@@ -13,8 +13,10 @@ import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.IngressRateLimiter;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -54,6 +56,26 @@ public final class ArcanaServerRuntime {
         engines.remove(Objects.requireNonNull(spellId, "spellId"));
     }
 
+    /**
+     * Prunes restored cooldown/charge state after all server initializers have
+     * installed the canonical policies for this runtime.
+     */
+    public PruneResult pruneOrphanedPersistentState() {
+        Set<String> activeCooldownGroups = new HashSet<>();
+        cooldownPolicies.cooldownSnapshot().values().forEach(spec -> {
+            if (spec.durationTicks() > 0L && spec.persistent()) activeCooldownGroups.add(spec.groupId());
+        });
+
+        Set<String> activeChargeGroups = new HashSet<>();
+        cooldownPolicies.chargeSnapshot().values().forEach(spec -> {
+            if (spec.persistent()) activeChargeGroups.add(spec.groupId());
+        });
+
+        int cooldownsRemoved = cooldowns.pruneGroups(activeCooldownGroups);
+        int chargesRemoved = charges.pruneGroups(activeChargeGroups);
+        return new PruneResult(cooldownsRemoved, chargesRemoved);
+    }
+
     public ArcanaSpellRegistry spells() {
         return spells;
     }
@@ -76,5 +98,13 @@ public final class ArcanaServerRuntime {
 
     public int installedEngineCount() {
         return engines.size();
+    }
+
+    public record PruneResult(int cooldownsRemoved, int chargePoolsRemoved) {
+        public PruneResult {
+            if (cooldownsRemoved < 0 || chargePoolsRemoved < 0) {
+                throw new IllegalArgumentException("prune counts cannot be negative");
+            }
+        }
     }
 }
