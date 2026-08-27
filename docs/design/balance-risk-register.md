@@ -22,6 +22,10 @@ Status: PREPARATORY. This register defines non-negotiable safety requirements fo
 9. Every temporary block/entity/domain effect has cleanup semantics for normal expiry, chunk unload, server restart, caster logout/death and interrupted cast.
 10. Client prediction never authorizes costs, targets, permissions or world changes.
 
+## Numeric guardrails
+
+`docs/design/server-safety-ceilings.md` is the canonical preparatory table of default runtime budgets and absolute validation ceilings. Stage 08 may tighten/tune defaults but must not silently raise hard ceilings. A higher hard ceiling requires a recorded architecture/risk decision.
+
 ## Critical mechanics
 
 ### Sanguine Harvest
@@ -108,7 +112,7 @@ Requirements:
 ### Mortal Ledger / Soul Anchor
 Threats: mob-farm immortality and logout/death duplication.
 Requirements:
-- hard cap on full anchors (initial design target: small integer, exact value Stage 08);
+- hard cap on full anchors;
 - eligible-death rules and anti-farm contribution/rarity weighting;
 - anchor consumption is atomic with death prevention;
 - post-revival vulnerability/recovery lockout;

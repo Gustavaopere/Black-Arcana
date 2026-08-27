@@ -4,12 +4,14 @@ Last updated: 2026-08-27
 
 ## Current state
 
-Stage 00 Foundation is implemented on `round-1-foundation` but is **not complete or frozen** because the required NeoForge CI/dedicated-server verification has not executed. Pure Java domain contracts compile on Java 21 and their local smoke path passes. GitHub-hosted Actions is currently failing before runner assignment, with zero workflow steps executed.
+Stage 00 Foundation is implemented on `round-1-foundation` but is **not complete or frozen** because the required NeoForge CI/dedicated-server verification has not yet executed successfully. Pure Java domain contracts compile on Java 21 and their local smoke path passes. A fresh rerun of the hosted workflow was requested on 2026-08-27 and remains the gate for promotion.
+
+Stage 01 Reference Catalog is being developed only as an isolated preparatory branch (`prep/01-reference-catalog`). Its clean-room inventory, host-capability map, classification, original identity, candidate contracts and risk guardrails may advance while Stage 00 is blocked, but Stage 01 is not canonical and cannot be marked complete before Foundation lands on `main` and the catalog is rebased/reviewed against that canonical base.
 
 | Stage | State | Notes |
 |---|---|---|
-| 00 Foundation | 🟨 Verification blocked | Implementation HEAD `c0ed9789648a03aac7e14699f9b526bd07d7b737`; waiting for real CI/GameTest/dedicated-server execution |
-| 01 Reference Catalog | ⬜ Not started | Clean-room mechanic inventory/classification |
+| 00 Foundation | 🟨 Verification blocked | Branch HEAD `78210ef35e87e1f4357e03a2543930cd0816a5ca`; waiting for real CI/GameTest/dedicated-server execution |
+| 01 Reference Catalog | 🟨 Preparatory | Isolated clean-room specification work; no canonical merge yet |
 | 02 Arcana Core | ⬜ Not started | Server-authoritative execution kernel |
 | 03 Integration Layer | ⬜ Not started | Iron's, Ars, Eidolon, Malum, RPG adapters |
 | 04 World Safety | ⬜ Not started | Destruction policy, rollback, budgets |
@@ -19,11 +21,11 @@ Stage 00 Foundation is implemented on `round-1-foundation` but is **not complete
 | 08 Progression & Balance | ⬜ Not started | Knowledge, mastery, caps, presets |
 | 09 Hardening & Release | ⬜ Not started | Tests, performance, upgrade, release |
 
-## Active stage
+## Canonical active stage
 
 `00-foundation`
 
-## Implemented checkpoint
+## Foundation implemented checkpoint
 
 - NeoForge 1.21.1 / Java 21 / ModDevGradle scaffold.
 - Pinned Gradle bootstrap with published-checksum verification.
@@ -35,16 +37,23 @@ Stage 00 Foundation is implemented on `round-1-foundation` but is **not complete
 - Pure Java 21 compile validation: PASS.
 - Pure cast pipeline smoke validation: PASS.
 
-## External verification blocker
+## Stage 01 preparatory checkpoint
 
-The Actions runs for the Foundation commits have terminated before runner allocation (`runner_id=0`, no steps/logs). Changing from `ubuntu-latest` to explicit `ubuntu-24.04` produced the same provider-side signature. Do not interpret those runs as code/test failures; they executed no repository command. Do not merge or add ✅ until a hosted runner actually executes the workflow successfully.
+- Public/observable reference feature inventory without reference implementation code/assets.
+- Host-capability map for Iron's Spellbooks, Ars Nouveau, Malum and Eidolon.
+- `KEEP / REIMAGINE / MERGE / DROP / DEFER` matrix.
+- Original Black Arcana identity/naming vocabulary.
+- Candidate implementation contracts with costs, tiers, host intent and acceptance-test obligations.
+- Balance/abuse risk register.
+- Numeric server safety ceilings and absolute runtime guardrails.
 
-## Immediate next actions
+## Promotion gates
 
-1. Re-run Foundation CI when GitHub allocates hosted runners normally.
-2. Fix any real Gradle/NeoForge/GameTest failure exposed by that run.
-3. Only after green CI: rename all Stage 00 task files with ✅, update this status to complete, and merge/fast-forward `round-1-foundation` into `main`.
-4. Create `feat/01-reference-catalog` from the resulting latest `main`.
+1. Foundation CI must actually execute on a hosted runner and pass unit tests, build, JAR inspection, GameTest server and dedicated-server smoke.
+2. Fix any real Gradle/NeoForge/GameTest failure exposed by that execution.
+3. Only after green CI: mark the four Stage 00 task files complete and merge/fast-forward `round-1-foundation` into `main`.
+4. Rebase/recreate the Reference Catalog branch from the new `main`, carry forward only reviewed clean-room specification commits, then perform its canonical review.
+5. No Stage 02/07 gameplay implementation begins from the preparatory catalog branch.
 
 ## Freeze rules
 
