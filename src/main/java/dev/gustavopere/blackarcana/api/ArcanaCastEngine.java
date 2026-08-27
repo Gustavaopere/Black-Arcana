@@ -2,11 +2,13 @@ package dev.gustavopere.blackarcana.api;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastResult.Status;
 import dev.gustavopere.blackarcana.api.ArcanaServices.ArcanaEffect;
+import dev.gustavopere.blackarcana.api.ArcanaServices.CastRequestValidator;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CooldownService;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostProvider;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostReservation;
 import dev.gustavopere.blackarcana.api.ArcanaServices.EffectResult;
 import dev.gustavopere.blackarcana.api.ArcanaServices.ProgressionGate;
+import dev.gustavopere.blackarcana.api.ArcanaServices.ReplayGuard;
 import dev.gustavopere.blackarcana.api.ArcanaServices.TargetResolution;
 import dev.gustavopere.blackarcana.api.ArcanaServices.TargetSelector;
 import dev.gustavopere.blackarcana.api.ArcanaServices.WorldEffectPolicy;
@@ -14,6 +16,8 @@ import dev.gustavopere.blackarcana.api.ArcanaServices.WorldEffectPolicy;
 import java.util.Objects;
 
 public final class ArcanaCastEngine {
+    private final CastRequestValidator identity;
+    private final ReplayGuard replayGuard;
     private final ProgressionGate progression;
     private final CooldownService cooldowns;
     private final TargetSelector targets;
@@ -22,6 +26,8 @@ public final class ArcanaCastEngine {
     private final ArcanaEffect effect;
 
     public ArcanaCastEngine(
+            CastRequestValidator identity,
+            ReplayGuard replayGuard,
             ProgressionGate progression,
             CooldownService cooldowns,
             TargetSelector targets,
@@ -29,6 +35,8 @@ public final class ArcanaCastEngine {
             WorldEffectPolicy worldPolicy,
             ArcanaEffect effect
     ) {
+        this.identity = Objects.requireNonNull(identity);
+        this.replayGuard = Objects.requireNonNull(replayGuard);
         this.progression = Objects.requireNonNull(progression);
         this.cooldowns = Objects.requireNonNull(cooldowns);
         this.targets = Objects.requireNonNull(targets);
@@ -40,7 +48,13 @@ public final class ArcanaCastEngine {
     public ArcanaCastResult execute(ArcanaCastRequest request) {
         Objects.requireNonNull(request, "request");
 
-        ArcanaDecision decision = progression.check(request);
+        ArcanaDecision decision = identity.check(request);
+        if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_IDENTITY, decision);
+
+        decision = replayGuard.claim(request);
+        if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_REPLAY, decision);
+
+        decision = progression.check(request);
         if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_PROGRESSION, decision);
 
         decision = cooldowns.check(request);
@@ -74,9 +88,7 @@ public final class ArcanaCastEngine {
             cooldowns.start(request);
             return ArcanaCastResult.success(effectResult.detail());
         } finally {
-            if (!committed) {
-                reservation.refund();
-            }
+            if (!committed) reservation.refund();
         }
     }
 }
