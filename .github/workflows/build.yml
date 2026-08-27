@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   verify:
-    runs-on: ubuntu-24.04
+    runs-on: macos-15-intel
     timeout-minutes: 25
     steps:
       - name: Checkout
@@ -55,7 +55,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana-*.jar' | head -n 1)"
+          JAR="$(find build/libs -type f -name 'black_arcana-*.jar' | head -n 1)"
           test -n "$JAR"
           jar tf "$JAR" | grep -Fx 'META-INF/neoforge.mods.toml'
           jar tf "$JAR" | grep -Fx 'dev/gustavopere/blackarcana/BlackArcanaMod.class'
