@@ -52,4 +52,12 @@ Power should come from knowledge, RPG attributes/mastery, equipment and meaningf
 
 ## D013 — License
 
-Project license is intentionally undecided until the clean-room/provenance stage. Do not add a license without an explicit decision.
+Project license is intentionally undecided until the clean-room/provenance stage. Do not add a repository license without an explicit decision. `All Rights Reserved` in mandatory NeoForge mod metadata is a conservative packaging placeholder and is not a decision to publish under a particular license.
+
+## D014 — Foundation toolchain pins
+
+The initial 1.21.1 foundation follows the current official NeoForge MDK baseline observed on 2026-08-27: ModDevGradle `2.0.144`, NeoForge `21.1.248`, Parchment `2024.11.17` for Minecraft `1.21.1`, Java 21, and Gradle `9.2.1`.
+
+## D015 — Reproducible text Gradle bootstrap
+
+Until a standard binary `gradle-wrapper.jar` can be introduced and verified cleanly, the repository uses text `gradlew`/`gradlew.bat` bootstraps pinned to Gradle 9.2.1. The launcher downloads the official binary distribution and verifies it against Gradle's published SHA-256 before executing. This is an implementation detail, not an API contract; replacing it later with the official wrapper is allowed without changing gameplay architecture.
