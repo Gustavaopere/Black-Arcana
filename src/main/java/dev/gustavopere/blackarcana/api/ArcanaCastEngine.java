@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.api.ArcanaCastResult.Status;
 import dev.gustavopere.blackarcana.api.ArcanaServices.ArcanaEffect;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CooldownService;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostProvider;
+import dev.gustavopere.blackarcana.api.ArcanaServices.CostReservation;
 import dev.gustavopere.blackarcana.api.ArcanaServices.EffectResult;
 import dev.gustavopere.blackarcana.api.ArcanaServices.ProgressionGate;
 import dev.gustavopere.blackarcana.api.ArcanaServices.TargetResolution;
@@ -56,16 +57,26 @@ public final class ArcanaCastEngine {
         decision = worldPolicy.authorize(request, target);
         if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_WORLD_POLICY, decision);
 
-        if (!costs.consume(request)) {
-            return ArcanaCastResult.denied(Status.DENIED_COST, ArcanaDecision.deny("cost_race", "resource changed before execution"));
+        CostReservation reservation = Objects.requireNonNull(costs.reserve(request), "cost reservation");
+        if (!reservation.reserved()) {
+            return ArcanaCastResult.denied(Status.DENIED_COST, reservation.decision());
         }
 
-        EffectResult effectResult = effect.apply(request, target);
-        if (!effectResult.success()) {
-            return new ArcanaCastResult(Status.EFFECT_FAILED, "effect_failed", effectResult.detail());
-        }
+        boolean committed = false;
+        try {
+            EffectResult effectResult = effect.apply(request, target);
+            if (!effectResult.success()) {
+                return new ArcanaCastResult(Status.EFFECT_FAILED, "effect_failed", effectResult.detail());
+            }
 
-        cooldowns.start(request);
-        return ArcanaCastResult.success(effectResult.detail());
+            reservation.commit();
+            committed = true;
+            cooldowns.start(request);
+            return ArcanaCastResult.success(effectResult.detail());
+        } finally {
+            if (!committed) {
+                reservation.refund();
+            }
+        }
     }
 }

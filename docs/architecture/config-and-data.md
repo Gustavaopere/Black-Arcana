@@ -20,4 +20,4 @@ Gameplay-authoritative values originate on the server. A future handshake/sync p
 
 ## ID migration
 
-Renamed IDs map old -> new through an explicit migration table. Removed IDs resolve to no spell with a reason instead of silently pointing at unrelated content. Persisted content must never infer a replacement by display name.
+Renamed IDs map old -> new through an explicit migration table. Replacement chains resolve transitively until a live terminal id or an explicit removal is reached. Cycles, contradictory replace+remove entries and blank removal reasons are rejected when the migration table is created rather than being guessed at load time. Removed IDs resolve to no spell with a reason instead of silently pointing at unrelated content. Persisted content must never infer a replacement by display name.

@@ -18,7 +18,18 @@ public final class ArcanaServices {
 
     public interface CostProvider {
         ArcanaDecision check(ArcanaCastRequest request);
-        boolean consume(ArcanaCastRequest request);
+        CostReservation reserve(ArcanaCastRequest request);
+    }
+
+    public interface CostReservation {
+        ArcanaDecision decision();
+
+        default boolean reserved() {
+            return decision().allowed();
+        }
+
+        void commit();
+        void refund();
     }
 
     @FunctionalInterface

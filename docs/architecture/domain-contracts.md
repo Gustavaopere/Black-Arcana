@@ -7,13 +7,16 @@ The canonical execution order is:
 1. progression gate;
 2. cooldown validation;
 3. target resolution;
-4. resource-cost validation;
+4. resource-cost affordability validation;
 5. world-effect policy authorization;
-6. cost consumption;
+6. atomic cost reservation/revalidation;
 7. effect execution;
-8. cooldown start after successful effect.
+8. cost commit after successful effect, or refund on failed/exceptional effect execution;
+9. cooldown start after successful effect and committed cost.
 
-Expected denial states are values (`ArcanaCastResult.Status` + code/detail), not exceptions. Exceptions remain reserved for programmer errors and broken invariants.
+`CostProvider.check` is an early deterministic affordability gate. `CostProvider.reserve` is the race-safe transaction boundary immediately before execution and returns a provider-owned `CostReservation`. A successful reservation must be atomically committable/refundable by the provider. The cast engine calls exactly one terminal path: `commit` after a successful effect, or `refund` if effect execution fails or throws before commit. Composite providers introduced in Stage 02 must reserve all component costs atomically or deny the reservation without partial consumption.
+
+Expected denial states are values (`ArcanaCastResult.Status` + code/detail), not exceptions. Exceptions remain reserved for programmer errors and broken invariants; an exceptional effect path still refunds an uncommitted reservation before propagating the exception.
 
 `ArcanaIntegration` exposes only Black Arcana-owned availability/version metadata. Iron's, Ars Nouveau, Eidolon, Malum and RPG-specific types must stay behind adapters introduced in Stage 03.
 

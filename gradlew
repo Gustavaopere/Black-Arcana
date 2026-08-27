@@ -2,11 +2,11 @@
 set -eu
 
 GRADLE_VERSION="9.2.1"
+GRADLE_SHA256="72f44c9f8ebcb1af43838f45ee5c4aa9c5444898b3468ab3f4af7b6076c5bc3f"
 GRADLE_HOME_BASE="${GRADLE_USER_HOME:-${HOME}/.gradle}/black-arcana-bootstrap"
 GRADLE_INSTALL="${GRADLE_HOME_BASE}/gradle-${GRADLE_VERSION}"
 DIST="gradle-${GRADLE_VERSION}-bin.zip"
 DIST_URL="https://services.gradle.org/distributions/${DIST}"
-CHECKSUM_URL="${DIST_URL}.sha256"
 
 fetch() {
     if command -v curl >/dev/null 2>&1; then
@@ -27,26 +27,22 @@ if [ ! -x "${GRADLE_INSTALL}/bin/gradle" ]; then
 
     mkdir -p "${GRADLE_HOME_BASE}"
     ZIP="${GRADLE_HOME_BASE}/${DIST}"
-    SHA_FILE="${ZIP}.sha256"
     TMP="${GRADLE_HOME_BASE}/.gradle-${GRADLE_VERSION}-tmp-$$"
 
     fetch "${DIST_URL}" "${ZIP}"
-    fetch "${CHECKSUM_URL}" "${SHA_FILE}"
 
     if command -v sha256sum >/dev/null 2>&1; then
-        EXPECTED="$(tr -d '[:space:]' < "${SHA_FILE}")"
         ACTUAL="$(sha256sum "${ZIP}" | awk '{print $1}')"
     elif command -v shasum >/dev/null 2>&1; then
-        EXPECTED="$(tr -d '[:space:]' < "${SHA_FILE}")"
         ACTUAL="$(shasum -a 256 "${ZIP}" | awk '{print $1}')"
     else
         echo "Black Arcana Gradle bootstrap requires sha256sum or shasum." >&2
         exit 1
     fi
 
-    [ "${EXPECTED}" = "${ACTUAL}" ] || {
+    [ "${GRADLE_SHA256}" = "${ACTUAL}" ] || {
         echo "Gradle distribution checksum mismatch." >&2
-        rm -f "${ZIP}" "${SHA_FILE}"
+        rm -f "${ZIP}"
         exit 1
     }
 
@@ -55,7 +51,7 @@ if [ ! -x "${GRADLE_INSTALL}/bin/gradle" ]; then
     unzip -q "${ZIP}" -d "${TMP}"
     rm -rf "${GRADLE_INSTALL}"
     mv "${TMP}/gradle-${GRADLE_VERSION}" "${GRADLE_INSTALL}"
-    rm -rf "${TMP}" "${ZIP}" "${SHA_FILE}"
+    rm -rf "${TMP}" "${ZIP}"
 fi
 
 exec "${GRADLE_INSTALL}/bin/gradle" "$@"
