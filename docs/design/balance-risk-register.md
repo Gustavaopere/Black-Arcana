@@ -37,6 +37,16 @@ Requirements:
 - diminishing yield for repeated farmed entity types/source contexts;
 - server-side LOS/range/ownership checks.
 
+### Namescry
+Threats: hostile player surveillance, privacy leakage, remote-world scanning and accidental chunk loading.
+Requirements:
+- never force-load chunks or targets; resolve only naturally loaded entities/world state;
+- hostile player use disabled by default and gated by explicit server policy plus covenant/consent rules when enabled;
+- expose only a small whitelisted perception payload, never arbitrary capabilities/NBT/container state;
+- same-dimension default and bounded range/channel duration;
+- interruption, target unload/logout and policy changes terminate the session deterministically;
+- record sufficient audit context for server debugging without logging sensitive arbitrary target data.
+
 ### Reciprocal Transposition
 Threats: involuntary player movement, item automation exploits, cross-chunk inconsistency.
 Requirements:
