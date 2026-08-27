@@ -27,6 +27,27 @@ public final class LoadoutRegistry implements CastRequestValidator {
         return loadouts.getOrDefault(Objects.requireNonNull(casterId, "casterId"), List.of());
     }
 
+    public synchronized Map<UUID, List<ArcanaSpellId>> snapshot() {
+        Map<UUID, List<ArcanaSpellId>> snapshot = new HashMap<>();
+        loadouts.forEach((caster, spells) -> snapshot.put(caster, List.copyOf(spells)));
+        return Map.copyOf(snapshot);
+    }
+
+    public synchronized void restoreSnapshot(Map<UUID, List<ArcanaSpellId>> snapshot) {
+        Objects.requireNonNull(snapshot, "snapshot");
+        Map<UUID, List<ArcanaSpellId>> validated = new HashMap<>();
+        snapshot.forEach((caster, spells) -> {
+            Objects.requireNonNull(caster, "casterId");
+            Objects.requireNonNull(spells, "spells");
+            if (spells.size() > ArcanaCastRequest.MAX_LOADOUT_SLOTS) {
+                throw new IllegalArgumentException("loadout exceeds maximum slot count");
+            }
+            validated.put(caster, List.copyOf(spells));
+        });
+        loadouts.clear();
+        loadouts.putAll(validated);
+    }
+
     public synchronized void clear(UUID casterId) {
         loadouts.remove(Objects.requireNonNull(casterId, "casterId"));
     }
