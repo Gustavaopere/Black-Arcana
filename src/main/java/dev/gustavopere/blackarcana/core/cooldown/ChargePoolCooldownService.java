@@ -4,10 +4,12 @@ import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaChargeSpec;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CooldownService;
+import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -68,6 +70,18 @@ public final class ChargePoolCooldownService implements CooldownService {
         });
     }
 
+    /** Removes charge groups that no longer have an active server policy. */
+    public synchronized int pruneGroups(Set<String> activeGroupIds) {
+        Set<String> active = validateGroups(activeGroupIds);
+        int before = states.size();
+        states.keySet().removeIf(key -> !active.contains(key.groupId()));
+        return before - states.size();
+    }
+
+    public synchronized int size() {
+        return states.size();
+    }
+
     private State stateFor(ArcanaCastRequest request, ArcanaChargeSpec spec) {
         ChargeKey key = new ChargeKey(request.context().casterId(), spec.groupId());
         return states.computeIfAbsent(key, ignored -> new State(spec.maxCharges(), 0L, spec.persistent()));
@@ -102,6 +116,13 @@ public final class ChargePoolCooldownService implements CooldownService {
         return Objects.requireNonNull(policy.apply(request), "charge spec");
     }
 
+    private static Set<String> validateGroups(Set<String> groupIds) {
+        Objects.requireNonNull(groupIds, "groupIds");
+        Set<String> copy = Set.copyOf(groupIds);
+        copy.forEach(ArcanaSpellId::parse);
+        return copy;
+    }
+
     private static long safeAdd(long value, long delta) {
         if (delta > Long.MAX_VALUE - value) return Long.MAX_VALUE;
         return value + delta;
@@ -117,7 +138,7 @@ public final class ChargePoolCooldownService implements CooldownService {
         public ChargeKey {
             Objects.requireNonNull(casterId, "casterId");
             Objects.requireNonNull(groupId, "groupId");
-            dev.gustavopere.blackarcana.api.ArcanaSpellId.parse(groupId);
+            ArcanaSpellId.parse(groupId);
         }
     }
 
