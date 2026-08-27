@@ -5,7 +5,7 @@ import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 public final class ArcanaProtocol {
     public static final int VERSION = 1;
     public static final int MAX_LOADOUT_SLOTS = ArcanaCastRequest.MAX_LOADOUT_SLOTS;
-    public static final int MAX_TARGET_HINT_LENGTH = 96;
+    public static final int MAX_TARGET_HINT_LENGTH = ArcanaCastRequest.MAX_TARGET_HINT_LENGTH;
     public static final int MAX_RESULT_CODE_LENGTH = 64;
     public static final int MAX_RESULT_DETAIL_LENGTH = 256;
     public static final int MAX_COOLDOWN_ENTRIES = 128;

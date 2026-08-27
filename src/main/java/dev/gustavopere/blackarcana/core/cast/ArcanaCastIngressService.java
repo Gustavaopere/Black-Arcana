@@ -17,8 +17,8 @@ import java.util.function.Function;
 
 /**
  * Pure server-side ingress between a validated wire intent and a spell engine.
- * The client contributes only an id/slot/advisory target hint; the canonical
- * spell definition and all gameplay authority are resolved on the server.
+ * Client target hints remain advisory: they are copied into the request only so
+ * a server-owned TargetSelector can re-resolve and validate them against live world state.
  */
 public final class ArcanaCastIngressService {
     private final ArcanaSpellRegistry spellRegistry;
@@ -60,7 +60,7 @@ public final class ArcanaCastIngressService {
         }
 
         ArcanaCastRequest request = new ArcanaCastRequest(
-                intent.parsedCastId(), definition, context, intent.loadoutSlot());
+                intent.parsedCastId(), definition, context, intent.loadoutSlot(), intent.targetHint());
         return result(intent, engine.execute(request));
     }
 
