@@ -4,10 +4,12 @@ import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaCooldownSpec;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CooldownService;
+import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -74,6 +76,17 @@ public final class PersistentCooldownService implements CooldownService {
         }
     }
 
+    /**
+     * Removes persisted/runtime cooldown groups that no longer have an active server policy.
+     * This is intentionally called only after all server initializers have registered policies.
+     */
+    public synchronized int pruneGroups(Set<String> activeGroupIds) {
+        Set<String> active = validateGroups(activeGroupIds);
+        int before = entries.size();
+        entries.keySet().removeIf(key -> !active.contains(key.groupId()));
+        return before - entries.size();
+    }
+
     public synchronized int size() {
         return entries.size();
     }
@@ -86,6 +99,13 @@ public final class PersistentCooldownService implements CooldownService {
         return new CooldownKey(request.context().casterId(), spec.groupId());
     }
 
+    private static Set<String> validateGroups(Set<String> groupIds) {
+        Objects.requireNonNull(groupIds, "groupIds");
+        Set<String> copy = Set.copyOf(groupIds);
+        copy.forEach(ArcanaSpellId::parse);
+        return copy;
+    }
+
     private static long safeAdd(long value, long delta) {
         if (delta > Long.MAX_VALUE - value) return Long.MAX_VALUE;
         return value + delta;
@@ -95,7 +115,7 @@ public final class PersistentCooldownService implements CooldownService {
         public CooldownKey {
             Objects.requireNonNull(casterId, "casterId");
             Objects.requireNonNull(groupId, "groupId");
-            dev.gustavopere.blackarcana.api.ArcanaSpellId.parse(groupId);
+            ArcanaSpellId.parse(groupId);
         }
     }
 
