@@ -9,10 +9,12 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LoadoutRegistryTest {
@@ -50,5 +52,34 @@ class LoadoutRegistryTest {
         LoadoutRegistry registry = new LoadoutRegistry();
         registry.setLoadout(CASTER, List.of(spell("alpha").id()));
         assertEquals("loadout_slot_unavailable", registry.check(request(spell("alpha"), 2)).code());
+    }
+
+    @Test
+    void snapshotRoundTripRestoresServerOwnedSlots() {
+        LoadoutRegistry source = new LoadoutRegistry();
+        ArcanaSpellId alpha = spell("alpha").id();
+        ArcanaSpellId beta = spell("beta").id();
+        source.setLoadout(CASTER, List.of(alpha, beta));
+
+        LoadoutRegistry restored = new LoadoutRegistry();
+        restored.restoreSnapshot(source.snapshot());
+
+        assertEquals(List.of(alpha, beta), restored.getLoadout(CASTER));
+        assertEquals(source.snapshot(), restored.snapshot());
+    }
+
+    @Test
+    void restoreIsAtomicWhenAnyEntryIsInvalid() {
+        LoadoutRegistry registry = new LoadoutRegistry();
+        ArcanaSpellId original = spell("original").id();
+        registry.setLoadout(CASTER, List.of(original));
+
+        List<ArcanaSpellId> tooMany = java.util.stream.IntStream.range(0, ArcanaCastRequest.MAX_LOADOUT_SLOTS + 1)
+                .mapToObj(i -> ArcanaSpellId.parse("black_arcana:test_" + i))
+                .toList();
+
+        UUID other = UUID.fromString("11111111-2222-3333-4444-555555555555");
+        assertThrows(IllegalArgumentException.class, () -> registry.restoreSnapshot(Map.of(other, tooMany)));
+        assertEquals(List.of(original), registry.getLoadout(CASTER));
     }
 }
