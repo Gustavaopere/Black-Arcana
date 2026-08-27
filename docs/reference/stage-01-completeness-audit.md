@@ -29,7 +29,7 @@ No inventory mechanic is unclassified.
 - Eidetic Arsenal: 5.
 - Sanguine/Sepulchral/Cinder: 8.
 
-The count is intentionally larger than `REIMAGINE + KEEP` because three `MERGE` ideas are useful as Black Arcana-owned framework modules rather than standalone reference clones: Vigil Ward, Blood Price and Spirit Sight. Other `MERGE` rows remain host-owned or are folded into an existing candidate (for example weapon-projectile behavior is part of Spectral Arsenal).
+The count is intentionally larger than `REIMAGINE + KEEP` because three `MERGE` ideas are useful as Black Arcana-owned framework modules rather than standalone reference clones: Vigil Ward, Blood Price and Spirit Sight. Other `MERGE` rows remain host-owned or are folded into an existing candidate.
 
 Every candidate contract contains behavior, cost class, progression tier, safety rule, preferred host and acceptance-test obligations. T4 candidates remain balance-gated even when their technical design is specified.
 
@@ -40,7 +40,7 @@ Every retained High/Critical classification row is covered by all four layers be
 1. candidate-specific safety and acceptance tests in `candidate-specifications.md`;
 2. global invariants and dedicated critical sections in `balance-risk-register.md` where the risk is Critical;
 3. numeric/runtime config guardrails in `server-safety-ceilings.md` or an explicit requirement that Stage 08 supply a bounded value under an existing hard runtime budget;
-4. server-authoritative validation through the Foundation contracts (`WorldEffectPolicy`, cost/progression/target validation and adapter isolation).
+4. server-authoritative validation through the Foundation contracts (`WorldEffectPolicy`, transactional costs, progression/target validation and adapter isolation).
 
 Specific cross-cutting coverage:
 
@@ -67,6 +67,16 @@ The classification deliberately avoids rebuilding capabilities already provided 
 
 No candidate is allowed to introduce a mandatory second mana pool, staff/scroll-only casting, generic duplicate familiar framework or generic duplicate teleport network.
 
+## Host viability audit
+
+`candidate-host-viability.md` reconciles all 32 candidates against three engineering confidence classes:
+
+- `CORE`: Black Arcana must own the authoritative state/safety/transaction/session behavior;
+- `PUBLIC_API`: the limited host role needed at planning level is covered by a documented public extension surface, principally Iron's spell registration;
+- `PROBE`: thematic capability exists but the exact installed-version extension seam must be proven during Stage 03 before any dependency is accepted.
+
+Every `PROBE` route has an explicit fallback. No candidate requires private/reflection access merely to preserve its design. The Stage 03 probe queue is pinned to the installed runtime baseline: Iron's `3.16.3`, Ars `5.13.0`, Eidolon `0.5.0.2`, Malum `1.8.2`.
+
 ## Clean-room audit
 
 - Reference source used for Mahou behavior: public player-visible documentation only.
@@ -76,12 +86,13 @@ No candidate is allowed to introduce a mandatory second mana pool, staff/scroll-
 
 ## Preparatory verdict
 
-Stage 01 documentation is **ready for canonical rebase/review** once Stage 00 lands on `main`. It is not frozen and receives no ✅ while its base is preparatory.
+Stage 01 documentation is **specification-complete and ready for canonical rebase/review** once Stage 00 lands on `main`. It is not frozen and receives no ✅ while its base is preparatory.
 
 Canonical promotion checklist after Foundation merge:
 
 1. recreate/rebase Stage 01 from latest `main`;
 2. verify all 53 inventory rows still reconcile 53/53;
-3. verify host versions/APIs against the actual modpack/runtime;
-4. review any changed safety ceilings/host decisions;
-5. mark Stage 01 task files complete only after that review and merge.
+3. verify all 32 candidate specs still map to the host viability matrix;
+4. verify host versions/APIs against the actual modpack/runtime;
+5. review any changed safety ceilings/host decisions;
+6. mark Stage 01 task files complete only after that review and merge.
