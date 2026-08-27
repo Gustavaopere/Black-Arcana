@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.persistence;
 
+import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
@@ -27,6 +28,11 @@ import java.util.UUID;
 public final class BlackArcanaSavedData extends SavedData {
     private static final String DATA_NAME = "black_arcana_runtime";
     private static final int SCHEMA_VERSION = 1;
+
+    // Defensive restore ceilings. Normal runtime state should stay far below these values.
+    public static final int MAX_PERSISTED_COOLDOWNS = 131_072;
+    public static final int MAX_PERSISTED_CHARGE_POOLS = 131_072;
+    public static final int MAX_PERSISTED_LOADOUT_CASTERS = 16_384;
 
     private Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> cooldowns = Map.of();
     private Map<ChargePoolCooldownService.ChargeKey, ChargePoolCooldownService.SnapshotEntry> charges = Map.of();
@@ -98,7 +104,8 @@ public final class BlackArcanaSavedData extends SavedData {
 
     private static Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> readCooldowns(ListTag list) {
         Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> result = new HashMap<>();
-        for (int i = 0; i < list.size(); i++) {
+        int count = Math.min(list.size(), MAX_PERSISTED_COOLDOWNS);
+        for (int i = 0; i < count; i++) {
             CompoundTag tag = list.getCompound(i);
             try {
                 var key = new PersistentCooldownService.CooldownKey(tag.getUUID("caster"), tag.getString("group"));
@@ -126,7 +133,8 @@ public final class BlackArcanaSavedData extends SavedData {
 
     private static Map<ChargePoolCooldownService.ChargeKey, ChargePoolCooldownService.SnapshotEntry> readCharges(ListTag list) {
         Map<ChargePoolCooldownService.ChargeKey, ChargePoolCooldownService.SnapshotEntry> result = new HashMap<>();
-        for (int i = 0; i < list.size(); i++) {
+        int count = Math.min(list.size(), MAX_PERSISTED_CHARGE_POOLS);
+        for (int i = 0; i < count; i++) {
             CompoundTag tag = list.getCompound(i);
             try {
                 var key = new ChargePoolCooldownService.ChargeKey(tag.getUUID("caster"), tag.getString("group"));
@@ -154,18 +162,19 @@ public final class BlackArcanaSavedData extends SavedData {
 
     private static Map<UUID, List<ArcanaSpellId>> readLoadouts(ListTag list) {
         Map<UUID, List<ArcanaSpellId>> result = new HashMap<>();
-        for (int i = 0; i < list.size(); i++) {
+        int count = Math.min(list.size(), MAX_PERSISTED_LOADOUT_CASTERS);
+        for (int i = 0; i < count; i++) {
             CompoundTag tag = list.getCompound(i);
             try {
                 UUID caster = tag.getUUID("caster");
                 ListTag spellList = tag.getList("spells", Tag.TAG_STRING);
-                List<ArcanaSpellId> spells = new ArrayList<>();
+                if (spellList.size() > ArcanaCastRequest.MAX_LOADOUT_SLOTS) continue;
+
+                List<ArcanaSpellId> spells = new ArrayList<>(spellList.size());
                 for (int j = 0; j < spellList.size(); j++) {
                     spells.add(ArcanaSpellId.parse(spellList.getString(j)));
                 }
-                if (spells.size() <= dev.gustavopere.blackarcana.api.ArcanaCastRequest.MAX_LOADOUT_SLOTS) {
-                    result.put(caster, List.copyOf(spells));
-                }
+                result.put(caster, List.copyOf(spells));
             } catch (RuntimeException ignored) {
                 // A broken player's loadout must not make the entire saved data unreadable.
             }
