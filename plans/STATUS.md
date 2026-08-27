@@ -4,15 +4,15 @@ Last updated: 2026-08-27
 
 ## Current state
 
-Stage 00 Foundation is implemented on `round-1-foundation` but is **not complete or frozen** because the required NeoForge CI/dedicated-server verification has still not executed. Pure Java 21 validation passes for the domain/config contracts, including transactional cost reservation/refund and transitive ID migration. GitHub-hosted Actions continues to terminate before runner assignment with zero repository steps executed.
+Stage 00 Foundation is implemented on `round-1-foundation` but is **not complete or frozen** because the required NeoForge CI/dedicated-server verification has still not executed. Pure Java 21 validation passes for the domain/config contracts, including transactional cost reservation/refund and transitive ID migration. Earlier GitHub-hosted Actions attempts terminated before runner assignment with zero repository steps executed.
 
 Stage 01 Reference Catalog has advanced only in the isolated `prep/01-reference-catalog` branch. Its preparatory completeness audit reconciles all 53 observable reference rows and its safety/risk contracts are ready for canonical rebase/review after Foundation lands. It is not canonical or frozen.
 
 | Stage | State | Notes |
 |---|---|---|
-| 00 Foundation | 🟨 Verification blocked | Transactional implementation checkpoint `a81ff8049ff1bbe175d457dc1e04894a0beb09bf`; waiting for real CI/GameTest/dedicated-server execution |
-| 01 Reference Catalog | 🟨 Preparatory | Prep HEAD `60fa4e4a936d59fbdb0bfa198c47868a4e2241ca`; 53/53 inventory rows classified, awaiting canonical rebase/review |
-| 02 Arcana Core | ⬜ Not started | Server-authoritative execution kernel |
+| 00 Foundation | 🟨 Verification blocked | Implementation HEAD includes transactional contracts and pinned build bootstrap; waiting for real CI/GameTest/dedicated-server execution |
+| 01 Reference Catalog | 🟨 Preparatory | Isolated clean-room catalog ready for canonical rebase/review |
+| 02 Arcana Core | ⬜ Not started canonically | Preparatory implementation exists outside `main` |
 | 03 Integration Layer | ⬜ Not started | Iron's, Ars, Eidolon, Malum, RPG adapters |
 | 04 World Safety | ⬜ Not started | Destruction policy, rollback, budgets |
 | 05 Casting & UX | ⬜ Not started | Direct cast, loadouts, radial HUD |
@@ -41,15 +41,15 @@ Stage 01 Reference Catalog has advanced only in the isolated `prep/01-reference-
 
 ## External verification blocker
 
-The latest workflow for implementation checkpoint `a81ff8049ff1bbe175d457dc1e04894a0beb09bf` (run `33122757379`) again terminated before a hosted runner executed any step. Earlier retries showed the same signature. Do not interpret these as Gradle/Java/GameTest failures: no checkout or repository command ran. Do not merge or add ✅ until a runner actually executes the required workflow successfully, or an explicitly approved equivalent verification environment proves the same acceptance gates.
+Earlier workflow attempts terminated before a hosted runner executed any step (`runner_id=0`, empty step list). GitHub's public status page now reports Actions operational after the Aug 26–27 incidents, so this commit intentionally triggers a completely fresh workflow run rather than reusing a failed run attempt. Do not interpret a runnerless failure as a Gradle/Java/GameTest failure. Do not merge or add ✅ until a runner actually executes the required workflow successfully, or an explicitly approved equivalent verification environment proves the same acceptance gates.
 
 ## Immediate next actions
 
-1. Re-run/check Foundation CI when GitHub allocates hosted runners normally.
+1. Inspect the fresh post-incident Foundation workflow triggered by this commit.
 2. Fix any real Gradle/NeoForge/GameTest failure exposed by an actual execution.
 3. After green verification: mark the four Stage 00 task files complete and merge/fast-forward `round-1-foundation` into `main`.
-4. Recreate/rebase Stage 01 from that latest `main`, carry forward the reviewed preparatory catalog, run the canonical completeness/host-version review, then merge Stage 01.
-5. Do not begin Stage 02/07 gameplay implementation from the preparatory catalog branch.
+4. Recreate/rebase the Reference Catalog from latest `main`, carry forward only reviewed clean-room specification commits, run canonical completeness/host-version review, then merge Stage 01.
+5. Keep Stage 02 work preparatory until the canonical dependency chain is restored.
 
 ## Freeze rules
 
