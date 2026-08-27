@@ -56,7 +56,7 @@ public final class ArcanaServices {
             Objects.requireNonNull(detail, "detail");
         }
 
-        public static EffectResult success() {
+        public static EffectResult ok() {
             return new EffectResult(true, "");
         }
 

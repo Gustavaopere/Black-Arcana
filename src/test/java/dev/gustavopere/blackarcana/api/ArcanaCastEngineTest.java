@@ -67,7 +67,7 @@ class ArcanaCastEngineTest {
                     public boolean consume(ArcanaCastRequest req) { calls.add("cost-consume"); return true; }
                 },
                 (req, target) -> { calls.add("world-policy"); return ArcanaDecision.allow(); },
-                (req, target) -> { calls.add("effect"); return ArcanaServices.EffectResult.success(); });
+                (req, target) -> { calls.add("effect"); return ArcanaServices.EffectResult.ok(); });
 
         ArcanaCastResult result = engine.execute(request());
         assertEquals(ArcanaCastResult.Status.SUCCESS, result.status());
