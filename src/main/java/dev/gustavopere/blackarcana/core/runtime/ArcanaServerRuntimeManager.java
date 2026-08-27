@@ -52,7 +52,8 @@ public final class ArcanaServerRuntimeManager {
     public static CastResultPayload handleCastIntent(ServerPlayer player, CastIntentPayload intent) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(intent, "intent");
-        ArcanaServerRuntime runtime = RUNTIMES.get(player.server);
+        MinecraftServer server = player.serverLevel().getServer();
+        ArcanaServerRuntime runtime = RUNTIMES.get(server);
         if (runtime == null) {
             return CastResultPayload.from(intent.parsedCastId(), ArcanaCastResult.denied(
                     ArcanaCastResult.Status.DENIED_IDENTITY,
@@ -67,6 +68,7 @@ public final class ArcanaServerRuntimeManager {
         INITIALIZERS.forEach(initializer -> initializer.accept(runtime));
         BlackArcanaSavedData.get(server).restore(
                 runtime.cooldowns(), runtime.charges(), runtime.loadouts(), server.overworld().getGameTime());
+        runtime.pruneOrphanedPersistentState();
         RUNTIMES.put(server, runtime);
     }
 
