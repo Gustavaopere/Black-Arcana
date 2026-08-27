@@ -5,6 +5,7 @@ import java.util.Objects;
 public record ArcanaCastResult(Status status, String code, String detail) {
     public enum Status {
         SUCCESS,
+        DENIED_INGRESS,
         DENIED_IDENTITY,
         DENIED_REPLAY,
         DENIED_PROGRESSION,
