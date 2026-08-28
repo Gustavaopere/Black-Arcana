@@ -113,6 +113,13 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events 'failed'
+        exceptionFormat = 'full'
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
 }
 
 var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
