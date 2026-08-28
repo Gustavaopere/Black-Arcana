@@ -84,9 +84,15 @@ dependencies {
     // Stable addon-facing Iron's API only. The full mod remains an optional runtime dependency.
     compileOnly "io.redspace:irons_spellbooks:${irons_spells_version}:api"
 
-    // Ars Nouveau does not publish a dedicated API classifier; compile against the pinned
-    // release without transitives and isolate all provider loading behind optional entrypoints.
+    // Ars Nouveau does not publish a dedicated API classifier; compile against the exact
+    // installed-pack baseline without transitives and isolate provider loading behind entrypoints.
     compileOnly("curse.maven:ars-nouveau-401955:${ars_nouveau_file_id}") {
+        transitive = false
+    }
+
+    // Eidolon 1.21.1 exposes its ritual classes in an api package but no standalone API jar.
+    // Compile against the exact pack release; all binary references remain in optional adapter classes.
+    compileOnly("curse.maven:eidolon-repraised-870250:${eidolon_repraised_file_id}") {
         transitive = false
     }
 
