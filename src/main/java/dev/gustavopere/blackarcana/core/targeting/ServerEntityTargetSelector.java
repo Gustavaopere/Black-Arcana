@@ -19,11 +19,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -282,23 +280,16 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
             ArcanaCastRequest request,
             ArcanaTargetSpec spec
     ) {
-        List<UUID> linked = Objects.requireNonNull(
-                linkedTargetResolver.resolve(request, caster), "linked targets");
-        if (linked.size() > MAX_LINK_CANDIDATES) {
-            return ArcanaServices.TargetResolution.denied("linked target candidate set exceeds hard bound");
-        }
-
-        Set<UUID> unique = new LinkedHashSet<>();
-        for (UUID targetId : linked) {
-            if (targetId == null) {
-                return ArcanaServices.TargetResolution.denied("linked target resolver returned null id");
-            }
-            unique.add(targetId);
+        LinkedTargetCandidates.Result normalized = LinkedTargetCandidates.normalize(
+                linkedTargetResolver.resolve(request, caster),
+                MAX_LINK_CANDIDATES);
+        if (!normalized.valid()) {
+            return ArcanaServices.TargetResolution.denied(normalized.detail());
         }
 
         ServerLevel level = caster.serverLevel();
-        List<TargetCandidate> candidates = new ArrayList<>(unique.size());
-        for (UUID targetId : unique) {
+        List<TargetCandidate> candidates = new ArrayList<>(normalized.uniqueIds().size());
+        for (UUID targetId : normalized.uniqueIds()) {
             Entity target = level.getEntity(targetId);
             if (target == null) continue;
             candidates.add(candidate(caster, target, caster.distanceToSqr(target)));
