@@ -13,15 +13,22 @@ public record TemporaryWorldMutation(
     String replacementState,
     long expiresAtTick
 ) {
+    public static final int MAX_STATE_ID_LENGTH = 512;
+
     public TemporaryWorldMutation {
         Objects.requireNonNull(key, "key");
         Objects.requireNonNull(ownerId, "ownerId");
         Objects.requireNonNull(castId, "castId");
         Objects.requireNonNull(originalState, "originalState");
         Objects.requireNonNull(replacementState, "replacementState");
-        if (originalState.isBlank() || replacementState.isBlank()) {
-            throw new IllegalArgumentException("block-state ids cannot be blank");
-        }
+        validateStateId(originalState);
+        validateStateId(replacementState);
         if (expiresAtTick < 0L) throw new IllegalArgumentException("expiresAtTick cannot be negative");
+    }
+
+    private static void validateStateId(String state) {
+        if (state.isBlank() || state.length() > MAX_STATE_ID_LENGTH) {
+            throw new IllegalArgumentException("block-state id must be non-blank and bounded");
+        }
     }
 }

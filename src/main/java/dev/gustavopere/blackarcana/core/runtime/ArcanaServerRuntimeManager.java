@@ -108,7 +108,11 @@ public final class ArcanaServerRuntimeManager {
         INITIALIZERS.forEach(initializer -> initializer.accept(runtime));
         runtime.spellData().replaceAll(CURRENT_SPELL_DATA);
         BlackArcanaSavedData.get(server).restore(
-                runtime.cooldowns(), runtime.charges(), runtime.loadouts(), server.overworld().getGameTime());
+                runtime.cooldowns(),
+                runtime.charges(),
+                runtime.loadouts(),
+                runtime.temporaryMutations(),
+                server.overworld().getGameTime());
         runtime.migrateRestoredPersistentState();
         runtime.pruneOrphanedPersistentState();
         RUNTIMES.put(server, runtime);
@@ -161,6 +165,10 @@ public final class ArcanaServerRuntimeManager {
         ArcanaServerRuntime runtime = RUNTIMES.get(server);
         if (runtime == null) return;
         BlackArcanaSavedData.get(server).capture(
-                runtime.cooldowns(), runtime.charges(), runtime.loadouts(), now);
+                runtime.cooldowns(),
+                runtime.charges(),
+                runtime.loadouts(),
+                runtime.temporaryMutations(),
+                now);
     }
 }
