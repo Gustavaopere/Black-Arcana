@@ -61,7 +61,7 @@ public final class MalumSyntheticContent {
             new PolicyAwareCostProvider(
                 ArcanaPaymentPolicy.BYPASS_CREATIVE_AND_ADMIN,
                 new MalumSpiritCostProvider(spiritAccess)),
-            (request, target) -> ArcanaDecision.allow(),
+            runtime.worldEffectPolicy(),
             (request, target) -> EffectResult.ok(),
             mastery);
         runtime.installEngine(definition.id(), engine);

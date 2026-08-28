@@ -1,10 +1,14 @@
 package dev.gustavopere.blackarcana.persistence;
 
+import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
+import dev.gustavopere.blackarcana.core.world.TemporaryMutationKey;
+import dev.gustavopere.blackarcana.core.world.TemporaryMutationTracker;
+import dev.gustavopere.blackarcana.core.world.TemporaryWorldMutation;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -23,7 +27,7 @@ import java.util.UUID;
  * Minecraft persistence adapter for Black Arcana's server-owned runtime state.
  *
  * The data is intentionally stored in the Overworld because these records are
- * global to a player/caster rather than scoped to one dimension.
+ * global/runtime recovery state rather than scoped to one loaded dimension.
  */
 public final class BlackArcanaSavedData extends SavedData {
     private static final String DATA_NAME = "black_arcana_runtime";
@@ -33,10 +37,12 @@ public final class BlackArcanaSavedData extends SavedData {
     public static final int MAX_PERSISTED_COOLDOWNS = 131_072;
     public static final int MAX_PERSISTED_CHARGE_POOLS = 131_072;
     public static final int MAX_PERSISTED_LOADOUT_CASTERS = 16_384;
+    public static final int MAX_PERSISTED_TEMPORARY_MUTATIONS = 16_384;
 
     private Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> cooldowns = Map.of();
     private Map<ChargePoolCooldownService.ChargeKey, ChargePoolCooldownService.SnapshotEntry> charges = Map.of();
     private Map<UUID, List<ArcanaSpellId>> loadouts = Map.of();
+    private List<TemporaryWorldMutation> temporaryMutations = List.of();
 
     public static BlackArcanaSavedData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(
@@ -54,6 +60,7 @@ public final class BlackArcanaSavedData extends SavedData {
         data.cooldowns = readCooldowns(root.getList("cooldowns", Tag.TAG_COMPOUND));
         data.charges = readCharges(root.getList("charges", Tag.TAG_COMPOUND));
         data.loadouts = readLoadouts(root.getList("loadouts", Tag.TAG_COMPOUND));
+        data.temporaryMutations = readTemporaryMutations(root.getList("temporary_mutations", Tag.TAG_COMPOUND));
         return data;
     }
 
@@ -69,6 +76,18 @@ public final class BlackArcanaSavedData extends SavedData {
         setDirty();
     }
 
+    public void capture(
+            PersistentCooldownService cooldownService,
+            ChargePoolCooldownService chargeService,
+            LoadoutRegistry loadoutRegistry,
+            TemporaryMutationTracker temporaryMutationTracker,
+            long now
+    ) {
+        capture(cooldownService, chargeService, loadoutRegistry, now);
+        this.temporaryMutations = temporaryMutationTracker.snapshot();
+        setDirty();
+    }
+
     public void restore(
             PersistentCooldownService cooldownService,
             ChargePoolCooldownService chargeService,
@@ -80,12 +99,24 @@ public final class BlackArcanaSavedData extends SavedData {
         loadoutRegistry.restoreSnapshot(loadouts);
     }
 
+    public void restore(
+            PersistentCooldownService cooldownService,
+            ChargePoolCooldownService chargeService,
+            LoadoutRegistry loadoutRegistry,
+            TemporaryMutationTracker temporaryMutationTracker,
+            long now
+    ) {
+        restore(cooldownService, chargeService, loadoutRegistry, now);
+        temporaryMutationTracker.restoreSnapshot(temporaryMutations);
+    }
+
     @Override
     public CompoundTag save(CompoundTag root, HolderLookup.Provider registries) {
         root.putInt("schema", SCHEMA_VERSION);
         root.put("cooldowns", writeCooldowns(cooldowns));
         root.put("charges", writeCharges(charges));
         root.put("loadouts", writeLoadouts(loadouts));
+        root.put("temporary_mutations", writeTemporaryMutations(temporaryMutations));
         return root;
     }
 
@@ -180,5 +211,43 @@ public final class BlackArcanaSavedData extends SavedData {
             }
         }
         return Map.copyOf(result);
+    }
+
+    private static ListTag writeTemporaryMutations(List<TemporaryWorldMutation> entries) {
+        ListTag list = new ListTag();
+        int count = Math.min(entries.size(), MAX_PERSISTED_TEMPORARY_MUTATIONS);
+        for (int i = 0; i < count; i++) {
+            TemporaryWorldMutation mutation = entries.get(i);
+            CompoundTag tag = new CompoundTag();
+            tag.putString("dimension", mutation.key().dimensionId());
+            tag.putLong("pos", mutation.key().packedBlockPos());
+            tag.putUUID("owner", mutation.ownerId());
+            tag.putUUID("cast", mutation.castId().value());
+            tag.putString("original", mutation.originalState());
+            tag.putString("replacement", mutation.replacementState());
+            tag.putLong("expires", mutation.expiresAtTick());
+            list.add(tag);
+        }
+        return list;
+    }
+
+    private static List<TemporaryWorldMutation> readTemporaryMutations(ListTag list) {
+        List<TemporaryWorldMutation> result = new ArrayList<>();
+        int count = Math.min(list.size(), MAX_PERSISTED_TEMPORARY_MUTATIONS);
+        for (int i = 0; i < count; i++) {
+            CompoundTag tag = list.getCompound(i);
+            try {
+                result.add(new TemporaryWorldMutation(
+                    new TemporaryMutationKey(tag.getString("dimension"), tag.getLong("pos")),
+                    tag.getUUID("owner"),
+                    new ArcanaCastId(tag.getUUID("cast")),
+                    tag.getString("original"),
+                    tag.getString("replacement"),
+                    tag.getLong("expires")));
+            } catch (RuntimeException ignored) {
+                // Skip malformed restoration records; never poison otherwise valid world state.
+            }
+        }
+        return List.copyOf(result);
     }
 }
