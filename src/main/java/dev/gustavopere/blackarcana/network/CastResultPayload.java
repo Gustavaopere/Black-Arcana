@@ -18,6 +18,12 @@ public record CastResultPayload(
         Objects.requireNonNull(status, "status");
         Objects.requireNonNull(code, "code");
         Objects.requireNonNull(detail, "detail");
+        if (castId.length() > ArcanaProtocol.MAX_CAST_ID_LENGTH) {
+            throw new IllegalArgumentException("castId exceeds protocol bound");
+        }
+        if (status.length() > ArcanaProtocol.MAX_RESULT_STATUS_LENGTH) {
+            throw new IllegalArgumentException("status exceeds protocol bound");
+        }
         ArcanaCastId.parse(castId);
         ArcanaCastResult.Status.valueOf(status);
         if (code.length() > ArcanaProtocol.MAX_RESULT_CODE_LENGTH) throw new IllegalArgumentException("code exceeds protocol bound");
