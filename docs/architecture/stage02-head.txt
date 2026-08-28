@@ -1,6 +1,0 @@
-Stage 02 preparatory verification checkpoint
-
-Branch: prep/02-arcana-core
-Checkpoint before verification branch creation: 79f0a46b0637409512ced3847b09dd24694f113e
-
-This file records the exact source state intended for the next feat/verify-arcana-core checkpoint. It is not evidence of green CI and does not promote any stage.
