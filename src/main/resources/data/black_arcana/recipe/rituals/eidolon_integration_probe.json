@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "eidolon_repraised"
+    }
+  ],
+  "type": "eidolon_repraised:ritual_brazier",
+  "focus_items": [],
+  "health_requirement": 0.0,
+  "invariant_items": [],
+  "pedestal_items": [],
+  "reagent": {
+    "item": "minecraft:paper"
+  },
+  "ritual": "black_arcana:eidolon_integration_probe"
+}
