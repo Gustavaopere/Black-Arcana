@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -76,5 +77,20 @@ class PersistentCooldownServiceTest {
         service.start(request(200));
         duration.set(80);
         assertTrue(service.check(request(220)).allowed());
+    }
+
+    @Test
+    void orphanedPersistentGroupsArePrunedOnlyAgainstExplicitActiveSet() {
+        PersistentCooldownService service = new PersistentCooldownService(req -> new ArcanaCooldownSpec("black_arcana:active", 40, true));
+        service.restorePersistentSnapshot(Map.of(
+                new PersistentCooldownService.CooldownKey(CASTER, "black_arcana:active"),
+                new PersistentCooldownService.SnapshotEntry(100, 140),
+                new PersistentCooldownService.CooldownKey(CASTER, "black_arcana:removed"),
+                new PersistentCooldownService.SnapshotEntry(100, 160)
+        ), 110);
+
+        assertEquals(1, service.pruneGroups(Set.of("black_arcana:active")));
+        assertEquals(1, service.size());
+        assertFalse(service.check(request(120)).allowed());
     }
 }
