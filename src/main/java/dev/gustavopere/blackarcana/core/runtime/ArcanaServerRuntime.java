@@ -21,8 +21,13 @@ import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
 import dev.gustavopere.blackarcana.core.world.ConfigurableWorldEffectPolicy;
 import dev.gustavopere.blackarcana.core.world.DefaultEntityInteractionPolicy;
+import dev.gustavopere.blackarcana.core.world.LoadedChunkGuard;
 import dev.gustavopere.blackarcana.core.world.ProtectionAdapterRegistry;
+import dev.gustavopere.blackarcana.core.world.TemporaryBlockBackend;
+import dev.gustavopere.blackarcana.core.world.TemporaryBlockMutationGateway;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationTracker;
+import dev.gustavopere.blackarcana.core.world.TemporaryRestorationService;
+import dev.gustavopere.blackarcana.core.world.WorldEffectAdmissionService;
 import dev.gustavopere.blackarcana.core.world.WorldEffectBudgetLedger;
 import dev.gustavopere.blackarcana.core.world.WorldEffectPolicyConfig;
 import dev.gustavopere.blackarcana.core.world.WorldEffectProfileRegistry;
@@ -33,6 +38,7 @@ import dev.gustavopere.blackarcana.network.IngressRateLimiter;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -48,6 +54,10 @@ public final class ArcanaServerRuntime {
     public static final long DEFAULT_WORLD_CAST_IDLE_TICKS = 20L * 60L;
     public static final int DEFAULT_MAX_TEMPORARY_MUTATIONS = 16_384;
     public static final int DEFAULT_MAX_PROTECTION_ADAPTERS = 16;
+    public static final int DEFAULT_MAX_WORLD_CHUNKS_PER_EFFECT = 64;
+    public static final int DEFAULT_TEMPORARY_RESTORE_CHECKS_PER_TICK = 128;
+    public static final long DEFAULT_MAX_TEMPORARY_MUTATION_LIFETIME_TICKS =
+        TemporaryBlockMutationGateway.ABSOLUTE_MAX_LIFETIME_TICKS;
 
     private final ArcanaSpellRegistry spells = new ArcanaSpellRegistry();
     private final SpellDataCatalog spellData = new SpellDataCatalog();
@@ -72,6 +82,10 @@ public final class ArcanaServerRuntime {
     private final ArcanaChannelManager channels;
     private final ArcanaChannelCastCoordinator channelCasts;
     private final BoundedWorkScheduler effectScheduler;
+    private volatile TemporaryBlockMutationGateway temporaryBlockGateway;
+    private volatile TemporaryRestorationService temporaryRestorationService;
+    private volatile TemporaryRestorationService.TickResult lastTemporaryRestoration =
+        new TemporaryRestorationService.TickResult(0, 0, 0, 0);
     private RuntimeGroupMigrations groupMigrations = RuntimeGroupMigrations.none();
 
     public ArcanaServerRuntime(int maxCastIntentsPerSecond, int maxTrackedCasters) {
@@ -129,7 +143,41 @@ public final class ArcanaServerRuntime {
     public RuntimeTickResult tick(long serverTick) {
         int expiredChannels = channels.pruneExpired(serverTick);
         BoundedWorkScheduler.TickResult work = effectScheduler.tick();
+        worldEffectBudgets.pruneIdle(serverTick);
+        TemporaryRestorationService restoration = temporaryRestorationService;
+        if (restoration != null) {
+            lastTemporaryRestoration = restoration.tick(serverTick, DEFAULT_TEMPORARY_RESTORE_CHECKS_PER_TICK);
+        }
         return new RuntimeTickResult(expiredChannels, work);
+    }
+
+    /**
+     * Installs the server-specific world adapter once. The core contract exposes only
+     * loaded-state reads/CAS writes and a read-only loaded-chunk probe, so this path
+     * cannot acquire tickets or force chunk generation.
+     */
+    public synchronized void installWorldBackend(
+        TemporaryBlockBackend backend,
+        LoadedChunkGuard.LoadedChunkProbe loadedChunkProbe
+    ) {
+        Objects.requireNonNull(backend, "backend");
+        Objects.requireNonNull(loadedChunkProbe, "loadedChunkProbe");
+        if (temporaryBlockGateway != null || temporaryRestorationService != null) {
+            throw new IllegalStateException("world backend already installed");
+        }
+        LoadedChunkGuard chunkGuard = new LoadedChunkGuard(
+            DEFAULT_MAX_WORLD_CHUNKS_PER_EFFECT,
+            loadedChunkProbe);
+        WorldEffectAdmissionService admission = new WorldEffectAdmissionService(
+            worldEffectPolicy,
+            chunkGuard,
+            worldEffectBudgets);
+        temporaryBlockGateway = new TemporaryBlockMutationGateway(
+            admission,
+            temporaryMutations,
+            backend,
+            DEFAULT_MAX_TEMPORARY_MUTATION_LIFETIME_TICKS);
+        temporaryRestorationService = new TemporaryRestorationService(temporaryMutations, backend);
     }
 
     public void installEngine(ArcanaSpellId spellId, ArcanaCastEngine engine) {
@@ -181,6 +229,12 @@ public final class ArcanaServerRuntime {
     public ConfigurableWorldEffectPolicy worldEffectPolicy() { return worldEffectPolicy; }
     public WorldEffectBudgetLedger worldEffectBudgets() { return worldEffectBudgets; }
     public TemporaryMutationTracker temporaryMutations() { return temporaryMutations; }
+    public Optional<TemporaryBlockMutationGateway> temporaryBlockGateway() {
+        return Optional.ofNullable(temporaryBlockGateway);
+    }
+    public TemporaryRestorationService.TickResult lastTemporaryRestoration() {
+        return lastTemporaryRestoration;
+    }
     public DefaultEntityInteractionPolicy entityInteractionPolicy() { return entityInteractionPolicy; }
     public ProtectionAdapterRegistry protectionAdapters() { return protectionAdapters; }
     public int installedEngineCount() { return engines.size(); }
