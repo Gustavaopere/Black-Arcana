@@ -70,9 +70,7 @@ public final class ArcaneBacklashLedgerRegistry {
         Iterator<ArcaneBacklashLedger> iterator = ledgers.values().iterator();
         while (iterator.hasNext()) {
             ArcaneBacklashLedger ledger = iterator.next();
-            if (ledger.snapshot().hazard().activatedAtTick() > currentTick
-                || currentTick >= ledger.snapshot().hazard().activatedAtTick()
-                    + ledger.snapshot().hazard().profile().damageLeaseTicks()) {
+            if (ledger.isExpired(currentTick)) {
                 iterator.remove();
                 removed++;
             }
