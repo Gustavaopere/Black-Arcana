@@ -32,6 +32,8 @@ neoForge {
         minecraftVersion = project.parchment_minecraft_version
     }
 
+    addModdingDependenciesTo(sourceSets.test)
+
     runs {
         client {
             client()
