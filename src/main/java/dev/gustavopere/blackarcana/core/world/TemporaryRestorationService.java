@@ -2,6 +2,8 @@ package dev.gustavopere.blackarcana.core.world;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** Bounded restoration processor. Unloaded chunks remain pending and are never ticketed/loaded. */
 public final class TemporaryRestorationService {
@@ -14,14 +16,24 @@ public final class TemporaryRestorationService {
     }
 
     public TickResult tick(long nowTick, int maxChecks) {
+        AtomicInteger readFailures = new AtomicInteger();
         List<TemporaryMutationTracker.ExpiryAction> actions = tracker.inspectExpired(
             nowTick,
             maxChecks,
-            key -> backend.readLoadedState(key));
+            key -> {
+                try {
+                    return Objects.requireNonNull(backend.readLoadedState(key), "loaded state");
+                } catch (RuntimeException | LinkageError failure) {
+                    // Treat a failed read like an unavailable chunk so the rollback record
+                    // remains pending, but expose the failure separately in telemetry.
+                    readFailures.incrementAndGet();
+                    return Optional.empty();
+                }
+            });
         int restored = 0;
         int changed = 0;
         int unavailable = 0;
-        int failures = 0;
+        int failures = readFailures.get();
 
         for (TemporaryMutationTracker.ExpiryAction action : actions) {
             switch (action.kind()) {
