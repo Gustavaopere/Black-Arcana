@@ -93,4 +93,23 @@ class PersistentCooldownServiceTest {
         assertEquals(1, service.size());
         assertFalse(service.check(request(120)).allowed());
     }
+
+    @Test
+    void uiSnapshotIsBoundedDeterministicAndPrunesExpiredEntries() {
+        PersistentCooldownService service = new PersistentCooldownService(req -> new ArcanaCooldownSpec("black_arcana:unused", 40, true));
+        UUID otherCaster = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        service.restorePersistentSnapshot(Map.of(
+                new PersistentCooldownService.CooldownKey(CASTER, "black_arcana:zeta"),
+                new PersistentCooldownService.SnapshotEntry(100, 150),
+                new PersistentCooldownService.CooldownKey(CASTER, "black_arcana:alpha"),
+                new PersistentCooldownService.SnapshotEntry(100, 130),
+                new PersistentCooldownService.CooldownKey(CASTER, "black_arcana:expired"),
+                new PersistentCooldownService.SnapshotEntry(50, 100),
+                new PersistentCooldownService.CooldownKey(otherCaster, "black_arcana:other"),
+                new PersistentCooldownService.SnapshotEntry(100, 170)
+        ), 90);
+
+        assertEquals(Map.of("black_arcana:alpha", 10L), service.remainingSnapshot(CASTER, 120, 1));
+        assertEquals(3, service.size());
+    }
 }
