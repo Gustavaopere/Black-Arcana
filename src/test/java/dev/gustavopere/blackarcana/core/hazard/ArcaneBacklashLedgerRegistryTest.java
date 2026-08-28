@@ -18,7 +18,7 @@ class ArcaneBacklashLedgerRegistryTest {
 
     @Test
     void registryRoutesConfirmedDamageByRootCastAndPrunesExpiredLedgers() {
-        ArcanaBacklashLedgerRegistry registry = new ArcaneBacklashLedgerRegistry(4);
+        ArcaneBacklashLedgerRegistry registry = new ArcaneBacklashLedgerRegistry(4);
         ArcanaCastId cast = ArcanaCastId.parse("30000000-0000-0000-0000-000000000001");
         ArcaneHazardSession session = session(cast, 10L, 20L);
         assertTrue(registry.open(session, zeroResistance(), ArcaneBacklashPolicy.canonical()).isPresent());
