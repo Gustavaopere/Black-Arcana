@@ -67,7 +67,10 @@ class RpgSkillTreeIntegrationTest {
             (req, target) -> ArcanaServices.EffectResult.ok(),
             new RpgMasteryAwardObserver(
                 bridge,
-                req -> Optional.of(new RpgMasteryAwardSpec("black_arcana", 25, req.spell().id().value()))));
+                req -> Optional.of(new RpgMasteryAwardSpec(
+                    "black_arcana",
+                    25,
+                    req.spell().id().canonical()))));
 
         ArcanaCastRequest request = request();
         assertEquals(ArcanaCastResult.Status.SUCCESS, engine.execute(request).status());
