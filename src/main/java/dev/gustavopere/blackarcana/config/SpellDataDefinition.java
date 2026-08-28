@@ -21,26 +21,37 @@ public record SpellDataDefinition(int schemaVersion, String id, String translati
         if (schemaVersion != CURRENT_SCHEMA_VERSION) {
             errors.add("unsupported schemaVersion: " + schemaVersion);
         }
-        if (id.length() > ArcanaProtocol.MAX_RESOURCE_ID_LENGTH) {
-            errors.add("id exceeds maximum length");
+
+        if (id.isBlank()) {
+            errors.add("id cannot be blank");
+        } else {
+            if (id.length() > ArcanaProtocol.MAX_RESOURCE_ID_LENGTH) {
+                errors.add("id exceeds maximum length");
+            }
+            try {
+                ArcanaSpellId.parse(id);
+            } catch (IllegalArgumentException ex) {
+                errors.add(ex.getMessage());
+            }
         }
-        try {
-            ArcanaSpellId.parse(id);
-        } catch (IllegalArgumentException ex) {
-            errors.add(ex.getMessage());
-        }
-        if (translationKey.isBlank()) errors.add("translationKey cannot be blank");
-        if (translationKey.length() > ArcanaProtocol.MAX_TRANSLATION_KEY_LENGTH) {
+
+        if (translationKey.isBlank()) {
+            errors.add("translationKey cannot be blank");
+        } else if (translationKey.length() > ArcanaProtocol.MAX_TRANSLATION_KEY_LENGTH) {
             errors.add("translationKey exceeds maximum length");
         }
-        if (iconId.isBlank()) errors.add("iconId cannot be blank");
-        if (iconId.length() > ArcanaProtocol.MAX_ICON_ID_LENGTH) {
-            errors.add("iconId exceeds maximum length");
-        }
-        try {
-            ArcanaSpellId.parse(iconId);
-        } catch (IllegalArgumentException ex) {
-            errors.add("invalid iconId: " + ex.getMessage());
+
+        if (iconId.isBlank()) {
+            errors.add("iconId cannot be blank");
+        } else {
+            if (iconId.length() > ArcanaProtocol.MAX_ICON_ID_LENGTH) {
+                errors.add("iconId exceeds maximum length");
+            }
+            try {
+                ArcanaSpellId.parse(iconId);
+            } catch (IllegalArgumentException ex) {
+                errors.add("invalid iconId: " + ex.getMessage());
+            }
         }
         return List.copyOf(errors);
     }
