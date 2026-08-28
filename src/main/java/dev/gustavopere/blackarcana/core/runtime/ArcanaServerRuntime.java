@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.core.runtime;
 
+import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaCastContext;
 import dev.gustavopere.blackarcana.api.ArcanaCastEngine;
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
@@ -34,6 +35,8 @@ public final class ArcanaServerRuntime {
     public static final int DEFAULT_MAX_CAST_INTENTS_PER_SECOND = 12;
     public static final int DEFAULT_MAX_TRACKED_CASTERS = 4096;
     public static final int DEFAULT_MAX_CHANNEL_SESSIONS = 4096;
+    public static final int DEFAULT_MAX_SCHEDULED_EFFECTS = 2048;
+    public static final int DEFAULT_EFFECT_WORK_BUDGET_PER_TICK = 128;
 
     private final ArcanaSpellRegistry spells = new ArcanaSpellRegistry();
     private final SpellDataCatalog spellData = new SpellDataCatalog();
@@ -45,23 +48,50 @@ public final class ArcanaServerRuntime {
     private final ArcanaCastIngressService ingress;
     private final ArcanaChannelManager channels;
     private final ArcanaChannelCastCoordinator channelCasts;
+    private final BoundedWorkScheduler effectScheduler;
 
     public ArcanaServerRuntime(int maxCastIntentsPerSecond, int maxTrackedCasters) {
-        this(maxCastIntentsPerSecond, maxTrackedCasters, DEFAULT_MAX_CHANNEL_SESSIONS);
+        this(
+                maxCastIntentsPerSecond,
+                maxTrackedCasters,
+                DEFAULT_MAX_CHANNEL_SESSIONS,
+                DEFAULT_MAX_SCHEDULED_EFFECTS,
+                DEFAULT_EFFECT_WORK_BUDGET_PER_TICK);
     }
 
     public ArcanaServerRuntime(int maxCastIntentsPerSecond, int maxTrackedCasters, int maxChannelSessions) {
+        this(
+                maxCastIntentsPerSecond,
+                maxTrackedCasters,
+                maxChannelSessions,
+                DEFAULT_MAX_SCHEDULED_EFFECTS,
+                DEFAULT_EFFECT_WORK_BUDGET_PER_TICK);
+    }
+
+    public ArcanaServerRuntime(
+            int maxCastIntentsPerSecond,
+            int maxTrackedCasters,
+            int maxChannelSessions,
+            int maxScheduledEffects,
+            int effectWorkBudgetPerTick
+    ) {
         IngressRateLimiter limiter = new IngressRateLimiter(maxCastIntentsPerSecond, 20L, maxTrackedCasters);
         this.ingress = new ArcanaCastIngressService(spells, limiter, engines::get);
         this.channels = new ArcanaChannelManager(maxChannelSessions);
         this.channelCasts = new ArcanaChannelCastCoordinator(spells, loadouts, channels, engines::get);
+        this.effectScheduler = new BoundedWorkScheduler(
+                maxScheduledEffects,
+                effectWorkBudgetPerTick,
+                failure -> BlackArcanaMod.LOGGER.error("Scheduled Black Arcana effect failed and was dropped", failure));
     }
 
     public static ArcanaServerRuntime createDefault() {
         return new ArcanaServerRuntime(
                 DEFAULT_MAX_CAST_INTENTS_PER_SECOND,
                 DEFAULT_MAX_TRACKED_CASTERS,
-                DEFAULT_MAX_CHANNEL_SESSIONS);
+                DEFAULT_MAX_CHANNEL_SESSIONS,
+                DEFAULT_MAX_SCHEDULED_EFFECTS,
+                DEFAULT_EFFECT_WORK_BUDGET_PER_TICK);
     }
 
     public CastResultPayload handle(ArcanaCastContext context, CastIntentPayload intent) {
@@ -86,6 +116,13 @@ public final class ArcanaServerRuntime {
 
     public boolean cancelChannel(ArcanaCastContext context, ArcanaCastId castId) {
         return channelCasts.cancel(context, castId);
+    }
+
+    /** Runs bounded follow-up effect work and removes abandoned expired channels. */
+    public RuntimeTickResult tick(long serverTick) {
+        int expiredChannels = channels.pruneExpired(serverTick);
+        BoundedWorkScheduler.TickResult work = effectScheduler.tick();
+        return new RuntimeTickResult(expiredChannels, work);
     }
 
     public void installEngine(ArcanaSpellId spellId, ArcanaCastEngine engine) {
@@ -144,8 +181,19 @@ public final class ArcanaServerRuntime {
         return channels;
     }
 
+    public BoundedWorkScheduler effectScheduler() {
+        return effectScheduler;
+    }
+
     public int installedEngineCount() {
         return engines.size();
+    }
+
+    public record RuntimeTickResult(int expiredChannels, BoundedWorkScheduler.TickResult scheduledWork) {
+        public RuntimeTickResult {
+            if (expiredChannels < 0) throw new IllegalArgumentException("expiredChannels cannot be negative");
+            Objects.requireNonNull(scheduledWork, "scheduledWork");
+        }
     }
 
     public record PruneResult(int cooldownsRemoved, int chargePoolsRemoved) {
