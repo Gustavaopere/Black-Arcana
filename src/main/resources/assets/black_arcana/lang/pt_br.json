@@ -1,5 +1,6 @@
 {
   "spell.black_arcana.irons_integration_probe": "Prova de Integração da Arcana Negra",
+  "death.attack.black_arcana.arcane_backlash": "%1$s foi consumido pelo refluxo arcano",
   "key.categories.black_arcana": "Black Arcana",
   "key.black_arcana.open_radial": "Abrir Seletor Radial de Feitiços",
   "key.black_arcana.cast_selected": "Conjurar Feitiço Selecionado",
