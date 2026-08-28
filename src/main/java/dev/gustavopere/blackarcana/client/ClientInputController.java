@@ -61,7 +61,8 @@ public final class ClientInputController {
 
     private static void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player == null) {
+        if (minecraft.player == null || minecraft.getConnection() == null) {
+            ClientArcanaSyncState.clear();
             ClientUxState.clear();
             return;
         }
@@ -69,12 +70,12 @@ public final class ClientInputController {
         SELECTION.reconcile(loadout);
 
         while (BlackArcanaKeyMappings.OPEN_RADIAL.consumeClick()) {
-            if (minecraft.getConnection() != null && minecraft.screen == null && !loadout.isEmpty()) {
+            if (minecraft.screen == null && !loadout.isEmpty()) {
                 radialOpener.run();
             }
         }
         while (BlackArcanaKeyMappings.EDIT_LOADOUT.consumeClick()) {
-            if (minecraft.getConnection() != null && minecraft.screen == null) {
+            if (minecraft.screen == null) {
                 loadoutEditorOpener.run();
             }
         }
