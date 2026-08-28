@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.core.runtime;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.config.SpellDataDefinition;
+import dev.gustavopere.blackarcana.core.cast.LoadoutUpdateService;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftTemporaryBlockBackend;
 import dev.gustavopere.blackarcana.integration.neoforge.NeoForgeIntegrationBootstrap;
@@ -10,7 +11,10 @@ import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.CooldownSnapshotPayload;
+import dev.gustavopere.blackarcana.network.LoadoutSnapshotPayload;
+import dev.gustavopere.blackarcana.network.LoadoutUpdatePayload;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
+import dev.gustavopere.blackarcana.network.neoforge.LoadoutNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.ServerPlayerArcanaContext;
 import dev.gustavopere.blackarcana.persistence.BlackArcanaSavedData;
 import net.minecraft.server.MinecraftServer;
@@ -102,6 +106,24 @@ public final class ArcanaServerRuntimeManager {
         return result;
     }
 
+    public static LoadoutSnapshotPayload handleLoadoutUpdate(ServerPlayer player, LoadoutUpdatePayload update) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(update, "update");
+        MinecraftServer server = player.serverLevel().getServer();
+        ArcanaServerRuntime runtime = RUNTIMES.get(server);
+        if (runtime == null) return new LoadoutSnapshotPayload(ArcanaProtocol.VERSION, List.of());
+
+        LoadoutUpdateService service = new LoadoutUpdateService(
+                runtime.spells(), runtime.loadouts(), spellId -> runtime.spells().resolve(spellId).isPresent());
+        LoadoutUpdateService.Result result = service.apply(player.getUUID(), update.parsedSpellIds());
+        if (result.decision().allowed()) {
+            persist(server, server.overworld().getGameTime());
+        }
+        return new LoadoutSnapshotPayload(
+                ArcanaProtocol.VERSION,
+                result.loadout().stream().map(spell -> spell.canonical()).toList());
+    }
+
     private static void onServerStarted(ServerStartedEvent event) {
         MinecraftServer server = event.getServer();
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
@@ -131,6 +153,7 @@ public final class ArcanaServerRuntimeManager {
         ArcanaNetworkBridge.sendCooldownSnapshot(
                 player,
                 cooldownSnapshot(runtime, player, server.overworld().getGameTime()));
+        LoadoutNetworkBridge.sendSnapshot(player, loadoutSnapshot(runtime, player));
     }
 
     private static void onServerTick(ServerTickEvent.Post event) {
@@ -162,6 +185,14 @@ public final class ArcanaServerRuntimeManager {
                 .map(entry -> new CooldownSnapshotPayload.Entry(entry.getKey(), entry.getValue()))
                 .toList();
         return new CooldownSnapshotPayload(ArcanaProtocol.VERSION, entries);
+    }
+
+    private static LoadoutSnapshotPayload loadoutSnapshot(ArcanaServerRuntime runtime, ServerPlayer player) {
+        return new LoadoutSnapshotPayload(
+                ArcanaProtocol.VERSION,
+                runtime.loadouts().getLoadout(player.getUUID()).stream()
+                        .map(spell -> spell.canonical())
+                        .toList());
     }
 
     private static void persist(MinecraftServer server, long now) {
