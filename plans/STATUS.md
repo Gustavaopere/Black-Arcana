@@ -8,13 +8,13 @@ Stage 00 Foundation remains implemented but **verification-blocked** on `round-1
 
 Stage 01 Reference Catalog is specification-complete only in `prep/01-reference-catalog` HEAD `d2450eeb972758dbd5b3880553461c86fd79d301`: 53/53 reference rows classified, 32 candidates specified, runtime host baselines pinned and per-candidate host viability/probe routes documented. It is not canonical or frozen.
 
-Stage 02 Arcana Core is implementation-advanced only in `prep/02-arcana-core`. The branch now contains the cast/runtime contracts, transactional costs, full bounded target-kind routing, live bounded effect scheduling, persistent cooldown/charge migration, real NeoForge payload/reload/SavedData bridges and extensive unit/GameTest source. It remains preparatory until Stages 00 and 01 are promoted in order and the test suite actually executes.
+Stage 02 Arcana Core is implementation-advanced only in `prep/02-arcana-core`. Verification branch `feat/verify-arcana-core-v4` was frozen from clean preparatory SHA `5ce4a5b4ea9dde41538c72cd5a4da6b1c760361e`. Workflow run `33135172255` created job `98733413416`, which again completed `failure` with `steps=null`; no repository step executed. Stage 02 therefore remains preparatory despite its broad implementation coverage.
 
 | Stage | State | Notes |
 |---|---|---|
 | 00 Foundation | 🟨 Verification blocked | HEAD `3d4b9e24361e5ca3ed8cdcebeeb116abe7361c00`; retry job `98730674669` still received no executable steps |
 | 01 Reference Catalog | 🟦 Preparatory complete | HEAD `d2450eeb972758dbd5b3880553461c86fd79d301`; awaiting canonical rebase/review |
-| 02 Arcana Core | 🟨 Preparatory advanced | Core implementation is broad; remaining closure work is primarily real-runner verification plus restart/logout/chunk-boundary/transport evidence |
+| 02 Arcana Core | 🟨 Preparatory advanced | v4 verification run `33135172255`, job `98733413416`: `steps=null`; remaining closure is real-runner evidence plus restart/logout/chunk-boundary/transport tests |
 | 03 Integration Layer | ⬜ Not started | Iron's, Ars, Eidolon, Malum, RPG adapters |
 | 04 World Safety | ⬜ Not started | Destruction policy, rollback, budgets |
 | 05 Casting & UX | ⬜ Not started | Direct cast, loadouts, radial HUD |
