@@ -11,21 +11,22 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Emits at most one bounded RPG mastery award for a committed Black Arcana cast.
- * A reentrancy guard prevents progression events from feeding back into the same
- * award path recursively.
+ * Emits at most one bounded RPG mastery award for a committed, meaningful Black Arcana cast.
+ * A reentrancy guard prevents progression events from feeding back into the same award path,
+ * while the bounded throttle suppresses repetitive same-technique/same-target farming.
  */
 public final class RpgMasteryAwardObserver implements CastSuccessObserver {
     private final RpgSkillTreeBridge bridge;
     private final Function<ArcanaCastRequest, Optional<RpgMasteryAwardSpec>> awardResolver;
     private final Consumer<ArcanaDecision> failureSink;
+    private final MeaningfulMasteryAwardThrottle throttle;
     private final ThreadLocal<Boolean> awarding = ThreadLocal.withInitial(() -> false);
 
     public RpgMasteryAwardObserver(
         RpgSkillTreeBridge bridge,
         Function<ArcanaCastRequest, Optional<RpgMasteryAwardSpec>> awardResolver
     ) {
-        this(bridge, awardResolver, ignored -> { });
+        this(bridge, awardResolver, ignored -> { }, new MeaningfulMasteryAwardThrottle());
     }
 
     public RpgMasteryAwardObserver(
@@ -33,9 +34,19 @@ public final class RpgMasteryAwardObserver implements CastSuccessObserver {
         Function<ArcanaCastRequest, Optional<RpgMasteryAwardSpec>> awardResolver,
         Consumer<ArcanaDecision> failureSink
     ) {
+        this(bridge, awardResolver, failureSink, new MeaningfulMasteryAwardThrottle());
+    }
+
+    RpgMasteryAwardObserver(
+        RpgSkillTreeBridge bridge,
+        Function<ArcanaCastRequest, Optional<RpgMasteryAwardSpec>> awardResolver,
+        Consumer<ArcanaDecision> failureSink,
+        MeaningfulMasteryAwardThrottle throttle
+    ) {
         this.bridge = Objects.requireNonNull(bridge, "bridge");
         this.awardResolver = Objects.requireNonNull(awardResolver, "awardResolver");
         this.failureSink = Objects.requireNonNull(failureSink, "failureSink");
+        this.throttle = Objects.requireNonNull(throttle, "throttle");
     }
 
     @Override
@@ -43,11 +54,11 @@ public final class RpgMasteryAwardObserver implements CastSuccessObserver {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(target, "target");
         Objects.requireNonNull(effectResult, "effectResult");
-        if (!bridge.available() || awarding.get()) return;
+        if (!effectResult.success() || !bridge.available() || awarding.get()) return;
 
         Optional<RpgMasteryAwardSpec> award = Objects.requireNonNull(
             awardResolver.apply(request), "awardResolver result");
-        if (award.isEmpty()) return;
+        if (award.isEmpty() || !throttle.allow(request, target)) return;
 
         awarding.set(true);
         try {
