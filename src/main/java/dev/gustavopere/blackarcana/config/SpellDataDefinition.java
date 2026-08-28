@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public record SpellDataDefinition(int schemaVersion, String id, String translationKey, String iconId) {
     public static final int CURRENT_SCHEMA_VERSION = 1;
+    public static final int MAX_TRANSLATION_KEY_LENGTH = 256;
+    public static final int MAX_ICON_ID_LENGTH = 192;
 
     public SpellDataDefinition {
         Objects.requireNonNull(id, "id");
@@ -26,7 +28,18 @@ public record SpellDataDefinition(int schemaVersion, String id, String translati
             errors.add(ex.getMessage());
         }
         if (translationKey.isBlank()) errors.add("translationKey cannot be blank");
+        if (translationKey.length() > MAX_TRANSLATION_KEY_LENGTH) {
+            errors.add("translationKey exceeds maximum length");
+        }
         if (iconId.isBlank()) errors.add("iconId cannot be blank");
+        if (iconId.length() > MAX_ICON_ID_LENGTH) {
+            errors.add("iconId exceeds maximum length");
+        }
+        try {
+            ArcanaSpellId.parse(iconId);
+        } catch (IllegalArgumentException ex) {
+            errors.add("invalid iconId: " + ex.getMessage());
+        }
         return List.copyOf(errors);
     }
 }
