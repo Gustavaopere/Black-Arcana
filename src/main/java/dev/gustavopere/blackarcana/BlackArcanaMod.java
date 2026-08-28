@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana;
 import com.mojang.logging.LogUtils;
 import dev.gustavopere.blackarcana.config.ArcanaSpellDataReloadListener;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
+import dev.gustavopere.blackarcana.integration.neoforge.OptionalModEntrypoints;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
 import net.neoforged.bus.api.IEventBus;
@@ -16,6 +17,7 @@ public final class BlackArcanaMod {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public BlackArcanaMod(IEventBus modEventBus) {
+        OptionalModEntrypoints.install(modEventBus);
         modEventBus.addListener(ArcanaNetworkBridge::register);
         ArcanaNetworkBridge.installServerHandler(ArcanaServerRuntimeManager::handleCastIntent);
         ArcanaNetworkBridge.installClientResultHandler(ClientArcanaSyncState::acceptResult);
