@@ -7,7 +7,8 @@ public record ArcanaCastRequest(
         ArcanaSpellDefinition spell,
         ArcanaCastContext context,
         int loadoutSlot,
-        String targetHint
+        String targetHint,
+        long channelTicks
 ) {
     public static final int MAX_LOADOUT_SLOTS = 16;
     public static final int MAX_TARGET_HINT_LENGTH = 96;
@@ -23,17 +24,30 @@ public record ArcanaCastRequest(
         if (targetHint.length() > MAX_TARGET_HINT_LENGTH) {
             throw new IllegalArgumentException("targetHint exceeds request bound");
         }
+        if (channelTicks < 0L || channelTicks > ArcanaChannelSpec.ABSOLUTE_MAX_CHANNEL_TICKS) {
+            throw new IllegalArgumentException("channelTicks outside absolute channel bounds");
+        }
+    }
+
+    public ArcanaCastRequest(
+            ArcanaCastId castId,
+            ArcanaSpellDefinition spell,
+            ArcanaCastContext context,
+            int loadoutSlot,
+            String targetHint
+    ) {
+        this(castId, spell, context, loadoutSlot, targetHint, 0L);
     }
 
     public ArcanaCastRequest(ArcanaCastId castId, ArcanaSpellDefinition spell, ArcanaCastContext context, int loadoutSlot) {
-        this(castId, spell, context, loadoutSlot, "");
+        this(castId, spell, context, loadoutSlot, "", 0L);
     }
 
     public ArcanaCastRequest(ArcanaCastId castId, ArcanaSpellDefinition spell, ArcanaCastContext context) {
-        this(castId, spell, context, 0, "");
+        this(castId, spell, context, 0, "", 0L);
     }
 
     public ArcanaCastRequest(ArcanaSpellDefinition spell, ArcanaCastContext context) {
-        this(ArcanaCastId.random(), spell, context, 0, "");
+        this(ArcanaCastId.random(), spell, context, 0, "", 0L);
     }
 }
