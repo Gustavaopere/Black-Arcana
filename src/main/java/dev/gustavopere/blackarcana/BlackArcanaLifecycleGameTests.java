@@ -36,49 +36,54 @@ public final class BlackArcanaLifecycleGameTests {
         var scoreboard = caster.getScoreboard();
         String teamName = "ba_" + caster.getUUID().toString().substring(0, 8);
         var team = scoreboard.addPlayerTeam(teamName);
-        try {
-            scoreboard.addPlayerToTeam(caster.getScoreboardName(), team);
-            scoreboard.addPlayerToTeam(target.getScoreboardName(), team);
-            helper.assertTrue(caster.isAlliedTo(target), "scoreboard team must establish vanilla allied state");
+        scoreboard.addPlayerToTeam(caster.getScoreboardName(), team);
+        scoreboard.addPlayerToTeam(target.getScoreboardName(), team);
 
-            AtomicReference<ArcanaTargetSpec> spec = new AtomicReference<>(new ArcanaTargetSpec(
-                    ArcanaTargetSpec.Kind.ENTITY,
-                    8.0D,
-                    1,
-                    false,
-                    false,
-                    false));
-            ServerEntityTargetSelector selector = new ServerEntityTargetSelector(
-                    helper.getLevel().getServer(),
-                    request -> spec.get());
-            ArcanaCastRequest request = new ArcanaCastRequest(
-                    ArcanaCastId.random(),
-                    syntheticSpell(),
-                    new ArcanaCastContext(
-                            caster.getUUID(),
-                            helper.getLevel().getGameTime(),
-                            helper.getLevel().dimension().location().toString()),
-                    0,
-                    target.getUUID().toString());
+        AtomicReference<ArcanaTargetSpec> spec = new AtomicReference<>(new ArcanaTargetSpec(
+                ArcanaTargetSpec.Kind.ENTITY,
+                8.0D,
+                1,
+                false,
+                false,
+                false));
+        ServerEntityTargetSelector selector = new ServerEntityTargetSelector(
+                helper.getLevel().getServer(),
+                request -> spec.get());
+        ArcanaCastRequest request = new ArcanaCastRequest(
+                ArcanaCastId.random(),
+                syntheticSpell(),
+                new ArcanaCastContext(
+                        caster.getUUID(),
+                        helper.getLevel().getGameTime(),
+                        helper.getLevel().dimension().location().toString()),
+                0,
+                target.getUUID().toString());
 
-            helper.assertTrue(
-                    !selector.resolve(request).resolved(),
-                    "friendly entity must be rejected when allowFriendly=false");
+        // Give the level entity index and scoreboard membership one server tick to settle.
+        // This keeps the test focused on Black Arcana's friendly-target policy instead of
+        // depending on same-tick GameTest fixture registration order.
+        helper.runAfterDelay(1L, () -> {
+            try {
+                helper.assertTrue(caster.isAlliedTo(target), "scoreboard team must establish vanilla allied state");
+                helper.assertTrue(
+                        !selector.resolve(request).resolved(),
+                        "friendly entity must be rejected when allowFriendly=false");
 
-            spec.set(new ArcanaTargetSpec(
-                    ArcanaTargetSpec.Kind.ENTITY,
-                    8.0D,
-                    1,
-                    false,
-                    false,
-                    true));
-            helper.assertTrue(
-                    selector.resolve(request).resolved(),
-                    "same friendly entity must resolve when allowFriendly=true");
-        } finally {
-            scoreboard.removePlayerTeam(team);
-        }
-        helper.succeed();
+                spec.set(new ArcanaTargetSpec(
+                        ArcanaTargetSpec.Kind.ENTITY,
+                        8.0D,
+                        1,
+                        false,
+                        false,
+                        true));
+                helper.assertTrue(
+                        selector.resolve(request).resolved(),
+                        "same friendly entity must resolve when allowFriendly=true");
+                helper.succeed();
+            } finally {
+                scoreboard.removePlayerTeam(team);
+            }
+        });
     }
 
     @SuppressWarnings("removal")
