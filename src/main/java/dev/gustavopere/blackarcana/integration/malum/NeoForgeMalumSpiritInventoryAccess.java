@@ -85,9 +85,13 @@ public final class NeoForgeMalumSpiritInventoryAccess implements MalumSpiritAcce
             remaining -= taken;
         }
         inventory.setChanged();
-        return remaining == 0
-            ? ArcanaDecision.allow()
-            : ArcanaDecision.deny("malum_spirit_remove_incomplete", "spirit removal did not complete atomically");
+        if (remaining == 0) return ArcanaDecision.allow();
+
+        int removed = amount - remaining;
+        if (removed > 0) add(player, item, removed);
+        return ArcanaDecision.deny(
+            "malum_spirit_remove_incomplete",
+            "spirit removal did not complete; removed shards were restored");
     }
 
     private static ArcanaDecision add(ServerPlayer player, Item item, int amount) {
