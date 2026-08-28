@@ -4,6 +4,8 @@ import dev.gustavopere.blackarcana.api.ArcanaTargetGeometry;
 
 /** Pure geometry predicates shared by the Minecraft targeting bridge and unit tests. */
 public final class TargetGeometryMath {
+    private static final double DOT_EPSILON = 1.0E-12D;
+
     private TargetGeometryMath() { }
 
     public static boolean withinCone(
@@ -22,7 +24,7 @@ public final class TargetGeometryMath {
         double dot = facingX * deltaX + facingY * deltaY + facingZ * deltaZ;
         double normalizedDot = dot / Math.sqrt(facingLengthSquared * deltaLengthSquared);
         double minimumDot = Math.cos(Math.toRadians(cone.halfAngleDegrees()));
-        return normalizedDot >= minimumDot;
+        return normalizedDot + DOT_EPSILON >= minimumDot;
     }
 
     public static boolean withinCylinder(
