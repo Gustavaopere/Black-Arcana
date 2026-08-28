@@ -17,6 +17,7 @@ import dev.gustavopere.blackarcana.network.LoadoutUpdatePayload;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.LoadoutNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.ServerPlayerArcanaContext;
+import dev.gustavopere.blackarcana.persistence.BlackArcanaKnowledgeSavedData;
 import dev.gustavopere.blackarcana.persistence.BlackArcanaSavedData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -148,6 +149,18 @@ public final class ArcanaServerRuntimeManager {
         }
         runtime.migrateRestoredPersistentState();
         runtime.pruneOrphanedPersistentState();
+
+        var knowledgeRestore = BlackArcanaKnowledgeSavedData.get(server).restore(
+                runtime.knowledge(),
+                runtime.spells().snapshot().keySet(),
+                runtime.knowledgeMigrations());
+        if (knowledgeRestore.migrated() > 0 || knowledgeRestore.dropped() > 0) {
+            BlackArcanaMod.LOGGER.info(
+                    "Restored Black Arcana knowledge: {} spells, {} migrated, {} dropped",
+                    knowledgeRestore.spellsRestored(),
+                    knowledgeRestore.migrated(),
+                    knowledgeRestore.dropped());
+        }
         RUNTIMES.put(server, runtime);
     }
 
@@ -213,5 +226,6 @@ public final class ArcanaServerRuntimeManager {
                 runtime.temporaryMutations(),
                 runtime.rituals(),
                 now);
+        BlackArcanaKnowledgeSavedData.get(server).capture(runtime.knowledge());
     }
 }
