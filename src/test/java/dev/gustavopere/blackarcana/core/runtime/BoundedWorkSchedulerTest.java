@@ -60,4 +60,22 @@ class BoundedWorkSchedulerTest {
         scheduler.enqueue(granted -> BoundedWorkScheduler.StepResult.complete(granted + 1));
         assertThrows(IllegalStateException.class, scheduler::tick);
     }
+
+    @Test
+    void configuredFailureHandlerCanDropOneBadItemWithoutBlockingOthers() {
+        AtomicInteger failures = new AtomicInteger();
+        AtomicInteger healthyCalls = new AtomicInteger();
+        BoundedWorkScheduler scheduler = new BoundedWorkScheduler(4, 4, failure -> failures.incrementAndGet());
+        scheduler.enqueue(granted -> { throw new IllegalStateException("boom"); });
+        scheduler.enqueue(granted -> {
+            healthyCalls.incrementAndGet();
+            return BoundedWorkScheduler.StepResult.complete(1);
+        });
+
+        var result = scheduler.tick();
+        assertEquals(1, failures.get());
+        assertEquals(1, result.failedItems());
+        assertEquals(1, healthyCalls.get());
+        assertEquals(0, result.queuedItems());
+    }
 }
