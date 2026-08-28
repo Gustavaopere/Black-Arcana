@@ -8,11 +8,8 @@ import dev.gustavopere.blackarcana.core.ritual.RitualCompletionKey;
 import dev.gustavopere.blackarcana.core.ritual.RitualCompletionLedger;
 import dev.gustavopere.blackarcana.persistence.RitualCompletionSavedData;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 /**
@@ -24,9 +21,18 @@ import net.minecraft.world.level.Level;
  */
 public final class EidolonAnchorAttunementRitual extends Ritual {
     public static final ArcanaRitualId ARCANA_ID = ArcanaRitualId.parse("black_arcana:eidolon_anchor_attunement");
+    private static final ResourceLocation SYMBOL = ResourceLocation.fromNamespaceAndPath(
+        EidolonIntegrationIds.MOD_ID,
+        "particle/crystal_ritual");
+    private static final int COLOR = 0xFF6A1538;
 
     public EidolonAnchorAttunementRitual() {
-        super(ParticleTypes.SOUL_FIRE_FLAME, SoundEvents.SOUL_ESCAPE, new ItemStack(Items.ECHO_SHARD));
+        super(SYMBOL, COLOR);
+    }
+
+    @Override
+    public Ritual cloneRitual() {
+        return new EidolonAnchorAttunementRitual();
     }
 
     @Override
