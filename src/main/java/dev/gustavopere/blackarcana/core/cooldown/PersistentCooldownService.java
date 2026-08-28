@@ -100,6 +100,26 @@ public final class PersistentCooldownService implements CooldownService {
         }
     }
 
+    /** Renames active/restored groups before pruning removed groups. */
+    public synchronized int migrateGroups(RuntimeGroupMigrations migrations) {
+        Objects.requireNonNull(migrations, "migrations");
+        if (migrations.isEmpty() || entries.isEmpty()) return 0;
+
+        Map<CooldownKey, Entry> migrated = new HashMap<>();
+        int renamed = 0;
+        for (Map.Entry<CooldownKey, Entry> item : entries.entrySet()) {
+            CooldownKey oldKey = item.getKey();
+            String resolvedGroup = migrations.resolve(oldKey.groupId());
+            if (!resolvedGroup.equals(oldKey.groupId())) renamed++;
+
+            CooldownKey newKey = new CooldownKey(oldKey.casterId(), resolvedGroup);
+            migrated.merge(newKey, item.getValue(), PersistentCooldownService::mergeRestrictively);
+        }
+        entries.clear();
+        entries.putAll(migrated);
+        return renamed;
+    }
+
     /**
      * Removes persisted/runtime cooldown groups that no longer have an active server policy.
      * This is intentionally called only after all server initializers have registered policies.
@@ -121,6 +141,15 @@ public final class PersistentCooldownService implements CooldownService {
 
     private static CooldownKey key(ArcanaCastRequest request, ArcanaCooldownSpec spec) {
         return new CooldownKey(request.context().casterId(), spec.groupId());
+    }
+
+    private static Entry mergeRestrictively(Entry left, Entry right) {
+        Entry later = left.readyAtTick() > right.readyAtTick()
+                || (left.readyAtTick() == right.readyAtTick() && left.startedAtTick() >= right.startedAtTick())
+                ? left
+                : right;
+        return new Entry(later.startedAtTick(), Math.max(left.readyAtTick(), right.readyAtTick()),
+                left.persistent() || right.persistent());
     }
 
     private static Set<String> validateGroups(Set<String> groupIds) {
