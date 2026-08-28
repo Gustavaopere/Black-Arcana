@@ -111,6 +111,7 @@ public final class ArcanaServerRuntimeManager {
         runtime.spellData().replaceAll(CURRENT_SPELL_DATA);
         BlackArcanaSavedData.get(server).restore(
                 runtime.cooldowns(), runtime.charges(), runtime.loadouts(), server.overworld().getGameTime());
+        runtime.migrateRestoredPersistentState();
         runtime.pruneOrphanedPersistentState();
         RUNTIMES.put(server, runtime);
     }
