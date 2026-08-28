@@ -16,6 +16,8 @@ import dev.gustavopere.blackarcana.core.cooldown.ArcanaCooldownPolicyRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.RuntimeGroupMigrations;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
+import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
 import dev.gustavopere.blackarcana.core.integration.ArcanaIntegrationRegistry;
 import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
@@ -68,6 +70,8 @@ public final class ArcanaServerRuntime {
     private final PersistentCooldownService cooldowns = new PersistentCooldownService(cooldownPolicies::cooldownFor);
     private final ChargePoolCooldownService charges = new ChargePoolCooldownService(cooldownPolicies::requireCharge);
     private final ArcanaIntegrationRegistry integrations = new ArcanaIntegrationRegistry();
+    private final CorruptionStateService corruption = CorruptionStateService.canonical(DEFAULT_MAX_TRACKED_CASTERS);
+    private final ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(DEFAULT_MAX_TRACKED_CASTERS);
     private final WorldEffectProfileRegistry worldEffectProfiles = new WorldEffectProfileRegistry();
     private final ConfigurableWorldEffectPolicy worldEffectPolicy =
         new ConfigurableWorldEffectPolicy(worldEffectProfiles, WorldEffectPolicyConfig.safeDefaults());
@@ -156,11 +160,6 @@ public final class ArcanaServerRuntime {
         return new RuntimeTickResult(expiredChannels, work);
     }
 
-    /**
-     * Installs the server-specific world adapter once. The core contract exposes only
-     * loaded-state reads/CAS writes and a read-only loaded-chunk probe, so this path
-     * cannot acquire tickets or force chunk generation.
-     */
     public synchronized void installWorldBackend(
         TemporaryBlockBackend backend,
         LoadedChunkGuard.LoadedChunkProbe loadedChunkProbe
@@ -170,18 +169,10 @@ public final class ArcanaServerRuntime {
         if (temporaryBlockGateway != null || temporaryRestorationService != null || protectedDestinationGuard != null) {
             throw new IllegalStateException("world backend already installed");
         }
-        LoadedChunkGuard chunkGuard = new LoadedChunkGuard(
-            DEFAULT_MAX_WORLD_CHUNKS_PER_EFFECT,
-            loadedChunkProbe);
-        WorldEffectAdmissionService admission = new WorldEffectAdmissionService(
-            worldEffectPolicy,
-            chunkGuard,
-            worldEffectBudgets);
+        LoadedChunkGuard chunkGuard = new LoadedChunkGuard(DEFAULT_MAX_WORLD_CHUNKS_PER_EFFECT, loadedChunkProbe);
+        WorldEffectAdmissionService admission = new WorldEffectAdmissionService(worldEffectPolicy, chunkGuard, worldEffectBudgets);
         temporaryBlockGateway = new TemporaryBlockMutationGateway(
-            admission,
-            temporaryMutations,
-            backend,
-            DEFAULT_MAX_TEMPORARY_MUTATION_LIFETIME_TICKS);
+            admission, temporaryMutations, backend, DEFAULT_MAX_TEMPORARY_MUTATION_LIFETIME_TICKS);
         temporaryRestorationService = new TemporaryRestorationService(temporaryMutations, backend);
         protectedDestinationGuard = new ProtectedDestinationGuard(chunkGuard, protectionAdapters);
     }
@@ -231,19 +222,15 @@ public final class ArcanaServerRuntime {
     public ArcanaChannelManager channels() { return channels; }
     public BoundedWorkScheduler effectScheduler() { return effectScheduler; }
     public ArcanaIntegrationRegistry integrations() { return integrations; }
+    public CorruptionStateService corruption() { return corruption; }
+    public ArcaneStrainStateService strain() { return strain; }
     public WorldEffectProfileRegistry worldEffectProfiles() { return worldEffectProfiles; }
     public ConfigurableWorldEffectPolicy worldEffectPolicy() { return worldEffectPolicy; }
     public WorldEffectBudgetLedger worldEffectBudgets() { return worldEffectBudgets; }
     public TemporaryMutationTracker temporaryMutations() { return temporaryMutations; }
-    public Optional<TemporaryBlockMutationGateway> temporaryBlockGateway() {
-        return Optional.ofNullable(temporaryBlockGateway);
-    }
-    public Optional<ProtectedDestinationGuard> protectedDestinationGuard() {
-        return Optional.ofNullable(protectedDestinationGuard);
-    }
-    public TemporaryRestorationService.TickResult lastTemporaryRestoration() {
-        return lastTemporaryRestoration;
-    }
+    public Optional<TemporaryBlockMutationGateway> temporaryBlockGateway() { return Optional.ofNullable(temporaryBlockGateway); }
+    public Optional<ProtectedDestinationGuard> protectedDestinationGuard() { return Optional.ofNullable(protectedDestinationGuard); }
+    public TemporaryRestorationService.TickResult lastTemporaryRestoration() { return lastTemporaryRestoration; }
     public DefaultEntityInteractionPolicy entityInteractionPolicy() { return entityInteractionPolicy; }
     public EntityInteractionAdmissionService entityInteractionAdmission() { return entityInteractionAdmission; }
     public ProtectionAdapterRegistry protectionAdapters() { return protectionAdapters; }
