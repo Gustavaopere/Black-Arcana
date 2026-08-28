@@ -5,6 +5,10 @@ import java.util.Objects;
 public record ArcanaCastResult(Status status, String code, String detail) {
     public enum Status {
         SUCCESS,
+        DENIED_INGRESS,
+        DENIED_IDENTITY,
+        DENIED_REPLAY,
+        DENIED_CHANNEL,
         DENIED_PROGRESSION,
         DENIED_COOLDOWN,
         DENIED_TARGET,
@@ -24,9 +28,7 @@ public record ArcanaCastResult(Status status, String code, String detail) {
     }
 
     public static ArcanaCastResult denied(Status status, ArcanaDecision decision) {
-        if (status == Status.SUCCESS) {
-            throw new IllegalArgumentException("denial cannot use SUCCESS status");
-        }
+        if (status == Status.SUCCESS) throw new IllegalArgumentException("denial cannot use SUCCESS status");
         return new ArcanaCastResult(status, decision.code(), decision.detail());
     }
 }

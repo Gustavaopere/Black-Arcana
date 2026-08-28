@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.config;
 
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -24,6 +25,17 @@ class ConfigContractTest {
         SpellDataDefinition malformed = new SpellDataDefinition(99, "Bad Id", "", "");
         assertEquals(4, malformed.validate().size());
         assertTrue(malformed.validate().get(0).contains("schemaVersion"));
+    }
+
+    @Test
+    void spellDataCannotExceedWireIdentifierBounds() {
+        SpellDataDefinition oversized = new SpellDataDefinition(
+                SpellDataDefinition.CURRENT_SCHEMA_VERSION,
+                "black_arcana:" + "a".repeat(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH),
+                "spell.black_arcana.test",
+                "black_arcana:test");
+
+        assertTrue(oversized.validate().stream().anyMatch(error -> error.contains("id exceeds")));
     }
 
     @Test
