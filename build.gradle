@@ -16,6 +16,12 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 repositories {
     mavenCentral()
+    maven {
+        url = 'https://code.redspace.io/releases'
+        content {
+            includeGroup 'io.redspace'
+        }
+    }
 }
 
 sourceSets.main.resources {
@@ -68,6 +74,9 @@ configurations {
 }
 
 dependencies {
+    // Stable addon-facing Iron's API only. The full mod remains an optional runtime dependency.
+    compileOnly "io.redspace:irons_spellbooks:${irons_spells_version}:api"
+
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
