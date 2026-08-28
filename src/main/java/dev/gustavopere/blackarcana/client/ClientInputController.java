@@ -19,6 +19,7 @@ import java.util.UUID;
 public final class ClientInputController {
     private static final ClientLoadoutSelection SELECTION = new ClientLoadoutSelection();
     private static volatile Runnable radialOpener = () -> { };
+    private static volatile Runnable loadoutEditorOpener = () -> { };
 
     private ClientInputController() { }
 
@@ -28,6 +29,10 @@ public final class ClientInputController {
 
     public static void installRadialOpener(Runnable opener) {
         radialOpener = Objects.requireNonNull(opener, "opener");
+    }
+
+    public static void installLoadoutEditorOpener(Runnable opener) {
+        loadoutEditorOpener = Objects.requireNonNull(opener, "opener");
     }
 
     public static ClientLoadoutSelection selection() {
@@ -61,6 +66,11 @@ public final class ClientInputController {
         while (BlackArcanaKeyMappings.OPEN_RADIAL.consumeClick()) {
             if (minecraft.player != null && minecraft.getConnection() != null && minecraft.screen == null && !loadout.isEmpty()) {
                 radialOpener.run();
+            }
+        }
+        while (BlackArcanaKeyMappings.EDIT_LOADOUT.consumeClick()) {
+            if (minecraft.player != null && minecraft.getConnection() != null && minecraft.screen == null) {
+                loadoutEditorOpener.run();
             }
         }
         while (BlackArcanaKeyMappings.CAST_SELECTED.consumeClick()) {
