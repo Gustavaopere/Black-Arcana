@@ -19,16 +19,13 @@ public record CastIntentPacket(
         int loadoutSlot,
         String targetHint
 ) implements CustomPacketPayload {
-    private static final int MAX_CAST_ID_LENGTH = 36;
-    private static final int MAX_SPELL_ID_LENGTH = 192;
-
     public static final Type<CastIntentPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "cast_intent"));
 
     public static final StreamCodec<ByteBuf, CastIntentPacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, CastIntentPacket::protocolVersion,
-            ByteBufCodecs.stringUtf8(MAX_CAST_ID_LENGTH), CastIntentPacket::castId,
-            ByteBufCodecs.stringUtf8(MAX_SPELL_ID_LENGTH), CastIntentPacket::spellId,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_CAST_ID_LENGTH), CastIntentPacket::castId,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH), CastIntentPacket::spellId,
             ByteBufCodecs.VAR_INT, CastIntentPacket::loadoutSlot,
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_TARGET_HINT_LENGTH), CastIntentPacket::targetHint,
             CastIntentPacket::new);
