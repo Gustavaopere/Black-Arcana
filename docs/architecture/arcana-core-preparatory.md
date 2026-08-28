@@ -13,9 +13,11 @@ Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not
 - Server-owned loadout registry and slot-to-spell validation.
 - Composite identity validator.
 - Bounded replay protection with duplicate, expiry and saturation semantics.
-- Structured denial statuses/codes.
-- Channel lifecycle: begin/cancel/timeout do not execute a cast; a valid release enters the normal engine once and only then claims replay/cost/cooldown.
-- `ArcanaCastIngressService` rate-limits first, resolves canonical definitions/engines and builds the immutable server request.
+- Structured denial statuses/codes, including channel-specific denial.
+- Channel lifecycle is integrated into `ArcanaServerRuntime`: begin/cancel/timeout do not execute a cast; a valid release consumes the server-owned session and enters the same `ArcanaCastEngine` used by immediate casts exactly once.
+- Channel sessions preserve cast id, canonical spell id and loadout slot. Release recomputes elapsed channel time from server ticks and exposes it as bounded `ArcanaCastRequest.channelTicks`; the client cannot author charge duration.
+- Release re-resolves the current spell runtime and revalidates the current server-owned loadout through the normal engine, so changing a loadout during charge cannot bypass identity checks.
+- `ArcanaCastIngressService` rate-limits immediate casts first, resolves canonical definitions/engines and builds the immutable server request.
 
 ### 02.02 — Transactional costs
 - `check -> reserve -> effect -> commit/refund` transaction.
@@ -26,6 +28,7 @@ Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not
 
 ### 02.03 — Targeting and bounded work
 - `ArcanaTargetSpec` with hard range/count/LOS/player/friendly-fire policy.
+- `TargetResolution` supports a bounded target set while retaining a primary-target convenience for single-target effects.
 - `BoundedTargeting` accepts server-computed candidate facts only and applies deterministic filtering/caps.
 - Minecraft `ServerEntityTargetSelector` re-resolves caster/target from live server state, refuses unloaded/missing/dead targets and does not force-load chunks.
 - Current Minecraft bridge covers SELF and explicit ENTITY targets.
@@ -44,9 +47,11 @@ Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not
 - Bounded cooldown UI snapshot prunes expired state for that caster.
 
 ### 02.05 — Networking and data-driven content
-- Protocol v1 with hard string/list bounds.
+- Protocol v1 with centralized hard string/list bounds shared by domain payloads and NeoForge codecs.
+- Cast ids, resource ids, result status/code/detail, target hints, translation keys and icon ids have one canonical bound source.
+- Cooldown snapshots reject duplicate group ids and presentation snapshots reject duplicate spell ids at the protocol boundary.
 - Serverbound intent contains only protocol version, cast id, spell id, loadout slot and bounded advisory target hint.
-- No client packet carries authoritative damage, cost, cooldown, range or world-destruction permission.
+- No client packet carries authoritative damage, cost, cooldown, range, channel duration or world-destruction permission.
 - NeoForge 1.21.1 payload registration is implemented with `RegisterPayloadHandlersEvent` / `PayloadRegistrar`.
 - S2C cast-result, cooldown-snapshot and spell-presentation packets are registered.
 - Presentation/cooldown sync happens at bounded lifecycle points only: login, metadata reload and successful cast; no per-tick full-state synchronization.
@@ -54,6 +59,7 @@ Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not
 - Strict server datapack listener uses the NeoForge 1.21.1 `AddReloadListenerEvent` surface.
 - Datapack spell metadata lives under `data/<namespace>/black_arcana/spells/*.json`.
 - File resource id and JSON `id` must match; unknown fields are rejected.
+- Datapack ids and presentation fields obey the same bounds as the wire protocol, preventing a server-valid/client-invalid metadata snapshot.
 - Current data schema is intentionally presentation-only (`schemaVersion`, `id`, `translationKey`, `iconId`). Gameplay implementation/cost/damage/world mutation cannot be injected by JSON.
 
 ## Verification source written
@@ -63,6 +69,7 @@ JUnit coverage now includes:
 - replay duplicate/saturation/expiry;
 - loadout ownership and snapshot/restore;
 - channel begin/release/cancel/timeout semantics;
+- channel release execution exactly once through the canonical engine, server-owned duration propagation and loadout revalidation;
 - composite costs and payment-mode policy;
 - cooldown persistence/config clamping/pruning/UI snapshots;
 - charge depletion/recharge/persistence/pruning;
@@ -70,10 +77,12 @@ JUnit coverage now includes:
 - work scheduler budget/capacity;
 - canonical spell anti-spoofing;
 - atomic spell catalog reload;
-- protocol/packet collection bounds and ingress rate limiting;
+- protocol/packet collection and identifier bounds, duplicate snapshot rejection and ingress rate limiting;
 - strict datapack parser schema/unknown-field/resource-id checks.
 
-Dedicated GameTest source now includes a synthetic Arcana Core cast that runs through ingress, canonical registry, loadout, replay, cooldown, target, cost reservation, world policy and effect without any optional magic mod. A second immediate cast must be denied by the server-owned cooldown.
+Dedicated GameTest source includes:
+- a synthetic Arcana Core cast through ingress, canonical registry, loadout, replay, cooldown, target, cost reservation, world policy and effect without any optional magic mod; a second immediate cast must be denied by the server-owned cooldown;
+- an NBT round-trip for persistent cooldown and loadout state using the real GameTest server registry access.
 
 These are implementation/test sources, not a green verification claim. GitHub-hosted jobs are still terminating before runner assignment, with zero repository steps executed.
 
@@ -81,7 +90,7 @@ These are implementation/test sources, not a green verification claim. GitHub-ho
 
 ### 02.01
 - Prove channel/replay/loadout behavior under Gradle and dedicated GameTest.
-- Add any invocation-specific charge/channel packet only if Stage 05 UX requires it; do not fork engine semantics.
+- Add any invocation-specific channel network messages only if Stage 05 UX requires them; they must terminate in the existing coordinator/engine rather than creating a second execution path.
 
 ### 02.02
 - Execute the full transaction test suite in Gradle.
