@@ -46,7 +46,7 @@ public final class MeaningfulMasteryAwardThrottle {
         Objects.requireNonNull(target, "target");
         if (!target.resolved()) return false;
 
-        long now = request.context().gameTick();
+        long now = request.context().serverTick();
         prune(now);
         Key key = new Key(
             request.context().casterId(),
