@@ -42,6 +42,12 @@ class NetworkContractTest {
                 payload.spellId(),
                 0,
                 "x".repeat(ArcanaProtocol.MAX_TARGET_HINT_LENGTH + 1)));
+        assertThrows(IllegalArgumentException.class, () -> new CastIntentPayload(
+                ArcanaProtocol.VERSION,
+                payload.castId(),
+                "black_arcana:" + "a".repeat(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH),
+                0,
+                ""));
     }
 
     @Test
@@ -62,5 +68,22 @@ class NetworkContractTest {
                 java.util.Collections.nCopies(
                         ArcanaProtocol.MAX_PRESENTATION_ENTRIES + 1,
                         new SpellPresentationPayload.Entry("black_arcana:test", "spell.black_arcana.test", "black_arcana:test"))));
+    }
+
+    @Test
+    void snapshotsRejectDuplicateKeysAtTheProtocolBoundary() {
+        assertThrows(IllegalArgumentException.class, () -> new CooldownSnapshotPayload(
+                ArcanaProtocol.VERSION,
+                List.of(
+                        new CooldownSnapshotPayload.Entry("black_arcana:shared", 10),
+                        new CooldownSnapshotPayload.Entry("black_arcana:shared", 20))));
+
+        assertThrows(IllegalArgumentException.class, () -> new SpellPresentationPayload(
+                ArcanaProtocol.VERSION,
+                List.of(
+                        new SpellPresentationPayload.Entry(
+                                "black_arcana:test", "spell.black_arcana.test", "black_arcana:test"),
+                        new SpellPresentationPayload.Entry(
+                                "black_arcana:test", "spell.black_arcana.test_alt", "black_arcana:test_alt"))));
     }
 }
