@@ -17,6 +17,8 @@ import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.RuntimeGroupMigrations;
 import dev.gustavopere.blackarcana.core.integration.ArcanaIntegrationRegistry;
+import dev.gustavopere.blackarcana.core.progression.ArcanaKnowledgeLedger;
+import dev.gustavopere.blackarcana.core.progression.KnowledgeMigrationTable;
 import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
 import dev.gustavopere.blackarcana.core.ritual.RitualActivationGuard;
@@ -79,6 +81,10 @@ public final class ArcanaServerRuntime {
     private final ArcanaSpellRegistry spells = new ArcanaSpellRegistry();
     private final SpellDataCatalog spellData = new SpellDataCatalog();
     private final LoadoutRegistry loadouts = new LoadoutRegistry();
+    private final ArcanaKnowledgeLedger knowledge = new ArcanaKnowledgeLedger(
+        ArcanaKnowledgeLedger.ABSOLUTE_MAX_CASTERS,
+        ArcanaKnowledgeLedger.ABSOLUTE_MAX_KNOWN_PER_CASTER);
+    private final KnowledgeMigrationTable knowledgeMigrations = new KnowledgeMigrationTable();
     private final ArcanaCooldownPolicyRegistry cooldownPolicies = new ArcanaCooldownPolicyRegistry();
     private final PersistentCooldownService cooldowns = new PersistentCooldownService(cooldownPolicies::cooldownFor);
     private final ChargePoolCooldownService charges = new ChargePoolCooldownService(cooldownPolicies::requireCharge);
@@ -260,6 +266,8 @@ public final class ArcanaServerRuntime {
     public ArcanaSpellRegistry spells() { return spells; }
     public SpellDataCatalog spellData() { return spellData; }
     public LoadoutRegistry loadouts() { return loadouts; }
+    public ArcanaKnowledgeLedger knowledge() { return knowledge; }
+    public KnowledgeMigrationTable knowledgeMigrations() { return knowledgeMigrations; }
     public ArcanaCooldownPolicyRegistry cooldownPolicies() { return cooldownPolicies; }
     public PersistentCooldownService cooldowns() { return cooldowns; }
     public ChargePoolCooldownService charges() { return charges; }
