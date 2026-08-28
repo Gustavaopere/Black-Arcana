@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -23,14 +24,15 @@ public final class MinecraftEntityProtectionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 40)
     public static void serverPvpSettingProtectsPlayerTargets(GameTestHelper helper) {
-        var caster = helper.makeMockServerPlayerInLevel();
-        var target = helper.makeMockServerPlayerInLevel();
+        var caster = helper.makeMockPlayer(GameType.SURVIVAL);
+        var target = helper.makeMockPlayer(GameType.SURVIVAL);
         var server = helper.getLevel().getServer();
         boolean previousPvp = server.isPvpAllowed();
         try {
             server.setPvpAllowed(false);
             var facts = MinecraftEntityProtectionResolver.resolve(server, caster, target);
             helper.assertTrue(facts.player(), "target player fact must be derived from the server entity");
+            helper.assertTrue(!facts.invulnerable(), "survival fixture must not be classified as privileged/invulnerable");
             helper.assertTrue(!facts.serverPvpEnabled(), "resolver must read the live server PvP setting");
             var authorization = DefaultEntityInteractionPolicy.safeDefaults()
                 .authorize(EntityInteractionType.DAMAGE, facts);
@@ -45,10 +47,10 @@ public final class MinecraftEntityProtectionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 40)
     public static void scoreboardAllianceProtectsTarget(GameTestHelper helper) {
-        var caster = helper.makeMockServerPlayerInLevel();
+        var caster = helper.makeMockPlayer(GameType.SURVIVAL);
         var target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 2, 1));
         Scoreboard scoreboard = helper.getLevel().getScoreboard();
-        String teamName = "ba_gt_ally_" + target.getId();
+        String teamName = "ba_gt_ally";
         PlayerTeam existing = scoreboard.getPlayerTeam(teamName);
         if (existing != null) scoreboard.removePlayerTeam(existing);
         PlayerTeam team = scoreboard.addPlayerTeam(teamName);
@@ -70,7 +72,7 @@ public final class MinecraftEntityProtectionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 60)
     public static void bossesReceiveCapsInsteadOfBlanketImmunity(GameTestHelper helper) {
-        var caster = helper.makeMockServerPlayerInLevel();
+        var caster = helper.makeMockPlayer(GameType.SURVIVAL);
         var boss = helper.spawnWithNoFreeWill(EntityType.WITHER, new BlockPos(4, 2, 1));
         var facts = MinecraftEntityProtectionResolver.resolve(helper.getLevel().getServer(), caster, boss);
         helper.assertTrue(facts.boss(), "c:bosses membership must be recognized by the server resolver");
@@ -91,7 +93,7 @@ public final class MinecraftEntityProtectionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 40)
     public static void invulnerableTargetsAreDenied(GameTestHelper helper) {
-        var caster = helper.makeMockServerPlayerInLevel();
+        var caster = helper.makeMockPlayer(GameType.SURVIVAL);
         var target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 2, 1));
         target.setInvulnerable(true);
         var facts = MinecraftEntityProtectionResolver.resolve(helper.getLevel().getServer(), caster, target);
@@ -106,7 +108,7 @@ public final class MinecraftEntityProtectionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 40)
     public static void protectedAndUnloadedDestinationsFailClosed(GameTestHelper helper) {
-        var caster = helper.makeMockServerPlayerInLevel();
+        var caster = helper.makeMockPlayer(GameType.SURVIVAL);
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
         MinecraftTemporaryBlockBackend backend =
             new MinecraftTemporaryBlockBackend(helper.getLevel().getServer());
