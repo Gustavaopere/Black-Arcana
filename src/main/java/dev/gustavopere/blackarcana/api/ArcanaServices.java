@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.api;
 
+import java.util.List;
 import java.util.Objects;
 
 public final class ArcanaServices {
@@ -40,13 +41,46 @@ public final class ArcanaServices {
     @FunctionalInterface
     public interface ArcanaEffect { EffectResult apply(ArcanaCastRequest request, TargetResolution target); }
 
-    public record TargetResolution(boolean resolved, String targetId, String detail) {
+    /**
+     * Bounded target set resolved entirely on the server. Single-target callers
+     * may continue using {@link #targetId()} as a primary-target convenience.
+     */
+    public record TargetResolution(boolean resolved, List<String> targetIds, String detail) {
         public TargetResolution {
-            Objects.requireNonNull(targetId, "targetId");
+            Objects.requireNonNull(targetIds, "targetIds");
             Objects.requireNonNull(detail, "detail");
+            targetIds = List.copyOf(targetIds);
+            if (targetIds.size() > ArcanaTargetSpec.ABSOLUTE_MAX_TARGETS) {
+                throw new IllegalArgumentException("target resolution exceeds absolute target cap");
+            }
+            if (resolved && targetIds.isEmpty()) {
+                throw new IllegalArgumentException("resolved target set cannot be empty");
+            }
+            if (!resolved && !targetIds.isEmpty()) {
+                throw new IllegalArgumentException("denied target set must be empty");
+            }
+            for (String targetId : targetIds) {
+                if (targetId == null || targetId.isBlank()) {
+                    throw new IllegalArgumentException("target ids cannot be null/blank");
+                }
+            }
         }
-        public static TargetResolution resolved(String targetId) { return new TargetResolution(true, targetId, ""); }
-        public static TargetResolution denied(String detail) { return new TargetResolution(false, "", detail); }
+
+        public String targetId() {
+            return targetIds.isEmpty() ? "" : targetIds.getFirst();
+        }
+
+        public static TargetResolution resolved(String targetId) {
+            return new TargetResolution(true, List.of(Objects.requireNonNull(targetId, "targetId")), "");
+        }
+
+        public static TargetResolution resolved(List<String> targetIds) {
+            return new TargetResolution(true, targetIds, "");
+        }
+
+        public static TargetResolution denied(String detail) {
+            return new TargetResolution(false, List.of(), detail);
+        }
     }
 
     public record EffectResult(boolean success, String detail) {
