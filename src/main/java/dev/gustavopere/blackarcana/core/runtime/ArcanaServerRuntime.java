@@ -9,6 +9,7 @@ import dev.gustavopere.blackarcana.core.cooldown.ArcanaCooldownPolicyRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
+import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.IngressRateLimiter;
@@ -21,13 +22,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Runtime state owned by one Minecraft server instance. Optional-mod adapters
- * install engines into this object; no runtime state is shared across servers.
+ * install engines into this object; no mutable gameplay state is shared across servers.
  */
 public final class ArcanaServerRuntime {
     public static final int DEFAULT_MAX_CAST_INTENTS_PER_SECOND = 12;
     public static final int DEFAULT_MAX_TRACKED_CASTERS = 4096;
 
     private final ArcanaSpellRegistry spells = new ArcanaSpellRegistry();
+    private final SpellDataCatalog spellData = new SpellDataCatalog();
     private final LoadoutRegistry loadouts = new LoadoutRegistry();
     private final ArcanaCooldownPolicyRegistry cooldownPolicies = new ArcanaCooldownPolicyRegistry();
     private final PersistentCooldownService cooldowns = new PersistentCooldownService(cooldownPolicies::cooldownFor);
@@ -78,6 +80,10 @@ public final class ArcanaServerRuntime {
 
     public ArcanaSpellRegistry spells() {
         return spells;
+    }
+
+    public SpellDataCatalog spellData() {
+        return spellData;
     }
 
     public LoadoutRegistry loadouts() {
