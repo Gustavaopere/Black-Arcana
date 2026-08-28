@@ -57,6 +57,10 @@ public final class ArcanaNetworkBridge {
         clientPresentationHandler = Objects.requireNonNull(handler, "handler");
     }
 
+    public static void sendCastIntent(CastIntentPayload intent) {
+        PacketDistributor.sendToServer(CastIntentPacket.from(Objects.requireNonNull(intent, "intent")));
+    }
+
     public static void sendCooldownSnapshot(ServerPlayer player, CooldownSnapshotPayload snapshot) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(snapshot, "snapshot");
