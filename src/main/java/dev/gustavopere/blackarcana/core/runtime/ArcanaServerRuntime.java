@@ -50,6 +50,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class ArcanaServerRuntime {
     public static final int DEFAULT_MAX_CAST_INTENTS_PER_SECOND = 12;
     public static final int DEFAULT_MAX_TRACKED_CASTERS = 4096;
+    public static final int DEFAULT_MAX_TRACKED_HAZARD_PLAYERS = 16_384;
     public static final int DEFAULT_MAX_CHANNEL_SESSIONS = 4096;
     public static final int DEFAULT_MAX_SCHEDULED_EFFECTS = 2048;
     public static final int DEFAULT_EFFECT_WORK_BUDGET_PER_TICK = 128;
@@ -70,19 +71,16 @@ public final class ArcanaServerRuntime {
     private final PersistentCooldownService cooldowns = new PersistentCooldownService(cooldownPolicies::cooldownFor);
     private final ChargePoolCooldownService charges = new ChargePoolCooldownService(cooldownPolicies::requireCharge);
     private final ArcanaIntegrationRegistry integrations = new ArcanaIntegrationRegistry();
-    private final CorruptionStateService corruption = CorruptionStateService.canonical(DEFAULT_MAX_TRACKED_CASTERS);
-    private final ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(DEFAULT_MAX_TRACKED_CASTERS);
+    private final CorruptionStateService corruption = CorruptionStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
+    private final ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
     private final WorldEffectProfileRegistry worldEffectProfiles = new WorldEffectProfileRegistry();
     private final ConfigurableWorldEffectPolicy worldEffectPolicy =
         new ConfigurableWorldEffectPolicy(worldEffectProfiles, WorldEffectPolicyConfig.safeDefaults());
     private final WorldEffectBudgetLedger worldEffectBudgets = new WorldEffectBudgetLedger(
         DEFAULT_MAX_TRACKED_WORLD_CASTS, DEFAULT_WORLD_UNITS_PER_CAST, DEFAULT_WORLD_CAST_IDLE_TICKS);
-    private final TemporaryMutationTracker temporaryMutations =
-        new TemporaryMutationTracker(DEFAULT_MAX_TEMPORARY_MUTATIONS);
-    private final DefaultEntityInteractionPolicy entityInteractionPolicy =
-        DefaultEntityInteractionPolicy.safeDefaults();
-    private final ProtectionAdapterRegistry protectionAdapters =
-        new ProtectionAdapterRegistry(DEFAULT_MAX_PROTECTION_ADAPTERS);
+    private final TemporaryMutationTracker temporaryMutations = new TemporaryMutationTracker(DEFAULT_MAX_TEMPORARY_MUTATIONS);
+    private final DefaultEntityInteractionPolicy entityInteractionPolicy = DefaultEntityInteractionPolicy.safeDefaults();
+    private final ProtectionAdapterRegistry protectionAdapters = new ProtectionAdapterRegistry(DEFAULT_MAX_PROTECTION_ADAPTERS);
     private final EntityInteractionAdmissionService entityInteractionAdmission =
         new EntityInteractionAdmissionService(entityInteractionPolicy, protectionAdapters);
     private final Map<ArcanaSpellId, ArcanaCastEngine> engines = new ConcurrentHashMap<>();
@@ -133,21 +131,14 @@ public final class ArcanaServerRuntime {
             DEFAULT_EFFECT_WORK_BUDGET_PER_TICK);
     }
 
-    public CastResultPayload handle(ArcanaCastContext context, CastIntentPayload intent) {
-        return ingress.handle(context, intent);
-    }
-
+    public CastResultPayload handle(ArcanaCastContext context, CastIntentPayload intent) { return ingress.handle(context, intent); }
     public ArcanaDecision beginChannel(ArcanaCastContext context, CastIntentPayload intent, ArcanaChannelSpec spec) {
         return channelCasts.begin(context, intent, spec);
     }
-
     public ArcanaCastResult releaseChannel(ArcanaCastContext context, ArcanaCastId castId, String targetHint) {
         return channelCasts.release(context, castId, targetHint);
     }
-
-    public boolean cancelChannel(ArcanaCastContext context, ArcanaCastId castId) {
-        return channelCasts.cancel(context, castId);
-    }
+    public boolean cancelChannel(ArcanaCastContext context, ArcanaCastId castId) { return channelCasts.cancel(context, castId); }
 
     public RuntimeTickResult tick(long serverTick) {
         int expiredChannels = channels.pruneExpired(serverTick);
@@ -160,10 +151,7 @@ public final class ArcanaServerRuntime {
         return new RuntimeTickResult(expiredChannels, work);
     }
 
-    public synchronized void installWorldBackend(
-        TemporaryBlockBackend backend,
-        LoadedChunkGuard.LoadedChunkProbe loadedChunkProbe
-    ) {
+    public synchronized void installWorldBackend(TemporaryBlockBackend backend, LoadedChunkGuard.LoadedChunkProbe loadedChunkProbe) {
         Objects.requireNonNull(backend, "backend");
         Objects.requireNonNull(loadedChunkProbe, "loadedChunkProbe");
         if (temporaryBlockGateway != null || temporaryRestorationService != null || protectedDestinationGuard != null) {
@@ -180,23 +168,12 @@ public final class ArcanaServerRuntime {
     public void installEngine(ArcanaSpellId spellId, ArcanaCastEngine engine) {
         engines.put(Objects.requireNonNull(spellId, "spellId"), Objects.requireNonNull(engine, "engine"));
     }
-
-    public void removeEngine(ArcanaSpellId spellId) {
-        engines.remove(Objects.requireNonNull(spellId, "spellId"));
-    }
-
-    public void configureWorldEffects(WorldEffectPolicyConfig config) {
-        worldEffectPolicy.updateConfig(Objects.requireNonNull(config, "config"));
-    }
-
-    public void setRuntimeGroupMigrations(RuntimeGroupMigrations migrations) {
-        this.groupMigrations = Objects.requireNonNull(migrations, "migrations");
-    }
+    public void removeEngine(ArcanaSpellId spellId) { engines.remove(Objects.requireNonNull(spellId, "spellId")); }
+    public void configureWorldEffects(WorldEffectPolicyConfig config) { worldEffectPolicy.updateConfig(Objects.requireNonNull(config, "config")); }
+    public void setRuntimeGroupMigrations(RuntimeGroupMigrations migrations) { this.groupMigrations = Objects.requireNonNull(migrations, "migrations"); }
 
     public MigrationResult migrateRestoredPersistentState() {
-        int cooldownsRenamed = cooldowns.migrateGroups(groupMigrations);
-        int chargesRenamed = charges.migrateGroups(groupMigrations);
-        return new MigrationResult(cooldownsRenamed, chargesRenamed);
+        return new MigrationResult(cooldowns.migrateGroups(groupMigrations), charges.migrateGroups(groupMigrations));
     }
 
     public PruneResult pruneOrphanedPersistentState() {
@@ -208,9 +185,7 @@ public final class ArcanaServerRuntime {
         cooldownPolicies.chargeSnapshot().values().forEach(spec -> {
             if (spec.persistent()) activeChargeGroups.add(spec.groupId());
         });
-        int cooldownsRemoved = cooldowns.pruneGroups(activeCooldownGroups);
-        int chargesRemoved = charges.pruneGroups(activeChargeGroups);
-        return new PruneResult(cooldownsRemoved, chargesRemoved);
+        return new PruneResult(cooldowns.pruneGroups(activeCooldownGroups), charges.pruneGroups(activeChargeGroups));
     }
 
     public ArcanaSpellRegistry spells() { return spells; }
@@ -242,20 +217,14 @@ public final class ArcanaServerRuntime {
             Objects.requireNonNull(scheduledWork, "scheduledWork");
         }
     }
-
     public record MigrationResult(int cooldownsRenamed, int chargePoolsRenamed) {
         public MigrationResult {
-            if (cooldownsRenamed < 0 || chargePoolsRenamed < 0) {
-                throw new IllegalArgumentException("migration counts cannot be negative");
-            }
+            if (cooldownsRenamed < 0 || chargePoolsRenamed < 0) throw new IllegalArgumentException("migration counts cannot be negative");
         }
     }
-
     public record PruneResult(int cooldownsRemoved, int chargePoolsRemoved) {
         public PruneResult {
-            if (cooldownsRemoved < 0 || chargePoolsRemoved < 0) {
-                throw new IllegalArgumentException("prune counts cannot be negative");
-            }
+            if (cooldownsRemoved < 0 || chargePoolsRemoved < 0) throw new IllegalArgumentException("prune counts cannot be negative");
         }
     }
 }
