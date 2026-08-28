@@ -130,8 +130,9 @@ public final class ArcanaServerRuntimeManager {
     private static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
         long now = server.overworld().getGameTime();
-        if (now % PERSIST_INTERVAL_TICKS != 0L) return;
-        persist(server, now);
+        ArcanaServerRuntime runtime = RUNTIMES.get(server);
+        if (runtime != null) runtime.tick(now);
+        if (now % PERSIST_INTERVAL_TICKS == 0L) persist(server, now);
     }
 
     private static void onServerStopping(ServerStoppingEvent event) {
