@@ -18,6 +18,8 @@ Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231
 
 Stage 06 Rituals is **preparatory-complete and full-CI GREEN** on `prep/06-rituals`. Source checkpoint `78bab54207965d906c607322417f92b10f6c86a3` was verified by `feat/verify-rituals-v8`, workflow run `33189742674`; unit tests, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke all passed. The branch is stacked linearly on the current Stage 05 main baseline. It remains non-canonical solely because Stage 05 manual client QA is still open.
 
+Stage 07 Spell Domains is **preparatory-complete and full-CI GREEN** on `prep/07-spell-domains`. Source checkpoint `958ab5ef8c23f8a4aaeab6d8c96d7e3b72b45626` was verified by `feat/verify-spell-domains-v1`, workflow run `33193403989`; unit tests, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke all passed. It remains stacked/non-canonical behind Stages 05 and 06.
+
 | Stage | State | Notes |
 |---|---|---|
 | 00 Foundation | ✅ Complete | branch + post-merge full CI green |
@@ -26,9 +28,9 @@ Stage 06 Rituals is **preparatory-complete and full-CI GREEN** on `prep/06-ritua
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch `33170777944` + post-merge `33171003791` green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch `33171942536` + post-merge `33172216821` green |
 | 05 Casting & UX | 🟨 Active / code merged | automated gates green; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
-| 06 Rituals | 🟦 Preparatory complete / CI green | v8 run `33189742674` full green; canonical merge blocked only by Stage 05 ordering gate |
-| 07 Spell Domains | ⬜ Not started | may proceed only as stacked preparatory work until Stages 05–06 are canonical |
-| 08 Progression & Balance | ⬜ Not started | Knowledge, mastery, caps, presets |
+| 06 Rituals | 🟦 Preparatory complete / CI green | v8 run `33189742674` full green; canonical merge blocked by Stage 05 ordering gate |
+| 07 Spell Domains | 🟦 Preparatory complete / CI green | v1 run `33193403989` full green; stacked behind Stages 05–06 |
+| 08 Progression & Balance | ⬜ Not started | may proceed only as stacked preparatory work until predecessors are canonical |
 | 09 Hardening & Release | ⬜ Not started | Tests, performance, upgrade, release |
 
 ## Canonical active stage
@@ -39,20 +41,9 @@ Stage 06 Rituals is **preparatory-complete and full-CI GREEN** on `prep/06-ritua
 
 Stages 00, 01, 02, 03 and 04 may only change through explicit follow-up decisions recorded in `DECISIONS.md`.
 
-## Stage 05 merged implementation
-
-- rebindable radial/cast/quick-slot key mappings, with quick slots unbound by default to reduce pack conflicts;
-- server-validated persistent loadout editing over bounded C2S/S2C payloads;
-- client-only radial selector whose selection is separate from cast execution;
-- direct selected-slot and quick-slot casting that still terminates in the canonical server ingress pipeline;
-- contextual HUD for selected spell and authoritative cast denial/success feedback, with no permanent resource bar;
-- CLIENT-only NeoForge config for HUD visibility/scale/anchor, feedback density, radial hold/toggle behavior, particle-density preference and reduced-motion/flash preferences;
-- explicit client cache clearing on disconnect to prevent stale same-UUID reconnect state;
-- dedicated-server smoke remains green after all client-only code was packaged.
-
 ## Stage 05 remaining closure work
 
-Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags (particle density, reduced motion/flashes) may be carried explicitly to Stage 09 if no corresponding effect exists yet.
+Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags may be carried explicitly to Stage 09 if no corresponding effect exists yet.
 
 ## Stage 06 preparatory checkpoint
 
@@ -63,19 +54,31 @@ Implemented and automatically verified on `prep/06-rituals`:
 - persistent active sessions and persistent completion/reward ledger;
 - production Eidolon anchor-attunement ritual through the supported ritual host path;
 - typed Malum spirit requirements and transactional ritual component consumption;
-- representative Black Arcana grand ritual for mechanics that should remain in the Black Arcana engine;
-- runtime bootstrap/persistence wiring without global tick scans or chunk-force-load requirements;
-- automated tests for core lifecycle, registry/completion semantics, persistence, Malum integration and grand-ritual component binding.
+- representative Black Arcana grand ritual;
+- runtime bootstrap/persistence wiring without global tick scans or chunk-force-load requirements.
 
 Architecture/evidence checkpoint: `docs/architecture/rituals-preparatory.md`.
 
-## Stage 06 promotion gate
+## Stage 07 preparatory checkpoint
 
-Stage 06 task files remain unrenamed and the branch remains unmerged until Stage 05 manual client QA closes. Once Stage 05 is frozen, canonicalize Stage 06 from the latest accepted preparatory checkpoint, rerun the full pipeline and merge only after it is green again.
+Implemented and automatically verified on `prep/07-spell-domains`:
+- Blood & Curses: bounded harvest/health-transfer planning, health substitution limits, damage-link recursion protection and recurrence-state tracking;
+- Souls & Death: bounded/persistable Soul Anchor ledger, anti-farm eligibility and spirit-sight policy;
+- Projection & Arsenal: sanitized non-NBT weapon profiles, projected-entity budgets and bounded ascension allocation;
+- Space & Displacement: safe loaded destinations, bounded safe-position search, transposition/recall validation, throughput and impulse ceilings;
+- Black Pyre: dedicated bounded frontier with hard cell/frontier/spread ceilings and no vanilla fire cascade or implicit chunk loading;
+- Forbidden Domains: localized-session-first Inner Dominion journal with nested-domain denial, bounded participants/duration and explicit origin/fallback return routes; dynamic temporary dimensions remain deferred;
+- Familiars & Divination: bounded ownership registry, consent/covenant-aware scrying policy, same-dimension/loaded-range checks and metadata allowlisting.
+
+Architecture/evidence checkpoint: `docs/architecture/spell-domains-preparatory.md`.
+
+## Promotion gates
+
+Stages 06 and 07 task files remain unrenamed and their branches remain unmerged until Stage 05 manual client QA closes. Once Stage 05 is frozen, canonicalize Stage 06 first, rerun full CI and merge; then canonicalize Stage 07, rerun full CI and merge.
 
 ## Preparatory next work
 
-Stage 07 may proceed as a stacked isolated preparatory branch from the verified Stage 06 checkpoint. It must not be declared canonical or merged ahead of Stages 05 and 06.
+Stage 08 may proceed as a stacked isolated preparatory branch from the verified Stage 07 checkpoint. It must not be declared canonical or merged ahead of Stages 05–07.
 
 ## Freeze rules
 
@@ -85,3 +88,4 @@ Stage 07 may proceed as a stacked isolated preparatory branch from the verified 
 - World-mutating content remains subject to frozen Stage 04 policy and budgets.
 - Stage 06 preparatory work cannot be promoted ahead of unresolved Stage 05 closure.
 - Stage 07 preparatory work cannot be promoted ahead of Stages 05 and 06.
+- Stage 08 preparatory work cannot be promoted ahead of Stages 05–07.
