@@ -55,7 +55,7 @@ public final class SoulAnchorLedger {
         if (nowTick < 0L) throw new IllegalArgumentException("nowTick cannot be negative");
         State state = states.get(ownerId);
         if (state == null || state.anchors <= 0) return AnchorConsumeResult.noAnchor();
-        if (nowTick < state.recoveryUntilTick) return AnchorConsumeResult.locked(state.recoveryUntilTick);
+        if (nowTick < state.recoveryUntilTick) return AnchorConsumeResult.locked(state.anchors, state.recoveryUntilTick);
         if (state.lastPreventedDeathEvent != null && state.lastPreventedDeathEvent.equals(deathEventId)) {
             return AnchorConsumeResult.duplicate(state.anchors, state.recoveryUntilTick);
         }
@@ -181,7 +181,7 @@ public final class SoulAnchorLedger {
         public boolean consumed() { return status == Status.CONSUMED; }
         static AnchorConsumeResult consumed(int anchors, long recovery) { return new AnchorConsumeResult(Status.CONSUMED, anchors, recovery); }
         static AnchorConsumeResult noAnchor() { return new AnchorConsumeResult(Status.NO_ANCHOR, 0, 0L); }
-        static AnchorConsumeResult locked(long recovery) { return new AnchorConsumeResult(Status.RECOVERY_LOCKED, 0, recovery); }
+        static AnchorConsumeResult locked(int anchors, long recovery) { return new AnchorConsumeResult(Status.RECOVERY_LOCKED, anchors, recovery); }
         static AnchorConsumeResult duplicate(int anchors, long recovery) { return new AnchorConsumeResult(Status.DUPLICATE_EVENT, anchors, recovery); }
     }
 
