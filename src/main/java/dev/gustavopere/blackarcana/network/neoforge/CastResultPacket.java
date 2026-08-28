@@ -19,16 +19,13 @@ public record CastResultPacket(
         String code,
         String detail
 ) implements CustomPacketPayload {
-    private static final int MAX_CAST_ID_LENGTH = 36;
-    private static final int MAX_STATUS_LENGTH = 48;
-
     public static final Type<CastResultPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "cast_result"));
 
     public static final StreamCodec<ByteBuf, CastResultPacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, CastResultPacket::protocolVersion,
-            ByteBufCodecs.stringUtf8(MAX_CAST_ID_LENGTH), CastResultPacket::castId,
-            ByteBufCodecs.stringUtf8(MAX_STATUS_LENGTH), CastResultPacket::status,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_CAST_ID_LENGTH), CastResultPacket::castId,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_STATUS_LENGTH), CastResultPacket::status,
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_CODE_LENGTH), CastResultPacket::code,
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_DETAIL_LENGTH), CastResultPacket::detail,
             CastResultPacket::new);
