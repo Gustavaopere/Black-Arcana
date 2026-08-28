@@ -8,6 +8,8 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,5 +54,20 @@ class ChargePoolCooldownServiceTest {
         restored.restorePersistentSnapshot(snapshot);
         assertEquals(0, restored.charges(request(101)));
         assertEquals(1, restored.charges(request(120)));
+    }
+
+    @Test
+    void orphanedChargeGroupsArePrunedAgainstCanonicalPolicies() {
+        ChargePoolCooldownService service = new ChargePoolCooldownService(req -> new ArcanaChargeSpec("black_arcana:active", 2, 20, true));
+        service.restorePersistentSnapshot(Map.of(
+                new ChargePoolCooldownService.ChargeKey(CASTER, "black_arcana:active"),
+                new ChargePoolCooldownService.SnapshotEntry(1, 120),
+                new ChargePoolCooldownService.ChargeKey(CASTER, "black_arcana:removed"),
+                new ChargePoolCooldownService.SnapshotEntry(0, 140)
+        ));
+
+        assertEquals(1, service.pruneGroups(Set.of("black_arcana:active")));
+        assertEquals(1, service.size());
+        assertEquals(1, service.charges(request(101)));
     }
 }
