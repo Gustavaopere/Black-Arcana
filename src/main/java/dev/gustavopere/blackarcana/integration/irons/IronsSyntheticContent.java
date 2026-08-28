@@ -32,7 +32,7 @@ public final class IronsSyntheticContent {
     public static void install(
         ArcanaServerRuntime runtime,
         IronsManaAccess manaAccess,
-        RpgSkillTreeBridge rpg
+        Optional<RpgSkillTreeBridge> rpg
     ) {
         Objects.requireNonNull(runtime, "runtime");
         Objects.requireNonNull(manaAccess, "manaAccess");
@@ -42,14 +42,15 @@ public final class IronsSyntheticContent {
         installDefinition(runtime, definition);
         installCooldown(runtime);
 
-        CastSuccessObserver mastery = rpg.available()
-            ? new RpgMasteryAwardObserver(
-                rpg,
+        CastSuccessObserver mastery = rpg
+            .filter(RpgSkillTreeBridge::available)
+            .<CastSuccessObserver>map(bridge -> new RpgMasteryAwardObserver(
+                bridge,
                 request -> Optional.of(new RpgMasteryAwardSpec(
                     "black_arcana:casting",
                     3,
-                    request.spell().id().canonical())))
-            : CastSuccessObserver.noop();
+                    request.spell().id().canonical()))))
+            .orElseGet(CastSuccessObserver::noop);
 
         ArcanaCastEngine engine = new ArcanaCastEngine(
             runtime.spells(),
