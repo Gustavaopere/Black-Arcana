@@ -18,6 +18,10 @@ public final class SpellDataCatalog {
 
     public synchronized void replaceAll(Collection<SpellDataDefinition> newDefinitions) {
         Objects.requireNonNull(newDefinitions, "newDefinitions");
+        if (newDefinitions.size() > ArcanaProtocol.MAX_PRESENTATION_ENTRIES) {
+            throw new IllegalArgumentException("too many spell data definitions: " + newDefinitions.size());
+        }
+
         Map<ArcanaSpellId, SpellDataDefinition> next = new LinkedHashMap<>();
         for (SpellDataDefinition definition : newDefinitions) {
             Objects.requireNonNull(definition, "definition");
