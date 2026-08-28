@@ -9,6 +9,7 @@ import dev.gustavopere.blackarcana.api.ArcanaServices.CastSuccessObserver;
 import dev.gustavopere.blackarcana.api.ArcanaServices.EffectResult;
 import dev.gustavopere.blackarcana.api.ArcanaServices.TargetResolution;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
+import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.BoundedReplayGuard;
 import dev.gustavopere.blackarcana.core.cost.PolicyAwareCostProvider;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
@@ -67,10 +68,10 @@ public final class IronsSyntheticContent {
 
     public static ArcanaSpellDefinition definition() {
         return new ArcanaSpellDefinition(
-            IronsArcanaProbeSpell.ARCANA_ID,
+            IronsIntegrationIds.PROBE_ARCANA_ID,
             "spell.black_arcana.irons_integration_probe",
             "black_arcana:textures/gui/spell_icons/irons_integration_probe.png",
-            new ArcanaCost(IronsManaCostProvider.RESOURCE_ID, IronsArcanaProbeSpell.MANA_COST),
+            new ArcanaCost(IronsManaCostProvider.RESOURCE_ID, IronsIntegrationIds.PROBE_MANA_COST),
             false);
     }
 
@@ -88,11 +89,11 @@ public final class IronsSyntheticContent {
     }
 
     private static void installCooldown(ArcanaServerRuntime runtime) {
-        Map<dev.gustavopere.blackarcana.api.ArcanaSpellId, ArcanaCooldownSpec> cooldowns =
+        Map<ArcanaSpellId, ArcanaCooldownSpec> cooldowns =
             new LinkedHashMap<>(runtime.cooldownPolicies().cooldownSnapshot());
         cooldowns.put(
-            IronsArcanaProbeSpell.ARCANA_ID,
-            new ArcanaCooldownSpec(IronsArcanaProbeSpell.ARCANA_ID.canonical(), COOLDOWN_TICKS, false));
+            IronsIntegrationIds.PROBE_ARCANA_ID,
+            new ArcanaCooldownSpec(IronsIntegrationIds.PROBE_ARCANA_ID.canonical(), COOLDOWN_TICKS, false));
         runtime.cooldownPolicies().replaceAll(cooldowns, runtime.cooldownPolicies().chargeSnapshot());
     }
 }
