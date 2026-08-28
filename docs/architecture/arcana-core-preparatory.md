@@ -17,6 +17,7 @@ Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not
 - Channel lifecycle is integrated into `ArcanaServerRuntime`: begin/cancel/timeout do not execute a cast; a valid release consumes the server-owned session and enters the same `ArcanaCastEngine` used by immediate casts exactly once.
 - Channel sessions preserve cast id, canonical spell id and loadout slot. Release recomputes elapsed channel time from server ticks and exposes it as bounded `ArcanaCastRequest.channelTicks`; the client cannot author charge duration.
 - Release re-resolves the current spell runtime and revalidates the current server-owned loadout through the normal engine, so changing a loadout during charge cannot bypass identity checks.
+- Expired abandoned channel sessions are pruned from the live server tick rather than only when another channel begins.
 - `ArcanaCastIngressService` rate-limits immediate casts first, resolves canonical definitions/engines and builds the immutable server request.
 
 ### 02.02 — Transactional costs
@@ -29,10 +30,15 @@ Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not
 ### 02.03 — Targeting and bounded work
 - `ArcanaTargetSpec` with hard range/count/LOS/player/friendly-fire policy.
 - `TargetResolution` supports a bounded target set while retaining a primary-target convenience for single-target effects.
+- `ArcanaTargetReference` provides canonical typed entity/block references instead of ad-hoc client-authored coordinates.
 - `BoundedTargeting` accepts server-computed candidate facts only and applies deterministic filtering/caps.
-- Minecraft `ServerEntityTargetSelector` re-resolves caster/target from live server state, refuses unloaded/missing/dead targets and does not force-load chunks.
-- Current Minecraft bridge covers SELF and explicit ENTITY targets.
-- `BoundedWorkScheduler` provides bounded queue/work budget and at-most-once processing per item per tick.
+- Minecraft `ServerEntityTargetSelector` re-resolves caster/target from live server state, refuses unloaded/missing/dead targets and never deliberately force-loads chunks.
+- Minecraft routes now exist for SELF, ENTITY, PROJECTILE, BLOCK, RAY, SPHERE, CONE, CYLINDER and LINKED target kinds.
+- BLOCK/RAY perform loaded-chunk preflight before clipping; ENTITY/PROJECTILE only resolve entities naturally loaded in the caster dimension.
+- CONE/CYLINDER use explicit bounded `ArcanaTargetGeometry` contracts and shared pure geometry predicates; no hidden default angle/height is embedded in the adapter.
+- LINKED targets come only from a server-owned `LinkedTargetResolver`; candidate sets are bounded, null-safe and stably deduplicated before entity resolution.
+- `BoundedWorkScheduler` provides bounded queue/work budget and at-most-once processing per item per tick, isolates failing work items and is driven by the real server tick.
+- `ScheduledArcanaEffect` enqueues bounded follow-up work through that scheduler and fails the effect before cost commit when capacity is exhausted.
 
 ### 02.04 — Cooldowns, charges and persistence
 - Per-spell/shared group cooldown specs with session/persistent policy.
@@ -40,9 +46,13 @@ Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not
 - Reusable charge pools with continuous recharge semantics and persistence snapshots.
 - Composite cooldown service for spells that combine cooldown and charge policy.
 - Server-owned loadout snapshot/restore.
-- NeoForge/Minecraft `SavedData` adapter stored globally in the Overworld.
+- Cooldown keys are caster + canonical group, so dimension changes do not reset cooldown state.
+- NeoForge/Minecraft `SavedData` adapter is stored globally in the Overworld.
 - Saved state is captured periodically and during server stopping, then restored on server start.
-- Restored orphan cooldown/charge groups are pruned only after runtime initializers register the canonical active policies.
+- `RuntimeGroupMigrations` supports validated chained cooldown/charge group renames with cycle detection.
+- Startup order is `initializers/policies -> SavedData restore -> group migrations -> orphan pruning`, so renamed state is not discarded before migration.
+- Collision during cooldown rename preserves the later ready boundary; charge collisions preserve the lower charge count and later recharge boundary, preventing migrations from granting power.
+- Restored orphan cooldown/charge groups are pruned only after runtime initializers register canonical active policies and migrations run.
 - Defensive restore ceilings bound cooldown, charge-pool and loadout collection counts.
 - Bounded cooldown UI snapshot prunes expired state for that caster.
 
@@ -55,6 +65,8 @@ Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not
 - NeoForge 1.21.1 payload registration is implemented with `RegisterPayloadHandlersEvent` / `PayloadRegistrar`.
 - S2C cast-result, cooldown-snapshot and spell-presentation packets are registered.
 - Presentation/cooldown sync happens at bounded lifecycle points only: login, metadata reload and successful cast; no per-tick full-state synchronization.
+- Pure ingress tests prove unknown-spell rejection and rate limiting happen before gameplay execution.
+- Real `StreamCodec<ByteBuf, ...>` round-trip tests exist for cast intent, cast result, cooldown snapshot and spell presentation packets.
 - `SpellDataCatalog` atomically replaces validated metadata.
 - Strict server datapack listener uses the NeoForge 1.21.1 `AddReloadListenerEvent` surface.
 - Datapack spell metadata lives under `data/<namespace>/black_arcana/spells/*.json`.
@@ -71,20 +83,21 @@ JUnit coverage now includes:
 - channel begin/release/cancel/timeout semantics;
 - channel release execution exactly once through the canonical engine, server-owned duration propagation and loadout revalidation;
 - composite costs and payment-mode policy;
-- cooldown persistence/config clamping/pruning/UI snapshots;
+- cooldown persistence/config clamping/pruning/UI snapshots, dimension invariance, expired restore filtering and long-overflow saturation;
+- cooldown/charge group rename chains, cycle rejection, conservative collision merge and migrate-before-prune runtime behavior;
 - charge depletion/recharge/persistence/pruning;
-- bounded target filtering;
-- work scheduler budget/capacity;
+- bounded target filtering, target-reference round-trip, cone/cylinder geometry boundaries and linked candidate normalization;
+- work scheduler budget/capacity/failure isolation and scheduled-effect admission behavior;
 - canonical spell anti-spoofing;
 - atomic spell catalog reload;
-- protocol/packet collection and identifier bounds, duplicate snapshot rejection and ingress rate limiting;
+- protocol/packet collection and identifier bounds, duplicate snapshot rejection, ingress rate limiting and real NeoForge packet codec round-trips;
 - strict datapack parser schema/unknown-field/resource-id checks.
 
 Dedicated GameTest source includes:
 - a synthetic Arcana Core cast through ingress, canonical registry, loadout, replay, cooldown, target, cost reservation, world policy and effect without any optional magic mod; a second immediate cast must be denied by the server-owned cooldown;
 - an NBT round-trip for persistent cooldown and loadout state using the real GameTest server registry access.
 
-These are implementation/test sources, not a green verification claim. GitHub-hosted jobs are still terminating before runner assignment, with zero repository steps executed.
+These are implementation/test sources, not a green verification claim. GitHub-hosted jobs are still terminating before runner assignment, with zero repository steps executed. Foundation run `33126490920` was retried again after this work began and the new job also completed with `steps=null`.
 
 ## Remaining work before Stage 02 can close
 
@@ -97,19 +110,17 @@ These are implementation/test sources, not a green verification claim. GitHub-ho
 - Stage 03 host adapters must satisfy the same reservation contract; providers whose commit can fail irreversibly require explicit escrow/compensation design.
 
 ### 02.03
-- Add Minecraft bridges for ray/block/cone/sphere/cylinder/projectile/linked targets as real spells require them.
-- Bind expensive world/effect producers to `BoundedWorkScheduler` rather than direct unbounded loops.
-- Add GameTests for chunk borders, LOS and real entity/friendly-fire behavior.
+- Add dedicated GameTests for chunk borders, LOS and real entity/friendly-fire behavior.
+- Bind each future expensive world/content effect to `ScheduledArcanaEffect`/`BoundedWorkScheduler`; the infrastructure is already live but content producers do not exist yet.
 
 ### 02.04
 - Execute NBT save/load and actual server-restart persistence tests.
-- Add explicit rename migration for cooldown/charge group ids when the first real group rename occurs; current implementation handles safe pruning of removed groups.
-- Verify death/logout/dimension-change invariants in GameTests.
+- Verify death/logout invariants in GameTests; dimension invariance is now covered at the service-contract level.
 
 ### 02.05
-- Execute packet codecs and real C2S/S2C flow on dedicated server/client test environments.
-- Add malformed/spam network GameTests where the test harness permits transport-level injection.
-- Extend the data schema with bounded authoritative balance parameters only when Stage 08 defines their canonical model; do not invent an early universal spell DSL.
+- Execute packet codec tests and real C2S/S2C flow in a working CI/dedicated environment.
+- Add malformed/spam transport-level GameTests where the harness permits packet injection; pure protocol/ingress bounds are already covered.
+- Extend the data schema with bounded authoritative balance parameters only after Stage 08 defines their canonical model; do not invent an early universal spell DSL.
 
 ## Promotion rule
 
