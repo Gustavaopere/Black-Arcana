@@ -72,6 +72,10 @@ public final class ArcaneBacklashLedger {
         return snapshot;
     }
 
+    public boolean isExpired(long currentTick) {
+        return session.isExpired(currentTick) || session.closed();
+    }
+
     public synchronized double confirmedEligibleDamage() {
         return confirmedEligibleDamage;
     }
