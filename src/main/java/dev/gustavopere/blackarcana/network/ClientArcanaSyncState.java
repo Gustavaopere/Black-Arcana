@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,13 +15,14 @@ import java.util.UUID;
  *
  * This class deliberately uses no client-only Minecraft types, so it is safe to
  * package in the common jar. Server gameplay never reads this cache; Stage 05 UI
- * will consume immutable snapshots on the physical client.
+ * consumes immutable snapshots on the physical client.
  */
 public final class ClientArcanaSyncState {
     private static UUID playerId;
     private static CastResultPayload lastResult;
     private static Map<String, Long> cooldowns = Map.of();
     private static Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation = Map.of();
+    private static List<ArcanaSpellId> loadout = List.of();
 
     private ClientArcanaSyncState() { }
 
@@ -54,6 +56,11 @@ public final class ClientArcanaSyncState {
         presentation = Map.copyOf(next);
     }
 
+    public static synchronized void acceptLoadout(Player player, LoadoutSnapshotPayload payload) {
+        ensurePlayer(player);
+        loadout = List.copyOf(Objects.requireNonNull(payload, "payload").parsedSpellIds());
+    }
+
     public static synchronized Optional<CastResultPayload> lastResult() {
         return Optional.ofNullable(lastResult);
     }
@@ -66,11 +73,16 @@ public final class ClientArcanaSyncState {
         return presentation;
     }
 
+    public static synchronized List<ArcanaSpellId> loadoutSnapshot() {
+        return loadout;
+    }
+
     public static synchronized void clear() {
         playerId = null;
         lastResult = null;
         cooldowns = Map.of();
         presentation = Map.of();
+        loadout = List.of();
     }
 
     private static void ensurePlayer(Player player) {
@@ -80,6 +92,7 @@ public final class ClientArcanaSyncState {
             lastResult = null;
             cooldowns = Map.of();
             presentation = Map.of();
+            loadout = List.of();
         }
         playerId = incoming;
     }
