@@ -14,7 +14,7 @@ Stage 02 Arcana Core is implementation-advanced only in `prep/02-arcana-core`. T
 |---|---|---|
 | 00 Foundation | 🟨 Verification blocked | HEAD `3d4b9e24361e5ca3ed8cdcebeeb116abe7361c00`; retry job `98730674669` still received no executable steps |
 | 01 Reference Catalog | 🟦 Preparatory complete | HEAD `d2450eeb972758dbd5b3880553461c86fd79d301`; awaiting canonical rebase/review |
-| 02 Arcana Core | 🟨 Preparatory advanced | Core implementation is broad; remaining closure work is primarily real-runner verification plus dedicated lifecycle/transport GameTests |
+| 02 Arcana Core | 🟨 Preparatory advanced | Core implementation is broad; remaining closure work is primarily real-runner verification plus restart/logout/chunk-boundary/transport evidence |
 | 03 Integration Layer | ⬜ Not started | Iron's, Ars, Eidolon, Malum, RPG adapters |
 | 04 World Safety | ⬜ Not started | Destruction policy, rollback, budgets |
 | 05 Casting & UX | ⬜ Not started | Direct cast, loadouts, radial HUD |
@@ -55,16 +55,18 @@ Implemented on `prep/02-arcana-core`:
 - strict datapack reload listener under `data/<namespace>/black_arcana/spells/*.json`, with datapack identifiers constrained to the same bounds as network synchronization;
 - presentation/cooldown sync on login, metadata reload and successful cast only;
 - JUnit source for target geometry, linked-target normalization, migration order, dimension invariance, overflow boundaries and all four packet codec round-trips;
-- dedicated GameTest source for the no-optional-mod core path and cooldown denial on immediate recast;
-- dedicated GameTest source for NBT round-trip of persistent cooldown and loadout state.
+- GameTest source for the no-optional-mod core path and cooldown denial on immediate recast;
+- GameTest source for NBT round-trip of persistent cooldown and loadout state;
+- real Minecraft GameTest source for loaded entity targeting, range rejection and LOS rejection through `ServerEntityTargetSelector`;
+- real Minecraft GameTest source for scoreboard-team friendly-fire policy and player death without cooldown reset.
 
 Detailed implementation/pending audit: `docs/architecture/arcana-core-preparatory.md`.
 
 ## Stage 02 still open
 
 - execute all JUnit, packet codec, GameTest and dedicated-server gates in a real runner;
-- add dedicated GameTests for chunk-border/LOS/friendly-fire target behavior;
-- prove persistence across actual server restart, death and logout; dimension invariance is already unit-covered;
+- add dedicated chunk-boundary targeting GameTest where chunk lifecycle can be controlled without force-loading;
+- prove persistence across actual server restart and logout; death is now GameTest-covered and dimension invariance is unit-covered;
 - bind each future expensive content/world effect to the live bounded scheduler as that content is implemented;
 - run malformed/spam transport-level tests where the dedicated harness permits packet injection;
 - extend the authoritative data schema with balance parameters only after Stage 08 defines the canonical bounded model.
