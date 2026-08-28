@@ -4,17 +4,17 @@ Last updated: 2026-08-27
 
 ## Current state
 
-Stage 00 Foundation remains implemented but **verification-blocked** on `round-1-foundation` HEAD `e843d35789a7a30be16da8348e7daf06f604cdea`. Repeated Linux and macOS GitHub-hosted jobs have terminated with no assigned runner and zero steps, so no Gradle/NeoForge/GameTest command has executed remotely.
+Stage 00 Foundation remains implemented but **verification-blocked** on `round-1-foundation` HEAD `3d4b9e24361e5ca3ed8cdcebeeb116abe7361c00`. The fresh post-incident workflow run `33126490920` again terminated with `runner_id=0` and `steps=[]`; therefore no Gradle/NeoForge/GameTest/dedicated-server command executed.
 
 Stage 01 Reference Catalog is specification-complete only in `prep/01-reference-catalog` HEAD `d2450eeb972758dbd5b3880553461c86fd79d301`: 53/53 reference rows classified, 32 candidates specified, runtime host baselines pinned and per-candidate host viability/probe routes documented. It is not canonical or frozen.
 
-Stage 02 Arcana Core is now advancing only in `prep/02-arcana-core`. Pure Black Arcana infrastructure that does not require optional magic mods is being prepared while the canonical gate is blocked. This does not change the merge order.
+Stage 02 Arcana Core is advancing only in `prep/02-arcana-core`. The branch now includes the real NeoForge 1.21.1 networking/reload/persistence bridges in addition to the pure contracts, but remains preparatory until Stages 00 and 01 are promoted in order.
 
 | Stage | State | Notes |
 |---|---|---|
-| 00 Foundation | 🟨 Verification blocked | HEAD `e843d35789a7a30be16da8348e7daf06f604cdea`; hosted jobs still receive no runner/steps |
+| 00 Foundation | 🟨 Verification blocked | HEAD `3d4b9e24361e5ca3ed8cdcebeeb116abe7361c00`; fresh hosted job still received no runner/steps |
 | 01 Reference Catalog | 🟦 Preparatory complete | HEAD `d2450eeb972758dbd5b3880553461c86fd79d301`; awaiting canonical rebase/review |
-| 02 Arcana Core | 🟨 Preparatory implementation | Pure-Java cast/replay/cost/cooldown/target/runtime/registry/network contracts implemented; NeoForge/SavedData/runtime gates still open |
+| 02 Arcana Core | 🟨 Preparatory advanced | Runtime, SavedData, payload registration, strict datapack metadata reload, lifecycle sync and synthetic dedicated GameTest source implemented; runtime verification still blocked |
 | 03 Integration Layer | ⬜ Not started | Iron's, Ars, Eidolon, Malum, RPG adapters |
 | 04 World Safety | ⬜ Not started | Destruction policy, rollback, budgets |
 | 05 Casting & UX | ⬜ Not started | Direct cast, loadouts, radial HUD |
@@ -35,33 +35,36 @@ Required before `main` moves:
 3. GameTest server executes successfully.
 4. Dedicated-server smoke reaches normal startup and Black Arcana load marker.
 
-The current Actions failures do not satisfy or fail those gates because the jobs report no runner and no steps.
+The current Actions failures do not satisfy or fail those gates because the jobs report no runner and no steps. `main` therefore remains intentionally unchanged.
 
 ## Stage 02 preparatory checkpoint
 
 Implemented on `prep/02-arcana-core`:
-- `ArcanaCastId`, canonical request validation seam and bounded replay protection;
-- composite transactional cost provider with reverse rollback;
-- shared/persistent cooldown model and snapshot/restore;
-- server-fact target policy with absolute range/target caps;
+- unique cast identity, server-owned canonical spell/loadout validation and bounded replay protection;
+- transactional/composite costs with flat/percent-of-max models and explicit creative/admin policy;
+- channel lifecycle that reuses the canonical cast engine rather than creating a second execution path;
+- shared/persistent cooldowns, charge pools, bounded UI snapshots, snapshot/restore and orphan-group pruning;
+- server-fact targeting with a real SELF/ENTITY Minecraft adapter and no chunk force-loading;
 - bounded follow-up work scheduler;
-- canonical compiled spell registry with spoof protection;
-- atomic schema-v1 metadata catalog;
-- versioned/bounded cast-result/cooldown/presentation payload contracts;
-- bounded ingress rate limiting.
+- canonical spell registry plus atomically replaceable presentation metadata catalog;
+- per-server runtime lifecycle and Overworld `SavedData` persistence with defensive restore ceilings;
+- NeoForge 1.21.1 payload registration and bounded C2S/S2C codecs;
+- server ingress rate limiting and canonical request construction;
+- strict datapack reload listener under `data/<namespace>/black_arcana/spells/*.json`;
+- presentation/cooldown sync on login, metadata reload and successful cast only;
+- synthetic dedicated GameTest source proving the no-optional-mod core path and cooldown denial on immediate recast.
 
 Detailed implementation/pending audit: `docs/architecture/arcana-core-preparatory.md`.
 
 ## Stage 02 still open
 
-- actual loadout resolution and charge/channel lifecycle;
-- percent-of-max costs and creative/admin payment policy;
-- Minecraft target collection/raycast/area adapters;
-- SavedData cooldown persistence and canonical persistent clock;
-- charge pools;
-- NeoForge payload registration/codecs/handlers;
-- datapack reload listener/codec bridge;
-- real Gradle, GameTest and dedicated-server execution.
+- execute all JUnit, packet codec, GameTest and dedicated-server gates in a real runner;
+- add real Minecraft bridges for ray/block/cone/sphere/cylinder/projectile/linked targets as required by content;
+- bind actual expensive world/effect producers to the bounded scheduler;
+- prove NBT persistence across restart/death/logout/dimension changes;
+- add explicit ID rename migration for cooldown/charge groups when a real rename exists;
+- extend the authoritative data schema with balance parameters only after Stage 08 defines the canonical bounded model;
+- run malformed/spam transport-level tests where the dedicated harness supports them.
 
 ## Canonical promotion order
 
