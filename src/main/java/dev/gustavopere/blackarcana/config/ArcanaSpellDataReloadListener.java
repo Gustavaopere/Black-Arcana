@@ -60,41 +60,44 @@ public final class ArcanaSpellDataReloadListener extends SimpleJsonResourceReloa
                 .sorted(Map.Entry.comparingByKey(Comparator.comparing(ResourceLocation::toString)))
                 .toList();
         List<SpellDataDefinition> definitions = new ArrayList<>(ordered.size());
-
         for (Map.Entry<ResourceLocation, JsonElement> entry : ordered) {
-            ResourceLocation resourceId = entry.getKey();
-            JsonElement element = entry.getValue();
-            if (!element.isJsonObject()) {
-                throw new JsonParseException("spell definition must be a JSON object: " + resourceId);
-            }
-
-            JsonObject object = element.getAsJsonObject();
-            for (String key : object.keySet()) {
-                if (!ALLOWED_KEYS.contains(key)) {
-                    throw new JsonParseException("unknown field '" + key + "' in spell definition " + resourceId);
-                }
-            }
-
-            String canonicalId = resourceId.getNamespace() + ":" + resourceId.getPath();
-            SpellDataDefinition definition = new SpellDataDefinition(
-                    requiredInt(object, "schemaVersion", resourceId),
-                    requiredString(object, "id", resourceId),
-                    requiredString(object, "translationKey", resourceId),
-                    requiredString(object, "iconId", resourceId));
-
-            if (!canonicalId.equals(definition.id())) {
-                throw new JsonParseException(
-                        "spell definition id must match resource id: expected " + canonicalId + " but got " + definition.id());
-            }
-            List<String> errors = definition.validate();
-            if (!errors.isEmpty()) {
-                throw new JsonParseException("invalid spell definition " + resourceId + ": " + String.join("; ", errors));
-            }
-            definitions.add(definition);
+            definitions.add(parseDefinition(entry.getKey(), entry.getValue()));
         }
 
         // Publication occurs only after the entire reload snapshot has parsed and validated.
         ArcanaServerRuntimeManager.reloadSpellData(definitions);
+    }
+
+    static SpellDataDefinition parseDefinition(ResourceLocation resourceId, JsonElement element) {
+        Objects.requireNonNull(resourceId, "resourceId");
+        Objects.requireNonNull(element, "element");
+        if (!element.isJsonObject()) {
+            throw new JsonParseException("spell definition must be a JSON object: " + resourceId);
+        }
+
+        JsonObject object = element.getAsJsonObject();
+        for (String key : object.keySet()) {
+            if (!ALLOWED_KEYS.contains(key)) {
+                throw new JsonParseException("unknown field '" + key + "' in spell definition " + resourceId);
+            }
+        }
+
+        String canonicalId = resourceId.getNamespace() + ":" + resourceId.getPath();
+        SpellDataDefinition definition = new SpellDataDefinition(
+                requiredInt(object, "schemaVersion", resourceId),
+                requiredString(object, "id", resourceId),
+                requiredString(object, "translationKey", resourceId),
+                requiredString(object, "iconId", resourceId));
+
+        if (!canonicalId.equals(definition.id())) {
+            throw new JsonParseException(
+                    "spell definition id must match resource id: expected " + canonicalId + " but got " + definition.id());
+        }
+        List<String> errors = definition.validate();
+        if (!errors.isEmpty()) {
+            throw new JsonParseException("invalid spell definition " + resourceId + ": " + String.join("; ", errors));
+        }
+        return definition;
     }
 
     private static int requiredInt(JsonObject object, String key, ResourceLocation resourceId) {
