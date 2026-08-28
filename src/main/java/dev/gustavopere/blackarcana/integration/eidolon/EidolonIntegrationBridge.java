@@ -1,14 +1,20 @@
 package dev.gustavopere.blackarcana.integration.eidolon;
 
-import alexthw.eidolon_repraised.registries.RitualRegistry;
 import dev.gustavopere.blackarcana.api.ArcanaIntegration;
 import dev.gustavopere.blackarcana.api.ArcanaIntegrationAvailability;
 import dev.gustavopere.blackarcana.api.ArcanaIntegrationCapability;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BooleanSupplier;
 
-/** Server-visible descriptor for the public Eidolon 1.21.1 ritual host. */
+/**
+ * Server-visible descriptor for the Eidolon 1.21.1 ritual host.
+ *
+ * <p>This descriptor intentionally contains no Eidolon binary types. The optional
+ * bootstrap supplies the actual registry probe only after NeoForge confirms the
+ * provider mod is loaded, preserving a safe core-only classloading path.</p>
+ */
 public final class EidolonIntegrationBridge implements ArcanaIntegration {
     private final ArcanaIntegrationAvailability availability;
     private final String version;
@@ -24,17 +30,20 @@ public final class EidolonIntegrationBridge implements ArcanaIntegration {
         this.diagnostic = Objects.requireNonNull(diagnostic, "diagnostic");
     }
 
-    public static EidolonIntegrationBridge probe(boolean modLoaded, String version) {
+    public static EidolonIntegrationBridge probe(
+        boolean modLoaded,
+        String version,
+        BooleanSupplier ritualRegisteredProbe
+    ) {
         if (!modLoaded) {
             return new EidolonIntegrationBridge(
                 ArcanaIntegrationAvailability.MISSING_MOD,
                 version,
                 "Eidolon: Repraised is not loaded");
         }
+        Objects.requireNonNull(ritualRegisteredProbe, "ritualRegisteredProbe");
         try {
-            boolean registered = EidolonRitualRegistration.isRegistered()
-                && RitualRegistry.find(EidolonIntegrationIds.PROBE_RITUAL_ID) instanceof EidolonArcanaProbeRitual;
-            if (!registered) {
+            if (!ritualRegisteredProbe.getAsBoolean()) {
                 return new EidolonIntegrationBridge(
                     ArcanaIntegrationAvailability.API_INCOMPATIBLE,
                     version,

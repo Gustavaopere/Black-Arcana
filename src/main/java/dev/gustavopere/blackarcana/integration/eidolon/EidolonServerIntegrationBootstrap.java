@@ -18,7 +18,10 @@ public final class EidolonServerIntegrationBootstrap {
         String version = ModList.get().getModContainerById(EidolonIntegrationIds.MOD_ID)
             .map(container -> container.getModInfo().getVersion().toString())
             .orElse("not-loaded");
-        EidolonIntegrationBridge bridge = EidolonIntegrationBridge.probe(true, version);
+        EidolonIntegrationBridge bridge = EidolonIntegrationBridge.probe(
+            true,
+            version,
+            EidolonRitualRegistration::isRegistered);
         runtime.integrations().register(bridge);
 
         BlackArcanaMod.LOGGER.info(

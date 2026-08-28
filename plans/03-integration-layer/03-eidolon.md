@@ -3,11 +3,22 @@
 ## Intent
 Make Eidolon the primary occult/ritual presentation layer where its public API/data model permits it.
 
-## Investigate
-Ritual registration/extensibility, signs/knowledge, altar/components, sacrifice/item conditions and progression hooks available in the exact 1.21.1 build.
+## Verified 1.21.1 surface
+- `alexthw.eidolon_repraised.api.ritual.Ritual` is public and subclassable.
+- `RitualRegistry.register(ResourceLocation, Ritual)` and `find(ResourceLocation)` are public.
+- `GenericRitualRecipe` resolves the ritual implementation by registered id.
+- Generated ritual JSON uses recipe type `eidolon_repraised:ritual_brazier`.
+
+## Preparatory implementation
+- non-destructive `black_arcana:eidolon_integration_probe` ritual registered through the public API;
+- conditional recipe guarded by `neoforge:mod_loaded`;
+- optional mod-bus bootstrap performs registration only when Eidolon is loaded;
+- server descriptor advertises only `RITUAL_HOST` after the registered ritual is confirmed;
+- descriptor itself has no Eidolon binary references;
+- failed registration/linkage becomes `API_INCOMPATIBLE`, never a silent capability.
 
 ## Rule
-If Eidolon lacks a stable public hook for a required grand ritual, implement a Black Arcana ritual engine that consumes/recognizes Eidolon content instead of mixin-patching internals by default.
+If Eidolon lacks a stable public hook for a future grand ritual, implement a Black Arcana ritual engine that consumes/recognizes Eidolon content instead of mixin-patching internals by default.
 
-## Acceptance
-Document supported versus unavailable hooks and implement one safe prototype ritual bridge without relying on private internals.
+## Acceptance state
+Source implementation and source-level contracts are prepared. The positive installed-Eidolon runtime profile still requires a real executing runner before this task can receive a completion check.

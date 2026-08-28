@@ -82,3 +82,18 @@ Multi-tick or high-cardinality effects use `ScheduledArcanaEffect` and the runti
 
 ## D027 — Runtime group renames precede orphan pruning [PREPARATORY Stage 02]
 Cooldown and charge group identifiers may be renamed through a validated, cycle-free migration graph. Startup order is `initializers/policies -> SavedData restore -> runtime group migrations -> orphan pruning`. Rename collisions merge conservatively: cooldowns preserve the later ready boundary; charge pools preserve the lower available charge count and later recharge boundary. Removed groups remain the responsibility of the active-policy pruning pass.
+
+## D028 — Optional integrations fail closed [PREPARATORY Stage 03]
+Every supported optional provider receives an explicit integration descriptor at server startup. Absence is `MISSING_MOD`; binary/API drift is `API_INCOMPATIBLE`; only a successful provider probe may advertise capabilities. A missing resource backend never reduces a provider-backed cost to zero.
+
+## D029 — Installed-pack version is the first compatibility baseline [PREPARATORY Stage 03]
+For integrations without a stable standalone API artifact, Black Arcana compiles first against the exact release installed in the target pack. Newer upstream releases are compatibility targets, not silent baseline upgrades. Ars Nouveau is therefore pinned to `5.13.0` for the current pack.
+
+## D030 — Malum spirits are discrete resources [PREPARATORY Stage 03]
+Black Arcana does not invent a generic Malum mana pool. Spirit-backed costs are typed, bounded integer inventory transactions keyed to canonical Malum spirit items and must provide compensation if an unexpected partial debit occurs.
+
+## D031 — Eidolon is a public ritual host, not an internals target [PREPARATORY Stage 03]
+On Eidolon: Repraised 1.21.1, Black Arcana may register ritual implementations through public `api.ritual.Ritual` and `RitualRegistry.register`, with data-driven `ritual_brazier` recipes resolving those ids. Provider-specific recipe JSON must be conditioned on Eidolon presence. Mixins/private tile manipulation are not the default extension route.
+
+## D032 — RPG mastery lanes may be Black Arcana-owned [PREPARATORY Stage 03]
+The RPG Skill Tree mastery state accepts dynamic non-blank lane ids. Black Arcana therefore owns the `black_arcana:casting` lane and may add later domain-specific lanes without modifying the RPG mod, provided awards remain bounded, successful-action-only and protected from recursive XP feedback.
