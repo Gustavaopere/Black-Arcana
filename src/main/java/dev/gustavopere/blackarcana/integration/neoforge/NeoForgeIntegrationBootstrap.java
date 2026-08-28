@@ -34,5 +34,8 @@ public final class NeoForgeIntegrationBootstrap {
             rpg.implementationVersion(),
             rpg.capabilities(),
             rpg.diagnostic().isBlank() ? "" : " diagnostic=" + rpg.diagnostic());
+
+        // Provider-specific classes are loaded only after ModList confirms presence.
+        OptionalModEntrypoints.installServer(server, runtime);
     }
 }
