@@ -218,8 +218,7 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
 
         ServerLevel level = caster.serverLevel();
         Vec3 origin = caster.getEyePosition(1.0F);
-        Vec3 facing = caster.getViewVector(1.0F).normalize();
-        double minimumDot = Math.cos(Math.toRadians(cone.halfAngleDegrees()));
+        Vec3 facing = caster.getViewVector(1.0F);
         AABB bounds = caster.getBoundingBox().inflate(spec.maxRange());
         List<TargetCandidate> candidates = new ArrayList<>();
 
@@ -228,9 +227,12 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
                 bounds,
                 entity -> entity != caster)) {
             Vec3 toTarget = entity.position().subtract(origin);
-            double lengthSquared = toTarget.lengthSqr();
-            if (lengthSquared == 0.0D) continue;
-            if (facing.dot(toTarget.normalize()) < minimumDot) continue;
+            if (!TargetGeometryMath.withinCone(
+                    facing.x, facing.y, facing.z,
+                    toTarget.x, toTarget.y, toTarget.z,
+                    cone)) {
+                continue;
+            }
             candidates.add(candidate(caster, entity, caster.distanceToSqr(entity)));
         }
 
@@ -255,7 +257,6 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
         Vec3 center = caster.position();
         AABB bounds = caster.getBoundingBox().inflate(
                 cylinder.radius(), cylinder.halfHeight(), cylinder.radius());
-        double radiusSquared = cylinder.radius() * cylinder.radius();
         List<TargetCandidate> candidates = new ArrayList<>();
 
         for (LivingEntity entity : level.getEntitiesOfClass(
@@ -263,10 +264,13 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
                 bounds,
                 entity -> entity != caster)) {
             Vec3 position = entity.position();
-            double dx = position.x - center.x;
-            double dz = position.z - center.z;
-            if (dx * dx + dz * dz > radiusSquared) continue;
-            if (Math.abs(position.y - center.y) > cylinder.halfHeight()) continue;
+            if (!TargetGeometryMath.withinCylinder(
+                    position.x - center.x,
+                    position.y - center.y,
+                    position.z - center.z,
+                    cylinder)) {
+                continue;
+            }
             candidates.add(candidate(caster, entity, caster.distanceToSqr(entity)));
         }
 
@@ -278,19 +282,23 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
             ArcanaCastRequest request,
             ArcanaTargetSpec spec
     ) {
-        List<UUID> linked = List.copyOf(Objects.requireNonNull(
-                linkedTargetResolver.resolve(request, caster), "linked targets"));
+        List<UUID> linked = Objects.requireNonNull(
+                linkedTargetResolver.resolve(request, caster), "linked targets");
         if (linked.size() > MAX_LINK_CANDIDATES) {
             return ArcanaServices.TargetResolution.denied("linked target candidate set exceeds hard bound");
         }
 
-        Set<UUID> unique = new LinkedHashSet<>(linked);
-        ServerLevel level = caster.serverLevel();
-        List<TargetCandidate> candidates = new ArrayList<>(unique.size());
-        for (UUID targetId : unique) {
+        Set<UUID> unique = new LinkedHashSet<>();
+        for (UUID targetId : linked) {
             if (targetId == null) {
                 return ArcanaServices.TargetResolution.denied("linked target resolver returned null id");
             }
+            unique.add(targetId);
+        }
+
+        ServerLevel level = caster.serverLevel();
+        List<TargetCandidate> candidates = new ArrayList<>(unique.size());
+        for (UUID targetId : unique) {
             Entity target = level.getEntity(targetId);
             if (target == null) continue;
             candidates.add(candidate(caster, target, caster.distanceToSqr(target)));
