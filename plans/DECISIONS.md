@@ -73,3 +73,12 @@ Black Arcana does not send full runtime state every tick. Spell presentation is 
 
 ## D024 — Channeling converges on the canonical cast engine [PREPARATORY Stage 02]
 Beginning a charge/channel creates bounded server-owned session state but does not execute gameplay effects or spend resources. Releasing a valid session consumes it and then enters the same `ArcanaCastEngine` used by immediate casts exactly once. The server computes channel duration from gameplay ticks, preserves the original loadout slot, and revalidates the current spell/loadout/runtime at release. Client-reported charge duration is never authoritative, and Stage 05 input packets must terminate in this coordinator rather than introducing a parallel execution pipeline.
+
+## D025 — Target kinds require explicit server geometry [PREPARATORY Stage 02]
+Every `ArcanaTargetSpec.Kind` has a server-owned resolution route. Entity/projectile hints are advisory ids only; block/ray results come from server raycasts with loaded-chunk preflight; cone/cylinder require bounded `ArcanaTargetGeometry` rather than hidden default angles or heights; linked targets come from a server-owned resolver and never from a client-authored entity list. Target references crossing core/effect boundaries use canonical typed entity/block encodings.
+
+## D026 — Expensive effects are admitted before cost commit [PREPARATORY Stage 02]
+Multi-tick or high-cardinality effects use `ScheduledArcanaEffect` and the runtime-owned `BoundedWorkScheduler`. Queue saturation fails the effect before resource commit so the normal cast transaction can refund. Accepted work is processed under a fixed per-tick budget, a pending item runs at most once per tick, and a failing work item is isolated/dropped instead of corrupting the remaining queue.
+
+## D027 — Runtime group renames precede orphan pruning [PREPARATORY Stage 02]
+Cooldown and charge group identifiers may be renamed through a validated, cycle-free migration graph. Startup order is `initializers/policies -> SavedData restore -> runtime group migrations -> orphan pruning`. Rename collisions merge conservatively: cooldowns preserve the later ready boundary; charge pools preserve the lower available charge count and later recharge boundary. Removed groups remain the responsibility of the active-policy pruning pass.
