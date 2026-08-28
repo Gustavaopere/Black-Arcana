@@ -61,3 +61,12 @@ Client targeting is only intent. Server-computed facts determine loaded/alive/ra
 
 ## D020 — Minimal network authority [PREPARATORY Stage 02]
 Cast-intent payloads carry only bounded identity/intention fields such as cast id, spell id, loadout slot and target hint. Authoritative cost, damage, cooldown, range, progression and world mutation values are resolved from server registries/config. Protocol payloads are versioned, bounded and rate-limited at ingress.
+
+## D021 — Datapacks are declarative, not executable [PREPARATORY Stage 02]
+The initial spell datapack schema is intentionally limited to identity/presentation metadata. Unknown fields are rejected and a resource's path-derived id must match its declared id. Data-driven authoritative balance may be added only through a bounded schema designed by Stage 08; datapacks never provide Java class names, commands, script bodies or arbitrary execution hooks.
+
+## D022 — Global player runtime state uses Overworld SavedData [PREPARATORY Stage 02]
+Cooldowns, charge pools and loadouts are player/global runtime state rather than dimension-local state, so their Minecraft persistence adapter is attached to the Overworld `DimensionDataStorage`. Restore is bounded and tolerant of malformed individual entries. Removed cooldown/charge groups are pruned only after server initializers install the current canonical policies, preventing early startup from deleting valid state.
+
+## D023 — Client synchronization is event-driven [PREPARATORY Stage 02]
+Black Arcana does not send full runtime state every tick. Spell presentation is synchronized on login and successful metadata reload; cooldown snapshots are synchronized on login and after a successful cast. Future UI-specific incremental packets must preserve this event-driven model and hard payload limits.
