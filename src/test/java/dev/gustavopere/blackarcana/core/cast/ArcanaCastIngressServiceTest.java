@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -106,20 +107,28 @@ class ArcanaCastIngressServiceTest {
     void rateLimitFailsBeforeSpellExecution() {
         ArcanaSpellRegistry registry = new ArcanaSpellRegistry();
         registry.replaceAll(List.of(spell()));
+        AtomicInteger engineResolutions = new AtomicInteger();
         ArcanaCastIngressService ingress = new ArcanaCastIngressService(
                 registry,
                 new IngressRateLimiter(1, 20L, 32),
-                id -> { throw new AssertionError("engine must not run after ingress limit"); });
+                id -> {
+                    engineResolutions.incrementAndGet();
+                    return null;
+                });
 
-        // First request consumes the ingress bucket even though no runtime exists.
+        // First request consumes the ingress bucket and may proceed to runtime resolution.
         var first = ingress.handle(context(10L), intent(SPELL_ID.canonical()));
         assertEquals("DENIED_IDENTITY", first.status());
+        assertEquals("spell_runtime_unavailable", first.code());
+        assertEquals(1, engineResolutions.get());
 
+        // Second request is denied by ingress before another runtime lookup can occur.
         var second = ingress.handle(context(11L), new CastIntentPayload(
                 ArcanaProtocol.VERSION,
                 "00000000-0000-0000-0000-000000000002",
                 SPELL_ID.canonical(), 0, ""));
         assertEquals("DENIED_INGRESS", second.status());
         assertEquals("rate_limited", second.code());
+        assertEquals(1, engineResolutions.get());
     }
 }
