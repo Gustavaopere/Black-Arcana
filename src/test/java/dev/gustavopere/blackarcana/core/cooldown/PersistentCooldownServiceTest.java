@@ -27,9 +27,13 @@ class PersistentCooldownServiceTest {
             new ArcanaCost("black_arcana:test", 1.0), false);
 
     private static ArcanaCastRequest request(long tick) {
+        return request(tick, "minecraft:overworld");
+    }
+
+    private static ArcanaCastRequest request(long tick, String dimensionId) {
         return new ArcanaCastRequest(
                 ArcanaCastId.random(), SPELL,
-                new ArcanaCastContext(CASTER, tick, "minecraft:overworld"));
+                new ArcanaCastContext(CASTER, tick, dimensionId));
     }
 
     @Test
@@ -45,6 +49,15 @@ class PersistentCooldownServiceTest {
     }
 
     @Test
+    void cooldownIsCasterGlobalAcrossDimensionChanges() {
+        PersistentCooldownService service = new PersistentCooldownService(req -> new ArcanaCooldownSpec("black_arcana:shared", 40, true));
+        service.start(request(100, "minecraft:overworld"));
+
+        assertFalse(service.check(request(120, "minecraft:the_nether")).allowed());
+        assertTrue(service.check(request(140, "minecraft:the_end")).allowed());
+    }
+
+    @Test
     void persistentSnapshotSurvivesServiceRecreation() {
         PersistentCooldownService first = new PersistentCooldownService(req -> new ArcanaCooldownSpec("black_arcana:shared", 40, true));
         first.start(request(100));
@@ -53,6 +66,17 @@ class PersistentCooldownServiceTest {
         PersistentCooldownService restored = new PersistentCooldownService(req -> new ArcanaCooldownSpec("black_arcana:shared", 40, true));
         restored.restorePersistentSnapshot(snapshot, 110);
         assertFalse(restored.check(request(120)).allowed());
+        assertTrue(restored.check(request(140)).allowed());
+    }
+
+    @Test
+    void restoreDropsEntriesAlreadyExpiredAtCurrentTick() {
+        PersistentCooldownService restored = new PersistentCooldownService(req -> new ArcanaCooldownSpec("black_arcana:shared", 40, true));
+        restored.restorePersistentSnapshot(Map.of(
+                new PersistentCooldownService.CooldownKey(CASTER, "black_arcana:shared"),
+                new PersistentCooldownService.SnapshotEntry(100, 140)
+        ), 140);
+        assertEquals(0, restored.size());
         assertTrue(restored.check(request(140)).allowed());
     }
 
@@ -77,6 +101,15 @@ class PersistentCooldownServiceTest {
         service.start(request(200));
         duration.set(80);
         assertTrue(service.check(request(220)).allowed());
+    }
+
+    @Test
+    void readyTickSaturatesInsteadOfOverflowingNearLongMax() {
+        PersistentCooldownService service = new PersistentCooldownService(req -> new ArcanaCooldownSpec("black_arcana:shared", 20, true));
+        service.start(request(Long.MAX_VALUE - 5L));
+
+        assertFalse(service.check(request(Long.MAX_VALUE - 1L)).allowed());
+        assertTrue(service.check(request(Long.MAX_VALUE)).allowed());
     }
 
     @Test
