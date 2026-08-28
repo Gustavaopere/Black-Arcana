@@ -38,9 +38,6 @@ public final class TemporaryMutationTracker {
         Objects.requireNonNull(castId, "castId");
         Objects.requireNonNull(observedCurrentState, "observedCurrentState");
         Objects.requireNonNull(replacementState, "replacementState");
-        if (observedCurrentState.isBlank() || replacementState.isBlank()) {
-            throw new IllegalArgumentException("block-state ids cannot be blank");
-        }
         if (expiresAtTick < 0L) throw new IllegalArgumentException("expiresAtTick cannot be negative");
 
         TemporaryWorldMutation previous = entries.get(key);
@@ -58,7 +55,21 @@ public final class TemporaryMutationTracker {
         TemporaryWorldMutation mutation = new TemporaryWorldMutation(
             key, ownerId, castId, original, replacementState, effectiveExpiry);
         entries.put(key, mutation);
-        return RegistrationResult.accepted(mutation);
+        return RegistrationResult.accepted(mutation, previous);
+    }
+
+    /** Undo a just-created tracking record only when it is still the current record. */
+    public synchronized boolean rollbackRegistration(RegistrationResult registration) {
+        Objects.requireNonNull(registration, "registration");
+        if (!registration.decision().allowed() || registration.mutation() == null) return false;
+        TemporaryWorldMutation current = entries.get(registration.mutation().key());
+        if (!registration.mutation().equals(current)) return false;
+        if (registration.previousMutation() == null) {
+            entries.remove(registration.mutation().key());
+        } else {
+            entries.put(registration.mutation().key(), registration.previousMutation());
+        }
+        return true;
     }
 
     public synchronized List<ExpiryAction> inspectExpired(long nowTick, int maxChecks, StateReader reader) {
@@ -122,20 +133,33 @@ public final class TemporaryMutationTracker {
         Optional<String> read(TemporaryMutationKey key);
     }
 
-    public record RegistrationResult(ArcanaDecision decision, TemporaryWorldMutation mutation) {
+    public record RegistrationResult(
+        ArcanaDecision decision,
+        TemporaryWorldMutation mutation,
+        TemporaryWorldMutation previousMutation
+    ) {
         public RegistrationResult {
             Objects.requireNonNull(decision, "decision");
             if (decision.allowed() != (mutation != null)) {
                 throw new IllegalArgumentException("accepted registration must carry exactly one mutation");
             }
+            if (!decision.allowed() && previousMutation != null) {
+                throw new IllegalArgumentException("denied registration cannot carry previous mutation state");
+            }
         }
 
-        public static RegistrationResult accepted(TemporaryWorldMutation mutation) {
-            return new RegistrationResult(ArcanaDecision.allow(), Objects.requireNonNull(mutation, "mutation"));
+        public static RegistrationResult accepted(
+            TemporaryWorldMutation mutation,
+            TemporaryWorldMutation previousMutation
+        ) {
+            return new RegistrationResult(
+                ArcanaDecision.allow(),
+                Objects.requireNonNull(mutation, "mutation"),
+                previousMutation);
         }
 
         public static RegistrationResult denied(String code, String detail) {
-            return new RegistrationResult(ArcanaDecision.deny(code, detail), null);
+            return new RegistrationResult(ArcanaDecision.deny(code, detail), null, null);
         }
     }
 

@@ -3,8 +3,10 @@ package dev.gustavopere.blackarcana.core.world;
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices;
+import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /** Central fail-closed safety gate for every spell declaring world mutation. */
 public final class ConfigurableWorldEffectPolicy implements ArcanaServices.WorldEffectPolicy {
@@ -22,6 +24,10 @@ public final class ConfigurableWorldEffectPolicy implements ArcanaServices.World
 
     public WorldEffectPolicyConfig config() {
         return config;
+    }
+
+    public Optional<WorldEffectProfile> profileFor(ArcanaSpellId spellId) {
+        return profiles.find(Objects.requireNonNull(spellId, "spellId"));
     }
 
     @Override
