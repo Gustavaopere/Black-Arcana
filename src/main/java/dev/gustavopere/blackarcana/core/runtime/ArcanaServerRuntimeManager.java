@@ -2,6 +2,8 @@ package dev.gustavopere.blackarcana.core.runtime;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.config.SpellDataDefinition;
+import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.neoforge.ServerPlayerArcanaContext;
@@ -14,6 +16,7 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -29,6 +32,7 @@ public final class ArcanaServerRuntimeManager {
     private static final Map<MinecraftServer, ArcanaServerRuntime> RUNTIMES =
             Collections.synchronizedMap(new IdentityHashMap<>());
     private static final List<Consumer<ArcanaServerRuntime>> INITIALIZERS = new CopyOnWriteArrayList<>();
+    private static volatile List<SpellDataDefinition> CURRENT_SPELL_DATA = List.of();
 
     private ArcanaServerRuntimeManager() { }
 
@@ -43,6 +47,26 @@ public final class ArcanaServerRuntimeManager {
     /** Integrations may register bootstrap logic before the server starts. */
     public static void addInitializer(Consumer<ArcanaServerRuntime> initializer) {
         INITIALIZERS.add(Objects.requireNonNull(initializer, "initializer"));
+    }
+
+    /**
+     * Atomically validates a datapack metadata snapshot before publishing it to
+     * current and future server runtimes. Gameplay implementation is not data-driven here.
+     */
+    public static void reloadSpellData(Collection<SpellDataDefinition> definitions) {
+        Objects.requireNonNull(definitions, "definitions");
+        SpellDataCatalog validator = new SpellDataCatalog();
+        validator.replaceAll(definitions);
+        List<SpellDataDefinition> validated = List.copyOf(validator.snapshot().values());
+
+        CURRENT_SPELL_DATA = validated;
+        synchronized (RUNTIMES) {
+            RUNTIMES.values().forEach(runtime -> runtime.spellData().replaceAll(validated));
+        }
+    }
+
+    public static List<SpellDataDefinition> currentSpellDataSnapshot() {
+        return CURRENT_SPELL_DATA;
     }
 
     public static Optional<ArcanaServerRuntime> get(MinecraftServer server) {
@@ -66,6 +90,7 @@ public final class ArcanaServerRuntimeManager {
         MinecraftServer server = event.getServer();
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
         INITIALIZERS.forEach(initializer -> initializer.accept(runtime));
+        runtime.spellData().replaceAll(CURRENT_SPELL_DATA);
         BlackArcanaSavedData.get(server).restore(
                 runtime.cooldowns(), runtime.charges(), runtime.loadouts(), server.overworld().getGameTime());
         runtime.pruneOrphanedPersistentState();
