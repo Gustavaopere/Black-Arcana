@@ -13,13 +13,11 @@ import java.util.List;
 import java.util.Objects;
 
 public record CooldownSnapshotPacket(int protocolVersion, List<Entry> entries) implements CustomPacketPayload {
-    private static final int MAX_GROUP_ID_LENGTH = 192;
-
     public static final Type<CooldownSnapshotPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "cooldown_snapshot"));
 
     private static final StreamCodec<ByteBuf, Entry> ENTRY_CODEC = StreamCodec.composite(
-            ByteBufCodecs.stringUtf8(MAX_GROUP_ID_LENGTH), Entry::groupId,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH), Entry::groupId,
             ByteBufCodecs.VAR_LONG, Entry::remainingTicks,
             Entry::new);
 
