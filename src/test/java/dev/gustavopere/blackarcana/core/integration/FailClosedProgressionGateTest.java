@@ -69,7 +69,7 @@ class FailClosedProgressionGateTest {
 
     private static ArcanaCastRequest request() {
         ArcanaSpellDefinition spell = new ArcanaSpellDefinition(
-            new ArcanaSpellId("black_arcana:test"),
+            ArcanaSpellId.parse("black_arcana:test"),
             "spell.black_arcana.test",
             "black_arcana:test",
             ArcanaCost.none(),
