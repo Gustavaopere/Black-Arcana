@@ -21,6 +21,9 @@ public record SpellDataDefinition(int schemaVersion, String id, String translati
         if (schemaVersion != CURRENT_SCHEMA_VERSION) {
             errors.add("unsupported schemaVersion: " + schemaVersion);
         }
+        if (id.length() > ArcanaProtocol.MAX_RESOURCE_ID_LENGTH) {
+            errors.add("id exceeds maximum length");
+        }
         try {
             ArcanaSpellId.parse(id);
         } catch (IllegalArgumentException ex) {
