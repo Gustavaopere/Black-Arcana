@@ -4,13 +4,17 @@ import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.config.SpellDataDefinition;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
+import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
+import dev.gustavopere.blackarcana.network.CooldownSnapshotPayload;
+import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.ServerPlayerArcanaContext;
 import dev.gustavopere.blackarcana.persistence.BlackArcanaSavedData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
@@ -18,6 +22,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +47,7 @@ public final class ArcanaServerRuntimeManager {
         gameBus.addListener(ArcanaServerRuntimeManager::onServerTick);
         gameBus.addListener(ArcanaServerRuntimeManager::onServerStopping);
         gameBus.addListener(ArcanaServerRuntimeManager::onServerStopped);
+        gameBus.addListener(ArcanaServerRuntimeManager::onPlayerLoggedIn);
     }
 
     /** Integrations may register bootstrap logic before the server starts. */
@@ -61,7 +67,12 @@ public final class ArcanaServerRuntimeManager {
 
         CURRENT_SPELL_DATA = validated;
         synchronized (RUNTIMES) {
-            RUNTIMES.values().forEach(runtime -> runtime.spellData().replaceAll(validated));
+            RUNTIMES.forEach((server, runtime) -> {
+                runtime.spellData().replaceAll(validated);
+                var presentation = runtime.spellData().presentationPayload();
+                server.getPlayerList().getPlayers().forEach(player ->
+                        ArcanaNetworkBridge.sendSpellPresentation(player, presentation));
+            });
         }
     }
 
@@ -83,7 +94,14 @@ public final class ArcanaServerRuntimeManager {
                     ArcanaCastResult.Status.DENIED_IDENTITY,
                     ArcanaDecision.deny("server_runtime_unavailable", "Black Arcana server runtime is not active")));
         }
-        return runtime.handle(ServerPlayerArcanaContext.from(player), intent);
+
+        CastResultPayload result = runtime.handle(ServerPlayerArcanaContext.from(player), intent);
+        if (ArcanaCastResult.Status.SUCCESS.name().equals(result.status())) {
+            ArcanaNetworkBridge.sendCooldownSnapshot(
+                    player,
+                    cooldownSnapshot(runtime, player, server.overworld().getGameTime()));
+        }
+        return result;
     }
 
     private static void onServerStarted(ServerStartedEvent event) {
@@ -95,6 +113,18 @@ public final class ArcanaServerRuntimeManager {
                 runtime.cooldowns(), runtime.charges(), runtime.loadouts(), server.overworld().getGameTime());
         runtime.pruneOrphanedPersistentState();
         RUNTIMES.put(server, runtime);
+    }
+
+    private static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        MinecraftServer server = player.serverLevel().getServer();
+        ArcanaServerRuntime runtime = RUNTIMES.get(server);
+        if (runtime == null) return;
+
+        ArcanaNetworkBridge.sendSpellPresentation(player, runtime.spellData().presentationPayload());
+        ArcanaNetworkBridge.sendCooldownSnapshot(
+                player,
+                cooldownSnapshot(runtime, player, server.overworld().getGameTime()));
     }
 
     private static void onServerTick(ServerTickEvent.Post event) {
@@ -111,6 +141,20 @@ public final class ArcanaServerRuntimeManager {
 
     private static void onServerStopped(ServerStoppedEvent event) {
         RUNTIMES.remove(event.getServer());
+    }
+
+    private static CooldownSnapshotPayload cooldownSnapshot(
+            ArcanaServerRuntime runtime,
+            ServerPlayer player,
+            long now
+    ) {
+        List<CooldownSnapshotPayload.Entry> entries = runtime.cooldowns()
+                .remainingSnapshot(player.getUUID(), now, ArcanaProtocol.MAX_COOLDOWN_ENTRIES)
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))
+                .map(entry -> new CooldownSnapshotPayload.Entry(entry.getKey(), entry.getValue()))
+                .toList();
+        return new CooldownSnapshotPayload(ArcanaProtocol.VERSION, entries);
     }
 
     private static void persist(MinecraftServer server, long now) {
