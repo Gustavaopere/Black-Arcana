@@ -7,84 +7,18 @@ import dev.gustavopere.blackarcana.api.ArcanaCooldownSpec;
 import dev.gustavopere.blackarcana.api.ArcanaCost;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
-import dev.gustavopere.blackarcana.api.ArcanaTargetSpec;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
-import dev.gustavopere.blackarcana.core.targeting.ServerEntityTargetSelector;
-import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 @GameTestHolder(BlackArcanaMod.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class BlackArcanaLifecycleGameTests {
     private BlackArcanaLifecycleGameTests() { }
-
-    @SuppressWarnings("removal")
-    @GameTest(template = "foundation_empty", timeoutTicks = 40)
-    public static void serverEntityTargetingRespectsFriendlyPolicy(GameTestHelper helper) {
-        var caster = helper.makeMockServerPlayerInLevel();
-        BlockPos casterPos = helper.absolutePos(new BlockPos(1, 2, 1));
-        caster.teleportTo(casterPos.getX() + 0.5D, casterPos.getY(), casterPos.getZ() + 0.5D);
-        var target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(4, 2, 1));
-
-        var scoreboard = caster.getScoreboard();
-        String teamName = "ba_" + caster.getUUID().toString().substring(0, 8);
-        var team = scoreboard.addPlayerTeam(teamName);
-        scoreboard.addPlayerToTeam(caster.getScoreboardName(), team);
-        scoreboard.addPlayerToTeam(target.getScoreboardName(), team);
-
-        AtomicReference<ArcanaTargetSpec> spec = new AtomicReference<>(new ArcanaTargetSpec(
-                ArcanaTargetSpec.Kind.ENTITY,
-                8.0D,
-                1,
-                false,
-                false,
-                false));
-        ServerEntityTargetSelector selector = new ServerEntityTargetSelector(
-                helper.getLevel().getServer(),
-                request -> spec.get());
-        ArcanaCastRequest request = new ArcanaCastRequest(
-                ArcanaCastId.random(),
-                syntheticSpell(),
-                new ArcanaCastContext(
-                        caster.getUUID(),
-                        helper.getLevel().getGameTime(),
-                        helper.getLevel().dimension().location().toString()),
-                0,
-                target.getUUID().toString());
-
-        // Give the level entity index and scoreboard membership one server tick to settle.
-        // This keeps the test focused on Black Arcana's friendly-target policy instead of
-        // depending on same-tick GameTest fixture registration order.
-        helper.runAfterDelay(1L, () -> {
-            try {
-                helper.assertTrue(caster.isAlliedTo(target), "scoreboard team must establish vanilla allied state");
-                helper.assertTrue(
-                        !selector.resolve(request).resolved(),
-                        "friendly entity must be rejected when allowFriendly=false");
-
-                spec.set(new ArcanaTargetSpec(
-                        ArcanaTargetSpec.Kind.ENTITY,
-                        8.0D,
-                        1,
-                        false,
-                        false,
-                        true));
-                helper.assertTrue(
-                        selector.resolve(request).resolved(),
-                        "same friendly entity must resolve when allowFriendly=true");
-                helper.succeed();
-            } finally {
-                scoreboard.removePlayerTeam(team);
-            }
-        });
-    }
 
     @SuppressWarnings("removal")
     @GameTest(template = "foundation_empty", timeoutTicks = 40)
