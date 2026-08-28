@@ -6,7 +6,9 @@ import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CooldownService;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -63,6 +65,28 @@ public final class PersistentCooldownService implements CooldownService {
             }
         });
         return Map.copyOf(snapshot);
+    }
+
+    /**
+     * Returns a deterministic, bounded UI snapshot for one caster. Expired entries
+     * for that caster are pruned as part of the read.
+     */
+    public synchronized Map<String, Long> remainingSnapshot(UUID casterId, long now, int maxEntries) {
+        Objects.requireNonNull(casterId, "casterId");
+        if (now < 0L) throw new IllegalArgumentException("now cannot be negative");
+        if (maxEntries < 0) throw new IllegalArgumentException("maxEntries cannot be negative");
+
+        entries.entrySet().removeIf(item -> item.getKey().casterId().equals(casterId) && item.getValue().readyAtTick() <= now);
+
+        Map<String, Long> result = new LinkedHashMap<>();
+        entries.entrySet().stream()
+                .filter(item -> item.getKey().casterId().equals(casterId))
+                .sorted(Map.Entry.comparingByKey(Comparator.comparing(CooldownKey::groupId)))
+                .limit(maxEntries)
+                .forEach(item -> result.put(
+                        item.getKey().groupId(),
+                        item.getValue().readyAtTick() - now));
+        return Map.copyOf(result);
     }
 
     public synchronized void restorePersistentSnapshot(Map<CooldownKey, SnapshotEntry> snapshot, long now) {
