@@ -15,6 +15,7 @@ import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ArcanaCooldownPolicyRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
+import dev.gustavopere.blackarcana.core.cooldown.RuntimeGroupMigrations;
 import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
@@ -49,6 +50,7 @@ public final class ArcanaServerRuntime {
     private final ArcanaChannelManager channels;
     private final ArcanaChannelCastCoordinator channelCasts;
     private final BoundedWorkScheduler effectScheduler;
+    private RuntimeGroupMigrations groupMigrations = RuntimeGroupMigrations.none();
 
     public ArcanaServerRuntime(int maxCastIntentsPerSecond, int maxTrackedCasters) {
         this(
@@ -133,9 +135,21 @@ public final class ArcanaServerRuntime {
         engines.remove(Objects.requireNonNull(spellId, "spellId"));
     }
 
+    /** Initializers register rename tables before SavedData restoration. */
+    public void setRuntimeGroupMigrations(RuntimeGroupMigrations migrations) {
+        this.groupMigrations = Objects.requireNonNull(migrations, "migrations");
+    }
+
+    /** Applies configured renames to restored state before removed-group pruning. */
+    public MigrationResult migrateRestoredPersistentState() {
+        int cooldownsRenamed = cooldowns.migrateGroups(groupMigrations);
+        int chargesRenamed = charges.migrateGroups(groupMigrations);
+        return new MigrationResult(cooldownsRenamed, chargesRenamed);
+    }
+
     /**
      * Prunes restored cooldown/charge state after all server initializers have
-     * installed the canonical policies for this runtime.
+     * installed the canonical policies for this runtime and migrations ran.
      */
     public PruneResult pruneOrphanedPersistentState() {
         Set<String> activeCooldownGroups = new HashSet<>();
@@ -193,6 +207,14 @@ public final class ArcanaServerRuntime {
         public RuntimeTickResult {
             if (expiredChannels < 0) throw new IllegalArgumentException("expiredChannels cannot be negative");
             Objects.requireNonNull(scheduledWork, "scheduledWork");
+        }
+    }
+
+    public record MigrationResult(int cooldownsRenamed, int chargePoolsRenamed) {
+        public MigrationResult {
+            if (cooldownsRenamed < 0 || chargePoolsRenamed < 0) {
+                throw new IllegalArgumentException("migration counts cannot be negative");
+            }
         }
     }
 
