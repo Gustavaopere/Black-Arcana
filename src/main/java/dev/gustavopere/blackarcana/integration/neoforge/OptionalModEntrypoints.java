@@ -19,7 +19,9 @@ public final class OptionalModEntrypoints {
     );
     private static final Map<String, String> SERVER_ENTRYPOINTS = Map.of(
         "irons_spellbooks",
-        "dev.gustavopere.blackarcana.integration.irons.IronsServerIntegrationBootstrap"
+        "dev.gustavopere.blackarcana.integration.irons.IronsServerIntegrationBootstrap",
+        "ars_nouveau",
+        "dev.gustavopere.blackarcana.integration.ars.ArsServerIntegrationBootstrap"
     );
 
     private OptionalModEntrypoints() { }
