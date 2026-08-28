@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.core.cast;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
+import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
@@ -27,10 +28,24 @@ public final class ArcanaChannelManager {
             long serverTick,
             ArcanaChannelSpec spec
     ) {
+        return begin(casterId, castId, spellId, 0, serverTick, spec);
+    }
+
+    public synchronized ArcanaDecision begin(
+            UUID casterId,
+            ArcanaCastId castId,
+            ArcanaSpellId spellId,
+            int loadoutSlot,
+            long serverTick,
+            ArcanaChannelSpec spec
+    ) {
         Objects.requireNonNull(casterId, "casterId");
         Objects.requireNonNull(castId, "castId");
         Objects.requireNonNull(spellId, "spellId");
         Objects.requireNonNull(spec, "spec");
+        if (loadoutSlot < 0 || loadoutSlot >= ArcanaCastRequest.MAX_LOADOUT_SLOTS) {
+            throw new IllegalArgumentException("loadoutSlot outside cast request bounds");
+        }
         if (serverTick < 0L) throw new IllegalArgumentException("serverTick cannot be negative");
         pruneExpired(serverTick);
 
@@ -41,7 +56,7 @@ public final class ArcanaChannelManager {
             return ArcanaDecision.deny("channel_manager_saturated", "channel session capacity reached");
         }
 
-        sessions.put(casterId, new Session(castId, spellId, serverTick, spec));
+        sessions.put(casterId, new Session(castId, spellId, loadoutSlot, serverTick, spec));
         return ArcanaDecision.allow();
     }
 
@@ -71,7 +86,8 @@ public final class ArcanaChannelManager {
         }
 
         sessions.remove(casterId);
-        return ReleaseResult.released(new ReleasedChannel(session.castId(), session.spellId(), elapsed));
+        return ReleaseResult.released(new ReleasedChannel(
+                session.castId(), session.spellId(), session.loadoutSlot(), elapsed));
     }
 
     public synchronized boolean cancel(UUID casterId, ArcanaCastId castId) {
@@ -98,9 +114,20 @@ public final class ArcanaChannelManager {
         return sessions.size();
     }
 
-    private record Session(ArcanaCastId castId, ArcanaSpellId spellId, long startedAtTick, ArcanaChannelSpec spec) { }
+    private record Session(
+            ArcanaCastId castId,
+            ArcanaSpellId spellId,
+            int loadoutSlot,
+            long startedAtTick,
+            ArcanaChannelSpec spec
+    ) { }
 
-    public record ReleasedChannel(ArcanaCastId castId, ArcanaSpellId spellId, long channelTicks) { }
+    public record ReleasedChannel(
+            ArcanaCastId castId,
+            ArcanaSpellId spellId,
+            int loadoutSlot,
+            long channelTicks
+    ) { }
 
     public record ReleaseResult(ArcanaDecision decision, Optional<ReleasedChannel> released) {
         public ReleaseResult {
