@@ -4,19 +4,21 @@ Last updated: 2026-08-28
 
 ## Current state
 
-Stage 00 Foundation is **complete, verified and merged into `main`**. The validated Foundation fix was incorporated through merge commit `b78993ac7e5866e81a206b0b6c7f3d96b5481bd8`; its source branch run `33166799319` passed JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke.
+Stage 00 Foundation is ✅ complete, verified and merged. The validated Foundation history is included in `main`; branch run `33166799319` and post-merge run `33167079272` passed JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke.
 
-Stage 01 Reference Catalog is the canonical active stage on `feat/01-reference-catalog`. The clean-room catalog was reapplied onto latest `main` without importing stale Foundation history. It reconciles all 53 observable reference rows, 32 implementation candidates, original identity, host viability, risk register, safety ceilings and provenance ledger.
+Stage 01 Reference Catalog is ✅ complete, verified and merged at `88059dc73d8abae12fe5dd4d8e99e08f8e0a8ed6`. Canonical CI run `33167246384` passed the full pipeline. All 53 observable reference rows and 32 candidate specifications are now frozen inputs for later content stages.
 
-Later stages remain preparatory until their causal predecessors merge. Stage 04 has already demonstrated an integrated full-green preparatory run (`33166679049`), but that evidence does not bypass Stages 01–03.
+Stage 02 Arcana Core is now the canonical active stage. Its existing preparatory implementation must be reapplied onto this latest `main` without importing stale Foundation/Stage 01 history.
+
+Stage 03 and Stage 04 remain preparatory. Stage 04 has already demonstrated a full-green integrated preparatory run (`33166679049`), but causal merge order remains mandatory.
 
 | Stage | State | Notes |
 |---|---|---|
-| 00 Foundation | ✅ Complete | merged; source branch full CI green |
-| 01 Reference Catalog | 🟨 Active | canonical branch assembled; full CI/merge pending |
-| 02 Arcana Core | 🟦 Preparatory | implementation exists downstream; canonicalization waits for Stage 01 |
-| 03 Integration Layer | 🟦 Preparatory | Iron's, Ars, Eidolon, Malum and RPG adapters exist downstream |
-| 04 World Safety | 🟦 Preparatory verified | integrated run `33166679049` fully green; canonicalization still waits for Stages 01–03 |
+| 00 Foundation | ✅ Complete | full branch and post-merge CI green |
+| 01 Reference Catalog | ✅ Complete | merged at `88059dc...`; run `33167246384` full green |
+| 02 Arcana Core | 🟨 Active | canonicalization from preparatory implementation starts now |
+| 03 Integration Layer | 🟦 Preparatory | waits for Stage 02 canonical merge |
+| 04 World Safety | 🟦 Preparatory verified | integrated run `33166679049` full green; waits for Stages 02–03 |
 | 05 Casting & UX | ⬜ Not started canonically | Direct cast, loadouts, radial HUD |
 | 06 Rituals | ⬜ Not started | Ritual contracts and occult/grand rituals |
 | 07 Spell Domains | ⬜ Not started | Blood, souls, projection, displacement, forbidden |
@@ -25,30 +27,27 @@ Later stages remain preparatory until their causal predecessors merge. Stage 04 
 
 ## Canonical active stage
 
-`01-reference-catalog`
+`02-arcana-core`
 
-## Stage 00 freeze
+## Frozen predecessors
 
-Foundation contracts are frozen unless an explicit follow-up decision is recorded in `DECISIONS.md`.
+Stage 00 and Stage 01 may only change through explicit follow-up decisions recorded in `DECISIONS.md`.
 
-## Stage 01 acceptance state
-
-Canonical catalog contents:
+Stage 01 frozen outputs include:
 - 53/53 observable reference mechanics reconciled exactly once;
-- every row classified `KEEP / REIMAGINE / MERGE / DROP / DEFER`;
-- 32 candidate implementation contracts with original Black Arcana identity;
-- host decisions separated into `CORE / PUBLIC_API / PROBE` rather than thematic assumptions;
+- `KEEP / REIMAGINE / MERGE / DROP / DEFER` classification;
+- 32 original Black Arcana implementation contracts;
+- `CORE / PUBLIC_API / PROBE` host viability model;
 - hard safety ceilings and balance/runtime risk register;
-- clean-room provenance ledger with no copied/decompiled Mahou source/assets.
-
-No Stage 01 task receives ✅ until this canonical branch passes the full CI and is merged.
+- clean-room provenance ledger.
 
 ## Immediate next actions
 
-1. Run full CI on `feat/01-reference-catalog`.
-2. If green, merge Stage 01 to `main`.
-3. After merge, mark the four Stage 01 task files ✅ and activate Stage 02.
-4. Recut/reapply Stage 02 from the new `main`; do not merge preparatory downstream branches out of order.
+1. Create/rebase `feat/02-arcana-core` from latest `main`.
+2. Reapply only Stage 02 implementation and architecture artifacts from `prep/02-arcana-core`.
+3. Reconcile Stage 02 decisions against frozen Stage 00/01 contracts.
+4. Run full canonical CI.
+5. If green, merge Stage 02, mark its five tasks ✅ and activate Stage 03.
 
 ## Freeze rules
 

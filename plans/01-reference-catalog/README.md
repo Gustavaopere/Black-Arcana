@@ -3,11 +3,11 @@
 Convert inspiration into an original, implementable Black Arcana specification before coding spells.
 
 ## Tasks
-1. Inventory public/observable Mahou-like mechanics relevant to the project.
-2. Classify every mechanic: `KEEP`, `REIMAGINE`, `MERGE`, `DROP`, `DEFER`.
-3. Assign original Black Arcana names/domains and intended host integration.
-4. Audit balance/destruction/multiplayer risks.
-5. Separate thematic host preference from proven extension capability.
+1. ✅ Inventory public/observable Mahou-like mechanics relevant to the project.
+2. ✅ Classify every mechanic: `KEEP`, `REIMAGINE`, `MERGE`, `DROP`, `DEFER`.
+3. ✅ Assign original Black Arcana names/domains and intended host integration.
+4. ✅ Audit balance/destruction/multiplayer risks.
+5. ✅ Separate thematic host preference from proven extension capability.
 
 ## Canonical artifacts
 
@@ -28,6 +28,6 @@ No Stage 07 mechanic begins without an approved spec containing behavior, cost m
 
 A thematic host name is never sufficient to authorize an integration. Any route marked `PROBE` must be proven against the exact installed NeoForge 1.21.1 host version during Stage 03. Black Arcana core remains authoritative for cross-cutting safety, persistent state, transactions, privacy and world mutation.
 
-## Current canonical verdict
+## Completion
 
-The reviewed Stage 01 catalog has been reapplied onto the verified Foundation history in `feat/01-reference-catalog`. It contains all 53 observable reference rows and all 32 candidate specifications. It remains unmarked until canonical CI and merge complete.
+Stage 01 passed the full canonical CI in run `33167246384` and was merged into `main` at `88059dc73d8abae12fe5dd4d8e99e08f8e0a8ed6`. The catalog is frozen unless a later explicit decision records a revision.
