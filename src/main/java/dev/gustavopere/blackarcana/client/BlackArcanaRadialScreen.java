@@ -42,6 +42,15 @@ public final class BlackArcanaRadialScreen extends Screen {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (BlackArcanaClientConfig.RADIAL_BEHAVIOR.get() == BlackArcanaClientConfig.RadialBehavior.HOLD
+                && !BlackArcanaKeyMappings.OPEN_RADIAL.isDown()) {
+            onClose();
+        }
+    }
+
+    @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         graphics.fill(0, 0, width, height, 0x55000000);
         int centerX = width / 2;
@@ -90,6 +99,7 @@ public final class BlackArcanaRadialScreen extends Screen {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && hoveredSlot >= 0) {
             ClientInputController.selection().select(hoveredSlot, loadout);
+            ClientUxState.markSelectionChanged();
             onClose();
             return true;
         }

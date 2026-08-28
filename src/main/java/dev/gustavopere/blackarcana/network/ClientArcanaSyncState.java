@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.UUID;
 
 /**
@@ -20,6 +21,7 @@ import java.util.UUID;
 public final class ClientArcanaSyncState {
     private static UUID playerId;
     private static CastResultPayload lastResult;
+    private static long lastResultTick = Long.MIN_VALUE;
     private static Map<String, Long> cooldowns = Map.of();
     private static Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation = Map.of();
     private static List<ArcanaSpellId> loadout = List.of();
@@ -29,6 +31,7 @@ public final class ClientArcanaSyncState {
     public static synchronized void acceptResult(Player player, CastResultPayload payload) {
         ensurePlayer(player);
         lastResult = Objects.requireNonNull(payload, "payload");
+        lastResultTick = player.tickCount;
     }
 
     public static synchronized void acceptCooldowns(Player player, CooldownSnapshotPayload payload) {
@@ -65,6 +68,10 @@ public final class ClientArcanaSyncState {
         return Optional.ofNullable(lastResult);
     }
 
+    public static synchronized OptionalLong lastResultTick() {
+        return lastResultTick == Long.MIN_VALUE ? OptionalLong.empty() : OptionalLong.of(lastResultTick);
+    }
+
     public static synchronized Map<String, Long> cooldownSnapshot() {
         return cooldowns;
     }
@@ -80,6 +87,7 @@ public final class ClientArcanaSyncState {
     public static synchronized void clear() {
         playerId = null;
         lastResult = null;
+        lastResultTick = Long.MIN_VALUE;
         cooldowns = Map.of();
         presentation = Map.of();
         loadout = List.of();
@@ -90,6 +98,7 @@ public final class ClientArcanaSyncState {
         UUID incoming = player.getUUID();
         if (playerId != null && !playerId.equals(incoming)) {
             lastResult = null;
+            lastResultTick = Long.MIN_VALUE;
             cooldowns = Map.of();
             presentation = Map.of();
             loadout = List.of();

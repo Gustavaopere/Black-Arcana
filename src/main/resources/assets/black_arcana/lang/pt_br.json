@@ -17,5 +17,18 @@
   "screen.black_arcana.radial.hint": "Clique esquerdo para selecionar; conjurar continua sendo uma ação separada",
   "screen.black_arcana.loadout": "Loadout da Black Arcana",
   "screen.black_arcana.loadout.page": "Página %s / %s",
-  "screen.black_arcana.loadout.hint": "%s selecionados · Enter: aplicar · Delete: limpar · Esc: cancelar"
+  "screen.black_arcana.loadout.hint": "%s selecionados · Enter: aplicar · Delete: limpar · Esc: cancelar",
+  "hud.black_arcana.selected": "Selecionado: %s",
+  "hud.black_arcana.denied": "Negado: %s",
+  "hud.black_arcana.cast_success": "Conjuração aceita",
+  "config.black_arcana.contextual_hud": "HUD contextual",
+  "config.black_arcana.hud_scale": "Escala do HUD",
+  "config.black_arcana.hud_anchor": "Âncora do HUD",
+  "config.black_arcana.selection_duration_ticks": "Duração da seleção na tela",
+  "config.black_arcana.feedback_duration_ticks": "Duração do feedback de conjuração",
+  "config.black_arcana.feedback_level": "Nível de feedback de conjuração",
+  "config.black_arcana.radial_behavior": "Comportamento do seletor radial",
+  "config.black_arcana.particle_density": "Densidade de partículas",
+  "config.black_arcana.reduced_motion": "Movimento reduzido",
+  "config.black_arcana.reduced_flashes": "Clarões reduzidos"
 }

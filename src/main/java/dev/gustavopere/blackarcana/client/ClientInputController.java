@@ -44,6 +44,7 @@ public final class ClientInputController {
         if (minecraft.player == null || minecraft.getConnection() == null || minecraft.screen != null) return false;
         List<ArcanaSpellId> loadout = ClientArcanaSyncState.loadoutSnapshot();
         if (!SELECTION.select(slot, loadout)) return false;
+        ClientUxState.markSelectionChanged();
         ArcanaSpellId spell = loadout.get(slot);
         String targetHint = "";
         if (minecraft.hitResult instanceof EntityHitResult entityHit) {
@@ -60,16 +61,20 @@ public final class ClientInputController {
 
     private static void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null) {
+            ClientUxState.clear();
+            return;
+        }
         List<ArcanaSpellId> loadout = ClientArcanaSyncState.loadoutSnapshot();
         SELECTION.reconcile(loadout);
 
         while (BlackArcanaKeyMappings.OPEN_RADIAL.consumeClick()) {
-            if (minecraft.player != null && minecraft.getConnection() != null && minecraft.screen == null && !loadout.isEmpty()) {
+            if (minecraft.getConnection() != null && minecraft.screen == null && !loadout.isEmpty()) {
                 radialOpener.run();
             }
         }
         while (BlackArcanaKeyMappings.EDIT_LOADOUT.consumeClick()) {
-            if (minecraft.player != null && minecraft.getConnection() != null && minecraft.screen == null) {
+            if (minecraft.getConnection() != null && minecraft.screen == null) {
                 loadoutEditorOpener.run();
             }
         }

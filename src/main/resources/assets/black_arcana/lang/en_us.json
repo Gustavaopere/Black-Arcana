@@ -17,5 +17,18 @@
   "screen.black_arcana.radial.hint": "Left-click to select; cast remains a separate input",
   "screen.black_arcana.loadout": "Black Arcana Loadout",
   "screen.black_arcana.loadout.page": "Page %s / %s",
-  "screen.black_arcana.loadout.hint": "%s selected · Enter: apply · Delete: clear · Esc: cancel"
+  "screen.black_arcana.loadout.hint": "%s selected · Enter: apply · Delete: clear · Esc: cancel",
+  "hud.black_arcana.selected": "Selected: %s",
+  "hud.black_arcana.denied": "Denied: %s",
+  "hud.black_arcana.cast_success": "Cast accepted",
+  "config.black_arcana.contextual_hud": "Contextual HUD",
+  "config.black_arcana.hud_scale": "HUD Scale",
+  "config.black_arcana.hud_anchor": "HUD Anchor",
+  "config.black_arcana.selection_duration_ticks": "Selection Display Duration",
+  "config.black_arcana.feedback_duration_ticks": "Cast Feedback Duration",
+  "config.black_arcana.feedback_level": "Cast Feedback Level",
+  "config.black_arcana.radial_behavior": "Radial Behavior",
+  "config.black_arcana.particle_density": "Particle Density",
+  "config.black_arcana.reduced_motion": "Reduced Motion",
+  "config.black_arcana.reduced_flashes": "Reduced Flashes"
 }
