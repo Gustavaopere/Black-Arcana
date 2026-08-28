@@ -58,15 +58,17 @@ public final class ArcanaNetworkBridge {
     }
 
     public static void sendCooldownSnapshot(ServerPlayer player, CooldownSnapshotPayload snapshot) {
-        PacketDistributor.sendToPlayer(
-                Objects.requireNonNull(player, "player"),
-                CooldownSnapshotPacket.from(Objects.requireNonNull(snapshot, "snapshot")));
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(snapshot, "snapshot");
+        if (!player.connection.hasChannel(CooldownSnapshotPacket.TYPE)) return;
+        PacketDistributor.sendToPlayer(player, CooldownSnapshotPacket.from(snapshot));
     }
 
     public static void sendSpellPresentation(ServerPlayer player, SpellPresentationPayload presentation) {
-        PacketDistributor.sendToPlayer(
-                Objects.requireNonNull(player, "player"),
-                SpellPresentationPacket.from(Objects.requireNonNull(presentation, "presentation")));
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(presentation, "presentation");
+        if (!player.connection.hasChannel(SpellPresentationPacket.TYPE)) return;
+        PacketDistributor.sendToPlayer(player, SpellPresentationPacket.from(presentation));
     }
 
     private static void handleServerbound(CastIntentPacket packet, IPayloadContext context) {
