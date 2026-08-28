@@ -1,21 +1,28 @@
 # Black Arcana — Status
 
-Last updated: 2026-08-27
+Last updated: 2026-08-28
 
 ## Current state
 
-Stage 00 Foundation is implemented on `round-1-foundation` but is **not complete or frozen** because the required NeoForge CI/dedicated-server verification has still not executed. Pure Java 21 validation passes for the domain/config contracts, including transactional cost reservation/refund and transitive ID migration. Earlier GitHub-hosted Actions attempts terminated before runner assignment with zero repository steps executed.
+Stage 00 Foundation is **complete, verified and merged into `main`** at `9743064b34cadd26ae767677c773856ebcd3677c`.
 
-Stage 01 Reference Catalog has advanced only in the isolated `prep/01-reference-catalog` branch. Its preparatory completeness audit reconciles all 53 observable reference rows and its safety/risk contracts are ready for canonical rebase/review after Foundation lands. It is not canonical or frozen.
+Verification evidence:
+- branch CI run `33165948006`, job `98831312937`: all steps green;
+- post-merge `main` CI run `33166155632`, job `98831943918`: all steps green;
+- gates passed: JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke.
+
+Stage 01 Reference Catalog is now the canonical active stage. Its previously prepared clean-room catalog is being reapplied onto the verified `main` through `feat/01-reference-catalog`, without importing the stale/divergent Foundation history from `prep/01-reference-catalog`.
+
+Later stages have preparatory implementations but remain non-canonical until their causal predecessors merge in order. Stage 04's integrated preparatory checkpoint additionally achieved a full green verification in run `33166278505`, job `98832347653`; this evidence is retained for later canonicalization but does not bypass Stages 01–03.
 
 | Stage | State | Notes |
 |---|---|---|
-| 00 Foundation | 🟨 Verification blocked | Implementation HEAD includes transactional contracts and pinned build bootstrap; waiting for real CI/GameTest/dedicated-server execution |
-| 01 Reference Catalog | 🟨 Preparatory | Isolated clean-room catalog ready for canonical rebase/review |
-| 02 Arcana Core | ⬜ Not started canonically | Preparatory implementation exists outside `main` |
-| 03 Integration Layer | ⬜ Not started | Iron's, Ars, Eidolon, Malum, RPG adapters |
-| 04 World Safety | ⬜ Not started | Destruction policy, rollback, budgets |
-| 05 Casting & UX | ⬜ Not started | Direct cast, loadouts, radial HUD |
+| 00 Foundation | ✅ Complete | merged at `9743064b...`; branch and post-merge CI fully green |
+| 01 Reference Catalog | 🟨 Active | canonical branch `feat/01-reference-catalog`; clean-room catalog awaiting review/CI/merge |
+| 02 Arcana Core | 🟦 Preparatory | implementation exists downstream; canonicalization waits for Stage 01 |
+| 03 Integration Layer | 🟦 Preparatory | Iron's, Ars, Eidolon, Malum and RPG adapters exist downstream |
+| 04 World Safety | 🟦 Preparatory verified | integrated v9 run `33166278505` fully green; canonicalization still waits for Stages 01–03 |
+| 05 Casting & UX | ⬜ Not started canonically | Direct cast, loadouts, radial HUD |
 | 06 Rituals | ⬜ Not started | Ritual contracts and occult/grand rituals |
 | 07 Spell Domains | ⬜ Not started | Blood, souls, projection, displacement, forbidden |
 | 08 Progression & Balance | ⬜ Not started | Knowledge, mastery, caps, presets |
@@ -23,36 +30,32 @@ Stage 01 Reference Catalog has advanced only in the isolated `prep/01-reference-
 
 ## Canonical active stage
 
-`00-foundation`
+`01-reference-catalog`
 
-## Foundation implemented checkpoint
+## Stage 00 freeze
 
-- NeoForge 1.21.1 / Java 21 / ModDevGradle scaffold.
-- Gradle 9.2.1 bootstrap with a fixed distribution SHA-256 in Unix, Windows and wrapper metadata.
-- GitHub Actions workflow for unit tests, build, JAR inspection, GameTest server and dedicated-server smoke.
-- Clean-room provenance rules and reference ledger.
-- Black Arcana-owned cast/cooldown/progression/target/world-policy/effect/integration contracts.
-- Transactional cost contract: affordability check → atomic reservation → effect → commit, with refund on failed/exceptional effect execution.
-- Server/common/client configuration authority contract and schema v1 validation.
-- Transitive spell-ID migration with explicit removal, cycle/conflict rejection and deterministic diagnostics.
-- Dedicated GameTest fixture `foundation_empty`.
-- Pure Java 21 compile validation: PASS.
-- Pure transactional cast/migration smoke validation: PASS.
+The Foundation contracts are now frozen unless an explicit follow-up decision is recorded in `DECISIONS.md`.
 
-## External verification blocker
-
-Earlier workflow attempts terminated before a hosted runner executed any step (`runner_id=0`, empty step list). GitHub's public status page now reports Actions operational after the Aug 26–27 incidents, so this commit intentionally triggers a completely fresh workflow run rather than reusing a failed run attempt. Do not interpret a runnerless failure as a Gradle/Java/GameTest failure. Do not merge or add ✅ until a runner actually executes the required workflow successfully, or an explicitly approved equivalent verification environment proves the same acceptance gates.
+Frozen baseline includes:
+- Minecraft 1.21.1 / NeoForge / Java 21 / ModDevGradle build;
+- reproducible Gradle bootstrap with fixed distribution SHA-256;
+- CI gates for JUnit, build, artifact inspection, GameTests and dedicated server;
+- clean-room provenance rules;
+- Black Arcana-owned cast/cost/cooldown/progression/target/world-policy/effect/integration boundaries;
+- transactional cost reservation/commit/refund;
+- server/common/client configuration authority contract;
+- transitive spell-ID migration and explicit removal semantics.
 
 ## Immediate next actions
 
-1. Inspect the fresh post-incident Foundation workflow triggered by this commit.
-2. Fix any real Gradle/NeoForge/GameTest failure exposed by an actual execution.
-3. After green verification: mark the four Stage 00 task files complete and merge/fast-forward `round-1-foundation` into `main`.
-4. Recreate/rebase the Reference Catalog from latest `main`, carry forward only reviewed clean-room specification commits, run canonical completeness/host-version review, then merge Stage 01.
-5. Keep Stage 02 work preparatory until the canonical dependency chain is restored.
+1. Reapply the reviewed Stage 01 catalog onto latest `main` in `feat/01-reference-catalog`.
+2. Reconcile all 53 observable reference rows and 32 candidate specifications against the canonical branch.
+3. Run the full CI on the canonical Stage 01 branch.
+4. If green, merge Stage 01 to `main`, mark its four tasks ✅ and make Stage 02 canonical active.
+5. Recut/reapply Stage 02 from the new `main`; do not merge preparatory downstream branches out of order.
 
 ## Freeze rules
 
 - A completed stage can only be changed by an explicit follow-up decision recorded in `DECISIONS.md`.
-- No task receives ✅ until implementation, tests, CI and merge are complete.
+- No task receives ✅ until implementation/specification acceptance, tests/CI and merge are complete.
 - Later stages may inspect or prototype against frozen contracts but may not silently redefine them.
