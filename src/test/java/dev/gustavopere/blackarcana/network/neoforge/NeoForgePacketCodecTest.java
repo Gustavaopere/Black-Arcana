@@ -4,6 +4,8 @@ import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.CooldownSnapshotPayload;
+import dev.gustavopere.blackarcana.network.LoadoutSnapshotPayload;
+import dev.gustavopere.blackarcana.network.LoadoutUpdatePayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -56,6 +58,22 @@ class NeoForgePacketCodecTest {
                         "spell.black_arcana.test_spell",
                         "black_arcana:test_spell"))));
         assertEquals(packet, roundTrip(SpellPresentationPacket.STREAM_CODEC, packet));
+    }
+
+    @Test
+    void loadoutUpdateRoundTrips() {
+        LoadoutUpdatePacket packet = LoadoutUpdatePacket.from(new LoadoutUpdatePayload(
+                ArcanaProtocol.VERSION,
+                List.of("black_arcana:first", "black_arcana:second")));
+        assertEquals(packet, roundTrip(LoadoutUpdatePacket.STREAM_CODEC, packet));
+    }
+
+    @Test
+    void loadoutSnapshotRoundTrips() {
+        LoadoutSnapshotPacket packet = LoadoutSnapshotPacket.from(new LoadoutSnapshotPayload(
+                ArcanaProtocol.VERSION,
+                List.of("black_arcana:first", "black_arcana:second")));
+        assertEquals(packet, roundTrip(LoadoutSnapshotPacket.STREAM_CODEC, packet));
     }
 
     private static <T> T roundTrip(StreamCodec<ByteBuf, T> codec, T value) {
