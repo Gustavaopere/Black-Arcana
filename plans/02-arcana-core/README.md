@@ -2,34 +2,32 @@
 
 Build the server-authoritative execution kernel used by integrations, UI, rituals and spells.
 
-## Tasks
-- Cast validation/execution pipeline.
-- Pluggable resource/cost providers.
-- Target/effect runtime.
-- Cooldowns and persistence.
-- Networking and data-driven registration.
+## Status
+
+✅ Complete, verified and merged into `main` on 2026-08-28.
+
+Canonical verification:
+- branch run `33169091342`: unit tests, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke all green;
+- post-merge `main` run `33169344809`: the same full pipeline green.
+
+## Completed tasks
+- ✅ Cast validation/execution pipeline.
+- ✅ Pluggable resource/cost providers.
+- ✅ Target/effect runtime.
+- ✅ Cooldowns and persistence.
+- ✅ Networking and data-driven registration.
+
+## Delivered contracts
+- unique cast IDs, canonical server-owned spell/loadout validation and bounded replay protection;
+- immediate and channelled casts converge through one execution pipeline with server-owned channel duration;
+- transactional `check -> reserve -> effect -> commit/refund` resource semantics, including atomic composite costs;
+- bounded server-fact targeting for all planned target kinds plus bounded follow-up work scheduling;
+- persistent/shared cooldowns, reusable charge pools, migration/pruning and Overworld `SavedData` state;
+- versioned/bounded C2S/S2C protocol, negotiated payload-safe sync and rate-limited ingress;
+- strict atomic datapack reload of presentation metadata without client-authored gameplay authority.
 
 ## Exit criteria
-A synthetic spell can be cast on dedicated server through the full pipeline with deterministic costs, cooldown, target validation, persistence and client result messaging—without any optional magic mod installed.
 
-## Preparatory implementation state
+Satisfied. A synthetic spell casts on dedicated server through the full canonical pipeline with deterministic costs, cooldown, target validation, persistence and client-result contracts, with no optional magic mod required.
 
-Branch: `prep/02-arcana-core`, based on the latest preparatory Foundation rather than canonical `main`.
-
-Implemented as pure Black Arcana infrastructure:
-- unique cast ids, identity validation seam and bounded replay guard;
-- transactional composite costs with rollback of partial reservations;
-- shared/persistent cooldown ledger with snapshot/restore;
-- bounded target specifications and deterministic server-candidate filtering;
-- bounded follow-up work scheduler;
-- canonical compiled spell registry and atomic metadata catalog;
-- versioned/bounded network payload contracts;
-- ingress cast-intent rate limiter.
-
-Detailed checkpoint and remaining work: `docs/architecture/arcana-core-preparatory.md`.
-
-## Not complete
-
-None of the five tasks is marked ✅ yet. Remaining work includes actual loadout resolution, charge/channel lifecycle, percent-of-max/creative cost policy, Minecraft target adapters, SavedData persistence, charge pools, NeoForge payload registration/codecs, reload listener integration and dedicated-server/GameTest validation.
-
-This branch is preparatory only and cannot bypass Stage 00/01 canonical promotion.
+Stage 03 Integration Layer is the next canonical stage. Completed Stage 02 contracts are frozen unless an explicit follow-up decision is recorded in `plans/DECISIONS.md`.
