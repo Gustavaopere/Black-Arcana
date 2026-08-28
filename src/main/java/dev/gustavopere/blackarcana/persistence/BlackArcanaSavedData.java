@@ -6,6 +6,8 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
+import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationKey;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationTracker;
 import dev.gustavopere.blackarcana.core.world.TemporaryWorldMutation;
@@ -33,16 +35,19 @@ public final class BlackArcanaSavedData extends SavedData {
     private static final String DATA_NAME = "black_arcana_runtime";
     private static final int SCHEMA_VERSION = 1;
 
-    // Defensive restore ceilings. Normal runtime state should stay far below these values.
     public static final int MAX_PERSISTED_COOLDOWNS = 131_072;
     public static final int MAX_PERSISTED_CHARGE_POOLS = 131_072;
     public static final int MAX_PERSISTED_LOADOUT_CASTERS = 16_384;
     public static final int MAX_PERSISTED_TEMPORARY_MUTATIONS = 16_384;
+    public static final int MAX_PERSISTED_CORRUPTION_PLAYERS = 16_384;
+    public static final int MAX_PERSISTED_STRAIN_PLAYERS = 16_384;
 
     private Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> cooldowns = Map.of();
     private Map<ChargePoolCooldownService.ChargeKey, ChargePoolCooldownService.SnapshotEntry> charges = Map.of();
     private Map<UUID, List<ArcanaSpellId>> loadouts = Map.of();
     private List<TemporaryWorldMutation> temporaryMutations = List.of();
+    private Map<UUID, CorruptionStateService.PersistedState> corruptionStates = Map.of();
+    private Map<UUID, ArcaneStrainStateService.PersistedState> strainStates = Map.of();
 
     public static BlackArcanaSavedData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(
@@ -53,14 +58,16 @@ public final class BlackArcanaSavedData extends SavedData {
     public static BlackArcanaSavedData load(CompoundTag root, HolderLookup.Provider registries) {
         BlackArcanaSavedData data = new BlackArcanaSavedData();
         int schema = root.getInt("schema");
-        if (schema != SCHEMA_VERSION) {
-            return data;
-        }
+        if (schema != SCHEMA_VERSION) return data;
 
         data.cooldowns = readCooldowns(root.getList("cooldowns", Tag.TAG_COMPOUND));
         data.charges = readCharges(root.getList("charges", Tag.TAG_COMPOUND));
         data.loadouts = readLoadouts(root.getList("loadouts", Tag.TAG_COMPOUND));
         data.temporaryMutations = readTemporaryMutations(root.getList("temporary_mutations", Tag.TAG_COMPOUND));
+        data.corruptionStates = HazardStatePersistence.readCorruption(
+            root.getList("corruption", Tag.TAG_COMPOUND), MAX_PERSISTED_CORRUPTION_PLAYERS);
+        data.strainStates = HazardStatePersistence.readStrain(
+            root.getList("strain", Tag.TAG_COMPOUND), MAX_PERSISTED_STRAIN_PLAYERS);
         return data;
     }
 
@@ -88,6 +95,12 @@ public final class BlackArcanaSavedData extends SavedData {
         setDirty();
     }
 
+    public void captureHazards(CorruptionStateService corruption, ArcaneStrainStateService strain) {
+        this.corruptionStates = Map.copyOf(corruption.persistentSnapshot());
+        this.strainStates = Map.copyOf(strain.persistentSnapshot());
+        setDirty();
+    }
+
     public void restore(
             PersistentCooldownService cooldownService,
             ChargePoolCooldownService chargeService,
@@ -110,6 +123,11 @@ public final class BlackArcanaSavedData extends SavedData {
         temporaryMutationTracker.restoreSnapshot(temporaryMutations);
     }
 
+    public void restoreHazards(CorruptionStateService corruption, ArcaneStrainStateService strain) {
+        corruption.restoreSnapshot(corruptionStates);
+        strain.restoreSnapshot(strainStates);
+    }
+
     @Override
     public CompoundTag save(CompoundTag root, HolderLookup.Provider registries) {
         root.putInt("schema", SCHEMA_VERSION);
@@ -117,6 +135,8 @@ public final class BlackArcanaSavedData extends SavedData {
         root.put("charges", writeCharges(charges));
         root.put("loadouts", writeLoadouts(loadouts));
         root.put("temporary_mutations", writeTemporaryMutations(temporaryMutations));
+        root.put("corruption", HazardStatePersistence.writeCorruption(corruptionStates, MAX_PERSISTED_CORRUPTION_PLAYERS));
+        root.put("strain", HazardStatePersistence.writeStrain(strainStates, MAX_PERSISTED_STRAIN_PLAYERS));
         return root;
     }
 
@@ -142,9 +162,7 @@ public final class BlackArcanaSavedData extends SavedData {
                 var key = new PersistentCooldownService.CooldownKey(tag.getUUID("caster"), tag.getString("group"));
                 var value = new PersistentCooldownService.SnapshotEntry(tag.getLong("started"), tag.getLong("ready"));
                 result.put(key, value);
-            } catch (RuntimeException ignored) {
-                // Malformed individual entries are skipped rather than poisoning the entire world save.
-            }
+            } catch (RuntimeException ignored) { }
         }
         return Map.copyOf(result);
     }
@@ -171,9 +189,7 @@ public final class BlackArcanaSavedData extends SavedData {
                 var key = new ChargePoolCooldownService.ChargeKey(tag.getUUID("caster"), tag.getString("group"));
                 var value = new ChargePoolCooldownService.SnapshotEntry(tag.getInt("charges"), tag.getLong("next"));
                 result.put(key, value);
-            } catch (RuntimeException ignored) {
-                // Skip malformed entries and retain all valid runtime state.
-            }
+            } catch (RuntimeException ignored) { }
         }
         return Map.copyOf(result);
     }
@@ -200,15 +216,10 @@ public final class BlackArcanaSavedData extends SavedData {
                 UUID caster = tag.getUUID("caster");
                 ListTag spellList = tag.getList("spells", Tag.TAG_STRING);
                 if (spellList.size() > ArcanaCastRequest.MAX_LOADOUT_SLOTS) continue;
-
                 List<ArcanaSpellId> spells = new ArrayList<>(spellList.size());
-                for (int j = 0; j < spellList.size(); j++) {
-                    spells.add(ArcanaSpellId.parse(spellList.getString(j)));
-                }
+                for (int j = 0; j < spellList.size(); j++) spells.add(ArcanaSpellId.parse(spellList.getString(j)));
                 result.put(caster, List.copyOf(spells));
-            } catch (RuntimeException ignored) {
-                // A broken player's loadout must not make the entire saved data unreadable.
-            }
+            } catch (RuntimeException ignored) { }
         }
         return Map.copyOf(result);
     }
@@ -244,9 +255,7 @@ public final class BlackArcanaSavedData extends SavedData {
                     tag.getString("original"),
                     tag.getString("replacement"),
                     tag.getLong("expires")));
-            } catch (RuntimeException ignored) {
-                // Skip malformed restoration records; never poison otherwise valid world state.
-            }
+            } catch (RuntimeException ignored) { }
         }
         return List.copyOf(result);
     }
