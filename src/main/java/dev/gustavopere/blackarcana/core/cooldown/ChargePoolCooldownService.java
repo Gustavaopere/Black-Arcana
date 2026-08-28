@@ -70,6 +70,28 @@ public final class ChargePoolCooldownService implements CooldownService {
         });
     }
 
+    /** Renames active/restored groups before pruning removed groups. */
+    public synchronized int migrateGroups(RuntimeGroupMigrations migrations) {
+        Objects.requireNonNull(migrations, "migrations");
+        if (migrations.isEmpty() || states.isEmpty()) return 0;
+
+        Map<ChargeKey, State> migrated = new HashMap<>();
+        int renamed = 0;
+        for (Map.Entry<ChargeKey, State> item : states.entrySet()) {
+            ChargeKey oldKey = item.getKey();
+            String resolvedGroup = migrations.resolve(oldKey.groupId());
+            if (!resolvedGroup.equals(oldKey.groupId())) renamed++;
+
+            ChargeKey newKey = new ChargeKey(oldKey.casterId(), resolvedGroup);
+            State source = item.getValue();
+            State copy = new State(source.charges, source.nextRechargeAt, source.persistent);
+            migrated.merge(newKey, copy, ChargePoolCooldownService::mergeRestrictively);
+        }
+        states.clear();
+        states.putAll(migrated);
+        return renamed;
+    }
+
     /** Removes charge groups that no longer have an active server policy. */
     public synchronized int pruneGroups(Set<String> activeGroupIds) {
         Set<String> active = validateGroups(activeGroupIds);
@@ -114,6 +136,13 @@ public final class ChargePoolCooldownService implements CooldownService {
 
     private ArcanaChargeSpec requireSpec(ArcanaCastRequest request) {
         return Objects.requireNonNull(policy.apply(request), "charge spec");
+    }
+
+    private static State mergeRestrictively(State left, State right) {
+        return new State(
+                Math.min(left.charges, right.charges),
+                Math.max(left.nextRechargeAt, right.nextRechargeAt),
+                left.persistent || right.persistent);
     }
 
     private static Set<String> validateGroups(Set<String> groupIds) {
