@@ -61,7 +61,7 @@ public final class IronsSyntheticContent {
             new PolicyAwareCostProvider(
                 ArcanaPaymentPolicy.BYPASS_CREATIVE_AND_ADMIN,
                 new IronsManaCostProvider(manaAccess)),
-            (request, target) -> ArcanaDecision.allow(),
+            runtime.worldEffectPolicy(),
             (request, target) -> EffectResult.ok(),
             mastery);
         runtime.installEngine(definition.id(), engine);

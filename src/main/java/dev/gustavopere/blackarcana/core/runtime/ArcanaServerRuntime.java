@@ -19,6 +19,13 @@ import dev.gustavopere.blackarcana.core.cooldown.RuntimeGroupMigrations;
 import dev.gustavopere.blackarcana.core.integration.ArcanaIntegrationRegistry;
 import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
+import dev.gustavopere.blackarcana.core.world.ConfigurableWorldEffectPolicy;
+import dev.gustavopere.blackarcana.core.world.DefaultEntityInteractionPolicy;
+import dev.gustavopere.blackarcana.core.world.ProtectionAdapterRegistry;
+import dev.gustavopere.blackarcana.core.world.TemporaryMutationTracker;
+import dev.gustavopere.blackarcana.core.world.WorldEffectBudgetLedger;
+import dev.gustavopere.blackarcana.core.world.WorldEffectPolicyConfig;
+import dev.gustavopere.blackarcana.core.world.WorldEffectProfileRegistry;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.IngressRateLimiter;
@@ -36,6 +43,11 @@ public final class ArcanaServerRuntime {
     public static final int DEFAULT_MAX_CHANNEL_SESSIONS = 4096;
     public static final int DEFAULT_MAX_SCHEDULED_EFFECTS = 2048;
     public static final int DEFAULT_EFFECT_WORK_BUDGET_PER_TICK = 128;
+    public static final int DEFAULT_MAX_TRACKED_WORLD_CASTS = 4096;
+    public static final int DEFAULT_WORLD_UNITS_PER_CAST = 4096;
+    public static final long DEFAULT_WORLD_CAST_IDLE_TICKS = 20L * 60L;
+    public static final int DEFAULT_MAX_TEMPORARY_MUTATIONS = 16_384;
+    public static final int DEFAULT_MAX_PROTECTION_ADAPTERS = 16;
 
     private final ArcanaSpellRegistry spells = new ArcanaSpellRegistry();
     private final SpellDataCatalog spellData = new SpellDataCatalog();
@@ -44,6 +56,17 @@ public final class ArcanaServerRuntime {
     private final PersistentCooldownService cooldowns = new PersistentCooldownService(cooldownPolicies::cooldownFor);
     private final ChargePoolCooldownService charges = new ChargePoolCooldownService(cooldownPolicies::requireCharge);
     private final ArcanaIntegrationRegistry integrations = new ArcanaIntegrationRegistry();
+    private final WorldEffectProfileRegistry worldEffectProfiles = new WorldEffectProfileRegistry();
+    private final ConfigurableWorldEffectPolicy worldEffectPolicy =
+        new ConfigurableWorldEffectPolicy(worldEffectProfiles, WorldEffectPolicyConfig.safeDefaults());
+    private final WorldEffectBudgetLedger worldEffectBudgets = new WorldEffectBudgetLedger(
+        DEFAULT_MAX_TRACKED_WORLD_CASTS, DEFAULT_WORLD_UNITS_PER_CAST, DEFAULT_WORLD_CAST_IDLE_TICKS);
+    private final TemporaryMutationTracker temporaryMutations =
+        new TemporaryMutationTracker(DEFAULT_MAX_TEMPORARY_MUTATIONS);
+    private final DefaultEntityInteractionPolicy entityInteractionPolicy =
+        DefaultEntityInteractionPolicy.safeDefaults();
+    private final ProtectionAdapterRegistry protectionAdapters =
+        new ProtectionAdapterRegistry(DEFAULT_MAX_PROTECTION_ADAPTERS);
     private final Map<ArcanaSpellId, ArcanaCastEngine> engines = new ConcurrentHashMap<>();
     private final ArcanaCastIngressService ingress;
     private final ArcanaChannelManager channels;
@@ -117,6 +140,10 @@ public final class ArcanaServerRuntime {
         engines.remove(Objects.requireNonNull(spellId, "spellId"));
     }
 
+    public void configureWorldEffects(WorldEffectPolicyConfig config) {
+        worldEffectPolicy.updateConfig(Objects.requireNonNull(config, "config"));
+    }
+
     public void setRuntimeGroupMigrations(RuntimeGroupMigrations migrations) {
         this.groupMigrations = Objects.requireNonNull(migrations, "migrations");
     }
@@ -150,6 +177,12 @@ public final class ArcanaServerRuntime {
     public ArcanaChannelManager channels() { return channels; }
     public BoundedWorkScheduler effectScheduler() { return effectScheduler; }
     public ArcanaIntegrationRegistry integrations() { return integrations; }
+    public WorldEffectProfileRegistry worldEffectProfiles() { return worldEffectProfiles; }
+    public ConfigurableWorldEffectPolicy worldEffectPolicy() { return worldEffectPolicy; }
+    public WorldEffectBudgetLedger worldEffectBudgets() { return worldEffectBudgets; }
+    public TemporaryMutationTracker temporaryMutations() { return temporaryMutations; }
+    public DefaultEntityInteractionPolicy entityInteractionPolicy() { return entityInteractionPolicy; }
+    public ProtectionAdapterRegistry protectionAdapters() { return protectionAdapters; }
     public int installedEngineCount() { return engines.size(); }
 
     public record RuntimeTickResult(int expiredChannels, BoundedWorkScheduler.TickResult scheduledWork) {

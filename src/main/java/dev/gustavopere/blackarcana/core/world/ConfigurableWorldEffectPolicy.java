@@ -9,11 +9,19 @@ import java.util.Objects;
 /** Central fail-closed safety gate for every spell declaring world mutation. */
 public final class ConfigurableWorldEffectPolicy implements ArcanaServices.WorldEffectPolicy {
     private final WorldEffectProfileRegistry profiles;
-    private final WorldEffectPolicyConfig config;
+    private volatile WorldEffectPolicyConfig config;
 
     public ConfigurableWorldEffectPolicy(WorldEffectProfileRegistry profiles, WorldEffectPolicyConfig config) {
         this.profiles = Objects.requireNonNull(profiles, "profiles");
         this.config = Objects.requireNonNull(config, "config");
+    }
+
+    public void updateConfig(WorldEffectPolicyConfig config) {
+        this.config = Objects.requireNonNull(config, "config");
+    }
+
+    public WorldEffectPolicyConfig config() {
+        return config;
     }
 
     @Override
@@ -29,14 +37,15 @@ public final class ConfigurableWorldEffectPolicy implements ArcanaServices.World
                 "World-mutating spell has no registered safety profile");
         }
 
-        WorldEffectOverride override = config.spellOverrides().get(request.spell().id());
+        WorldEffectPolicyConfig snapshot = config;
+        WorldEffectOverride override = snapshot.spellOverrides().get(request.spell().id());
         WorldEffectMode effectiveMode = override == null
-            ? config.globalMode()
-            : WorldEffectMode.mostRestrictive(config.globalMode(), override.modeCap());
+            ? snapshot.globalMode()
+            : WorldEffectMode.mostRestrictive(snapshot.globalMode(), override.modeCap());
         int effectiveUnits = override == null
-            ? config.globalMaxAffectedUnits()
-            : Math.min(config.globalMaxAffectedUnits(), override.maxAffectedUnits());
-        boolean entityDamageAllowed = config.entityDamageAllowed()
+            ? snapshot.globalMaxAffectedUnits()
+            : Math.min(snapshot.globalMaxAffectedUnits(), override.maxAffectedUnits());
+        boolean entityDamageAllowed = snapshot.entityDamageAllowed()
             && (override == null || override.entityDamageAllowed());
 
         if (!effectiveMode.allows(profile.mutationClass())) {

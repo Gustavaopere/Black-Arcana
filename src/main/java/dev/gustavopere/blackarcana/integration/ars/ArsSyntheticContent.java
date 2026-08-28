@@ -61,7 +61,7 @@ public final class ArsSyntheticContent {
             new PolicyAwareCostProvider(
                 ArcanaPaymentPolicy.BYPASS_CREATIVE_AND_ADMIN,
                 new ArsManaCostProvider(manaAccess)),
-            (request, target) -> ArcanaDecision.allow(),
+            runtime.worldEffectPolicy(),
             (request, target) -> EffectResult.ok(),
             mastery);
         runtime.installEngine(definition.id(), engine);
