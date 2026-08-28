@@ -7,5 +7,6 @@
 *.yaml text eol=lf
 *.md text eol=lf
 *.json text eol=lf
+*.bat text eol=crlf whitespace=-trailing-space
 *.nbt binary
 *.jar binary
