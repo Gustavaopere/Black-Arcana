@@ -82,3 +82,6 @@ Multi-tick or high-cardinality effects use `ScheduledArcanaEffect` and the runti
 
 ## D027 — Runtime group renames precede orphan pruning [PREPARATORY Stage 02]
 Cooldown and charge group identifiers may be renamed through a validated, cycle-free migration graph. Startup order is `initializers/policies -> SavedData restore -> runtime group migrations -> orphan pruning`. Rename collisions merge conservatively: cooldowns preserve the later ready boundary; charge pools preserve the lower available charge count and later recharge boundary. Removed groups remain the responsibility of the active-policy pruning pass.
+
+## D028 — Arcane Danger is inserted as Stage 05A
+Arcane Danger, Resistance, Corruption & Backlash is a causal prerequisite for canonical high-power Rituals and Spell Domains. It is inserted as Stage `05A` between Casting & UX and Rituals rather than renumbering established Stages 06–09 or invalidating already-verified branch history. Existing ritual preparatory code is preserved as a downstream prototype and must be synchronized/retested after Stage 05A freezes its hazard APIs. Black Arcana owns hazard computation; downstream content consumes these contracts rather than implementing parallel backlash/corruption systems.
