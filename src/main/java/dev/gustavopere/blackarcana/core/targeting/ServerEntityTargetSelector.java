@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.core.targeting;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaServices;
+import dev.gustavopere.blackarcana.api.ArcanaTargetGeometry;
 import dev.gustavopere.blackarcana.api.ArcanaTargetReference;
 import dev.gustavopere.blackarcana.api.ArcanaTargetSpec;
 import net.minecraft.core.BlockPos;
@@ -18,33 +19,46 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
 /**
- * Minecraft server target adapter for target kinds whose geometry is fully
- * defined by {@link ArcanaTargetSpec}. It never treats client coordinates as
- * authoritative and performs a loaded-chunk preflight before block raycasts.
- *
- * CONE, CYLINDER and LINKED deliberately remain unsupported until their own
- * canonical geometry/link contracts exist instead of relying on hidden defaults.
+ * Minecraft server target adapter. All coordinates/entity sets are resolved
+ * from live server state; client target data is advisory only for explicit
+ * ENTITY/PROJECTILE selection. No path intentionally force-loads chunks.
  */
 public final class ServerEntityTargetSelector implements ArcanaServices.TargetSelector {
     private static final double RAY_ENTITY_INFLATION = 0.3D;
     private static final double CHUNK_PREFLIGHT_STEP = 8.0D;
+    private static final int MAX_LINK_CANDIDATES = ArcanaTargetSpec.ABSOLUTE_MAX_TARGETS * 4;
 
     private final MinecraftServer server;
     private final Function<ArcanaCastRequest, ArcanaTargetSpec> specResolver;
+    private final Function<ArcanaCastRequest, ArcanaTargetGeometry> geometryResolver;
+    private final LinkedTargetResolver linkedTargetResolver;
 
     public ServerEntityTargetSelector(
             MinecraftServer server,
             Function<ArcanaCastRequest, ArcanaTargetSpec> specResolver
     ) {
+        this(server, specResolver, request -> ArcanaTargetGeometry.none(), LinkedTargetResolver.none());
+    }
+
+    public ServerEntityTargetSelector(
+            MinecraftServer server,
+            Function<ArcanaCastRequest, ArcanaTargetSpec> specResolver,
+            Function<ArcanaCastRequest, ArcanaTargetGeometry> geometryResolver,
+            LinkedTargetResolver linkedTargetResolver
+    ) {
         this.server = Objects.requireNonNull(server, "server");
         this.specResolver = Objects.requireNonNull(specResolver, "specResolver");
+        this.geometryResolver = Objects.requireNonNull(geometryResolver, "geometryResolver");
+        this.linkedTargetResolver = Objects.requireNonNull(linkedTargetResolver, "linkedTargetResolver");
     }
 
     @Override
@@ -67,8 +81,9 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
             case BLOCK -> resolveBlockRay(caster, spec);
             case RAY -> resolveEntityRay(caster, spec);
             case SPHERE -> resolveSphere(caster, spec);
-            case CONE, CYLINDER, LINKED -> ArcanaServices.TargetResolution.denied(
-                    "target kind requires an explicit geometry/link contract: " + spec.kind());
+            case CONE -> resolveCone(caster, request, spec);
+            case CYLINDER -> resolveCylinder(caster, request, spec);
+            case LINKED -> resolveLinked(caster, request, spec);
         };
     }
 
@@ -103,7 +118,7 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
         if (selected.isEmpty()) {
             return ArcanaServices.TargetResolution.denied("target rejected by range/LOS/player/friendly policy");
         }
-        return ArcanaServices.TargetResolution.resolved(selected.getFirst().targetId());
+        return resolution(selected, "explicit target rejected");
     }
 
     private static ArcanaServices.TargetResolution resolveBlockRay(ServerPlayer caster, ArcanaTargetSpec spec) {
@@ -172,12 +187,7 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
             candidates.add(candidate(caster, entity, start.distanceToSqr(intersection.get())));
         }
 
-        List<TargetCandidate> selected = BoundedTargeting.select(spec, candidates);
-        if (selected.isEmpty()) {
-            return ArcanaServices.TargetResolution.denied("entity ray found no valid target");
-        }
-        return ArcanaServices.TargetResolution.resolved(
-                selected.stream().map(TargetCandidate::targetId).toList());
+        return resolution(BoundedTargeting.select(spec, candidates), "entity ray found no valid target");
     }
 
     private static ArcanaServices.TargetResolution resolveSphere(ServerPlayer caster, ArcanaTargetSpec spec) {
@@ -192,10 +202,108 @@ public final class ServerEntityTargetSelector implements ArcanaServices.TargetSe
             candidates.add(candidate(caster, entity, caster.distanceToSqr(entity)));
         }
 
-        List<TargetCandidate> selected = BoundedTargeting.select(spec, candidates);
-        if (selected.isEmpty()) {
-            return ArcanaServices.TargetResolution.denied("sphere found no valid target");
+        return resolution(BoundedTargeting.select(spec, candidates), "sphere found no valid target");
+    }
+
+    private ArcanaServices.TargetResolution resolveCone(
+            ServerPlayer caster,
+            ArcanaCastRequest request,
+            ArcanaTargetSpec spec
+    ) {
+        ArcanaTargetGeometry geometry = Objects.requireNonNull(
+                geometryResolver.apply(request), "target geometry");
+        if (!(geometry instanceof ArcanaTargetGeometry.Cone cone)) {
+            return ArcanaServices.TargetResolution.denied("cone target requires ArcanaTargetGeometry.Cone");
         }
+
+        ServerLevel level = caster.serverLevel();
+        Vec3 origin = caster.getEyePosition(1.0F);
+        Vec3 facing = caster.getViewVector(1.0F).normalize();
+        double minimumDot = Math.cos(Math.toRadians(cone.halfAngleDegrees()));
+        AABB bounds = caster.getBoundingBox().inflate(spec.maxRange());
+        List<TargetCandidate> candidates = new ArrayList<>();
+
+        for (LivingEntity entity : level.getEntitiesOfClass(
+                LivingEntity.class,
+                bounds,
+                entity -> entity != caster)) {
+            Vec3 toTarget = entity.position().subtract(origin);
+            double lengthSquared = toTarget.lengthSqr();
+            if (lengthSquared == 0.0D) continue;
+            if (facing.dot(toTarget.normalize()) < minimumDot) continue;
+            candidates.add(candidate(caster, entity, caster.distanceToSqr(entity)));
+        }
+
+        return resolution(BoundedTargeting.select(spec, candidates), "cone found no valid target");
+    }
+
+    private ArcanaServices.TargetResolution resolveCylinder(
+            ServerPlayer caster,
+            ArcanaCastRequest request,
+            ArcanaTargetSpec spec
+    ) {
+        ArcanaTargetGeometry geometry = Objects.requireNonNull(
+                geometryResolver.apply(request), "target geometry");
+        if (!(geometry instanceof ArcanaTargetGeometry.Cylinder cylinder)) {
+            return ArcanaServices.TargetResolution.denied("cylinder target requires ArcanaTargetGeometry.Cylinder");
+        }
+        if (cylinder.radius() > spec.maxRange() || cylinder.halfHeight() > spec.maxRange()) {
+            return ArcanaServices.TargetResolution.denied("cylinder geometry exceeds target maxRange");
+        }
+
+        ServerLevel level = caster.serverLevel();
+        Vec3 center = caster.position();
+        AABB bounds = caster.getBoundingBox().inflate(
+                cylinder.radius(), cylinder.halfHeight(), cylinder.radius());
+        double radiusSquared = cylinder.radius() * cylinder.radius();
+        List<TargetCandidate> candidates = new ArrayList<>();
+
+        for (LivingEntity entity : level.getEntitiesOfClass(
+                LivingEntity.class,
+                bounds,
+                entity -> entity != caster)) {
+            Vec3 position = entity.position();
+            double dx = position.x - center.x;
+            double dz = position.z - center.z;
+            if (dx * dx + dz * dz > radiusSquared) continue;
+            if (Math.abs(position.y - center.y) > cylinder.halfHeight()) continue;
+            candidates.add(candidate(caster, entity, caster.distanceToSqr(entity)));
+        }
+
+        return resolution(BoundedTargeting.select(spec, candidates), "cylinder found no valid target");
+    }
+
+    private ArcanaServices.TargetResolution resolveLinked(
+            ServerPlayer caster,
+            ArcanaCastRequest request,
+            ArcanaTargetSpec spec
+    ) {
+        List<UUID> linked = List.copyOf(Objects.requireNonNull(
+                linkedTargetResolver.resolve(request, caster), "linked targets"));
+        if (linked.size() > MAX_LINK_CANDIDATES) {
+            return ArcanaServices.TargetResolution.denied("linked target candidate set exceeds hard bound");
+        }
+
+        Set<UUID> unique = new LinkedHashSet<>(linked);
+        ServerLevel level = caster.serverLevel();
+        List<TargetCandidate> candidates = new ArrayList<>(unique.size());
+        for (UUID targetId : unique) {
+            if (targetId == null) {
+                return ArcanaServices.TargetResolution.denied("linked target resolver returned null id");
+            }
+            Entity target = level.getEntity(targetId);
+            if (target == null) continue;
+            candidates.add(candidate(caster, target, caster.distanceToSqr(target)));
+        }
+
+        return resolution(BoundedTargeting.select(spec, candidates), "linked set found no valid target");
+    }
+
+    private static ArcanaServices.TargetResolution resolution(
+            List<TargetCandidate> selected,
+            String emptyReason
+    ) {
+        if (selected.isEmpty()) return ArcanaServices.TargetResolution.denied(emptyReason);
         return ArcanaServices.TargetResolution.resolved(
                 selected.stream().map(TargetCandidate::targetId).toList());
     }
