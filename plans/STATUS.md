@@ -12,7 +12,9 @@ Stage 02 Arcana Core is ✅ complete, verified and merged. Canonical branch run 
 
 Stage 03 Integration Layer is ✅ complete, verified and merged at `359dff669bdb9fe45c4db326668057ff4e28f725`. Canonical branch run `33170777944` and post-merge run `33171003791` both passed unit tests, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Its six task files are frozen.
 
-Stage 04 World Safety is now the canonical active stage. Its stacked preparatory implementation has already passed the full pipeline at `212ee9d00fa24f574ba7b7cdb98dc59df83e1a12` via run `33170234798`, but it must be reapplied onto this latest canonical `main` before merge.
+Stage 04 World Safety is ✅ complete, verified and merged at `b5a515335544cee5273ff67d033c68bacf98b05a`. Canonical branch run `33171942536` and post-merge main run `33172216821` both passed unit tests, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke.
+
+Stage 05 Casting & UX is now the canonical active stage.
 
 | Stage | State | Notes |
 |---|---|---|
@@ -20,8 +22,8 @@ Stage 04 World Safety is now the canonical active stage. Its stacked preparatory
 | 01 Reference Catalog | ✅ Complete | merged at `88059dc...`; canonical full CI green |
 | 02 Arcana Core | ✅ Complete | branch `33169091342` + post-merge `33169344809` green |
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch `33170777944` + post-merge `33171003791` green |
-| 04 World Safety | 🟨 Active | preparatory SHA `212ee9d...` full-green in `33170234798`; canonical reapplication starts now |
-| 05 Casting & UX | ⬜ Not started canonically | Direct cast, loadouts, radial HUD |
+| 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch `33171942536` + post-merge `33172216821` green |
+| 05 Casting & UX | 🟨 Active | Direct cast, loadouts, radial selection, contextual HUD and accessibility |
 | 06 Rituals | ⬜ Not started | Ritual contracts and occult/grand rituals |
 | 07 Spell Domains | ⬜ Not started | Blood, souls, projection, displacement, forbidden |
 | 08 Progression & Balance | ⬜ Not started | Knowledge, mastery, caps, presets |
@@ -29,32 +31,35 @@ Stage 04 World Safety is now the canonical active stage. Its stacked preparatory
 
 ## Canonical active stage
 
-`04-world-safety`
+`05-casting-ux`
 
 ## Frozen predecessors
 
-Stages 00, 01, 02 and 03 may only change through explicit follow-up decisions recorded in `DECISIONS.md`.
+Stages 00, 01, 02, 03 and 04 may only change through explicit follow-up decisions recorded in `DECISIONS.md`.
 
-Stage 03 frozen outputs include:
-- fail-closed optional provider discovery and capability reporting;
-- transactional Iron's mana, Ars mana and Malum spirit resource adapters;
-- public Eidolon ritual-host bridge with a non-destructive integration probe;
-- reflection-isolated RPG progression/mastery adapter with post-success mastery awards;
-- optional dependency metadata and provider-specific classloading boundaries;
-- no provider absence/API mismatch may silently make a required cost or progression gate free.
+Stage 04 frozen outputs include:
+- central `WorldEffectPolicy` modes `OFF`, `COSMETIC`, `TEMPORARY`, `LIMITED` and `FULL`;
+- fail-closed per-spell world-effect profiles and overrides that can only restrict the global ceiling;
+- bounded world-effect admission, chunk and work budgets with no arbitrary chunk force-loading;
+- transactional temporary block mutation with compare-and-set restoration and persisted rollback state;
+- Minecraft backend using loaded-chunk checks, full BlockState serialization and block-entity refusal by default;
+- server-derived PvP, team, invulnerability and boss facts with boss-specific caps rather than blanket immunity;
+- fail-closed protection-adapter registry and protected-destination guard;
+- unit/GameTest coverage for policy modes, budgets, rollback, restart persistence, PvP/allies/bosses/protected destinations and external edits.
 
 ## Immediate next actions
 
-1. Create `feat/04-world-safety` from latest `main`.
-2. Reapply only Stage 04 world-policy, rollback, budget, protection, persistence and GameTest changes from `prep/04-world-safety`.
-3. Preserve all frozen Stage 03 integration contracts and current CI/build fixes.
-4. Run full canonical CI.
-5. If green, merge Stage 04, run post-merge CI, mark its four tasks ✅ and activate Stage 05.
+1. Create `feat/05-casting-ux` from latest `main`.
+2. Implement configurable client input and server-validated loadout selection without introducing a parallel cast path.
+3. Build a client-only radial selector with explicit selection separate from cast execution.
+4. Add contextual cooldown/cost/channel/denial feedback with no permanent resource HUD by default.
+5. Add accessibility/client preferences that only reduce presentation and never alter authoritative gameplay state.
+6. Run full canonical CI and manual/client UX matrix before Stage 05 receives ✅.
 
 ## Freeze rules
 
 - Completed stages change only through an explicit follow-up decision.
-- No Stage 04 task receives ✅ until canonical implementation passes its acceptance gates and merge.
-- Destructive effects must route through Black Arcana world-effect policy and bounded runtime work.
-- No world effect may force-load arbitrary chunks.
+- No Stage 05 task receives ✅ until canonical implementation passes its acceptance gates and merge.
 - Client input/presentation never becomes authoritative gameplay state.
+- All Stage 05 casts must terminate in the canonical Stage 02 ingress/channel pipeline.
+- World-mutating content remains subject to frozen Stage 04 policy and budgets.
