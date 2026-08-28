@@ -1,110 +1,111 @@
 # Arcana Core — preparatory implementation checkpoint
 
-Branch: `prep/02-arcana-core`
-Base: Foundation HEAD `e843d35789a7a30be16da8348e7daf06f604cdea`.
-Status: PREPARATORY ONLY. Stage 00 is not canonical; no Stage 02 task receives ✅ and this branch must not merge before the causal gates are restored.
+Branch: `prep/02-arcana-core`.
+Original code base: Foundation HEAD `e843d35789a7a30be16da8348e7daf06f604cdea`.
+Current Foundation branch: `3d4b9e24361e5ca3ed8cdcebeeb116abe7361c00` (verification-trigger/documentation delta; still not canonical).
+Status: PREPARATORY ONLY. No Stage 02 task receives ✅ and this branch must not merge before the causal gates are restored.
 
-## Implemented pure-Java infrastructure
+## Implemented infrastructure
 
-### Cast identity and execution
-- `ArcanaCastId` UUID identity on each request.
-- `CastRequestValidator` seam for canonical identity/loadout/policy checks.
-- `ReplayGuard` seam and bounded in-memory implementation.
-- Engine order begins with identity and replay validation before progression/cooldown/target/cost/world mutation.
-- Duplicate cast ids and replay-guard saturation have explicit denial codes.
+### 02.01 — Cast identity, ingress and execution
+- `ArcanaCastId` UUID identity on every cast intent.
+- Canonical server-side spell resolution before request construction.
+- Server-owned loadout registry and slot-to-spell validation.
+- Composite identity validator.
+- Bounded replay protection with duplicate, expiry and saturation semantics.
+- Structured denial statuses/codes.
+- Channel lifecycle: begin/cancel/timeout do not execute a cast; a valid release enters the normal engine once and only then claims replay/cost/cooldown.
+- `ArcanaCastIngressService` rate-limits first, resolves canonical definitions/engines and builds the immutable server request.
 
-### Costs
-- Foundation `check -> reserve -> effect -> commit/refund` transaction is preserved.
-- `CompositeCostProvider` reserves providers sequentially and refunds already-reserved components in reverse order if a later component fails.
-- Composite reservation commit uses deterministic provider order; explicit refund uses reverse order.
-- Provider contract assumes `commit()` is infallible after a successful reservation. A provider that can still fail irreversibly at commit is not compatible with the contract and must use a compensating/escrow adapter designed explicitly in Stage 03.
+### 02.02 — Transactional costs
+- `check -> reserve -> effect -> commit/refund` transaction.
+- `CompositeCostProvider` reserves all components atomically and rolls partial reservation back in reverse order.
+- Flat and percent-of-max cost representation.
+- Explicit SURVIVAL/CREATIVE/ADMIN payment policy instead of adapter-local bypasses.
+- Host resource systems remain adapters; Black Arcana still has no mandatory mana pool.
 
-### Cooldowns
-- `ArcanaCooldownSpec` supports shared group id, bounded duration and session/persistent mode.
-- `PersistentCooldownService` stores caster/group entries, produces persistent snapshots and restores them.
-- A later config decrease can shorten an existing cooldown; a later increase does not extend an already-started cooldown.
-- Cooldown time currently consumes `ArcanaCastContext.serverTick`; the canonical Minecraft bridge must supply a persistent monotonic gameplay tick suitable for restart-safe SavedData semantics.
+### 02.03 — Targeting and bounded work
+- `ArcanaTargetSpec` with hard range/count/LOS/player/friendly-fire policy.
+- `BoundedTargeting` accepts server-computed candidate facts only and applies deterministic filtering/caps.
+- Minecraft `ServerEntityTargetSelector` re-resolves caster/target from live server state, refuses unloaded/missing/dead targets and does not force-load chunks.
+- Current Minecraft bridge covers SELF and explicit ENTITY targets.
+- `BoundedWorkScheduler` provides bounded queue/work budget and at-most-once processing per item per tick.
 
-### Targeting and bounded effects
-- `ArcanaTargetSpec` defines target kind, hard maximum range, target count, LOS, player and friendly-fire policy.
-- `BoundedTargeting` filters server-computed candidates only: loaded/alive/range/LOS/player/friendly state, then sorts deterministically and applies the target cap.
-- `BoundedWorkScheduler` enforces a fixed per-tick work budget, bounded queue and at-most-once-per-item processing each tick.
-- No client-provided coordinates become authoritative through these primitives.
+### 02.04 — Cooldowns, charges and persistence
+- Per-spell/shared group cooldown specs with session/persistent policy.
+- Restart-capable snapshots and config-decrease clamping.
+- Reusable charge pools with continuous recharge semantics and persistence snapshots.
+- Composite cooldown service for spells that combine cooldown and charge policy.
+- Server-owned loadout snapshot/restore.
+- NeoForge/Minecraft `SavedData` adapter stored globally in the Overworld.
+- Saved state is captured periodically and during server stopping, then restored on server start.
+- Restored orphan cooldown/charge groups are pruned only after runtime initializers register the canonical active policies.
+- Defensive restore ceilings bound cooldown, charge-pool and loadout collection counts.
+- Bounded cooldown UI snapshot prunes expired state for that caster.
 
-### Canonical registries and data
-- `ArcanaSpellRegistry` atomically replaces compiled server definitions and rejects unknown/spoofed definitions.
-- `SpellDataCatalog` atomically reloads validated schema-v1 metadata and produces deterministic presentation snapshots.
-- Failed duplicate/malformed reloads leave the previous registry snapshot intact.
+### 02.05 — Networking and data-driven content
+- Protocol v1 with hard string/list bounds.
+- Serverbound intent contains only protocol version, cast id, spell id, loadout slot and bounded advisory target hint.
+- No client packet carries authoritative damage, cost, cooldown, range or world-destruction permission.
+- NeoForge 1.21.1 payload registration is implemented with `RegisterPayloadHandlersEvent` / `PayloadRegistrar`.
+- S2C cast-result, cooldown-snapshot and spell-presentation packets are registered.
+- Presentation/cooldown sync happens at bounded lifecycle points only: login, metadata reload and successful cast; no per-tick full-state synchronization.
+- `SpellDataCatalog` atomically replaces validated metadata.
+- Strict server datapack listener uses the NeoForge 1.21.1 `AddReloadListenerEvent` surface.
+- Datapack spell metadata lives under `data/<namespace>/black_arcana/spells/*.json`.
+- File resource id and JSON `id` must match; unknown fields are rejected.
+- Current data schema is intentionally presentation-only (`schemaVersion`, `id`, `translationKey`, `iconId`). Gameplay implementation/cost/damage/world mutation cannot be injected by JSON.
 
-### Network contracts, not transport
-- Protocol version 1 and hard collection/string bounds.
-- Cast intent carries only `castId`, `spellId`, bounded `loadoutSlot` and bounded target hint.
-- Cast result, cooldown snapshot and presentation snapshot records are versioned and bounded.
-- `IngressRateLimiter` provides bounded per-caster sliding-window request control before expensive cast execution.
-- No payload contains authoritative damage, cost, cooldown, range or world-destruction values.
+## Verification source written
 
-## Test contracts written
-
-JUnit coverage has been added for:
-- identity-before-replay ordering;
-- deterministic cast pipeline;
-- effect failure/exception refund;
+JUnit coverage now includes:
+- cast pipeline order, denial and transactional refund;
 - replay duplicate/saturation/expiry;
-- composite cost partial-reservation rollback and terminal order;
-- cooldown expiry, persistence, session-only mode and config-change clamping;
-- target validity/range/LOS/player/friendly filtering and hard target cap;
-- work-budget enforcement and queue capacity;
-- canonical spell definition anti-spoofing and atomic registry reload;
-- protocol/version/collection bounds;
-- ingress rate limiting;
-- atomic spell-data reload and deterministic presentation ordering.
+- loadout ownership and snapshot/restore;
+- channel begin/release/cancel/timeout semantics;
+- composite costs and payment-mode policy;
+- cooldown persistence/config clamping/pruning/UI snapshots;
+- charge depletion/recharge/persistence/pruning;
+- bounded target filtering;
+- work scheduler budget/capacity;
+- canonical spell anti-spoofing;
+- atomic spell catalog reload;
+- protocol/packet collection bounds and ingress rate limiting;
+- strict datapack parser schema/unknown-field/resource-id checks.
 
-These tests are source-level preparatory evidence only until Gradle/NeoForge executes them in a real verification environment.
+Dedicated GameTest source now includes a synthetic Arcana Core cast that runs through ingress, canonical registry, loadout, replay, cooldown, target, cost reservation, world policy and effect without any optional magic mod. A second immediate cast must be denied by the server-owned cooldown.
 
-## Remaining work by Stage 02 task
+These are implementation/test sources, not a green verification claim. GitHub-hosted jobs are still terminating before runner assignment, with zero repository steps executed.
 
-### 02.01 Cast Request & Execution
-Still required:
-- actual loadout ownership validator and slot-to-spell resolution;
-- charge/channel lifecycle without duplicate execution semantics;
-- request creation path from server-validated network intent;
-- dedicated-server replay/duplicate tests.
+## Remaining work before Stage 02 can close
 
-### 02.02 Resource & Cost Providers
-Still required:
-- explicit flat vs percent-of-max cost representation;
-- creative/admin payment policy;
-- zero-cost provider and reusable reservation utilities;
-- composite provider contract tests executed by Gradle;
-- later host adapters must run the same transaction suite.
+### 02.01
+- Prove channel/replay/loadout behavior under Gradle and dedicated GameTest.
+- Add any invocation-specific charge/channel packet only if Stage 05 UX requires it; do not fork engine semantics.
 
-### 02.03 Targeting & Effect Runtime
-Still required:
-- Minecraft/NeoForge candidate collection for self/entity/ray/block/cone/sphere/cylinder/projectile/linked targets;
-- actual chunk-loaded, LOS, entity-liveness and friendly-team facts from server state;
-- effect enqueue integration with the work scheduler;
-- GameTests for chunk edges and real entities.
+### 02.02
+- Execute the full transaction test suite in Gradle.
+- Stage 03 host adapters must satisfy the same reservation contract; providers whose commit can fail irreversibly require explicit escrow/compensation design.
 
-### 02.04 Cooldowns & Persistence
-Still required:
-- SavedData or equivalent server persistence bridge;
-- canonical persistent tick/time source;
-- charge pools;
-- death/logout/dimension/restart GameTests;
-- migration/pruning of obsolete cooldown groups.
+### 02.03
+- Add Minecraft bridges for ray/block/cone/sphere/cylinder/projectile/linked targets as real spells require them.
+- Bind expensive world/effect producers to `BoundedWorkScheduler` rather than direct unbounded loops.
+- Add GameTests for chunk borders, LOS and real entity/friendly-fire behavior.
 
-### 02.05 Networking & Data-driven Content
-Still required:
-- NeoForge 1.21.1 payload registration and codecs;
-- server handler that rate-limits, resolves the canonical spell, validates loadout and builds `ArcanaCastRequest`;
-- minimal result/cooldown/presentation synchronization;
-- reload listener/datapack codec bridge for `SpellDataCatalog`;
-- malformed/spam packet dedicated-server tests.
+### 02.04
+- Execute NBT save/load and actual server-restart persistence tests.
+- Add explicit rename migration for cooldown/charge group ids when the first real group rename occurs; current implementation handles safe pruning of removed groups.
+- Verify death/logout/dimension-change invariants in GameTests.
+
+### 02.05
+- Execute packet codecs and real C2S/S2C flow on dedicated server/client test environments.
+- Add malformed/spam network GameTests where the test harness permits transport-level injection.
+- Extend the data schema with bounded authoritative balance parameters only when Stage 08 defines their canonical model; do not invent an early universal spell DSL.
 
 ## Promotion rule
 
-This branch may continue implementing pure Black Arcana infrastructure while Foundation verification is externally blocked, but canonical promotion remains:
+Canonical order remains:
 
 `Stage 00 green + main -> Stage 01 canonical review/merge -> Stage 02 rebase/review/test -> main`.
 
-No preparatory checkpoint changes that causal order.
+Preparatory progress does not change that order and no task receives ✅ until its acceptance evidence exists.
