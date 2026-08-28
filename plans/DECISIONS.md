@@ -70,3 +70,6 @@ Cooldowns, charge pools and loadouts are player/global runtime state rather than
 
 ## D023 — Client synchronization is event-driven [PREPARATORY Stage 02]
 Black Arcana does not send full runtime state every tick. Spell presentation is synchronized on login and successful metadata reload; cooldown snapshots are synchronized on login and after a successful cast. Future UI-specific incremental packets must preserve this event-driven model and hard payload limits.
+
+## D024 — Channeling converges on the canonical cast engine [PREPARATORY Stage 02]
+Beginning a charge/channel creates bounded server-owned session state but does not execute gameplay effects or spend resources. Releasing a valid session consumes it and then enters the same `ArcanaCastEngine` used by immediate casts exactly once. The server computes channel duration from gameplay ticks, preserves the original loadout slot, and revalidates the current spell/loadout/runtime at release. Client-reported charge duration is never authoritative, and Stage 05 input packets must terminate in this coordinator rather than introducing a parallel execution pipeline.
