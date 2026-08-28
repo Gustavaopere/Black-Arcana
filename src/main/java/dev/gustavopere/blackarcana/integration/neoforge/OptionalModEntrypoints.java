@@ -21,7 +21,9 @@ public final class OptionalModEntrypoints {
         "irons_spellbooks",
         "dev.gustavopere.blackarcana.integration.irons.IronsServerIntegrationBootstrap",
         "ars_nouveau",
-        "dev.gustavopere.blackarcana.integration.ars.ArsServerIntegrationBootstrap"
+        "dev.gustavopere.blackarcana.integration.ars.ArsServerIntegrationBootstrap",
+        "malum",
+        "dev.gustavopere.blackarcana.integration.malum.MalumServerIntegrationBootstrap"
     );
 
     private OptionalModEntrypoints() { }
