@@ -15,7 +15,9 @@ import java.util.Objects;
 public final class OptionalModEntrypoints {
     private static final Map<String, String> MOD_BUS_ENTRYPOINTS = Map.of(
         "irons_spellbooks",
-        "dev.gustavopere.blackarcana.integration.irons.IronsOptionalModBootstrap"
+        "dev.gustavopere.blackarcana.integration.irons.IronsOptionalModBootstrap",
+        "eidolon_repraised",
+        "dev.gustavopere.blackarcana.integration.eidolon.EidolonOptionalModBootstrap"
     );
     private static final Map<String, String> SERVER_ENTRYPOINTS = Map.of(
         "irons_spellbooks",
@@ -23,7 +25,9 @@ public final class OptionalModEntrypoints {
         "ars_nouveau",
         "dev.gustavopere.blackarcana.integration.ars.ArsServerIntegrationBootstrap",
         "malum",
-        "dev.gustavopere.blackarcana.integration.malum.MalumServerIntegrationBootstrap"
+        "dev.gustavopere.blackarcana.integration.malum.MalumServerIntegrationBootstrap",
+        "eidolon_repraised",
+        "dev.gustavopere.blackarcana.integration.eidolon.EidolonServerIntegrationBootstrap"
     );
 
     private OptionalModEntrypoints() { }
