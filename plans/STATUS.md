@@ -10,11 +10,11 @@ Stage 01 Reference Catalog is ✅ complete, verified and merged at `88059dc73d8a
 
 Stage 02 Arcana Core is ✅ complete, verified and merged. Canonical branch run `33169091342` and post-merge run `33169344809` both passed the full pipeline. The five Stage 02 tasks are frozen contracts.
 
-Stage 03 Integration Layer is ✅ complete, verified and merged at `359dff669bdb9fe45c4db326668057ff4e28f725`. Canonical branch run `33170777944` and post-merge run `33171003791` both passed unit tests, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Its six task files are frozen.
+Stage 03 Integration Layer is ✅ complete, verified and merged at `359dff669bdb9fe45c4db326668057ff4e28f725`. Canonical branch run `33170777944` and post-merge run `33171003791` both passed the full pipeline. Its six task files are frozen.
 
-Stage 04 World Safety is ✅ complete, verified and merged at `b5a515335544cee5273ff67d033c68bacf98b05a`. Canonical branch run `33171942536` and post-merge main run `33172216821` both passed unit tests, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke.
+Stage 04 World Safety is ✅ complete, verified and merged at `b5a515335544cee5273ff67d033c68bacf98b05a`. Canonical branch run `33171942536` and post-merge main run `33172216821` both passed the full pipeline.
 
-Stage 05 Casting & UX is now the canonical active stage.
+Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231075d68353447b8ce37add`. Branch run `33182063857` and post-merge main run `33182458511` both passed unit tests, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. The stage remains 🟨 active because its required client visual/input matrix has not yet been manually executed.
 
 | Stage | State | Notes |
 |---|---|---|
@@ -23,8 +23,8 @@ Stage 05 Casting & UX is now the canonical active stage.
 | 02 Arcana Core | ✅ Complete | branch `33169091342` + post-merge `33169344809` green |
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch `33170777944` + post-merge `33171003791` green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch `33171942536` + post-merge `33172216821` green |
-| 05 Casting & UX | 🟨 Active | Direct cast, loadouts, radial selection, contextual HUD and accessibility |
-| 06 Rituals | ⬜ Not started | Ritual contracts and occult/grand rituals |
+| 05 Casting & UX | 🟨 Active / code merged | automated gates green; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
+| 06 Rituals | ⬜ Not canonical | preparatory work may proceed without freezing Stage 05 |
 | 07 Spell Domains | ⬜ Not started | Blood, souls, projection, displacement, forbidden |
 | 08 Progression & Balance | ⬜ Not started | Knowledge, mastery, caps, presets |
 | 09 Hardening & Release | ⬜ Not started | Tests, performance, upgrade, release |
@@ -37,29 +37,29 @@ Stage 05 Casting & UX is now the canonical active stage.
 
 Stages 00, 01, 02, 03 and 04 may only change through explicit follow-up decisions recorded in `DECISIONS.md`.
 
-Stage 04 frozen outputs include:
-- central `WorldEffectPolicy` modes `OFF`, `COSMETIC`, `TEMPORARY`, `LIMITED` and `FULL`;
-- fail-closed per-spell world-effect profiles and overrides that can only restrict the global ceiling;
-- bounded world-effect admission, chunk and work budgets with no arbitrary chunk force-loading;
-- transactional temporary block mutation with compare-and-set restoration and persisted rollback state;
-- Minecraft backend using loaded-chunk checks, full BlockState serialization and block-entity refusal by default;
-- server-derived PvP, team, invulnerability and boss facts with boss-specific caps rather than blanket immunity;
-- fail-closed protection-adapter registry and protected-destination guard;
-- unit/GameTest coverage for policy modes, budgets, rollback, restart persistence, PvP/allies/bosses/protected destinations and external edits.
+## Stage 05 merged implementation
 
-## Immediate next actions
+- rebindable radial/cast/quick-slot key mappings, with quick slots unbound by default to reduce pack conflicts;
+- server-validated persistent loadout editing over bounded C2S/S2C payloads;
+- client-only radial selector whose selection is separate from cast execution;
+- direct selected-slot and quick-slot casting that still terminates in the canonical server ingress pipeline;
+- contextual HUD for selected spell and authoritative cast denial/success feedback, with no permanent resource bar;
+- CLIENT-only NeoForge config for HUD visibility/scale/anchor, feedback density, radial hold/toggle behavior, particle-density preference and reduced-motion/flash preferences;
+- explicit client cache clearing on disconnect to prevent stale same-UUID reconnect state;
+- dedicated-server smoke remains green after all client-only code was packaged.
 
-1. Create `feat/05-casting-ux` from latest `main`.
-2. Implement configurable client input and server-validated loadout selection without introducing a parallel cast path.
-3. Build a client-only radial selector with explicit selection separate from cast execution.
-4. Add contextual cooldown/cost/channel/denial feedback with no permanent resource HUD by default.
-5. Add accessibility/client preferences that only reduce presentation and never alter authoritative gameplay state.
-6. Run full canonical CI and manual/client UX matrix before Stage 05 receives ✅.
+## Stage 05 remaining closure work
+
+Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags (particle density, reduced motion/flashes) may be carried explicitly to Stage 09 if no corresponding effect exists yet.
+
+## Preparatory next work
+
+Stage 06 may proceed in an isolated preparatory branch from the latest green `main` because its server-side ritual contracts do not depend on the pending visual QA. It may not be declared canonical ahead of Stage 05.
 
 ## Freeze rules
 
 - Completed stages change only through an explicit follow-up decision.
-- No Stage 05 task receives ✅ until canonical implementation passes its acceptance gates and merge.
 - Client input/presentation never becomes authoritative gameplay state.
-- All Stage 05 casts must terminate in the canonical Stage 02 ingress/channel pipeline.
+- All Stage 05 casts terminate in the canonical Stage 02 ingress/channel pipeline.
 - World-mutating content remains subject to frozen Stage 04 policy and budgets.
+- Stage 06 preparatory work cannot be promoted ahead of unresolved Stage 05 closure.
