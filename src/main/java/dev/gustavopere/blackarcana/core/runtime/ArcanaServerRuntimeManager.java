@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.config.SpellDataDefinition;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftTemporaryBlockBackend;
 import dev.gustavopere.blackarcana.integration.neoforge.NeoForgeIntegrationBootstrap;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
@@ -104,6 +105,8 @@ public final class ArcanaServerRuntimeManager {
     private static void onServerStarted(ServerStartedEvent event) {
         MinecraftServer server = event.getServer();
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        MinecraftTemporaryBlockBackend worldBackend = new MinecraftTemporaryBlockBackend(server);
+        runtime.installWorldBackend(worldBackend, worldBackend);
         NeoForgeIntegrationBootstrap.install(server, runtime);
         INITIALIZERS.forEach(initializer -> initializer.accept(runtime));
         runtime.spellData().replaceAll(CURRENT_SPELL_DATA);
