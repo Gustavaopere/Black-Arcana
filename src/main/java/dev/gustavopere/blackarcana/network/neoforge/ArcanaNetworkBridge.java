@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.network.CooldownSnapshotPayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -54,6 +55,18 @@ public final class ArcanaNetworkBridge {
 
     public static void installClientPresentationHandler(BiConsumer<Player, SpellPresentationPayload> handler) {
         clientPresentationHandler = Objects.requireNonNull(handler, "handler");
+    }
+
+    public static void sendCooldownSnapshot(ServerPlayer player, CooldownSnapshotPayload snapshot) {
+        PacketDistributor.sendToPlayer(
+                Objects.requireNonNull(player, "player"),
+                CooldownSnapshotPacket.from(Objects.requireNonNull(snapshot, "snapshot")));
+    }
+
+    public static void sendSpellPresentation(ServerPlayer player, SpellPresentationPayload presentation) {
+        PacketDistributor.sendToPlayer(
+                Objects.requireNonNull(player, "player"),
+                SpellPresentationPacket.from(Objects.requireNonNull(presentation, "presentation")));
     }
 
     private static void handleServerbound(CastIntentPacket packet, IPayloadContext context) {
