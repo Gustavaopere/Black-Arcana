@@ -13,17 +13,13 @@ import java.util.List;
 import java.util.Objects;
 
 public record SpellPresentationPacket(int protocolVersion, List<Entry> entries) implements CustomPacketPayload {
-    private static final int MAX_SPELL_ID_LENGTH = 192;
-    private static final int MAX_TRANSLATION_KEY_LENGTH = 160;
-    private static final int MAX_ICON_ID_LENGTH = 192;
-
     public static final Type<SpellPresentationPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "spell_presentation"));
 
     private static final StreamCodec<ByteBuf, Entry> ENTRY_CODEC = StreamCodec.composite(
-            ByteBufCodecs.stringUtf8(MAX_SPELL_ID_LENGTH), Entry::spellId,
-            ByteBufCodecs.stringUtf8(MAX_TRANSLATION_KEY_LENGTH), Entry::translationKey,
-            ByteBufCodecs.stringUtf8(MAX_ICON_ID_LENGTH), Entry::iconId,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH), Entry::spellId,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_TRANSLATION_KEY_LENGTH), Entry::translationKey,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_ICON_ID_LENGTH), Entry::iconId,
             Entry::new);
 
     public static final StreamCodec<ByteBuf, SpellPresentationPacket> STREAM_CODEC = StreamCodec.composite(
