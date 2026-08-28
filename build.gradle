@@ -22,6 +22,13 @@ repositories {
             includeGroup 'io.redspace'
         }
     }
+    maven {
+        name = 'CurseMaven'
+        url = 'https://www.cursemaven.com'
+        content {
+            includeGroup 'curse.maven'
+        }
+    }
 }
 
 sourceSets.main.resources {
@@ -76,6 +83,12 @@ configurations {
 dependencies {
     // Stable addon-facing Iron's API only. The full mod remains an optional runtime dependency.
     compileOnly "io.redspace:irons_spellbooks:${irons_spells_version}:api"
+
+    // Ars Nouveau does not publish a dedicated API classifier; compile against the pinned
+    // release without transitives and isolate all provider loading behind optional entrypoints.
+    compileOnly("curse.maven:ars-nouveau-401955:${ars_nouveau_file_id}") {
+        transitive = false
+    }
 
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
