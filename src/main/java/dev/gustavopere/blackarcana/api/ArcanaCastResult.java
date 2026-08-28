@@ -8,6 +8,7 @@ public record ArcanaCastResult(Status status, String code, String detail) {
         DENIED_INGRESS,
         DENIED_IDENTITY,
         DENIED_REPLAY,
+        DENIED_CHANNEL,
         DENIED_PROGRESSION,
         DENIED_COOLDOWN,
         DENIED_TARGET,
