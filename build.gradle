@@ -45,6 +45,10 @@ neoForge {
         minecraftVersion = project.parchment_minecraft_version
     }
 
+    // Unit tests directly exercise Minecraft/NeoForge types (SavedData, packet codecs,
+    // reload listeners). Make the modding classpath explicit for test compilation.
+    addModdingDependenciesTo(sourceSets.test)
+
     runs {
         client {
             client()
@@ -83,6 +87,7 @@ neoForge {
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+    testCompileOnly.extendsFrom compileOnly
 }
 
 dependencies {
