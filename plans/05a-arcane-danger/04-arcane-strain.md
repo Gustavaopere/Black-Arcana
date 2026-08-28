@@ -1,4 +1,4 @@
-# 06.04 — Arcane Strain
+# 05A.04 — Arcane Strain
 
 ## Objective
 Add a short-/medium-term load state that makes repeated dangerous casting progressively riskier without relying only on cooldowns.

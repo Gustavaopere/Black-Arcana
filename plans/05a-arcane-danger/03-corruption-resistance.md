@@ -1,4 +1,4 @@
-# 06.03 — Corruption Resistance
+# 05A.03 — Corruption Resistance
 
 ## Objective
 Create a persistent corruption channel that is independent from Arcane Resistance and produces meaningful long-term consequences without becoming a decorative bar or duplicating Enshrouded.
@@ -31,7 +31,7 @@ A profile may define:
 - threshold consequence hooks.
 
 ## Consequences
-Stage 06 establishes a small bounded consequence framework, not dozens of content effects. Threshold transitions may publish events/hooks and apply a minimal test effect/diagnostic. Actual spell/domain-specific corruption consequences belong to later content/balance stages.
+Stage 05A establishes a small bounded consequence framework, not dozens of content effects. Threshold transitions may publish events/hooks and apply a minimal test effect/diagnostic. Actual spell/domain-specific corruption consequences belong to later content/balance stages.
 
 Corruption is explicitly NOT Enshrouded Shroud exposure/corruption. Future interaction requires a bridge/provider.
 

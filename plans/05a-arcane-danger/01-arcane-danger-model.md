@@ -1,4 +1,4 @@
-# 06.01 — Arcane Danger Model
+# 05A.01 — Arcane Danger Model
 
 ## Objective
 Freeze the domain language and server-owned lifecycle for dangerous/forbidden magic before any spell is retrofitted.

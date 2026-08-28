@@ -1,4 +1,4 @@
-# 06.06 — Equipment & Containment Items
+# 05A.06 — Equipment & Containment Items
 
 ## Objective
 Make forbidden-magic preparation visible in character build/equipment instead of reducing the system to perks or a single resistance number.
@@ -7,61 +7,27 @@ Make forbidden-magic preparation visible in character build/equipment instead of
 Black Arcana may add specialized containment equipment such as robes/armor, masks/helms, gloves, mantles and containment artifacts. Final names/models/recipes are content decisions; this task freezes the mechanical infrastructure first.
 
 ## Equipment provider
-Implement a server-side Black Arcana equipment resistance provider that snapshots equipped armor/items at hazard-session activation.
-
-Equipment contributions may include:
-- Arcane Resistance;
-- Corruption Resistance;
-- strain-capacity/recovery modifiers;
-- profile-specific containment bonuses;
-- emergency backlash absorption;
-- explicit set effects.
-
-Vanilla armor value/toughness are not automatically converted into Arcane Resistance.
+Implement a server-side Black Arcana equipment resistance provider that snapshots equipped armor/items at hazard-session activation. Contributions may include Arcane Resistance, Corruption Resistance, strain capacity/recovery, profile-specific containment, emergency backlash absorption and explicit set effects. Vanilla armor/toughness are not automatically converted into Arcane Resistance.
 
 ## Item data
-Prefer explicit Black Arcana data components/tags/registries for containment properties rather than slot-name conditionals scattered through cast code.
-
-Set bonuses are resolved as a provider over stable set identity/tags. The provider produces a diagnostic contribution list so preflight/debug can explain where resistance came from.
+Prefer explicit Black Arcana data components/tags/registries for containment properties rather than slot-name conditionals scattered through cast code. Set bonuses resolve through stable set identity/tags and produce diagnostic contribution breakdowns.
 
 ## Emergency protection
-Rare equipment may prevent/reduce a lethal backlash event only through a transactional protection contract:
-- evaluate predicted lethal backlash after resistance;
-- reserve a single eligible item/charge/durability resource;
-- consume/break/start cooldown exactly once per qualifying backlash settlement;
-- apply bounded reduction/absorption;
-- commit or compensate atomically;
-- use root-cast/damage identity to prevent double consumption.
+Rare equipment may prevent/reduce lethal backlash only through a transactional protection contract: evaluate predicted lethal backlash, reserve one eligible resource/charge/durability use, consume exactly once, apply bounded absorption and commit/compensate atomically. Root-cast/damage identity prevents duplicate consumption. Profiles may disallow emergency protection or retain unavoidable floors.
 
-Emergency protection is not permanent immortality. Profiles may disallow it or enforce unavoidable damage/corruption/strain.
+## Design constraints
+Do not create a generic ladder of interchangeable `+10%` items. Important items should have distinct containment, corruption, strain, emergency or affinity-specific roles.
 
-## Set design constraints
-Do not create a generic ladder of interchangeable `+10%` items. Important items should have distinct roles, for example:
-- stable always-on containment;
-- better corruption protection but weaker immediate backlash protection;
-- strain recovery/capacity specialization;
-- one-time emergency ward;
-- affinity-specific containment for a spell family.
-
-Numeric tuning belongs to Stage 09 Progression & Balance; Stage 06 establishes ceilings and behavior contracts.
+Numeric tuning belongs to Stage 08 Progression & Balance; Stage 05A establishes behavior contracts and hard ceilings.
 
 ## RED
-Tests:
-- armor contribution is included in snapshot;
-- removing armor after cast does not change that root cast's backlash;
-- equipping armor after cast does not retroactively reduce it;
-- set bonus activates only for valid composition;
-- normal armor with no BA containment data contributes zero;
-- emergency item consumes exactly once;
-- failed/duplicate backlash cannot duplicate durability/charge consumption;
-- emergency protection cannot reduce below profile unavoidable floor;
-- broken/depleted item no longer contributes.
+Tests cover snapshot inclusion, post-cast gear swaps, set composition, zero contribution from ordinary armor, exactly-once emergency consumption, duplicate/failure idempotency, unavoidable floors and depleted/broken items.
 
 ## GREEN
-Implement equipment provider, containment data contracts, set resolver and transactional emergency-protection interface. A minimal test item/set may be introduced only to prove the infrastructure.
+Implement equipment provider, containment data contracts, set resolver and transactional emergency-protection interface. A minimal test item/set may be introduced only to prove infrastructure.
 
 ## REFACTOR
 Keep item-specific behavior behind registered containment definitions/providers. Hazard core must not know concrete item classes.
 
 ## Acceptance
-A player can build meaningful Arcane/Corruption resistance from Black Arcana equipment, with snapshot-safe behavior and no generic vanilla armor shortcut.
+A player can build meaningful Arcane/Corruption resistance from Black Arcana equipment with snapshot-safe behavior and no generic vanilla armor shortcut.

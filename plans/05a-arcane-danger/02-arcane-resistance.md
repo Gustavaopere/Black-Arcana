@@ -1,4 +1,4 @@
-# 06.02 — Arcane Resistance
+# 05A.02 — Arcane Resistance
 
 ## Objective
 Create the canonical internal-resilience stat used to mitigate Arcane Backlash without conflating it with generic magic resistance or vanilla armor.
