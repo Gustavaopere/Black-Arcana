@@ -6,6 +6,15 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
+import dev.gustavopere.blackarcana.core.ritual.ArcanaRitualId;
+import dev.gustavopere.blackarcana.core.ritual.RitualActivationId;
+import dev.gustavopere.blackarcana.core.ritual.RitualAnchor;
+import dev.gustavopere.blackarcana.core.ritual.RitualContext;
+import dev.gustavopere.blackarcana.core.ritual.RitualDefinition;
+import dev.gustavopere.blackarcana.core.ritual.RitualEngine;
+import dev.gustavopere.blackarcana.core.ritual.RitualRestoreResult;
+import dev.gustavopere.blackarcana.core.ritual.RitualSessionSnapshot;
+import dev.gustavopere.blackarcana.core.ritual.RitualSessionState;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationKey;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationTracker;
 import dev.gustavopere.blackarcana.core.world.TemporaryWorldMutation;
@@ -38,11 +47,13 @@ public final class BlackArcanaSavedData extends SavedData {
     public static final int MAX_PERSISTED_CHARGE_POOLS = 131_072;
     public static final int MAX_PERSISTED_LOADOUT_CASTERS = 16_384;
     public static final int MAX_PERSISTED_TEMPORARY_MUTATIONS = 16_384;
+    public static final int MAX_PERSISTED_RITUAL_SESSIONS = 4_096;
 
     private Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> cooldowns = Map.of();
     private Map<ChargePoolCooldownService.ChargeKey, ChargePoolCooldownService.SnapshotEntry> charges = Map.of();
     private Map<UUID, List<ArcanaSpellId>> loadouts = Map.of();
     private List<TemporaryWorldMutation> temporaryMutations = List.of();
+    private List<RitualSessionSnapshot> ritualSessions = List.of();
 
     public static BlackArcanaSavedData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(
@@ -61,6 +72,7 @@ public final class BlackArcanaSavedData extends SavedData {
         data.charges = readCharges(root.getList("charges", Tag.TAG_COMPOUND));
         data.loadouts = readLoadouts(root.getList("loadouts", Tag.TAG_COMPOUND));
         data.temporaryMutations = readTemporaryMutations(root.getList("temporary_mutations", Tag.TAG_COMPOUND));
+        data.ritualSessions = readRitualSessions(root.getList("ritual_sessions", Tag.TAG_COMPOUND));
         return data;
     }
 
@@ -88,6 +100,19 @@ public final class BlackArcanaSavedData extends SavedData {
         setDirty();
     }
 
+    public void capture(
+            PersistentCooldownService cooldownService,
+            ChargePoolCooldownService chargeService,
+            LoadoutRegistry loadoutRegistry,
+            TemporaryMutationTracker temporaryMutationTracker,
+            RitualEngine ritualEngine,
+            long now
+    ) {
+        capture(cooldownService, chargeService, loadoutRegistry, temporaryMutationTracker, now);
+        this.ritualSessions = ritualEngine.snapshot(MAX_PERSISTED_RITUAL_SESSIONS);
+        setDirty();
+    }
+
     public void restore(
             PersistentCooldownService cooldownService,
             ChargePoolCooldownService chargeService,
@@ -110,6 +135,19 @@ public final class BlackArcanaSavedData extends SavedData {
         temporaryMutationTracker.restoreSnapshot(temporaryMutations);
     }
 
+    public RitualRestoreResult restore(
+            PersistentCooldownService cooldownService,
+            ChargePoolCooldownService chargeService,
+            LoadoutRegistry loadoutRegistry,
+            TemporaryMutationTracker temporaryMutationTracker,
+            RitualEngine ritualEngine,
+            List<RitualDefinition> definitions,
+            long now
+    ) {
+        restore(cooldownService, chargeService, loadoutRegistry, temporaryMutationTracker, now);
+        return ritualEngine.restore(definitions, ritualSessions, now);
+    }
+
     @Override
     public CompoundTag save(CompoundTag root, HolderLookup.Provider registries) {
         root.putInt("schema", SCHEMA_VERSION);
@@ -117,6 +155,7 @@ public final class BlackArcanaSavedData extends SavedData {
         root.put("charges", writeCharges(charges));
         root.put("loadouts", writeLoadouts(loadouts));
         root.put("temporary_mutations", writeTemporaryMutations(temporaryMutations));
+        root.put("ritual_sessions", writeRitualSessions(ritualSessions));
         return root;
     }
 
@@ -246,6 +285,60 @@ public final class BlackArcanaSavedData extends SavedData {
                     tag.getLong("expires")));
             } catch (RuntimeException ignored) {
                 // Skip malformed restoration records; never poison otherwise valid world state.
+            }
+        }
+        return List.copyOf(result);
+    }
+
+    private static ListTag writeRitualSessions(List<RitualSessionSnapshot> entries) {
+        ListTag list = new ListTag();
+        int count = Math.min(entries.size(), MAX_PERSISTED_RITUAL_SESSIONS);
+        for (int i = 0; i < count; i++) {
+            RitualSessionSnapshot snapshot = entries.get(i);
+            CompoundTag tag = new CompoundTag();
+            tag.putString("ritual", snapshot.ritualId().canonical());
+            tag.putUUID("activation", snapshot.activationId().value());
+            tag.putUUID("caster", snapshot.context().casterId());
+            ListTag participants = new ListTag();
+            snapshot.context().participantIds().forEach(id -> participants.add(StringTag.valueOf(id.toString())));
+            tag.put("participants", participants);
+            tag.putString("dimension", snapshot.context().anchor().dimensionId());
+            tag.putLong("anchor", snapshot.context().anchor().packedBlockPos());
+            tag.putLong("started", snapshot.startedAtTick());
+            tag.putLong("commit", snapshot.commitAtTick());
+            tag.putLong("complete", snapshot.completeAtTick());
+            tag.putString("state", snapshot.state().name());
+            list.add(tag);
+        }
+        return list;
+    }
+
+    private static List<RitualSessionSnapshot> readRitualSessions(ListTag list) {
+        List<RitualSessionSnapshot> result = new ArrayList<>();
+        int count = Math.min(list.size(), MAX_PERSISTED_RITUAL_SESSIONS);
+        for (int i = 0; i < count; i++) {
+            CompoundTag tag = list.getCompound(i);
+            try {
+                ListTag participantTags = tag.getList("participants", Tag.TAG_STRING);
+                if (participantTags.size() > RitualContext.MAX_PARTICIPANTS) continue;
+                List<UUID> participants = new ArrayList<>(participantTags.size());
+                for (int j = 0; j < participantTags.size(); j++) {
+                    participants.add(UUID.fromString(participantTags.getString(j)));
+                }
+                RitualContext context = new RitualContext(
+                        tag.getUUID("caster"),
+                        participants,
+                        new RitualAnchor(tag.getString("dimension"), tag.getLong("anchor")));
+                result.add(new RitualSessionSnapshot(
+                        ArcanaRitualId.parse(tag.getString("ritual")),
+                        new RitualActivationId(tag.getUUID("activation")),
+                        context,
+                        tag.getLong("started"),
+                        tag.getLong("commit"),
+                        tag.getLong("complete"),
+                        RitualSessionState.valueOf(tag.getString("state"))));
+            } catch (RuntimeException ignored) {
+                // Skip malformed ritual sessions and preserve all valid runtime state.
             }
         }
         return List.copyOf(result);
