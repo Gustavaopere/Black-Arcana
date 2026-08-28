@@ -11,21 +11,27 @@ import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.api.ArcanaTargetSpec;
 import dev.gustavopere.blackarcana.core.cast.BoundedReplayGuard;
 import dev.gustavopere.blackarcana.core.cast.CompositeCastRequestValidator;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
+import dev.gustavopere.blackarcana.core.targeting.ServerEntityTargetSelector;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.persistence.BlackArcanaSavedData;
+import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 @GameTestHolder(BlackArcanaMod.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -149,6 +155,48 @@ public final class BlackArcanaGameTests {
                         spell,
                         new ArcanaCastContext(caster, now + 1L, helper.getLevel().dimension().location().toString()))).allowed(),
                 "restored cooldown must still deny before ready tick");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 40)
+    public static void serverEntityTargetingEnforcesRangeAndLineOfSight(GameTestHelper helper) {
+        var caster = helper.makeMockServerPlayerInLevel();
+        BlockPos casterPos = helper.absolutePos(new BlockPos(1, 2, 1));
+        caster.teleportTo(casterPos.getX() + 0.5D, casterPos.getY(), casterPos.getZ() + 0.5D);
+        var target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(4, 2, 1));
+
+        AtomicReference<ArcanaTargetSpec> spec = new AtomicReference<>(new ArcanaTargetSpec(
+                ArcanaTargetSpec.Kind.ENTITY,
+                8.0D,
+                1,
+                true,
+                false,
+                false));
+        ServerEntityTargetSelector selector = new ServerEntityTargetSelector(
+                helper.getLevel().getServer(),
+                request -> spec.get());
+
+        ArcanaCastRequest request = new ArcanaCastRequest(
+                ArcanaCastId.random(),
+                syntheticSpell(),
+                new ArcanaCastContext(
+                        caster.getUUID(),
+                        helper.getLevel().getGameTime(),
+                        helper.getLevel().dimension().location().toString()),
+                0,
+                target.getUUID().toString());
+
+        helper.assertTrue(selector.resolve(request).resolved(), "loaded in-range entity with LOS must resolve");
+
+        spec.set(new ArcanaTargetSpec(ArcanaTargetSpec.Kind.ENTITY, 1.0D, 1, true, false, false));
+        helper.assertTrue(!selector.resolve(request).resolved(), "out-of-range entity must be rejected");
+
+        spec.set(new ArcanaTargetSpec(ArcanaTargetSpec.Kind.ENTITY, 8.0D, 1, true, false, false));
+        helper.setBlock(2, 2, 1, Blocks.STONE);
+        helper.setBlock(2, 3, 1, Blocks.STONE);
+        helper.setBlock(2, 4, 1, Blocks.STONE);
+        helper.assertTrue(!selector.resolve(request).resolved(), "solid wall must cause LOS rejection");
         helper.succeed();
     }
 
