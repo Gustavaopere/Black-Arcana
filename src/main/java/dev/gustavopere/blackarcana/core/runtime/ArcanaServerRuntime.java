@@ -21,7 +21,9 @@ import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
 import dev.gustavopere.blackarcana.core.world.ConfigurableWorldEffectPolicy;
 import dev.gustavopere.blackarcana.core.world.DefaultEntityInteractionPolicy;
+import dev.gustavopere.blackarcana.core.world.EntityInteractionAdmissionService;
 import dev.gustavopere.blackarcana.core.world.LoadedChunkGuard;
+import dev.gustavopere.blackarcana.core.world.ProtectedDestinationGuard;
 import dev.gustavopere.blackarcana.core.world.ProtectionAdapterRegistry;
 import dev.gustavopere.blackarcana.core.world.TemporaryBlockBackend;
 import dev.gustavopere.blackarcana.core.world.TemporaryBlockMutationGateway;
@@ -77,6 +79,8 @@ public final class ArcanaServerRuntime {
         DefaultEntityInteractionPolicy.safeDefaults();
     private final ProtectionAdapterRegistry protectionAdapters =
         new ProtectionAdapterRegistry(DEFAULT_MAX_PROTECTION_ADAPTERS);
+    private final EntityInteractionAdmissionService entityInteractionAdmission =
+        new EntityInteractionAdmissionService(entityInteractionPolicy, protectionAdapters);
     private final Map<ArcanaSpellId, ArcanaCastEngine> engines = new ConcurrentHashMap<>();
     private final ArcanaCastIngressService ingress;
     private final ArcanaChannelManager channels;
@@ -84,6 +88,7 @@ public final class ArcanaServerRuntime {
     private final BoundedWorkScheduler effectScheduler;
     private volatile TemporaryBlockMutationGateway temporaryBlockGateway;
     private volatile TemporaryRestorationService temporaryRestorationService;
+    private volatile ProtectedDestinationGuard protectedDestinationGuard;
     private volatile TemporaryRestorationService.TickResult lastTemporaryRestoration =
         new TemporaryRestorationService.TickResult(0, 0, 0, 0);
     private RuntimeGroupMigrations groupMigrations = RuntimeGroupMigrations.none();
@@ -162,7 +167,7 @@ public final class ArcanaServerRuntime {
     ) {
         Objects.requireNonNull(backend, "backend");
         Objects.requireNonNull(loadedChunkProbe, "loadedChunkProbe");
-        if (temporaryBlockGateway != null || temporaryRestorationService != null) {
+        if (temporaryBlockGateway != null || temporaryRestorationService != null || protectedDestinationGuard != null) {
             throw new IllegalStateException("world backend already installed");
         }
         LoadedChunkGuard chunkGuard = new LoadedChunkGuard(
@@ -178,6 +183,7 @@ public final class ArcanaServerRuntime {
             backend,
             DEFAULT_MAX_TEMPORARY_MUTATION_LIFETIME_TICKS);
         temporaryRestorationService = new TemporaryRestorationService(temporaryMutations, backend);
+        protectedDestinationGuard = new ProtectedDestinationGuard(chunkGuard, protectionAdapters);
     }
 
     public void installEngine(ArcanaSpellId spellId, ArcanaCastEngine engine) {
@@ -232,10 +238,14 @@ public final class ArcanaServerRuntime {
     public Optional<TemporaryBlockMutationGateway> temporaryBlockGateway() {
         return Optional.ofNullable(temporaryBlockGateway);
     }
+    public Optional<ProtectedDestinationGuard> protectedDestinationGuard() {
+        return Optional.ofNullable(protectedDestinationGuard);
+    }
     public TemporaryRestorationService.TickResult lastTemporaryRestoration() {
         return lastTemporaryRestoration;
     }
     public DefaultEntityInteractionPolicy entityInteractionPolicy() { return entityInteractionPolicy; }
+    public EntityInteractionAdmissionService entityInteractionAdmission() { return entityInteractionAdmission; }
     public ProtectionAdapterRegistry protectionAdapters() { return protectionAdapters; }
     public int installedEngineCount() { return engines.size(); }
 
