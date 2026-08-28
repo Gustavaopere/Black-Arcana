@@ -1,3 +1,21 @@
 {
-  "spell.black_arcana.irons_integration_probe": "Black Arcana Integration Probe"
+  "spell.black_arcana.irons_integration_probe": "Black Arcana Integration Probe",
+  "key.categories.black_arcana": "Black Arcana",
+  "key.black_arcana.open_radial": "Open Spell Radial",
+  "key.black_arcana.cast_selected": "Cast Selected Spell",
+  "key.black_arcana.edit_loadout": "Edit Black Arcana Loadout",
+  "key.black_arcana.quick_cast_1": "Quick Cast Slot 1",
+  "key.black_arcana.quick_cast_2": "Quick Cast Slot 2",
+  "key.black_arcana.quick_cast_3": "Quick Cast Slot 3",
+  "key.black_arcana.quick_cast_4": "Quick Cast Slot 4",
+  "key.black_arcana.quick_cast_5": "Quick Cast Slot 5",
+  "key.black_arcana.quick_cast_6": "Quick Cast Slot 6",
+  "key.black_arcana.quick_cast_7": "Quick Cast Slot 7",
+  "key.black_arcana.quick_cast_8": "Quick Cast Slot 8",
+  "screen.black_arcana.radial": "Black Arcana",
+  "screen.black_arcana.radial.page": "Page %s / %s",
+  "screen.black_arcana.radial.hint": "Left-click to select; cast remains a separate input",
+  "screen.black_arcana.loadout": "Black Arcana Loadout",
+  "screen.black_arcana.loadout.page": "Page %s / %s",
+  "screen.black_arcana.loadout.hint": "%s selected · Enter: apply · Delete: clear · Esc: cancel"
 }
