@@ -2,8 +2,14 @@ package dev.gustavopere.blackarcana.core.runtime;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastContext;
 import dev.gustavopere.blackarcana.api.ArcanaCastEngine;
+import dev.gustavopere.blackarcana.api.ArcanaCastId;
+import dev.gustavopere.blackarcana.api.ArcanaCastResult;
+import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
+import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.ArcanaCastIngressService;
+import dev.gustavopere.blackarcana.core.cast.ArcanaChannelCastCoordinator;
+import dev.gustavopere.blackarcana.core.cast.ArcanaChannelManager;
 import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ArcanaCooldownPolicyRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
@@ -27,6 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class ArcanaServerRuntime {
     public static final int DEFAULT_MAX_CAST_INTENTS_PER_SECOND = 12;
     public static final int DEFAULT_MAX_TRACKED_CASTERS = 4096;
+    public static final int DEFAULT_MAX_CHANNEL_SESSIONS = 4096;
 
     private final ArcanaSpellRegistry spells = new ArcanaSpellRegistry();
     private final SpellDataCatalog spellData = new SpellDataCatalog();
@@ -36,18 +43,49 @@ public final class ArcanaServerRuntime {
     private final ChargePoolCooldownService charges = new ChargePoolCooldownService(cooldownPolicies::requireCharge);
     private final Map<ArcanaSpellId, ArcanaCastEngine> engines = new ConcurrentHashMap<>();
     private final ArcanaCastIngressService ingress;
+    private final ArcanaChannelManager channels;
+    private final ArcanaChannelCastCoordinator channelCasts;
 
     public ArcanaServerRuntime(int maxCastIntentsPerSecond, int maxTrackedCasters) {
+        this(maxCastIntentsPerSecond, maxTrackedCasters, DEFAULT_MAX_CHANNEL_SESSIONS);
+    }
+
+    public ArcanaServerRuntime(int maxCastIntentsPerSecond, int maxTrackedCasters, int maxChannelSessions) {
         IngressRateLimiter limiter = new IngressRateLimiter(maxCastIntentsPerSecond, 20L, maxTrackedCasters);
         this.ingress = new ArcanaCastIngressService(spells, limiter, engines::get);
+        this.channels = new ArcanaChannelManager(maxChannelSessions);
+        this.channelCasts = new ArcanaChannelCastCoordinator(spells, loadouts, channels, engines::get);
     }
 
     public static ArcanaServerRuntime createDefault() {
-        return new ArcanaServerRuntime(DEFAULT_MAX_CAST_INTENTS_PER_SECOND, DEFAULT_MAX_TRACKED_CASTERS);
+        return new ArcanaServerRuntime(
+                DEFAULT_MAX_CAST_INTENTS_PER_SECOND,
+                DEFAULT_MAX_TRACKED_CASTERS,
+                DEFAULT_MAX_CHANNEL_SESSIONS);
     }
 
     public CastResultPayload handle(ArcanaCastContext context, CastIntentPayload intent) {
         return ingress.handle(context, intent);
+    }
+
+    public ArcanaDecision beginChannel(
+            ArcanaCastContext context,
+            CastIntentPayload intent,
+            ArcanaChannelSpec spec
+    ) {
+        return channelCasts.begin(context, intent, spec);
+    }
+
+    public ArcanaCastResult releaseChannel(
+            ArcanaCastContext context,
+            ArcanaCastId castId,
+            String targetHint
+    ) {
+        return channelCasts.release(context, castId, targetHint);
+    }
+
+    public boolean cancelChannel(ArcanaCastContext context, ArcanaCastId castId) {
+        return channelCasts.cancel(context, castId);
     }
 
     public void installEngine(ArcanaSpellId spellId, ArcanaCastEngine engine) {
@@ -100,6 +138,10 @@ public final class ArcanaServerRuntime {
 
     public ChargePoolCooldownService charges() {
         return charges;
+    }
+
+    public ArcanaChannelManager channels() {
+        return channels;
     }
 
     public int installedEngineCount() {
