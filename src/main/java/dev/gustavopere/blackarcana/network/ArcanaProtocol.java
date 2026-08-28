@@ -8,6 +8,8 @@ public final class ArcanaProtocol {
     public static final int MAX_TARGET_HINT_LENGTH = ArcanaCastRequest.MAX_TARGET_HINT_LENGTH;
     public static final int MAX_RESULT_CODE_LENGTH = 64;
     public static final int MAX_RESULT_DETAIL_LENGTH = 256;
+    public static final int MAX_TRANSLATION_KEY_LENGTH = 160;
+    public static final int MAX_ICON_ID_LENGTH = 192;
     public static final int MAX_COOLDOWN_ENTRIES = 128;
     public static final int MAX_PRESENTATION_ENTRIES = 512;
 
