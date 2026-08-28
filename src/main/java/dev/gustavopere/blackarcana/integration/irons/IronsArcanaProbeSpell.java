@@ -2,7 +2,6 @@ package dev.gustavopere.blackarcana.integration.irons;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
-import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
@@ -20,11 +19,9 @@ import net.minecraft.world.level.Level;
  * invocation; Black Arcana owns validation, cost transaction and cooldown.
  */
 public final class IronsArcanaProbeSpell extends AbstractSpell {
-    public static final ArcanaSpellId ARCANA_ID = ArcanaSpellId.parse("black_arcana:irons_integration_probe");
-    public static final ResourceLocation IRONS_ID = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation IRONS_ID = ResourceLocation.fromNamespaceAndPath(
         BlackArcanaMod.MOD_ID,
-        "irons_integration_probe");
-    public static final int MANA_COST = 20;
+        IronsIntegrationIds.PROBE_PATH);
 
     private static final DefaultConfig CONFIG = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
@@ -35,7 +32,7 @@ public final class IronsArcanaProbeSpell extends AbstractSpell {
         .build();
 
     public IronsArcanaProbeSpell() {
-        this.baseManaCost = MANA_COST;
+        this.baseManaCost = IronsIntegrationIds.PROBE_MANA_COST;
         this.manaCostPerLevel = 0;
         this.baseSpellPower = 0;
         this.spellPowerPerLevel = 0;
@@ -70,7 +67,7 @@ public final class IronsArcanaProbeSpell extends AbstractSpell {
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!(entity instanceof ServerPlayer player)) return;
-        var result = IronsHostedCastDispatcher.cast(player, ARCANA_ID);
+        var result = IronsHostedCastDispatcher.cast(player, IronsIntegrationIds.PROBE_ARCANA_ID);
         if (ArcanaCastResult.Status.SUCCESS.name().equals(result.status())) {
             super.onCast(level, spellLevel, entity, castSource, playerMagicData);
         }
