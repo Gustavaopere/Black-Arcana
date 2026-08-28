@@ -1,3 +1,21 @@
 {
-  "spell.black_arcana.irons_integration_probe": "Prova de Integração da Arcana Negra"
+  "spell.black_arcana.irons_integration_probe": "Prova de Integração da Arcana Negra",
+  "key.categories.black_arcana": "Black Arcana",
+  "key.black_arcana.open_radial": "Abrir Seletor Radial de Feitiços",
+  "key.black_arcana.cast_selected": "Conjurar Feitiço Selecionado",
+  "key.black_arcana.edit_loadout": "Editar Loadout da Black Arcana",
+  "key.black_arcana.quick_cast_1": "Conjuração Rápida — Espaço 1",
+  "key.black_arcana.quick_cast_2": "Conjuração Rápida — Espaço 2",
+  "key.black_arcana.quick_cast_3": "Conjuração Rápida — Espaço 3",
+  "key.black_arcana.quick_cast_4": "Conjuração Rápida — Espaço 4",
+  "key.black_arcana.quick_cast_5": "Conjuração Rápida — Espaço 5",
+  "key.black_arcana.quick_cast_6": "Conjuração Rápida — Espaço 6",
+  "key.black_arcana.quick_cast_7": "Conjuração Rápida — Espaço 7",
+  "key.black_arcana.quick_cast_8": "Conjuração Rápida — Espaço 8",
+  "screen.black_arcana.radial": "Black Arcana",
+  "screen.black_arcana.radial.page": "Página %s / %s",
+  "screen.black_arcana.radial.hint": "Clique esquerdo para selecionar; conjurar continua sendo uma ação separada",
+  "screen.black_arcana.loadout": "Loadout da Black Arcana",
+  "screen.black_arcana.loadout.page": "Página %s / %s",
+  "screen.black_arcana.loadout.hint": "%s selecionados · Enter: aplicar · Delete: limpar · Esc: cancelar"
 }
