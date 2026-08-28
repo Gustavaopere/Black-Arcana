@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.api;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult.Status;
 import dev.gustavopere.blackarcana.api.ArcanaServices.ArcanaEffect;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CastRequestValidator;
+import dev.gustavopere.blackarcana.api.ArcanaServices.CastSuccessObserver;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CooldownService;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostProvider;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostReservation;
@@ -24,6 +25,7 @@ public final class ArcanaCastEngine {
     private final CostProvider costs;
     private final WorldEffectPolicy worldPolicy;
     private final ArcanaEffect effect;
+    private final CastSuccessObserver successObserver;
 
     public ArcanaCastEngine(
             CastRequestValidator identity,
@@ -35,6 +37,20 @@ public final class ArcanaCastEngine {
             WorldEffectPolicy worldPolicy,
             ArcanaEffect effect
     ) {
+        this(identity, replayGuard, progression, cooldowns, targets, costs, worldPolicy, effect, CastSuccessObserver.noop());
+    }
+
+    public ArcanaCastEngine(
+            CastRequestValidator identity,
+            ReplayGuard replayGuard,
+            ProgressionGate progression,
+            CooldownService cooldowns,
+            TargetSelector targets,
+            CostProvider costs,
+            WorldEffectPolicy worldPolicy,
+            ArcanaEffect effect,
+            CastSuccessObserver successObserver
+    ) {
         this.identity = Objects.requireNonNull(identity);
         this.replayGuard = Objects.requireNonNull(replayGuard);
         this.progression = Objects.requireNonNull(progression);
@@ -43,6 +59,7 @@ public final class ArcanaCastEngine {
         this.costs = Objects.requireNonNull(costs);
         this.worldPolicy = Objects.requireNonNull(worldPolicy);
         this.effect = Objects.requireNonNull(effect);
+        this.successObserver = Objects.requireNonNull(successObserver);
     }
 
     public ArcanaCastResult execute(ArcanaCastRequest request) {
@@ -86,9 +103,19 @@ public final class ArcanaCastEngine {
             reservation.commit();
             committed = true;
             cooldowns.start(request);
+            notifySuccess(request, target, effectResult);
             return ArcanaCastResult.success(effectResult.detail());
         } finally {
             if (!committed) reservation.refund();
+        }
+    }
+
+    private void notifySuccess(ArcanaCastRequest request, TargetResolution target, EffectResult effectResult) {
+        try {
+            successObserver.onSuccess(request, target, effectResult);
+        } catch (RuntimeException ignored) {
+            // The spell and resource transaction are already committed. Optional
+            // observers must fail independently instead of duplicating/refunding casts.
         }
     }
 }

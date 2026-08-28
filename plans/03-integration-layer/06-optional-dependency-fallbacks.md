@@ -3,14 +3,20 @@
 ## Objective
 Define exactly what happens for every integration combination.
 
-## Matrix fields
-mod present? compatible API? content enabled? replacement cost/provider? recipe/ritual hidden? datapack condition? startup behavior?
+## Implemented matrix
+| Provider state | Registry state | Capabilities | Provider-backed content | Startup |
+|---|---|---|---|---|
+| mod absent | `MISSING_MOD` | none | disabled/hidden | continue safely |
+| mod present, API/linkage probe fails | `API_INCOMPATIBLE` | none | disabled | continue with actionable diagnostic |
+| mod present, probe succeeds | `AVAILABLE` | adapter-specific only | enabled according to provider contract | continue |
 
 ## Rules
 - Never crash because an optional mod is absent.
 - Never silently make a spell free because its cost provider is absent.
 - Disable unavailable content with actionable diagnostics.
-- Keep client/server mod-list expectations explicit.
+- Provider-specific recipe types are guarded by datapack conditions when absence would make deserialization invalid.
+- `neoforge.mods.toml` declares integrations optional and `AFTER`; the runtime probe, not a permissive metadata range, is authoritative for API compatibility.
+- Mod-bus failures are retained and surfaced as `API_INCOMPATIBLE` when the server runtime is installed.
 
-## Acceptance
-Automated smoke profiles cover core-only and representative integration combinations chosen by the release dependency policy.
+## Acceptance state
+Pure fallback/descriptor tests are prepared. Core-only dedicated-server and installed-provider matrix execution remain blocked on a GitHub Actions job that actually runs steps.

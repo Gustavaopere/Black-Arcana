@@ -42,6 +42,20 @@ public final class ArcanaServices {
     public interface ArcanaEffect { EffectResult apply(ArcanaCastRequest request, TargetResolution target); }
 
     /**
+     * Side-effect hook invoked only after the effect succeeded, the resource
+     * transaction committed and cooldown state started. Observer failures must
+     * never retroactively invalidate an already committed cast.
+     */
+    @FunctionalInterface
+    public interface CastSuccessObserver {
+        void onSuccess(ArcanaCastRequest request, TargetResolution target, EffectResult effectResult);
+
+        static CastSuccessObserver noop() {
+            return (request, target, effectResult) -> { };
+        }
+    }
+
+    /**
      * Bounded target set resolved entirely on the server. Single-target callers
      * may continue using {@link #targetId()} as a primary-target convenience.
      */

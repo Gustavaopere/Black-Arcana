@@ -24,3 +24,38 @@ type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="irons_spellbooks"
+type="optional"
+ordering="AFTER"
+side="BOTH"
+reason="Optional Black Arcana spell-host and mana integration"
+
+[[dependencies.${mod_id}]]
+modId="ars_nouveau"
+type="optional"
+ordering="AFTER"
+side="BOTH"
+reason="Optional Black Arcana mana and utility integration"
+
+[[dependencies.${mod_id}]]
+modId="eidolon_repraised"
+type="optional"
+ordering="AFTER"
+side="BOTH"
+reason="Optional Black Arcana ritual-host integration"
+
+[[dependencies.${mod_id}]]
+modId="malum"
+type="optional"
+ordering="AFTER"
+side="BOTH"
+reason="Optional Black Arcana spirit-resource integration"
+
+[[dependencies.${mod_id}]]
+modId="rpgskilltree"
+type="optional"
+ordering="AFTER"
+side="BOTH"
+reason="Optional Black Arcana progression and mastery integration"

@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.config.SpellDataDefinition;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
+import dev.gustavopere.blackarcana.integration.neoforge.NeoForgeIntegrationBootstrap;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
@@ -55,10 +56,6 @@ public final class ArcanaServerRuntimeManager {
         INITIALIZERS.add(Objects.requireNonNull(initializer, "initializer"));
     }
 
-    /**
-     * Atomically validates a datapack metadata snapshot before publishing it to
-     * current and future server runtimes. Gameplay implementation is not data-driven here.
-     */
     public static void reloadSpellData(Collection<SpellDataDefinition> definitions) {
         Objects.requireNonNull(definitions, "definitions");
         SpellDataCatalog validator = new SpellDataCatalog();
@@ -107,6 +104,7 @@ public final class ArcanaServerRuntimeManager {
     private static void onServerStarted(ServerStartedEvent event) {
         MinecraftServer server = event.getServer();
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        NeoForgeIntegrationBootstrap.install(server, runtime);
         INITIALIZERS.forEach(initializer -> initializer.accept(runtime));
         runtime.spellData().replaceAll(CURRENT_SPELL_DATA);
         BlackArcanaSavedData.get(server).restore(
