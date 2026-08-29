@@ -8,8 +8,10 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSourceCategory;
 import org.junit.jupiter.api.Test;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +41,7 @@ class ArcaneEmergencyHazardSnapshotTest {
         ArcaneHazardRuntime runtime = new ArcaneHazardRuntime(8);
         var activated = runtime.activate(
             hazard,
-            ArcaneResistanceSnapshot.zero(),
+            zeroResistance(),
             ArcaneBacklashPolicy.canonical(),
             emergency);
 
@@ -62,9 +64,25 @@ class ArcaneEmergencyHazardSnapshotTest {
                 ArcaneDangerTier.DANGEROUS, 1.0D, 0.0D, 0.0D, 100L, 16, 0.0D, 0.0D, false));
 
         ArcaneHazardRuntime runtime = new ArcaneHazardRuntime(8);
-        runtime.activate(hazard, ArcaneResistanceSnapshot.zero(), ArcaneBacklashPolicy.canonical());
+        runtime.activate(hazard, zeroResistance(), ArcaneBacklashPolicy.canonical());
 
         assertTrue(runtime.sessions().find(castId).orElseThrow()
             .emergencyProtectionSnapshot().candidates().isEmpty());
+    }
+
+    private static ArcaneResistanceSnapshot zeroResistance() {
+        EnumMap<ArcaneResistanceSourceCategory, Double> byCategory =
+            new EnumMap<>(ArcaneResistanceSourceCategory.class);
+        for (ArcaneResistanceSourceCategory category : ArcaneResistanceSourceCategory.values()) {
+            byCategory.put(category, 0.0D);
+        }
+        return new ArcaneResistanceSnapshot(
+            0.0D,
+            1.0D,
+            40.0D,
+            240.0D,
+            List.of(),
+            byCategory,
+            List.of());
     }
 }
