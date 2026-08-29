@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneConfirmedDamage;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneBacklashProtectionAttemptTracker;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneDamageProvenanceTracker;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneHazardRuntime;
 import dev.gustavopere.blackarcana.core.hazard.PendingBacklashRegistry;
@@ -113,6 +114,25 @@ public final class MinecraftArcaneDamagePipeline {
         Objects.requireNonNull(policy, "policy");
         Objects.requireNonNull(emergencyProtectionSnapshot, "emergencyProtectionSnapshot");
         return runtime.activate(snapshot, resistance, policy, emergencyProtectionSnapshot);
+    }
+
+    static Optional<ArcaneBacklashProtectionAttemptTracker.Attempt> protectionAttempt(
+        ArcaneHazardRuntime hazards,
+        ArcanaDamageProvenance provenance
+    ) {
+        Objects.requireNonNull(hazards, "hazards");
+        Objects.requireNonNull(provenance, "provenance");
+        if (!provenance.hazardEligible()) return Optional.empty();
+        return hazards.sessions().find(provenance.rootCastId())
+            .filter(session -> session.snapshot().rootCastId().equals(provenance.rootCastId()))
+            .filter(session -> session.snapshot().casterId().equals(provenance.casterId()))
+            .filter(session -> session.snapshot().spellId().equals(provenance.spellId()))
+            .map(session -> new ArcaneBacklashProtectionAttemptTracker.Attempt(
+                provenance.rootCastId(),
+                provenance.damageInstanceId(),
+                provenance.casterId(),
+                session.snapshot().profile().emergencyProtectionAllowed(),
+                session.emergencyProtectionSnapshot()));
     }
 
     public static Optional<ArcaneHazardRuntime> hazardRuntime(MinecraftServer server) {
