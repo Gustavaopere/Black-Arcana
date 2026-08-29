@@ -68,7 +68,7 @@ public final class ArcaneEquipmentHazardResistanceProvider
     @Override
     public synchronized List<CorruptionResistanceContribution> contributions(CorruptionResistanceQuery query) {
         Objects.requireNonNull(query, "query");
-        FrozenSnapshot frozen = snapshotFor(query.rootCastId(), query.casterId(), query.serverTick());
+        FrozenSnapshot frozen = snapshotFor(query.rootCastId(), query.subjectId(), query.serverTick());
         frozen.corruptionRead = true;
         double amount = frozen.snapshot.corruptionResistance();
         releaseIfFullyObserved(query.rootCastId(), frozen);
