@@ -1,6 +1,8 @@
 {
   "spell.black_arcana.irons_integration_probe": "Black Arcana Integration Probe",
   "death.attack.black_arcana.arcane_backlash": "%1$s was consumed by arcane backlash",
+  "death.attack.black_arcana.sympathetic_wound": "%1$s succumbed to a sympathetic wound",
+  "death.attack.black_arcana.sympathetic_wound.player": "%1$s succumbed to %2$s's sympathetic wound",
   "key.categories.black_arcana": "Black Arcana",
   "key.black_arcana.open_radial": "Open Spell Radial",
   "key.black_arcana.cast_selected": "Cast Selected Spell",
