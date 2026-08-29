@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceContribution;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceProvider;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceQuery;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceSourceCategory;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionSnapshotProvider;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSnapshotService;
 
 import java.util.Iterator;
@@ -25,7 +26,7 @@ import java.util.UUID;
  * inventory scan.
  */
 public final class CuriosHazardResistanceProvider
-    implements ArcaneResistanceProvider, CorruptionResistanceProvider {
+    implements ArcaneResistanceProvider, CorruptionResistanceProvider, ArcaneEmergencyProtectionSnapshotProvider {
 
     public static final String PROVIDER_ID = "black_arcana:curios";
     private static final String SOURCE_ID = "curios:equipped_containment";
@@ -81,6 +82,7 @@ public final class CuriosHazardResistanceProvider
      * Transfers emergency-protection facts from the same root-cast Curios snapshot and releases
      * the cached entry without re-reading Curios.
      */
+    @Override
     public synchronized ArcaneEmergencyProtectionSnapshot takeEmergencySnapshot(
         ArcanaCastId castId,
         UUID casterId,
@@ -94,6 +96,7 @@ public final class CuriosHazardResistanceProvider
         return emergency;
     }
 
+    @Override
     public synchronized void release(ArcanaCastId castId) {
         snapshots.remove(Objects.requireNonNull(castId, "castId"));
     }
