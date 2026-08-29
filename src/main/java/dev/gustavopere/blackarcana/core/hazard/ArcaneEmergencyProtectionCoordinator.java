@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.core.hazard;
 
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageInstanceId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtection;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import java.util.Set;
  */
 public final class ArcaneEmergencyProtectionCoordinator {
     public static final int MAX_PROVIDERS = 16;
+    public static final int MAX_SETTLEMENT_PROVIDERS = ArcaneEmergencyProtectionSnapshot.MAX_CANDIDATES;
     public static final int MAX_REMEMBERED_DAMAGE_INSTANCES = 8_192;
 
     private final List<ArcaneEmergencyProtection> providers;
@@ -41,8 +43,8 @@ public final class ArcaneEmergencyProtectionCoordinator {
     ) {
         Objects.requireNonNull(query, "query");
         Objects.requireNonNull(settlementProviders, "settlementProviders");
-        if (providers.size() + settlementProviders.size() > MAX_PROVIDERS) {
-            throw new IllegalArgumentException("too many emergency protection providers");
+        if (settlementProviders.size() > MAX_SETTLEMENT_PROVIDERS) {
+            throw new IllegalArgumentException("too many settlement emergency protection providers");
         }
         for (ArcaneEmergencyProtection provider : settlementProviders) {
             Objects.requireNonNull(provider, "settlement emergency provider");
