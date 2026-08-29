@@ -17,6 +17,7 @@ import dev.gustavopere.blackarcana.core.cooldown.ArcanaCooldownPolicyRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.RuntimeGroupMigrations;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionStateService;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneResistanceProviderRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
@@ -55,6 +56,7 @@ public final class ArcanaServerRuntime {
     public static final int DEFAULT_MAX_CAST_INTENTS_PER_SECOND = 12;
     public static final int DEFAULT_MAX_TRACKED_CASTERS = 4096;
     public static final int DEFAULT_MAX_TRACKED_HAZARD_PLAYERS = 16_384;
+    public static final int DEFAULT_MAX_EMERGENCY_RESOURCES = 65_536;
     public static final int DEFAULT_MAX_CHANNEL_SESSIONS = 4096;
     public static final int DEFAULT_MAX_SCHEDULED_EFFECTS = 2048;
     public static final int DEFAULT_EFFECT_WORK_BUDGET_PER_TICK = 128;
@@ -82,6 +84,8 @@ public final class ArcanaServerRuntime {
     private final ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles = new ArcaneEquipmentProfileRegistry();
     private final CorruptionStateService corruption = CorruptionStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
     private final ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
+    private final ArcaneEmergencyProtectionStateService emergencyProtection =
+        ArcaneEmergencyProtectionStateService.canonical(DEFAULT_MAX_EMERGENCY_RESOURCES);
     private final WorldEffectProfileRegistry worldEffectProfiles = new WorldEffectProfileRegistry();
     private final ConfigurableWorldEffectPolicy worldEffectPolicy =
         new ConfigurableWorldEffectPolicy(worldEffectProfiles, WorldEffectPolicyConfig.safeDefaults());
@@ -221,6 +225,7 @@ public final class ArcanaServerRuntime {
     public ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles() { return arcaneEquipmentProfiles; }
     public CorruptionStateService corruption() { return corruption; }
     public ArcaneStrainStateService strain() { return strain; }
+    public ArcaneEmergencyProtectionStateService emergencyProtection() { return emergencyProtection; }
     public WorldEffectProfileRegistry worldEffectProfiles() { return worldEffectProfiles; }
     public ConfigurableWorldEffectPolicy worldEffectPolicy() { return worldEffectPolicy; }
     public WorldEffectBudgetLedger worldEffectBudgets() { return worldEffectBudgets; }

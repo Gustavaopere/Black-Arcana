@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.core.hazard;
 
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageInstanceId;
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageProvenance;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 
 import java.util.HashSet;
@@ -20,12 +21,22 @@ public final class ArcaneHazardSession {
     }
 
     private final ArcaneHazardSnapshot snapshot;
+    private final ArcaneEmergencyProtectionSnapshot emergencyProtectionSnapshot;
     private final long expiresAtTick;
     private final Set<ArcanaDamageInstanceId> seenDamageInstances = new HashSet<>();
     private boolean closed;
 
     public ArcaneHazardSession(ArcaneHazardSnapshot snapshot) {
+        this(snapshot, ArcaneEmergencyProtectionSnapshot.empty());
+    }
+
+    public ArcaneHazardSession(
+        ArcaneHazardSnapshot snapshot,
+        ArcaneEmergencyProtectionSnapshot emergencyProtectionSnapshot
+    ) {
         this.snapshot = Objects.requireNonNull(snapshot, "snapshot");
+        this.emergencyProtectionSnapshot = Objects.requireNonNull(
+            emergencyProtectionSnapshot, "emergencyProtectionSnapshot");
         this.expiresAtTick = saturatingAdd(snapshot.activatedAtTick(), snapshot.profile().damageLeaseTicks());
     }
 
@@ -58,6 +69,10 @@ public final class ArcaneHazardSession {
 
     public ArcaneHazardSnapshot snapshot() {
         return snapshot;
+    }
+
+    public ArcaneEmergencyProtectionSnapshot emergencyProtectionSnapshot() {
+        return emergencyProtectionSnapshot;
     }
 
     public long expiresAtTick() {

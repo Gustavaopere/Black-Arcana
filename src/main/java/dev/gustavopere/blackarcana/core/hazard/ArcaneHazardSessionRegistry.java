@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.core.hazard;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 
 import java.util.Iterator;
@@ -48,7 +49,15 @@ public final class ArcaneHazardSessionRegistry {
     }
 
     public synchronized OpenResult open(ArcaneHazardSnapshot snapshot) {
+        return open(snapshot, ArcaneEmergencyProtectionSnapshot.empty());
+    }
+
+    public synchronized OpenResult open(
+        ArcaneHazardSnapshot snapshot,
+        ArcaneEmergencyProtectionSnapshot emergencyProtectionSnapshot
+    ) {
         Objects.requireNonNull(snapshot, "snapshot");
+        Objects.requireNonNull(emergencyProtectionSnapshot, "emergencyProtectionSnapshot");
         if (!snapshot.profile().requiresHazardSession()) {
             return OpenResult.denied("profile_not_hazardous");
         }
@@ -59,7 +68,7 @@ public final class ArcaneHazardSessionRegistry {
         if (sessions.size() >= maxSessions) {
             return OpenResult.denied("hazard_session_capacity");
         }
-        ArcaneHazardSession session = new ArcaneHazardSession(snapshot);
+        ArcaneHazardSession session = new ArcaneHazardSession(snapshot, emergencyProtectionSnapshot);
         sessions.put(snapshot.rootCastId(), session);
         return OpenResult.success(session);
     }

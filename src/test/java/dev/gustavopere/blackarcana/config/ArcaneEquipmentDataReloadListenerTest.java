@@ -23,6 +23,20 @@ class ArcaneEquipmentDataReloadListenerTest {
         assertEquals(15.0D, definition.profile().corruptionResistance());
         assertEquals("black_arcana:test_set", definition.profile().setId());
         assertTrue(definition.profile().containmentTags().contains("black_arcana:ward"));
+        assertEquals(12.5D, definition.profile().emergencyAbsorption());
+        assertEquals(600L, definition.profile().emergencyCooldownTicks());
+    }
+
+    @Test
+    void legacyProfileWithoutEmergencyFieldsDefaultsToZeroProtection() {
+        String legacy = validJson()
+            .replace(",\n  \"emergencyAbsorption\": 12.5", "")
+            .replace(",\n  \"emergencyCooldownTicks\": 600", "");
+
+        var definition = ArcaneEquipmentDataReloadListener.parseDefinition(ID, JsonParser.parseString(legacy));
+
+        assertEquals(0.0D, definition.profile().emergencyAbsorption());
+        assertEquals(0L, definition.profile().emergencyCooldownTicks());
     }
 
     @Test
@@ -41,6 +55,13 @@ class ArcaneEquipmentDataReloadListenerTest {
             ArcaneEquipmentDataReloadListener.parseDefinition(ID, JsonParser.parseString(json)));
     }
 
+    @Test
+    void rejectsCooldownWithoutPositiveEmergencyAbsorption() {
+        String json = validJson().replace("\"emergencyAbsorption\": 12.5", "\"emergencyAbsorption\": 0.0");
+        assertThrows(JsonParseException.class, () ->
+            ArcaneEquipmentDataReloadListener.parseDefinition(ID, JsonParser.parseString(json)));
+    }
+
     private static String validJson() {
         return """
             {
@@ -52,7 +73,9 @@ class ArcaneEquipmentDataReloadListenerTest {
               "strainCapacityBonus": 8.0,
               "strainRecoveryPerTick": 0.25,
               "setId": "black_arcana:test_set",
-              "containmentTags": ["black_arcana:ward", "black_arcana:helm"]
+              "containmentTags": ["black_arcana:ward", "black_arcana:helm"],
+              "emergencyAbsorption": 12.5,
+              "emergencyCooldownTicks": 600
             }
             """;
     }

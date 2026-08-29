@@ -1,5 +1,7 @@
 package dev.gustavopere.blackarcana.core.hazard;
 
+import dev.gustavopere.blackarcana.api.ArcanaCastId;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceContribution;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceProvider;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceQuery;
@@ -13,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 /** Bounded deterministic provider aggregation for one Arcane Resistance snapshot. */
@@ -70,8 +73,7 @@ public final class ArcaneResistanceProviderRegistry {
 
     public synchronized ArcaneResistanceSnapshot snapshot(ArcaneResistanceQuery query) {
         Objects.requireNonNull(query, "query");
-        List<Map.Entry<String, ArcaneResistanceProvider>> orderedProviders = new ArrayList<>(providers.entrySet());
-        orderedProviders.sort(Map.Entry.comparingByKey());
+        List<Map.Entry<String, ArcaneResistanceProvider>> orderedProviders = orderedProviders();
 
         List<ArcaneResistanceSnapshot.ResolvedContribution> contributions = new ArrayList<>();
         List<String> diagnostics = new ArrayList<>();
@@ -112,8 +114,60 @@ public final class ArcaneResistanceProviderRegistry {
             diagnostics);
     }
 
+    /**
+     * Takes emergency facts from emergency-capable providers in provider-id order. Duplicate
+     * resource identities are collapsed deterministically and the canonical snapshot cap is
+     * enforced without skipping provider handoff/cleanup.
+     */
+    public synchronized ArcaneEmergencyProtectionSnapshot takeEmergencyProtectionSnapshot(
+        ArcanaCastId castId,
+        UUID casterId,
+        long serverTick
+    ) {
+        Objects.requireNonNull(castId, "castId");
+        Objects.requireNonNull(casterId, "casterId");
+        if (serverTick < 0L) throw new IllegalArgumentException("serverTick cannot be negative");
+
+        Map<String, ArcaneEmergencyProtectionSnapshot.Candidate> candidates = new LinkedHashMap<>();
+        for (Map.Entry<String, ArcaneResistanceProvider> entry : orderedProviders()) {
+            if (!(entry.getValue() instanceof ArcaneEmergencyProtectionSnapshotProvider provider)) continue;
+            final ArcaneEmergencyProtectionSnapshot snapshot;
+            try {
+                snapshot = Objects.requireNonNull(
+                    provider.takeEmergencySnapshot(castId, casterId, serverTick),
+                    "emergency protection snapshot");
+            } catch (RuntimeException | LinkageError failure) {
+                continue;
+            }
+            for (ArcaneEmergencyProtectionSnapshot.Candidate candidate : snapshot.candidates()) {
+                if (candidates.size() >= ArcaneEmergencyProtectionSnapshot.MAX_CANDIDATES) continue;
+                candidates.putIfAbsent(candidate.resourceId(), candidate);
+            }
+        }
+        return new ArcaneEmergencyProtectionSnapshot(new ArrayList<>(candidates.values()));
+    }
+
+    /** Releases emergency-capable provider caches when preflight terminates before handoff. */
+    public synchronized void releaseEmergencyProtectionSnapshots(ArcanaCastId castId) {
+        Objects.requireNonNull(castId, "castId");
+        for (Map.Entry<String, ArcaneResistanceProvider> entry : orderedProviders()) {
+            if (!(entry.getValue() instanceof ArcaneEmergencyProtectionSnapshotProvider provider)) continue;
+            try {
+                provider.release(castId);
+            } catch (RuntimeException | LinkageError ignored) {
+                // Emergency protection is optional; cleanup failures must not change cast semantics.
+            }
+        }
+    }
+
     public synchronized int size() {
         return providers.size();
+    }
+
+    private List<Map.Entry<String, ArcaneResistanceProvider>> orderedProviders() {
+        List<Map.Entry<String, ArcaneResistanceProvider>> ordered = new ArrayList<>(providers.entrySet());
+        ordered.sort(Map.Entry.comparingByKey());
+        return ordered;
     }
 
     private static void collectProvider(

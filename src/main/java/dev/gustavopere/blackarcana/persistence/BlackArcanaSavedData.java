@@ -6,6 +6,7 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionStateService;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
 import dev.gustavopere.blackarcana.core.hazard.PendingBacklashRegistry;
@@ -45,6 +46,7 @@ public final class BlackArcanaSavedData extends SavedData {
     public static final int MAX_PERSISTED_CORRUPTION_PLAYERS = 16_384;
     public static final int MAX_PERSISTED_STRAIN_PLAYERS = 16_384;
     public static final int MAX_PERSISTED_PENDING_BACKLASH_PLAYERS = 16_384;
+    public static final int MAX_PERSISTED_EMERGENCY_RESOURCES = 65_536;
 
     private Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> cooldowns = Map.of();
     private Map<ChargePoolCooldownService.ChargeKey, ChargePoolCooldownService.SnapshotEntry> charges = Map.of();
@@ -52,6 +54,8 @@ public final class BlackArcanaSavedData extends SavedData {
     private List<TemporaryWorldMutation> temporaryMutations = List.of();
     private Map<UUID, CorruptionStateService.PersistedState> corruptionStates = Map.of();
     private Map<UUID, ArcaneStrainStateService.PersistedState> strainStates = Map.of();
+    private Map<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState>
+        emergencyProtectionStates = Map.of();
     private final Map<UUID, Double> pendingBacklash = new LinkedHashMap<>();
 
     public static BlackArcanaSavedData get(MinecraftServer server) {
@@ -73,6 +77,8 @@ public final class BlackArcanaSavedData extends SavedData {
             root.getList("corruption", Tag.TAG_COMPOUND), MAX_PERSISTED_CORRUPTION_PLAYERS);
         data.strainStates = HazardStatePersistence.readStrain(
             root.getList("strain", Tag.TAG_COMPOUND), MAX_PERSISTED_STRAIN_PLAYERS);
+        data.emergencyProtectionStates = readEmergencyProtection(
+            root.getList("emergency_protection", Tag.TAG_COMPOUND), MAX_PERSISTED_EMERGENCY_RESOURCES);
         data.pendingBacklash.putAll(readPendingBacklash(
             root.getList("pending_backlash", Tag.TAG_COMPOUND), MAX_PERSISTED_PENDING_BACKLASH_PLAYERS));
         return data;
@@ -105,6 +111,17 @@ public final class BlackArcanaSavedData extends SavedData {
     public void captureHazards(CorruptionStateService corruption, ArcaneStrainStateService strain) {
         this.corruptionStates = Map.copyOf(corruption.persistentSnapshot());
         this.strainStates = Map.copyOf(strain.persistentSnapshot());
+        setDirty();
+    }
+
+    public void captureHazards(
+        CorruptionStateService corruption,
+        ArcaneStrainStateService strain,
+        ArcaneEmergencyProtectionStateService emergencyProtection
+    ) {
+        Objects.requireNonNull(emergencyProtection, "emergencyProtection");
+        captureHazards(corruption, strain);
+        this.emergencyProtectionStates = boundedEmergencySnapshot(emergencyProtection.persistentSnapshot());
         setDirty();
     }
 
@@ -169,6 +186,16 @@ public final class BlackArcanaSavedData extends SavedData {
         strain.restoreSnapshot(strainStates);
     }
 
+    public void restoreHazards(
+        CorruptionStateService corruption,
+        ArcaneStrainStateService strain,
+        ArcaneEmergencyProtectionStateService emergencyProtection
+    ) {
+        Objects.requireNonNull(emergencyProtection, "emergencyProtection");
+        restoreHazards(corruption, strain);
+        emergencyProtection.restoreSnapshot(emergencyProtectionStates);
+    }
+
     public void restorePendingBacklash(PendingBacklashRegistry registry) {
         Objects.requireNonNull(registry, "registry");
         registry.restoreSnapshot(Map.copyOf(pendingBacklash));
@@ -183,6 +210,7 @@ public final class BlackArcanaSavedData extends SavedData {
         root.put("temporary_mutations", writeTemporaryMutations(temporaryMutations));
         root.put("corruption", HazardStatePersistence.writeCorruption(corruptionStates, MAX_PERSISTED_CORRUPTION_PLAYERS));
         root.put("strain", HazardStatePersistence.writeStrain(strainStates, MAX_PERSISTED_STRAIN_PLAYERS));
+        root.put("emergency_protection", writeEmergencyProtection(emergencyProtectionStates));
         root.put("pending_backlash", writePendingBacklash(pendingBacklash));
         return root;
     }
@@ -305,6 +333,59 @@ public final class BlackArcanaSavedData extends SavedData {
             } catch (RuntimeException ignored) { }
         }
         return List.copyOf(result);
+    }
+
+    private static Map<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState>
+    boundedEmergencySnapshot(
+        Map<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState> source
+    ) {
+        Objects.requireNonNull(source, "source");
+        LinkedHashMap<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState>
+            result = new LinkedHashMap<>();
+        for (Map.Entry<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState>
+            entry : source.entrySet()) {
+            if (result.size() >= MAX_PERSISTED_EMERGENCY_RESOURCES) break;
+            if (entry.getKey() == null || entry.getValue() == null || entry.getValue().readyAtTick() <= 0L) continue;
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return Map.copyOf(result);
+    }
+
+    private static ListTag writeEmergencyProtection(
+        Map<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState> entries
+    ) {
+        ListTag list = new ListTag();
+        int written = 0;
+        for (Map.Entry<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState>
+            entry : entries.entrySet()) {
+            if (written >= MAX_PERSISTED_EMERGENCY_RESOURCES) break;
+            if (entry.getKey() == null || entry.getValue() == null || entry.getValue().readyAtTick() <= 0L) continue;
+            CompoundTag tag = new CompoundTag();
+            tag.putUUID("player", entry.getKey().playerId());
+            tag.putString("resource", entry.getKey().resourceId());
+            tag.putLong("ready", entry.getValue().readyAtTick());
+            list.add(tag);
+            written++;
+        }
+        return list;
+    }
+
+    private static Map<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState>
+    readEmergencyProtection(ListTag list, int maxEntries) {
+        LinkedHashMap<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState>
+            result = new LinkedHashMap<>();
+        int count = Math.min(list.size(), maxEntries);
+        for (int i = 0; i < count; i++) {
+            CompoundTag tag = list.getCompound(i);
+            try {
+                long readyAtTick = tag.getLong("ready");
+                if (readyAtTick <= 0L) continue;
+                var key = new ArcaneEmergencyProtectionStateService.ResourceKey(
+                    tag.getUUID("player"), tag.getString("resource"));
+                result.putIfAbsent(key, new ArcaneEmergencyProtectionStateService.PersistedState(readyAtTick));
+            } catch (RuntimeException ignored) { }
+        }
+        return Map.copyOf(result);
     }
 
     private static ListTag writePendingBacklash(Map<UUID, Double> entries) {

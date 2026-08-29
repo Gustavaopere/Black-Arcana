@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.api.ArcanaServices.HazardPreparation;
 import dev.gustavopere.blackarcana.api.ArcanaServices.TargetResolution;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashPolicy;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerProfile;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceQuery;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
@@ -32,6 +33,17 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             ArcaneResistanceSnapshot resistance,
             ArcaneBacklashPolicy policy
         );
+
+        /** Backwards-compatible extension carrying the frozen emergency-protection facts. */
+        default ArcaneHazardRuntime.ActivationResult activate(
+            ArcaneHazardSnapshot snapshot,
+            ArcaneResistanceSnapshot resistance,
+            ArcaneBacklashPolicy policy,
+            ArcaneEmergencyProtectionSnapshot emergencyProtectionSnapshot
+        ) {
+            Objects.requireNonNull(emergencyProtectionSnapshot, "emergencyProtectionSnapshot");
+            return activate(snapshot, resistance, policy);
+        }
 
         boolean close(ArcanaCastId castId);
     }
@@ -104,6 +116,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             profile));
 
         if (resistance.effectiveResistance() < profile.minimumArcaneResistance()) {
+            releaseEmergencyProviderState(request.castId());
             return denied(ArcanaDecision.deny(
                 "hazard_minimum_resistance",
                 "effective Arcane Resistance is below the server-required minimum"));
@@ -113,6 +126,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
         if (stateSettlementEnabled) {
             UUID casterId = request.context().casterId();
             if (!hasStateCapacity(casterId, profile)) {
+                releaseEmergencyProviderState(request.castId());
                 return denied(ArcanaDecision.deny(
                     "hazard_state_capacity",
                     "persistent hazard state capacity is exhausted"));
@@ -142,6 +156,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                 0.0D,
                 0L);
             if (strainPreflight.hardGateActive() || strainPreflight.predictedHardGate()) {
+                releaseEmergencyProviderState(request.castId());
                 return denied(ArcanaDecision.deny(
                     "hazard_strain_gate",
                     "Arcane Strain hard gate denies this cast"));
@@ -153,6 +168,13 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                 strainPreflight);
         }
 
+        ArcaneEmergencyProtectionSnapshot emergencyProtection = profile.emergencyProtectionAllowed()
+            ? resistanceProviders.takeEmergencyProtectionSnapshot(
+                request.castId(),
+                request.context().casterId(),
+                request.context().serverTick())
+            : releaseAndReturnEmptyEmergencySnapshot(request.castId());
+
         ArcaneHazardSnapshot snapshot = new ArcaneHazardSnapshot(
             request.castId(),
             request.spell().id(),
@@ -160,7 +182,16 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             request.context().dimensionId(),
             request.context().serverTick(),
             profile);
-        return new Prepared(snapshot, resistance, stateSettlement);
+        return new Prepared(snapshot, resistance, emergencyProtection, stateSettlement);
+    }
+
+    private ArcaneEmergencyProtectionSnapshot releaseAndReturnEmptyEmergencySnapshot(ArcanaCastId castId) {
+        releaseEmergencyProviderState(castId);
+        return ArcaneEmergencyProtectionSnapshot.empty();
+    }
+
+    private void releaseEmergencyProviderState(ArcanaCastId castId) {
+        resistanceProviders.releaseEmergencyProtectionSnapshots(castId);
     }
 
     private boolean hasStateCapacity(UUID casterId, ArcaneDangerProfile profile) {
@@ -243,6 +274,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
     private final class Prepared implements HazardPreparation {
         private final ArcaneHazardSnapshot snapshot;
         private final ArcaneResistanceSnapshot resistance;
+        private final ArcaneEmergencyProtectionSnapshot emergencyProtection;
         private final PreparedStateSettlement stateSettlement;
         private boolean activated;
         private boolean stateReservationClaimed;
@@ -252,10 +284,12 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
         private Prepared(
             ArcaneHazardSnapshot snapshot,
             ArcaneResistanceSnapshot resistance,
+            ArcaneEmergencyProtectionSnapshot emergencyProtection,
             PreparedStateSettlement stateSettlement
         ) {
-            this.snapshot = snapshot;
-            this.resistance = resistance;
+            this.snapshot = Objects.requireNonNull(snapshot, "snapshot");
+            this.resistance = Objects.requireNonNull(resistance, "resistance");
+            this.emergencyProtection = Objects.requireNonNull(emergencyProtection, "emergencyProtection");
             this.stateSettlement = stateSettlement;
         }
 
@@ -283,7 +317,8 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                 result = activator.activate(
                     snapshot,
                     resistance,
-                    ArcaneBacklashPolicy.canonical());
+                    ArcaneBacklashPolicy.canonical(),
+                    emergencyProtection);
             } catch (RuntimeException | Error failure) {
                 releaseClaimedStateReservation();
                 throw failure;

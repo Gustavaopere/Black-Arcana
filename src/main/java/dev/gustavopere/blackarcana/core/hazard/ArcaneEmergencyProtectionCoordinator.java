@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.core.hazard;
 
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageInstanceId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtection;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import java.util.Set;
  */
 public final class ArcaneEmergencyProtectionCoordinator {
     public static final int MAX_PROVIDERS = 16;
+    public static final int MAX_SETTLEMENT_PROVIDERS = ArcaneEmergencyProtectionSnapshot.MAX_CANDIDATES;
     public static final int MAX_REMEMBERED_DAMAGE_INSTANCES = 8_192;
 
     private final List<ArcaneEmergencyProtection> providers;
@@ -28,7 +30,25 @@ public final class ArcaneEmergencyProtectionCoordinator {
     }
 
     public synchronized Result protect(ArcaneEmergencyProtection.Query query) {
+        return protect(query, List.of());
+    }
+
+    /**
+     * Applies the coordinator's long-lived providers plus providers bound to this settlement's
+     * frozen hazard snapshot. The same committed damage-id memory is shared across both paths.
+     */
+    public synchronized Result protect(
+        ArcaneEmergencyProtection.Query query,
+        List<ArcaneEmergencyProtection> settlementProviders
+    ) {
         Objects.requireNonNull(query, "query");
+        Objects.requireNonNull(settlementProviders, "settlementProviders");
+        if (settlementProviders.size() > MAX_SETTLEMENT_PROVIDERS) {
+            throw new IllegalArgumentException("too many settlement emergency protection providers");
+        }
+        for (ArcaneEmergencyProtection provider : settlementProviders) {
+            Objects.requireNonNull(provider, "settlement emergency provider");
+        }
         if (!query.protectionAllowed() || query.predictedBacklash() <= query.unavoidableFloor()) {
             return new Result(query.predictedBacklash(), 0.0D, false, "protection_unavailable");
         }
@@ -36,7 +56,18 @@ public final class ArcaneEmergencyProtectionCoordinator {
             return new Result(query.predictedBacklash(), 0.0D, false, "already_processed");
         }
 
-        for (ArcaneEmergencyProtection provider : providers) {
+        Result staticResult = tryProviders(query, providers);
+        if (staticResult != null) return staticResult;
+        Result settlementResult = tryProviders(query, settlementProviders);
+        if (settlementResult != null) return settlementResult;
+        return new Result(query.predictedBacklash(), 0.0D, false, "no_reservation");
+    }
+
+    private Result tryProviders(
+        ArcaneEmergencyProtection.Query query,
+        List<ArcaneEmergencyProtection> candidates
+    ) {
+        for (ArcaneEmergencyProtection provider : candidates) {
             final ArcaneEmergencyProtection.Reservation reservation;
             try {
                 reservation = Objects.requireNonNull(provider.reserve(query), "reservation");
@@ -66,7 +97,7 @@ public final class ArcaneEmergencyProtectionCoordinator {
             remember(query.damageInstanceId());
             return new Result(query.predictedBacklash() - absorbed, absorbed, true, provider.providerId());
         }
-        return new Result(query.predictedBacklash(), 0.0D, false, "no_reservation");
+        return null;
     }
 
     public synchronized boolean wasCommitted(ArcanaDamageInstanceId id) {
