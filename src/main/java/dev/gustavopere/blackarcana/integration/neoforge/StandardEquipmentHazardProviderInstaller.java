@@ -3,6 +3,8 @@ package dev.gustavopere.blackarcana.integration.neoforge;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentHazardResistanceProvider;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRuntimeStore;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRegistry;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRuntimeStore;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSnapshotService;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import net.minecraft.server.MinecraftServer;
@@ -19,10 +21,12 @@ public final class StandardEquipmentHazardProviderInstaller {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(runtime, "runtime");
         ArcaneEquipmentProfileRegistry profiles = ArcaneEquipmentProfileRuntimeStore.forRuntime(runtime);
-        MinecraftStandardEquipmentSnapshotAdapter adapter = new MinecraftStandardEquipmentSnapshotAdapter(profiles);
+        ArcaneEquipmentSetBonusRegistry setBonuses = ArcaneEquipmentSetBonusRuntimeStore.forRuntime(runtime);
+        MinecraftStandardEquipmentSnapshotAdapter adapter =
+            new MinecraftStandardEquipmentSnapshotAdapter(profiles, setBonuses);
         install(runtime, playerId -> {
             ServerPlayer player = server.getPlayerList().getPlayer(playerId);
-            if (player == null) return new ArcaneEquipmentSnapshotService(profiles).capture(List.of());
+            if (player == null) return new ArcaneEquipmentSnapshotService(profiles, setBonuses).capture(List.of());
             return adapter.snapshot(player);
         });
     }
@@ -33,8 +37,7 @@ public final class StandardEquipmentHazardProviderInstaller {
     ) {
         Objects.requireNonNull(runtime, "runtime");
         Objects.requireNonNull(source, "source");
-        ArcaneEquipmentHazardResistanceProvider provider =
-            new ArcaneEquipmentHazardResistanceProvider(source);
+        ArcaneEquipmentHazardResistanceProvider provider = new ArcaneEquipmentHazardResistanceProvider(source);
         runtime.arcaneResistanceProviders().register(provider);
         runtime.corruptionResistanceProviders().register(provider);
     }
