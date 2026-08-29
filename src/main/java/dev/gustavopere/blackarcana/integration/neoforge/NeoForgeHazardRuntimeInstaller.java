@@ -36,7 +36,7 @@ public final class NeoForgeHazardRuntimeInstaller {
                 @Override
                 public boolean close(ArcanaCastId castId) {
                     return MinecraftArcaneDamagePipeline.hazardRuntime(server)
-                        .map(runtime -> runtime.close(castId))
+                        .map(hazards -> hazards.close(castId))
                         .orElse(false);
                 }
             }));
