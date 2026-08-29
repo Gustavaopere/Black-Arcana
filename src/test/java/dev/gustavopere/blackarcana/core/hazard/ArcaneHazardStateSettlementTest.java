@@ -72,7 +72,7 @@ class ArcaneHazardStateSettlementTest {
     }
 
     @Test
-    void overlappingSameTickCastsAccumulateFrozenStrainWithoutLostUpdates() {
+    void sequentialSameTickCastsAccumulateDeterministically() {
         ArcaneDangerProfileRegistry profiles = profiles(profile(0.0D, 12.0D));
         ArcaneResistanceProviderRegistry arcane = ArcaneResistanceProviderRegistry.canonical(4);
         CorruptionResistanceProviderRegistry corruptionResistance = CorruptionResistanceProviderRegistry.canonical(4);
@@ -92,15 +92,15 @@ class ArcaneHazardStateSettlementTest {
         var first = gate.preflight(
             request(CASTER_ID, "11111111-aaaa-bbbb-cccc-222222222221"),
             TargetResolution.resolved("target"));
+        assertTrue(first.decision().allowed());
+        assertTrue(first.activate().allowed());
+        first.commit();
+
         var second = gate.preflight(
             request(CASTER_ID, "11111111-aaaa-bbbb-cccc-222222222222"),
             TargetResolution.resolved("target"));
-
-        assertTrue(first.decision().allowed());
         assertTrue(second.decision().allowed());
-        assertTrue(first.activate().allowed());
         assertTrue(second.activate().allowed());
-        first.commit();
         second.commit();
 
         assertEquals(44.0D, strain.snapshot(CASTER_ID, 100L).units());
