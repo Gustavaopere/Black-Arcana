@@ -59,3 +59,10 @@ type="optional"
 ordering="AFTER"
 side="BOTH"
 reason="Optional Black Arcana progression and mastery integration"
+
+[[dependencies.${mod_id}]]
+modId="curios"
+type="optional"
+ordering="AFTER"
+side="BOTH"
+reason="Optional Black Arcana containment-equipment snapshot integration"
