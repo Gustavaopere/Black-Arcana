@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -28,5 +29,15 @@ class LawOfRecurrenceTrackerTest {
     void resistanceCanNeverReachFullImmunity() {
         assertThrows(IllegalArgumentException.class, () -> new LawOfRecurrenceTracker.Policy(
             0.25D, 1.0D, 0.1D, 0.5D, 8, 4, 100L));
+    }
+
+    @Test
+    void conservativeFallbackAcceptsNamespacedDamageTypePaths() {
+        var tracker = new LawOfRecurrenceTracker(8,
+            new LawOfRecurrenceTracker.Policy(0.10D, 0.40D, 0.15D, 0.60D, 8, 4, 100L));
+        UUID caster = UUID.randomUUID();
+
+        var outcome = assertDoesNotThrow(() -> tracker.observe(caster, "examplemod:ritual/blood_cut", 1L));
+        assertEquals("examplemod:ritual/blood_cut", outcome.damageFamily());
     }
 }
