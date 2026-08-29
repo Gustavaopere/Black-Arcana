@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.integration.neoforge.MinecraftArcaneDamagePip
 import dev.gustavopere.blackarcana.integration.neoforge.OptionalModEntrypoints;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
+import dev.gustavopere.blackarcana.network.neoforge.HazardPreflightSyncService;
 import dev.gustavopere.blackarcana.network.neoforge.LoadoutNetworkBridge;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -27,10 +28,12 @@ public final class BlackArcanaMod {
         ArcanaNetworkBridge.installClientResultHandler(ClientArcanaSyncState::acceptResult);
         ArcanaNetworkBridge.installClientCooldownHandler(ClientArcanaSyncState::acceptCooldowns);
         ArcanaNetworkBridge.installClientPresentationHandler(ClientArcanaSyncState::acceptPresentation);
+        ArcanaNetworkBridge.installClientHazardPreflightHandler(ClientArcanaSyncState::acceptHazardPreflight);
         LoadoutNetworkBridge.installServerHandler(ArcanaServerRuntimeManager::handleLoadoutUpdate);
         LoadoutNetworkBridge.installClientHandler(ClientArcanaSyncState::acceptLoadout);
         ArcanaServerRuntimeManager.register(NeoForge.EVENT_BUS);
         MinecraftArcaneDamagePipeline.register(NeoForge.EVENT_BUS);
+        HazardPreflightSyncService.register(NeoForge.EVENT_BUS);
         ArcanaSpellDataReloadListener.register(NeoForge.EVENT_BUS);
         ArcaneDangerDataReloadListener.register(NeoForge.EVENT_BUS);
         LOGGER.info("Black Arcana foundation loaded");

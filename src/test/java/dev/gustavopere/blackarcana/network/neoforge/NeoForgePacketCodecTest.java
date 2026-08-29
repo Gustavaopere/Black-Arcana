@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.CooldownSnapshotPayload;
+import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
 import dev.gustavopere.blackarcana.network.LoadoutSnapshotPayload;
 import dev.gustavopere.blackarcana.network.LoadoutUpdatePayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
@@ -58,6 +59,18 @@ class NeoForgePacketCodecTest {
                         "spell.black_arcana.test_spell",
                         "black_arcana:test_spell"))));
         assertEquals(packet, roundTrip(SpellPresentationPacket.STREAM_CODEC, packet));
+    }
+
+    @Test
+    void hazardPreflightRoundTrips() {
+        HazardPreflightPacket packet = HazardPreflightPacket.from(new HazardPreflightPayload(
+                ArcanaProtocol.VERSION,
+                List.of(new HazardPreflightPayload.Entry(
+                        "black_arcana:test_spell",
+                        "DANGEROUS",
+                        12.0D,
+                        24.0D))));
+        assertEquals(packet, roundTrip(HazardPreflightPacket.STREAM_CODEC, packet));
     }
 
     @Test

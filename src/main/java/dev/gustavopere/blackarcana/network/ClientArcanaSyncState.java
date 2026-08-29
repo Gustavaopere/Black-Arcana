@@ -24,6 +24,7 @@ public final class ClientArcanaSyncState {
     private static long lastResultTick = Long.MIN_VALUE;
     private static Map<String, Long> cooldowns = Map.of();
     private static Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation = Map.of();
+    private static Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazardPreflight = Map.of();
     private static List<ArcanaSpellId> loadout = List.of();
 
     private ClientArcanaSyncState() { }
@@ -59,6 +60,23 @@ public final class ClientArcanaSyncState {
         presentation = Map.copyOf(next);
     }
 
+    public static synchronized void acceptHazardPreflight(Player player, HazardPreflightPayload payload) {
+        ensurePlayer(player);
+        replaceHazardPreflight(payload);
+    }
+
+    static synchronized void replaceHazardPreflight(HazardPreflightPayload payload) {
+        Objects.requireNonNull(payload, "payload");
+        Map<ArcanaSpellId, HazardPreflightPayload.Entry> next = new LinkedHashMap<>();
+        for (HazardPreflightPayload.Entry entry : payload.entries()) {
+            ArcanaSpellId id = ArcanaSpellId.parse(entry.spellId());
+            if (next.putIfAbsent(id, entry) != null) {
+                throw new IllegalArgumentException("duplicate hazard preflight entry: " + id.canonical());
+            }
+        }
+        hazardPreflight = Map.copyOf(next);
+    }
+
     public static synchronized void acceptLoadout(Player player, LoadoutSnapshotPayload payload) {
         ensurePlayer(player);
         loadout = List.copyOf(Objects.requireNonNull(payload, "payload").parsedSpellIds());
@@ -80,6 +98,10 @@ public final class ClientArcanaSyncState {
         return presentation;
     }
 
+    public static synchronized Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazardPreflightSnapshot() {
+        return hazardPreflight;
+    }
+
     public static synchronized List<ArcanaSpellId> loadoutSnapshot() {
         return loadout;
     }
@@ -90,6 +112,7 @@ public final class ClientArcanaSyncState {
         lastResultTick = Long.MIN_VALUE;
         cooldowns = Map.of();
         presentation = Map.of();
+        hazardPreflight = Map.of();
         loadout = List.of();
     }
 
@@ -101,6 +124,7 @@ public final class ClientArcanaSyncState {
             lastResultTick = Long.MIN_VALUE;
             cooldowns = Map.of();
             presentation = Map.of();
+            hazardPreflight = Map.of();
             loadout = List.of();
         }
         playerId = incoming;
