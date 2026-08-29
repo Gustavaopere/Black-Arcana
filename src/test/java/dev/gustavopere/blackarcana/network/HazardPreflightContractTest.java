@@ -73,4 +73,16 @@ class HazardPreflightContractTest {
         ClientArcanaSyncState.clear();
         assertTrue(ClientArcanaSyncState.hazardPreflightSnapshot().isEmpty());
     }
+
+    @Test
+    void authoritativeDenialDetailIsPreservedVerbatimByTheClientPayload() {
+        CastResultPayload denial = new CastResultPayload(
+                ArcanaProtocol.VERSION,
+                "11111111-1111-1111-1111-111111111111",
+                "DENIED_PROGRESSION",
+                "arcane_resistance_required",
+                "Requires Arcane Resistance 12.0");
+
+        assertEquals("Requires Arcane Resistance 12.0", denial.detail());
+    }
 }

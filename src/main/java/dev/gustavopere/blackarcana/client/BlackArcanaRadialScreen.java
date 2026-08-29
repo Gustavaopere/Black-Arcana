@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.client;
 
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
+import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -11,6 +12,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /** Compact selector only: choosing a wedge changes selection but never executes a cast. */
 public final class BlackArcanaRadialScreen extends Screen {
@@ -22,6 +24,7 @@ public final class BlackArcanaRadialScreen extends Screen {
 
     private final List<ArcanaSpellId> loadout;
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
+    private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private int page;
     private int hoveredSlot = -1;
 
@@ -29,6 +32,7 @@ public final class BlackArcanaRadialScreen extends Screen {
         super(Component.translatable("screen.black_arcana.radial"));
         this.loadout = ClientArcanaSyncState.loadoutSnapshot();
         this.presentation = ClientArcanaSyncState.presentationSnapshot();
+        this.hazards = ClientArcanaSyncState.hazardPreflightSnapshot();
         this.page = RadialLayout.clampPage(
                 loadout.size(),
                 ClientInputController.selection().selectedSlot() / RadialLayout.SLOTS_PER_PAGE);
@@ -81,10 +85,12 @@ public final class BlackArcanaRadialScreen extends Screen {
         }
 
         graphics.drawCenteredString(font, title, centerX, centerY - 4, 0xFFEADCEA);
+        focusedHazard().ifPresent(line ->
+                graphics.drawCenteredString(font, line, centerX, centerY + 12, 0xFFF2D0F2));
         if (RadialLayout.pageCount(loadout.size()) > 1) {
             Component pages = Component.translatable(
                     "screen.black_arcana.radial.page", page + 1, RadialLayout.pageCount(loadout.size()));
-            graphics.drawCenteredString(font, pages, centerX, centerY + 10, 0xFFB9ABB9);
+            graphics.drawCenteredString(font, pages, centerX, centerY + 26, 0xFFB9ABB9);
         }
         graphics.drawCenteredString(
                 font,
@@ -122,6 +128,18 @@ public final class BlackArcanaRadialScreen extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    private Optional<Component> focusedHazard() {
+        ArcanaSpellId spell = null;
+        if (hoveredSlot >= 0 && hoveredSlot < loadout.size()) {
+            spell = loadout.get(hoveredSlot);
+        } else {
+            spell = ClientInputController.selection().selected(loadout).orElse(null);
+        }
+        if (spell == null) return Optional.empty();
+        HazardPreflightPayload.Entry entry = hazards.get(spell);
+        return entry == null ? Optional.empty() : Optional.of(BlackArcanaHudLayer.preflightLine(entry));
     }
 
     private String displayName(ArcanaSpellId spell) {

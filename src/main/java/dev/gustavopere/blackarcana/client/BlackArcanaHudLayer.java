@@ -2,8 +2,10 @@ package dev.gustavopere.blackarcana.client;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
+import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -14,6 +16,7 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalLong;
@@ -49,13 +52,15 @@ public final class BlackArcanaHudLayer {
         if (level == BlackArcanaClientConfig.FeedbackLevel.MINIMAL && !denialRecent) return;
         if (!selectionRecent && !resultRecent) return;
 
-        List<Component> lines = new ArrayList<>(2);
+        List<Component> lines = new ArrayList<>(3);
         if (level != BlackArcanaClientConfig.FeedbackLevel.MINIMAL) {
             selectedSpellLine().ifPresent(lines::add);
+            if (selectionRecent) selectedHazardLine().ifPresent(lines::add);
         }
         if (resultRecent) {
             CastResultPayload payload = result.orElseThrow();
             if (!"SUCCESS".equals(payload.status())) {
+                // The detail is the bounded server result; the client never invents a gate reason.
                 lines.add(Component.translatable("hud.black_arcana.denied", Component.literal(payload.detail())));
             } else if (level == BlackArcanaClientConfig.FeedbackLevel.VERBOSE) {
                 lines.add(Component.translatable("hud.black_arcana.cast_success"));
@@ -88,8 +93,7 @@ public final class BlackArcanaHudLayer {
     }
 
     private static Optional<Component> selectedSpellLine() {
-        List<ArcanaSpellId> loadout = ClientArcanaSyncState.loadoutSnapshot();
-        Optional<ArcanaSpellId> selected = ClientInputController.selection().selected(loadout);
+        Optional<ArcanaSpellId> selected = selectedSpell();
         if (selected.isEmpty()) return Optional.empty();
         ArcanaSpellId spell = selected.orElseThrow();
         Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation = ClientArcanaSyncState.presentationSnapshot();
@@ -98,5 +102,35 @@ public final class BlackArcanaHudLayer {
                 ? Component.literal(spell.path().replace('_', ' '))
                 : Component.translatable(entry.translationKey());
         return Optional.of(Component.translatable("hud.black_arcana.selected", name));
+    }
+
+    private static Optional<Component> selectedHazardLine() {
+        Optional<ArcanaSpellId> selected = selectedSpell();
+        if (selected.isEmpty()) return Optional.empty();
+        HazardPreflightPayload.Entry entry = ClientArcanaSyncState.hazardPreflightSnapshot().get(selected.orElseThrow());
+        if (entry == null || entry.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
+        return Optional.of(preflightLine(entry));
+    }
+
+    static Component preflightLine(HazardPreflightPayload.Entry entry) {
+        Component tier = Component.translatable(
+                "hazard.black_arcana.tier." + entry.parsedTier().name().toLowerCase(Locale.ROOT));
+        if (entry.parsedTier() == ArcaneDangerTier.NORMAL) {
+            return Component.translatable("hazard.black_arcana.preflight.normal", tier);
+        }
+        return Component.translatable(
+                "hazard.black_arcana.preflight",
+                tier,
+                Component.literal(formatResistance(entry.minimumArcaneResistance())),
+                Component.literal(formatResistance(entry.recommendedArcaneResistance())));
+    }
+
+    private static Optional<ArcanaSpellId> selectedSpell() {
+        List<ArcanaSpellId> loadout = ClientArcanaSyncState.loadoutSnapshot();
+        return ClientInputController.selection().selected(loadout);
+    }
+
+    private static String formatResistance(double value) {
+        return String.format(Locale.ROOT, "%.1f", value);
     }
 }

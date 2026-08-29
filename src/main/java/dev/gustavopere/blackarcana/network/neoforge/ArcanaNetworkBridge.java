@@ -5,6 +5,7 @@ import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.CooldownSnapshotPayload;
+import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -30,6 +31,7 @@ public final class ArcanaNetworkBridge {
     private static volatile BiConsumer<Player, CastResultPayload> clientResultHandler = (player, result) -> { };
     private static volatile BiConsumer<Player, CooldownSnapshotPayload> clientCooldownHandler = (player, snapshot) -> { };
     private static volatile BiConsumer<Player, SpellPresentationPayload> clientPresentationHandler = (player, presentation) -> { };
+    private static volatile BiConsumer<Player, HazardPreflightPayload> clientHazardPreflightHandler = (player, preflight) -> { };
 
     private ArcanaNetworkBridge() { }
 
@@ -39,6 +41,7 @@ public final class ArcanaNetworkBridge {
         registrar.playToClient(CastResultPacket.TYPE, CastResultPacket.STREAM_CODEC, ArcanaNetworkBridge::handleCastResult);
         registrar.playToClient(CooldownSnapshotPacket.TYPE, CooldownSnapshotPacket.STREAM_CODEC, ArcanaNetworkBridge::handleCooldownSnapshot);
         registrar.playToClient(SpellPresentationPacket.TYPE, SpellPresentationPacket.STREAM_CODEC, ArcanaNetworkBridge::handleSpellPresentation);
+        registrar.playToClient(HazardPreflightPacket.TYPE, HazardPreflightPacket.STREAM_CODEC, ArcanaNetworkBridge::handleHazardPreflight);
     }
 
     public static void installServerHandler(ServerCastIntentHandler handler) {
@@ -55,6 +58,10 @@ public final class ArcanaNetworkBridge {
 
     public static void installClientPresentationHandler(BiConsumer<Player, SpellPresentationPayload> handler) {
         clientPresentationHandler = Objects.requireNonNull(handler, "handler");
+    }
+
+    public static void installClientHazardPreflightHandler(BiConsumer<Player, HazardPreflightPayload> handler) {
+        clientHazardPreflightHandler = Objects.requireNonNull(handler, "handler");
     }
 
     public static void sendCastIntent(CastIntentPayload intent) {
@@ -75,6 +82,13 @@ public final class ArcanaNetworkBridge {
         PacketDistributor.sendToPlayer(player, SpellPresentationPacket.from(presentation));
     }
 
+    public static void sendHazardPreflight(ServerPlayer player, HazardPreflightPayload preflight) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(preflight, "preflight");
+        if (!player.connection.hasChannel(HazardPreflightPacket.TYPE)) return;
+        PacketDistributor.sendToPlayer(player, HazardPreflightPacket.from(preflight));
+    }
+
     private static void handleServerbound(CastIntentPacket packet, IPayloadContext context) {
         if (!(context.player() instanceof ServerPlayer player)) return;
         CastResultPayload result = Objects.requireNonNull(
@@ -92,6 +106,10 @@ public final class ArcanaNetworkBridge {
 
     private static void handleSpellPresentation(SpellPresentationPacket packet, IPayloadContext context) {
         clientPresentationHandler.accept(context.player(), packet.toDomain());
+    }
+
+    private static void handleHazardPreflight(HazardPreflightPacket packet, IPayloadContext context) {
+        clientHazardPreflightHandler.accept(context.player(), packet.toDomain());
     }
 
     private static CastResultPayload notReady(ServerPlayer player, CastIntentPayload intent) {

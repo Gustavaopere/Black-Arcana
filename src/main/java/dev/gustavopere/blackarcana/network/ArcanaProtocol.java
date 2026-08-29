@@ -13,8 +13,11 @@ public final class ArcanaProtocol {
     public static final int MAX_RESULT_DETAIL_LENGTH = 256;
     public static final int MAX_TRANSLATION_KEY_LENGTH = 160;
     public static final int MAX_ICON_ID_LENGTH = 192;
+    public static final int MAX_DANGER_TIER_LENGTH = 16;
     public static final int MAX_COOLDOWN_ENTRIES = 128;
     public static final int MAX_PRESENTATION_ENTRIES = 512;
+    public static final int MAX_HAZARD_PREFLIGHT_ENTRIES = 4_096;
+    public static final double MAX_HAZARD_RESISTANCE_HINT = 10_000.0D;
 
     private ArcanaProtocol() { }
 
