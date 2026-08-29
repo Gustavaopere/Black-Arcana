@@ -15,12 +15,36 @@ public record ArcaneEquipmentProfile(
     double strainCapacityBonus,
     double strainRecoveryPerTick,
     String setId,
-    Set<String> containmentTags
+    Set<String> containmentTags,
+    double emergencyAbsorption,
+    long emergencyCooldownTicks
 ) {
     public static final double ABSOLUTE_MAX_RESISTANCE = 10_000.0D;
     public static final double ABSOLUTE_MAX_STRAIN_CAPACITY = 10_000.0D;
     public static final double ABSOLUTE_MAX_STRAIN_RECOVERY = 100.0D;
     private static final Pattern ID = Pattern.compile("[a-z0-9_.:/-]{1,96}");
+
+    /** Backward-compatible profile constructor for definitions without emergency protection. */
+    public ArcaneEquipmentProfile(
+        String profileId,
+        double arcaneResistance,
+        double corruptionResistance,
+        double strainCapacityBonus,
+        double strainRecoveryPerTick,
+        String setId,
+        Set<String> containmentTags
+    ) {
+        this(
+            profileId,
+            arcaneResistance,
+            corruptionResistance,
+            strainCapacityBonus,
+            strainRecoveryPerTick,
+            setId,
+            containmentTags,
+            0.0D,
+            0L);
+    }
 
     public ArcaneEquipmentProfile {
         requireId(profileId, "profileId");
@@ -28,6 +52,17 @@ public record ArcaneEquipmentProfile(
         validateBounded(corruptionResistance, ABSOLUTE_MAX_RESISTANCE, "corruptionResistance");
         validateBounded(strainCapacityBonus, ABSOLUTE_MAX_STRAIN_CAPACITY, "strainCapacityBonus");
         validateBounded(strainRecoveryPerTick, ABSOLUTE_MAX_STRAIN_RECOVERY, "strainRecoveryPerTick");
+        validateBounded(
+            emergencyAbsorption,
+            ArcaneEmergencyProtectionSnapshot.ABSOLUTE_MAX_ABSORPTION,
+            "emergencyAbsorption");
+        if (emergencyCooldownTicks < 0L
+            || emergencyCooldownTicks > ArcaneEmergencyProtectionSnapshot.ABSOLUTE_MAX_COOLDOWN_TICKS) {
+            throw new IllegalArgumentException("emergencyCooldownTicks outside absolute bounds");
+        }
+        if (emergencyAbsorption == 0.0D && emergencyCooldownTicks != 0L) {
+            throw new IllegalArgumentException("emergency cooldown requires positive absorption");
+        }
         if (setId != null && !setId.isBlank()) requireId(setId, "setId");
         setId = setId == null || setId.isBlank() ? null : setId;
         containmentTags = Set.copyOf(Objects.requireNonNull(containmentTags, "containmentTags"));
