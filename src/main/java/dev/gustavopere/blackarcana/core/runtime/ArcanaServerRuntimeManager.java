@@ -6,6 +6,7 @@ import dev.gustavopere.blackarcana.config.SpellDataDefinition;
 import dev.gustavopere.blackarcana.core.cast.LoadoutUpdateService;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftTemporaryBlockBackend;
+import dev.gustavopere.blackarcana.integration.neoforge.NeoForgeHazardRuntimeInstaller;
 import dev.gustavopere.blackarcana.integration.neoforge.NeoForgeIntegrationBootstrap;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
@@ -122,6 +123,7 @@ public final class ArcanaServerRuntimeManager {
         MinecraftTemporaryBlockBackend worldBackend = new MinecraftTemporaryBlockBackend(server);
         runtime.installWorldBackend(worldBackend, worldBackend);
         NeoForgeIntegrationBootstrap.install(server, runtime);
+        NeoForgeHazardRuntimeInstaller.install(server, runtime);
         INITIALIZERS.forEach(initializer -> initializer.accept(runtime));
         runtime.spellData().replaceAll(CURRENT_SPELL_DATA);
         BlackArcanaSavedData savedData = BlackArcanaSavedData.get(server);
@@ -161,7 +163,8 @@ public final class ArcanaServerRuntimeManager {
     }
 
     private static void onServerStopped(ServerStoppedEvent event) {
-        RUNTIMES.remove(event.getServer());
+        ArcanaServerRuntime runtime = RUNTIMES.remove(event.getServer());
+        NeoForgeHazardRuntimeInstaller.remove(runtime);
     }
 
     private static CooldownSnapshotPayload cooldownSnapshot(
