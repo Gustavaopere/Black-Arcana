@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashPolicy;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashSettlement;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneConfirmedDamage;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
 
@@ -58,11 +59,21 @@ public final class ArcaneHazardRuntime {
         ArcaneResistanceSnapshot resistance,
         ArcaneBacklashPolicy backlashPolicy
     ) {
+        return activate(snapshot, resistance, backlashPolicy, ArcaneEmergencyProtectionSnapshot.empty());
+    }
+
+    public ActivationResult activate(
+        ArcaneHazardSnapshot snapshot,
+        ArcaneResistanceSnapshot resistance,
+        ArcaneBacklashPolicy backlashPolicy,
+        ArcaneEmergencyProtectionSnapshot emergencyProtectionSnapshot
+    ) {
         Objects.requireNonNull(snapshot, "snapshot");
         Objects.requireNonNull(resistance, "resistance");
         Objects.requireNonNull(backlashPolicy, "backlashPolicy");
+        Objects.requireNonNull(emergencyProtectionSnapshot, "emergencyProtectionSnapshot");
 
-        ArcaneHazardSessionRegistry.OpenResult opened = sessions.open(snapshot);
+        ArcaneHazardSessionRegistry.OpenResult opened = sessions.open(snapshot, emergencyProtectionSnapshot);
         if (!opened.opened()) return ActivationResult.denied(opened.code());
 
         ArcaneHazardSession session = opened.session().orElseThrow();
