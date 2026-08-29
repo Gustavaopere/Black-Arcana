@@ -133,7 +133,7 @@ public final class ArcanaServerRuntimeManager {
                 runtime.loadouts(),
                 runtime.temporaryMutations(),
                 server.overworld().getGameTime());
-        savedData.restoreHazards(runtime.corruption(), runtime.strain());
+        savedData.restoreHazards(runtime.corruption(), runtime.strain(), runtime.emergencyProtection());
         runtime.migrateRestoredPersistentState();
         runtime.pruneOrphanedPersistentState();
         RUNTIMES.put(server, runtime);
@@ -197,6 +197,6 @@ public final class ArcanaServerRuntimeManager {
                 runtime.loadouts(),
                 runtime.temporaryMutations(),
                 now);
-        savedData.captureHazards(runtime.corruption(), runtime.strain());
+        savedData.captureHazards(runtime.corruption(), runtime.strain(), runtime.emergencyProtection());
     }
 }
