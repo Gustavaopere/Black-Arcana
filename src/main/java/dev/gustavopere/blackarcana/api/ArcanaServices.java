@@ -38,6 +38,45 @@ public final class ArcanaServices {
     @FunctionalInterface
     public interface WorldEffectPolicy { ArcanaDecision authorize(ArcanaCastRequest request, TargetResolution target); }
 
+    /**
+     * Prepares the server-owned hazard transaction after ordinary cast checks and
+     * world policy have succeeded but before resources are reserved. Implementations
+     * must keep this preparation phase side-effect free with respect to gameplay state.
+     */
+    @FunctionalInterface
+    public interface CastHazardGate {
+        HazardPreparation preflight(ArcanaCastRequest request, TargetResolution target);
+
+        static CastHazardGate noop() {
+            return (request, target) -> HazardPreparation.noop();
+        }
+    }
+
+    /**
+     * One immutable/prepared hazard transaction bound to a single cast attempt.
+     *
+     * {@link #decision()} exposes the side-effect-free preflight decision.
+     * {@link #activate()} runs only after normal resources have been reserved and
+     * before the spell effect can execute. {@link #commit()} is a terminal,
+     * infallible operation after the effect/resource transaction succeeds.
+     * {@link #cancel()} must be safe for any non-committed path and idempotent.
+     */
+    public interface HazardPreparation {
+        ArcanaDecision decision();
+        ArcanaDecision activate();
+        void commit();
+        void cancel();
+
+        static HazardPreparation noop() {
+            return new HazardPreparation() {
+                @Override public ArcanaDecision decision() { return ArcanaDecision.allow(); }
+                @Override public ArcanaDecision activate() { return ArcanaDecision.allow(); }
+                @Override public void commit() { }
+                @Override public void cancel() { }
+            };
+        }
+    }
+
     @FunctionalInterface
     public interface ArcanaEffect { EffectResult apply(ArcanaCastRequest request, TargetResolution target); }
 
