@@ -27,6 +27,14 @@ import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
 import dev.gustavopere.blackarcana.core.integration.ArcanaIntegrationRegistry;
 import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
+import dev.gustavopere.blackarcana.core.ritual.RitualActivationGuard;
+import dev.gustavopere.blackarcana.core.ritual.RitualBindingRegistry;
+import dev.gustavopere.blackarcana.core.ritual.RitualDefinition;
+import dev.gustavopere.blackarcana.core.ritual.RitualDefinitionRegistry;
+import dev.gustavopere.blackarcana.core.ritual.RitualEngine;
+import dev.gustavopere.blackarcana.core.ritual.RitualRestoreResult;
+import dev.gustavopere.blackarcana.core.ritual.RitualSessionRegistry;
+import dev.gustavopere.blackarcana.core.ritual.RitualSessionSnapshot;
 import dev.gustavopere.blackarcana.core.world.ConfigurableWorldEffectPolicy;
 import dev.gustavopere.blackarcana.core.world.DefaultEntityInteractionPolicy;
 import dev.gustavopere.blackarcana.core.world.EntityInteractionAdmissionService;
@@ -46,6 +54,7 @@ import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.IngressRateLimiter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -70,6 +79,12 @@ public final class ArcanaServerRuntime {
     public static final int DEFAULT_TEMPORARY_RESTORE_CHECKS_PER_TICK = 128;
     public static final long DEFAULT_MAX_TEMPORARY_MUTATION_LIFETIME_TICKS =
         TemporaryBlockMutationGateway.ABSOLUTE_MAX_LIFETIME_TICKS;
+    public static final int DEFAULT_MAX_RITUAL_DEFINITIONS = 512;
+    public static final int DEFAULT_MAX_RITUAL_BINDINGS = 512;
+    public static final int DEFAULT_MAX_RITUAL_SESSIONS = 1024;
+    public static final int DEFAULT_MAX_TRACKED_RITUAL_ACTIVATIONS = 4096;
+    public static final long DEFAULT_RITUAL_REPLAY_RETENTION_TICKS = 20L * 60L * 60L * 2L;
+    public static final int DEFAULT_RITUAL_SESSIONS_PER_TICK = 64;
 
     private final ArcanaSpellRegistry spells = new ArcanaSpellRegistry();
     private final SpellDataCatalog spellData = new SpellDataCatalog();
@@ -88,6 +103,16 @@ public final class ArcanaServerRuntime {
     private final ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
     private final ArcaneEmergencyProtectionStateService emergencyProtection =
         ArcaneEmergencyProtectionStateService.canonical(DEFAULT_MAX_EMERGENCY_RESOURCES);
+    private final RitualDefinitionRegistry ritualDefinitions =
+        new RitualDefinitionRegistry(DEFAULT_MAX_RITUAL_DEFINITIONS);
+    private final RitualBindingRegistry ritualBindings =
+        new RitualBindingRegistry(DEFAULT_MAX_RITUAL_BINDINGS);
+    private final RitualEngine rituals = new RitualEngine(
+        new RitualSessionRegistry(DEFAULT_MAX_RITUAL_SESSIONS),
+        new RitualActivationGuard(DEFAULT_MAX_TRACKED_RITUAL_ACTIVATIONS, DEFAULT_RITUAL_REPLAY_RETENTION_TICKS),
+        ritualBindings.requirements(),
+        ritualBindings.components(),
+        ritualBindings.outcomes());
     private final WorldEffectProfileRegistry worldEffectProfiles = new WorldEffectProfileRegistry();
     private final ConfigurableWorldEffectPolicy worldEffectPolicy =
         new ConfigurableWorldEffectPolicy(worldEffectProfiles, WorldEffectPolicyConfig.safeDefaults());
@@ -109,6 +134,7 @@ public final class ArcanaServerRuntime {
     private volatile ProtectedDestinationGuard protectedDestinationGuard;
     private volatile TemporaryRestorationService.TickResult lastTemporaryRestoration =
         new TemporaryRestorationService.TickResult(0, 0, 0, 0);
+    private volatile RitualEngine.TickSummary lastRitualTickSummary = new RitualEngine.TickSummary(0, 0, 0);
     private RuntimeGroupMigrations groupMigrations = RuntimeGroupMigrations.none();
 
     public ArcanaServerRuntime(int maxCastIntentsPerSecond, int maxTrackedCasters) {
@@ -159,6 +185,7 @@ public final class ArcanaServerRuntime {
     public RuntimeTickResult tick(long serverTick) {
         int expiredChannels = channels.pruneExpired(serverTick);
         BoundedWorkScheduler.TickResult work = effectScheduler.tick();
+        lastRitualTickSummary = rituals.tick(serverTick, DEFAULT_RITUAL_SESSIONS_PER_TICK);
         worldEffectBudgets.pruneIdle(serverTick);
         TemporaryRestorationService restoration = temporaryRestorationService;
         if (restoration != null) {
@@ -201,6 +228,14 @@ public final class ArcanaServerRuntime {
         return new MigrationResult(cooldowns.migrateGroups(groupMigrations), charges.migrateGroups(groupMigrations));
     }
 
+    public RitualRestoreResult restoreRitualSessions(List<RitualSessionSnapshot> snapshots, long nowTick) {
+        return rituals.restore(ritualDefinitions.snapshot(), Objects.requireNonNull(snapshots, "snapshots"), nowTick);
+    }
+
+    public List<RitualDefinition> ritualDefinitionSnapshot() {
+        return ritualDefinitions.snapshot();
+    }
+
     public PruneResult pruneOrphanedPersistentState() {
         Set<String> activeCooldownGroups = new HashSet<>();
         cooldownPolicies.cooldownSnapshot().values().forEach(spec -> {
@@ -229,6 +264,10 @@ public final class ArcanaServerRuntime {
     public CorruptionStateService corruption() { return corruption; }
     public ArcaneStrainStateService strain() { return strain; }
     public ArcaneEmergencyProtectionStateService emergencyProtection() { return emergencyProtection; }
+    public RitualDefinitionRegistry ritualDefinitions() { return ritualDefinitions; }
+    public RitualBindingRegistry ritualBindings() { return ritualBindings; }
+    public RitualEngine rituals() { return rituals; }
+    public RitualEngine.TickSummary lastRitualTickSummary() { return lastRitualTickSummary; }
     public WorldEffectProfileRegistry worldEffectProfiles() { return worldEffectProfiles; }
     public ConfigurableWorldEffectPolicy worldEffectPolicy() { return worldEffectPolicy; }
     public WorldEffectBudgetLedger worldEffectBudgets() { return worldEffectBudgets; }
