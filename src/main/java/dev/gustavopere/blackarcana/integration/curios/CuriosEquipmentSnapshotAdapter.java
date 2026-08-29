@@ -17,10 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * Installed-first Curios 9.5.1+1.21.1 snapshot bridge.
- * No Curios type appears in the compiled signature, keeping dedicated servers without Curios safe.
- */
+/** Installed-first Curios 9.5.1+1.21.1 snapshot bridge with no binary Curios signature. */
 public final class CuriosEquipmentSnapshotAdapter {
     public enum Availability { AVAILABLE, MISSING_MOD, API_INCOMPATIBLE }
 
@@ -51,11 +48,12 @@ public final class CuriosEquipmentSnapshotAdapter {
             Class<?> api = Class.forName("top.theillusivec4.curios.api.CuriosApi", false, loader);
             Class<?> handler = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler", false, loader);
             Class<?> itemHandler = Class.forName("net.neoforged.neoforge.items.IItemHandler", false, loader);
-            Method getInventory = api.getMethod("getCuriosInventory", LivingEntity.class);
-            Method equipped = handler.getMethod("getEquippedCurios");
-            Method slots = itemHandler.getMethod("getSlots");
-            Method stack = itemHandler.getMethod("getStackInSlot", int.class);
-            return new CuriosEquipmentSnapshotAdapter(Availability.AVAILABLE, getInventory, equipped, slots, stack);
+            return new CuriosEquipmentSnapshotAdapter(
+                Availability.AVAILABLE,
+                api.getMethod("getCuriosInventory", LivingEntity.class),
+                handler.getMethod("getEquippedCurios"),
+                itemHandler.getMethod("getSlots"),
+                itemHandler.getMethod("getStackInSlot", int.class));
         } catch (ReflectiveOperationException | LinkageError incompatible) {
             return unavailable(Availability.API_INCOMPATIBLE);
         }
@@ -63,38 +61,43 @@ public final class CuriosEquipmentSnapshotAdapter {
 
     public Availability availability() { return availability; }
 
-    public ArcaneEquipmentSnapshotService.Snapshot snapshot(
-        ServerPlayer player,
-        ArcaneEquipmentProfileRegistry profiles
-    ) {
+    public ArcaneEquipmentSnapshotService.Snapshot snapshot(ServerPlayer player, ArcaneEquipmentProfileRegistry profiles) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(profiles, "profiles");
-        if (availability != Availability.AVAILABLE) {
-            return new ArcaneEquipmentSnapshotService(profiles).capture(List.of());
-        }
+        if (availability != Availability.AVAILABLE) return new ArcaneEquipmentSnapshotService(profiles).capture(List.of());
         try {
             Object optionalObject = getCuriosInventory.invoke(null, player);
             if (!(optionalObject instanceof Optional<?> optional) || optional.isEmpty()) {
                 return new ArcaneEquipmentSnapshotService(profiles).capture(List.of());
             }
             Object combined = getEquippedCurios.invoke(optional.get());
-            int slots = (int) getSlots.invoke(combined);
-            int boundedSlots = Math.min(slots, ArcaneEquipmentSnapshotService.MAX_EQUIPPED_SLOTS);
-            List<ArcaneEquipmentSlotSnapshot> equipped = new ArrayList<>(boundedSlots);
-            Set<ItemStack> seenStacks = Collections.newSetFromMap(new IdentityHashMap<>());
-            for (int index = 0; index < boundedSlots; index++) {
+            int slots = Math.min((int) getSlots.invoke(combined), ArcaneEquipmentSnapshotService.MAX_EQUIPPED_SLOTS);
+            List<ItemStack> stacks = new ArrayList<>(slots);
+            for (int index = 0; index < slots; index++) {
                 Object raw = getStackInSlot.invoke(combined, index);
-                if (!(raw instanceof ItemStack stack) || stack.isEmpty() || !seenStacks.add(stack)) continue;
-                String itemId = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
-                int durability = stack.isDamageableItem()
-                    ? Math.max(0, stack.getMaxDamage() - stack.getDamageValue())
-                    : Integer.MAX_VALUE;
-                equipped.add(new ArcaneEquipmentSlotSnapshot("curio_" + index, itemId, durability));
+                if (raw instanceof ItemStack stack) stacks.add(stack);
             }
-            return new ArcaneEquipmentSnapshotService(profiles).capture(equipped);
+            return new ArcaneEquipmentSnapshotService(profiles).capture(normalizeStacks(stacks));
         } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
             return new ArcaneEquipmentSnapshotService(profiles).capture(List.of());
         }
+    }
+
+    static List<ArcaneEquipmentSlotSnapshot> normalizeStacks(List<ItemStack> stacks) {
+        Objects.requireNonNull(stacks, "stacks");
+        List<ArcaneEquipmentSlotSnapshot> result = new ArrayList<>();
+        Set<ItemStack> seenStacks = Collections.newSetFromMap(new IdentityHashMap<>());
+        int bounded = Math.min(stacks.size(), ArcaneEquipmentSnapshotService.MAX_EQUIPPED_SLOTS);
+        for (int index = 0; index < bounded; index++) {
+            ItemStack stack = stacks.get(index);
+            if (stack == null || stack.isEmpty() || !seenStacks.add(stack)) continue;
+            String itemId = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+            int durability = stack.isDamageableItem()
+                ? Math.max(0, stack.getMaxDamage() - stack.getDamageValue())
+                : Integer.MAX_VALUE;
+            result.add(new ArcaneEquipmentSlotSnapshot("curio_" + index, itemId, durability));
+        }
+        return List.copyOf(result);
     }
 
     private static CuriosEquipmentSnapshotAdapter unavailable(Availability availability) {
