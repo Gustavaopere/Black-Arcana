@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.core.hazard;
 
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEquipmentProfile;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEquipmentSetBonus;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEquipmentSlotSnapshot;
 
 import java.util.ArrayList;
@@ -17,9 +18,18 @@ public final class ArcaneEquipmentSnapshotService {
     public static final int MAX_EQUIPPED_SLOTS = 32;
 
     private final ArcaneEquipmentProfileRegistry profiles;
+    private final ArcaneEquipmentSetBonusRegistry setBonuses;
 
     public ArcaneEquipmentSnapshotService(ArcaneEquipmentProfileRegistry profiles) {
+        this(profiles, new ArcaneEquipmentSetBonusRegistry());
+    }
+
+    public ArcaneEquipmentSnapshotService(
+        ArcaneEquipmentProfileRegistry profiles,
+        ArcaneEquipmentSetBonusRegistry setBonuses
+    ) {
         this.profiles = Objects.requireNonNull(profiles, "profiles");
+        this.setBonuses = Objects.requireNonNull(setBonuses, "setBonuses");
     }
 
     public Snapshot capture(List<ArcaneEquipmentSlotSnapshot> equipped) {
@@ -55,6 +65,16 @@ public final class ArcaneEquipmentSnapshotService {
             }
         }
 
+        List<ResolvedSetBonus> activeSetBonuses = new ArrayList<>();
+        for (ArcaneEquipmentSetBonus bonus : setBonuses.resolve(setCounts)) {
+            int equippedPieces = setCounts.getOrDefault(bonus.setId(), 0);
+            activeSetBonuses.add(new ResolvedSetBonus(bonus, equippedPieces));
+            arcane = boundedAdd(arcane, bonus.arcaneResistance(), ArcaneEquipmentProfile.ABSOLUTE_MAX_RESISTANCE);
+            corruption = boundedAdd(corruption, bonus.corruptionResistance(), ArcaneEquipmentProfile.ABSOLUTE_MAX_RESISTANCE);
+            strainCapacity = boundedAdd(strainCapacity, bonus.strainCapacityBonus(), ArcaneEquipmentProfile.ABSOLUTE_MAX_STRAIN_CAPACITY);
+            strainRecovery = boundedAdd(strainRecovery, bonus.strainRecoveryPerTick(), ArcaneEquipmentProfile.ABSOLUTE_MAX_STRAIN_RECOVERY);
+        }
+
         return new Snapshot(
             List.copyOf(resolved),
             Map.copyOf(setCounts),
@@ -62,7 +82,8 @@ public final class ArcaneEquipmentSnapshotService {
             corruption,
             strainCapacity,
             strainRecovery,
-            List.copyOf(emergencyCandidates));
+            List.copyOf(emergencyCandidates),
+            List.copyOf(activeSetBonuses));
     }
 
     private static double boundedAdd(double left, double right, double max) {
@@ -76,6 +97,16 @@ public final class ArcaneEquipmentSnapshotService {
         }
     }
 
+    /** Frozen diagnostic record for one cumulative threshold satisfied at capture time. */
+    public record ResolvedSetBonus(ArcaneEquipmentSetBonus bonus, int equippedPieces) {
+        public ResolvedSetBonus {
+            Objects.requireNonNull(bonus, "bonus");
+            if (equippedPieces < bonus.requiredPieces() || equippedPieces > MAX_EQUIPPED_SLOTS) {
+                throw new IllegalArgumentException("equippedPieces does not satisfy set threshold");
+            }
+        }
+    }
+
     public record Snapshot(
         List<ResolvedItem> items,
         Map<String, Integer> setCounts,
@@ -83,8 +114,30 @@ public final class ArcaneEquipmentSnapshotService {
         double corruptionResistance,
         double strainCapacityBonus,
         double strainRecoveryPerTick,
-        List<ArcaneEmergencyProtectionSnapshot.Candidate> emergencyProtectionCandidates
+        List<ArcaneEmergencyProtectionSnapshot.Candidate> emergencyProtectionCandidates,
+        List<ResolvedSetBonus> activeSetBonuses
     ) {
+        /** Backward-compatible constructor for snapshots created before set-bonus metadata existed. */
+        public Snapshot(
+            List<ResolvedItem> items,
+            Map<String, Integer> setCounts,
+            double arcaneResistance,
+            double corruptionResistance,
+            double strainCapacityBonus,
+            double strainRecoveryPerTick,
+            List<ArcaneEmergencyProtectionSnapshot.Candidate> emergencyProtectionCandidates
+        ) {
+            this(
+                items,
+                setCounts,
+                arcaneResistance,
+                corruptionResistance,
+                strainCapacityBonus,
+                strainRecoveryPerTick,
+                emergencyProtectionCandidates,
+                List.of());
+        }
+
         /** Backward-compatible constructor for snapshots created before emergency protection metadata existed. */
         public Snapshot(
             List<ResolvedItem> items,
@@ -101,6 +154,7 @@ public final class ArcaneEquipmentSnapshotService {
                 corruptionResistance,
                 strainCapacityBonus,
                 strainRecoveryPerTick,
+                List.of(),
                 List.of());
         }
 
@@ -109,7 +163,7 @@ public final class ArcaneEquipmentSnapshotService {
             setCounts = Map.copyOf(Objects.requireNonNull(setCounts, "setCounts"));
             emergencyProtectionCandidates = List.copyOf(Objects.requireNonNull(
                 emergencyProtectionCandidates, "emergencyProtectionCandidates"));
-            // Reuse the public immutable contract for duplicate/bounds validation.
+            activeSetBonuses = List.copyOf(Objects.requireNonNull(activeSetBonuses, "activeSetBonuses"));
             new ArcaneEmergencyProtectionSnapshot(emergencyProtectionCandidates);
         }
 
