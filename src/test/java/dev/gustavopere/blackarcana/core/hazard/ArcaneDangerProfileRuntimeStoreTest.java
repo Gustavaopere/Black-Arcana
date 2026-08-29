@@ -15,17 +15,21 @@ class ArcaneDangerProfileRuntimeStoreTest {
     void reloadPublishesToExistingAndFutureRuntimeRegistries() {
         ArcanaSpellId id = ArcanaSpellId.parse("black_arcana:store_probe");
         ArcanaServerRuntime first = ArcanaServerRuntime.createDefault();
-        var firstRegistry = ArcaneDangerProfileRuntimeStore.forRuntime(first);
+        ArcanaServerRuntime second = null;
+        try {
+            var firstRegistry = ArcaneDangerProfileRuntimeStore.forRuntime(first);
+            ArcaneDangerProfileRuntimeStore.reload(Map.of(id, definition(id)));
 
-        ArcaneDangerProfileRuntimeStore.reload(Map.of(id, definition(id)));
-
-        assertEquals(ArcaneDangerTier.DANGEROUS, firstRegistry.resolve(id).orElseThrow().tier());
-        ArcanaServerRuntime second = ArcanaServerRuntime.createDefault();
-        assertEquals(
-            ArcaneDangerTier.DANGEROUS,
-            ArcaneDangerProfileRuntimeStore.forRuntime(second).resolve(id).orElseThrow().tier());
-        ArcaneDangerProfileRuntimeStore.remove(first);
-        ArcaneDangerProfileRuntimeStore.remove(second);
+            assertEquals(ArcaneDangerTier.DANGEROUS, firstRegistry.resolve(id).orElseThrow().tier());
+            second = ArcanaServerRuntime.createDefault();
+            assertEquals(
+                ArcaneDangerTier.DANGEROUS,
+                ArcaneDangerProfileRuntimeStore.forRuntime(second).resolve(id).orElseThrow().tier());
+        } finally {
+            ArcaneDangerProfileRuntimeStore.reload(Map.of());
+            ArcaneDangerProfileRuntimeStore.remove(first);
+            if (second != null) ArcaneDangerProfileRuntimeStore.remove(second);
+        }
     }
 
     private static ArcaneDangerDataDefinition definition(ArcanaSpellId id) {
