@@ -84,6 +84,12 @@ public final class PendingBacklashRegistry {
         return removed == null ? List.of() : List.copyOf(removed.debts);
     }
 
+    /** O(1) immutable view for incrementally persisting one caster without scanning all queues. */
+    public synchronized List<PendingBacklashDebt> pendingDebts(UUID playerId) {
+        DebtQueue queue = pending.get(Objects.requireNonNull(playerId, "playerId"));
+        return queue == null ? List.of() : List.copyOf(queue.debts);
+    }
+
     public synchronized double pending(UUID playerId) {
         DebtQueue queue = pending.get(Objects.requireNonNull(playerId, "playerId"));
         return queue == null ? 0.0D : queue.total;
