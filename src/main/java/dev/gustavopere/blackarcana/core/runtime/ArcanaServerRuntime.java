@@ -7,6 +7,7 @@ import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.api.ArcanaServices.CastHazardGate;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.ArcanaCastIngressService;
 import dev.gustavopere.blackarcana.core.cast.ArcanaChannelCastCoordinator;
@@ -16,7 +17,10 @@ import dev.gustavopere.blackarcana.core.cooldown.ArcanaCooldownPolicyRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.RuntimeGroupMigrations;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneResistanceProviderRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
+import dev.gustavopere.blackarcana.core.hazard.CorruptionResistanceProviderRegistry;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
 import dev.gustavopere.blackarcana.core.integration.ArcanaIntegrationRegistry;
 import dev.gustavopere.blackarcana.core.registry.ArcanaSpellRegistry;
@@ -71,6 +75,11 @@ public final class ArcanaServerRuntime {
     private final PersistentCooldownService cooldowns = new PersistentCooldownService(cooldownPolicies::cooldownFor);
     private final ChargePoolCooldownService charges = new ChargePoolCooldownService(cooldownPolicies::requireCharge);
     private final ArcanaIntegrationRegistry integrations = new ArcanaIntegrationRegistry();
+    private final ArcaneResistanceProviderRegistry arcaneResistanceProviders =
+        ArcaneResistanceProviderRegistry.canonical(ArcaneResistanceProviderRegistry.ABSOLUTE_MAX_PROVIDERS);
+    private final CorruptionResistanceProviderRegistry corruptionResistanceProviders =
+        CorruptionResistanceProviderRegistry.canonical(CorruptionResistanceProviderRegistry.ABSOLUTE_MAX_PROVIDERS);
+    private final ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles = new ArcaneEquipmentProfileRegistry();
     private final CorruptionStateService corruption = CorruptionStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
     private final ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
     private final WorldEffectProfileRegistry worldEffectProfiles = new WorldEffectProfileRegistry();
@@ -88,6 +97,7 @@ public final class ArcanaServerRuntime {
     private final ArcanaChannelManager channels;
     private final ArcanaChannelCastCoordinator channelCasts;
     private final BoundedWorkScheduler effectScheduler;
+    private volatile CastHazardGate hazardGate = CastHazardGate.noop();
     private volatile TemporaryBlockMutationGateway temporaryBlockGateway;
     private volatile TemporaryRestorationService temporaryRestorationService;
     private volatile ProtectedDestinationGuard protectedDestinationGuard;
@@ -165,8 +175,17 @@ public final class ArcanaServerRuntime {
         protectedDestinationGuard = new ProtectedDestinationGuard(chunkGuard, protectionAdapters);
     }
 
-    public void installEngine(ArcanaSpellId spellId, ArcanaCastEngine engine) {
-        engines.put(Objects.requireNonNull(spellId, "spellId"), Objects.requireNonNull(engine, "engine"));
+    /** Installs one server-owned hazard gate for both existing and future spell engines. */
+    public synchronized void installHazardGate(CastHazardGate gate) {
+        CastHazardGate checked = Objects.requireNonNull(gate, "gate");
+        hazardGate = checked;
+        engines.replaceAll((spellId, engine) -> engine.withHazardGate(checked));
+    }
+
+    public synchronized void installEngine(ArcanaSpellId spellId, ArcanaCastEngine engine) {
+        ArcanaSpellId checkedId = Objects.requireNonNull(spellId, "spellId");
+        ArcanaCastEngine checkedEngine = Objects.requireNonNull(engine, "engine");
+        engines.put(checkedId, checkedEngine.withHazardGate(hazardGate));
     }
     public void removeEngine(ArcanaSpellId spellId) { engines.remove(Objects.requireNonNull(spellId, "spellId")); }
     public void configureWorldEffects(WorldEffectPolicyConfig config) { worldEffectPolicy.updateConfig(Objects.requireNonNull(config, "config")); }
@@ -197,6 +216,9 @@ public final class ArcanaServerRuntime {
     public ArcanaChannelManager channels() { return channels; }
     public BoundedWorkScheduler effectScheduler() { return effectScheduler; }
     public ArcanaIntegrationRegistry integrations() { return integrations; }
+    public ArcaneResistanceProviderRegistry arcaneResistanceProviders() { return arcaneResistanceProviders; }
+    public CorruptionResistanceProviderRegistry corruptionResistanceProviders() { return corruptionResistanceProviders; }
+    public ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles() { return arcaneEquipmentProfiles; }
     public CorruptionStateService corruption() { return corruption; }
     public ArcaneStrainStateService strain() { return strain; }
     public WorldEffectProfileRegistry worldEffectProfiles() { return worldEffectProfiles; }

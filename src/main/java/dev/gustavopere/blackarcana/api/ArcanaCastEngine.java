@@ -101,6 +101,24 @@ public final class ArcanaCastEngine {
         this.hazardGate = Objects.requireNonNull(hazardGate);
     }
 
+    /**
+     * Rebinds only the Stage 05A hazard gate while preserving every established
+     * Stage 02 collaborator and observer. The original engine remains immutable.
+     */
+    public ArcanaCastEngine withHazardGate(CastHazardGate replacement) {
+        return new ArcanaCastEngine(
+            identity,
+            replayGuard,
+            progression,
+            cooldowns,
+            targets,
+            costs,
+            worldPolicy,
+            effect,
+            successObserver,
+            Objects.requireNonNull(replacement, "replacement"));
+    }
+
     public ArcanaCastResult execute(ArcanaCastRequest request) {
         Objects.requireNonNull(request, "request");
 
