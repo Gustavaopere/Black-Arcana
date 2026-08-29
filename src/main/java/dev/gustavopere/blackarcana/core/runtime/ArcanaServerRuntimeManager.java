@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.core.runtime;
 
+import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.config.SpellDataDefinition;
@@ -127,13 +128,20 @@ public final class ArcanaServerRuntimeManager {
         INITIALIZERS.forEach(initializer -> initializer.accept(runtime));
         runtime.spellData().replaceAll(CURRENT_SPELL_DATA);
         BlackArcanaSavedData savedData = BlackArcanaSavedData.get(server);
-        savedData.restore(
+        var ritualRestore = savedData.restore(
                 runtime.cooldowns(),
                 runtime.charges(),
                 runtime.loadouts(),
                 runtime.temporaryMutations(),
+                runtime.rituals(),
+                runtime.ritualDefinitionSnapshot(),
                 server.overworld().getGameTime());
         savedData.restoreHazards(runtime.corruption(), runtime.strain(), runtime.emergencyProtection());
+        if (ritualRestore.rejected() > 0) {
+            BlackArcanaMod.LOGGER.warn(
+                    "Rejected {} invalid or unavailable Black Arcana ritual sessions during restore",
+                    ritualRestore.rejected());
+        }
         runtime.migrateRestoredPersistentState();
         runtime.pruneOrphanedPersistentState();
         RUNTIMES.put(server, runtime);
@@ -196,6 +204,7 @@ public final class ArcanaServerRuntimeManager {
                 runtime.charges(),
                 runtime.loadouts(),
                 runtime.temporaryMutations(),
+                runtime.rituals(),
                 now);
         savedData.captureHazards(runtime.corruption(), runtime.strain(), runtime.emergencyProtection());
     }
