@@ -2,12 +2,14 @@ package dev.gustavopere.blackarcana.api;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastResult.Status;
 import dev.gustavopere.blackarcana.api.ArcanaServices.ArcanaEffect;
+import dev.gustavopere.blackarcana.api.ArcanaServices.CastHazardGate;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CastRequestValidator;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CastSuccessObserver;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CooldownService;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostProvider;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostReservation;
 import dev.gustavopere.blackarcana.api.ArcanaServices.EffectResult;
+import dev.gustavopere.blackarcana.api.ArcanaServices.HazardPreparation;
 import dev.gustavopere.blackarcana.api.ArcanaServices.ProgressionGate;
 import dev.gustavopere.blackarcana.api.ArcanaServices.ReplayGuard;
 import dev.gustavopere.blackarcana.api.ArcanaServices.TargetResolution;
@@ -26,6 +28,7 @@ public final class ArcanaCastEngine {
     private final WorldEffectPolicy worldPolicy;
     private final ArcanaEffect effect;
     private final CastSuccessObserver successObserver;
+    private final CastHazardGate hazardGate;
 
     public ArcanaCastEngine(
             CastRequestValidator identity,
@@ -37,7 +40,17 @@ public final class ArcanaCastEngine {
             WorldEffectPolicy worldPolicy,
             ArcanaEffect effect
     ) {
-        this(identity, replayGuard, progression, cooldowns, targets, costs, worldPolicy, effect, CastSuccessObserver.noop());
+        this(
+            identity,
+            replayGuard,
+            progression,
+            cooldowns,
+            targets,
+            costs,
+            worldPolicy,
+            effect,
+            CastSuccessObserver.noop(),
+            CastHazardGate.noop());
     }
 
     public ArcanaCastEngine(
@@ -51,6 +64,31 @@ public final class ArcanaCastEngine {
             ArcanaEffect effect,
             CastSuccessObserver successObserver
     ) {
+        this(
+            identity,
+            replayGuard,
+            progression,
+            cooldowns,
+            targets,
+            costs,
+            worldPolicy,
+            effect,
+            successObserver,
+            CastHazardGate.noop());
+    }
+
+    public ArcanaCastEngine(
+            CastRequestValidator identity,
+            ReplayGuard replayGuard,
+            ProgressionGate progression,
+            CooldownService cooldowns,
+            TargetSelector targets,
+            CostProvider costs,
+            WorldEffectPolicy worldPolicy,
+            ArcanaEffect effect,
+            CastSuccessObserver successObserver,
+            CastHazardGate hazardGate
+    ) {
         this.identity = Objects.requireNonNull(identity);
         this.replayGuard = Objects.requireNonNull(replayGuard);
         this.progression = Objects.requireNonNull(progression);
@@ -60,6 +98,7 @@ public final class ArcanaCastEngine {
         this.worldPolicy = Objects.requireNonNull(worldPolicy);
         this.effect = Objects.requireNonNull(effect);
         this.successObserver = Objects.requireNonNull(successObserver);
+        this.hazardGate = Objects.requireNonNull(hazardGate);
     }
 
     public ArcanaCastResult execute(ArcanaCastRequest request) {
@@ -88,13 +127,35 @@ public final class ArcanaCastEngine {
         decision = worldPolicy.authorize(request, target);
         if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_WORLD_POLICY, decision);
 
-        CostReservation reservation = Objects.requireNonNull(costs.reserve(request), "cost reservation");
+        HazardPreparation hazard = Objects.requireNonNull(
+            hazardGate.preflight(request, target),
+            "hazard preparation");
+        ArcanaDecision hazardDecision = Objects.requireNonNull(hazard.decision(), "hazard preflight decision");
+        if (!hazardDecision.allowed()) {
+            hazard.cancel();
+            return ArcanaCastResult.denied(Status.DENIED_HAZARD, hazardDecision);
+        }
+
+        final CostReservation reservation;
+        try {
+            reservation = Objects.requireNonNull(costs.reserve(request), "cost reservation");
+        } catch (RuntimeException | Error failure) {
+            hazard.cancel();
+            throw failure;
+        }
         if (!reservation.reserved()) {
+            hazard.cancel();
             return ArcanaCastResult.denied(Status.DENIED_COST, reservation.decision());
         }
 
         boolean committed = false;
+        boolean hazardCommitted = false;
         try {
+            hazardDecision = Objects.requireNonNull(hazard.activate(), "hazard activation decision");
+            if (!hazardDecision.allowed()) {
+                return ArcanaCastResult.denied(Status.DENIED_HAZARD, hazardDecision);
+            }
+
             EffectResult effectResult = effect.apply(request, target);
             if (!effectResult.success()) {
                 return new ArcanaCastResult(Status.EFFECT_FAILED, "effect_failed", effectResult.detail());
@@ -103,9 +164,12 @@ public final class ArcanaCastEngine {
             reservation.commit();
             committed = true;
             cooldowns.start(request);
+            hazard.commit();
+            hazardCommitted = true;
             notifySuccess(request, target, effectResult);
             return ArcanaCastResult.success(effectResult.detail());
         } finally {
+            if (!hazardCommitted) hazard.cancel();
             if (!committed) reservation.refund();
         }
     }
