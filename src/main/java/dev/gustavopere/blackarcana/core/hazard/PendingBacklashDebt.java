@@ -60,7 +60,8 @@ public record PendingBacklashDebt(
         return damageInstanceId.isPresent();
     }
 
-    PendingBacklashDebt withAmount(double boundedAmount) {
+    /** Returns the same frozen causal context with a safely clamped amount. */
+    public PendingBacklashDebt withAmount(double boundedAmount) {
         return new PendingBacklashDebt(
             boundedAmount,
             damageInstanceId,
