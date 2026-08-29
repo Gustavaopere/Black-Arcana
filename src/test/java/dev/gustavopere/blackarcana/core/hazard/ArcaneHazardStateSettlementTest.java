@@ -65,7 +65,8 @@ class ArcaneHazardStateSettlementTest {
         assertTrue(preparation.activate().allowed());
         preparation.commit();
 
-        assertEquals(10.0D, corruption.snapshot(CASTER_ID).units());
+        // Corruption Resistance is independent: canonical K=60, so R=40 -> 0.6 residual.
+        assertEquals(12.0D, corruption.snapshot(CASTER_ID).units());
         assertEquals(32.0D, strain.snapshot(CASTER_ID, 100L).units());
     }
 
