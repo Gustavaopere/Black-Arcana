@@ -16,7 +16,7 @@ Stage 04 World Safety is ✅ complete, verified and merged at `b5a515335544cee52
 
 Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231075d68353447b8ce37add`. Branch run `33182063857` and post-merge main run `33182458511` both passed the automated pipeline. The stage remains 🟨 active because its required client visual/input matrix has not yet been manually executed.
 
-Inserted Stage 05A Arcane Danger is the next server/gameplay contract stage. It must freeze backlash, resistance, corruption, strain, hazard snapshots and public provider APIs before Rituals or Spell Domains are canonicalized against dangerous/forbidden content.
+Inserted Stage 05A Arcane Danger is the next server/gameplay contract stage and is now 🟨 preparatory active. The danger model, Arcane/Corruption Resistance, strain/recovery and persistent hazard state are present. The dedicated Arcane Backlash pipeline is fully verified at `583286d1dd28c35da8a64261b6c6eceb22242522`: workflow run `33222848359` passed JUnit, diff sanity, NeoForge build, JAR inspection, 17/17 GameTests and dedicated-server smoke. Zero Arcane Resistance now proves exact runtime 1:1 multi-hit settlement (`4 + 3 confirmed eligible damage -> 7 backlash`) with non-recursive accounting. The dedicated damage type intentionally bypasses vanilla invulnerability after Black Arcana's own resistance/preflight snapshot has resolved, so join/spawn invulnerability cannot silently weaken hazard settlement.
 
 Stage 06 Rituals already has substantial preparatory work. `feat/verify-rituals-v8` at `78bab54207965d906c607322417f92b10f6c86a3` passed CI run `33189742674`; `prep/06-rituals` only added architecture/status documentation after that verified functional checkpoint. This work is preserved but is downstream of Stage 05A and must be synchronized/retested after Stage 05A contracts freeze.
 
@@ -28,11 +28,11 @@ Stage 06 Rituals already has substantial preparatory work. `feat/verify-rituals-
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch + post-merge CI green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
 | 05 Casting & UX | 🟨 Active / code merged | automated gates green; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
-| 05A Arcane Danger | ⬜ Planned / next contract stage | must precede canonical Rituals/Spell Domains |
+| 05A Arcane Danger | 🟨 Preparatory active | backlash GREEN; equipment/Curios/profiles/API/RPG/HUD/hardening remain |
 | 06 Rituals | 🟦 Preparatory advanced | v8 functional checkpoint CI green; re-sync after 05A freeze required |
-| 07 Spell Domains | ⬜ Not started | Blood, souls, projection, displacement, forbidden |
-| 08 Progression & Balance | ⬜ Not started | Knowledge, mastery, caps, presets |
-| 09 Hardening & Release | ⬜ Not started | Tests, performance, upgrade, release |
+| 07 Spell Domains | 🟦 Preparatory | downstream non-canonical work exists and must resync after 05A |
+| 08 Progression & Balance | 🟦 Preparatory | downstream non-canonical work exists and must resync after 05A |
+| 09 Hardening & Release | ⬜ Not started | final closure after predecessor stages |
 
 ## Canonical active stage
 
@@ -45,6 +45,27 @@ Stages 00, 01, 02, 03 and 04 may only change through explicit follow-up decision
 ## Stage 05 remaining closure work
 
 Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags may be carried explicitly to Stage 09 if no corresponding effect exists yet.
+
+## Stage 05A verified checkpoint
+
+Verified Arcane Backlash behavior:
+- confirmed post-mitigation eligible health damage is the only backlash basis;
+- root `ArcanaCastId` plus unique subordinate damage-instance IDs provide causal ownership;
+- zero Arcane Resistance with canonical linear dangerous/forbidden profile is exact 1:1;
+- multi-hit aggregation is deterministic and bounded;
+- `ARCANE_BACKLASH` is a dedicated terminal damage family and never feeds the eligible damage ledger;
+- vanilla armor, effects, resistance, enchantments, shield, hit cooldown and generic invulnerability cannot silently reduce an already-settled backlash amount;
+- dedicated-server absence of optional providers remains supported.
+
+## Stage 05A still open
+
+- 05A.06 equipment/containment provider and transactional emergency protection;
+- 05A.07 optional Curios `9.5.1+1.21.1` snapshot adapter;
+- 05A.08 authoritative spell danger profiles;
+- 05A.09 public hazard provider/observer API;
+- 05A.10 RPG attribute/mastery integration;
+- 05A.11 HUD/tooltips/preflight presentation;
+- 05A.12 hardening: delayed damage, PvP, death/relog/restart, pending-backlash persistence and full optional-provider matrix.
 
 ## Stage 05A preparatory authorization
 
