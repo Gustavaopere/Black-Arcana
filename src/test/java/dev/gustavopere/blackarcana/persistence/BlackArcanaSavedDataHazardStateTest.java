@@ -9,6 +9,7 @@ import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceQuery;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionResistanceProviderRegistry;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
+import dev.gustavopere.blackarcana.core.hazard.PendingBacklashRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,24 @@ class BlackArcanaSavedDataHazardStateTest {
         loaded.restoreHazards(restoredCorruption, restoredStrain);
         assertEquals(25.0D, restoredCorruption.snapshot(player).units(), 1.0E-9D);
         assertEquals(77.5D, restoredStrain.snapshot(player, 150L).units(), 1.0E-9D);
+    }
+
+    @Test
+    void pendingBacklashRoundTripsAndRemainsExactlyOnceAcrossRestartBoundary() {
+        UUID player = UUID.fromString("61000000-0000-0000-0000-000000000001");
+        PendingBacklashRegistry pending = new PendingBacklashRegistry(16, 1_000.0D);
+        pending.accrue(player, 23.5D);
+
+        BlackArcanaSavedData saved = new BlackArcanaSavedData();
+        saved.capturePendingBacklash(pending);
+        CompoundTag root = saved.save(new CompoundTag(), null);
+        BlackArcanaSavedData loaded = BlackArcanaSavedData.load(root, null);
+
+        PendingBacklashRegistry restored = new PendingBacklashRegistry(16, 1_000.0D);
+        loaded.restorePendingBacklash(restored);
+        assertEquals(23.5D, restored.pending(player), 0.0D);
+        assertEquals(23.5D, restored.drain(player), 0.0D);
+        assertEquals(0.0D, restored.drain(player), 0.0D);
     }
 
     @Test

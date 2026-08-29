@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneDamageProvenanceTracker;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneHazardRuntime;
 import dev.gustavopere.blackarcana.core.hazard.PendingBacklashRegistry;
+import dev.gustavopere.blackarcana.persistence.BlackArcanaSavedData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,7 +44,7 @@ public final class MinecraftArcaneDamagePipeline {
         public DamageAttempt {
             Objects.requireNonNull(code, "code");
             if (invoked && !code.isEmpty()) throw new IllegalArgumentException("invoked attempt cannot carry denial code");
-            if (!invoked && code.isBlank()) throw new IllegalArgumentException("denied attempt requires code");
+            if (!invoked && code.isBlank()) throw new IllegalArgumentException("denied attempt requires a code");
             if (!invoked && accepted) throw new IllegalArgumentException("non-invoked attempt cannot be accepted");
         }
 
@@ -113,10 +114,14 @@ public final class MinecraftArcaneDamagePipeline {
 
     private static void onServerStarted(ServerStartedEvent event) {
         MinecraftServer server = event.getServer();
+        PendingBacklashRegistry pendingBacklash = new PendingBacklashRegistry(
+            DEFAULT_MAX_PENDING_CASTERS,
+            PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER);
+        BlackArcanaSavedData.get(server).restorePendingBacklash(pendingBacklash);
         STATES.put(server, new ServerState(
             new ArcaneHazardRuntime(DEFAULT_MAX_HAZARD_SESSIONS),
             new ArcaneDamageProvenanceTracker<>(DEFAULT_MAX_TRACKED_DAMAGE_SOURCES),
-            new PendingBacklashRegistry(DEFAULT_MAX_PENDING_CASTERS, PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER)));
+            pendingBacklash));
     }
 
     private static void onServerTick(ServerTickEvent.Post event) {
@@ -142,7 +147,10 @@ public final class MinecraftArcaneDamagePipeline {
         ServerPlayer caster = findCaster(server, provenance.casterId());
         if (caster == null) {
             boolean fullyRecorded = state.pendingBacklash().accrue(provenance.casterId(), settlement.backlashDamage());
-            if (!fullyRecorded) {
+            double persistedAmount = state.pendingBacklash().pending(provenance.casterId());
+            boolean fullyPersisted = BlackArcanaSavedData.get(server)
+                .updatePendingBacklash(provenance.casterId(), persistedAmount);
+            if (!fullyRecorded || !fullyPersisted) {
                 BlackArcanaMod.LOGGER.error(
                     "Pending Arcane Backlash hit a safety ceiling for caster {}; debt was clamped",
                     provenance.casterId());
@@ -158,16 +166,13 @@ public final class MinecraftArcaneDamagePipeline {
         ServerState state = STATES.get(server);
         if (state == null) return;
         double pending = state.pendingBacklash().drain(player.getUUID());
-        if (pending > 0.0D) applyBacklash(player, pending);
+        if (pending <= 0.0D) return;
+        BlackArcanaSavedData.get(server).updatePendingBacklash(player.getUUID(), 0.0D);
+        applyBacklash(player, pending);
     }
 
     private static void onServerStopped(ServerStoppedEvent event) {
-        ServerState removed = STATES.remove(event.getServer());
-        if (removed != null && removed.pendingBacklash().size() > 0) {
-            BlackArcanaMod.LOGGER.warn(
-                "Server stopped with {} in-memory pending Arcane Backlash debts; restart persistence is reserved for Stage 05A hardening",
-                removed.pendingBacklash().size());
-        }
+        STATES.remove(event.getServer());
     }
 
     private static ServerPlayer findCaster(MinecraftServer server, UUID casterId) {

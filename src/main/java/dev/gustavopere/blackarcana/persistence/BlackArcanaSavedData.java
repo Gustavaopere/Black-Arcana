@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
+import dev.gustavopere.blackarcana.core.hazard.PendingBacklashRegistry;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationKey;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationTracker;
 import dev.gustavopere.blackarcana.core.world.TemporaryWorldMutation;
@@ -21,8 +22,10 @@ import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -41,6 +44,7 @@ public final class BlackArcanaSavedData extends SavedData {
     public static final int MAX_PERSISTED_TEMPORARY_MUTATIONS = 16_384;
     public static final int MAX_PERSISTED_CORRUPTION_PLAYERS = 16_384;
     public static final int MAX_PERSISTED_STRAIN_PLAYERS = 16_384;
+    public static final int MAX_PERSISTED_PENDING_BACKLASH_PLAYERS = 16_384;
 
     private Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> cooldowns = Map.of();
     private Map<ChargePoolCooldownService.ChargeKey, ChargePoolCooldownService.SnapshotEntry> charges = Map.of();
@@ -48,6 +52,7 @@ public final class BlackArcanaSavedData extends SavedData {
     private List<TemporaryWorldMutation> temporaryMutations = List.of();
     private Map<UUID, CorruptionStateService.PersistedState> corruptionStates = Map.of();
     private Map<UUID, ArcaneStrainStateService.PersistedState> strainStates = Map.of();
+    private final Map<UUID, Double> pendingBacklash = new LinkedHashMap<>();
 
     public static BlackArcanaSavedData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(
@@ -68,6 +73,8 @@ public final class BlackArcanaSavedData extends SavedData {
             root.getList("corruption", Tag.TAG_COMPOUND), MAX_PERSISTED_CORRUPTION_PLAYERS);
         data.strainStates = HazardStatePersistence.readStrain(
             root.getList("strain", Tag.TAG_COMPOUND), MAX_PERSISTED_STRAIN_PLAYERS);
+        data.pendingBacklash.putAll(readPendingBacklash(
+            root.getList("pending_backlash", Tag.TAG_COMPOUND), MAX_PERSISTED_PENDING_BACKLASH_PLAYERS));
         return data;
     }
 
@@ -101,6 +108,40 @@ public final class BlackArcanaSavedData extends SavedData {
         setDirty();
     }
 
+    public void capturePendingBacklash(PendingBacklashRegistry registry) {
+        Objects.requireNonNull(registry, "registry");
+        pendingBacklash.clear();
+        int copied = 0;
+        for (Map.Entry<UUID, Double> entry : registry.persistentSnapshot().entrySet()) {
+            if (copied >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS) break;
+            Double amount = entry.getValue();
+            if (entry.getKey() == null || amount == null || !Double.isFinite(amount) || amount <= 0.0D) continue;
+            pendingBacklash.put(entry.getKey(), Math.min(amount, PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER));
+            copied++;
+        }
+        setDirty();
+    }
+
+    /** Incremental O(1) update used by the live damage pipeline. */
+    public boolean updatePendingBacklash(UUID playerId, double amount) {
+        Objects.requireNonNull(playerId, "playerId");
+        if (!Double.isFinite(amount) || amount < 0.0D) {
+            throw new IllegalArgumentException("pending backlash must be finite and non-negative");
+        }
+        if (amount == 0.0D) {
+            if (pendingBacklash.remove(playerId) != null) setDirty();
+            return true;
+        }
+        if (!pendingBacklash.containsKey(playerId)
+            && pendingBacklash.size() >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS) {
+            return false;
+        }
+        double bounded = Math.min(amount, PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER);
+        pendingBacklash.put(playerId, bounded);
+        setDirty();
+        return amount <= PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER;
+    }
+
     public void restore(
             PersistentCooldownService cooldownService,
             ChargePoolCooldownService chargeService,
@@ -128,6 +169,11 @@ public final class BlackArcanaSavedData extends SavedData {
         strain.restoreSnapshot(strainStates);
     }
 
+    public void restorePendingBacklash(PendingBacklashRegistry registry) {
+        Objects.requireNonNull(registry, "registry");
+        registry.restoreSnapshot(Map.copyOf(pendingBacklash));
+    }
+
     @Override
     public CompoundTag save(CompoundTag root, HolderLookup.Provider registries) {
         root.putInt("schema", SCHEMA_VERSION);
@@ -137,6 +183,7 @@ public final class BlackArcanaSavedData extends SavedData {
         root.put("temporary_mutations", writeTemporaryMutations(temporaryMutations));
         root.put("corruption", HazardStatePersistence.writeCorruption(corruptionStates, MAX_PERSISTED_CORRUPTION_PLAYERS));
         root.put("strain", HazardStatePersistence.writeStrain(strainStates, MAX_PERSISTED_STRAIN_PLAYERS));
+        root.put("pending_backlash", writePendingBacklash(pendingBacklash));
         return root;
     }
 
@@ -258,5 +305,36 @@ public final class BlackArcanaSavedData extends SavedData {
             } catch (RuntimeException ignored) { }
         }
         return List.copyOf(result);
+    }
+
+    private static ListTag writePendingBacklash(Map<UUID, Double> entries) {
+        ListTag list = new ListTag();
+        int written = 0;
+        for (Map.Entry<UUID, Double> entry : entries.entrySet()) {
+            if (written >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS) break;
+            Double amount = entry.getValue();
+            if (entry.getKey() == null || amount == null || !Double.isFinite(amount) || amount <= 0.0D) continue;
+            CompoundTag tag = new CompoundTag();
+            tag.putUUID("player", entry.getKey());
+            tag.putDouble("amount", Math.min(amount, PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER));
+            list.add(tag);
+            written++;
+        }
+        return list;
+    }
+
+    private static Map<UUID, Double> readPendingBacklash(ListTag list, int maxPlayers) {
+        Map<UUID, Double> result = new LinkedHashMap<>();
+        int count = Math.min(list.size(), maxPlayers);
+        for (int i = 0; i < count; i++) {
+            CompoundTag tag = list.getCompound(i);
+            try {
+                UUID player = tag.getUUID("player");
+                double amount = tag.getDouble("amount");
+                if (!Double.isFinite(amount) || amount <= 0.0D) continue;
+                result.put(player, Math.min(amount, PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER));
+            } catch (RuntimeException ignored) { }
+        }
+        return Map.copyOf(result);
     }
 }

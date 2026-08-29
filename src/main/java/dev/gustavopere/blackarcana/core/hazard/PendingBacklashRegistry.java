@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-/** Bounded in-memory debt for delayed backlash whose caster is temporarily offline. */
+/** Bounded debt for delayed backlash whose caster is temporarily offline. */
 public final class PendingBacklashRegistry {
     public static final int ABSOLUTE_MAX_PLAYERS = 65_536;
     public static final double ABSOLUTE_MAX_PENDING_PER_PLAYER = 100_000_000.0D;
@@ -54,6 +54,22 @@ public final class PendingBacklashRegistry {
 
     public synchronized double pending(UUID playerId) {
         return pending.getOrDefault(Objects.requireNonNull(playerId, "playerId"), 0.0D);
+    }
+
+    public synchronized Map<UUID, Double> persistentSnapshot() {
+        return Map.copyOf(pending);
+    }
+
+    public synchronized void restoreSnapshot(Map<UUID, Double> snapshot) {
+        Objects.requireNonNull(snapshot, "snapshot");
+        pending.clear();
+        for (Map.Entry<UUID, Double> entry : snapshot.entrySet()) {
+            if (pending.size() >= maxPlayers) break;
+            UUID playerId = entry.getKey();
+            Double amount = entry.getValue();
+            if (playerId == null || amount == null || !Double.isFinite(amount) || amount <= 0.0D) continue;
+            pending.put(playerId, Math.min(amount, maxPendingPerPlayer));
+        }
     }
 
     public synchronized int size() {
