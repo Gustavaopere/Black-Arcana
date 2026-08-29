@@ -48,12 +48,13 @@ public final class CuriosServerIntegrationBootstrap {
 
         if (!integration.available()) return;
 
-        ArcaneEquipmentSnapshotService emptySnapshots = new ArcaneEquipmentSnapshotService(runtime.equipmentProfiles());
+        ArcaneEquipmentSnapshotService emptySnapshots =
+            new ArcaneEquipmentSnapshotService(runtime.arcaneEquipmentProfiles());
         CuriosHazardResistanceProvider provider = new CuriosHazardResistanceProvider(playerId -> {
             ServerPlayer player = server.getPlayerList().getPlayer(playerId);
             return player == null
                 ? emptySnapshots.capture(List.of())
-                : adapter.snapshot(player, runtime.equipmentProfiles());
+                : adapter.snapshot(player, runtime.arcaneEquipmentProfiles());
         });
         runtime.arcaneResistanceProviders().register(provider);
         runtime.corruptionResistanceProviders().register(provider);
