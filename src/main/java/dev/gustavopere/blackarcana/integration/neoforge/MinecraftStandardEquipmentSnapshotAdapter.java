@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.integration.neoforge;
 
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEquipmentSlotSnapshot;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSnapshotService;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,7 +27,16 @@ public final class MinecraftStandardEquipmentSnapshotAdapter {
     private final ArcaneEquipmentSnapshotService snapshots;
 
     public MinecraftStandardEquipmentSnapshotAdapter(ArcaneEquipmentProfileRegistry profiles) {
-        this.snapshots = new ArcaneEquipmentSnapshotService(Objects.requireNonNull(profiles, "profiles"));
+        this(profiles, new ArcaneEquipmentSetBonusRegistry());
+    }
+
+    public MinecraftStandardEquipmentSnapshotAdapter(
+        ArcaneEquipmentProfileRegistry profiles,
+        ArcaneEquipmentSetBonusRegistry setBonuses
+    ) {
+        this.snapshots = new ArcaneEquipmentSnapshotService(
+            Objects.requireNonNull(profiles, "profiles"),
+            Objects.requireNonNull(setBonuses, "setBonuses"));
     }
 
     public ArcaneEquipmentSnapshotService.Snapshot snapshot(ServerPlayer player) {
