@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana;
 
 import com.mojang.logging.LogUtils;
 import dev.gustavopere.blackarcana.config.ArcaneDangerDataReloadListener;
+import dev.gustavopere.blackarcana.config.ArcaneEquipmentDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcanaSpellDataReloadListener;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftArcaneDamagePipeline;
@@ -36,6 +37,7 @@ public final class BlackArcanaMod {
         HazardPreflightSyncService.register(NeoForge.EVENT_BUS);
         ArcanaSpellDataReloadListener.register(NeoForge.EVENT_BUS);
         ArcaneDangerDataReloadListener.register(NeoForge.EVENT_BUS);
+        ArcaneEquipmentDataReloadListener.register(NeoForge.EVENT_BUS);
         LOGGER.info("Black Arcana foundation loaded");
     }
 }
