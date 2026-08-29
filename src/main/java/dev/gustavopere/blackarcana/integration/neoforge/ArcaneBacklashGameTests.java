@@ -23,12 +23,17 @@ import java.util.UUID;
 public final class ArcaneBacklashGameTests {
     private ArcaneBacklashGameTests() { }
 
+    @SuppressWarnings("removal")
     @GameTest(template = "foundation_empty", timeoutTicks = 60)
     public static void confirmedMultiHitDamageProducesExactNonRecursiveBacklash(GameTestHelper helper) {
-        ServerPlayer caster = helper.makeMockPlayer(GameType.SURVIVAL);
+        ServerPlayer caster = helper.makeMockServerPlayerInLevel();
+        caster.setGameMode(GameType.SURVIVAL);
+        caster.getAbilities().invulnerable = false;
+        caster.getAbilities().instabuild = false;
+        caster.onUpdateAbilities();
         helper.assertTrue(
             !caster.getAbilities().invulnerable,
-            "backlash fixture must be a vulnerable survival player");
+            "backlash fixture must be a vulnerable survival server player");
         var firstTarget = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 2, 1));
         var secondTarget = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(5, 2, 1));
         var server = helper.getLevel().getServer();
