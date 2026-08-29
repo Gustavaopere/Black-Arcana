@@ -514,8 +514,9 @@ public final class BlackArcanaSavedData extends SavedData {
                 CompoundTag tag = new CompoundTag();
                 tag.putUUID("player", playerId);
                 tag.putDouble("amount", debt.amount());
-                if (debt.damageInstanceId().isPresent()) {
+                if (debt.hasCausalContext()) {
                     tag.putBoolean("contextual", true);
+                    tag.putUUID("root_cast", debt.rootCastId().orElseThrow().value());
                     tag.putUUID("damage", debt.damageInstanceId().orElseThrow().value());
                     tag.putBoolean("protection_allowed", debt.protectionAllowed());
                     tag.put("emergency_candidates", writeEmergencyCandidates(debt.emergencyProtectionSnapshot()));
@@ -553,11 +554,13 @@ public final class BlackArcanaSavedData extends SavedData {
                 PendingBacklashDebt debt;
                 if (tag.getBoolean("contextual")) {
                     try {
+                        ArcanaCastId rootCastId = new ArcanaCastId(tag.getUUID("root_cast"));
                         ArcanaDamageInstanceId damageInstanceId = new ArcanaDamageInstanceId(tag.getUUID("damage"));
                         ArcaneEmergencyProtectionSnapshot emergency = readEmergencyCandidates(
                             tag.getList("emergency_candidates", Tag.TAG_COMPOUND));
                         debt = PendingBacklashDebt.contextual(
                             amount,
+                            rootCastId,
                             damageInstanceId,
                             tag.getBoolean("protection_allowed"),
                             emergency);
