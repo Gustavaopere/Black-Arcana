@@ -19,6 +19,7 @@ import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.RuntimeGroupMigrations;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionStateService;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneResistanceProviderRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionResistanceProviderRegistry;
@@ -82,6 +83,7 @@ public final class ArcanaServerRuntime {
     private final CorruptionResistanceProviderRegistry corruptionResistanceProviders =
         CorruptionResistanceProviderRegistry.canonical(CorruptionResistanceProviderRegistry.ABSOLUTE_MAX_PROVIDERS);
     private final ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles = new ArcaneEquipmentProfileRegistry();
+    private final ArcaneEquipmentSetBonusRegistry arcaneEquipmentSetBonuses = new ArcaneEquipmentSetBonusRegistry();
     private final CorruptionStateService corruption = CorruptionStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
     private final ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
     private final ArcaneEmergencyProtectionStateService emergencyProtection =
@@ -223,6 +225,7 @@ public final class ArcanaServerRuntime {
     public ArcaneResistanceProviderRegistry arcaneResistanceProviders() { return arcaneResistanceProviders; }
     public CorruptionResistanceProviderRegistry corruptionResistanceProviders() { return corruptionResistanceProviders; }
     public ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles() { return arcaneEquipmentProfiles; }
+    public ArcaneEquipmentSetBonusRegistry arcaneEquipmentSetBonuses() { return arcaneEquipmentSetBonuses; }
     public CorruptionStateService corruption() { return corruption; }
     public ArcaneStrainStateService strain() { return strain; }
     public ArcaneEmergencyProtectionStateService emergencyProtection() { return emergencyProtection; }
