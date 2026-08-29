@@ -48,7 +48,15 @@ public record ArcaneDangerDataDefinition(
 
     public ArcaneDangerProfile toRuntimeProfile() {
         return new ArcaneDangerProfile(
-            tier, backlashMultiplier, corruptionCoefficient, strainCoefficient, damageLeaseTicks, maxDamageInstances);
+            tier,
+            backlashMultiplier,
+            corruptionCoefficient,
+            strainCoefficient,
+            damageLeaseTicks,
+            maxDamageInstances,
+            minimumArcaneResistance,
+            recommendedArcaneResistance,
+            emergencyProtectionAllowed);
     }
 
     private static void validateFinite(List<String> errors, double value, String name) {
