@@ -8,7 +8,7 @@ import com.google.gson.JsonParseException;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneDangerProfileRegistry;
-import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneDangerProfileRuntimeStore;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -57,7 +57,7 @@ public final class ArcaneDangerDataReloadListener extends SimpleJsonResourceRelo
                     throw new JsonParseException("duplicate danger profile: " + id.canonical());
                 }
             });
-        ArcanaServerRuntimeManager.reloadDangerProfiles(parsed);
+        ArcaneDangerProfileRuntimeStore.reload(parsed);
     }
 
     static ArcaneDangerDataDefinition parseDefinition(ResourceLocation resourceId, JsonElement element) {
