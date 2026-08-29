@@ -16,7 +16,9 @@ import dev.gustavopere.blackarcana.api.hazard.CorruptionAcquisitionProfile;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceQuery;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceSnapshot;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -39,9 +41,10 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
     private final CorruptionResistanceProviderRegistry corruptionResistanceProviders;
     private final CorruptionStateService corruptionState;
     private final ArcaneStrainStateService strainState;
-    private final int maxStatefulPlayers;
     private final boolean stateSettlementEnabled;
     private final HazardSessionActivator activator;
+    private final Object stateReservationLock = new Object();
+    private final Set<UUID> activeStatefulCasters = new HashSet<>();
 
     /** Backwards-compatible hazard-only constructor for isolated core consumers/tests. */
     public ArcaneHazardCastGate(
@@ -54,7 +57,6 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
         this.corruptionResistanceProviders = null;
         this.corruptionState = null;
         this.strainState = null;
-        this.maxStatefulPlayers = 0;
         this.stateSettlementEnabled = false;
         this.activator = Objects.requireNonNull(activator, "activator");
     }
@@ -81,7 +83,6 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                 ArcaneStrainStateService.ABSOLUTE_MAX_TRACKED_PLAYERS)) {
             throw new IllegalArgumentException("maxStatefulPlayers outside absolute bounds");
         }
-        this.maxStatefulPlayers = maxStatefulPlayers;
         this.stateSettlementEnabled = true;
         this.activator = Objects.requireNonNull(activator, "activator");
     }
@@ -127,6 +128,11 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                     profile));
             CorruptionAcquisitionProfile corruptionProfile =
                 CorruptionAcquisitionProfile.committedCastOnly(profile.corruptionCoefficient(), 0.0D);
+            CorruptionStateService.CorruptionPreflight corruptionPreflight = corruptionState.preflightCommittedCast(
+                casterId,
+                request.context().serverTick(),
+                corruptionProfile,
+                corruptionResistance);
             ArcaneStrainProfile strainProfile = baseCommittedCastStrain(profile.strainCoefficient());
             ArcaneStrainStateService.StrainPreflight strainPreflight = strainState.preflight(
                 casterId,
@@ -143,8 +149,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             stateSettlement = new PreparedStateSettlement(
                 casterId,
                 request.context().serverTick(),
-                corruptionProfile,
-                corruptionResistance,
+                corruptionPreflight,
                 strainPreflight);
         }
 
@@ -159,13 +164,48 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
     }
 
     private boolean hasStateCapacity(UUID casterId, ArcaneDangerProfile profile) {
-        if (profile.corruptionCoefficient() > 0.0D && corruptionState.size() >= maxStatefulPlayers
-            && !corruptionState.persistentSnapshot().containsKey(casterId)) {
-            return false;
+        if (profile.corruptionCoefficient() > 0.0D && !corruptionState.canReserve(casterId)) return false;
+        return profile.strainCoefficient() <= 0.0D || strainState.canReserve(casterId);
+    }
+
+    private ArcanaDecision claimStateReservation(PreparedStateSettlement settlement) {
+        if (!settlement.requiresStateWrite()) return ArcanaDecision.allow();
+        synchronized (stateReservationLock) {
+            UUID casterId = settlement.casterId();
+            if (!activeStatefulCasters.add(casterId)) {
+                return ArcanaDecision.deny(
+                    "hazard_state_busy",
+                    "another stateful hazard cast for this caster is still active");
+            }
+
+            boolean corruptionReserved = false;
+            if (settlement.needsCorruptionWrite()) {
+                corruptionReserved = corruptionState.reserve(casterId);
+                if (!corruptionReserved) {
+                    activeStatefulCasters.remove(casterId);
+                    return ArcanaDecision.deny(
+                        "hazard_state_capacity",
+                        "persistent corruption state capacity is exhausted");
+                }
+            }
+            if (settlement.needsStrainWrite() && !strainState.reserve(casterId)) {
+                if (corruptionReserved) corruptionState.releaseReservation(casterId);
+                activeStatefulCasters.remove(casterId);
+                return ArcanaDecision.deny(
+                    "hazard_state_capacity",
+                    "persistent strain state capacity is exhausted");
+            }
+            return ArcanaDecision.allow();
         }
-        return profile.strainCoefficient() <= 0.0D
-            || strainState.size() < maxStatefulPlayers
-            || strainState.persistentSnapshot().containsKey(casterId);
+    }
+
+    private void releaseStateReservation(PreparedStateSettlement settlement) {
+        if (settlement == null || !settlement.requiresStateWrite()) return;
+        synchronized (stateReservationLock) {
+            if (settlement.needsCorruptionWrite()) corruptionState.releaseReservation(settlement.casterId());
+            if (settlement.needsStrainWrite()) strainState.releaseReservation(settlement.casterId());
+            activeStatefulCasters.remove(settlement.casterId());
+        }
     }
 
     private static ArcaneStrainProfile baseCommittedCastStrain(double units) {
@@ -184,16 +224,28 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
     private record PreparedStateSettlement(
         UUID casterId,
         long serverTick,
-        CorruptionAcquisitionProfile corruptionProfile,
-        CorruptionResistanceSnapshot corruptionResistance,
+        CorruptionStateService.CorruptionPreflight corruptionPreflight,
         ArcaneStrainStateService.StrainPreflight strainPreflight
-    ) { }
+    ) {
+        boolean needsCorruptionWrite() {
+            return corruptionPreflight.appliedCorruption() > 0.0D;
+        }
+
+        boolean needsStrainWrite() {
+            return strainPreflight.appliedStrain() > 0.0D;
+        }
+
+        boolean requiresStateWrite() {
+            return needsCorruptionWrite() || needsStrainWrite();
+        }
+    }
 
     private final class Prepared implements HazardPreparation {
         private final ArcaneHazardSnapshot snapshot;
         private final ArcaneResistanceSnapshot resistance;
         private final PreparedStateSettlement stateSettlement;
         private boolean activated;
+        private boolean stateReservationClaimed;
         private boolean committed;
         private boolean cancelled;
 
@@ -220,11 +272,24 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             }
             if (activated) return ArcanaDecision.allow();
 
-            ArcaneHazardRuntime.ActivationResult result = activator.activate(
-                snapshot,
-                resistance,
-                ArcaneBacklashPolicy.canonical());
+            ArcanaDecision reservationDecision = stateSettlement == null
+                ? ArcanaDecision.allow()
+                : claimStateReservation(stateSettlement);
+            if (!reservationDecision.allowed()) return reservationDecision;
+            stateReservationClaimed = stateSettlement != null && stateSettlement.requiresStateWrite();
+
+            final ArcaneHazardRuntime.ActivationResult result;
+            try {
+                result = activator.activate(
+                    snapshot,
+                    resistance,
+                    ArcaneBacklashPolicy.canonical());
+            } catch (RuntimeException | Error failure) {
+                releaseClaimedStateReservation();
+                throw failure;
+            }
             if (!result.activated()) {
+                releaseClaimedStateReservation();
                 return ArcanaDecision.deny(result.code(), "hazard session activation was denied");
             }
             activated = true;
@@ -234,25 +299,42 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
         @Override
         public synchronized void commit() {
             if (cancelled || committed) return;
-            if (stateSettlement != null) {
-                corruptionState.acquireFromCommittedCast(
-                    stateSettlement.casterId(),
-                    stateSettlement.serverTick(),
-                    stateSettlement.corruptionProfile(),
-                    stateSettlement.corruptionResistance());
-                strainState.commitPrepared(
-                    stateSettlement.casterId(),
-                    stateSettlement.serverTick(),
-                    stateSettlement.strainPreflight());
+            try {
+                if (stateSettlement != null) {
+                    if (stateSettlement.needsCorruptionWrite()) {
+                        corruptionState.commitPrepared(
+                            stateSettlement.casterId(),
+                            stateSettlement.serverTick(),
+                            stateSettlement.corruptionPreflight());
+                    }
+                    if (stateSettlement.needsStrainWrite()) {
+                        strainState.commitPrepared(
+                            stateSettlement.casterId(),
+                            stateSettlement.serverTick(),
+                            stateSettlement.strainPreflight());
+                    }
+                }
+                committed = true;
+            } finally {
+                releaseClaimedStateReservation();
             }
-            committed = true;
         }
 
         @Override
         public synchronized void cancel() {
             if (committed || cancelled) return;
             cancelled = true;
-            if (activated) activator.close(snapshot.rootCastId());
+            try {
+                if (activated) activator.close(snapshot.rootCastId());
+            } finally {
+                releaseClaimedStateReservation();
+            }
+        }
+
+        private void releaseClaimedStateReservation() {
+            if (!stateReservationClaimed) return;
+            releaseStateReservation(stateSettlement);
+            stateReservationClaimed = false;
         }
     }
 }
