@@ -3,12 +3,15 @@ package dev.gustavopere.blackarcana.persistence;
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageInstanceId;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionStateService;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
+import dev.gustavopere.blackarcana.core.hazard.PendingBacklashDebt;
 import dev.gustavopere.blackarcana.core.hazard.PendingBacklashRegistry;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationKey;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationTracker;
@@ -23,10 +26,12 @@ import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -46,6 +51,7 @@ public final class BlackArcanaSavedData extends SavedData {
     public static final int MAX_PERSISTED_CORRUPTION_PLAYERS = 16_384;
     public static final int MAX_PERSISTED_STRAIN_PLAYERS = 16_384;
     public static final int MAX_PERSISTED_PENDING_BACKLASH_PLAYERS = 16_384;
+    public static final int MAX_PERSISTED_PENDING_BACKLASH_DEBTS = 65_536;
     public static final int MAX_PERSISTED_EMERGENCY_RESOURCES = 65_536;
 
     private Map<PersistentCooldownService.CooldownKey, PersistentCooldownService.SnapshotEntry> cooldowns = Map.of();
@@ -56,7 +62,8 @@ public final class BlackArcanaSavedData extends SavedData {
     private Map<UUID, ArcaneStrainStateService.PersistedState> strainStates = Map.of();
     private Map<ArcaneEmergencyProtectionStateService.ResourceKey, ArcaneEmergencyProtectionStateService.PersistedState>
         emergencyProtectionStates = Map.of();
-    private final Map<UUID, Double> pendingBacklash = new LinkedHashMap<>();
+    private final Map<UUID, List<PendingBacklashDebt>> pendingBacklashDebts = new LinkedHashMap<>();
+    private int pendingBacklashDebtCount;
 
     public static BlackArcanaSavedData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(
@@ -79,8 +86,23 @@ public final class BlackArcanaSavedData extends SavedData {
             root.getList("strain", Tag.TAG_COMPOUND), MAX_PERSISTED_STRAIN_PLAYERS);
         data.emergencyProtectionStates = readEmergencyProtection(
             root.getList("emergency_protection", Tag.TAG_COMPOUND), MAX_PERSISTED_EMERGENCY_RESOURCES);
-        data.pendingBacklash.putAll(readPendingBacklash(
-            root.getList("pending_backlash", Tag.TAG_COMPOUND), MAX_PERSISTED_PENDING_BACKLASH_PLAYERS));
+
+        Map<UUID, List<PendingBacklashDebt>> contextual = readPendingBacklashDebts(
+            root.getList("pending_backlash_debts", Tag.TAG_COMPOUND),
+            MAX_PERSISTED_PENDING_BACKLASH_PLAYERS,
+            MAX_PERSISTED_PENDING_BACKLASH_DEBTS);
+        data.pendingBacklashDebts.putAll(contextual);
+
+        // Schema 1 originally stored only aggregate amounts. Keep those saves valid and, if a
+        // structured entry is malformed, fail closed to the aggregate debt without inventing
+        // emergency-protection context.
+        Map<UUID, Double> legacy = readPendingBacklash(
+            root.getList("pending_backlash", Tag.TAG_COMPOUND), MAX_PERSISTED_PENDING_BACKLASH_PLAYERS);
+        for (Map.Entry<UUID, Double> entry : legacy.entrySet()) {
+            if (data.pendingBacklashDebts.size() >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS) break;
+            data.pendingBacklashDebts.putIfAbsent(entry.getKey(), List.of(PendingBacklashDebt.legacy(entry.getValue())));
+        }
+        data.pendingBacklashDebtCount = countPendingDebts(data.pendingBacklashDebts);
         return data;
     }
 
@@ -127,36 +149,71 @@ public final class BlackArcanaSavedData extends SavedData {
 
     public void capturePendingBacklash(PendingBacklashRegistry registry) {
         Objects.requireNonNull(registry, "registry");
-        pendingBacklash.clear();
-        int copied = 0;
-        for (Map.Entry<UUID, Double> entry : registry.persistentSnapshot().entrySet()) {
-            if (copied >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS) break;
-            Double amount = entry.getValue();
-            if (entry.getKey() == null || amount == null || !Double.isFinite(amount) || amount <= 0.0D) continue;
-            pendingBacklash.put(entry.getKey(), Math.min(amount, PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER));
-            copied++;
-        }
+        replacePendingBacklashDebts(registry.persistentDebtsSnapshot());
         setDirty();
     }
 
-    /** Incremental O(1) update used by the live damage pipeline. */
+    /** Backward-compatible incremental update. Amount-only callers create legacy/unprotected debt. */
     public boolean updatePendingBacklash(UUID playerId, double amount) {
         Objects.requireNonNull(playerId, "playerId");
         if (!Double.isFinite(amount) || amount < 0.0D) {
             throw new IllegalArgumentException("pending backlash must be finite and non-negative");
         }
-        if (amount == 0.0D) {
-            if (pendingBacklash.remove(playerId) != null) setDirty();
+        if (amount == 0.0D) return updatePendingBacklash(playerId, List.of());
+        double bounded = Math.min(amount, PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER);
+        boolean fullyStored = updatePendingBacklash(playerId, List.of(PendingBacklashDebt.legacy(bounded)));
+        return fullyStored && amount <= PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER;
+    }
+
+    /** Incremental contextual update used by the live damage pipeline. */
+    public boolean updatePendingBacklash(UUID playerId, List<PendingBacklashDebt> debts) {
+        Objects.requireNonNull(playerId, "playerId");
+        Objects.requireNonNull(debts, "debts");
+        List<PendingBacklashDebt> previous = pendingBacklashDebts.remove(playerId);
+        if (previous != null) pendingBacklashDebtCount -= previous.size();
+        if (debts.isEmpty()) {
+            if (previous != null) setDirty();
             return true;
         }
-        if (!pendingBacklash.containsKey(playerId)
-            && pendingBacklash.size() >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS) {
+        if (!pendingBacklashDebts.containsKey(playerId)
+            && pendingBacklashDebts.size() >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS) {
+            if (previous != null) {
+                pendingBacklashDebts.put(playerId, previous);
+                pendingBacklashDebtCount += previous.size();
+            }
             return false;
         }
-        double bounded = Math.min(amount, PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER);
-        pendingBacklash.put(playerId, bounded);
+
+        int availableGlobal = MAX_PERSISTED_PENDING_BACKLASH_DEBTS - pendingBacklashDebtCount;
+        int limit = Math.min(
+            Math.min(debts.size(), PendingBacklashRegistry.ABSOLUTE_MAX_DEBTS_PER_PLAYER),
+            Math.max(0, availableGlobal));
+        List<PendingBacklashDebt> bounded = new ArrayList<>(limit);
+        double total = 0.0D;
+        boolean fullyStored = debts.size() <= limit;
+        for (int i = 0; i < limit; i++) {
+            PendingBacklashDebt debt = Objects.requireNonNull(debts.get(i), "debt");
+            double remaining = PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER - total;
+            if (remaining <= 0.0D) {
+                fullyStored = false;
+                break;
+            }
+            double amount = Math.min(debt.amount(), remaining);
+            bounded.add(amount == debt.amount() ? debt : debt.withAmount(amount));
+            total += amount;
+            if (amount < debt.amount()) fullyStored = false;
+        }
+        if (bounded.isEmpty()) {
+            if (previous != null) {
+                pendingBacklashDebts.put(playerId, previous);
+                pendingBacklashDebtCount += previous.size();
+            }
+            return false;
+        }
+        pendingBacklashDebts.put(playerId, List.copyOf(bounded));
+        pendingBacklashDebtCount += bounded.size();
         setDirty();
-        return amount <= PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER;
+        return fullyStored;
     }
 
     public void restore(
@@ -198,7 +255,7 @@ public final class BlackArcanaSavedData extends SavedData {
 
     public void restorePendingBacklash(PendingBacklashRegistry registry) {
         Objects.requireNonNull(registry, "registry");
-        registry.restoreSnapshot(Map.copyOf(pendingBacklash));
+        registry.restoreDebtsSnapshot(copyPendingBacklashDebts(pendingBacklashDebts));
     }
 
     @Override
@@ -211,7 +268,9 @@ public final class BlackArcanaSavedData extends SavedData {
         root.put("corruption", HazardStatePersistence.writeCorruption(corruptionStates, MAX_PERSISTED_CORRUPTION_PLAYERS));
         root.put("strain", HazardStatePersistence.writeStrain(strainStates, MAX_PERSISTED_STRAIN_PLAYERS));
         root.put("emergency_protection", writeEmergencyProtection(emergencyProtectionStates));
-        root.put("pending_backlash", writePendingBacklash(pendingBacklash));
+        root.put("pending_backlash_debts", writePendingBacklashDebts(pendingBacklashDebts));
+        // Keep the aggregate field as a fail-closed fallback for schema-1 saves/readers.
+        root.put("pending_backlash", writePendingBacklash(aggregatePendingBacklash(pendingBacklashDebts)));
         return root;
     }
 
@@ -386,6 +445,196 @@ public final class BlackArcanaSavedData extends SavedData {
             } catch (RuntimeException ignored) { }
         }
         return Map.copyOf(result);
+    }
+
+    private void replacePendingBacklashDebts(Map<UUID, List<PendingBacklashDebt>> source) {
+        pendingBacklashDebts.clear();
+        pendingBacklashDebtCount = 0;
+        int players = 0;
+        for (Map.Entry<UUID, List<PendingBacklashDebt>> entry : source.entrySet()) {
+            if (players >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS
+                || pendingBacklashDebtCount >= MAX_PERSISTED_PENDING_BACKLASH_DEBTS) break;
+            UUID playerId = entry.getKey();
+            List<PendingBacklashDebt> debts = entry.getValue();
+            if (playerId == null || debts == null || debts.isEmpty()) continue;
+            int available = MAX_PERSISTED_PENDING_BACKLASH_DEBTS - pendingBacklashDebtCount;
+            int limit = Math.min(
+                Math.min(debts.size(), PendingBacklashRegistry.ABSOLUTE_MAX_DEBTS_PER_PLAYER),
+                available);
+            List<PendingBacklashDebt> copied = new ArrayList<>(limit);
+            double total = 0.0D;
+            for (int i = 0; i < limit; i++) {
+                PendingBacklashDebt debt = debts.get(i);
+                if (debt == null) continue;
+                double remaining = PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER - total;
+                if (remaining <= 0.0D) break;
+                double amount = Math.min(debt.amount(), remaining);
+                copied.add(amount == debt.amount() ? debt : debt.withAmount(amount));
+                total += amount;
+            }
+            if (copied.isEmpty()) continue;
+            pendingBacklashDebts.put(playerId, List.copyOf(copied));
+            pendingBacklashDebtCount += copied.size();
+            players++;
+        }
+    }
+
+    private static Map<UUID, List<PendingBacklashDebt>> copyPendingBacklashDebts(
+        Map<UUID, List<PendingBacklashDebt>> source
+    ) {
+        LinkedHashMap<UUID, List<PendingBacklashDebt>> copy = new LinkedHashMap<>();
+        source.forEach((playerId, debts) -> copy.put(playerId, List.copyOf(debts)));
+        return Map.copyOf(copy);
+    }
+
+    private static int countPendingDebts(Map<UUID, List<PendingBacklashDebt>> source) {
+        int count = 0;
+        for (List<PendingBacklashDebt> debts : source.values()) {
+            if (debts == null) continue;
+            if (count >= MAX_PERSISTED_PENDING_BACKLASH_DEBTS - debts.size()) {
+                return MAX_PERSISTED_PENDING_BACKLASH_DEBTS;
+            }
+            count += debts.size();
+        }
+        return count;
+    }
+
+    private static ListTag writePendingBacklashDebts(Map<UUID, List<PendingBacklashDebt>> entries) {
+        ListTag list = new ListTag();
+        int written = 0;
+        for (Map.Entry<UUID, List<PendingBacklashDebt>> entry : entries.entrySet()) {
+            if (written >= MAX_PERSISTED_PENDING_BACKLASH_DEBTS) break;
+            UUID playerId = entry.getKey();
+            if (playerId == null || entry.getValue() == null) continue;
+            int perPlayer = 0;
+            for (PendingBacklashDebt debt : entry.getValue()) {
+                if (written >= MAX_PERSISTED_PENDING_BACKLASH_DEBTS
+                    || perPlayer >= PendingBacklashRegistry.ABSOLUTE_MAX_DEBTS_PER_PLAYER) break;
+                if (debt == null) continue;
+                CompoundTag tag = new CompoundTag();
+                tag.putUUID("player", playerId);
+                tag.putDouble("amount", debt.amount());
+                if (debt.hasCausalContext()) {
+                    tag.putBoolean("contextual", true);
+                    tag.putUUID("root_cast", debt.rootCastId().orElseThrow().value());
+                    tag.putUUID("damage", debt.damageInstanceId().orElseThrow().value());
+                    tag.putBoolean("protection_allowed", debt.protectionAllowed());
+                    tag.put("emergency_candidates", writeEmergencyCandidates(debt.emergencyProtectionSnapshot()));
+                }
+                list.add(tag);
+                written++;
+                perPlayer++;
+            }
+        }
+        return list;
+    }
+
+    private static Map<UUID, List<PendingBacklashDebt>> readPendingBacklashDebts(
+        ListTag list,
+        int maxPlayers,
+        int maxDebts
+    ) {
+        LinkedHashMap<UUID, List<PendingBacklashDebt>> mutable = new LinkedHashMap<>();
+        int count = Math.min(list.size(), maxDebts);
+        for (int i = 0; i < count; i++) {
+            CompoundTag tag = list.getCompound(i);
+            try {
+                UUID playerId = tag.getUUID("player");
+                double rawAmount = tag.getDouble("amount");
+                if (!Double.isFinite(rawAmount) || rawAmount <= 0.0D) continue;
+                if (!mutable.containsKey(playerId) && mutable.size() >= maxPlayers) continue;
+                List<PendingBacklashDebt> debts = mutable.computeIfAbsent(playerId, ignored -> new ArrayList<>());
+                if (debts.size() >= PendingBacklashRegistry.ABSOLUTE_MAX_DEBTS_PER_PLAYER) continue;
+                double currentTotal = 0.0D;
+                for (PendingBacklashDebt debt : debts) currentTotal += debt.amount();
+                double remaining = PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER - currentTotal;
+                if (remaining <= 0.0D) continue;
+                double amount = Math.min(rawAmount, remaining);
+
+                PendingBacklashDebt debt;
+                if (tag.getBoolean("contextual")) {
+                    try {
+                        ArcanaCastId rootCastId = new ArcanaCastId(tag.getUUID("root_cast"));
+                        ArcanaDamageInstanceId damageInstanceId = new ArcanaDamageInstanceId(tag.getUUID("damage"));
+                        ArcaneEmergencyProtectionSnapshot emergency = readEmergencyCandidates(
+                            tag.getList("emergency_candidates", Tag.TAG_COMPOUND));
+                        debt = PendingBacklashDebt.contextual(
+                            amount,
+                            rootCastId,
+                            damageInstanceId,
+                            tag.getBoolean("protection_allowed"),
+                            emergency);
+                    } catch (RuntimeException malformedContext) {
+                        debt = PendingBacklashDebt.legacy(amount);
+                    }
+                } else {
+                    debt = PendingBacklashDebt.legacy(amount);
+                }
+                debts.add(debt);
+            } catch (RuntimeException ignored) { }
+        }
+
+        LinkedHashMap<UUID, List<PendingBacklashDebt>> result = new LinkedHashMap<>();
+        mutable.forEach((playerId, debts) -> {
+            if (!debts.isEmpty()) result.put(playerId, List.copyOf(debts));
+        });
+        return Map.copyOf(result);
+    }
+
+    private static ListTag writeEmergencyCandidates(ArcaneEmergencyProtectionSnapshot snapshot) {
+        ListTag list = new ListTag();
+        int count = Math.min(snapshot.candidates().size(), ArcaneEmergencyProtectionSnapshot.MAX_CANDIDATES);
+        for (int i = 0; i < count; i++) {
+            ArcaneEmergencyProtectionSnapshot.Candidate candidate = snapshot.candidates().get(i);
+            CompoundTag tag = new CompoundTag();
+            tag.putString("source", candidate.sourceId());
+            tag.putString("resource", candidate.resourceId());
+            tag.putDouble("absorption", candidate.absorption());
+            tag.putLong("cooldown", candidate.cooldownTicks());
+            list.add(tag);
+        }
+        return list;
+    }
+
+    private static ArcaneEmergencyProtectionSnapshot readEmergencyCandidates(ListTag list) {
+        List<ArcaneEmergencyProtectionSnapshot.Candidate> candidates = new ArrayList<>();
+        Set<String> resources = new HashSet<>();
+        int count = Math.min(list.size(), ArcaneEmergencyProtectionSnapshot.MAX_CANDIDATES);
+        for (int i = 0; i < count; i++) {
+            CompoundTag tag = list.getCompound(i);
+            try {
+                ArcaneEmergencyProtectionSnapshot.Candidate candidate =
+                    new ArcaneEmergencyProtectionSnapshot.Candidate(
+                        tag.getString("source"),
+                        tag.getString("resource"),
+                        tag.getDouble("absorption"),
+                        tag.getLong("cooldown"));
+                if (resources.add(candidate.resourceId())) candidates.add(candidate);
+            } catch (RuntimeException ignored) { }
+        }
+        return new ArcaneEmergencyProtectionSnapshot(candidates);
+    }
+
+    private static Map<UUID, Double> aggregatePendingBacklash(
+        Map<UUID, List<PendingBacklashDebt>> entries
+    ) {
+        LinkedHashMap<UUID, Double> aggregate = new LinkedHashMap<>();
+        int players = 0;
+        for (Map.Entry<UUID, List<PendingBacklashDebt>> entry : entries.entrySet()) {
+            if (players >= MAX_PERSISTED_PENDING_BACKLASH_PLAYERS) break;
+            if (entry.getKey() == null || entry.getValue() == null) continue;
+            double total = 0.0D;
+            for (PendingBacklashDebt debt : entry.getValue()) {
+                if (debt == null) continue;
+                total = Math.min(
+                    PendingBacklashRegistry.ABSOLUTE_MAX_PENDING_PER_PLAYER,
+                    total + debt.amount());
+            }
+            if (total <= 0.0D) continue;
+            aggregate.put(entry.getKey(), total);
+            players++;
+        }
+        return Map.copyOf(aggregate);
     }
 
     private static ListTag writePendingBacklash(Map<UUID, Double> entries) {

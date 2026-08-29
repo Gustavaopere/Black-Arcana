@@ -13,6 +13,7 @@ import dev.gustavopere.blackarcana.core.hazard.ArcaneDamageProvenanceTracker;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionCoordinator;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneHazardRuntime;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneLethalBacklashProtection;
+import dev.gustavopere.blackarcana.core.hazard.PendingBacklashDebt;
 import dev.gustavopere.blackarcana.core.hazard.PendingBacklashRegistry;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.persistence.BlackArcanaSavedData;
@@ -143,6 +144,56 @@ public final class MinecraftArcaneDamagePipeline {
                 session.emergencyProtectionSnapshot()));
     }
 
+    /**
+     * Freezes one delayed backlash debt at settlement time. The provenance identity is always
+     * retained for new debts; missing or mismatched emergency context fails closed to an empty,
+     * disallowed frozen snapshot rather than consulting equipment later.
+     */
+    static PendingBacklashDebt pendingDebt(
+        ArcanaDamageProvenance provenance,
+        double amount,
+        Optional<ArcaneBacklashProtectionAttemptTracker.Attempt> frozenAttempt
+    ) {
+        Objects.requireNonNull(provenance, "provenance");
+        Objects.requireNonNull(frozenAttempt, "frozenAttempt");
+
+        ArcaneBacklashProtectionAttemptTracker.Attempt attempt = frozenAttempt
+            .filter(candidate -> candidate.rootCastId().equals(provenance.rootCastId()))
+            .filter(candidate -> candidate.damageInstanceId().equals(provenance.damageInstanceId()))
+            .filter(candidate -> candidate.casterId().equals(provenance.casterId()))
+            .orElse(null);
+        if (attempt == null) {
+            return PendingBacklashDebt.contextual(
+                amount,
+                provenance.rootCastId(),
+                provenance.damageInstanceId(),
+                false,
+                ArcaneEmergencyProtectionSnapshot.empty());
+        }
+        return PendingBacklashDebt.contextual(
+            amount,
+            provenance.rootCastId(),
+            provenance.damageInstanceId(),
+            attempt.protectionAllowed(),
+            attempt.emergencyProtectionSnapshot());
+    }
+
+    /** Rehydrates only context that was frozen into a structured debt. Legacy debt stays unprotected. */
+    static Optional<ArcaneBacklashProtectionAttemptTracker.Attempt> protectionAttempt(
+        UUID casterId,
+        PendingBacklashDebt debt
+    ) {
+        Objects.requireNonNull(casterId, "casterId");
+        Objects.requireNonNull(debt, "debt");
+        if (!debt.hasCausalContext()) return Optional.empty();
+        return Optional.of(new ArcaneBacklashProtectionAttemptTracker.Attempt(
+            debt.rootCastId().orElseThrow(),
+            debt.damageInstanceId().orElseThrow(),
+            casterId,
+            debt.protectionAllowed(),
+            debt.emergencyProtectionSnapshot()));
+    }
+
     public static Optional<ArcaneHazardRuntime> hazardRuntime(MinecraftServer server) {
         ServerState state = STATES.get(Objects.requireNonNull(server, "server"));
         return state == null ? Optional.empty() : Optional.of(state.hazards());
@@ -239,12 +290,15 @@ public final class MinecraftArcaneDamagePipeline {
             server.overworld().getGameTime()));
         if (settlement.status() != ArcaneBacklashSettlement.Status.SETTLED || settlement.backlashDamage() <= 0.0D) return;
 
+        Optional<ArcaneBacklashProtectionAttemptTracker.Attempt> frozenAttempt =
+            protectionAttempt(state.hazards(), provenance);
         ServerPlayer caster = findCaster(server, provenance.casterId());
         if (caster == null) {
-            boolean fullyRecorded = state.pendingBacklash().accrue(provenance.casterId(), settlement.backlashDamage());
-            double persistedAmount = state.pendingBacklash().pending(provenance.casterId());
-            boolean fullyPersisted = BlackArcanaSavedData.get(server)
-                .updatePendingBacklash(provenance.casterId(), persistedAmount);
+            PendingBacklashDebt debt = pendingDebt(provenance, settlement.backlashDamage(), frozenAttempt);
+            boolean fullyRecorded = state.pendingBacklash().accrue(provenance.casterId(), debt);
+            boolean fullyPersisted = BlackArcanaSavedData.get(server).updatePendingBacklash(
+                provenance.casterId(),
+                state.pendingBacklash().pendingDebts(provenance.casterId()));
             if (!fullyRecorded || !fullyPersisted) {
                 BlackArcanaMod.LOGGER.error(
                     "Pending Arcane Backlash hit a safety ceiling for caster {}; debt was clamped",
@@ -256,7 +310,7 @@ public final class MinecraftArcaneDamagePipeline {
             caster,
             settlement.backlashDamage(),
             state,
-            protectionAttempt(state.hazards(), provenance).orElse(null));
+            frozenAttempt.orElse(null));
     }
 
     private static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
@@ -264,10 +318,16 @@ public final class MinecraftArcaneDamagePipeline {
         MinecraftServer server = player.serverLevel().getServer();
         ServerState state = STATES.get(server);
         if (state == null) return;
-        double pending = state.pendingBacklash().drain(player.getUUID());
-        if (pending <= 0.0D) return;
-        BlackArcanaSavedData.get(server).updatePendingBacklash(player.getUUID(), 0.0D);
-        applyBacklash(player, pending);
+        List<PendingBacklashDebt> debts = state.pendingBacklash().drainDebts(player.getUUID());
+        if (debts.isEmpty()) return;
+        BlackArcanaSavedData.get(server).updatePendingBacklash(player.getUUID(), List.of());
+        for (PendingBacklashDebt debt : debts) {
+            applyBacklash(
+                player,
+                debt.amount(),
+                state,
+                protectionAttempt(player.getUUID(), debt).orElse(null));
+        }
     }
 
     private static void onServerStopped(ServerStoppedEvent event) {
