@@ -6,9 +6,11 @@ import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceSnapshot;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -27,6 +29,7 @@ public final class CorruptionStateService {
     private final double maxCorruptionUnits;
     private final CorruptionThresholds thresholds;
     private final Map<UUID, MutableState> states = new LinkedHashMap<>();
+    private final Set<UUID> reservations = new LinkedHashSet<>();
     private final Map<String, CorruptionThresholdListener> listeners = new LinkedHashMap<>();
 
     public CorruptionStateService(
@@ -69,6 +72,61 @@ public final class CorruptionStateService {
         if (listeners.containsKey(id)) throw new IllegalArgumentException("duplicate corruption listener: " + id);
         if (listeners.size() >= maxListeners) throw new IllegalStateException("corruption listener registry is full");
         listeners.put(id, listener);
+    }
+
+    public synchronized CorruptionPreflight preflightCommittedCast(
+        UUID playerId,
+        long serverTick,
+        CorruptionAcquisitionProfile profile,
+        CorruptionResistanceSnapshot resistance
+    ) {
+        validatePlayerTick(playerId, serverTick);
+        Objects.requireNonNull(profile, "profile");
+        Objects.requireNonNull(resistance, "resistance");
+        CorruptionSnapshot current = snapshotOf(states.get(playerId));
+        double applied = appliedCorruption(
+            current.units(),
+            profile.baseCorruptionPerCommittedCast(),
+            profile,
+            resistance);
+        return new CorruptionPreflight(current, applied);
+    }
+
+    /** Commits the immutable cast-time corruption snapshot without allowing post-preflight recovery to evade it. */
+    public synchronized CorruptionUpdate commitPrepared(
+        UUID playerId,
+        long serverTick,
+        CorruptionPreflight preflight
+    ) {
+        validatePlayerTick(playerId, serverTick);
+        Objects.requireNonNull(preflight, "preflight");
+
+        CorruptionSnapshot liveBefore = snapshotOf(states.get(playerId));
+        double frozenFloor = preflight.current().units();
+        double targetUnits = Math.min(
+            maxCorruptionUnits,
+            Math.max(liveBefore.units(), frozenFloor) + preflight.appliedCorruption());
+        if (targetUnits <= liveBefore.units()) {
+            return new CorruptionUpdate(liveBefore, liveBefore, 0.0D, List.of());
+        }
+
+        MutableState state = states.get(playerId);
+        if (state == null) {
+            ensureCapacityFor(playerId, "corruption state registry is full");
+            state = new MutableState(0.0D, 0L, -1L, 0L, 0L);
+            states.put(playerId, state);
+        }
+        state.units = targetUnits;
+        state.lastMeaningfulUpdateTick = serverTick;
+        if (preflight.appliedCorruption() > 0.0D) {
+            state.acquisitionEvents = saturatingIncrement(Math.max(
+                state.acquisitionEvents,
+                preflight.current().acquisitionEvents()));
+        }
+        CorruptionSnapshot after = snapshotOf(state);
+        List<CorruptionTransition> transitions = transitions(playerId, liveBefore, after, serverTick);
+        publish(transitions);
+        return new CorruptionUpdate(liveBefore, after, targetUnits - liveBefore.units(), transitions);
     }
 
     public synchronized CorruptionUpdate acquireFromCommittedCast(
@@ -123,6 +181,31 @@ public final class CorruptionStateService {
         return snapshotOf(states.get(playerId));
     }
 
+    /** Side-effect-free O(1) capacity probe used by cast preflight. */
+    public synchronized boolean canReserve(UUID playerId) {
+        Objects.requireNonNull(playerId, "playerId");
+        return states.containsKey(playerId)
+            || reservations.contains(playerId)
+            || occupiedSlots() < maxTrackedPlayers;
+    }
+
+    /** Claims capacity for a terminal cast commit. Existing state consumes no additional slot. */
+    public synchronized boolean reserve(UUID playerId) {
+        Objects.requireNonNull(playerId, "playerId");
+        if (reservations.contains(playerId)) return true;
+        if (!states.containsKey(playerId) && occupiedSlots() >= maxTrackedPlayers) return false;
+        reservations.add(playerId);
+        return true;
+    }
+
+    public synchronized void releaseReservation(UUID playerId) {
+        reservations.remove(Objects.requireNonNull(playerId, "playerId"));
+    }
+
+    public synchronized boolean contains(UUID playerId) {
+        return states.containsKey(Objects.requireNonNull(playerId, "playerId"));
+    }
+
     public synchronized Map<UUID, PersistedState> persistentSnapshot() {
         Map<UUID, PersistedState> result = new LinkedHashMap<>();
         states.forEach((playerId, state) -> result.put(playerId, state.persisted()));
@@ -154,6 +237,7 @@ public final class CorruptionStateService {
         });
         states.clear();
         states.putAll(restored);
+        reservations.clear();
     }
 
     public synchronized int size() {
@@ -186,13 +270,12 @@ public final class CorruptionStateService {
             return new CorruptionUpdate(before, before, 0.0D, List.of());
         }
 
-        double boundedRaw = Math.min(rawUnits, maxCorruptionUnits);
-        double applied = Math.min(maxCorruptionUnits - before.units(), boundedRaw * resistance.residualMultiplier(profile));
+        double applied = appliedCorruption(before.units(), rawUnits, profile, resistance);
         if (applied <= 0.0D) return new CorruptionUpdate(before, before, 0.0D, List.of());
 
         MutableState state = states.get(playerId);
         if (state == null) {
-            if (states.size() >= maxTrackedPlayers) throw new IllegalStateException("corruption state registry is full");
+            ensureCapacityFor(playerId, "corruption state registry is full");
             state = new MutableState(0.0D, 0L, -1L, 0L, 0L);
             states.put(playerId, state);
         }
@@ -203,6 +286,37 @@ public final class CorruptionStateService {
         List<CorruptionTransition> transitions = transitions(playerId, before, after, serverTick);
         publish(transitions);
         return new CorruptionUpdate(before, after, applied, transitions);
+    }
+
+    private double appliedCorruption(
+        double currentUnits,
+        double rawUnits,
+        CorruptionAcquisitionProfile profile,
+        CorruptionResistanceSnapshot resistance
+    ) {
+        if (!Double.isFinite(rawUnits) || rawUnits < 0.0D) {
+            throw new IllegalArgumentException("raw corruption units must be finite and non-negative");
+        }
+        if (rawUnits == 0.0D || currentUnits >= maxCorruptionUnits) return 0.0D;
+        double boundedRaw = Math.min(rawUnits, maxCorruptionUnits);
+        return Math.min(
+            maxCorruptionUnits - currentUnits,
+            boundedRaw * resistance.residualMultiplier(profile));
+    }
+
+    private int occupiedSlots() {
+        int reservedWithoutState = 0;
+        for (UUID playerId : reservations) {
+            if (!states.containsKey(playerId)) reservedWithoutState++;
+        }
+        return states.size() + reservedWithoutState;
+    }
+
+    private void ensureCapacityFor(UUID playerId, String message) {
+        if (states.containsKey(playerId)) return;
+        if (!reservations.contains(playerId) && occupiedSlots() >= maxTrackedPlayers) {
+            throw new IllegalStateException(message);
+        }
     }
 
     private CorruptionSnapshot snapshotOf(MutableState state) {
@@ -314,6 +428,16 @@ public final class CorruptionStateService {
                 throw new IllegalArgumentException("corruption telemetry outside bounds");
             }
             if (schemaVersion != STATE_SCHEMA_VERSION) throw new IllegalArgumentException("unsupported corruption state schema");
+        }
+    }
+
+    public record CorruptionPreflight(CorruptionSnapshot current, double appliedCorruption) {
+        public CorruptionPreflight {
+            Objects.requireNonNull(current, "current");
+            if (!Double.isFinite(appliedCorruption) || appliedCorruption < 0.0D
+                || appliedCorruption > ABSOLUTE_MAX_CORRUPTION_UNITS) {
+                throw new IllegalArgumentException("preflight corruption outside absolute bounds");
+            }
         }
     }
 
