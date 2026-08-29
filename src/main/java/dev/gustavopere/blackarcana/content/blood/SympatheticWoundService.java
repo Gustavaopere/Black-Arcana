@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.content.blood;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -50,11 +51,31 @@ public final class SympatheticWoundService {
             Math.min(state.spec.perEventCap(), state.remainingBudget));
         if (mirrored <= 0.0D) return Optional.empty();
         state.remainingBudget -= mirrored;
-        return Optional.of(new DamageEvent(
+        DamageEvent result = new DamageEvent(
             incoming.eventId(),
             state.spec.targetId(),
             mirrored,
-            DamageProvenance.SYMPATHETIC_WOUND));
+            DamageProvenance.SYMPATHETIC_WOUND);
+        if (state.remainingBudget <= 0.0D) byCaster.remove(incoming.victimId());
+        return Optional.of(result);
+    }
+
+    public synchronized int pruneExpired(long nowTick) {
+        if (nowTick < 0L) throw new IllegalArgumentException("nowTick cannot be negative");
+        int removed = 0;
+        Iterator<LinkState> iterator = byCaster.values().iterator();
+        while (iterator.hasNext()) {
+            LinkState state = iterator.next();
+            if (nowTick >= state.spec.expiresAtTick() || state.remainingBudget <= 0.0D) {
+                iterator.remove();
+                removed++;
+            }
+        }
+        return removed;
+    }
+
+    public synchronized int size() {
+        return byCaster.size();
     }
 
     public synchronized double remainingBudget(UUID casterId) {
