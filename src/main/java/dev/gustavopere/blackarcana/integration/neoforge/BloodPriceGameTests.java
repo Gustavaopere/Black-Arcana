@@ -6,6 +6,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -24,7 +25,11 @@ public final class BloodPriceGameTests {
         caster.getAbilities().instabuild = false;
         caster.onUpdateAbilities();
         caster.setHealth(20.0F);
+        var maxAbsorption = caster.getAttribute(Attributes.MAX_ABSORPTION);
+        helper.assertTrue(maxAbsorption != null, "fixture requires the vanilla max-absorption attribute");
+        maxAbsorption.setBaseValue(8.0D);
         caster.setAbsorptionAmount(8.0F);
+        helper.assertTrue(caster.getAbsorptionAmount() == 8.0F, "fixture must begin with eight absorption");
 
         MinecraftServer server = helper.getLevel().getServer();
         Class<?> implementation = Class.forName(
