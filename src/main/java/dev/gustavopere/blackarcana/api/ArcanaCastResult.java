@@ -14,6 +14,7 @@ public record ArcanaCastResult(Status status, String code, String detail) {
         DENIED_TARGET,
         DENIED_COST,
         DENIED_WORLD_POLICY,
+        DENIED_HAZARD,
         EFFECT_FAILED
     }
 
