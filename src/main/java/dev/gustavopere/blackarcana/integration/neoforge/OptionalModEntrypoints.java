@@ -30,7 +30,9 @@ public final class OptionalModEntrypoints {
         "malum",
         "dev.gustavopere.blackarcana.integration.malum.MalumServerIntegrationBootstrap",
         "eidolon_repraised",
-        "dev.gustavopere.blackarcana.integration.eidolon.EidolonServerIntegrationBootstrap"
+        "dev.gustavopere.blackarcana.integration.eidolon.EidolonServerIntegrationBootstrap",
+        "curios",
+        "dev.gustavopere.blackarcana.integration.curios.CuriosServerIntegrationBootstrap"
     );
     private static final Map<String, String> MOD_BUS_FAILURES = new ConcurrentHashMap<>();
 
