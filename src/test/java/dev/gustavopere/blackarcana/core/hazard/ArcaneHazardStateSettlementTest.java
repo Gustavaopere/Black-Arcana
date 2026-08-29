@@ -42,7 +42,6 @@ class ArcaneHazardStateSettlementTest {
         CorruptionStateService corruption = CorruptionStateService.canonical(16);
         ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(16);
 
-        // Existing strain is part of the authoritative preflight snapshot.
         strain.commitCast(CASTER_ID, 100L, baseStrain(20.0D), 1.0D, 0.0D, 0L);
 
         ArcaneHazardCastGate gate = new ArcaneHazardCastGate(
@@ -51,6 +50,7 @@ class ArcaneHazardStateSettlementTest {
             corruptionResistance,
             corruption,
             strain,
+            16,
             successfulActivator());
 
         var preparation = gate.preflight(request(), TargetResolution.resolved("target"));
@@ -58,7 +58,6 @@ class ArcaneHazardStateSettlementTest {
         assertEquals(0.0D, corruption.snapshot(CASTER_ID).units());
         assertEquals(20.0D, strain.snapshot(CASTER_ID, 100L).units());
 
-        // Mutations after preflight must not let the caster evade the captured risk.
         corruptionAmount.set(0.0D);
         strain.recover(CASTER_ID, 100L, 20.0D);
         assertEquals(0.0D, strain.snapshot(CASTER_ID, 100L).units());
@@ -66,9 +65,7 @@ class ArcaneHazardStateSettlementTest {
         assertTrue(preparation.activate().allowed());
         preparation.commit();
 
-        // R=40 on canonical K=40 produces 0.5 residual; 20 base corruption -> 10.
         assertEquals(10.0D, corruption.snapshot(CASTER_ID).units());
-        // Frozen preflight was current 20 + 12 configured strain, regardless of later recovery.
         assertEquals(32.0D, strain.snapshot(CASTER_ID, 100L).units());
     }
 
@@ -86,6 +83,7 @@ class ArcaneHazardStateSettlementTest {
             corruptionResistance,
             corruption,
             strain,
+            16,
             successfulActivator());
 
         var preparation = gate.preflight(request(), TargetResolution.resolved("target"));
@@ -128,6 +126,7 @@ class ArcaneHazardStateSettlementTest {
             corruptionResistance,
             corruption,
             strain,
+            1,
             successfulActivator());
 
         var preparation = gate.preflight(request(), TargetResolution.resolved("target"));
