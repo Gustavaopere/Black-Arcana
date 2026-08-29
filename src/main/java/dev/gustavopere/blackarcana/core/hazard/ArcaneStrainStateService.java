@@ -97,9 +97,28 @@ public final class ArcaneStrainStateService {
     ) {
         StrainPreflight preflight = preflight(
             playerId, serverTick, profile, avoidableResidualMultiplier, confirmedDamage, channelTicks);
+        return commitPrepared(playerId, serverTick, preflight);
+    }
+
+    /** Commits the exact immutable preflight captured for this cast. */
+    public synchronized StrainUpdate commitPrepared(
+        UUID playerId,
+        long serverTick,
+        StrainPreflight preflight
+    ) {
+        validatePlayerTick(playerId, serverTick);
+        Objects.requireNonNull(preflight, "preflight");
+        double expectedApplied = Math.max(0.0D, preflight.predictedUnits() - preflight.current().units());
+        if (Math.abs(expectedApplied - preflight.appliedStrain()) > 1.0E-9D) {
+            throw new IllegalArgumentException("strain preflight is internally inconsistent");
+        }
+        if (preflight.predictedUnits() > maxStrainUnits) {
+            throw new IllegalArgumentException("strain preflight exceeds configured maximum");
+        }
         if (preflight.appliedStrain() == 0.0D) {
             return new StrainUpdate(preflight.current(), preflight.current(), 0.0D, preflight);
         }
+
         MutableState state = states.get(playerId);
         if (state == null) {
             if (states.size() >= maxTrackedPlayers) throw new IllegalStateException("strain state registry is full");
@@ -108,7 +127,8 @@ public final class ArcaneStrainStateService {
         }
         state.units = preflight.predictedUnits();
         state.lastUpdateTick = serverTick;
-        state.acquisitionEvents = saturatingIncrement(state.acquisitionEvents);
+        state.acquisitionEvents = saturatingIncrement(preflight.current().acquisitionEvents());
+        state.recoveryEvents = preflight.current().recoveryEvents();
         StrainSnapshot after = snapshotOf(state, serverTick);
         return new StrainUpdate(preflight.current(), after, preflight.appliedStrain(), preflight);
     }
