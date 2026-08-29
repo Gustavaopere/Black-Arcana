@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.core.hazard;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceContribution;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceProvider;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceQuery;
@@ -18,13 +19,14 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Bridges one frozen standard-equipment snapshot into both hazard resistance channels.
+ * Bridges one frozen standard-equipment snapshot into both hazard resistance channels and the
+ * emergency-protection handoff for the same root cast.
  *
- * <p>The first query for a root cast captures server-observed equipment. Arcane and Corruption
- * Resistance then read the same immutable snapshot even if equipment changes between registry
- * queries. Entries are removed after both channels have observed them, may be explicitly released
- * for aborted preflights, and are short-lived/bounded so an Arcane-only denied preflight cannot
- * leak unbounded state.</p>
+ * <p>The first query for a root cast captures server-observed equipment. Arcane Resistance,
+ * Corruption Resistance and emergency protection then read the same immutable snapshot even if
+ * equipment changes between phases. Entries with emergency candidates remain retained until the
+ * emergency facts are handed off, may be explicitly released for aborted preflights, and are
+ * short-lived/bounded so an incomplete preflight cannot leak unbounded state.</p>
  */
 public final class ArcaneEquipmentHazardResistanceProvider
     implements ArcaneResistanceProvider, CorruptionResistanceProvider {
@@ -57,7 +59,7 @@ public final class ArcaneEquipmentHazardResistanceProvider
         FrozenSnapshot frozen = snapshotFor(query.rootCastId(), query.casterId(), query.serverTick());
         frozen.arcaneRead = true;
         double amount = frozen.snapshot.arcaneResistance();
-        releaseIfFullyObserved(query.rootCastId(), frozen);
+        releaseIfComplete(query.rootCastId(), frozen);
         if (amount <= 0.0D) return List.of();
         return List.of(new ArcaneResistanceContribution(
             SOURCE_ID,
@@ -71,12 +73,29 @@ public final class ArcaneEquipmentHazardResistanceProvider
         FrozenSnapshot frozen = snapshotFor(query.rootCastId(), query.subjectId(), query.serverTick());
         frozen.corruptionRead = true;
         double amount = frozen.snapshot.corruptionResistance();
-        releaseIfFullyObserved(query.rootCastId(), frozen);
+        releaseIfComplete(query.rootCastId(), frozen);
         if (amount <= 0.0D) return List.of();
         return List.of(new CorruptionResistanceContribution(
             SOURCE_ID,
             CorruptionResistanceSourceCategory.EQUIPMENT,
             amount));
+    }
+
+    /**
+     * Transfers emergency-protection facts from the same root-cast snapshot and releases the cache
+     * entry. The equipment source is never re-queried when a resistance phase already captured it.
+     */
+    public synchronized ArcaneEmergencyProtectionSnapshot takeEmergencySnapshot(
+        ArcanaCastId castId,
+        UUID casterId,
+        long serverTick
+    ) {
+        Objects.requireNonNull(castId, "castId");
+        Objects.requireNonNull(casterId, "casterId");
+        FrozenSnapshot frozen = snapshotFor(castId, casterId, serverTick);
+        ArcaneEmergencyProtectionSnapshot emergency = frozen.snapshot.emergencyProtectionSnapshot();
+        snapshots.remove(castId);
+        return emergency;
     }
 
     /** Releases a snapshot retained by an aborted/short-circuited preflight. */
@@ -118,8 +137,9 @@ public final class ArcaneEquipmentHazardResistanceProvider
         }
     }
 
-    private void releaseIfFullyObserved(ArcanaCastId castId, FrozenSnapshot frozen) {
-        if (frozen.arcaneRead && frozen.corruptionRead) snapshots.remove(castId);
+    private void releaseIfComplete(ArcanaCastId castId, FrozenSnapshot frozen) {
+        if (!frozen.arcaneRead || !frozen.corruptionRead) return;
+        if (frozen.snapshot.emergencyProtectionCandidates().isEmpty()) snapshots.remove(castId);
     }
 
     private static final class FrozenSnapshot {
