@@ -11,6 +11,7 @@ import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceProvider;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceQuery;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceSourceCategory;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,12 +22,6 @@ import java.util.UUID;
 /**
  * Bridges one frozen standard-equipment snapshot into both hazard resistance channels and the
  * emergency-protection handoff for the same root cast.
- *
- * <p>The first query for a root cast captures server-observed equipment. Arcane Resistance,
- * Corruption Resistance and emergency protection then read the same immutable snapshot even if
- * equipment changes between phases. Entries with emergency candidates remain retained until the
- * emergency facts are handed off, may be explicitly released for aborted preflights, and are
- * short-lived/bounded so an incomplete preflight cannot leak unbounded state.</p>
  */
 public final class ArcaneEquipmentHazardResistanceProvider
     implements ArcaneResistanceProvider, CorruptionResistanceProvider, ArcaneEmergencyProtectionSnapshotProvider {
@@ -49,22 +44,16 @@ public final class ArcaneEquipmentHazardResistanceProvider
     }
 
     @Override
-    public String providerId() {
-        return PROVIDER_ID;
-    }
+    public String providerId() { return PROVIDER_ID; }
 
     @Override
     public synchronized List<ArcaneResistanceContribution> contributions(ArcaneResistanceQuery query) {
         Objects.requireNonNull(query, "query");
         FrozenSnapshot frozen = snapshotFor(query.rootCastId(), query.casterId(), query.serverTick());
         frozen.arcaneRead = true;
-        double amount = frozen.snapshot.arcaneResistance();
+        List<ArcaneResistanceContribution> result = arcaneContributions(frozen.snapshot);
         releaseIfComplete(query.rootCastId(), frozen);
-        if (amount <= 0.0D) return List.of();
-        return List.of(new ArcaneResistanceContribution(
-            SOURCE_ID,
-            ArcaneResistanceSourceCategory.EQUIPMENT,
-            amount));
+        return result;
     }
 
     @Override
@@ -72,19 +61,11 @@ public final class ArcaneEquipmentHazardResistanceProvider
         Objects.requireNonNull(query, "query");
         FrozenSnapshot frozen = snapshotFor(query.rootCastId(), query.subjectId(), query.serverTick());
         frozen.corruptionRead = true;
-        double amount = frozen.snapshot.corruptionResistance();
+        List<CorruptionResistanceContribution> result = corruptionContributions(frozen.snapshot);
         releaseIfComplete(query.rootCastId(), frozen);
-        if (amount <= 0.0D) return List.of();
-        return List.of(new CorruptionResistanceContribution(
-            SOURCE_ID,
-            CorruptionResistanceSourceCategory.EQUIPMENT,
-            amount));
+        return result;
     }
 
-    /**
-     * Transfers emergency-protection facts from the same root-cast snapshot and releases the cache
-     * entry. The equipment source is never re-queried when a resistance phase already captured it.
-     */
     @Override
     public synchronized ArcaneEmergencyProtectionSnapshot takeEmergencySnapshot(
         ArcanaCastId castId,
@@ -99,23 +80,96 @@ public final class ArcaneEquipmentHazardResistanceProvider
         return emergency;
     }
 
-    /** Releases a snapshot retained by an aborted/short-circuited preflight. */
     @Override
     public synchronized void release(ArcanaCastId castId) {
         snapshots.remove(Objects.requireNonNull(castId, "castId"));
     }
 
-    public synchronized int activeSnapshots() {
-        return snapshots.size();
+    public synchronized int activeSnapshots() { return snapshots.size(); }
+
+    private static List<ArcaneResistanceContribution> arcaneContributions(
+        ArcaneEquipmentSnapshotService.Snapshot snapshot
+    ) {
+        double total = snapshot.arcaneResistance();
+        if (total <= 0.0D) return List.of();
+        List<ArcaneResistanceContribution> result = new ArrayList<>();
+        double remaining = total;
+        double itemTotal = itemArcaneResistance(snapshot);
+        if (snapshot.items().isEmpty() && snapshot.activeSetBonuses().isEmpty()) itemTotal = total;
+        double base = Math.min(remaining, itemTotal);
+        if (base > 0.0D) {
+            result.add(new ArcaneResistanceContribution(SOURCE_ID, ArcaneResistanceSourceCategory.EQUIPMENT, base));
+            remaining -= base;
+        }
+        for (ArcaneEquipmentSnapshotService.ResolvedSetBonus resolved : snapshot.activeSetBonuses()) {
+            if (remaining <= 0.0D) break;
+            double amount = Math.min(remaining, resolved.bonus().arcaneResistance());
+            if (amount <= 0.0D) continue;
+            result.add(new ArcaneResistanceContribution(
+                resolved.bonus().bonusId(), ArcaneResistanceSourceCategory.EQUIPMENT, amount));
+            remaining -= amount;
+        }
+        if (remaining > 0.0D) {
+            result.add(new ArcaneResistanceContribution(SOURCE_ID, ArcaneResistanceSourceCategory.EQUIPMENT, remaining));
+        }
+        return List.copyOf(result);
+    }
+
+    private static List<CorruptionResistanceContribution> corruptionContributions(
+        ArcaneEquipmentSnapshotService.Snapshot snapshot
+    ) {
+        double total = snapshot.corruptionResistance();
+        if (total <= 0.0D) return List.of();
+        List<CorruptionResistanceContribution> result = new ArrayList<>();
+        double remaining = total;
+        double itemTotal = itemCorruptionResistance(snapshot);
+        if (snapshot.items().isEmpty() && snapshot.activeSetBonuses().isEmpty()) itemTotal = total;
+        double base = Math.min(remaining, itemTotal);
+        if (base > 0.0D) {
+            result.add(new CorruptionResistanceContribution(
+                SOURCE_ID, CorruptionResistanceSourceCategory.EQUIPMENT, base));
+            remaining -= base;
+        }
+        for (ArcaneEquipmentSnapshotService.ResolvedSetBonus resolved : snapshot.activeSetBonuses()) {
+            if (remaining <= 0.0D) break;
+            double amount = Math.min(remaining, resolved.bonus().corruptionResistance());
+            if (amount <= 0.0D) continue;
+            result.add(new CorruptionResistanceContribution(
+                resolved.bonus().bonusId(), CorruptionResistanceSourceCategory.EQUIPMENT, amount));
+            remaining -= amount;
+        }
+        if (remaining > 0.0D) {
+            result.add(new CorruptionResistanceContribution(
+                SOURCE_ID, CorruptionResistanceSourceCategory.EQUIPMENT, remaining));
+        }
+        return List.copyOf(result);
+    }
+
+    private static double itemArcaneResistance(ArcaneEquipmentSnapshotService.Snapshot snapshot) {
+        double total = 0.0D;
+        for (ArcaneEquipmentSnapshotService.ResolvedItem item : snapshot.items()) {
+            total = Math.min(
+                dev.gustavopere.blackarcana.api.hazard.ArcaneEquipmentProfile.ABSOLUTE_MAX_RESISTANCE,
+                total + item.profile().arcaneResistance());
+        }
+        return total;
+    }
+
+    private static double itemCorruptionResistance(ArcaneEquipmentSnapshotService.Snapshot snapshot) {
+        double total = 0.0D;
+        for (ArcaneEquipmentSnapshotService.ResolvedItem item : snapshot.items()) {
+            total = Math.min(
+                dev.gustavopere.blackarcana.api.hazard.ArcaneEquipmentProfile.ABSOLUTE_MAX_RESISTANCE,
+                total + item.profile().corruptionResistance());
+        }
+        return total;
     }
 
     private FrozenSnapshot snapshotFor(ArcanaCastId castId, UUID casterId, long serverTick) {
         pruneExpired(serverTick);
         FrozenSnapshot existing = snapshots.get(castId);
         if (existing != null) {
-            if (!existing.casterId.equals(casterId)) {
-                throw new IllegalStateException("root cast id reused by a different caster");
-            }
+            if (!existing.casterId.equals(casterId)) throw new IllegalStateException("root cast id reused by a different caster");
             return existing;
         }
         if (snapshots.size() >= MAX_ACTIVE_SNAPSHOTS) {
@@ -132,10 +186,7 @@ public final class ArcaneEquipmentHazardResistanceProvider
         Iterator<Map.Entry<ArcanaCastId, FrozenSnapshot>> iterator = snapshots.entrySet().iterator();
         while (iterator.hasNext()) {
             FrozenSnapshot frozen = iterator.next().getValue();
-            if (serverTick > frozen.serverTick
-                && serverTick - frozen.serverTick > MAX_SNAPSHOT_AGE_TICKS) {
-                iterator.remove();
-            }
+            if (serverTick > frozen.serverTick && serverTick - frozen.serverTick > MAX_SNAPSHOT_AGE_TICKS) iterator.remove();
         }
     }
 
@@ -151,11 +202,7 @@ public final class ArcaneEquipmentHazardResistanceProvider
         private boolean arcaneRead;
         private boolean corruptionRead;
 
-        private FrozenSnapshot(
-            UUID casterId,
-            long serverTick,
-            ArcaneEquipmentSnapshotService.Snapshot snapshot
-        ) {
+        private FrozenSnapshot(UUID casterId, long serverTick, ArcaneEquipmentSnapshotService.Snapshot snapshot) {
             this.casterId = Objects.requireNonNull(casterId, "casterId");
             this.serverTick = serverTick;
             this.snapshot = Objects.requireNonNull(snapshot, "snapshot");
