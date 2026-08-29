@@ -5,6 +5,7 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtection;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,5 +85,30 @@ class ArcaneFrozenEmergencyProtectionTest {
         assertFalse(result.consumed());
         assertEquals(10.0D, result.remainingBacklash());
         assertEquals("no_reservation", result.sourceId());
+    }
+
+    @Test
+    void coordinatorAcceptsTheFullValidFrozenCandidateSnapshot() {
+        List<ArcaneEmergencyProtectionSnapshot.Candidate> candidates = new ArrayList<>();
+        for (int i = 0; i < ArcaneEmergencyProtectionSnapshot.MAX_CANDIDATES; i++) {
+            candidates.add(new ArcaneEmergencyProtectionSnapshot.Candidate(
+                "black_arcana:source_" + i,
+                "black_arcana:resource_" + i,
+                1.0D,
+                20L));
+        }
+        ArcaneEmergencyProtectionSnapshot snapshot = new ArcaneEmergencyProtectionSnapshot(candidates);
+
+        var result = new ArcaneEmergencyProtectionCoordinator(List.of()).protect(
+            new ArcaneEmergencyProtection.Query(
+                CASTER, ArcanaDamageInstanceId.random(), 10.0D, 0.0D, true),
+            ArcaneFrozenEmergencyProtection.providers(
+                snapshot,
+                ArcaneEmergencyProtectionStateService.canonical(64),
+                100L));
+
+        assertTrue(result.consumed());
+        assertEquals(1.0D, result.absorbed());
+        assertEquals("black_arcana:source_0", result.sourceId());
     }
 }
