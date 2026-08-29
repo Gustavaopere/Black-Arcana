@@ -29,8 +29,11 @@ public final class SympatheticWoundGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 60)
     public static void mirroredDamageIsAttributedAndCannotRecurseThroughCrossLinks(GameTestHelper helper) throws Exception {
-        var first = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(2, 2, 1));
-        var second = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(5, 2, 1));
+        var first = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
+        var second = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(5, 2, 1));
+        helper.assertTrue(first.getArmorValue() == 0 && second.getArmorValue() == 0,
+            "fixture entities must have no armor mitigation");
+
         MinecraftServer server = helper.getLevel().getServer();
         long now = server.overworld().getGameTime();
 
@@ -54,7 +57,7 @@ public final class SympatheticWoundGameTests {
         helper.assertTrue(first.getHealth() == firstBefore - 8.0F,
             "generated sympathetic damage must not recurse through the reverse link");
         helper.assertTrue(second.getHealth() == secondBefore - 4.0F,
-            "mirror fraction must apply to confirmed final health damage");
+            "mirror fraction must apply before ordinary target-side mitigation");
 
         DamageSource mirroredSource = second.getLastDamageSource();
         helper.assertTrue(mirroredSource != null && mirroredSource.is(SYMPATHETIC_WOUND),
