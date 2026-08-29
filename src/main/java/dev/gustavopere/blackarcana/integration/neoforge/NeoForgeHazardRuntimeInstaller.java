@@ -5,6 +5,7 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashPolicy;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneDangerProfileRuntimeStore;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRuntimeStore;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneHazardCastGate;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneHazardRuntime;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
@@ -47,6 +48,8 @@ public final class NeoForgeHazardRuntimeInstaller {
     }
 
     public static void remove(ArcanaServerRuntime runtime) {
-        if (runtime != null) ArcaneDangerProfileRuntimeStore.remove(runtime);
+        if (runtime == null) return;
+        ArcaneDangerProfileRuntimeStore.remove(runtime);
+        ArcaneEquipmentProfileRuntimeStore.remove(runtime);
     }
 }
