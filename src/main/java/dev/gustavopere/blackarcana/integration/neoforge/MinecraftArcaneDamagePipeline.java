@@ -5,6 +5,7 @@ import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageProvenance;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashPolicy;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashSettlement;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneConfirmedDamage;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneDamageProvenanceTracker;
@@ -78,10 +79,40 @@ public final class MinecraftArcaneDamagePipeline {
         ArcaneResistanceSnapshot resistance,
         ArcaneBacklashPolicy policy
     ) {
+        return activate(server, snapshot, resistance, policy, ArcaneEmergencyProtectionSnapshot.empty());
+    }
+
+    public static ArcaneHazardRuntime.ActivationResult activate(
+        MinecraftServer server,
+        ArcaneHazardSnapshot snapshot,
+        ArcaneResistanceSnapshot resistance,
+        ArcaneBacklashPolicy policy,
+        ArcaneEmergencyProtectionSnapshot emergencyProtectionSnapshot
+    ) {
         Objects.requireNonNull(server, "server");
         ServerState state = STATES.get(server);
         if (state == null) return ArcaneHazardRuntime.ActivationResult.denied("hazard_runtime_unavailable");
-        return state.hazards().activate(snapshot, resistance, policy);
+        return activateHazardRuntime(
+            state.hazards(),
+            snapshot,
+            resistance,
+            policy,
+            emergencyProtectionSnapshot);
+    }
+
+    static ArcaneHazardRuntime.ActivationResult activateHazardRuntime(
+        ArcaneHazardRuntime runtime,
+        ArcaneHazardSnapshot snapshot,
+        ArcaneResistanceSnapshot resistance,
+        ArcaneBacklashPolicy policy,
+        ArcaneEmergencyProtectionSnapshot emergencyProtectionSnapshot
+    ) {
+        Objects.requireNonNull(runtime, "runtime");
+        Objects.requireNonNull(snapshot, "snapshot");
+        Objects.requireNonNull(resistance, "resistance");
+        Objects.requireNonNull(policy, "policy");
+        Objects.requireNonNull(emergencyProtectionSnapshot, "emergencyProtectionSnapshot");
+        return runtime.activate(snapshot, resistance, policy, emergencyProtectionSnapshot);
     }
 
     public static Optional<ArcaneHazardRuntime> hazardRuntime(MinecraftServer server) {
