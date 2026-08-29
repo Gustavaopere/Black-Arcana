@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.integration.neoforge;
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import dev.gustavopere.blackarcana.integration.rpg.ReflectiveRpgSkillTreeBridge;
+import dev.gustavopere.blackarcana.integration.rpg.RpgHazardProviderInstaller;
 import dev.gustavopere.blackarcana.integration.rpg.RpgSkillTreeBridge;
 import java.util.Objects;
 import net.minecraft.server.MinecraftServer;
@@ -26,6 +27,7 @@ public final class NeoForgeIntegrationBootstrap {
             rpgVersion,
             server.getPlayerList()::getPlayer);
         runtime.integrations().register(rpg);
+        RpgHazardProviderInstaller.install(runtime, rpg);
 
         BlackArcanaMod.LOGGER.info(
             "Black Arcana integration {}: {} version={} capabilities={}{}",
