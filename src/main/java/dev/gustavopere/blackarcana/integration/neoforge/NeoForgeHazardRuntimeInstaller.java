@@ -23,6 +23,10 @@ public final class NeoForgeHazardRuntimeInstaller {
         runtime.installHazardGate(new ArcaneHazardCastGate(
             ArcaneDangerProfileRuntimeStore.forRuntime(runtime),
             runtime.arcaneResistanceProviders(),
+            runtime.corruptionResistanceProviders(),
+            runtime.corruption(),
+            runtime.strain(),
+            ArcanaServerRuntime.DEFAULT_MAX_TRACKED_HAZARD_PLAYERS,
             new ArcaneHazardCastGate.HazardSessionActivator() {
                 @Override
                 public ArcaneHazardRuntime.ActivationResult activate(

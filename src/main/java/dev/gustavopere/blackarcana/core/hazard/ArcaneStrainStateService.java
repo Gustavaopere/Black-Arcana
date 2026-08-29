@@ -5,8 +5,10 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneStrainRecoveryQuery;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneStrainRecoverySnapshot;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 /** Lazy/event-driven short-term arcane load state. No global player tick scan is required. */
@@ -24,6 +26,7 @@ public final class ArcaneStrainStateService {
     private final double baseRecoveryPerTick;
     private final ArcaneStrainRecoveryProviderRegistry recoveryProviders;
     private final Map<UUID, MutableState> states = new LinkedHashMap<>();
+    private final Set<UUID> reservations = new LinkedHashSet<>();
 
     public ArcaneStrainStateService(
         int maxTrackedPlayers,
@@ -97,20 +100,53 @@ public final class ArcaneStrainStateService {
     ) {
         StrainPreflight preflight = preflight(
             playerId, serverTick, profile, avoidableResidualMultiplier, confirmedDamage, channelTicks);
-        if (preflight.appliedStrain() == 0.0D) {
-            return new StrainUpdate(preflight.current(), preflight.current(), 0.0D, preflight);
+        return commitPrepared(playerId, serverTick, preflight);
+    }
+
+    /**
+     * Commits the immutable cast-time preflight. A post-preflight recovery cannot lower the frozen
+     * baseline, while independent later increases are preserved rather than overwritten.
+     */
+    public synchronized StrainUpdate commitPrepared(
+        UUID playerId,
+        long serverTick,
+        StrainPreflight preflight
+    ) {
+        validatePlayerTick(playerId, serverTick);
+        Objects.requireNonNull(preflight, "preflight");
+        double expectedApplied = Math.max(0.0D, preflight.predictedUnits() - preflight.current().units());
+        if (Math.abs(expectedApplied - preflight.appliedStrain()) > 1.0E-9D) {
+            throw new IllegalArgumentException("strain preflight is internally inconsistent");
         }
+        if (preflight.predictedUnits() > maxStrainUnits) {
+            throw new IllegalArgumentException("strain preflight exceeds configured maximum");
+        }
+
+        EffectiveState liveEffective = effectiveState(playerId, serverTick);
+        StrainSnapshot liveBefore = liveEffective.snapshot();
+        double targetUnits = Math.min(
+            maxStrainUnits,
+            Math.max(liveBefore.units(), preflight.current().units()) + preflight.appliedStrain());
+        if (targetUnits <= liveBefore.units()) {
+            return new StrainUpdate(liveBefore, liveBefore, 0.0D, preflight);
+        }
+
         MutableState state = states.get(playerId);
         if (state == null) {
-            if (states.size() >= maxTrackedPlayers) throw new IllegalStateException("strain state registry is full");
+            ensureCapacityFor(playerId);
             state = new MutableState(0.0D, serverTick, 0L, 0L);
             states.put(playerId, state);
         }
-        state.units = preflight.predictedUnits();
+        state.units = targetUnits;
         state.lastUpdateTick = serverTick;
-        state.acquisitionEvents = saturatingIncrement(state.acquisitionEvents);
+        if (preflight.appliedStrain() > 0.0D) {
+            state.acquisitionEvents = saturatingIncrement(Math.max(
+                liveBefore.acquisitionEvents(),
+                preflight.current().acquisitionEvents()));
+        }
+        state.recoveryEvents = Math.max(liveBefore.recoveryEvents(), preflight.current().recoveryEvents());
         StrainSnapshot after = snapshotOf(state, serverTick);
-        return new StrainUpdate(preflight.current(), after, preflight.appliedStrain(), preflight);
+        return new StrainUpdate(liveBefore, after, targetUnits - liveBefore.units(), preflight);
     }
 
     /** Explicit rest/ritual/buff recovery hook layered on top of lazy natural recovery. */
@@ -140,6 +176,31 @@ public final class ArcaneStrainStateService {
         return new StrainUpdate(before, after, -recovered, null);
     }
 
+    /** Side-effect-free O(1) capacity probe used by cast preflight. */
+    public synchronized boolean canReserve(UUID playerId) {
+        Objects.requireNonNull(playerId, "playerId");
+        return states.containsKey(playerId)
+            || reservations.contains(playerId)
+            || occupiedSlots() < maxTrackedPlayers;
+    }
+
+    /** Claims capacity for a terminal cast commit, including if existing state is recovered meanwhile. */
+    public synchronized boolean reserve(UUID playerId) {
+        Objects.requireNonNull(playerId, "playerId");
+        if (reservations.contains(playerId)) return true;
+        if (!states.containsKey(playerId) && occupiedSlots() >= maxTrackedPlayers) return false;
+        reservations.add(playerId);
+        return true;
+    }
+
+    public synchronized void releaseReservation(UUID playerId) {
+        reservations.remove(Objects.requireNonNull(playerId, "playerId"));
+    }
+
+    public synchronized boolean contains(UUID playerId) {
+        return states.containsKey(Objects.requireNonNull(playerId, "playerId"));
+    }
+
     public synchronized Map<UUID, PersistedState> persistentSnapshot() {
         Map<UUID, PersistedState> result = new LinkedHashMap<>();
         states.forEach((playerId, state) -> result.put(playerId, state.persisted()));
@@ -163,6 +224,7 @@ public final class ArcaneStrainStateService {
         });
         states.clear();
         states.putAll(restored);
+        reservations.clear();
     }
 
     public synchronized int size() {
@@ -207,6 +269,21 @@ public final class ArcaneStrainStateService {
         return recoveryProviders.snapshot(
             new ArcaneStrainRecoveryQuery(playerId, serverTick, storedUnits),
             baseRecoveryPerTick);
+    }
+
+    private int occupiedSlots() {
+        int reservedWithoutState = 0;
+        for (UUID playerId : reservations) {
+            if (!states.containsKey(playerId)) reservedWithoutState++;
+        }
+        return states.size() + reservedWithoutState;
+    }
+
+    private void ensureCapacityFor(UUID playerId) {
+        if (states.containsKey(playerId)) return;
+        if (!reservations.contains(playerId) && occupiedSlots() >= maxTrackedPlayers) {
+            throw new IllegalStateException("strain state registry is full");
+        }
     }
 
     private static StrainSnapshot snapshotOf(MutableState state, long visibleTick) {
