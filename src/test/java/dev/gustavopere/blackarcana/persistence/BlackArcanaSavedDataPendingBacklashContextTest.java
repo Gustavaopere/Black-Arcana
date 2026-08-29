@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.persistence;
 
+import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageInstanceId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
 import dev.gustavopere.blackarcana.core.hazard.PendingBacklashDebt;
@@ -15,18 +16,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BlackArcanaSavedDataPendingBacklashContextTest {
     private static final UUID PLAYER = UUID.fromString("62000000-0000-0000-0000-000000000001");
+    private static final ArcanaCastId ROOT = ArcanaCastId.parse("62000000-0000-0000-0000-000000000021");
     private static final ArcanaDamageInstanceId DAMAGE = new ArcanaDamageInstanceId(
         UUID.fromString("62000000-0000-0000-0000-000000000011"));
 
     @Test
-    void contextualDebtRoundTripKeepsDamageIdentityAndFrozenProtectionSnapshot() {
+    void contextualDebtRoundTripKeepsRootDamageIdentityAndFrozenProtectionSnapshot() {
         ArcaneEmergencyProtectionSnapshot frozen = new ArcaneEmergencyProtectionSnapshot(List.of(
             new ArcaneEmergencyProtectionSnapshot.Candidate(
                 "black_arcana:sealed_hood",
                 "black_arcana:sealed_hood",
                 8.0D,
                 120L)));
-        PendingBacklashDebt debt = PendingBacklashDebt.contextual(18.0D, DAMAGE, true, frozen);
+        PendingBacklashDebt debt = PendingBacklashDebt.contextual(18.0D, ROOT, DAMAGE, true, frozen);
         PendingBacklashRegistry source = new PendingBacklashRegistry(16, 1_000.0D);
         assertTrue(source.accrue(PLAYER, debt));
 
@@ -37,7 +39,10 @@ class BlackArcanaSavedDataPendingBacklashContextTest {
 
         PendingBacklashRegistry restored = new PendingBacklashRegistry(16, 1_000.0D);
         loaded.restorePendingBacklash(restored);
-        assertEquals(List.of(debt), restored.drainDebts(PLAYER));
+        PendingBacklashDebt restoredDebt = assertSingle(restored.drainDebts(PLAYER));
+        assertEquals(debt, restoredDebt);
+        assertEquals(ROOT, restoredDebt.rootCastId().orElseThrow());
+        assertEquals(DAMAGE, restoredDebt.damageInstanceId().orElseThrow());
     }
 
     @Test
@@ -57,6 +62,7 @@ class BlackArcanaSavedDataPendingBacklashContextTest {
 
         PendingBacklashDebt debt = assertSingle(restored.drainDebts(PLAYER));
         assertEquals(11.0D, debt.amount(), 0.0D);
+        assertTrue(debt.rootCastId().isEmpty());
         assertTrue(debt.damageInstanceId().isEmpty());
         assertFalse(debt.protectionAllowed());
         assertTrue(debt.emergencyProtectionSnapshot().candidates().isEmpty());
