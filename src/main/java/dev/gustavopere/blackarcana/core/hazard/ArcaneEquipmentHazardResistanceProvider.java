@@ -29,7 +29,7 @@ import java.util.UUID;
  * short-lived/bounded so an incomplete preflight cannot leak unbounded state.</p>
  */
 public final class ArcaneEquipmentHazardResistanceProvider
-    implements ArcaneResistanceProvider, CorruptionResistanceProvider {
+    implements ArcaneResistanceProvider, CorruptionResistanceProvider, ArcaneEmergencyProtectionSnapshotProvider {
 
     public static final String PROVIDER_ID = "black_arcana:standard_equipment";
     public static final String SOURCE_ID = "black_arcana:standard_equipment";
@@ -85,6 +85,7 @@ public final class ArcaneEquipmentHazardResistanceProvider
      * Transfers emergency-protection facts from the same root-cast snapshot and releases the cache
      * entry. The equipment source is never re-queried when a resistance phase already captured it.
      */
+    @Override
     public synchronized ArcaneEmergencyProtectionSnapshot takeEmergencySnapshot(
         ArcanaCastId castId,
         UUID casterId,
@@ -99,6 +100,7 @@ public final class ArcaneEquipmentHazardResistanceProvider
     }
 
     /** Releases a snapshot retained by an aborted/short-circuited preflight. */
+    @Override
     public synchronized void release(ArcanaCastId castId) {
         snapshots.remove(Objects.requireNonNull(castId, "castId"));
     }
