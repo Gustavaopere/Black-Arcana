@@ -28,7 +28,8 @@ public final class ArcaneEquipmentDataReloadListener extends SimpleJsonResourceR
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     private static final Set<String> ALLOWED_KEYS = Set.of(
         "schemaVersion", "id", "itemId", "arcaneResistance", "corruptionResistance",
-        "strainCapacityBonus", "strainRecoveryPerTick", "setId", "containmentTags");
+        "strainCapacityBonus", "strainRecoveryPerTick", "setId", "containmentTags",
+        "emergencyAbsorption", "emergencyCooldownTicks");
 
     public ArcaneEquipmentDataReloadListener() {
         super(GSON, DIRECTORY);
@@ -92,7 +93,9 @@ public final class ArcaneEquipmentDataReloadListener extends SimpleJsonResourceR
                 requiredDouble(object, "strainCapacityBonus", resourceId),
                 requiredDouble(object, "strainRecoveryPerTick", resourceId),
                 setId,
-                tags);
+                tags,
+                optionalDouble(object, "emergencyAbsorption", resourceId, 0.0D),
+                optionalLong(object, "emergencyCooldownTicks", resourceId, 0L));
             ArcaneEquipmentProfileRegistry validator = new ArcaneEquipmentProfileRegistry();
             validator.register(itemId, profile);
             return new ArcaneEquipmentDataDefinition(
@@ -126,7 +129,11 @@ public final class ArcaneEquipmentDataReloadListener extends SimpleJsonResourceR
         if (!value.getAsJsonPrimitive().isNumber()) {
             throw new JsonParseException("required integer '" + key + "' missing/invalid in " + id);
         }
-        return value.getAsInt();
+        double raw = value.getAsDouble();
+        if (!Double.isFinite(raw) || raw != Math.rint(raw) || raw < Integer.MIN_VALUE || raw > Integer.MAX_VALUE) {
+            throw new JsonParseException("required integer '" + key + "' missing/invalid in " + id);
+        }
+        return (int) raw;
     }
 
     private static double requiredDouble(JsonObject object, String key, ResourceLocation id) {
@@ -134,7 +141,43 @@ public final class ArcaneEquipmentDataReloadListener extends SimpleJsonResourceR
         if (!value.getAsJsonPrimitive().isNumber()) {
             throw new JsonParseException("required number '" + key + "' missing/invalid in " + id);
         }
-        return value.getAsDouble();
+        double result = value.getAsDouble();
+        if (!Double.isFinite(result)) throw new JsonParseException("required number '" + key + "' invalid in " + id);
+        return result;
+    }
+
+    private static double optionalDouble(
+        JsonObject object,
+        String key,
+        ResourceLocation id,
+        double defaultValue
+    ) {
+        JsonElement value = object.get(key);
+        if (value == null || value.isJsonNull()) return defaultValue;
+        if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isNumber()) {
+            throw new JsonParseException("optional number '" + key + "' invalid in " + id);
+        }
+        double result = value.getAsDouble();
+        if (!Double.isFinite(result)) throw new JsonParseException("optional number '" + key + "' invalid in " + id);
+        return result;
+    }
+
+    private static long optionalLong(
+        JsonObject object,
+        String key,
+        ResourceLocation id,
+        long defaultValue
+    ) {
+        JsonElement value = object.get(key);
+        if (value == null || value.isJsonNull()) return defaultValue;
+        if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isNumber()) {
+            throw new JsonParseException("optional integer '" + key + "' invalid in " + id);
+        }
+        double raw = value.getAsDouble();
+        if (!Double.isFinite(raw) || raw != Math.rint(raw) || raw < 0.0D || raw > Long.MAX_VALUE) {
+            throw new JsonParseException("optional integer '" + key + "' invalid in " + id);
+        }
+        return value.getAsLong();
     }
 
     private static String optionalString(JsonObject object, String key, ResourceLocation id) {
