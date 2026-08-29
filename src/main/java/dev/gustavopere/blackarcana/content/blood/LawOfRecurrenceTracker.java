@@ -49,7 +49,7 @@ public final class LawOfRecurrenceTracker {
     private static String normalizeFamily(String family) {
         Objects.requireNonNull(family, "damageFamily");
         String normalized = family.trim().toLowerCase(java.util.Locale.ROOT);
-        if (normalized.isEmpty() || normalized.length() > 64 || !normalized.matches("[a-z0-9_.:-]+")) {
+        if (normalized.isEmpty() || normalized.length() > 64 || !normalized.matches("[a-z0-9_./:-]+")) {
             throw new IllegalArgumentException("damageFamily must be a bounded stable identifier");
         }
         return normalized;
