@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEquipmentProfile;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
-import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRuntimeStore;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -59,7 +59,7 @@ public final class ArcaneEquipmentDataReloadListener extends SimpleJsonResourceR
             });
 
         // Publish only after the complete snapshot has parsed and validated.
-        ArcanaServerRuntimeManager.reloadEquipmentProfiles(parsed);
+        ArcaneEquipmentProfileRuntimeStore.reload(parsed);
     }
 
     static ArcaneEquipmentDataDefinition parseDefinition(ResourceLocation resourceId, JsonElement element) {
