@@ -39,4 +39,20 @@ class SympatheticWoundServiceTest {
             UUID.randomUUID(), caster, 4.0D, SympatheticWoundService.DamageProvenance.DIRECT), 20L).isEmpty());
         assertEquals(0.0D, service.remainingBudget(caster));
     }
+
+    @Test
+    void expiredLinksArePrunedWithoutWaitingForAnotherDamageEvent() {
+        UUID expiredCaster = UUID.randomUUID();
+        UUID liveCaster = UUID.randomUUID();
+        SympatheticWoundService service = new SympatheticWoundService(8);
+        service.bind(new SympatheticWoundService.LinkSpec(
+            expiredCaster, UUID.randomUUID(), 20L, 0.25D, 10.0D, 40.0D));
+        service.bind(new SympatheticWoundService.LinkSpec(
+            liveCaster, UUID.randomUUID(), 50L, 0.25D, 10.0D, 40.0D));
+
+        assertEquals(1, service.pruneExpired(20L));
+        assertEquals(1, service.size());
+        assertEquals(0.0D, service.remainingBudget(expiredCaster));
+        assertEquals(40.0D, service.remainingBudget(liveCaster));
+    }
 }
