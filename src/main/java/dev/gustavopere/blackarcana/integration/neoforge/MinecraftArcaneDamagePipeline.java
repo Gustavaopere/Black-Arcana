@@ -10,8 +10,11 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneBacklashProtectionAttemptTracker;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneDamageProvenanceTracker;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionCoordinator;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneHazardRuntime;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneLethalBacklashProtection;
 import dev.gustavopere.blackarcana.core.hazard.PendingBacklashRegistry;
+import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.persistence.BlackArcanaSavedData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -28,6 +31,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.Collections;
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,6 +45,7 @@ public final class MinecraftArcaneDamagePipeline {
     public static final int DEFAULT_MAX_HAZARD_SESSIONS = 16_384;
     public static final int DEFAULT_MAX_TRACKED_DAMAGE_SOURCES = 65_536;
     public static final int DEFAULT_MAX_PENDING_CASTERS = 16_384;
+    public static final int DEFAULT_MAX_TRACKED_BACKLASH_ATTEMPTS = 65_536;
 
     public record DamageAttempt(boolean invoked, boolean accepted, String code) {
         public DamageAttempt {
@@ -57,7 +62,9 @@ public final class MinecraftArcaneDamagePipeline {
     private record ServerState(
         ArcaneHazardRuntime hazards,
         ArcaneDamageProvenanceTracker<DamageSource> provenance,
-        PendingBacklashRegistry pendingBacklash
+        PendingBacklashRegistry pendingBacklash,
+        ArcaneBacklashProtectionAttemptTracker<DamageSource> backlashProtectionAttempts,
+        ArcaneEmergencyProtectionCoordinator emergencyProtection
     ) { }
 
     private static final Map<MinecraftServer, ServerState> STATES =
@@ -70,6 +77,7 @@ public final class MinecraftArcaneDamagePipeline {
         gameBus.addListener(MinecraftArcaneDamagePipeline::onServerStarted);
         gameBus.addListener(MinecraftArcaneDamagePipeline::onServerTick);
         gameBus.addListener(MinecraftArcaneDamagePipeline::onPlayerLoggedIn);
+        gameBus.addListener(MinecraftArcaneDamagePipeline::onLivingDamagePre);
         gameBus.addListener(MinecraftArcaneDamagePipeline::onLivingDamagePost);
         gameBus.addListener(MinecraftArcaneDamagePipeline::onServerStopped);
     }
@@ -172,12 +180,48 @@ public final class MinecraftArcaneDamagePipeline {
         STATES.put(server, new ServerState(
             new ArcaneHazardRuntime(DEFAULT_MAX_HAZARD_SESSIONS),
             new ArcaneDamageProvenanceTracker<>(DEFAULT_MAX_TRACKED_DAMAGE_SOURCES),
-            pendingBacklash));
+            pendingBacklash,
+            new ArcaneBacklashProtectionAttemptTracker<>(DEFAULT_MAX_TRACKED_BACKLASH_ATTEMPTS),
+            new ArcaneEmergencyProtectionCoordinator(List.of())));
     }
 
     private static void onServerTick(ServerTickEvent.Post event) {
         ServerState state = STATES.get(event.getServer());
         if (state != null) state.hazards().tick(event.getServer().overworld().getGameTime());
+    }
+
+    private static void onLivingDamagePre(LivingDamageEvent.Pre event) {
+        if (!(event.getEntity() instanceof ServerPlayer caster)) return;
+        if (!event.getSource().is(ArcaneBacklashDamageTypes.ARCANE_BACKLASH)) return;
+        MinecraftServer server = caster.serverLevel().getServer();
+        ServerState state = STATES.get(server);
+        if (state == null) return;
+
+        ArcaneBacklashProtectionAttemptTracker.Attempt attempt =
+            state.backlashProtectionAttempts().find(event.getSource()).orElse(null);
+        if (attempt == null || !caster.getUUID().equals(attempt.casterId())) return;
+
+        var runtime = ArcanaServerRuntimeManager.get(server).orElse(null);
+        if (runtime == null) return;
+
+        ArcaneLethalBacklashProtection.Result result = ArcaneLethalBacklashProtection.resolve(
+            attempt.casterId(),
+            attempt.damageInstanceId(),
+            event.getNewDamage(),
+            caster.getHealth(),
+            caster.getAbsorptionAmount(),
+            attempt.protectionAllowed(),
+            attempt.emergencyProtectionSnapshot(),
+            runtime.emergencyProtection(),
+            server.overworld().getGameTime(),
+            state.emergencyProtection());
+        if (!result.consumed()) return;
+
+        event.setNewDamage((float) result.remainingDamage());
+        BlackArcanaSavedData.get(server).captureHazards(
+            runtime.corruption(),
+            runtime.strain(),
+            runtime.emergencyProtection());
     }
 
     private static void onLivingDamagePost(LivingDamageEvent.Post event) {
@@ -208,7 +252,11 @@ public final class MinecraftArcaneDamagePipeline {
             }
             return;
         }
-        applyBacklash(caster, settlement.backlashDamage());
+        applyBacklash(
+            caster,
+            settlement.backlashDamage(),
+            state,
+            protectionAttempt(state.hazards(), provenance).orElse(null));
     }
 
     private static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
@@ -237,8 +285,26 @@ public final class MinecraftArcaneDamagePipeline {
     }
 
     private static void applyBacklash(ServerPlayer caster, double amount) {
+        applyBacklash(caster, amount, null, null);
+    }
+
+    private static void applyBacklash(
+        ServerPlayer caster,
+        double amount,
+        ServerState state,
+        ArcaneBacklashProtectionAttemptTracker.Attempt attempt
+    ) {
         float bounded = (float) Math.min(amount, 1_000_000.0D);
         if (bounded <= 0.0F) return;
-        caster.hurt(caster.damageSources().source(ArcaneBacklashDamageTypes.ARCANE_BACKLASH), bounded);
+        DamageSource source = caster.damageSources().source(ArcaneBacklashDamageTypes.ARCANE_BACKLASH);
+        if (state == null || attempt == null || !state.backlashProtectionAttempts().register(source, attempt)) {
+            caster.hurt(source, bounded);
+            return;
+        }
+        try {
+            caster.hurt(source, bounded);
+        } finally {
+            state.backlashProtectionAttempts().release(source);
+        }
     }
 }
