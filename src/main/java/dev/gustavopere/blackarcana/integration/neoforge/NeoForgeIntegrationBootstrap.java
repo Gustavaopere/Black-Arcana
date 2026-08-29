@@ -17,6 +17,8 @@ public final class NeoForgeIntegrationBootstrap {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(runtime, "runtime");
 
+        StandardEquipmentHazardProviderInstaller.install(server, runtime);
+
         ModList mods = ModList.get();
         boolean rpgLoaded = mods.isLoaded(RpgSkillTreeBridge.MOD_ID);
         String rpgVersion = mods.getModContainerById(RpgSkillTreeBridge.MOD_ID)

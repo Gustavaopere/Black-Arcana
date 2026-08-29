@@ -1,4 +1,4 @@
-package dev.gustavopere.blackarcana.integration.curios;
+package dev.gustavopere.blackarcana.core.hazard;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceContribution;
@@ -9,7 +9,6 @@ import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceContribution;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceProvider;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceQuery;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceSourceCategory;
-import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSnapshotService;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -19,26 +18,31 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Read-only Curios contribution bridge. One root cast observes one frozen Curios snapshot across
- * both resistance channels; there is no global or per-tick inventory scan.
+ * Bridges one frozen standard-equipment snapshot into both hazard resistance channels.
+ *
+ * <p>The first query for a root cast captures server-observed equipment. Arcane and Corruption
+ * Resistance then read the same immutable snapshot even if equipment changes between registry
+ * queries. Entries are removed after both channels have observed them, may be explicitly released
+ * for aborted preflights, and are short-lived/bounded so an Arcane-only denied preflight cannot
+ * leak unbounded state.</p>
  */
-public final class CuriosHazardResistanceProvider
+public final class ArcaneEquipmentHazardResistanceProvider
     implements ArcaneResistanceProvider, CorruptionResistanceProvider {
 
-    public static final String PROVIDER_ID = "black_arcana:curios";
-    private static final String SOURCE_ID = "curios:equipped_containment";
+    public static final String PROVIDER_ID = "black_arcana:standard_equipment";
+    public static final String SOURCE_ID = "black_arcana:standard_equipment";
     public static final int MAX_ACTIVE_SNAPSHOTS = 4_096;
     public static final long MAX_SNAPSHOT_AGE_TICKS = 2L;
 
     @FunctionalInterface
     public interface SnapshotSource {
-        ArcaneEquipmentSnapshotService.Snapshot snapshot(UUID playerId);
+        ArcaneEquipmentSnapshotService.Snapshot capture(UUID playerId);
     }
 
     private final SnapshotSource source;
     private final Map<ArcanaCastId, FrozenSnapshot> snapshots = new LinkedHashMap<>();
 
-    public CuriosHazardResistanceProvider(SnapshotSource source) {
+    public ArcaneEquipmentHazardResistanceProvider(SnapshotSource source) {
         this.source = Objects.requireNonNull(source, "source");
     }
 
@@ -57,7 +61,7 @@ public final class CuriosHazardResistanceProvider
         if (amount <= 0.0D) return List.of();
         return List.of(new ArcaneResistanceContribution(
             SOURCE_ID,
-            ArcaneResistanceSourceCategory.CURIO,
+            ArcaneResistanceSourceCategory.EQUIPMENT,
             amount));
     }
 
@@ -71,12 +75,17 @@ public final class CuriosHazardResistanceProvider
         if (amount <= 0.0D) return List.of();
         return List.of(new CorruptionResistanceContribution(
             SOURCE_ID,
-            CorruptionResistanceSourceCategory.CURIO,
+            CorruptionResistanceSourceCategory.EQUIPMENT,
             amount));
     }
 
+    /** Releases a snapshot retained by an aborted/short-circuited preflight. */
     public synchronized void release(ArcanaCastId castId) {
         snapshots.remove(Objects.requireNonNull(castId, "castId"));
+    }
+
+    public synchronized int activeSnapshots() {
+        return snapshots.size();
     }
 
     private FrozenSnapshot snapshotFor(ArcanaCastId castId, UUID casterId, long serverTick) {
@@ -89,10 +98,10 @@ public final class CuriosHazardResistanceProvider
             return existing;
         }
         if (snapshots.size() >= MAX_ACTIVE_SNAPSHOTS) {
-            throw new IllegalStateException("Curios equipment snapshot cache is full");
+            throw new IllegalStateException("standard equipment snapshot cache is full");
         }
         ArcaneEquipmentSnapshotService.Snapshot captured =
-            Objects.requireNonNull(source.snapshot(casterId), "Curios equipment snapshot");
+            Objects.requireNonNull(source.capture(casterId), "equipment snapshot");
         FrozenSnapshot created = new FrozenSnapshot(casterId, serverTick, captured);
         snapshots.put(castId, created);
         return created;

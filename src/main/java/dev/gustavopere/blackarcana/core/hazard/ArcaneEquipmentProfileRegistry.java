@@ -25,6 +25,23 @@ public final class ArcaneEquipmentProfileRegistry {
         profiles.put(canonical, profile);
     }
 
+    public synchronized void replaceAll(Map<String, ArcaneEquipmentProfile> replacements) {
+        Objects.requireNonNull(replacements, "replacements");
+        if (replacements.size() > MAX_PROFILES) {
+            throw new IllegalArgumentException("too many arcane equipment profiles: " + replacements.size());
+        }
+        LinkedHashMap<String, ArcaneEquipmentProfile> validated = new LinkedHashMap<>();
+        for (Map.Entry<String, ArcaneEquipmentProfile> entry : replacements.entrySet()) {
+            String canonical = canonicalItemId(entry.getKey());
+            ArcaneEquipmentProfile profile = Objects.requireNonNull(entry.getValue(), "profile");
+            if (validated.putIfAbsent(canonical, profile) != null) {
+                throw new IllegalArgumentException("duplicate arcane equipment profile: " + canonical);
+            }
+        }
+        profiles.clear();
+        profiles.putAll(validated);
+    }
+
     public synchronized Optional<ArcaneEquipmentProfile> resolve(String itemId) {
         return Optional.ofNullable(profiles.get(canonicalItemId(itemId)));
     }

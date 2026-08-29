@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,15 +36,22 @@ class CuriosHazardResistanceProviderTest {
         false);
 
     @Test
-    void curioSnapshotContributesToBothResistanceChannels() {
-        CuriosHazardResistanceProvider provider = new CuriosHazardResistanceProvider(
-            ignored -> snapshot(35.0D, 22.0D));
+    void curioSnapshotIsFrozenAcrossBothResistanceChannels() {
+        AtomicInteger calls = new AtomicInteger();
+        AtomicReference<ArcaneEquipmentSnapshotService.Snapshot> current =
+            new AtomicReference<>(snapshot(35.0D, 22.0D));
+        CuriosHazardResistanceProvider provider = new CuriosHazardResistanceProvider(ignored -> {
+            calls.incrementAndGet();
+            return current.get();
+        });
 
         var arcane = provider.contributions(new ArcaneResistanceQuery(
             CAST, SPELL, PLAYER, "minecraft:overworld", 100L, PROFILE));
+        current.set(snapshot(90.0D, 5.0D));
         var corruption = provider.contributions(new CorruptionResistanceQuery(
             CAST, SPELL, PLAYER, "minecraft:overworld", 100L, PROFILE));
 
+        assertEquals(1, calls.get());
         assertEquals(1, arcane.size());
         assertEquals(35.0D, arcane.getFirst().amount());
         assertEquals(ArcaneResistanceSourceCategory.CURIO, arcane.getFirst().category());
@@ -64,7 +72,7 @@ class CuriosHazardResistanceProviderTest {
     }
 
     @Test
-    void eachProviderQueryTakesOneBoundedSnapshotOnly() {
+    void firstProviderQueryTakesOneBoundedSnapshotOnly() {
         AtomicInteger calls = new AtomicInteger();
         CuriosHazardResistanceProvider provider = new CuriosHazardResistanceProvider(ignored -> {
             calls.incrementAndGet();
