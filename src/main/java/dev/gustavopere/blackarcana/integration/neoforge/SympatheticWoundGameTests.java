@@ -13,6 +13,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -64,6 +65,44 @@ public final class SympatheticWoundGameTests {
             "mirrored damage must carry the dedicated Sympathetic Wound damage type");
         helper.assertTrue(mirroredSource.getEntity() == first,
             "the wounded source entity must remain attributed as the causing entity");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 60)
+    public static void playerTargetsAreDisabledByDefault(GameTestHelper helper) {
+        var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
+        var target = helper.makeMockServerPlayerInLevel();
+        target.setGameMode(GameType.SURVIVAL);
+        target.getAbilities().invulnerable = false;
+        target.getAbilities().instabuild = false;
+        target.onUpdateAbilities();
+
+        MinecraftServer server = helper.getLevel().getServer();
+        long now = server.overworld().getGameTime();
+        ArcanaDecision decision = MinecraftSympatheticWoundRuntime.bind(server, new SympatheticWoundService.LinkSpec(
+            caster.getUUID(), target.getUUID(), now + 40L, 0.25D, 10.0D, 40.0D));
+
+        helper.assertTrue(!decision.allowed(), "hostile player health-sharing targets must be disabled by default");
+        helper.assertTrue("sympathetic_wound_player_target_disabled".equals(decision.code()),
+            "player denial must use the dedicated conservative-policy code");
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 60)
+    public static void invulnerableTargetsUseCanonicalEntityAdmission(GameTestHelper helper) {
+        var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(5, 2, 1));
+        target.setInvulnerable(true);
+
+        MinecraftServer server = helper.getLevel().getServer();
+        long now = server.overworld().getGameTime();
+        ArcanaDecision decision = MinecraftSympatheticWoundRuntime.bind(server, new SympatheticWoundService.LinkSpec(
+            caster.getUUID(), target.getUUID(), now + 40L, 0.25D, 10.0D, 40.0D));
+
+        helper.assertTrue(!decision.allowed(), "invulnerable targets must be denied by canonical entity admission");
+        helper.assertTrue("target_invulnerable".equals(decision.code()),
+            "runtime must preserve the canonical entity-admission denial code");
         helper.succeed();
     }
 }
