@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.integration.neoforge;
 
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.content.noetic.NullifyingGazeTargetPolicy;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.core.world.EntityInteractionAuthorization;
@@ -127,10 +128,9 @@ public final class MinecraftNullifyingGazeRuntime {
         if (!authorization.decision().allowed()) {
             return new NullifyResult(authorization.decision(), Optional.empty());
         }
-        if (facts.boss()) {
-            return NullifyResult.denied(
-                "nullifying_gaze_boss_resistant",
-                "Boss targets require an explicit provider-specific nullification contract");
+        ArcanaDecision targetPolicy = NullifyingGazeTargetPolicy.evaluate(facts);
+        if (!targetPolicy.allowed()) {
+            return new NullifyResult(targetPolicy, Optional.empty());
         }
 
         EffectPolicyState state = stateFor(server);
