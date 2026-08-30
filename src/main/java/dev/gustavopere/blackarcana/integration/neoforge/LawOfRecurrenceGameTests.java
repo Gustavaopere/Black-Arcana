@@ -36,21 +36,23 @@ public final class LawOfRecurrenceGameTests {
         helper.assertTrue(target.hurt(target.damageSources().source(DamageTypes.MAGIC), 10.0F),
             "first fixture hit must be accepted");
         helper.assertTrue(close(target.getHealth(), 11.0F),
-            "first recognized family hit must receive one resistance stack");
+            "first recognized family hit must receive one resistance stack; actualHealth=" + target.getHealth()
+                + ", activeSessions=" + activeSessions(server));
 
         target.setHealth(20.0F);
         target.invulnerableTime = 0;
         helper.assertTrue(target.hurt(target.damageSources().source(DamageTypes.MAGIC), 10.0F),
             "second fixture hit must be accepted");
         helper.assertTrue(close(target.getHealth(), 12.0F),
-            "repeated family must build the second resistance stack");
+            "repeated family must build the second resistance stack; actualHealth=" + target.getHealth());
 
         target.setHealth(20.0F);
         target.invulnerableTime = 0;
         helper.assertTrue(target.hurt(target.damageSources().source(DamageTypes.IN_FIRE), 10.0F),
             "switched fixture hit must be accepted");
         helper.assertTrue(close(target.getHealth(), 9.65F),
-            "family switch must combine one new-family resistance stack with bounded vulnerability");
+            "family switch must combine one new-family resistance stack with bounded vulnerability; actualHealth="
+                + target.getHealth());
         helper.succeed();
     }
 
@@ -61,14 +63,18 @@ public final class LawOfRecurrenceGameTests {
         LawOfRecurrenceTracker.Policy policy = new LawOfRecurrenceTracker.Policy(
             0.10D, 0.40D, 0.15D, 0.60D, 8, 4, 2L);
 
+        int sessionsBefore = activeSessions(server);
         ArcanaDecision activated = activate(server, target.getUUID(), policy);
         helper.assertTrue(activated.allowed(), "short Law of Recurrence session must activate");
-        helper.assertTrue(activeSessions(server) == 1, "activation must create exactly one bounded session");
+        int sessionsAfter = activeSessions(server);
+        helper.assertTrue(sessionsAfter == 1,
+            "activation must create exactly one bounded session; before=" + sessionsBefore + ", after=" + sessionsAfter);
 
         helper.runAfterDelay(4L, () -> {
             try {
-                helper.assertTrue(activeSessions(server) == 0,
-                    "expired Law of Recurrence sessions must be pruned by server tick");
+                int remaining = activeSessions(server);
+                helper.assertTrue(remaining == 0,
+                    "expired Law of Recurrence sessions must be pruned by server tick; remaining=" + remaining);
                 helper.succeed();
             } catch (Exception failure) {
                 helper.fail("failed to inspect Law of Recurrence runtime: " + failure.getMessage());
