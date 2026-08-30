@@ -38,6 +38,18 @@ public final class InnerDominionLifecycleDiagnosticGameTests {
 
         BlockPos displaced = helper.absolutePos(new BlockPos(5, 2, 1));
         owner.setPos(displaced.getX() + 0.5D, displaced.getY(), displaced.getZ() + 0.5D);
+
+        var originSafety = MinecraftSafeDestinationResolver.evaluate(
+            server,
+            owner,
+            helper.getLevel(),
+            originX,
+            originY,
+            originZ);
+        helper.assertTrue(originSafety.allowed(),
+            "captured origin unexpectedly rejected before recovery; code=" + originSafety.code()
+                + " facts=" + originSafety.facts());
+
         var recovery = MinecraftInnerDominionRuntime.recoverParticipant(server, owner);
 
         double distance = distanceSquared(owner.getX(), owner.getY(), owner.getZ(), originX, originY, originZ);
