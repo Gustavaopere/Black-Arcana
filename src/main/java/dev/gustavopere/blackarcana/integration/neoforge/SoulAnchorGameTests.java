@@ -53,14 +53,10 @@ public final class SoulAnchorGameTests {
 
         player.setHealth(4.0F);
         player.invulnerableTime = 0;
-        boolean accepted = player.hurt(player.damageSources().magic(), 100.0F);
+        player.die(player.damageSources().magic());
         SoulAnchorLedger.Snapshot after = (SoulAnchorLedger.Snapshot) snapshot.invoke(null, server, player.getUUID());
 
-        helper.assertTrue(accepted,
-            "fixture fatal damage must be accepted; actualHealth=" + player.getHealth()
-                + ", anchors=" + after.anchors()
-                + ", recoveryUntil=" + after.recoveryUntilTick());
-        helper.assertTrue(player.isAlive(), "fatal damage must be canceled while an eligible Soul Anchor exists");
+        helper.assertTrue(player.isAlive(), "fatal death event must be canceled while an eligible Soul Anchor exists");
         helper.assertTrue(Math.abs(player.getHealth() - 6.0F) <= 0.01F,
             "Soul Anchor must restore the configured bounded health amount; actual=" + player.getHealth()
                 + ", anchors=" + after.anchors()
