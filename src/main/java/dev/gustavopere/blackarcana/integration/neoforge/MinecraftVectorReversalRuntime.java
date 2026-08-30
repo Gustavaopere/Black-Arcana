@@ -85,11 +85,12 @@ public final class MinecraftVectorReversalRuntime {
         if (!Double.isFinite(requestedIntensity) || requestedIntensity <= 0.0D) {
             return VectorReversalResult.denied("vector_reversal_intensity", "Vector intensity must be finite and positive");
         }
-        if (!Double.isFinite(maxSpeed) || maxSpeed <= 0.0D) {
-            return VectorReversalResult.denied("vector_reversal_speed", "Vector speed cap must be finite and positive");
+        if (!Double.isFinite(maxSpeed) || maxSpeed <= 0.0D
+                || maxSpeed > LiminalSafetyCeilings.MAX_RESULTING_SPEED) {
+            return VectorReversalResult.denied("vector_reversal_speed", "Vector speed cap is outside the hard Liminal ceiling");
         }
-        if (maxEntities <= 0 || maxEntities > LiminalSafetyCeilings.MAX_VECTOR_TARGETS) {
-            return VectorReversalResult.denied("vector_reversal_target_cap", "Vector target cap exceeds the hard Liminal ceiling");
+        if (maxEntities <= 0 || maxEntities > DEFAULT_MAX_ENTITIES) {
+            return VectorReversalResult.denied("vector_reversal_target_cap", "Vector target cap exceeds the spell safety cap");
         }
         if (!validMultiplier(playerMultiplier) || !validMultiplier(bossMultiplier)) {
             return VectorReversalResult.denied("vector_reversal_multiplier", "Vector target multipliers must be finite values in [0, 1]");
@@ -177,10 +178,13 @@ public final class MinecraftVectorReversalRuntime {
             }
 
             Vec3 impulse = normalizedDirection.scale(policyIntensity);
-            Vec3 settledVelocity = VectorImpulseLimiter.clamp(
-                target.getDeltaMovement().add(impulse),
+            Vec3 requestedVelocity = target.getDeltaMovement().add(impulse);
+            VectorImpulseLimiter.Vector settledVelocity = VectorImpulseLimiter.clamp(
+                requestedVelocity.x,
+                requestedVelocity.y,
+                requestedVelocity.z,
                 maxSpeed);
-            target.setDeltaMovement(settledVelocity);
+            target.setDeltaMovement(settledVelocity.x(), settledVelocity.y(), settledVelocity.z());
             affected++;
         }
 
