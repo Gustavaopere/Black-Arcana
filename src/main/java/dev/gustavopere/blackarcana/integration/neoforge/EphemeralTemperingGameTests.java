@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -50,8 +51,7 @@ public final class EphemeralTemperingGameTests {
 
         LivingDamageEvent.Pre damage = new LivingDamageEvent.Pre(
             target,
-            target.damageSources().playerAttack(owner),
-            3.0F);
+            new DamageContainer(target.damageSources().playerAttack(owner), 3.0F));
         onLivingDamage(damage);
         helper.assertTrue(Math.abs(damage.getNewDamage() - 5.0F) < 0.001F,
             "MELEE_DAMAGE tempering must add its bounded overlay to vanilla player-attack final damage");
@@ -68,8 +68,7 @@ public final class EphemeralTemperingGameTests {
             "expired tempering overlay must be removed completely");
         LivingDamageEvent.Pre afterExpiry = new LivingDamageEvent.Pre(
             target,
-            target.damageSources().playerAttack(owner),
-            3.0F);
+            new DamageContainer(target.damageSources().playerAttack(owner), 3.0F));
         onLivingDamage(afterExpiry);
         helper.assertTrue(Math.abs(afterExpiry.getNewDamage() - 3.0F) < 0.001F,
             "expiry must restore unmodified melee damage behavior");
