@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -64,6 +65,35 @@ public final class OccultAppraisalGameTests {
             "range denial must expose the canonical Occult Appraisal diagnostic");
         helper.assertTrue(metadata(result).isEmpty(),
             "denied Occult Appraisal must not leak metadata");
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void appraisalFailsClosedWhenLineOfSightIsBlocked(GameTestHelper helper) throws Exception {
+        var caster = helper.makeMockServerPlayerInLevel();
+        var target = helper.makeMockServerPlayerInLevel();
+        BlockPos casterPos = new BlockPos(2, 2, 1);
+        BlockPos targetPos = new BlockPos(6, 2, 1);
+        place(helper, caster, casterPos);
+        place(helper, target, targetPos);
+
+        BlockPos wall = helper.absolutePos(new BlockPos(4, 2, 1));
+        helper.getLevel().setBlockAndUpdate(wall, Blocks.STONE.defaultBlockState());
+        helper.getLevel().setBlockAndUpdate(wall.above(), Blocks.STONE.defaultBlockState());
+
+        Object result = appraise(
+            helper.getLevel().getServer(),
+            caster.getUUID(),
+            target.getUUID(),
+            16.0D,
+            Set.of("health", "held_item"));
+
+        helper.assertTrue(!decision(result).allowed(),
+            "Occult Appraisal must fail closed when server LOS is blocked");
+        helper.assertTrue("occult_appraisal_los".equals(decision(result).code()),
+            "blocked LOS must expose the canonical Occult Appraisal diagnostic");
+        helper.assertTrue(metadata(result).isEmpty(),
+            "LOS-denied Occult Appraisal must not leak metadata");
         helper.succeed();
     }
 
