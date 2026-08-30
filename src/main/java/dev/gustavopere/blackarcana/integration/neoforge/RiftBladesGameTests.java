@@ -26,20 +26,22 @@ public final class RiftBladesGameTests {
         MinecraftServer server = helper.getLevel().getServer();
         float healthBefore = target.getHealth();
         double distanceBefore = caster.distanceToSqr(target);
-        double landingX = target.getX() - 1.5D;
+
+        // foundation_empty is intentionally tiny and the GameTest harness surrounds out-of-template
+        // space with barriers. Build an explicit supported air landing cell so this test exercises
+        // Rift Blades safety policy rather than accidentally targeting harness geometry.
+        double landingX = target.getX() - 2.0D;
         double landingY = target.getY();
         double landingZ = target.getZ();
         BlockPos landingPos = BlockPos.containing(landingX, landingY, landingZ);
+        helper.getLevel().setBlockAndUpdate(landingPos, Blocks.AIR.defaultBlockState());
+        helper.getLevel().setBlockAndUpdate(landingPos.above(), Blocks.AIR.defaultBlockState());
         var landingBox = caster.getBoundingBox().move(
             landingX - caster.getX(),
             landingY - caster.getY(),
             landingZ - caster.getZ());
-        boolean currentBlockCollisionFree = helper.getLevel().noBlockCollision(caster, caster.getBoundingBox());
-        boolean blockCollisionFree = helper.getLevel().noBlockCollision(caster, landingBox);
-        int entityCollisionCount = helper.getLevel().getEntityCollisions(caster, landingBox).size();
-        String landingState = helper.getLevel().getBlockState(landingPos).toString();
-        String landingAboveState = helper.getLevel().getBlockState(landingPos.above()).toString();
-        String landingBelowState = helper.getLevel().getBlockState(landingPos.below()).toString();
+        helper.assertTrue(helper.getLevel().noBlockCollision(caster, landingBox),
+            "Rift Blades safe-landing fixture must be collision-free before settlement");
 
         Object result = resolveMarkedStrike(
             server,
@@ -59,13 +61,7 @@ public final class RiftBladesGameTests {
         helper.assertTrue(target.getHealth() < healthBefore,
             "eligible marked strike must damage the resolved target");
         helper.assertTrue(gapClosed(result),
-            "safe loaded landing candidate must allow optional gap-close; code=" + gapCloseCode(result)
-                + ", currentBlockCollisionFree=" + currentBlockCollisionFree
-                + ", blockCollisionFree=" + blockCollisionFree
-                + ", entityCollisionCount=" + entityCollisionCount
-                + ", landing=" + landingState
-                + ", above=" + landingAboveState
-                + ", below=" + landingBelowState);
+            "safe loaded landing candidate must allow optional gap-close; code=" + gapCloseCode(result));
         helper.assertTrue(caster.distanceToSqr(target) < distanceBefore,
             "successful gap-close must move the caster closer to the marked target");
         helper.succeed();
@@ -80,7 +76,7 @@ public final class RiftBladesGameTests {
         double casterXBefore = caster.getX();
         double casterYBefore = caster.getY();
         double casterZBefore = caster.getZ();
-        double landingX = target.getX() - 1.5D;
+        double landingX = target.getX() - 2.0D;
         double landingY = target.getY();
         double landingZ = target.getZ();
         BlockPos blocked = BlockPos.containing(landingX, landingY, landingZ);
