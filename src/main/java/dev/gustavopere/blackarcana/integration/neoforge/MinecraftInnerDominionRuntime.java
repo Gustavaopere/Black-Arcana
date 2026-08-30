@@ -30,8 +30,9 @@ import java.util.UUID;
  * participant set. Closing revalidates every route immediately before movement and removes
  * the journal entry only after every loaded participant has settled successfully.
  *
- * Restart/offline recovery is intentionally a separate checkpoint; this boundary therefore
- * keeps unavailable participants journaled rather than discarding their return obligation.
+ * Recovery obligations are mirrored into overworld SavedData after every journal mutation.
+ * A volatile-state cache miss therefore rehydrates the bounded journal rather than silently
+ * losing sessions after a restart or runtime cache reset.
  */
 public final class MinecraftInnerDominionRuntime {
     private static final double SETTLED_EPSILON_SQUARED = 1.0E-6D;
@@ -147,14 +148,18 @@ public final class MinecraftInnerDominionRuntime {
         }
 
         long now = server.overworld().getGameTime();
-        InnerDominionSessionJournal.OpenResult opened = state(server).journal.open(
+        State state = state(server);
+        InnerDominionSessionJournal.OpenResult opened = state.journal.open(
             sessionId,
             ownerId,
             now,
             durationTicks,
             routes);
         return switch (opened) {
-            case OPENED -> new OpenSessionResult(ArcanaDecision.allow(), true, routes.size());
+            case OPENED -> {
+                state.persist();
+                yield new OpenSessionResult(ArcanaDecision.allow(), true, routes.size());
+            }
             case DUPLICATE_SESSION -> OpenSessionResult.denied(
                 "inner_dominion_duplicate_session",
                 "Inner Dominion session id is already active");
@@ -173,12 +178,7 @@ public final class MinecraftInnerDominionRuntime {
     public static CloseSessionResult closeSession(MinecraftServer server, UUID sessionId) {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(sessionId, "sessionId");
-        State state = STATES.get(server);
-        if (state == null) {
-            return CloseSessionResult.denied(
-                "inner_dominion_session_missing",
-                "Inner Dominion server state is not active");
-        }
+        State state = state(server);
 
         InnerDominionSessionJournal.Session session = state.journal.snapshot().stream()
             .filter(candidate -> candidate.sessionId().equals(sessionId))
@@ -258,6 +258,7 @@ public final class MinecraftInnerDominionRuntime {
                 "inner_dominion_session_changed",
                 "Inner Dominion session changed before close settlement");
         }
+        state.persist();
         return new CloseSessionResult(
             ArcanaDecision.allow(),
             true,
@@ -267,8 +268,7 @@ public final class MinecraftInnerDominionRuntime {
 
     public static int activeSessions(MinecraftServer server) {
         Objects.requireNonNull(server, "server");
-        State state = STATES.get(server);
-        return state == null ? 0 : state.journal.activeSessions();
+        return state(server).journal.activeSessions();
     }
 
     private static Optional<DomainReturnPoint> findFallback(
@@ -297,7 +297,7 @@ public final class MinecraftInnerDominionRuntime {
 
     private static State state(MinecraftServer server) {
         synchronized (STATES) {
-            return STATES.computeIfAbsent(server, ignored -> new State());
+            return STATES.computeIfAbsent(server, State::new);
         }
     }
 
@@ -357,10 +357,23 @@ public final class MinecraftInnerDominionRuntime {
     }
 
     private static final class State {
-        private final InnerDominionSessionJournal journal = new InnerDominionSessionJournal(
-            ForbiddenDomainSafetyCeilings.MAX_ACTIVE_SESSIONS,
-            ForbiddenDomainSafetyCeilings.MAX_PARTICIPANTS,
-            ForbiddenDomainSafetyCeilings.MAX_DURATION_TICKS);
+        private final InnerDominionSavedData savedData;
+        private final InnerDominionSessionJournal journal;
+
+        private State(MinecraftServer server) {
+            savedData = server.overworld().getDataStorage().computeIfAbsent(
+                InnerDominionSavedData.factory(),
+                InnerDominionSavedData.DATA_NAME);
+            journal = new InnerDominionSessionJournal(
+                ForbiddenDomainSafetyCeilings.MAX_ACTIVE_SESSIONS,
+                ForbiddenDomainSafetyCeilings.MAX_PARTICIPANTS,
+                ForbiddenDomainSafetyCeilings.MAX_DURATION_TICKS);
+            journal.restore(savedData.sessions(), server.overworld().getGameTime());
+        }
+
+        private void persist() {
+            savedData.replaceSessions(journal.snapshot());
+        }
     }
 
     public record OpenSessionResult(ArcanaDecision decision, boolean opened, int participantCount) {
