@@ -44,12 +44,7 @@ public final class MinecraftSpiritSightRuntime {
     public static ArcanaDecision registerProvider(MinecraftServer server, SpiritTraceProvider provider) {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(provider, "provider");
-        ServerState state = STATES.get(server);
-        if (state == null) {
-            return ArcanaDecision.deny(
-                "spirit_sight_runtime_unavailable",
-                "Spirit Sight runtime is unavailable on this server");
-        }
+        ServerState state = stateForRegistration(server);
         String providerId = provider.providerId();
         if (!SpiritTraceProvider.validProviderId(providerId)) {
             return ArcanaDecision.deny(
@@ -185,8 +180,14 @@ public final class MinecraftSpiritSightRuntime {
         return List.copyOf(visible);
     }
 
+    private static ServerState stateForRegistration(MinecraftServer server) {
+        synchronized (STATES) {
+            return STATES.computeIfAbsent(server, ignored -> new ServerState());
+        }
+    }
+
     private static void onServerStarted(ServerStartedEvent event) {
-        STATES.put(event.getServer(), new ServerState());
+        stateForRegistration(event.getServer());
     }
 
     private static void onServerTick(ServerTickEvent.Post event) {
