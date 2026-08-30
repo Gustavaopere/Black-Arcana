@@ -133,4 +133,39 @@ public final class EchoArmamentGameTests {
             "logout must atomically remove owner echoes and release budget");
         helper.succeed();
     }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void activeEchoBudgetRejectsFortyNinthManifestation(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        var server = helper.getLevel().getServer();
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.NETHERITE_SWORD));
+        String profileId = "black_arcana:test_budget_echo";
+        helper.assertTrue(MinecraftEchoArmamentRuntime.rememberHeldWeapon(server, player.getUUID(), profileId)
+                .decision().allowed(),
+            "test profile must be remembered before saturation");
+        long nowTick = server.getTickCount();
+
+        for (int index = 0; index < ProjectionSafetyCeilings.MAX_ACTIVE_ECHOES; index++) {
+            helper.assertTrue(MinecraftEchoArmamentRuntime.manifest(
+                    server, player.getUUID(), profileId, nowTick, 200L).decision().allowed(),
+                "every echo up to the hard active cap must be admitted");
+        }
+        helper.assertTrue(MinecraftEchoArmamentRuntime.activeEchoes(server, player.getUUID())
+                == ProjectionSafetyCeilings.MAX_ACTIVE_ECHOES,
+            "active echo accounting must stop exactly at the hard cap");
+
+        var overflow = MinecraftEchoArmamentRuntime.manifest(
+            server, player.getUUID(), profileId, nowTick, 200L);
+        helper.assertTrue(!overflow.decision().allowed(), "the 49th concurrent echo must fail closed");
+        helper.assertTrue(overflow.decision().code().equals("echo_armament_active_capacity"),
+            "overflow denial must use the stable active-capacity code");
+        helper.assertTrue(overflow.manifestation().isEmpty(),
+            "capacity denial must never return an untracked manifestation");
+
+        MinecraftEchoArmamentRuntime.onPlayerLoggedOut(new PlayerEvent.PlayerLoggedOutEvent(player));
+        helper.assertTrue(MinecraftEchoArmamentRuntime.activeEchoes(server, player.getUUID()) == 0,
+            "cleanup after saturation must release every budget slot");
+        helper.succeed();
+    }
 }
