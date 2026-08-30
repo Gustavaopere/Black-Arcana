@@ -34,7 +34,8 @@ public final class GazeOfStillnessGameTests {
 
         Object result = start(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(),
             20L, 16.0D, 0.0D, 0.5D, 0.5D, 80L);
-        helper.assertTrue(decision(result).allowed(), "valid reciprocal Gaze must start");
+        ArcanaDecision startDecision = decision(result);
+        helper.assertTrue(startDecision.allowed(), "valid reciprocal Gaze must start; " + initialDiagnostic(startDecision, caster, target));
 
         target.setDeltaMovement(new Vec3(0.1D, 0.0D, 0.0D));
         helper.runAfterDelay(2L, () -> {
@@ -56,7 +57,8 @@ public final class GazeOfStillnessGameTests {
 
         Object result = start(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(),
             20L, 16.0D, 0.0D, 0.5D, 0.5D, 80L);
-        helper.assertTrue(decision(result).allowed(), "fixture Gaze must start");
+        ArcanaDecision startDecision = decision(result);
+        helper.assertTrue(startDecision.allowed(), "fixture Gaze must start; " + initialDiagnostic(startDecision, caster, target));
 
         target.setYRot(-90.0F);
         target.setYHeadRot(-90.0F);
@@ -113,6 +115,26 @@ public final class GazeOfStillnessGameTests {
         } catch (ReflectiveOperationException exception) {
             throw new IllegalStateException(exception);
         }
+    }
+
+    private static String initialDiagnostic(ArcanaDecision decision, LivingEntity caster, LivingEntity target) {
+        return "code=" + decision.code()
+            + ", casterPos=" + caster.position()
+            + ", targetPos=" + target.position()
+            + ", casterAlive=" + caster.isAlive()
+            + ", targetAlive=" + target.isAlive()
+            + ", distance=" + Math.sqrt(caster.distanceToSqr(target))
+            + ", casterLos=" + caster.hasLineOfSight(target)
+            + ", targetLos=" + target.hasLineOfSight(caster)
+            + ", casterDot=" + facingDot(caster, target)
+            + ", targetDot=" + facingDot(target, caster);
+    }
+
+    private static double facingDot(LivingEntity source, LivingEntity target) {
+        Vec3 direction = target.getEyePosition().subtract(source.getEyePosition());
+        double lengthSquared = direction.lengthSqr();
+        if (!Double.isFinite(lengthSquared) || lengthSquared <= 1.0E-12D) return Double.NaN;
+        return source.getLookAngle().dot(direction.scale(1.0D / Math.sqrt(lengthSquared)));
     }
 
     private static void faceEachOther(LivingEntity caster, LivingEntity target) {
