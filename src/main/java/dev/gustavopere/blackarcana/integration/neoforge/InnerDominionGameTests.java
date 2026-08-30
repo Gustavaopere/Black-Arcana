@@ -7,6 +7,8 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -226,6 +228,86 @@ public final class InnerDominionGameTests {
             "last participant recovery must close the persisted session");
         helper.assertTrue(distanceSquared(guest.getX(), guest.getY(), guest.getZ(), guestOriginX, guestOriginY, guestOriginZ) < 0.01D,
             "remaining participant must use the original server-captured return route");
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void logoutEventReturnsParticipantBeforeRemoval(GameTestHelper helper) throws Exception {
+        var owner = helper.makeMockServerPlayerInLevel();
+        BlockPos originRelative = new BlockPos(1, 2, 1);
+        place(helper, owner, originRelative);
+        double originX = owner.getX();
+        double originY = owner.getY();
+        double originZ = owner.getZ();
+        MinecraftServer server = helper.getLevel().getServer();
+        UUID sessionId = UUID.randomUUID();
+
+        Object opened = open(server, sessionId, owner.getUUID(), List.of(owner.getUUID()), 8.0D, 200L);
+        helper.assertTrue(decision(opened).allowed(), "logout recovery fixture session must open");
+        place(helper, owner, new BlockPos(5, 2, 1));
+
+        try {
+            NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerLoggedOutEvent(owner));
+            helper.assertTrue(activeSessions(server) == 0,
+                "logout event must settle the participant return obligation before PlayerList removal");
+            helper.assertTrue(distanceSquared(owner.getX(), owner.getY(), owner.getZ(), originX, originY, originZ) < 0.01D,
+                "logout event must return the player to the captured origin before vanilla save");
+        } finally {
+            if (activeSessions(server) > 0) close(server, sessionId);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void loginEventRehydratesAndReturnsPendingParticipant(GameTestHelper helper) throws Exception {
+        var owner = helper.makeMockServerPlayerInLevel();
+        place(helper, owner, new BlockPos(1, 2, 1));
+        double originX = owner.getX();
+        double originY = owner.getY();
+        double originZ = owner.getZ();
+        MinecraftServer server = helper.getLevel().getServer();
+        UUID sessionId = UUID.randomUUID();
+
+        Object opened = open(server, sessionId, owner.getUUID(), List.of(owner.getUUID()), 8.0D, 200L);
+        helper.assertTrue(decision(opened).allowed(), "login recovery fixture session must open");
+        place(helper, owner, new BlockPos(5, 2, 1));
+        dropVolatileState(server);
+
+        try {
+            NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerLoggedInEvent(owner));
+            helper.assertTrue(activeSessions(server) == 0,
+                "login event must rehydrate and settle persisted Inner Dominion recovery state");
+            helper.assertTrue(distanceSquared(owner.getX(), owner.getY(), owner.getZ(), originX, originY, originZ) < 0.01D,
+                "login recovery must use the persisted captured return route");
+        } finally {
+            if (activeSessions(server) > 0) close(server, sessionId);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void respawnEventReturnsParticipantAfterDeathLifecycle(GameTestHelper helper) throws Exception {
+        var owner = helper.makeMockServerPlayerInLevel();
+        place(helper, owner, new BlockPos(1, 2, 1));
+        double originX = owner.getX();
+        double originY = owner.getY();
+        double originZ = owner.getZ();
+        MinecraftServer server = helper.getLevel().getServer();
+        UUID sessionId = UUID.randomUUID();
+
+        Object opened = open(server, sessionId, owner.getUUID(), List.of(owner.getUUID()), 8.0D, 200L);
+        helper.assertTrue(decision(opened).allowed(), "respawn recovery fixture session must open");
+        place(helper, owner, new BlockPos(5, 2, 1));
+
+        try {
+            NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerRespawnEvent(owner, false));
+            helper.assertTrue(activeSessions(server) == 0,
+                "respawn event must settle a pending Inner Dominion participant after death lifecycle replacement");
+            helper.assertTrue(distanceSquared(owner.getX(), owner.getY(), owner.getZ(), originX, originY, originZ) < 0.01D,
+                "respawn recovery must return the replacement player to the captured origin");
+        } finally {
+            if (activeSessions(server) > 0) close(server, sessionId);
+        }
         helper.succeed();
     }
 
