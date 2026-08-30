@@ -110,6 +110,25 @@ class OathforgedAscensionLedgerTest {
         assertEquals(2, ledger.points(firstTrack), "capacity denial must leave the prior committed track state unchanged");
     }
 
+    @Test
+    void snapshotRestorePreservesTrackPointsAndConsumedSacrificeReplayGuard() {
+        var original = new OathforgedAscensionLedger(8, 64, 8);
+        var track = new OathforgedAscensionLedger.TrackKey("weapon:restart", "black_arcana:edge");
+        var spent = token(160.0D, false);
+        assertTrue(original.settle(track, List.of(spent), POLICY, 12).accepted());
+
+        var restored = new OathforgedAscensionLedger(8, 64, 8);
+        restored.restore(original.snapshot());
+
+        assertEquals(4, restored.points(track));
+        assertTrue(restored.consumed(spent.sacrificeId()));
+        var replay = restored.settle(track, List.of(spent), POLICY, 12);
+        assertFalse(replay.accepted());
+        assertEquals("sacrifice_already_consumed", replay.denialCode(),
+            "restart restoration must preserve exact-once sacrifice semantics");
+        assertEquals(4, restored.points(track));
+    }
+
     private static OathforgedAscensionLedger.SacrificeToken token(double eligibleValue, boolean recursive) {
         return new OathforgedAscensionLedger.SacrificeToken(UUID.randomUUID(), eligibleValue, recursive);
     }
