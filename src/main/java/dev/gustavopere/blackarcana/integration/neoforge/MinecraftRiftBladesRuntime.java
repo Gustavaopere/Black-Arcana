@@ -75,7 +75,7 @@ public final class MinecraftRiftBladesRuntime {
 
         EntityInteractionAuthorization damageAuthorization = authorizeDamage(server, runtime, caster, target, level);
         if (!damageAuthorization.decision().allowed()) {
-            return new StrikeResult(damageAuthorization.decision(), 0.0D, false);
+            return new StrikeResult(damageAuthorization.decision(), 0.0D, false, "not_attempted");
         }
 
         // Hard technical ceiling only. Stage 08 owns final spell balance below this boundary.
@@ -88,33 +88,37 @@ public final class MinecraftRiftBladesRuntime {
         }
         EntityInteractionAuthorization settlementAuthorization = authorizeDamage(server, runtime, caster, target, level);
         if (!settlementAuthorization.decision().allowed()) {
-            return new StrikeResult(settlementAuthorization.decision(), 0.0D, false);
+            return new StrikeResult(settlementAuthorization.decision(), 0.0D, false, "not_attempted");
         }
 
         float healthBefore = target.getHealth();
         target.hurt(target.damageSources().indirectMagic(caster, caster), (float) boundedDamage);
         double damageDealt = Math.max(0.0D, (double) healthBefore - target.getHealth());
         if (damageDealt <= 0.0D || !caster.isAlive()) {
-            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false);
+            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false, "no_damage");
         }
 
         double policyGapLimit = Math.min(
             maxGapCloseBlocks,
             settlementAuthorization.limits().maxDisplacementBlocks());
         if (policyGapLimit <= 0.0D || !withinGapLimit(caster, landingX, landingY, landingZ, policyGapLimit)) {
-            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false);
+            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false, "range_denied");
         }
 
-        if (!safeLanding(server, runtime, caster, level, landingX, landingY, landingZ)) {
-            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false);
+        LandingEvaluation landing = evaluateLanding(server, runtime, caster, level, landingX, landingY, landingZ);
+        if (!landing.allowed()) {
+            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false, landing.code());
         }
 
         // Re-resolve immediately before displacement so stale/unloaded/dead caster state cannot
         // be used to cross the already-validated destination boundary.
         LivingEntity settlementCaster = findLoadedLivingEntity(server, casterId);
-        if (settlementCaster != caster || !caster.isAlive()
-                || !safeLanding(server, runtime, caster, level, landingX, landingY, landingZ)) {
-            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false);
+        if (settlementCaster != caster || !caster.isAlive()) {
+            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false, "caster_changed");
+        }
+        LandingEvaluation settlementLanding = evaluateLanding(server, runtime, caster, level, landingX, landingY, landingZ);
+        if (!settlementLanding.allowed()) {
+            return new StrikeResult(ArcanaDecision.allow(), damageDealt, false, settlementLanding.code());
         }
 
         boolean teleported = caster.teleportTo(
@@ -125,7 +129,11 @@ public final class MinecraftRiftBladesRuntime {
             Set.<RelativeMovement>of(),
             caster.getYRot(),
             caster.getXRot());
-        return new StrikeResult(ArcanaDecision.allow(), damageDealt, teleported);
+        return new StrikeResult(
+            ArcanaDecision.allow(),
+            damageDealt,
+            teleported,
+            teleported ? "" : "teleport_failed");
     }
 
     private static EntityInteractionAuthorization authorizeDamage(
@@ -159,7 +167,7 @@ public final class MinecraftRiftBladesRuntime {
         return dx * dx + dy * dy + dz * dz <= limit * limit;
     }
 
-    private static boolean safeLanding(
+    private static LandingEvaluation evaluateLanding(
             MinecraftServer server,
             ArcanaServerRuntime runtime,
             LivingEntity caster,
@@ -168,7 +176,9 @@ public final class MinecraftRiftBladesRuntime {
             double landingY,
             double landingZ
     ) {
-        if (caster.getType().is(Tags.EntityTypes.TELEPORTING_NOT_SUPPORTED)) return false;
+        if (caster.getType().is(Tags.EntityTypes.TELEPORTING_NOT_SUPPORTED)) {
+            return LandingEvaluation.deny("teleport_unsupported");
+        }
 
         BlockPos landing = BlockPos.containing(landingX, landingY, landingZ);
         boolean loaded = level.getChunkSource().getChunkNow(landing.getX() >> 4, landing.getZ() >> 4) != null;
@@ -208,7 +218,7 @@ public final class MinecraftRiftBladesRuntime {
                 true,
                 protectionAllowed,
                 vehicleUnsafe));
-        return decision.allowed();
+        return decision.allowed() ? LandingEvaluation.allow() : LandingEvaluation.deny(decision.code());
     }
 
     private static LivingEntity findLoadedLivingEntity(MinecraftServer server, UUID entityId) {
@@ -219,9 +229,18 @@ public final class MinecraftRiftBladesRuntime {
         return null;
     }
 
-    public record StrikeResult(ArcanaDecision decision, double damageDealt, boolean gapClosed) {
+    private record LandingEvaluation(boolean allowed, String code) {
+        private LandingEvaluation {
+            Objects.requireNonNull(code, "code");
+        }
+        private static LandingEvaluation allow() { return new LandingEvaluation(true, ""); }
+        private static LandingEvaluation deny(String code) { return new LandingEvaluation(false, code); }
+    }
+
+    public record StrikeResult(ArcanaDecision decision, double damageDealt, boolean gapClosed, String gapCloseCode) {
         public StrikeResult {
             Objects.requireNonNull(decision, "decision");
+            Objects.requireNonNull(gapCloseCode, "gapCloseCode");
             if (!Double.isFinite(damageDealt) || damageDealt < 0.0D) {
                 throw new IllegalArgumentException("damageDealt must be finite and non-negative");
             }
@@ -231,10 +250,16 @@ public final class MinecraftRiftBladesRuntime {
             if (gapClosed && damageDealt <= 0.0D) {
                 throw new IllegalArgumentException("Rift Blades cannot gap-close without real damage settlement");
             }
+            if (gapClosed && !gapCloseCode.isEmpty()) {
+                throw new IllegalArgumentException("successful gap-close cannot carry a denial diagnostic");
+            }
+            if (!gapClosed && gapCloseCode.isEmpty()) {
+                throw new IllegalArgumentException("skipped gap-close must carry a diagnostic code");
+            }
         }
 
         public static StrikeResult denied(String code, String detail) {
-            return new StrikeResult(ArcanaDecision.deny(code, detail), 0.0D, false);
+            return new StrikeResult(ArcanaDecision.deny(code, detail), 0.0D, false, "not_attempted");
         }
     }
 }
