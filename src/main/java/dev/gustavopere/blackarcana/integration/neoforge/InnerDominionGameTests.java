@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -22,8 +21,8 @@ public final class InnerDominionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void localizedSessionReturnsParticipantsToCapturedOrigins(GameTestHelper helper) throws Exception {
-        var owner = helper.makeMockPlayer(GameType.SURVIVAL);
-        var guest = helper.makeMockPlayer(GameType.SURVIVAL);
+        var owner = helper.makeMockServerPlayerInLevel();
+        var guest = helper.makeMockServerPlayerInLevel();
         place(helper, owner, new BlockPos(1, 2, 1));
         place(helper, guest, new BlockPos(3, 2, 1));
         double guestOriginX = guest.getX();
@@ -56,8 +55,8 @@ public final class InnerDominionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void nestedParticipantFailsClosed(GameTestHelper helper) throws Exception {
-        var owner = helper.makeMockPlayer(GameType.SURVIVAL);
-        var guest = helper.makeMockPlayer(GameType.SURVIVAL);
+        var owner = helper.makeMockServerPlayerInLevel();
+        var guest = helper.makeMockServerPlayerInLevel();
         place(helper, owner, new BlockPos(1, 2, 1));
         place(helper, guest, new BlockPos(3, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
@@ -91,8 +90,8 @@ public final class InnerDominionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void participantOutsideRequestedRadiusFailsClosed(GameTestHelper helper) throws Exception {
-        var owner = helper.makeMockPlayer(GameType.SURVIVAL);
-        var guest = helper.makeMockPlayer(GameType.SURVIVAL);
+        var owner = helper.makeMockServerPlayerInLevel();
+        var guest = helper.makeMockServerPlayerInLevel();
         place(helper, owner, new BlockPos(1, 2, 1));
         place(helper, guest, new BlockPos(10, 2, 1));
 
@@ -112,8 +111,8 @@ public final class InnerDominionGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void invalidOriginUsesValidatedOwnerFallback(GameTestHelper helper) throws Exception {
-        var owner = helper.makeMockPlayer(GameType.SURVIVAL);
-        var guest = helper.makeMockPlayer(GameType.SURVIVAL);
+        var owner = helper.makeMockServerPlayerInLevel();
+        var guest = helper.makeMockServerPlayerInLevel();
         BlockPos ownerRelative = new BlockPos(1, 2, 1);
         BlockPos guestRelative = new BlockPos(3, 2, 1);
         place(helper, owner, ownerRelative);
