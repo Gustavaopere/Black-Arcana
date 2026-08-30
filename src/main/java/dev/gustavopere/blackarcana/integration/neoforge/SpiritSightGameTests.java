@@ -6,10 +6,15 @@ import dev.gustavopere.blackarcana.content.souls.SpiritSightPolicy;
 import dev.gustavopere.blackarcana.content.souls.SpiritTraceProvider;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.server.MinecraftServer;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -130,5 +135,79 @@ public final class SpiritSightGameTests {
             MinecraftSpiritSightRuntime.unregisterProvider(server, provider.providerId());
             helper.succeed();
         });
+    }
+
+    @SuppressWarnings({"removal", "unchecked"})
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void providerRegisteredBeforeStartedListenerSurvivesInitialization(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        MinecraftServer server = helper.getLevel().getServer();
+        UUID viewerId = player.getUUID();
+        var position = player.position();
+        Map<MinecraftServer, Object> states = spiritSightStates();
+        Object originalState;
+        synchronized (states) {
+            originalState = states.remove(server);
+            try {
+                SpiritTraceProvider provider = new SpiritTraceProvider() {
+                    @Override
+                    public String providerId() {
+                        return "black_arcana:test_early_spirit_sight";
+                    }
+
+                    @Override
+                    public List<Trace> query(Query query) {
+                        if (!viewerId.equals(query.viewerId())) return List.of();
+                        return List.of(new Trace(
+                            UUID.randomUUID(),
+                            position.x + 1.0D,
+                            position.y,
+                            position.z,
+                            SpiritSightPolicy.TraceKind.MALUM_SPIRIT,
+                            false));
+                    }
+                };
+
+                ArcanaDecision registered = MinecraftSpiritSightRuntime.registerProvider(server, provider);
+                helper.assertTrue(registered.allowed(),
+                    "optional host bootstrap must be able to register a Spirit Sight provider before its started listener");
+
+                invokeStartedListener(server);
+                SpiritSightPolicy.Policy policy = new SpiritSightPolicy.Policy(
+                    8.0D,
+                    20L,
+                    Set.of(SpiritSightPolicy.TraceKind.MALUM_SPIRIT),
+                    false);
+                helper.assertTrue(MinecraftSpiritSightRuntime.activate(server, viewerId, policy).allowed(),
+                    "Spirit Sight runtime must remain available after started initialization");
+                helper.assertTrue(MinecraftSpiritSightRuntime.visibleTraces(server, viewerId).size() == 1,
+                    "provider registered during an earlier ServerStartedEvent listener must survive later initialization");
+            } finally {
+                if (originalState == null) states.remove(server);
+                else states.put(server, originalState);
+            }
+        }
+        helper.succeed();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<MinecraftServer, Object> spiritSightStates() {
+        try {
+            Field field = MinecraftSpiritSightRuntime.class.getDeclaredField("STATES");
+            field.setAccessible(true);
+            return (Map<MinecraftServer, Object>) field.get(null);
+        } catch (ReflectiveOperationException failure) {
+            throw new AssertionError("could not access Spirit Sight server state for lifecycle regression", failure);
+        }
+    }
+
+    private static void invokeStartedListener(MinecraftServer server) {
+        try {
+            Method method = MinecraftSpiritSightRuntime.class.getDeclaredMethod("onServerStarted", ServerStartedEvent.class);
+            method.setAccessible(true);
+            method.invoke(null, new ServerStartedEvent(server));
+        } catch (ReflectiveOperationException failure) {
+            throw new AssertionError("could not invoke Spirit Sight started listener for lifecycle regression", failure);
+        }
     }
 }
