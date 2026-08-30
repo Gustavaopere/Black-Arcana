@@ -10,8 +10,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @SuppressWarnings("removal")
@@ -150,6 +152,40 @@ public final class InnerDominionGameTests {
         helper.succeed();
     }
 
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void persistedSessionRehydratesAfterVolatileStateLoss(GameTestHelper helper) throws Exception {
+        var owner = helper.makeMockServerPlayerInLevel();
+        var guest = helper.makeMockServerPlayerInLevel();
+        place(helper, owner, new BlockPos(1, 2, 1));
+        place(helper, guest, new BlockPos(3, 2, 1));
+        double guestOriginX = guest.getX();
+        double guestOriginY = guest.getY();
+        double guestOriginZ = guest.getZ();
+        MinecraftServer server = helper.getLevel().getServer();
+        UUID sessionId = UUID.randomUUID();
+
+        Object opened = open(
+            server,
+            sessionId,
+            owner.getUUID(),
+            List.of(owner.getUUID(), guest.getUUID()),
+            8.0D,
+            200L);
+        helper.assertTrue(decision(opened).allowed(), "restart-recovery fixture session must open");
+        place(helper, guest, new BlockPos(6, 2, 1));
+
+        dropVolatileState(server);
+        helper.assertTrue(activeSessions(server) == 1,
+            "persisted Inner Dominion recovery obligation must rehydrate after volatile state loss");
+
+        Object closed = close(server, sessionId);
+        helper.assertTrue(decision(closed).allowed() && closed(closed),
+            "rehydrated Inner Dominion session must remain safely closeable");
+        helper.assertTrue(distanceSquared(guest.getX(), guest.getY(), guest.getZ(), guestOriginX, guestOriginY, guestOriginZ) < 0.01D,
+            "rehydrated session must preserve the captured participant return route");
+        helper.succeed();
+    }
+
     private static Object open(
             MinecraftServer server,
             UUID sessionId,
@@ -176,6 +212,22 @@ public final class InnerDominionGameTests {
             "dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime");
         Method method = runtime.getMethod("closeSession", MinecraftServer.class, UUID.class);
         return method.invoke(null, server, sessionId);
+    }
+
+    private static int activeSessions(MinecraftServer server) throws Exception {
+        Class<?> runtime = Class.forName(
+            "dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime");
+        Method method = runtime.getMethod("activeSessions", MinecraftServer.class);
+        return (int) method.invoke(null, server);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void dropVolatileState(MinecraftServer server) throws Exception {
+        Class<?> runtime = Class.forName(
+            "dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime");
+        Field statesField = runtime.getDeclaredField("STATES");
+        statesField.setAccessible(true);
+        ((Map<MinecraftServer, ?>) statesField.get(null)).remove(server);
     }
 
     private static ArcanaDecision decision(Object result) throws Exception {
