@@ -144,7 +144,7 @@ public final class MinecraftEphemeralTemperingRuntime {
                 expiresAtTick,
                 new WeakReference<>(held));
             overlays.add(overlay);
-            return ApplyResult.allowed(overlay.overlayId(), mode.id, expiresAtTick);
+            return ApplyResult.allowed(overlay.overlayId, mode.id, expiresAtTick);
         }
     }
 
