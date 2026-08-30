@@ -11,6 +11,7 @@ import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEchoArmamentRun
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftLawOfRecurrenceRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftRiftBladesRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSoulAnchorRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSpectralArsenalRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSpiritSightRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSympatheticWoundRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.OptionalModEntrypoints;
@@ -45,6 +46,7 @@ public final class BlackArcanaMod {
         MinecraftLawOfRecurrenceRuntime.register(NeoForge.EVENT_BUS);
         MinecraftRiftBladesRuntime.register(NeoForge.EVENT_BUS);
         MinecraftSoulAnchorRuntime.register(NeoForge.EVENT_BUS);
+        MinecraftSpectralArsenalRuntime.register(NeoForge.EVENT_BUS);
         MinecraftSpiritSightRuntime.register(NeoForge.EVENT_BUS);
         MinecraftSympatheticWoundRuntime.register(NeoForge.EVENT_BUS);
         HazardPreflightSyncService.register(NeoForge.EVENT_BUS);
