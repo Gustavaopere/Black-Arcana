@@ -269,8 +269,26 @@ public final class MinecraftInnerDominionRuntime {
     public static ParticipantRecoveryResult recoverParticipant(MinecraftServer server, UUID participantId) {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(participantId, "participantId");
-        State state = state(server);
+        ServerPlayer participant = loadedAlivePlayer(server, participantId);
+        if (participant == null) {
+            return ParticipantRecoveryResult.denied(
+                "inner_dominion_participant_unavailable",
+                "Inner Dominion participant must be loaded and alive before recovery settlement");
+        }
+        return recoverParticipant(server, participant);
+    }
 
+    public static ParticipantRecoveryResult recoverParticipant(MinecraftServer server, ServerPlayer participant) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(participant, "participant");
+        if (!participant.isAlive() || participant.serverLevel().getServer() != server) {
+            return ParticipantRecoveryResult.denied(
+                "inner_dominion_participant_unavailable",
+                "Inner Dominion participant must belong to this server and be alive before recovery settlement");
+        }
+
+        UUID participantId = participant.getUUID();
+        State state = state(server);
         InnerDominionSessionJournal.Session session = state.journal.snapshot().stream()
             .filter(candidate -> candidate.participants().containsKey(participantId))
             .findFirst()
@@ -279,13 +297,6 @@ public final class MinecraftInnerDominionRuntime {
             return ParticipantRecoveryResult.denied(
                 "inner_dominion_participant_not_pending",
                 "Player has no pending Inner Dominion return obligation");
-        }
-
-        ServerPlayer participant = loadedAlivePlayer(server, participantId);
-        if (participant == null) {
-            return ParticipantRecoveryResult.denied(
-                "inner_dominion_participant_unavailable",
-                "Inner Dominion participant must be loaded and alive before recovery settlement");
         }
 
         InnerDominionSessionJournal.ReturnRoute route = session.participants().get(participantId);
