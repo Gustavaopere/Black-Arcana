@@ -1,0 +1,341 @@
+package dev.gustavopere.blackarcana.integration.neoforge;
+
+import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.content.forbidden.DomainReturnPoint;
+import dev.gustavopere.blackarcana.content.forbidden.DomainReturnSelector;
+import dev.gustavopere.blackarcana.content.forbidden.ForbiddenDomainSafetyCeilings;
+import dev.gustavopere.blackarcana.content.forbidden.InnerDominionSessionJournal;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+
+/**
+ * Server-authoritative localized lifecycle boundary for Inner Dominion.
+ *
+ * Stage 07 deliberately keeps the domain in the already-loaded world instead of creating
+ * dynamic dimensions. Opening captures immutable server-derived return routes for a bounded
+ * participant set. Closing revalidates every route immediately before movement and removes
+ * the journal entry only after every loaded participant has settled successfully.
+ *
+ * Restart/offline recovery is intentionally a separate checkpoint; this boundary therefore
+ * keeps unavailable participants journaled rather than discarding their return obligation.
+ */
+public final class MinecraftInnerDominionRuntime {
+    private static final Map<MinecraftServer, State> STATES =
+        Collections.synchronizedMap(new IdentityHashMap<>());
+
+    private MinecraftInnerDominionRuntime() { }
+
+    public static void register(IEventBus gameBus) {
+        Objects.requireNonNull(gameBus, "gameBus");
+        gameBus.addListener(MinecraftInnerDominionRuntime::onServerStopped);
+    }
+
+    public static OpenSessionResult openLocalizedSession(
+            MinecraftServer server,
+            UUID sessionId,
+            UUID ownerId,
+            List<UUID> participantIds,
+            double radius,
+            long durationTicks
+    ) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(sessionId, "sessionId");
+        Objects.requireNonNull(ownerId, "ownerId");
+        Objects.requireNonNull(participantIds, "participantIds");
+
+        if (!Double.isFinite(radius) || radius <= 0.0D
+                || radius > ForbiddenDomainSafetyCeilings.MAX_RADIUS_BLOCKS) {
+            return OpenSessionResult.denied(
+                "inner_dominion_radius_config",
+                "Inner Dominion radius is outside the hard forbidden-domain ceiling");
+        }
+        if (durationTicks <= 0L || durationTicks > ForbiddenDomainSafetyCeilings.MAX_DURATION_TICKS) {
+            return OpenSessionResult.denied(
+                "inner_dominion_duration",
+                "Inner Dominion duration is outside the hard forbidden-domain ceiling");
+        }
+        if (participantIds.isEmpty() || participantIds.size() > ForbiddenDomainSafetyCeilings.MAX_PARTICIPANTS) {
+            return OpenSessionResult.denied(
+                "inner_dominion_participants",
+                "Inner Dominion participant request is empty or exceeds the hard cap");
+        }
+
+        LinkedHashSet<UUID> uniqueParticipants = new LinkedHashSet<>();
+        for (UUID participantId : participantIds) {
+            if (participantId == null) {
+                return OpenSessionResult.denied(
+                    "inner_dominion_participants",
+                    "Inner Dominion participant ids cannot be null");
+            }
+            uniqueParticipants.add(participantId);
+        }
+        if (!uniqueParticipants.contains(ownerId)) {
+            return OpenSessionResult.denied(
+                "inner_dominion_owner_missing",
+                "Inner Dominion owner must be included in the participant set");
+        }
+        if (uniqueParticipants.size() > ForbiddenDomainSafetyCeilings.MAX_PARTICIPANTS) {
+            return OpenSessionResult.denied(
+                "inner_dominion_participants",
+                "Inner Dominion unique participant set exceeds the hard cap");
+        }
+
+        ServerPlayer owner = loadedAlivePlayer(server, ownerId);
+        if (owner == null) {
+            return OpenSessionResult.denied(
+                "inner_dominion_owner_unavailable",
+                "Inner Dominion owner must be a loaded living server player");
+        }
+
+        String dimensionId = owner.serverLevel().dimension().location().toString();
+        DomainReturnPoint ownerOrigin = point(owner);
+        double radiusSquared = radius * radius;
+        Map<UUID, InnerDominionSessionJournal.ReturnRoute> routes = new LinkedHashMap<>();
+
+        for (UUID participantId : uniqueParticipants) {
+            ServerPlayer participant = loadedAlivePlayer(server, participantId);
+            if (participant == null) {
+                return OpenSessionResult.denied(
+                    "inner_dominion_participant_unavailable",
+                    "Every Inner Dominion participant must be loaded and alive when the session opens");
+            }
+            if (!participant.serverLevel().dimension().location().toString().equals(dimensionId)) {
+                return OpenSessionResult.denied(
+                    "inner_dominion_dimension",
+                    "Localized Inner Dominion participants must begin in the owner's dimension");
+            }
+            if (participant.distanceToSqr(owner) > radiusSquared) {
+                return OpenSessionResult.denied(
+                    "inner_dominion_radius",
+                    "Inner Dominion participant lies outside the requested localized radius");
+            }
+
+            DomainReturnPoint origin = point(participant);
+            DomainReturnPoint fallback = participantId.equals(ownerId) ? origin : ownerOrigin;
+            if (!safeDestination(server, participant, origin) || !safeDestination(server, participant, fallback)) {
+                return OpenSessionResult.denied(
+                    "inner_dominion_return_route",
+                    "Inner Dominion requires validated loaded origin and fallback routes before opening");
+            }
+            routes.put(participantId, new InnerDominionSessionJournal.ReturnRoute(origin, fallback));
+        }
+
+        long now = server.overworld().getGameTime();
+        InnerDominionSessionJournal.OpenResult opened = state(server).journal.open(
+            sessionId,
+            ownerId,
+            now,
+            durationTicks,
+            routes);
+        return switch (opened) {
+            case OPENED -> new OpenSessionResult(ArcanaDecision.allow(), true, routes.size());
+            case DUPLICATE_SESSION -> OpenSessionResult.denied(
+                "inner_dominion_duplicate_session",
+                "Inner Dominion session id is already active");
+            case NESTED_PARTICIPANT -> OpenSessionResult.denied(
+                "inner_dominion_nested_participant",
+                "Inner Dominion participants cannot join nested domain sessions");
+            case CAPACITY -> OpenSessionResult.denied(
+                "inner_dominion_capacity",
+                "Server Inner Dominion session capacity is full");
+            case INVALID_DURATION -> OpenSessionResult.denied(
+                "inner_dominion_invalid_session",
+                "Inner Dominion session failed bounded journal validation");
+        };
+    }
+
+    public static CloseSessionResult closeSession(MinecraftServer server, UUID sessionId) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(sessionId, "sessionId");
+        State state = STATES.get(server);
+        if (state == null) {
+            return CloseSessionResult.denied(
+                "inner_dominion_session_missing",
+                "Inner Dominion server state is not active");
+        }
+
+        InnerDominionSessionJournal.Session session = state.journal.snapshot().stream()
+            .filter(candidate -> candidate.sessionId().equals(sessionId))
+            .findFirst()
+            .orElse(null);
+        if (session == null) {
+            return CloseSessionResult.denied(
+                "inner_dominion_session_missing",
+                "Inner Dominion session is not active");
+        }
+
+        List<Settlement> settlements = new ArrayList<>(session.participants().size());
+        int fallbackReturns = 0;
+        for (Map.Entry<UUID, InnerDominionSessionJournal.ReturnRoute> entry : session.participants().entrySet()) {
+            ServerPlayer participant = loadedAlivePlayer(server, entry.getKey());
+            if (participant == null) {
+                return CloseSessionResult.denied(
+                    "inner_dominion_participant_unavailable",
+                    "Inner Dominion retains the journal while a participant cannot be safely returned");
+            }
+            InnerDominionSessionJournal.ReturnRoute route = entry.getValue();
+            DomainReturnPoint chosen = DomainReturnSelector.choose(
+                route.origin(),
+                route.fallback(),
+                point -> safeDestination(server, participant, point)).orElse(null);
+            if (chosen == null) {
+                return CloseSessionResult.denied(
+                    "inner_dominion_return_unavailable",
+                    "No validated Inner Dominion return route is currently available");
+            }
+            boolean usedFallback = !chosen.equals(route.origin());
+            if (usedFallback) fallbackReturns++;
+            settlements.add(new Settlement(participant, chosen, usedFallback));
+        }
+
+        // Immediate all-participant revalidation before the first movement mutation.
+        for (Settlement settlement : settlements) {
+            if (!safeDestination(server, settlement.player(), settlement.destination())) {
+                return CloseSessionResult.denied(
+                    "inner_dominion_return_changed",
+                    "Inner Dominion return destination changed before settlement");
+            }
+        }
+
+        try {
+            for (Settlement settlement : settlements) {
+                DomainReturnPoint destination = settlement.destination();
+                settlement.player().setPos(destination.x(), destination.y(), destination.z());
+            }
+        } catch (RuntimeException movementFailure) {
+            return CloseSessionResult.denied(
+                "inner_dominion_return_failed",
+                "Inner Dominion return movement failed; recovery journal remains active");
+        }
+
+        if (state.journal.close(sessionId).isEmpty()) {
+            return CloseSessionResult.denied(
+                "inner_dominion_session_changed",
+                "Inner Dominion session changed before close settlement");
+        }
+        return new CloseSessionResult(
+            ArcanaDecision.allow(),
+            true,
+            settlements.size(),
+            fallbackReturns);
+    }
+
+    public static int activeSessions(MinecraftServer server) {
+        Objects.requireNonNull(server, "server");
+        State state = STATES.get(server);
+        return state == null ? 0 : state.journal.activeSessions();
+    }
+
+    private static State state(MinecraftServer server) {
+        synchronized (STATES) {
+            return STATES.computeIfAbsent(server, ignored -> new State());
+        }
+    }
+
+    private static ServerPlayer loadedAlivePlayer(MinecraftServer server, UUID playerId) {
+        ServerPlayer player = server.getPlayerList().getPlayer(playerId);
+        return player != null && player.isAlive() ? player : null;
+    }
+
+    private static DomainReturnPoint point(ServerPlayer player) {
+        return new DomainReturnPoint(
+            player.serverLevel().dimension().location().toString(),
+            player.getX(),
+            player.getY(),
+            player.getZ());
+    }
+
+    private static boolean safeDestination(
+            MinecraftServer server,
+            ServerPlayer participant,
+            DomainReturnPoint point
+    ) {
+        ServerLevel level = loadedLevel(server, point.dimensionId());
+        if (level == null) return false;
+        return MinecraftSafeDestinationResolver.evaluate(
+            server,
+            participant,
+            level,
+            point.x(),
+            point.y(),
+            point.z()).allowed();
+    }
+
+    private static ServerLevel loadedLevel(MinecraftServer server, String dimensionId) {
+        for (ServerLevel level : server.getAllLevels()) {
+            if (level.dimension().location().toString().equals(dimensionId)) return level;
+        }
+        return null;
+    }
+
+    private static void onServerStopped(ServerStoppedEvent event) {
+        STATES.remove(event.getServer());
+    }
+
+    private record Settlement(ServerPlayer player, DomainReturnPoint destination, boolean fallback) {
+        private Settlement {
+            Objects.requireNonNull(player, "player");
+            Objects.requireNonNull(destination, "destination");
+        }
+    }
+
+    private static final class State {
+        private final InnerDominionSessionJournal journal = new InnerDominionSessionJournal(
+            ForbiddenDomainSafetyCeilings.MAX_ACTIVE_SESSIONS,
+            ForbiddenDomainSafetyCeilings.MAX_PARTICIPANTS,
+            ForbiddenDomainSafetyCeilings.MAX_DURATION_TICKS);
+    }
+
+    public record OpenSessionResult(ArcanaDecision decision, boolean opened, int participantCount) {
+        public OpenSessionResult {
+            Objects.requireNonNull(decision, "decision");
+            if (!decision.allowed() && opened) {
+                throw new IllegalArgumentException("denied Inner Dominion open cannot report success");
+            }
+            if (participantCount < 0 || participantCount > ForbiddenDomainSafetyCeilings.MAX_PARTICIPANTS) {
+                throw new IllegalArgumentException("participantCount outside Inner Dominion bounds");
+            }
+        }
+
+        private static OpenSessionResult denied(String code, String detail) {
+            return new OpenSessionResult(ArcanaDecision.deny(code, detail), false, 0);
+        }
+    }
+
+    public record CloseSessionResult(
+        ArcanaDecision decision,
+        boolean closed,
+        int returnedParticipants,
+        int fallbackReturns
+    ) {
+        public CloseSessionResult {
+            Objects.requireNonNull(decision, "decision");
+            if (!decision.allowed() && closed) {
+                throw new IllegalArgumentException("denied Inner Dominion close cannot report success");
+            }
+            if (returnedParticipants < 0 || returnedParticipants > ForbiddenDomainSafetyCeilings.MAX_PARTICIPANTS) {
+                throw new IllegalArgumentException("returnedParticipants outside Inner Dominion bounds");
+            }
+            if (fallbackReturns < 0 || fallbackReturns > returnedParticipants) {
+                throw new IllegalArgumentException("fallbackReturns outside settled participant count");
+            }
+        }
+
+        private static CloseSessionResult denied(String code, String detail) {
+            return new CloseSessionResult(ArcanaDecision.deny(code, detail), false, 0, 0);
+        }
+    }
+}
