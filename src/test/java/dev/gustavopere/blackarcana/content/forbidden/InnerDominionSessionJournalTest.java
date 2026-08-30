@@ -42,6 +42,30 @@ class InnerDominionSessionJournalTest {
         assertFalse(journal.participantActive(owner));
     }
 
+    @Test void participantRecoveryReleasesIndependentlyAndLastSettlementClosesSession() {
+        var journal = new InnerDominionSessionJournal(2, 4, 200);
+        UUID owner = UUID.randomUUID();
+        UUID guest = UUID.randomUUID();
+        UUID sessionId = UUID.randomUUID();
+        assertEquals(
+            InnerDominionSessionJournal.OpenResult.OPENED,
+            journal.open(sessionId, owner, 10, 100, Map.of(owner, route(), guest, route())));
+
+        assertEquals(
+            InnerDominionSessionJournal.SettleResult.PARTICIPANT_SETTLED,
+            journal.settleParticipant(sessionId, owner));
+        assertFalse(journal.participantActive(owner), "settled owner must be released from nested-session binding");
+        assertTrue(journal.participantActive(guest), "unsettled guest must retain the recovery obligation");
+        assertEquals(1, journal.activeSessions(), "session must persist while any participant still requires recovery");
+        assertEquals(List.of(guest), journal.snapshot().getFirst().participants().keySet().stream().toList());
+
+        assertEquals(
+            InnerDominionSessionJournal.SettleResult.SESSION_CLOSED,
+            journal.settleParticipant(sessionId, guest));
+        assertFalse(journal.participantActive(guest));
+        assertEquals(0, journal.activeSessions());
+    }
+
     @Test void restoreRetainsExpiredRecoveryObligationsAndRejectsOverlap() {
         UUID owner = UUID.randomUUID(); UUID guest = UUID.randomUUID(); UUID expiredOwner = UUID.randomUUID();
         var valid = new InnerDominionSessionJournal.Session(UUID.randomUUID(), owner, 100, Map.of(owner, route(), guest, route()));
