@@ -29,12 +29,17 @@ public final class RiftBladesGameTests {
         double landingX = target.getX() - 1.5D;
         double landingY = target.getY();
         double landingZ = target.getZ();
+        BlockPos landingPos = BlockPos.containing(landingX, landingY, landingZ);
         var landingBox = caster.getBoundingBox().move(
             landingX - caster.getX(),
             landingY - caster.getY(),
             landingZ - caster.getZ());
+        boolean currentBlockCollisionFree = helper.getLevel().noBlockCollision(caster, caster.getBoundingBox());
         boolean blockCollisionFree = helper.getLevel().noBlockCollision(caster, landingBox);
         int entityCollisionCount = helper.getLevel().getEntityCollisions(caster, landingBox).size();
+        String landingState = helper.getLevel().getBlockState(landingPos).toString();
+        String landingAboveState = helper.getLevel().getBlockState(landingPos.above()).toString();
+        String landingBelowState = helper.getLevel().getBlockState(landingPos.below()).toString();
 
         Object result = resolveMarkedStrike(
             server,
@@ -55,8 +60,12 @@ public final class RiftBladesGameTests {
             "eligible marked strike must damage the resolved target");
         helper.assertTrue(gapClosed(result),
             "safe loaded landing candidate must allow optional gap-close; code=" + gapCloseCode(result)
+                + ", currentBlockCollisionFree=" + currentBlockCollisionFree
                 + ", blockCollisionFree=" + blockCollisionFree
-                + ", entityCollisionCount=" + entityCollisionCount);
+                + ", entityCollisionCount=" + entityCollisionCount
+                + ", landing=" + landingState
+                + ", above=" + landingAboveState
+                + ", below=" + landingBelowState);
         helper.assertTrue(caster.distanceToSqr(target) < distanceBefore,
             "successful gap-close must move the caster closer to the marked target");
         helper.succeed();
