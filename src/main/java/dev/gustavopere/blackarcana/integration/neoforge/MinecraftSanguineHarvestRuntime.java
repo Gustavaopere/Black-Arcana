@@ -113,7 +113,6 @@ public final class MinecraftSanguineHarvestRuntime {
             if (!Float.isFinite(requestedDrain) || requestedDrain <= 0.0F) continue;
 
             float beforeHealth = target.getHealth();
-            target.invulnerableTime = 0;
             boolean accepted = target.hurt(
                 target.damageSources().indirectMagic(caster, caster),
                 requestedDrain);
