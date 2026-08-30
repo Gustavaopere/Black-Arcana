@@ -20,7 +20,7 @@ Inserted Stage 05A Arcane Danger now has its server/gameplay implementation and 
 
 Stage 06 Rituals has now been re-synchronized from the historical preparatory branch onto the frozen Stage 05A contracts in PR #21 (`feat/stage-06-rituals-mainline`). Functional checkpoint `26c11072b041981e02265377382b5e568e54a79a` passed workflow run `33277837831` (#521) in full: JUnit, diff sanity, NeoForge build, JAR inspection, GameTests and dedicated-server smoke. The PR is mergeable, but Stage 06 remains 🟦 promotion-ready / blocked because project ordering explicitly forbids merging Stage 06 ahead of Stage 05 manual client QA.
 
-Stage 07 Spell Domains remains preparatory in PR #22 (`feat/stage-07-spell-domains-resync`), stacked on Stage 06 rather than `main`. Space `Vector Reversal` checkpoint `14d73cfa9596e189a920649700b75317b2918972` passed workflow run `33317670699` (#636) in full. Black Flame `Black Pyre` entity-damage/safe-mode checkpoint `5811b030ccd44e25bd6cb6e4c6270ddad8264439` passed workflow run `33318334221` (#638) in full, including all 74 GameTests. Black Pyre terrain mutation remains explicitly fail-closed because frozen Stage 04 has no semantically valid protected-block/world-mutation claim query; an explicit Stage 04 follow-up is required before that terrain path can be enabled.
+Stage 07 Spell Domains remains preparatory in PR #22 (`feat/stage-07-spell-domains-resync`), stacked on Stage 06 rather than `main`. Space `Vector Reversal` checkpoint `14d73cfa9596e189a920649700b75317b2918972` passed workflow run `33317670699` (#636) in full. Black Flame `Black Pyre` entity-damage/safe-mode checkpoint `5811b030ccd44e25bd6cb6e4c6270ddad8264439` passed workflow run `33318334221` (#638) in full, including all 74 GameTests. Forbidden Domains `Inner Dominion` lifecycle/expiry checkpoint `7f6b320c21cbec58ea4e714a02506dc927f9b4bb` passed workflow run `33332904561` (#673) in full, including 85/85 GameTests and dedicated-server smoke. Black Pyre terrain mutation remains explicitly fail-closed because frozen Stage 04 has no semantically valid protected-block/world-mutation claim query; an explicit Stage 04 follow-up is required before that terrain path can be enabled.
 
 | Stage | State | Notes |
 |---|---|---|
@@ -32,7 +32,7 @@ Stage 07 Spell Domains remains preparatory in PR #22 (`feat/stage-07-spell-domai
 | 05 Casting & UX | 🟨 Active / code merged | automated gates green; real-client manual matrix remains open |
 | 05A Arcane Danger | ✅ Server contracts frozen | implementation merged through #20; post-merge #512 full green |
 | 06 Rituals | 🟦 Promotion-ready / blocked | re-synced in #21; functional #521 full green; merge waits for Stage 05 manual QA |
-| 07 Spell Domains | 🟦 Preparatory | PR #22; Vector Reversal #636 green; Black Pyre safe-mode #638 green; terrain protection gap recorded |
+| 07 Spell Domains | 🟦 Preparatory | PR #22; Vector Reversal #636, Black Pyre safe-mode #638 and Inner Dominion lifecycle/expiry #673 green; terrain protection gap recorded |
 | 08 Progression & Balance | 🟦 Preparatory | downstream non-canonical work must consume frozen 05A contracts |
 | 09 Hardening & Release | ⬜ Not started | final closure after predecessor stages |
 
@@ -92,6 +92,8 @@ PR #22 is intentionally stacked on `feat/stage-06-rituals-mainline`; it is not a
 Validated checkpoints currently include:
 - Space/Displacement `Vector Reversal`: server-authoritative bounded impulse, canonical displacement admission and revalidation, local four-target spell cap, velocity clamp and preserved fall distance; full GREEN run #636.
 - Black Flame `Black Pyre`: canonical entity-damage admission, actual-health-loss accounting and safe-mode operation independent of terrain; TDD RED run #637 proved the missing runtime, then full GREEN run #638 proved the implementation.
+- Forbidden Domains `Inner Dominion`: localized in-world session architecture with hard radius/duration/participant/session ceilings, server-captured origin plus validated participant-local fallback, nested/radius denial, persisted recovery obligations, partial settlement, logout/login/respawn recovery and non-destructive automatic expiry recovery. TDD RED run #672 added exactly one failing GameTest for missing automatic expiry; full GREEN run #673 then passed 85/85 GameTests and dedicated-server smoke.
+- Inner Dominion deliberately creates no dynamic dimension, forced chunk, domain entity, inventory clone or parallel player-state copy; unavailable/unsafe participants remain journaled for later recovery instead of being discarded on expiry.
 - Black Pyre terrain is deliberately not implemented through raw block writes or semantically incorrect `CONTROL`/`DISPLACEMENT` claim queries. The frozen Stage 04 protection extension point must be explicitly extended for block/world mutation before this path can leave fail-closed state.
 
 No Stage 07 checkpoint is canonical until predecessor promotion gates are satisfied and the Stage 07 PR is reviewed/merged in order.
