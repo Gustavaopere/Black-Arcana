@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-08-28
+Last updated: 2026-08-30
 
 ## Current state
 
@@ -14,11 +14,13 @@ Stage 03 Integration Layer is ✅ complete, verified and merged at `359dff669bdb
 
 Stage 04 World Safety is ✅ complete, verified and merged at `b5a515335544cee5273ff67d033c68bacf98b05a`. Canonical branch run `33171942536` and post-merge main run `33172216821` both passed the full pipeline.
 
-Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231075d68353447b8ce37add`. Branch run `33182063857` and post-merge main run `33182458511` both passed the automated pipeline. The stage remains 🟨 active because its required client visual/input matrix has not yet been manually executed.
+Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231075d68353447b8ce37add`. Branch run `33182063857` and post-merge main run `33182458511` both passed the automated pipeline. The stage remains 🟨 active because its required real-client visual/input matrix has not yet been manually executed.
 
-Inserted Stage 05A Arcane Danger is the next server/gameplay contract stage and is now 🟨 preparatory active. The danger model, Arcane/Corruption Resistance, strain/recovery and persistent hazard state are present. The dedicated Arcane Backlash pipeline is fully verified at `583286d1dd28c35da8a64261b6c6eceb22242522`: workflow run `33222848359` passed JUnit, diff sanity, NeoForge build, JAR inspection, 17/17 GameTests and dedicated-server smoke. Zero Arcane Resistance now proves exact runtime 1:1 multi-hit settlement (`4 + 3 confirmed eligible damage -> 7 backlash`) with non-recursive accounting. The dedicated damage type intentionally bypasses vanilla invulnerability after Black Arcana's own resistance/preflight snapshot has resolved, so join/spawn invulnerability cannot silently weaken hazard settlement.
+Inserted Stage 05A Arcane Danger is 🟨 active and materially implemented on `main`. The danger model, Arcane/Corruption Resistance, strain/recovery, persistent hazard state and the dedicated Arcane Backlash pipeline are present. Backlash was verified at `583286d1dd28c35da8a64261b6c6eceb22242522` by workflow `33222848359`, including exact zero-resistance 1:1 multi-hit settlement and non-recursive accounting.
 
-Stage 06 Rituals already has substantial preparatory work. `feat/verify-rituals-v8` at `78bab54207965d906c607322417f92b10f6c86a3` passed CI run `33189742674`; `prep/06-rituals` only added architecture/status documentation after that verified functional checkpoint. This work is preserved but is downstream of Stage 05A and must be synchronized/retested after Stage 05A contracts freeze.
+Since that checkpoint, Stage 05A has also gained merged production contracts for equipment-derived hazard resistance and emergency protection, optional Curios equipment/resistance snapshots and bootstrap, authoritative danger-profile runtime, RPG Skill Tree hazard/progression/mastery integration, and data-driven equipment set bonuses. Current `main` `07263ae9bad12eba6ed500992991faa36ad598b2` includes the explicit equipment-set bonus registry/loader/runtime/snapshot integration merged through PR #20. These source contracts are real and must no longer be listed as wholly unimplemented; formal Stage 05A completion still depends on the remaining presentation/hardening/closure gates below.
+
+Stage 06 Rituals has a current promotion PR (#21) with verified functional work but is intentionally not canonicalized ahead of the unresolved Stage 05 real-client gate. Stage 07 Spell Domains is stacked downstream in PR #22 and remains non-canonical until its dependency chain is cleared.
 
 | Stage | State | Notes |
 |---|---|---|
@@ -28,15 +30,15 @@ Stage 06 Rituals already has substantial preparatory work. `feat/verify-rituals-
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch + post-merge CI green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
 | 05 Casting & UX | 🟨 Active / code merged | automated gates green; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
-| 05A Arcane Danger | 🟨 Preparatory active | backlash GREEN; equipment/Curios/profiles/API/RPG/HUD/hardening remain |
-| 06 Rituals | 🟦 Preparatory advanced | v8 functional checkpoint CI green; re-sync after 05A freeze required |
-| 07 Spell Domains | 🟦 Preparatory | downstream non-canonical work exists and must resync after 05A |
-| 08 Progression & Balance | 🟦 Preparatory | downstream non-canonical work exists and must resync after 05A |
-| 09 Hardening & Release | ⬜ Not started | final closure after predecessor stages |
+| 05A Arcane Danger | 🟨 Active / advanced | core hazard, equipment, Curios, profiles and RPG provider contracts are present on `main`; final presentation/hardening/closure remains |
+| 06 Rituals | 🟦 Promotion prepared | PR #21 is downstream of the Stage 05 manual gate |
+| 07 Spell Domains | 🟦 Stacked preparatory | PR #22 remains downstream/non-canonical |
+| 08 Progression & Balance | 🟦 Preparatory | final quantitative progression/balance closure remains downstream |
+| 09 Hardening & Release | ⬜ Not started | final compatibility, migration, provenance and release closure |
 
 ## Canonical active stage
 
-`05-casting-ux` remains the formal active stage until its manual client matrix is closed. `05a-arcane-danger` is authorized for isolated preparatory implementation because its server-side contracts do not depend on unresolved visual QA.
+`05-casting-ux` remains the formal active stage until its manual client matrix is closed. `05a-arcane-danger` may continue deterministic server-side closure in parallel, but cannot be declared complete ahead of the required Stage 05 presentation gate.
 
 ## Frozen predecessors
 
@@ -44,44 +46,34 @@ Stages 00, 01, 02, 03 and 04 may only change through explicit follow-up decision
 
 ## Stage 05 remaining closure work
 
-Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags may be carried explicitly to Stage 09 if no corresponding effect exists yet.
+Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags may be carried explicitly to Stage 09 only when the corresponding effect is genuinely deferred.
 
-## Stage 05A verified checkpoint
+## Stage 05A verified/merged capabilities
 
-Verified Arcane Backlash behavior:
-- confirmed post-mitigation eligible health damage is the only backlash basis;
-- root `ArcanaCastId` plus unique subordinate damage-instance IDs provide causal ownership;
-- zero Arcane Resistance with canonical linear dangerous/forbidden profile is exact 1:1;
-- multi-hit aggregation is deterministic and bounded;
-- `ARCANE_BACKLASH` is a dedicated terminal damage family and never feeds the eligible damage ledger;
-- vanilla armor, effects, resistance, enchantments, shield, hit cooldown and generic invulnerability cannot silently reduce an already-settled backlash amount;
-- dedicated-server absence of optional providers remains supported.
+The current codebase contains:
+
+- deterministic danger-profile and root-cast attribution contracts;
+- Arcane and Corruption Resistance provider/snapshot semantics;
+- persistent strain/corruption/recovery state;
+- confirmed-damage/backlash settlement with recursion exclusions;
+- equipment-derived hazard resistance and transactional emergency-protection state/coordinator paths;
+- optional Curios snapshot/resistance integration under `integration/curios`, including `CuriosServerIntegrationBootstrap`;
+- RPG Skill Tree provider/progression/mastery integration under `integration/rpg`;
+- authoritative danger-profile runtime/registry;
+- data-driven equipment set bonuses merged through PR #20 / `07263ae9bad12eba6ed500992991faa36ad598b2`.
+
+The presence of these contracts does not by itself mark their numbered planning files ✅; that rename remains subject to the stage's complete acceptance and documentation closeout rules.
 
 ## Stage 05A still open
 
-- 05A.06 equipment/containment provider and transactional emergency protection;
-- 05A.07 optional Curios `9.5.1+1.21.1` snapshot adapter;
-- 05A.08 authoritative spell danger profiles;
-- 05A.09 public hazard provider/observer API;
-- 05A.10 RPG attribute/mastery integration;
-- 05A.11 HUD/tooltips/preflight presentation;
-- 05A.12 hardening: delayed damage, PvP, death/relog/restart, pending-backlash persistence and full optional-provider matrix.
+- 05A.11 HUD/tooltips/preflight presentation and its real-client validation where applicable;
+- 05A.12 final hardening across delayed damage, PvP, death/relog/restart, persistence edge cases and the full optional-provider matrix;
+- reconciliation of numbered Stage 05A task status/closeout once the complete acceptance matrix is proven;
+- Stage 05 manual client gate, which still blocks declaring downstream stages canonical.
 
-## Stage 05A preparatory authorization
+## Stage 06 / 07 preservation rule
 
-Stage 05A may proceed in `prep/05a-arcane-danger` or equivalent isolated implementation branches from the latest green `main`. It may not be declared complete ahead of Stage 05's manual closure, but its deterministic server contracts may be implemented and fully CI-verified now.
-
-Required freeze before downstream canonicalization:
-- danger profile/schema and root-cast attribution;
-- Arcane/Corruption Resistance provider API and snapshot semantics;
-- strain/corruption persistence and recovery rules;
-- confirmed-damage/backlash settlement with recursion exclusions;
-- Curios/RPG optional-provider contracts;
-- client preflight remains presentational only.
-
-## Stage 06 preservation rule
-
-The existing ritual preparatory branch remains valuable and must not be discarded. Because it predates Stage 05A, it is treated as a downstream prototype. After Stage 05A freezes, rebase/merge-sync Rituals onto the new canonical contracts, update hazard-sensitive ritual semantics, rerun the full pipeline, then consider promotion.
+Do not discard the verified Stage 06/07 work, but do not bypass the causal gate. Stage 06 PR #21 and stacked Stage 07 PR #22 remain downstream until Stage 05 manual closure and any required Stage 05A contract reconciliation are complete.
 
 ## Freeze rules
 
@@ -90,4 +82,4 @@ The existing ritual preparatory branch remains valuable and must not be discarde
 - All casts terminate in the canonical Stage 02 ingress/channel pipeline.
 - World-mutating content remains subject to frozen Stage 04 policy and budgets.
 - Stage 05A owns forbidden-magic hazard computation; downstream stages consume it rather than implementing parallel backlash systems.
-- Stage 06/07 content is not canonicalized ahead of unresolved Stage 05 closure and Stage 05A contract freeze.
+- Stage 06/07 content is not canonicalized ahead of unresolved Stage 05 closure and required Stage 05A freeze/acceptance gates.
