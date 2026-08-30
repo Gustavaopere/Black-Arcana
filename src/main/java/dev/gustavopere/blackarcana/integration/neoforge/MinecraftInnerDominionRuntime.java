@@ -266,6 +266,89 @@ public final class MinecraftInnerDominionRuntime {
             fallbackReturns);
     }
 
+    public static ParticipantRecoveryResult recoverParticipant(MinecraftServer server, UUID participantId) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(participantId, "participantId");
+        State state = state(server);
+
+        InnerDominionSessionJournal.Session session = state.journal.snapshot().stream()
+            .filter(candidate -> candidate.participants().containsKey(participantId))
+            .findFirst()
+            .orElse(null);
+        if (session == null) {
+            return ParticipantRecoveryResult.denied(
+                "inner_dominion_participant_not_pending",
+                "Player has no pending Inner Dominion return obligation");
+        }
+
+        ServerPlayer participant = loadedAlivePlayer(server, participantId);
+        if (participant == null) {
+            return ParticipantRecoveryResult.denied(
+                "inner_dominion_participant_unavailable",
+                "Inner Dominion participant must be loaded and alive before recovery settlement");
+        }
+
+        InnerDominionSessionJournal.ReturnRoute route = session.participants().get(participantId);
+        DomainReturnPoint destination;
+        boolean usedFallback;
+        boolean movementRequired;
+        if (atPoint(participant, route.origin())) {
+            destination = route.origin();
+            usedFallback = false;
+            movementRequired = false;
+        } else {
+            destination = DomainReturnSelector.choose(
+                route.origin(),
+                route.fallback(),
+                point -> safeDestination(server, participant, point)).orElse(null);
+            if (destination == null) {
+                return ParticipantRecoveryResult.denied(
+                    "inner_dominion_return_unavailable",
+                    "No validated Inner Dominion return route is currently available");
+            }
+            usedFallback = !destination.equals(route.origin());
+            movementRequired = true;
+        }
+
+        if (movementRequired && !safeDestination(server, participant, destination)) {
+            return ParticipantRecoveryResult.denied(
+                "inner_dominion_return_changed",
+                "Inner Dominion return destination changed before participant recovery settlement");
+        }
+        if (!movementRequired && !atPoint(participant, destination)) {
+            return ParticipantRecoveryResult.denied(
+                "inner_dominion_return_changed",
+                "Inner Dominion participant moved before recovery settlement");
+        }
+
+        try {
+            if (movementRequired) {
+                participant.setPos(destination.x(), destination.y(), destination.z());
+            }
+        } catch (RuntimeException movementFailure) {
+            return ParticipantRecoveryResult.denied(
+                "inner_dominion_return_failed",
+                "Inner Dominion participant return movement failed; recovery obligation remains active");
+        }
+
+        InnerDominionSessionJournal.SettleResult settled = state.journal.settleParticipant(
+            session.sessionId(),
+            participantId);
+        return switch (settled) {
+            case PARTICIPANT_SETTLED -> {
+                state.persist();
+                yield new ParticipantRecoveryResult(ArcanaDecision.allow(), true, false, usedFallback);
+            }
+            case SESSION_CLOSED -> {
+                state.persist();
+                yield new ParticipantRecoveryResult(ArcanaDecision.allow(), true, true, usedFallback);
+            }
+            case SESSION_MISSING, PARTICIPANT_MISSING -> ParticipantRecoveryResult.denied(
+                "inner_dominion_session_changed",
+                "Inner Dominion recovery obligation changed before participant settlement");
+        };
+    }
+
     public static int activeSessions(MinecraftServer server) {
         Objects.requireNonNull(server, "server");
         return state(server).journal.activeSessions();
@@ -413,6 +496,30 @@ public final class MinecraftInnerDominionRuntime {
 
         private static CloseSessionResult denied(String code, String detail) {
             return new CloseSessionResult(ArcanaDecision.deny(code, detail), false, 0, 0);
+        }
+    }
+
+    public record ParticipantRecoveryResult(
+        ArcanaDecision decision,
+        boolean recovered,
+        boolean sessionClosed,
+        boolean usedFallback
+    ) {
+        public ParticipantRecoveryResult {
+            Objects.requireNonNull(decision, "decision");
+            if (!decision.allowed() && (recovered || sessionClosed || usedFallback)) {
+                throw new IllegalArgumentException("denied Inner Dominion participant recovery cannot report settlement");
+            }
+            if (sessionClosed && !recovered) {
+                throw new IllegalArgumentException("closed Inner Dominion recovery session must report participant recovery");
+            }
+            if (usedFallback && !recovered) {
+                throw new IllegalArgumentException("Inner Dominion fallback return requires successful recovery");
+            }
+        }
+
+        private static ParticipantRecoveryResult denied(String code, String detail) {
+            return new ParticipantRecoveryResult(ArcanaDecision.deny(code, detail), false, false, false);
         }
     }
 }
