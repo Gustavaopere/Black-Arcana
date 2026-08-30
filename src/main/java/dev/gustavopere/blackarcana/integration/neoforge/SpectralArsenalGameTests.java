@@ -10,10 +10,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -104,6 +106,74 @@ public final class SpectralArsenalGameTests {
         helper.succeed();
     }
 
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void activeProjectionBudgetRejectsFortyNinthSpectralProjectile(GameTestHelper helper) throws Exception {
+        var owner = helper.makeMockServerPlayerInLevel();
+        var server = helper.getLevel().getServer();
+        owner.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.NETHERITE_SWORD));
+
+        List<String> profileIds = new ArrayList<>(ProjectionSafetyCeilings.MAX_ACTIVE_ECHOES);
+        for (int index = 0; index < ProjectionSafetyCeilings.MAX_ACTIVE_ECHOES; index++) {
+            String profileId = "black_arcana:spectral_budget_" + index;
+            helper.assertTrue(MinecraftEchoArmamentRuntime.rememberHeldWeapon(server, owner.getUUID(), profileId)
+                    .decision().allowed(),
+                "fixture must register every sanitized profile up to the active projection ceiling");
+            profileIds.add(profileId);
+        }
+        long nowTick = server.getTickCount();
+
+        Object saturated = launchVolley(server, owner.getUUID(), profileIds, nowTick, 100L, 8.0D);
+        helper.assertTrue(decision(saturated).allowed(), "exactly 48 Spectral Arsenal projectiles must be admitted");
+        helper.assertTrue(launchedCount(saturated) == ProjectionSafetyCeilings.MAX_ACTIVE_ECHOES,
+            "saturated volley must launch exactly the hard active cap");
+        helper.assertTrue(activeProjectiles(server, owner.getUUID()) == ProjectionSafetyCeilings.MAX_ACTIVE_ECHOES,
+            "active Spectral Arsenal accounting must stop at the hard ceiling");
+
+        Object overflow = launchVolley(server, owner.getUUID(), List.of(profileIds.getFirst()), nowTick, 100L, 8.0D);
+        helper.assertTrue(!decision(overflow).allowed(), "49th concurrent Spectral Arsenal projection must fail closed");
+        helper.assertTrue("spectral_arsenal_active_capacity".equals(decision(overflow).code()),
+            "active-cap denial must expose a stable code");
+        helper.assertTrue(launchedCount(overflow) == 0,
+            "capacity denial must not produce an untracked partial projectile");
+        helper.assertTrue(activeProjectiles(server, owner.getUUID()) == ProjectionSafetyCeilings.MAX_ACTIVE_ECHOES,
+            "denied overflow must leave the saturated accounting unchanged");
+
+        tick(server, nowTick + 100L);
+        helper.assertTrue(activeProjectiles(server, owner.getUUID()) == 0,
+            "expiry after saturation must release every Spectral Arsenal budget slot");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void ownerLogoutCleansSpectralArsenalHandlesAndBudget(GameTestHelper helper) throws Exception {
+        var owner = helper.makeMockServerPlayerInLevel();
+        var server = helper.getLevel().getServer();
+        owner.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+        String first = "black_arcana:spectral_logout_a";
+        String second = "black_arcana:spectral_logout_b";
+        helper.assertTrue(MinecraftEchoArmamentRuntime.rememberHeldWeapon(server, owner.getUUID(), first)
+                .decision().allowed(), "first logout fixture profile must register");
+        helper.assertTrue(MinecraftEchoArmamentRuntime.rememberHeldWeapon(server, owner.getUUID(), second)
+                .decision().allowed(), "second logout fixture profile must register");
+
+        Object volley = launchVolley(
+            server,
+            owner.getUUID(),
+            List.of(first, second),
+            server.getTickCount(),
+            200L,
+            8.0D);
+        helper.assertTrue(decision(volley).allowed() && activeProjectiles(server, owner.getUUID()) == 2,
+            "logout fixture must begin with exactly two active Spectral Arsenal handles");
+
+        onPlayerLoggedOut(new PlayerEvent.PlayerLoggedOutEvent(owner));
+        helper.assertTrue(activeProjectiles(server, owner.getUUID()) == 0,
+            "logout must atomically remove Spectral Arsenal handles and release their budget");
+        helper.succeed();
+    }
+
     private static Object launchVolley(
         net.minecraft.server.MinecraftServer server,
         UUID ownerId,
@@ -133,6 +203,13 @@ public final class SpectralArsenalGameTests {
         Class<?> runtime = Class.forName(RUNTIME);
         return (int) runtime.getMethod("activeProjectiles", net.minecraft.server.MinecraftServer.class, UUID.class)
             .invoke(null, server, ownerId);
+    }
+
+    private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) throws Exception {
+        Class<?> runtime = Class.forName(RUNTIME);
+        Method method = runtime.getDeclaredMethod("onPlayerLoggedOut", PlayerEvent.PlayerLoggedOutEvent.class);
+        method.setAccessible(true);
+        method.invoke(null, event);
     }
 
     private static ArcanaDecision decision(Object result) throws Exception {
