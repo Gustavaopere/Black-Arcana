@@ -39,6 +39,6 @@ public final class MinecraftInnerDominionLifecycleRuntime {
     private static void recover(net.minecraft.world.entity.player.Player player) {
         if (!(player instanceof ServerPlayer serverPlayer)) return;
         MinecraftServer server = serverPlayer.serverLevel().getServer();
-        MinecraftInnerDominionRuntime.recoverParticipant(server, serverPlayer.getUUID());
+        MinecraftInnerDominionRuntime.recoverParticipant(server, serverPlayer);
     }
 }
