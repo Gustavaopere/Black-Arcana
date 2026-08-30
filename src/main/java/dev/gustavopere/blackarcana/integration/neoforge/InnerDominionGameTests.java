@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("removal")
 @GameTestHolder(BlackArcanaMod.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class InnerDominionGameTests {
@@ -110,16 +111,16 @@ public final class InnerDominionGameTests {
     }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
-    public static void invalidOriginUsesValidatedOwnerFallback(GameTestHelper helper) throws Exception {
+    public static void invalidOriginUsesValidatedAlternateFallback(GameTestHelper helper) throws Exception {
         var owner = helper.makeMockServerPlayerInLevel();
         var guest = helper.makeMockServerPlayerInLevel();
         BlockPos ownerRelative = new BlockPos(1, 2, 1);
         BlockPos guestRelative = new BlockPos(3, 2, 1);
         place(helper, owner, ownerRelative);
         place(helper, guest, guestRelative);
-        double fallbackX = owner.getX();
-        double fallbackY = owner.getY();
-        double fallbackZ = owner.getZ();
+        double guestOriginX = guest.getX();
+        double guestOriginY = guest.getY();
+        double guestOriginZ = guest.getZ();
         UUID sessionId = UUID.randomUUID();
 
         Object opened = open(
@@ -140,8 +141,10 @@ public final class InnerDominionGameTests {
             "invalid origin must not strand an otherwise recoverable participant");
         helper.assertTrue(fallbackReturns(closed) == 1,
             "exactly the participant with a blocked origin must use fallback");
-        helper.assertTrue(distanceSquared(guest.getX(), guest.getY(), guest.getZ(), fallbackX, fallbackY, fallbackZ) < 0.01D,
-            "blocked guest origin must degrade to the server-captured owner fallback");
+        helper.assertTrue(distanceSquared(guest.getX(), guest.getY(), guest.getZ(), guestOriginX, guestOriginY, guestOriginZ) > 0.25D,
+            "blocked guest origin must not be reused as fallback");
+        helper.assertTrue(helper.getLevel().noCollision(guest, guest.getBoundingBox()),
+            "selected alternate fallback must remain collision-free after settlement");
         helper.succeed();
     }
 
