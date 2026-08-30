@@ -234,7 +234,7 @@ public final class InnerDominionGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void logoutEventReturnsParticipantBeforeRemoval(GameTestHelper helper) throws Exception {
         var owner = helper.makeMockServerPlayerInLevel();
-        BlockPos originRelative = new BlockPos(1, 2, 1);
+        BlockPos originRelative = new BlockPos(3, 2, 1);
         place(helper, owner, originRelative);
         double originX = owner.getX();
         double originY = owner.getY();
@@ -244,7 +244,7 @@ public final class InnerDominionGameTests {
 
         Object opened = open(server, sessionId, owner.getUUID(), List.of(owner.getUUID()), 8.0D, 200L);
         helper.assertTrue(decision(opened).allowed(), "logout recovery fixture session must open");
-        place(helper, owner, new BlockPos(5, 2, 1));
+        place(helper, owner, new BlockPos(6, 2, 1));
 
         try {
             NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerLoggedOutEvent(owner));
@@ -261,7 +261,7 @@ public final class InnerDominionGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void loginEventRehydratesAndReturnsPendingParticipant(GameTestHelper helper) throws Exception {
         var owner = helper.makeMockServerPlayerInLevel();
-        place(helper, owner, new BlockPos(1, 2, 1));
+        place(helper, owner, new BlockPos(3, 2, 1));
         double originX = owner.getX();
         double originY = owner.getY();
         double originZ = owner.getZ();
@@ -270,7 +270,7 @@ public final class InnerDominionGameTests {
 
         Object opened = open(server, sessionId, owner.getUUID(), List.of(owner.getUUID()), 8.0D, 200L);
         helper.assertTrue(decision(opened).allowed(), "login recovery fixture session must open");
-        place(helper, owner, new BlockPos(5, 2, 1));
+        place(helper, owner, new BlockPos(6, 2, 1));
         dropVolatileState(server);
 
         try {
@@ -288,7 +288,7 @@ public final class InnerDominionGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void respawnEventReturnsParticipantAfterDeathLifecycle(GameTestHelper helper) throws Exception {
         var owner = helper.makeMockServerPlayerInLevel();
-        place(helper, owner, new BlockPos(1, 2, 1));
+        place(helper, owner, new BlockPos(3, 2, 1));
         double originX = owner.getX();
         double originY = owner.getY();
         double originZ = owner.getZ();
@@ -297,7 +297,7 @@ public final class InnerDominionGameTests {
 
         Object opened = open(server, sessionId, owner.getUUID(), List.of(owner.getUUID()), 8.0D, 200L);
         helper.assertTrue(decision(opened).allowed(), "respawn recovery fixture session must open");
-        place(helper, owner, new BlockPos(5, 2, 1));
+        place(helper, owner, new BlockPos(6, 2, 1));
 
         try {
             NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerRespawnEvent(owner, false));
