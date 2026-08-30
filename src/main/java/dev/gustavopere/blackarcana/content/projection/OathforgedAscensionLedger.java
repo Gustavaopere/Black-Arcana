@@ -134,6 +134,43 @@ public final class OathforgedAscensionLedger {
         return consumedSacrifices.size();
     }
 
+    /**
+     * Returns an immutable policy-agnostic snapshot suitable for durable host persistence.
+     * Physical ritual inventory is intentionally not represented here.
+     */
+    public synchronized Snapshot snapshot() {
+        return new Snapshot(pointsByTrack, consumedSacrifices);
+    }
+
+    /**
+     * Restores a previously validated logical ledger state. Validation completes before mutation,
+     * so malformed/oversized snapshots cannot partially replace the current state.
+     */
+    public synchronized void restore(Snapshot snapshot) {
+        Objects.requireNonNull(snapshot, "snapshot");
+        if (snapshot.pointsByTrack().size() > maxTrackedTracks) {
+            throw new IllegalArgumentException("snapshot exceeds tracked-track capacity");
+        }
+        if (snapshot.consumedSacrifices().size() > maxConsumedSacrifices) {
+            throw new IllegalArgumentException("snapshot exceeds consumed-sacrifice capacity");
+        }
+        for (Map.Entry<TrackKey, Integer> entry : snapshot.pointsByTrack().entrySet()) {
+            Objects.requireNonNull(entry.getKey(), "snapshot track");
+            Integer value = Objects.requireNonNull(entry.getValue(), "snapshot points");
+            if (value < 0 || value > ProjectionSafetyCeilings.MAX_ASCENSION_POINTS) {
+                throw new IllegalArgumentException("snapshot track points outside hard Ascension ceiling");
+            }
+        }
+        for (UUID sacrificeId : snapshot.consumedSacrifices()) {
+            Objects.requireNonNull(sacrificeId, "snapshot sacrifice id");
+        }
+
+        pointsByTrack.clear();
+        consumedSacrifices.clear();
+        pointsByTrack.putAll(snapshot.pointsByTrack());
+        consumedSacrifices.addAll(snapshot.consumedSacrifices());
+    }
+
     public record TrackKey(String targetId, String trackId) {
         public TrackKey {
             targetId = validateKey(targetId, "targetId");
@@ -182,6 +219,15 @@ public final class OathforgedAscensionLedger {
 
         private static Settlement denied(String code, int currentTrackPoints) {
             return new Settlement(false, 0, currentTrackPoints, Objects.requireNonNull(code, "code"));
+        }
+    }
+
+    public record Snapshot(Map<TrackKey, Integer> pointsByTrack, Set<UUID> consumedSacrifices) {
+        public Snapshot {
+            Objects.requireNonNull(pointsByTrack, "pointsByTrack");
+            Objects.requireNonNull(consumedSacrifices, "consumedSacrifices");
+            pointsByTrack = Map.copyOf(new LinkedHashMap<>(pointsByTrack));
+            consumedSacrifices = Set.copyOf(new LinkedHashSet<>(consumedSacrifices));
         }
     }
 
