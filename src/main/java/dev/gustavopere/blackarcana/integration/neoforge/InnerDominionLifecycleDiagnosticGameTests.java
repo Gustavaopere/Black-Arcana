@@ -19,7 +19,7 @@ public final class InnerDominionLifecycleDiagnosticGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void directServerPlayerRecoveryUsesCapturedOrigin(GameTestHelper helper) {
         var owner = helper.makeMockServerPlayerInLevel();
-        BlockPos origin = helper.absolutePos(new BlockPos(1, 2, 1));
+        BlockPos origin = helper.absolutePos(new BlockPos(3, 2, 1));
         owner.setPos(origin.getX() + 0.5D, origin.getY(), origin.getZ() + 0.5D);
         double originX = owner.getX();
         double originY = owner.getY();
@@ -36,7 +36,7 @@ public final class InnerDominionLifecycleDiagnosticGameTests {
             200L);
         helper.assertTrue(opened.decision().allowed(), "direct recovery fixture must open");
 
-        BlockPos displaced = helper.absolutePos(new BlockPos(5, 2, 1));
+        BlockPos displaced = helper.absolutePos(new BlockPos(6, 2, 1));
         owner.setPos(displaced.getX() + 0.5D, displaced.getY(), displaced.getZ() + 0.5D);
 
         var originSafety = MinecraftSafeDestinationResolver.evaluate(
