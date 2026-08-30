@@ -14,6 +14,7 @@ import dev.gustavopere.blackarcana.integration.neoforge.MinecraftGazeOfStillness
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionLifecycleRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftLawOfRecurrenceRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftNullifyingGazeRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftReciprocalTranspositionRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftRiftBladesRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSoulAnchorRuntime;
@@ -54,6 +55,7 @@ public final class BlackArcanaMod {
         MinecraftEchoArmamentRuntime.register(NeoForge.EVENT_BUS);
         MinecraftEphemeralTemperingRuntime.register(NeoForge.EVENT_BUS);
         MinecraftGazeOfStillnessRuntime.register(NeoForge.EVENT_BUS);
+        MinecraftNullifyingGazeRuntime.register(NeoForge.EVENT_BUS);
         MinecraftInnerDominionRuntime.register(NeoForge.EVENT_BUS);
         MinecraftInnerDominionLifecycleRuntime.register(NeoForge.EVENT_BUS);
         MinecraftLawOfRecurrenceRuntime.register(NeoForge.EVENT_BUS);
