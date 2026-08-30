@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.config.ArcanaSpellDataReloadListener;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftArcaneDamagePipeline;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEchoArmamentRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEphemeralTemperingRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftLawOfRecurrenceRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftRiftBladesRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSoulAnchorRuntime;
@@ -43,6 +44,7 @@ public final class BlackArcanaMod {
         ArcanaServerRuntimeManager.register(NeoForge.EVENT_BUS);
         MinecraftArcaneDamagePipeline.register(NeoForge.EVENT_BUS);
         MinecraftEchoArmamentRuntime.register(NeoForge.EVENT_BUS);
+        MinecraftEphemeralTemperingRuntime.register(NeoForge.EVENT_BUS);
         MinecraftLawOfRecurrenceRuntime.register(NeoForge.EVENT_BUS);
         MinecraftRiftBladesRuntime.register(NeoForge.EVENT_BUS);
         MinecraftSoulAnchorRuntime.register(NeoForge.EVENT_BUS);
