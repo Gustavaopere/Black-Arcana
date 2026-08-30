@@ -186,6 +186,49 @@ public final class InnerDominionGameTests {
         helper.succeed();
     }
 
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void singleParticipantRecoveryPersistsRemainingObligations(GameTestHelper helper) throws Exception {
+        var owner = helper.makeMockServerPlayerInLevel();
+        var guest = helper.makeMockServerPlayerInLevel();
+        place(helper, owner, new BlockPos(1, 2, 1));
+        place(helper, guest, new BlockPos(3, 2, 1));
+        double guestOriginX = guest.getX();
+        double guestOriginY = guest.getY();
+        double guestOriginZ = guest.getZ();
+        MinecraftServer server = helper.getLevel().getServer();
+        UUID sessionId = UUID.randomUUID();
+
+        Object opened = open(
+            server,
+            sessionId,
+            owner.getUUID(),
+            List.of(owner.getUUID(), guest.getUUID()),
+            8.0D,
+            200L);
+        helper.assertTrue(decision(opened).allowed(), "partial-recovery fixture session must open");
+        place(helper, owner, new BlockPos(5, 2, 1));
+        place(helper, guest, new BlockPos(6, 2, 1));
+
+        Object ownerRecovery = recover(server, owner.getUUID());
+        helper.assertTrue(decision(ownerRecovery).allowed() && recovered(ownerRecovery),
+            "one available participant must recover without waiting for every other participant");
+        helper.assertTrue(!sessionClosed(ownerRecovery) && activeSessions(server) == 1,
+            "session must remain while another participant still has a return obligation");
+
+        dropVolatileState(server);
+        helper.assertTrue(activeSessions(server) == 1,
+            "partial recovery must persist the remaining participant obligation before cache loss");
+
+        Object guestRecovery = recover(server, guest.getUUID());
+        helper.assertTrue(decision(guestRecovery).allowed() && recovered(guestRecovery),
+            "remaining participant must recover from the persisted partial session");
+        helper.assertTrue(sessionClosed(guestRecovery) && activeSessions(server) == 0,
+            "last participant recovery must close the persisted session");
+        helper.assertTrue(distanceSquared(guest.getX(), guest.getY(), guest.getZ(), guestOriginX, guestOriginY, guestOriginZ) < 0.01D,
+            "remaining participant must use the original server-captured return route");
+        helper.succeed();
+    }
+
     private static Object open(
             MinecraftServer server,
             UUID sessionId,
@@ -212,6 +255,13 @@ public final class InnerDominionGameTests {
             "dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime");
         Method method = runtime.getMethod("closeSession", MinecraftServer.class, UUID.class);
         return method.invoke(null, server, sessionId);
+    }
+
+    private static Object recover(MinecraftServer server, UUID participantId) throws Exception {
+        Class<?> runtime = Class.forName(
+            "dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime");
+        Method method = runtime.getMethod("recoverParticipant", MinecraftServer.class, UUID.class);
+        return method.invoke(null, server, participantId);
     }
 
     private static int activeSessions(MinecraftServer server) throws Exception {
@@ -252,6 +302,14 @@ public final class InnerDominionGameTests {
 
     private static int fallbackReturns(Object result) throws Exception {
         return (int) result.getClass().getMethod("fallbackReturns").invoke(result);
+    }
+
+    private static boolean recovered(Object result) throws Exception {
+        return (boolean) result.getClass().getMethod("recovered").invoke(result);
+    }
+
+    private static boolean sessionClosed(Object result) throws Exception {
+        return (boolean) result.getClass().getMethod("sessionClosed").invoke(result);
     }
 
     private static void place(GameTestHelper helper, net.minecraft.world.entity.Entity entity, BlockPos relative) {
