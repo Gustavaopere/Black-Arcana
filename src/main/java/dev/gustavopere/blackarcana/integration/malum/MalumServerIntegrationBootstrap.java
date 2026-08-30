@@ -7,6 +7,7 @@ import dev.gustavopere.blackarcana.core.ritual.RitualCompletionKey;
 import dev.gustavopere.blackarcana.core.ritual.RitualCompletionLedger;
 import dev.gustavopere.blackarcana.core.ritual.RitualContext;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSpiritSightRuntime;
 import dev.gustavopere.blackarcana.integration.rpg.RpgSkillTreeBridge;
 import dev.gustavopere.blackarcana.persistence.RitualCompletionSavedData;
 import net.minecraft.core.BlockPos;
@@ -42,6 +43,16 @@ public final class MalumServerIntegrationBootstrap {
             bridge.diagnostic().isBlank() ? "" : " diagnostic=" + bridge.diagnostic());
 
         if (!bridge.available()) return;
+
+        ArcanaDecision spiritSight = MinecraftSpiritSightRuntime.registerProvider(
+            server,
+            new MalumSpiritTraceProvider(server));
+        if (!spiritSight.allowed()) {
+            BlackArcanaMod.LOGGER.warn(
+                "Could not register Malum Spirit Sight provider: {} {}",
+                spiritSight.code(),
+                spiritSight.detail());
+        }
 
         Optional<RpgSkillTreeBridge> rpg = runtime.integrations()
             .find(RpgSkillTreeBridge.MOD_ID)
