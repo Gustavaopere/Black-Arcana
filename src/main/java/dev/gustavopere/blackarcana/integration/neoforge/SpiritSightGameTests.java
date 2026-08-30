@@ -27,7 +27,7 @@ public final class SpiritSightGameTests {
         SpiritSightPolicy.Policy policy = new SpiritSightPolicy.Policy(
             16.0D,
             40L,
-            Set.of(SpiritSightPolicy.TraceKind.SOUL),
+            Set.of(SpiritSightPolicy.TraceKind.MALUM_SPIRIT),
             false);
 
         ArcanaDecision activation = MinecraftSpiritSightRuntime.activate(server, player.getUUID(), policy);
@@ -56,13 +56,13 @@ public final class SpiritSightGameTests {
                 if (!available.get()) return List.of();
                 return List.of(
                     new Trace(UUID.randomUUID(), position.x + 2.0D, position.y, position.z,
-                        SpiritSightPolicy.TraceKind.SOUL, false),
+                        SpiritSightPolicy.TraceKind.MALUM_SPIRIT, false),
                     new Trace(UUID.randomUUID(), position.x + 2.0D, position.y, position.z,
-                        SpiritSightPolicy.TraceKind.ECHO, false),
+                        SpiritSightPolicy.TraceKind.EIDOLON_OCCULT, false),
                     new Trace(UUID.randomUUID(), position.x + 2.0D, position.y, position.z,
-                        SpiritSightPolicy.TraceKind.SOUL, true),
+                        SpiritSightPolicy.TraceKind.MALUM_SPIRIT, true),
                     new Trace(UUID.randomUUID(), position.x + 40.0D, position.y, position.z,
-                        SpiritSightPolicy.TraceKind.SOUL, false));
+                        SpiritSightPolicy.TraceKind.MALUM_SPIRIT, false));
             }
         };
 
@@ -72,7 +72,7 @@ public final class SpiritSightGameTests {
         SpiritSightPolicy.Policy policy = new SpiritSightPolicy.Policy(
             16.0D,
             40L,
-            Set.of(SpiritSightPolicy.TraceKind.SOUL),
+            Set.of(SpiritSightPolicy.TraceKind.MALUM_SPIRIT),
             false);
         helper.assertTrue(MinecraftSpiritSightRuntime.activate(server, player.getUUID(), policy).allowed(),
             "Spirit Sight activation must succeed for loaded living caster");
@@ -80,7 +80,7 @@ public final class SpiritSightGameTests {
         List<SpiritTraceProvider.Trace> visible = MinecraftSpiritSightRuntime.visibleTraces(server, player.getUUID());
         helper.assertTrue(visible.size() == 1,
             "radius, category and private-data filters must leave exactly one visible trace; actual=" + visible.size());
-        helper.assertTrue(visible.getFirst().kind() == SpiritSightPolicy.TraceKind.SOUL,
+        helper.assertTrue(visible.getFirst().kind() == SpiritSightPolicy.TraceKind.MALUM_SPIRIT,
             "visible trace must retain its real provider-backed category");
 
         available.set(false);
@@ -106,14 +106,14 @@ public final class SpiritSightGameTests {
             @Override
             public List<Trace> query(Query query) {
                 return List.of(new Trace(UUID.randomUUID(), position.x + 1.0D, position.y, position.z,
-                    SpiritSightPolicy.TraceKind.SOUL, false));
+                    SpiritSightPolicy.TraceKind.MALUM_SPIRIT, false));
             }
         };
         MinecraftSpiritSightRuntime.registerProvider(server, provider);
         SpiritSightPolicy.Policy policy = new SpiritSightPolicy.Policy(
             8.0D,
             2L,
-            Set.of(SpiritSightPolicy.TraceKind.SOUL),
+            Set.of(SpiritSightPolicy.TraceKind.MALUM_SPIRIT),
             false);
         MinecraftSpiritSightRuntime.activate(server, player.getUUID(), policy);
         helper.assertTrue(MinecraftSpiritSightRuntime.visibleTraces(server, player.getUUID()).size() == 1,
