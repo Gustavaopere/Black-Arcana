@@ -7,6 +7,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -30,21 +31,20 @@ public final class ThresholdGateGameTests {
         var level = helper.getLevel();
         UUID gateId = UUID.randomUUID();
         String dimension = level.dimension().location().toString();
+        Vec3 destination = helper.absoluteVec(new Vec3(6.5D, 2.0D, 1.5D));
 
         clearLanding(helper, new BlockPos(6, 2, 1));
         ArcanaDecision registration = registerPair(
             server, gateId, owner.getUUID(), dimension,
             entity.getX(), entity.getY(), entity.getZ(),
-            6.5D, entity.getY(), 1.5D,
+            destination.x, destination.y, destination.z,
             4);
         helper.assertTrue(registration.allowed(), "valid loaded gate pair must register");
 
         Object result = transfer(server, gateId, owner.getUUID(), 0, entity.getUUID(), server.getTickCount(), true);
         helper.assertTrue(decision(result).allowed() && transferred(result),
             "owned loaded gate must move an eligible existing entity");
-        helper.assertTrue(Math.abs(entity.getX() - 6.5D) < 0.001D
-                && Math.abs(entity.getY() - 2.0D) < 0.001D
-                && Math.abs(entity.getZ() - 1.5D) < 0.001D,
+        helper.assertTrue(samePosition(entity, destination.x, destination.y, destination.z),
             "entity must land exactly at the paired endpoint supplied by the host");
         helper.succeed();
     }
@@ -61,12 +61,13 @@ public final class ThresholdGateGameTests {
         double x = entity.getX();
         double y = entity.getY();
         double z = entity.getZ();
+        Vec3 destination = helper.absoluteVec(new Vec3(6.5D, 2.0D, 1.5D));
 
         helper.setBlock(new BlockPos(6, 2, 1), Blocks.STONE);
         ArcanaDecision registration = registerPair(
             server, gateId, owner.getUUID(), dimension,
             x, y, z,
-            6.5D, y, 1.5D,
+            destination.x, destination.y, destination.z,
             4);
         helper.assertTrue(registration.allowed(), "pair registration must not force-load or pre-authorize future destination state");
 
@@ -96,20 +97,23 @@ public final class ThresholdGateGameTests {
         UUID gateId = UUID.randomUUID();
         String dimension = level.dimension().location().toString();
         long nowTick = server.getTickCount();
+        Vec3 firstDestination = helper.absoluteVec(new Vec3(6.5D, 2.0D, 1.5D));
+        Vec3 playerDestination = helper.absoluteVec(new Vec3(8.5D, 2.0D, 1.5D));
 
         clearLanding(helper, new BlockPos(6, 2, 1));
-        helper.setBlock(new BlockPos(8, 2, 1), Blocks.AIR);
-        helper.setBlock(new BlockPos(8, 3, 1), Blocks.AIR);
+        clearLanding(helper, new BlockPos(8, 2, 1));
         ArcanaDecision registration = registerPair(
             server, gateId, owner.getUUID(), dimension,
             first.getX(), first.getY(), first.getZ(),
-            6.5D, first.getY(), 1.5D,
+            firstDestination.x, firstDestination.y, firstDestination.z,
             1);
         helper.assertTrue(registration.allowed(), "throughput=1 must be a valid bounded gate configuration");
 
         Object firstTransfer = transfer(server, gateId, owner.getUUID(), 0, first.getUUID(), nowTick, true);
         helper.assertTrue(decision(firstTransfer).allowed() && transferred(firstTransfer),
             "first transfer in the throughput window must succeed");
+        helper.assertTrue(samePosition(first, firstDestination.x, firstDestination.y, firstDestination.z),
+            "successful throughput fixture transfer must land at the absolute paired endpoint");
 
         double secondX = second.getX();
         double secondY = second.getY();
@@ -123,11 +127,10 @@ public final class ThresholdGateGameTests {
 
         // A separate pair avoids the saturated window and isolates consent behavior.
         UUID playerGate = UUID.randomUUID();
-        clearLanding(helper, new BlockPos(8, 2, 1));
         helper.assertTrue(registerPair(
             server, playerGate, owner.getUUID(), dimension,
             otherPlayer.getX(), otherPlayer.getY(), otherPlayer.getZ(),
-            8.5D, otherPlayer.getY(), 1.5D,
+            playerDestination.x, playerDestination.y, playerDestination.z,
             4).allowed(), "player-consent fixture pair must register");
         double playerX = otherPlayer.getX();
         double playerY = otherPlayer.getY();
