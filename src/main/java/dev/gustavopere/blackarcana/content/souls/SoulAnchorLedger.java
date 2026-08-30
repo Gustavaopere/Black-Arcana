@@ -67,14 +67,13 @@ public final class SoulAnchorLedger {
 
     public synchronized Snapshot snapshot(UUID ownerId) {
         State state = states.get(Objects.requireNonNull(ownerId, "ownerId"));
-        if (state == null) return new Snapshot(ownerId, 0.0D, 0, 0L);
-        return new Snapshot(ownerId, state.storedSpiritValue, state.anchors, state.recoveryUntilTick);
+        if (state == null) return new Snapshot(ownerId, 0.0D, 0, 0L, List.of(), null);
+        return snapshotOf(ownerId, state);
     }
 
     public synchronized List<Snapshot> snapshotAll() {
         return states.entrySet().stream()
-            .map(entry -> new Snapshot(entry.getKey(), entry.getValue().storedSpiritValue,
-                entry.getValue().anchors, entry.getValue().recoveryUntilTick))
+            .map(entry -> snapshotOf(entry.getKey(), entry.getValue()))
             .toList();
     }
 
@@ -96,10 +95,24 @@ public final class SoulAnchorLedger {
             state.storedSpiritValue = snapshot.storedSpiritValue();
             state.anchors = snapshot.anchors();
             state.recoveryUntilTick = snapshot.recoveryUntilTick();
+            state.lastPreventedDeathEvent = snapshot.lastPreventedDeathEvent();
+            for (UUID deathEventId : snapshot.recentDeathEventIds()) {
+                rememberEvent(state, deathEventId);
+            }
             replacement.put(snapshot.ownerId(), state);
         }
         states.clear();
         states.putAll(replacement);
+    }
+
+    private static Snapshot snapshotOf(UUID ownerId, State state) {
+        return new Snapshot(
+            ownerId,
+            state.storedSpiritValue,
+            state.anchors,
+            state.recoveryUntilTick,
+            List.copyOf(state.deathEventOrder),
+            state.lastPreventedDeathEvent);
     }
 
     private State stateFor(UUID ownerId) {
@@ -167,12 +180,34 @@ public final class SoulAnchorLedger {
 
     public record CreditResult(boolean credited, double awarded, double storedAfter) { }
 
-    public record Snapshot(UUID ownerId, double storedSpiritValue, int anchors, long recoveryUntilTick) {
+    public record Snapshot(
+        UUID ownerId,
+        double storedSpiritValue,
+        int anchors,
+        long recoveryUntilTick,
+        List<UUID> recentDeathEventIds,
+        UUID lastPreventedDeathEvent
+    ) {
         public Snapshot {
             Objects.requireNonNull(ownerId, "ownerId");
+            recentDeathEventIds = List.copyOf(Objects.requireNonNull(recentDeathEventIds, "recentDeathEventIds"));
             if (!Double.isFinite(storedSpiritValue) || storedSpiritValue < 0.0D) throw new IllegalArgumentException("storedSpiritValue invalid");
             if (anchors < 0 || anchors > SoulSafetyCeilings.MAX_SOUL_ANCHORS) throw new IllegalArgumentException("anchors invalid");
             if (recoveryUntilTick < 0L) throw new IllegalArgumentException("recoveryUntilTick invalid");
+            if (recentDeathEventIds.size() > SoulSafetyCeilings.MAX_RECENT_DEATH_EVENTS_PER_OWNER) {
+                throw new IllegalArgumentException("recent death event snapshot exceeds hard ceiling");
+            }
+            Set<UUID> uniqueDeathEvents = new HashSet<>();
+            for (UUID eventId : recentDeathEventIds) {
+                Objects.requireNonNull(eventId, "recent death event id");
+                if (!uniqueDeathEvents.add(eventId)) {
+                    throw new IllegalArgumentException("duplicate recent death event id");
+                }
+            }
+        }
+
+        public Snapshot(UUID ownerId, double storedSpiritValue, int anchors, long recoveryUntilTick) {
+            this(ownerId, storedSpiritValue, anchors, recoveryUntilTick, List.of(), null);
         }
     }
 
