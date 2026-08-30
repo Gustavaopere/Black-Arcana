@@ -85,6 +85,18 @@ public final class MinecraftLawOfRecurrenceRuntime {
         }
     }
 
+    public static boolean isActive(MinecraftServer server, UUID casterId) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(casterId, "casterId");
+        ServerState state = STATES.get(server);
+        if (state == null) return false;
+        long nowTick = server.overworld().getGameTime();
+        synchronized (state) {
+            state.pruneExpired(nowTick);
+            return state.sessions.containsKey(casterId);
+        }
+    }
+
     private static void onServerStarted(ServerStartedEvent event) {
         STATES.put(event.getServer(), new ServerState());
     }
