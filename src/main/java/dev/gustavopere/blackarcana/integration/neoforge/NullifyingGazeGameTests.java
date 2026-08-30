@@ -28,6 +28,7 @@ public final class NullifyingGazeGameTests {
     private static final double TEST_RANGE = 16.0D;
     private static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("minecraft", "speed");
     private static final ResourceLocation STRENGTH = ResourceLocation.fromNamespaceAndPath("minecraft", "strength");
+    private static final ResourceLocation FIRE_RESISTANCE = ResourceLocation.fromNamespaceAndPath("minecraft", "fire_resistance");
 
     private NullifyingGazeGameTests() { }
 
@@ -38,15 +39,14 @@ public final class NullifyingGazeGameTests {
         var target = target(helper);
         place(helper, caster, CASTER_POS);
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200));
-        target.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200));
+        target.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 200));
 
-        reset(helper.getLevel().getServer());
         registerNullifiable(helper.getLevel().getServer(), SPEED);
         Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
 
         helper.assertTrue(decision(result).allowed(), "registered nullifiable effect must be removable");
         helper.assertTrue(!target.hasEffect(MobEffects.MOVEMENT_SPEED), "registered speed effect must be removed");
-        helper.assertTrue(target.hasEffect(MobEffects.DAMAGE_BOOST), "unknown strength effect must remain untouched");
+        helper.assertTrue(target.hasEffect(MobEffects.NIGHT_VISION), "unknown night-vision effect must remain untouched");
         helper.assertTrue(removedEffect(result).filter(SPEED::equals).isPresent(), "result must identify the removed effect");
         helper.succeed();
     }
@@ -60,7 +60,6 @@ public final class NullifyingGazeGameTests {
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200));
         target.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200));
 
-        reset(helper.getLevel().getServer());
         registerNullifiable(helper.getLevel().getServer(), SPEED);
         registerNullifiable(helper.getLevel().getServer(), STRENGTH);
         Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
@@ -79,15 +78,14 @@ public final class NullifyingGazeGameTests {
         var caster = helper.makeMockServerPlayerInLevel();
         var target = target(helper);
         place(helper, caster, CASTER_POS);
-        target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200));
+        target.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 200));
 
-        reset(helper.getLevel().getServer());
         Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
 
         helper.assertTrue(!decision(result).allowed(), "unknown effect must fail closed");
         helper.assertTrue("nullifying_gaze_no_eligible_effect".equals(decision(result).code()),
             "unknown effect denial must expose canonical diagnostic");
-        helper.assertTrue(target.hasEffect(MobEffects.MOVEMENT_SPEED), "unknown effect must remain untouched");
+        helper.assertTrue(target.hasEffect(MobEffects.NIGHT_VISION), "unknown effect must remain untouched");
         helper.succeed();
     }
 
@@ -97,15 +95,14 @@ public final class NullifyingGazeGameTests {
         var caster = helper.makeMockServerPlayerInLevel();
         var target = target(helper);
         place(helper, caster, CASTER_POS);
-        target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200));
+        target.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 200));
 
-        reset(helper.getLevel().getServer());
-        registerNullifiable(helper.getLevel().getServer(), SPEED);
-        registerProtected(helper.getLevel().getServer(), SPEED);
+        registerNullifiable(helper.getLevel().getServer(), FIRE_RESISTANCE);
+        registerProtected(helper.getLevel().getServer(), FIRE_RESISTANCE);
         Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
 
         helper.assertTrue(!decision(result).allowed(), "protected effect must not be nullified");
-        helper.assertTrue(target.hasEffect(MobEffects.MOVEMENT_SPEED), "protected effect must remain untouched");
+        helper.assertTrue(target.hasEffect(MobEffects.FIRE_RESISTANCE), "protected effect must remain untouched");
         helper.assertTrue(removedEffect(result).isEmpty(), "denied result must not report a removed effect");
         helper.succeed();
     }
@@ -118,7 +115,6 @@ public final class NullifyingGazeGameTests {
         place(helper, caster, CASTER_POS);
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200));
 
-        reset(helper.getLevel().getServer());
         registerNullifiable(helper.getLevel().getServer(), SPEED);
         Object invalidRange = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), Double.NaN);
         helper.assertTrue(!decision(invalidRange).allowed(), "non-finite configured range must fail closed");
@@ -169,10 +165,6 @@ public final class NullifyingGazeGameTests {
     private static void registerProtected(MinecraftServer server, ResourceLocation effectId) throws Exception {
         runtime().getMethod("registerProtectedEffect", MinecraftServer.class, ResourceLocation.class)
             .invoke(null, server, effectId);
-    }
-
-    private static void reset(MinecraftServer server) throws Exception {
-        runtime().getMethod("resetEffectPolicyForTests", MinecraftServer.class).invoke(null, server);
     }
 
     private static Class<?> runtime() throws ClassNotFoundException {
