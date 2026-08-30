@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.integration.neoforge.MinecraftAnchorRecallRun
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftArcaneDamagePipeline;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEchoArmamentRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEphemeralTemperingRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionLifecycleRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftLawOfRecurrenceRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftReciprocalTranspositionRuntime;
@@ -52,6 +53,7 @@ public final class BlackArcanaMod {
         MinecraftEchoArmamentRuntime.register(NeoForge.EVENT_BUS);
         MinecraftEphemeralTemperingRuntime.register(NeoForge.EVENT_BUS);
         MinecraftInnerDominionRuntime.register(NeoForge.EVENT_BUS);
+        MinecraftInnerDominionLifecycleRuntime.register(NeoForge.EVENT_BUS);
         MinecraftLawOfRecurrenceRuntime.register(NeoForge.EVENT_BUS);
         MinecraftReciprocalTranspositionRuntime.register(NeoForge.EVENT_BUS);
         MinecraftRiftBladesRuntime.register(NeoForge.EVENT_BUS);
