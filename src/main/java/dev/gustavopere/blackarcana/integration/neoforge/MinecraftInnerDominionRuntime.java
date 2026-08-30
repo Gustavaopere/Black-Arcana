@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +49,7 @@ public final class MinecraftInnerDominionRuntime {
 
     public static void register(IEventBus gameBus) {
         Objects.requireNonNull(gameBus, "gameBus");
+        gameBus.addListener(MinecraftInnerDominionRuntime::onServerTick);
         gameBus.addListener(MinecraftInnerDominionRuntime::onServerStopped);
     }
 
@@ -429,6 +431,20 @@ public final class MinecraftInnerDominionRuntime {
             if (level.dimension().location().toString().equals(dimensionId)) return level;
         }
         return null;
+    }
+
+    private static void onServerTick(ServerTickEvent.Post event) {
+        MinecraftServer server = event.getServer();
+        State state = state(server);
+        long now = server.overworld().getGameTime();
+        for (InnerDominionSessionJournal.Session session : state.journal.due(now)) {
+            for (UUID participantId : session.participants().keySet()) {
+                ServerPlayer participant = loadedAlivePlayer(server, participantId);
+                if (participant != null) {
+                    recoverParticipant(server, participant);
+                }
+            }
+        }
     }
 
     private static void onServerStopped(ServerStoppedEvent event) {
