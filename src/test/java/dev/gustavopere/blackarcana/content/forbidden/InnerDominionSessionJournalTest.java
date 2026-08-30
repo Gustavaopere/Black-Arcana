@@ -24,14 +24,35 @@ class InnerDominionSessionJournalTest {
         assertFalse(journal.participantActive(guest));
     }
 
-    @Test void restoreDropsExpiredAndOverlappingSessions() {
+    @Test void dueSessionsRemainBoundUntilExplicitClose() {
+        var journal = new InnerDominionSessionJournal(2, 4, 200);
+        UUID owner = UUID.randomUUID();
+        UUID sessionId = UUID.randomUUID();
+        assertEquals(
+            InnerDominionSessionJournal.OpenResult.OPENED,
+            journal.open(sessionId, owner, 10, 20, Map.of(owner, route())));
+
+        List<InnerDominionSessionJournal.Session> due = journal.due(30);
+
+        assertEquals(1, due.size());
+        assertEquals(sessionId, due.getFirst().sessionId());
+        assertEquals(1, journal.activeSessions(), "expiry discovery must not discard the recovery obligation");
+        assertTrue(journal.participantActive(owner), "expired participant must stay bound until safe return closes the session");
+        assertTrue(journal.close(sessionId).isPresent());
+        assertFalse(journal.participantActive(owner));
+    }
+
+    @Test void restoreRetainsExpiredRecoveryObligationsAndRejectsOverlap() {
         UUID owner = UUID.randomUUID(); UUID guest = UUID.randomUUID(); UUID expiredOwner = UUID.randomUUID();
         var valid = new InnerDominionSessionJournal.Session(UUID.randomUUID(), owner, 100, Map.of(owner, route(), guest, route()));
         var overlap = new InnerDominionSessionJournal.Session(UUID.randomUUID(), guest, 120, Map.of(guest, route()));
         var expired = new InnerDominionSessionJournal.Session(UUID.randomUUID(), expiredOwner, 5, Map.of(expiredOwner, route()));
         var journal = new InnerDominionSessionJournal(3, 4, 200);
-        assertEquals(1, journal.restore(List.of(expired, valid, overlap), 10));
-        assertEquals(1, journal.activeSessions());
+
+        assertEquals(2, journal.restore(List.of(expired, valid, overlap), 10));
+        assertEquals(2, journal.activeSessions());
+        assertTrue(journal.participantActive(expiredOwner), "restart restore must retain overdue return obligations");
+        assertEquals(List.of(expired.sessionId()), journal.due(10).stream().map(InnerDominionSessionJournal.Session::sessionId).toList());
     }
 
     @Test void returnSelectionUsesSafeFallbackAndNeverInventsDestination() {
