@@ -28,7 +28,7 @@ public final class GazeOfStillnessGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void reciprocalFacingSuppressesHorizontalMovement(GameTestHelper helper) throws Exception {
         var caster = helper.makeMockServerPlayerInLevel();
-        var target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(6, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.SHEEP, new BlockPos(6, 2, 1));
         place(helper, caster, new BlockPos(2, 2, 1));
         faceEachOther(caster, target);
 
@@ -53,7 +53,7 @@ public final class GazeOfStillnessGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void breakingReciprocalFacingEndsSuppression(GameTestHelper helper) throws Exception {
         var caster = helper.makeMockServerPlayerInLevel();
-        var target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(6, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.SHEEP, new BlockPos(6, 2, 1));
         place(helper, caster, new BlockPos(2, 2, 1));
         faceEachOther(caster, target);
 
@@ -77,7 +77,7 @@ public final class GazeOfStillnessGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void durationAboveNoeticCeilingFailsClosed(GameTestHelper helper) throws Exception {
         var caster = helper.makeMockServerPlayerInLevel();
-        var target = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(6, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.SHEEP, new BlockPos(6, 2, 1));
         place(helper, caster, new BlockPos(2, 2, 1));
         faceEachOther(caster, target);
 
