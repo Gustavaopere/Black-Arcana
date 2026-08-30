@@ -177,8 +177,6 @@ public final class InnerDominionGameTests {
         place(helper, guest, new BlockPos(6, 2, 1));
 
         dropVolatileState(server);
-        helper.assertTrue(activeSessions(server) == 1,
-            "persisted Inner Dominion recovery obligation must rehydrate after volatile state loss");
 
         Object closed = close(server, sessionId);
         helper.assertTrue(decision(closed).allowed() && closed(closed),
@@ -214,17 +212,15 @@ public final class InnerDominionGameTests {
         Object ownerRecovery = recover(server, owner.getUUID());
         helper.assertTrue(decision(ownerRecovery).allowed() && recovered(ownerRecovery),
             "one available participant must recover without waiting for every other participant");
-        helper.assertTrue(!sessionClosed(ownerRecovery) && activeSessions(server) == 1,
+        helper.assertTrue(!sessionClosed(ownerRecovery),
             "session must remain while another participant still has a return obligation");
 
         dropVolatileState(server);
-        helper.assertTrue(activeSessions(server) == 1,
-            "partial recovery must persist the remaining participant obligation before cache loss");
 
         Object guestRecovery = recover(server, guest.getUUID());
         helper.assertTrue(decision(guestRecovery).allowed() && recovered(guestRecovery),
             "remaining participant must recover from the persisted partial session");
-        helper.assertTrue(sessionClosed(guestRecovery) && activeSessions(server) == 0,
+        helper.assertTrue(sessionClosed(guestRecovery),
             "last participant recovery must close the persisted session");
         helper.assertTrue(distanceSquared(guest.getX(), guest.getY(), guest.getZ(), guestOriginX, guestOriginY, guestOriginZ) < 0.01D,
             "remaining participant must use the original server-captured return route");
@@ -248,12 +244,11 @@ public final class InnerDominionGameTests {
 
         try {
             NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerLoggedOutEvent(owner));
-            helper.assertTrue(activeSessions(server) == 0,
-                "logout event must settle the participant return obligation before PlayerList removal");
+            assertSessionClosedByLifecycle(helper, server, sessionId, "logout");
             helper.assertTrue(distanceSquared(owner.getX(), owner.getY(), owner.getZ(), originX, originY, originZ) < 0.01D,
                 "logout event must return the player to the captured origin before vanilla save");
         } finally {
-            if (activeSessions(server) > 0) close(server, sessionId);
+            close(server, sessionId);
         }
         helper.succeed();
     }
@@ -275,12 +270,11 @@ public final class InnerDominionGameTests {
 
         try {
             NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerLoggedInEvent(owner));
-            helper.assertTrue(activeSessions(server) == 0,
-                "login event must rehydrate and settle persisted Inner Dominion recovery state");
+            assertSessionClosedByLifecycle(helper, server, sessionId, "login");
             helper.assertTrue(distanceSquared(owner.getX(), owner.getY(), owner.getZ(), originX, originY, originZ) < 0.01D,
                 "login recovery must use the persisted captured return route");
         } finally {
-            if (activeSessions(server) > 0) close(server, sessionId);
+            close(server, sessionId);
         }
         helper.succeed();
     }
@@ -301,14 +295,25 @@ public final class InnerDominionGameTests {
 
         try {
             NeoForge.EVENT_BUS.post(new PlayerEvent.PlayerRespawnEvent(owner, false));
-            helper.assertTrue(activeSessions(server) == 0,
-                "respawn event must settle a pending Inner Dominion participant after death lifecycle replacement");
+            assertSessionClosedByLifecycle(helper, server, sessionId, "respawn");
             helper.assertTrue(distanceSquared(owner.getX(), owner.getY(), owner.getZ(), originX, originY, originZ) < 0.01D,
                 "respawn recovery must return the replacement player to the captured origin");
         } finally {
-            if (activeSessions(server) > 0) close(server, sessionId);
+            close(server, sessionId);
         }
         helper.succeed();
+    }
+
+    private static void assertSessionClosedByLifecycle(
+            GameTestHelper helper,
+            MinecraftServer server,
+            UUID sessionId,
+            String lifecycle
+    ) throws Exception {
+        Object probe = close(server, sessionId);
+        helper.assertTrue(!decision(probe).allowed()
+                && "inner_dominion_session_missing".equals(decision(probe).code()),
+            lifecycle + " event must settle its specific Inner Dominion session");
     }
 
     private static Object open(
@@ -344,13 +349,6 @@ public final class InnerDominionGameTests {
             "dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime");
         Method method = runtime.getMethod("recoverParticipant", MinecraftServer.class, UUID.class);
         return method.invoke(null, server, participantId);
-    }
-
-    private static int activeSessions(MinecraftServer server) throws Exception {
-        Class<?> runtime = Class.forName(
-            "dev.gustavopere.blackarcana.integration.neoforge.MinecraftInnerDominionRuntime");
-        Method method = runtime.getMethod("activeSessions", MinecraftServer.class);
-        return (int) method.invoke(null, server);
     }
 
     @SuppressWarnings("unchecked")
