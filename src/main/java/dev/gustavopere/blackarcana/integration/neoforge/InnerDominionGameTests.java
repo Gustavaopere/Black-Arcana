@@ -133,14 +133,16 @@ public final class InnerDominionGameTests {
         helper.assertTrue(decision(opened).allowed(), "Inner Dominion fixture session must open");
 
         place(helper, guest, new BlockPos(6, 2, 1));
-        helper.setBlock(guestRelative, Blocks.STONE);
-        helper.setBlock(guestRelative.above(), Blocks.STONE);
+        BlockPos blockedOrigin = helper.absolutePos(guestRelative);
+        helper.getLevel().setBlockAndUpdate(blockedOrigin, Blocks.STONE.defaultBlockState());
+        helper.getLevel().setBlockAndUpdate(blockedOrigin.above(), Blocks.STONE.defaultBlockState());
 
         Object closed = close(helper.getLevel().getServer(), sessionId);
         helper.assertTrue(decision(closed).allowed() && closed(closed),
             "invalid origin must not strand an otherwise recoverable participant");
-        helper.assertTrue(fallbackReturns(closed) == 1,
-            "exactly the participant with a blocked origin must use fallback");
+        int fallbackCount = fallbackReturns(closed);
+        helper.assertTrue(fallbackCount == 1,
+            "exactly the participant with a blocked origin must use fallback; actual=" + fallbackCount);
         helper.assertTrue(distanceSquared(guest.getX(), guest.getY(), guest.getZ(), guestOriginX, guestOriginY, guestOriginZ) > 0.25D,
             "blocked guest origin must not be reused as fallback");
         helper.assertTrue(helper.getLevel().noCollision(guest, guest.getBoundingBox()),
