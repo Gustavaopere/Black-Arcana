@@ -47,8 +47,9 @@ import java.util.UUID;
 public final class MinecraftRiftBladesRuntime {
     private static final SafeDestinationPolicy DESTINATION_POLICY = new SafeDestinationPolicy();
 
-    /** Technical ceiling only; Stage 08/config is expected to choose a much shorter lifetime. */
+    /** Technical ceilings only; Stage 08/config owns final spell balance below them. */
     public static final long ABSOLUTE_MAX_PROJECTILE_LIFETIME_TICKS = 20L * 60L * 60L;
+    public static final double ABSOLUTE_MAX_PROJECTILE_RANGE_BLOCKS = 128.0D;
 
     private static final Map<MinecraftServer, ProjectileState> PROJECTILE_STATES =
         Collections.synchronizedMap(new IdentityHashMap<>());
@@ -62,12 +63,34 @@ public final class MinecraftRiftBladesRuntime {
         gameBus.addListener(MinecraftRiftBladesRuntime::onServerStopped);
     }
 
+    /**
+     * Compatibility overload for callers that have not yet supplied spell-specific range balance.
+     * It still receives the absolute technical ceiling; Stage 08/host wiring should use the bounded
+     * overload below with its configured range.
+     */
     public static VolleyResult launchProjectileVolley(
             MinecraftServer server,
             UUID ownerId,
             long nowTick,
             int projectileCount,
             long lifetimeTicks
+    ) {
+        return launchProjectileVolley(
+            server,
+            ownerId,
+            nowTick,
+            projectileCount,
+            lifetimeTicks,
+            ABSOLUTE_MAX_PROJECTILE_RANGE_BLOCKS);
+    }
+
+    public static VolleyResult launchProjectileVolley(
+            MinecraftServer server,
+            UUID ownerId,
+            long nowTick,
+            int projectileCount,
+            long lifetimeTicks,
+            double maxRangeBlocks
     ) {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(ownerId, "ownerId");
@@ -83,6 +106,13 @@ public final class MinecraftRiftBladesRuntime {
             return VolleyResult.denied(
                 "rift_blades_projectile_lifetime",
                 "Projectile lifetime is outside the technical safety ceiling");
+        }
+        if (!Double.isFinite(maxRangeBlocks)
+                || maxRangeBlocks <= 0.0D
+                || maxRangeBlocks > ABSOLUTE_MAX_PROJECTILE_RANGE_BLOCKS) {
+            return VolleyResult.denied(
+                "rift_blades_projectile_range",
+                "Projectile range is outside the technical safety ceiling");
         }
 
         LivingEntity owner = findLoadedLivingEntity(server, ownerId);
@@ -109,10 +139,65 @@ public final class MinecraftRiftBladesRuntime {
             for (int index = 0; index < projectileCount; index++) {
                 RiftBladeProjectileHandle handle = new RiftBladeProjectileHandle(
                     UUID.randomUUID(), ownerId, nowTick, expiresAtTick);
-                state.projectiles.put(handle.projectileId(), handle);
+                TrackedProjectile tracked = new TrackedProjectile(
+                    handle,
+                    owner.getX(),
+                    owner.getY(),
+                    owner.getZ(),
+                    maxRangeBlocks);
+                state.projectiles.put(handle.projectileId(), tracked);
                 launched.add(handle);
             }
             return VolleyResult.allowed(launched);
+        }
+    }
+
+    /**
+     * Accepts an observation from the host-owned projectile entity. The core never force-loads
+     * chunks or owns projectile physics; it only enforces its registered lifetime/range/collision
+     * contract and releases the matching budget slot exactly once when the handle terminates.
+     */
+    public static ProjectileStepResult updateProjectile(
+            MinecraftServer server,
+            UUID projectileId,
+            double x,
+            double y,
+            double z,
+            boolean collided
+    ) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(projectileId, "projectileId");
+        if (!Double.isFinite(x) || !Double.isFinite(y) || !Double.isFinite(z)) {
+            return ProjectileStepResult.terminated("invalid_position");
+        }
+
+        ProjectileState state = PROJECTILE_STATES.get(server);
+        if (state == null) return ProjectileStepResult.terminated("missing");
+        synchronized (state) {
+            TrackedProjectile tracked = state.projectiles.get(projectileId);
+            if (tracked == null) return ProjectileStepResult.terminated("missing");
+
+            if (collided) {
+                terminateProjectile(server, state, tracked);
+                return ProjectileStepResult.terminated("collision");
+            }
+
+            double dx = x - tracked.originX();
+            double dy = y - tracked.originY();
+            double dz = z - tracked.originZ();
+            double distanceSquared = dx * dx + dy * dy + dz * dz;
+            double maxRangeSquared = tracked.maxRangeBlocks() * tracked.maxRangeBlocks();
+            if (!Double.isFinite(distanceSquared) || distanceSquared > maxRangeSquared) {
+                terminateProjectile(server, state, tracked);
+                return ProjectileStepResult.terminated("range_exceeded");
+            }
+
+            LivingEntity owner = findLoadedLivingEntity(server, tracked.handle().ownerId());
+            if (owner == null || !owner.isAlive()) {
+                terminateProjectile(server, state, tracked);
+                return ProjectileStepResult.terminated("owner_unavailable");
+            }
+            return ProjectileStepResult.activeResult();
         }
     }
 
@@ -132,9 +217,10 @@ public final class MinecraftRiftBladesRuntime {
         ProjectileState state = PROJECTILE_STATES.get(server);
         if (state == null) return;
         synchronized (state) {
-            Iterator<Map.Entry<UUID, RiftBladeProjectileHandle>> iterator = state.projectiles.entrySet().iterator();
+            Iterator<Map.Entry<UUID, TrackedProjectile>> iterator = state.projectiles.entrySet().iterator();
             while (iterator.hasNext()) {
-                RiftBladeProjectileHandle handle = iterator.next().getValue();
+                TrackedProjectile tracked = iterator.next().getValue();
+                RiftBladeProjectileHandle handle = tracked.handle();
                 boolean expired = handle.expiresAtTick() <= nowTick;
                 LivingEntity owner = findLoadedLivingEntity(server, handle.ownerId());
                 boolean ownerUnavailable = owner == null || !owner.isAlive();
@@ -338,14 +424,27 @@ public final class MinecraftRiftBladesRuntime {
         }
     }
 
+    private static void terminateProjectile(
+            MinecraftServer server,
+            ProjectileState state,
+            TrackedProjectile tracked
+    ) {
+        RiftBladeProjectileHandle removed = null;
+        TrackedProjectile removedTracked = state.projectiles.remove(tracked.handle().projectileId());
+        if (removedTracked != null) removed = removedTracked.handle();
+        if (removed == null) return;
+        state.budget.releaseEchoes(removed.ownerId(), 1);
+        if (state.projectiles.isEmpty()) PROJECTILE_STATES.remove(server);
+    }
+
     private static void clearOwner(MinecraftServer server, UUID ownerId) {
         ProjectileState state = PROJECTILE_STATES.get(server);
         if (state == null) return;
         synchronized (state) {
             int removed = 0;
-            Iterator<Map.Entry<UUID, RiftBladeProjectileHandle>> iterator = state.projectiles.entrySet().iterator();
+            Iterator<Map.Entry<UUID, TrackedProjectile>> iterator = state.projectiles.entrySet().iterator();
             while (iterator.hasNext()) {
-                if (iterator.next().getValue().ownerId().equals(ownerId)) {
+                if (iterator.next().getValue().handle().ownerId().equals(ownerId)) {
                     iterator.remove();
                     removed++;
                 }
@@ -385,6 +484,26 @@ public final class MinecraftRiftBladesRuntime {
         private static LandingEvaluation deny(String code) { return new LandingEvaluation(false, code); }
     }
 
+    private record TrackedProjectile(
+        RiftBladeProjectileHandle handle,
+        double originX,
+        double originY,
+        double originZ,
+        double maxRangeBlocks
+    ) {
+        private TrackedProjectile {
+            Objects.requireNonNull(handle, "handle");
+            if (!Double.isFinite(originX) || !Double.isFinite(originY) || !Double.isFinite(originZ)) {
+                throw new IllegalArgumentException("Rift Blades projectile origin must be finite");
+            }
+            if (!Double.isFinite(maxRangeBlocks)
+                    || maxRangeBlocks <= 0.0D
+                    || maxRangeBlocks > ABSOLUTE_MAX_PROJECTILE_RANGE_BLOCKS) {
+                throw new IllegalArgumentException("Rift Blades projectile range outside technical ceiling");
+            }
+        }
+    }
+
     public record RiftBladeProjectileHandle(
         UUID projectileId,
         UUID ownerId,
@@ -397,6 +516,26 @@ public final class MinecraftRiftBladesRuntime {
             if (createdTick < 0L || expiresAtTick <= createdTick) {
                 throw new IllegalArgumentException("invalid Rift Blades projectile lifetime");
             }
+        }
+    }
+
+    public record ProjectileStepResult(boolean active, String code) {
+        public ProjectileStepResult {
+            Objects.requireNonNull(code, "code");
+            if (active && !code.isEmpty()) {
+                throw new IllegalArgumentException("active Rift Blades projectile cannot carry termination reason");
+            }
+            if (!active && code.isEmpty()) {
+                throw new IllegalArgumentException("terminated Rift Blades projectile must carry a reason");
+            }
+        }
+
+        private static ProjectileStepResult activeResult() {
+            return new ProjectileStepResult(true, "");
+        }
+
+        private static ProjectileStepResult terminated(String code) {
+            return new ProjectileStepResult(false, Objects.requireNonNull(code, "code"));
         }
     }
 
@@ -452,6 +591,6 @@ public final class MinecraftRiftBladesRuntime {
     private static final class ProjectileState {
         private final ProjectionBudgetTracker budget =
             new ProjectionBudgetTracker(ProjectionSafetyCeilings.MAX_ACTIVE_ECHOES);
-        private final Map<UUID, RiftBladeProjectileHandle> projectiles = new LinkedHashMap<>();
+        private final Map<UUID, TrackedProjectile> projectiles = new LinkedHashMap<>();
     }
 }
