@@ -66,4 +66,66 @@ public final class SoulAnchorGameTests {
             "successful prevention must start the configured recovery lockout");
         helper.succeed();
     }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void runtimeReconfigureRehydratesPersistedLedgerAndDeathIds(GameTestHelper helper) throws Exception {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(GameType.SURVIVAL);
+        player.getAbilities().invulnerable = false;
+        player.getAbilities().instabuild = false;
+        player.onUpdateAbilities();
+
+        MinecraftServer server = helper.getLevel().getServer();
+        SoulAnchorLedger.Policy policy = new SoulAnchorLedger.Policy(2, 10.0D, 100.0D, 600L, 64);
+        UUID creditedDeathId = UUID.randomUUID();
+
+        Class<?> runtime = Class.forName(
+            "dev.gustavopere.blackarcana.integration.neoforge.MinecraftSoulAnchorRuntime");
+        Method configure = runtime.getMethod(
+            "configure", MinecraftServer.class, SoulAnchorLedger.Policy.class, float.class);
+        Method creditDeath = runtime.getMethod(
+            "creditDeath", MinecraftServer.class, UUID.class, SoulAnchorLedger.DeathCredit.class);
+        Method formAnchor = runtime.getMethod("formAnchor", MinecraftServer.class, UUID.class);
+        Method snapshot = runtime.getMethod("snapshot", MinecraftServer.class, UUID.class);
+
+        ArcanaDecision firstConfiguration = (ArcanaDecision) configure.invoke(null, server, policy, 5.0F);
+        helper.assertTrue(firstConfiguration.allowed(), "initial Soul Anchor runtime configuration must succeed");
+        SoulAnchorLedger.CreditResult firstCredit = (SoulAnchorLedger.CreditResult) creditDeath.invoke(
+            null,
+            server,
+            player.getUUID(),
+            new SoulAnchorLedger.DeathCredit(creditedDeathId, 10.0D, 1.0D, true));
+        helper.assertTrue(firstCredit.credited(), "initial credited death must be persisted");
+        helper.assertTrue((boolean) formAnchor.invoke(null, server, player.getUUID()),
+            "initial persisted spirit must form one anchor");
+
+        ArcanaDecision reconfigured = (ArcanaDecision) configure.invoke(null, server, policy, 7.0F);
+        helper.assertTrue(reconfigured.allowed(), "runtime must rehydrate the persisted bounded ledger");
+
+        SoulAnchorLedger.Snapshot restored = (SoulAnchorLedger.Snapshot) snapshot.invoke(null, server, player.getUUID());
+        helper.assertTrue(restored.anchors() == 1, "rehydration must preserve the formed anchor");
+        helper.assertTrue(restored.recentDeathEventIds().contains(creditedDeathId),
+            "rehydration must preserve credited death ids for exactly-once accounting");
+
+        SoulAnchorLedger.CreditResult duplicate = (SoulAnchorLedger.CreditResult) creditDeath.invoke(
+            null,
+            server,
+            player.getUUID(),
+            new SoulAnchorLedger.DeathCredit(creditedDeathId, 10.0D, 1.0D, true));
+        helper.assertTrue(!duplicate.credited(), "rehydrated ledger must reject duplicate death credit");
+
+        player.setHealth(4.0F);
+        player.invulnerableTime = 0;
+        player.die(player.damageSources().magic());
+        SoulAnchorLedger.Snapshot after = (SoulAnchorLedger.Snapshot) snapshot.invoke(null, server, player.getUUID());
+
+        helper.assertTrue(player.isAlive(), "rehydrated anchor must still prevent the fatal death event");
+        helper.assertTrue(Math.abs(player.getHealth() - 7.0F) <= 0.01F,
+            "rehydrated runtime must use the new configured restore amount");
+        helper.assertTrue(after.anchors() == 0, "rehydrated anchor must be consumed exactly once");
+        helper.assertTrue(after.recoveryUntilTick() > server.overworld().getGameTime(),
+            "rehydrated runtime must persist the post-revival lockout");
+        helper.succeed();
+    }
 }
