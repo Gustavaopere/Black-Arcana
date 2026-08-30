@@ -125,11 +125,6 @@ public final class MinecraftInnerDominionRuntime {
 
             DomainReturnPoint origin = point(participant);
             DomainReturnPoint fallback = participantId.equals(ownerId) ? origin : ownerOrigin;
-            if (!safeDestination(server, participant, origin) || !safeDestination(server, participant, fallback)) {
-                return OpenSessionResult.denied(
-                    "inner_dominion_return_route",
-                    "Inner Dominion requires validated loaded origin and fallback routes before opening");
-            }
             routes.put(participantId, new InnerDominionSessionJournal.ReturnRoute(origin, fallback));
         }
 
