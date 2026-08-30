@@ -2,11 +2,16 @@ package dev.gustavopere.blackarcana.integration.neoforge;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
+import dev.gustavopere.blackarcana.core.world.EntityInteractionType;
+import dev.gustavopere.blackarcana.core.world.ProtectionQuery;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -36,7 +41,8 @@ public final class GazeOfStillnessGameTests {
         target.setDeltaMovement(new Vec3(0.8D, 0.0D, 0.4D));
         helper.runAfterDelay(2L, () -> {
             helper.assertTrue(active(helper.getLevel().getServer(), target.getUUID()),
-                "valid reciprocal gaze must remain active during its bounded duration");
+                "valid reciprocal gaze must remain active during its bounded duration; "
+                    + diagnostic(helper.getLevel().getServer(), caster, target));
             Vec3 movement = target.getDeltaMovement();
             helper.assertTrue(movement.x * movement.x + movement.z * movement.z < 1.0E-6D,
                 "active Gaze of Stillness must suppress horizontal movement at the configured multiplier");
@@ -128,8 +134,52 @@ public final class GazeOfStillnessGameTests {
         }
     }
 
-    private static void faceEachOther(net.minecraft.world.entity.LivingEntity caster,
-                                      net.minecraft.world.entity.LivingEntity target) {
+    private static String diagnostic(MinecraftServer server, LivingEntity caster, LivingEntity target) {
+        boolean sameLevel = caster.level() == target.level();
+        double distance = Math.sqrt(caster.distanceToSqr(target));
+        boolean casterLos = caster.hasLineOfSight(target);
+        boolean targetLos = target.hasLineOfSight(caster);
+        double casterDot = facingDot(caster, target);
+        double targetDot = facingDot(target, caster);
+        String authorization = "runtime-missing";
+        if (sameLevel && caster.level() instanceof ServerLevel level) {
+            var runtime = ArcanaServerRuntimeManager.get(server).orElse(null);
+            if (runtime != null) {
+                var facts = MinecraftEntityProtectionResolver.resolve(server, caster, target);
+                var decision = runtime.entityInteractionAdmission().authorize(
+                    EntityInteractionType.CONTROL,
+                    facts,
+                    new ProtectionQuery(
+                        caster.getUUID(),
+                        level.dimension().location().toString(),
+                        target.getUUID().toString(),
+                        EntityInteractionType.CONTROL)).decision();
+                authorization = decision.allowed() ? "allowed" : decision.code();
+            }
+        }
+        return "casterAlive=" + caster.isAlive()
+            + ", targetAlive=" + target.isAlive()
+            + ", sameLevel=" + sameLevel
+            + ", distance=" + distance
+            + ", casterLos=" + casterLos
+            + ", targetLos=" + targetLos
+            + ", casterDot=" + casterDot
+            + ", targetDot=" + targetDot
+            + ", casterYaw=" + caster.getYRot()
+            + ", casterHeadYaw=" + caster.getYHeadRot()
+            + ", targetYaw=" + target.getYRot()
+            + ", targetHeadYaw=" + target.getYHeadRot()
+            + ", authorization=" + authorization;
+    }
+
+    private static double facingDot(LivingEntity source, LivingEntity target) {
+        Vec3 direction = target.getEyePosition().subtract(source.getEyePosition());
+        double lengthSquared = direction.lengthSqr();
+        if (!Double.isFinite(lengthSquared) || lengthSquared <= 1.0E-12D) return Double.NaN;
+        return source.getLookAngle().dot(direction.scale(1.0D / Math.sqrt(lengthSquared)));
+    }
+
+    private static void faceEachOther(LivingEntity caster, LivingEntity target) {
         caster.setYRot(-90.0F);
         caster.setYHeadRot(-90.0F);
         target.setYRot(90.0F);
