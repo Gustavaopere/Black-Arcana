@@ -42,7 +42,7 @@ public final class GazeOfStillnessGameTests {
         helper.runAfterDelay(2L, () -> {
             helper.assertTrue(active(helper.getLevel().getServer(), target.getUUID()),
                 "valid reciprocal gaze must remain active during its bounded duration; "
-                    + diagnostic(helper.getLevel().getServer(), caster, target));
+                    + diagnostic(helper, caster, target));
             Vec3 movement = target.getDeltaMovement();
             helper.assertTrue(movement.x * movement.x + movement.z * movement.z < 1.0E-6D,
                 "active Gaze of Stillness must suppress horizontal movement at the configured multiplier");
@@ -134,13 +134,16 @@ public final class GazeOfStillnessGameTests {
         }
     }
 
-    private static String diagnostic(MinecraftServer server, LivingEntity caster, LivingEntity target) {
+    private static String diagnostic(GameTestHelper helper, LivingEntity caster, LivingEntity target) {
+        MinecraftServer server = helper.getLevel().getServer();
         boolean sameLevel = caster.level() == target.level();
         double distance = Math.sqrt(caster.distanceToSqr(target));
         boolean casterLos = caster.hasLineOfSight(target);
         boolean targetLos = target.hasLineOfSight(caster);
         double casterDot = facingDot(caster, target);
         double targetDot = facingDot(target, caster);
+        boolean registered = helper.getLevel().getEntity(target.getUUID()) != null;
+        boolean insideBounds = helper.getBounds().contains(target.position());
         String authorization = "runtime-missing";
         if (sameLevel && caster.level() instanceof ServerLevel level) {
             var runtime = ArcanaServerRuntimeManager.get(server).orElse(null);
@@ -159,6 +162,13 @@ public final class GazeOfStillnessGameTests {
         }
         return "casterAlive=" + caster.isAlive()
             + ", targetAlive=" + target.isAlive()
+            + ", targetRemoved=" + target.isRemoved()
+            + ", removalReason=" + target.getRemovalReason()
+            + ", targetHealth=" + target.getHealth()
+            + ", registered=" + registered
+            + ", insideBounds=" + insideBounds
+            + ", targetPos=" + target.position()
+            + ", bounds=" + helper.getBounds()
             + ", sameLevel=" + sameLevel
             + ", distance=" + distance
             + ", casterLos=" + casterLos
