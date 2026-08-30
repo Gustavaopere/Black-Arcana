@@ -1,11 +1,16 @@
 # Source provenance
 
-This file indexes third-party projects used by Black Arcana as clean-room behavioral references, optional dependencies, compatibility targets or sibling-system integrations.
+This file indexes third-party projects and platform/build relationships used by Black Arcana as clean-room behavioral references, optional dependencies, compatibility targets, sibling-system integrations or development infrastructure.
 
-**A public repository, documentation page, installed JAR or observable gameplay mechanic is not permission to copy implementation or assets.** Before source/asset derivation, consult [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) and [`plans/09-hardening-release/06-provenance-license.md`](plans/09-hardening-release/06-provenance-license.md).
+**A public repository, documentation page, installed JAR, observable gameplay mechanic or build dependency is not permission to copy implementation or assets.** Before source/asset derivation, consult [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) and [`plans/09-hardening-release/06-provenance-license.md`](plans/09-hardening-release/06-provenance-license.md).
 
 | Source | Black Arcana use | Compliance posture |
 | --- | --- | --- |
+| Minecraft 1.21.1 / Mojang | target game/platform | `PLATFORM_DEPENDENCY`; proprietary platform relationship only; no Minecraft code/assets are treated as reusable Black Arcana source material |
+| NeoForge `21.1.248` | mod-loader/runtime/API platform | `PLATFORM_API_RUNTIME`; exact release/license/notice obligations are part of the final provenance audit and must be reviewed before distribution claims |
+| ModDevGradle `2.0.144` | Gradle plugin/build tooling | `BUILD_TOOL`; exact release/license provenance remains a final hardening audit item |
+| Gradle `9.2.1` bootstrap | build execution tooling | `BUILD_TOOL`; exact distribution/license provenance remains a final hardening audit item |
+| JUnit `5.11.4` | test framework | `TEST_TOOL`; exact release/license provenance remains a final hardening audit item |
 | [Mahou Tsukai](https://www.curseforge.com/minecraft/mc-mods/mahou-tsukai) | clean-room behavioral/design reference only | `REFERENCE_ONLY`; do not copy/decompile/reuse code, assets, text, models, sounds or implementation details on the basis of this project |
 | [Iron's Spells 'n Spellbooks](https://github.com/iron431/irons-spells-n-spellbooks) | optional active-spell/mana integration through the published addon-facing API; build baseline `1.21.1-3.16.3` | `DEPENDENCY_API`; source/assets are not imported by implication |
 | [Ars Nouveau](https://github.com/baileyholl/Ars-Nouveau) | optional mana/resource/glyph-compatible utility integration; pack baseline `5.13.0` | `DEPENDENCY_API / COMPATIBILITY_TARGET`; avoid duplicating generic Ars-owned mechanics |
@@ -25,3 +30,7 @@ Black Arcana's clean-room catalog and host analysis live under [`docs/reference/
 - `runtime-host-baseline.md` — exact installed-pack versions used by Stage 03.
 
 Those documents specify what Black Arcana may independently implement. They are not source-code derivation records.
+
+## Final audit rule
+
+Entries marked as a platform/build/test relationship are intentionally not treated as source-derivation grants. Stage 09 must reconcile the exact distributed/runtime/build artifacts with their applicable licenses/notices and record any redistribution obligation that actually applies to the Black Arcana release artifact.
