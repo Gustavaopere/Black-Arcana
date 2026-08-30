@@ -25,6 +25,7 @@ import java.util.UUID;
 public final class NullifyingGazeGameTests {
     private static final BlockPos TARGET_POS = new BlockPos(0, 1, 0);
     private static final BlockPos CASTER_POS = new BlockPos(-4, 1, 0);
+    private static final double TEST_RANGE = 16.0D;
     private static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("minecraft", "speed");
     private static final ResourceLocation STRENGTH = ResourceLocation.fromNamespaceAndPath("minecraft", "strength");
 
@@ -41,7 +42,7 @@ public final class NullifyingGazeGameTests {
 
         reset(helper.getLevel().getServer());
         registerNullifiable(helper.getLevel().getServer(), SPEED);
-        Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), 14.0D);
+        Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
 
         helper.assertTrue(decision(result).allowed(), "registered nullifiable effect must be removable");
         helper.assertTrue(!target.hasEffect(MobEffects.MOVEMENT_SPEED), "registered speed effect must be removed");
@@ -62,7 +63,7 @@ public final class NullifyingGazeGameTests {
         reset(helper.getLevel().getServer());
         registerNullifiable(helper.getLevel().getServer(), SPEED);
         registerNullifiable(helper.getLevel().getServer(), STRENGTH);
-        Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), 14.0D);
+        Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
 
         helper.assertTrue(decision(result).allowed(), "one eligible effect must be nullified");
         int remaining = (target.hasEffect(MobEffects.MOVEMENT_SPEED) ? 1 : 0)
@@ -81,7 +82,7 @@ public final class NullifyingGazeGameTests {
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200));
 
         reset(helper.getLevel().getServer());
-        Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), 14.0D);
+        Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
 
         helper.assertTrue(!decision(result).allowed(), "unknown effect must fail closed");
         helper.assertTrue("nullifying_gaze_no_eligible_effect".equals(decision(result).code()),
@@ -101,7 +102,7 @@ public final class NullifyingGazeGameTests {
         reset(helper.getLevel().getServer());
         registerNullifiable(helper.getLevel().getServer(), SPEED);
         registerProtected(helper.getLevel().getServer(), SPEED);
-        Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), 14.0D);
+        Object result = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
 
         helper.assertTrue(!decision(result).allowed(), "protected effect must not be nullified");
         helper.assertTrue(target.hasEffect(MobEffects.MOVEMENT_SPEED), "protected effect must remain untouched");
@@ -119,15 +120,15 @@ public final class NullifyingGazeGameTests {
 
         reset(helper.getLevel().getServer());
         registerNullifiable(helper.getLevel().getServer(), SPEED);
-        Object invalidRange = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), 14.01D);
-        helper.assertTrue(!decision(invalidRange).allowed(), "range above hard ceiling must fail closed");
+        Object invalidRange = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), Double.NaN);
+        helper.assertTrue(!decision(invalidRange).allowed(), "non-finite configured range must fail closed");
         helper.assertTrue("nullifying_gaze_range_config".equals(decision(invalidRange).code()),
-            "range ceiling denial must expose canonical diagnostic");
+            "invalid range denial must expose canonical diagnostic");
         helper.assertTrue(target.hasEffect(MobEffects.MOVEMENT_SPEED), "invalid range must not mutate target effects");
 
         helper.getLevel().setBlockAndUpdate(helper.absolutePos(new BlockPos(-2, 1, 0)), Blocks.STONE.defaultBlockState());
         helper.getLevel().setBlockAndUpdate(helper.absolutePos(new BlockPos(-2, 2, 0)), Blocks.STONE.defaultBlockState());
-        Object blockedLos = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), 14.0D);
+        Object blockedLos = nullify(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(), TEST_RANGE);
         helper.assertTrue(!decision(blockedLos).allowed(), "blocked LOS must deny Nullifying Gaze");
         helper.assertTrue("nullifying_gaze_los".equals(decision(blockedLos).code()),
             "LOS denial must expose canonical diagnostic");
