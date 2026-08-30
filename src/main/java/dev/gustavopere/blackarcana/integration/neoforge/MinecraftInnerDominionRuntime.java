@@ -34,6 +34,7 @@ import java.util.UUID;
  * keeps unavailable participants journaled rather than discarding their return obligation.
  */
 public final class MinecraftInnerDominionRuntime {
+    private static final double SETTLED_EPSILON_SQUARED = 1.0E-6D;
     private static final int[][] FALLBACK_OFFSETS = {
         {1, 0}, {-1, 0}, {0, 1}, {0, -1},
         {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
@@ -199,6 +200,16 @@ public final class MinecraftInnerDominionRuntime {
                     "Inner Dominion retains the journal while a participant cannot be safely returned");
             }
             InnerDominionSessionJournal.ReturnRoute route = entry.getValue();
+
+            // A participant already standing at the captured origin is already settled; running
+            // that no-op through landing collision checks can falsely classify its own occupied
+            // position as blocked. Only participants that actually need movement use the shared
+            // safe-destination resolver.
+            if (atPoint(participant, route.origin())) {
+                settlements.add(new Settlement(participant, route.origin(), false, false));
+                continue;
+            }
+
             DomainReturnPoint chosen = DomainReturnSelector.choose(
                 route.origin(),
                 route.fallback(),
@@ -210,11 +221,19 @@ public final class MinecraftInnerDominionRuntime {
             }
             boolean usedFallback = !chosen.equals(route.origin());
             if (usedFallback) fallbackReturns++;
-            settlements.add(new Settlement(participant, chosen, usedFallback));
+            settlements.add(new Settlement(participant, chosen, usedFallback, true));
         }
 
         // Immediate all-participant revalidation before the first movement mutation.
         for (Settlement settlement : settlements) {
+            if (!settlement.movementRequired()) {
+                if (!atPoint(settlement.player(), settlement.destination())) {
+                    return CloseSessionResult.denied(
+                        "inner_dominion_return_changed",
+                        "Inner Dominion settled participant moved before close settlement");
+                }
+                continue;
+            }
             if (!safeDestination(server, settlement.player(), settlement.destination())) {
                 return CloseSessionResult.denied(
                     "inner_dominion_return_changed",
@@ -224,6 +243,7 @@ public final class MinecraftInnerDominionRuntime {
 
         try {
             for (Settlement settlement : settlements) {
+                if (!settlement.movementRequired()) continue;
                 DomainReturnPoint destination = settlement.destination();
                 settlement.player().setPos(destination.x(), destination.y(), destination.z());
             }
@@ -265,6 +285,14 @@ public final class MinecraftInnerDominionRuntime {
             if (safeDestination(server, participant, candidate)) return Optional.of(candidate);
         }
         return Optional.empty();
+    }
+
+    private static boolean atPoint(ServerPlayer player, DomainReturnPoint point) {
+        if (!player.serverLevel().dimension().location().toString().equals(point.dimensionId())) return false;
+        double dx = player.getX() - point.x();
+        double dy = player.getY() - point.y();
+        double dz = player.getZ() - point.z();
+        return dx * dx + dy * dy + dz * dz <= SETTLED_EPSILON_SQUARED;
     }
 
     private static State state(MinecraftServer server) {
@@ -313,10 +341,18 @@ public final class MinecraftInnerDominionRuntime {
         STATES.remove(event.getServer());
     }
 
-    private record Settlement(ServerPlayer player, DomainReturnPoint destination, boolean fallback) {
+    private record Settlement(
+        ServerPlayer player,
+        DomainReturnPoint destination,
+        boolean fallback,
+        boolean movementRequired
+    ) {
         private Settlement {
             Objects.requireNonNull(player, "player");
             Objects.requireNonNull(destination, "destination");
+            if (!movementRequired && fallback) {
+                throw new IllegalArgumentException("no-op Inner Dominion settlement cannot report fallback movement");
+            }
         }
     }
 
