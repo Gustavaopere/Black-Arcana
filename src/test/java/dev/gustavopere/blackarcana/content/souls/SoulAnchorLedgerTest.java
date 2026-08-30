@@ -62,6 +62,31 @@ class SoulAnchorLedgerTest {
     }
 
     @Test
+    void snapshotRestorePreservesDeathTransactionIdempotency() {
+        SoulAnchorLedger source = ledger();
+        UUID owner = UUID.randomUUID();
+        UUID creditedDeathEvent = UUID.randomUUID();
+        UUID preventedDeathEvent = UUID.randomUUID();
+        var credit = new SoulAnchorLedger.DeathCredit(creditedDeathEvent, 20.0D, 1.0D, true);
+
+        assertTrue(source.creditDeath(owner, credit).credited());
+        assertTrue(source.formAnchor(owner));
+        assertTrue(source.formAnchor(owner));
+        assertTrue(source.consumeForDeath(owner, preventedDeathEvent, 40L).consumed());
+
+        SoulAnchorLedger restored = ledger();
+        restored.restore(source.snapshotAll());
+
+        assertFalse(restored.creditDeath(owner, credit).credited(),
+            "restart must not allow the same credited death event to mint spirit twice");
+        assertEquals(SoulAnchorLedger.AnchorConsumeResult.Status.DUPLICATE_EVENT,
+            restored.consumeForDeath(owner, preventedDeathEvent, 1_000L).status(),
+            "restart must preserve same-death-event anchor idempotency after lockout expires");
+        assertEquals(1, restored.snapshot(owner).anchors(),
+            "replayed prevented death must not consume the remaining anchor");
+    }
+
+    @Test
     void hardAnchorAndLockoutCeilingsCannotBeRelaxed() {
         assertThrows(IllegalArgumentException.class,
             () -> new SoulAnchorLedger.Policy(6, 10.0D, 100.0D, 600L, 16));
