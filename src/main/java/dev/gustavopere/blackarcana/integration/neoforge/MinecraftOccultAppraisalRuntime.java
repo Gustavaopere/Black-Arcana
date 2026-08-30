@@ -8,6 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.LinkedHashMap;
@@ -52,6 +53,11 @@ public final class MinecraftOccultAppraisalRuntime {
                 "occult_appraisal_target_unavailable",
                 "Occult Appraisal resolves only a currently loaded target in the caster dimension");
         }
+        if (target instanceof Player) {
+            return AppraisalResult.denied(
+                "occult_appraisal_player_privacy",
+                "Player targets require an explicit server privacy or consent policy before metadata may be exposed");
+        }
 
         double distanceSquared = caster.distanceToSqr(target);
         double rangeSquared = maxRange * maxRange;
@@ -68,6 +74,12 @@ public final class MinecraftOccultAppraisalRuntime {
 
         DivinationVisibilityPolicy policy = new DivinationVisibilityPolicy(maxRange);
         Set<String> allowedFields = policy.filterMetadata(requestedFields);
+        if (allowedFields.isEmpty()) {
+            return AppraisalResult.denied(
+                "occult_appraisal_no_approved_metadata",
+                "Occult Appraisal request contains no server-approved metadata fields");
+        }
+
         Map<String, String> metadata = new LinkedHashMap<>();
         for (String field : allowedFields) {
             String value = value(field, target);
