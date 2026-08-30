@@ -19,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -33,6 +34,11 @@ import java.util.UUID;
  * keeps unavailable participants journaled rather than discarding their return obligation.
  */
 public final class MinecraftInnerDominionRuntime {
+    private static final int[][] FALLBACK_OFFSETS = {
+        {1, 0}, {-1, 0}, {0, 1}, {0, -1},
+        {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
+    };
+
     private static final Map<MinecraftServer, State> STATES =
         Collections.synchronizedMap(new IdentityHashMap<>());
 
@@ -101,10 +107,11 @@ public final class MinecraftInnerDominionRuntime {
         }
 
         String dimensionId = owner.serverLevel().dimension().location().toString();
-        DomainReturnPoint ownerOrigin = point(owner);
         double radiusSquared = radius * radius;
-        Map<UUID, InnerDominionSessionJournal.ReturnRoute> routes = new LinkedHashMap<>();
+        Map<UUID, ServerPlayer> participants = new LinkedHashMap<>();
 
+        // Validate the requested localized participant set before preparing return routes so
+        // radius/dimension/availability diagnostics are never masked by fallback preparation.
         for (UUID participantId : uniqueParticipants) {
             ServerPlayer participant = loadedAlivePlayer(server, participantId);
             if (participant == null) {
@@ -122,15 +129,20 @@ public final class MinecraftInnerDominionRuntime {
                     "inner_dominion_radius",
                     "Inner Dominion participant lies outside the requested localized radius");
             }
+            participants.put(participantId, participant);
+        }
 
+        Map<UUID, InnerDominionSessionJournal.ReturnRoute> routes = new LinkedHashMap<>();
+        for (Map.Entry<UUID, ServerPlayer> entry : participants.entrySet()) {
+            ServerPlayer participant = entry.getValue();
             DomainReturnPoint origin = point(participant);
-            DomainReturnPoint fallback = participantId.equals(ownerId) ? origin : ownerOrigin;
-            if (!safeDestination(server, participant, origin) || !safeDestination(server, participant, fallback)) {
+            DomainReturnPoint fallback = findFallback(server, participant, origin).orElse(null);
+            if (fallback == null) {
                 return OpenSessionResult.denied(
                     "inner_dominion_return_route",
-                    "Inner Dominion requires validated loaded origin and fallback routes before opening");
+                    "Inner Dominion could not capture a distinct loaded and protected fallback route");
             }
-            routes.put(participantId, new InnerDominionSessionJournal.ReturnRoute(origin, fallback));
+            routes.put(entry.getKey(), new InnerDominionSessionJournal.ReturnRoute(origin, fallback));
         }
 
         long now = server.overworld().getGameTime();
@@ -237,6 +249,22 @@ public final class MinecraftInnerDominionRuntime {
         Objects.requireNonNull(server, "server");
         State state = STATES.get(server);
         return state == null ? 0 : state.journal.activeSessions();
+    }
+
+    private static Optional<DomainReturnPoint> findFallback(
+            MinecraftServer server,
+            ServerPlayer participant,
+            DomainReturnPoint origin
+    ) {
+        for (int[] offset : FALLBACK_OFFSETS) {
+            DomainReturnPoint candidate = new DomainReturnPoint(
+                origin.dimensionId(),
+                origin.x() + offset[0],
+                origin.y(),
+                origin.z() + offset[1]);
+            if (safeDestination(server, participant, candidate)) return Optional.of(candidate);
+        }
+        return Optional.empty();
     }
 
     private static State state(MinecraftServer server) {
