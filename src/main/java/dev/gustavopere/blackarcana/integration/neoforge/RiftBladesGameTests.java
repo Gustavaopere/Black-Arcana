@@ -47,7 +47,8 @@ public final class RiftBladesGameTests {
             "Rift Blades must report only real bounded health loss");
         helper.assertTrue(target.getHealth() < healthBefore,
             "eligible marked strike must damage the resolved target");
-        helper.assertTrue(gapClosed(result), "safe loaded landing candidate must allow optional gap-close");
+        helper.assertTrue(gapClosed(result),
+            "safe loaded landing candidate must allow optional gap-close; code=" + gapCloseCode(result));
         helper.assertTrue(caster.distanceToSqr(target) < distanceBefore,
             "successful gap-close must move the caster closer to the marked target");
         helper.succeed();
@@ -84,6 +85,8 @@ public final class RiftBladesGameTests {
         helper.assertTrue(damageDealt(result) > 0.0D && target.getHealth() < healthBefore,
             "damage settlement must remain independent from optional displacement");
         helper.assertTrue(!gapClosed(result), "blocked destination must fail closed for displacement");
+        helper.assertTrue(!gapCloseCode(result).isBlank(),
+            "blocked displacement must expose a stable diagnostic reason");
         helper.assertTrue(Math.abs(caster.getX() - casterXBefore) < 0.01D
                 && Math.abs(caster.getY() - casterYBefore) < 0.01D
                 && Math.abs(caster.getZ() - casterZBefore) < 0.01D,
@@ -135,5 +138,9 @@ public final class RiftBladesGameTests {
 
     private static boolean gapClosed(Object result) throws Exception {
         return (boolean) result.getClass().getMethod("gapClosed").invoke(result);
+    }
+
+    private static String gapCloseCode(Object result) throws Exception {
+        return (String) result.getClass().getMethod("gapCloseCode").invoke(result);
     }
 }
