@@ -8,6 +8,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -26,6 +27,7 @@ public final class GazeOfStillnessGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void reciprocalFacingSuppressesHorizontalMovement(GameTestHelper helper) throws Exception {
+        clearSightCorridor(helper);
         var caster = helper.makeMockServerPlayerInLevel();
         var target = target(helper);
         place(helper, caster, CASTER_POS);
@@ -34,8 +36,7 @@ public final class GazeOfStillnessGameTests {
 
         Object result = start(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(),
             20L, 16.0D, 0.0D, 0.5D, 0.5D, 80L);
-        ArcanaDecision startDecision = decision(result);
-        helper.assertTrue(startDecision.allowed(), "valid reciprocal Gaze must start; " + initialDiagnostic(startDecision, caster, target));
+        helper.assertTrue(decision(result).allowed(), "valid reciprocal Gaze must start");
 
         target.setDeltaMovement(new Vec3(0.1D, 0.0D, 0.0D));
         helper.runAfterDelay(2L, () -> {
@@ -50,6 +51,7 @@ public final class GazeOfStillnessGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void breakingReciprocalFacingEndsSuppression(GameTestHelper helper) throws Exception {
+        clearSightCorridor(helper);
         var caster = helper.makeMockServerPlayerInLevel();
         var target = target(helper);
         place(helper, caster, CASTER_POS);
@@ -57,8 +59,7 @@ public final class GazeOfStillnessGameTests {
 
         Object result = start(helper.getLevel().getServer(), caster.getUUID(), target.getUUID(),
             20L, 16.0D, 0.0D, 0.5D, 0.5D, 80L);
-        ArcanaDecision startDecision = decision(result);
-        helper.assertTrue(startDecision.allowed(), "fixture Gaze must start; " + initialDiagnostic(startDecision, caster, target));
+        helper.assertTrue(decision(result).allowed(), "fixture Gaze must start");
 
         target.setYRot(-90.0F);
         target.setYHeadRot(-90.0F);
@@ -75,6 +76,7 @@ public final class GazeOfStillnessGameTests {
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void durationAboveNoeticCeilingFailsClosed(GameTestHelper helper) throws Exception {
+        clearSightCorridor(helper);
         var caster = helper.makeMockServerPlayerInLevel();
         var target = target(helper);
         place(helper, caster, CASTER_POS);
@@ -92,6 +94,15 @@ public final class GazeOfStillnessGameTests {
         var target = helper.spawnWithNoFreeWill(EntityType.SHEEP, TARGET_POS);
         target.setNoGravity(true);
         return target;
+    }
+
+    private static void clearSightCorridor(GameTestHelper helper) {
+        for (int x = CASTER_POS.getX(); x <= TARGET_POS.getX(); x++) {
+            for (int y = 1; y <= 2; y++) {
+                BlockPos absolute = helper.absolutePos(new BlockPos(x, y, 0));
+                helper.getLevel().setBlockAndUpdate(absolute, Blocks.AIR.defaultBlockState());
+            }
+        }
     }
 
     private static Object start(MinecraftServer server, UUID casterId, UUID targetId,
@@ -115,26 +126,6 @@ public final class GazeOfStillnessGameTests {
         } catch (ReflectiveOperationException exception) {
             throw new IllegalStateException(exception);
         }
-    }
-
-    private static String initialDiagnostic(ArcanaDecision decision, LivingEntity caster, LivingEntity target) {
-        return "code=" + decision.code()
-            + ", casterPos=" + caster.position()
-            + ", targetPos=" + target.position()
-            + ", casterAlive=" + caster.isAlive()
-            + ", targetAlive=" + target.isAlive()
-            + ", distance=" + Math.sqrt(caster.distanceToSqr(target))
-            + ", casterLos=" + caster.hasLineOfSight(target)
-            + ", targetLos=" + target.hasLineOfSight(caster)
-            + ", casterDot=" + facingDot(caster, target)
-            + ", targetDot=" + facingDot(target, caster);
-    }
-
-    private static double facingDot(LivingEntity source, LivingEntity target) {
-        Vec3 direction = target.getEyePosition().subtract(source.getEyePosition());
-        double lengthSquared = direction.lengthSqr();
-        if (!Double.isFinite(lengthSquared) || lengthSquared <= 1.0E-12D) return Double.NaN;
-        return source.getLookAngle().dot(direction.scale(1.0D / Math.sqrt(lengthSquared)));
     }
 
     private static void faceEachOther(LivingEntity caster, LivingEntity target) {
