@@ -6,6 +6,7 @@ import dev.gustavopere.blackarcana.config.ArcaneEquipmentDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcaneEquipmentSetBonusDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcanaSpellDataReloadListener;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftAnchorRecallRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftArcaneDamagePipeline;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEchoArmamentRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEphemeralTemperingRuntime;
@@ -42,6 +43,7 @@ public final class BlackArcanaMod {
         LoadoutNetworkBridge.installServerHandler(ArcanaServerRuntimeManager::handleLoadoutUpdate);
         LoadoutNetworkBridge.installClientHandler(ClientArcanaSyncState::acceptLoadout);
         ArcanaServerRuntimeManager.register(NeoForge.EVENT_BUS);
+        MinecraftAnchorRecallRuntime.register(NeoForge.EVENT_BUS);
         MinecraftArcaneDamagePipeline.register(NeoForge.EVENT_BUS);
         MinecraftEchoArmamentRuntime.register(NeoForge.EVENT_BUS);
         MinecraftEphemeralTemperingRuntime.register(NeoForge.EVENT_BUS);
