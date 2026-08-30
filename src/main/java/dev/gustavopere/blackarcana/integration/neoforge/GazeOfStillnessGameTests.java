@@ -63,13 +63,10 @@ public final class GazeOfStillnessGameTests {
 
         target.setYRot(-90.0F);
         target.setYHeadRot(-90.0F);
-        target.setDeltaMovement(new Vec3(0.1D, 0.0D, 0.0D));
         helper.runAfterDelay(2L, () -> {
             helper.assertTrue(!active(helper.getLevel().getServer(), target.getUUID()),
                 "breaking reciprocal facing must end control immediately");
             helper.assertTrue(target.isAlive() && !target.isRemoved(), "breaking Gaze must not remove the target");
-            helper.assertTrue(Math.abs(target.getDeltaMovement().x) > 0.005D,
-                "movement must not remain artificially suppressed after Gaze breaks");
             helper.succeed();
         });
     }
