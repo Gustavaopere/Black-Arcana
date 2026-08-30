@@ -49,17 +49,22 @@ public final class SoulAnchorGameTests {
         Method formAnchor = runtime.getMethod("formAnchor", MinecraftServer.class, UUID.class);
         helper.assertTrue((boolean) formAnchor.invoke(null, server, player.getUUID()),
             "fixture must form exactly one Soul Anchor");
+        Method snapshot = runtime.getMethod("snapshot", MinecraftServer.class, UUID.class);
 
         player.setHealth(4.0F);
         player.invulnerableTime = 0;
-        player.hurt(player.damageSources().magic(), 100.0F);
+        boolean accepted = player.hurt(player.damageSources().magic(), 100.0F);
+        SoulAnchorLedger.Snapshot after = (SoulAnchorLedger.Snapshot) snapshot.invoke(null, server, player.getUUID());
 
+        helper.assertTrue(accepted,
+            "fixture fatal damage must be accepted; actualHealth=" + player.getHealth()
+                + ", anchors=" + after.anchors()
+                + ", recoveryUntil=" + after.recoveryUntilTick());
         helper.assertTrue(player.isAlive(), "fatal damage must be canceled while an eligible Soul Anchor exists");
         helper.assertTrue(Math.abs(player.getHealth() - 6.0F) <= 0.01F,
-            "Soul Anchor must restore the configured bounded health amount; actual=" + player.getHealth());
-
-        Method snapshot = runtime.getMethod("snapshot", MinecraftServer.class, UUID.class);
-        SoulAnchorLedger.Snapshot after = (SoulAnchorLedger.Snapshot) snapshot.invoke(null, server, player.getUUID());
+            "Soul Anchor must restore the configured bounded health amount; actual=" + player.getHealth()
+                + ", anchors=" + after.anchors()
+                + ", recoveryUntil=" + after.recoveryUntilTick());
         helper.assertTrue(after.anchors() == 0, "fatal event must consume exactly one Soul Anchor");
         helper.assertTrue(after.recoveryUntilTick() > server.overworld().getGameTime(),
             "successful prevention must start the configured recovery lockout");
