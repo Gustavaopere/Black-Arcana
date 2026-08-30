@@ -7,9 +7,11 @@ Black Arcana is a clean-room forbidden-magic project. It interoperates with exte
 - `REFERENCE_ONLY` — behavior/architecture may be studied; no source/assets are intended to be copied.
 - `DEPENDENCY_API` — Black Arcana writes its own integration against an allowed external API/dependency.
 - `COMPATIBILITY_TARGET` — external mod is supported/tested without source ownership.
+- `PLATFORM_DEPENDENCY` / `PLATFORM_API_RUNTIME` — target platform/runtime relationship, not a source-reuse grant.
+- `BUILD_TOOL` / `TEST_TOOL` — development infrastructure, not runtime/content source material.
 - `DERIVED_CODE` — copied/adapted source; exact revision/file/license obligations required.
 - `DERIVED_ASSET` — copied/adapted asset; separate asset rights required.
-- `REVIEW_REQUIRED` — available evidence is insufficient to authorize derivation.
+- `REVIEW_REQUIRED` — available evidence is insufficient to authorize derivation or a final redistribution claim.
 - `PERMISSION_REQUIRED` — explicit additional permission is required before public copying/adaptation.
 
 ## Clean-room boundary: Mahou Tsukai
@@ -19,6 +21,20 @@ Mahou Tsukai is a behavioral/design reference only. Black Arcana's Stage 01 cata
 Project policy forbids using Mahou Tsukai code, decompiled implementation, assets, models, sounds, copied text or implementation details as source material. No reuse license is relied upon by Black Arcana for those materials. If direct reuse were ever proposed, it would remain `PERMISSION_REQUIRED`/`REVIEW_REQUIRED` until explicit applicable rights were recorded.
 
 The clean-room audit must also check terminology and audiovisual assets so that independent implementation does not accidentally import protected expression from the reference or unrelated third-party fiction.
+
+## Platform and development infrastructure
+
+The following relationships are required to build/test/run the project but do not authorize Black Arcana to copy platform or tool source/assets:
+
+| Relationship | Pinned project evidence | Classification | Release/provenance posture |
+| --- | --- | --- | --- |
+| Minecraft / Mojang | Minecraft `1.21.1` | `PLATFORM_DEPENDENCY` | proprietary target platform; no Minecraft source/assets are treated as Black Arcana source material |
+| NeoForge | `21.1.248` | `PLATFORM_API_RUNTIME` | final Stage 09 audit must record the exact release/license/notices that apply to the release relationship |
+| ModDevGradle | `2.0.144` | `BUILD_TOOL` | final Stage 09 audit must record exact release/license provenance; build use is not source derivation |
+| Gradle | `9.2.1` bootstrap | `BUILD_TOOL` | final Stage 09 audit must record exact distribution/license provenance where relevant |
+| JUnit | `5.11.4` | `TEST_TOOL` | test-only relationship; final audit records exact license provenance where relevant |
+
+Until that final reconciliation is recorded, these entries may support normal platform/build/test use but are `REVIEW_REQUIRED` for any stronger redistribution or source-derivation claim.
 
 ## Dependency / compatibility evidence — 2026-08-30
 
@@ -61,11 +77,12 @@ Before a public release, scan source and binary resources to confirm:
 - external API/provider code is isolated to the intended adapter boundaries;
 - no copied translations, textures, models, sounds or other assets lack provenance;
 - source files with unusually close third-party structure/naming are reviewed;
+- platform/runtime/build/test dependencies are reconciled against exact versions and applicable notice/redistribution obligations;
 - bundled libraries/binaries are represented by the release provenance records;
 - player-facing terminology remains within the original Black Arcana identity vocabulary or otherwise has documented rights.
 
 ## Release policy
 
-A release must fail closed when actual copied/adapted material has `REVIEW_REQUIRED`, `PERMISSION_REQUIRED` or unknown rights. Normal dependency/API/compatibility support may continue without granting Black Arcana any rights to external source/assets.
+A release must fail closed when actual copied/adapted material has `REVIEW_REQUIRED`, `PERMISSION_REQUIRED` or unknown rights. Normal platform, build, test, dependency/API and compatibility support may continue without granting Black Arcana any rights to external source/assets.
 
 The built JAR must carry the root `LICENSE` and this `THIRD_PARTY_NOTICES.md` file.
