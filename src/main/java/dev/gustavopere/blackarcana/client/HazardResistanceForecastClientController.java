@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.client;
 
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.HazardResistanceForecastRequestPayload;
@@ -46,6 +47,8 @@ public final class HazardResistanceForecastClientController {
         List<ArcanaSpellId> loadout = ClientArcanaSyncState.loadoutSnapshot();
         ArcanaSpellId selected = ClientInputController.selection().selected(loadout).orElse(null);
         if (selected == null) return;
+        var hazard = ClientArcanaSyncState.hazardPreflightSnapshot().get(selected);
+        if (hazard == null || hazard.parsedTier() == ArcaneDangerTier.NORMAL) return;
 
         boolean changed = !selected.equals(lastRequestedSpell);
         boolean refreshDue = lastRequestTick == Long.MIN_VALUE || now - lastRequestTick >= REFRESH_INTERVAL_TICKS;
