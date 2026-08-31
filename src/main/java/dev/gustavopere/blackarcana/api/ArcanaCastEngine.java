@@ -119,6 +119,40 @@ public final class ArcanaCastEngine {
             Objects.requireNonNull(replacement, "replacement"));
     }
 
+    /**
+     * Evaluates only established query-only gates for selected-spell presentation.
+     *
+     * <p>This method deliberately skips replay admission, target resolution, world
+     * authorization and hazard preparation. It never reserves resources, starts a
+     * cooldown or executes the spell. A CLEAR result is therefore informational,
+     * not a guarantee that a later cast will succeed.</p>
+     */
+    public ArcanaGatePreflight previewReadOnlyGates(ArcanaCastRequest request) {
+        Objects.requireNonNull(request, "request");
+
+        ArcanaDecision decision = Objects.requireNonNull(identity.check(request), "identity decision");
+        if (!decision.allowed()) {
+            return ArcanaGatePreflight.blocked(ArcanaGatePreflight.Gate.IDENTITY, decision);
+        }
+
+        decision = Objects.requireNonNull(progression.check(request), "progression decision");
+        if (!decision.allowed()) {
+            return ArcanaGatePreflight.blocked(ArcanaGatePreflight.Gate.PROGRESSION, decision);
+        }
+
+        decision = Objects.requireNonNull(cooldowns.check(request), "cooldown decision");
+        if (!decision.allowed()) {
+            return ArcanaGatePreflight.blocked(ArcanaGatePreflight.Gate.COOLDOWN, decision);
+        }
+
+        decision = Objects.requireNonNull(costs.check(request), "cost decision");
+        if (!decision.allowed()) {
+            return ArcanaGatePreflight.blocked(ArcanaGatePreflight.Gate.COST, decision);
+        }
+
+        return ArcanaGatePreflight.clear();
+    }
+
     public ArcanaCastResult execute(ArcanaCastRequest request) {
         Objects.requireNonNull(request, "request");
 
