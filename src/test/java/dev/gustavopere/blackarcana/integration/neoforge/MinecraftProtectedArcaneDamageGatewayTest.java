@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MinecraftProtectedArcaneDamageGatewayTest {
     @Test
@@ -42,6 +43,7 @@ class MinecraftProtectedArcaneDamageGatewayTest {
             true);
 
         var result = MinecraftProtectedArcaneDamageGateway.validateCasterIdentity(caster, provenance);
-        assertEquals("", result.code());
+        assertTrue(result.allowed());
+        assertEquals("ok", result.code());
     }
 }
