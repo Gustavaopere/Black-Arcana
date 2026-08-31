@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.client;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
+import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -15,6 +16,7 @@ public final class BlackArcanaClient {
         container.registerConfig(ModConfig.Type.CLIENT, BlackArcanaClientConfig.SPEC);
         modEventBus.addListener(BlackArcanaKeyMappings::register);
         modEventBus.addListener(BlackArcanaHudLayer::register);
+        ArcanaNetworkBridge.installClientBorrowedSightCameraHandler(BorrowedSightClientCamera::accept);
         ClientInputController.register(NeoForge.EVENT_BUS);
         ClientInputController.installRadialOpener(BlackArcanaRadialScreen::open);
         ClientInputController.installLoadoutEditorOpener(BlackArcanaLoadoutScreen::open);
