@@ -12,6 +12,11 @@
 - Malformed datapack/profile rejection and migration of persisted hazard state.
 - Stress tests for concurrent casts, delayed settlements and bounded ledgers.
 
+## Persistence/death contract checkpoint
+Corruption and Arcane Strain are server-owned states keyed by player UUID. Relog, restart and death/respawn are not cleanse paths; Strain may only decrease through its normal lazy recovery rules. `BlackArcanaSavedDataHazardStateTest` covers save/load/restart reconstruction and malformed-state sanitation. `BlackArcanaLifecycleGameTests.playerDeathDoesNotResetPersistentHazardState` exercises the real `ServerPlayer.die(...)` route and proves death does not clear either channel.
+
+This checkpoint closes the explicit death-cleanse gap only. It does not by itself complete 05A.12; the remaining required rows still need their own verified coverage before the task receives ✅.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
