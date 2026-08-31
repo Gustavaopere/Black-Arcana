@@ -106,13 +106,14 @@ public final class ArcaneBacklashGameTests {
             helper.getLevel().dimension().location().toString(),
             now,
             profile);
+        var standardActivation = MinecraftArcaneDamagePipeline.activate(
+            server,
+            standardHazard,
+            zeroResistance(),
+            ArcaneBacklashPolicy.canonical());
         helper.assertTrue(
-            MinecraftArcaneDamagePipeline.activate(
-                server,
-                standardHazard,
-                zeroResistance(),
-                ArcaneBacklashPolicy.canonical()).activated(),
-            "standard hazard session must activate");
+            standardActivation.activated(),
+            "standard hazard session must activate; code=" + standardActivation.code());
 
         float casterBefore = caster.getHealth();
         var projectile = MinecraftArcaneDamagePipeline.hurtAttributed(
@@ -186,13 +187,14 @@ public final class ArcaneBacklashGameTests {
             0.0D,
             ArcaneBacklashPolicy.ABSOLUTE_MAX_BACKLASH_PER_SETTLEMENT,
             ArcaneBacklashPolicy.ABSOLUTE_MAX_TOTAL_ELIGIBLE_DAMAGE);
+        var optedActivation = MinecraftArcaneDamagePipeline.activate(
+            server,
+            optedHazard,
+            zeroResistance(),
+            summonOptIn);
         helper.assertTrue(
-            MinecraftArcaneDamagePipeline.activate(
-                server,
-                optedHazard,
-                zeroResistance(),
-                summonOptIn).activated(),
-            "owned-summon opt-in hazard session must activate");
+            optedActivation.activated(),
+            "owned-summon opt-in hazard session must activate; code=" + optedActivation.code());
 
         var optedSummon = MinecraftArcaneDamagePipeline.hurtAttributed(
             optedSummonTarget,
