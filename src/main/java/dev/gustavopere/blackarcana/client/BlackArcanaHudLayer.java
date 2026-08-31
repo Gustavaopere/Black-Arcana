@@ -6,6 +6,7 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
+import dev.gustavopere.blackarcana.network.HazardResistanceForecastPayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -107,9 +108,41 @@ public final class BlackArcanaHudLayer {
     private static Optional<Component> selectedHazardLine() {
         Optional<ArcanaSpellId> selected = selectedSpell();
         if (selected.isEmpty()) return Optional.empty();
-        HazardPreflightPayload.Entry entry = ClientArcanaSyncState.hazardPreflightSnapshot().get(selected.orElseThrow());
+        ArcanaSpellId spell = selected.orElseThrow();
+        Optional<HazardResistanceForecastPayload> forecast = ClientArcanaSyncState.hazardResistanceForecast(spell);
+        if (forecast.isPresent()) {
+            HazardResistanceForecastPayload payload = forecast.orElseThrow();
+            if (payload.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
+            return Optional.of(resistanceForecastLine(payload));
+        }
+        HazardPreflightPayload.Entry entry = ClientArcanaSyncState.hazardPreflightSnapshot().get(spell);
         if (entry == null || entry.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
         return Optional.of(preflightLine(entry));
+    }
+
+    static Component resistanceForecastLine(HazardResistanceForecastPayload forecast) {
+        Component tier = Component.translatable(
+            "hazard.black_arcana.tier." + forecast.parsedTier().name().toLowerCase(Locale.ROOT));
+        if (!forecast.available()) {
+            return Component.translatable(
+                "hazard.black_arcana.forecast.unavailable",
+                tier,
+                Component.literal(formatResistance(forecast.minimumArcaneResistance())),
+                Component.literal(formatResistance(forecast.recommendedArcaneResistance())));
+        }
+        Component safety = Component.translatable(switch (forecast.parsedStatus()) {
+            case BELOW_MINIMUM -> "hazard.black_arcana.forecast.safety.dangerous";
+            case BELOW_RECOMMENDED -> "hazard.black_arcana.forecast.safety.attention";
+            case RECOMMENDED, NORMAL -> "hazard.black_arcana.forecast.safety.safe";
+            case UNAVAILABLE -> "hazard.black_arcana.forecast.safety.unavailable";
+        });
+        return Component.translatable(
+            "hazard.black_arcana.forecast",
+            tier,
+            Component.literal(formatResistance(forecast.effectiveArcaneResistance())),
+            Component.literal(formatResistance(forecast.minimumArcaneResistance())),
+            Component.literal(formatResistance(forecast.recommendedArcaneResistance())),
+            safety);
     }
 
     static Component preflightLine(HazardPreflightPayload.Entry entry) {
