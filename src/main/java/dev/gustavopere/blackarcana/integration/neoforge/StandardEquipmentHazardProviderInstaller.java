@@ -1,11 +1,14 @@
 package dev.gustavopere.blackarcana.integration.neoforge;
 
+import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSourceCategory;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentHazardResistanceProvider;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRuntimeStore;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRuntimeStore;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSnapshotService;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneResistancePreviewRuntimeStore;
+import dev.gustavopere.blackarcana.core.hazard.SnapshotArcaneResistancePreviewProvider;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,5 +43,12 @@ public final class StandardEquipmentHazardProviderInstaller {
         ArcaneEquipmentHazardResistanceProvider provider = new ArcaneEquipmentHazardResistanceProvider(source);
         runtime.arcaneResistanceProviders().register(provider);
         runtime.corruptionResistanceProviders().register(provider);
+        ArcaneResistancePreviewRuntimeStore.register(
+            runtime,
+            new SnapshotArcaneResistancePreviewProvider(
+                ArcaneEquipmentHazardResistanceProvider.PROVIDER_ID,
+                ArcaneEquipmentHazardResistanceProvider.SOURCE_ID,
+                ArcaneResistanceSourceCategory.EQUIPMENT,
+                source::capture));
     }
 }

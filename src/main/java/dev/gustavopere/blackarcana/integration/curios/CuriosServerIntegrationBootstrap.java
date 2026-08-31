@@ -2,7 +2,10 @@ package dev.gustavopere.blackarcana.integration.curios;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaIntegrationAvailability;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSourceCategory;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSnapshotService;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneResistancePreviewRuntimeStore;
+import dev.gustavopere.blackarcana.core.hazard.SnapshotArcaneResistancePreviewProvider;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -50,13 +53,21 @@ public final class CuriosServerIntegrationBootstrap {
 
         ArcaneEquipmentSnapshotService emptySnapshots =
             new ArcaneEquipmentSnapshotService(runtime.arcaneEquipmentProfiles());
-        CuriosHazardResistanceProvider provider = new CuriosHazardResistanceProvider(playerId -> {
+        CuriosHazardResistanceProvider.SnapshotSource source = playerId -> {
             ServerPlayer player = server.getPlayerList().getPlayer(playerId);
             return player == null
                 ? emptySnapshots.capture(List.of())
                 : adapter.snapshot(player, runtime.arcaneEquipmentProfiles());
-        });
+        };
+        CuriosHazardResistanceProvider provider = new CuriosHazardResistanceProvider(source);
         runtime.arcaneResistanceProviders().register(provider);
         runtime.corruptionResistanceProviders().register(provider);
+        ArcaneResistancePreviewRuntimeStore.register(
+            runtime,
+            new SnapshotArcaneResistancePreviewProvider(
+                CuriosHazardResistanceProvider.PROVIDER_ID,
+                "curios:equipped_containment",
+                ArcaneResistanceSourceCategory.CURIO,
+                source::snapshot));
     }
 }
