@@ -50,6 +50,62 @@ class ArcaneBacklashLedgerRegistryTest {
             registry.settle(new ArcaneConfirmedDamage(provenance, 2.0D, 15L)).code());
     }
 
+    @Test
+    void boundedCapacityRejectsOverflowUntilExpiryReopensSlotAtLeaseBoundary() {
+        ArcaneBacklashLedgerRegistry registry = new ArcaneBacklashLedgerRegistry(2);
+        ArcanaCastId first = ArcanaCastId.parse("30000000-0000-0000-0000-000000000010");
+        ArcanaCastId second = ArcanaCastId.parse("30000000-0000-0000-0000-000000000011");
+        ArcanaCastId overflow = ArcanaCastId.parse("30000000-0000-0000-0000-000000000012");
+
+        assertTrue(registry.open(session(first, 10L, 20L), zeroResistance(), ArcaneBacklashPolicy.canonical()).isPresent());
+        assertTrue(registry.open(session(second, 10L, 40L), zeroResistance(), ArcaneBacklashPolicy.canonical()).isPresent());
+        assertEquals(2, registry.size());
+
+        assertTrue(registry.open(session(overflow, 20L, 20L), zeroResistance(), ArcaneBacklashPolicy.canonical()).isEmpty());
+        assertEquals(2, registry.size());
+
+        ArcaneBacklashSettlement lastValid = registry.settle(damage(
+            first,
+            "30000000-0000-0000-0000-000000000013",
+            29L,
+            3.0D));
+        assertEquals(ArcaneBacklashSettlement.Status.SETTLED, lastValid.status());
+        assertEquals(3.0D, lastValid.backlashDamage(), 0.0D);
+
+        ArcaneBacklashSettlement expired = registry.settle(damage(
+            first,
+            "30000000-0000-0000-0000-000000000014",
+            30L,
+            3.0D));
+        assertEquals(ArcaneBacklashSettlement.Status.DENIED, expired.status());
+        assertEquals("hazard_claim_expired", expired.code());
+        assertEquals(2, registry.size());
+
+        assertTrue(registry.open(session(overflow, 30L, 20L), zeroResistance(), ArcaneBacklashPolicy.canonical()).isPresent());
+        assertEquals(2, registry.size());
+        assertTrue(registry.find(first).isEmpty());
+        assertTrue(registry.find(second).isPresent());
+        assertTrue(registry.find(overflow).isPresent());
+    }
+
+    private static ArcaneConfirmedDamage damage(
+        ArcanaCastId cast,
+        String damageInstanceId,
+        long tick,
+        double amount
+    ) {
+        return new ArcaneConfirmedDamage(
+            new ArcanaDamageProvenance(
+                cast,
+                ArcanaDamageInstanceId.parse(damageInstanceId),
+                CASTER,
+                SPELL,
+                ArcaneDamageFamily.DIRECT,
+                true),
+            amount,
+            tick);
+    }
+
     private static ArcaneHazardSession session(ArcanaCastId cast, long start, long lease) {
         ArcaneDangerProfile profile = new ArcaneDangerProfile(
             ArcaneDangerTier.FORBIDDEN, 1.0D, 0.25D, 0.25D, lease, 16);
