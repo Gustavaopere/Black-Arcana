@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.integration.neoforge;
 
+import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageProvenance;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.core.world.EntityInteractionType;
@@ -11,6 +12,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Canonical NeoForge entrypoint for attributed hostile spell damage.
@@ -35,8 +37,9 @@ public final class MinecraftProtectedArcaneDamageGateway {
         Objects.requireNonNull(source, "source");
         Objects.requireNonNull(provenance, "provenance");
 
-        if (!provenance.casterId().equals(caster.getUUID())) {
-            return MinecraftArcaneDamagePipeline.DamageAttempt.denied("damage_caster_mismatch");
+        ArcanaDecision identity = validateCasterIdentity(caster.getUUID(), provenance);
+        if (!identity.allowed()) {
+            return MinecraftArcaneDamagePipeline.DamageAttempt.denied(identity.code());
         }
         if (!(target.level() instanceof ServerLevel targetLevel)) {
             return MinecraftArcaneDamagePipeline.DamageAttempt.denied("server_level_required");
@@ -67,5 +70,16 @@ public final class MinecraftProtectedArcaneDamageGateway {
         }
 
         return MinecraftArcaneDamagePipeline.hurtAttributed(target, source, requestedDamage, provenance);
+    }
+
+    static ArcanaDecision validateCasterIdentity(UUID casterId, ArcanaDamageProvenance provenance) {
+        Objects.requireNonNull(casterId, "casterId");
+        Objects.requireNonNull(provenance, "provenance");
+        if (!provenance.casterId().equals(casterId)) {
+            return ArcanaDecision.deny(
+                "damage_caster_mismatch",
+                "Attributed damage provenance does not belong to the authoritative caster");
+        }
+        return ArcanaDecision.allow();
     }
 }
