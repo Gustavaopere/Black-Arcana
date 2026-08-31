@@ -4,7 +4,7 @@ import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
-import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageFamily;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneDamageFamily;
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageInstanceId;
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageProvenance;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashPolicy;
