@@ -22,6 +22,13 @@ Attributed hostile spell damage now has a canonical NeoForge gateway that resolv
 
 This checkpoint closes the explicit PvP/team/boss/protection interaction row at the Stage 05A damage boundary. It does not relax Stage 04 caps or create parallel protection heuristics, and it does not by itself complete the remaining 05A.12 acceptance matrix.
 
+## Malformed profile and persisted-state migration checkpoint
+The Stage 05A danger-profile datapack boundary is strict and non-executable. `ArcaneDangerDataReloadListenerTest` proves rejection of unknown executable-like fields, resource-id mismatch, unsupported `schemaVersion`, out-of-bounds `profileVersion`, impossible resistance hints and dangerous profiles that configure away mandatory Backlash.
+
+Persisted pending Backlash has a real schema-1 migration path: legacy aggregate `pending_backlash` entries restore as explicit unprotected `PendingBacklashDebt.legacy(...)`, while contextual `pending_backlash_debts` preserves causal identity and frozen protection state when valid. `BlackArcanaSavedDataPendingBacklashContextTest` proves both the legacy migration and the fail-closed corruption rule: malformed contextual state retains only the bounded amount as an unprotected legacy debt and never invents root-cast, damage-instance or emergency-protection context.
+
+This checkpoint closes the explicit malformed danger-profile / real persisted-hazard migration evidence row. No synthetic pre-schema format is introduced; unsupported top-level persistence schemas continue to fail closed. It does not by itself complete the remaining 05A.12 acceptance matrix.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
