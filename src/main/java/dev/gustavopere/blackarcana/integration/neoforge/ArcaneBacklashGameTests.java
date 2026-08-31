@@ -73,18 +73,173 @@ public final class ArcaneBacklashGameTests {
         helper.succeed();
     }
 
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void projectileDotChainAndOwnedSummonAttributionRespectFrozenPolicy(GameTestHelper helper) {
+        ServerPlayer caster = helper.makeMockServerPlayerInLevel();
+        caster.setGameMode(GameType.SURVIVAL);
+        caster.getAbilities().invulnerable = false;
+        caster.getAbilities().instabuild = false;
+        caster.onUpdateAbilities();
+        helper.assertTrue(
+            !caster.getAbilities().invulnerable,
+            "attribution fixture must be a vulnerable survival server player");
+
+        var projectileTarget = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(2, 2, 1));
+        var dotTarget = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 2, 1));
+        var chainTarget = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(4, 2, 1));
+        var deniedSummonTarget = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(5, 2, 1));
+        var optedSummonTarget = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(6, 2, 1));
+
+        var server = helper.getLevel().getServer();
+        long now = server.overworld().getGameTime();
+        UUID casterId = caster.getUUID();
+        ArcanaSpellId spell = ArcanaSpellId.parse("black_arcana:attribution_gametest");
+        ArcaneDangerProfile profile = new ArcaneDangerProfile(
+            ArcaneDangerTier.FORBIDDEN, 1.0D, 0.0D, 0.0D, 200L, 16);
+
+        ArcanaCastId standardCast = ArcanaCastId.parse("72000000-0000-0000-0000-000000000001");
+        ArcaneHazardSnapshot standardHazard = new ArcaneHazardSnapshot(
+            standardCast,
+            spell,
+            casterId,
+            helper.getLevel().dimension().location().toString(),
+            now,
+            profile);
+        var standardActivation = MinecraftArcaneDamagePipeline.activate(
+            server,
+            standardHazard,
+            zeroResistance(),
+            ArcaneBacklashPolicy.canonical());
+        helper.assertTrue(
+            standardActivation.activated(),
+            "standard hazard session must activate; code=" + standardActivation.code());
+
+        float casterBefore = caster.getHealth();
+        var projectile = MinecraftArcaneDamagePipeline.hurtAttributed(
+            projectileTarget,
+            projectileTarget.damageSources().magic(),
+            2.0F,
+            provenance(
+                standardCast,
+                casterId,
+                spell,
+                "71000000-0000-0000-0000-000000000002",
+                ArcaneDamageFamily.PROJECTILE));
+        var dot = MinecraftArcaneDamagePipeline.hurtAttributed(
+            dotTarget,
+            dotTarget.damageSources().magic(),
+            2.0F,
+            provenance(
+                standardCast,
+                casterId,
+                spell,
+                "71000000-0000-0000-0000-000000000003",
+                ArcaneDamageFamily.DAMAGE_OVER_TIME));
+        var chain = MinecraftArcaneDamagePipeline.hurtAttributed(
+            chainTarget,
+            chainTarget.damageSources().magic(),
+            2.0F,
+            provenance(
+                standardCast,
+                casterId,
+                spell,
+                "71000000-0000-0000-0000-000000000004",
+                ArcaneDamageFamily.CHAIN));
+        var deniedSummon = MinecraftArcaneDamagePipeline.hurtAttributed(
+            deniedSummonTarget,
+            deniedSummonTarget.damageSources().magic(),
+            2.0F,
+            provenance(
+                standardCast,
+                casterId,
+                spell,
+                "71000000-0000-0000-0000-000000000005",
+                ArcaneDamageFamily.OWNED_SUMMON));
+
+        helper.assertTrue(projectile.invoked() && projectile.accepted(), "projectile hit must reach Minecraft damage");
+        helper.assertTrue(dot.invoked() && dot.accepted(), "DoT hit must reach Minecraft damage");
+        helper.assertTrue(chain.invoked() && chain.accepted(), "chain hit must reach Minecraft damage");
+        helper.assertTrue(deniedSummon.invoked() && deniedSummon.accepted(), "non-opted summon still deals normal target damage");
+        helper.assertTrue(
+            caster.getHealth() == casterBefore - 6.0F,
+            "canonical policy must settle projectile, DoT and chain but exclude owned summon");
+
+        var standardLedger = MinecraftArcaneDamagePipeline.hazardRuntime(server).orElseThrow()
+            .backlashLedgers().find(standardCast).orElseThrow();
+        helper.assertTrue(
+            standardLedger.confirmedEligibleDamage() == 6.0D,
+            "non-opted owned summon must not enter confirmed eligible damage");
+        helper.assertTrue(
+            standardLedger.backlashSettled() == 6.0D,
+            "zero resistance must settle the three eligible families exactly 1:1");
+
+        ArcanaCastId optedCast = ArcanaCastId.parse("72000000-0000-0000-0000-000000000006");
+        ArcaneHazardSnapshot optedHazard = new ArcaneHazardSnapshot(
+            optedCast,
+            spell,
+            casterId,
+            helper.getLevel().dimension().location().toString(),
+            now,
+            profile);
+        ArcaneBacklashPolicy summonOptIn = new ArcaneBacklashPolicy(
+            true,
+            0.0D,
+            ArcaneBacklashPolicy.ABSOLUTE_MAX_BACKLASH_PER_SETTLEMENT,
+            ArcaneBacklashPolicy.ABSOLUTE_MAX_TOTAL_ELIGIBLE_DAMAGE);
+        var optedActivation = MinecraftArcaneDamagePipeline.activate(
+            server,
+            optedHazard,
+            zeroResistance(),
+            summonOptIn);
+        helper.assertTrue(
+            optedActivation.activated(),
+            "owned-summon opt-in hazard session must activate; code=" + optedActivation.code());
+
+        var optedSummon = MinecraftArcaneDamagePipeline.hurtAttributed(
+            optedSummonTarget,
+            optedSummonTarget.damageSources().magic(),
+            2.0F,
+            provenance(
+                optedCast,
+                casterId,
+                spell,
+                "71000000-0000-0000-0000-000000000007",
+                ArcaneDamageFamily.OWNED_SUMMON));
+        helper.assertTrue(optedSummon.invoked() && optedSummon.accepted(), "opted owned summon must deal normal target damage");
+        helper.assertTrue(
+            caster.getHealth() == casterBefore - 8.0F,
+            "explicit summon opt-in must add exact 1:1 backlash at zero resistance");
+
+        var optedLedger = MinecraftArcaneDamagePipeline.hazardRuntime(server).orElseThrow()
+            .backlashLedgers().find(optedCast).orElseThrow();
+        helper.assertTrue(optedLedger.confirmedEligibleDamage() == 2.0D, "opted summon must enter eligible damage");
+        helper.assertTrue(optedLedger.backlashSettled() == 2.0D, "opted summon must settle exact 1:1 backlash");
+        helper.succeed();
+    }
+
     private static ArcanaDamageProvenance provenance(
         ArcanaCastId cast,
         UUID caster,
         ArcanaSpellId spell,
         String damageId
     ) {
+        return provenance(cast, caster, spell, damageId, ArcaneDamageFamily.DIRECT);
+    }
+
+    private static ArcanaDamageProvenance provenance(
+        ArcanaCastId cast,
+        UUID caster,
+        ArcanaSpellId spell,
+        String damageId,
+        ArcaneDamageFamily family
+    ) {
         return new ArcanaDamageProvenance(
             cast,
             ArcanaDamageInstanceId.parse(damageId),
             caster,
             spell,
-            ArcaneDamageFamily.DIRECT,
+            family,
             true);
     }
 
