@@ -17,6 +17,11 @@ Corruption and Arcane Strain are server-owned states keyed by player UUID. Relog
 
 This checkpoint closes the explicit death-cleanse gap only. It does not by itself complete 05A.12; the remaining required rows still need their own verified coverage before the task receives ✅.
 
+## Stage 04 entity-protection boundary checkpoint
+Attributed hostile spell damage now has a canonical NeoForge gateway that resolves authoritative server facts and delegates PvP, allied-target, boss and optional protection-adapter decisions to the frozen Stage 04 `EntityInteractionAdmissionService` before invoking the lower-level hazard damage pipeline. Denied interactions never call `target.hurt`, never become confirmed eligible damage and therefore cannot create Arcane Backlash settlement. `ArcaneHazardProtectionGameTests` exercises PvP-disabled, allied, protected and boss targets against the live Minecraft/NeoForge path.
+
+This checkpoint closes the explicit PvP/team/boss/protection interaction row at the Stage 05A damage boundary. It does not relax Stage 04 caps or create parallel protection heuristics, and it does not by itself complete the remaining 05A.12 acceptance matrix.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
