@@ -12,5 +12,29 @@ Expose danger clearly before casting without making client prediction authoritat
 ## Networking
 No client packet may submit resistance, corruption, backlash damage, danger tier or bypass decisions. Synchronization is event-driven and bounded, not per-tick full-state spam.
 
+## Implemented selected-spell resistance sublane
+The contextual HUD now has a server-authored read-only Arcane Resistance forecast for the currently selected spell:
+
+- the client submits only a bounded spell id and monotonic request id;
+- the server resolves the canonical danger profile and computes effective Arcane Resistance through a runtime-scoped preview mirror of gameplay resistance providers;
+- preview availability fails closed unless every gameplay Arcane Resistance provider has a side-effect-free mirror and the aggregate snapshot is diagnostic-free;
+- standard equipment, RPG Skill Tree hazard attributes and optional Curios equipment currently install preview mirrors;
+- preview queries do not open hazard sessions, reserve corruption/strain state, consume emergency protection or award progression/mastery;
+- the server rate-limits forecast requests and the client refreshes only for selected non-normal danger tiers while contextual selection feedback can be displayed;
+- stale responses are rejected by request id, danger-profile reload clears the cached forecast, and a dynamic forecast is rendered only when its tier/threshold revision matches current static server-authored preflight metadata;
+- for non-normal danger tiers the HUD can display current/minimum/recommended Arcane Resistance plus factual threshold status: blocked below minimum, below recommended, recommendation met, or unavailable;
+- meeting the recommended threshold is not labeled safe because residual danger/Backlash semantics remain authoritative;
+- the original synchronized static danger metadata remains the fallback when a matching dynamic forecast is unavailable or has not arrived.
+
+The detailed authority/anti-abuse contract is recorded in `docs/qa/stage05a11-resistance-forecast.md`.
+
+## Still open
+This sublane does **not** complete 05A.11. The following remain open:
+
+- complete pre-cast presentation of non-resistance hard-gate reasons where a safe read-only projection is justified; canonical strain, cooldown/resource/progression and other denials remain authoritative through normal cast results unless separately projected;
+- spell-tooltip coverage beyond the existing radial/static hazard presentation;
+- any Corruption Resistance / strain feedback that is ultimately retained by the design;
+- real-client validation across the Stage 05 manual matrix, including reconnect/stale state, GUI scales, disabled HUD and accessibility settings.
+
 ## Acceptance
-Tests cover payload bounds/state clearing and authoritative denial text. Manual Stage 05/09 visual matrix covers common GUI scales, disabled HUD, reduced-motion/flash settings and stale reconnect state.
+Automated tests cover payload bounds/state clearing, authoritative denial text, forecast payload/codec invariants, fail-closed preview-provider completeness/diagnostics and stale forecast revision fallback. Manual Stage 05/09 visual matrix covers common GUI scales, disabled HUD, reduced-motion/flash settings, stale reconnect state and the selected-spell hazard forecast presentation.

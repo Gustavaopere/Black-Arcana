@@ -25,6 +25,7 @@ public final class ClientArcanaSyncState {
     private static Map<String, Long> cooldowns = Map.of();
     private static Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation = Map.of();
     private static Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazardPreflight = Map.of();
+    private static HazardResistanceForecastPayload hazardResistanceForecast;
     private static List<ArcanaSpellId> loadout = List.of();
 
     private ClientArcanaSyncState() { }
@@ -75,6 +76,21 @@ public final class ClientArcanaSyncState {
             }
         }
         hazardPreflight = Map.copyOf(next);
+        // A datapack reload can change thresholds; never display a forecast from the previous revision.
+        hazardResistanceForecast = null;
+    }
+
+    public static synchronized void acceptHazardResistanceForecast(
+        Player player,
+        HazardResistanceForecastPayload payload
+    ) {
+        ensurePlayer(player);
+        Objects.requireNonNull(payload, "payload");
+        if (hazardResistanceForecast != null
+            && payload.requestId() < hazardResistanceForecast.requestId()) {
+            return;
+        }
+        hazardResistanceForecast = payload;
     }
 
     public static synchronized void acceptLoadout(Player player, LoadoutSnapshotPayload payload) {
@@ -102,6 +118,14 @@ public final class ClientArcanaSyncState {
         return hazardPreflight;
     }
 
+    public static synchronized Optional<HazardResistanceForecastPayload> hazardResistanceForecast(ArcanaSpellId spellId) {
+        Objects.requireNonNull(spellId, "spellId");
+        if (hazardResistanceForecast == null || !hazardResistanceForecast.parsedSpellId().equals(spellId)) {
+            return Optional.empty();
+        }
+        return Optional.of(hazardResistanceForecast);
+    }
+
     public static synchronized List<ArcanaSpellId> loadoutSnapshot() {
         return loadout;
     }
@@ -113,6 +137,7 @@ public final class ClientArcanaSyncState {
         cooldowns = Map.of();
         presentation = Map.of();
         hazardPreflight = Map.of();
+        hazardResistanceForecast = null;
         loadout = List.of();
     }
 
@@ -125,6 +150,7 @@ public final class ClientArcanaSyncState {
             cooldowns = Map.of();
             presentation = Map.of();
             hazardPreflight = Map.of();
+            hazardResistanceForecast = null;
             loadout = List.of();
         }
         playerId = incoming;

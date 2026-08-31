@@ -16,6 +16,7 @@ public final class BlackArcanaClient {
         modEventBus.addListener(BlackArcanaKeyMappings::register);
         modEventBus.addListener(BlackArcanaHudLayer::register);
         ClientInputController.register(NeoForge.EVENT_BUS);
+        HazardResistanceForecastClientController.register(NeoForge.EVENT_BUS);
         ClientInputController.installRadialOpener(BlackArcanaRadialScreen::open);
         ClientInputController.installLoadoutEditorOpener(BlackArcanaLoadoutScreen::open);
     }

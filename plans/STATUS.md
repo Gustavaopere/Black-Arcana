@@ -18,7 +18,7 @@ Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231
 
 Inserted Stage 05A Arcane Danger is 🟨 active and materially implemented on `main`. The danger model, Arcane/Corruption Resistance, strain/recovery, persistent hazard state and the dedicated Arcane Backlash pipeline are present. Backlash was verified at `583286d1dd28c35da8a64261b6c6eceb22242522` by workflow `33222848359`, including exact zero-resistance 1:1 multi-hit settlement and non-recursive accounting.
 
-Since that checkpoint, Stage 05A has also gained merged production contracts for equipment-derived hazard resistance and emergency protection, optional Curios equipment/resistance snapshots and bootstrap, authoritative danger-profile runtime, RPG Skill Tree hazard/progression/mastery integration, data-driven equipment set bonuses, causal damage-family attribution, numeric resistance hardening and bounded concurrent/delayed ledger stress coverage. These source contracts are real and must no longer be listed as wholly unimplemented. The 05A.12 automated hardening matrix now has explicit coverage for every required row, including terminal Backlash offensive-credit/mastery exclusions; formal Stage 05A completion still depends on the remaining presentation and closeout gates below.
+Since that checkpoint, Stage 05A has also gained production contracts for equipment-derived hazard resistance and emergency protection, optional Curios equipment/resistance snapshots and bootstrap, authoritative danger-profile runtime, RPG Skill Tree hazard/progression/mastery integration, data-driven equipment set bonuses, causal damage-family attribution, numeric resistance hardening, bounded concurrent/delayed ledger stress coverage and a server-authored selected-spell Arcane Resistance forecast for contextual HUD presentation. The forecast mirrors only explicitly side-effect-free gameplay providers, fails closed on incomplete/diagnostic projections, is rate-limited and never becomes cast authority. The 05A.12 automated hardening matrix now has explicit coverage for every required row, including terminal Backlash offensive-credit/mastery exclusions; formal Stage 05A completion still depends on the remaining presentation and closeout gates below.
 
 Stage 06 Rituals has a current promotion PR (#21) with verified functional work but is intentionally not canonicalized ahead of the unresolved Stage 05 real-client gate. Stage 07 Spell Domains is stacked downstream in PR #22 and remains non-canonical until its dependency chain is cleared.
 
@@ -30,7 +30,7 @@ Stage 06 Rituals has a current promotion PR (#21) with verified functional work 
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch + post-merge CI green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
 | 05 Casting & UX | 🟨 Active / code merged | automated gates green; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
-| 05A Arcane Danger | 🟨 Active / advanced | 05A.12 automated hardening matrix covered; 05A.11 presentation/manual validation and formal closeout remain |
+| 05A Arcane Danger | 🟨 Active / advanced | 05A.12 automated hardening covered; 05A.11 selected-spell resistance forecast implemented, broader presentation/manual validation and formal closeout remain |
 | 06 Rituals | 🟦 Promotion prepared | PR #21 is downstream of the Stage 05 manual gate |
 | 07 Spell Domains | 🟦 Stacked preparatory | PR #22 remains downstream/non-canonical |
 | 08 Progression & Balance | 🟦 Preparatory | final quantitative progression/balance closure remains downstream |
@@ -48,7 +48,7 @@ Stages 00, 01, 02, 03 and 04 may only change through explicit follow-up decision
 
 Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags may be carried explicitly to Stage 09 only when the corresponding effect is genuinely deferred.
 
-## Stage 05A verified/merged capabilities
+## Stage 05A verified/implemented capabilities
 
 The current codebase contains:
 
@@ -61,13 +61,15 @@ The current codebase contains:
 - RPG Skill Tree provider/progression/mastery integration under `integration/rpg`;
 - authoritative danger-profile runtime/registry;
 - data-driven equipment set bonuses;
+- selected-spell Arcane Resistance forecast networking/presentation with a complete-provider read-only mirror, bounded request rate, stale-response rejection and fail-closed diagnostics;
 - explicit 05A.12 evidence for persistence/death, Stage 04 protection semantics, malformed data/migration, provider snapshots, dedupe/capacity, damage-family attribution, numeric boundaries, concurrent/delayed stress and terminal Backlash exclusions.
 
 The presence of these contracts does not by itself mark their numbered planning files ✅; that rename remains subject to the stage's complete acceptance and documentation closeout rules.
 
 ## Stage 05A still open
 
-- 05A.11 HUD/tooltips/preflight presentation and its real-client validation where applicable;
+- 05A.11 broader HUD/tooltips/preflight presentation: the selected-spell Arcane Resistance forecast exists, but complete non-resistance hard-gate projection, tooltip coverage and any retained Corruption/strain presentation remain unresolved;
+- real-client validation of the 05A.11 forecast and stale/reconnect/accessibility behavior in `docs/qa/casting-ux-manual-matrix.md`;
 - reconciliation of numbered Stage 05A task status/closeout after the remaining presentation gate is proven;
 - Stage 05 manual client gate, which still blocks declaring Stage 05A complete or downstream stages canonical.
 

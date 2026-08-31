@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.integration.rpg;
 
+import dev.gustavopere.blackarcana.core.hazard.ArcaneResistancePreviewRuntimeStore;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 
 import java.util.Objects;
@@ -17,5 +18,7 @@ public final class RpgHazardProviderInstaller {
             RpgHazardResistanceConfig.canonical());
         runtime.arcaneResistanceProviders().register(provider);
         runtime.corruptionResistanceProviders().register(provider);
+        // This adapter is already a pure read-only query over the RPG public snapshot boundary.
+        ArcaneResistancePreviewRuntimeStore.register(runtime, provider);
     }
 }

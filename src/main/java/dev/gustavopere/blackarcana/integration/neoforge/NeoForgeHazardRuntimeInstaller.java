@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRuntimeStor
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRuntimeStore;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneHazardCastGate;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneHazardRuntime;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneResistancePreviewRuntimeStore;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import net.minecraft.server.MinecraftServer;
 
@@ -104,5 +105,6 @@ public final class NeoForgeHazardRuntimeInstaller {
         ArcaneDangerProfileRuntimeStore.remove(runtime);
         ArcaneEquipmentProfileRuntimeStore.remove(runtime);
         ArcaneEquipmentSetBonusRuntimeStore.remove(runtime);
+        ArcaneResistancePreviewRuntimeStore.remove(runtime);
     }
 }
