@@ -34,6 +34,11 @@ Equipment snapshot reuse is already covered by the canonical equipment tests, in
 
 This checkpoint closes the explicit equipment/Curios/RPG/provider snapshot and post-cast swap row at the Stage 05A Arcane Resistance/Backlash boundary. It does not claim a concrete third-party Curios or RPG Skill Tree adapter where one is not loaded, and it does not by itself complete the remaining 05A.12 acceptance matrix.
 
+## Damage-instance dedupe and bounded root-ledger checkpoint
+`ArcaneBacklashLedgerTest` and `ArcaneHazardHardeningTest` already prove that a repeated `damageInstanceId` cannot settle twice, including concurrent attempts against the same root cast. `ArcaneBacklashLedgerRegistryTest.boundedCapacityRejectsOverflowUntilExpiryReopensSlotAtLeaseBoundary` now closes the registry-level bound: a full registry rejects an additional root without growing, the last valid lease tick still settles, the expiry boundary fails closed, and opening a new root at that boundary prunes the expired ledger before applying the capacity check so the freed slot can be reused without exceeding the configured maximum.
+
+This checkpoint closes the explicit damage-instance dedupe and root-cast ledger-limit row. It does not by itself close the separate full stress row for concurrent casts, delayed settlements and bounded ledgers, and it does not complete the remaining 05A.12 acceptance matrix.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
