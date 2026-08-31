@@ -141,11 +141,12 @@ public final class BlackArcanaHudLayer {
                 Component.literal(formatResistance(forecast.minimumArcaneResistance())),
                 Component.literal(formatResistance(forecast.recommendedArcaneResistance())));
         }
-        Component safety = Component.translatable(switch (forecast.parsedStatus()) {
-            case BELOW_MINIMUM -> "hazard.black_arcana.forecast.safety.dangerous";
-            case BELOW_RECOMMENDED -> "hazard.black_arcana.forecast.safety.attention";
-            case RECOMMENDED, NORMAL -> "hazard.black_arcana.forecast.safety.safe";
-            case UNAVAILABLE -> "hazard.black_arcana.forecast.safety.unavailable";
+        Component status = Component.translatable(switch (forecast.parsedStatus()) {
+            case BELOW_MINIMUM -> "hazard.black_arcana.forecast.status.blocked";
+            case BELOW_RECOMMENDED -> "hazard.black_arcana.forecast.status.below_recommended";
+            case RECOMMENDED -> "hazard.black_arcana.forecast.status.recommended";
+            case NORMAL -> "hazard.black_arcana.forecast.status.normal";
+            case UNAVAILABLE -> "hazard.black_arcana.forecast.status.unavailable";
         });
         return Component.translatable(
             "hazard.black_arcana.forecast",
@@ -153,7 +154,7 @@ public final class BlackArcanaHudLayer {
             Component.literal(formatResistance(forecast.effectiveArcaneResistance())),
             Component.literal(formatResistance(forecast.minimumArcaneResistance())),
             Component.literal(formatResistance(forecast.recommendedArcaneResistance())),
-            safety);
+            status);
     }
 
     static Component preflightLine(HazardPreflightPayload.Entry entry) {
