@@ -68,6 +68,32 @@ class BlackArcanaSavedDataPendingBacklashContextTest {
         assertTrue(debt.emergencyProtectionSnapshot().candidates().isEmpty());
     }
 
+    @Test
+    void malformedContextualNbtFailsClosedToUnprotectedLegacyDebt() {
+        CompoundTag root = new CompoundTag();
+        root.putInt("schema", 1);
+
+        CompoundTag malformed = new CompoundTag();
+        malformed.putUUID("player", PLAYER);
+        malformed.putDouble("amount", 13.0D);
+        malformed.putBoolean("contextual", true);
+        malformed.putBoolean("protection_allowed", true);
+        ListTag contextual = new ListTag();
+        contextual.add(malformed);
+        root.put("pending_backlash_debts", contextual);
+
+        BlackArcanaSavedData loaded = BlackArcanaSavedData.load(root, null);
+        PendingBacklashRegistry restored = new PendingBacklashRegistry(16, 1_000.0D);
+        loaded.restorePendingBacklash(restored);
+
+        PendingBacklashDebt debt = assertSingle(restored.drainDebts(PLAYER));
+        assertEquals(13.0D, debt.amount(), 0.0D);
+        assertTrue(debt.rootCastId().isEmpty());
+        assertTrue(debt.damageInstanceId().isEmpty());
+        assertFalse(debt.protectionAllowed());
+        assertTrue(debt.emergencyProtectionSnapshot().candidates().isEmpty());
+    }
+
     private static <T> T assertSingle(List<T> values) {
         assertEquals(1, values.size());
         return values.getFirst();
