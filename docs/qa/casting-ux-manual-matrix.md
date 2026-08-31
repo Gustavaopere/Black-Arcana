@@ -25,7 +25,11 @@ This document deliberately does **not** mark visual/manual rows as passed. They 
 | Feedback | Authoritative denial | HUD displays actual server denial briefly, then disappears | ⬜ PENDING |
 | Feedback | Idle player | No permanent Black Arcana resource bar or stale result remains visible | ⬜ PENDING |
 | HUD | All five anchors at 0.5×, 1×, 2× | Panel stays inside viewport and text remains readable | ⬜ PENDING |
-| Accessibility | `MINIMAL`, `STANDARD`, `VERBOSE` | Feedback density follows client preference only | ⬜ PENDING |
+| Hazard HUD | Effective Arcane Resistance below minimum / between minimum and recommended / at-or-above recommended | Selected dangerous spell shows server-authored current/minimum/recommended values and `Dangerous` / `Attention` / `Safe` classification without changing cast authority | ⬜ PENDING |
+| Hazard HUD | Preview provider unavailable/incompatible | HUD shows `Unavailable` or static danger fallback; it never presents a partial resistance value as complete | ⬜ PENDING |
+| Hazard HUD | Change armor/Curios/RPG resistance while selected | Refresh converges to the current server-authored projection without per-tick packet spam or stale lower request-id rollback | ⬜ PENDING |
+| Hazard HUD | Datapack danger-profile reload or reconnect | Cached forecast is cleared/replaced; old thresholds or resistance state do not flash as current | ⬜ PENDING |
+| Accessibility | `MINIMAL`, `STANDARD`, `VERBOSE` | Feedback density follows client preference only; `MINIMAL` does not generate unused forecast traffic | ⬜ PENDING |
 | Accessibility | reduced motion / reduced flashes | Flags persist locally; future effects must honor them when such effects exist | ⬜ PENDING |
 | Accessibility | particle density 0 / 0.5 / 1 | Preference persists locally; future Black Arcana particles must consume the multiplier | ⬜ PENDING |
 | Client config | Missing/reset config entries | NeoForge defaults recover safely | ⬜ PENDING |
