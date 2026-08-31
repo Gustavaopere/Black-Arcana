@@ -1,7 +1,10 @@
 package dev.gustavopere.blackarcana.network.neoforge;
 
+import dev.gustavopere.blackarcana.api.ArcanaCastContext;
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
+import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.api.ArcanaGatePreflight;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerProfile;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceQuery;
@@ -21,6 +24,7 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 import java.util.Collections;
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -53,35 +57,77 @@ public final class HazardResistanceForecastService {
         if (runtimeOptional.isEmpty()) return unavailable(request, ArcaneDangerProfile.normal());
         ArcanaServerRuntime runtime = runtimeOptional.orElseThrow();
         ArcanaSpellId spellId = request.parsedSpellId();
-        if (runtime.spells().resolve(spellId).isEmpty()) {
-            return unavailable(request, ArcaneDangerProfile.normal());
-        }
-
         ArcaneDangerProfile profile = ArcaneDangerProfileRuntimeStore.forRuntime(runtime)
             .resolve(spellId)
             .orElse(ArcaneDangerProfile.normal());
-        ArcaneResistanceQuery query = new ArcaneResistanceQuery(
-            ArcanaCastId.random(),
-            spellId,
-            player.getUUID(),
-            player.level().dimension().location().toString(),
-            now,
-            profile);
+
         try {
+            ArcanaCastContext castContext = ServerPlayerArcanaContext.from(player);
+            Optional<ArcanaCastRequest> gateRequest = previewRequest(runtime, spellId, castContext);
+            if (gateRequest.isEmpty()) return unavailable(request, profile);
+            Optional<ArcanaGatePreflight> gatePreview = runtime.previewReadOnlyGates(gateRequest.orElseThrow());
+            if (gatePreview.isEmpty()) return unavailable(request, profile);
+
+            ArcaneResistanceQuery query = new ArcaneResistanceQuery(
+                ArcanaCastId.random(),
+                spellId,
+                player.getUUID(),
+                player.level().dimension().location().toString(),
+                now,
+                profile);
             Optional<ArcaneResistanceSnapshot> preview =
                 ArcaneResistancePreviewRuntimeStore.snapshotIfComplete(runtime, query);
             if (preview.isEmpty()) return unavailable(request, profile);
             double effective = preview.orElseThrow().effectiveResistance();
-            return available(request, profile, effective);
+            return available(request, profile, effective, gateStatus(gatePreview.orElseThrow()));
         } catch (RuntimeException | LinkageError failure) {
             return unavailable(request, profile);
         }
     }
 
+    static Optional<ArcanaCastRequest> previewRequest(
+        ArcanaServerRuntime runtime,
+        ArcanaSpellId spellId,
+        ArcanaCastContext context
+    ) {
+        Objects.requireNonNull(runtime, "runtime");
+        Objects.requireNonNull(spellId, "spellId");
+        Objects.requireNonNull(context, "context");
+        var definition = runtime.spells().resolve(spellId);
+        if (definition.isEmpty()) return Optional.empty();
+
+        List<ArcanaSpellId> loadout = runtime.loadouts().getLoadout(context.casterId());
+        int loadoutSlot = loadout.indexOf(spellId);
+        if (loadoutSlot < 0) {
+            // Slot zero is a valid bounded request value. The canonical identity validator
+            // remains responsible for the actual missing/mismatch denial.
+            loadoutSlot = 0;
+        }
+        return Optional.of(new ArcanaCastRequest(
+            ArcanaCastId.random(),
+            definition.orElseThrow(),
+            context,
+            loadoutSlot,
+            "",
+            0L));
+    }
+
+    static HazardResistanceForecastPayload.GateStatus gateStatus(ArcanaGatePreflight preflight) {
+        Objects.requireNonNull(preflight, "preflight");
+        return switch (preflight.gate()) {
+            case CLEAR -> HazardResistanceForecastPayload.GateStatus.CLEAR;
+            case IDENTITY -> HazardResistanceForecastPayload.GateStatus.IDENTITY;
+            case PROGRESSION -> HazardResistanceForecastPayload.GateStatus.PROGRESSION;
+            case COOLDOWN -> HazardResistanceForecastPayload.GateStatus.COOLDOWN;
+            case COST -> HazardResistanceForecastPayload.GateStatus.COST;
+        };
+    }
+
     private static HazardResistanceForecastPayload available(
         HazardResistanceForecastRequestPayload request,
         ArcaneDangerProfile profile,
-        double effective
+        double effective,
+        HazardResistanceForecastPayload.GateStatus gateStatus
     ) {
         HazardResistanceForecastPayload.Status status;
         if (!profile.requiresHazardSession()) {
@@ -102,7 +148,8 @@ public final class HazardResistanceForecastService {
             profile.tier().name(),
             effective,
             profile.minimumArcaneResistance(),
-            profile.recommendedArcaneResistance());
+            profile.recommendedArcaneResistance(),
+            Objects.requireNonNull(gateStatus, "gateStatus").name());
     }
 
     private static HazardResistanceForecastPayload unavailable(
@@ -118,7 +165,8 @@ public final class HazardResistanceForecastService {
             profile.tier().name(),
             0.0D,
             profile.minimumArcaneResistance(),
-            profile.recommendedArcaneResistance());
+            profile.recommendedArcaneResistance(),
+            HazardResistanceForecastPayload.GateStatus.UNAVAILABLE.name());
     }
 
     private static IngressRateLimiter limiter(MinecraftServer server) {
