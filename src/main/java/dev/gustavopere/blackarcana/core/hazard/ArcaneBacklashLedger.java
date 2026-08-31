@@ -5,6 +5,7 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneConfirmedDamage;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDamageFamily;
 
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -41,7 +42,9 @@ public final class ArcaneBacklashLedger {
 
         ArcaneHazardSession.ClaimResult claim = session.claim(provenance, damage.serverTick());
         if (claim != ArcaneHazardSession.ClaimResult.ACCEPTED) {
-            return ArcaneBacklashSettlement.denied(damage.healthDamage(), "hazard_claim_" + claim.name().toLowerCase());
+            return ArcaneBacklashSettlement.denied(
+                damage.healthDamage(),
+                "hazard_claim_" + claim.name().toLowerCase(Locale.ROOT));
         }
         if (damage.healthDamage() == 0.0D) {
             return ArcaneBacklashSettlement.settled(0.0D, 0.0D, 0.0D);
