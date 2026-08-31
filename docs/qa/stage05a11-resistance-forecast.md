@@ -6,7 +6,7 @@ This note records the automated contract for the Stage 05A.11 selected-spell res
 
 - The client submits only a bounded spell identifier plus a monotonic request id.
 - The server resolves the canonical danger profile and computes the effective Arcane Resistance preview.
-- The client never submits resistance, danger tier, safety classification or bypass decisions.
+- The client never submits resistance, danger tier, threshold status or bypass decisions.
 - The preview never opens a hazard session, reserves corruption/strain state, consumes emergency protection or mutates RPG progression.
 - Actual cast admission and denial details remain authoritative in the normal Stage 02/05 cast pipeline.
 
@@ -25,11 +25,12 @@ An unknown future gameplay provider therefore makes the forecast unavailable unt
 ## Transport and anti-abuse
 
 - request: one spell id + request id;
-- response: availability, danger tier, effective/minimum/recommended Arcane Resistance and server-derived safety class;
+- response: availability, danger tier, effective/minimum/recommended Arcane Resistance and server-derived threshold status;
 - server request limiter: 4 requests / 20 ticks per player with bounded tracked-player state;
-- client refresh: at most once every 20 ticks while the contextual HUD can display selection feedback;
+- client refresh: at most once every 20 ticks, only for a selected non-normal danger tier while contextual selection feedback can be displayed;
 - stale responses are ignored by request id;
-- datapack hazard-preflight replacement clears the cached forecast.
+- datapack hazard-preflight replacement clears the cached forecast;
+- a dynamic forecast is rendered only when its danger tier and thresholds match the current static server-authored preflight revision, preventing an in-flight stale response from overriding newer danger metadata.
 
 ## Presentation
 
@@ -38,9 +39,9 @@ For non-normal danger tiers the contextual HUD can display:
 - current effective Arcane Resistance;
 - minimum server threshold;
 - recommended server threshold;
-- `Safe`, `Attention`, `Dangerous` or `Unavailable` presentation state.
+- factual threshold state: `Blocked: resistance below minimum`, `Below recommended resistance`, `Resistance recommendation met`, or `Unavailable`.
 
-The static danger metadata remains the fallback if no dynamic forecast has arrived.
+Meeting the recommended resistance is deliberately **not** labeled safe: the danger profile and residual Backlash semantics remain authoritative and may still carry risk. The static danger metadata remains the fallback if no matching dynamic forecast has arrived.
 
 ## Explicitly still open
 
