@@ -14,7 +14,8 @@ import java.util.Optional;
 /**
  * Runtime-scoped mirror containing only providers that explicitly support side-effect-free
  * presentation queries. The gameplay registry remains authoritative; previews fail closed if
- * the mirror does not cover every currently installed Arcane Resistance provider.
+ * the mirror does not cover every currently installed Arcane Resistance provider or if any
+ * preview provider reports a bounded aggregation diagnostic.
  */
 public final class ArcaneResistancePreviewRuntimeStore {
     private static final Map<ArcanaServerRuntime, ArcaneResistanceProviderRegistry> PREVIEWS =
@@ -41,7 +42,9 @@ public final class ArcaneResistancePreviewRuntimeStore {
         if (preview == null || preview.size() != runtime.arcaneResistanceProviders().size()) {
             return Optional.empty();
         }
-        return Optional.of(preview.snapshot(query));
+        ArcaneResistanceSnapshot snapshot = preview.snapshot(query);
+        if (!snapshot.diagnostics().isEmpty()) return Optional.empty();
+        return Optional.of(snapshot);
     }
 
     public static int previewProviderCount(ArcanaServerRuntime runtime) {
