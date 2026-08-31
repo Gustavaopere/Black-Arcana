@@ -44,6 +44,11 @@ This checkpoint closes the explicit damage-instance dedupe and root-cast ledger-
 
 This checkpoint closes the explicit direct/AoE/multi-hit/projectile/DoT/explicitly-owned-summon attribution row at the Stage 05A NeoForge gateway. Delayed lease timing remains independently covered by the core hardening tests; this checkpoint does not by itself complete the remaining 05A.12 acceptance matrix.
 
+## Resistance numeric-boundary checkpoint
+`ArcaneResistanceCurveTest`, `CorruptionResistanceCurveTest`, `ArcaneResistanceProviderRegistryTest`, `CorruptionResistanceProviderRegistryTest` and `CorruptionStateServiceTest` already establish the canonical diminishing-return curves, zero-resistance baseline, configured caps, monotonic behavior, corruption acquisition floor and fail-closed provider isolation. `ArcaneResistanceNumericHardeningTest` closes the remaining explicit numeric-boundary evidence: both channels reject `NaN`, positive/negative infinity, negative and above-absolute-cap contribution values; `Double.MAX_VALUE` curve inputs saturate to the configured resistance cap without non-finite output; null provider lists and null entries fail closed without poisoning valid sibling contributions; and canonical registries clamp maximum finite contributions before curve evaluation.
+
+The same hardening test feeds real canonical Arcane Resistance snapshots into `ArcaneBacklashLedger`: `R=0` settles exactly 1:1 (`100%`) Backlash, while canonical capped resistance resolves to the expected `1/7` residual and settles a finite exact reduced amount. This checkpoint therefore closes the explicit `R=0 -> 100%` invariant and the Resistance/Corruption Resistance curves, floors, caps, null/NaN/infinity/negative/overflow-boundary row. It does not by itself complete the remaining 05A.12 acceptance matrix.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
