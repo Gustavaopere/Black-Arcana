@@ -31,6 +31,11 @@ public final class HazardResistanceForecastClientController {
             reset();
             return;
         }
+        if (!BlackArcanaClientConfig.CONTEXTUAL_HUD.get()
+            || BlackArcanaClientConfig.FEEDBACK_LEVEL.get() == BlackArcanaClientConfig.FeedbackLevel.MINIMAL) {
+            return;
+        }
+
         long now = minecraft.player.tickCount;
         if (!HudLayout.isRecent(
             now,
