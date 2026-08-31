@@ -6,10 +6,16 @@ import dev.gustavopere.blackarcana.api.hazard.*;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
@@ -75,6 +81,106 @@ class ArcaneHazardHardeningTest {
         assertEquals("hazard_session_capacity", overflow.code());
         assertEquals(capacity, registry.pruneExpired(300L));
         assertEquals(0, registry.size());
+    }
+
+    @Test
+    void simultaneousRootSessionOverflowAdmitsExactlyCapacity() throws Exception {
+        int capacity = 8;
+        int attempts = 24;
+        ArcaneHazardSessionRegistry registry = new ArcaneHazardSessionRegistry(capacity);
+        CountDownLatch ready = new CountDownLatch(attempts);
+        CountDownLatch start = new CountDownLatch(1);
+        ExecutorService pool = Executors.newFixedThreadPool(attempts);
+        List<Future<ArcaneHazardSessionRegistry.OpenResult>> futures = new ArrayList<>(attempts);
+
+        try {
+            for (int i = 0; i < attempts; i++) {
+                int attempt = i;
+                futures.add(pool.submit(() -> {
+                    ready.countDown();
+                    if (!start.await(5, TimeUnit.SECONDS)) {
+                        throw new IllegalStateException("concurrent session start barrier timed out");
+                    }
+                    return registry.open(snapshot(cast("overflow-race-" + attempt), 100L, 200L, 8));
+                }));
+            }
+
+            assertTrue(ready.await(5, TimeUnit.SECONDS), "workers did not reach the start barrier");
+            start.countDown();
+
+            int opened = 0;
+            int capacityDenied = 0;
+            for (Future<ArcaneHazardSessionRegistry.OpenResult> future : futures) {
+                ArcaneHazardSessionRegistry.OpenResult result = future.get(5, TimeUnit.SECONDS);
+                if (result.opened()) {
+                    opened++;
+                } else {
+                    assertEquals("hazard_session_capacity", result.code());
+                    capacityDenied++;
+                }
+            }
+
+            assertEquals(capacity, opened);
+            assertEquals(attempts - capacity, capacityDenied);
+            assertEquals(capacity, registry.size());
+        } finally {
+            start.countDown();
+            pool.shutdownNow();
+            assertTrue(pool.awaitTermination(5, TimeUnit.SECONDS), "worker pool did not terminate");
+        }
+    }
+
+    @Test
+    void simultaneousClaimsForSameDamageInstanceAreExactlyOnce() throws Exception {
+        ArcanaCastId cast = cast("same-damage-race");
+        ArcaneHazardSession session = new ArcaneHazardSession(snapshot(cast, 100L, 200L, 8));
+        ArcanaDamageProvenance shared = new ArcanaDamageProvenance(
+                cast,
+                ArcanaDamageInstanceId.parse(namedUuid("shared-damage-instance").toString()),
+                CASTER,
+                SPELL,
+                ArcaneDamageFamily.DIRECT,
+                true);
+        int contenders = 24;
+        CountDownLatch ready = new CountDownLatch(contenders);
+        CountDownLatch start = new CountDownLatch(1);
+        ExecutorService pool = Executors.newFixedThreadPool(contenders);
+        List<Future<ArcaneHazardSession.ClaimResult>> futures = new ArrayList<>(contenders);
+
+        try {
+            for (int i = 0; i < contenders; i++) {
+                futures.add(pool.submit(() -> {
+                    ready.countDown();
+                    if (!start.await(5, TimeUnit.SECONDS)) {
+                        throw new IllegalStateException("concurrent claim start barrier timed out");
+                    }
+                    return session.claim(shared, 101L);
+                }));
+            }
+
+            assertTrue(ready.await(5, TimeUnit.SECONDS), "workers did not reach the start barrier");
+            start.countDown();
+
+            int accepted = 0;
+            int duplicates = 0;
+            for (Future<ArcaneHazardSession.ClaimResult> future : futures) {
+                ArcaneHazardSession.ClaimResult result = future.get(5, TimeUnit.SECONDS);
+                if (result == ArcaneHazardSession.ClaimResult.ACCEPTED) {
+                    accepted++;
+                } else {
+                    assertEquals(ArcaneHazardSession.ClaimResult.DUPLICATE, result);
+                    duplicates++;
+                }
+            }
+
+            assertEquals(1, accepted);
+            assertEquals(contenders - 1, duplicates);
+            assertEquals(1, session.seenDamageInstances());
+        } finally {
+            start.countDown();
+            pool.shutdownNow();
+            assertTrue(pool.awaitTermination(5, TimeUnit.SECONDS), "worker pool did not terminate");
+        }
     }
 
     @Test
