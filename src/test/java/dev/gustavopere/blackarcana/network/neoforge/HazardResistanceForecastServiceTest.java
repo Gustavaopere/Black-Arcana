@@ -54,19 +54,19 @@ class HazardResistanceForecastServiceTest {
         assertEquals(
             HazardResistanceForecastPayload.GateStatus.IDENTITY,
             HazardResistanceForecastService.gateStatus(
-                ArcanaGatePreflight.denied(ArcanaGatePreflight.Gate.IDENTITY, ArcanaDecision.deny("identity", "blocked"))));
+                ArcanaGatePreflight.blocked(ArcanaGatePreflight.Gate.IDENTITY, ArcanaDecision.deny("identity", "blocked"))));
         assertEquals(
             HazardResistanceForecastPayload.GateStatus.PROGRESSION,
             HazardResistanceForecastService.gateStatus(
-                ArcanaGatePreflight.denied(ArcanaGatePreflight.Gate.PROGRESSION, ArcanaDecision.deny("progression", "blocked"))));
+                ArcanaGatePreflight.blocked(ArcanaGatePreflight.Gate.PROGRESSION, ArcanaDecision.deny("progression", "blocked"))));
         assertEquals(
             HazardResistanceForecastPayload.GateStatus.COOLDOWN,
             HazardResistanceForecastService.gateStatus(
-                ArcanaGatePreflight.denied(ArcanaGatePreflight.Gate.COOLDOWN, ArcanaDecision.deny("cooldown", "blocked"))));
+                ArcanaGatePreflight.blocked(ArcanaGatePreflight.Gate.COOLDOWN, ArcanaDecision.deny("cooldown", "blocked"))));
         assertEquals(
             HazardResistanceForecastPayload.GateStatus.COST,
             HazardResistanceForecastService.gateStatus(
-                ArcanaGatePreflight.denied(ArcanaGatePreflight.Gate.COST, ArcanaDecision.deny("cost", "blocked"))));
+                ArcanaGatePreflight.blocked(ArcanaGatePreflight.Gate.COST, ArcanaDecision.deny("cost", "blocked"))));
     }
 
     private static ArcanaSpellDefinition spell(ArcanaSpellId id) {
