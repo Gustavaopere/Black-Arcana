@@ -2,7 +2,7 @@ package dev.gustavopere.blackarcana.integration.neoforge;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
-import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageFamily;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneDamageFamily;
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageInstanceId;
 import dev.gustavopere.blackarcana.api.hazard.ArcanaDamageProvenance;
 import org.junit.jupiter.api.Test;
