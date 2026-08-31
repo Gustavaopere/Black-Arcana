@@ -25,17 +25,29 @@ public record HazardResistanceForecastPacket(
     public static final Type<HazardResistanceForecastPacket> TYPE = new Type<>(
         ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "hazard_resistance_forecast"));
 
-    public static final StreamCodec<ByteBuf, HazardResistanceForecastPacket> STREAM_CODEC = StreamCodec.composite(
-        ByteBufCodecs.VAR_INT, HazardResistanceForecastPacket::protocolVersion,
-        ByteBufCodecs.VAR_LONG, HazardResistanceForecastPacket::requestId,
-        ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH), HazardResistanceForecastPacket::spellId,
-        ByteBufCodecs.BOOL, HazardResistanceForecastPacket::available,
-        ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_STATUS_LENGTH), HazardResistanceForecastPacket::status,
-        ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_DANGER_TIER_LENGTH), HazardResistanceForecastPacket::dangerTier,
-        ByteBufCodecs.DOUBLE, HazardResistanceForecastPacket::effectiveArcaneResistance,
-        ByteBufCodecs.DOUBLE, HazardResistanceForecastPacket::minimumArcaneResistance,
-        ByteBufCodecs.DOUBLE, HazardResistanceForecastPacket::recommendedArcaneResistance,
-        HazardResistanceForecastPacket::new);
+    /** Explicit codec because vanilla StreamCodec.composite is bounded to six fields in 1.21.1. */
+    public static final StreamCodec<ByteBuf, HazardResistanceForecastPacket> STREAM_CODEC = StreamCodec.of(
+        (buffer, value) -> {
+            ByteBufCodecs.VAR_INT.encode(buffer, value.protocolVersion());
+            ByteBufCodecs.VAR_LONG.encode(buffer, value.requestId());
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH).encode(buffer, value.spellId());
+            ByteBufCodecs.BOOL.encode(buffer, value.available());
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_STATUS_LENGTH).encode(buffer, value.status());
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_DANGER_TIER_LENGTH).encode(buffer, value.dangerTier());
+            ByteBufCodecs.DOUBLE.encode(buffer, value.effectiveArcaneResistance());
+            ByteBufCodecs.DOUBLE.encode(buffer, value.minimumArcaneResistance());
+            ByteBufCodecs.DOUBLE.encode(buffer, value.recommendedArcaneResistance());
+        },
+        buffer -> new HazardResistanceForecastPacket(
+            ByteBufCodecs.VAR_INT.decode(buffer),
+            ByteBufCodecs.VAR_LONG.decode(buffer),
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH).decode(buffer),
+            ByteBufCodecs.BOOL.decode(buffer),
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_STATUS_LENGTH).decode(buffer),
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_DANGER_TIER_LENGTH).decode(buffer),
+            ByteBufCodecs.DOUBLE.decode(buffer),
+            ByteBufCodecs.DOUBLE.decode(buffer),
+            ByteBufCodecs.DOUBLE.decode(buffer)));
 
     public HazardResistanceForecastPacket {
         toDomain(protocolVersion, requestId, spellId, available, status, dangerTier,
