@@ -39,6 +39,11 @@ This checkpoint closes the explicit equipment/Curios/RPG/provider snapshot and p
 
 This checkpoint closes the explicit damage-instance dedupe and root-cast ledger-limit row. It does not by itself close the separate full stress row for concurrent casts, delayed settlements and bounded ledgers, and it does not complete the remaining 05A.12 acceptance matrix.
 
+## Damage-family attribution checkpoint
+`ArcaneBacklashGameTests.confirmedMultiHitDamageProducesExactNonRecursiveBacklash` already exercises a multi-target root cast through the live NeoForge damage hook, proving direct multi-hit/AoE-style aggregation from confirmed health loss rather than nominal damage. `ArcaneBacklashGameTests.projectileDotChainAndOwnedSummonAttributionRespectFrozenPolicy` extends the real Minecraft boundary across `PROJECTILE`, `DAMAGE_OVER_TIME`, `CHAIN` and `OWNED_SUMMON`: projectile/DoT/chain damage settles against the same root ledger, canonical policy lets a non-opted owned summon damage its target without creating Backlash credit, and a separate root with frozen `allowOwnedSummon=true` admits owned-summon damage and settles exact zero-resistance 1:1 Backlash.
+
+This checkpoint closes the explicit direct/AoE/multi-hit/projectile/DoT/explicitly-owned-summon attribution row at the Stage 05A NeoForge gateway. Delayed lease timing remains independently covered by the core hardening tests; this checkpoint does not by itself complete the remaining 05A.12 acceptance matrix.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
