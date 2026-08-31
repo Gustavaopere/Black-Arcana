@@ -122,7 +122,7 @@ class RpgMasteryBacklashExclusionTest {
             return Set.of(ArcanaIntegrationCapability.MASTERY_AWARD);
         }
         @Override public RpgProgressionQuery query(UUID playerId) {
-            return RpgProgressionQuery.unavailable("not_required");
+            return RpgProgressionQuery.denied("not_required", "mastery exclusion fixture does not query progression");
         }
         @Override public ArcanaDecision awardMastery(UUID playerId, RpgMasteryAwardSpec award) {
             awards.incrementAndGet();
