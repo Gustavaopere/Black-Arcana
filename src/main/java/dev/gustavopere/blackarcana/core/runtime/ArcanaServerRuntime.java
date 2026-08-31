@@ -4,9 +4,11 @@ import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaCastContext;
 import dev.gustavopere.blackarcana.api.ArcanaCastEngine;
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
+import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.api.ArcanaGatePreflight;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CastHazardGate;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.ArcanaCastIngressService;
@@ -155,6 +157,17 @@ public final class ArcanaServerRuntime {
         return channelCasts.release(context, castId, targetHint);
     }
     public boolean cancelChannel(ArcanaCastContext context, ArcanaCastId castId) { return channelCasts.cancel(context, castId); }
+
+    /**
+     * Returns the selected spell engine's non-mutating gate projection. Missing engines are
+     * represented as unavailable instead of guessing from unrelated runtime state.
+     */
+    public Optional<ArcanaGatePreflight> previewReadOnlyGates(ArcanaCastRequest request) {
+        ArcanaCastRequest checked = Objects.requireNonNull(request, "request");
+        ArcanaCastEngine engine = engines.get(checked.spell().id());
+        if (engine == null) return Optional.empty();
+        return Optional.of(engine.previewReadOnlyGates(checked));
+    }
 
     public RuntimeTickResult tick(long serverTick) {
         int expiredChannels = channels.pruneExpired(serverTick);
