@@ -16,6 +16,7 @@ public final class ArcaneHazardSession {
         DUPLICATE,
         PROVENANCE_MISMATCH,
         PROFILE_LIMIT,
+        NOT_ACTIVE,
         EXPIRED,
         CLOSED
     }
@@ -44,6 +45,7 @@ public final class ArcaneHazardSession {
         Objects.requireNonNull(provenance, "provenance");
         if (currentTick < 0L) throw new IllegalArgumentException("currentTick cannot be negative");
         if (closed) return ClaimResult.CLOSED;
+        if (currentTick < snapshot.activatedAtTick()) return ClaimResult.NOT_ACTIVE;
         if (isExpired(currentTick)) {
             closed = true;
             return ClaimResult.EXPIRED;
