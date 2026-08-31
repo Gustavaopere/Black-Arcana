@@ -98,7 +98,7 @@ public final class ArcaneBacklashGameTests {
         ArcaneDangerProfile profile = new ArcaneDangerProfile(
             ArcaneDangerTier.FORBIDDEN, 1.0D, 0.0D, 0.0D, 200L, 16);
 
-        ArcanaCastId standardCast = ArcanaCastId.parse("71000000-0000-0000-0000-000000000001");
+        ArcanaCastId standardCast = ArcanaCastId.parse("72000000-0000-0000-0000-000000000001");
         ArcaneHazardSnapshot standardHazard = new ArcaneHazardSnapshot(
             standardCast,
             spell,
@@ -174,7 +174,7 @@ public final class ArcaneBacklashGameTests {
             standardLedger.backlashSettled() == 6.0D,
             "zero resistance must settle the three eligible families exactly 1:1");
 
-        ArcanaCastId optedCast = ArcanaCastId.parse("71000000-0000-0000-0000-000000000006");
+        ArcanaCastId optedCast = ArcanaCastId.parse("72000000-0000-0000-0000-000000000006");
         ArcaneHazardSnapshot optedHazard = new ArcaneHazardSnapshot(
             optedCast,
             spell,
