@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
@@ -80,6 +81,24 @@ class ArcaneHazardHardeningTest {
         assertEquals(ArcaneBacklashSettlement.Status.SETTLED, atActivation.status());
         assertEquals(4.0D, ledger.confirmedEligibleDamage(), 0.0D);
         assertEquals(4.0D, ledger.backlashSettled(), 0.0D);
+    }
+
+    @Test
+    void hazardClaimDenialCodeIsLocaleIndependent() {
+        Locale original = Locale.getDefault();
+        try {
+            Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+            ArcanaCastId cast = cast("locale-independent-code");
+            ArcaneBacklashLedger ledger = ledger(cast, 100L, 20L, 8, false);
+
+            ArcaneBacklashSettlement denied = ledger.settle(
+                    damage(cast, "locale-before-activation", ArcaneDamageFamily.DIRECT, 1.0D, true, 99L));
+
+            assertEquals(ArcaneBacklashSettlement.Status.DENIED, denied.status());
+            assertEquals("hazard_claim_not_active", denied.code());
+        } finally {
+            Locale.setDefault(original);
+        }
     }
 
     @Test
