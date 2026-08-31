@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -70,6 +71,48 @@ public final class ArcaneBacklashGameTests {
             .backlashLedgers().find(cast).orElseThrow();
         helper.assertTrue(ledger.confirmedEligibleDamage() == 7.0D, "backlash itself must never recurse into eligible damage");
         helper.assertTrue(ledger.backlashSettled() == 7.0D, "ledger must settle exactly seven backlash damage");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 60)
+    public static void dedicatedBacklashSourceIsAttackerlessAndUnattributed(GameTestHelper helper) {
+        ServerPlayer caster = helper.makeMockServerPlayerInLevel();
+        caster.setGameMode(GameType.SURVIVAL);
+        caster.getAbilities().invulnerable = false;
+        caster.getAbilities().instabuild = false;
+        caster.onUpdateAbilities();
+
+        var server = helper.getLevel().getServer();
+        long now = server.overworld().getGameTime();
+        ArcanaCastId cast = ArcanaCastId.parse("76000000-0000-0000-0000-000000000001");
+        ArcanaSpellId spell = ArcanaSpellId.parse("black_arcana:terminal_backlash_gametest");
+        ArcaneDangerProfile profile = new ArcaneDangerProfile(
+            ArcaneDangerTier.FORBIDDEN, 1.0D, 0.0D, 0.0D, 200L, 16);
+        ArcaneHazardSnapshot hazard = new ArcaneHazardSnapshot(
+            cast, spell, caster.getUUID(), helper.getLevel().dimension().location().toString(), now, profile);
+        var activation = MinecraftArcaneDamagePipeline.activate(
+            server,
+            hazard,
+            zeroResistance(),
+            ArcaneBacklashPolicy.canonical());
+        helper.assertTrue(activation.activated(), "terminal-backlash hazard session must activate; code=" + activation.code());
+
+        DamageSource source = caster.damageSources().source(ArcaneBacklashDamageTypes.ARCANE_BACKLASH);
+        helper.assertTrue(source.is(ArcaneBacklashDamageTypes.ARCANE_BACKLASH), "source must use the dedicated Arcane Backlash damage type");
+        helper.assertTrue(source.getEntity() == null, "Arcane Backlash must not expose an attacker entity for lifesteal/proc credit");
+        helper.assertTrue(source.getDirectEntity() == null, "Arcane Backlash must not expose a direct attacker for crit/proc credit");
+
+        float before = caster.getHealth();
+        helper.assertTrue(caster.hurt(source, 2.0F), "dedicated Backlash source must reach Minecraft damage");
+        helper.assertTrue(caster.getHealth() == before - 2.0F, "dedicated Backlash source must apply the requested terminal health damage");
+
+        var runtime = MinecraftArcaneDamagePipeline.hazardRuntime(server).orElseThrow();
+        var ledger = runtime.backlashLedgers().find(cast).orElseThrow();
+        var session = runtime.sessions().find(cast).orElseThrow();
+        helper.assertTrue(ledger.confirmedEligibleDamage() == 0.0D, "unattributed Backlash must not create offensive eligible damage");
+        helper.assertTrue(ledger.backlashSettled() == 0.0D, "unattributed Backlash must not settle recursive Backlash");
+        helper.assertTrue(session.seenDamageInstances() == 0, "unattributed Backlash must not claim a damage-instance id");
         helper.succeed();
     }
 
