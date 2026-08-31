@@ -18,7 +18,7 @@ Create bounded per-player corruption state with:
 - threshold/band evaluation;
 - bounded provenance/telemetry counters only where needed.
 
-Persist through the existing Overworld/global `BlackArcanaSavedData`. Relog/restart must not cleanse corruption.
+Persist through the existing Overworld/global `BlackArcanaSavedData`. Relog/restart must not cleanse corruption. Death/respawn also must not cleanse or reduce corruption: the canonical state is server-owned and keyed by player UUID rather than by the disposable `ServerPlayer` entity instance. Any future death-specific reduction or penalty requires an explicit balance decision and migration contract.
 
 ## Resistance
 Use a separate registered provider registry/channel. It may reuse the same diminishing-return utility as Arcane Resistance but has independent constants/caps and independent contribution sources.
@@ -41,6 +41,7 @@ Tests:
 - resistance lowers acquisition monotonically without going negative;
 - unavoidable profile floor survives high resistance;
 - corruption persists through save/load;
+- relog/restart/death-respawn do not cleanse corruption;
 - malformed/oversized persisted values clamp/fail safely;
 - threshold transitions fire once per crossing rather than every tick;
 - provider absence contributes zero and does not disable Black Arcana;
@@ -53,4 +54,4 @@ Implement persistent state, separate provider resolution, bounded acquisition an
 Prefer lazy/event-driven updates rather than a global player scan every tick.
 
 ## Acceptance
-Corruption survives restart, has a distinct resistance build channel and exposes meaningful threshold transitions without creating an unrelated second survival-mod corruption system.
+Corruption survives restart and death/respawn, has a distinct resistance build channel and exposes meaningful threshold transitions without creating an unrelated second survival-mod corruption system.
