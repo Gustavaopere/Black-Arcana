@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-08-30
+Last updated: 2026-08-31
 
 ## Current state
 
@@ -10,7 +10,7 @@ Stage 01 Reference Catalog is ✅ complete, verified and merged at `88059dc73d8a
 
 Stage 02 Arcana Core is ✅ complete, verified and merged. Canonical branch run `33169091342` and post-merge run `33169344809` both passed the full pipeline.
 
-Stage 03 Integration Layer is ✅ complete, verified and merged at `359dff669bdb9fe45c4db326668057ff4e28f725`. Canonical branch run `33170777944` and post-merge run `33171003791` both passed the full pipeline.
+Stage 03 Integration Layer is ✅ complete, verified and merged at `359dff669bdb9fe45c4db326668057ff4e28f725`. Canonical branch run `33170777944` and post-merge `33171003791` both passed the full pipeline.
 
 Stage 04 World Safety is ✅ complete, verified and merged at `b5a515335544cee5273ff67d033c68bacf98b05a`. Canonical branch run `33171942536` and post-merge main run `33172216821` both passed the full pipeline.
 
@@ -18,7 +18,7 @@ Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231
 
 Inserted Stage 05A Arcane Danger is 🟨 active and materially implemented on `main`. The danger model, Arcane/Corruption Resistance, strain/recovery, persistent hazard state and the dedicated Arcane Backlash pipeline are present. Backlash was verified at `583286d1dd28c35da8a64261b6c6eceb22242522` by workflow `33222848359`, including exact zero-resistance 1:1 multi-hit settlement and non-recursive accounting.
 
-Since that checkpoint, Stage 05A has also gained merged production contracts for equipment-derived hazard resistance and emergency protection, optional Curios equipment/resistance snapshots and bootstrap, authoritative danger-profile runtime, RPG Skill Tree hazard/progression/mastery integration, and data-driven equipment set bonuses. Current `main` `07263ae9bad12eba6ed500992991faa36ad598b2` includes the explicit equipment-set bonus registry/loader/runtime/snapshot integration merged through PR #20. These source contracts are real and must no longer be listed as wholly unimplemented; formal Stage 05A completion still depends on the remaining presentation/hardening/closure gates below.
+Since that checkpoint, Stage 05A has also gained merged production contracts for equipment-derived hazard resistance and emergency protection, optional Curios equipment/resistance snapshots and bootstrap, authoritative danger-profile runtime, RPG Skill Tree hazard/progression/mastery integration, data-driven equipment set bonuses, causal damage-family attribution, numeric resistance hardening and bounded concurrent/delayed ledger stress coverage. These source contracts are real and must no longer be listed as wholly unimplemented. The 05A.12 automated hardening matrix now has explicit coverage for every required row, including terminal Backlash offensive-credit/mastery exclusions; formal Stage 05A completion still depends on the remaining presentation and closeout gates below.
 
 Stage 06 Rituals has a current promotion PR (#21) with verified functional work but is intentionally not canonicalized ahead of the unresolved Stage 05 real-client gate. Stage 07 Spell Domains is stacked downstream in PR #22 and remains non-canonical until its dependency chain is cleared.
 
@@ -30,7 +30,7 @@ Stage 06 Rituals has a current promotion PR (#21) with verified functional work 
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch + post-merge CI green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
 | 05 Casting & UX | 🟨 Active / code merged | automated gates green; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
-| 05A Arcane Danger | 🟨 Active / advanced | core hazard, equipment, Curios, profiles and RPG provider contracts are present on `main`; final presentation/hardening/closure remains |
+| 05A Arcane Danger | 🟨 Active / advanced | 05A.12 automated hardening matrix covered; 05A.11 presentation/manual validation and formal closeout remain |
 | 06 Rituals | 🟦 Promotion prepared | PR #21 is downstream of the Stage 05 manual gate |
 | 07 Spell Domains | 🟦 Stacked preparatory | PR #22 remains downstream/non-canonical |
 | 08 Progression & Balance | 🟦 Preparatory | final quantitative progression/balance closure remains downstream |
@@ -55,21 +55,23 @@ The current codebase contains:
 - deterministic danger-profile and root-cast attribution contracts;
 - Arcane and Corruption Resistance provider/snapshot semantics;
 - persistent strain/corruption/recovery state;
-- confirmed-damage/backlash settlement with recursion exclusions;
+- confirmed-damage/backlash settlement with recursion and offensive-credit exclusions;
 - equipment-derived hazard resistance and transactional emergency-protection state/coordinator paths;
 - optional Curios snapshot/resistance integration under `integration/curios`, including `CuriosServerIntegrationBootstrap`;
 - RPG Skill Tree provider/progression/mastery integration under `integration/rpg`;
 - authoritative danger-profile runtime/registry;
-- data-driven equipment set bonuses merged through PR #20 / `07263ae9bad12eba6ed500992991faa36ad598b2`.
+- data-driven equipment set bonuses;
+- explicit 05A.12 evidence for persistence/death, Stage 04 protection semantics, malformed data/migration, provider snapshots, dedupe/capacity, damage-family attribution, numeric boundaries, concurrent/delayed stress and terminal Backlash exclusions.
 
 The presence of these contracts does not by itself mark their numbered planning files ✅; that rename remains subject to the stage's complete acceptance and documentation closeout rules.
 
 ## Stage 05A still open
 
 - 05A.11 HUD/tooltips/preflight presentation and its real-client validation where applicable;
-- 05A.12 final hardening across delayed damage, PvP, death/relog/restart, persistence edge cases and the full optional-provider matrix;
-- reconciliation of numbered Stage 05A task status/closeout once the complete acceptance matrix is proven;
-- Stage 05 manual client gate, which still blocks declaring downstream stages canonical.
+- reconciliation of numbered Stage 05A task status/closeout after the remaining presentation gate is proven;
+- Stage 05 manual client gate, which still blocks declaring Stage 05A complete or downstream stages canonical.
+
+05A.12's automated acceptance matrix is covered, but that does not override the stage-level exit rule or substitute for real-client presentation evidence.
 
 ## Stage 06 / 07 preservation rule
 
