@@ -109,15 +109,26 @@ public final class BlackArcanaHudLayer {
         Optional<ArcanaSpellId> selected = selectedSpell();
         if (selected.isEmpty()) return Optional.empty();
         ArcanaSpellId spell = selected.orElseThrow();
+        HazardPreflightPayload.Entry entry = ClientArcanaSyncState.hazardPreflightSnapshot().get(spell);
+        if (entry == null || entry.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
+
         Optional<HazardResistanceForecastPayload> forecast = ClientArcanaSyncState.hazardResistanceForecast(spell);
         if (forecast.isPresent()) {
             HazardResistanceForecastPayload payload = forecast.orElseThrow();
-            if (payload.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
-            return Optional.of(resistanceForecastLine(payload));
+            if (forecastMatchesPreflight(entry, payload)) {
+                return Optional.of(resistanceForecastLine(payload));
+            }
         }
-        HazardPreflightPayload.Entry entry = ClientArcanaSyncState.hazardPreflightSnapshot().get(spell);
-        if (entry == null || entry.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
         return Optional.of(preflightLine(entry));
+    }
+
+    static boolean forecastMatchesPreflight(
+        HazardPreflightPayload.Entry preflight,
+        HazardResistanceForecastPayload forecast
+    ) {
+        return preflight.parsedTier() == forecast.parsedTier()
+            && Double.compare(preflight.minimumArcaneResistance(), forecast.minimumArcaneResistance()) == 0
+            && Double.compare(preflight.recommendedArcaneResistance(), forecast.recommendedArcaneResistance()) == 0;
     }
 
     static Component resistanceForecastLine(HazardResistanceForecastPayload forecast) {
