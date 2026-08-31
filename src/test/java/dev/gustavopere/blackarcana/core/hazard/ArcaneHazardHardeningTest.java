@@ -64,6 +64,25 @@ class ArcaneHazardHardeningTest {
     }
 
     @Test
+    void damageBeforeRootActivationFailsClosedWithoutConsumingLedger() {
+        ArcanaCastId cast = cast("pre-activation");
+        ArcaneBacklashLedger ledger = ledger(cast, 100L, 20L, 8, false);
+
+        ArcaneBacklashSettlement beforeActivation = ledger.settle(
+                damage(cast, "before-activation", ArcaneDamageFamily.PROJECTILE, 4.0D, true, 99L));
+        assertEquals(ArcaneBacklashSettlement.Status.DENIED, beforeActivation.status());
+        assertEquals("hazard_claim_not_active", beforeActivation.code());
+        assertEquals(0.0D, ledger.confirmedEligibleDamage(), 0.0D);
+        assertEquals(0.0D, ledger.backlashSettled(), 0.0D);
+
+        ArcaneBacklashSettlement atActivation = ledger.settle(
+                damage(cast, "at-activation", ArcaneDamageFamily.PROJECTILE, 4.0D, true, 100L));
+        assertEquals(ArcaneBacklashSettlement.Status.SETTLED, atActivation.status());
+        assertEquals(4.0D, ledger.confirmedEligibleDamage(), 0.0D);
+        assertEquals(4.0D, ledger.backlashSettled(), 0.0D);
+    }
+
+    @Test
     void concurrentRootSessionOpenIsDeterministicAndBounded() {
         int capacity = 512;
         ArcaneHazardSessionRegistry registry = new ArcaneHazardSessionRegistry(capacity);
