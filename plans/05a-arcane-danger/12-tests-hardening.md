@@ -54,6 +54,15 @@ The same hardening test feeds real canonical Arcane Resistance snapshots into `A
 
 This checkpoint closes the explicit stress row for concurrent casts, delayed settlements and bounded ledgers. It does not close the separate Backlash crit/lifesteal/proc/mastery exclusion row and therefore does not by itself complete 05A.12.
 
+## Terminal Backlash offensive-credit exclusion checkpoint
+The exclusion is enforced by existing server-side boundaries rather than by four parallel bonus systems. `ArcanaDamageProvenance` rejects any `ARCANE_BACKLASH` provenance marked `hazardEligible=true`; `ArcaneBacklashLedger` rejects terminal Backlash before claiming a damage-instance id; and `MinecraftArcaneDamagePipeline` applies the dedicated `black_arcana:arcane_backlash` `DamageSource` directly instead of routing it through `hurtAttributed(...)`. `ArcaneBacklashOffensiveCreditExclusionTest` locks the provenance, pre-claim and no-inference invariants.
+
+`ArcaneBacklashGameTests.dedicatedBacklashSourceIsAttackerlessAndUnattributed` exercises the live NeoForge/Minecraft boundary: the dedicated Backlash source has neither causing nor direct attacker entity, deals real health damage, and still creates no eligible damage, recursive Backlash settlement or claimed damage-instance state in an active root ledger. That attackerless/unattributed topology is the canonical Black Arcana exclusion for crit-triggered additions, lifesteal/sustain and BA-owned offensive proc chains; no separate BA damage-side credit observer exists to bypass it.
+
+RPG mastery is a concrete integration and is checked separately. `RpgMasteryAwardObserver` is a `CastSuccessObserver`, not a damage observer. `RpgMasteryBacklashExclusionTest` proves a terminal Backlash settlement produces zero mastery awards while an explicit committed-cast success callback remains able to award exactly once. Together with the existing live non-recursion GameTest, these regressions close the explicit Backlash recursion/crit/lifesteal/proc/mastery exclusion row for Black Arcana-owned behavior.
+
+With this checkpoint, every row listed under `Required automated coverage` has explicit automated evidence. 05A.12's automated hardening matrix is therefore closed once the full runtime gates below are green. This does not close 05A.11 presentation, does not satisfy the Stage 05 real-client matrix, does not mark Stage 05A complete, and does not authorize promotion of Stage 06/07.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
