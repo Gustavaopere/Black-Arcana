@@ -49,6 +49,11 @@ This checkpoint closes the explicit direct/AoE/multi-hit/projectile/DoT/explicit
 
 The same hardening test feeds real canonical Arcane Resistance snapshots into `ArcaneBacklashLedger`: `R=0` settles exactly 1:1 (`100%`) Backlash, while canonical capped resistance resolves to the expected `1/7` residual and settles a finite exact reduced amount. This checkpoint therefore closes the explicit `R=0 -> 100%` invariant and the Resistance/Corruption Resistance curves, floors, caps, null/NaN/infinity/negative/overflow-boundary row. It does not by itself complete the remaining 05A.12 acceptance matrix.
 
+## Integrated concurrent/delayed bounded-ledger stress checkpoint
+`ArcaneHazardHardeningTest` already proves isolated high-contention root-session admission, exactly-once concurrent damage claims and 200 linear concurrent settlements, while `ArcaneBacklashLedgerRegistryTest` proves deterministic capacity rejection plus lease-boundary reclamation. `ArcaneBacklashLedgerStressTest.concurrentRootsDelayedSettlementsAndCapacityReclamationStayBounded` combines those concerns at the actual Backlash ledger registry boundary: 48 simultaneous root opens race against a capacity of 32, every admitted root receives four delayed DoT settlements concurrently on the last valid lease tick, every root rejects a further settlement exactly at expiry without changing its accumulated totals, and a second 48-root admission race at the expiry boundary reclaims the expired ledgers and admits exactly 32 replacements without registry overgrowth or cross-root damage contamination.
+
+This checkpoint closes the explicit stress row for concurrent casts, delayed settlements and bounded ledgers. It does not close the separate Backlash crit/lifesteal/proc/mastery exclusion row and therefore does not by itself complete 05A.12.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
