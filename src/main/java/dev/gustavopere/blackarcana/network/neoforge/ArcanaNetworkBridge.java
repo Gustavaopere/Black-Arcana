@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.network.neoforge;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
+import dev.gustavopere.blackarcana.network.BorrowedSightCameraPayload;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.CooldownSnapshotPayload;
@@ -32,6 +33,7 @@ public final class ArcanaNetworkBridge {
     private static volatile BiConsumer<Player, CooldownSnapshotPayload> clientCooldownHandler = (player, snapshot) -> { };
     private static volatile BiConsumer<Player, SpellPresentationPayload> clientPresentationHandler = (player, presentation) -> { };
     private static volatile BiConsumer<Player, HazardPreflightPayload> clientHazardPreflightHandler = (player, preflight) -> { };
+    private static volatile BiConsumer<Player, BorrowedSightCameraPayload> clientBorrowedSightCameraHandler = (player, camera) -> { };
 
     private ArcanaNetworkBridge() { }
 
@@ -42,6 +44,7 @@ public final class ArcanaNetworkBridge {
         registrar.playToClient(CooldownSnapshotPacket.TYPE, CooldownSnapshotPacket.STREAM_CODEC, ArcanaNetworkBridge::handleCooldownSnapshot);
         registrar.playToClient(SpellPresentationPacket.TYPE, SpellPresentationPacket.STREAM_CODEC, ArcanaNetworkBridge::handleSpellPresentation);
         registrar.playToClient(HazardPreflightPacket.TYPE, HazardPreflightPacket.STREAM_CODEC, ArcanaNetworkBridge::handleHazardPreflight);
+        registrar.playToClient(BorrowedSightCameraPacket.TYPE, BorrowedSightCameraPacket.STREAM_CODEC, ArcanaNetworkBridge::handleBorrowedSightCamera);
     }
 
     public static void installServerHandler(ServerCastIntentHandler handler) {
@@ -62,6 +65,10 @@ public final class ArcanaNetworkBridge {
 
     public static void installClientHazardPreflightHandler(BiConsumer<Player, HazardPreflightPayload> handler) {
         clientHazardPreflightHandler = Objects.requireNonNull(handler, "handler");
+    }
+
+    public static void installClientBorrowedSightCameraHandler(BiConsumer<Player, BorrowedSightCameraPayload> handler) {
+        clientBorrowedSightCameraHandler = Objects.requireNonNull(handler, "handler");
     }
 
     public static void sendCastIntent(CastIntentPayload intent) {
@@ -89,6 +96,13 @@ public final class ArcanaNetworkBridge {
         PacketDistributor.sendToPlayer(player, HazardPreflightPacket.from(preflight));
     }
 
+    public static void sendBorrowedSightCamera(ServerPlayer player, BorrowedSightCameraPayload camera) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(camera, "camera");
+        if (!player.connection.hasChannel(BorrowedSightCameraPacket.TYPE)) return;
+        PacketDistributor.sendToPlayer(player, BorrowedSightCameraPacket.from(camera));
+    }
+
     private static void handleServerbound(CastIntentPacket packet, IPayloadContext context) {
         if (!(context.player() instanceof ServerPlayer player)) return;
         CastResultPayload result = Objects.requireNonNull(
@@ -110,6 +124,10 @@ public final class ArcanaNetworkBridge {
 
     private static void handleHazardPreflight(HazardPreflightPacket packet, IPayloadContext context) {
         clientHazardPreflightHandler.accept(context.player(), packet.toDomain());
+    }
+
+    private static void handleBorrowedSightCamera(BorrowedSightCameraPacket packet, IPayloadContext context) {
+        clientBorrowedSightCameraHandler.accept(context.player(), packet.toDomain());
     }
 
     private static CastResultPayload notReady(ServerPlayer player, CastIntentPayload intent) {
