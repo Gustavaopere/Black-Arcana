@@ -36,6 +36,26 @@ class ArcaneDangerDataReloadListenerTest {
     }
 
     @Test
+    void rejectsUnsupportedSchemaVersion() {
+        String json = validJson().replace("\"schemaVersion\": 1", "\"schemaVersion\": 2");
+        assertThrows(JsonParseException.class, () ->
+            ArcaneDangerDataReloadListener.parseDefinition(ID, JsonParser.parseString(json)));
+    }
+
+    @Test
+    void rejectsOutOfBoundsProfileVersion() {
+        String zeroVersion = validJson().replace("\"profileVersion\": 1", "\"profileVersion\": 0");
+        assertThrows(JsonParseException.class, () ->
+            ArcaneDangerDataReloadListener.parseDefinition(ID, JsonParser.parseString(zeroVersion)));
+
+        String excessiveVersion = validJson().replace(
+            "\"profileVersion\": 1",
+            "\"profileVersion\": " + (ArcaneDangerDataDefinition.MAX_PROFILE_VERSION + 1));
+        assertThrows(JsonParseException.class, () ->
+            ArcaneDangerDataReloadListener.parseDefinition(ID, JsonParser.parseString(excessiveVersion)));
+    }
+
+    @Test
     void rejectsImpossibleResistanceHints() {
         String json = validJson().replace("\"minimumArcaneResistance\": 25.0", "\"minimumArcaneResistance\": 75.0")
             .replace("\"recommendedArcaneResistance\": 50.0", "\"recommendedArcaneResistance\": 50.0");
