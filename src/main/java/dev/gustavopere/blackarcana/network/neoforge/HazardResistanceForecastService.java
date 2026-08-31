@@ -149,6 +149,7 @@ public final class HazardResistanceForecastService {
             effective,
             profile.minimumArcaneResistance(),
             profile.recommendedArcaneResistance(),
+            true,
             Objects.requireNonNull(gateStatus, "gateStatus").name());
     }
 
@@ -166,6 +167,7 @@ public final class HazardResistanceForecastService {
             0.0D,
             profile.minimumArcaneResistance(),
             profile.recommendedArcaneResistance(),
+            false,
             HazardResistanceForecastPayload.GateStatus.UNAVAILABLE.name());
     }
 
