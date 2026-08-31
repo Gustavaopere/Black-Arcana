@@ -18,9 +18,10 @@ Use bounded per-player strain units plus recovery metadata. Recovery should be l
 - query/cast computes effective decayed strain from last-update tick;
 - explicit rest/ritual/buff hooks may accelerate recovery;
 - relog/restart must not instantly cleanse strain;
+- death/respawn must not become a free reset; the same UUID retains its server-owned strain state and only the normal recovery rules may reduce it;
 - no global scan over every player every tick is required.
 
-Persist enough state in `BlackArcanaSavedData` to reconstruct strain deterministically after restart.
+Persist enough state in `BlackArcanaSavedData` to reconstruct strain deterministically after restart. Any future death-specific strain reduction requires an explicit balance decision rather than an implicit entity-lifecycle reset.
 
 ## Interaction with casting
 Preflight exposes current/effective strain and predicted post-cast strain. Profiles may use strain to:
@@ -36,7 +37,7 @@ Tests:
 - strain increases deterministically after configured casts;
 - recovery is monotonic and bounded;
 - no negative strain or overflow;
-- logout/restart does not cleanse it;
+- logout/restart/death-respawn do not cleanse it;
 - current strain affects preflight only through profile-declared rules;
 - multiple casts in the same tick are deterministic;
 - rituals/buffs can contribute recovery modifiers through explicit providers/hooks;
@@ -49,4 +50,4 @@ Implement bounded state, lazy decay/recovery service, persistence snapshot and p
 Keep recovery math pure and unit-testable. Minecraft time/persistence adapters remain narrow.
 
 ## Acceptance
-Repeated forbidden casting can become increasingly unsafe even when cooldown and mana permit it, while normal/non-straining spells remain unaffected.
+Repeated forbidden casting can become increasingly unsafe even when cooldown and mana permit it, while normal/non-straining spells remain unaffected. Relog, restart and death/respawn do not provide a cleanse shortcut.
