@@ -29,6 +29,11 @@ Persisted pending Backlash has a real schema-1 migration path: legacy aggregate 
 
 This checkpoint closes the explicit malformed danger-profile / real persisted-hazard migration evidence row. No synthetic pre-schema format is introduced; unsupported top-level persistence schemas continue to fail closed. It does not by itself complete the remaining 05A.12 acceptance matrix.
 
+## Optional-provider snapshot checkpoint
+Equipment snapshot reuse is already covered by the canonical equipment tests, including root-cast reuse across Arcane/Corruption channels and later equipment-state recapture. `ArcaneOptionalProviderSnapshotHardeningTest` extends that acceptance evidence through the generic optional-provider boundary used by Curios/RPG contributions: a root cast freezes CURIO + RPG Arcane Resistance at activation, removing the Curio/perk afterward cannot rewrite delayed Backlash for that root, and a later root cast observes the new provider state at its own preflight boundary.
+
+This checkpoint closes the explicit equipment/Curios/RPG/provider snapshot and post-cast swap row at the Stage 05A Arcane Resistance/Backlash boundary. It does not claim a concrete third-party Curios or RPG Skill Tree adapter where one is not loaded, and it does not by itself complete the remaining 05A.12 acceptance matrix.
+
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
 
