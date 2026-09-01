@@ -10,6 +10,11 @@ Stage 05A.11 automated presentation checkpoint: `7c617983a266e084cacb98682e669cc
 - workflow `33471722454`: unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke all GREEN;
 - the preceding presentation RED was captured by workflow `33471498889` before the gate/tooltip helpers existed.
 
+Stage 05 real-client fixture checkpoint: PR #39 merged to `main` at `06f0a9a495b6fe6576da75f673800a94af14dab0`.
+- post-merge workflow `33501635945`: unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke all GREEN;
+- `docs/qa/fixtures/stage05-real-client/` provides removable deterministic controls for hazard thresholds, Arcane Resistance 0/15/30, legitimate CLEAR/COOLDOWN/COST gates and stale-profile reload checks;
+- fixture availability does **not** change any manual result by itself. Every row below remains PENDING until direct client evidence is recorded.
+
 Execution procedure and evidence requirements are in `docs/qa/casting-ux-real-client-runbook.md`.
 
 This document deliberately does **not** mark visual/manual rows as passed. They must be exercised in a real Minecraft client before Stage 05 task files receive ✅.
