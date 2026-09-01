@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "black_arcana:qa_resistance_stick",
+  "itemId": "minecraft:stick",
+  "arcaneResistance": 15.0,
+  "corruptionResistance": 0.0,
+  "strainCapacityBonus": 0.0,
+  "strainRecoveryPerTick": 0.0,
+  "containmentTags": [],
+  "emergencyAbsorption": 0.0,
+  "emergencyCooldownTicks": 0
+}

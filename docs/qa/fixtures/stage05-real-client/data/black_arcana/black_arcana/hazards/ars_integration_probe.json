@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "profileVersion": 1,
+  "id": "black_arcana:ars_integration_probe",
+  "tier": "NORMAL",
+  "backlashMultiplier": 0.0,
+  "corruptionCoefficient": 0.0,
+  "strainCoefficient": 0.0,
+  "damageLeaseTicks": 0,
+  "maxDamageInstances": 1,
+  "minimumArcaneResistance": 0.0,
+  "recommendedArcaneResistance": 0.0,
+  "emergencyProtectionAllowed": false
+}

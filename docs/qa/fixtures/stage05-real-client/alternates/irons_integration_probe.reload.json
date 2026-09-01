@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "profileVersion": 2,
+  "id": "black_arcana:irons_integration_probe",
+  "tier": "FORBIDDEN",
+  "backlashMultiplier": 1.5,
+  "corruptionCoefficient": 0.0,
+  "strainCoefficient": 0.0,
+  "damageLeaseTicks": 60,
+  "maxDamageInstances": 1,
+  "minimumArcaneResistance": 20.0,
+  "recommendedArcaneResistance": 40.0,
+  "emergencyProtectionAllowed": false
+}
