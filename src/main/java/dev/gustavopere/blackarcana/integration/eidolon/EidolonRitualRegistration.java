@@ -10,22 +10,35 @@ public final class EidolonRitualRegistration {
     private EidolonRitualRegistration() { }
 
     public static synchronized void register() {
-        Ritual existing = RitualRegistry.find(EidolonIntegrationIds.PROBE_RITUAL_ID);
+        registerOwned(
+            EidolonIntegrationIds.PROBE_RITUAL_ID,
+            EidolonArcanaProbeRitual.class,
+            EidolonArcanaProbeRitual::new);
+        registerOwned(
+            EidolonIntegrationIds.ANCHOR_ATTUNEMENT_RITUAL_ID,
+            EidolonAnchorAttunementRitual.class,
+            EidolonAnchorAttunementRitual::new);
+        registered = true;
+    }
+
+    private static <T extends Ritual> void registerOwned(
+        net.minecraft.resources.ResourceLocation id,
+        Class<T> expectedType,
+        java.util.function.Supplier<T> factory
+    ) {
+        Ritual existing = RitualRegistry.find(id);
         if (existing != null) {
-            if (!(existing instanceof EidolonArcanaProbeRitual)) {
-                throw new IllegalStateException("Eidolon ritual id is already owned by another implementation");
+            if (!expectedType.isInstance(existing)) {
+                throw new IllegalStateException("Eidolon ritual id is already owned by another implementation: " + id);
             }
-            registered = true;
             return;
         }
-        RitualRegistry.register(
-            EidolonIntegrationIds.PROBE_RITUAL_ID,
-            new EidolonArcanaProbeRitual());
-        registered = true;
+        RitualRegistry.register(id, factory.get());
     }
 
     public static synchronized boolean isRegistered() {
         return registered
-            && RitualRegistry.find(EidolonIntegrationIds.PROBE_RITUAL_ID) instanceof EidolonArcanaProbeRitual;
+            && RitualRegistry.find(EidolonIntegrationIds.PROBE_RITUAL_ID) instanceof EidolonArcanaProbeRitual
+            && RitualRegistry.find(EidolonIntegrationIds.ANCHOR_ATTUNEMENT_RITUAL_ID) instanceof EidolonAnchorAttunementRitual;
     }
 }
