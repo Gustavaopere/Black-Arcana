@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.client;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
+import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
 import dev.gustavopere.blackarcana.network.LoadoutUpdatePayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import dev.gustavopere.blackarcana.network.neoforge.LoadoutNetworkBridge;
@@ -15,6 +16,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /** Client-only draft editor. Apply sends intent; the server response remains canonical. */
 public final class BlackArcanaLoadoutScreen extends Screen {
@@ -23,6 +25,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     private static final int PANEL_WIDTH = 300;
 
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
+    private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private final List<ArcanaSpellId> available;
     private final LoadoutDraft draft;
     private int page;
@@ -30,6 +33,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     private BlackArcanaLoadoutScreen() {
         super(Component.translatable("screen.black_arcana.loadout"));
         presentation = ClientArcanaSyncState.presentationSnapshot();
+        hazards = ClientArcanaSyncState.hazardPreflightSnapshot();
         available = presentation.keySet().stream()
                 .sorted(Comparator.comparing(ArcanaSpellId::canonical))
                 .toList();
@@ -52,6 +56,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 top + ROWS_PER_PAGE * ROW_HEIGHT + 48, 0xE0100C14);
         graphics.drawCenteredString(font, title, width / 2, top - 16, 0xFFF0E4F0);
 
+        Component hoveredTooltip = null;
         int start = page * ROWS_PER_PAGE;
         int end = Math.min(available.size(), start + ROWS_PER_PAGE);
         for (int index = start; index < end; index++) {
@@ -65,6 +70,9 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             graphics.fill(left, y, left + PANEL_WIDTH, y + ROW_HEIGHT - 2, background);
             String prefix = chosen ? "[x] " : "[ ] ";
             graphics.drawString(font, prefix + displayName(spell), left + 8, y + 7, 0xFFFFFFFF, false);
+            if (hovered) {
+                hoveredTooltip = hazardTooltip(hazards.get(spell)).orElse(null);
+            }
         }
 
         int pages = Math.max(1, (available.size() + ROWS_PER_PAGE - 1) / ROWS_PER_PAGE);
@@ -79,6 +87,9 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 top + ROWS_PER_PAGE * ROW_HEIGHT + 20,
                 0xFFD8CCD8);
         super.render(graphics, mouseX, mouseY, partialTick);
+        if (hoveredTooltip != null) {
+            graphics.renderTooltip(font, hoveredTooltip, mouseX, mouseY);
+        }
     }
 
     @Override
@@ -130,6 +141,10 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 ArcanaProtocol.VERSION,
                 draft.snapshot().stream().map(ArcanaSpellId::canonical).toList()));
         onClose();
+    }
+
+    static Optional<Component> hazardTooltip(HazardPreflightPayload.Entry entry) {
+        return entry == null ? Optional.empty() : Optional.of(BlackArcanaHudLayer.preflightLine(entry));
     }
 
     private String displayName(ArcanaSpellId spell) {

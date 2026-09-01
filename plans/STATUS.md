@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-08-31
+Last updated: 2026-09-01
 
 ## Current state
 
@@ -18,7 +18,11 @@ Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231
 
 Inserted Stage 05A Arcane Danger is 🟨 active and materially implemented on `main`. The danger model, Arcane/Corruption Resistance, strain/recovery, persistent hazard state and the dedicated Arcane Backlash pipeline are present. Backlash was verified at `583286d1dd28c35da8a64261b6c6eceb22242522` by workflow `33222848359`, including exact zero-resistance 1:1 multi-hit settlement and non-recursive accounting.
 
-Since that checkpoint, Stage 05A has also gained production contracts for equipment-derived hazard resistance and emergency protection, optional Curios equipment/resistance snapshots and bootstrap, authoritative danger-profile runtime, RPG Skill Tree hazard/progression/mastery integration, data-driven equipment set bonuses, causal damage-family attribution, numeric resistance hardening, bounded concurrent/delayed ledger stress coverage and a server-authored selected-spell Arcane Resistance forecast for contextual HUD presentation. The forecast mirrors only explicitly side-effect-free gameplay providers, fails closed on incomplete/diagnostic projections, is rate-limited and never becomes cast authority. The 05A.12 automated hardening matrix now has explicit coverage for every required row, including terminal Backlash offensive-credit/mastery exclusions; formal Stage 05A completion still depends on the remaining presentation and closeout gates below.
+Since that checkpoint, Stage 05A has also gained production contracts for equipment-derived hazard resistance and emergency protection, optional Curios equipment/resistance snapshots and bootstrap, authoritative danger-profile runtime, RPG Skill Tree hazard/progression/mastery integration, data-driven equipment set bonuses, causal damage-family attribution, numeric resistance hardening, bounded concurrent/delayed ledger stress coverage and server-authored selected-spell hazard preflight presentation. The preflight now combines the fail-closed Arcane Resistance forecast with a deliberately partial read-only projection of identity/loadout, progression, cooldown and resource-cost gates, and the loadout editor exposes synchronized static hazard metadata as a hover tooltip. Client input never supplies resistance, danger tier, gate state or loadout slot. The 05A.12 automated hardening matrix has explicit coverage for every required row, including terminal Backlash offensive-credit/mastery exclusions.
+
+The read-only gate/runtime/networking path passed the full pipeline on workflow `33422931351` at `44dda0c3586cb17d5461c18ccbb75432d9ac1626`. The HUD gate presentation and loadout tooltip then followed an explicit RED (`33471498889`) and GREEN (`33471722454`) cycle; the GREEN head `7c617983a266e084cacb98682e669cce561e333f` passed unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke.
+
+No Corruption/strain client value is added to this 05A.11 closure because the current client networking surface has no bounded synchronized Corruption/strain snapshot contract. A future presentation for those values requires an explicit server-authored sync contract rather than a client-side estimate or an unreviewed new state channel.
 
 Stage 06 Rituals has a current promotion PR (#21) with verified functional work but is intentionally not canonicalized ahead of the unresolved Stage 05 real-client gate. Stage 07 Spell Domains is stacked downstream in PR #22 and remains non-canonical until its dependency chain is cleared.
 
@@ -30,7 +34,7 @@ Stage 06 Rituals has a current promotion PR (#21) with verified functional work 
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch + post-merge CI green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
 | 05 Casting & UX | 🟨 Active / code merged | automated gates green; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
-| 05A Arcane Danger | 🟨 Active / advanced | 05A.12 automated hardening covered; 05A.11 selected-spell resistance forecast implemented, broader presentation/manual validation and formal closeout remain |
+| 05A Arcane Danger | 🟨 Active / automated presentation advanced | 05A.12 automated hardening covered; 05A.11 resistance + predictable gate preflight + loadout tooltip implemented/verified; real-client validation and formal closeout remain |
 | 06 Rituals | 🟦 Promotion prepared | PR #21 is downstream of the Stage 05 manual gate |
 | 07 Spell Domains | 🟦 Stacked preparatory | PR #22 remains downstream/non-canonical |
 | 08 Progression & Balance | 🟦 Preparatory | final quantitative progression/balance closure remains downstream |
@@ -38,7 +42,7 @@ Stage 06 Rituals has a current promotion PR (#21) with verified functional work 
 
 ## Canonical active stage
 
-`05-casting-ux` remains the formal active stage until its manual client matrix is closed. `05a-arcane-danger` may continue deterministic server-side closure in parallel, but cannot be declared complete ahead of the required Stage 05 presentation gate.
+`05-casting-ux` remains the formal active stage until its manual client matrix is closed. `05a-arcane-danger` may continue deterministic server-side/automated closure in parallel, but cannot be declared complete ahead of the required Stage 05 presentation gate.
 
 ## Frozen predecessors
 
@@ -62,22 +66,25 @@ The current codebase contains:
 - authoritative danger-profile runtime/registry;
 - data-driven equipment set bonuses;
 - selected-spell Arcane Resistance forecast networking/presentation with a complete-provider read-only mirror, bounded request rate, stale-response rejection and fail-closed diagnostics;
+- selected-spell predictable gate projection owned by the canonical `ArcanaCastEngine`, restricted to identity/loadout, progression, cooldown and resource-cost query-only gates;
+- server-derived loadout-slot context for gate preview; no client loadout-slot authority;
+- bounded gate transport (`CLEAR`, `IDENTITY`, `PROGRESSION`, `COOLDOWN`, `COST`, `UNAVAILABLE`) without arbitrary forecast detail;
+- static loadout hover tooltip derived only from synchronized `HazardPreflightPayload` metadata;
 - explicit 05A.12 evidence for persistence/death, Stage 04 protection semantics, malformed data/migration, provider snapshots, dedupe/capacity, damage-family attribution, numeric boundaries, concurrent/delayed stress and terminal Backlash exclusions.
 
 The presence of these contracts does not by itself mark their numbered planning files ✅; that rename remains subject to the stage's complete acceptance and documentation closeout rules.
 
 ## Stage 05A still open
 
-- 05A.11 broader HUD/tooltips/preflight presentation: the selected-spell Arcane Resistance forecast exists, but complete non-resistance hard-gate projection, tooltip coverage and any retained Corruption/strain presentation remain unresolved;
-- real-client validation of the 05A.11 forecast and stale/reconnect/accessibility behavior in `docs/qa/casting-ux-manual-matrix.md`;
+- real-client validation of the 05A.11 resistance/gate forecast, loadout tooltip and stale/reconnect/accessibility behavior in `docs/qa/casting-ux-manual-matrix.md`;
 - reconciliation of numbered Stage 05A task status/closeout after the remaining presentation gate is proven;
 - Stage 05 manual client gate, which still blocks declaring Stage 05A complete or downstream stages canonical.
 
-05A.12's automated acceptance matrix is covered, but that does not override the stage-level exit rule or substitute for real-client presentation evidence.
+05A.11's deterministic automated presentation scope is implemented, but its manual acceptance remains open. Corruption/strain client values are intentionally not retained without a separate bounded synchronization contract. 05A.12's automated acceptance matrix is covered, but neither fact overrides the stage-level exit rule or substitutes for real-client presentation evidence.
 
 ## Stage 06 / 07 preservation rule
 
-Do not discard the verified Stage 06/07 work, but do not bypass the causal gate. Stage 06 PR #21 and stacked Stage 07 PR #22 remain downstream until Stage 05 manual closure and any required Stage 05A contract reconciliation are complete.
+Do not discard the verified Stage 06/07 work, but do not bypass the causal gate. Stage 06 PR #21 and stacked Stage 07 PR #22 remain downstream until Stage 05 manual closure and any required Stage 05A freeze/acceptance gates are complete.
 
 ## Freeze rules
 
