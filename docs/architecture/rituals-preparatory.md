@@ -1,12 +1,17 @@
 # Stage 06 — Rituals architecture
 
-Status: implementation promoted on the current-main line; applicable automated validation is green. Final real-modpack/manual acceptance remains deferred under D031 and must not be inferred as PASS.
+Status: canonical on `main` as `IMPLEMENTED / FINAL VALIDATION DEFERRED`. Applicable automated validation is green. Final real-modpack/manual acceptance remains deferred under D031 and must not be inferred as PASS.
 
 Current-main promotion baseline: `d8fb667cc5954d5811dacbbef4da1053fa296581`.
-Historical reviewed source: PR #21 / `9b2fd70a60a487ffe17eb90cbc870e24af7e2a80`.
+Historical reviewed source: PR #21 / `9b2fd70a60a487ffe17eb90cbc870e24af7e2a80`, closed unmerged as superseded.
+Replacement integration PR: #43.
+Canonical Stage 06 merge: `4a79d440a4bba3920002eb8fc49a520e15744c48`.
 TDD RED: workflow `33555023989` on test-only commit `63fc59a1ddee145c5d3a14de9897b997ab52c4d2` failed at test compilation because the Stage 06 production contracts were deliberately absent.
 Core GREEN: workflow `33556263487` on `0f8e6bd90837d182f3add9ad047303115d7145f0` passed JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke.
 Integrated GREEN: workflow `33556878810` on `90c3a4b4f4be4570b4e45e51edcec90df47a4377` passed the same full pipeline after server lifecycle persistence, Malum grand-ritual wiring and Eidolon anchor-attunement registration were restored against the current-main contracts. The run executed Java 21 / NeoForge 21.1.248 and all 21 required GameTests passed.
+Final branch GREEN: workflow `33560762231` on `f5c2249cfdb513e2034994711827e7b301d41a4b` passed the full pipeline after documentation synchronization.
+PR GREEN: workflow `33561144294` passed the full pipeline on the same final branch SHA before merge.
+Post-merge GREEN: workflow `33561613644` passed the full pipeline on canonical `main` SHA `4a79d440a4bba3920002eb8fc49a520e15744c48` and published canonical artifact `black-arcana-4a79d440a4bba3920002eb8fc49a520e15744c48`.
 
 ## Core ritual model
 
@@ -59,10 +64,10 @@ No arbitrary global structure scan or permanent chunk loading is introduced.
 
 The Stage 06 test suite covers core transaction/session/completion registries, composite components, persistence round-trips, runtime ownership/ticking, Malum component behavior and representative grand-ritual binding. The current-main promotion also runs the repository-wide JUnit, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke gates.
 
-The integrated current-main candidate is automated-green at `90c3a4b4f4be4570b4e45e51edcec90df47a4377` / workflow `33556878810`. No real-modpack/manual host acceptance is claimed from that run.
+The canonical implementation is automated-green on `main` at `4a79d440a4bba3920002eb8fc49a520e15744c48` via post-merge workflow `33561613644`. No real-modpack/manual host acceptance is claimed from that run.
 
 ## Final validation status
 
-Stage 06 is eligible to be canonicalized as `IMPLEMENTED / FINAL VALIDATION DEFERRED` under D031 because its current-main implementation and applicable automated gates are green. This does not convert any Stage 05/05A real-client row to PASS and does not claim representative real-modpack/manual validation that has not been executed.
+Stage 06 is canonicalized as `IMPLEMENTED / FINAL VALIDATION DEFERRED` under D031. Its applicable automated gates are green, but representative real-modpack/manual host validation that has not been executed remains deferred. This does not convert any Stage 05/05A real-client row to PASS.
 
-Do not rename Stage 06 task files to `✅-*` solely from automated evidence. Stage 07 may begin only after Stage 06 is canonical on the latest `main`, and Stage 09 remains release-blocked until the accumulated deferred validation campaign is closed.
+Do not rename Stage 06 task files to `✅-*` solely from automated evidence. Stage 07 is now eligible for a fresh latest-`main` resynchronization, but no Stage 07 implementation is started by this Stage 06 closeout. Stage 09 remains release-blocked until the accumulated deferred validation campaign is closed.
