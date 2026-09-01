@@ -20,9 +20,9 @@ Stage 05A Arcane Danger is `IMPLEMENTED / FINAL VALIDATION DEFERRED`. Its server
 
 The deterministic Stage 05/05A fixture is merged at `06f0a9a495b6fe6576da75f673800a94af14dab0`, with post-merge workflow `33501635945` green. It supplies reproducible hazard/resistance/gate/reload states without production debug hooks or client authority, but fixture availability is not PASS evidence.
 
-The canonical CI delivery path is merged through PR #41. Current `main` is `e573a0edfcb69d09e423b60ad75ab71b9d8e70c5`; post-merge workflow `33532564420` passed the full automated gate and published `black-arcana-e573a0edfcb69d09e423b60ad75ab71b9d8e70c5` only after those gates. Artifact publication is support infrastructure for later real-client execution, not manual acceptance.
+The latest canonical `main` baseline used for Stage 06 resynchronization is `d8fb667cc5954d5811dacbbef4da1053fa296581` (PR #42, D031 deferred-final-validation sequencing). Main workflow `33551757625` passed the full automated gate and published `black-arcana-d8fb667cc5954d5811dacbbef4da1053fa296581`. Artifact publication remains support infrastructure for later real-client execution, not manual acceptance.
 
-Stage 06 Rituals is authorized for latest-`main` resynchronization and promotion under D031. Historical PR #21 remains useful reviewed source material, but its stale ancestry is not merged wholesale. Shared runtime/persistence must be reconciled against current Stage 05A contracts, the full automated gate rerun, and any host/client-only evidence that CI cannot provide must be recorded as `FINAL VALIDATION DEFERRED` rather than blocking implementation merge.
+Stage 06 Rituals is `IMPLEMENTED / FINAL VALIDATION DEFERRED` on the latest-main promotion line. Historical PR #21 was used only as reviewed source material; stale ancestry was not merged wholesale. The replacement implementation was rebuilt from baseline `d8fb667...`, preserved current Stage 05A runtime/persistence contracts, and followed an explicit TDD RED→GREEN sequence: workflow `33555023989` on test-only `63fc59a1...` failed because production Rituals contracts were absent; core workflow `33556263487` on `0f8e6bd9...` passed the complete pipeline; integrated workflow `33556878810` on `90c3a4b4...` also passed JUnit, diff sanity, NeoForge build, JAR inspection, all 21 required GameTests and dedicated-server smoke after runtime-manager, Malum and Eidolon wiring. Real-modpack/manual host acceptance remains deferred under D031 and is not inferred as PASS.
 
 Stage 07 Spell Domains remains downstream/non-canonical until Stage 06 implementation is canonical on `main`. Historical stacked PR #22 preserves substantial reviewed work but must be resynchronized to the resulting latest `main`. Stage 07.06 Forbidden Domains follows D032: bounded localized in-world fields/arenas are the default; dynamic dimensions require a new explicit architectural decision.
 
@@ -37,14 +37,14 @@ Stage 08 Progression & Balance starts only after Stage 07 implementation is cano
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
 | 05 Casting & UX | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | automated gates green; exact-SHA QA artifact + fixture available; real-client matrix remains PENDING |
 | 05A Arcane Danger | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | server contracts frozen; automated presentation/hardening advanced; real-client presentation acceptance remains |
-| 06 Rituals | 🟦 IMPLEMENTATION AUTHORIZED | resynchronize reviewed #21 behavior onto latest main; automated gates required before merge |
-| 07 Spell Domains | 🟦 DOWNSTREAM / NON-CANONICAL | resynchronize after Stage 06 merge; finish 07.04–07.07 |
+| 06 Rituals | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | latest-main resync automated-green; real-modpack/manual host acceptance deferred |
+| 07 Spell Domains | 🟦 DOWNSTREAM / NON-CANONICAL | resynchronize after Stage 06 becomes canonical; finish 07.04–07.07 |
 | 08 Progression & Balance | ⬜ WAITING FOR 07 IMPLEMENTATION | implement after 07 becomes canonical |
 | 09 Hardening & Release | ⬜ WAITING FOR 08 IMPLEMENTATION | infrastructure first; final campaign remains release-blocking |
 
 ## Canonical implementation sequence
 
-The sequence is now governed by D031:
+The sequence is governed by D031:
 
 `05/05A frozen runtime contracts -> 06 Rituals -> 07 Spell Domains -> 08 Progression & Balance -> 09 Hardening/Release infrastructure -> accumulated final validation`
 
@@ -84,11 +84,13 @@ The current codebase contains:
 
 These contracts do not convert deferred real-client acceptance to PASS.
 
-## Stage 06 promotion rule
+## Stage 06 implementation and validation state
 
-Use historical PR #21 only as reviewed Stage 06 source/evidence. Create a fresh Stage 06 branch from the latest canonical `main`, restore the ritual core and tests, manually reconcile shared runtime/persistence/provider bootstrap files, rerun the complete automated pipeline and open a replacement PR. Close #21 as superseded rather than merging stale ancestry.
+The current Stage 06 line restores the bounded ritual core, session persistence, exactly-once completion ledger, server lifecycle wiring, Eidolon anchor-attunement bridge and Malum typed-spirit grand-ritual path while retaining current 05A state.
 
-Stage 06 may merge as `IMPLEMENTED / FINAL VALIDATION DEFERRED` if optional host/runtime client evidence is unavailable. It may only become `VALIDATED / COMPLETE` when its own documented acceptance criteria are directly evidenced. Stage 05's separate manual presentation debt no longer blocks Stage 06 implementation canonicalization.
+Applicable automated validation is green on `90c3a4b4f4be4570b4e45e51edcec90df47a4377` / workflow `33556878810`. Optional host/runtime evidence that requires the real modpack remains `FINAL VALIDATION DEFERRED`; no manual PASS is claimed. Historical PR #21 is superseded as an integration vehicle and must not be merged with its stale ancestry.
+
+Stage 07 may begin only after this Stage 06 implementation is canonical on the latest `main`.
 
 ## Freeze rules
 
