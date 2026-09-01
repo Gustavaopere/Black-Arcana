@@ -22,6 +22,8 @@ Since that checkpoint, Stage 05A has also gained production contracts for equipm
 
 The read-only gate/runtime/networking path passed the full pipeline on workflow `33422931351` at `44dda0c3586cb17d5461c18ccbb75432d9ac1626`. The HUD gate presentation and loadout tooltip then followed an explicit RED (`33471498889`) and GREEN (`33471722454`) cycle; the GREEN head `7c617983a266e084cacb98682e669cce561e333f` passed unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke.
 
+PR #39 then added a removable, non-production Stage 05/05A real-client datapack fixture and merged it to `main` at `06f0a9a495b6fe6576da75f673800a94af14dab0`. The fixture provides deterministic hazard thresholds, Arcane Resistance 0/15/30 controls, legitimate `CLEAR`/`COOLDOWN`/`COST` gate states and stale danger-profile reload coverage without debug bypasses or client authority. Post-merge workflow `33501635945` passed unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke. This makes the manual gate reproducible but does not convert any manual matrix row to PASS.
+
 No Corruption/strain client value is added to this 05A.11 closure because the current client networking surface has no bounded synchronized Corruption/strain snapshot contract. A future presentation for those values requires an explicit server-authored sync contract rather than a client-side estimate or an unreviewed new state channel.
 
 Stage 06 Rituals has a current promotion PR (#21) with verified functional work but is intentionally not canonicalized ahead of the unresolved Stage 05 real-client gate. Stage 07 Spell Domains is stacked downstream in PR #22 and remains non-canonical until its dependency chain is cleared.
@@ -33,7 +35,7 @@ Stage 06 Rituals has a current promotion PR (#21) with verified functional work 
 | 02 Arcana Core | ✅ Complete | branch `33169091342` + post-merge `33169344809` green |
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch + post-merge CI green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
-| 05 Casting & UX | 🟨 Active / code merged | automated gates green; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
+| 05 Casting & UX | 🟨 Active / code merged | automated gates green; deterministic real-client fixture merged at `06f0a9a...`; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
 | 05A Arcane Danger | 🟨 Active / automated presentation advanced | 05A.12 automated hardening covered; 05A.11 resistance + predictable gate preflight + loadout tooltip implemented/verified; real-client validation and formal closeout remain |
 | 06 Rituals | 🟦 Promotion prepared | PR #21 is downstream of the Stage 05 manual gate |
 | 07 Spell Domains | 🟦 Stacked preparatory | PR #22 remains downstream/non-canonical |
@@ -50,7 +52,7 @@ Stages 00, 01, 02, 03 and 04 may only change through explicit follow-up decision
 
 ## Stage 05 remaining closure work
 
-Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags may be carried explicitly to Stage 09 only when the corresponding effect is genuinely deferred.
+Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md` using `docs/qa/casting-ux-real-client-runbook.md` and the removable fixture under `docs/qa/fixtures/stage05-real-client/` where applicable. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags may be carried explicitly to Stage 09 only when the corresponding effect is genuinely deferred.
 
 ## Stage 05A verified/implemented capabilities
 
@@ -70,7 +72,8 @@ The current codebase contains:
 - server-derived loadout-slot context for gate preview; no client loadout-slot authority;
 - bounded gate transport (`CLEAR`, `IDENTITY`, `PROGRESSION`, `COOLDOWN`, `COST`, `UNAVAILABLE`) without arbitrary forecast detail;
 - static loadout hover tooltip derived only from synchronized `HazardPreflightPayload` metadata;
-- explicit 05A.12 evidence for persistence/death, Stage 04 protection semantics, malformed data/migration, provider snapshots, dedupe/capacity, damage-family attribution, numeric boundaries, concurrent/delayed stress and terminal Backlash exclusions.
+- explicit 05A.12 evidence for persistence/death, Stage 04 protection semantics, malformed data/migration, provider snapshots, dedupe/capacity, damage-family attribution, numeric boundaries, concurrent/delayed stress and terminal Backlash exclusions;
+- removable Stage 05/05A real-client datapack fixture with strict-loader JUnit validation, used only to make selected manual scenarios reproducible without production debug hooks.
 
 The presence of these contracts does not by itself mark their numbered planning files ✅; that rename remains subject to the stage's complete acceptance and documentation closeout rules.
 

@@ -4,9 +4,11 @@ This runbook operationalizes `docs/qa/casting-ux-manual-matrix.md`. It does not 
 
 ## Canonical build under test
 
-Test the current `main` containing PR #37 or a build proven equivalent to that exact `main` revision. Record the tested commit SHA at the top of the evidence report before changing any matrix state.
+Test the current `main` containing PR #39 at `06f0a9a495b6fe6576da75f673800a94af14dab0`, or a build proven equivalent to that exact revision. Record the tested commit SHA at the top of the evidence report before changing any matrix state.
 
 The Stage 05/05A gate is manual by design. Automated CI, GameTests, screenshots from tests, code inspection and server smoke tests are supporting evidence only; they do not substitute for the client checks below.
+
+Use the removable deterministic datapack fixture in `docs/qa/fixtures/stage05-real-client/` when exercising hazard thresholds, the normal/non-normal tooltip controls, Arcane Resistance 0/15/30 states, legitimate Iron cooldown/cost gate states and danger-profile reload/stale-forecast behavior. The fixture does not create PASS evidence by itself and must not be shipped as production gameplay data.
 
 ## Result vocabulary
 
@@ -91,15 +93,15 @@ For a denial, confirm the separate preflight line reports only the bounded serve
 
 For `CLEAR`, confirm the wording says only that no predictable gate blocks. It must not promise cast success because replay admission, target resolution, world policy and hazard preparation remain cast-time authority.
 
-If a category cannot be produced without adding a debug bypass or changing production semantics, mark that row `BLOCKED` and record the missing fixture rather than fabricating the state.
+If a category cannot be produced without adding a debug bypass or changing production semantics, mark that row `BLOCKED` and record the missing fixture rather than fabricating the state. The Stage 05 fixture deliberately supports legitimate `CLEAR`, `COOLDOWN` and `COST` states; its documented `PROGRESSION`, identity/loadout and unavailable limitations must remain `BLOCKED` when the production runtime cannot produce them naturally.
 
 ## Block G — Reconnect, stale state and datapack reload
 
 1. Produce visible selected-spell forecast state.
 2. Disconnect and reconnect as the same player.
 3. Confirm old result/loadout/HUD state does not flash before fresh server snapshots arrive.
-4. Exercise a danger-profile datapack reload when available while a forecast is in use.
-5. Confirm cached forecast is cleared/replaced and stale tier/threshold data cannot override the new static preflight.
+4. Exercise the fixture's alternate Iron danger profile while a forecast is in use.
+5. Run `/reload` and confirm cached forecast is cleared/replaced and stale tier/threshold data cannot override the new static preflight.
 6. Record the transition in one continuous capture whenever possible.
 
 ## Block H — Accessibility and client configuration
