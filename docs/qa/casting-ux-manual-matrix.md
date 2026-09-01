@@ -10,6 +10,8 @@ Stage 05A.11 automated presentation checkpoint: `7c617983a266e084cacb98682e669cc
 - workflow `33471722454`: unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke all GREEN;
 - the preceding presentation RED was captured by workflow `33471498889` before the gate/tooltip helpers existed.
 
+Execution procedure and evidence requirements are in `docs/qa/casting-ux-real-client-runbook.md`.
+
 This document deliberately does **not** mark visual/manual rows as passed. They must be exercised in a real Minecraft client before Stage 05 task files receive ✅.
 
 ## Manual matrix
