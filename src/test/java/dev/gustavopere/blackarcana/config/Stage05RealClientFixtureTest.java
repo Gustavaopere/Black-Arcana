@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Stage05RealClientFixtureTest {
-    private static final Path ROOT = Path.of("docs", "qa", "fixtures", "stage05-real-client");
+    private static final Path ROOT = fixtureRoot();
 
     @Test
     void targetsMinecraft1211DatapackFormat() throws IOException {
@@ -73,6 +73,15 @@ class Stage05RealClientFixtureTest {
         assertEquals(ArcaneDangerTier.FORBIDDEN, alternate.tier());
         assertEquals(20.0D, alternate.minimumArcaneResistance());
         assertEquals(40.0D, alternate.recommendedArcaneResistance());
+    }
+
+    private static Path fixtureRoot() {
+        Path current = Path.of(System.getProperty("user.dir")).toAbsolutePath().normalize();
+        for (int depth = 0; current != null && depth < 8; depth++, current = current.getParent()) {
+            Path candidate = current.resolve("docs/qa/fixtures/stage05-real-client");
+            if (Files.isDirectory(candidate)) return candidate;
+        }
+        throw new IllegalStateException("could not locate Stage 05 real-client fixture from test working directory");
     }
 
     private static ResourceLocation id(String path) {
