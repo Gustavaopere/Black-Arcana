@@ -15,6 +15,8 @@ Stage 05 real-client fixture checkpoint: PR #39 merged to `main` at `06f0a9a495b
 - `docs/qa/fixtures/stage05-real-client/` provides removable deterministic controls for hazard thresholds, Arcane Resistance 0/15/30, legitimate CLEAR/COOLDOWN/COST gates and stale-profile reload checks;
 - fixture availability does **not** change any manual result by itself. Every row below remains PENDING until direct client evidence is recorded.
 
+Canonical real-client build delivery: successful `main` CI publishes a 7-day GitHub Actions artifact named `black-arcana-<full commit SHA>` only after the full automated runtime gate succeeds. Use the artifact matching the exact SHA recorded in the evidence report. Artifact availability is delivery infrastructure only and does **not** change any manual PENDING row.
+
 Execution procedure and evidence requirements are in `docs/qa/casting-ux-real-client-runbook.md`.
 
 This document deliberately does **not** mark visual/manual rows as passed. They must be exercised in a real Minecraft client before Stage 05 task files receive ✅.
