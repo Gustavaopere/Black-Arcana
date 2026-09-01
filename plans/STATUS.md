@@ -14,21 +14,19 @@ Stage 03 Integration Layer is ✅ complete, verified and merged at `359dff669bdb
 
 Stage 04 World Safety is ✅ complete, verified and merged at `b5a515335544cee5273ff67d033c68bacf98b05a`. Canonical branch run `33171942536` and post-merge main run `33172216821` both passed the full pipeline.
 
-Stage 05 Casting & UX implementation is merged on `main` at `630db8d57a0703a1231075d68353447b8ce37add`. Branch run `33182063857` and post-merge main run `33182458511` both passed the automated pipeline. The stage remains 🟨 active because its required real-client visual/input matrix has not yet been manually executed.
+Stage 05 Casting & UX is `IMPLEMENTED / FINAL VALIDATION DEFERRED`. Its implementation is merged and its deterministic automated gates are green, but the required real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md` remains genuinely unexecuted. Every applicable manual row remains `PENDING` until directly observed.
 
-Inserted Stage 05A Arcane Danger is 🟨 active and materially implemented on `main`. The danger model, Arcane/Corruption Resistance, strain/recovery, persistent hazard state and the dedicated Arcane Backlash pipeline are present. Backlash was verified at `583286d1dd28c35da8a64261b6c6eceb22242522` by workflow `33222848359`, including exact zero-resistance 1:1 multi-hit settlement and non-recursive accounting.
+Stage 05A Arcane Danger is `IMPLEMENTED / FINAL VALIDATION DEFERRED`. Its server/gameplay contracts are frozen and materially implemented: danger profiles, Arcane/Corruption Resistance, corruption/strain persistence and recovery, causal confirmed-damage/backlash settlement, equipment/Curios/RPG providers, emergency protection, read-only server-authored resistance/gate forecast, loadout tooltip and the 05A.12 automated hardening matrix are present. Remaining presentation acceptance is part of the same deferred real-client campaign; no manual acceptance is inferred from automated evidence.
 
-Since that checkpoint, Stage 05A has also gained production contracts for equipment-derived hazard resistance and emergency protection, optional Curios equipment/resistance snapshots and bootstrap, authoritative danger-profile runtime, RPG Skill Tree hazard/progression/mastery integration, data-driven equipment set bonuses, causal damage-family attribution, numeric resistance hardening, bounded concurrent/delayed ledger stress coverage and server-authored selected-spell hazard preflight presentation. The preflight now combines the fail-closed Arcane Resistance forecast with a deliberately partial read-only projection of identity/loadout, progression, cooldown and resource-cost gates, and the loadout editor exposes synchronized static hazard metadata as a hover tooltip. Client input never supplies resistance, danger tier, gate state or loadout slot. The 05A.12 automated hardening matrix has explicit coverage for every required row, including terminal Backlash offensive-credit/mastery exclusions.
+The deterministic Stage 05/05A fixture is merged at `06f0a9a495b6fe6576da75f673800a94af14dab0`, with post-merge workflow `33501635945` green. It supplies reproducible hazard/resistance/gate/reload states without production debug hooks or client authority, but fixture availability is not PASS evidence.
 
-The read-only gate/runtime/networking path passed the full pipeline on workflow `33422931351` at `44dda0c3586cb17d5461c18ccbb75432d9ac1626`. The HUD gate presentation and loadout tooltip then followed an explicit RED (`33471498889`) and GREEN (`33471722454`) cycle; the GREEN head `7c617983a266e084cacb98682e669cce561e333f` passed unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke.
+The canonical CI delivery path is merged through PR #41. Current `main` is `e573a0edfcb69d09e423b60ad75ab71b9d8e70c5`; post-merge workflow `33532564420` passed the full automated gate and published `black-arcana-e573a0edfcb69d09e423b60ad75ab71b9d8e70c5` only after those gates. Artifact publication is support infrastructure for later real-client execution, not manual acceptance.
 
-PR #39 then added a removable, non-production Stage 05/05A real-client datapack fixture and merged it to `main` at `06f0a9a495b6fe6576da75f673800a94af14dab0`. The fixture provides deterministic hazard thresholds, Arcane Resistance 0/15/30 controls, legitimate `CLEAR`/`COOLDOWN`/`COST` gate states and stale danger-profile reload coverage without debug bypasses or client authority. Post-merge workflow `33501635945` passed unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke. This makes the manual gate reproducible but does not convert any manual matrix row to PASS.
+Stage 06 Rituals is authorized for latest-`main` resynchronization and promotion under D031. Historical PR #21 remains useful reviewed source material, but its stale ancestry is not merged wholesale. Shared runtime/persistence must be reconciled against current Stage 05A contracts, the full automated gate rerun, and any host/client-only evidence that CI cannot provide must be recorded as `FINAL VALIDATION DEFERRED` rather than blocking implementation merge.
 
-The CI delivery path now publishes a canonical real-client QA JAR only from a successful `main` run and only after the complete automated runtime gate. The artifact is named `black-arcana-<full commit SHA>`, fails publication when the expected built JAR is absent, and is retained for 7 days. This removes local-build friction and makes the exact tested revision explicit; artifact publication is not manual client evidence and cannot convert any Stage 05 matrix row to PASS.
+Stage 07 Spell Domains remains downstream/non-canonical until Stage 06 implementation is canonical on `main`. Historical stacked PR #22 preserves substantial reviewed work but must be resynchronized to the resulting latest `main`. Stage 07.06 Forbidden Domains follows D032: bounded localized in-world fields/arenas are the default; dynamic dimensions require a new explicit architectural decision.
 
-No Corruption/strain client value is added to this 05A.11 closure because the current client networking surface has no bounded synchronized Corruption/strain snapshot contract. A future presentation for those values requires an explicit server-authored sync contract rather than a client-side estimate or an unreviewed new state channel.
-
-Stage 06 Rituals has a current promotion PR (#21) with verified functional work but is intentionally not canonicalized ahead of the unresolved Stage 05 real-client gate. Stage 07 Spell Domains is stacked downstream in PR #22 and remains non-canonical until its dependency chain is cleared.
+Stage 08 Progression & Balance starts only after Stage 07 implementation is canonical. Stage 09 Hardening & Release infrastructure starts only after Stage 08 implementation is canonical. Stage 09 cannot leave `RELEASE BLOCKED` until the accumulated final validation campaign is executed on the exact release candidate.
 
 | Stage | State | Notes |
 |---|---|---|
@@ -37,24 +35,30 @@ Stage 06 Rituals has a current promotion PR (#21) with verified functional work 
 | 02 Arcana Core | ✅ Complete | branch `33169091342` + post-merge `33169344809` green |
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch + post-merge CI green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
-| 05 Casting & UX | 🟨 Active / code merged | automated gates green; deterministic real-client fixture and exact-SHA CI artifact delivery available; manual client QA remains in `docs/qa/casting-ux-manual-matrix.md` |
-| 05A Arcane Danger | 🟨 Active / automated presentation advanced | 05A.12 automated hardening covered; 05A.11 resistance + predictable gate preflight + loadout tooltip implemented/verified; real-client validation and formal closeout remain |
-| 06 Rituals | 🟦 Promotion prepared | PR #21 is downstream of the Stage 05 manual gate |
-| 07 Spell Domains | 🟦 Stacked preparatory | PR #22 remains downstream/non-canonical |
-| 08 Progression & Balance | 🟦 Preparatory | final quantitative progression/balance closure remains downstream |
-| 09 Hardening & Release | ⬜ Not started | final compatibility, migration, provenance and release closure |
+| 05 Casting & UX | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | automated gates green; exact-SHA QA artifact + fixture available; real-client matrix remains PENDING |
+| 05A Arcane Danger | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | server contracts frozen; automated presentation/hardening advanced; real-client presentation acceptance remains |
+| 06 Rituals | 🟦 IMPLEMENTATION AUTHORIZED | resynchronize reviewed #21 behavior onto latest main; automated gates required before merge |
+| 07 Spell Domains | 🟦 DOWNSTREAM / NON-CANONICAL | resynchronize after Stage 06 merge; finish 07.04–07.07 |
+| 08 Progression & Balance | ⬜ WAITING FOR 07 IMPLEMENTATION | implement after 07 becomes canonical |
+| 09 Hardening & Release | ⬜ WAITING FOR 08 IMPLEMENTATION | infrastructure first; final campaign remains release-blocking |
 
-## Canonical active stage
+## Canonical implementation sequence
 
-`05-casting-ux` remains the formal active stage until its manual client matrix is closed. `05a-arcane-danger` may continue deterministic server-side/automated closure in parallel, but cannot be declared complete ahead of the required Stage 05 presentation gate.
+The sequence is now governed by D031:
+
+`05/05A frozen runtime contracts -> 06 Rituals -> 07 Spell Domains -> 08 Progression & Balance -> 09 Hardening/Release infrastructure -> accumulated final validation`
+
+Missing manual/final evidence blocks validation and release claims, not downstream implementation, when the downstream stage's causal runtime contracts are frozen and applicable automated gates are green.
 
 ## Frozen predecessors
 
-Stages 00, 01, 02, 03 and 04 may only change through explicit follow-up decisions recorded in `DECISIONS.md`.
+Stages 00, 01, 02, 03 and 04 are complete and may change only through explicit follow-up decisions. Stage 05A server/gameplay contracts are frozen for downstream consumers; changing their authority, transaction, hazard, resistance or persistence semantics requires explicit reviewed follow-up work.
 
-## Stage 05 remaining closure work
+## Stage 05 / 05A deferred validation ledger
 
-Execute the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md` using `docs/qa/casting-ux-real-client-runbook.md`, the exact-SHA `main` CI artifact and the removable fixture under `docs/qa/fixtures/stage05-real-client/` where applicable. Do not rename Stage 05 task files to ✅ until applicable rows are actually exercised. Future-only presentation flags may be carried explicitly to Stage 09 only when the corresponding effect is genuinely deferred.
+The real-client visual/input matrix remains in `docs/qa/casting-ux-manual-matrix.md`. Execute it later using `docs/qa/casting-ux-real-client-runbook.md`, the exact-SHA `main` CI artifact and the removable fixture under `docs/qa/fixtures/stage05-real-client/` where applicable.
+
+Do not rename Stage 05/05A task files to ✅ merely because downstream implementation advances. Direct client evidence is still required for rows that explicitly require it. Corruption/strain client values remain intentionally absent until a bounded server-authored synchronization contract is separately approved.
 
 ## Stage 05A verified/implemented capabilities
 
@@ -64,33 +68,27 @@ The current codebase contains:
 - Arcane and Corruption Resistance provider/snapshot semantics;
 - persistent strain/corruption/recovery state;
 - confirmed-damage/backlash settlement with recursion and offensive-credit exclusions;
-- equipment-derived hazard resistance and transactional emergency-protection state/coordinator paths;
-- optional Curios snapshot/resistance integration under `integration/curios`, including `CuriosServerIntegrationBootstrap`;
-- RPG Skill Tree provider/progression/mastery integration under `integration/rpg`;
+- equipment-derived hazard resistance and transactional emergency-protection paths;
+- optional Curios snapshot/resistance integration;
+- RPG Skill Tree provider/progression/mastery integration;
 - authoritative danger-profile runtime/registry;
 - data-driven equipment set bonuses;
-- selected-spell Arcane Resistance forecast networking/presentation with a complete-provider read-only mirror, bounded request rate, stale-response rejection and fail-closed diagnostics;
-- selected-spell predictable gate projection owned by the canonical `ArcanaCastEngine`, restricted to identity/loadout, progression, cooldown and resource-cost query-only gates;
-- server-derived loadout-slot context for gate preview; no client loadout-slot authority;
-- bounded gate transport (`CLEAR`, `IDENTITY`, `PROGRESSION`, `COOLDOWN`, `COST`, `UNAVAILABLE`) without arbitrary forecast detail;
-- static loadout hover tooltip derived only from synchronized `HazardPreflightPayload` metadata;
-- explicit 05A.12 evidence for persistence/death, Stage 04 protection semantics, malformed data/migration, provider snapshots, dedupe/capacity, damage-family attribution, numeric boundaries, concurrent/delayed stress and terminal Backlash exclusions;
-- removable Stage 05/05A real-client datapack fixture with strict-loader JUnit validation, used only to make selected manual scenarios reproducible without production debug hooks;
-- main-only exact-SHA QA JAR publication after the complete automated CI gate, with short-lived retention for real-client execution.
+- selected-spell Arcane Resistance forecast with bounded request rate, stale-response rejection and fail-closed diagnostics;
+- predictable gate projection owned by the canonical `ArcanaCastEngine`, restricted to identity/loadout, progression, cooldown and resource-cost query-only gates;
+- server-derived loadout-slot context; no client loadout-slot authority;
+- bounded gate transport (`CLEAR`, `IDENTITY`, `PROGRESSION`, `COOLDOWN`, `COST`, `UNAVAILABLE`);
+- static loadout hazard tooltip from synchronized metadata;
+- 05A.12 automated persistence/death/protection/malformed-data/provider/dedupe/numeric/stress/backlash exclusion coverage;
+- removable real-client datapack fixture validated by strict loaders;
+- main-only exact-SHA QA JAR publication after the complete automated CI gate.
 
-The presence of these contracts does not by itself mark their numbered planning files ✅; that rename remains subject to the stage's complete acceptance and documentation closeout rules.
+These contracts do not convert deferred real-client acceptance to PASS.
 
-## Stage 05A still open
+## Stage 06 promotion rule
 
-- real-client validation of the 05A.11 resistance/gate forecast, loadout tooltip and stale/reconnect/accessibility behavior in `docs/qa/casting-ux-manual-matrix.md`;
-- reconciliation of numbered Stage 05A task status/closeout after the remaining presentation gate is proven;
-- Stage 05 manual client gate, which still blocks declaring Stage 05A complete or downstream stages canonical.
+Use historical PR #21 only as reviewed Stage 06 source/evidence. Create a fresh Stage 06 branch from the latest canonical `main`, restore the ritual core and tests, manually reconcile shared runtime/persistence/provider bootstrap files, rerun the complete automated pipeline and open a replacement PR. Close #21 as superseded rather than merging stale ancestry.
 
-05A.11's deterministic automated presentation scope is implemented, but its manual acceptance remains open. Corruption/strain client values are intentionally not retained without a separate bounded synchronization contract. 05A.12's automated acceptance matrix is covered, but neither fact overrides the stage-level exit rule or substitutes for real-client presentation evidence.
-
-## Stage 06 / 07 preservation rule
-
-Do not discard the verified Stage 06/07 work, but do not bypass the causal gate. Stage 06 PR #21 and stacked Stage 07 PR #22 remain downstream until Stage 05 manual closure and any required Stage 05A freeze/acceptance gates are complete.
+Stage 06 may merge as `IMPLEMENTED / FINAL VALIDATION DEFERRED` if optional host/runtime client evidence is unavailable. It may only become `VALIDATED / COMPLETE` when its own documented acceptance criteria are directly evidenced. Stage 05's separate manual presentation debt no longer blocks Stage 06 implementation canonicalization.
 
 ## Freeze rules
 
@@ -99,4 +97,5 @@ Do not discard the verified Stage 06/07 work, but do not bypass the causal gate.
 - All casts terminate in the canonical Stage 02 ingress/channel pipeline.
 - World-mutating content remains subject to frozen Stage 04 policy and budgets.
 - Stage 05A owns forbidden-magic hazard computation; downstream stages consume it rather than implementing parallel backlash systems.
-- Stage 06/07 content is not canonicalized ahead of unresolved Stage 05 closure and required Stage 05A freeze/acceptance gates.
+- Deferred validation is recorded, never inferred as PASS.
+- Stages 06→09 integrate sequentially through the latest `main`; stale preparatory branches are not merged wholesale.

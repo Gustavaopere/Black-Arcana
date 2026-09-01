@@ -6,6 +6,7 @@ Items here block or influence later implementation but are not yet architectural
 - Decide whether Black Arcana should remain fully functional without Iron's installed or treat Iron's as a soft-but-primary casting backend.
 - Decide final project license after clean-room provenance review.
 - Determine final original names for reference-derived mechanics during Stage 01.
-- Decide whether Forbidden Domains use temporary in-world arenas, isolated dimensions/instances, or both; implementation must be safe for multiplayer and chunk lifecycle.
 - Determine how much of the radial/loadout UI should coexist with Iron's existing UI versus replace only Black Arcana selection surfaces.
 - Define release dependency policy: optional integrations vs recommended modpack profile.
+
+Resolved architectural choices belong in `DECISIONS.md`; Forbidden Domains now use the D032 bounded in-world-field default unless a later explicit decision supersedes it.
