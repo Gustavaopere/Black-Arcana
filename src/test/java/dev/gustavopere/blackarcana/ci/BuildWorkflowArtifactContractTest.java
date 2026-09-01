@@ -17,7 +17,7 @@ class BuildWorkflowArtifactContractTest {
 
         int jarVerification = workflow.indexOf("- name: Verify built JAR");
         int dedicatedSmoke = workflow.indexOf("- name: Dedicated-server smoke test");
-        int artifactUpload = workflow.indexOf("uses: actions/upload-artifact@v4");
+        int artifactUpload = workflow.indexOf("uses: actions/upload-artifact@v7");
 
         assertTrue(jarVerification >= 0, "workflow must retain built-JAR verification");
         assertTrue(dedicatedSmoke > jarVerification, "dedicated-server smoke must remain after JAR verification");
