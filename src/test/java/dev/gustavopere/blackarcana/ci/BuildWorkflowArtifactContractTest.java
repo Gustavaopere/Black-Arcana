@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BuildWorkflowArtifactContractTest {
-    private static final Path WORKFLOW = Path.of(".github/workflows/build.yml");
+    private static final Path WORKFLOW = repositoryRoot().resolve(".github/workflows/build.yml");
 
     @Test
     void publishesValidatedMainJarAsShortLivedQaArtifact() throws IOException {
@@ -27,5 +27,21 @@ class BuildWorkflowArtifactContractTest {
         assertTrue(workflow.contains("path: build/libs/black_arcana-*.jar"), "artifact must contain the built Black Arcana JAR");
         assertTrue(workflow.contains("if-no-files-found: error"), "missing verified JAR must fail artifact publication");
         assertTrue(workflow.contains("retention-days: 7"), "QA artifact retention must remain short-lived");
+    }
+
+    private static Path repositoryRoot() {
+        String workspace = System.getenv("GITHUB_WORKSPACE");
+        if (workspace != null && !workspace.isBlank()) {
+            return Path.of(workspace);
+        }
+
+        Path candidate = Path.of("").toAbsolutePath();
+        while (candidate != null) {
+            if (Files.exists(candidate.resolve("settings.gradle")) && Files.isDirectory(candidate.resolve(".github"))) {
+                return candidate;
+            }
+            candidate = candidate.getParent();
+        }
+        throw new IllegalStateException("Unable to locate repository root from test working directory");
     }
 }
