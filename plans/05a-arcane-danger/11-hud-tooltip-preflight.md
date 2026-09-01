@@ -5,15 +5,18 @@ Expose danger clearly before casting without making client prediction authoritat
 
 ## Presentation
 - Spell tooltip/radial metadata shows danger tier and concise resistance recommendation.
-- Contextual preflight may show current effective Arcane/Corruption Resistance, expected risk class and hard-gate reason.
-- Corruption/strain feedback appears only when relevant and respects Stage 05 accessibility/reduced-effects settings.
+- Contextual preflight may show current effective Arcane Resistance, expected risk class and hard-gate reason only when backed by a bounded server-authored read-only projection.
+- Corruption/strain feedback appears only when relevant and when an explicit synchronized presentation contract exists.
 - Exact server settlement remains authoritative; client values are advisory presentation derived from synchronized bounded data.
 
 ## Networking
-No client packet may submit resistance, corruption, backlash damage, danger tier or bypass decisions. Synchronization is event-driven and bounded, not per-tick full-state spam.
+No client packet may submit resistance, corruption, backlash damage, danger tier, gate result, loadout slot or bypass decisions. Synchronization is event-driven and bounded, not per-tick full-state spam.
 
-## Implemented selected-spell resistance sublane
-The contextual HUD now has a server-authored read-only Arcane Resistance forecast for the currently selected spell:
+## Implemented automated presentation lanes
+
+### Selected-spell Arcane Resistance forecast
+
+The contextual HUD has a server-authored read-only Arcane Resistance forecast for the currently selected spell:
 
 - the client submits only a bounded spell id and monotonic request id;
 - the server resolves the canonical danger profile and computes effective Arcane Resistance through a runtime-scoped preview mirror of gameplay resistance providers;
@@ -26,15 +29,46 @@ The contextual HUD now has a server-authored read-only Arcane Resistance forecas
 - meeting the recommended threshold is not labeled safe because residual danger/Backlash semantics remain authoritative;
 - the original synchronized static danger metadata remains the fallback when a matching dynamic forecast is unavailable or has not arrived.
 
-The detailed authority/anti-abuse contract is recorded in `docs/qa/stage05a11-resistance-forecast.md`.
+### Read-only predictable cast gates
+
+The same bounded selected-spell forecast now carries a server-authored categorical projection of the established query-only cast gates:
+
+- `ArcanaCastEngine.previewReadOnlyGates(...)` evaluates identity/loadout, progression, cooldown and resource-cost availability in canonical order;
+- the server derives the loadout slot from the canonical server loadout; the client never submits it;
+- the runtime returns no projection when no engine is installed for the spell;
+- replay admission, target resolution, world policy and hazard preparation are deliberately excluded because they are cast-time authority or are not safe read-only projections;
+- the payload transports only `CLEAR`, `IDENTITY`, `PROGRESSION`, `COOLDOWN`, `COST` or `UNAVAILABLE`, never arbitrary denial detail;
+- `CLEAR` is presented as “no predictable gate blocks”, not as a cast-success guarantee;
+- exceptions, missing runtime data or unavailable projection paths fail closed.
+
+### Loadout hazard tooltip
+
+The loadout editor now shows the synchronized static hazard preflight on hover:
+
+- the tooltip is derived only from `HazardPreflightPayload` already synchronized by the server;
+- it shows danger tier and the same minimum/recommended Arcane Resistance metadata used by the radial/static fallback;
+- it performs no additional request, prediction or gameplay mutation.
+
+### Corruption / strain presentation
+
+No Corruption/strain client state is retained in this closure. The current client networking surface has no bounded synchronized Corruption/strain snapshot contract, so this task does not invent a new authority/state-sync surface merely for optional presentation. A future UI addition requires an explicit server-authored bounded snapshot contract plus stale-state and anti-spam evidence.
+
+The detailed authority/anti-abuse contract and automated evidence are recorded in `docs/qa/stage05a11-resistance-forecast.md`.
+
+## Automated evidence
+
+- gate/runtime/networking full pipeline: workflow `33422931351` at `44dda0c3586cb17d5461c18ccbb75432d9ac1626`;
+- presentation RED: workflow `33471498889`, failing only on the intentionally absent gate/tooltip helpers;
+- presentation GREEN: workflow `33471722454` at `7c617983a266e084cacb98682e669cce561e333f`, passing unit tests, diff sanity, NeoForge build, JAR inspection, Foundation GameTest server and dedicated-server smoke.
 
 ## Still open
-This sublane does **not** complete 05A.11. The following remain open:
 
-- complete pre-cast presentation of non-resistance hard-gate reasons where a safe read-only projection is justified; canonical strain, cooldown/resource/progression and other denials remain authoritative through normal cast results unless separately projected;
-- spell-tooltip coverage beyond the existing radial/static hazard presentation;
-- any Corruption Resistance / strain feedback that is ultimately retained by the design;
-- real-client validation across the Stage 05 manual matrix, including reconnect/stale state, GUI scales, disabled HUD and accessibility settings.
+The deterministic/automated implementation scope of 05A.11 is present. The task remains operationally open only for the real-client presentation gate:
+
+- verify gate wording and resistance forecast together in a real client;
+- verify loadout hover tooltip placement/readability across the required resolutions and GUI scales;
+- verify reconnect/datapack stale-state behavior and accessibility settings;
+- record evidence in `docs/qa/casting-ux-manual-matrix.md` without marking any row passed unless it was actually exercised.
 
 ## Acceptance
-Automated tests cover payload bounds/state clearing, authoritative denial text, forecast payload/codec invariants, fail-closed preview-provider completeness/diagnostics and stale forecast revision fallback. Manual Stage 05/09 visual matrix covers common GUI scales, disabled HUD, reduced-motion/flash settings, stale reconnect state and the selected-spell hazard forecast presentation.
+Automated tests cover payload bounds/state clearing, authoritative denial text, resistance forecast payload/codec invariants, fail-closed preview-provider completeness/diagnostics, read-only gate ordering/runtime ownership, server-derived loadout slot, bounded gate transport, stale forecast revision fallback and static loadout tooltip derivation. Manual Stage 05/09 visual matrix covers common GUI scales, disabled HUD, accessibility settings, stale reconnect state, selected-spell hazard/gate forecast presentation and loadout tooltip usability.
