@@ -53,10 +53,13 @@ public final class BlackArcanaHudLayer {
         if (level == BlackArcanaClientConfig.FeedbackLevel.MINIMAL && !denialRecent) return;
         if (!selectionRecent && !resultRecent) return;
 
-        List<Component> lines = new ArrayList<>(3);
+        List<Component> lines = new ArrayList<>(4);
         if (level != BlackArcanaClientConfig.FeedbackLevel.MINIMAL) {
             selectedSpellLine().ifPresent(lines::add);
-            if (selectionRecent) selectedHazardLine().ifPresent(lines::add);
+            if (selectionRecent) {
+                selectedHazardLine().ifPresent(lines::add);
+                selectedGateLine().ifPresent(lines::add);
+            }
         }
         if (resultRecent) {
             CastResultPayload payload = result.orElseThrow();
@@ -122,6 +125,23 @@ public final class BlackArcanaHudLayer {
         return Optional.of(preflightLine(entry));
     }
 
+    private static Optional<Component> selectedGateLine() {
+        Optional<ArcanaSpellId> selected = selectedSpell();
+        if (selected.isEmpty()) return Optional.empty();
+        ArcanaSpellId spell = selected.orElseThrow();
+        HazardPreflightPayload.Entry entry = ClientArcanaSyncState.hazardPreflightSnapshot().get(spell);
+        if (entry == null || entry.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
+
+        Optional<HazardResistanceForecastPayload> forecast = ClientArcanaSyncState.hazardResistanceForecast(spell);
+        if (forecast.isEmpty()) return Optional.empty();
+        HazardResistanceForecastPayload payload = forecast.orElseThrow();
+        if (!forecastMatchesPreflight(entry, payload)) return Optional.empty();
+        HazardResistanceForecastPayload.GateStatus status = payload.gateForecastAvailable()
+                ? payload.parsedGateStatus()
+                : HazardResistanceForecastPayload.GateStatus.UNAVAILABLE;
+        return Optional.of(Component.translatable(gateStatusTranslationKey(status)));
+    }
+
     static boolean forecastMatchesPreflight(
         HazardPreflightPayload.Entry preflight,
         HazardResistanceForecastPayload forecast
@@ -155,6 +175,17 @@ public final class BlackArcanaHudLayer {
             Component.literal(formatResistance(forecast.minimumArcaneResistance())),
             Component.literal(formatResistance(forecast.recommendedArcaneResistance())),
             status);
+    }
+
+    static String gateStatusTranslationKey(HazardResistanceForecastPayload.GateStatus status) {
+        return switch (status) {
+            case CLEAR -> "hazard.black_arcana.gate.clear";
+            case IDENTITY -> "hazard.black_arcana.gate.identity";
+            case PROGRESSION -> "hazard.black_arcana.gate.progression";
+            case COOLDOWN -> "hazard.black_arcana.gate.cooldown";
+            case COST -> "hazard.black_arcana.gate.cost";
+            case UNAVAILABLE -> "hazard.black_arcana.gate.unavailable";
+        };
     }
 
     static Component preflightLine(HazardPreflightPayload.Entry entry) {
