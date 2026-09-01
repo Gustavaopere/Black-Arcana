@@ -6,6 +6,7 @@ import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
 import dev.gustavopere.blackarcana.network.HazardResistanceForecastPayload;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,6 +31,42 @@ class HazardForecastPresentationTest {
         assertFalse(BlackArcanaHudLayer.forecastMatchesPreflight(current, staleTier));
         assertFalse(BlackArcanaHudLayer.forecastMatchesPreflight(current, staleThreshold));
         assertFalse(BlackArcanaHudLayer.forecastMatchesPreflight(current, rateLimitedNormal));
+    }
+
+    @Test
+    void gateForecastUsesOnlyBoundedCategoricalTranslationKeys() {
+        assertEquals(
+            "hazard.black_arcana.gate.clear",
+            BlackArcanaHudLayer.gateStatusTranslationKey(HazardResistanceForecastPayload.GateStatus.CLEAR));
+        assertEquals(
+            "hazard.black_arcana.gate.identity",
+            BlackArcanaHudLayer.gateStatusTranslationKey(HazardResistanceForecastPayload.GateStatus.IDENTITY));
+        assertEquals(
+            "hazard.black_arcana.gate.progression",
+            BlackArcanaHudLayer.gateStatusTranslationKey(HazardResistanceForecastPayload.GateStatus.PROGRESSION));
+        assertEquals(
+            "hazard.black_arcana.gate.cooldown",
+            BlackArcanaHudLayer.gateStatusTranslationKey(HazardResistanceForecastPayload.GateStatus.COOLDOWN));
+        assertEquals(
+            "hazard.black_arcana.gate.cost",
+            BlackArcanaHudLayer.gateStatusTranslationKey(HazardResistanceForecastPayload.GateStatus.COST));
+        assertEquals(
+            "hazard.black_arcana.gate.unavailable",
+            BlackArcanaHudLayer.gateStatusTranslationKey(HazardResistanceForecastPayload.GateStatus.UNAVAILABLE));
+    }
+
+    @Test
+    void loadoutHazardTooltipUsesStaticServerAuthoredPreflight() {
+        HazardPreflightPayload.Entry dangerous = new HazardPreflightPayload.Entry(
+            "black_arcana:test",
+            ArcaneDangerTier.FORBIDDEN.name(),
+            20.0D,
+            35.0D);
+
+        assertEquals(
+            BlackArcanaHudLayer.preflightLine(dangerous),
+            BlackArcanaLoadoutScreen.hazardTooltip(dangerous).orElseThrow());
+        assertTrue(BlackArcanaLoadoutScreen.hazardTooltip(null).isEmpty());
     }
 
     private static HazardResistanceForecastPayload forecast(
