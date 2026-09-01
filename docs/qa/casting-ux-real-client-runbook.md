@@ -4,7 +4,11 @@ This runbook operationalizes `docs/qa/casting-ux-manual-matrix.md`. It does not 
 
 ## Canonical build under test
 
-Test the current `main` containing PR #39 at `06f0a9a495b6fe6576da75f673800a94af14dab0`, or a build proven equivalent to that exact revision. Record the tested commit SHA at the top of the evidence report before changing any matrix state.
+Use the Black Arcana JAR published by the latest successful `main` Black Arcana CI run for the exact commit being tested. After unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server and dedicated-server smoke all pass, the `main` workflow publishes a short-lived GitHub Actions artifact named `black-arcana-<full commit SHA>` containing `build/libs/black_arcana-*.jar`.
+
+Canonical QA artifacts are published from `main` only and retained for 7 days. Feature-branch and pull-request runs still exercise the full automated gate but do not publish a canonical real-client artifact. Download the artifact for the exact `main` SHA, extract its archive, place the contained Black Arcana JAR in the target Minecraft 1.21.1 / NeoForge test instance `mods/` directory, and record that exact SHA at the top of the evidence report before changing any matrix state.
+
+If the artifact for the required SHA has expired or is unavailable, rerun CI for the current exact `main` revision when appropriate or build that exact recorded SHA locally. Do not silently substitute a different revision. Artifact availability proves only build delivery after the automated gate; it is not real-client evidence and does not make any manual matrix row PASS.
 
 The Stage 05/05A gate is manual by design. Automated CI, GameTests, screenshots from tests, code inspection and server smoke tests are supporting evidence only; they do not substitute for the client checks below.
 

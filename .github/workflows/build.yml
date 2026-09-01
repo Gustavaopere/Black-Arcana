@@ -99,3 +99,12 @@ jobs:
           done
           cat "$LOG"
           exit 1
+
+      - name: Publish canonical QA JAR
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v7
+        with:
+          name: black-arcana-${{ github.sha }}
+          path: build/libs/black_arcana-*.jar
+          if-no-files-found: error
+          retention-days: 7
