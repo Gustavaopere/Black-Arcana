@@ -1,29 +1,30 @@
 # Deferred Final Validation Stage Sequence
 
 Date: 2026-09-01
-Status: approved design, pending implementation plan
-Scope: project governance and stage-promotion sequencing only
+Status: in-chat design approved; written-spec review pending before implementation planning
+Scope: project governance and stage-promotion sequencing, plus the explicitly approved Stage 07.06 architecture default
 
 ## 1. Purpose
 
-Black Arcana currently has an unresolved real-client acceptance gate in Stage 05 Casting & UX and Stage 05A presentation acceptance. That gate is legitimate, but the project owner cannot execute real-client testing now and has explicitly chosen to finish all remaining implementation plans before running the accumulated final validation.
+Black Arcana has a legitimate unresolved real-client acceptance gate in Stage 05 Casting & UX and Stage 05A presentation acceptance. The project owner cannot execute that real-client testing now and has explicitly chosen to finish the remaining implementation plans before running the accumulated final validation.
 
-This design changes the sequencing rule so unresolved manual/final validation does not stop downstream implementation work. It does **not** weaken any acceptance criterion, convert any PENDING row to PASS, or allow the project to claim release readiness without evidence.
+This design changes sequencing so unresolved manual/final validation does not stop downstream implementation work. It does **not** weaken acceptance criteria, convert PENDING rows to PASS, or permit release-readiness claims without evidence.
 
-The implementation order remains causal:
+The causal implementation order remains:
 
-`05/05A contracts -> 06 Rituals -> 07 Spell Domains -> 08 Progression & Balance -> 09 Hardening & Release infrastructure -> accumulated final validation`
+`05/05A frozen runtime contracts -> 06 Rituals -> 07 Spell Domains -> 08 Progression & Balance -> 09 Hardening & Release infrastructure -> accumulated final validation`
 
-The difference is that downstream implementation and stage-local automated verification may proceed while the deferred real-client/final validation ledger remains open.
+Downstream implementation and stage-local automated verification may proceed while the deferred real-client/final-validation ledger remains open.
 
-## 2. Non-goals
+## 2. Scope and non-goals
+
+This change governs promotion and truth states. It does not redesign Stage 06, 07.01-07.05, 07.07, Stage 08, or Stage 09 gameplay semantics. The one explicit gameplay-architecture decision included here is the already approved Stage 07.06 default: bounded localized in-world fields/arenas rather than dynamic dimensions.
 
 This change does not:
 
-- redesign any Stage 06-09 gameplay mechanic;
-- change server authority, transaction, hazard, world-safety, or provider contracts;
+- change server authority, transactions, hazards, world safety, or provider ownership;
 - waive Stage 05/05A real-client requirements;
-- treat CI, GameTests, screenshots, fixture availability, or static inspection as substitutes for real-client evidence;
+- treat CI, GameTests, screenshots, fixtures, or static inspection as substitutes for real-client evidence;
 - permit a release while release-blocking rows remain unverified;
 - invent optional-provider behavior when the actual provider API/runtime is unavailable;
 - allow task files to be renamed to `✅-*` unless their own documented acceptance criteria are genuinely verified and the implementation is merged;
@@ -31,155 +32,154 @@ This change does not:
 
 ## 3. Canonical state model
 
-The project needs to distinguish implementation progress from final validation progress. The following states are canonical for Stages 05-09:
+Implementation progress and final validation progress are separate facts.
 
-### 3.1 `IMPLEMENTATION ACTIVE`
+### `IMPLEMENTATION ACTIVE`
 
-Code/design work for the stage is still incomplete.
+Code/design work for the stage is incomplete.
 
-### 3.2 `IMPLEMENTED / AUTOMATED GATES GREEN`
+### `IMPLEMENTED / AUTOMATED GATES GREEN`
 
-The intended runtime/configuration/infrastructure is present and the applicable deterministic automated checks pass. This state does not imply real-client or real-modpack validation.
+The intended runtime/configuration/infrastructure is present and applicable deterministic automated checks pass. This does not imply real-client or real-modpack validation.
 
-### 3.3 `IMPLEMENTED / FINAL VALIDATION DEFERRED`
+### `IMPLEMENTED / FINAL VALIDATION DEFERRED`
 
-The stage has no known implementation work remaining, but one or more acceptance items explicitly require later real-client, real-modpack, representative performance, upgrade-fixture, compatibility, or release-head validation.
+No known implementation work remains, but one or more acceptance items require later real-client, real-modpack, representative performance, upgrade-fixture, compatibility, or exact-release-head evidence.
 
-This is the normal terminal state for work that cannot be honestly closed before the final validation phase.
+### `VALIDATED / COMPLETE`
 
-### 3.4 `VALIDATED / COMPLETE`
+All stage-local acceptance criteria have direct evidence, applicable CI/tests are green, and the implementation is merged to `main`. Only then may the existing `✅-*` task-file convention be used.
 
-All stage-local acceptance criteria are supported by direct evidence, applicable CI/tests are green, and the stage implementation is merged to `main`. Only then may its task files use the existing `✅-*` completion convention.
+### `RELEASE BLOCKED`
 
-### 3.5 `RELEASE BLOCKED`
-
-Used for Stage 09 while implementation/harness work is ready but release-blocking validation remains open. A built JAR is not release completion.
+Stage 09 implementation/harness work may be ready while release-blocking validation remains open. A built JAR is never sufficient for release completion.
 
 ## 4. Promotion rule
 
-The previous practical rule treated unresolved Stage 05 manual QA as a hard blocker for canonicalizing Stage 06 and later work. The new rule is:
+The prior practical rule treated unresolved Stage 05 manual QA as a hard blocker for canonicalizing Stage 06 and later work. Replace it with:
 
-> An unresolved manual/final-validation item blocks **validation/release claims**, but does not block downstream implementation or merge when all causal runtime contracts required by that downstream stage are frozen, the downstream change is independently reviewable, and its applicable automated gates are green.
+> An unresolved manual/final-validation item blocks **validation and release claims**, but does not block downstream implementation or merge when all causal runtime contracts required by that downstream stage are frozen, the downstream diff is independently reviewable, and its applicable automated gates are green.
 
 Consequences:
 
 1. Stage 05 and Stage 05A remain open with their real-client rows unchanged.
-2. Stage 06 may be resynchronized to the latest `main`, verified against the frozen 05A contracts, and merged.
-3. Stage 07 then moves onto the resulting latest `main`, not onto a stale preparatory branch.
-4. Stage 08 begins only after Stage 07's implementation contracts are canonical on `main`.
+2. Stage 06 may be resynchronized to the latest `main`, verified against frozen 05A contracts, and merged.
+3. Stage 07 then moves onto the resulting latest `main` rather than remaining stacked on stale ancestry.
+4. Stage 08 begins only after Stage 07 implementation contracts are canonical on `main`.
 5. Stage 09 implementation/hardening infrastructure begins only after Stage 08 implementation is canonical.
 6. Final integrated/manual/release validation runs after implementation work is exhausted.
 
-This policy changes sequencing, not truth conditions.
+This changes sequencing, not truth conditions.
 
-## 5. Branch and PR strategy
+## 5. Merge gate for every implementation stage
+
+A downstream stage may merge only when all of the following are true:
+
+- its diff is scoped to that stage plus necessary synchronization/documentation;
+- current `main` authority is preserved when resolving stale-branch conflicts;
+- deterministic tests required to build the feature safely have been written and run;
+- repository CI is green for the final PR head;
+- no unresolved issue requires redesign of an upstream frozen contract;
+- documentation records any real-client/real-provider/performance acceptance that remains deferred;
+- after merge, `main` is confirmed at the merge SHA and post-merge CI is green when the repository workflow applies.
+
+Manual/final validation is not a promotion prerequisite unless the specific stage's own acceptance criterion genuinely cannot be separated from that evidence.
+
+## 6. Branch and PR strategy
 
 Use sequential, stage-scoped integration rather than one large stacked release branch.
 
 ### Stage 06
 
-- Start from the latest `main`.
-- Reuse/transplant only the intended Stage 06 work from PR #21 / `feat/stage-06-rituals-mainline`.
-- Resolve divergence against current Stage 05A/CI infrastructure explicitly.
-- Do not regress the exact-SHA QA artifact path or any current hazard/presentation contract.
-- Run the full automated pipeline required by the repository.
-- Merge only after branch/PR CI is green and the diff is Stage 06-scoped plus necessary synchronization/documentation.
+- Start synchronization from the latest `main`.
+- Prefer preserving PR #21 / `feat/stage-06-rituals-mainline` if it can be resynchronized without unsafe history manipulation or accidental regression.
+- If #21's divergence makes a clean resync unsafe or unreviewable, create a replacement Stage 06 branch from current `main`, transplant only the intended Stage 06 changes, open a replacement PR, and close #21 with a link/explanation.
+- Preserve current Stage 05A hazard/presentation contracts and exact-SHA QA artifact infrastructure.
+- Merge only after the Stage 06 merge gate is satisfied.
 
 ### Stage 07
 
-- After Stage 06 merges, resynchronize the Stage 07 work onto the new `main`.
-- Preserve completed 07.01-07.03 behavior only after verifying it against the new base.
+- After Stage 06 merges, move Stage 07 onto the new `main`.
+- Prefer reusing PR #22 only if its branch can be safely rebased/resynchronized without losing reviewability.
+- Otherwise create a replacement Stage 07 branch from the new `main`, transplant verified 07.01-07.03 behavior and current 07.04 work deliberately, then continue 07.04-07.07 there. Close #22 with a link/explanation if replaced.
+- Preserve behavior and evidence, not obsolete stacked ancestry.
 - Finish 07.04-07.07 domain-by-domain with TDD and bounded server-authoritative contracts.
-- Avoid carrying stale branch ancestry merely to preserve history; preserve behavior/evidence, not obsolete merge topology.
-- Merge Stage 07 only after its applicable automated gates are green.
 
 ### Stage 08
 
 - Create from the then-current `main` after Stage 07.
 - Implement progression/unlock persistence, RPG gates/mastery, quantitative budget infrastructure, caps/diminishing returns, exploit controls, and server presets.
-- Where acceptance depends on representative real-pack tuning, record `FINAL VALIDATION DEFERRED` rather than inventing benchmark evidence.
+- Where acceptance depends on representative real-pack tuning, record `FINAL VALIDATION DEFERRED` instead of inventing benchmark evidence.
 
 ### Stage 09
 
 - Create from the then-current `main` after Stage 08.
-- Implement/complete the executable test matrix, performance instrumentation and thresholds, dedicated-server/multiplayer abuse harnesses, migration fixtures, release/provenance validators, packaging checks, and release documentation infrastructure.
-- Stage 09 remains `RELEASE BLOCKED` until the accumulated final validation is actually executed on the exact release candidate HEAD.
+- Implement/complete the executable test matrix, performance instrumentation and regression thresholds, dedicated-server/multiplayer abuse harnesses, migration fixtures, release/provenance validators, packaging checks, and release-documentation infrastructure.
+- Stage 09 remains `RELEASE BLOCKED` until accumulated final validation is executed on the exact release-candidate HEAD.
 
-## 6. Stage-specific closure semantics
+## 7. Stage-specific closure semantics
 
-### 6.1 Stage 05 / 05A
+### Stage 05 / 05A
 
 No manual matrix row changes state without direct observation. Existing deterministic fixtures and exact-SHA CI artifact delivery remain support infrastructure only.
 
 Stage 05/05A may coexist with downstream merged implementation while remaining `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
 
-### 6.2 Stage 06 Rituals
+### Stage 06 Rituals
 
-Stage-local acceptance is based on its documented transactional ritual behavior, provider bridges, world/progression safety, interruption/restart recovery, and applicable automated integration coverage.
+Stage-local acceptance covers transactional ritual behavior, provider bridges, world/progression safety, interruption/restart recovery, and applicable automated integration coverage.
 
-If all Stage 06 criteria are genuinely automated and verified, Stage 06 may reach `VALIDATED / COMPLETE` even while Stage 05 manual UX remains deferred, because the upstream manual presentation gate is not evidence about ritual runtime correctness.
+If all Stage 06 criteria are genuinely verified, Stage 06 may reach `VALIDATED / COMPLETE` while Stage 05 manual UX remains deferred. If any Stage 06 criterion genuinely needs unavailable real-client/provider-host evidence, Stage 06 stops at `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
 
-If any Stage 06 criterion actually requires real-client/provider-host evidence not available in CI, Stage 06 instead stops at `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
+### Stage 07 Spell Domains
 
-### 6.3 Stage 07 Spell Domains
+Each domain keeps its documented acceptance. Deterministic server behavior must be tested during implementation. Optional-provider visual/in-game compatibility that cannot be proven in repository CI is deferred explicitly.
 
-Each domain keeps its own documented acceptance. Deterministic server behavior must be tested during implementation; optional-provider visual/in-game compatibility that cannot be proven in the repository's CI is deferred explicitly.
+A synthetic adapter test does not prove a real host-runtime criterion.
 
-No spell/domain is declared fully validated merely because a synthetic adapter test passes when its acceptance requires a real host runtime.
+### Stage 08 Progression & Balance
 
-### 6.4 Stage 08 Progression & Balance
+Implement and test core equations, caps, persistence, gates, anti-spam rules, presets, malformed-input behavior, and deterministic budget calculations now.
 
-Core equations, caps, persistence, gates, anti-spam rules, presets, malformed-input behavior, and deterministic budget calculations are implemented/tested now.
+Representative modpack comparison and final numerical tuning that require real progression points/gameplay remain part of accumulated final validation. Every provisional production value still needs a documented budget rationale.
 
-Representative modpack comparison and final numerical tuning that require real progression points or real gameplay remain part of accumulated final validation. Quantitative values must be traceable to a budget rationale even before final tuning.
+### Stage 09 Hardening & Release
 
-### 6.5 Stage 09 Hardening & Release
+Implement test/profiling/migration/provenance infrastructure now. Execution-dependent acceptance stays open.
 
-Implementation of test/profiling/migration/provenance infrastructure proceeds now. Execution-dependent acceptance stays open.
+The release checklist remains blocked until the exact release candidate has direct evidence for CI/build/tests, dedicated server, required real-client/real-pack rows, representative performance, upgrades/migrations, dependency/version review, provenance/license review, packaged notices, incompatibilities, and release notes.
 
-The release checklist cannot be completed until the exact release candidate has:
+## 8. Stage 07.06 Forbidden Domains default
 
-- clean CI/build/test evidence;
-- dedicated-server evidence;
-- required real-client/real-pack rows;
-- representative performance evidence;
-- upgrade/migration evidence;
-- exact dependency/version review;
-- final provenance/license review;
-- packaged notice verification;
-- documented incompatibilities and release notes.
-
-## 7. Forbidden Domains architecture default
-
-For Stage 07.06, the implementation default is a bounded localized in-world field/arena, not a dynamically-created dimension/instance.
+Implement Forbidden Domains as bounded localized in-world fields/arenas by default, not dynamically-created dimensions/instances.
 
 Rationale:
 
 - avoids dynamic-dimension lifecycle and save-format complexity;
 - reduces stranded-player recovery risk;
-- avoids orphan dimension/chunk state;
-- reuses existing world border, protection, loaded-chunk, teleport recovery, and `WorldEffectPolicy` contracts;
+- avoids orphan dimensions/chunks;
+- reuses existing world border, protection, loaded-chunk, teleport-recovery, and `WorldEffectPolicy` contracts;
 - is easier to bound by radius, duration, entity count, and restoration budget.
 
-A temporary isolated dimension may be reconsidered only through a separate explicit architectural decision supported by a concrete requirement that the in-world model cannot satisfy. It is not part of the default Stage 07 implementation.
+A temporary isolated dimension requires a separate explicit architectural decision supported by a concrete requirement the in-world model cannot satisfy.
 
-## 8. Error handling and fail-closed rules
+## 9. Error handling and fail-closed rules
 
-The sequence change must not relax existing failure semantics.
+The sequence change does not relax failure semantics.
 
 - Optional integrations remain fail-closed/safe when absent or incompatible.
 - No client-authored value becomes authoritative.
-- Stale downstream branches are not merged wholesale when their base no longer matches canonical contracts.
-- Synchronization conflicts are resolved by preserving current `main` authority first, then reapplying downstream intent.
+- Stale downstream branches are never merged wholesale merely to preserve history.
+- Synchronization conflicts preserve current `main` authority first, then reapply downstream intent.
 - Missing real-client evidence results in `FINAL VALIDATION DEFERRED`, never inferred PASS.
-- Missing representative performance evidence results in an open Stage 09 row, never an optimization claim.
+- Missing representative performance evidence leaves an open Stage 09 row, never an optimization claim.
 - Unknown provenance/permission remains release-blocking.
 
-## 9. Testing policy during implementation
+## 10. Testing policy during implementation
 
-"Test later" means deferring the final integrated/manual/release campaign. It does **not** mean deferring deterministic engineering tests required to build safely.
+"Test later" means deferring the final integrated/manual/release campaign. It does **not** mean deferring deterministic engineering tests required for safe implementation.
 
-During Stages 06-09 implementation, continue to use:
+During Stages 06-09 continue to use, as applicable:
 
 - TDD for deterministic behavior;
 - unit/codec/config tests;
@@ -187,39 +187,39 @@ During Stages 06-09 implementation, continue to use:
 - networking/authority tests;
 - dedicated-server smoke;
 - CI build/JAR verification;
-- malformed input, boundary, idempotency, replay, dedupe, and concurrency tests where applicable.
+- malformed-input, boundary, idempotency, replay, dedupe, and concurrency tests.
 
-Deferred until the final campaign are only checks that genuinely need the real client, actual modpack/provider hosts, representative gameplay/performance environment, prior-world fixtures not yet available, or exact release-candidate review.
+Deferred until the final campaign are checks that genuinely require a real client, actual modpack/provider hosts, representative gameplay/performance environment, prior-world fixtures not yet available, or exact release-candidate review.
 
-## 10. Documentation updates required by implementation
+## 11. Canonical documentation changes required before Stage 06 promotion
 
-The first implementation step after this design is approved must update canonical governance files so later sessions cannot accidentally reintroduce the old gate interpretation:
+The first implementation subproject must update governance so later sessions cannot reintroduce the old gate interpretation:
 
-- `plans/README.md` — branch/promotion policy and completion semantics;
-- `plans/DECISIONS.md` — add a durable architectural decision recording deferred final validation and sequential downstream promotion;
-- `plans/STATUS.md` — record Stage 05/05A as final-validation-deferred while allowing Stage 06 implementation promotion;
-- `plans/PENDING.md` — keep unresolved architectural/external unknowns, but remove wording that incorrectly treats manual Stage 05 acceptance as a universal implementation blocker if present;
-- affected PR descriptions (#21/#22 or their replacement PRs) — reflect the new promotion rule and actual base/head state.
+- `plans/README.md` — promotion policy and completion-state distinction;
+- `plans/DECISIONS.md` — durable architectural decision for deferred final validation and sequential downstream promotion, including the Stage 07.06 in-world-field default;
+- `plans/STATUS.md` — Stage 05/05A remain final-validation-deferred while Stage 06 promotion becomes permitted;
+- `plans/PENDING.md` — preserve genuine unknowns, remove/resolve the Forbidden Domains architecture decision because this design selects the in-world default, and remove any wording that treats Stage 05 manual acceptance as a universal downstream implementation blocker;
+- PR #21/#22 descriptions, or replacement PR descriptions — reflect the new promotion rule and actual base/head state.
 
-No Stage 05 manual evidence file is rewritten to manufacture completion.
+No Stage 05 manual evidence file is changed to manufacture completion.
 
-## 11. Success criteria for this sequencing change
+## 12. Success criteria
 
-The sequencing change is correctly implemented when:
+The sequencing change is implemented correctly when:
 
-1. Canonical governance explicitly distinguishes implementation completion from final validation.
+1. Canonical governance distinguishes implementation completion from final validation.
 2. Stage 05/05A manual rows remain truthful and open.
-3. Stage 06 can be integrated from latest `main` without weakening 05A contracts.
+3. Stage 06 can integrate from latest `main` without weakening 05A contracts.
 4. Stage 07 proceeds only after Stage 06 is canonical and is resynchronized to the resulting latest `main`.
 5. Stage 08 proceeds only after Stage 07 implementation is canonical.
 6. Stage 09 infrastructure proceeds only after Stage 08 implementation is canonical.
-7. Every merge still requires the repository's applicable automated CI to be green.
-8. No stage or release is called validated/complete when its own acceptance evidence is still missing.
-9. The final validation campaign remains a single explicit release-blocking phase after implementation work is exhausted.
+7. Every merge still requires applicable automated CI to be green and post-merge `main` confirmation.
+8. No stage/release is called validated or complete while its own acceptance evidence is missing.
+9. Final accumulated validation remains an explicit release-blocking phase after implementation work is exhausted.
 
-## 12. Implementation decomposition
+## 13. Implementation decomposition
 
-This design is intentionally an umbrella governance design. Implementation is decomposed into sequential subprojects:
+This is an umbrella governance design, not a replacement for the existing stage feature plans. Work remains decomposed into sequential subprojects:
 
 1. Governance update + Stage 06 resynchronization/promotion.
 2. Stage 07 resynchronization + completion of 07.04-07.07.
@@ -227,4 +227,4 @@ This design is intentionally an umbrella governance design. Implementation is de
 4. Stage 09 hardening/release infrastructure implementation.
 5. Final accumulated validation and release closeout.
 
-Each subproject must use the existing stage plans as its feature specification and must not silently expand scope into the next stage before the current stage's implementation merge is complete.
+Each subproject uses the existing stage plans as its feature specification and must not silently expand into the next stage before the current stage's implementation merge is complete.
