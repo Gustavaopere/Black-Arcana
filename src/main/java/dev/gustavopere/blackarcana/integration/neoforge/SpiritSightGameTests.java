@@ -1,0 +1,213 @@
+package dev.gustavopere.blackarcana.integration.neoforge;
+
+import dev.gustavopere.blackarcana.BlackArcanaMod;
+import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.content.souls.SpiritSightPolicy;
+import dev.gustavopere.blackarcana.content.souls.SpiritTraceProvider;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.server.MinecraftServer;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+@GameTestHolder(BlackArcanaMod.MOD_ID)
+@PrefixGameTestTemplate(false)
+public final class SpiritSightGameTests {
+    private SpiritSightGameTests() { }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void providerAbsenceRevealsNothing(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        var server = helper.getLevel().getServer();
+        SpiritSightPolicy.Policy policy = new SpiritSightPolicy.Policy(
+            16.0D,
+            40L,
+            Set.of(SpiritSightPolicy.TraceKind.MALUM_SPIRIT),
+            false);
+
+        ArcanaDecision activation = MinecraftSpiritSightRuntime.activate(server, player.getUUID(), policy);
+        helper.assertTrue(activation.allowed(), "Spirit Sight must activate without fabricating a provider");
+        helper.assertTrue(MinecraftSpiritSightRuntime.visibleTraces(server, player.getUUID()).isEmpty(),
+            "provider absence must reveal no synthetic traces");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void radiusCategoryPrivacyAndProviderDisappearanceAreFailClosed(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        var server = helper.getLevel().getServer();
+        UUID viewerId = player.getUUID();
+        var position = player.position();
+        AtomicBoolean available = new AtomicBoolean(true);
+
+        SpiritTraceProvider provider = new SpiritTraceProvider() {
+            @Override
+            public String providerId() {
+                return "black_arcana:test_spirit_sight";
+            }
+
+            @Override
+            public List<Trace> query(Query query) {
+                if (!available.get() || !viewerId.equals(query.viewerId())) return List.of();
+                return List.of(
+                    new Trace(UUID.randomUUID(), position.x + 2.0D, position.y, position.z,
+                        SpiritSightPolicy.TraceKind.MALUM_SPIRIT, false),
+                    new Trace(UUID.randomUUID(), position.x + 2.0D, position.y, position.z,
+                        SpiritSightPolicy.TraceKind.EIDOLON_OCCULT, false),
+                    new Trace(UUID.randomUUID(), position.x + 2.0D, position.y, position.z,
+                        SpiritSightPolicy.TraceKind.MALUM_SPIRIT, true),
+                    new Trace(UUID.randomUUID(), position.x + 40.0D, position.y, position.z,
+                        SpiritSightPolicy.TraceKind.MALUM_SPIRIT, false));
+            }
+        };
+
+        ArcanaDecision registered = MinecraftSpiritSightRuntime.registerProvider(server, provider);
+        helper.assertTrue(registered.allowed(), "bounded Spirit Sight provider registration must succeed");
+
+        SpiritSightPolicy.Policy policy = new SpiritSightPolicy.Policy(
+            16.0D,
+            40L,
+            Set.of(SpiritSightPolicy.TraceKind.MALUM_SPIRIT),
+            false);
+        helper.assertTrue(MinecraftSpiritSightRuntime.activate(server, viewerId, policy).allowed(),
+            "Spirit Sight activation must succeed for loaded living caster");
+
+        List<SpiritTraceProvider.Trace> visible = MinecraftSpiritSightRuntime.visibleTraces(server, viewerId);
+        helper.assertTrue(visible.size() == 1,
+            "radius, category and private-data filters must leave exactly one visible trace; actual=" + visible.size());
+        helper.assertTrue(visible.getFirst().kind() == SpiritSightPolicy.TraceKind.MALUM_SPIRIT,
+            "visible trace must retain its real provider-backed category");
+
+        available.set(false);
+        helper.assertTrue(MinecraftSpiritSightRuntime.visibleTraces(server, viewerId).isEmpty(),
+            "provider disappearance must immediately remove its traces instead of caching synthetic state");
+        helper.assertTrue(MinecraftSpiritSightRuntime.unregisterProvider(server, provider.providerId()),
+            "test provider must be removable without leaving visible state");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void timedSessionExpiresAndStopsRevealing(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        var server = helper.getLevel().getServer();
+        UUID viewerId = player.getUUID();
+        var position = player.position();
+        SpiritTraceProvider provider = new SpiritTraceProvider() {
+            @Override
+            public String providerId() {
+                return "black_arcana:test_spirit_sight_expiry";
+            }
+
+            @Override
+            public List<Trace> query(Query query) {
+                if (!viewerId.equals(query.viewerId())) return List.of();
+                return List.of(new Trace(UUID.randomUUID(), position.x + 1.0D, position.y, position.z,
+                    SpiritSightPolicy.TraceKind.MALUM_SPIRIT, false));
+            }
+        };
+        MinecraftSpiritSightRuntime.registerProvider(server, provider);
+        SpiritSightPolicy.Policy policy = new SpiritSightPolicy.Policy(
+            8.0D,
+            2L,
+            Set.of(SpiritSightPolicy.TraceKind.MALUM_SPIRIT),
+            false);
+        MinecraftSpiritSightRuntime.activate(server, viewerId, policy);
+        helper.assertTrue(MinecraftSpiritSightRuntime.visibleTraces(server, viewerId).size() == 1,
+            "active Spirit Sight session must expose eligible provider trace");
+
+        helper.runAfterDelay(4L, () -> {
+            helper.assertTrue(!MinecraftSpiritSightRuntime.isActive(server, viewerId),
+                "expired Spirit Sight session must be pruned");
+            helper.assertTrue(MinecraftSpiritSightRuntime.visibleTraces(server, viewerId).isEmpty(),
+                "expired session must reveal no traces");
+            MinecraftSpiritSightRuntime.unregisterProvider(server, provider.providerId());
+            helper.succeed();
+        });
+    }
+
+    @SuppressWarnings({"removal", "unchecked"})
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void providerRegisteredBeforeStartedListenerSurvivesInitialization(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        MinecraftServer server = helper.getLevel().getServer();
+        UUID viewerId = player.getUUID();
+        var position = player.position();
+        Map<MinecraftServer, Object> states = spiritSightStates();
+        Object originalState;
+        synchronized (states) {
+            originalState = states.remove(server);
+            try {
+                SpiritTraceProvider provider = new SpiritTraceProvider() {
+                    @Override
+                    public String providerId() {
+                        return "black_arcana:test_early_spirit_sight";
+                    }
+
+                    @Override
+                    public List<Trace> query(Query query) {
+                        if (!viewerId.equals(query.viewerId())) return List.of();
+                        return List.of(new Trace(
+                            UUID.randomUUID(),
+                            position.x + 1.0D,
+                            position.y,
+                            position.z,
+                            SpiritSightPolicy.TraceKind.MALUM_SPIRIT,
+                            false));
+                    }
+                };
+
+                ArcanaDecision registered = MinecraftSpiritSightRuntime.registerProvider(server, provider);
+                helper.assertTrue(registered.allowed(),
+                    "optional host bootstrap must be able to register a Spirit Sight provider before its started listener");
+
+                invokeStartedListener(server);
+                SpiritSightPolicy.Policy policy = new SpiritSightPolicy.Policy(
+                    8.0D,
+                    20L,
+                    Set.of(SpiritSightPolicy.TraceKind.MALUM_SPIRIT),
+                    false);
+                helper.assertTrue(MinecraftSpiritSightRuntime.activate(server, viewerId, policy).allowed(),
+                    "Spirit Sight runtime must remain available after started initialization");
+                helper.assertTrue(MinecraftSpiritSightRuntime.visibleTraces(server, viewerId).size() == 1,
+                    "provider registered during an earlier ServerStartedEvent listener must survive later initialization");
+            } finally {
+                if (originalState == null) states.remove(server);
+                else states.put(server, originalState);
+            }
+        }
+        helper.succeed();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<MinecraftServer, Object> spiritSightStates() {
+        try {
+            Field field = MinecraftSpiritSightRuntime.class.getDeclaredField("STATES");
+            field.setAccessible(true);
+            return (Map<MinecraftServer, Object>) field.get(null);
+        } catch (ReflectiveOperationException failure) {
+            throw new AssertionError("could not access Spirit Sight server state for lifecycle regression", failure);
+        }
+    }
+
+    private static void invokeStartedListener(MinecraftServer server) {
+        try {
+            Method method = MinecraftSpiritSightRuntime.class.getDeclaredMethod("onServerStarted", ServerStartedEvent.class);
+            method.setAccessible(true);
+            method.invoke(null, new ServerStartedEvent(server));
+        } catch (ReflectiveOperationException failure) {
+            throw new AssertionError("could not invoke Spirit Sight started listener for lifecycle regression", failure);
+        }
+    }
+}
