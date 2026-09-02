@@ -24,7 +24,7 @@ Stage 06 Rituals is canonical on `main` as `IMPLEMENTED / FINAL VALIDATION DEFER
 
 The current canonical QA artifact for that Stage 06 merge is `black-arcana-4a79d440a4bba3920002eb8fc49a520e15744c48`, produced by workflow `33561613644`. Its publication confirms the automated mainline delivery gate only; real-modpack/manual host acceptance remains deferred under D031 and is not inferred as PASS.
 
-Stage 07 Spell Domains is now **IN PROGRESS** through fresh latest-`main` domain-scoped promotion. Stage 07.01 Blood & Curses is implemented on PR #45 from exact Stage 06 baseline `6b77b5c0ec4f0ff4a8688bb105cef055860c061c`; its final implementation head `87cd68599a4358a00137fff52bdaed27d1a716ed` passed workflow `33654634485` with JUnit, diff sanity, NeoForge build, JAR inspection, all 34 required GameTests and dedicated-server smoke. The PR diff contains only shared Stage 07 specification primitives plus Blood & Curses code/tests; 07.02–07.07 are not implemented by PR #45. Historical stacked PR #22 remains non-canonical/stale reviewed source material and is not merged wholesale. Stage 07.06 Forbidden Domains continues to follow D032: bounded localized in-world fields/arenas are the default; dynamic dimensions require a new explicit architectural decision. Real-modpack/manual host acceptance remains deferred and is not inferred from automated evidence.
+Stage 07 Spell Domains is **IN PROGRESS** through fresh latest-`main` domain-scoped promotion. Stage 07.01 Blood & Curses is canonical on `main` via PR #45 at merge SHA `0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`. The final PR head `3936f1a8468bf71c470e9108e3b531fda211bfda` passed workflow `33655485829`; post-merge workflow `33655891843` passed JUnit, diff sanity, NeoForge build, JAR inspection, all 34 required GameTests, dedicated-server smoke and canonical artifact publication. The exact-SHA QA artifact is `black-arcana-0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`. PR #45 contained only shared Stage 07 specification primitives plus Blood & Curses code/tests; 07.02–07.07 remain pending. Historical stacked PR #22 remains non-canonical/stale reviewed source material and is not merged wholesale. Stage 07.06 Forbidden Domains continues to follow D032: bounded localized in-world fields/arenas are the default; dynamic dimensions require a new explicit architectural decision. Real-modpack/manual host acceptance remains deferred and is not inferred from automated evidence.
 
 Stage 08 Progression & Balance starts only after Stage 07 implementation is canonical. Stage 09 Hardening & Release infrastructure starts only after Stage 08 implementation is canonical. Stage 09 cannot leave `RELEASE BLOCKED` until the accumulated final validation campaign is executed on the exact release candidate.
 
@@ -38,7 +38,7 @@ Stage 08 Progression & Balance starts only after Stage 07 implementation is cano
 | 05 Casting & UX | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | automated gates green; exact-SHA QA artifact + fixture available; real-client matrix remains PENDING |
 | 05A Arcane Danger | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | server contracts frozen; automated presentation/hardening advanced; real-client presentation acceptance remains |
 | 06 Rituals | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | canonical on `main` at `4a79d440...`; post-merge full CI green; real-modpack/manual host acceptance deferred |
-| 07 Spell Domains | 🟦 IN PROGRESS — 07.01 AUTOMATED GREEN | PR #45 contains only 07.01 + shared specs; 07.02–07.07 pending; real-modpack/manual acceptance deferred |
+| 07 Spell Domains | 🟦 IN PROGRESS — 07.01 CANONICAL | 07.01 merged at `0f6d70bf...` with post-merge full CI + QA artifact; 07.02–07.07 pending; real-modpack/manual acceptance deferred |
 | 08 Progression & Balance | ⬜ WAITING FOR 07 IMPLEMENTATION | implement after 07 becomes canonical |
 | 09 Hardening & Release | ⬜ WAITING FOR 08 IMPLEMENTATION | infrastructure first; final campaign remains release-blocking |
 
@@ -52,7 +52,7 @@ Missing manual/final evidence blocks validation and release claims, not downstre
 
 ## Frozen predecessors
 
-Stages 00, 01, 02, 03 and 04 are complete and may change only through explicit follow-up decisions. Stage 05A server/gameplay contracts are frozen for downstream consumers; changing their authority, transaction, hazard, resistance or persistence semantics requires explicit reviewed follow-up work. Stage 06 is now canonical as an implemented downstream consumer; any change to its ritual identity, transaction, persistence or provider semantics requires explicit reviewed follow-up work.
+Stages 00, 01, 02, 03 and 04 are complete and may change only through explicit follow-up decisions. Stage 05A server/gameplay contracts are frozen for downstream consumers; changing their authority, transaction, hazard, resistance or persistence semantics requires explicit reviewed follow-up work. Stage 06 is canonical as an implemented downstream consumer; any change to its ritual identity, transaction, persistence or provider semantics requires explicit reviewed follow-up work. Stage 07.01 is now a canonical Stage 07 subdomain; changes to its Blood Price authority, target-admission rules, damage-provenance/recursion semantics or bounded state contracts require explicit reviewed follow-up work rather than silent drift in later domains.
 
 ## Stage 05 / 05A deferred validation ledger
 
@@ -94,7 +94,7 @@ Optional host/runtime evidence that requires the real modpack remains `FINAL VAL
 
 ## Stage 07 implementation and validation state
 
-07.01 Blood & Curses has been rebuilt on fresh latest-`main` ancestry in PR #45 using explicit RED→GREEN cycles for Blood Price, Equilibrium Rite, Sanguine Harvest, damage-family classification, Law of Recurrence and Sympathetic Wound. Final branch workflow `33654634485` is GREEN on implementation head `87cd68599a4358a00137fff52bdaed27d1a716ed` with 34 required GameTests and dedicated-server smoke. Documentation updates record the same evidence before promotion.
+07.01 Blood & Curses was rebuilt on fresh latest-`main` ancestry in PR #45 using explicit RED→GREEN cycles for Blood Price, Equilibrium Rite, Sanguine Harvest, damage-family classification, Law of Recurrence and Sympathetic Wound. Final branch workflow `33655485829` passed on head `3936f1a8468bf71c470e9108e3b531fda211bfda`. Canonical merge: PR #45 / `0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`. Post-merge workflow `33655891843` passed the full pipeline with 34 required GameTests, dedicated-server smoke and canonical artifact `black-arcana-0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`.
 
 07.02 Souls & Death through 07.07 Familiars & Divination remain pending and must continue sequentially from the latest canonical `main`; they are not pulled in through stale PR #22 ancestry. Optional provider/host behavior that requires the real modpack remains part of the deferred final validation campaign.
 
