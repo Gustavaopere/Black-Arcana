@@ -1,16 +1,245 @@
 # 07.05 — Black Flame
 
-## Fantasy
-A soul-corrupting flame family with visually aggressive behavior but server-controlled terrain impact.
+## State
 
-## Model
-Separate entity burn/status, visual flame propagation and block mutation. Spread uses a bounded frontier scheduler.
+**DESIGN APPROVED / IMPLEMENTATION NOT STARTED.**
+
+This domain must be implemented sequentially from canonical `main@0e508b646b602beefd136bf9602945e247b2a524`. Historical stacked PR #22 is review material only and must not become ancestry. Stage 07.06–07.07 remain out of scope.
+
+The approved architecture includes one additive Stage 04 world-mutation protection extension because the frozen Stage 04 API can authorize entity interactions and protected displacement destinations but does not currently express claim/protection semantics for block mutation. Black Pyre must not encode block coordinates into entity-oriented `ProtectionQuery` or silently bypass claim adapters.
+
+## Fantasy and identity
+
+Black Flame is a forbidden soul-fire family with aggressive visual propagation, policy-controlled entity damage/status and server-authoritative terrain effects. It is not vanilla fire with a cosmetic skin. Black Arcana owns the propagation graph, world-safety admission, settlement and cleanup.
+
+The first canonical spell is `black_arcana:black_pyre`.
+
+## Host/provider boundary
+
+- **Iron's Spells 'n Spellbooks** may host the active-cast presentation/cost surface when an exact supported hook is available.
+- **Malum** may provide spirit flavor or bounded amplification only through a verified causal/value-bearing hook. If such a hook is unavailable or ambiguous, amplification fails closed rather than being approximated from generic spirit state.
+- **Black Arcana** owns entity admission, propagation scheduling, world-mode policy, block protection, mutation settlement, restoration and lifecycle cleanup.
+- No provider may invoke vanilla fire spread as a substitute for the Black Pyre frontier.
+
+Real-modpack/provider/manual host validation remains deferred under D031 unless executed with the actual pack. Automated CI cannot promote those lines to PASS.
+
+## Mechanics
+
+### Black Pyre
+
+A server-authoritative ignition launches or places forbidden soul-fire. It has three independent effect planes:
+
+1. **Entity plane** — direct/ongoing Black Pyre damage or status on eligible entities. Entity effects use canonical `EntityInteractionAdmissionService` and are re-authorized immediately before settlement.
+2. **Visual plane** — Black Flame presentation propagated through the bounded frontier without requiring block mutation.
+3. **Terrain plane** — optional policy-governed block mutation, admitted per cell through the Stage 04 world-effect and world-mutation protection authorities.
+
+Failure of the terrain plane must not retroactively roll back already-authorized entity damage when the contract defines those outcomes as independent. Terrain failure must return an explicit machine-readable denial/degradation code.
+
+## Bounded frontier scheduler
+
+Black Pyre must never delegate propagation to vanilla fire/random ticks. A Black Arcana scheduler owns every frontier.
+
+Hard technical ceilings:
+
+- radius: `<= 12` blocks from the frontier origin;
+- cells per frontier: `<= 256`;
+- processed/admitted spread candidates per tick per frontier: `<= 16`;
+- concurrent frontiers per server runtime: `<= 8`;
+- lifetime: `<= 1_200` ticks;
+- unloaded candidate cells are dropped, never retained as chunk-load work;
+- duplicate cells are idempotently ignored;
+- finishing/expiry/server-stop removes frontier runtime state.
+
+These are safety ceilings. Stage 08 may tune normal values downward but must not silently raise them.
 
 ## World modes
-`COSMETIC`: visual only. `TEMPORARY`: reversible scorched/fire-like blocks. `LIMITED`: bounded permanent mutation. `FULL`: explicit server opt-in.
 
-## Balance
-Boss damage modifier/cap, spread radius/count, duration, concurrent frontier cap and friendly-fire policy.
+Black Pyre uses the existing `WorldEffectMode` ordering and must not create a second configuration hierarchy.
 
-## Acceptance
-No vanilla-style uncontrolled fire cascade; restart/chunk tests clean temporary state; stress test proves bounded spread work.
+### `COSMETIC`
+
+- visual frontier only;
+- zero block mutation;
+- entity effects remain governed independently by entity-damage policy;
+- no temporary restoration record is created because nothing changed in the world.
+
+### `TEMPORARY` — default terrain behavior
+
+- reversible scorched/fire-like replacement only;
+- each cell must pass loaded-chunk, per-cast world budget and world-mutation protection admission;
+- settlement routes through `TemporaryBlockMutationGateway`/`TemporaryMutationTracker` using compare-and-set semantics;
+- expiry, restart recovery and cleanup must restore only mutations still owned by the recorded Black Arcana mutation, never overwrite later player/world changes;
+- lifetime never exceeds the Black Pyre lifetime ceiling.
+
+### `LIMITED`
+
+- bounded permanent mutation is allowed only when the effective server mode permits `LIMITED`;
+- each mutation must pass the same loaded-chunk, budget and world-mutation protection authority as temporary cells;
+- settlement must use a dedicated bounded compare-and-set gateway rather than direct arbitrary `ServerLevel#setBlock` calls from spell code;
+- no restoration record is expected for a successfully committed permanent mutation;
+- permanent work remains bounded by frontier and world-effect budgets.
+
+### `FULL`
+
+- explicit server opt-in only;
+- uses the same protected, bounded settlement route as `LIMITED`;
+- `FULL` does **not** mean unlimited radius, unlimited cells, vanilla fire cascade, chunk loading or protection bypass;
+- it only permits the most destructive mutation class allowed by the registered spell profile/configuration while all technical ceilings remain enforced.
+
+`OFF` remains a stronger global denial mode where world-effect policy rejects terrain work entirely.
+
+## Stage 04 additive authority extension
+
+### Problem being solved
+
+Current Stage 04 `ProtectionQuery` is entity/destination oriented: it carries caster, dimension, string target identity and `EntityInteractionType`. Existing interaction types are `DAMAGE`, `CONTROL`, `DISPLACEMENT`, `EXECUTION`, `RESURRECTION_DENIAL` and `DOMAIN_CAPTURE`. Reusing this contract for block mutation would create ambiguous adapter semantics.
+
+### New provider-neutral contract
+
+Add an explicit block/world-mutation protection route without changing existing entity-interaction semantics.
+
+The new query must identify at minimum:
+
+- caster UUID;
+- dimension ID;
+- exact block position/cell identity;
+- `WorldMutationType` (for Black Pyre terrain: `FIRE_SPREAD` and/or bounded `BLOCK_REPLACEMENT` as appropriate);
+- requested `WorldMutationClass`/persistence class;
+- Black Arcana spell/cast provenance where needed for diagnostics and deduplication.
+
+The registry/guard must:
+
+- be bounded by an adapter-count ceiling;
+- fail closed when an installed adapter throws, links incorrectly or returns invalid data;
+- require all installed adapters to allow a mutation;
+- not force-load chunks;
+- keep existing entity `ProtectionAdapterRegistry` behavior source-compatible;
+- expose no generic bypass flag to spell code.
+
+Optional claim/provider integrations consume this provider-neutral query. Black Pyre itself must not know claim-mod internals.
+
+### Settlement gateways
+
+Temporary block work continues through the existing `TemporaryBlockMutationGateway` after mutation-protection admission.
+
+Add a narrow permanent mutation gateway for `LIMITED`/`FULL` that:
+
+- accepts only already-loaded target state;
+- rechecks mutation-protection admission immediately before side effect;
+- uses compare-and-set semantics against the observed block state;
+- consumes the canonical per-cast world-effect budget exactly once;
+- rejects stale state rather than overwriting concurrent player/world edits;
+- exposes no chunk-loading API;
+- reports explicit denial codes.
+
+Spell/runtime code must not mutate terrain directly around these gateways.
+
+## Entity damage/status policy
+
+Black Pyre entity settlement must:
+
+- require a loaded, alive server-side caster;
+- deduplicate target UUIDs and honor the canonical absolute target cap;
+- require same permitted server level unless a future contract explicitly says otherwise;
+- use `EntityInteractionType.DAMAGE` admission and reauthorization immediately before damage;
+- preserve allied/friendly-fire/PvP/boss limits from canonical policy;
+- clamp requested raw damage to a technical ceiling and never treat a policy cap greater than `1.0` as an implicit damage amplifier;
+- report actual confirmed health loss rather than nominal pre-mitigation damage when returning settlement metrics;
+- not create mastery/lifesteal/proc credit outside existing canonical damage provenance rules.
+
+Final ordinary damage, boss multiplier, PvP multiplier and cooldown tuning remain Stage 08 responsibility below hard safety ceilings.
+
+## Causality, deduplication and anti-abuse
+
+- one frontier ID maps to one bounded frontier lifecycle;
+- duplicate seed/frontier creation with the same identity is rejected;
+- cell identity is stable and deduplicated before work is admitted;
+- world budget is charged once per actual mutation attempt under the canonical budget ledger;
+- failed compare-and-set does not become a successful mutation;
+- a later player/world block edit must never be reverted by stale temporary cleanup;
+- entity targets are settled at most once per effect pass unless the spell explicitly schedules a separate bounded tick/effect instance;
+- optional Malum amplification must have causal ownership for this cast and a bounded numeric value; generic inventory/spirit presence is insufficient evidence.
+
+## Failure semantics
+
+Fail closed for:
+
+- missing/unavailable Black Arcana runtime;
+- unloaded target chunk/cell;
+- world mode below required mutation class;
+- missing spell world-effect profile;
+- world-effect budget exhaustion;
+- protection adapter denial/failure;
+- mutation-protection contract unavailable;
+- stale block state at settlement;
+- invalid/expired frontier;
+- out-of-radius or over-cell-budget candidate;
+- invalid/non-finite entity damage request;
+- ambiguous provider amplification.
+
+Visual degradation may continue where the approved mode permits cosmetic presentation, but it must not be represented as successful terrain mutation.
+
+## Lifecycle and persistence
+
+- frontier runtime state is bounded and ephemeral;
+- temporary mutation restoration data uses the canonical Stage 04 tracker/persistence path;
+- server restart must not resurrect expired frontiers as active spread jobs;
+- pending unloaded candidates are not persisted for later activation;
+- restoration after restart processes bounded work and only restores still-owned temporary replacements;
+- server stop clears in-memory frontier state after durable temporary restoration state has been handled by the existing persistence path.
+
+## Required TDD / validation matrix
+
+Implementation starts RED and must cover at least:
+
+### Pure/core tests
+
+- scheduler rejects configuration above every hard ceiling;
+- frontier count cap;
+- cell deduplication and cell cap;
+- per-tick processing cap;
+- radius rejection;
+- unloaded candidates are dropped/no deferred chunk-load queue;
+- expiry/finish cleanup;
+- mutation-protection registry all-allow, denial and adapter-exception fail-closed;
+- mutation query preserves position/type/class/caster/cast provenance;
+- permanent gateway stale-state compare-and-set denial;
+- world-mode ordering: COSMETIC < TEMPORARY < LIMITED < FULL;
+- LIMITED/FULL cannot bypass technical frontier budgets.
+
+### GameTests
+
+- COSMETIC produces no terrain mutation;
+- safe-mode/entity-only Black Pyre damages one eligible target without terrain mutation;
+- allied/protected target is not damaged;
+- boss/player limits are honored;
+- TEMPORARY mutation applies only in loaded authorized cells;
+- temporary mutation expires and restores;
+- player/world edit after temporary mutation is not overwritten by cleanup;
+- restart/reload path restores temporary state cleanly without reviving spread;
+- chunk-edge candidate never force-loads an unloaded chunk;
+- protected block/claim cell fails closed;
+- LIMITED bounded permanent mutation commits only under an allowed mode and protection decision;
+- FULL does not exceed radius/cell/per-tick/concurrent-frontier ceilings;
+- stale cell revalidation prevents overwrite;
+- no vanilla fire cascade/random-tick propagation occurs;
+- stress case proves bounded work under max legal frontier count/cell count.
+
+### Pipeline
+
+Before merge the exact PR head must pass:
+
+- JUnit/pure tests;
+- diff sanity;
+- NeoForge 1.21.1 build on Java 21;
+- built-JAR verification;
+- complete required GameTest server suite;
+- dedicated-server smoke.
+
+After merge, the exact `main` SHA must pass the same pipeline and publish the canonical QA JAR before 07.05 is marked canonical.
+
+## Documentation/promotion rules
+
+During implementation this file remains `05-black-flame.md` and must state the real status. Only after runtime merge plus exact-SHA post-merge GREEN may a documentation follow-up rename it to `✅-05-black-flame.md` and update `README.md`, `plans/STATUS.md` and the Black Arcana Notion dossiê.
+
+Do not start 07.06 automatically.
