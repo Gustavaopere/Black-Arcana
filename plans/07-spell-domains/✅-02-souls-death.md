@@ -51,4 +51,6 @@ Provider-native boundaries are mandatory:
 Automated isolated CI does not claim real-modpack/manual acceptance for optional host behavior. Provider-specific behavior requiring the installed full modpack remains in the deferred final-validation campaign under D031.
 
 ## Acceptance
-Death/relog/restart tests prove exact charge accounting and no duplication. Spirit Sight tests prove bounded visibility, privacy denial, provider failure/disappearance fail-closed behavior and session expiry. Final canonical status still requires PR merge plus healthy post-merge `main` CI.
+Death/relog/restart tests prove exact charge accounting and no duplication. Spirit Sight tests prove bounded visibility, privacy denial, provider failure/disappearance fail-closed behavior and session expiry.
+
+Canonical merge: PR #47 / `998186beed3522a0821a7dbb911f5e31cd6a9e1d`. Exact-SHA post-merge workflow `33981437469` passed the complete automated pipeline and published the canonical QA artifact. Final real-modpack/provider/manual acceptance remains deferred under D031 and is not inferred from automated CI.

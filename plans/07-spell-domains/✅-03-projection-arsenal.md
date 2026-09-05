@@ -55,9 +55,13 @@ The 07.03 implementation followed explicit RED→GREEN slices.
 - Spectral Arsenal: RED workflow #974 failed only the four new GameTests while `MinecraftSpectralArsenalRuntime` was absent; GREEN workflow `33989714645` (#976) passed the complete pipeline with 51 required GameTests and dedicated-server smoke.
 - Rift Blades: RED workflow `33989972103` (#982) passed unit/build/JAR gates and failed exactly the seven new Rift Blades GameTests because `MinecraftRiftBladesRuntime` was absent. GREEN workflow `33990282195` (#984) passed the complete pipeline with all 58 required GameTests and dedicated-server smoke.
 - Integrated runtime registration: workflow `33990511277` (#986) passed JUnit, diff sanity, NeoForge build, JAR verification, all 58 required GameTests and dedicated-server smoke on the complete 07.03 branch.
+- Final PR-head workflow `33991180861` (#992) passed the complete automated pipeline on head `134ced971549480ed8690233f9986793800d3d37`.
+- Canonical merge: PR #50 / `8631c614e7e319a46ab6b29fe7ab33b3903fc2ef`.
+- Exact-SHA post-merge workflow `33991393657` (#993) passed JUnit, diff sanity, NeoForge build, JAR verification, all 58 required GameTests, dedicated-server smoke and main-only artifact publication.
+- Canonical QA artifact: `black-arcana-8631c614e7e319a46ab6b29fe7ab33b3903fc2ef`, artifact ID `9976772186`, SHA-256 `81688a5db8ab9e3d1dc37d63ff4153d3d80fe2739941235af0a81c831d59d2bc`.
 
 ## Acceptance state
 
-`IMPLEMENTED / AUTOMATED GATES GREEN / REAL-MODPACK HOST ACCEPTANCE DEFERRED`
+`CANONICAL ON MAIN / AUTOMATED GATES GREEN / REAL-MODPACK HOST ACCEPTANCE DEFERRED`
 
 The automated evidence validates deterministic Black Arcana contracts and NeoForge server integration. It does not convert provider-specific or real-modpack/manual host acceptance into PASS.
