@@ -100,7 +100,7 @@ Optional host/runtime evidence that requires the real modpack remains `FINAL VAL
 
 Provider-native safety remains explicit in 07.02. `MinecraftSoulAnchorRuntime.creditDeath(...)` is a seam for validated provider-backed or deliberately configured fallback credit; Black Arcana does not infer Malum spirit yield from generic deaths. Malum 1.8.2 exposes real spirit inventory operations and supported Spirit Sight traces but no verified per-death spirit-yield callback/value used by this stage, so automatic harvesting remains fail-closed. Eidolon: Repraised 0.5.0.2 custom ritual callbacks do not expose caster identity, so the existing anchor-bound attunement is not treated as a player-specific Soul Anchor unlock. Neither boundary is replaced by a generic bonus or synthetic resource.
 
-07.03 Space & Boundaries through 07.07 Familiars & Divination remain pending and must continue sequentially from the latest canonical `main`; they are not pulled in through stale PR #22 ancestry. Optional provider/host behavior that requires the real modpack remains part of the deferred final validation campaign.
+07.03 Projection & Arsenal through 07.07 Familiars & Divination remain pending and must continue sequentially from the latest canonical `main`; 07.04 is Space & Displacement. They are not pulled in through stale PR #22 ancestry. Optional provider/host behavior that requires the real modpack remains part of the deferred final validation campaign.
 
 ## Freeze rules
 
