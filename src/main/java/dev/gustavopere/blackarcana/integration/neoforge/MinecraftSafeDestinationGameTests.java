@@ -59,6 +59,56 @@ public final class MinecraftSafeDestinationGameTests {
 
     @SuppressWarnings("removal")
     @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void lowHeadroomSuffocationGeometryFailsClosed(GameTestHelper helper) throws Exception {
+        var entity = helper.makeMockServerPlayerInLevel();
+        ServerLevel level = helper.getLevel();
+        MinecraftServer server = level.getServer();
+        double x = entity.getX() + 2.0D;
+        double y = entity.getY();
+        double z = entity.getZ();
+        BlockPos landing = BlockPos.containing(x, y, z);
+
+        level.setBlockAndUpdate(landing, Blocks.AIR.defaultBlockState());
+        level.setBlockAndUpdate(landing.above(), Blocks.STONE.defaultBlockState());
+        Object lowHeadroom = evaluate(server, entity, level, x, y, z);
+        helper.assertTrue(!allowed(lowHeadroom) && "collision_blocked".equals(code(lowHeadroom)),
+            "low-headroom/suffocation geometry must be rejected by the authoritative full-entity collision check");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80, batch = "space_world_border")
+    public static void loadedDestinationOutsideLiveWorldBorderFailsClosed(GameTestHelper helper) throws Exception {
+        var entity = helper.makeMockServerPlayerInLevel();
+        ServerLevel level = helper.getLevel();
+        MinecraftServer server = level.getServer();
+        var border = level.getWorldBorder();
+        double previousCenterX = border.getCenterX();
+        double previousCenterZ = border.getCenterZ();
+        double previousSize = border.getSize();
+
+        double x = entity.getX() + 3.0D;
+        double y = entity.getY();
+        double z = entity.getZ();
+        BlockPos landing = BlockPos.containing(x, y, z);
+        level.setBlockAndUpdate(landing, Blocks.AIR.defaultBlockState());
+        level.setBlockAndUpdate(landing.above(), Blocks.AIR.defaultBlockState());
+
+        try {
+            border.setCenter(entity.getX(), entity.getZ());
+            border.setSize(4.0D);
+            Object outside = evaluate(server, entity, level, x, y, z);
+            helper.assertTrue(!allowed(outside) && "world_border".equals(code(outside)),
+                "loaded collision-free destination outside the live world border must fail closed as world_border");
+        } finally {
+            border.setCenter(previousCenterX, previousCenterZ);
+            border.setSize(previousSize);
+        }
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
     public static void dimensionMismatchAndVehiclesFailClosedBeforeTeleport(GameTestHelper helper) throws Exception {
         var entity = helper.makeMockServerPlayerInLevel();
         ServerLevel level = helper.getLevel();
