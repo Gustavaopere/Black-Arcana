@@ -18,9 +18,11 @@ Specification must state: fantasy, host integration, invocation, target rules, r
 
 Stage 07 is being promoted as sequential domain-scoped work to keep review and validation surfaces bounded.
 
-- **07.01 Blood & Curses** — implemented on fresh latest-`main` PR #45; automated branch validation is GREEN, including JUnit, NeoForge build, JAR inspection, 34 required GameTests and dedicated-server smoke. Final real-modpack/manual acceptance remains deferred under D031.
-- **07.02–07.07** — not implemented by PR #45 and remain pending.
+- **07.01 Blood & Curses** — canonical on `main` via PR #45; automated branch and post-merge validation are GREEN. Final real-modpack/manual acceptance remains deferred under D031.
+- **07.02 Souls & Death** — canonical on `main` via PR #47 at merge `998186beed3522a0821a7dbb911f5e31cd6a9e1d`; exact-SHA post-merge workflow `33981437469` passed JUnit, diff sanity, NeoForge build, JAR inspection, all 40 required GameTests, dedicated-server smoke and canonical QA artifact publication. Provider-native Malum death-to-spirit harvesting and player-specific Eidolon unlock remain explicitly fail-closed where verified hooks lack the required causal/value or caster-identity contracts. Final real-modpack/manual host acceptance remains deferred under D031.
+- **07.03 Projection & Arsenal** — current next implementation slice.
+- **07.04–07.07** — pending and must follow sequentially from the latest canonical `main`.
 
 Historical stacked Stage 07 branches/PR #22 are reviewed source material only and are not canonical integration ancestry. Each later domain must start from the latest canonical `main` after its predecessor is promoted.
 
-The stage may be split into sequential domain branches if the review surface becomes too large; 07.01 establishes that pattern.
+The stage may be split into sequential domain branches if the review surface becomes too large; 07.01 established that pattern and 07.02 continued it.
