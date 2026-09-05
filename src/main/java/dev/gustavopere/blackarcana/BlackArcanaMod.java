@@ -8,6 +8,8 @@ import dev.gustavopere.blackarcana.config.ArcanaSpellDataReloadListener;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftArcaneDamagePipeline;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftLawOfRecurrenceRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSoulAnchorRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSpiritSightRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSympatheticWoundRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.OptionalModEntrypoints;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
@@ -43,6 +45,8 @@ public final class BlackArcanaMod {
         ArcanaServerRuntimeManager.register(NeoForge.EVENT_BUS);
         MinecraftArcaneDamagePipeline.register(NeoForge.EVENT_BUS);
         MinecraftLawOfRecurrenceRuntime.register(NeoForge.EVENT_BUS);
+        MinecraftSoulAnchorRuntime.register(NeoForge.EVENT_BUS);
+        MinecraftSpiritSightRuntime.register(NeoForge.EVENT_BUS);
         MinecraftSympatheticWoundRuntime.register(NeoForge.EVENT_BUS);
         HazardPreflightSyncService.register(NeoForge.EVENT_BUS);
         HazardResistanceForecastService.register(NeoForge.EVENT_BUS);
