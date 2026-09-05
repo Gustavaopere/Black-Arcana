@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-09-02
+Last updated: 2026-09-05
 
 ## Current state
 
@@ -24,7 +24,7 @@ Stage 06 Rituals is canonical on `main` as `IMPLEMENTED / FINAL VALIDATION DEFER
 
 The current canonical QA artifact for that Stage 06 merge is `black-arcana-4a79d440a4bba3920002eb8fc49a520e15744c48`, produced by workflow `33561613644`. Its publication confirms the automated mainline delivery gate only; real-modpack/manual host acceptance remains deferred under D031 and is not inferred as PASS.
 
-Stage 07 Spell Domains is **IN PROGRESS** through fresh latest-`main` domain-scoped promotion. Stage 07.01 Blood & Curses is canonical on `main` via PR #45 at merge SHA `0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`. The final PR head `3936f1a8468bf71c470e9108e3b531fda211bfda` passed workflow `33655485829`; post-merge workflow `33655891843` passed JUnit, diff sanity, NeoForge build, JAR inspection, all 34 required GameTests, dedicated-server smoke and canonical artifact publication. The exact-SHA QA artifact is `black-arcana-0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`. PR #45 contained only shared Stage 07 specification primitives plus Blood & Curses code/tests; 07.02–07.07 remain pending. Historical stacked PR #22 remains non-canonical/stale reviewed source material and is not merged wholesale. Stage 07.06 Forbidden Domains continues to follow D032: bounded localized in-world fields/arenas are the default; dynamic dimensions require a new explicit architectural decision. Real-modpack/manual host acceptance remains deferred and is not inferred from automated evidence.
+Stage 07 Spell Domains is **IN PROGRESS** through fresh latest-`main` domain-scoped promotion. Stage 07.01 Blood & Curses is canonical via PR #45 at merge SHA `0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`. Stage 07.02 Souls & Death is canonical via PR #47 at merge SHA `998186beed3522a0821a7dbb911f5e31cd6a9e1d`; final PR head `8d3e2ce9fa7c9c760257294ae3d805f55b9a8901` passed workflow `33981212999`, and post-merge workflow `33981437469` passed JUnit, diff sanity, NeoForge build, JAR inspection, all 40 required GameTests, dedicated-server smoke and canonical QA artifact publication. The exact-SHA artifact is `black-arcana-998186beed3522a0821a7dbb911f5e31cd6a9e1d`. 07.02 keeps automatic Malum death-to-spirit harvesting and player-specific Eidolon unlock fail-closed because the verified provider hooks do not expose the required causal/value or caster-identity contracts; no synthetic soul economy or inferred player ownership was introduced. 07.03–07.07 remain pending. Historical stacked PR #22 remains non-canonical/stale reviewed source material and is not merged wholesale. Stage 07.06 Forbidden Domains continues to follow D032: bounded localized in-world fields/arenas are the default; dynamic dimensions require a new explicit architectural decision. Real-modpack/manual host acceptance remains deferred and is not inferred from automated evidence.
 
 Stage 08 Progression & Balance starts only after Stage 07 implementation is canonical. Stage 09 Hardening & Release infrastructure starts only after Stage 08 implementation is canonical. Stage 09 cannot leave `RELEASE BLOCKED` until the accumulated final validation campaign is executed on the exact release candidate.
 
@@ -38,7 +38,7 @@ Stage 08 Progression & Balance starts only after Stage 07 implementation is cano
 | 05 Casting & UX | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | automated gates green; exact-SHA QA artifact + fixture available; real-client matrix remains PENDING |
 | 05A Arcane Danger | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | server contracts frozen; automated presentation/hardening advanced; real-client presentation acceptance remains |
 | 06 Rituals | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | canonical on `main` at `4a79d440...`; post-merge full CI green; real-modpack/manual host acceptance deferred |
-| 07 Spell Domains | 🟦 IN PROGRESS — 07.01 CANONICAL | 07.01 merged at `0f6d70bf...` with post-merge full CI + QA artifact; 07.02–07.07 pending; real-modpack/manual acceptance deferred |
+| 07 Spell Domains | 🟦 IN PROGRESS — 07.01 + 07.02 CANONICAL | 07.01 merged at `0f6d70bf...`; 07.02 merged at `998186be...`; both have post-merge full CI + QA artifacts; 07.03–07.07 pending; real-modpack/manual acceptance deferred |
 | 08 Progression & Balance | ⬜ WAITING FOR 07 IMPLEMENTATION | implement after 07 becomes canonical |
 | 09 Hardening & Release | ⬜ WAITING FOR 08 IMPLEMENTATION | infrastructure first; final campaign remains release-blocking |
 
@@ -52,7 +52,7 @@ Missing manual/final evidence blocks validation and release claims, not downstre
 
 ## Frozen predecessors
 
-Stages 00, 01, 02, 03 and 04 are complete and may change only through explicit follow-up decisions. Stage 05A server/gameplay contracts are frozen for downstream consumers; changing their authority, transaction, hazard, resistance or persistence semantics requires explicit reviewed follow-up work. Stage 06 is canonical as an implemented downstream consumer; any change to its ritual identity, transaction, persistence or provider semantics requires explicit reviewed follow-up work. Stage 07.01 is now a canonical Stage 07 subdomain; changes to its Blood Price authority, target-admission rules, damage-provenance/recursion semantics or bounded state contracts require explicit reviewed follow-up work rather than silent drift in later domains.
+Stages 00, 01, 02, 03 and 04 are complete and may change only through explicit follow-up decisions. Stage 05A server/gameplay contracts are frozen for downstream consumers; changing their authority, transaction, hazard, resistance or persistence semantics requires explicit reviewed follow-up work. Stage 06 is canonical as an implemented downstream consumer; any change to its ritual identity, transaction, persistence or provider semantics requires explicit reviewed follow-up work. Stage 07.01 is a canonical Stage 07 subdomain; changes to its Blood Price authority, target-admission rules, damage-provenance/recursion semantics or bounded state contracts require explicit reviewed follow-up work rather than silent drift in later domains. Stage 07.02 is also canonical: changes to Mortal Ledger credit identity, Soul Anchor cap/lockout/persistence/exactly-once death settlement, Spirit Sight privacy/provider bounds, or the documented Malum/Eidolon fail-closed authority boundaries require an explicit reviewed follow-up.
 
 ## Stage 05 / 05A deferred validation ledger
 
@@ -96,7 +96,11 @@ Optional host/runtime evidence that requires the real modpack remains `FINAL VAL
 
 07.01 Blood & Curses was rebuilt on fresh latest-`main` ancestry in PR #45 using explicit RED→GREEN cycles for Blood Price, Equilibrium Rite, Sanguine Harvest, damage-family classification, Law of Recurrence and Sympathetic Wound. Final branch workflow `33655485829` passed on head `3936f1a8468bf71c470e9108e3b531fda211bfda`. Canonical merge: PR #45 / `0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`. Post-merge workflow `33655891843` passed the full pipeline with 34 required GameTests, dedicated-server smoke and canonical artifact `black-arcana-0f6d70bf6ccfbb0b8da4700f88aa84ab63f34791`.
 
-07.02 Souls & Death through 07.07 Familiars & Divination remain pending and must continue sequentially from the latest canonical `main`; they are not pulled in through stale PR #22 ancestry. Optional provider/host behavior that requires the real modpack remains part of the deferred final validation campaign.
+07.02 Souls & Death was rebuilt sequentially from the latest canonical `main` in PR #47. The implementation includes bounded Mortal Ledger/Soul Anchor contracts, deterministic death-transaction identity, SavedData persistence, server-authoritative exactly-once death prevention, Spirit Sight privacy/provider contracts and runtime, and a stable-registry Malum Spirit Sight adapter. TDD runs covered ledger, specs, policy/provider/runtime and persistence; Soul Anchor RED workflow `33978656892` failed only because the new runtime was absent, and GREEN workflow `33980621225` passed all 40 GameTests. Final PR head `8d3e2ce9fa7c9c760257294ae3d805f55b9a8901` passed workflow `33981212999`. Canonical merge: PR #47 / `998186beed3522a0821a7dbb911f5e31cd6a9e1d`. Post-merge workflow `33981437469` passed the full pipeline and published `black-arcana-998186beed3522a0821a7dbb911f5e31cd6a9e1d`.
+
+Provider-native safety remains explicit in 07.02. `MinecraftSoulAnchorRuntime.creditDeath(...)` is a seam for validated provider-backed or deliberately configured fallback credit; Black Arcana does not infer Malum spirit yield from generic deaths. Malum 1.8.2 exposes real spirit inventory operations and supported Spirit Sight traces but no verified per-death spirit-yield callback/value used by this stage, so automatic harvesting remains fail-closed. Eidolon: Repraised 0.5.0.2 custom ritual callbacks do not expose caster identity, so the existing anchor-bound attunement is not treated as a player-specific Soul Anchor unlock. Neither boundary is replaced by a generic bonus or synthetic resource.
+
+07.03 Space & Boundaries through 07.07 Familiars & Divination remain pending and must continue sequentially from the latest canonical `main`; they are not pulled in through stale PR #22 ancestry. Optional provider/host behavior that requires the real modpack remains part of the deferred final validation campaign.
 
 ## Freeze rules
 
