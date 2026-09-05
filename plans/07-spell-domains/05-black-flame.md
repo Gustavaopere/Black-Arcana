@@ -94,7 +94,31 @@ Black Pyre uses the existing `WorldEffectMode` ordering and must not create a se
 
 Current Stage 04 `ProtectionQuery` is entity/destination oriented: it carries caster, dimension, string target identity and `EntityInteractionType`. Existing interaction types are `DAMAGE`, `CONTROL`, `DISPLACEMENT`, `EXECUTION`, `RESURRECTION_DENIAL` and `DOMAIN_CAPTURE`. Reusing this contract for block mutation would create ambiguous adapter semantics.
 
-### New provider-neutral contract
+A second Stage 04 issue is that `WorldEffectProfile` is explicitly a static worst-case declaration, while the current `ConfigurableWorldEffectPolicy#authorize(request, target)` treats `profile.mutationClass()` as the exact class required for every mutation attempt. A single Black Pyre profile declared at worst-case `PERMANENT` would therefore be rejected in `TEMPORARY` and `LIMITED`, even when the actual requested cell operation is less destructive. Creating multiple spell IDs or parallel configuration trees to work around that would violate the domain contract.
+
+### Requested mutation-class admission
+
+Preserve the existing policy API and semantics for current callers, and add a narrow requested-class admission path for Stage 07.05.
+
+The registered `WorldEffectProfile` remains the spell's **maximum/worst-case declaration**. For Black Pyre it may declare the maximum mutation class the spell can ever request under explicit server configuration. A new overload/service path accepts a `requestedMutationClass` for the actual operation and must enforce all of the following:
+
+- `requestedMutationClass` is not more destructive than `profile.mutationClass()`;
+- the effective `WorldEffectMode` allows the requested class;
+- the existing global/per-spell affected-unit limits still apply;
+- entity-damage configuration remains independently enforced where applicable;
+- the canonical `WorldEffectBudgetLedger` is still the only cumulative per-cast budget;
+- the existing `authorize(request, target)` path remains source- and behavior-compatible for all predecessor callers.
+
+Black Pyre uses:
+
+- no block admission for `COSMETIC` because no mutation occurs;
+- requested class `TEMPORARY` for reversible cells;
+- requested class `LIMITED` for bounded permanent cells under `LIMITED` mode;
+- requested class `PERMANENT` for the maximum explicit `FULL` path.
+
+`TemporaryBlockMutationGateway` must route its Black Pyre operation through requested class `TEMPORARY` rather than forcing the spell's worst-case profile class. Existing temporary callers with a `TEMPORARY` profile must remain behaviorally unchanged. The permanent gateway accepts only `LIMITED` or `PERMANENT` requested classes and rejects weaker/invalid classes rather than guessing.
+
+### New provider-neutral mutation-protection contract
 
 Add an explicit block/world-mutation protection route without changing existing entity-interaction semantics.
 
@@ -103,9 +127,9 @@ The new query must identify at minimum:
 - caster UUID;
 - dimension ID;
 - exact block position/cell identity;
-- `WorldMutationType` (for Black Pyre terrain: `FIRE_SPREAD` and/or bounded `BLOCK_REPLACEMENT` as appropriate);
+- `WorldMutationType` (for Black Pyre terrain: the registered Black Pyre mutation type, expected to be `FIRE_SPREAD` for frontier-owned terrain work);
 - requested `WorldMutationClass`/persistence class;
-- Black Arcana spell/cast provenance where needed for diagnostics and deduplication.
+- Black Arcana spell ID and cast provenance for diagnostics/deduplication.
 
 The registry/guard must:
 
@@ -116,21 +140,27 @@ The registry/guard must:
 - keep existing entity `ProtectionAdapterRegistry` behavior source-compatible;
 - expose no generic bypass flag to spell code.
 
+An empty mutation-protection registry is a neutral allow after all core world policy/loaded-chunk checks, matching the existing provider-neutral registry model: absence of an optional claim adapter does not imply that every block in an otherwise unclaimed world is protected. If an adapter is installed, its denial/failure is authoritative and fail-closed.
+
 Optional claim/provider integrations consume this provider-neutral query. Black Pyre itself must not know claim-mod internals.
 
 ### Settlement gateways
 
-Temporary block work continues through the existing `TemporaryBlockMutationGateway` after mutation-protection admission.
+Temporary block work continues through the existing `TemporaryBlockMutationGateway` after mutation-protection admission and requested-class world admission.
 
 Add a narrow permanent mutation gateway for `LIMITED`/`FULL` that:
 
 - accepts only already-loaded target state;
-- rechecks mutation-protection admission immediately before side effect;
+- validates requested mutation class against the registered worst-case profile and effective mode;
+- performs mutation-protection admission before consuming mutation budget;
+- rechecks mutation-protection admission immediately before side effect when mutable provider state can change;
 - uses compare-and-set semantics against the observed block state;
-- consumes the canonical per-cast world-effect budget exactly once;
+- consumes the canonical per-cast world-effect budget exactly once per admitted mutation attempt;
 - rejects stale state rather than overwriting concurrent player/world edits;
 - exposes no chunk-loading API;
 - reports explicit denial codes.
+
+The temporary route must similarly perform mutation-protection admission before invoking the existing gateway that consumes canonical world-effect budget, so a claim denial does not burn budget for work that was never eligible to settle.
 
 Spell/runtime code must not mutate terrain directly around these gateways.
 
@@ -154,7 +184,8 @@ Final ordinary damage, boss multiplier, PvP multiplier and cooldown tuning remai
 - one frontier ID maps to one bounded frontier lifecycle;
 - duplicate seed/frontier creation with the same identity is rejected;
 - cell identity is stable and deduplicated before work is admitted;
-- world budget is charged once per actual mutation attempt under the canonical budget ledger;
+- world budget is charged once per admitted mutation attempt under the canonical budget ledger;
+- protection denials occur before world-budget consumption;
 - failed compare-and-set does not become a successful mutation;
 - a later player/world block edit must never be reverted by stale temporary cleanup;
 - entity targets are settled at most once per effect pass unless the spell explicitly schedules a separate bounded tick/effect instance;
@@ -166,11 +197,12 @@ Fail closed for:
 
 - missing/unavailable Black Arcana runtime;
 - unloaded target chunk/cell;
-- world mode below required mutation class;
+- requested mutation class above the spell's worst-case declared class;
+- world mode below requested mutation class;
 - missing spell world-effect profile;
 - world-effect budget exhaustion;
-- protection adapter denial/failure;
-- mutation-protection contract unavailable;
+- installed protection adapter denial/failure;
+- mutation-protection authority unavailable from the runtime when terrain settlement is requested;
 - stale block state at settlement;
 - invalid/expired frontier;
 - out-of-radius or over-cell-budget candidate;
@@ -201,10 +233,14 @@ Implementation starts RED and must cover at least:
 - radius rejection;
 - unloaded candidates are dropped/no deferred chunk-load queue;
 - expiry/finish cleanup;
-- mutation-protection registry all-allow, denial and adapter-exception fail-closed;
-- mutation query preserves position/type/class/caster/cast provenance;
+- mutation-protection registry empty-registry neutral allow, all-allow, denial and adapter-exception fail-closed;
+- mutation query preserves position/type/class/caster/spell/cast provenance;
+- requested-class admission rejects class above profile maximum;
+- requested-class admission permits TEMPORARY under a PERMANENT worst-case profile when effective mode is TEMPORARY;
+- legacy world-effect admission behavior remains unchanged for predecessor callers;
+- protection denial occurs before world-budget consumption;
 - permanent gateway stale-state compare-and-set denial;
-- world-mode ordering: COSMETIC < TEMPORARY < LIMITED < FULL;
+- world-mode ordering: OFF < COSMETIC < TEMPORARY < LIMITED < FULL;
 - LIMITED/FULL cannot bypass technical frontier budgets.
 
 ### GameTests
@@ -213,13 +249,14 @@ Implementation starts RED and must cover at least:
 - safe-mode/entity-only Black Pyre damages one eligible target without terrain mutation;
 - allied/protected target is not damaged;
 - boss/player limits are honored;
-- TEMPORARY mutation applies only in loaded authorized cells;
+- TEMPORARY mutation applies only in loaded authorized cells even when Black Pyre's profile declares a PERMANENT worst case;
 - temporary mutation expires and restores;
 - player/world edit after temporary mutation is not overwritten by cleanup;
 - restart/reload path restores temporary state cleanly without reviving spread;
 - chunk-edge candidate never force-loads an unloaded chunk;
-- protected block/claim cell fails closed;
+- protected block/claim cell fails closed and does not consume mutation budget;
 - LIMITED bounded permanent mutation commits only under an allowed mode and protection decision;
+- FULL/PERMANENT mutation is denied unless server mode explicitly allows FULL;
 - FULL does not exceed radius/cell/per-tick/concurrent-frontier ceilings;
 - stale cell revalidation prevents overwrite;
 - no vanilla fire cascade/random-tick propagation occurs;
