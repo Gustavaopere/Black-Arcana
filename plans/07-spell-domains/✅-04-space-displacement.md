@@ -2,11 +2,21 @@
 
 ## State
 
-**IMPLEMENTED ON PR #52 / AWAITING FINAL PR-HEAD VALIDATION AND CANONICAL MERGE.**
+**CANONICAL ON `main` / IMPLEMENTED / FINAL REAL-MODPACK VALIDATION DEFERRED.**
 
-This domain is implemented sequentially from canonical `main@f30999b375d42506127eb4c7570f1b8bfd68262c`. Historical stacked PR #22 is reviewed source material only and is not canonical ancestry.
+Stage 07.04 was implemented sequentially from canonical `main@f30999b375d42506127eb4c7570f1b8bfd68262c` in PR #52 and merged at `a567419f1cccd3a33db95402fcb267c0ad79bc67`. Historical stacked PR #22 remained reviewed source material only and was not merged as canonical ancestry.
 
-No 07.05–07.07 runtime is part of this scope. Final real-modpack/provider/manual host acceptance remains deferred under D031 and is not inferred from automated CI.
+Final PR-head workflow `33997420003` passed JUnit, diff sanity, NeoForge build, JAR inspection, all required GameTests and dedicated-server smoke on head `f74bf5b15e3178392a2ea52d3f00969ac6288ea2`.
+
+Exact-SHA post-merge workflow `33997767668` passed the full pipeline on `main@a567419f1cccd3a33db95402fcb267c0ad79bc67`, including **77/77 required GameTests**, dedicated-server smoke and canonical QA artifact publication.
+
+Canonical QA artifact:
+
+- name: `black-arcana-a567419f1cccd3a33db95402fcb267c0ad79bc67`;
+- artifact ID: `9978600971`;
+- SHA-256: `c4343f5764d76d6b5310dc446ff1bfbb9359b17ccf74898e615743010259dc1e`.
+
+No 07.05–07.07 runtime is included in this domain. Real-modpack/provider/manual host acceptance remains deferred under D031 and is not inferred from automated CI.
 
 ## Implemented mechanics
 
@@ -113,14 +123,12 @@ Stage 08 may tune ordinary gameplay values below these ceilings but must not sil
 
 The implementation was rebuilt from latest canonical `main` with RED→GREEN discipline rather than merging stale PR #22 ancestry.
 
-Additional audit hardening performed during PR #52 identified two live-wiring/settlement issues:
+Additional audit hardening during PR #52 identified two live-wiring/settlement issues:
 
-1. stateful 07.04 lifecycle runtimes existed but were not registered by `BlackArcanaMod`; an explicit RED wiring contract reproduced the missing composition-root registration before the four runtimes were registered on `NeoForge.EVENT_BUS`;
+1. stateful 07.04 lifecycle runtimes existed but were not registered by `BlackArcanaMod`; an explicit RED wiring contract reproduced the missing composition-root registration before Threshold Gate, Veilstep Reflex, Anchor Recall and Reciprocal Transposition were registered on `NeoForge.EVENT_BUS`;
 2. Threshold Gate and Reciprocal Transposition used raw `setPos(...)` even though player endpoints are supported; a dedicated RED contract failed on both paths before settlement/rollback were moved to `teleportTo(...)`.
 
-GameTests cover the domain's concrete safety and transaction behavior, including loaded safe destinations, collision/headroom, fluids, world border, dimension mismatch, vehicles, player consent, throughput, stale endpoint snapshots, atomic/no-partial transposition behavior, ItemEntity non-duplication and Vector Reversal authorization/bounds.
-
-A final full PR-head workflow must pass JUnit, diff sanity, NeoForge build, JAR inspection, all required GameTests and dedicated-server smoke before PR #52 is eligible for merge. Exact-SHA post-merge CI and canonical QA artifact publication are required before 07.04 becomes canonical on `main`.
+The canonical post-merge GameTest server ran 77 tests and reported `All 77 required tests passed`. Coverage includes loaded safe destinations, collision/headroom, fluids, world border, dimension mismatch, vehicles, player consent, throughput, stale endpoint snapshots, atomic/no-partial transposition behavior, ItemEntity non-duplication and Vector Reversal authorization/bounds.
 
 ## Deferred acceptance
 
