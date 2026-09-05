@@ -76,10 +76,10 @@ public final class MinecraftReciprocalTranspositionRuntime {
             if (STATES.get(server) != state) return SwapResult.denied("transposition_throughput_changed", "Throughput policy changed before Reciprocal Transposition settlement");
             if (!state.throughput.tryAcquire(ownerId, nowTick)) return SwapResult.denied("transposition_throughput", "Reciprocal Transposition throughput is exhausted for this owner/window");
         }
-        try { first.entity().setPos(secondPosition.x(), secondPosition.y(), secondPosition.z()); second.entity().setPos(firstPosition.x(), firstPosition.y(), firstPosition.z()); }
+        try { first.entity().teleportTo(secondPosition.x(), secondPosition.y(), secondPosition.z()); second.entity().teleportTo(firstPosition.x(), firstPosition.y(), firstPosition.z()); }
         catch (RuntimeException settlementFailure) {
-            try { first.entity().setPos(firstPosition.x(), firstPosition.y(), firstPosition.z()); } catch (RuntimeException ignored) { }
-            try { second.entity().setPos(secondPosition.x(), secondPosition.y(), secondPosition.z()); } catch (RuntimeException ignored) { }
+            try { first.entity().teleportTo(firstPosition.x(), firstPosition.y(), firstPosition.z()); } catch (RuntimeException ignored) { }
+            try { second.entity().teleportTo(secondPosition.x(), secondPosition.y(), secondPosition.z()); } catch (RuntimeException ignored) { }
             return SwapResult.denied("transposition_settlement_failed", "Reciprocal Transposition movement could not be settled atomically");
         }
         return SwapResult.allowedResult();
