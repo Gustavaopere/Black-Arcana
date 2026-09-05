@@ -81,7 +81,7 @@ public final class MinecraftThresholdGateRuntime {
             if (STATES.get(server) != state || state.pairs.get(gateId) != pair) return TransferResult.denied("threshold_gate_pair_changed", "Gate pair changed before transfer settlement");
             if (!pair.throughput().tryAcquire(pair.ownerId(), nowTick)) return TransferResult.denied("threshold_gate_throughput", "Gate throughput is exhausted for this window");
         }
-        try { living.setPos(destination.x(), destination.y(), destination.z()); }
+        try { living.teleportTo(destination.x(), destination.y(), destination.z()); }
         catch (RuntimeException movementFailure) { return TransferResult.denied("threshold_gate_settlement_failed", "Gate movement could not be settled"); }
         return TransferResult.allowedResult();
     }
