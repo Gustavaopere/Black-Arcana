@@ -13,10 +13,11 @@
 - **Dano base listado:** 15
 - **Raio:** 8 blocos
 - **Casts:** 1–5
+- **Aquisição auditada:** não craftável; não lootável
 
 ## O que faz
 
-Golpeia com a arma para liberar uma grande onda de choque flamejante ao redor do caster. A documentação atual registra que o dano escala com a arma empunhada e que a quantidade de casts cresce até cinco.
+Golpeia com a arma para liberar uma grande onda de choque flamejante ao redor do caster. A documentação atual registra que o dano escala com a arma empunhada e que a quantidade de casts cresce até cinco. A auditoria source 3.16.3 confirma criação de `FireEruptionAoe` de raio 8.
 
 ## Escalonamento
 
@@ -24,14 +25,15 @@ O catálogo lista dano base 15, raio 8 blocos e 1–5 casts. A fórmula exata de
 
 ## Obtenção e aprendizado
 
-Raise Hell foi adicionado na linha 3.10.0. O pipeline específico de aquisição permanece `NÃO VERIFICADO` além das regras gerais de scrolls/spellbooks.
+Raise Hell foi adicionado na linha 3.10.0. A auditoria atual do provider confirma explicitamente que este spell **não é craftável e não é lootável**, portanto a ficha não o encaminha pelo pipeline genérico de scroll loot/crafting. Qualquer rota positiva específica de aquisição além dessas exclusões permanece `NÃO VERIFICADO`.
 
 ## Deduplicação / causalidade
 
-Já cobre shockwave melee/fire de grande raio com multi-cast e weapon scaling. Os recasts não devem virar casts raiz independentes em integrações, e o dano de arma não deve ser recalculado por Black Arcana.
+Já cobre shockwave/erupção melee-fire de grande raio com multi-cast e weapon scaling. Os recasts não devem virar casts raiz independentes em integrações, e o dano de arma não deve ser recalculado por Black Arcana. A futura Arcana Infernal não pode reutilizar “Raise Hell” nem replicar essa erupção como identidade central.
 
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/`
 - Changelog oficial: `https://iron.wiki/changelog/`
+- Auditoria Fire 3.16.3 canônica: `wiki/providers/irons-spellbooks/FIRE-AUDIT.md`.
 - Consulta: 2026-09-06.
