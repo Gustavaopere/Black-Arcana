@@ -81,6 +81,27 @@ class ForbiddenDomainContractTest {
     }
 
     @Test
+    void participantLogoutCleanupRemovesStaleMembershipWithoutClosingOwnerDomains() {
+        ForbiddenDomainSpec spec = new ForbiddenDomainSpec(
+                "black_arcana:test_domain", ForbiddenDomainMode.LOCALIZED_FIELD, 8, 40, 4, 32);
+        ForbiddenDomainRuntime runtime = new ForbiddenDomainRuntime(2);
+        UUID ownerA = UUID.randomUUID();
+        UUID ownerB = UUID.randomUUID();
+        UUID participant = UUID.randomUUID();
+
+        assertEquals(ForbiddenDomainRuntime.StartResult.STARTED, runtime.start(ownerA, spec, 100));
+        assertEquals(ForbiddenDomainRuntime.StartResult.STARTED, runtime.start(ownerB, spec, 100));
+        assertTrue(runtime.trackParticipant(ownerA, participant));
+        assertTrue(runtime.trackParticipant(ownerB, participant));
+
+        assertEquals(2, runtime.clearParticipant(participant));
+        assertEquals(0, runtime.session(ownerA).orElseThrow().participantCount());
+        assertEquals(0, runtime.session(ownerB).orElseThrow().participantCount());
+        assertEquals(2, runtime.activeCount());
+        assertEquals(0, runtime.clearParticipant(participant));
+    }
+
+    @Test
     void expiryAndServerStopCleanupCannotLeaveOrphanSessions() {
         ForbiddenDomainSpec spec = new ForbiddenDomainSpec(
                 "black_arcana:test_domain", ForbiddenDomainMode.LOCALIZED_FIELD, 8, 20, 8, 32);
