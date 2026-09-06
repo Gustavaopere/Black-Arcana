@@ -114,6 +114,12 @@ public final class BlackArcanaRadialScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (shouldCloseFromOpenKey(
+                BlackArcanaClientConfig.RADIAL_BEHAVIOR.get(),
+                BlackArcanaKeyMappings.OPEN_RADIAL.matches(keyCode, scanCode))) {
+            onClose();
+            return true;
+        }
         if (keyCode == GLFW.GLFW_KEY_PAGE_UP || keyCode == GLFW.GLFW_KEY_LEFT) {
             page = RadialLayout.clampPage(loadout.size(), page - 1);
             return true;
@@ -123,6 +129,13 @@ public final class BlackArcanaRadialScreen extends Screen {
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    static boolean shouldCloseFromOpenKey(
+            BlackArcanaClientConfig.RadialBehavior behavior,
+            boolean openKeyPressed
+    ) {
+        return behavior == BlackArcanaClientConfig.RadialBehavior.TOGGLE && openKeyPressed;
     }
 
     @Override
