@@ -3,29 +3,33 @@
 - **Mod ID:** `irons_spellbooks`
 - **JAR do pack:** `irons_spellbooks-1.21.1-3.16.3.jar`
 - **Runtime:** `1.21.1-3.16.3`
-- **Regra desta Wiki:** TODO spell existente recebe um arquivo `.md`, mesmo quando não há alteração planejada pelo Black Arcana.
+- **Regra desta Wiki:** TODO spell existente recebe um arquivo `.md`, mesmo quando não há alteração planejada pelo Black Arcana. Spells deprecated ainda presentes no provider recebem ficha histórica/semântica, mas não inflam a contagem ativa do catálogo oficial.
 
 ## Progresso do catálogo individual
 
-| Escola | Total | Fichas individuais | Estado |
+| Escola | Total ativo | Fichas ativas | Estado |
 |---|---:|---:|---|
 | Blood | 10 | 10 | `COMPLETO` |
 | Eldritch | 7 | 7 | `COMPLETO` |
 | Ender | 16 | 16 | `COMPLETO` |
 | Evocation | 17 | 17 | `COMPLETO` |
 | Fire | 13 | 13 | `COMPLETO` |
-| Holy | 12 | 0 | `PENDENTE` |
+| Holy | 12 | 12 | `COMPLETO` |
 | Ice | 12 | 0 | `PENDENTE` |
 | Lightning | 10 | 0 | `PENDENTE` |
 | Nature | 13 | 0 | `PENDENTE` |
 
-**Cobertura atual:** 63/110 spells do Iron's base possuem ficha individual canônica.
+**Cobertura ativa atual:** 75/110 spells do Iron's base possuem ficha individual canônica.
 
-`COMPLETO` aqui significa que a ficha individual existe para todos os spells da escola e contém tudo que pôde ser confirmado no passe atual. Não significa que VFX/runtime, fórmulas internas, loot específico ou outros campos marcados `NÃO VERIFICADO` tenham sido observados no cliente real.
+`COMPLETO` aqui significa que a ficha individual existe para todos os spells **ativos** da escola e contém tudo que pôde ser confirmado no passe atual. Não significa que VFX/runtime, fórmulas internas, loot específico ou outros campos marcados `NÃO VERIFICADO` tenham sido observados no cliente real.
+
+### Spells legados/deprecated preservados fora da contagem ativa
+
+- `cloud-of-regeneration.md` — implementação Holy ainda presente no source 3.16.3, `Deprecated=true` no `DefaultConfig`, ausente do catálogo oficial ativo atual. Mantido para provenance/deduplicação histórica sem alterar 75/110.
 
 ## Escolas nativas do Iron's base
 
-A build atual do provider-base possui 9 escolas nativas:
+A build atual do catálogo oficial ativo possui 9 escolas nativas:
 
 1. Blood — 10 spells
 2. Eldritch — 7 spells
@@ -37,7 +41,7 @@ A build atual do provider-base possui 9 escolas nativas:
 8. Lightning — 10 spells
 9. Nature — 13 spells
 
-**Total do Iron's base: 110 spells.**
+**Total ativo do Iron's base: 110 spells.**
 
 ## Escolas adicionais no modpack
 
@@ -77,6 +81,7 @@ Cada ficha deve registrar, quando a informação existir e puder ser verificada:
 - status no modpack;
 - provider e mod ID;
 - JAR/versão;
+- spell ID;
 - escola/tipo;
 - descrição funcional;
 - níveis e raridade;
