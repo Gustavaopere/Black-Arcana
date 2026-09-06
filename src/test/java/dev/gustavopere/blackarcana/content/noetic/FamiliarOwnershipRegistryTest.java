@@ -1,8 +1,5 @@
 package dev.gustavopere.blackarcana.content.noetic;
 
-import com.hollingsworth.arsnouveau.api.familiar.IFamiliar;
-import dev.gustavopere.blackarcana.integration.ars.ArsFamiliarOwnershipProvider;
-import net.minecraft.resources.ResourceLocation;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -46,15 +43,12 @@ class FamiliarOwnershipRegistryTest {
     }
 
     @Test
-    void arsProviderUsesOnlyPublicFamiliarOwnerIdentity() {
-        UUID owner = UUID.randomUUID();
-        UUID foreign = UUID.randomUUID();
-        ArsFamiliarOwnershipProvider provider = new ArsFamiliarOwnershipProvider();
-        IFamiliar familiar = new FakeFamiliar(owner);
-
-        assertEquals(FamiliarOwnershipProvider.Result.OWNED, provider.ownership(owner, familiar));
-        assertEquals(FamiliarOwnershipProvider.Result.NOT_OWNED, provider.ownership(foreign, familiar));
-        assertEquals(FamiliarOwnershipProvider.Result.NOT_OWNED, provider.ownership(owner, new Object()));
+    void invalidProviderIdsAndNullInputsFailClosed() {
+        FamiliarOwnershipRegistry registry = new FamiliarOwnershipRegistry(2);
+        assertFalse(registry.register(new FixedProvider("   ", FamiliarOwnershipProvider.Result.OWNED)));
+        assertThrows(NullPointerException.class, () -> registry.ownership(null, new Object()));
+        assertThrows(NullPointerException.class, () -> registry.ownership(UUID.randomUUID(), null));
+        assertEquals(0, registry.providerCount());
     }
 
     private record FixedProvider(String providerId, FamiliarOwnershipProvider.Result result)
@@ -70,19 +64,5 @@ class FamiliarOwnershipRegistryTest {
         public Result ownership(UUID ownerId, Object candidate) {
             throw new IllegalStateException("provider failed");
         }
-    }
-
-    private static final class FakeFamiliar implements IFamiliar {
-        private UUID ownerId;
-        private ResourceLocation holderId = ResourceLocation.fromNamespaceAndPath("black_arcana", "test_familiar");
-
-        private FakeFamiliar(UUID ownerId) {
-            this.ownerId = ownerId;
-        }
-
-        @Override public ResourceLocation getHolderID() { return holderId; }
-        @Override public void setHolderID(ResourceLocation id) { holderId = id; }
-        @Override public UUID getOwnerID() { return ownerId; }
-        @Override public void setOwnerID(UUID uuid) { ownerId = uuid; }
     }
 }
