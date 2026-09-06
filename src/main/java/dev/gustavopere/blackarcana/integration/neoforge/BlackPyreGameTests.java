@@ -226,8 +226,9 @@ public final class BlackPyreGameTests {
         try {
             runtime.configureWorldEffects(new WorldEffectPolicyConfig(WorldEffectMode.TEMPORARY, 4096, true, Map.of()));
             Object result = igniteDefault(server, caster.getUUID(), List.of(target.getUUID()), 2.0D, true, seed);
+            ArcanaCastId frontierCastId = castId(result);
             helper.assertTrue(terrainApplied(result), "seed ignition must settle before the frontier starts");
-            helper.assertTrue(activeFrontiers(server) == 1, "successful terrain ignition must create exactly one bounded frontier");
+            helper.assertTrue(isFrontierActive(server, frontierCastId), "successful terrain ignition must keep its own bounded frontier active");
             helper.assertTrue(neighbors.stream().allMatch(pos -> helper.getLevel().getBlockState(pos).is(Blocks.STONE)),
                 "frontier neighbors must remain untouched until a runtime tick admits them");
             helper.assertTrue(tickBlackPyreFrontiers(server, now + 1L), "Black Pyre runtime must expose its server-owned tick path");
@@ -255,10 +256,11 @@ public final class BlackPyreGameTests {
         try {
             runtime.configureWorldEffects(new WorldEffectPolicyConfig(WorldEffectMode.TEMPORARY, 4096, true, Map.of()));
             Object result = igniteDefault(server, caster.getUUID(), List.of(target.getUUID()), 2.0D, true, seed);
+            ArcanaCastId frontierCastId = castId(result);
             helper.assertTrue(terrainApplied(result), "seed ignition must settle before expiry test");
-            helper.assertTrue(activeFrontiers(server) == 1, "frontier must exist before its lifetime ceiling");
+            helper.assertTrue(isFrontierActive(server, frontierCastId), "frontier must exist before its lifetime ceiling");
             helper.assertTrue(tickBlackPyreFrontiers(server, now + 1_200L), "Black Pyre runtime must process expiry through its tick path");
-            helper.assertTrue(activeFrontiers(server) == 0, "frontier must be removed exactly at its lifetime ceiling");
+            helper.assertTrue(!isFrontierActive(server, frontierCastId), "the same frontier must be removed exactly at its lifetime ceiling");
             helper.assertTrue(helper.getLevel().getBlockState(neighbor).is(Blocks.STONE),
                 "expired pending work must not settle after frontier removal");
         } finally {
@@ -277,13 +279,13 @@ public final class BlackPyreGameTests {
         return method.invoke(null, server, casterId, targets, damage, terrainRequested, seed.getX(), seed.getY(), seed.getZ());
     }
 
-    private static int activeFrontiers(MinecraftServer server) {
+    private static boolean isFrontierActive(MinecraftServer server, ArcanaCastId castId) {
         try {
             Class<?> runtime = Class.forName("dev.gustavopere.blackarcana.integration.neoforge.MinecraftBlackPyreRuntime");
-            Method method = runtime.getMethod("activeFrontiers", MinecraftServer.class);
-            return (int) method.invoke(null, server);
+            Method method = runtime.getMethod("isFrontierActive", MinecraftServer.class, ArcanaCastId.class);
+            return (boolean) method.invoke(null, server, castId);
         } catch (ReflectiveOperationException failure) {
-            return -1;
+            return false;
         }
     }
 
