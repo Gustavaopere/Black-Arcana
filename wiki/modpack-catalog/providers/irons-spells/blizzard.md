@@ -57,6 +57,27 @@ Canaliza um blizzard lento e móvel em uma posição-alvo, puxando criaturas par
 
 Já cobre vortex Ice móvel com pull/freezing semantics. Uma nova tempestade glacial só é lacuna se tiver contrato diferente, não apenas outro AoE que puxa e congela.
 
+## Matriz obrigatória de verificação
+
+- **Status/provider/mod ID/JAR/spell ID/escola/tipo:** confirmados acima; tipo funcional = AoE Ice móvel.
+- **Descrição funcional:** confirmada pelo catálogo atual e pelo `BlizzardAoe` source-auditado.
+- **Níveis/raridade:** 1–8 / Rare → Legendary.
+- **Cast type / cast time / channel:** `LONG` / 25 ticks / não é `CONTINUOUS`; regras adicionais de interrupção `NÃO VERIFICADO`.
+- **Recurso/custo:** mana / 40–110; fórmula fina de custo além do intervalo público `NÃO VERIFICADO` nesta ficha.
+- **Cooldown:** 22 s.
+- **Dano/cura/tipo de dano:** dano e cura numéricos da `BlizzardAoe` `NÃO VERIFICADO`; tipo/tag de dano `NÃO VERIFICADO`.
+- **Alcance/raio/área/duração:** targeting 32 blocos; raio público 8; fórmula source `2 + 6 * entityPowerMultiplier`; duração pública 11,5 s versus fórmula source explicitada acima.
+- **Scaling/fórmulas/caps:** fórmulas de raio/duração acima; caps adicionais além do nível máximo 8 `NÃO VERIFICADO`.
+- **Targets/PvP/bosses/summons:** conforme seção específica; policies finas `NÃO VERIFICADO`.
+- **Condições/requisitos:** adicionais `NÃO VERIFICADO`.
+- **Obtenção/fabricação/ganho/aprendizado:** pipeline geral scroll/spellbook; rotas específicas `NÃO VERIFICADO`.
+- **Itens/focus/rituais:** específicos `NÃO VERIFICADO`.
+- **VFX/partículas/textura/animação/áudio:** animação e sons acima confirmados no source; partículas/textura `NÃO VERIFICADO`.
+- **Integrações/bridges:** bridge específica `NÃO VERIFICADO`; `BlizzardAoe` permanece authority.
+- **Deduplicação/sobreposição:** conclusão acima baseada em catálogo + source 3.16.3 pinado; diferenças mecânicas futuras ainda exigem nova evidência.
+- **Bugs/QA/fail-closed:** conflito docs×source registrado; QA client/modpack real `NÃO VERIFICADO`; não duplicar AoE/pull/settlement.
+- **Fonte/evidência/estado:** catálogo oficial atual + source 3.16.3 pinado; desconhecidos explicitamente marcados.
+
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.

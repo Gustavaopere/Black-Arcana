@@ -50,6 +50,27 @@ A propriedade de piercing é confirmada pelo catálogo atual; a implementação 
 
 Já cobre fast piercing Ice bolt com freeze.
 
+## Matriz obrigatória de verificação
+
+- **Status/provider/mod ID/JAR/spell ID/escola/tipo:** confirmados; tipo funcional = projectile Ice piercing.
+- **Descrição funcional:** confirmada pelo catálogo; multi-hit fino `NÃO VERIFICADO`.
+- **Níveis/raridade:** 1–10 / Common → Legendary.
+- **Cast type / cast time / channel:** `INSTANT` / 0 ticks / não channel.
+- **Recurso/custo:** mana / 10–28; fórmula fina de custo `NÃO VERIFICADO`.
+- **Cooldown:** 1 s.
+- **Dano/cura/tipo de dano:** 6–10,5; cura não aplicável; freeze80 source-auditado; tipo/tag de dano exato `NÃO VERIFICADO`.
+- **Alcance/raio/área/duração:** projectile forward; alcance/lifetime `NÃO VERIFICADO`; área nominal = projectile/piercing, raio/hitbox `NÃO VERIFICADO`.
+- **Scaling/fórmulas/caps:** spell power base12 +1/level; damage `spellPower*0.5`; caps além de nível10 `NÃO VERIFICADO`.
+- **Targets/PvP/bosses/summons:** conforme seção; immunity/friendly-fire `NÃO VERIFICADO`.
+- **Condições/requisitos:** adicionais `NÃO VERIFICADO`.
+- **Obtenção/fabricação/ganho/aprendizado:** pipeline geral; rotas específicas `NÃO VERIFICADO`.
+- **Itens/focus/rituais:** específicos `NÃO VERIFICADO`.
+- **VFX/partículas/textura/animação/áudio:** todos `NÃO VERIFICADO` nesta ficha além da entidade projectile conhecida.
+- **Integrações/bridges:** projectile provider-owned; bridge específica `NÃO VERIFICADO`.
+- **Deduplicação/sobreposição:** conclusão baseada no source pinado + catálogo.
+- **Bugs/QA/fail-closed:** precise piercing e QA real `NÃO VERIFICADO`; não duplicar hit/damage/freeze.
+- **Fonte/evidência/estado:** catálogo + source 3.16.3.
+
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.

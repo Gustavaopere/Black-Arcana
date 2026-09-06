@@ -51,6 +51,27 @@ Teleporta o caster para onde olha e deixa um Ice Shadow no ponto de origem. O sh
 
 Já cobre blink Ice + decoy/taunt + shatter. Mobilidade glacial nova precisa de delta real e deve ser comparada também com Teleport/Blood Step.
 
+## Matriz obrigatória de verificação
+
+- **Status/provider/mod ID/JAR/spell ID/escola/tipo:** confirmados; tipo funcional = mobilidade/decoy Ice.
+- **Descrição funcional:** confirmada.
+- **Níveis/raridade:** 1–8 / Rare → Legendary.
+- **Cast type / cast time / channel:** `INSTANT` / 0 ticks / não channel.
+- **Recurso/custo:** mana / 15–50; fórmula fina de custo `NÃO VERIFICADO` nesta ficha.
+- **Cooldown:** 12 s.
+- **Dano/cura/tipo de dano:** shatter 4–11; cura não aplicável; tipo/tag de dano do shatter `NÃO VERIFICADO`.
+- **Alcance/raio/área/duração:** teleport 8–11,5 blocos publicamente; taunt radius 10; Ice Shadow death timer 100 ticks/5 s; demais área/hitbox `NÃO VERIFICADO`.
+- **Scaling/fórmulas/caps:** range formula acima; shatter = spell power; caps adicionais além de nível 8 `NÃO VERIFICADO`.
+- **Targets/PvP/bosses/summons:** conforme seção; taunt policy fina `NÃO VERIFICADO`.
+- **Condições/requisitos:** teleport helper/provider gates finos `NÃO VERIFICADO`; demais requisitos `NÃO VERIFICADO`.
+- **Obtenção/fabricação/ganho/aprendizado:** pipeline geral; rotas específicas `NÃO VERIFICADO`.
+- **Itens/focus/rituais:** específicos `NÃO VERIFICADO`.
+- **VFX/partículas/textura/animação/áudio:** `FrostStepParticlesPacket` e som `FROST_STEP` confirmados; textura/animação final e conteúdo fino do packet `NÃO VERIFICADO`.
+- **Integrações/bridges:** helper de teleport provider-native; bridge externa específica `NÃO VERIFICADO`.
+- **Deduplicação/sobreposição:** conclusão baseada em source 3.16.3 pinado; comparar também com teleports já catalogados.
+- **Bugs/QA/fail-closed:** QA client/modpack real `NÃO VERIFICADO`; não contornar teleport helper nem duplicar taunt/shatter.
+- **Fonte/evidência/estado:** catálogo + source 3.16.3 pinado.
+
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.

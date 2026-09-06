@@ -52,6 +52,27 @@ Mantém um cone de energia fria à frente do caster, causando dano e acumulando 
 
 Já cobre cone contínuo Ice com dano + freeze. Não duplicar channel, freeze ou dano em bridge externa.
 
+## Matriz obrigatória de verificação
+
+- **Status/provider/mod ID/JAR/spell ID/escola/tipo:** confirmados; tipo funcional = cone Ice contínuo.
+- **Descrição funcional:** confirmada.
+- **Níveis/raridade:** 1–10 / Common → Legendary.
+- **Cast type / cast time / channel:** `CONTINUOUS` / 100 ticks; reuso da mesma `ConeOfColdProjectile` via `EntityCastData` confirmado; cancelamento/interrupção fino `NÃO VERIFICADO`.
+- **Recurso/custo:** mana / 5–14; fórmula fina de custo `NÃO VERIFICADO` nesta ficha.
+- **Cooldown:** 12 s.
+- **Dano/cura/tipo de dano:** dano 1–7,75 e fórmula acima; cura não aplicável no spell auditado; tipo/tag de dano exato `NÃO VERIFICADO`; freeze 80 ticks confirmado.
+- **Alcance/raio/área/duração:** cone provider-owned; alcance, ângulo e dimensões exatas `NÃO VERIFICADO`; janela nominal de cast = 100 ticks, duração efetiva/cancelamento `NÃO VERIFICADO`.
+- **Scaling/fórmulas/caps:** `1 + spellPower * 0.75`; caps adicionais além de nível 10 `NÃO VERIFICADO`.
+- **Targets/PvP/bosses/summons:** conforme acima; policy fina `NÃO VERIFICADO`.
+- **Condições/requisitos:** adicionais `NÃO VERIFICADO`.
+- **Obtenção/fabricação/ganho/aprendizado:** pipeline scroll/spellbook; rotas específicas `NÃO VERIFICADO`.
+- **Itens/focus/rituais:** específicos `NÃO VERIFICADO`.
+- **VFX/partículas/textura/animação/áudio:** loop sound confirmado; demais VFX/partículas/textura/animação `NÃO VERIFICADO`.
+- **Integrações/bridges:** bridge específica `NÃO VERIFICADO`; entity/channel provider-native.
+- **Deduplicação/sobreposição:** conclusão acima baseada no source 3.16.3 pinado.
+- **Bugs/QA/fail-closed:** QA client/modpack real `NÃO VERIFICADO`; não duplicar cone/channel/dano/freeze.
+- **Fonte/evidência/estado:** catálogo atual + source 3.16.3; desconhecidos marcados.
+
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.

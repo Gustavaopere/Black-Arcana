@@ -52,6 +52,27 @@ Cria uma linha crescente de ice spikes pelo chão. O spike final causa dano comp
 
 Já cobre cascading ground spikes Ice com final spike fortalecido/antecipável por target.
 
+## Matriz obrigatória de verificação
+
+- **Status/provider/mod ID/JAR/spell ID/escola/tipo:** confirmados; tipo funcional = sequência de ground spikes Ice.
+- **Descrição funcional:** confirmada.
+- **Níveis/raridade:** 1–10 / Common → Legendary.
+- **Cast type / cast time / channel:** `INSTANT` / 0 ticks / não channel.
+- **Recurso/custo:** mana / 30–120; fórmula fina de custo `NÃO VERIFICADO`.
+- **Cooldown:** 15 s.
+- **Dano/cura/tipo de dano:** 12–21 nominal; spikes intermediários 50%, final 100%; cura não aplicável; tipo/tag exato `NÃO VERIFICADO`.
+- **Alcance/raio/área/duração:** área linear; helper ≈ `count*1.25`; delay por spike = índice; hitbox/radius/lifetime exatos da entidade `NÃO VERIFICADO`.
+- **Scaling/fórmulas/caps:** count `7+3*level/2`; damage spell power base12 +1/level; size interpolation source-auditada; caps além de nível10 `NÃO VERIFICADO`.
+- **Targets/PvP/bosses/summons:** target móvel suportado; policy de entidade `NÃO VERIFICADO`.
+- **Condições/requisitos:** superfície sturdy confirmada; outros requisitos `NÃO VERIFICADO`.
+- **Obtenção/fabricação/ganho/aprendizado:** pipeline geral; rotas específicas `NÃO VERIFICADO`.
+- **Itens/focus/rituais:** específicos `NÃO VERIFICADO`.
+- **VFX/partículas/textura/animação/áudio:** entity visual existe; detalhes de VFX/partículas/textura/animação/áudio `NÃO VERIFICADO` nesta ficha.
+- **Integrações/bridges:** `IceSpikeEntity` authority; bridge específica `NÃO VERIFICADO`.
+- **Deduplicação/sobreposição:** conclusão baseada no source pinado.
+- **Bugs/QA/fail-closed:** QA real `NÃO VERIFICADO`; falhar fechado em terrain inválido; não duplicar sequência/dano.
+- **Fonte/evidência/estado:** catálogo + source 3.16.3.
+
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.

@@ -52,6 +52,27 @@ O comportamento player-facing “absorve um hit ou counterspell” vem do catál
 
 Já cobre stasis/protective Ice tomb self-cast com heal e single-hit/counterspell absorption.
 
+## Matriz obrigatória de verificação
+
+- **Status/provider/mod ID/JAR/spell ID/escola/tipo:** confirmados; tipo funcional = self-stasis/protection Ice.
+- **Descrição funcional:** outcome público confirmado; break/counterspell fino pertence à entidade.
+- **Níveis/raridade:** 1–8 / Uncommon → Legendary.
+- **Cast type / cast time / channel:** `INSTANT` / 0 ticks / não channel.
+- **Recurso/custo:** mana / 30–135; fórmula fina de custo `NÃO VERIFICADO`.
+- **Cooldown:** 30 s.
+- **Dano/cura/tipo de dano:** healing público 1 e fórmula source `sqrt(entityPowerMultiplier)`; dano não é outcome do cast auditado; tipo de dano não aplicável ao spell class.
+- **Alcance/raio/área/duração:** self; duração pública 5–12 s e fórmula source acima; dimensões/hitbox da `IceTombEntity` `NÃO VERIFICADO`.
+- **Scaling/fórmulas/caps:** healing/duration formulas acima; caps adicionais além de nível8 `NÃO VERIFICADO`.
+- **Targets/PvP/bosses/summons:** self target; interactions de ataques/counterspell `NÃO VERIFICADO`.
+- **Condições/requisitos:** desmontar pode abandonar o tomb segundo descrição pública; condições internas adicionais `NÃO VERIFICADO`.
+- **Obtenção/fabricação/ganho/aprendizado:** pipeline geral; rotas específicas `NÃO VERIFICADO`.
+- **Itens/focus/rituais:** específicos `NÃO VERIFICADO`.
+- **VFX/partículas/textura/animação/áudio:** `SELF_CAST_TWO_HANDS` confirmado; VFX/partículas/textura/áudio `NÃO VERIFICADO`.
+- **Integrações/bridges:** `IceTombEntity` authority; counterspell bridge específica `NÃO VERIFICADO`.
+- **Deduplicação/sobreposição:** conclusão baseada no source 3.16.3 pinado + outcome público.
+- **Bugs/QA/fail-closed:** QA real `NÃO VERIFICADO`; não duplicar heal/absorb/break settlement.
+- **Fonte/evidência/estado:** catálogo + source 3.16.3.
+
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
