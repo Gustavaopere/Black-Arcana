@@ -29,7 +29,7 @@ public final class BlackPyreDomainSpecifications {
             WorldEffectMode.TEMPORARY,
             "entity damage remains policy-controlled when terrain effects are disabled; bosses and players use explicit caps",
             "damage cap, radius, cell cap, spread/tick, lifetime, concurrent frontiers, world mode, PvP/boss multipliers",
-            "plans/07-spell-domains/05-black-flame.md"));
+            "plans/07-spell-domains/✅-05-black-flame.md"));
     }
 
     public static void installInto(SpellImplementationSpecRegistry registry) {

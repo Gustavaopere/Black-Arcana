@@ -2,11 +2,11 @@
 
 ## State
 
-**IMPLEMENTED / PR #54 AUTOMATED ACCEPTANCE GREEN / AWAITING MERGE.**
+**CANONICAL ON `main` / PR #54 MERGED / EXACT-SHA POST-MERGE CI GREEN.**
 
-Stage 07.05 was rebuilt sequentially from canonical `main@0e508b646b602beefd136bf9602945e247b2a524` in PR #54. Historical stacked PR #22 remained reviewed source material only and was not used as canonical ancestry. Stage 07.06–07.07 remain out of scope and must not start automatically from this PR.
+Stage 07.05 was rebuilt sequentially from canonical `main@0e508b646b602beefd136bf9602945e247b2a524` in PR #54. Historical stacked PR #22 remained reviewed source material only and was not used as canonical ancestry. PR #54 merged at `f57f2547977e48ac2bbd3bb912371913784ea1ba`; exact-SHA post-merge workflow `34006704333` (#1143) passed the complete automated pipeline and published the canonical QA artifact. Stage 07.06–07.07 remain out of scope and must not start automatically from this promotion.
 
-The implementation now includes the approved additive Stage 04 world-mutation protection/requested-class extension, bounded Black Pyre frontier runtime, entity-damage settlement, protected temporary/permanent terrain gateways, lifecycle cleanup, persistence-compatible rollback ownership and the required hard safety ceilings. Exact-main canonicality is intentionally **not** claimed until PR #54 is merged and the exact post-merge `main` SHA passes the complete pipeline.
+The canonical implementation includes the approved additive Stage 04 world-mutation protection/requested-class extension, operation-aware cast admission, bounded Black Pyre frontier runtime, entity-damage settlement, protected temporary/permanent terrain gateways, lifecycle cleanup, persistence-compatible rollback ownership, lossy-block fail-closed hardening and the required hard safety ceilings.
 
 The approved architecture includes one additive Stage 04 world-mutation protection extension because the frozen Stage 04 API can authorize entity interactions and protected displacement destinations but does not currently express claim/protection semantics for block mutation. Black Pyre must not encode block coordinates into entity-oriented `ProtectionQuery` or silently bypass claim adapters.
 
@@ -120,6 +120,8 @@ Black Pyre uses:
 
 `TemporaryBlockMutationGateway` must route its Black Pyre operation through requested class `TEMPORARY` rather than forcing the spell's worst-case profile class. Existing temporary callers with a `TEMPORARY` profile must remain behaviorally unchanged. The permanent gateway accepts only `LIMITED` or `PERMANENT` requested classes and rejects weaker/invalid classes rather than guessing.
 
+Cast-level admission uses the backward-compatible `WorldEffectPolicy#authorizeCast(...)` seam. Its default delegates to legacy `authorize(...)`; the configurable policy override verifies that a registered profile exists and defers the concrete requested mutation-class/mode/budget check to the canonical mutation gateway. This preserves predecessor policy behavior while allowing COSMETIC/OFF entity/visual fallback and adaptive TEMPORARY/LIMITED/FULL settlement.
+
 ### New provider-neutral mutation-protection contract
 
 Add an explicit block/world-mutation protection route without changing existing entity-interaction semantics.
@@ -163,6 +165,8 @@ Add a narrow permanent mutation gateway for `LIMITED`/`FULL` that:
 - reports explicit denial codes.
 
 The temporary route must similarly perform mutation-protection admission before invoking the existing gateway that consumes canonical world-effect budget, so a claim denial does not burn budget for work that was never eligible to settle.
+
+The shared Minecraft block backend rejects live block entities, block states with block entities and unbreakable target states before `setBlock`, preventing lossy chest/shulker/modded-machine inventory/NBT destruction and bedrock-like replacement. No undocumented Black Pyre fire-immune tag identifier is claimed by this stage; neither the canonical 07.05 contract nor the reviewed historical PR #22 source material defines one.
 
 Spell/runtime code must not mutate terrain directly around these gateways.
 
@@ -262,7 +266,9 @@ Implementation starts RED and must cover at least:
 - FULL does not exceed radius/cell/per-tick/concurrent-frontier ceilings;
 - stale cell revalidation prevents overwrite;
 - no vanilla fire cascade/random-tick propagation occurs;
-- stress case proves bounded work under max legal frontier count/cell count.
+- stress case proves bounded work under max legal frontier count/cell count;
+- block-entity inventory/NBT is preserved by fail-closed settlement;
+- unbreakable terrain is rejected before replacement.
 
 ### Pipeline
 
@@ -277,25 +283,26 @@ Before merge the exact PR head must pass:
 
 After merge, the exact `main` SHA must pass the same pipeline and publish the canonical QA JAR before 07.05 is marked canonical.
 
-## Implementation and validation evidence — pre-merge
+## Implementation and validation evidence — canonical
 
-The current PR #54 implementation was built through repeated RED→GREEN cycles rather than by merging stale Stage 07 ancestry. The final clean technical head before this documentation update was `6e021ef28ebb450a84a7dff7fa8a545f52a90389`.
+PR #54 was built through repeated RED→GREEN cycles rather than by merging stale Stage 07 ancestry. Earlier clean implementation head `6e021ef28ebb450a84a7dff7fa8a545f52a90389` passed workflow `34004647369` (#1118) with **92/92 required GameTests** and dedicated-server smoke.
 
-Key evidence includes:
+Final review hardening then added operation-aware cast admission regression coverage plus block-entity/unbreakable terrain safety. The final exact PR head `bf23cfc805dc6fe01ec7bed009f15e2f6e217ec9` passed workflow `34006367929` (#1142): JUnit, diff sanity, NeoForge build, built-JAR inspection, the complete required GameTest server suite and dedicated-server smoke all succeeded. Both P1 review threads were resolved before merge.
 
-- requested mutation-class and world-mutation authority contracts frozen in RED before production support;
-- Black Pyre domain/frontier contracts, server runtime, world safety gateways and NeoForge wiring implemented incrementally;
-- cast-specific frontier lifecycle tests first failed on test-only commit `acbe663cf28a24ac0937ed185e0356bb225ae926`, then passed after the minimal runtime exposure in `5c57669bf47ab600cae1a0585f6accfbcde9931b`;
-- hardening coverage explicitly exercises allied target denial, FULL/PERMANENT mode gating, Minecraft-backend stale-CAS preservation, restart simulation that retains rollback ownership without reviving frontier work, and the hard concurrent-frontier ceiling;
-- one redundant hardening suite was removed after systematic debugging showed it leaked shared GameTest state and caused an unrelated LIMITED-mode test to fail; no production behavior was changed to mask that test-isolation defect;
-- workflow `34004647369` (#1118) on head `6e021ef28ebb450a84a7dff7fa8a545f52a90389` passed JUnit, diff sanity, NeoForge build, built-JAR inspection, **92/92 required GameTests** and dedicated-server smoke.
+PR #54 was squash-merged to `main` at `f57f2547977e48ac2bbd3bb912371913784ea1ba`. Exact-SHA post-merge workflow `34006704333` (#1143) passed JUnit, diff sanity, NeoForge build, built-JAR inspection, the complete GameTest server suite, dedicated-server smoke and main-only canonical artifact publication.
+
+Canonical QA artifact:
+
+- name: `black-arcana-f57f2547977e48ac2bbd3bb912371913784ea1ba`;
+- artifact ID: `9981201760`;
+- SHA-256: `7c462656d5d99b59cd9d49a4ecdd4e44272ee2a294fc192a53ecfd0b63cf5a47`.
 
 Existing canonical Stage 04 GameTests additionally cover live PvP, alliance, boss caps, invulnerability, protection/no-force-load behavior and temporary mutation persistence. Those predecessor contracts are reused rather than duplicated or weakened.
 
-Real-modpack/provider/manual host acceptance remains `FINAL VALIDATION DEFERRED` under D031. Malum amplification remains fail-closed because no verified causal numeric hook has been promoted by this implementation. This pre-merge state is not canonical until PR #54 is merged and exact-SHA `main` validation succeeds.
+Real-modpack/provider/manual host acceptance remains `FINAL VALIDATION DEFERRED` under D031. Malum amplification remains fail-closed because no verified causal numeric hook has been promoted by this implementation. Automated canonicality does not convert deferred real-modpack/manual rows to PASS.
 
-## Documentation/promotion rules
+## Documentation/promotion state
 
-During implementation this file remains `05-black-flame.md` and must state the real status. Only after runtime merge plus exact-SHA post-merge GREEN may a documentation follow-up rename it to `✅-05-black-flame.md` and update `README.md`, `plans/STATUS.md` and the Black Arcana Notion dossiê.
+This canonical follow-up promotes the plan to `✅-05-black-flame.md` only after the runtime merge and exact-SHA post-merge GREEN evidence above. `README.md`, `plans/STATUS.md` and the Black Arcana Notion dossiê are updated by the same promotion cycle.
 
 Do not start 07.06 automatically.
