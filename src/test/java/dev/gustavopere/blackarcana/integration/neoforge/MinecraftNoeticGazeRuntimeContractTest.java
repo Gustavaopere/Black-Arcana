@@ -47,10 +47,15 @@ class MinecraftNoeticGazeRuntimeContractTest {
 
     @Test
     void stillnessDiminishingReturnsBoundDurationAndEventuallyGrantImmunity() {
-        assertEquals(200, NoeticGazePolicy.effectiveControlTicks(200, 200, 0));
-        assertEquals(100, NoeticGazePolicy.effectiveControlTicks(200, 200, 1));
-        assertEquals(50, NoeticGazePolicy.effectiveControlTicks(200, 200, 2));
-        assertEquals(0, NoeticGazePolicy.effectiveControlTicks(200, 200, NoeticSafetyCeilings.MAX_GAZE_DR_STACKS));
-        assertEquals(40, NoeticGazePolicy.effectiveControlTicks(200, 40, 0));
+        int hardCeiling = NoeticSafetyCeilings.MAX_GAZE_DURATION_TICKS;
+        assertEquals(160, hardCeiling);
+        assertEquals(160, NoeticGazePolicy.effectiveControlTicks(hardCeiling, hardCeiling, 0));
+        assertEquals(80, NoeticGazePolicy.effectiveControlTicks(hardCeiling, hardCeiling, 1));
+        assertEquals(40, NoeticGazePolicy.effectiveControlTicks(hardCeiling, hardCeiling, 2));
+        assertEquals(0, NoeticGazePolicy.effectiveControlTicks(
+                hardCeiling,
+                hardCeiling,
+                NoeticSafetyCeilings.MAX_GAZE_DR_STACKS));
+        assertEquals(40, NoeticGazePolicy.effectiveControlTicks(hardCeiling, 40, 0));
     }
 }
