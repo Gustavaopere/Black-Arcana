@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.integration.neoforge;
 
+import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipProvider;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipRegistry;
@@ -12,17 +13,22 @@ import dev.gustavopere.blackarcana.core.world.EntityInteractionType;
 import dev.gustavopere.blackarcana.core.world.EntityProtectionFacts;
 import dev.gustavopere.blackarcana.core.world.ProtectionQuery;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -39,6 +45,13 @@ import java.util.UUID;
  * is an explicitly supplied member currently inside the bounded familiar-centered aura.</p>
  */
 public final class MinecraftPactSanctuaryRuntime {
+    private static final TagKey<EntityType<?>> SANCTUARY_EXCLUDED = TagKey.create(
+            Registries.ENTITY_TYPE,
+            ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "pact_sanctuary_excluded"));
+    private static final TagKey<EntityType<?>> SANCTUARY_ELIGIBLE = TagKey.create(
+            Registries.ENTITY_TYPE,
+            ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "pact_sanctuary_eligible"));
+
     private final FamiliarOwnershipRegistry familiarOwnership;
     private final Map<MinecraftServer, ServerState> states = new IdentityHashMap<>();
 
@@ -239,6 +252,7 @@ public final class MinecraftPactSanctuaryRuntime {
         int suppressed = 0;
         for (Mob mob : candidates) {
             if (familiar.distanceToSqr(mob) > radiusSquared) continue;
+            if (!isSanctuaryControlEligible(mob)) continue;
 
             LivingEntity hostileTarget = mob.getTarget();
             if (hostileTarget == null || hostileTarget.level() != level) continue;
@@ -262,6 +276,25 @@ public final class MinecraftPactSanctuaryRuntime {
             suppressed++;
         }
         return suppressed;
+    }
+
+    /**
+     * Pact Sanctuary is deliberately fail-closed for event/encounter mobs. Vanilla raid mobs and
+     * Wardens are excluded explicitly. Data packs/providers can extend the exclusion tag. Unknown
+     * modded mob types are not treated as ordinary mobs unless they opt in through the eligible tag.
+     */
+    private static boolean isSanctuaryControlEligible(Mob mob) {
+        EntityType<?> type = mob.getType();
+        if (mob instanceof Raider || type == EntityType.WARDEN || type.is(SANCTUARY_EXCLUDED)) {
+            return false;
+        }
+
+        ResourceLocation typeId = BuiltInRegistries.ENTITY_TYPE.getKey(type);
+        if (typeId == null) return false;
+        if (!"minecraft".equals(typeId.getNamespace()) && !type.is(SANCTUARY_ELIGIBLE)) {
+            return false;
+        }
+        return true;
     }
 
     private static boolean allAuraChunksLoaded(ServerLevel level, BlockPos center, int radius) {

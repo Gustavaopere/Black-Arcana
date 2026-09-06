@@ -12,11 +12,14 @@ import dev.gustavopere.blackarcana.content.noetic.NullificationRegistry;
 import dev.gustavopere.blackarcana.content.noetic.PactSanctuarySpec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.Collections;
@@ -46,6 +49,8 @@ public final class MinecraftNoeticRuntime {
         if (registered) return;
         registered = true;
         gameBus.addListener(MinecraftNoeticRuntime::onServerStarted);
+        gameBus.addListener(MinecraftNoeticRuntime::onEntityTickPre);
+        gameBus.addListener(MinecraftNoeticRuntime::onEntityTickPost);
         gameBus.addListener(MinecraftNoeticRuntime::onServerTick);
         gameBus.addListener(MinecraftNoeticRuntime::onPlayerLoggedOut);
         gameBus.addListener(MinecraftNoeticRuntime::onLivingDeath);
@@ -157,6 +162,30 @@ public final class MinecraftNoeticRuntime {
 
     private static void onServerStarted(ServerStartedEvent event) {
         stateFor(event.getServer());
+    }
+
+    private static void onEntityTickPre(EntityTickEvent.Pre event) {
+        if (!(event.getEntity() instanceof LivingEntity living)
+                || !(living.level() instanceof ServerLevel level)) {
+            return;
+        }
+        MinecraftServer server = level.getServer();
+        ServerState state = STATES.get(server);
+        if (state != null) {
+            state.gaze.enforceStillnessBeforeEntityTick(server, living);
+        }
+    }
+
+    private static void onEntityTickPost(EntityTickEvent.Post event) {
+        if (!(event.getEntity() instanceof LivingEntity living)
+                || !(living.level() instanceof ServerLevel level)) {
+            return;
+        }
+        MinecraftServer server = level.getServer();
+        ServerState state = STATES.get(server);
+        if (state != null) {
+            state.gaze.enforceStillnessAfterEntityTick(server, living);
+        }
     }
 
     private static void onServerTick(ServerTickEvent.Post event) {

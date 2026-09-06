@@ -111,7 +111,12 @@ public final class MinecraftNoeticGazeRuntime {
             return deny("gaze_dr_immunity", "Target is temporarily immune after repeated gaze control");
         }
 
-        StillnessSession session = new StillnessSession(casterId, targetId, nowTick + effectiveTicks);
+        StillnessSession session = new StillnessSession(
+                casterId,
+                targetId,
+                nowTick + effectiveTicks,
+                target.getX(),
+                target.getZ());
         state.byCaster.put(casterId, session);
         state.casterByTarget.put(targetId, casterId);
         state.drByTarget.put(
@@ -119,8 +124,22 @@ public final class MinecraftNoeticGazeRuntime {
                 new DrState(
                         Math.min(NoeticSafetyCeilings.MAX_GAZE_DR_STACKS, priorApplications + 1),
                         nowTick + NoeticSafetyCeilings.GAZE_DR_RESET_TICKS));
-        suppressHorizontalMovement(target);
+        restoreStillnessAnchor(target, session);
         return ArcanaDecision.allow();
+    }
+
+    /**
+     * Applies the horizontal Stillness lock before the entity performs tick work. This corrects any
+     * packet/previous-tick X/Z drift without cancelling the entity tick, so gravity and unrelated
+     * entity logic continue to run normally.
+     */
+    public synchronized void enforceStillnessBeforeEntityTick(MinecraftServer server, LivingEntity target) {
+        enforceStillnessMovement(server, target);
+    }
+
+    /** Applies the same lock after entity work so AI/travel during the tick cannot accumulate X/Z drift. */
+    public synchronized void enforceStillnessAfterEntityTick(MinecraftServer server, LivingEntity target) {
+        enforceStillnessMovement(server, target);
     }
 
     public synchronized NullificationResult nullify(MinecraftServer server, UUID casterId, UUID targetId) {
@@ -244,7 +263,7 @@ public final class MinecraftNoeticGazeRuntime {
                 closeCasters.add(session.casterId());
                 continue;
             }
-            suppressHorizontalMovement(target);
+            restoreStillnessAnchor(target, session);
         }
         for (UUID casterId : closeCasters) closeSession(state, casterId);
         if (state.byCaster.isEmpty() && state.drByTarget.isEmpty()) states.remove(server);
@@ -278,6 +297,45 @@ public final class MinecraftNoeticGazeRuntime {
         Objects.requireNonNull(server, "server");
         ServerState state = states.remove(server);
         return state == null ? 0 : state.byCaster.size();
+    }
+
+    private void enforceStillnessMovement(MinecraftServer server, LivingEntity target) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(target, "target");
+        ServerState state = states.get(server);
+        if (state == null) return;
+
+        UUID casterId = state.casterByTarget.get(target.getUUID());
+        if (casterId == null) return;
+        StillnessSession session = state.byCaster.get(casterId);
+        if (session == null || !session.targetId().equals(target.getUUID())) return;
+
+        long nowTick = server.overworld().getGameTime();
+        if (nowTick >= session.expiresAtTick()) {
+            closeSession(state, casterId);
+            return;
+        }
+
+        LivingEntity caster = findLoadedLivingEntity(server, casterId);
+        if (caster == null || !caster.isAlive() || !target.isAlive()
+                || !(caster.level() instanceof ServerLevel level) || target.level() != level) {
+            closeSession(state, casterId);
+            return;
+        }
+
+        ArcanaServerRuntime runtime = ArcanaServerRuntimeManager.get(server).orElse(null);
+        if (runtime == null) {
+            closeSession(state, casterId);
+            return;
+        }
+        EntityProtectionFacts protectionFacts = MinecraftEntityProtectionResolver.resolve(server, caster, target);
+        EntityInteractionAuthorization authorization = authorize(runtime, level, caster, target, protectionFacts);
+        if (!NoeticGazePolicy.authorizeStillness(gazeFacts(caster, target, authorization)).allowed()) {
+            closeSession(state, casterId);
+            return;
+        }
+
+        restoreStillnessAnchor(target, session);
     }
 
     private static NoeticGazePolicy.Facts gazeFacts(
@@ -332,6 +390,13 @@ public final class MinecraftNoeticGazeRuntime {
         return look.normalize().dot(toTarget.normalize()) > 0.0D;
     }
 
+    private static void restoreStillnessAnchor(LivingEntity target, StillnessSession session) {
+        if (target.getX() != session.anchorX() || target.getZ() != session.anchorZ()) {
+            target.teleportTo(session.anchorX(), target.getY(), session.anchorZ());
+        }
+        suppressHorizontalMovement(target);
+    }
+
     private static void suppressHorizontalMovement(LivingEntity target) {
         Vec3 motion = target.getDeltaMovement();
         if (motion.x != 0.0D || motion.z != 0.0D) {
@@ -373,10 +438,19 @@ public final class MinecraftNoeticGazeRuntime {
         private final Map<UUID, DrState> drByTarget = new LinkedHashMap<>();
     }
 
-    private record StillnessSession(UUID casterId, UUID targetId, long expiresAtTick) {
+    private record StillnessSession(
+            UUID casterId,
+            UUID targetId,
+            long expiresAtTick,
+            double anchorX,
+            double anchorZ
+    ) {
         private StillnessSession {
             Objects.requireNonNull(casterId, "casterId");
             Objects.requireNonNull(targetId, "targetId");
+            if (!Double.isFinite(anchorX) || !Double.isFinite(anchorZ)) {
+                throw new IllegalArgumentException("Stillness anchor must be finite");
+            }
         }
     }
 

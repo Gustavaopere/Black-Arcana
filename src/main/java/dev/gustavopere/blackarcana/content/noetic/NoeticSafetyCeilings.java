@@ -11,7 +11,7 @@ public final class NoeticSafetyCeilings {
     public static final int MAX_NULLIFICATIONS_PER_ACTION = 8;
     public static final int MAX_ACTIVE_GAZES = 64;
     public static final double MAX_GAZE_RANGE_BLOCKS = 24.0D;
-    public static final int MAX_GAZE_DURATION_TICKS = 200;
+    public static final int MAX_GAZE_DURATION_TICKS = 160;
     public static final int MAX_NULLIFIABLE_EFFECT_TYPES = 128;
     public static final int MAX_GAZE_DR_STACKS = 3;
     public static final int MAX_GAZE_DR_TRACKED_TARGETS = 256;

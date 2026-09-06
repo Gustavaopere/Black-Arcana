@@ -24,6 +24,11 @@ public final class NoeticObservationPolicy {
         if (!facts.targetAlive()) {
             return ArcanaDecision.deny("noetic_target_dead", "Noetic observation requires a live eligible target");
         }
+        if (facts.targetPlayer() && !facts.explicitConsent() && kind != NoeticObservationKind.NAMESCRY) {
+            return ArcanaDecision.deny(
+                    "noetic_player_privacy",
+                    "Observation of another player requires explicit server-authorized consent");
+        }
 
         return switch (kind) {
             case NAMESCRY -> facts.targetPlayer() && !facts.explicitConsent()
