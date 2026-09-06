@@ -17,4 +17,4 @@ Provider base: Iron's Spells 'n Spellbooks `3.16.3`.
 - Thunderstorm
 - Volt Strike
 
-As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/<spell>.md`.
+As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/lightning/<spell>.md`.
