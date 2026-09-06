@@ -27,7 +27,6 @@ class OperationScopedWorldEffectCastAdmissionTest {
             WorldMutationType.FIRE_SPREAD,
             WorldMutationClass.PERMANENT,
             8,
-            true,
             true));
         ConfigurableWorldEffectPolicy policy = new ConfigurableWorldEffectPolicy(
             profiles,
@@ -62,7 +61,7 @@ class OperationScopedWorldEffectCastAdmissionTest {
             (ignored, ignoredTarget) -> ArcanaServices.EffectResult.ok());
 
         assertEquals(dev.gustavopere.blackarcana.api.ArcanaCastResult.Status.SUCCESS, engine.execute(request).status(),
-            "operation-scoped terrain policy must not cancel entity/visual fallback before the runtime chooses a mutation class");
+            "cast-level policy must not cancel entity/visual fallback before the runtime chooses the actual mutation class");
     }
 
     private static ArcanaCastRequest request() {
