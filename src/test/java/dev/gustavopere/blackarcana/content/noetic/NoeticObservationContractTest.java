@@ -56,6 +56,18 @@ class NoeticObservationContractTest {
     }
 
     @Test
+    void everyObservationKindPreservesPlayerPrivacyWithoutExplicitConsent() {
+        NoeticObservationFacts privatePlayer = new NoeticObservationFacts(
+                true, true, true, true, true, true, false, false);
+
+        for (NoeticObservationKind kind : NoeticObservationKind.values()) {
+            assertFalse(
+                    NoeticObservationPolicy.authorize(kind, privatePlayer).allowed(),
+                    kind + " must not expose another player's whitelisted metadata without explicit consent");
+        }
+    }
+
+    @Test
     void allObservationKindsRejectUnloadedWrongDimensionOutOfRangeOrDeadTargets() {
         NoeticObservationFacts unloaded = new NoeticObservationFacts(
                 false, true, true, true, true, false, true, true);

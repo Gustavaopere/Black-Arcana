@@ -61,6 +61,36 @@ public final class NoeticPactSanctuaryGameTests {
     }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void raidEncounterMobIsExcludedFromSanctuaryControl(GameTestHelper helper) {
+        MinecraftServer server = helper.getLevel().getServer();
+        LivingEntity owner = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 2));
+        LivingEntity familiar = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 2));
+        LivingEntity member = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 3));
+        Mob raidEncounterMob = helper.spawnWithNoFreeWill(EntityType.EVOKER, new BlockPos(3, 2, 2));
+
+        FamiliarOwnershipRegistry ownership = ownershipFor(owner.getUUID(), familiar.getUUID());
+        MinecraftPactSanctuaryRuntime runtime = new MinecraftPactSanctuaryRuntime(ownership);
+        raidEncounterMob.setTarget(member);
+
+        ArcanaDecision activation = runtime.activate(
+                server,
+                owner.getUUID(),
+                familiar.getUUID(),
+                new PactSanctuarySpec(3, 200, 1),
+                Set.of(member.getUUID()));
+
+        helper.assertTrue(activation.allowed(), "owned familiar must activate the sanctuary for the exclusion test");
+        int suppressed = runtime.tick(server);
+        helper.assertTrue(suppressed == 0,
+                "raid/event encounter mobs must remain fail-closed and must not be pacified by Pact Sanctuary");
+        helper.assertTrue(raidEncounterMob.getTarget() == member,
+                "Pact Sanctuary must preserve the current target of an excluded encounter mob");
+
+        runtime.clearEntity(server, familiar.getUUID());
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void foreignOrUnsupportedFamiliarFailsClosed(GameTestHelper helper) {
         MinecraftServer server = helper.getLevel().getServer();
         LivingEntity owner = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 2));
