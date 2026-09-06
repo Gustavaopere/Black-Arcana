@@ -1,61 +1,96 @@
 # Wiki Status
 
-`FASE 1 FECHADA — PR #61 PRONTA PARA MERGE`
+`FASE 2 ATIVA — CATÁLOGO / DEDUPLICAÇÃO EM PROGRESSO`
 
-A PR #61 fecha **arquitetura, planos e Wiki estrutural**. O catálogo completo do modpack e a implementação das novas escolas são deliberadamente pós-merge e estão descritos em `wiki/PHASES.md`.
+A arquitetura documental da Wiki já está canônica. A implementação das novas escolas continua bloqueada até a Fase 2 provar, provider por provider, quais capacidades já existem no modpack e quais lacunas possuem delta mecânico real.
 
-## Concluído nesta fase
+## Checkpoints canônicos
 
-- estrutura canônica `wiki/` e template individual;
-- taxonomia de estado;
-- inventário inicial de domínios Black Arcana;
-- páginas individuais iniciais de Blood & Curses;
-- páginas individuais iniciais de Souls & Death;
-- páginas individuais de Projection & Arsenal;
-- páginas individuais iniciais de Space & Displacement;
-- Black Pyre individualizado;
-- runtime localized Forbidden Domain documentado;
-- reservatório hemático em mB + distinção sangue/vida/mana/soul/spirit;
-- lifecycle/eligibilidade de vínculos e HUD conceitual;
-- scaffolds e catálogos candidatos de Caos e Ordem;
-- Magia Infernal + fonte Lava Infernal Nether-only + catálogo candidato;
-- Magia Divina/Celestial + Sanctum/Ressonância sem Aether + catálogo candidato;
-- Bruxaria Integrada com Hexalia como núcleo e Toxony como braço toxicologia/mutagênicos + catálogo candidato;
-- integração arquitetural com Immersive Portals;
-- padrão visual/VFX/animação/áudio;
-- política `PROVIDER-NATIVE FIRST` e assinatura semântica de deduplicação;
-- reconciliação inicial do inventário: os 94 JARs/providers do guia mágico anterior continuam presentes na modlist atual de 607 entradas, com deltas de versão registrados;
-- corpus fornecido pelo usuário para Scarlet Witch, Doctor Strange, Doctor Fate e John Constantine processado e convertido em categorias de gameplay/dedup;
-- Constantine formalizado como repertório transversal, não nova escola;
-- proveniência da Wiki alinhada ao clean-room: documentação/API pública e observação clean-room são padrão; derivação de código externo exige licença exata compatível + ledger antes da especificação implementável.
+### Fase 1 — Wiki estrutural
 
-## Próxima fase — somente após o merge
+- PR #61 — `docs: build canonical spell wiki catalog`
+- merge canônico: `edcc9f8cf1d582681d4b7d2aa1facbcb39b99ae9`
+- resultado: estrutura `wiki/`, planos de escolas/sistemas, política provider-native/dedup, proveniência e arquitetura de recursos/bridges tornaram-se canônicos.
 
-### Catálogo completo do modpack
+### Fase 2 — baseline do catálogo
 
-- classificar todos os JARs magic-related atuais como spell/resource/ritual/bridge/library/gear/mixed;
-- extrair todos os spells/poderes discretos de cada `SPELL_PROVIDER` usando fontes permitidas e o JAR/config realmente instalado quando necessário;
-- registrar acquisition/learning, raridade/tier, mana/resource, cooldown, cast time, damage/effect/scaling e IDs reais;
-- catalogar glyphs/forms/augments de Ars sem explodir toda combinação possível;
-- catalogar rituais/brews/plants/idols/transmutations de Hexalia;
-- catalogar toxicity/mutagens/oils/preparações do Toxony;
-- catalogar Holy/Paladin, Cataclysm/Ignis, Asterism/Eidolon, Goety, Malum, Vampirism/Bloodlines e todos os demais providers/addons relevantes;
-- produzir a matriz `capacidade → providers existentes → cobertura → lacuna real`.
+- PR #62 — `docs: catalog all modpack magic providers`
+- merge canônico: `17f87619bc8ed71023bc80d0adb752c13dc8c6c4`
+- post-merge CI exata: run `34056029588` / Black Arcana CI #1477 — `SUCCESS`
+- resultado: baseline de **101 componentes magic-relevant** reconciliados contra a modlist atual de **607 entradas top-level**, primeiras páginas granulares e matriz inicial `capability → provider → overlap → gap`.
 
-### Implementação
+**PR #62 não fechou a Fase 2.** Vários providers continuam com inventário, números, IDs, aquisição ou semantics exatas explicitamente pendentes.
 
-Somente depois da matriz de deduplicação:
+## Passe atual — ecossistema Ars, segunda normalização
 
-- selecionar os spells/sistemas novos com delta mecânico real;
-- fechar números/tier/aquisição;
-- implementar Caos, Ordem, Hemática/Vincular, Infernal, Divina/Celestial e Bruxaria integrada conforme os planos aprovados;
-- criar texturas, partículas, animações, áudio e HUD originais de alta qualidade;
-- validar Immersive Portals e demais bridges no pack real;
-- executar testes/CI/QA apropriados e atualizar a Wiki para `IMPLEMENTADO` somente com evidência.
+O catálogo agora materializa páginas específicas para:
 
-## Pendências canônicas que não bloqueiam o merge documental
+- Ars Additions 21.3.0;
+- Ars Zero 2.0.2;
+- Ars Technica 2.7.6;
+- Ars Creo 5.4.0;
+- Ars Elemancy 1.18.3;
+- Not Enough Glyphs 4.6.1;
+- Ars 'n' Spells 3.2.4;
+- Ars Polymorphia 1.0.3.
+
+Também foi criada uma correção canônica de classificação para quatro linhas do baseline #62:
+
+- Ars Creo → `BRIDGE / COMPAT / PROGRESSION`, não glyph provider;
+- Ars Elemancy → `GEAR / ENCHANT / SUPPORT CONTENT`, não glyph provider;
+- Ars 'n' Spells → bridge Ars Nouveau ↔ Iron's com capacidades/rituais discretos;
+- Ars Polymorphia → compat de Storage Lectern/Polymorph, não spell/glyph provider.
+
+A matriz de cobertura foi ampliada para registrar evidência de:
+
+- contingencies / condition-triggered casting;
+- stored-reference targeting via Mark/Recall;
+- spell containers e cross-engine spellbook casting;
+- mana/progression bridge Ars↔Iron's;
+- Create-integrated magic/contraption casting;
+- geometry, gravity, blight e randomization já presentes no ecossistema Ars.
+
+## Restrições de design já comprovadas pela Fase 2
+
+- **Caos:** generic randomness/probability não é lacuna por si só.
+- **Ordem:** boolean logic, runes, geometry, walls, counters e constraints não são lacuna por si só.
+- **Arcana Vincular:** simple damage/healing link não é lacuna; o possível delta continua sendo relationship/resource routing tipado e persistente, com lifecycle e transação correta.
+- **Cross-engine magic:** generic Ars↔Iron's mana/spellbook unification já possui provider instalado; Black Arcana não deve duplicá-lo.
+- **Automação mágica no Create:** Ars Creo/Technica já cobrem partes relevantes; apresentação sombria não cria delta mecânico.
+- **Contingency casting:** trigger condicional genérico já é coberto no ecossistema Ars.
+
+## O que ainda bloqueia a Fase 3
+
+Ainda precisam de fechamento/reconciliação suficiente, conforme aplicável:
+
+- Apprentice's Codex;
+- Cataclysm: Spellbooks e addons correlatos;
+- Dreamless, Leyline, Somake e demais spell addons com tabela pública incompleta;
+- Goety 3.1.4 + Goety Cataclysm/Goety Iron onde pertinentes;
+- Malum 1.8.2 + Vestis;
+- Eidolon:Repraised 0.5.0.2;
+- Hexalia 1.3.5 runtime / JAR 1.3.6;
+- Toxony 0.10.7;
+- Vampirism/Bloodlines/Werewolves e bridges;
+- Mobstein 5.4.4;
+- Soul Fire'd / Ignis Soulfires e bridges;
+- demais providers Ars/Iron's e magical support components ainda sem primitive-level reconciliation;
+- aquisição, IDs, custos, cooldowns, fórmulas e authority onde continuam `UNVERIFIED`.
+
+## Fase 3 — continua BLOQUEADA
+
+Não implementar ainda Caos, Ordem, Hemática/Vincular, Infernal, Divina/Celestial ou Bruxaria Integrada apenas a partir dos catálogos candidatos da Fase 1.
+
+A transição só ocorre quando a matriz puder classificar cada candidato relevante como:
+
+- duplicação;
+- overlap parcial;
+- delta mecânico real;
+- ou comportamento não verificável que deve permanecer fail-closed.
+
+## Pendências canônicas independentes
 
 - Familiars & Divination continua seguindo o fluxo próprio do Stage 07.07;
 - Stage 08 continua dono do balanceamento final onde os números ainda são TBD;
-- QA visual/manual no cliente real não é reivindicado por esta PR;
-- bugs ou discrepâncias de providers externos são registrados como pendências, não corrigidos nesta fase.
+- QA visual/manual no cliente real não é inferido a partir de CI;
+- bugs/discrepâncias de providers externos são registrados como evidência/pendência, não silenciosamente corrigidos pelo Black Arcana.

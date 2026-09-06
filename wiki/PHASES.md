@@ -2,9 +2,14 @@
 
 ## Fase 1 — arquitetura, planos e Wiki estrutural
 
-**Estado:** `FECHADA PARA MERGE na PR #61`
+**Estado:** `MERGED / CANÔNICA`
 
-Objetivo desta fase: transformar as decisões de design em documentação canônica suficiente para orientar o trabalho posterior sem iniciar implementação nova nem exigir que o catálogo completo do modpack esteja pronto antes do primeiro merge.
+Checkpoint canônico:
+
+- PR #61 — `docs: build canonical spell wiki catalog`
+- `main@edcc9f8cf1d582681d4b7d2aa1facbcb39b99ae9`
+
+Objetivo desta fase: transformar as decisões de design em documentação canônica suficiente para orientar o trabalho posterior sem iniciar implementação nova nem exigir que o catálogo completo do modpack estivesse pronto antes do primeiro merge.
 
 Entregas desta fase:
 
@@ -20,21 +25,21 @@ Entregas desta fase:
 - política `PROVIDER-NATIVE FIRST` e deduplicação semântica;
 - corpus de pesquisa de Wanda/Scarlet Witch, Doctor Strange, Doctor Fate e Constantine convertido em candidatos originais bounded;
 - fila dos providers mágicos atuais que precisam de catalogação granular;
-- documentação inicial de alguns providers usada somente para validar a forma do catálogo e detectar redundâncias/QA, sem tornar a catalogação completa pré-requisito deste merge;
 - política de proveniência alinhada ao clean-room do projeto.
 
-### Fora do escopo da Fase 1
-
-- implementar as novas escolas/sistemas;
-- alterar runtime de Iron's, Ars, Hexalia, Toxony ou outros providers;
-- fechar números finais de Stage 08 onde ainda são TBD;
-- catalogar todos os spells/glyphs/rituais/efeitos do modpack;
-- corrigir bugs de providers externos;
-- declarar QA visual do pack como concluído.
+A Fase 1 não autorizou implementação das novas escolas nem declarou o catálogo do modpack completo.
 
 ## Fase 2 — catálogo completo do modpack
 
-**Início:** somente depois do merge da Fase 1.
+**Estado:** `ATIVA / EM PROGRESSO`
+
+Checkpoint inicial já mergeado:
+
+- PR #62 — `docs: catalog all modpack magic providers`
+- `main@17f87619bc8ed71023bc80d0adb752c13dc8c6c4`
+- post-merge CI `34056029588` / #1477 — `SUCCESS`
+
+O checkpoint #62 estabeleceu o baseline de 101 componentes magic-relevant contra a modlist de 607 entradas e criou a primeira matriz de deduplicação, mas não concluiu a Fase 2.
 
 Objetivo: catalogar integralmente o conteúdo mágico jogável do pack antes de aprovar duplicações ou fechar a lista final das novas escolas.
 
@@ -54,11 +59,21 @@ Para cada provider relevante, registrar conforme aplicável:
 - versão/JAR realmente presente na modlist;
 - proveniência da informação.
 
-Ars deve ser catalogado por formas/glyphs/augments e capacidades composicionais, não por enumerar infinitamente todas as combinações possíveis.
+Ars deve ser catalogado por forms/glyphs/augments/rituals e capacidades composicionais, não por enumerar infinitamente todas as combinações possíveis.
 
-A saída principal desta fase é uma matriz `capacidade → providers existentes → cobertura → lacuna real`.
+### Regra de classificação
+
+Magic-relevant não significa spell provider. Bridges, gear, libraries e compat podem ser essenciais para authority/dedup sem oferecer novos spells. Quando a auditoria granular contradiz a classe inicial do registry baseline, a correção deve ser registrada explicitamente e prevalecer sobre a classificação antiga.
+
+### Saída principal
+
+`capability → provider(s) → current coverage → semantic overlap → real gap`
+
+Nenhuma linha é liberada para Fase 3 apenas porque a apresentação/nome de um candidato Black Arcana difere do conteúdo instalado.
 
 ## Fase 3 — seleção final e implementação
+
+**Estado:** `BLOQUEADA PELA FASE 2`
 
 Só começa depois de a matriz da Fase 2 permitir deduplicação segura.
 
@@ -72,8 +87,18 @@ Ordem de trabalho:
 6. executar unit tests/GameTests/build/servidor/cliente conforme aplicável;
 7. atualizar Wiki de conceito para `IMPLEMENTADO` somente com evidência.
 
+### Invariantes para transição
+
+- generic randomness/probability não basta para justificar Caos;
+- geometry/boolean logic/runes/walls/counters não bastam para justificar Ordem;
+- generic life/damage linking não basta para justificar Arcana Vincular;
+- generic Ars Nouveau ↔ Iron's mana/spellbook unification não é lacuna enquanto Ars 'n' Spells 3.2.4 cobre esse papel;
+- generic contingency/event-triggered casting não é lacuna enquanto o ecossistema Ars já cobre esse comportamento;
+- magic-on-Create/moving contraptions não é lacuna por si só enquanto Ars Creo/Technica cobrem partes substanciais desse espaço;
+- unknown provider behavior remains fail-closed rather than being replaced by a generic Black Arcana bonus.
+
 ## Regra de transição
 
-O merge da PR #61 significa apenas: **o plano e a estrutura documental estão canônicos**.
+O projeto está atualmente entre Fase 2 e Fase 3: **Fase 1 está canônica; Fase 2 está em execução; Fase 3 continua bloqueada.**
 
-Ele não significa que todos os spells do modpack já foram catalogados nem que as novas escolas já existem em runtime. Esses trabalhos começam no ciclo seguinte, a partir de `main` pós-merge.
+O próximo merge documental da Fase 2 pode aumentar cobertura e corrigir classificações sem significar que a Fase 2 inteira terminou. A Fase 3 só é liberada quando as capability rows pertinentes deixarem de depender de provider audits incompletos e uma lacuna real puder ser demonstrada com evidência suficiente.
