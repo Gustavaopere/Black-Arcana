@@ -1,29 +1,31 @@
-# Holy — expansão divina/celestial sobre a escola existente do Iron's
+# Holy
+
+Status: `JÁ EXISTE — IRON'S BASE / EXPANSÃO CELESTIAL PLANEJADA`
+
+Provider base: Iron's Spells 'n Spellbooks `3.16.3`.
 
 ## Decisão canônica
 
 **Não existe uma nova escola `Divine` no Black Arcana.**
 
-A fantasia de magia divina/celestial será integrada à escola **Holy** já existente no Iron's Spells 'n Spellbooks. Se um novo spell for aprovado, ele será um spell Holy (ou usará explicitamente outro provider existente quando a mecânica pertencer a ele).
+A fantasia de magia divina/celestial será integrada à escola **Holy** já existente. Se um novo spell for aprovado, ele será Holy — ou permanecerá no provider existente correto quando a mecânica for Astral/Theurgy/etc.
 
-## Estado atual do provider
+## Spells base atuais — 12
 
-Iron's base já possui Holy com spells como:
+- Angel Wings
+- Blessing Of Life
+- Cleanse
+- Divine Smite
+- Fortify
+- Greater Heal
+- Guiding Bolt
+- Haste
+- Heal
+- Healing Circle
+- Sunbeam
+- Wisp
 
-- Angel Wings;
-- Blessing Of Life;
-- Cleanse;
-- Divine Smite;
-- Fortify;
-- Greater Heal;
-- Guiding Bolt;
-- Haste;
-- Heal;
-- Healing Circle;
-- Sunbeam;
-- Wisp.
-
-Addons como Paladin Spells também usam/cobrem gameplay Holy. Todos esses spells devem existir individualmente no catálogo `wiki/modpack-catalog/providers/<mod>/<spell>.md` e contam como conteúdo já existente mesmo quando Black Arcana não pretende alterá-los.
+As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/<spell>.md`. Addons como Paladin Spells também contam como cobertura Holy e permanecem em suas próprias pastas de provider.
 
 ## Regra provider-native first
 
@@ -31,16 +33,16 @@ Antes de criar qualquer novo conteúdo Holy, comparar contra:
 
 1. Iron's Holy base;
 2. Paladin Spells;
-3. outros addons que registrem spells na Holy school;
-4. Asterism Arcanum quando a proposta for astral/celestial;
-5. Eidolon quando a proposta for teurgia/ritual;
-6. demais providers do catálogo completo do modpack.
+3. outros addons que registrem Holy;
+4. Asterism quando a proposta for Astral;
+5. Eidolon quando a proposta for Theurgy/ritual;
+6. demais providers do catálogo completo.
 
-Se já existir efeito suficientemente equivalente, **não criar duplicata**.
+Se já existir efeito suficientemente equivalente, não criar duplicata.
 
-## Identidade para novos spells Holy
+## Nichos candidatos de expansão
 
-Os nichos ainda candidatos, sujeitos à deduplicação completa, são:
+Sujeitos à deduplicação completa:
 
 - julgamento celestial condicionado;
 - marcas Holy de graça/condenação com semântica específica;
@@ -50,15 +52,11 @@ Os nichos ainda candidatos, sujeitos à deduplicação completa, são:
 - miracles de preparação longa;
 - domains Holy bounded usando infraestrutura Black Arcana.
 
-Não criar uma segunda escola só porque o VFX é celestial.
-
 ## Miracle-tier
 
-Spells Holy normais permanecem no ecossistema Iron's. Ultimates/miracles podem exigir uma camada adicional preparada, como `Celestial Resonance`, mas isso é **custo/gate adicional**, não uma nova escola.
+Spells Holy normais permanecem no ecossistema Iron's. Ultimates/miracles podem exigir uma camada adicional preparada, como `Celestial Resonance`, mas isso é custo/gate adicional, não uma nova escola.
 
-Direção proposta:
-
-`CASTER -> HOLY SPELL -> (quando MIRACLE_TIER) CONSECRATED LINK -> SANCTUM CORE -> CELESTIAL RESONANCE`
+`CASTER -> HOLY SPELL -> (MIRACLE_TIER) CONSECRATED LINK -> SANCTUM CORE -> CELESTIAL RESONANCE`
 
 Céu aberto, Sol, Lua e eventos celestes funcionam como condições/eficiência de ritual; não geram recurso infinito passivamente.
 
@@ -67,8 +65,6 @@ Céu aberto, Sol, Lua e eventos celestes funcionam como condições/eficiência 
 - **Holy:** graça, consagração, proteção, julgamento, purificação, milagres.
 - **Astral:** estrelas/cosmos e autoridade própria do Asterism.
 - **Order:** lei, geometria, constraint, selos e estabilidade arcana.
-
-Compartilhar estética luminosa não torna as três categorias equivalentes.
 
 ## VFX
 
