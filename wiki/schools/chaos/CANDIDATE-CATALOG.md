@@ -20,6 +20,16 @@ A lista abaixo traduz categorias de feats pesquisadas para mecânicas bounded de
 | Colapso de Probabilidade | Keystone spell | Converte múltiplas chances bounded em um resultado garantido dentro de um conjunto pequeno, com cooldown/custo/backlash muito altos. |
 | Reescrita Local | Endgame Reality | Altera temporariamente uma propriedade autorizada de uma área/participante, usando Domain authority e restoration bounded. |
 | Negação Anômala | Countermagic | Suprime uma categoria mágica explicitamente reconhecida por curto tempo; fail-closed sem adapter. |
+| Falha Sistêmica | Anti-construct / Probability | Explora falhas internas de mecanismo, construct, gear ou sistema reconhecido pelo provider. Pode jam/degradar/desligar temporariamente um componente elegível sem virar dano genérico a qualquer máquina/bloco. |
+| Égide de Reversão | Reactive Hex / Defense | Ward reativa que liquida **um evento elegível reconhecido** como neutralização, desvio ou ricochete bounded. Sem hook para o projétil/spell/damage provenance, apenas bloqueia/falha fechado conforme contrato; nunca reflete dano desconhecido universalmente. |
+
+## Notas de deduplicação da pesquisa 2026-09-06
+
+- Feats de reversão de projétil/momentum já pertencem a `Distorção Vetorial`; não criar outro spell só porque a origem narrativa mudou.
+- Reversão de banimento/counterspell é extensão possível de `Negação Anômala`/`Descompasso`, não um terceiro countermagic automático.
+- Healing, ressurreição e manipulação biológica encontrados em histórias da Scarlet Witch **não entram automaticamente em Caos**: devem ser deduplicados contra Holy/Blood/Souls/witchcraft e só permanecer se a mecânica de probability produzir gameplay realmente diferente.
+- Probability aplicada a máquinas justificou `Falha Sistêmica` porque o delta é semântico: atacar causalidade/falha interna, não causar outro raio de dano.
+- Hex shield com ricochete justificou `Égide de Reversão` porque o settlement reativo/reflection é diferente de um ward puramente absorvente.
 
 ## Regras
 
@@ -28,4 +38,5 @@ A lista abaixo traduz categorias de feats pesquisadas para mecânicas bounded de
 - nenhuma transmutação arbitrária de inventories/entities;
 - probability nunca controla loot/RNG global sem boundary próprio;
 - grandes efeitos usam Arcane Danger/strain/corruption/backlash;
-- Iron's hospeda apresentação/progressão do spell quando a integração final for confirmada.
+- Iron's hospeda apresentação/progressão do spell quando a integração final for confirmada;
+- efeitos anti-machine devem integrar Create/Sable/outros sistemas somente por adapters próprios; block tag ou nome de classe não é prova de mecanismo elegível.
