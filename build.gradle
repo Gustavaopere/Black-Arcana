@@ -99,6 +99,11 @@ dependencies {
     compileOnly("curse.maven:ars-nouveau-401955:${ars_nouveau_file_id}") {
         transitive = false
     }
+    // The Stage 07.07 provider contract test instantiates the public IFamiliar API directly.
+    // Keep the same exact optional jar on the unit-test runtime without making it a production runtime dependency.
+    testRuntimeOnly("curse.maven:ars-nouveau-401955:${ars_nouveau_file_id}") {
+        transitive = false
+    }
 
     // Eidolon 1.21.1 exposes its ritual classes in an api package but no standalone API jar.
     // Compile against the exact pack release; all binary references remain in optional adapter classes.
