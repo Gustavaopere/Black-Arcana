@@ -23,45 +23,20 @@ class ForbiddenDomainContractTest {
         assertEquals(16, spec.radius());
         assertEquals(600, spec.durationTicks());
         assertThrows(IllegalArgumentException.class, () -> new ForbiddenDomainSpec(
-                "black_arcana:too_large",
-                ForbiddenDomainMode.LOCALIZED_FIELD,
-                ForbiddenDomainSafetyCeilings.MAX_RADIUS + 1,
-                600,
-                32,
-                256
-        ));
+                "black_arcana:too_large", ForbiddenDomainMode.LOCALIZED_FIELD,
+                ForbiddenDomainSafetyCeilings.MAX_RADIUS + 1, 600, 32, 256));
         assertThrows(IllegalArgumentException.class, () -> new ForbiddenDomainSpec(
-                "black_arcana:too_long",
-                ForbiddenDomainMode.LOCALIZED_FIELD,
-                16,
-                ForbiddenDomainSafetyCeilings.MAX_DURATION_TICKS + 1,
-                32,
-                256
-        ));
+                "black_arcana:too_long", ForbiddenDomainMode.LOCALIZED_FIELD,
+                16, ForbiddenDomainSafetyCeilings.MAX_DURATION_TICKS + 1, 32, 256));
         assertThrows(IllegalArgumentException.class, () -> new ForbiddenDomainSpec(
-                "black_arcana:too_many_entities",
-                ForbiddenDomainMode.LOCALIZED_FIELD,
-                16,
-                600,
-                ForbiddenDomainSafetyCeilings.MAX_TRACKED_ENTITIES + 1,
-                256
-        ));
+                "black_arcana:too_many_entities", ForbiddenDomainMode.LOCALIZED_FIELD,
+                16, 600, ForbiddenDomainSafetyCeilings.MAX_TRACKED_ENTITIES + 1, 256));
         assertThrows(IllegalArgumentException.class, () -> new ForbiddenDomainSpec(
-                "black_arcana:too_much_restoration",
-                ForbiddenDomainMode.LOCALIZED_FIELD,
-                16,
-                600,
-                32,
-                ForbiddenDomainSafetyCeilings.MAX_RESTORATION_POSITIONS + 1
-        ));
+                "black_arcana:too_much_restoration", ForbiddenDomainMode.LOCALIZED_FIELD,
+                16, 600, 32, ForbiddenDomainSafetyCeilings.MAX_RESTORATION_POSITIONS + 1));
         assertThrows(IllegalArgumentException.class, () -> new ForbiddenDomainSpec(
-                "black_arcana:dynamic_dimension",
-                ForbiddenDomainMode.TEMPORARY_DIMENSION,
-                16,
-                600,
-                32,
-                256
-        ));
+                "black_arcana:dynamic_dimension", ForbiddenDomainMode.TEMPORARY_DIMENSION,
+                16, 600, 32, 256));
     }
 
     @Test
@@ -76,13 +51,7 @@ class ForbiddenDomainContractTest {
     @Test
     void runtimeEnforcesOwnerGlobalParticipantAndExactlyOnceCloseContracts() {
         ForbiddenDomainSpec spec = new ForbiddenDomainSpec(
-                "black_arcana:test_domain",
-                ForbiddenDomainMode.LOCALIZED_FIELD,
-                8,
-                40,
-                2,
-                32
-        );
+                "black_arcana:test_domain", ForbiddenDomainMode.LOCALIZED_FIELD, 8, 40, 2, 32);
         ForbiddenDomainRuntime runtime = new ForbiddenDomainRuntime(2);
         UUID ownerA = UUID.randomUUID();
         UUID ownerB = UUID.randomUUID();
@@ -110,22 +79,18 @@ class ForbiddenDomainContractTest {
     @Test
     void expiryAndServerStopCleanupCannotLeaveOrphanSessions() {
         ForbiddenDomainSpec spec = new ForbiddenDomainSpec(
-                "black_arcana:test_domain",
-                ForbiddenDomainMode.LOCALIZED_FIELD,
-                8,
-                20,
-                8,
-                32
-        );
+                "black_arcana:test_domain", ForbiddenDomainMode.LOCALIZED_FIELD, 8, 20, 8, 32);
         ForbiddenDomainRuntime runtime = new ForbiddenDomainRuntime(ForbiddenDomainSafetyCeilings.MAX_ACTIVE_DOMAINS);
         UUID first = UUID.randomUUID();
         UUID second = UUID.randomUUID();
         assertEquals(ForbiddenDomainRuntime.StartResult.STARTED, runtime.start(first, spec, 100));
-        assertEquals(ForbiddenDomainRuntime.StartResult.STARTED, runtime.start(second, spec, 100));
+        assertEquals(ForbiddenDomainRuntime.StartResult.STARTED, runtime.start(second, spec, 101));
 
-        assertEquals(1, runtime.expire(119));
-        assertEquals(1, runtime.activeCount());
+        assertEquals(0, runtime.expire(119));
+        assertEquals(2, runtime.activeCount());
         assertEquals(1, runtime.expire(120));
+        assertEquals(1, runtime.activeCount());
+        assertEquals(1, runtime.expire(121));
         assertEquals(0, runtime.activeCount());
 
         runtime.start(first, spec, 200);
