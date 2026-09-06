@@ -1,36 +1,37 @@
 # Blessing Of Life
 
-- **Status no modpack:** PRESENTE — spell ativo no catálogo atual
+- **Status no modpack:** PRESENTE — ativo no catálogo atual
 - **Provider:** Iron's Spells 'n Spellbooks
 - **Mod ID:** `irons_spellbooks`
-- **Spell ID auditado:** `irons_spellbooks:blessing_of_life`
+- **Spell ID:** `irons_spellbooks:blessing_of_life`
 - **JAR/versão:** `irons_spellbooks-1.21.1-3.16.3.jar` / `1.21.1-3.16.3`
 - **Escola:** Holy
 - **Níveis:** 1–10
 - **Raridade:** Common → Legendary
-- **Cast:** Long — 30 ticks auditados
+- **Cast:** Long
+- **Cast time auditado:** 30 ticks
 - **Mana:** 10–55
 - **Cooldown:** 10 s
-- **Cura pública atual:** 6–15
+- **Cura atual:** 6–15
 - **Target helper auditado:** até 64 blocos
 
 ## O que faz
 
-Seleciona uma criatura-alvo e, ao completar a conjuração, aplica cura Holy a ela.
+Seleciona uma criatura e, ao completar o cast, cura o alvo.
 
-## Runtime e causalidade auditados
+## Source audit 3.16.3
 
-O source 3.16.3 resolve `healAmount = getSpellPower(level, caster)`, publica `SpellHealEvent(caster, target, healAmount, HOLY)` antes da cura e então cura o alvo. Esse evento é o hook preferencial para qualquer integração Black Arcana/RPG que precise provar qual cast/provider gerou a cura.
+- spell power: base 6, +1/level;
+- com `TargetEntityCastData` válido: `healAmount = getSpellPower(level, caster)`;
+- publica `SpellHealEvent(caster, target, healAmount, HOLY)` antes da cura;
+- aplica a cura e envia `HealParticlesPacket`.
 
-## VFX
+## Deduplicação / causalidade
 
-O runtime auditado distribui `HealParticlesPacket`. Aparência final no cliente real do pack permanece sujeita à matriz visual.
-
-## Deduplicação
-
-Já cobre cura Holy direcionada de alvo único. Uma nova magia Celestial não ganha delta por apenas curar mais ou trocar VFX.
+Já cobre cura Holy de alvo único. O `SpellHealEvent` é o hook causal preferível para integrações; não inferir uma segunda cura por diferença de HP nem executar settlement paralelo.
 
 ## Fonte / evidência
 
-- Catálogo oficial atual: `https://iron.wiki/spells/`.
-- Auditoria source 3.16.3: `wiki/providers/irons-spellbooks/spells/holy/blessing-of-life.md`.
+- Catálogo oficial atual: `https://iron.wiki/spells/`
+- Source audit canônico: `wiki/providers/irons-spellbooks/spells/holy/blessing-of-life.md`
+- Consulta: 2026-09-06.

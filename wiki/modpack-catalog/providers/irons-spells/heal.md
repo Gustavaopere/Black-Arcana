@@ -1,9 +1,9 @@
 # Heal
 
-- **Status no modpack:** PRESENTE — spell ativo no catálogo atual
+- **Status no modpack:** PRESENTE — ativo no catálogo atual
 - **Provider:** Iron's Spells 'n Spellbooks
 - **Mod ID:** `irons_spellbooks`
-- **Spell ID auditado:** `irons_spellbooks:heal`
+- **Spell ID:** `irons_spellbooks:heal`
 - **JAR/versão:** `irons_spellbooks-1.21.1-3.16.3.jar` / `1.21.1-3.16.3`
 - **Escola:** Holy
 - **Níveis:** 1–8
@@ -11,25 +11,26 @@
 - **Cast:** Instant
 - **Mana:** 30–135
 - **Cooldown:** 30 s
-- **Cura pública atual:** 5–12
+- **Cura atual:** 5–12
 
 ## O que faz
 
-Infunde o próprio caster com energia Holy e recupera vida imediatamente.
+Cura imediatamente o próprio caster.
 
-## Runtime e causalidade auditados
+## Source audit 3.16.3
 
-O source 3.16.3 usa `healAmount = getSpellPower(level, caster)` e publica `SpellHealEvent(caster, caster, healAmount, HOLY)` antes de chamar `entity.heal`. Para perks/telemetria causais, esse evento deve ser preferido a inferir cura por delta de HP.
+- spell power: base 5, +1/level;
+- `healAmount = getSpellPower(level, caster)`;
+- antes de `entity.heal`, publica `SpellHealEvent(caster, caster, healAmount, HOLY)`;
+- VFX: círculo de 16 partículas `HEART`;
+- animação: `SELF_CAST_ANIMATION`.
 
-## VFX / animação
+## Deduplicação / causalidade
 
-A auditoria registra círculo de 16 partículas `HEART` e `SELF_CAST_ANIMATION`.
-
-## Deduplicação
-
-Já ocupa self-heal Holy instantâneo. Uma nova cura não é gap por alterar apenas magnitude, cor ou nome.
+Já cobre self-heal instantâneo Holy. Quando uma perk precisa de causalidade de cura, deve preferir `SpellHealEvent` a inferir healing por diferença de HP. Não gerar segunda cura, lifesteal ou sustain credit para o mesmo settlement.
 
 ## Fonte / evidência
 
-- Catálogo oficial atual: `https://iron.wiki/spells/`.
-- Auditoria source 3.16.3: `wiki/providers/irons-spellbooks/spells/holy/heal.md`.
+- Catálogo oficial atual: `https://iron.wiki/spells/`
+- Source audit canônico: `wiki/providers/irons-spellbooks/spells/holy/heal.md`
+- Consulta: 2026-09-06.
