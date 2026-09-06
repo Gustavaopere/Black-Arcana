@@ -1,31 +1,59 @@
 # Greater Heal
 
-- **Status no modpack:** PRESENTE — spell ativo no catálogo atual
+- **Status no modpack:** PRESENTE — ativo no catálogo atual
 - **Provider:** Iron's Spells 'n Spellbooks
 - **Mod ID:** `irons_spellbooks`
-- **Spell ID auditado:** `irons_spellbooks:greater_heal`
+- **Spell ID:** `irons_spellbooks:greater_heal`
 - **JAR/versão:** `irons_spellbooks-1.21.1-3.16.3.jar` / `1.21.1-3.16.3`
 - **Escola:** Holy
-- **Nível:** 1
+- **Níveis:** 1
 - **Raridade:** Rare
-- **Cast:** Long — 120 ticks auditados
+- **Cast:** Long
+- **Cast time auditado:** 120 ticks
 - **Mana:** 100
 - **Cooldown:** 45 s
-- **Cura pública:** Max Healing
+- **Cura pública:** Max Healing / full self-heal
 
 ## O que faz
 
-É uma cura própria preparada e lenta que tenta restaurar completamente o caster.
+Ao completar o cast, tenta restaurar a vida do caster até o máximo.
 
-## Runtime e causalidade auditados
+## Source audit 3.16.3
 
-O source 3.16.3 calcula `healAmount = caster.getMaxHealth()` e executa `caster.heal(healAmount)`. Antes da cura publica `SpellHealEvent(caster, caster, healAmount, HOLY)` e envia `HealParticlesPacket`.
+- `healAmount = caster.getMaxHealth()`;
+- publica `SpellHealEvent(caster, caster, healAmount, HOLY)` antes da cura;
+- executa `caster.heal(healAmount)`;
+- envia `HealParticlesPacket`.
 
-## Deduplicação
+O resultado final continua sujeito à semântica normal de `heal` da entidade/provider; não inventamos comportamento adicional de overheal.
 
-Já ocupa o resultado “full self-heal”. Um Miracle-tier Holy não deve existir apenas como Greater Heal mais forte; precisa de custo, gate, condição e consequência realmente diferentes.
+## Targets / PvP / bosses / summons
+
+- **Target confirmado:** o próprio caster.
+- **PvP:** não possui target ofensivo direto; interações indiretas ficam `NÃO VERIFICADO`.
+- **Bosses/summons:** `NÃO VERIFICADO` — não são targets primários deste self-heal.
+- **Overheal/absorção:** não confirmado; não inferir além de `caster.heal`.
+
+## Obtenção, requisitos e aprendizado
+
+- **Pipeline geral:** segue o sistema de scrolls/spellbooks do Iron's.
+- **Rotas específicas de loot/trade/craft/recompensa:** `NÃO VERIFICADO`.
+- **Condições/requisitos adicionais:** `NÃO VERIFICADO`.
+- **Itens/focus/rituais específicos além do pipeline normal do provider:** `NÃO VERIFICADO`.
+
+## Integrações / QA / fail-closed
+
+- **Hook causal comprovado:** `SpellHealEvent`.
+- **Bridge específica de aquisição/casting:** `NÃO VERIFICADO`.
+- **VFX final além de `HealParticlesPacket`, animação/áudio e QA client/modpack real:** `NÃO VERIFICADO`.
+- Não conceder segunda cura, overheal ou sustain credit sem hook causal adicional comprovado.
+
+## Deduplicação / causalidade
+
+Já cobre full self-heal Holy preparado. O `SpellHealEvent` é o boundary causal preferível; nenhuma integração deve converter o mesmo cast em uma segunda cura ou sustain credit paralelo.
 
 ## Fonte / evidência
 
-- Catálogo oficial atual: `https://iron.wiki/spells/`.
-- Auditoria source 3.16.3: `wiki/providers/irons-spellbooks/spells/holy/greater-heal.md`.
+- Catálogo oficial atual: `https://iron.wiki/spells/`
+- Source audit canônico: `wiki/providers/irons-spellbooks/spells/holy/greater-heal.md`
+- Consulta: 2026-09-06.
