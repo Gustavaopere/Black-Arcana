@@ -15,17 +15,23 @@
 | Evocation | 17 | 17 | `COMPLETO` |
 | Fire | 13 | 13 | `COMPLETO` |
 | Holy | 12 | 12 | `COMPLETO` |
-| Ice | 12 | 0 | `PENDENTE` |
+| Ice | 12 | 12 | `COMPLETO` |
 | Lightning | 10 | 0 | `PENDENTE` |
 | Nature | 13 | 0 | `PENDENTE` |
 
-**Cobertura ativa atual:** 75/110 spells do Iron's base possuem ficha individual canônica.
+**Cobertura ativa atual:** 87/110 spells do Iron's base possuem ficha individual canônica.
 
 `COMPLETO` aqui significa que existe ficha individual para todos os spells **ativos** da escola e que cada campo obrigatório foi preenchido com evidência verificável ou marcado explicitamente `NÃO VERIFICADO`. Não significa que campos ainda desconhecidos tenham sido observados ou inferidos. VFX/runtime, fórmulas internas, loot específico, PvP/boss/summon policy, itens/rituais e QA client-real permanecem desconhecidos quando a respectiva ficha assim registrar.
 
+### Provenance especial do passe Ice
+
+O catálogo oficial atual de `https://iron.wiki/spells/` é a authority player-facing para o conjunto ativo e os valores publicados. Para internals, as fichas Ice também consultam o snapshot público upstream `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`.
+
+Esse commit upstream **não é rotulado nesta Wiki como tag/source 3.16.3**, porque a correspondência exata com o JAR instalado ainda não foi comprovada. Internals desse snapshot são registrados como evidência adicional e não substituem silenciosamente o catálogo atual quando houver divergência. Divergências ficam explícitas e o comportamento exato do JAR 3.16.3 permanece `NÃO VERIFICADO` até pinagem adequada.
+
 ### Spells legados/deprecated preservados fora da contagem ativa
 
-- `cloud-of-regeneration.md` — implementação Holy ainda presente no source 3.16.3, `Deprecated=true` no `DefaultConfig`, ausente do catálogo oficial ativo atual. Mantido para provenance/deduplicação histórica sem alterar 75/110.
+- `cloud-of-regeneration.md` — implementação Holy ainda presente no source 3.16.3, `Deprecated=true` no `DefaultConfig`, ausente do catálogo oficial ativo atual. Mantido para provenance/deduplicação histórica sem alterar 87/110.
 
 ## Escolas nativas do Iron's base
 
