@@ -241,14 +241,14 @@ public final class MinecraftBlackPyreRuntime {
         }
 
         long nowTick = level.getGameTime();
+        String targetId = blockTargetId(dimensionId, seed);
         ArcanaCastRequest request = new ArcanaCastRequest(
             castId,
             WORLD_SAFETY_SPELL,
             new ArcanaCastContext(casterId, nowTick, dimensionId),
-            blockTargetId(dimensionId, seed));
-        ArcanaServices.TargetResolution target = ArcanaServices.TargetResolution.resolved(
-            blockTargetId(dimensionId, seed),
-            "block");
+            0,
+            targetId);
+        ArcanaServices.TargetResolution target = ArcanaServices.TargetResolution.resolved(targetId);
         ChunkRef chunk = new ChunkRef(dimensionId, seed.getX() >> 4, seed.getZ() >> 4);
         TemporaryMutationKey key = new TemporaryMutationKey(dimensionId, seed.asLong());
         String replacementState = MinecraftTemporaryBlockBackend.encodeState(Blocks.BLACKSTONE.defaultBlockState());
