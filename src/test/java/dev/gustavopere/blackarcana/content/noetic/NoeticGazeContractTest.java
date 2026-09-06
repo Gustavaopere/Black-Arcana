@@ -42,7 +42,8 @@ class NoeticGazeContractTest {
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_RANGE_BLOCKS > 0.0D);
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_RANGE_BLOCKS <= NoeticSafetyCeilings.MAX_RANGE_BLOCKS);
         assertTrue(NoeticSafetyCeilings.MAX_ACTIVE_GAZES > 0);
-        assertTrue(NoeticSafetyCeilings.MAX_GAZE_DURATION_TICKS > 0);
+        assertEquals(160, NoeticSafetyCeilings.MAX_GAZE_DURATION_TICKS,
+                "Gaze of Stillness must honor the canonical 160-tick hard ceiling");
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_DURATION_TICKS <= NoeticSafetyCeilings.MAX_DURATION_TICKS);
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_DR_STACKS > 0);
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_DR_TRACKED_TARGETS >= NoeticSafetyCeilings.MAX_ACTIVE_GAZES);
