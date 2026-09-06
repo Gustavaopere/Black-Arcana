@@ -16,11 +16,10 @@ import java.util.Optional;
 
 /** Compact selector only: choosing a wedge changes selection but never executes a cast. */
 public final class BlackArcanaRadialScreen extends Screen {
-    private static final double RADIUS = 78.0D;
-    private static final double INNER_HIT_RADIUS = 28.0D;
-    private static final double OUTER_HIT_RADIUS = 112.0D;
-    private static final int SLOT_HALF_WIDTH = 45;
-    private static final int SLOT_HALF_HEIGHT = 12;
+    private static final double PREFERRED_RADIUS = 78.0D;
+    private static final double PREFERRED_INNER_HIT_RADIUS = 28.0D;
+    private static final double HIT_RADIUS_PADDING = 34.0D;
+    private static final int VIEWPORT_MARGIN = 4;
 
     private final List<ArcanaSpellId> loadout;
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
@@ -59,46 +58,61 @@ public final class BlackArcanaRadialScreen extends Screen {
         graphics.fill(0, 0, width, height, 0x55000000);
         int centerX = width / 2;
         int centerY = height / 2;
+        RadialLayout.CardMetrics card = RadialLayout.cardMetricsForViewport(width, height);
+        double radius = RadialLayout.radiusForViewport(
+                width, height, card.halfWidth() + 1, card.halfHeight() + 1,
+                PREFERRED_RADIUS, VIEWPORT_MARGIN);
+        double innerHitRadius = Math.min(PREFERRED_INNER_HIT_RADIUS, Math.max(8.0D, radius * 0.36D));
+        double outerHitRadius = Math.max(innerHitRadius + 1.0D, radius + HIT_RADIUS_PADDING);
+
         List<Integer> visible = RadialLayout.visibleSlots(loadout.size(), page);
         hoveredSlot = RadialLayout.hoveredSlot(
                 loadout.size(), page, mouseX, mouseY, centerX, centerY,
-                INNER_HIT_RADIUS, OUTER_HIT_RADIUS);
+                innerHitRadius, outerHitRadius);
 
         for (int visibleIndex = 0; visibleIndex < visible.size(); visibleIndex++) {
             int slot = visible.get(visibleIndex);
             ArcanaSpellId spell = loadout.get(slot);
             RadialLayout.Point point = RadialLayout.slotCenter(
-                    visibleIndex, visible.size(), centerX, centerY, RADIUS);
+                    visibleIndex, visible.size(), centerX, centerY, radius);
             int x = (int) Math.round(point.x());
             int y = (int) Math.round(point.y());
             boolean selected = slot == ClientInputController.selection().selectedSlot();
             boolean hovered = slot == hoveredSlot;
             int background = hovered ? 0xDD6B376D : selected ? 0xCC3D2748 : 0xB815101A;
             int border = hovered ? 0xFFF2D0F2 : selected ? 0xFFB991C0 : 0xFF5A4A60;
-            graphics.fill(x - SLOT_HALF_WIDTH - 1, y - SLOT_HALF_HEIGHT - 1,
-                    x + SLOT_HALF_WIDTH + 1, y + SLOT_HALF_HEIGHT + 1, border);
-            graphics.fill(x - SLOT_HALF_WIDTH, y - SLOT_HALF_HEIGHT,
-                    x + SLOT_HALF_WIDTH, y + SLOT_HALF_HEIGHT, background);
+            graphics.fill(x - card.halfWidth() - 1, y - card.halfHeight() - 1,
+                    x + card.halfWidth() + 1, y + card.halfHeight() + 1, border);
+            graphics.fill(x - card.halfWidth(), y - card.halfHeight(),
+                    x + card.halfWidth(), y + card.halfHeight(), background);
 
-            String name = displayName(spell);
-            graphics.drawCenteredString(font, (slot + 1) + " · " + name, x, y - 4, 0xFFFFFFFF);
+            String label = card.compact()
+                    ? Integer.toString(slot + 1)
+                    : (slot + 1) + " · " + displayName(spell, card.halfWidth() * 2 - 18);
+            graphics.drawCenteredString(font, label, x, y - 4, 0xFFFFFFFF);
         }
 
-        graphics.drawCenteredString(font, title, centerX, centerY - 4, 0xFFEADCEA);
-        focusedHazard().ifPresent(line ->
-                graphics.drawCenteredString(font, line, centerX, centerY + 12, 0xFFF2D0F2));
-        if (RadialLayout.pageCount(loadout.size()) > 1) {
-            Component pages = Component.translatable(
-                    "screen.black_arcana.radial.page", page + 1, RadialLayout.pageCount(loadout.size()));
-            graphics.drawCenteredString(font, pages, centerX, centerY + 26, 0xFFB9ABB9);
+        int centerTextWidth = Math.max(1, width - 16);
+        if (!card.compact()) {
+            graphics.drawCenteredString(font, title, centerX, centerY - 4, 0xFFEADCEA);
+            focusedHazard().ifPresent(line -> graphics.drawCenteredString(
+                    font, boundedCenterLine(line, centerTextWidth), centerX, centerY + 12, 0xFFF2D0F2));
+            if (RadialLayout.pageCount(loadout.size()) > 1) {
+                Component pages = Component.translatable(
+                        "screen.black_arcana.radial.page", page + 1, RadialLayout.pageCount(loadout.size()));
+                graphics.drawCenteredString(font, pages, centerX, centerY + 26, 0xFFB9ABB9);
+            }
+            graphics.drawCenteredString(
+                    font,
+                    boundedCenterLine(Component.translatable("screen.black_arcana.radial.hint"), centerTextWidth),
+                    centerX,
+                    Math.max(4, height - 24),
+                    0xFFD0C6D0);
         }
-        graphics.drawCenteredString(
-                font,
-                Component.translatable("screen.black_arcana.radial.hint"),
-                centerX,
-                height - 24,
-                0xFFD0C6D0);
         super.render(graphics, mouseX, mouseY, partialTick);
+        if (card.compact() && hoveredSlot >= 0) {
+            focusedSpellName().ifPresent(line -> graphics.renderTooltip(font, line, mouseX, mouseY));
+        }
     }
 
     @Override
@@ -143,23 +157,38 @@ public final class BlackArcanaRadialScreen extends Screen {
         return false;
     }
 
-    private Optional<Component> focusedHazard() {
-        ArcanaSpellId spell = null;
+    private Optional<ArcanaSpellId> focusedSpell() {
         if (hoveredSlot >= 0 && hoveredSlot < loadout.size()) {
-            spell = loadout.get(hoveredSlot);
-        } else {
-            spell = ClientInputController.selection().selected(loadout).orElse(null);
+            return Optional.of(loadout.get(hoveredSlot));
         }
+        return ClientInputController.selection().selected(loadout);
+    }
+
+    private Optional<Component> focusedSpellName() {
+        return focusedSpell().map(spell -> {
+            SpellPresentationPayload.Entry entry = presentation.get(spell);
+            return entry == null
+                    ? Component.literal(spell.path().replace('_', ' '))
+                    : Component.translatable(entry.translationKey());
+        });
+    }
+
+    private Optional<Component> focusedHazard() {
+        ArcanaSpellId spell = focusedSpell().orElse(null);
         if (spell == null) return Optional.empty();
         HazardPreflightPayload.Entry entry = hazards.get(spell);
         return entry == null ? Optional.empty() : Optional.of(BlackArcanaHudLayer.preflightLine(entry));
     }
 
-    private String displayName(ArcanaSpellId spell) {
+    private Component boundedCenterLine(Component line, int maxWidth) {
+        return BlackArcanaHudLayer.boundLine(font, line, maxWidth);
+    }
+
+    private String displayName(ArcanaSpellId spell, int maxWidth) {
         SpellPresentationPayload.Entry entry = presentation.get(spell);
         String raw = entry == null
                 ? spell.path().replace('_', ' ')
                 : Component.translatable(entry.translationKey()).getString();
-        return font.plainSubstrByWidth(raw, 70);
+        return font.plainSubstrByWidth(raw, Math.max(1, maxWidth));
     }
 }

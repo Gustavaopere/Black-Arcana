@@ -29,6 +29,35 @@ public final class RadialLayout {
         return List.copyOf(slots);
     }
 
+    public static CardMetrics cardMetricsForViewport(int width, int height) {
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException("viewport dimensions must be positive");
+        }
+        boolean compact = width < 300 || height < 180;
+        return compact
+                ? new CardMetrics(15, 7, true)
+                : new CardMetrics(34, 10, false);
+    }
+
+    public static double radiusForViewport(
+            int width,
+            int height,
+            int slotHalfWidth,
+            int slotHalfHeight,
+            double preferredRadius,
+            int margin
+    ) {
+        if (width <= 0 || height <= 0 || slotHalfWidth < 0 || slotHalfHeight < 0 || margin < 0) {
+            throw new IllegalArgumentException("invalid radial viewport geometry");
+        }
+        if (!Double.isFinite(preferredRadius) || preferredRadius <= 0.0D) {
+            throw new IllegalArgumentException("preferredRadius must be finite and positive");
+        }
+        double horizontal = width / 2.0D - slotHalfWidth - margin;
+        double vertical = height / 2.0D - slotHalfHeight - margin;
+        return Math.max(1.0D, Math.min(preferredRadius, Math.min(horizontal, vertical)));
+    }
+
     public static Point slotCenter(int visibleIndex, int visibleCount, double centerX, double centerY, double radius) {
         if (visibleCount <= 0 || visibleCount > SLOTS_PER_PAGE) {
             throw new IllegalArgumentException("visibleCount outside radial bounds");
@@ -66,6 +95,14 @@ public final class RadialLayout {
         double sector = Math.PI * 2.0D / visible.size();
         int visibleIndex = (int) Math.floor((angle + sector / 2.0D) / sector) % visible.size();
         return visible.get(visibleIndex);
+    }
+
+    public record CardMetrics(int halfWidth, int halfHeight, boolean compact) {
+        public CardMetrics {
+            if (halfWidth <= 0 || halfHeight <= 0) {
+                throw new IllegalArgumentException("radial card dimensions must be positive");
+            }
+        }
     }
 
     public record Point(double x, double y) { }

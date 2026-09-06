@@ -10,9 +10,11 @@ import dev.gustavopere.blackarcana.network.HazardResistanceForecastPayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public final class BlackArcanaHudLayer {
     private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "contextual_hud");
     private static final int MARGIN = 10;
     private static final int PADDING = 6;
+    private static final float MIN_EFFECTIVE_HUD_SCALE = 0.5F;
+    private static final int MAX_SCALE_FIT_ATTEMPTS = 4;
 
     private BlackArcanaHudLayer() { }
 
@@ -72,28 +76,62 @@ public final class BlackArcanaHudLayer {
         }
         if (lines.isEmpty()) return;
 
-        float scale = BlackArcanaClientConfig.HUD_SCALE.get().floatValue();
-        int logicalWidth = Math.max(1, (int) Math.floor(graphics.guiWidth() / scale));
-        int logicalHeight = Math.max(1, (int) Math.floor(graphics.guiHeight() / scale));
-        int textWidth = lines.stream().mapToInt(minecraft.font::width).max().orElse(1);
-        int panelWidth = textWidth + PADDING * 2;
-        int panelHeight = lines.size() * (minecraft.font.lineHeight + 2) + PADDING * 2 - 2;
-        HudLayout.Point origin = HudLayout.origin(
-                BlackArcanaClientConfig.HUD_ANCHOR.get(),
-                logicalWidth, logicalHeight, panelWidth, panelHeight, MARGIN);
+        float requestedScale = BlackArcanaClientConfig.HUD_SCALE.get().floatValue();
+        HudRenderLayout layout = layoutForScale(
+                minecraft.font, lines, graphics.guiWidth(), graphics.guiHeight(), requestedScale);
+        for (int attempt = 0; attempt < MAX_SCALE_FIT_ATTEMPTS; attempt++) {
+            float fittedScale = HudLayout.scaleDownToFit(
+                    layout.scale(), layout.logicalHeight(), layout.panelHeight(), MIN_EFFECTIVE_HUD_SCALE);
+            if (Math.abs(fittedScale - layout.scale()) < 0.0001F) break;
+            layout = layoutForScale(
+                    minecraft.font, lines, graphics.guiWidth(), graphics.guiHeight(), fittedScale);
+        }
 
         graphics.pose().pushPose();
-        graphics.pose().scale(scale, scale, 1.0F);
-        int x = origin.x();
-        int y = origin.y();
-        graphics.fill(x - 1, y - 1, x + panelWidth + 1, y + panelHeight + 1, 0xAA5A4A60);
-        graphics.fill(x, y, x + panelWidth, y + panelHeight, 0xB815101A);
+        graphics.pose().scale(layout.scale(), layout.scale(), 1.0F);
+        int x = layout.origin().x();
+        int y = layout.origin().y();
+        graphics.fill(x - 1, y - 1, x + layout.panelWidth() + 1, y + layout.panelHeight() + 1, 0xAA5A4A60);
+        graphics.fill(x, y, x + layout.panelWidth(), y + layout.panelHeight(), 0xB815101A);
         int textY = y + PADDING;
-        for (Component line : lines) {
+        for (FormattedCharSequence line : layout.lines()) {
             graphics.drawString(minecraft.font, line, x + PADDING, textY, 0xFFF2EAF2, false);
             textY += minecraft.font.lineHeight + 2;
         }
         graphics.pose().popPose();
+    }
+
+    private static HudRenderLayout layoutForScale(
+            Font font,
+            List<Component> sourceLines,
+            int guiWidth,
+            int guiHeight,
+            float scale
+    ) {
+        int logicalWidth = Math.max(1, (int) Math.floor(guiWidth / scale));
+        int logicalHeight = Math.max(1, (int) Math.floor(guiHeight / scale));
+        int maxTextWidth = HudLayout.maxTextWidth(logicalWidth, MARGIN, PADDING);
+        List<FormattedCharSequence> wrappedLines = new ArrayList<>();
+        for (Component line : sourceLines) {
+            wrappedLines.addAll(font.split(line, maxTextWidth));
+        }
+        int textWidth = wrappedLines.stream().mapToInt(font::width).max().orElse(1);
+        int panelWidth = textWidth + PADDING * 2;
+        int panelHeight = wrappedLines.size() * (font.lineHeight + 2) + PADDING * 2 - 2;
+        int effectiveMargin = HudLayout.boundedMargin(
+                logicalWidth, logicalHeight, panelWidth, panelHeight, MARGIN, 1);
+        HudLayout.Point origin = HudLayout.origin(
+                BlackArcanaClientConfig.HUD_ANCHOR.get(),
+                logicalWidth, logicalHeight, panelWidth, panelHeight, effectiveMargin);
+        return new HudRenderLayout(
+                scale, logicalHeight, List.copyOf(wrappedLines), panelWidth, panelHeight, origin);
+    }
+
+    static Component boundLine(Font font, Component line, int maxWidth) {
+        if (font.width(line) <= maxWidth) return line;
+        int ellipsisWidth = font.width("…");
+        String truncated = font.plainSubstrByWidth(line.getString(), Math.max(1, maxWidth - ellipsisWidth));
+        return Component.literal(truncated + "…");
     }
 
     private static Optional<Component> selectedSpellLine() {
@@ -209,4 +247,13 @@ public final class BlackArcanaHudLayer {
     private static String formatResistance(double value) {
         return String.format(Locale.ROOT, "%.1f", value);
     }
+
+    private record HudRenderLayout(
+            float scale,
+            int logicalHeight,
+            List<FormattedCharSequence> lines,
+            int panelWidth,
+            int panelHeight,
+            HudLayout.Point origin
+    ) { }
 }

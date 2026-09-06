@@ -8,6 +8,49 @@ public final class HudLayout {
 
     private HudLayout() { }
 
+    public static int maxTextWidth(int width, int margin, int padding) {
+        if (width <= 0 || margin < 0 || padding < 0) {
+            throw new IllegalArgumentException("HUD width geometry cannot be negative");
+        }
+        return Math.max(1, width - margin * 2 - padding * 2);
+    }
+
+    public static int boundedMargin(
+            int width,
+            int height,
+            int panelWidth,
+            int panelHeight,
+            int requestedMargin,
+            int border
+    ) {
+        if (width <= 0 || height <= 0 || panelWidth < 0 || panelHeight < 0
+                || requestedMargin < 0 || border < 0) {
+            throw new IllegalArgumentException("HUD margin geometry cannot be negative");
+        }
+        int freeHorizontal = width - panelWidth - border * 2;
+        int freeVertical = height - panelHeight - border * 2;
+        int available = Math.min(freeHorizontal, freeVertical);
+        if (available <= 0) return 0;
+        return Math.min(requestedMargin, available / 2);
+    }
+
+    public static float scaleDownToFit(
+            float requestedScale,
+            int logicalHeight,
+            int panelHeight,
+            float minimumScale
+    ) {
+        if (!Float.isFinite(requestedScale) || !Float.isFinite(minimumScale)
+                || requestedScale <= 0.0F || minimumScale <= 0.0F
+                || minimumScale > requestedScale || logicalHeight <= 0 || panelHeight < 0) {
+            throw new IllegalArgumentException("invalid HUD scale geometry");
+        }
+        int availableHeight = Math.max(1, logicalHeight - 2);
+        if (panelHeight <= availableHeight) return requestedScale;
+        float ratio = availableHeight / (float) panelHeight;
+        return Math.max(minimumScale, Math.min(requestedScale, requestedScale * ratio));
+    }
+
     public static Point origin(
             Anchor anchor,
             int width,
