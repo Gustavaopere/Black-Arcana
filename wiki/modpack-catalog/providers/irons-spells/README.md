@@ -3,11 +3,11 @@
 - **Mod ID:** `irons_spellbooks`
 - **JAR do pack:** `irons_spellbooks-1.21.1-3.16.3.jar`
 - **Runtime:** `1.21.1-3.16.3`
-- **Regra desta Wiki:** todo spell **ativo** do catálogo corrente recebe um arquivo `.md`, mesmo quando não há alteração planejada pelo Black Arcana. Entradas source-only explicitamente `deprecated` permanecem documentadas na auditoria do provider e não são contadas como spell ativo.
+- **Regra desta Wiki:** TODO spell existente recebe um arquivo `.md`, mesmo quando não há alteração planejada pelo Black Arcana. Spells deprecated ainda presentes no provider recebem ficha histórica/semântica, mas não inflam a contagem ativa do catálogo oficial.
 
 ## Progresso do catálogo individual
 
-| Escola | Total | Fichas individuais | Estado |
+| Escola | Total ativo | Fichas ativas | Estado |
 |---|---:|---:|---|
 | Blood | 10 | 10 | `COMPLETO` |
 | Eldritch | 7 | 7 | `COMPLETO` |
@@ -19,29 +19,29 @@
 | Lightning | 10 | 0 | `PENDENTE` |
 | Nature | 13 | 0 | `PENDENTE` |
 
-**Cobertura atual:** 75/110 spells ativos do Iron's base possuem ficha individual canônica.
+**Cobertura ativa atual:** 75/110 spells do Iron's base possuem ficha individual canônica.
 
-`COMPLETO` aqui significa que a ficha individual existe para todos os spells ativos da escola e contém tudo que pôde ser confirmado no passe atual. Não significa que todo detalhe visual, fórmula interna ou rota de loot tenha sido observado no cliente real.
+`COMPLETO` aqui significa que existe ficha individual para todos os spells **ativos** da escola e que cada campo obrigatório foi preenchido com evidência verificável ou marcado explicitamente `NÃO VERIFICADO`. Não significa que campos ainda desconhecidos tenham sido observados ou inferidos. VFX/runtime, fórmulas internas, loot específico, PvP/boss/summon policy, itens/rituais e QA client-real permanecem desconhecidos quando a respectiva ficha assim registrar.
 
-### Nota sobre Holy e `cloud_of_regeneration`
+### Spells legados/deprecated preservados fora da contagem ativa
 
-A auditoria de source 3.16.3 ainda encontra `irons_spellbooks:cloud_of_regeneration` no registry/source e o marca como **deprecated**, mas o catálogo público atual de spells expõe 12 Holy ativos e não inclui esse spell. Por isso ele permanece documentado na auditoria histórica/source em `wiki/providers/irons-spellbooks/spells/holy/cloud-of-regeneration.md`, mas **não entra no total ativo 110 nem nas 12 fichas canônicas de Holy desta pasta**.
+- `holy/cloud-of-regeneration.md` — implementação Holy ainda presente no source 3.16.3, `Deprecated=true` no `DefaultConfig`, ausente do catálogo oficial ativo atual. Mantido para provenance/deduplicação histórica sem alterar a cobertura ativa 75/110 nem o total ativo de 110 spells.
 
 ## Escolas nativas do Iron's base
 
-A build atual do provider-base possui 9 escolas nativas:
+A build atual do catálogo oficial ativo possui 9 escolas nativas:
 
 1. Blood — 10 spells
 2. Eldritch — 7 spells
 3. Ender — 16 spells
 4. Evocation — 17 spells
 5. Fire — 13 spells
-6. Holy — 12 spells ativos no catálogo público atual
+6. Holy — 12 spells
 7. Ice — 12 spells
 8. Lightning — 10 spells
 9. Nature — 13 spells
 
-**Total ativo do Iron's base adotado pela Wiki: 110 spells.**
+**Total ativo do Iron's base: 110 spells.**
 
 ## Estrutura física obrigatória
 
@@ -104,6 +104,7 @@ Cada ficha deve registrar, quando a informação existir e puder ser verificada:
 - status no modpack;
 - provider e mod ID;
 - JAR/versão;
+- spell ID;
 - escola/tipo;
 - descrição funcional;
 - níveis e raridade;
@@ -124,4 +125,4 @@ Cada ficha deve registrar, quando a informação existir e puder ser verificada:
 - bugs/QA/fail-closed relevantes;
 - fonte/evidência e estado de verificação.
 
-Campos ainda não comprovados ficam `NÃO VERIFICADO`; nunca são preenchidos por suposição.
+Campos ainda não comprovados ficam `NÃO VERIFICADO`; nunca são preenchidos por suposição. Uma escola só recebe `COMPLETO` quando todos os spells ativos têm ficha e os campos obrigatórios estão explicitamente resolvidos como evidência ou `NÃO VERIFICADO`.
