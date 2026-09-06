@@ -22,6 +22,21 @@ A lista abaixo traduz categorias de feats pesquisadas para mecânicas bounded de
 | Negação Anômala | Countermagic | Suprime uma categoria mágica explicitamente reconhecida por curto tempo; fail-closed sem adapter. |
 | Falha Sistêmica | Anti-construct / Probability | Explora falhas internas de mecanismo, construct, gear ou sistema reconhecido pelo provider. Pode jam/degradar/desligar temporariamente um componente elegível sem virar dano genérico a qualquer máquina/bloco. |
 | Égide de Reversão | Reactive Hex / Defense | Ward reativa que liquida **um evento elegível reconhecido** como neutralização, desvio ou ricochete bounded. Sem hook para o projétil/spell/damage provenance, apenas bloqueia/falha fechado conforme contrato; nunca reflete dano desconhecido universalmente. |
+| Reversão de Forma | Biological/Transformation | Tenta desfazer shapechange/transformation mágica explicitamente registrada. Sem provider de transformação reversível, falha fechado. |
+| Correção Improvável | Support/Probability | Remove ou mitiga um estado negativo somente quando houver outcome registrado e sem duplicar cleanse/heal Holy. A fantasia é causalidade improvável, não cura genérica. |
+| Remendo Caótico | Matter/World Effect | Reorganiza temporariamente matéria autorizada para cobertura/fechamento de abertura/reparo bounded, com Stage 04 protection e rollback ownership. |
+| Dor de Causalidade | Hex/Control | Aplica dor/controle por família mágica própria, com caps de PvP/boss. Não é simplesmente outro bolt de dano. |
+
+## Feats adicionados pelo corpus Wanda 616
+
+A pesquisa fornecida pelo usuário reforça estes deltas mecânicos:
+
+- armas e mecanismos que falham/engasgam justificam `Falha Sistêmica`;
+- projectiles que mudam de direção e momentum cancelado pertencem a `Distorção Vetorial`/`Égide de Reversão`;
+- transmutações e reversões biológicas justificam `Reversão de Forma`, mas só com provider hook explícito;
+- reparo/rearranjo de estrutura pode existir como `Remendo Caótico`, sempre bounded e protegido;
+- cura/ressurreição observada nos quadrinhos **não** justifica novos heals/resurrections de Chaos se Holy/Souls já cobrem o mesmo resultado;
+- reality warping de escala global é reduzido a `Reescrita Local`/`Campo de Dissonância`, nunca gamerule global ou edição ilimitada do mundo.
 
 ## Notas de deduplicação da pesquisa 2026-09-06
 
