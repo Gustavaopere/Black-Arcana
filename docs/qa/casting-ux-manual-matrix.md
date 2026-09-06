@@ -15,6 +15,12 @@ Stage 05 real-client fixture checkpoint: PR #39 merged to `main` at `06f0a9a495b
 - `docs/qa/fixtures/stage05-real-client/` provides removable deterministic controls for hazard thresholds, Arcane Resistance 0/15/30, legitimate CLEAR/COOLDOWN/COST gates and stale-profile reload checks;
 - fixture availability does **not** change any manual result by itself. Every row below remains PENDING until direct client evidence is recorded.
 
+Stage 05 small-viewport preflight hardening checkpoint: PR #57 merged to `main` at `f2bb9a19db92d869e4443b2047ad1c913f8d2a29`.
+- final PR head `01a77eab641896173585b66c6310662d820c9f0c` passed workflow `34010736078` (#1169);
+- exact-SHA post-merge workflow `34010968124` (#1170) passed JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical artifact publication;
+- canonical artifact `black-arcana-f2bb9a19db92d869e4443b2047ad1c913f8d2a29`, artifact ID `9982472491`, SHA-256 `1ba6949ceb04f261646548b6d99a158f4f40211a5017ca1911c0e1a732f86cdb`;
+- responsive loadout/radial geometry and wrapped authoritative HUD text are automated preflight evidence only. They do **not** mark the 854×480, GUI-scale, denial, hazard/gate or anchor rows PASS without direct client observation.
+
 Canonical real-client build delivery: successful `main` CI publishes a 7-day GitHub Actions artifact named `black-arcana-<full commit SHA>` only after the full automated runtime gate succeeds. Use the artifact matching the exact SHA recorded in the evidence report. Artifact availability is delivery infrastructure only and does **not** change any manual PENDING row.
 
 Execution procedure and evidence requirements are in `docs/qa/casting-ux-real-client-runbook.md`.
