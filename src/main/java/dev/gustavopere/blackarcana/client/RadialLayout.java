@@ -29,6 +29,16 @@ public final class RadialLayout {
         return List.copyOf(slots);
     }
 
+    public static CardMetrics cardMetricsForViewport(int width, int height) {
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException("viewport dimensions must be positive");
+        }
+        boolean compact = width < 300 || height < 180;
+        return compact
+                ? new CardMetrics(15, 7, true)
+                : new CardMetrics(34, 10, false);
+    }
+
     public static double radiusForViewport(
             int width,
             int height,
@@ -85,6 +95,14 @@ public final class RadialLayout {
         double sector = Math.PI * 2.0D / visible.size();
         int visibleIndex = (int) Math.floor((angle + sector / 2.0D) / sector) % visible.size();
         return visible.get(visibleIndex);
+    }
+
+    public record CardMetrics(int halfWidth, int halfHeight, boolean compact) {
+        public CardMetrics {
+            if (halfWidth <= 0 || halfHeight <= 0) {
+                throw new IllegalArgumentException("radial card dimensions must be positive");
+            }
+        }
     }
 
     public record Point(double x, double y) { }
