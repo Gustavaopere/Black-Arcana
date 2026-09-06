@@ -45,4 +45,25 @@ public final class BlackPyreBlockEntitySafetyGameTests {
             "failed mutation must preserve block-entity inventory/NBT");
         helper.succeed();
     }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void minecraftMutationBackendRejectsUnbreakableTerrain(GameTestHelper helper) {
+        BlockPos pos = helper.absolutePos(new BlockPos(4, 1, 2));
+        helper.getLevel().setBlock(pos, Blocks.BEDROCK.defaultBlockState(), Block.UPDATE_ALL);
+
+        MinecraftTemporaryBlockBackend backend = new MinecraftTemporaryBlockBackend(helper.getLevel().getServer());
+        TemporaryMutationKey key = new TemporaryMutationKey(
+            helper.getLevel().dimension().location().toString(),
+            pos.asLong());
+        String expected = backend.readLoadedState(key).orElseThrow();
+        boolean replaced = backend.replaceIfCurrent(
+            key,
+            expected,
+            MinecraftTemporaryBlockBackend.encodeState(Blocks.BLACKSTONE.defaultBlockState()));
+
+        helper.assertTrue(!replaced, "world mutation backend must fail closed for unbreakable terrain");
+        helper.assertTrue(helper.getLevel().getBlockState(pos).is(Blocks.BEDROCK),
+            "failed mutation must preserve unbreakable terrain");
+        helper.succeed();
+    }
 }
