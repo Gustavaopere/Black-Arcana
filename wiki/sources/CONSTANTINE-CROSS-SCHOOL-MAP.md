@@ -38,6 +38,10 @@ Se um mod instalado já fornece a técnica com qualidade aceitável, o Black Arc
 | ilusão/memória/hipnose | Witchcraft/Occult ou provider existente | Só criar quando o efeito mecânico for distinguível e seguro; client deception nunca é authority. |
 | comunicação com morto/espírito | Souls & Death / Malum/Eidolon | Provider-native first; não sintetizar alma de qualquer entidade morta. |
 | reanimar morto | Goety/Eidolon/necromancy | Não pertence automaticamente a Blood ou Infernal. |
+| reversão de magia/dano | Ordem / Countermagic | `Prisma de Retorno` somente com provenance verificável; não reflete dano desconhecido universalmente. |
+| portal para Inferno/afterlife | Infernal/Space | Reutilizar engine de portal e adapter Immersive Portals; a semântica do destino define a escola. |
+| encantamento de bebida/substância | Witchcraft | Excelente padrão de preparation-based magic: item real + rito + efeito provider-backed. |
+| aprisionamento demoníaco | Order/Binding/Witchcraft | O delivery pode ser cage/sigil/ritual; ownership, eligibility e release devem ser explícitos. |
 
 ## Candidatos que Constantine realmente acrescenta ao roadmap
 
@@ -82,6 +86,40 @@ Saídas bounded candidatas:
 **Categoria:** Witchcraft / Ward
 
 Mascara uma assinatura reconhecida contra um **detector específico** por tempo e escopo bounded. Não é invisibilidade global e não pode enganar sistemas sem adapter.
+
+### 5. Encantamento de Substância
+
+**Categoria:** Witchcraft / Preparation
+
+Permite aplicar um rito a uma substância consumível real (bebida, óleo, infusão ou poção) e usar essa substância como delivery de um efeito provider-backed. Inspirado em feats onde Constantine altera propriedades de bebidas/objetos, mas no pack deve usar receitas e componentes reais.
+
+### 6. Gaiola de Nome Verdadeiro
+
+**Categoria:** Witchcraft / Binding / Infernal
+
+Aprisiona temporariamente uma entidade sobrenatural elegível quando o jogador possui um identificador/true-name/contract token reconhecido pelo provider. Sem identidade causal não funciona. Não serializa ou apaga entidade arbitrariamente.
+
+### 7. Retorno Infernal
+
+**Categoria:** Infernal / Portal / Blood component
+
+Ritual de emergência que usa `ALTERED_BLOOD` demoníaco como chave para abrir saída bounded de um contexto infernal. Não converte sangue demoníaco em Lava Infernal; o sangue é requisito/chave consumível e o portal usa a authority normal de displacement/portal.
+
+## Evidência específica do corpus fornecido
+
+Os Respect Threads fornecidos pelo usuário registram, entre outros exemplos úteis de design:
+
+- ward/barrier contra demônio;
+- wards que escondem pessoas/casas/assinaturas de entidades infernais;
+- portais para Hell/afterlife/Between;
+- spell reversal/turnabout charm;
+- demon blood como componente para escapar do Inferno;
+- conjuração/manifestações demoníacas;
+- restrição/paralisia e cages;
+- enchanting de álcool/substância;
+- projeção/espionagem remota.
+
+Esses feats são usados como inspiração mecânica, não como escala de poder canônica.
 
 ## Vínculos e recursos — consequência importante
 
