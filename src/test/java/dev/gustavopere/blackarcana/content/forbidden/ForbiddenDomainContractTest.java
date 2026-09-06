@@ -41,15 +41,20 @@ class ForbiddenDomainContractTest {
 
     @Test
     void admissionFailsClosedOnAnyUnknownOrUnsafeWorldBoundary() {
-        ForbiddenDomainAdmission admitted = new ForbiddenDomainAdmission(true, true, true, true);
+        ForbiddenDomainAdmission incompleteRecovery = new ForbiddenDomainAdmission(true, true, true, true);
+        assertFalse(incompleteRecovery.safeRecoveryAvailable());
+        assertFalse(incompleteRecovery.admitted());
+
+        ForbiddenDomainAdmission admitted = new ForbiddenDomainAdmission(true, true, true, true, true);
         assertTrue(admitted.admitted());
         assertTrue(admitted.worldEffectAllowed());
-        assertFalse(new ForbiddenDomainAdmission(false, true, true, true).admitted());
-        assertFalse(new ForbiddenDomainAdmission(true, false, true, true).admitted());
-        assertFalse(new ForbiddenDomainAdmission(true, true, false, true).admitted());
-        ForbiddenDomainAdmission worldDenied = new ForbiddenDomainAdmission(true, true, true, false);
-        assertFalse(worldDenied.worldEffectAllowed());
-        assertFalse(worldDenied.admitted());
+        assertFalse(new ForbiddenDomainAdmission(false, true, true, true, true).admitted());
+        assertFalse(new ForbiddenDomainAdmission(true, false, true, true, true).admitted());
+        assertFalse(new ForbiddenDomainAdmission(true, true, false, true, true).admitted());
+        assertFalse(new ForbiddenDomainAdmission(true, true, true, false, true).admitted());
+        ForbiddenDomainAdmission recoveryDenied = new ForbiddenDomainAdmission(true, true, true, true, false);
+        assertFalse(recoveryDenied.safeRecoveryAvailable());
+        assertFalse(recoveryDenied.admitted());
     }
 
     @Test
@@ -81,24 +86,27 @@ class ForbiddenDomainContractTest {
     }
 
     @Test
-    void participantLogoutCleanupRemovesStaleMembershipWithoutClosingOwnerDomains() {
+    void participantCleanupRemovesStaleMembershipWithoutClosingOwnerDomainsAndReleasesBudget() {
         ForbiddenDomainSpec spec = new ForbiddenDomainSpec(
-                "black_arcana:test_domain", ForbiddenDomainMode.LOCALIZED_FIELD, 8, 40, 4, 32);
+                "black_arcana:test_domain", ForbiddenDomainMode.LOCALIZED_FIELD, 8, 40, 1, 32);
         ForbiddenDomainRuntime runtime = new ForbiddenDomainRuntime(2);
         UUID ownerA = UUID.randomUUID();
         UUID ownerB = UUID.randomUUID();
         UUID participant = UUID.randomUUID();
+        UUID replacement = UUID.randomUUID();
 
         assertEquals(ForbiddenDomainRuntime.StartResult.STARTED, runtime.start(ownerA, spec, 100));
         assertEquals(ForbiddenDomainRuntime.StartResult.STARTED, runtime.start(ownerB, spec, 100));
         assertTrue(runtime.trackParticipant(ownerA, participant));
         assertTrue(runtime.trackParticipant(ownerB, participant));
+        assertFalse(runtime.trackParticipant(ownerA, replacement));
 
         assertEquals(2, runtime.clearParticipant(participant));
         assertEquals(0, runtime.session(ownerA).orElseThrow().participantCount());
         assertEquals(0, runtime.session(ownerB).orElseThrow().participantCount());
         assertEquals(2, runtime.activeCount());
         assertEquals(0, runtime.clearParticipant(participant));
+        assertTrue(runtime.trackParticipant(ownerA, replacement));
     }
 
     @Test

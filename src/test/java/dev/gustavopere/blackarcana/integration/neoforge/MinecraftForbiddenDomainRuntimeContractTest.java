@@ -41,6 +41,9 @@ class MinecraftForbiddenDomainRuntimeContractTest {
         assertTrue(source.contains("ServerTickEvent.Post"));
         assertTrue(source.contains("PlayerEvent.PlayerLoggedOutEvent"));
         assertTrue(source.contains("state.domains.clearParticipant(playerId)"));
+        assertTrue(source.contains("LivingDeathEvent"));
+        assertTrue(source.contains("onLivingDeath"));
+        assertTrue(source.contains("pruneParticipants(server, state)"));
         assertTrue(source.contains("ServerStoppedEvent"));
 
         assertFalse(source.contains("addRegionTicket"));
