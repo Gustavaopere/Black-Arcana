@@ -36,6 +36,26 @@ public final class ConfigurableWorldEffectPolicy implements ArcanaServices.World
     }
 
     /**
+     * Cast-level admission validates only that a declared world-mutating spell has a registered
+     * safety profile. Concrete terrain class/mode/budget admission belongs to the mutation gateway,
+     * which lets adaptive spells retain entity/visual fallback when terrain is OFF/COSMETIC or when
+     * a less-destructive class is selected. The legacy {@link #authorize} method remains unchanged
+     * for predecessor callers that explicitly request worst-case admission.
+     */
+    @Override
+    public ArcanaDecision authorizeCast(ArcanaCastRequest request, ArcanaServices.TargetResolution target) {
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(target, "target");
+        if (!request.spell().requestsWorldMutation()) return ArcanaDecision.allow();
+        if (profiles.find(request.spell().id()).isEmpty()) {
+            return ArcanaDecision.deny(
+                "world_profile_missing",
+                "World-mutating spell has no registered safety profile");
+        }
+        return ArcanaDecision.allow();
+    }
+
+    /**
      * Authorizes one concrete mutation operation against the spell's static worst-case profile.
      * Existing callers keep using {@link #authorize(ArcanaCastRequest, ArcanaServices.TargetResolution)}.
      */
