@@ -70,7 +70,7 @@ Princípios:
 
 ## Spells Blood existentes
 
-O Iron's base atualmente possui 10 spells Blood e todos serão catalogados individualmente em `wiki/modpack-catalog/providers/irons-spells/`:
+O Iron's base atualmente possui 10 spells Blood e todos serão catalogados individualmente em `wiki/modpack-catalog/providers/irons-spells/blood/`:
 
 - Acupuncture;
 - Blood Needles;
