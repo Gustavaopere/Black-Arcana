@@ -11,6 +11,7 @@ import dev.gustavopere.blackarcana.integration.neoforge.MinecraftArcaneDamagePip
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftBlackPyreRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEchoArmamentRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftEphemeralTemperingRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftForbiddenDomainRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftLawOfRecurrenceRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftReciprocalTranspositionRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftRiftBladesRuntime;
@@ -57,6 +58,7 @@ public final class BlackArcanaMod {
         MinecraftBlackPyreRuntime.register(NeoForge.EVENT_BUS);
         MinecraftEchoArmamentRuntime.register(NeoForge.EVENT_BUS);
         MinecraftEphemeralTemperingRuntime.register(NeoForge.EVENT_BUS);
+        MinecraftForbiddenDomainRuntime.register(NeoForge.EVENT_BUS);
         MinecraftLawOfRecurrenceRuntime.register(NeoForge.EVENT_BUS);
         MinecraftReciprocalTranspositionRuntime.register(NeoForge.EVENT_BUS);
         MinecraftRiftBladesRuntime.register(NeoForge.EVENT_BUS);
