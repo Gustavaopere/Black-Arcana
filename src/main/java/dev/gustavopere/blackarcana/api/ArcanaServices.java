@@ -36,7 +36,18 @@ public final class ArcanaServices {
     public interface TargetSelector { TargetResolution resolve(ArcanaCastRequest request); }
 
     @FunctionalInterface
-    public interface WorldEffectPolicy { ArcanaDecision authorize(ArcanaCastRequest request, TargetResolution target); }
+    public interface WorldEffectPolicy {
+        ArcanaDecision authorize(ArcanaCastRequest request, TargetResolution target);
+
+        /**
+         * Cast-level admission. Legacy policies retain their existing behavior by default;
+         * operation-aware policies may defer concrete mutation-class checks to the canonical
+         * mutation gateway while still validating cast-level prerequisites.
+         */
+        default ArcanaDecision authorizeCast(ArcanaCastRequest request, TargetResolution target) {
+            return authorize(request, target);
+        }
+    }
 
     /**
      * Prepares the server-owned hazard transaction after ordinary cast checks and
