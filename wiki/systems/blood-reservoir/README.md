@@ -1,105 +1,137 @@
-# Sistema Hemático — Reservatório e Vínculos
+# Blood — Reservatório, custo hemático e vínculos
 
 ## Estado
 
-`CONCEITO / PESQUISA — NÃO IMPLEMENTADO`
+`CONCEITO / PESQUISA — REFORMA DA ESCOLA BLOOD EXISTENTE; NÃO IMPLEMENTADO`
 
-Este documento registra a direção de design solicitada para uma economia mágica hemática própria. Não substitui o runtime canônico atual até uma implementação revisada entrar em `main`.
+Este documento descreve a reforma planejada da **escola Blood já existente no Iron's Spells 'n Spellbooks**. Não cria uma nova escola, não cria uma segunda mana e não altera o runtime atual até uma implementação revisada entrar em `main`.
 
-## Invariante principal
+## Invariante principal planejado
 
-A Magia de Sangue **não usa mana normal**.
+Depois da implementação, spells Blood integrados **não usarão mana normal**.
 
-Se um spell pertencente à disciplina hemática exigir combustível, o custo deve ser resolvido exclusivamente por fontes hemáticas válidas, como sangue próprio, sangue de alvo autorizado, sangue de uma entidade vinculada ou sangue armazenado em infraestrutura hemática. Ausência de uma fonte válida faz o cast falhar fechado.
+Se um spell Blood exigir combustível, o custo será resolvido exclusivamente por fontes hemáticas válidas:
+
+- sangue do próprio caster;
+- sangue de alvo autorizado quando a semântica do spell permitir;
+- sangue de entidade vinculada;
+- sangue armazenado em infraestrutura hemática;
+- combinação explícita dessas fontes.
+
+Mana normal disponível não satisfaz um custo Blood. Ausência de fonte hemática válida faz o cast falhar fechado.
+
+## Estado provider-native atual
+
+Hoje o Iron's cobra mana normal nos spells Blood. A Wiki preserva esses valores como **baseline factual do provider**.
+
+Durante a futura implementação, cada spell receberá adapter explícito com dois campos separados:
+
+- `provider_native_mana_cost` — custo original, preservado para auditoria/config;
+- `black_arcana_blood_cost` — custo efetivo novo em HP/mB/fontes vinculadas.
+
+O primeiro deixa de ser debitado quando o override hemático estiver ativo e validado.
 
 ## Reservatório de sangue
 
-O sistema deve permitir uma construção física de armazenamento de sangue com capacidade medida em `mB`.
+O sistema deve permitir uma construção física com capacidade medida em `mB`.
 
-Exemplo conceitual:
+Exemplo:
 
 - capacidade estrutural: `70.000 mB`;
 - sangue armazenado: `50 mB`;
-- HUD: `50 / 70.000`;
-- preenchimento visual proporcional: aproximadamente `0,071%` da barra.
+- HUD: `50 / 70.000 mB`;
+- preenchimento visual: aproximadamente `0,071%`.
 
 A capacidade vem do volume/arquitetura válida da construção; o recurso disponível vem do sangue realmente armazenado. A barra **não regenera passivamente**.
 
-Uma construção grande e quase vazia permanece uma reserva grande em potencial, mas oferece pouca energia atual.
+Uma construção grande e quase vazia oferece grande capacidade potencial, mas quase nenhum combustível atual.
 
 ## Sangue não é energia vital
 
-O sistema deve distinguir explicitamente:
+O sistema distingue explicitamente:
 
-- `SANGUE` — recurso hemático fisiológico de seres que realmente possuem sangue segundo classificação registrada;
-- `ENERGIA_VITAL` — vida/força vital abstrata; não é convertida automaticamente em sangue;
-- `ALMA/ESPÍRITO` — recurso espiritual provider-owned; não é sangue;
-- `MANA` — recurso arcano comum; não participa do combustível hemático por padrão.
+- `SANGUE` — recurso hemático fisiológico;
+- `ENERGIA_VITAL` — vida/força vital abstrata;
+- `ALMA/ESPÍRITO` — recurso espiritual provider-owned;
+- `MANA` — recurso arcano comum.
 
-Exemplo obrigatório: **Iron Golem não é fonte de sangue.** Ele pode possuir vida/energia vital para outras mecânicas, mas não satisfaz uma operação que exige `SANGUE`.
+Esses recursos não se convertem automaticamente.
+
+Exemplo obrigatório: **Iron Golem não é fonte de sangue.** Ele pode possuir HP/energia vital para outras mecânicas, mas satisfaz `NO_BLOOD` para operações hemáticas.
 
 ## Classificação de fontes
 
-Toda entidade elegível deve passar por uma classificação server-authoritative. O design futuro deve prever pelo menos:
+Toda entidade elegível passa por classificação server-authoritative:
 
 - `HEMATIC_BLOOD` — sangue normal válido;
-- `ALTERED_BLOOD` — sangue especial (vampírico, corrupto, mágico etc.) com identidade própria;
+- `ALTERED_BLOOD` — sangue especial, como vampírico/corrupto/mágico, quando houver provider/registro;
 - `NO_BLOOD` — construtos, golems, máquinas e outros alvos sem sangue;
 - `UNKNOWN` — falha fechado até classificação segura.
 
-Nenhuma decisão deve depender só do nome visível da entidade.
+Nenhuma decisão depende somente do nome visível da entidade.
 
 ## Vínculos
 
-Um vínculo hemático é uma relação persistente e autorizada:
+Um vínculo hemático é uma relação persistente/autorizada:
 
-`CONJURADOR ⇄ VÍNCULO ⇄ FONTE`
+`CONJURADOR <-> BLOOD LINK <-> FONTE`
 
-A fonte pode ser, conforme regras futuras:
+A fonte pode ser:
 
 - o próprio conjurador;
-- criatura viva compatível;
-- familiar/servo com ownership válido;
-- jogador com consentimento explícito quando PvP/multiplayer;
+- criatura hemática compatível;
+- familiar/servo com ownership válido e sangue real;
+- jogador com consentimento/política PvP adequada;
 - reservatório hemático;
-- artefato/estrutura que exponha recurso hemático real.
+- artefato/estrutura que exponha sangue real por contrato.
 
-O vínculo deve registrar identidade estável, ownership/consentimento, tipo de recurso, limites, distância/dimensão quando aplicável e política de quebra.
+O vínculo registra identidade estável, ownership/consentimento, tipo de recurso, limites, distância/dimensão e política de quebra.
 
 ## Transação de cast
 
-Um cast hemático deve seguir uma única transação canônica:
+Um cast Blood reformado deve seguir uma única transação:
 
-1. resolver spell e custo;
-2. resolver fontes permitidas;
-3. cotar disponibilidade real;
-4. reservar o recurso sem duplicação;
-5. executar validação final de targeting/gates;
-6. aplicar/commit do spell;
-7. consumir exatamente o valor confirmado;
-8. refund/rollback quando o cast não for cometido.
+1. resolver spell e adapter Blood;
+2. calcular custo hemático;
+3. resolver fontes permitidas;
+4. cotar disponibilidade real;
+5. reservar HP/mB sem duplicação;
+6. executar targeting/gates finais;
+7. commit do cast;
+8. consumir exatamente o valor confirmado;
+9. refund/rollback se o cast não for cometido.
 
-Não pode haver dano à fonte sem cast correspondente nem cast gratuito após falha de liquidação.
+Não pode haver dano/consumo sem cast correspondente, cast gratuito após falha, nem double-spend entre corpo, vínculo e tanque.
 
 ## Relação com Blood Price existente
 
-O Black Arcana já possui `Blood Price`, que substitui parcialmente um custo provider-owned por vida real de forma transacional. Esse contrato é evidência reutilizável para atomicidade e rollback, mas **não é o sistema final desta economia hemática**, porque o objetivo desta disciplina é não depender da mana normal.
+`Blood Price` já demonstra atomicidade e rollback ao trocar parcialmente custo provider-owned por vida. Na nova arquitetura ele deve ser **reavaliado/migrado**: Blood school não deve depender de substituição parcial de mana, porque o objetivo final é `0 mana normal` para spells Blood integrados.
+
+Blood Price pode permanecer como mecânica separada para outros contextos se houver identidade legítima, mas não será usado como desculpa para manter mana como combustível da Blood school.
+
+## Compatibilidade obrigatória antes do override global
+
+Não aplicar cegamente a regra apenas por `school == Blood`. Auditar individualmente:
+
+- 10 Blood spells do Iron's base;
+- addons que adicionem spells à Blood school;
+- Vampire Spells Addon/Vampirism/Bloodlines;
+- Hazen/Somake/Travel Optics e demais providers com conteúdo hemático;
+- summons, self-cost, channeled spells e spells com custos especiais.
+
+Cada adapter incompatível deve falhar fechado até existir integração segura.
 
 ## Próximas decisões de design
 
-Ainda precisam ser fechados antes da implementação:
-
-- razão `mB` ↔ custo mágico;
-- como coletar sangue sem duplicação;
-- capacidade por bloco/material da estrutura;
-- perdas, se existirem;
-- distância máxima de vínculo;
-- cross-dimension policy;
+- razão HP ↔ mB ↔ custo do spell;
+- coleta de sangue;
+- capacidade por bloco/material;
+- perdas/eficiência;
+- distância e cross-dimension de vínculo;
 - prioridade entre múltiplas fontes;
 - consentimento PvP;
-- compatibilidade Vampirism/Bloodlines/Iron's Blood;
-- integração visual com HUD;
-- efeitos de tipos especiais de sangue;
+- tipos especiais de sangue;
 - limites de bosses/summons/farms;
-- persistência e invalidação após morte/despawn;
-- progressão e unlocks no RPG Skill Tree.
+- persistência após morte/despawn;
+- HUD/resource bar;
+- progressão/unlocks no RPG Skill Tree.
