@@ -29,6 +29,26 @@ Fortifica living entities amigáveis/elegíveis ao redor do caster, concedendo a
 - pre-cast mostra `TargetedAreaEntity` de raio 8;
 - VFX: `AbsorptionParticlesPacket` por alvo + `FortifyAreaParticlesPacket` na área.
 
+## Targets / PvP / bosses / summons
+
+- **Targeting confirmado:** living entities em 8 blocos filtradas por `Utils.shouldHealEntity`.
+- **Players/PvP, bosses e summons:** a elegibilidade específica dentro desse helper fica `NÃO VERIFICADO`; não ampliar a seleção por bridge.
+- **Efeito confirmado:** `FORTIFY` por 120 s, amplifier derivado do spell power.
+
+## Obtenção, requisitos e aprendizado
+
+- **Pipeline geral:** segue o sistema de scrolls/spellbooks do Iron's.
+- **Rotas específicas de loot/trade/craft/recompensa:** `NÃO VERIFICADO`.
+- **Condições/requisitos adicionais:** `NÃO VERIFICADO`.
+- **Itens/focus/rituais específicos além do pipeline normal do provider:** `NÃO VERIFICADO`.
+
+## Integrações / QA / fail-closed
+
+- **Authority de seleção:** `Utils.shouldHealEntity`; **authority de efeito:** `MobEffectRegistry.FORTIFY`.
+- **Bridge específica de aquisição/casting:** `NÃO VERIFICADO`.
+- **Áudio/textura final e QA client/modpack real:** `NÃO VERIFICADO`.
+- Não criar uma segunda pool de absorção/temporary HP para o mesmo cast.
+
 ## Deduplicação
 
 Já cobre fortificação/absorção Holy em área. Não criar uma segunda camada equivalente de temporary HP sobre o mesmo cast nem duplicar a seleção de aliados em bridge própria.

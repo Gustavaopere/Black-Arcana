@@ -27,6 +27,27 @@ Ao completar o cast, tenta restaurar a vida do caster até o máximo.
 
 O resultado final continua sujeito à semântica normal de `heal` da entidade/provider; não inventamos comportamento adicional de overheal.
 
+## Targets / PvP / bosses / summons
+
+- **Target confirmado:** o próprio caster.
+- **PvP:** não possui target ofensivo direto; interações indiretas ficam `NÃO VERIFICADO`.
+- **Bosses/summons:** `NÃO VERIFICADO` — não são targets primários deste self-heal.
+- **Overheal/absorção:** não confirmado; não inferir além de `caster.heal`.
+
+## Obtenção, requisitos e aprendizado
+
+- **Pipeline geral:** segue o sistema de scrolls/spellbooks do Iron's.
+- **Rotas específicas de loot/trade/craft/recompensa:** `NÃO VERIFICADO`.
+- **Condições/requisitos adicionais:** `NÃO VERIFICADO`.
+- **Itens/focus/rituais específicos além do pipeline normal do provider:** `NÃO VERIFICADO`.
+
+## Integrações / QA / fail-closed
+
+- **Hook causal comprovado:** `SpellHealEvent`.
+- **Bridge específica de aquisição/casting:** `NÃO VERIFICADO`.
+- **VFX final além de `HealParticlesPacket`, animação/áudio e QA client/modpack real:** `NÃO VERIFICADO`.
+- Não conceder segunda cura, overheal ou sustain credit sem hook causal adicional comprovado.
+
 ## Deduplicação / causalidade
 
 Já cobre full self-heal Holy preparado. O `SpellHealEvent` é o boundary causal preferível; nenhuma integração deve converter o mesmo cast em uma segunda cura ou sustain credit paralelo.

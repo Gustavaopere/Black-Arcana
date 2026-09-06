@@ -21,9 +21,30 @@ Cura imediatamente o próprio caster.
 
 - spell power: base 5, +1/level;
 - `healAmount = getSpellPower(level, caster)`;
-- antes de `entity.heal`, publica `SpellHealEvent(caster, caster, healAmount, HOLY)`;
+- antes de `caster.heal`, publica `SpellHealEvent(caster, caster, healAmount, HOLY)`;
 - VFX: círculo de 16 partículas `HEART`;
 - animação: `SELF_CAST_ANIMATION`.
+
+## Targets / PvP / bosses / summons
+
+- **Target confirmado:** o próprio caster.
+- **PvP:** não possui target ofensivo direto; interações indiretas ficam `NÃO VERIFICADO`.
+- **Bosses/summons:** `NÃO VERIFICADO` — não são targets primários deste self-heal.
+- **Overheal/absorção:** `NÃO VERIFICADO`; não inferir além do heal normal do provider.
+
+## Obtenção, requisitos e aprendizado
+
+- **Pipeline geral:** segue o sistema de scrolls/spellbooks do Iron's.
+- **Rotas específicas de loot/trade/craft/recompensa:** `NÃO VERIFICADO`.
+- **Condições/requisitos adicionais:** `NÃO VERIFICADO`.
+- **Itens/focus/rituais específicos além do pipeline normal do provider:** `NÃO VERIFICADO`.
+
+## Integrações / QA / fail-closed
+
+- **Hook causal comprovado:** `SpellHealEvent`.
+- **Bridge específica de aquisição/casting:** `NÃO VERIFICADO`.
+- **Áudio/textura final e QA client/modpack real:** `NÃO VERIFICADO`; VFX/animação source-auditados estão registrados acima.
+- Não gerar segunda cura, lifesteal ou sustain credit para o mesmo settlement.
 
 ## Deduplicação / causalidade
 

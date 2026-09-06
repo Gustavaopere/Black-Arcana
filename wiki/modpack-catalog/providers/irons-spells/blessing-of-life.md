@@ -26,6 +26,26 @@ Seleciona uma criatura e, ao completar o cast, cura o alvo.
 - publica `SpellHealEvent(caster, target, healAmount, HOLY)` antes da cura;
 - aplica a cura e envia `HealParticlesPacket`.
 
+## Targets / PvP / bosses / summons
+
+- **Target confirmado:** entidade válida via `TargetEntityCastData`, com helper até 64 blocos.
+- **Elegibilidade exata de player aliado/PvP, boss e summon:** `NÃO VERIFICADO` neste passe; não inferir a policy apenas do conceito de “aliado”.
+- Bridges devem respeitar o target aceito pelo provider e o `SpellHealEvent`; não ampliar a elegibilidade por conta própria.
+
+## Obtenção, requisitos e aprendizado
+
+- **Pipeline geral:** segue o sistema de scrolls/spellbooks do Iron's.
+- **Rotas específicas de loot/trade/craft/recompensa:** `NÃO VERIFICADO`.
+- **Condições/requisitos adicionais:** `NÃO VERIFICADO`.
+- **Itens/focus/rituais específicos além do pipeline normal do provider:** `NÃO VERIFICADO`.
+
+## Integrações / QA / fail-closed
+
+- **Hook causal comprovado:** `SpellHealEvent`.
+- **Bridge específica de aquisição/casting:** `NÃO VERIFICADO`.
+- **VFX final além de `HealParticlesPacket`, textura/animação/áudio:** `NÃO VERIFICADO`.
+- **QA client/modpack real e exceções de target:** `NÃO VERIFICADO`; falhar fechado em vez de inventar elegibilidade.
+
 ## Deduplicação / causalidade
 
 Já cobre cura Holy de alvo único. O `SpellHealEvent` é o hook causal preferível para integrações; não inferir uma segunda cura por diferença de HP nem executar settlement paralelo.

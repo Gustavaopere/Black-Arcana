@@ -29,6 +29,26 @@ Aplica `HASTENED`, aumentando movimento, velocidade de ataque, mineração e Cas
 
 O catálogo atual resume o resultado como 20% Magical Haste por 30–45 s. A ficha preserva ambos: outcome público e implementação auditada.
 
+## Targets / PvP / bosses / summons
+
+- **Targeting confirmado:** aliado até 32 blocos, com fallback para o próprio caster.
+- **Definição exata de aliado para players/PvP, bosses e summons:** `NÃO VERIFICADO`.
+- A bridge não deve ampliar a elegibilidade nem substituir o fallback do provider.
+
+## Obtenção, requisitos e aprendizado
+
+- **Pipeline geral:** segue o sistema de scrolls/spellbooks do Iron's.
+- **Rotas específicas de loot/trade/craft/recompensa:** `NÃO VERIFICADO`.
+- **Condições/requisitos adicionais:** `NÃO VERIFICADO`.
+- **Itens/focus/rituais específicos além do pipeline normal do provider:** `NÃO VERIFICADO`.
+
+## Integrações / QA / fail-closed
+
+- **Effect authority:** `HASTENED` / `HastenedEffect.getPercentForAmplifier`.
+- **Bridge específica de aquisição/casting:** `NÃO VERIFICADO`.
+- **VFX/animação/áudio final e QA client/modpack real:** `NÃO VERIFICADO`.
+- Não duplicar movement/attack/mining/CTR como bônus paralelo para o mesmo cast.
+
 ## Deduplicação
 
 Já cobre buff Holy multiatributo de haste. Perks/bridges devem operar por hooks/atributos do provider quando disponíveis e não somar um clone do mesmo buff fora do pipeline.

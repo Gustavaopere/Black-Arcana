@@ -21,7 +21,7 @@
 
 **Cobertura ativa atual:** 75/110 spells do Iron's base possuem ficha individual canônica.
 
-`COMPLETO` aqui significa que a ficha individual existe para todos os spells **ativos** da escola e contém tudo que pôde ser confirmado no passe atual. Não significa que VFX/runtime, fórmulas internas, loot específico ou outros campos marcados `NÃO VERIFICADO` tenham sido observados no cliente real.
+`COMPLETO` aqui significa que existe ficha individual para todos os spells **ativos** da escola e que cada campo obrigatório foi preenchido com evidência verificável ou marcado explicitamente `NÃO VERIFICADO`. Não significa que campos ainda desconhecidos tenham sido observados ou inferidos. VFX/runtime, fórmulas internas, loot específico, PvP/boss/summon policy, itens/rituais e QA client-real permanecem desconhecidos quando a respectiva ficha assim registrar.
 
 ### Spells legados/deprecated preservados fora da contagem ativa
 
@@ -102,4 +102,4 @@ Cada ficha deve registrar, quando a informação existir e puder ser verificada:
 - bugs/QA/fail-closed relevantes;
 - fonte/evidência e estado de verificação.
 
-Campos ainda não comprovados ficam `NÃO VERIFICADO`; nunca são preenchidos por suposição.
+Campos ainda não comprovados ficam `NÃO VERIFICADO`; nunca são preenchidos por suposição. Uma escola só recebe `COMPLETO` quando todos os spells ativos têm ficha e os campos obrigatórios estão explicitamente resolvidos como evidência ou `NÃO VERIFICADO`.

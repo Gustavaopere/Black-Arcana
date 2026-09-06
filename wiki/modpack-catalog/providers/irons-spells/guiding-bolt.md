@@ -26,6 +26,26 @@ Dispara um projétil lento Holy. A documentação pública atual registra que cr
 
 A mecânica pública de Guided é confirmada pelo catálogo atual; raio/algoritmo fino de homing permanece propriedade do projectile/effect do provider e não é reimplementado aqui.
 
+## Targets / PvP / bosses / summons
+
+- **Targeting confirmado:** projétil disparado na direção de visão; o alvo atingido recebe a semântica Guided documentada.
+- **Players em PvP, bosses e summons:** elegibilidade/imunidades específicas ficam `NÃO VERIFICADO`.
+- **Homing fino e seleção de projéteis guiados:** pertencem ao provider e ficam `NÃO VERIFICADO` além do outcome público confirmado.
+
+## Obtenção, requisitos e aprendizado
+
+- **Pipeline geral:** segue o sistema de scrolls/spellbooks do Iron's.
+- **Rotas específicas de loot/trade/craft/recompensa:** `NÃO VERIFICADO`.
+- **Condições/requisitos adicionais:** `NÃO VERIFICADO`.
+- **Itens/focus/rituais específicos além do pipeline normal do provider:** `NÃO VERIFICADO`.
+
+## Integrações / QA / fail-closed
+
+- **Entity/projétil authority:** `GuidingBoltProjectile`.
+- **Bridge específica de aquisição/casting ou homing:** `NÃO VERIFICADO`.
+- **VFX/animação/áudio final e QA client/modpack real:** `NÃO VERIFICADO`.
+- Não criar um segundo algoritmo de homing ou reaplicar o dano/Guided fora do provider.
+
 ## Deduplicação / causalidade
 
 Já cobre bolt Holy + marca de homing. Não criar um segundo homing genérico nem atribuir hits posteriores ao cast raiz sem causalidade comprovada pelo provider.
