@@ -84,6 +84,21 @@ class SmallViewportLayoutContractTest {
         assertTrue(origin.y() + panelHeight + 1 <= logicalHeight);
     }
 
+    @Test
+    void hudCanScaleDownToPreserveWrappedAuthoritativeText() {
+        float fitted = HudLayout.scaleDownToFit(2.0F, 60, 96, 0.5F);
+
+        assertTrue(fitted < 2.0F);
+        assertTrue(fitted >= 0.5F);
+    }
+
+    @Test
+    void hudScaleIsStableWhenWrappedContentAlreadyFits() {
+        float fitted = HudLayout.scaleDownToFit(1.0F, 120, 90, 0.5F);
+
+        assertTrue(Math.abs(fitted - 1.0F) < 0.0001F);
+    }
+
     private record Rect(double left, double top, double right, double bottom) {
         boolean overlaps(Rect other) {
             return left < other.right && right > other.left
