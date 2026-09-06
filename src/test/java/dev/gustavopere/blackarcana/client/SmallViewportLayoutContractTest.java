@@ -65,6 +65,25 @@ class SmallViewportLayoutContractTest {
         assertTrue(maxTextWidth + 2 * 6 + 2 * 10 <= 214);
     }
 
+    @Test
+    void scaledFourLineHudCanReduceMarginInsteadOfOverflowingVertically() {
+        int logicalWidth = 107;
+        int logicalHeight = 60;
+        int panelWidth = 87;
+        int panelHeight = 54;
+        int margin = HudLayout.boundedMargin(
+                logicalWidth, logicalHeight, panelWidth, panelHeight, 10, 1);
+        HudLayout.Point origin = HudLayout.origin(
+                HudLayout.Anchor.BOTTOM_CENTER,
+                logicalWidth, logicalHeight, panelWidth, panelHeight, margin);
+
+        assertTrue(margin < 10);
+        assertTrue(origin.x() - 1 >= 0);
+        assertTrue(origin.y() - 1 >= 0);
+        assertTrue(origin.x() + panelWidth + 1 <= logicalWidth);
+        assertTrue(origin.y() + panelHeight + 1 <= logicalHeight);
+    }
+
     private record Rect(double left, double top, double right, double bottom) {
         boolean overlaps(Rect other) {
             return left < other.right && right > other.left
