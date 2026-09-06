@@ -1,19 +1,27 @@
 package dev.gustavopere.blackarcana.integration.neoforge;
 
+import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipRegistry;
+import dev.gustavopere.blackarcana.content.noetic.NoeticObservationKind;
 import dev.gustavopere.blackarcana.content.noetic.NoeticObservationRuntime;
+import dev.gustavopere.blackarcana.content.noetic.NoeticObservationSession;
 import dev.gustavopere.blackarcana.content.noetic.NoeticPerceptionSnapshot;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
+import net.minecraft.server.MinecraftServer;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.RecordComponent;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -76,5 +84,46 @@ class MinecraftNoeticObservationRuntimeContractTest {
                 new NoeticObservationRuntime(4),
                 new FamiliarOwnershipRegistry(4));
         assertNotNull(runtime);
+    }
+
+    @Test
+    void minecraftAdapterExposesServerScopedAdmissionSnapshotAndLifecycleSurface() throws Exception {
+        assertEquals(ArcanaDecision.class,
+                MinecraftNoeticObservationRuntime.class.getMethod(
+                        "start",
+                        MinecraftServer.class,
+                        UUID.class,
+                        UUID.class,
+                        NoeticObservationKind.class,
+                        int.class,
+                        boolean.class).getReturnType());
+        assertEquals(Optional.class,
+                MinecraftNoeticObservationRuntime.class.getMethod(
+                        "snapshot", MinecraftServer.class, UUID.class).getReturnType());
+        assertEquals(void.class,
+                MinecraftNoeticObservationRuntime.class.getMethod(
+                        "tick", MinecraftServer.class).getReturnType());
+        assertEquals(boolean.class,
+                MinecraftNoeticObservationRuntime.class.getMethod(
+                        "clearViewer", UUID.class, NoeticObservationSession.CloseReason.class).getReturnType());
+        assertEquals(int.class,
+                MinecraftNoeticObservationRuntime.class.getMethod(
+                        "clearTarget", UUID.class).getReturnType());
+        assertEquals(int.class,
+                MinecraftNoeticObservationRuntime.class.getMethod(
+                        "clearForServerStop").getReturnType());
+    }
+
+    @Test
+    void minecraftAdapterSourceNeverUsesChunkAcquisitionOrArbitrarySerialization() throws Exception {
+        String source = Files.readString(Path.of(
+                "src/main/java/dev/gustavopere/blackarcana/integration/neoforge/MinecraftNoeticObservationRuntime.java"));
+        assertFalse(source.contains("getChunk("));
+        assertFalse(source.contains("addRegionTicket"));
+        assertFalse(source.contains("setChunkForced"));
+        assertFalse(source.contains("getPersistentData"));
+        assertFalse(source.contains("saveWithoutId"));
+        assertFalse(source.contains("serializeNBT"));
+        assertFalse(source.contains("getAllSlots"));
     }
 }
