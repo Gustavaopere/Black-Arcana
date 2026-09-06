@@ -14,14 +14,18 @@
 | Ender | 16 | 16 | `COMPLETO` |
 | Evocation | 17 | 17 | `COMPLETO` |
 | Fire | 13 | 13 | `COMPLETO` |
-| Holy | 12 | 0 | `PENDENTE` |
+| Holy | 12 | 12 | `COMPLETO` |
 | Ice | 12 | 0 | `PENDENTE` |
 | Lightning | 10 | 0 | `PENDENTE` |
 | Nature | 13 | 0 | `PENDENTE` |
 
-**Cobertura atual:** 63/110 spells do Iron's base possuem ficha individual canônica.
+**Cobertura atual:** 75/110 spells ativos do Iron's base possuem ficha individual canônica.
 
-`COMPLETO` aqui significa que a ficha individual existe para todos os spells da escola e contém tudo que pôde ser confirmado no passe atual. Não significa que VFX/runtime, fórmulas internas, loot específico ou outros campos marcados `NÃO VERIFICADO` tenham sido observados no cliente real.
+`COMPLETO` aqui significa que a ficha individual existe para todos os spells ativos da escola e contém tudo que pôde ser confirmado no passe atual. Não significa que todo detalhe visual, fórmula interna ou rota de loot tenha sido observado no cliente real.
+
+### Nota sobre Holy e `cloud_of_regeneration`
+
+A auditoria de source 3.16.3 ainda encontra `irons_spellbooks:cloud_of_regeneration` no registry/source e o marca como **deprecated**, mas o catálogo público atual de spells expõe 12 Holy ativos e não inclui esse spell. Por isso ele permanece documentado na auditoria histórica/source em `wiki/providers/irons-spellbooks/spells/holy/cloud-of-regeneration.md`, mas **não entra no total ativo 110 nem nas 12 fichas canônicas de Holy desta pasta**.
 
 ## Escolas nativas do Iron's base
 
@@ -32,12 +36,12 @@ A build atual do provider-base possui 9 escolas nativas:
 3. Ender — 16 spells
 4. Evocation — 17 spells
 5. Fire — 13 spells
-6. Holy — 12 spells
+6. Holy — 12 spells ativos no catálogo público atual
 7. Ice — 12 spells
 8. Lightning — 10 spells
 9. Nature — 13 spells
 
-**Total do Iron's base: 110 spells.**
+**Total ativo do Iron's base adotado pela Wiki: 110 spells.**
 
 ## Escolas adicionais no modpack
 
@@ -58,7 +62,7 @@ A lista exata das 36 escolas será reconstruída a partir do runtime/JARs atuais
 
 ## Estrutura obrigatória
 
-Cada spell fica diretamente nesta pasta quando pertence ao Iron's base:
+Cada spell ativo do Iron's base fica diretamente nesta pasta:
 
 `providers/irons-spells/<spell>.md`
 
