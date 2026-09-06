@@ -38,12 +38,22 @@ class NoeticGazeContractTest {
     }
 
     @Test
-    void gazeRangeAndActiveStateHaveHardCeilings() {
+    void gazeRangeActiveStateAndDiminishingReturnsHaveHardCeilings() {
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_RANGE_BLOCKS > 0.0D);
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_RANGE_BLOCKS <= NoeticSafetyCeilings.MAX_RANGE_BLOCKS);
         assertTrue(NoeticSafetyCeilings.MAX_ACTIVE_GAZES > 0);
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_DURATION_TICKS > 0);
         assertTrue(NoeticSafetyCeilings.MAX_GAZE_DURATION_TICKS <= NoeticSafetyCeilings.MAX_DURATION_TICKS);
+        assertTrue(NoeticSafetyCeilings.MAX_GAZE_DR_STACKS > 0);
+        assertTrue(NoeticSafetyCeilings.MAX_GAZE_DR_TRACKED_TARGETS >= NoeticSafetyCeilings.MAX_ACTIVE_GAZES);
+        assertTrue(NoeticSafetyCeilings.GAZE_DR_RESET_TICKS >= NoeticSafetyCeilings.MAX_GAZE_DURATION_TICKS);
+    }
+
+    @Test
+    void nullificationPolicyFailsClosedForBossesAndCanonicalControlDenial() {
+        assertTrue(NoeticGazePolicy.authorizeNullification(false, true).allowed());
+        assertFalse(NoeticGazePolicy.authorizeNullification(true, true).allowed());
+        assertFalse(NoeticGazePolicy.authorizeNullification(false, false).allowed());
     }
 
     @Test
