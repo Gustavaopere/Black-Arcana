@@ -8,8 +8,13 @@ public final class NoeticSafetyCeilings {
     public static final int MAX_EFFECT_IDS = 16;
     public static final int MAX_DISPLAY_NAME_LENGTH = 96;
     public static final int MAX_FAMILIAR_PROVIDERS = 16;
-    public static final int MAX_NULLIFICATIONS_PER_ACTION = 8;
+
+    public static final double MAX_GAZE_RANGE_BLOCKS = 24.0D;
+    public static final int MAX_GAZE_DURATION_TICKS = 200;
     public static final int MAX_ACTIVE_GAZES = 64;
+    public static final int MAX_NULLIFIABLE_EFFECT_TYPES = 128;
+    public static final int MAX_NULLIFICATIONS_PER_ACTION = 8;
+
     public static final int MAX_SANCTUARY_RADIUS = 16;
     public static final int MAX_SANCTUARY_DURATION_TICKS = 600;
     public static final int MAX_SANCTUARY_MEMBERS = 8;
