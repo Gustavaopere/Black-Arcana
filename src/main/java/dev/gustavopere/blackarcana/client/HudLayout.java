@@ -8,6 +8,13 @@ public final class HudLayout {
 
     private HudLayout() { }
 
+    public static int maxTextWidth(int width, int margin, int padding) {
+        if (width <= 0 || margin < 0 || padding < 0) {
+            throw new IllegalArgumentException("HUD width geometry cannot be negative");
+        }
+        return Math.max(1, width - margin * 2 - padding * 2);
+    }
+
     public static Point origin(
             Anchor anchor,
             int width,
