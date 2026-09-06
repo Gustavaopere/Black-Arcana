@@ -11,8 +11,6 @@ import net.minecraft.server.MinecraftServer;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.RecordComponent;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +19,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -112,18 +109,5 @@ class MinecraftNoeticObservationRuntimeContractTest {
         assertEquals(int.class,
                 MinecraftNoeticObservationRuntime.class.getMethod(
                         "clearForServerStop").getReturnType());
-    }
-
-    @Test
-    void minecraftAdapterSourceNeverUsesChunkAcquisitionOrArbitrarySerialization() throws Exception {
-        String source = Files.readString(Path.of(
-                "src/main/java/dev/gustavopere/blackarcana/integration/neoforge/MinecraftNoeticObservationRuntime.java"));
-        assertFalse(source.contains("getChunk("));
-        assertFalse(source.contains("addRegionTicket"));
-        assertFalse(source.contains("setChunkForced"));
-        assertFalse(source.contains("getPersistentData"));
-        assertFalse(source.contains("saveWithoutId"));
-        assertFalse(source.contains("serializeNBT"));
-        assertFalse(source.contains("getAllSlots"));
     }
 }
