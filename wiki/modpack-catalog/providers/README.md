@@ -1,6 +1,10 @@
 # Provider Catalog — organização canônica
 
-Esta pasta é o inventário integral das capacidades mágicas do modpack.
+Esta pasta é o inventário integral das capacidades mágicas do modpack e é a **única árvore canônica de providers**:
+
+`wiki/modpack-catalog/providers/`
+
+A antiga árvore `wiki/providers/` foi consolidada aqui e não deve ser recriada.
 
 ## Regra principal
 
@@ -45,6 +49,18 @@ Usam as categorias reais do próprio mod. Exemplos previstos conforme auditoria:
 - Toxony: harmful effects / oils / mutagens.
 
 Subpastas só são criadas quando a categoria é comprovada no provider atual. Não inventamos classes apenas para preencher diretórios.
+
+## Auditorias técnicas
+
+Auditorias de source/runtime que preservam detalhes adicionais ficam dentro do próprio provider em `audits/` ou em `TECHNICAL-AUDIT.md`. Elas são evidência auxiliar; a ficha individual na classificação nativa continua sendo a referência de gameplay para cada capacidade.
+
+No Iron's, por exemplo, auditorias source 3.16.3 antigas foram preservadas sob `irons-spells/audits/` em vez de manter uma segunda árvore paralela.
+
+## Metadados globais
+
+Inventário corrente, política de deduplicação e fila de auditoria ficam em:
+
+`wiki/modpack-catalog/meta/`
 
 ## Regra de proveniência
 
