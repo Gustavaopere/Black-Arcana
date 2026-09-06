@@ -2,46 +2,73 @@ package dev.gustavopere.blackarcana.client;
 
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SmallViewportLayoutContractTest {
     @Test
-    void loadoutLayoutFitsGuiScaleFourSmallWindow() throws Exception {
-        Class<?> layoutClass = Class.forName("dev.gustavopere.blackarcana.client.LoadoutLayout");
-        Method forViewport = layoutClass.getDeclaredMethod("forViewport", int.class, int.class);
-        Object layout = forViewport.invoke(null, 214, 120);
-        int left = (int) layout.getClass().getDeclaredMethod("left").invoke(layout);
-        int top = (int) layout.getClass().getDeclaredMethod("top").invoke(layout);
-        int panelWidth = (int) layout.getClass().getDeclaredMethod("panelWidth").invoke(layout);
-        int rowsPerPage = (int) layout.getClass().getDeclaredMethod("rowsPerPage").invoke(layout);
-        int rowHeight = (int) layout.getClass().getDeclaredMethod("rowHeight").invoke(layout);
+    void loadoutLayoutFitsGuiScaleFourSmallWindow() {
+        LoadoutLayout layout = LoadoutLayout.forViewport(214, 120);
 
-        assertTrue(left - 8 >= 0);
-        assertTrue(left + panelWidth + 8 <= 214);
-        assertTrue(top - 24 >= 0);
-        assertTrue(top + rowsPerPage * rowHeight + 48 <= 120);
+        assertTrue(layout.left() - 8 >= 0);
+        assertTrue(layout.left() + layout.panelWidth() + 8 <= 214);
+        assertTrue(layout.top() - 24 >= 0);
+        assertTrue(layout.top() + layout.rowsPerPage() * layout.rowHeight() + 48 <= 120);
     }
 
     @Test
-    void radialRadiusShrinksToKeepSlotCardsInsideSmallViewport() throws Exception {
-        Method method = RadialLayout.class.getDeclaredMethod(
-                "radiusForViewport",
-                int.class, int.class, int.class, int.class, double.class, int.class);
-        double radius = (double) method.invoke(null, 214, 120, 45, 12, 78.0D, 4);
+    void radialRadiusShrinksToKeepSlotCardsInsideSmallViewport() {
+        RadialLayout.CardMetrics card = RadialLayout.cardMetricsForViewport(214, 120);
+        double radius = RadialLayout.radiusForViewport(
+                214, 120, card.halfWidth(), card.halfHeight(), 78.0D, 4);
 
-        assertTrue(radius <= 44.0D);
+        assertTrue(radius <= 49.0D);
         assertTrue(radius > 0.0D);
+        assertTrue(card.compact());
     }
 
     @Test
-    void hudExposesViewportBoundedTextWidth() throws Exception {
-        Method method = HudLayout.class.getDeclaredMethod(
-                "maxTextWidth", int.class, int.class, int.class);
-        int maxTextWidth = (int) method.invoke(null, 214, 10, 6);
+    void eightRadialCardsDoNotOverlapAtGuiScaleFourSmallWindow() {
+        int width = 214;
+        int height = 120;
+        RadialLayout.CardMetrics card = RadialLayout.cardMetricsForViewport(width, height);
+        double radius = RadialLayout.radiusForViewport(
+                width, height, card.halfWidth(), card.halfHeight(), 78.0D, 4);
+        List<Rect> cards = new ArrayList<>();
+
+        for (int index = 0; index < 8; index++) {
+            RadialLayout.Point center = RadialLayout.slotCenter(
+                    index, 8, width / 2.0D, height / 2.0D, radius);
+            cards.add(new Rect(
+                    center.x() - card.halfWidth(),
+                    center.y() - card.halfHeight(),
+                    center.x() + card.halfWidth(),
+                    center.y() + card.halfHeight()));
+        }
+
+        for (int left = 0; left < cards.size(); left++) {
+            for (int right = left + 1; right < cards.size(); right++) {
+                assertFalse(cards.get(left).overlaps(cards.get(right)),
+                        "radial cards overlap: " + left + " and " + right);
+            }
+        }
+    }
+
+    @Test
+    void hudExposesViewportBoundedTextWidth() {
+        int maxTextWidth = HudLayout.maxTextWidth(214, 10, 6);
 
         assertTrue(maxTextWidth > 0);
         assertTrue(maxTextWidth + 2 * 6 + 2 * 10 <= 214);
+    }
+
+    private record Rect(double left, double top, double right, double bottom) {
+        boolean overlaps(Rect other) {
+            return left < other.right && right > other.left
+                    && top < other.bottom && bottom > other.top;
+        }
     }
 }
