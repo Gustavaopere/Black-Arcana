@@ -32,7 +32,77 @@ public final class TemporaryBlockMutationGateway {
         this.maxLifetimeTicks = maxLifetimeTicks;
     }
 
+    /** Legacy predecessor path; behavior and worst-case profile admission remain unchanged. */
     public ArcanaDecision replace(
+        ArcanaCastRequest request,
+        ArcanaServices.TargetResolution target,
+        ChunkRef chunk,
+        TemporaryMutationKey key,
+        String replacementState,
+        long expiresAtTick
+    ) {
+        ArcanaDecision lifetime = validateCommon(request, target, chunk, key, replacementState, expiresAtTick);
+        if (!lifetime.allowed()) return lifetime;
+
+        ArcanaDecision admitted = admission.authorize(request, target, List.of(chunk), 1);
+        if (!admitted.allowed()) return admitted;
+        return settleTrackedReplacement(request, key, replacementState, expiresAtTick);
+    }
+
+    /**
+     * Protected operation-specific path for adaptive world-effect spells. Protection is checked
+     * before non-consuming world preflight and immediately before the single budget settlement.
+     */
+    public ArcanaDecision replaceProtected(
+        ArcanaCastRequest request,
+        ArcanaServices.TargetResolution target,
+        ChunkRef chunk,
+        TemporaryMutationKey key,
+        String replacementState,
+        long expiresAtTick,
+        WorldMutationType mutationType,
+        WorldMutationProtectionAdapterRegistry protection
+    ) {
+        ArcanaDecision lifetime = validateCommon(request, target, chunk, key, replacementState, expiresAtTick);
+        if (!lifetime.allowed()) return lifetime;
+        Objects.requireNonNull(mutationType, "mutationType");
+        Objects.requireNonNull(protection, "protection");
+
+        if (!request.context().dimensionId().equals(key.dimensionId())
+            || !chunk.dimensionId().equals(key.dimensionId())) {
+            return ArcanaDecision.deny(
+                "world_mutation_dimension",
+                "Mutation key, chunk and caster context must share a dimension");
+        }
+
+        WorldMutationProtectionQuery query = new WorldMutationProtectionQuery(
+            request.context().casterId(),
+            request.castId(),
+            request.spell().id(),
+            key,
+            mutationType,
+            WorldMutationClass.TEMPORARY);
+        ArcanaDecision protectedDecision = protection.authorize(query);
+        if (!protectedDecision.allowed()) return protectedDecision;
+
+        ArcanaDecision preflight = admission.preflight(
+            request,
+            target,
+            List.of(chunk),
+            1,
+            mutationType,
+            WorldMutationClass.TEMPORARY);
+        if (!preflight.allowed()) return preflight;
+
+        ArcanaDecision settlementProtection = protection.authorize(query);
+        if (!settlementProtection.allowed()) return settlementProtection;
+
+        ArcanaDecision budget = admission.consumeBudget(request, 1);
+        if (!budget.allowed()) return budget;
+        return settleTrackedReplacement(request, key, replacementState, expiresAtTick);
+    }
+
+    private ArcanaDecision validateCommon(
         ArcanaCastRequest request,
         ArcanaServices.TargetResolution target,
         ChunkRef chunk,
@@ -52,10 +122,15 @@ public final class TemporaryBlockMutationGateway {
                 "temporary_lifetime",
                 "Temporary mutation lifetime is outside the configured bound");
         }
+        return ArcanaDecision.allow();
+    }
 
-        ArcanaDecision admitted = admission.authorize(request, target, List.of(chunk), 1);
-        if (!admitted.allowed()) return admitted;
-
+    private ArcanaDecision settleTrackedReplacement(
+        ArcanaCastRequest request,
+        TemporaryMutationKey key,
+        String replacementState,
+        long expiresAtTick
+    ) {
         Optional<String> current;
         try {
             current = Objects.requireNonNull(backend.readLoadedState(key), "loaded state");

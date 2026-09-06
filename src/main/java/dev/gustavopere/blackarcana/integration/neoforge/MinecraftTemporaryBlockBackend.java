@@ -27,7 +27,7 @@ import java.util.Optional;
  * Invariants:
  * - resolves only already-loaded chunks via getChunkNow;
  * - never acquires chunk tickets or asks Minecraft to generate/load a chunk;
- * - rejects block-entity states so inventories and arbitrary BE NBT are not lost;
+ * - rejects block-entity and unbreakable target states so inventories/NBT and immutable terrain are not lost;
  * - applies compare-and-set writes with drops suppressed.
  */
 public final class MinecraftTemporaryBlockBackend
@@ -70,7 +70,8 @@ public final class MinecraftTemporaryBlockBackend
         if (!encodeState(current).equals(expectedState)) return false;
 
         BlockState replacement = decodeState(level, replacementState);
-        if (current.hasBlockEntity() || replacement.hasBlockEntity()) return false;
+        if (level.getBlockEntity(pos) != null || current.hasBlockEntity() || replacement.hasBlockEntity()) return false;
+        if (current.getDestroySpeed(level, pos) < 0.0F) return false;
 
         return level.setBlock(pos, replacement, UPDATE_FLAGS);
     }

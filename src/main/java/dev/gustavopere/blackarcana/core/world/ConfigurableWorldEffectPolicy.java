@@ -32,6 +32,46 @@ public final class ConfigurableWorldEffectPolicy implements ArcanaServices.World
 
     @Override
     public ArcanaDecision authorize(ArcanaCastRequest request, ArcanaServices.TargetResolution target) {
+        return authorizeInternal(request, target, null);
+    }
+
+    /**
+     * Cast-level admission validates only that a declared world-mutating spell has a registered
+     * safety profile. Concrete terrain class/mode/budget admission belongs to the mutation gateway,
+     * which lets adaptive spells retain entity/visual fallback when terrain is OFF/COSMETIC or when
+     * a less-destructive class is selected. The legacy {@link #authorize} method remains unchanged
+     * for predecessor callers that explicitly request worst-case admission.
+     */
+    @Override
+    public ArcanaDecision authorizeCast(ArcanaCastRequest request, ArcanaServices.TargetResolution target) {
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(target, "target");
+        if (!request.spell().requestsWorldMutation()) return ArcanaDecision.allow();
+        if (profiles.find(request.spell().id()).isEmpty()) {
+            return ArcanaDecision.deny(
+                "world_profile_missing",
+                "World-mutating spell has no registered safety profile");
+        }
+        return ArcanaDecision.allow();
+    }
+
+    /**
+     * Authorizes one concrete mutation operation against the spell's static worst-case profile.
+     * Existing callers keep using {@link #authorize(ArcanaCastRequest, ArcanaServices.TargetResolution)}.
+     */
+    public ArcanaDecision authorize(
+        ArcanaCastRequest request,
+        ArcanaServices.TargetResolution target,
+        WorldMutationClass requestedMutationClass
+    ) {
+        return authorizeInternal(request, target, Objects.requireNonNull(requestedMutationClass, "requestedMutationClass"));
+    }
+
+    private ArcanaDecision authorizeInternal(
+        ArcanaCastRequest request,
+        ArcanaServices.TargetResolution target,
+        WorldMutationClass requestedMutationClass
+    ) {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(target, "target");
         if (!request.spell().requestsWorldMutation()) return ArcanaDecision.allow();
@@ -41,6 +81,16 @@ public final class ConfigurableWorldEffectPolicy implements ArcanaServices.World
             return ArcanaDecision.deny(
                 "world_profile_missing",
                 "World-mutating spell has no registered safety profile");
+        }
+
+        WorldMutationClass effectiveClass = profile.mutationClass();
+        if (requestedMutationClass != null) {
+            if (requestedMutationClass.requiredRank() > profile.mutationClass().requiredRank()) {
+                return ArcanaDecision.deny(
+                    "world_effect_class_exceeds_profile",
+                    "Requested mutation class exceeds the spell's registered worst-case profile");
+            }
+            effectiveClass = requestedMutationClass;
         }
 
         WorldEffectPolicyConfig snapshot = config;
@@ -54,10 +104,10 @@ public final class ConfigurableWorldEffectPolicy implements ArcanaServices.World
         boolean entityDamageAllowed = snapshot.entityDamageAllowed()
             && (override == null || override.entityDamageAllowed());
 
-        if (!effectiveMode.allows(profile.mutationClass())) {
+        if (!effectiveMode.allows(effectiveClass)) {
             return ArcanaDecision.deny(
                 "world_effect_mode",
-                "World effect requires " + profile.mutationClass() + " but effective mode is " + effectiveMode);
+                "World effect requires " + effectiveClass + " but effective mode is " + effectiveMode);
         }
         if (profile.maxAffectedUnits() > effectiveUnits) {
             return ArcanaDecision.deny(
