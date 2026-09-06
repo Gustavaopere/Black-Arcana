@@ -83,9 +83,11 @@ public final class BlackArcanaHudLayer {
         int textWidth = boundedLines.stream().mapToInt(minecraft.font::width).max().orElse(1);
         int panelWidth = textWidth + PADDING * 2;
         int panelHeight = boundedLines.size() * (minecraft.font.lineHeight + 2) + PADDING * 2 - 2;
+        int effectiveMargin = HudLayout.boundedMargin(
+                logicalWidth, logicalHeight, panelWidth, panelHeight, MARGIN, 1);
         HudLayout.Point origin = HudLayout.origin(
                 BlackArcanaClientConfig.HUD_ANCHOR.get(),
-                logicalWidth, logicalHeight, panelWidth, panelHeight, MARGIN);
+                logicalWidth, logicalHeight, panelWidth, panelHeight, effectiveMargin);
 
         graphics.pose().pushPose();
         graphics.pose().scale(scale, scale, 1.0F);
