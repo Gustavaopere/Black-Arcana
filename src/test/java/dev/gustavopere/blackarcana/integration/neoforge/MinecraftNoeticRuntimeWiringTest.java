@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MinecraftNoeticRuntimeWiringTest {
@@ -23,6 +24,22 @@ class MinecraftNoeticRuntimeWiringTest {
                 "Pre hook must delegate to the gaze runtime movement lock");
         assertTrue(source.contains("enforceStillnessAfterEntityTick"),
                 "Post hook must delegate to the gaze runtime movement lock");
+    }
+
+    @Test
+    void deathCleanupIsDeferredUntilTheDeathOutcomeIsFinal() throws IOException {
+        String source = Files.readString(RUNTIME_SOURCE);
+        assertTrue(source.contains("pendingDeaths"),
+                "LivingDeathEvent must only enqueue bounded pending cleanup until cancellation outcome is known");
+        assertTrue(source.contains("settlePendingDeaths"),
+                "Server tick must settle pending deaths after death-prevention listeners have completed");
+
+        int handlerStart = source.indexOf("private static void onLivingDeath");
+        assertTrue(handlerStart >= 0, "Noetic runtime must keep an explicit LivingDeathEvent handler");
+        int nextMethod = source.indexOf("\n    private static void", handlerStart + 1);
+        String handler = source.substring(handlerStart, nextMethod < 0 ? source.length() : nextMethod);
+        assertFalse(handler.contains("clearLifecycleEntity("),
+                "LivingDeathEvent must not clear Noetic state before Soul Anchor can cancel the death");
     }
 
     private static Path repositoryRoot() {
