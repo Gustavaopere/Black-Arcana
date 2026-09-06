@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.network.HazardResistanceForecastPayload;
 import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -75,9 +76,13 @@ public final class BlackArcanaHudLayer {
         float scale = BlackArcanaClientConfig.HUD_SCALE.get().floatValue();
         int logicalWidth = Math.max(1, (int) Math.floor(graphics.guiWidth() / scale));
         int logicalHeight = Math.max(1, (int) Math.floor(graphics.guiHeight() / scale));
-        int textWidth = lines.stream().mapToInt(minecraft.font::width).max().orElse(1);
+        int maxTextWidth = HudLayout.maxTextWidth(logicalWidth, MARGIN, PADDING);
+        List<Component> boundedLines = lines.stream()
+                .map(line -> boundLine(minecraft.font, line, maxTextWidth))
+                .toList();
+        int textWidth = boundedLines.stream().mapToInt(minecraft.font::width).max().orElse(1);
         int panelWidth = textWidth + PADDING * 2;
-        int panelHeight = lines.size() * (minecraft.font.lineHeight + 2) + PADDING * 2 - 2;
+        int panelHeight = boundedLines.size() * (minecraft.font.lineHeight + 2) + PADDING * 2 - 2;
         HudLayout.Point origin = HudLayout.origin(
                 BlackArcanaClientConfig.HUD_ANCHOR.get(),
                 logicalWidth, logicalHeight, panelWidth, panelHeight, MARGIN);
@@ -89,11 +94,18 @@ public final class BlackArcanaHudLayer {
         graphics.fill(x - 1, y - 1, x + panelWidth + 1, y + panelHeight + 1, 0xAA5A4A60);
         graphics.fill(x, y, x + panelWidth, y + panelHeight, 0xB815101A);
         int textY = y + PADDING;
-        for (Component line : lines) {
+        for (Component line : boundedLines) {
             graphics.drawString(minecraft.font, line, x + PADDING, textY, 0xFFF2EAF2, false);
             textY += minecraft.font.lineHeight + 2;
         }
         graphics.pose().popPose();
+    }
+
+    static Component boundLine(Font font, Component line, int maxWidth) {
+        if (font.width(line) <= maxWidth) return line;
+        int ellipsisWidth = font.width("…");
+        String truncated = font.plainSubstrByWidth(line.getString(), Math.max(1, maxWidth - ellipsisWidth));
+        return Component.literal(truncated + "…");
     }
 
     private static Optional<Component> selectedSpellLine() {
