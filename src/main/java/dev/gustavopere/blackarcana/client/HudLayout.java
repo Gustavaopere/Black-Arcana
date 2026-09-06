@@ -15,6 +15,25 @@ public final class HudLayout {
         return Math.max(1, width - margin * 2 - padding * 2);
     }
 
+    public static int boundedMargin(
+            int width,
+            int height,
+            int panelWidth,
+            int panelHeight,
+            int requestedMargin,
+            int border
+    ) {
+        if (width <= 0 || height <= 0 || panelWidth < 0 || panelHeight < 0
+                || requestedMargin < 0 || border < 0) {
+            throw new IllegalArgumentException("HUD margin geometry cannot be negative");
+        }
+        int freeHorizontal = width - panelWidth - border * 2;
+        int freeVertical = height - panelHeight - border * 2;
+        int available = Math.min(freeHorizontal, freeVertical);
+        if (available <= 0) return 0;
+        return Math.min(requestedMargin, available / 2);
+    }
+
     public static Point origin(
             Anchor anchor,
             int width,
