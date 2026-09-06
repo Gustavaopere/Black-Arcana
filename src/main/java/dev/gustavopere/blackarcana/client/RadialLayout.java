@@ -29,6 +29,25 @@ public final class RadialLayout {
         return List.copyOf(slots);
     }
 
+    public static double radiusForViewport(
+            int width,
+            int height,
+            int slotHalfWidth,
+            int slotHalfHeight,
+            double preferredRadius,
+            int margin
+    ) {
+        if (width <= 0 || height <= 0 || slotHalfWidth < 0 || slotHalfHeight < 0 || margin < 0) {
+            throw new IllegalArgumentException("invalid radial viewport geometry");
+        }
+        if (!Double.isFinite(preferredRadius) || preferredRadius <= 0.0D) {
+            throw new IllegalArgumentException("preferredRadius must be finite and positive");
+        }
+        double horizontal = width / 2.0D - slotHalfWidth - margin;
+        double vertical = height / 2.0D - slotHalfHeight - margin;
+        return Math.max(1.0D, Math.min(preferredRadius, Math.min(horizontal, vertical)));
+    }
+
     public static Point slotCenter(int visibleIndex, int visibleCount, double centerX, double centerY, double radius) {
         if (visibleCount <= 0 || visibleCount > SLOTS_PER_PAGE) {
             throw new IllegalArgumentException("visibleCount outside radial bounds");
