@@ -122,6 +122,13 @@ public final class BlackPyreFrontierScheduler {
         return frontiers.size();
     }
 
+    /** Read-only queue visibility for lifecycle cleanup; absent frontiers report zero. */
+    public synchronized int pendingCells(UUID frontierId) {
+        Objects.requireNonNull(frontierId, "frontierId");
+        Frontier frontier = frontiers.get(frontierId);
+        return frontier == null ? 0 : frontier.pending.size();
+    }
+
     public synchronized int seenCells(UUID frontierId) {
         Frontier frontier = frontiers.get(frontierId);
         return frontier == null ? 0 : frontier.seen.size();
