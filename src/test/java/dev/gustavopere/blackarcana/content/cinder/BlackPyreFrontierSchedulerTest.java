@@ -69,6 +69,24 @@ class BlackPyreFrontierSchedulerTest {
     }
 
     @Test
+    void pendingWorkCountTracksQueueExhaustionWithoutRevivingRemovedFrontiers() {
+        var scheduler = new BlackPyreFrontierScheduler(1, 16, 2, 12, 1200);
+        UUID id = UUID.randomUUID();
+        var seed = cell(0, 64, 0);
+        assertTrue(scheduler.start(id, seed, 0));
+        assertEquals(1, scheduler.pendingCells(id));
+        assertEquals(2, scheduler.offer(id, List.of(cell(1, 64, 0), cell(2, 64, 0))));
+        assertEquals(3, scheduler.pendingCells(id));
+
+        scheduler.tick(id, 0, ignored -> true);
+        assertEquals(1, scheduler.pendingCells(id), "per-tick processing must decrease only actually processed queue entries");
+        scheduler.tick(id, 1, ignored -> true);
+        assertEquals(0, scheduler.pendingCells(id), "exhausted frontier must expose zero pending work");
+        scheduler.finish(id);
+        assertEquals(0, scheduler.pendingCells(id), "removed frontier must never report phantom pending work");
+    }
+
+    @Test
     void lifetimeExpiryAndExplicitFinishRemoveFrontierState() {
         var scheduler = new BlackPyreFrontierScheduler(2, 16, 4, 12, 1200);
         UUID expiring = UUID.randomUUID();
