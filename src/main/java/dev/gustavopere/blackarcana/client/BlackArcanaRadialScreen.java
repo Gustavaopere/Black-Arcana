@@ -93,14 +93,7 @@ public final class BlackArcanaRadialScreen extends Screen {
         }
 
         int centerTextWidth = Math.max(1, width - 16);
-        if (card.compact()) {
-            graphics.drawCenteredString(font,
-                    boundedCenterLine(title, centerTextWidth), centerX, centerY - 17, 0xFFEADCEA);
-            focusedSpellName().ifPresent(line -> graphics.drawCenteredString(
-                    font, boundedCenterLine(line, centerTextWidth), centerX, centerY - 5, 0xFFFFFFFF));
-            focusedHazard().ifPresent(line -> graphics.drawCenteredString(
-                    font, boundedCenterLine(line, centerTextWidth), centerX, centerY + 7, 0xFFF2D0F2));
-        } else {
+        if (!card.compact()) {
             graphics.drawCenteredString(font, title, centerX, centerY - 4, 0xFFEADCEA);
             focusedHazard().ifPresent(line -> graphics.drawCenteredString(
                     font, boundedCenterLine(line, centerTextWidth), centerX, centerY + 12, 0xFFF2D0F2));
@@ -117,6 +110,9 @@ public final class BlackArcanaRadialScreen extends Screen {
                     0xFFD0C6D0);
         }
         super.render(graphics, mouseX, mouseY, partialTick);
+        if (card.compact() && hoveredSlot >= 0) {
+            focusedSpellName().ifPresent(line -> graphics.renderTooltip(font, line, mouseX, mouseY));
+        }
     }
 
     @Override
