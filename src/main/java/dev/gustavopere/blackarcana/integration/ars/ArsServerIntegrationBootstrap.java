@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.integration.ars;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftNoeticRuntime;
 import dev.gustavopere.blackarcana.integration.rpg.RpgSkillTreeBridge;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.fml.ModList;
@@ -32,6 +33,15 @@ public final class ArsServerIntegrationBootstrap {
             bridge.diagnostic().isBlank() ? "" : " diagnostic=" + bridge.diagnostic());
 
         if (!bridge.available()) return;
+
+        bridge.familiarOwnershipProvider().ifPresent(provider -> {
+            boolean registered = MinecraftNoeticRuntime.registerFamiliarOwnershipProvider(server, provider);
+            if (!registered) {
+                BlackArcanaMod.LOGGER.warn(
+                    "Black Arcana did not register duplicate/capacity-limited familiar ownership provider {}",
+                    provider.providerId());
+            }
+        });
 
         Optional<RpgSkillTreeBridge> rpg = runtime.integrations()
             .find(RpgSkillTreeBridge.MOD_ID)
