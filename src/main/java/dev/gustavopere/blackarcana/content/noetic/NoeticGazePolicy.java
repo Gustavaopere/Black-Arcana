@@ -4,7 +4,7 @@ import dev.gustavopere.blackarcana.api.ArcanaDecision;
 
 import java.util.Objects;
 
-/** Pure fail-closed admission policy for reciprocal Gaze of Stillness facts. */
+/** Pure fail-closed admission and diminishing-return policy for Noetic gaze actions. */
 public final class NoeticGazePolicy {
     private NoeticGazePolicy() { }
 
@@ -20,6 +20,36 @@ public final class NoeticGazePolicy {
         if (!facts.targetAlive()) return deny("gaze_target_dead", "Gaze target must remain alive");
         if (!facts.controlAuthorized()) return deny("gaze_control_denied", "Canonical CONTROL admission denied the gaze");
         return ArcanaDecision.allow();
+    }
+
+    public static ArcanaDecision authorizeNullification(boolean bossTarget, boolean controlAuthorized) {
+        if (!controlAuthorized) {
+            return deny("nullifying_gaze_control_denied", "Canonical CONTROL admission denied nullification");
+        }
+        if (bossTarget) {
+            return deny(
+                    "nullifying_gaze_boss_resistant",
+                    "Boss targets require an explicit provider-specific nullification contract");
+        }
+        return ArcanaDecision.allow();
+    }
+
+    /**
+     * Applies the canonical control cap first, then halves duration for each recent successful application.
+     * Reaching the hard DR stack ceiling grants temporary reapplication immunity.
+     */
+    public static int effectiveControlTicks(int requestedTicks, int policyCapTicks, int priorApplications) {
+        if (requestedTicks <= 0 || policyCapTicks <= 0) return 0;
+        if (priorApplications < 0) throw new IllegalArgumentException("priorApplications cannot be negative");
+        if (priorApplications >= NoeticSafetyCeilings.MAX_GAZE_DR_STACKS) return 0;
+
+        int bounded = Math.min(
+                NoeticSafetyCeilings.MAX_GAZE_DURATION_TICKS,
+                Math.min(requestedTicks, policyCapTicks));
+        for (int i = 0; i < priorApplications && bounded > 1; i++) {
+            bounded = Math.max(1, bounded / 2);
+        }
+        return bounded;
     }
 
     private static ArcanaDecision deny(String code, String detail) {
