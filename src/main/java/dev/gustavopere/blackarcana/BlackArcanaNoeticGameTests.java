@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana;
 
+import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipProvider;
 import dev.gustavopere.blackarcana.content.noetic.NoeticObservationKind;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftNoeticRuntime;
@@ -10,6 +11,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+
+import java.util.UUID;
 
 @GameTestHolder(BlackArcanaMod.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -95,23 +98,44 @@ public final class BlackArcanaNoeticGameTests {
 
     @SuppressWarnings("removal")
     @GameTest(template = "foundation_empty", timeoutTicks = 80)
-    public static void borrowedSightForeignTargetFailsClosedAndCleanupIsIdempotent(GameTestHelper helper) {
+    public static void borrowedSightForeignFamiliarFailsClosedAndCleanupIsIdempotent(GameTestHelper helper) {
         var server = helper.getLevel().getServer();
         var viewer = helper.makeMockServerPlayerInLevel();
-        var foreignTarget = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(3, 2, 3));
-        viewer.teleportTo(foreignTarget.getX() + 2.0D, foreignTarget.getY(), foreignTarget.getZ());
+        var foreignFamiliar = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(3, 2, 3));
+        viewer.teleportTo(foreignFamiliar.getX() + 2.0D, foreignFamiliar.getY(), foreignFamiliar.getZ());
+
+        UUID foreignFamiliarId = foreignFamiliar.getUUID();
+        boolean providerRegistered = MinecraftNoeticRuntime.registerFamiliarOwnershipProvider(
+                server,
+                new FamiliarOwnershipProvider() {
+                    @Override
+                    public String providerId() {
+                        return "black_arcana:gametest_foreign_familiar";
+                    }
+
+                    @Override
+                    public Result ownership(UUID ownerId, Object candidate) {
+                        if (candidate instanceof net.minecraft.world.entity.Entity entity
+                                && foreignFamiliarId.equals(entity.getUUID())) {
+                            return Result.NOT_OWNED;
+                        }
+                        return Result.UNSUPPORTED;
+                    }
+                });
+        helper.assertTrue(providerRegistered || MinecraftNoeticRuntime.familiarProviderCount(server) > 0,
+                "foreign familiar test requires one explicit ownership provider boundary");
 
         var decision = MinecraftNoeticRuntime.startObservation(
                 server,
                 viewer.getUUID(),
-                foreignTarget.getUUID(),
+                foreignFamiliar.getUUID(),
                 NoeticObservationKind.BORROWED_SIGHT,
                 20,
                 false);
         helper.assertTrue(!decision.allowed(),
-                "Borrowed Sight must fail closed when no provider explicitly confirms target ownership");
+                "Borrowed Sight must fail closed when a provider explicitly reports foreign ownership");
         helper.assertTrue("noetic_borrowed_sight_authority".equals(decision.code()),
-                "foreign/unsupported ownership denial must remain explicit: " + decision.code());
+                "foreign familiar ownership denial must remain explicit: " + decision.code());
         helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 0,
                 "failed Borrowed Sight must not allocate a session");
 
@@ -120,7 +144,7 @@ public final class BlackArcanaNoeticGameTests {
         helper.assertTrue(MinecraftNoeticRuntime.clearEntity(server, viewer.getUUID()) == 0,
                 "repeated cleanup must remain an idempotent no-op");
         helper.assertTrue(MinecraftNoeticRuntime.activeStateCount(server) == 0,
-                "denied foreign observation must leave no active Noetic state");
+                "denied foreign familiar observation must leave no active Noetic state");
         helper.succeed();
     }
 }
