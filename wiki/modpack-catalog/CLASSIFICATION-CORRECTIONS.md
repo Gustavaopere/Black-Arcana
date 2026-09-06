@@ -22,10 +22,10 @@ A compatibility mod can be highly relevant without being a spell provider. Infla
 
 ## Provider pages supporting this overlay
 
-- `providers/ars-creo.md`
-- `providers/ars-elemancy.md`
-- `providers/ars-n-spells.md`
-- `providers/ars-polymorphia.md`
+- `providers/ars-creo/README.md`
+- `providers/ars-elemancy/README.md`
+- `providers/ars-n-spells/README.md`
+- `providers/ars-polymorphia/README.md`
 
 ## Gate
 

@@ -25,7 +25,7 @@ A fantasia de magia divina/celestial será integrada à escola **Holy** já exis
 - Sunbeam
 - Wisp
 
-As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/<spell>.md`. Addons como Paladin Spells também contam como cobertura Holy e permanecem em suas próprias pastas de provider.
+As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/holy/<spell>.md`. Addons como Paladin Spells também contam como cobertura Holy e permanecem em suas próprias pastas de provider, por exemplo `wiki/modpack-catalog/providers/paladin-spells/holy/`.
 
 ## Regra provider-native first
 

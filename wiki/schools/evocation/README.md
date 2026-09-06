@@ -24,6 +24,6 @@ Provider base: Iron's Spells 'n Spellbooks `3.16.3`.
 - Throw
 - Wololo
 
-As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/<spell>.md`.
+As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/evocation/<spell>.md`.
 
 Nenhum conteúdo Black Arcana deve duplicar esses efeitos apenas por trocar VFX/nome.

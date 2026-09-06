@@ -25,7 +25,7 @@
 
 ### Spells legados/deprecated preservados fora da contagem ativa
 
-- `cloud-of-regeneration.md` — implementação Holy ainda presente no source 3.16.3, `Deprecated=true` no `DefaultConfig`, ausente do catálogo oficial ativo atual. Mantido para provenance/deduplicação histórica sem alterar 75/110.
+- `holy/cloud-of-regeneration.md` — implementação Holy ainda presente no source 3.16.3, `Deprecated=true` no `DefaultConfig`, ausente do catálogo oficial ativo atual. Mantido para provenance/deduplicação histórica sem alterar a cobertura ativa 75/110 nem o total ativo de 110 spells.
 
 ## Escolas nativas do Iron's base
 
@@ -43,9 +43,46 @@ A build atual do catálogo oficial ativo possui 9 escolas nativas:
 
 **Total ativo do Iron's base: 110 spells.**
 
+## Estrutura física obrigatória
+
+O catálogo do Iron's é organizado pela classificação nativa mais forte do provider: **escola**.
+
+```text
+providers/irons-spells/
+├── README.md
+├── PROVIDER-AUDIT.md
+├── blood/
+├── eldritch/
+├── ender/
+├── evocation/
+├── fire/
+├── holy/
+├── ice/
+├── lightning/
+└── nature/
+```
+
+Cada spell fica em:
+
+`providers/irons-spells/<escola>/<spell>.md`
+
+Exemplos:
+
+- `providers/irons-spells/blood/acupuncture.md`
+- `providers/irons-spells/ender/portal.md`
+- `providers/irons-spells/holy/sunbeam.md`
+
+Spells de addons **não são movidos para a pasta do Iron's base**. A origem real permanece sendo o addon que registrou o spell, mesmo quando ele usa uma escola do Iron's. Exemplos:
+
+- `providers/asterism-arcanum/astral/<spell>.md`
+- `providers/paladin-spells/holy/<spell>.md`
+- `providers/dreamless-spells/empty/<spell>.md`
+
+Isso preserva simultaneamente duas dimensões úteis para auditoria: **provider de origem** e **escola/classificação**.
+
 ## Escolas adicionais no modpack
 
-As 9 acima NÃO representam todas as escolas existentes no pack. Um snapshot real do runtime registrou **36 escolas Iron's** depois que os addons foram carregados.
+As 9 escolas acima NÃO representam todas as escolas existentes no pack. Um snapshot real do runtime registrou **36 escolas Iron's** depois que os addons foram carregados.
 
 Escolas adicionais já comprovadas no stack incluem, entre outras:
 
@@ -59,20 +96,6 @@ Escolas adicionais já comprovadas no stack incluem, entre outras:
 - Sound — infraestrutura FamiliarsLib/addons associados
 
 A lista exata das 36 escolas será reconstruída a partir do runtime/JARs atuais; nenhum nome será inventado para completar a contagem.
-
-## Estrutura obrigatória
-
-Cada spell fica diretamente nesta pasta quando pertence ao Iron's base:
-
-`providers/irons-spells/<spell>.md`
-
-Spells de addons ficam na pasta do addon que realmente os fornece, por exemplo:
-
-`providers/asterism-arcanum/<spell>.md`
-`providers/paladin-spells/<spell>.md`
-`providers/dreamless-spells/<spell>.md`
-
-Assim a origem real nunca é perdida mesmo quando vários mods compartilham a mesma escola.
 
 ## Campos obrigatórios por magia
 

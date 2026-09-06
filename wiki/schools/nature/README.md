@@ -20,6 +20,6 @@ Provider base: Iron's Spells 'n Spellbooks `3.16.3`.
 - Stomp
 - Touch Dig
 
-As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/<spell>.md`.
+As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/nature/<spell>.md`.
 
 Bruxaria/Toxony/Hexalia devem deduplicar contra poison, blight, roots e efeitos ecológicos já cobertos por Nature.
