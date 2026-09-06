@@ -188,6 +188,17 @@ public final class MinecraftBlackPyreRuntime {
         }
     }
 
+    public static boolean isFrontierActive(MinecraftServer server, ArcanaCastId castId) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(castId, "castId");
+        ServerState state = STATES.get(server);
+        if (state == null) return false;
+        UUID frontierId = castId.value();
+        synchronized (state) {
+            return state.contexts.containsKey(frontierId) && state.scheduler.seenCells(frontierId) > 0;
+        }
+    }
+
     /**
      * Drives only ephemeral propagation state. All world settlement remains delegated to the Stage 04
      * gateways and temporary restoration persistence remains owned by the canonical world-safety runtime.
