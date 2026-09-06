@@ -7,7 +7,14 @@ import java.util.UUID;
 
 /** Server-owned ephemeral lifecycle state. It never owns or copies player inventory/persistence. */
 public final class ForbiddenDomainSession {
-    public enum CloseReason { EXPLICIT, EXPIRED, OWNER_LOGOUT, SERVER_STOP }
+    public enum CloseReason {
+        EXPLICIT,
+        EXPIRED,
+        OWNER_LOGOUT,
+        OWNER_DEATH,
+        OWNER_UNAVAILABLE,
+        SERVER_STOP
+    }
 
     private final UUID ownerId;
     private final ForbiddenDomainSpec spec;
@@ -52,6 +59,7 @@ public final class ForbiddenDomainSession {
         if (closed) return false;
         closed = true;
         closeReason = reason;
+        participants.clear();
         return true;
     }
 }

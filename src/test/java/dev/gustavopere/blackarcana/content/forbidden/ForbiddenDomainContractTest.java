@@ -86,7 +86,7 @@ class ForbiddenDomainContractTest {
     }
 
     @Test
-    void participantCleanupRemovesStaleMembershipWithoutClosingOwnerDomainsAndReleasesBudget() {
+    void participantCleanupIsOwnerScopedWhenPruningAndGlobalForTerminalLifecycle() {
         ForbiddenDomainSpec spec = new ForbiddenDomainSpec(
                 "black_arcana:test_domain", ForbiddenDomainMode.LOCALIZED_FIELD, 8, 40, 1, 32);
         ForbiddenDomainRuntime runtime = new ForbiddenDomainRuntime(2);
@@ -101,12 +101,15 @@ class ForbiddenDomainContractTest {
         assertTrue(runtime.trackParticipant(ownerB, participant));
         assertFalse(runtime.trackParticipant(ownerA, replacement));
 
-        assertEquals(2, runtime.clearParticipant(participant));
+        assertTrue(runtime.untrackParticipant(ownerA, participant));
         assertEquals(0, runtime.session(ownerA).orElseThrow().participantCount());
+        assertEquals(1, runtime.session(ownerB).orElseThrow().participantCount());
+        assertTrue(runtime.trackParticipant(ownerA, replacement));
+
+        assertEquals(1, runtime.clearParticipant(participant));
         assertEquals(0, runtime.session(ownerB).orElseThrow().participantCount());
         assertEquals(2, runtime.activeCount());
         assertEquals(0, runtime.clearParticipant(participant));
-        assertTrue(runtime.trackParticipant(ownerA, replacement));
     }
 
     @Test

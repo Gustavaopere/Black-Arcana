@@ -9,8 +9,9 @@ public record ForbiddenDomainAdmission(
         boolean safeRecoveryAvailable
 ) {
     /**
-     * Compatibility convenience for callers that only need the four world-admission facts.
-     * The Minecraft adapter uses the canonical five-argument form and proves recovery separately.
+     * Convenience form for callers that only have the four world-admission facts.
+     * Missing recovery evidence is unknown, therefore it fails closed. The Minecraft adapter uses the
+     * canonical five-argument form after explicitly proving recovery safety.
      */
     public ForbiddenDomainAdmission(
             boolean chunksLoaded,
@@ -18,7 +19,7 @@ public record ForbiddenDomainAdmission(
             boolean protectionAllowed,
             boolean worldEffectAllowed
     ) {
-        this(chunksLoaded, insideWorldBorder, protectionAllowed, worldEffectAllowed, true);
+        this(chunksLoaded, insideWorldBorder, protectionAllowed, worldEffectAllowed, false);
     }
 
     public boolean admitted() {

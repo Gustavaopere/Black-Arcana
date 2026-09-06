@@ -31,6 +31,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -74,6 +75,7 @@ public final class MinecraftForbiddenDomainRuntime {
         gameBus.addListener(MinecraftForbiddenDomainRuntime::onServerStarted);
         gameBus.addListener(MinecraftForbiddenDomainRuntime::onServerTick);
         gameBus.addListener(MinecraftForbiddenDomainRuntime::onPlayerLoggedOut);
+        gameBus.addListener(MinecraftForbiddenDomainRuntime::onLivingDeath);
         gameBus.addListener(MinecraftForbiddenDomainRuntime::onServerStopped);
     }
 
@@ -399,8 +401,48 @@ public final class MinecraftForbiddenDomainRuntime {
         long nowTick = server.overworld().getGameTime();
         state.domains.expire(nowTick);
         synchronized (state) {
+            pruneParticipants(server, state);
             state.fields.keySet().removeIf(ownerId -> state.domains.session(ownerId).isEmpty());
         }
+    }
+
+    private static void pruneParticipants(MinecraftServer server, ServerState state) {
+        for (Map.Entry<UUID, FieldContext> entry : new ArrayList<>(state.fields.entrySet())) {
+            UUID ownerId = entry.getKey();
+            FieldContext field = entry.getValue();
+            ForbiddenDomainSession session = state.domains.session(ownerId).orElse(null);
+            if (session == null) {
+                state.fields.remove(ownerId);
+                continue;
+            }
+
+            LivingEntity owner = findLoadedLivingEntity(server, ownerId);
+            if (owner == null
+                    || !owner.isAlive()
+                    || !(owner.level() instanceof ServerLevel ownerLevel)
+                    || !field.dimensionId().equals(ownerLevel.dimension().location().toString())) {
+                state.domains.close(ownerId, ForbiddenDomainSession.CloseReason.OWNER_UNAVAILABLE);
+                state.fields.remove(ownerId);
+                continue;
+            }
+
+            for (UUID participantId : session.participants()) {
+                LivingEntity participant = findLoadedLivingEntity(server, participantId);
+                if (!isValidParticipant(field, participant)) {
+                    state.domains.untrackParticipant(ownerId, participantId);
+                }
+            }
+        }
+    }
+
+    private static boolean isValidParticipant(FieldContext field, LivingEntity participant) {
+        if (participant == null || !participant.isAlive() || !(participant.level() instanceof ServerLevel level)) {
+            return false;
+        }
+        if (!field.dimensionId().equals(level.dimension().location().toString())) return false;
+        if (!insideRadius(field.center(), participant.blockPosition(), field.spec().radius())) return false;
+        BlockPos position = participant.blockPosition();
+        return level.getChunkSource().getChunkNow(position.getX() >> 4, position.getZ() >> 4) != null;
     }
 
     private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
@@ -411,8 +453,21 @@ public final class MinecraftForbiddenDomainRuntime {
         UUID playerId = event.getEntity().getUUID();
         synchronized (state) {
             state.domains.clearParticipant(playerId);
-            state.domains.clearOwner(playerId);
+            state.domains.close(playerId, ForbiddenDomainSession.CloseReason.OWNER_LOGOUT);
             state.fields.remove(playerId);
+        }
+    }
+
+    private static void onLivingDeath(LivingDeathEvent event) {
+        if (!(event.getEntity().level() instanceof ServerLevel level)) return;
+        MinecraftServer server = level.getServer();
+        ServerState state = STATES.get(server);
+        if (state == null) return;
+        UUID entityId = event.getEntity().getUUID();
+        synchronized (state) {
+            state.domains.clearParticipant(entityId);
+            state.domains.close(entityId, ForbiddenDomainSession.CloseReason.OWNER_DEATH);
+            state.fields.remove(entityId);
         }
     }
 
