@@ -41,11 +41,15 @@ class ForbiddenDomainContractTest {
 
     @Test
     void admissionFailsClosedOnAnyUnknownOrUnsafeWorldBoundary() {
-        assertTrue(new ForbiddenDomainAdmission(true, true, true, true).admitted());
+        ForbiddenDomainAdmission admitted = new ForbiddenDomainAdmission(true, true, true, true);
+        assertTrue(admitted.admitted());
+        assertTrue(admitted.worldEffectAllowed());
         assertFalse(new ForbiddenDomainAdmission(false, true, true, true).admitted());
         assertFalse(new ForbiddenDomainAdmission(true, false, true, true).admitted());
         assertFalse(new ForbiddenDomainAdmission(true, true, false, true).admitted());
-        assertFalse(new ForbiddenDomainAdmission(true, true, true, false).admitted());
+        ForbiddenDomainAdmission worldDenied = new ForbiddenDomainAdmission(true, true, true, false);
+        assertFalse(worldDenied.worldEffectAllowed());
+        assertFalse(worldDenied.admitted());
     }
 
     @Test

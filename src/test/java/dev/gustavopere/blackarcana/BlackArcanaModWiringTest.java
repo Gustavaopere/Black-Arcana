@@ -21,6 +21,12 @@ class BlackArcanaModWiringTest {
         assertRegistered(source, "MinecraftReciprocalTranspositionRuntime");
     }
 
+    @Test
+    void forbiddenDomainLifecycleRuntimeIsRegisteredOnGameBus() throws IOException {
+        String source = Files.readString(MOD_SOURCE);
+        assertRegistered(source, "MinecraftForbiddenDomainRuntime");
+    }
+
     private static void assertRegistered(String source, String runtime) {
         assertTrue(
             source.contains("import dev.gustavopere.blackarcana.integration.neoforge." + runtime + ";"),
