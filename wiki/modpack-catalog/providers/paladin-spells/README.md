@@ -1,85 +1,62 @@
 # Paladin Spells — Iron's Spells Addon
 
-Status: `PUBLIC SPELL LIST COMPLETE FOR CURRENT 1.1.1; FORMULAS PARTIAL`
+Status: `INSTALLED 1.1.1 / SOURCE-PINNED / 5/5 SPELLS CATALOGED / UPSTREAM QA BLOCKERS EXPLICIT`
 
-- Current JAR: `paladin_spells-1.21.1-1.1.1.jar`
-- Mod id: `paladin_spells`
-- Runtime version: `1.21.1-1.1.1`
-- Provider class: `SPELL PROVIDER / CONTENT ADDON`
-- Primary casting authority: Iron's Spells 'n Spellbooks.
-- Scaling authority: public project documentation states all five spells scale with **Holy spell power**.
+- **JAR do pack:** `paladin_spells-1.21.1-1.1.1.jar`
+- **Mod ID:** `paladin_spells`
+- **Runtime version:** `1.21.1-1.1.1`
+- **Provider class:** `SPELL_PROVIDER / IRON'S CONTENT ADDON`
+- **Native school used:** Iron's `Holy`
+- **Source authority:** upstream branch `1.21@31f64ccdb39d062b21cc25d434cb62d6463b486e`
+- **Source version pin:** `gradle.properties` declares Minecraft `1.21.1` and mod version `1.21.1-1.1.1`.
 
-Public sources used: current CurseForge project page and current 1.1.1 changelog. The project is distributed under CC BY-NC-SA 4.0.
+The current CurseForge page describes the addon as a tank-oriented Iron's spell pack whose five spells scale with Holy spell power. The current 1.1.1 changelog fixes Sworn Protector duration, Bulwark cooldown to 45 s, a client-only-class server crash, removes WIP from two released spells and nerfs Bulwark duration.
 
-## Current public spell catalog — 5 entries
+## Catalog — 5/5
 
-| Spell | Semantic role | Public behavior established for Phase 2 |
-|---|---|---|
-| `Bulwark` | Defensive armor amplification | Increases armor based on the caster's current armor and Holy spell scaling |
-| `Taunt` | Aggro control | Forces enemies in an area around the caster to target the caster |
-| `Sworn Protector` | Ally damage interception | Redirects a percentage of damage from nearby players to the caster |
-| `Bedrock Skin` | Defensive stance / immobilization | Immobilizes the caster while granting percentage damage mitigation |
-| `Ram` | Armor-scaling mobility offense | Short dash through enemies; damage scales with caster armor |
+| Spell | ID | Role | Documentation state |
+|---|---|---|---|
+| Bulwark | `paladin_spells:bulwark` | armor amplification | `CATALOGED / LIVE FUNCTION QA REQUIRED` |
+| Taunt | `paladin_spells:taunt` | AoE aggro control | `CATALOGED` |
+| Sworn Protector | `paladin_spells:sworn_protector` | ally damage redirection | `CATALOGED / SERVER-AUTHORITY QA BLOCKER` |
+| Bedrock Skin | `paladin_spells:bedrock_skin` | rooted defense stance | `CATALOGED / MITIGATION QA BLOCKER` |
+| Ram | `paladin_spells:ram` | armor-scaling dash attack | `CATALOGED / FRIENDLY-FIRE QA REQUIRED` |
 
-## Current-version corrections
+**Provider coverage: 5/5 — DOCUMENTATION COMPLETE.**
 
-The public **1.1.1** changelog specifically records:
+`DOCUMENTATION COMPLETE` does not mean every upstream mechanic is proven functional. Static source inconsistencies are kept as QA blockers and integrations must fail closed until live-JAR/GameTest evidence resolves them.
 
-- `Sworn Protector`: duration behavior fixed for the 1.21 line;
-- `Bulwark`: cooldown corrected to **45 seconds** on 1.21;
-- `Bulwark`: duration was nerfed.
+## Iron's base formula inherited by this addon
 
-An older public changelog also records a historical `Bulwark` mana-cost-per-level reduction from 15 to 10. That historical change is useful context, but Phase 2 does not promote it to a final current formula until the current 1.1.1 data/config surface is confirmed.
+For the installed Iron's 3.16.3 API:
 
-## Authority observations
+- mana before config multiplier: `baseManaCost + manaCostPerLevel × (level - 1)`;
+- spell power before entity/config multipliers: `baseSpellPower + spellPowerPerLevel × (level - 1)`;
+- final spell power additionally multiplies generic spell power, Holy school power and config power multiplier.
 
-`Sworn Protector` is particularly important to Black Arcana deduplication because it is not merely a defense buff: it changes **who settles damage**. Any Black Arcana Order/Divine/Binding mechanic that intercepts ally damage must preserve:
+Therefore the numeric ranges in individual sheets are **neutral/base ranges** unless otherwise stated.
 
-- original damage provenance;
-- exactly-once settlement;
-- recursion prevention;
-- death/invalid-target handling;
-- PvP/protection rules;
-- provider-native behavior when Paladin Spells is the active mechanic.
+## Acquisition
 
-This catalog does not assert an implementation bug in 1.1.1. It only records the semantic authority risk that any bridge or duplicate mechanic would need to respect.
+No provider-specific spell loot/acquisition table was confirmed in the audited source. The spells are registered into Iron's spell registry. Exact scroll/loot/craft/trade/Inscription behavior in the pack remains `NÃO VERIFICADO` and must follow Iron's/provider configuration rather than a fabricated addon recipe.
 
 ## Deduplication impact
 
-### Divine / Celestial
+Paladin Spells already occupies five strong Holy/tank signatures:
 
-Paladin Spells already provides a compact Holy defensive kit covering:
+1. temporary armor amplification;
+2. forced enemy aggro in an area;
+3. ally damage interception/redirection;
+4. rooted high-defense stance;
+5. armor-scaling Holy charge.
 
-- armor amplification;
-- aggro/tanking control;
-- ally damage interception;
-- high-mitigation rooted stance;
-- armor-scaling charge offense.
+Black Arcana Divine/Celestial/Order/Binding content cannot claim these signatures as empty design space merely by changing VFX or naming.
 
-Therefore a new Divine/Celestial school must not recreate these as differently named golden barriers, holy taunts or protector links.
+## Source-vs-runtime QA blockers
 
-### Order
+- **Bulwark:** spell calculates a large amplifier, but `BulwarkEffect` declares the Armor `ADD_MULTIPLIED_TOTAL` modifier with amount `0.0`; no compensating handler was found in the audited branch.
+- **Sworn Protector:** `onCast` writes effect/range/redirect data only under `level.isClientSide`, while the damage-redirection event is server-side. This is an apparent authority mismatch in source.
+- **Bedrock Skin:** the spell writes `bedrock_skin_reduction`; repository search found no consumer of that key. Rooting and the effect's Armor modifier are separately source-confirmed.
+- **Ram:** its hit scan targets every alive `LivingEntity` except the caster in the swept AABB; no ally/friendly-fire filter appears in the spell class.
 
-`Bedrock Skin`, `Taunt` and `Sworn Protector` cover parts of imposed stance, target control and protection contracts. Order needs a stronger semantic delta in seals, local laws, geometric constraints, casting restrictions, stable boundaries or rule enforcement.
-
-### Binding
-
-`Sworn Protector` is a short-range protection relationship, but it is not the persistent typed external-resource link planned for Arcana Vincular. Still, any damage-sharing binding must deduplicate against and coexist safely with it.
-
-## Quantitative fields still pending
-
-The following remain `UNVERIFIED` for current 1.1.1 until confirmed from an appropriate current public/config/runtime surface:
-
-- complete mana formulas;
-- exact level ranges;
-- exact duration/radius per level;
-- exact mitigation/redirect percentages and scaling formulas;
-- acquisition/loot/crafting details for each spell.
-
-## Provenance / confidence
-
-- Presence/version: current modlist — HIGH.
-- Five spell names and semantic behavior: current public project page — HIGH.
-- Bulwark 45 s cooldown and 1.1.1 fixes: current changelog — HIGH.
-- Detailed numeric formulas not listed above: `UNVERIFIED`.
-- No source-code behavior was used for this catalog.
+These are static source findings, not claims that the installed gameplay is broken. Live-JAR/GameTest confirmation remains required.

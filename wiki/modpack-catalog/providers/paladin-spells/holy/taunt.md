@@ -1,72 +1,52 @@
 # Taunt
 
-## Estado
-
-`EXTERNAL PROVIDER / INSTALLED — SOURCE BEHAVIOR AUDITED; LIVE MODPACK VALIDATION PENDING`
-
-## Identidade
-
+- **Status:** PRESENTE — released
 - **ID:** `paladin_spells:taunt`
-- **Escola:** Holy
-- **Raridade mínima:** Rare
-- **Nível máximo:** 10
-- **Função:** crowd control / threat control
-- **Cast type:** Instant
-- **Animation:** `TOUCH_GROUND_ANIMATION`
+- **School:** Holy
+- **Levels:** 1–10
+- **Min rarity:** Rare
+- **Cast:** Instant / 0 ticks
+- **Mana neutral:** 30–120
+- **Cooldown:** 20 s
+- **Spell power neutral:** 10–55
+- **Radius neutral:** 30–120 blocks
+- **Duration neutral:** 15–60 s
 
-## Descrição
+## Source 1.1.1
 
-Marca mobs hostis próximos para que ataquem o caster, permitindo ao paladino tirar pressão de aliados.
+`range = 10 + 2*getSpellPower`
 
-## Custo e casting — source 1.21.1
+`duration = 5 + getSpellPower`
 
-- `baseManaCost = 30`
-- `manaCostPerLevel = 10`
-- `baseSpellPower = 10`
-- `spellPowerPerLevel = 5`
-- `castTime = 0`
-- **Cooldown:** `20 s`
+The spell scans `Mob` in the inflated caster box and keeps mobs alive, within true radius and not the caster. Only mobs implementing `Enemy` receive `TAUNT_EFFECT`. The caster UUID is written to `taunt_target_uuid`.
 
-## Targeting
+`TauntEffect` ticks every tick server-side, resolves that UUID and repeatedly:
 
-A classe infla o AABB do caster e seleciona `Mob` vivo que também seja `Enemy`.
+- `mob.setTarget(taunter)`;
+- `mob.setAggressive(true)`;
+- when taunter is Player, `mob.setLastHurtByPlayer(player)`.
 
-### Fórmula de raio
+Angry-villager particles are used as current feedback.
 
-`radius = 10 + getSpellPower(level, caster) * 2`
+## Authority / gates
 
-### Duração
+`TAUNT_EFFECT` + stored UUID + `TauntEffect` are the forced-aggro authority. Bridges must not run a second target-forcing loop.
 
-`durationSeconds = 5 + getSpellPower(level, caster)`
+- non-Mob entities: excluded;
+- Mob not implementing `Enemy`: excluded by spell;
+- PvP players: not targets of the taunt scan;
+- bosses/summons: eligible only if they satisfy the actual Mob/Enemy/provider behavior; individual modded-class coverage `NÃO VERIFICADO`.
 
-## Efeito mecânico
+## Mandatory matrix
 
-Para cada mob hostil elegível:
+- damage/heal: none;
+- range/duration: formulas above;
+- scaling/caps: Holy/generic/config power can change both; additional caps absent in class;
+- acquisition/focus/ritual: specific route `NÃO VERIFICADO`;
+- VFX/audio: `TAUNT` sound, `TOUCH_GROUND_ANIMATION`, Angry Villager particles;
+- QA: modded Enemy classification needs integration testing;
+- dedup: occupies AoE hostile aggro-control signature.
 
-1. aplica `TAUNT_EFFECT`;
-2. grava `taunt_target_uuid = caster UUID` no persistent data;
-3. durante o effect, a cada tick, o effect recupera o alvo no `ServerLevel`;
-4. executa `mob.setTarget(caster)` e `mob.setAggressive(true)`;
-5. se o alvo for player, também chama `setLastHurtByPlayer`.
+## Source
 
-Se o UUID não resolver mais, o persistent data do taunt é removido.
-
-## Dano
-
-Nenhum dano direto.
-
-## PvP
-
-O spell procura `Mob`, não players, portanto o cast não taunta jogadores diretamente pela implementação auditada.
-
-## Aquisição/aprendizado
-
-`TBD — Iron's generic spell acquisition / pack config`. Não foi encontrado loot table próprio do addon.
-
-## VFX
-
-O provider usa `ANGRY_VILLAGER` no cast e durante o effect. Isso é funcional como telegraph, mas entra como `VFX UPGRADE CANDIDATE` para a estética Holy final: selo de desafio, halo/mark sobre inimigos e pulso visual do caster são preferíveis, desde que o servidor continue sendo authority.
-
-## Deduplicação
-
-Novo spell Divino que apenas force hostis próximos a focar o caster é redundante com Taunt. Uma variante só se justifica se introduzir topologia/regra realmente nova, por exemplo challenge pact persistente de alvo único com consequência diferente.
+Paladin branch `1.21@31f64ccdb39d062b21cc25d434cb62d6463b486e`, `TauntSpell` + `TauntEffect`.

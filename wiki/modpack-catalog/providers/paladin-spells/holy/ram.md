@@ -1,70 +1,57 @@
 # Ram
 
-## Estado
-
-`EXTERNAL PROVIDER / INSTALLED — SOURCE BEHAVIOR AUDITED; FRIENDLY-FIRE QA PENDING`
-
-## Identidade
-
+- **Status:** PRESENTE — released
 - **ID:** `paladin_spells:ram`
-- **Escola:** Holy
-- **Raridade mínima:** Rare
-- **Nível máximo:** 10
-- **Função:** mobilidade ofensiva / charge / armor-scaling damage
-- **Cast type:** Instant
+- **School:** Holy
+- **Levels:** 1–10
+- **Min rarity:** Rare
+- **Cast:** Instant / 0 ticks
+- **Mana neutral:** 15–60
+- **Cooldown:** 10 s
+- **Spell power neutral:** 4–13
+- **Role:** armor-scaling short dash + melee-like AoE hit
 
-## Descrição
+## Damage and movement
 
-Impulsiona o caster para frente e causa dano/knockback aos LivingEntity interceptados pela caixa de carga.
+`damage = 1.25*armor + getSpellPower + 2*spellLevel`
 
-## Custo e casting — source 1.21.1
+With neutral spell power this simplifies to:
 
-- `baseManaCost = 15`
-- `manaCostPerLevel = 5`
-- `baseSpellPower = 4`
-- `spellPowerPerLevel = 1`
-- `castTime = 0`
-- **Cooldown:** `10 s`
+`damage = 1.25*armor + 3*level + 3`
 
-## Movimento
+so level 1 = `1.25*armor + 6`, level 10 = `1.25*armor + 33` before external armor/spell-power changes.
 
-`multiplier = getSpellPower(level, caster) / 3`
+Dash scale:
 
-O vetor de olhar horizontal é normalizado e escalado pelo multiplier. Quando o caster está no chão, o source reposiciona-o `+1.5 Y` antes de aplicar o impulso.
+`multiplier = getSpellPower/3`
 
-Existe `RamDirectionOverrideCastData` capaz de rotacionar o vetor em ±90° de forma aleatória quando essa cast data está presente.
+The spell normalizes horizontal look direction, scales by that multiplier, writes `ImpulseCastData`, directly changes delta movement and creates a swept AABB by expanding the caster box toward the dash vector plus 1.5 blocks.
 
-## Dano
+Every alive `LivingEntity` in that box except the caster is:
 
-Fórmula exata da classe:
+- hurt with `entity.damageSources().mobAttack(entity)`;
+- knocked back at 1.5 strength.
 
-`damage = armor * 1.25 + getSpellPower(level, caster) + level * 2`
+## Authority / PvP risk
 
-O dano é aplicado com `entity.damageSources().mobAttack(entity)`.
+There is no ally/team/friendly-fire filter in the spell's target predicate. Therefore party/PvP behavior is `LIVE QA REQUIRED`; a global game rule may still alter damage settlement.
 
-## Targeting
+The spell uses **mobAttack**, not an Iron's spell damage source, which matters for perks that trigger specifically from spell-damage provenance. Do not relabel Ram damage as spell damage without an explicit bridge contract.
 
-Cria uma AABB a partir do bounding box do caster, expande na direção do vetor de charge e aplica `inflate(1.5)`. Seleciona todo `LivingEntity` vivo diferente do caster.
+## Static movement quirk
 
-Cada alvo recebe:
+When grounded, source calls `vec.add(0,0.25,0)` without assigning the returned immutable `Vec3`. The intended extra Y component may therefore be lost. The spell separately raises caster position by 1.5 blocks, so this is a source-level quirk, not proof that the dash fails in gameplay.
 
-- dano da fórmula acima;
-- `knockback(1.5, forward.x, forward.z)`.
+## Mandatory matrix
 
-## Friendly fire / PvP
+- range/duration: dash scale formula above; exact traveled blocks depend on movement/collision and are `NÃO VERIFICADO`;
+- damage type/provenance: vanilla `mobAttack` confirmed;
+- targets: all alive LivingEntity except caster in swept box; FF policy external `NÃO VERIFICADO`;
+- acquisition/focus/ritual: specific route `NÃO VERIFICADO`;
+- sound: `RAM`; VFX/animation details beyond movement `NÃO VERIFICADO`;
+- dedup: occupies armor-scaling Holy charge/dash attack;
+- fail-closed: do not duplicate hit scan, movement impulse, damage or knockback.
 
-A classe auditada não contém filtro de party, ally, tame ownership ou PvP antes de chamar `hurt`. É possível que eventos globais do pack/provider alterem settlement, portanto a Wiki não declara comportamento seguro até live validation.
+## Source
 
-Para integração Black Arcana, não reutilizar Ram como primitive de ally-safe charge sem adapter/admission explícito.
-
-## Aquisição
-
-`TBD — Iron's generic acquisition / pack config`.
-
-## VFX
-
-Candidato a reforço visual com shield/halo frontal, streaks Holy e impacto luminoso orientado à velocidade. O VFX deve manter direção e área de colisão legíveis.
-
-## Deduplicação
-
-Novo spell Divino de “dash que bate com dano escalado por armor” é redundante com Ram salvo se alterar substancialmente targeting, recurso, defesa/interceptação ou consequência.
+Paladin branch `1.21@31f64ccdb39d062b21cc25d434cb62d6463b486e`, `RamSpell`.
