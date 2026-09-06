@@ -176,7 +176,7 @@ public final class ArcanaCastEngine {
         decision = costs.check(request);
         if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_COST, decision);
 
-        decision = worldPolicy.authorize(request, target);
+        decision = worldPolicy.authorizeCast(request, target);
         if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_WORLD_POLICY, decision);
 
         HazardPreparation hazard = Objects.requireNonNull(
