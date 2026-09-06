@@ -77,14 +77,8 @@ public final class MinecraftForbiddenDomainRuntime {
         gameBus.addListener(MinecraftForbiddenDomainRuntime::onServerStopped);
     }
 
-    /**
-     * Starts one bounded field centered on the loaded living owner. No entity is moved by this operation.
-     */
-    public static ArcanaDecision start(
-            MinecraftServer server,
-            UUID ownerId,
-            ForbiddenDomainSpec spec
-    ) {
+    /** Starts one bounded field centered on the loaded living owner. No entity is moved by this operation. */
+    public static ArcanaDecision start(MinecraftServer server, UUID ownerId, ForbiddenDomainSpec spec) {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(ownerId, "ownerId");
         Objects.requireNonNull(spec, "spec");
@@ -134,11 +128,7 @@ public final class MinecraftForbiddenDomainRuntime {
      * Adds an already-loaded participant to an existing localized field after canonical entity admission.
      * Capture records only UUID membership; it never owns inventory, capability or teleport state.
      */
-    public static ArcanaDecision captureParticipant(
-            MinecraftServer server,
-            UUID ownerId,
-            UUID participantId
-    ) {
+    public static ArcanaDecision captureParticipant(MinecraftServer server, UUID ownerId, UUID participantId) {
         Objects.requireNonNull(server, "server");
         Objects.requireNonNull(ownerId, "ownerId");
         Objects.requireNonNull(participantId, "participantId");
@@ -420,6 +410,7 @@ public final class MinecraftForbiddenDomainRuntime {
         if (state == null) return;
         UUID playerId = event.getEntity().getUUID();
         synchronized (state) {
+            state.domains.clearParticipant(playerId);
             state.domains.clearOwner(playerId);
             state.fields.remove(playerId);
         }

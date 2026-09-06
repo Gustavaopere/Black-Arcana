@@ -39,6 +39,15 @@ public final class ForbiddenDomainRuntime {
         return session != null && session.track(participantId);
     }
 
+    public synchronized int clearParticipant(UUID participantId) {
+        Objects.requireNonNull(participantId, "participantId");
+        int removed = 0;
+        for (ForbiddenDomainSession session : sessions.values()) {
+            if (session.untrack(participantId)) removed++;
+        }
+        return removed;
+    }
+
     public synchronized boolean close(UUID ownerId, ForbiddenDomainSession.CloseReason reason) {
         ForbiddenDomainSession session = sessions.remove(Objects.requireNonNull(ownerId, "ownerId"));
         return session != null && session.close(reason);

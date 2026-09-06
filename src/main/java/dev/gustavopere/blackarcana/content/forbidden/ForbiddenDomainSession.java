@@ -42,6 +42,11 @@ public final class ForbiddenDomainSession {
         return participants.add(participantId);
     }
 
+    boolean untrack(UUID participantId) {
+        Objects.requireNonNull(participantId, "participantId");
+        return !closed && participants.remove(participantId);
+    }
+
     boolean close(CloseReason reason) {
         Objects.requireNonNull(reason, "reason");
         if (closed) return false;
