@@ -23,6 +23,7 @@ public final class BlackArcanaNoeticGameTests {
         var viewer = helper.makeMockServerPlayerInLevel();
         var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(3, 2, 3));
         target.setCustomName(Component.literal("N".repeat(NoeticSafetyCeilings.MAX_DISPLAY_NAME_LENGTH + 32)));
+        viewer.teleportTo(target.getX() + 2.0D, target.getY(), target.getZ());
 
         try {
             var decision = MinecraftNoeticRuntime.startObservation(
@@ -33,7 +34,8 @@ public final class BlackArcanaNoeticGameTests {
                     20,
                     false);
             helper.assertTrue(decision.allowed(),
-                    "already-loaded same-dimension target must pass bounded Astral Severance admission");
+                    "already-loaded same-dimension target must pass bounded Astral Severance admission: "
+                            + decision.code());
             helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 1,
                     "successful observation must create exactly one server-owned session");
 
@@ -67,6 +69,7 @@ public final class BlackArcanaNoeticGameTests {
         var server = helper.getLevel().getServer();
         var viewer = helper.makeMockServerPlayerInLevel();
         var foreignPlayer = helper.makeMockServerPlayerInLevel();
+        viewer.teleportTo(foreignPlayer.getX() + 2.0D, foreignPlayer.getY(), foreignPlayer.getZ());
 
         helper.assertTrue(!viewer.getUUID().equals(foreignPlayer.getUUID()),
                 "privacy GameTest requires two distinct player identities");
@@ -80,7 +83,7 @@ public final class BlackArcanaNoeticGameTests {
                     false);
             helper.assertTrue(!decision.allowed(), "foreign player Namescry must fail closed without explicit consent");
             helper.assertTrue("noetic_namescry_player_privacy".equals(decision.code()),
-                    "foreign player privacy denial must remain explicit and stable");
+                    "foreign player privacy denial must remain explicit and stable: " + decision.code());
             helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 0,
                     "denied Namescry must not allocate an observation session");
         } finally {
@@ -96,6 +99,7 @@ public final class BlackArcanaNoeticGameTests {
         var server = helper.getLevel().getServer();
         var viewer = helper.makeMockServerPlayerInLevel();
         var foreignTarget = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(3, 2, 3));
+        viewer.teleportTo(foreignTarget.getX() + 2.0D, foreignTarget.getY(), foreignTarget.getZ());
 
         var decision = MinecraftNoeticRuntime.startObservation(
                 server,
@@ -107,7 +111,7 @@ public final class BlackArcanaNoeticGameTests {
         helper.assertTrue(!decision.allowed(),
                 "Borrowed Sight must fail closed when no provider explicitly confirms target ownership");
         helper.assertTrue("noetic_borrowed_sight_authority".equals(decision.code()),
-                "foreign/unsupported ownership denial must remain explicit");
+                "foreign/unsupported ownership denial must remain explicit: " + decision.code());
         helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 0,
                 "failed Borrowed Sight must not allocate a session");
 
