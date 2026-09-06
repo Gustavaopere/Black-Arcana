@@ -17,13 +17,13 @@
 
 Mantém um cone de energia fria à frente do caster, causando dano e acumulando freeze em criaturas no caminho.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - classe `ConeOfColdSpell`;
 - cast time 100 ticks;
 - cria `ConeOfColdProjectile` e o guarda em `EntityCastData`;
 - durante o mesmo cast contínuo, ativa o settlement de dano na entidade cone existente em vez de criar outra;
-- fórmula do snapshot: `damage = 1 + spellPower * 0.75`;
+- fórmula: `damage = 1 + spellPower * 0.75`;
 - `SpellDamageSource` adiciona 80 freeze ticks;
 - som de finish/loop: `CONE_OF_COLD_LOOP`;
 - AI deixa de canalizar quando o alvo se afasta além da condição definida pelo spell.
@@ -32,7 +32,7 @@ Mantém um cone de energia fria à frente do caster, causando dano e acumulando 
 
 - **Direção/área:** cone orientado pelo caster via `ConeOfColdProjectile`.
 - **Players em PvP, bosses e summons:** friendly-fire/eligibility específica da entidade cone `NÃO VERIFICADO` nesta ficha.
-- **Freeze:** 80 ticks no damage source do snapshot; o settlement exato no JAR 3.16.3 permanece sujeito à pinagem do source.
+- **Freeze:** 80 ticks no damage source source-auditado.
 
 ## Obtenção, requisitos e aprendizado
 
@@ -43,7 +43,7 @@ Mantém um cone de energia fria à frente do caster, causando dano e acumulando 
 
 ## Integrações / QA / fail-closed
 
-- `EntityCastData` + `ConeOfColdProjectile` representam a ownership contínua no snapshot.
+- `EntityCastData` + `ConeOfColdProjectile` representam a ownership contínua no source 3.16.3.
 - **Bridge específica:** `NÃO VERIFICADO`.
 - **VFX/textura/animação e QA client-real:** `NÃO VERIFICADO` além do som acima.
 - Integrações não devem spawnar um segundo cone nem cobrar/aplicar dano por um segundo channel path.
@@ -55,4 +55,5 @@ Já cobre cone contínuo Ice com dano + freeze. Não duplicar channel, freeze ou
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream `e4056af...`: `ConeOfColdSpell.java`.
+- Source 3.16.3: `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, `ConeOfColdSpell.java`.
+- Pinagem: `gradle.properties` no mesmo commit.

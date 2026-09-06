@@ -19,7 +19,7 @@
 
 Dispara um beam de frio por raycast, causando dano e aplicando imediatamente freeze ao alvo atingido.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - raycast 30 blocos, com blocks e bb inflation 0.15;
 - cria `RayOfFrostVisualEntity` entre olhos do caster e hit location;
@@ -43,7 +43,7 @@ Dispara um beam de frio por raycast, causando dano e aplicando imediatamente fre
 
 ## Integrações / QA / fail-closed
 
-- **Damage/freeze authority no snapshot:** `DamageSources.applyDamage` + damage source do spell.
+- **Damage/freeze authority:** `DamageSources.applyDamage` + damage source do spell.
 - bridge específica `NÃO VERIFICADO`.
 - QA client-real e resistência/imunidade por tipo de entidade `NÃO VERIFICADO`.
 - Não executar segundo raycast ou reaplicar freeze/dano.
@@ -55,4 +55,4 @@ Já cobre instant Ice beam de alcance fixo com dano + freeze imediato.
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream `e4056af...`: `RayOfFrostSpell.java`.
+- Source 3.16.3 `e4056af...`: `RayOfFrostSpell.java` + `gradle.properties`.

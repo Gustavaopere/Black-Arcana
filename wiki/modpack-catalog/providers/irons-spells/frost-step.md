@@ -18,7 +18,7 @@
 
 Teleporta o caster para onde olha e deixa um Ice Shadow no ponto de origem. O shadow atrai aggro próximo e se estilhaça após 5 s ou ao sofrer dano.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - usa `TeleportSpell.TeleportData`/`TeleportSpell.findTeleportLocation` e `Utils.handleSpellTeleport`;
 - cria `FrozenHumanoid` com shatter damage = spell power e death timer 100 ticks;
@@ -30,8 +30,8 @@ Teleporta o caster para onde olha e deixa um Ice Shadow no ponto de origem. O sh
 ## Targets / PvP / bosses / summons
 
 - **Target primário:** destino de teleporte; não é um spell de target ofensivo direto.
-- **Taunt do Ice Shadow:** predicate/raio auditados apenas no snapshot; comportamento específico contra players, bosses e summons `NÃO VERIFICADO`.
-- **World/teleport gates exatos do JAR instalado:** `NÃO VERIFICADO`; não contornar `Utils.handleSpellTeleport` em bridge.
+- **Taunt do Ice Shadow:** predicate/raio source-auditados; comportamento específico contra players, bosses e summons `NÃO VERIFICADO`.
+- **World/teleport gates finos dentro de `Utils.handleSpellTeleport`:** `NÃO VERIFICADO`; não contornar o helper em bridge.
 
 ## Obtenção, requisitos e aprendizado
 
@@ -42,9 +42,9 @@ Teleporta o caster para onde olha e deixa um Ice Shadow no ponto de origem. O sh
 
 ## Integrações / QA / fail-closed
 
-- **Teleport authority no snapshot:** helpers do próprio provider.
+- **Teleport authority:** helpers do próprio provider 3.16.3.
 - **Bridge específica:** `NÃO VERIFICADO`.
-- **VFX:** packet de Frost Step confirmado no snapshot; assets finais/QA client-real `NÃO VERIFICADO`.
+- **VFX:** packet de Frost Step confirmado no source; assets finais/QA client-real `NÃO VERIFICADO`.
 - Não criar teleporte paralelo, segundo taunt ou segundo shatter settlement.
 
 ## Deduplicação
@@ -54,4 +54,4 @@ Já cobre blink Ice + decoy/taunt + shatter. Mobilidade glacial nova precisa de 
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream `e4056af...`: `FrostStepSpell.java`.
+- Source 3.16.3 `e4056af...`: `FrostStepSpell.java` + `gradle.properties`.

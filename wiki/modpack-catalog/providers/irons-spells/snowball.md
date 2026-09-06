@@ -18,7 +18,7 @@
 
 Conjura e lança uma grande snowball que explode em um frosty field e aplica Chilled às criaturas na área. Pela semântica atual, alvos Chilled que se tornam fully frozen são entombados em gelo.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - cast time 20 ticks;
 - cria entidade `Snowball`, dispara pelo look angle e adiciona componente vertical ao movimento;
@@ -57,4 +57,4 @@ Já cobre projectile Ice de impacto que cria frosty field + Chilled.
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Changelog oficial 3.14.2.
-- Snapshot upstream `e4056af...`: `SnowballSpell.java`.
+- Source 3.16.3 `e4056af...`: `SnowballSpell.java` + `gradle.properties`.

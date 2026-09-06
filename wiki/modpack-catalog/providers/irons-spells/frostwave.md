@@ -18,7 +18,7 @@
 
 Emana uma onda radial de frost que aplica Chilled. Pela semântica atual do provider, criaturas Chilled que se tornam fully frozen são entombadas em gelo.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - cast time 20 ticks;
 - raio `6 + level * 0.75`;
@@ -32,8 +32,8 @@ O changelog oficial 3.14.2 documenta a semântica atual de Chilled: ao ficar ful
 
 ## Targets / PvP / bosses / summons
 
-- **Friendly-fire e LOS:** filtros explícitos no snapshot.
-- **Players em PvP, bosses e summons:** resultado específico de `DamageSources.isFriendlyFireBetween`/imunidades de freeze `NÃO VERIFICADO` para o JAR instalado.
+- **Friendly-fire e LOS:** filtros explícitos no source 3.16.3.
+- **Players em PvP, bosses e summons:** resultado específico de `DamageSources.isFriendlyFireBetween`/imunidades de freeze `NÃO VERIFICADO`.
 - Não substituir esses gates por lógica própria.
 
 ## Obtenção, requisitos e aprendizado
@@ -45,7 +45,7 @@ O changelog oficial 3.14.2 documenta a semântica atual de Chilled: ao ficar ful
 
 ## Integrações / QA / fail-closed
 
-- authorities de snapshot: friendly-fire provider + `CHILLED`.
+- authorities: friendly-fire provider + `CHILLED`.
 - bridge específica `NÃO VERIFICADO`.
 - QA client/modpack real e imunidades/caps de freeze `NÃO VERIFICADO`.
 - Não duplicar Chilled, tomb proc ou a wave radial.
@@ -58,4 +58,4 @@ Já cobre radial Ice debuff → Chilled → fully-frozen tomb semantics.
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Changelog oficial 3.14.2.
-- Snapshot upstream `e4056af...`: `FrostwaveSpell.java`.
+- Source 3.16.3 `e4056af...`: `FrostwaveSpell.java` + `gradle.properties`.

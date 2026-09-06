@@ -18,23 +18,23 @@
 
 Canaliza um blizzard lento e móvel em uma posição-alvo, puxando criaturas para o centro com vento e neve congelantes.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - classe `BlizzardSpell`;
 - cast time 25 ticks;
 - target helper até 32 blocos, com fallback para raycast de 32;
 - move o spawn para nível relativo do chão;
 - cria `BlizzardAoe`, define owner, radius, duration e movimento horizontal `0.05`;
-- radius do snapshot: `2 + 6 * entityPowerMultiplier`;
-- duration do snapshot: `20 * (10 + 1.5 * spellLevel)` ticks;
+- radius: `2 + 6 * entityPowerMultiplier`;
+- duration: `20 * (10 + 1.5 * spellLevel)` ticks;
 - sons: `CONE_OF_COLD_LOOP` no início e `ICE_CAST` no finish;
 - animação: `ANIMATION_LONG_CAST`.
 
-**Divergência explícita:** o catálogo oficial atual publica `11.5s Duration`, enquanto a fórmula do snapshot upstream cresce com o nível. Sem prova de que `e4056af...` corresponde exatamente ao JAR 3.16.3, a duração runtime exata instalada fica `NÃO VERIFICADO`; o valor player-facing publicado continua 11,5 s.
+**Divergência documentação × source:** o catálogo oficial atual publica `11.5s Duration`, enquanto o source 3.16.3 calcula duração por nível. Com `entityPowerMultiplier` neutro, a fórmula resulta em 11,5 s no nível 1 e 22 s no nível 8. A Wiki preserva ambos: 11,5 s como valor player-facing atualmente publicado e a fórmula acima como implementação source-auditada; não colapsar a fórmula interna para 11,5 s em integrações.
 
 ## Targets / PvP / bosses / summons
 
-- **Posicionamento confirmado no snapshot:** alvo ou raycast até 32 blocos.
+- **Posicionamento confirmado no source:** alvo ou raycast até 32 blocos.
 - **Pull/seleção de entidades pela `BlizzardAoe`:** detalhes finos `NÃO VERIFICADO` nesta auditoria.
 - **Players em PvP, bosses e summons:** elegibilidade/imunidades específicas `NÃO VERIFICADO`.
 
@@ -47,10 +47,10 @@ Canaliza um blizzard lento e móvel em uma posição-alvo, puxando criaturas par
 
 ## Integrações / QA / fail-closed
 
-- **Area authority:** `BlizzardAoe` no snapshot upstream.
+- **Area authority:** `BlizzardAoe` no source 3.16.3.
 - **Bridge específica:** `NÃO VERIFICADO`.
-- **Partículas/textura e comportamento fino do pull:** `NÃO VERIFICADO`; sons/animação acima são apenas do snapshot upstream.
-- **QA client/modpack real / confirmação da divergência de duração no JAR 3.16.3:** `NÃO VERIFICADO`.
+- **Partículas/textura e comportamento fino do pull:** `NÃO VERIFICADO`; sons/animação source-auditados estão registrados acima.
+- **QA client/modpack real da apresentação e do pull:** `NÃO VERIFICADO`.
 - Não criar segundo vortex/pull/settlement para o mesmo cast.
 
 ## Deduplicação
@@ -60,4 +60,5 @@ Já cobre vortex Ice móvel com pull/freezing semantics. Uma nova tempestade gla
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream: `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, `BlizzardSpell.java`.
+- Source 3.16.3: `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, `BlizzardSpell.java`.
+- Pinagem de versão: `gradle.properties` no mesmo commit (`minecraft_version=1.21.1`, `mod_version=1.21.1-3.16.3`).

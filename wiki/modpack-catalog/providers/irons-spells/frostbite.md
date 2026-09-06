@@ -18,7 +18,7 @@
 
 Imbui o caster com Frostbitten Strikes. Durante o efeito, criaturas totalmente congeladas mortas pelo caster tornam-se Ice Shadows, que depois se estilhaçam em icicles.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - aplica `MobEffectRegistry.FROSTBITTEN_STRIKES` ao caster;
 - spell power base 30, duração `spellPower * 20` ticks;
@@ -44,7 +44,7 @@ O changelog oficial 3.16.2 registra cast effects adicionados a Frostbite.
 
 ## Integrações / QA / fail-closed
 
-- **Effect authority no snapshot:** `FROSTBITTEN_STRIKES`/`FrostbiteEffect`.
+- **Effect authority:** `FROSTBITTEN_STRIKES`/`FrostbiteEffect` no source 3.16.3.
 - **Bridge específica:** `NÃO VERIFICADO`.
 - assets/áudio completos e QA client/modpack real `NÃO VERIFICADO`.
 - Não observar mortes congeladas por fora para spawnar um segundo Ice Shadow sem causalidade provider comprovada.
@@ -57,4 +57,4 @@ Já cobre self-buff Ice que converte kills de alvos fully-frozen em decoys/shatt
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Changelog oficial 3.16.2.
-- Snapshot upstream `e4056af...`: `FrostbiteSpell.java`.
+- Source 3.16.3 `e4056af...`: `FrostbiteSpell.java` + `gradle.properties`.

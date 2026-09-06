@@ -23,11 +23,11 @@
 
 `COMPLETO` aqui significa que existe ficha individual para todos os spells **ativos** da escola e que cada campo obrigatório foi preenchido com evidência verificável ou marcado explicitamente `NÃO VERIFICADO`. Não significa que campos ainda desconhecidos tenham sido observados ou inferidos. VFX/runtime, fórmulas internas, loot específico, PvP/boss/summon policy, itens/rituais e QA client-real permanecem desconhecidos quando a respectiva ficha assim registrar.
 
-### Provenance especial do passe Ice
+### Provenance do passe Ice
 
-O catálogo oficial atual de `https://iron.wiki/spells/` é a authority player-facing para o conjunto ativo e os valores publicados. Para internals, as fichas Ice também consultam o snapshot público upstream `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`.
+O catálogo oficial atual de `https://iron.wiki/spells/` é a authority player-facing para o conjunto ativo e os valores publicados. Para internals, as fichas Ice usam o source auditado no commit upstream `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`.
 
-Esse commit upstream **não é rotulado nesta Wiki como tag/source 3.16.3**, porque a correspondência exata com o JAR instalado ainda não foi comprovada. Internals desse snapshot são registrados como evidência adicional e não substituem silenciosamente o catálogo atual quando houver divergência. Divergências ficam explícitas e o comportamento exato do JAR 3.16.3 permanece `NÃO VERIFICADO` até pinagem adequada.
+A pinagem de versão foi comprovada pelo próprio `gradle.properties` desse commit: `minecraft_version=1.21.1` e `mod_version=1.21.1-3.16.3`, correspondendo ao JAR instalado `irons_spellbooks-1.21.1-3.16.3.jar`. Portanto os internals desse commit são tratados como **source 3.16.3**. Quando a página pública e o source 3.16.3 divergem, a divergência é registrada explicitamente: a página continua representando o valor player-facing publicado e o source é a authority para a implementação interna auditada.
 
 ### Spells legados/deprecated preservados fora da contagem ativa
 

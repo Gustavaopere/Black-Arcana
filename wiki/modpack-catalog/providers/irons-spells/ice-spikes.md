@@ -18,7 +18,7 @@
 
 Cria uma linha crescente de ice spikes pelo chão. O spike final causa dano completo; os anteriores causam dano reduzido. Com criatura válida no alcance, o final pode emergir antecipadamente junto ao target.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - count = `7 + 3 * level / 2` (aritmética inteira), produzindo 8–22;
 - spell power base 12, +1/level;
@@ -30,7 +30,7 @@ Cria uma linha crescente de ice spikes pelo chão. O spike final causa dano comp
 
 ## Targets / PvP / bosses / summons
 
-- **Targeting:** linha à frente com otimização para target válido no snapshot.
+- **Targeting:** linha à frente com otimização para target válido no source.
 - **Players em PvP, bosses e summons:** eligibility/damage policy da `IceSpikeEntity` `NÃO VERIFICADO`.
 - **Terrain:** requer superfície adequada; não há autorização para uma bridge forçar spikes em superfície inválida.
 
@@ -55,4 +55,4 @@ Já cobre cascading ground spikes Ice com final spike fortalecido/antecipável p
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream `e4056af...`: `IceSpikesSpell.java`.
+- Source 3.16.3 `e4056af...`: `IceSpikesSpell.java` + `gradle.properties`.

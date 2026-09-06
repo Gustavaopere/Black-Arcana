@@ -18,7 +18,7 @@
 
 Encasa o próprio caster em um tomb de gelo protetor que fornece healing, absorve um hit ou counterspell antes de quebrar e pode ser abandonado ao desmontar.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - cria `IceTombEntity` na posição do caster e transfere seu movimento;
 - healing = `sqrt(entityPowerMultiplier)`;
@@ -26,7 +26,7 @@ Encasa o próprio caster em um tomb de gelo protetor que fornece healing, absorv
 - o caster começa a montar a `IceTombEntity`;
 - animação `SELF_CAST_TWO_HANDS`.
 
-O comportamento player-facing “absorve um hit ou counterspell” vem do catálogo oficial; a liquidação interna de break/counterspell pertence à entidade e não foi inferida a partir do spell class.
+O comportamento player-facing “absorve um hit ou counterspell” vem do catálogo oficial; a liquidação interna de break/counterspell pertence à entidade e não foi inferida a partir da spell class.
 
 ## Targets / PvP / bosses / summons
 
@@ -55,4 +55,4 @@ Já cobre stasis/protective Ice tomb self-cast com heal e single-hit/counterspel
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream `e4056af...`: `IceTombSpell.java`.
+- Source 3.16.3 `e4056af...`: `IceTombSpell.java` + `gradle.properties`.

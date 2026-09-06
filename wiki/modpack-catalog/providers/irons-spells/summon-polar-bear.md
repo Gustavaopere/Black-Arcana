@@ -18,12 +18,12 @@
 
 Invoca um polar bear que segue, protege e luta pelo caster, além de servir como montaria.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - cast time 20 ticks;
 - usa `SummonedPolarBear`, `SummonManager`, `SummonedEntitiesCastData` e player recasts;
 - recast count = 2; o helper de recast do summon resolve término/unsummon;
-- summon lifetime do snapshot = `20 * 60 * 10` ticks (10 min);
+- summon lifetime = `20 * 60 * 10` ticks (10 min);
 - HP = `(20 + level * 4) * entityPowerMultiplier`;
 - damage = spell power (base 4, +1/level);
 - publica `SpellSummonEvent<>(caster, polarBear, spellId, spellLevel)` antes de adicionar a criatura;
@@ -34,7 +34,7 @@ Invoca um polar bear que segue, protege e luta pelo caster, além de servir como
 
 - **Entidade criada:** `SummonedPolarBear` com owner/caster explícito.
 - **PvP, bosses e seleção de targets pelo AI:** `NÃO VERIFICADO` nesta ficha; não reconstruir a AI ou friendly-fire policy por fora.
-- **Summon lifecycle:** ownership/recast comprovados no snapshot; persistência/login/dimension behavior exato do JAR instalado deve continuar provider-native.
+- **Summon lifecycle:** ownership/recast source-auditados; persistência/login/dimension behavior fino deve continuar provider-native e fica `NÃO VERIFICADO` nesta ficha quando não lido diretamente.
 
 ## Obtenção, requisitos e aprendizado
 
@@ -45,7 +45,7 @@ Invoca um polar bear que segue, protege e luta pelo caster, além de servir como
 
 ## Integrações / QA / fail-closed
 
-- **Hooks/authority no snapshot:** `SpellSummonEvent` + `SummonManager` + recast system.
+- **Hooks/authority:** `SpellSummonEvent` + `SummonManager` + recast system.
 - bridge específica `NÃO VERIFICADO`.
 - mount/AI/persistence cross-dimension e QA client/modpack real `NÃO VERIFICADO` nesta ficha.
 - Não spawnar segundo bear, manter summon após unsummon provider ou duplicar stats/eventos.
@@ -57,4 +57,4 @@ Já cobre summon Ice persistente/recastable de combat mount. Novos summons glaci
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream `e4056af...`: `SummonPolarBearSpell.java`.
+- Source 3.16.3 `e4056af...`: `SummonPolarBearSpell.java` + `gradle.properties`.

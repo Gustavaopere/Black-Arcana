@@ -17,7 +17,7 @@
 
 Dispara um icicle perfurante de energia fria que causa dano e congela criaturas atravessadas.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - cria `IcicleProjectile` na altura dos olhos, dispara no look angle e remove gravidade;
 - spell power base 12, +1/level;
@@ -53,4 +53,4 @@ Já cobre fast piercing Ice bolt com freeze.
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream `e4056af...`: `IcicleSpell.java`.
+- Source 3.16.3 `e4056af...`: `IcicleSpell.java` + `gradle.properties`.

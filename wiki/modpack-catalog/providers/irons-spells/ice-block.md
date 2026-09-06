@@ -17,7 +17,7 @@
 
 Conjura um grande bloco de gelo acima de uma criatura ou bloco; após atraso ele cai e explode em dano frost em área, com dano adicional às criaturas atingidas durante a queda.
 
-## Snapshot upstream `e4056af...` — NÃO tratado como tag 3.16.3
+## Source audit 3.16.3 — commit `e4056af...`
 
 - cast time 25 ticks;
 - pre-cast target helper 48 blocos; fallback raycast de 32 blocos;
@@ -31,7 +31,7 @@ A liquidação fina do impacto/explosão pertence a `IceBlockProjectile` e não 
 
 ## Targets / PvP / bosses / summons
 
-- **Targeting:** helper 48 / fallback raycast 32 no snapshot.
+- **Targeting:** helper 48 / fallback raycast 32 no source.
 - **Players em PvP, bosses e summons:** policy específica de impacto `NÃO VERIFICADO`.
 - **World collision:** o projectile pode usar `noPhysics` quando nasce em colisão; demais world-mutation semantics `NÃO VERIFICADO`.
 
@@ -56,4 +56,4 @@ Já cobre falling Ice projectile com impacto + AoE frost e freeze semantics.
 ## Fonte / evidência
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
-- Snapshot upstream `e4056af...`: `IceBlockSpell.java`.
+- Source 3.16.3 `e4056af...`: `IceBlockSpell.java` + `gradle.properties`.
