@@ -34,6 +34,23 @@ public final class HudLayout {
         return Math.min(requestedMargin, available / 2);
     }
 
+    public static float scaleDownToFit(
+            float requestedScale,
+            int logicalHeight,
+            int panelHeight,
+            float minimumScale
+    ) {
+        if (!Float.isFinite(requestedScale) || !Float.isFinite(minimumScale)
+                || requestedScale <= 0.0F || minimumScale <= 0.0F
+                || minimumScale > requestedScale || logicalHeight <= 0 || panelHeight < 0) {
+            throw new IllegalArgumentException("invalid HUD scale geometry");
+        }
+        int availableHeight = Math.max(1, logicalHeight - 2);
+        if (panelHeight <= availableHeight) return requestedScale;
+        float ratio = availableHeight / (float) panelHeight;
+        return Math.max(minimumScale, Math.min(requestedScale, requestedScale * ratio));
+    }
+
     public static Point origin(
             Anchor anchor,
             int width,
