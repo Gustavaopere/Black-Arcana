@@ -211,6 +211,62 @@ public final class BlackPyreGameTests {
         helper.succeed();
     }
 
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void frontierAdvancesOnlyWhenRuntimeTickProcessesPendingCells(GameTestHelper helper) throws Exception {
+        MinecraftServer server = helper.getLevel().getServer();
+        ArcanaServerRuntime runtime = requireRuntime(server);
+        WorldEffectPolicyConfig previous = runtime.worldEffectPolicy().config();
+        var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(3, 2, 1));
+        BlockPos seed = caster.blockPosition().offset(1, -1, 0);
+        List<BlockPos> neighbors = List.of(seed.east(), seed.west(), seed.north(), seed.south());
+        helper.getLevel().setBlock(seed, Blocks.STONE.defaultBlockState(), Block.UPDATE_ALL);
+        neighbors.forEach(pos -> helper.getLevel().setBlock(pos, Blocks.STONE.defaultBlockState(), Block.UPDATE_ALL));
+        long now = helper.getLevel().getGameTime();
+        try {
+            runtime.configureWorldEffects(new WorldEffectPolicyConfig(WorldEffectMode.TEMPORARY, 4096, true, Map.of()));
+            Object result = igniteDefault(server, caster.getUUID(), List.of(target.getUUID()), 2.0D, true, seed);
+            helper.assertTrue(terrainApplied(result), "seed ignition must settle before the frontier starts");
+            helper.assertTrue(activeFrontiers(server) == 1, "successful terrain ignition must create exactly one bounded frontier");
+            helper.assertTrue(neighbors.stream().allMatch(pos -> helper.getLevel().getBlockState(pos).is(Blocks.STONE)),
+                "frontier neighbors must remain untouched until a runtime tick admits them");
+            helper.assertTrue(tickBlackPyreFrontiers(server, now + 1L), "Black Pyre runtime must expose its server-owned tick path");
+            long mutated = neighbors.stream().filter(pos -> !helper.getLevel().getBlockState(pos).is(Blocks.STONE)).count();
+            helper.assertTrue(mutated > 0L, "one runtime tick must advance at least one loaded frontier cell");
+            helper.assertTrue(mutated <= 16L, "one runtime tick must never exceed the hard per-frontier spread budget");
+        } finally {
+            runtime.configureWorldEffects(previous);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void expiredFrontierIsRemovedBeforeFurtherSettlement(GameTestHelper helper) throws Exception {
+        MinecraftServer server = helper.getLevel().getServer();
+        ArcanaServerRuntime runtime = requireRuntime(server);
+        WorldEffectPolicyConfig previous = runtime.worldEffectPolicy().config();
+        var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(3, 2, 1));
+        BlockPos seed = caster.blockPosition().offset(1, -1, 0);
+        BlockPos neighbor = seed.east();
+        helper.getLevel().setBlock(seed, Blocks.STONE.defaultBlockState(), Block.UPDATE_ALL);
+        helper.getLevel().setBlock(neighbor, Blocks.STONE.defaultBlockState(), Block.UPDATE_ALL);
+        long now = helper.getLevel().getGameTime();
+        try {
+            runtime.configureWorldEffects(new WorldEffectPolicyConfig(WorldEffectMode.TEMPORARY, 4096, true, Map.of()));
+            Object result = igniteDefault(server, caster.getUUID(), List.of(target.getUUID()), 2.0D, true, seed);
+            helper.assertTrue(terrainApplied(result), "seed ignition must settle before expiry test");
+            helper.assertTrue(activeFrontiers(server) == 1, "frontier must exist before its lifetime ceiling");
+            helper.assertTrue(tickBlackPyreFrontiers(server, now + 1_200L), "Black Pyre runtime must process expiry through its tick path");
+            helper.assertTrue(activeFrontiers(server) == 0, "frontier must be removed exactly at its lifetime ceiling");
+            helper.assertTrue(helper.getLevel().getBlockState(neighbor).is(Blocks.STONE),
+                "expired pending work must not settle after frontier removal");
+        } finally {
+            runtime.configureWorldEffects(previous);
+        }
+        helper.succeed();
+    }
+
     private static ArcanaServerRuntime requireRuntime(MinecraftServer server) {
         return ArcanaServerRuntimeManager.get(server).orElseThrow(() -> new IllegalStateException("Black Arcana runtime unavailable"));
     }
@@ -219,6 +275,27 @@ public final class BlackPyreGameTests {
         Class<?> runtime = Class.forName("dev.gustavopere.blackarcana.integration.neoforge.MinecraftBlackPyreRuntime");
         Method method = runtime.getMethod("igniteDefault", MinecraftServer.class, UUID.class, List.class, double.class, boolean.class, int.class, int.class, int.class);
         return method.invoke(null, server, casterId, targets, damage, terrainRequested, seed.getX(), seed.getY(), seed.getZ());
+    }
+
+    private static int activeFrontiers(MinecraftServer server) {
+        try {
+            Class<?> runtime = Class.forName("dev.gustavopere.blackarcana.integration.neoforge.MinecraftBlackPyreRuntime");
+            Method method = runtime.getMethod("activeFrontiers", MinecraftServer.class);
+            return (int) method.invoke(null, server);
+        } catch (ReflectiveOperationException failure) {
+            return -1;
+        }
+    }
+
+    private static boolean tickBlackPyreFrontiers(MinecraftServer server, long nowTick) {
+        try {
+            Class<?> runtime = Class.forName("dev.gustavopere.blackarcana.integration.neoforge.MinecraftBlackPyreRuntime");
+            Method method = runtime.getMethod("tickFrontiers", MinecraftServer.class, long.class);
+            method.invoke(null, server, nowTick);
+            return true;
+        } catch (ReflectiveOperationException failure) {
+            return false;
+        }
     }
 
     private static ArcanaDecision decision(Object result) throws Exception { return (ArcanaDecision) result.getClass().getMethod("decision").invoke(result); }
