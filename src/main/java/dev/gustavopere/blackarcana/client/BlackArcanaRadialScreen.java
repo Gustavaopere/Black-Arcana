@@ -16,11 +16,12 @@ import java.util.Optional;
 
 /** Compact selector only: choosing a wedge changes selection but never executes a cast. */
 public final class BlackArcanaRadialScreen extends Screen {
-    private static final double RADIUS = 78.0D;
-    private static final double INNER_HIT_RADIUS = 28.0D;
-    private static final double OUTER_HIT_RADIUS = 112.0D;
+    private static final double PREFERRED_RADIUS = 78.0D;
+    private static final double PREFERRED_INNER_HIT_RADIUS = 28.0D;
+    private static final double HIT_RADIUS_PADDING = 34.0D;
     private static final int SLOT_HALF_WIDTH = 45;
     private static final int SLOT_HALF_HEIGHT = 12;
+    private static final int VIEWPORT_MARGIN = 4;
 
     private final List<ArcanaSpellId> loadout;
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
@@ -59,16 +60,22 @@ public final class BlackArcanaRadialScreen extends Screen {
         graphics.fill(0, 0, width, height, 0x55000000);
         int centerX = width / 2;
         int centerY = height / 2;
+        double radius = RadialLayout.radiusForViewport(
+                width, height, SLOT_HALF_WIDTH + 1, SLOT_HALF_HEIGHT + 1,
+                PREFERRED_RADIUS, VIEWPORT_MARGIN);
+        double innerHitRadius = Math.min(PREFERRED_INNER_HIT_RADIUS, Math.max(8.0D, radius * 0.36D));
+        double outerHitRadius = Math.max(innerHitRadius + 1.0D, radius + HIT_RADIUS_PADDING);
+
         List<Integer> visible = RadialLayout.visibleSlots(loadout.size(), page);
         hoveredSlot = RadialLayout.hoveredSlot(
                 loadout.size(), page, mouseX, mouseY, centerX, centerY,
-                INNER_HIT_RADIUS, OUTER_HIT_RADIUS);
+                innerHitRadius, outerHitRadius);
 
         for (int visibleIndex = 0; visibleIndex < visible.size(); visibleIndex++) {
             int slot = visible.get(visibleIndex);
             ArcanaSpellId spell = loadout.get(slot);
             RadialLayout.Point point = RadialLayout.slotCenter(
-                    visibleIndex, visible.size(), centerX, centerY, RADIUS);
+                    visibleIndex, visible.size(), centerX, centerY, radius);
             int x = (int) Math.round(point.x());
             int y = (int) Math.round(point.y());
             boolean selected = slot == ClientInputController.selection().selectedSlot();
@@ -96,7 +103,7 @@ public final class BlackArcanaRadialScreen extends Screen {
                 font,
                 Component.translatable("screen.black_arcana.radial.hint"),
                 centerX,
-                height - 24,
+                Math.max(4, height - 24),
                 0xFFD0C6D0);
         super.render(graphics, mouseX, mouseY, partialTick);
     }
