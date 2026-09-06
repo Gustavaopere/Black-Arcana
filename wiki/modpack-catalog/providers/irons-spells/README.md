@@ -3,7 +3,7 @@
 - **Mod ID:** `irons_spellbooks`
 - **JAR do pack:** `irons_spellbooks-1.21.1-3.16.3.jar`
 - **Runtime:** `1.21.1-3.16.3`
-- **Regra desta Wiki:** TODO spell existente recebe um arquivo `.md`, mesmo quando não há alteração planejada pelo Black Arcana.
+- **Regra desta Wiki:** todo spell **ativo** do catálogo corrente recebe um arquivo `.md`, mesmo quando não há alteração planejada pelo Black Arcana. Entradas source-only explicitamente `deprecated` permanecem documentadas na auditoria do provider e não são contadas como spell ativo.
 
 ## Progresso do catálogo individual
 
