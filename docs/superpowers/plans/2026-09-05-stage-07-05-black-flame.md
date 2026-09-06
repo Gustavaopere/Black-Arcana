@@ -192,6 +192,22 @@ Historical PR #22 may be used as reviewed source material, but the scheduler mus
 9. Synchronize the Black Arcana Notion dossier and re-fetch it to verify persistence.
 10. Confirm final `main` SHA and stop. Do not start 07.06 automatically.
 
+## Execution evidence through Task 5
+
+The implementation followed the required RED→GREEN sequence and remained on fresh 07.04 canonical ancestry:
+
+- Stage 04 authority RED `35113bbad3b7183f529c1eb7dc32c85714aecd32`, workflow `34000082970`: failure was limited to the intentionally missing requested-class, mutation-protection and permanent-gateway production APIs.
+- Stage 04 authority GREEN `7c7bd03b293c0f42d70c201a98b5cf5ee5b95749`: additive requested-class admission, mutation-protection authority and protected temporary/permanent gateways implemented while predecessor APIs remained compatible.
+- Black Pyre core RED `d9877b4adf021b1b920e02e3fcef14161ebeac63`, workflow `34000495582`: failure was limited to missing Black Pyre core classes.
+- Black Pyre core GREEN `2f58b44fa134dd7bac9d4c6220327a6c1e859ea7`: hard ceilings, cell identity, bounded scheduler and domain specification implemented.
+- Lifecycle integration RED `165c205...` demonstrated absent runtime frontier creation; pure RED `04c68b9...` froze `pendingCells(UUID)`; GREEN `9830bc9...` installed server-owned tick/expiry/stop lifecycle.
+- Diagnostic `1b92d133...` established synchronous terrain ignition creates one frontier; the diagnostic was removed after isolating the original global-count test flaw.
+- Cast-specific lifecycle RED `acbe663cf28a24ac0937ed185e0356bb225ae926` failed because cast-specific frontier observation was absent; minimal GREEN `5c57669bf47ab600cae1a0585f6accfbcde9931b` added read-only observation. Workflow `34004102089` passed the full branch pipeline with 87/87 GameTests and dedicated-server smoke.
+- Hardening added integrated alliance denial, FULL/PERMANENT gating, stale-CAS preservation, stop/start non-rehydration with independent Stage 04 rollback ownership, and hard concurrent-frontier stress. A redundant stress suite was removed after systematic debugging showed it polluted shared GameTest state; production ceilings were not weakened.
+- Clean technical head `6e021ef28ebb450a84a7dff7fa8a545f52a90389`, workflow `34004647369` (#1118): JUnit SUCCESS, diff sanity SUCCESS, NeoForge build SUCCESS, built-JAR verification SUCCESS, **92/92 required GameTests passed**, dedicated-server smoke PASS.
+
+Task 5 documentation records this state as `IMPLEMENTED / AWAITING MERGE`, not canonical. Real-modpack/provider/manual acceptance remains deferred under D031; no Malum causal amplification or Iron's host behavior is promoted without real provider evidence. The exact final PR head must be reverified after documentation changes before Task 6 merge.
+
 ## Non-goals / fail-closed boundaries
 
 - No dynamic dimensions or 07.06 work.
