@@ -11,15 +11,16 @@ Checkpoint canônico:
 
 Objetivo desta fase: transformar as decisões de design em documentação canônica suficiente para orientar o trabalho posterior sem iniciar implementação nova nem exigir que o catálogo completo do modpack estivesse pronto antes do primeiro merge.
 
-Entregas desta fase:
+Entregas históricas da fase incluíram os conceitos de Caos, Ordem, Blood/Vínculo, Infernal, Celestial e Bruxaria. Decisões posteriores da Fase 2 corrigiram duas classificações importantes:
 
-- estrutura canônica `wiki/` e template por feitiço;
-- taxonomia de estados e regras para números confirmados/TBD;
-- documentação dos domínios Black Arcana já presentes;
-- planos de Caos, Ordem, Hemática/Vincular, Infernal, Divina/Celestial e Bruxaria Integrada;
+- Celestial/Divino **não é escola separada**; qualquer expansão aprovada entra na escola Holy do Iron's;
+- Blood Binding **não é escola separada**; é uma reforma da escola Blood existente, com objetivo de `0 mana normal` e custo hemático próprio.
+
+A Fase 1 também estabeleceu:
+
 - arquitetura do reservatório hemático em mB e vínculos tipados;
 - arquitetura da Lava Infernal Nether-only e seu vínculo de infraestrutura;
-- arquitetura de Sanctum/Ressonância Celestial sem Aether;
+- arquitetura de Sanctum/Ressonância Celestial sem Aether para Holy `MIRACLE_TIER`;
 - integração planejada com Immersive Portals;
 - padrão visual de texturas, partículas, animações, áudio e HUD;
 - política `PROVIDER-NATIVE FIRST` e deduplicação semântica;
@@ -33,20 +34,30 @@ A Fase 1 não autorizou implementação das novas escolas nem declarou o catálo
 
 **Estado:** `ATIVA / EM PROGRESSO`
 
-Checkpoint inicial já mergeado:
+Checkpoint inicial:
 
 - PR #62 — `docs: catalog all modpack magic providers`
 - `main@17f87619bc8ed71023bc80d0adb752c13dc8c6c4`
 - post-merge CI `34056029588` / #1477 — `SUCCESS`
 
-O checkpoint #62 estabeleceu o baseline de 101 componentes magic-relevant contra a modlist de 607 entradas e criou a primeira matriz de deduplicação, mas não concluiu a Fase 2.
+Checkpoints documentais posteriores são mergeados incrementalmente quando coerentes e com CI verde; isso **não** significa que a Fase 2 inteira terminou.
 
-Objetivo: catalogar integralmente o conteúdo mágico jogável do pack antes de aprovar duplicações ou fechar a lista final das novas escolas.
+Objetivo: catalogar integralmente o conteúdo mágico jogável do pack antes de aprovar duplicações ou fechar a lista final das novas escolas/expansões.
 
-Para cada provider relevante, registrar conforme aplicável:
+### Árvore canônica única
+
+A única árvore de provider catalog é:
+
+`wiki/modpack-catalog/providers/<provider>/<classificação-nativa>/<capacidade>.md`
+
+A antiga `wiki/providers/` foi consolidada e removida. Auditorias técnicas preservadas ficam dentro do próprio provider (`audits/` ou `TECHNICAL-AUDIT.md`), e os metadados globais ficam em `wiki/modpack-catalog/meta/`.
+
+### Para cada provider relevante
+
+Registrar conforme aplicável:
 
 - IDs reais de spells/glyphs/rituais/efeitos;
-- escola/domínio;
+- escola/domínio/categoria nativa;
 - função semântica;
 - dano/cura/controle e fórmulas observáveis/documentadas;
 - custo e recurso real;
@@ -59,11 +70,15 @@ Para cada provider relevante, registrar conforme aplicável:
 - versão/JAR realmente presente na modlist;
 - proveniência da informação.
 
-Ars deve ser catalogado por forms/glyphs/augments/rituals e capacidades composicionais, não por enumerar infinitamente todas as combinações possíveis.
+Conteúdo que já existe no modpack continua obrigatório no catálogo mesmo quando nenhuma alteração for planejada.
 
-### Regra de classificação
+### Regras específicas
 
-Magic-relevant não significa spell provider. Bridges, gear, libraries e compat podem ser essenciais para authority/dedup sem oferecer novos spells. Quando a auditoria granular contradiz a classe inicial do registry baseline, a correção deve ser registrada explicitamente e prevalecer sobre a classificação antiga.
+- Iron's e addons baseados em schools: uma subpasta por escola e um `.md` por spell ativo.
+- Ars Nouveau: forms/effects/augments/rituals/systems; não enumerar combinações arbitrárias infinitas.
+- Outros providers: usar a classificação nativa comprovada do próprio mod; não inventar categorias por conveniência.
+- Magic-relevant não significa spell provider. Bridges, gear, libraries e compat podem ser essenciais para authority/dedup sem oferecer novos spells.
+- Quando a auditoria granular contradiz a classe inicial do registry baseline, a correção é registrada explicitamente.
 
 ### Saída principal
 
@@ -91,14 +106,15 @@ Ordem de trabalho:
 
 - generic randomness/probability não basta para justificar Caos;
 - geometry/boolean logic/runes/walls/counters não bastam para justificar Ordem;
-- generic life/damage linking não basta para justificar Arcana Vincular;
-- generic Ars Nouveau ↔ Iron's mana/spellbook unification não é lacuna enquanto Ars 'n' Spells 3.2.4 cobre esse papel;
+- generic life/damage linking não basta para justificar a reforma/vínculos de Blood;
+- Holy já existe; conteúdo Celestial deve entrar em Holy somente quando houver delta real;
+- generic Ars Nouveau ↔ Iron's mana/spellbook unification não é lacuna enquanto Ars 'n' Spells cobre esse papel;
 - generic contingency/event-triggered casting não é lacuna enquanto o ecossistema Ars já cobre esse comportamento;
 - magic-on-Create/moving contraptions não é lacuna por si só enquanto Ars Creo/Technica cobrem partes substanciais desse espaço;
-- unknown provider behavior remains fail-closed rather than being replaced by a generic Black Arcana bonus.
+- unknown provider behavior permanece fail-closed em vez de ser substituído por bônus Black Arcana genérico.
 
 ## Regra de transição
 
-O projeto está atualmente entre Fase 2 e Fase 3: **Fase 1 está canônica; Fase 2 está em execução; Fase 3 continua bloqueada.**
+Fase 1 está canônica; Fase 2 está em execução; Fase 3 continua bloqueada.
 
-O próximo merge documental da Fase 2 pode aumentar cobertura e corrigir classificações sem significar que a Fase 2 inteira terminou. A Fase 3 só é liberada quando as capability rows pertinentes deixarem de depender de provider audits incompletos e uma lacuna real puder ser demonstrada com evidência suficiente.
+Merges documentais incrementais da Fase 2 são permitidos para manter a Wiki consultável e auditável durante o trabalho. A Fase 3 só é liberada quando as capability rows pertinentes deixarem de depender de provider audits incompletos e uma lacuna real puder ser demonstrada com evidência suficiente.

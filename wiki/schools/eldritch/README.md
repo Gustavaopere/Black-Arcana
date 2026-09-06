@@ -16,6 +16,6 @@ Eldritch é uma escola nativa já presente no modpack. Esta página existe para 
 - Sonic Boom
 - Telekinesis
 
-As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/<spell>.md`.
+As fichas individuais ficam em `wiki/modpack-catalog/providers/irons-spells/eldritch/<spell>.md`.
 
 Addons que adicionem spells Eldritch permanecem sob seus próprios providers e serão vinculados a esta escola conforme a auditoria confirmar IDs/versões atuais.

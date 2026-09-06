@@ -8,9 +8,23 @@ This directory is the canonical Phase 2 inventory for every magic-relevant top-l
 
 - Phase 1 — architecture/plans/Wiki structure — merged through PR #61 at `main@edcc9f8cf1d582681d4b7d2aa1facbcb39b99ae9`.
 - Phase 2 baseline — provider inventory + first granular catalogs + capability matrix — merged through PR #62 at `main@17f87619bc8ed71023bc80d0adb752c13dc8c6c4`.
-- Exact post-merge CI for the PR #62 baseline: Black Arcana CI run `34056029588` / #1477 — `SUCCESS`.
+- Subsequent Phase 2 documentation is merged incrementally when coherent and CI-green; an incremental merge does not mean the complete catalog is finished.
 
-The PR #62 checkpoint is not the end of Phase 2. It establishes the 101-component magic-relevant registry and a first set of provider pages, while multiple exact spell/glyph/ritual/power inventories remain explicitly incomplete.
+The Phase 2 baseline established the magic-relevant registry and a first set of provider pages, while multiple exact spell/glyph/ritual/power inventories remain explicitly incomplete.
+
+## Single canonical provider tree
+
+All provider-owned catalog data lives under:
+
+`wiki/modpack-catalog/providers/`
+
+The old `wiki/providers/` tree was consolidated into this catalog and must not be recreated. Unique technical/source-audit material from that tree is preserved inside the appropriate provider under `audits/` or `TECHNICAL-AUDIT.md`.
+
+Global catalog metadata lives under:
+
+`wiki/modpack-catalog/meta/`
+
+including the current provider inventory, deduplication policy and audit queue.
 
 ## Authority order
 
@@ -37,6 +51,22 @@ Only components that expose discrete player-facing capabilities require a spell/
 
 When granular verification disproves a baseline classification, `CLASSIFICATION-CORRECTIONS.md` is the canonical correction overlay until the registry table is regenerated.
 
+## Provider-native hierarchy
+
+The first directory dimension is provider ownership. The second uses the strongest stable native classification available for that provider.
+
+Examples:
+
+- Iron's: `providers/irons-spells/<school>/<spell>.md`;
+- Asterism/Paladin/Dreamless and other school-based Iron's addons: `providers/<addon>/<school>/<spell>.md`;
+- Ars Nouveau: `providers/ars-nouveau/glyphs/forms|effects|augments/<glyph>.md`, plus `rituals/` and `systems/`;
+- Goety: Focuses / rituals / brews / servants / systems;
+- Malum: Spirit Rites / Geas-Pacts / spirits / systems;
+- Hexalia: brews / rituals / infusions;
+- Toxony: effects / oils / mutagens.
+
+No category is invented merely to make the directory tree look symmetrical.
+
 ## Per-capability contract
 
 Where applicable each capability receives:
@@ -57,38 +87,26 @@ Where applicable each capability receives:
 - compatibility/bridge behavior;
 - provenance and confidence.
 
-Unknown data is written as `UNVERIFIED` or `TBD`, never inferred.
+Unknown data is written as `UNVERIFIED`, `NÃO VERIFICADO` or `TBD`, never inferred.
+
+Existing content remains mandatory even when Black Arcana will not modify it. `JÁ EXISTE / SEM ALTERAÇÃO PLANEJADA` is a valid catalog state.
 
 ## Ars Nouveau rule
 
-Ars Nouveau is compositional. Phase 2 catalogs forms, glyphs, augments, rituals and other finite primitives, then maps the capabilities they can compose. It does **not** enumerate every possible player-authored spell recipe.
+Ars Nouveau is compositional. Phase 2 catalogs forms, effects, augments, rituals and other finite primitives, then maps the capabilities they can compose. It does **not** enumerate every possible player-authored spell recipe.
 
-### Ars ecosystem normalization — current pass
+## Current school decisions affecting the catalog
 
-The second Ars pass adds/normalizes dedicated pages for:
-
-- Ars Additions 21.3.0;
-- Ars Zero 2.0.2;
-- Ars Technica 2.7.6;
-- Ars Creo 5.4.0;
-- Ars Elemancy 1.18.3;
-- Not Enough Glyphs 4.6.1;
-- Ars 'n' Spells 3.2.4;
-- Ars Polymorphia 1.0.3.
-
-It also corrects four baseline classification errors without changing their current modlist identities:
-
-- Ars Creo → bridge/compat, not a proven glyph provider;
-- Ars Elemancy → gear/support, not a proven glyph provider;
-- Ars 'n' Spells → cross-engine Ars↔Iron's bridge with discrete bridge rituals;
-- Ars Polymorphia → Storage Lectern/Polymorph compatibility, not a spell provider.
-
-The new evidence expands the deduplication matrix for event-triggered casting, stored-reference targeting, cross-engine spellbooks/mana, Create-integrated magic automation, geometry, gravity and randomization.
+- Celestial/Divine is not a separate school: approved future celestial content belongs to Iron's **Holy** unless another existing provider is the actual authority.
+- Blood Binding is not a separate school: the existing Iron's **Blood** school is the target of the planned blood-resource reform.
+- Chaos and Order remain candidate Iron's schools pending complete semantic deduplication.
+- Infernal remains candidate pending full audit of Fire, Goety, Cataclysm/Ignis, Soul Fire and related providers.
 
 ## Known Phase 2 work still open
 
-Examples explicitly still incomplete after the baseline and this pass include:
+Examples include:
 
+- finish Iron's base catalog: Ice, Lightning and Nature currently remain after the first 75/110 individual fichas;
 - exact current inventories/numbers for providers such as Apprentice's Codex, Cataclysm: Spellbooks, Dreamless, Leyline and Somake;
 - exact installed capability reconciliation for Goety 3.1.4, Malum 1.8.2, Eidolon, Hexalia, Toxony, Vampirism/Bloodlines/Werewolves, Mobstein and related addons;
 - remaining Ars addon primitives not yet normalized to the same confidence level;

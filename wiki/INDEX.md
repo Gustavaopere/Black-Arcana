@@ -47,18 +47,19 @@ A Wiki é reconciliada contra o runtime/plans atuais. A presença de uma página
 - Progression & Balance (Stage 08)
 - Hardening & Release (Stage 09)
 
-## Novas escolas/disciplinas em pesquisa
+## Escolas / expansões em pesquisa
 
 ### Iron's-hosted / spellcasting
 
-- Arcana do Caos — host prioritário: Iron's Spells.
-- Arcana da Ordem — host prioritário: Iron's Spells.
-- Magia Infernal — host prioritário: Iron's; fonte especial Nether-only para conteúdo de alto nível.
-- Magia Divina / Celestial — Holy/Divine sobre Iron's, sem Aether e sem confundir com Astral.
+- Arcana do Caos — candidata a escola nova do Iron's; depende da deduplicação completa.
+- Arcana da Ordem — candidata a escola nova do Iron's; depende da deduplicação completa.
+- Magia Infernal — candidata; deve provar delta real contra Fire, Goety, Cataclysm/Ignis e demais providers.
+- Expansão Celestial — **entra em Holy**, não cria escola Divine separada.
 
-### Hemática / recursos próprios
+### Blood
 
-- Arcana Hemática e Vincular — combustível de sangue próprio/vinculado/armazenado; não usa mana normal.
+- A escola Blood já existe no Iron's e será reformada para usar **0 mana normal**; custos futuros usam sangue próprio, sangue drenado quando semanticamente válido, vínculos hemáticos e/ou reservatório em mB.
+- `BLOOD != VITAL_ENERGY != SOUL != SPIRIT != MANA`.
 
 ### Bruxaria
 
@@ -68,27 +69,28 @@ A Wiki é reconciliada contra o runtime/plans atuais. A presença de uma página
 
 - Reservatório Hemático e Vínculos (`systems/blood-reservoir/`)
 - Fonte Infernal / Lava Infernal Nether-only (`systems/infernal-source/`)
-- Sanctum / Ressonância Celestial para Miracle-tier (`systems/divine-source/`)
+- Sanctum / Ressonância Celestial para Holy `MIRACLE_TIER` (`systems/celestial-resonance/`)
 - Integração de portais com Immersive Portals (`systems/portal-integration/`)
 - Padrão visual, partículas, animação e áudio (`systems/visual-language/`)
 
-## Providers e deduplicação
+## Catálogo integral do modpack
 
-- `providers/CURRENT-MAGIC-PROVIDERS.md` — inventário/reconciliação da base instalada.
-- `providers/DEDUPLICATION-POLICY.md` — regra `PROVIDER-NATIVE FIRST` e assinatura semântica.
-- Catálogo provider-by-provider e spell-by-spell: em andamento.
+A árvore canônica é:
 
-### Prioridade atual da auditoria externa
+`modpack-catalog/providers/<provider>/<classificação-nativa>/<capacidade>.md`
 
-1. Paladin Spells / Holy — valores de fonte 1.21.1 sendo extraídos.
-2. Cataclysm: Spellbooks / Ignis — necessário antes de aprovar Magia Infernal.
-3. Hexalia — rituals/brews/idols/plants/transmutation.
-4. Toxony — toxicity/mutagens/oils/alchemy.
-5. Asterism/Eidolon — separar Astral, Holy e Theurgy.
-6. Demais providers mágicos da modlist atual.
+Não existe uma segunda árvore canônica em `wiki/providers/`; o conteúdo legado foi consolidado em `wiki/modpack-catalog/`.
+
+Metadados globais:
+
+- `modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md` — inventário/reconciliação da base instalada;
+- `modpack-catalog/meta/DEDUPLICATION-POLICY.md` — regra `PROVIDER-NATIVE FIRST` e assinatura semântica;
+- `modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md` — fila da auditoria.
+
+O catálogo provider-by-provider e capacidade-by-capacidade continua em andamento. Conteúdo já existente também recebe ficha, mesmo quando `JÁ EXISTE / SEM ALTERAÇÃO PLANEJADA`.
 
 ## Regra de documentação
 
-Cada spell ou poder nomeado deve possuir página própria quando for discreto e catalogável. Sistemas combinatórios como Ars Nouveau recebem inventário de glyph/form/augment e apenas combinações nomeadas/canônicas; não serão criadas páginas para toda permutação matemática possível.
+Cada spell ou poder nomeado deve possuir página própria quando for discreto e catalogável. Sistemas combinatórios como Ars Nouveau recebem inventário de glyph/form/augment/ritual/system e apenas combinações nomeadas/canônicas; não serão criadas páginas para toda permutação matemática possível.
 
 Nenhum spell novo do Black Arcana é aprovado antes de ser comparado com o concorrente provider-native mais próximo.
