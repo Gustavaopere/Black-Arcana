@@ -62,6 +62,7 @@ Examples:
 - Asterism/Paladin/Dreamless and other school-based Iron's addons: `providers/<addon>/<school>/<spell>.md`;
 - Ars Nouveau: `providers/ars-nouveau/glyphs/forms|effects|augments/<glyph>.md`, plus `rituals/` and `systems/`;
 - Goety: Focuses / rituals / brews / servants / systems;
+- Goety Cataclysm and Goety Iron: separate addon-provider directories; they are not folded into Goety's base Focus count;
 - Malum: Spirit Rites / Geas-Pacts / spirits / systems;
 - Hexalia: brews / rituals / infusions;
 - Toxony: effects / oils / mutagens.
@@ -103,24 +104,27 @@ Ars Nouveau is compositional. Phase 2 catalogs forms, effects, augments, rituals
 - Chaos and Order remain candidate Iron's schools pending complete semantic deduplication.
 - Infernal remains candidate pending full audit of Fire, Goety, Cataclysm/Ignis, Soul Fire and related providers.
 
-## Source-pinned high-value providers already advanced
+## Source/release-pinned high-value providers already advanced
 
-The granular queue remains authoritative for exact per-row status. At this checkpoint, major source-pinned audits include:
+The granular queue remains authoritative for exact per-row status. At this checkpoint, major audits include:
 
 - Iron's base spell registry/catalog;
 - Ypsilon's Fundamentalism, Asterism Arcanum, Dreamless and other audited Iron's addons;
 - Eidolon: Repraised `0.5.0.2` — spells/chants/conversions/ritual recipes/research inventoried in source, runtime QA pending;
 - Vampirism `1.10.13` + Bloodlines `3.0.9` + Vampiric Ageing `1.4.21` + Vampire Spells Addon `0.0.9` — provider authority/resources/actions/progression cataloged in source, runtime/inter-addon QA pending;
 - Vampirism Integrations `1.10.2` — Cold Sweat eligibility and Jade discovery cataloged without inferring runtime activation;
-- Werewolves `2.0.3.3` — faction/forms/actions/skills/effects/leveling/Lord/minions/refinements cataloged in source, runtime/Epic Fight QA pending.
+- Werewolves `2.0.3.3` — faction/forms/actions/skills/effects/leveling/Lord/minions/refinements cataloged in source, runtime/Epic Fight QA pending;
+- Goety `3.1.4` — official public inventory normalized to 110 base Focuses, 12 Wands/Staffs, 13 ritual types and 10 Research lines; exact 3.1.4 source/JAR registries/API remain unverified and fail-closed;
+- Goety Cataclysm `1.21.1-1.8.2` — exact installed artifact/File ID/hash pinned and public semantic surface audited; the available public repository does not expose the matching 1.21.1 source revision and the project is ARR, so granular internals remain unverified/fail-closed;
+- Goety Iron `3.1` — exact installed artifact/File ID/hash and exact release changelog pinned; eight servants are named by the public project description, while source/API internals and complete registries remain unverified/fail-closed.
 
-Source-pinned means the source catalog is tied to an exact revision. It does **not** mean exact installed-JAR equivalence or runtime validation unless those gates are separately recorded.
+Source-pinned means the source catalog is tied to an exact revision. Release/artifact-pinned is weaker and is stated separately. Neither state means runtime validation unless that gate is separately recorded.
 
 ## Known Phase 2 work still open
 
 Examples include:
 
-- exact installed capability reconciliation for **Goety 3.1.4**, **Malum 1.8.2**, Hexalia, Toxony and Mobstein;
+- exact installed capability reconciliation for **Malum 1.8.2**, Hexalia, Toxony and Mobstein;
 - exact current inventories/numbers for providers such as Apprentice's Codex, Cataclysm: Spellbooks, Leyline and Somake where exact installed internals remain incomplete;
 - remaining Ars base/addon primitives not yet normalized to the same confidence level;
 - pending Iron's ecosystem content/gear/compat providers listed in `meta/PROVIDER-AUDIT-QUEUE.md`;
@@ -130,7 +134,9 @@ Examples include:
 
 ### Next high-value base-provider checkpoint
 
-After the Eidolon and Vampirism/Werewolves source audits, **Goety `3.1.4`** is the next primary supernatural/magic provider to reconcile at granular level. It must be audited provider-native-first: Soul Energy, focuses/spells, rituals, servants, progression and addon boundaries remain Goety-owned unless an explicit safe integration contract proves otherwise.
+With **Goety 3.1.4**, **Goety Cataclysm 1.21.1-1.8.2** and **Goety Iron 3.1** now reconciled to the strongest publicly supportable confidence level, the next primary supernatural/magic provider checkpoint is **Malum `1.8.2`**.
+
+Malum must be audited provider-native-first: spirits, Spirit Rites, Soul Ward, Spirit Spoils, equipment/resource loops and addon boundaries remain Malum-owned unless an explicit safe integration contract proves otherwise. Gaze and Malum: Vestis remain separate providers and must not be silently folded into the base Malum catalog.
 
 ## Output
 
