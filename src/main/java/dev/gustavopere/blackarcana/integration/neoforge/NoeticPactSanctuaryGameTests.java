@@ -100,7 +100,6 @@ public final class NoeticPactSanctuaryGameTests {
 
         FamiliarOwnershipRegistry ownership = ownershipFor(owner.getUUID(), familiar.getUUID());
         MinecraftPactSanctuaryRuntime runtime = new MinecraftPactSanctuaryRuntime(ownership);
-        breeze.setTarget(member);
 
         ArcanaDecision activation = runtime.activate(
                 server,
@@ -110,11 +109,11 @@ public final class NoeticPactSanctuaryGameTests {
                 Set.of(member.getUUID()));
 
         helper.assertTrue(activation.allowed(), "owned familiar must activate the sanctuary for the Breeze exclusion test");
+        helper.assertTrue(!runtime.blocksTargetChange(server, breeze, member),
+                "trial encounter Breeze must remain fail-closed and Sanctuary must not veto its proposed target");
         int suppressed = runtime.tick(server);
         helper.assertTrue(suppressed == 0,
                 "trial encounter Breeze must remain fail-closed and must not be pacified by Pact Sanctuary");
-        helper.assertTrue(breeze.getTarget() == member,
-                "Pact Sanctuary must preserve the current target of a non-allowlisted Breeze");
 
         runtime.clearEntity(server, familiar.getUUID());
         helper.succeed();
