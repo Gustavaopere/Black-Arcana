@@ -1,0 +1,17 @@
+# AOE
+
+- Registry ID: `ars_nouveau:glyph_aoe`
+- Source class: `AugmentAOE`
+- Exact source: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
+- Default tier: **2**
+- Default mana: **35**
+
+## Source-pinned behavior
+
+Adds **+1.0** to Ars Nouveau's AOE spell stat. Compatible glyphs interpret the stat to expand their affected area around a target.
+
+## Boundary
+
+Ars Nouveau owns this AOE stat and its per-glyph interpretation. Black Arcana area geometry remains explicitly server-bounded and cannot inherit an unbounded Ars radius contract.
+
+Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
