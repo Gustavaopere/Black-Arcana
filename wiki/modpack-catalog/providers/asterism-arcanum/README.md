@@ -1,82 +1,61 @@
 # Asterism Arcanum
 
-Status: `PUBLIC CATALOG COMPLETE FOR 0.1.0; NUMERICAL DETAILS PARTIAL`
+## Estado canônico
 
-- Current JAR: `asterismarcanum-1.21.1-0.1.0.jar`
-- Mod id: `asterismarcanum`
-- Runtime version: `1.21.1-0.1.0`
-- Provider class: `SPELL PROVIDER / CONTENT ADDON`
-- Primary casting authority: Iron's Spells 'n Spellbooks.
-- New school/domain: Astral.
+- mod id: `asterismarcanum`
+- JAR instalado: `asterismarcanum-1.21.1-0.1.0.jar`
+- versão: `1.21.1-0.1.0`
+- Minecraft: 1.21.1
+- loader: NeoForge
+- source pin exato: `BirdieVibes/Asterism-Arcanum@f1738c7813a85d31a6da10e6c9f2dbce18d2b583` (`wrapping up!`, 2026-05-28)
+- source dependency: Iron's Spells `1.21.1-3.15.6`
+- pack dependency atual: Iron's Spells `1.21.1-3.16.3`
+- estado: **SOURCE-PINNED 0.1.0 / REGISTRY 11 / SURVIVAL 10/10 CATALOGADO / RUNTIME QA PENDENTE**
 
-## Provider identity
+Asterism Arcanum é um addon de Iron's Spells que introduz a escola própria **Astral** e um ecossistema de Astromancer, Lunar Moths, Dragonflies, equipamento Astral, Astrolabe Spellbook e Celestial Staff.
 
-Asterism Arcanum adds an **Astral** school whose public design emphasis is survivability through avoidance, distance control, defensive timing and astral mobility rather than simply another elemental damage school.
+## Inventário de spells
 
-Public source used for this catalog: current CurseForge project page for Asterism Arcanum 0.1.0. The project page also states that the current license is PolyForm Shield 1.0.0, replacing an earlier MIT license.
+O registry 0.1.0 contém 11 registrations. O catálogo survival contém 10 spells, exatamente os apresentados como utilizáveis na release:
 
-## Public 0.1.0 spell catalog — 11 entries
+| Spell | ID | Rarity | Níveis | Estado |
+|---|---|---:|---:|---|
+| Astral Echo | `asterismarcanum:astral_echo` | Rare | 1–8 | survival |
+| Brightburst | `asterismarcanum:brightburst` | Rare | 1–6 | survival |
+| Celestial Tether | `asterismarcanum:celestial_tether` | Uncommon | 1–8 | survival |
+| Luminous Beam | `asterismarcanum:luminous_beam` | Common | 1–10 | survival |
+| Piercing Light | `asterismarcanum:piercing_light` | Rare | 1–10 | survival |
+| Silvery Barbs | `asterismarcanum:silvery_barbs` | Rare | 1–5 | survival |
+| Starcutter | `asterismarcanum:starcutter` | Uncommon | 1–8 | survival |
+| Starfire | `asterismarcanum:starfire` | Common | 1–10 | survival |
+| Star Swarm | `asterismarcanum:star_swarm` | Common | 1–10 | survival |
+| Summon Lunar Moth | `asterismarcanum:summon_lunar_moths` | Rare | 1 | survival |
+| Astral Gateway | `asterismarcanum:astral_gateway` | Legendary | 1 | **creative-only / unfinished** |
 
-| Spell | Semantic role | Current survival coverage |
-|---|---|---|
-| `Astral Echo` | Reversible teleport / displacement with counterplay | YES |
-| `Brightburst` | Point-blank damage + knock-away control | YES |
-| `Celestial Tether` | Self-anchor / immobility paired with temporary incoming-damage nullification | YES |
-| `Star Swarm` | Multi-projectile ranged barrage toward aim | YES |
-| `Summon Lunar Moth` | Rideable protective summon | YES |
-| `Starfire` | Small luminous projectile with piercing / ricochet behavior | YES |
-| `Starcutter` | Fast light projectile / short-delay burst damage | YES |
-| `Luminous Beam` | Long narrow damaging beam | YES |
-| `Piercing Light` | Dense radial / surrounding projectile burst | YES |
-| `Silvery Barbs` | Reactive protection for pets, summons or allies about to take damage | YES |
-| `Astral Gateway` | Gateway / portal concept exposed by the mod | **NO — CREATIVE-ONLY IN 0.1.0** |
+`TrailblazeSpell` existe no source, mas seu registration está comentado. Portanto não integra o runtime 0.1.0 e não entra na contagem.
 
-### Survival caveat — Astral Gateway
+## Escola Astral
 
-The public 0.1.0 documentation explicitly describes `Astral Gateway` as creative-only / not intended to be craftable in this version and indicates that a later patch was planned. Phase 2 therefore does **not** count it as normal survival progression coverage. It remains useful as evidence that the provider already occupies part of the astral-gateway design space.
+`asterismarcanum:astral` é uma `SchoolType` real com:
 
-## Non-spell content relevant to progression
+- atributo próprio de Astral Spell Power;
+- atributo próprio de Astral Magic Resist;
+- damage type Astral próprio;
+- sound próprio;
+- tag de focus própria.
 
-Public 0.1.0 material also identifies:
+O construtor usado mantém os defaults de Iron's: `requiresLearning=false` e `allowLooting=true` para a escola.
 
-- Astral Observatory world/content theme;
-- Astromancer;
-- Dragonfly;
-- Lunar Moth;
-- Astrolabe spellbook;
-- Celestial Staff;
-- Astral Armor;
-- Dragonfly Wings used in astral spell/rune crafting.
+## Obtenção
 
-Exact acquisition recipes, loot probabilities, spell levels, mana costs and cooldowns are not normalized here unless the current public documentation exposes them unambiguously. Those fields remain `UNVERIFIED` rather than inherited from an older build.
+O Astromancer possui loot table nativa que gera um `irons_spellbooks:scroll` com `randomize_spell` e filtro `school: asterismarcanum:astral`, quality 0.25–0.85. Essa é uma fonte concreta de Astral Scrolls.
 
-## Deduplication impact
+Os `DefaultConfig` dos 10 spells survival não desabilitam crafting; no Iron's atual, `allowCrafting` default é `true`. Config/datapacks do pack continuam podendo alterar a disponibilidade efetiva.
 
-### Divine / Celestial
+O Astrolabe é um SpellBook de 12 slots com +200 Max Mana, +20% Astral Spell Power e +5% Mana Regen. A receita usa Clock, Mithril Ingot, Tarnished Crown e Chains.
 
-Asterism already covers:
+## Regra de integração Black Arcana
 
-- celestial projectile offense;
-- narrow celestial beam offense;
-- high-volume astral projectile barrage;
-- astral teleportation;
-- ally/summon protection;
-- a celestial rideable/protective summon;
-- a gateway concept.
+**Provider-native first.** Projectiles, beams, summons, teleport anchors, damage cancellation e targeting pertencem a Asterism/Iron's. Black Arcana pode observar eventos para progressão/perks, mas não deve recriar settlement, reaplicar dano ou manter ownership paralelo.
 
-A Black Arcana Divine/Celestial school therefore cannot justify new spells merely by giving existing projectile, beam, teleport or summon mechanics a brighter/golden/astral presentation. The planned `Sanctum / Celestial Resonance` architecture must be evaluated on its **resource, law, ritual, territory, resonance and progression semantics**, not visual theme alone.
-
-### Order
-
-`Astral Echo` and `Celestial Tether` already occupy parts of displacement control, anchoring and defensive immobility. Order still needs a proven delta in **imposed rules, seals, geometrical constraints, law enforcement or stable spatial authority** rather than another anchor/teleport effect.
-
-### Binding / Familiars
-
-`Summon Lunar Moth` is a summon capability, not evidence of the typed persistent `Caster ⇄ Link ⇄ Source` relationship planned for Black Arcana. It is nevertheless a provider that must be checked before approving any familiar or mount spell.
-
-## Provenance / confidence
-
-- Presence/version: current 2026-09-06 modlist — HIGH.
-- Spell names and public semantic descriptions: current public Asterism Arcanum 0.1.0 page — HIGH.
-- Exact numeric balance fields not explicitly normalized above — `UNVERIFIED`.
-- No source-code behavior was used to derive this catalog.
+Ver `TECHNICAL-AUDIT.md` para divergências de source e gates de QA.

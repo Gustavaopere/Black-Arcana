@@ -32,7 +32,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `arssophisticatedcompat` | Ars Sophisticated Compatibility | `arssophisticatedcompat-0.3.0.jar` | `0.3.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `ars_technica` | Ars Technica | `ars_technica-1.21.1-2.7.6.jar` | `2.7.6` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `ars_zero` | Ars Zero | `ars_zero-1.21.1-2.0.2.jar` | `2.0.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `asterismarcanum` | Asterism Arcanum | `asterismarcanum-1.21.1-0.1.0.jar` | `1.21.1-0.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `asterismarcanum` | Asterism Arcanum | `asterismarcanum-1.21.1-0.1.0.jar` | `1.21.1-0.1.0` | SOURCE-PINNED 0.1.0 / REGISTRY 11 / SURVIVAL 10/10 COMPLETO / GATEWAY NON-SURVIVAL / RUNTIME QA PENDENTE |  |
 | `backportedspellbooks` | Backported Spellbooks | `backportedspellbooks-0.1.2.jar` | `0.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `bloodlines` | Bloodlines | `bloodlines-1.21-3.0.9.jar` | `1.21-3.0.9` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `ignissoulfires` | Cataclysm: Ignis Soulfires | `ignissoulfires-1.8.0.jar` | `1.8.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -53,7 +53,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `firesenderexpansion` | Fire's Ender Expansion | `firesenderexpansion-2.4.1.jar` | `2.4.1` | SOURCE-PINNED 2.4.1 / CATÁLOGO 11/11 COMPLETO / RUNTIME QA PENDENTE |  |
 | `gtbcs_geomancy_plus` | GTBC's Geomancy Plus | `gtbcs_geomancy_plus-1.1.0-1.21.1.jar` | `1.1.0-1.21.1` | RELEASE EXATA 1.1.0-1.21.1 / SOURCE PÚBLICO NÃO LOCALIZADO / JAR EXTRACTION PENDENTE |  |
 | `gtbcs_spell_lib` | GTBC's SpellLib | `gtbcs_spell_lib-2.1.0-1.21.1.jar` | `2.1.0-1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `gaze` | Gaze | `gaze-1.1.7.1.jar` | `1.1.7.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `gaze` | Gaze | `gaze-1.1.7.1.jar` | `1.1.7.1` | RELEASE-PINNED 1.1.7.1 / PUBLIC SURFACE AUDITADO / SOURCE-JAR EXTRACTION PENDENTE / FAIL-CLOSED |  |
 | `goety` | Goety | `goety-3.1.4.jar` | `3.1.4` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
 | `goety_cataclysm` | Goety Cataclysm | `goety_cataclysm-1.21.1-1.8.2.jar` | `1.21.1-1.8.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `goetyiron` | Goety Iron | `GoetyIron-1.21.1-NeoForge-3.1.jar` | `3.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -100,7 +100,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `werewolves` | Werewolves | `Werewolves-1.21-2.0.3.3.jar` | `2.0.3.3` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `wind_spellbooks` | Wind's Spellbooks : Iron's Spells 'n Spellbooks Addon | `wind_spellbooks-1.0.5.jar` | `1.0.5` | RELEASE-PINNED 1.0.5 / RUNTIME REGISTRY 7/7 / SEMANTIC CATALOG 7/7 / SOURCE-JAR DECOMPILATION PENDENTE |  |
 | `woodwalkers_spellbooks` | Woodwalkers SpellBooks | `woodwalkers_spellbooks-0.3.1-BETA.jar` | `0.3.1-BETA` | SOURCE-PINNED 0.3.1-BETA / CATÁLOGO 1/1 COMPLETO / RUNTIME QA PENDENTE |  |
-| `ypfundamentals` | Ypsilon's Fundamentalism | `ypfundamentals-1.1.7.1.jar` | `1.1.7.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `ypfundamentals` | Ypsilon's Fundamentalism | `ypfundamentals-1.1.7.1.jar` | `1.1.7.1` | SOURCE-PINNED 1.1.7.1 / CATÁLOGO 15/15 COMPLETO / 13 PRINCIPLES AUDITADOS / RUNTIME QA PENDENTE |  |
 | `reliquified_artifacts` | reliquified_artifacts | `reliquified_artifacts-1.21.1-1.0.8.jar` | `1.0.8` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 
 ## Observação
