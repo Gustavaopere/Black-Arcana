@@ -55,6 +55,36 @@ class MinecraftNoeticRuntimeWiringTest {
                 "A protected Sanctuary target acquisition must be cancelled before AI can attack");
     }
 
+    @Test
+    void observationCameraPresentationIsDerivedAfterCanonicalRevalidation() throws IOException {
+        String source = Files.readString(RUNTIME_SOURCE);
+        assertTrue(source.contains("import dev.gustavopere.blackarcana.network.NoeticViewTransitionTracker;"),
+                "Noetic presentation sync must use the bounded transition tracker rather than a second observation registry");
+        assertTrue(source.contains("import dev.gustavopere.blackarcana.network.neoforge.NoeticViewNetworkBridge;"),
+                "Noetic presentation sync must use the canonical clientbound transport bridge");
+        assertTrue(source.contains("new NoeticViewTransitionTracker(NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS)"),
+                "Presentation tracking must share the canonical active-session ceiling");
+
+        int revalidation = source.indexOf("state.observation.tick(server);");
+        int sync = source.indexOf("syncObservationViews(server, state);");
+        assertTrue(revalidation >= 0 && sync > revalidation,
+                "Client camera presentation must be derived only after canonical observation policy revalidation");
+
+        assertTrue(source.contains("state.observations.session(player.getUUID())"),
+                "Presentation must derive from the canonical server-owned observation session");
+        assertTrue(source.contains("findLoadedLivingEntity(server, session.targetId())"),
+                "Presentation target resolution must remain loaded-only and never acquire chunks");
+        assertTrue(source.contains("NoeticObservationKind.BORROWED_SIGHT")
+                        && source.contains("NoeticObservationKind.ASTRAL_SEVERANCE"),
+                "Only the two camera-capable observation kinds may request remote camera presentation");
+        assertTrue(source.contains("target.getId()"),
+                "Clientbound camera presentation must use the already-loaded target runtime entity id");
+        assertTrue(source.contains("state.viewTransitions.reconcile(player.getUUID(), desired)"),
+                "BEGIN/END emission must be deduplicated through the bounded transition tracker");
+        assertTrue(source.contains("NoeticViewNetworkBridge.send(player, payload)"),
+                "Deduplicated presentation transitions must use the registered clientbound transport");
+    }
+
     private static Path repositoryRoot() {
         String workspace = System.getenv("GITHUB_WORKSPACE");
         if (workspace != null && !workspace.isBlank()) {
