@@ -82,6 +82,18 @@ class MinecraftNoeticGazeRuntimeContractTest {
                 "The repository hard floor for player reapplication immunity must stay explicit");
     }
 
+    @Test
+    void playerTargetsUseExplicitReducedControlCap() throws IOException {
+        String runtimeSource = Files.readString(RUNTIME_SOURCE);
+        String ceilingsSource = Files.readString(CEILINGS_SOURCE);
+        assertTrue(ceilingsSource.contains("MAX_PLAYER_GAZE_DURATION_TICKS = 40"),
+                "Player Stillness needs an explicit reduced Stage 07.07 control cap");
+        assertTrue(runtimeSource.contains("playerControlCapTicks"),
+                "Runtime must compute a player-specific control cap before diminishing returns");
+        assertTrue(runtimeSource.contains("MAX_PLAYER_GAZE_DURATION_TICKS"),
+                "Player control admission must use the reduced cap instead of generic standard CONTROL limits");
+    }
+
     private static Path repositoryRoot() {
         String workspace = System.getenv("GITHUB_WORKSPACE");
         if (workspace != null && !workspace.isBlank()) return Path.of(workspace);

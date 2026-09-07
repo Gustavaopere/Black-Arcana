@@ -42,6 +42,19 @@ class MinecraftNoeticRuntimeWiringTest {
                 "LivingDeathEvent must not clear Noetic state before Soul Anchor can cancel the death");
     }
 
+    @Test
+    void sanctuaryCanCancelTargetAcquisitionBeforeMobAiUsesIt() throws IOException {
+        String source = Files.readString(RUNTIME_SOURCE);
+        assertTrue(source.contains("LivingChangeTargetEvent"),
+                "Pact Sanctuary must intercept target changes before mob attack goals consume the target");
+        assertTrue(source.contains("onLivingChangeTarget"),
+                "The composition root must register an explicit target-change handler");
+        assertTrue(source.contains("blocksTargetChange"),
+                "Target-change admission must delegate to the bounded Sanctuary runtime");
+        assertTrue(source.contains("event.setCanceled(true)"),
+                "A protected Sanctuary target acquisition must be cancelled before AI can attack");
+    }
+
     private static Path repositoryRoot() {
         String workspace = System.getenv("GITHUB_WORKSPACE");
         if (workspace != null && !workspace.isBlank()) {

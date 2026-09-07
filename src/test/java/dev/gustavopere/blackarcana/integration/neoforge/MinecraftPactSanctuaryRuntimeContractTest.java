@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -59,6 +60,19 @@ class MinecraftPactSanctuaryRuntimeContractTest {
                 "Stage 07.07 should use the canonical 20-tick default Sanctuary refresh");
         assertTrue(ceilingsSource.contains("MIN_SANCTUARY_REFRESH_INTERVAL_TICKS = 5"),
                 "The hard five-tick Sanctuary refresh floor must remain explicit");
+    }
+
+    @Test
+    void sanctuaryVanillaAdmissionIsAllowlistBasedAndCandidateBudgetIsRelevantOnly() throws IOException {
+        String runtimeSource = Files.readString(RUNTIME_SOURCE);
+        assertTrue(runtimeSource.contains("return type.is(SANCTUARY_ELIGIBLE)"),
+                "Vanilla encounter mobs must fail closed unless explicitly admitted by the eligible tag");
+        assertFalse(runtimeSource.contains("\"minecraft\".equals(typeId.getNamespace())"),
+                "The vanilla namespace must not act as a blanket ordinary-mob allowlist");
+        assertTrue(runtimeSource.contains("isSanctuaryCandidate"),
+                "The bounded entity-query predicate must filter to attackers of protected members before consuming budget");
+        assertTrue(runtimeSource.contains("active.members.contains(hostileTarget.getUUID())"),
+                "Candidate admission must require the current target to be an explicit sanctuary member");
     }
 
     private static Path repositoryRoot() {
