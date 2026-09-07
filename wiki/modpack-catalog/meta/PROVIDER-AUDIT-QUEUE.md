@@ -50,8 +50,8 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `efiscompat` | Epic Fight & Iron's Spellbook animation compat | `efiscompat-3.1.0.jar` | `3.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `familiarslib` | FamiliarsLib | `familiarslib-1.21.1-1.7.1.jar` | `1.21.1-1.7` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `farmers_spell` | Farmer's Spell 'n Spellbooks | `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar` | `1.0.5.1-1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `firesenderexpansion` | Fire's Ender Expansion | `firesenderexpansion-2.4.1.jar` | `2.4.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `gtbcs_geomancy_plus` | GTBC's Geomancy Plus | `gtbcs_geomancy_plus-1.1.0-1.21.1.jar` | `1.1.0-1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `firesenderexpansion` | Fire's Ender Expansion | `firesenderexpansion-2.4.1.jar` | `2.4.1` | SOURCE-PINNED 2.4.1 / CATÁLOGO 11/11 COMPLETO / RUNTIME QA PENDENTE |  |
+| `gtbcs_geomancy_plus` | GTBC's Geomancy Plus | `gtbcs_geomancy_plus-1.1.0-1.21.1.jar` | `1.1.0-1.21.1` | RELEASE EXATA 1.1.0-1.21.1 / SOURCE PÚBLICO NÃO LOCALIZADO / JAR EXTRACTION PENDENTE |  |
 | `gtbcs_spell_lib` | GTBC's SpellLib | `gtbcs_spell_lib-2.1.0-1.21.1.jar` | `2.1.0-1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `gaze` | Gaze | `gaze-1.1.7.1.jar` | `1.1.7.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `goety` | Goety | `goety-3.1.4.jar` | `3.1.4` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
@@ -61,7 +61,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `hazentouvelib` | HazentouveLib | `hazentouvelib-1.0.9.jar` | `1.0.9` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `hexalia` | Hexalia | `hexalia-neoforge-1.3.6.jar` | `1.3.5` | GUIA+WEB LIDOS / RITUAIS-BREWS CATÁLOGO PENDENTE |  |
 | `iss_magicfromtheeast` | ISS: Magic From The East | `iss_magicfromtheeast-1.1.5.jar` | `1.1.5` | SOURCE-PINNED 1.1.5 / CATÁLOGO 22/22 COMPLETO / RUNTIME QA PENDENTE |  |
-| `ignissoulfires_spellbooks` | Ignis Soulfires: Spellbooks | `ignissoulfires_spellbooks-1.1.0.jar` | `1.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `ignissoulfires_spellbooks` | Ignis Soulfires: Spellbooks | `ignissoulfires_spellbooks-1.1.0.jar` | `1.1.0` | 1.1.0 INSTALADO / SOURCE PÚBLICO EXATO NÃO LOCALIZADO / JAR EXTRACTION PENDENTE / FAIL-CLOSED |  |
 | `immersive_portal_irons_spells_n_spellbooks_addon` | Immersive Portal - Iron's Spells 'n Spellbooks Addon | `immersive_portal_irons_spells_n_spellbooks_addon-1.0.1.jar` | `1.0.1` | BRIDGE DE PORTAL / ARQUITETURA DOCUMENTADA |  |
 | `irons_apothic` | Iron's Apothic | `irons_apothic-2.2.1.jar` | `2.2.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `irons_jewelry` | Iron's Gems 'n Jewelry | `irons_jewelry-1.21.1-2.0.2.jar` | `1.21.1-2.0.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -70,7 +70,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `recolor_tablet` | Iron's Spells 'n Spellbooks: Recolor | `recolor_tablet-1.3.2+1.21.1.jar` | `1.3.2+1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 1.2.5+1.21.1→1.3.2+1.21.1 |
 | `ironsable` | Ironsable | `ironsable-1.2.0.jar` | `1.2.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `legendary_spellbooks` | Legendary Spellbooks | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `leylines` | Leyline Spellbooks | `leylines-1.0.3.jar` | `1.0.3` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `leylines` | Leyline Spellbooks | `leylines-1.0.3.jar` | `1.0.3` | RELEASE EXATA 1.0.3 / SOURCE PÚBLICO NÃO LOCALIZADO / JAR EXTRACTION PENDENTE |  |
 | `malum` | Malum | `malum-1.21.1-1.8.2.jar` | `1.8.2` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
 | `vestis` | Malum: Vestis | `vestis-1.1.0.jar` | `1.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `mobstein` | Mobstein | `mobstein-5.4.4-neoforge-1.21.1.jar` | `5.4.4` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
