@@ -20,7 +20,11 @@ public final class LoadoutRegistry implements CastRequestValidator {
         if (spells.size() > ArcanaCastRequest.MAX_LOADOUT_SLOTS) {
             throw new IllegalArgumentException("loadout exceeds maximum slot count");
         }
-        loadouts.put(casterId, List.copyOf(spells));
+        List<ArcanaSpellId> candidate = List.copyOf(spells);
+        if (candidate.stream().distinct().count() != candidate.size()) {
+            throw new IllegalArgumentException("loadout contains duplicate spells");
+        }
+        loadouts.put(casterId, candidate);
     }
 
     public synchronized List<ArcanaSpellId> getLoadout(UUID casterId) {
