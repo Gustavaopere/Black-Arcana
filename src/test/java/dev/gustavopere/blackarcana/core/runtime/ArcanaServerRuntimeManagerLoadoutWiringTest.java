@@ -14,11 +14,12 @@ class ArcanaServerRuntimeManagerLoadoutWiringTest {
 
     @Test
     void loadoutUpdateRequiresAnInstalledExecutionEngine() throws IOException {
-        String source = Files.readString(MANAGER_SOURCE);
+        String normalized = Files.readString(MANAGER_SOURCE).replaceAll("\\s+", " ");
 
         assertTrue(
-            source.contains("runtime::hasInstalledEngine"),
-            "loadout acceptance must be wired to installed execution-engine authority, not registry presence alone");
+            normalized.contains(
+                "new LoadoutUpdateService( runtime.spells(), runtime.loadouts(), runtime::hasInstalledEngine)"),
+            "LoadoutUpdateService must receive installed execution-engine authority, not registry presence alone");
     }
 
     private static Path repositoryRoot() {
