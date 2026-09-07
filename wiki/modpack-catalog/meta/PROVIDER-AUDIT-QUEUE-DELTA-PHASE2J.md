@@ -13,6 +13,7 @@ This file is a narrow status overlay over `PROVIDER-AUDIT-QUEUE.md`. It prevails
 | `toxony` | `toxony-0.10.7.jar` / runtime `0.10.7` | `EXACT INSTALLED ARTIFACT + EXACT PUBLIC 0.10.7 SOURCE VERSION PIN 881bf7fe / EFFECTS 5/5 / OILS 9/9 / MUTAGEN EFFECTS 7/7 / AFFINITIES 11/11 / THRESHOLD MODEL + IRON'S/VAMPIRISM/WEREWOLVES COMPAT FACTUALLY AUDITED / GPLv3↔LGPLv3 LICENSE CONFLICT / RUNTIME+SUPPORTED-API QA PENDING / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
 | `mobstein` | `mobstein-5.4.4-neoforge-1.21.1.jar` / runtime `5.4.4` | `EXACT INSTALLED ARTIFACT + EXACT CURSEFORGE RELEASE 8040734 / PUBLISHER GUIDE AUDITED / RESURRECTED FORMS 10/10 / SURGERY TYPES 6/6 / FAILED EXPERIMENTS 7/7 / BODIES+ORGANS+SYRINGES+STRUCTURES+WITHERSTEIN SEMANTICS ADVANCED / 5.4.4 SABLE-COMPAT CLAIM RECORDED / ARR / NO OFFICIAL SOURCE/API PIN LOCATED / REGISTRY+RUNTIME QA PENDING / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
 | `monstersspellbooks` | `monstersspellbooks-0.0.16.3.jar` / runtime `0.0.16.3` | `EXACT INSTALLED ARTIFACT + EXACT CURSEFORGE FILE 8788560 / PUBLISHER PROJECT+CHANGELOG AUDITED / NECRO CURRENT PRIMARY SCHOOL / 90+ SPELL CLAIM + GEAR+MOBS+STRUCTURES COVERAGE / AERO SOFT-DELETED 0.0.16.2 + REMNANTS REMOVED 0.0.16.3 / LINKED SOURCE MAIN STILL 0.0.14 + ARR WHILE CURSEFORGE DISPLAYS MIT / EXACT CURRENT REGISTRY+API+ACQUISITION INCOMPLETE / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
+| `morerelics` | `morerelics-1.7.7-1.21.1.jar` / runtime `1.7.7` | `EXACT INSTALLED ARTIFACT + EXACT CURSEFORGE FILE 8685815 + MODRINTH 1.7.7 / ARR / 29 PUBLISHER-LISTED RELIC NAMES+LOOT ROUTES / EVOLUTION CHAINS MAPPED / CURRENT PACK RELICS 0.12.8 EXPLICITLY UNSUPPORTED BY ADDON PUBLISHER / 0.12.8 SUPPORT DESCRIBED AS FUTURE MINI-BETA / CURATORIAL MANTER PRESERVED AS RISK ACCEPTED / PROVIDER-SPECIFIC RUNTIME+PROGRESSION INTEGRATION FAIL-CLOSED` |
 
 ## Malum interpretation
 
@@ -155,6 +156,46 @@ Consequently:
 - provider-specific implementation remains fail-closed;
 - publisher changelogs are retained as semantic/historical evidence only, with later removals/reworks taking precedence.
 
+## More Relics interpretation
+
+The full queue already flagged More Relics as high-risk because of the installed Relics 0.12 line. Phase 2J now converts that generic warning into exact provider evidence.
+
+Installed/current artifact:
+
+- `morerelics-1.7.7-1.21.1.jar`;
+- mod id `morerelics`;
+- runtime `1.7.7`;
+- local SHA-1 `ba0c920bc7712d1ff85012327b26e1a808c648f6`;
+- CurseForge project `1269280`;
+- exact file `8685815`, uploaded 2026-08-19;
+- project license ARR.
+
+Current publisher documentation lists 29 named relic entries/loot routes and at least four evolution chains, while describing the addon as containing `25+` relics. Recent changelogs also establish active provider behaviors for Moodworm, Twin Fangs, Eject Button, Bionic Eye, Mass Gauntlet, Made in Heaven and status-indicator UI.
+
+### Exact current-host blocker
+
+Current pack:
+
+- More Relics `1.7.7`;
+- Relics `0.12.8`;
+- Relics 0.12.8 is an official **Beta** release.
+
+More Relics' current NeoForge notice explicitly states that Relics `0.11` and `0.12` are **not yet supported** and instructs 1.21.1 users to use Relics `0.10.7.8` instead.
+
+The exact More Relics 1.7.7 changelog still describes 0.12.8 support as a possible **future mini-beta**, potentially incomplete and bug-fix-only.
+
+Therefore the exact current pair is:
+
+`INSTALLED / CURATORIALLY MANTER / EXPLICITLY UNSUPPORTED UPSTREAM`
+
+This does not prove a crash. It does block any claim that More Relics-specific Black Arcana/RPG integration is supported or safe.
+
+### Additional migration blocker
+
+More Relics 1.7.0 documents a Made in Heaven stale extended-config path that can crash with `data is null` after upgrading from older provider versions. Persistent pack instances must be checked for the actual Relics extended-config setting and stale provider config before release validation.
+
+No official exact public source repository was located and no JAR decompilation is used. Provider-specific integration remains fail-closed.
+
 ## Phase 3 consequence
 
 None of these rows becomes an automatic Phase 3 implementation approval.
@@ -164,11 +205,12 @@ None of these rows becomes an automatic Phase 3 implementation approval.
 - Toxony: license/API/runtime gates remain.
 - Mobstein: ARR/no-source/API/runtime gates remain.
 - Monsters & Spellbooks: exact-current source/license/registry/API/acquisition/runtime gates remain.
+- More Relics: upstream-declared Relics 0.12.8 incompatibility/support gap + runtime/API/provenance gates remain.
 
 Provider-native authority and fail-closed integration remain mandatory.
 
 ## Next provider checkpoint
 
-After the Monsters & Spellbooks checkpoint, the next adjacent unresolved provider in the canonical queue is **More Relics `1.7.7`** (`morerelics-1.7.7-1.21.1.jar`).
+After More Relics, the next adjacent unresolved provider in the canonical queue is **Not Enough Glyphs `4.6.1`** (`not_enough_glyphs-1.21.1-4.6.1.jar`).
 
-Its physical identity is already present in the 2026-09-07 modlist, but the current guide flags a provider-version risk against the installed Relics `0.12.8`. Before advancing the row, revalidate the exact publisher release, dependency/version declarations, public source/provenance and current-pack compatibility posture. `Manter` is a curatorial decision, not proof of compatibility.
+Before advancing it, revalidate the exact installed artifact, Ars Nouveau host version, public release/source/provenance and its finite glyph/contingency/SpellBinder surface. Do not infer current glyph IDs or Ars API compatibility from older addon versions.
