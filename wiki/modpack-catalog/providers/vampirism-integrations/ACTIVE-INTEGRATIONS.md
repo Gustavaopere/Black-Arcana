@@ -1,6 +1,6 @@
-# Vampirism Integrations 1.10.2 — Active Integration Inventory
+# Vampirism Integrations 1.10.2 — Current-Pack Integration Inventory
 
-Status: `CURRENT 612-MOD SNAPSHOT RECONCILED`
+Status: `CURRENT 612-MOD SNAPSHOT RECONCILED / SOURCE ELIGIBILITY CATALOGED / RUNTIME ACTIVATION UNCONFIRMED`
 
 Source pin: `TeamLapen/VampirismIntegrations@bff02b9686408691aea2c0c910ccb712edb18bd5`.
 
@@ -13,15 +13,15 @@ Source pin: `TeamLapen/VampirismIntegrations@bff02b9686408691aea2c0c910ccb712edb
 3. the target version satisfies the compat's accepted range, when one is declared;
 4. setup does not throw; an exception unloads that compat from the loader.
 
-Therefore source presence alone does not prove runtime activation.
+Therefore source presence, target presence and a default-enabled config are only **eligibility evidence**. They do not prove that the compat actually prepared in the user's exact runtime.
 
-Jade is a special case: its current plugin is not routed through `ModCompatLoader`; Jade discovers `JadePlugin` through `@WailaPlugin`.
+Jade is a special case: its current plugin is not routed through `ModCompatLoader`; Jade discovers `JadePlugin` through `@WailaPlugin`. Target presence plus that discovery path proves that the plugin is discoverable, but exact runtime registration still belongs to runtime QA.
 
 ## Central loader registrations in 1.10.2
 
 | Compat | Target mod id | Current modlist | Current-pack status |
 |---|---|---|---|
-| Vampirism base | `vampirism` | present `1.10.13` | ACTIVE / dummy compatibility gate |
+| Vampirism base | `vampirism` | present `1.10.13` | ELIGIBLE / required base target present |
 | BOP | `biomesoplenty` | absent | DORMANT |
 | WAILA | `waila` | absent | DORMANT |
 | EvilCraft | `evilcraft` | absent | DORMANT |
@@ -29,12 +29,12 @@ Jade is a special case: its current plugin is not routed through `ModCompatLoade
 | Tough As Nails | target provider not installed | absent | DORMANT |
 | MCA | `mca` | absent | DORMANT |
 | CTOV | target provider not installed | absent | DORMANT |
-| Cold Sweat | `cold_sweat` | present `2.4.2` | **ACTIVE BY PRESENCE/DEFAULT CONFIG** |
+| Cold Sweat | `cold_sweat` | present `2.4.2` | **ELIGIBLE / DEFAULT-ENABLED / RUNTIME UNCONFIRMED** |
 | Guard Villagers | target provider not installed | absent | DORMANT |
 
 Several old compat classes still exist in the repository but are explicitly commented out in the 1.10.2 central registration list. They are not counted as current loader capabilities merely because files remain in source.
 
-## Active bridge A — Cold Sweat 2.4.2
+## Eligible bridge A — Cold Sweat 2.4.2
 
 ### Compatibility gate
 
@@ -45,6 +45,8 @@ Several old compat classes still exist in the repository but are explicitly comm
 - current pack target `2.4.2`, which satisfies that declared range;
 - configuration enabled by default.
 
+Those facts make the bridge eligible under stock configuration. They do **not** prove that the user's actual generated config still enables it or that setup completed without exception.
+
 ### Config defaults
 
 | Config | Default | Meaning in source |
@@ -53,7 +55,7 @@ Several old compat classes still exist in the repository but are explicitly comm
 | `vampireColdResistance` | `30` | subtract 30 °C-equivalent from Cold Sweat freezing point after provider unit conversion |
 | `vampireBurningPointModifier` | `0.7` | total-multiplier factor applied to Cold Sweat burning point |
 
-### Settlement path
+### Settlement path if the compat actually loads
 
 On player login, respawn or Vampirism faction-level change:
 
@@ -84,13 +86,15 @@ The integration never owns core body temperature. Cold Sweat remains authority f
 - consequences of thermal exposure;
 - its own attribute evaluation.
 
-Black Arcana must observe the final provider state rather than adding a second generic Vampire temperature bonus on top.
+Black Arcana must not add a second generic Vampire temperature modifier on top of this bridge. Until runtime activation is proven, consumers that require this compat specifically must fail closed rather than assuming the modifier exists.
 
-## Active bridge B — Jade 15.10.6
+## Discoverable bridge B — Jade 15.10.6
 
 ### Discovery path
 
-`JadePlugin` is annotated `@WailaPlugin`. It is therefore discovered by Jade's plugin scanner independently of the central Vampirism Integrations loader.
+`JadePlugin` is annotated `@WailaPlugin`. It is therefore discoverable by Jade's plugin scanner independently of the central Vampirism Integrations loader when Jade is present.
+
+The current modlist contains Jade, so the source-level state is **TARGET PRESENT / PLUGIN DISCOVERABLE**. Exact plugin registration/rendering remains runtime QA rather than an inferred PASS.
 
 ### Common/server data providers
 
@@ -158,13 +162,13 @@ The provider ships data-driven contracts whose entries are conditionally activat
 
 ## Source modules that must not be promoted automatically
 
-The exact 1.10.2 repository still contains source/config references for systems that are not current active bridges. Examples include Survive and several `old/` integrations. The central registration list comments many of these out.
+The exact 1.10.2 repository still contains source/config references for systems that are not current eligible bridges. Examples include Survive and several `old/` integrations. The central registration list comments many of these out.
 
-The rule is strict: **compiled/source-present ≠ registered ≠ target-installed ≠ runtime-active**.
+The rule is strict: **compiled/source-present ≠ registered ≠ target-installed ≠ eligible ≠ runtime-active**.
 
 ## MineColonies boundary
 
-MineColonies is installed in the current pack and appears in the provider's Gradle/deploy dependency configuration. No current MineColonies Java compat module or `ModCompatLoader` registration was found at the exact 1.10.2 pin. It therefore remains `NO CURRENT AUDITABLE RUNTIME BRIDGE FOUND`, not ACTIVE.
+MineColonies is installed in the current pack and appears in the provider's Gradle/deploy dependency configuration. No current MineColonies Java compat module or `ModCompatLoader` registration was found at the exact 1.10.2 pin. It therefore remains `NO CURRENT AUDITABLE RUNTIME BRIDGE FOUND`, not active or eligible through the central loader.
 
 ## Runtime confirmation command
 
@@ -172,4 +176,6 @@ The addon registers:
 
 `/vampirism-integrations loaded`
 
-It reports compats prepared by the central `ModCompatLoader`. This command does not prove independent plugin discovery such as Jade, so Jade must be validated separately in runtime QA.
+It reports compats actually prepared by the central `ModCompatLoader`. This command is the direct runtime gate for the Cold Sweat loader path in the exact installed pack. It does not prove independent plugin discovery such as Jade, so Jade must be validated separately in runtime QA.
+
+Until those checks are executed, the catalog state remains **source-eligible/discoverable**, not runtime-confirmed.
