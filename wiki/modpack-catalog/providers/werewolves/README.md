@@ -10,7 +10,11 @@
 - Installed JAR: `Werewolves-1.21-2.0.3.3.jar`.
 - Runtime version in current modlist: `2.0.3.3`.
 - Exact source authority: `TeamLapen/Werewolves@b72635b3e014e406b25bb79adb9d340f7443660b`.
+- Source license at that exact revision: GNU LGPL v3.
+- Black Arcana provenance records: `docs/provenance/REFERENCE_LEDGER.md`, `SOURCES.md`, `THIRD_PARTY_NOTICES.md`.
 - That source declares `major_version=2`, `minor_version=3`, `patch_version=3` and Vampirism range `[1.10.0-beta.2,1.11.0)`, compatible with installed Vampirism 1.10.13.
+
+The source audit is read-only evidence for this compatibility/catalog layer. No Werewolves code or assets are copied/adapted into Black Arcana by these documents.
 
 ## Provider role
 
