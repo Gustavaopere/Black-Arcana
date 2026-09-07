@@ -2,116 +2,55 @@
 
 ## State
 
-`IMPLEMENTED / FINAL VALIDATION DEFERRED`
+`IN PROGRESS — SERVER SUBSTRATE MERGED / CLIENT OBSERVATION SPELLS NOT YET IMPLEMENTED`
 
-Canonical runtime integration: PR #72, squash merge `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`.
+PR #72 merged the bounded server-side Noetic/familiar/gaze/sanctuary substrate at `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`. Its exact-SHA automated gates are valid evidence for that substrate. They do **not** prove production camera/HUD/input for remote-view mechanics.
 
-The deterministic server/runtime boundary is implemented and exact-SHA automated validation is GREEN. Real-modpack/provider/manual host acceptance, including real-client camera/HUD/input behavior, remains deferred under D031 and is not inferred as PASS.
+Stage 07.07 is therefore not promoted as a completed domain, and Stage 08 must not treat it as canonical balance input yet.
 
-## Objective
+## Implemented server substrate
 
-Provide bounded server-authoritative familiar ownership, divination/occult perception, gaze control and Pact Sanctuary behavior without creating a second casting engine, exposing arbitrary private player state or force-loading remote chunks.
+The merged runtime provides:
 
-## Implemented runtime
+- bounded Noetic observation sessions;
+- loaded-only same-dimension target resolution with no force-loading;
+- whitelisted `NoeticPerceptionSnapshot` output instead of arbitrary NBT/capability/inventory exposure;
+- familiar ownership through bounded explicit providers (`OWNED`, `NOT_OWNED`, `UNSUPPORTED`);
+- verified Ars familiar ownership adapter;
+- server-side observation privacy/admission policy;
+- Gaze of Stillness / Nullifying Gaze runtime and safety ceilings;
+- Pact Sanctuary bounded aura/eligibility/target-change enforcement;
+- expiry/logout/death/server-stop cleanup, including Soul Anchor-compatible final-death settlement.
 
-Stage 07.07 implements:
+These are reusable prerequisites, not proof that every approved spell is invocable end-to-end.
 
-- bounded Noetic observation sessions for the approved divination family;
-- whitelisted perception snapshots instead of arbitrary NBT/capability/inventory exposure;
-- loaded-only target resolution with no force-load/generation path;
-- familiar ownership through a bounded provider registry with explicit `OWNED`, `NOT_OWNED` and `UNSUPPORTED` semantics;
-- a verified Ars Nouveau 5.13.1 familiar ownership adapter based on the provider's public ownership contract;
-- Gaze of Stillness and Nullifying Gaze policies/runtime;
-- player privacy admission across observation modes;
-- Pact Sanctuary as an owned-familiar, server-authoritative bounded aura;
-- lifecycle cleanup for expiry, logout, death and server stop;
-- canonical NeoForge game-bus integration and live GameTests.
+## Blocking spell implementation gaps
 
-Provider-native summon/recall behavior remains owned by the host mods. Black Arcana does not introduce a duplicate generic familiar summoning framework.
+### Astral Severance — NOT IMPLEMENTED end-to-end
 
-## Hard safety ceilings
+Canonical design requires a controllable non-combat viewpoint/avatar while the physical body remains vulnerable, with hard range, timeout/interruption return, no unauthorized projection interaction, and logout/death restoration.
 
-`NoeticSafetyCeilings` freezes the Stage 07.07 upper bounds used by the runtime. Stage 08 may tune below these values but must not silently exceed them:
+The current server observation API accepts an already-loaded `LivingEntity` target and owns session/snapshot state only. It does not create or control an astral avatar/viewpoint, does not provide production client camera/input, and therefore cannot satisfy Astral Severance by itself. This is implementation work, not deferred manual evidence.
 
-- observation range: `128` blocks;
-- observation/session duration: `600` ticks;
-- active observation sessions: `64`;
-- effect IDs exposed in one bounded snapshot: `16`;
-- display-name payload length: `96` characters;
-- familiar ownership providers: `16`;
-- nullifications per action: `8`;
-- active gazes: `64`;
-- gaze range: `24` blocks;
-- generic gaze duration: `160` ticks maximum;
-- player gaze duration: `40` ticks maximum;
-- player gaze reapplication immunity: `80` ticks, with a hard minimum policy floor of `40` ticks;
-- nullifiable effect types: `128`;
-- gaze diminishing-return stacks: `3`;
-- gaze DR tracked targets: `256`;
-- gaze DR reset: `600` ticks;
-- Sanctuary radius: `16` blocks;
-- Sanctuary duration: `600` ticks;
-- Sanctuary members: `8`;
-- active Sanctuaries: `32`;
-- Sanctuary hostile candidates processed per refresh: `32`;
-- Sanctuary refresh cadence: `20` ticks, never below the canonical hard floor of `5` ticks;
-- pending deferred death cleanups: `256`.
+### Borrowed Sight — NOT IMPLEMENTED end-to-end
 
-## Privacy, targeting and authority
+Canonical design requires channeling the viewpoint of an owned familiar or explicitly consenting bonded target, with range/channel cost and return on interruption/unload.
 
-Observation of another player is admitted only through server-owned privacy/permission facts. A caller cannot bypass player privacy by choosing another observation kind. Perception output is intentionally whitelisted and bounded.
+The current server policy correctly rejects foreign ownership and can authorize an owned familiar, but there is no production client camera/input/network flow that invokes and follows the authorized session. GameTests of the server admission boundary do not substitute for that missing implementation.
 
-Gaze admission uses canonical entity-interaction authority and keeps PvP control conservative. Stillness enforces horizontal control at entity-tick boundaries rather than relying only on a late server-tick velocity reset. Player applications are capped and followed by an explicit reapplication-immunity window. Diminishing-return state is bounded and expires.
+## Specification gate
 
-Unknown or unsupported nullification state is not mutated reflectively. Failure to prove a supported nullification path fails closed.
+`plans/07-spell-domains/README.md` requires every spell to define fantasy, host integration, invocation, target rules, resource cost, cooldown, scaling equation, progression gate, world-effect mode, boss/PvP behavior, config surface, tests and provenance.
 
-## Familiar ownership
+The existing candidate entries for the 07.07 spell family do not yet freeze all of those fields. Until the per-spell specifications and the missing production mechanics are implemented/reviewed, 07.07 remains `IN PROGRESS` and Stage 08 must not tune these spells by inventing missing values.
 
-Familiar ownership is provider-driven and fail-closed. Unknown provider state is not interpreted as ownership, and foreign familiars are rejected. Provider count is bounded and provider registration remains explicit.
+## Existing automated evidence — server substrate only
 
-The Ars Nouveau integration uses the installed `5.13.1` provider boundary. This does not authorize Black Arcana to replace Ars summon/recall, familiar persistence or progression with synthetic equivalents.
+- final PR #72 runtime head: `673aff57e15ec29a6fc0d6a94f0034726b99a4c1`;
+- Black Arcana CI #1562 / `34069825298`: GREEN;
+- 103/103 Foundation GameTests and dedicated-server smoke;
+- runtime merge: `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`;
+- exact-SHA post-merge CI #1563 / `34070253755`: GREEN;
+- artifact `black-arcana-5c818c12bb6f580893e44f31fd0e17b9c1fe5840`, ID `10000268004`, SHA-256 `35c8436ab3cbd2f75e8cc6f7ae5554edb7a330205f5166265f96979b6fa65b16`.
 
-## Pact Sanctuary
-
-Pact Sanctuary requires an owned familiar and explicit protected-member membership. Its runtime is bounded by radius, duration, member count, active-aura count and per-refresh candidate budgets.
-
-The spatial query is throttled to the configured bounded refresh cadence and filters for relevant hostile target/member candidates before consuming the hard candidate budget. Target acquisition is also intercepted through the NeoForge target-change event so an eligible hostile mob cannot simply reacquire a protected member before the next settlement pass.
-
-Entity eligibility is fail-closed. `black_arcana:pact_sanctuary_eligible` is the positive eligibility surface; explicit exclusions win. Raiders, Warden and non-allowlisted encounter entities such as Breeze are not pacified merely because they are vanilla mobs. The runtime does not permanently rewrite faction/team/brain state.
-
-## Lifecycle and Soul Anchor interaction
-
-Death cleanup is deferred until the final death outcome is known so a death cancelled by the canonical Soul Anchor runtime does not destroy valid Noetic/Gaze/Sanctuary state for a player who survived. Pending cleanup state is bounded.
-
-Ordinary expiry, logout, confirmed death, familiar removal and server stop clear owned ephemeral state without creating orphan sessions or auras. Cleanup operations are designed to be idempotent where repeated lifecycle signals can occur.
-
-## Automated evidence
-
-Final runtime PR head: `673aff57e15ec29a6fc0d6a94f0034726b99a4c1`.
-
-Authoritative PR workflow: Black Arcana CI #1562 / run `34069825298` — GREEN on that exact head. It passed:
-
-- unit tests;
-- diff sanity;
-- NeoForge build;
-- built-JAR verification;
-- Foundation GameTest server with **103/103 GameTests**;
-- dedicated-server smoke.
-
-All 12 blocking review threads were resolved with evidence before merge.
-
-Canonical runtime merge: PR #72 / `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`.
-
-Exact-SHA post-merge workflow: Black Arcana CI #1563 / run `34070253755` — GREEN on `main@5c818c12bb6f580893e44f31fd0e17b9c1fe5840`, including unit tests, diff sanity, NeoForge build, built-JAR verification, **103/103 GameTests**, dedicated-server smoke and main-only QA artifact publication.
-
-Canonical artifact:
-
-- name: `black-arcana-5c818c12bb6f580893e44f31fd0e17b9c1fe5840`;
-- artifact ID: `10000268004`;
-- SHA-256: `35c8436ab3cbd2f75e8cc6f7ae5554edb7a330205f5166265f96979b6fa65b16`.
-
-## Acceptance boundary
-
-The deterministic server/runtime acceptance target is satisfied by the automated evidence above: bounded ownership and observation, privacy gates, no-force-load behavior, bounded gaze control, Sanctuary eligibility/budgeting, target-acquisition suppression and lifecycle cleanup are covered by the canonical runtime and validation suite.
-
-This does **not** claim real-client camera/HUD/input acceptance, real-modpack provider behavior or optional-host acceptance. Those remain part of the deferred final validation campaign under D031. No deferred row is converted to PASS from automated CI alone.
+This evidence remains authoritative for the code it actually exercises; it is not reclassified as client acceptance.
