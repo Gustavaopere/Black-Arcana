@@ -11,6 +11,7 @@ This file is a narrow status overlay over `PROVIDER-AUDIT-QUEUE.md`. It prevails
 | `malum` | `malum-1.21.1-1.8.2.jar` / `1.8.2` | `EXACT VERSION-LINE METADATA + PUBLISHER CHANGELOG AUDITED / SPIRIT RITE ARCHITECTURE + INSTALLED-LINE GEAS NAMES + SPIRIT RESOURCE MODEL ADVANCED / SOURCE-INTERNAL CATALOG BLOCKED BY LGPLv3↔ARR PROVENANCE CONFLICT / COMPLETE REGISTRIES+RUNTIME QA PENDING / FAIL-CLOSED` |
 | `hexalia` | `hexalia-neoforge-1.3.6.jar` / runtime metadata `1.3.5` | `PUBLIC RELEASE+SOURCE PIN 1.3.6 / MIT / BREWS 8/8 / NATURE'S RITUAL 19/19 PLAYER-FACING / CELESTIAL INFUSION 6/6 / MUTATION 21/21 / MORTAR 12/12 / CENSER 10/10 / IDOLS+MAJOR CAPABILITY OUTPUTS AUDITED / INSTALLED FILENAME↔RUNTIME VERSION MISMATCH + API/RUNTIME QA PENDING` |
 | `toxony` | `toxony-0.10.7.jar` / runtime `0.10.7` | `EXACT INSTALLED ARTIFACT + EXACT PUBLIC 0.10.7 SOURCE VERSION PIN 881bf7fe / EFFECTS 5/5 / OILS 9/9 / MUTAGEN EFFECTS 7/7 / AFFINITIES 11/11 / THRESHOLD MODEL + IRON'S/VAMPIRISM/WEREWOLVES COMPAT FACTUALLY AUDITED / GPLv3↔LGPLv3 LICENSE CONFLICT / RUNTIME+SUPPORTED-API QA PENDING / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
+| `mobstein` | `mobstein-5.4.4-neoforge-1.21.1.jar` / runtime `5.4.4` | `EXACT INSTALLED ARTIFACT + EXACT CURSEFORGE RELEASE 8040734 / PUBLISHER GUIDE AUDITED / RESURRECTED FORMS 10/10 / SURGERY TYPES 6/6 / FAILED EXPERIMENTS 7/7 / BODIES+ORGANS+SYRINGES+STRUCTURES+WITHERSTEIN SEMANTICS ADVANCED / 5.4.4 SABLE-COMPAT CLAIM RECORDED / ARR / NO OFFICIAL SOURCE/API PIN LOCATED / REGISTRY+RUNTIME QA PENDING / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
 
 ## Malum interpretation
 
@@ -62,6 +63,47 @@ At the same exact Toxony commit:
 
 Therefore source observations are factual catalog evidence only. Black Arcana does not derive implementation from those internals while the conflict remains unresolved.
 
+## Mobstein interpretation
+
+The full queue row `GUIA LIDO / CATÁLOGO GRANULAR PENDENTE` is now stale for semantic coverage.
+
+Phase 2J re-read the exact physical identity from the current 612-entry modlist and pinned the matching official CurseForge release:
+
+- `mobstein-5.4.4-neoforge-1.21.1.jar`;
+- mod id `mobstein`;
+- runtime `5.4.4`;
+- local SHA-1 `3672d88f940ddd474a5429d7066b099cd0ce0c29`;
+- CurseForge project `1193873`;
+- exact file `8040734`, uploaded 2026-05-04.
+
+Publisher documentation is sufficient to close the major player-facing semantic families:
+
+- ten resurrected creature forms;
+- Clinical Stretch night-time resurrection plus Lightningbolt Syringe daytime route;
+- full-body/body-part/organ processing;
+- six Surgery Stretch constructed types;
+- Mobstein-owned Health/Attack/Speed/Template construction perks, including the published numeric ranges;
+- Subject Assembly Machine mannequin flow;
+- seven failed-experiment variants;
+- Dr. Mobstenio/Igor progression;
+- five syringe families;
+- Frankenstein Castle, Witherstein Ruins and Old Ruins;
+- Witherstein's Reviver-triggered three-stage encounter;
+- explicit Reviver exclusions for Resurrected Warden and Frankenstein.
+
+The exact 5.4.4 release note also says Mobstein is compatible with Sable Mod. The current pack uses Sable 2.0.5, but the Mobstein release does not publish a Sable-version contract, so exact current-stack compatibility remains runtime QA.
+
+### Provenance/API blocker
+
+The publisher project is **All Rights Reserved**. No official public source repository or exact source pin was located during this checkpoint, and the installed JAR was not decompiled.
+
+Therefore:
+
+- public gameplay/release semantics are catalog authority;
+- registry IDs, private internals and exact formulas remain unverified unless publisher-documented;
+- no Mobstein-specific adapter is approved;
+- integration remains fail-closed until a supported public boundary and exact-pack runtime behavior are proven.
+
 ## Phase 3 consequence
 
 None of these rows becomes an automatic Phase 3 implementation approval.
@@ -69,9 +111,10 @@ None of these rows becomes an automatic Phase 3 implementation approval.
 - Malum: provenance/API/runtime gates remain.
 - Hexalia: installed-runtime/API gates remain.
 - Toxony: license/API/runtime gates remain.
+- Mobstein: ARR/no-source/API/runtime gates remain.
 
 Provider-native authority and fail-closed integration remain mandatory.
 
 ## Next provider checkpoint
 
-After this Toxony checkpoint, the next base/cross-domain provider from the previously grouped open set is **Mobstein `5.4.4`**, subject to revalidation against the current modlist and public exact-version evidence before any source/internal claims.
+After the Mobstein checkpoint, the next adjacent unresolved provider in the canonical queue is **Monsters & Spellbooks `0.0.16.3`** (`monsterspellbooks-0.0.16.3.jar`). Its installed identity must be revalidated against the current modlist and exact public release/source/provenance evidence before any registry, spell or implementation claim is promoted.
