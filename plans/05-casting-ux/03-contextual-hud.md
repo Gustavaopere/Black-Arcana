@@ -1,13 +1,24 @@
 # 05.03 — Contextual HUD & Feedback
 
-## Philosophy
+## State
+
+`IMPLEMENTED / FINAL VALIDATION DEFERRED`
+
+## Contract
+
 Show information when it matters; do not add a permanent Black Arcana resource bar by default.
 
-## Display candidates
-Selected spell, short cooldown, provider-specific cost, charge/channel state, denial reason and temporary grand-ritual/domain timer.
+- `BlackArcanaHudLayer` returns immediately while idle, when contextual HUD is disabled, or while another screen owns focus.
+- Recent selection may show the selected spell plus synchronized hazard/gate presentation.
+- Recent cast results show the bounded authoritative server denial detail. The client does not synthesize a gate reason.
+- Successful-cast feedback is presentation-level and depends on the configured feedback level.
+- Layout is anchorable/scalable and wraps/bounds content for small viewports.
+- Provider adapters may expose presentation data, but gameplay authority remains server-side.
 
-## Requirements
-Provider adapters expose presentation data without client-side authority. HUD can be disabled/positioned/scaled.
+## Automated coverage
 
-## Acceptance
-No persistent resource HUD when idle; failure messages identify the actual authoritative denial reason; dedicated server has zero client classloading.
+`HudLayoutTest`, `HazardForecastPresentationTest` and `SmallViewportLayoutContractTest` cover deterministic HUD geometry and synchronized presentation behavior. The project CI verifies dedicated-server startup, guarding the no-client-classloading boundary.
+
+## Deferred acceptance
+
+Actual readability, overlap and visual timing across the real-client resolution/GUI-scale matrix remain PENDING until directly observed.

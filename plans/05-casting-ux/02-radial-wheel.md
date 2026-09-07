@@ -1,16 +1,23 @@
 # 05.02 — Radial Wheel
 
-## Objective
-Provide a compact spell selector rather than persistent screen clutter.
+## State
 
-## Design targets
-6–10 visible slots per ring, icon + short name, cooldown/resource affordance, nested domain/loadout navigation only if usability remains fast.
+`IMPLEMENTED / FINAL VALIDATION DEFERRED`
 
-## Requirements
-- Rendering is client-only.
-- Selection never triggers a cast until explicit input.
-- Handles unavailable/locked spells distinctly.
-- Scales safely across GUI scales/aspect ratios.
+## Contract
 
-## Acceptance
-Visual/manual test matrix at common resolutions and GUI scales; no input lock after closing wheel.
+Provide a compact client-only spell selector rather than persistent screen clutter.
+
+- `BlackArcanaRadialScreen` renders the synchronized loadout and server-authored presentation/preflight metadata.
+- `RadialLayout` bounds visible slots by page and adapts geometry to the current viewport.
+- Selection is non-casting: left-click changes `ClientLoadoutSelection`, marks contextual UX state and closes the wheel. A separate explicit cast input is required.
+- Toggle and hold behavior are client-configurable; selection/config state never grants gameplay authority.
+- Unavailable/gated information is presentation derived from synchronized server state, not a client admission decision.
+
+## Automated coverage
+
+`RadialLayoutTest`, `RadialToggleInputTest` and `SmallViewportLayoutContractTest` cover layout, toggle semantics and small-view geometry. PR #57 additionally hardened 854×480 / GUI-scale-4 behavior and passed exact-SHA full CI at workflow `34010968124` (#1170).
+
+## Deferred acceptance
+
+Common resolutions, GUI scales, real mouse/key interaction and input-lock recovery after closing the wheel remain manual-matrix rows and are not marked PASS from automated tests.
