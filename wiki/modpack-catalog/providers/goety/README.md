@@ -1,311 +1,185 @@
-# Goety
+# Goety 3.1.4 — provider catalog
 
-Status: `PHASE 2 — PROVIDER AUDIT IN PROGRESS`
+## Status
 
-## Runtime identity
+`EXACT RELEASE-PINNED 3.1.4 / OFFICIAL PUBLIC-WIKI INVENTORY: 110 BASE FOCUSES + 12 WANDS/STAFFS + 13 RITUAL TYPES + 10 RESEARCH LINES / EXACT 3.1.4 SOURCE PIN OR JAR-LEVEL RECONCILIATION UNAVAILABLE / RUNTIME QA PENDING`
 
-- Provider: **Goety**
-- Installed JAR: `goety-3.1.4.jar`
-- Runtime version: `3.1.4`
-- Loader/game: NeoForge 1.21.1
-- Role: `SOUL ENERGY / FOCUS SPELLCASTING / NECROMANCY / SERVANT / RITUAL PROVIDER`
-- Addons installed separately: Goety Iron `3.1`, Goety Cataclysm `1.21.1-1.8.2`.
+## Installed authority
 
-The current modlist and runtime logs are authoritative for the installed `3.1.4` identity.
+- provider: **Goety**
+- mod id: `goety`
+- installed JAR: `goety-3.1.4.jar`
+- runtime version: `3.1.4`
+- loader/game: NeoForge 1.21.1
+- CurseForge file: `8689429`
+- release date: `2026-08-20`
+- channel: Release
+- project author: Polarice3
+- release uploader: Vivideru
+- project/release license declared by CurseForge: MIT
+- role: `SOUL ENERGY / FOCUS SPELLCASTING / NECROMANCY / SERVANT / RITUAL PROVIDER`
+- addons installed separately: Goety Iron `3.1`; Goety Cataclysm `1.21.1-1.8.2`.
 
-## Documentation drift warning
+The current modlist is authoritative for the installed JAR/runtime identity. CurseForge independently confirms the exact 3.1.4 artifact and release metadata.
 
-Public Goety pages currently visible for Minecraft 1.21.1 are behind the installed runtime in places. CurseForge/public port surfaces prominently expose 3.0.x while the pack is running 3.1.4. Therefore:
+## Source/provenance limitation
 
-- the public Wiki is accepted as a **baseline for capability names, progression concepts and provider identity**;
-- public older Wiki values are **not** accepted as exact 3.1.4 numeric authority;
-- costs, cooldowns, durations, damage, servant limits and exact acquisition details remain `UNVERIFIED FOR 3.1.4` unless current-artifact/current-version evidence is found.
+The official CurseForge project links source to `Polarice3/Goety-2`. The currently public repository exposes only `1.20` and `1.19` branches; it does not expose an auditable `1.21.1`/`3.1.4` branch or tag. The 3.1.4 CurseForge artifact has no additional source archive.
 
-## Core resource authority — Soul Energy
+Therefore this catalog deliberately does **not**:
 
-Goety owns a real **Soul Energy** economy.
+- use the current `1.20` branch as 3.1.4 source authority;
+- treat a third-party 1.21.1 fork as the official 3.1.4 source;
+- decompile the installed JAR to reconstruct implementation internals;
+- infer exact registry IDs, costs or hooks from older source.
 
-Public provider documentation establishes the following loop:
+Confidence classes:
 
-1. obtain/equip a soul totem such as Totem of Roots;
-2. kill mobs to generate Soul Energy, with entity type affecting yield;
-3. store Soul Energy in provider totems, with Totem of Souls offering greater capacity;
-4. spend Soul Energy on spellcasting, artifices, crafting and servant-related systems;
-5. use wands/staves equipped with a **Focus** to cast provider spells.
+- installed/release identity: **EXACT**;
+- current official Wiki-visible mechanics/inventory: **PUBLIC DOCUMENTATION**;
+- exact 3.1.4 implementation/source/API semantics: **UNVERIFIED / FAIL-CLOSED** unless separately evidenced;
+- exact runtime behavior in this 612-mod pack: **UNVERIFIED**.
 
-Black Arcana must not synthesize a second generic `Goety Soul Energy` pool from death events. Any integration must read/consume/refund the provider-owned resource through a verified public/runtime-safe surface.
+## Provider authority
+
+Goety is a primary supernatural/magic provider with its own:
+
+- Soul Energy economy;
+- Focus + Wand/Staff casting model;
+- ritual system;
+- research progression;
+- owned servants and summon lifecycle;
+- artifices powered by Soul Energy;
+- witchcraft/brewing surface;
+- endgame Lichdom transformation.
+
+It is not an Iron's/Ars spell addon. Black Arcana must not reinterpret Goety Focuses as Black Arcana-native spells or Goety Soul Energy as a generic shared soul resource.
+
+## Public official inventory checkpoint
+
+The current official Wiki inventory exposes:
+
+| Surface | Public documentation inventory | Exact 3.1.4 JAR reconciliation |
+|---|---:|---|
+| Base Focuses | **110** | PENDING |
+| Focus categories | **10** — Magic, Necromancy, Geomancy, Frost, Wild, Wind, Storm, Abyss, Nether, Void | PENDING |
+| Wands/staffs | **12** | PENDING |
+| Ritual types | **13** | PENDING |
+| Research lines | **10** | PENDING |
+| Main resource | Soul Energy | provider identity publicly confirmed; exact internals pending |
+| Endgame transformation | Lichdom | publicly confirmed; exact 3.1.4 internals pending |
+
+The earlier preparatory branch count of 109 Focuses was incorrect: it omitted **Order Focus** from the 25-entry Magic family. The current official Items inventory yields 110 total.
+
+## Core resource — Soul Energy
+
+Official documentation identifies Soul Energy as Goety's main power source. Spells and artifices consume it. The player needs provider storage/access such as a suitable Totem in the hotbar/Charm slot or an active Arca to store/use Soul Energy.
+
+Documented acquisition includes mob kills, with provider-specific generation paths through artifices and, under provider gear/state, servant kills. Soul Energy also participates in provider sustain, including healing compatible servant families and healing a Lich where ordinary regeneration changes.
+
+Black Arcana must not synthesize a second Goety Soul Energy balance from death events. Any future integration must consume/query the provider-owned state through a verified boundary.
 
 ## Focus casting model
 
-Goety spells are represented by **Focuses** inserted into compatible Wands/Staves. The public baseline lists a large focus surface grouped by domain. Current 3.1.4 numeric properties are pending, but these names already establish semantic coverage for deduplication.
+A Wand/Staff contains a Focus; the Focus determines the spell. The official getting-started flow exposes direct Focus slot selection and a Focus radial menu. The Focus Bag holds eight Focuses and can occupy a Curios Belt slot.
 
-### Magic — 24 baseline focuses
+Specialized staffs modify compatible Focus behavior. Those are variants inside the provider cast semantics; Black Arcana must not observe one activation and process it as a second cast.
 
-1. Vexing Focus
-2. Biting Focus
-3. Feasting Focus
-4. Teeth Focus
-5. Shredding Focus
-6. Mirror Focus
-7. Ignite Focus
-8. Fire Breath Focus
-9. Soul Bolt Focus
-10. Magic Bolt Focus
-11. Magic Sword Focus
-12. Soul Light Focus
-13. Glow Light Focus
-14. Crafting Focus
-15. Iron Hide Focus
-16. Bulwark Focus
-17. Soul Heal Focus
-18. Shockwave Focus
-19. Weakening Focus
-20. Arrow Rain Focus
-21. Telekinesis Focus
-22. Command Focus
-23. Sonic Boom Focus
-24. Corruption Focus
+See [`FOCUS-CATALOG.md`](FOCUS-CATALOG.md) for the complete current public 110-name inventory and confidence rules.
 
-### Necromancy — 11 baseline focuses
+## Ritual model
 
-1. Rotting Focus
-2. Osseous Focus
-3. Ghost Fire Focus
-4. Reaping Focus
-5. Spooky Focus
-6. Phantasm Focus
-7. Vanguard Focus
-8. Blackguard Focus
-9. Leeching Focus
-10. Killing Focus
-11. Skull Focus
+Official documentation describes the Dark Altar as the centerpiece of most rituals, fed Soul Energy through the Cursed Cage/storage chain. Rituals can:
 
-### Geomancy — 8 baseline focuses
+- craft provider items;
+- summon creatures;
+- transform creatures;
+- require environmental/structural conditions;
+- require pedestal ingredients;
+- require sacrifices within the altar area;
+- require living conversion targets.
 
-1. Barricade Focus
-2. Quaking Focus
-3. Pulverize Focus
-4. Rotation Focus
-5. Burrowing Focus
-6. Sensing Focus
-7. Scatter Focus
-8. Eruption Focus
+The official Wiki lists 13 ritual types: Animation, Forge, Geoturgy, Magic, Necroturgy, Deep, Frost, Sky, Storm, Adept Nether, Expert Nether, End and Sabbath.
 
-### Frost — 9 baseline focuses
+Ritual cost, sacrifice/conversion identity and completion settlement remain Goety-owned.
 
-1. Frost Breath Focus
-2. Ice Spike Focus
-3. Ice Storm Focus
-4. Hail Focus
-5. Iceology Focus
-6. Blizzard Focus
-7. Chilling Focus
-8. Frost Nova Focus
-9. Frostborn Focus
+## Research/progression
 
-### Wild — 11 baseline focuses
+Research Scrolls unlock provider rituals and servant/content gates. The public Research page lists ten named lines:
 
-1. Swarm Focus
-2. Poison Dart Focus
-3. Blossoming Focus
-4. Grapple Focus
-5. Hunting Focus
-6. Mauling Focus
-7. Slimy Focus
-8. Overgrowth Focus
-9. Entangling Focus
-10. Whispering Focus
-11. Leaping Focus
+1. Ravaging
+2. Warred
+3. Buried
+4. Front
+5. Haunting
+6. Mistral
+7. Floral
+8. Bygone
+9. Terminus
+10. Forbidden
 
-### Wind — 8 baseline focuses
+Terminus depends on Warred in the public progression. Forbidden gates Nameless/Lich content when the corresponding provider config requirement is enabled.
 
-1. Launching Focus
-2. Flight Focus
-3. Cushion Focus
-4. Whirlwind Focus
-5. Cyclone Focus
-6. Updraft Focus
-7. Wind Blast Focus
-8. Trembling Focus
+Black Arcana must not grant an advanced Goety Focus/ritual merely because the player has a semantically similar school or mastery elsewhere.
 
-### Storm — 8 baseline focuses
+## Servants
 
-1. Charge Focus
-2. Shocking Focus
-3. Thunderbolt Focus
-4. Electrocute Focus
-5. Monsoon Focus
-6. Discharge Focus
-7. Bolting Focus
-8. Lighting Focus
+Goety is a major servant authority. Official documentation defines servants as owned/summoned mobs that do not attack owners and respond to owner combat relationships. Many Focus summons also apply **Summon Down**: later summoning while it is active increases spell Soul Energy cost and weakens subsequent summons; the public documentation states a stack ceiling of Summon Down V.
 
-### Abyss — 8 baseline focuses
-
-1. Bubble Stream Focus
-2. Bouncy Bubble Focus
-3. Steaming Focus
-4. Trident Storm Focus
-5. Prisma Beam Focus
-6. Guardian Focus
-7. Biomine Focus
-8. Tidal Focus
-
-### Nether — 10 baseline focuses
-
-1. Fireball Focus
-2. Lava Bomb Focus
-3. Bombardment Focus
-4. Meteor Shower Focus
-5. Magma Bomb Focus
-6. Fire Blast Focus
-7. Flame Strike Focus
-8. Wither Skull Focus
-9. Ghastly Focus
-10. Blazing Focus
-
-### Void — 12 baseline focuses
-
-1. Call Focus
-2. Troop Focus
-3. Recall Focus
-4. Ender Chest Focus
-5. End Walk Focus
-6. Blink Focus
-7. Banish Focus
-8. Tunnel Focus
-9. Rupture Focus
-10. Watching Focus
-11. Blasting Focus
-12. Snaring Focus
-
-**Baseline total: 109 named Focuses.**
-
-This number is a public-Wiki capability baseline, **not a claim that the installed 3.1.4 JAR contains exactly 109 player-usable focuses**. Phase 2 still requires an installed/current-artifact registry reconciliation.
-
-## Wands / staffs — baseline provider casting authorities
-
-Public provider content lists:
-
-- Dark Wand
-- Ominous Staff
-- Necro Staff
-- Geo Staff
-- Wind Staff
-- Storm Staff
-- Frost Staff
-- Wild Staff
-- Abyss Staff
-- Void Staff
-- Nether Staff
-- Nameless Staff
-
-School/domain staff bonuses, costs and restrictions remain pending for exact 3.1.4 verification.
-
-## Research and acquisition
-
-Goety uses research rather than granting its advanced content as generic spell scrolls.
-
-Public provider documentation establishes that **Research Scrolls** can unlock recipes, rituals, servant systems and Focuses. Examples include:
-
-- Buried/necromancy-related research unlocking necromancer servant rituals and bound-servant content;
-- research paths for Vanguard / Blackguard Focuses and servant rituals;
-- Bygone research unlocking Blaze and Wildfire rituals plus the Blazing Focus and Nether equipment;
-- higher research paths for advanced constructs and Lich-related progression.
-
-Most advanced Focuses are therefore progression-bound and should not be granted by Black Arcana merely because the player has learned a semantically similar school.
-
-## Servants and binding authority
-
-Goety is a major **servant authority** in the pack. Its servant families include undead, wild/natural, Nether, Void and other magical entities. Public provider documentation also establishes that some servant families can be healed using owner Soul Energy under appropriate equipment states and that persistence/limits may depend on provider gear.
+Different servant families have provider gear-dependent persistence/healing rules. These lifecycles must remain provider-native.
 
 Consequences:
 
 - a Goety servant is not automatically a generic Black Arcana familiar;
-- Black Arcana may maintain a cross-provider `relationship` record only if it can prove the provider servant identity/owner and lifecycle safely;
-- Soul Energy healing/cost stays Goety-owned;
-- servant caps/persistence must not be bypassed through Binding.
+- owner, persistence, summon cap and lifespan must not be bypassed through Binding;
+- Soul Energy healing must not be paid twice;
+- servant kills must not generate a second guessed Soul Energy reward.
 
-## Witchcraft surface
+## Witchcraft overlap
 
-Goety already exposes explicit witchcraft/preparation content in addition to Focus spellcasting. Public baseline content includes:
+The official public inventory exposes Goety witchcraft/preparation tools including Taglock Kit, Waystone, Cauldron Ladle, Brew, Splash Brew, Lingering Brew, Gas Brew and Refuse Bottle.
 
-- Taglock Kit;
-- Waystone;
-- Cauldron Ladle;
-- Brew;
-- Splash Brew;
-- Lingering Brew;
-- Gas Brew;
-- Refuse Bottle;
-- `The Witch's Brews` documentation.
+This is a direct deduplication constraint for future Black Arcana witchcraft/sympathetic-magic work. Before creating a true-name/hair/blood/personal-object targeting token, the Goety Taglock semantics must be audited. If Goety already provides the required identity evidence, Black Arcana should integrate rather than clone it under another name.
 
-This is a major dedup constraint for the planned integrated Witchcraft system. Black Arcana must not create a second generic taglock or brew-delivery engine if Goety already owns the needed behavior.
+## Infernal/Nether overlap
 
-### Constantine-style consequence
+The public base inventory already includes a substantial Nether family: Fireball, Lava Bomb, Bombardment, Meteor Shower, Magma Bomb, Fire Blast, Flame Strike, Wither Skull, Ghastly and Blazing.
 
-The planned sympathetic/identity magic must audit **Goety Taglock** before implementing any `true-name`, hair/blood sample or personal-object targeting mechanism. If Taglock already provides the identity proof required for a ritual, Black Arcana should integrate it as a provider-native evidence token rather than create a cosmetically different taglock.
+Therefore a future Black Arcana Infernal domain cannot be justified as merely stronger Nether/fire magic. Its proposed provider-independent delta must survive comparison with Goety, Iron's Fire, Cataclysm/Ignis and Soulfire providers.
 
-## Infernal / Nether consequences
+## Soul/death overlap
 
-Goety already has a substantial Nether Focus family: Fireball, Lava Bomb, Bombardment, Meteor Shower, Magma Bomb, Fire Blast, Flame Strike, Wither Skull, Ghastly and Blazing.
+Goety already covers death-derived Soul Energy, soul-powered casting/artifices, necromancy, owned servants and soul-based sustain. This sharply constrains any generic Black Arcana `soul mana` concept.
 
-Therefore the planned Black Arcana Infernal school cannot justify itself as `stronger fire magic` or `Nether fire spells`. Its real delta must remain the separate **Nether-bound Infernal Lava reservoir + binding/structure/resource economy**, with only spell effects that remain semantically distinct after Goety, Iron's Fire, Cataclysm and Ignis/Soulfire providers are fully cataloged.
+Goety Soul Energy remains distinct from:
 
-## Soul / death consequences
+- Malum spirits;
+- Eidolon Soul capability/Soul Shards;
+- Gravebound Souls/Phylactery;
+- Vampirism blood;
+- Black Arcana resources.
 
-Goety occupies:
+No conversion exists merely because the concepts share a soul/death theme.
 
-- death-derived Soul Energy;
-- soul-powered spellcasting;
-- soul-powered artifacts;
-- necromancy;
-- servant summoning/control;
-- soul healing/utility;
-- ritual progression.
-
-This sharply limits any generic Black Arcana `soul mana` proposal. Black Arcana 07.02 must continue treating provider-native resources distinctly: `Goety Soul Energy` is not interchangeable with Malum spirits, Eidolon Soul Shards, Blood reservoir mB or ordinary Iron's mana.
-
-## Existing overlaps with other installed providers
-
-Several baseline Goety focuses directly overlap broad capabilities already present elsewhere:
-
-- Telekinesis → Iron's Eldritch Telekinesis / Ars movement primitives;
-- Soul Heal → Iron's/Ars healing families but with a different resource/provider identity;
-- Ignite / Fire Breath / Fireball / Magma Bomb / Wither Skull → Iron's Fire/Blood/Goety Nether and Cataclysm overlap;
-- Blink / Recall / Ender Chest / Banish → Iron's Ender + Ars displacement/utility;
-- Bulwark → Iron's Shield / Paladin Bulwark / Ars Bubble Shield;
-- Sonic Boom → Iron's Eldritch Sonic Boom / Ars ecosystem variants;
-- servant summons → Iron's/Ars/Asterism/Mobstein and Black Arcana 07.07 territory.
-
-These overlaps must be resolved semantically before Phase 3 approves any duplicate-looking Black Arcana spell.
-
-## Goety addons in the current pack
+## Installed addon boundary
 
 ### Goety Iron 3.1
 
-Bridge/provider addon between Goety and Iron's. It is cataloged separately because it can change servant/spell integration and authority boundaries.
+Separate bridge/provider between Goety and Iron's. It can alter spell/servant integration and must be cataloged separately rather than counted inside the base Focus list.
 
 ### Goety Cataclysm 1.21.1-1.8.2
 
-Content addon integrating Cataclysm themes/entities/powers into Goety's Soul Energy / Focus / servant ecosystem. It must be cataloged separately before Infernal, summoning and boss-power gaps are considered final.
+Separate content addon integrating Cataclysm themes/entities/powers into Goety. The current official Wiki page lists its own Focus families; those are addon-owned and are not included in the base 110-Focus inventory.
 
-## Provenance status
+## Documents
 
-Public 1.21.1 port repositories expose MIT licensing for some 3.0.x source lines, but Phase 2 has **not established that those exact source snapshots correspond to installed Goety 3.1.4**. Therefore no current implementation may be derived from those repositories merely because the older port is MIT.
-
-Current 3.1.4 implementation provenance/API surface remains `PENDING`.
-
-## Open audit items
-
-- reconcile the actual 3.1.4 Focus registry against the 109-name public baseline;
-- extract current 3.1.4 costs/cooldowns/damage/duration/range where a current artifact/API/doc source is available;
-- catalog every Research Scroll and exact acquisition/gate;
-- catalog servant families, owner identity, cap/persistence and Soul Energy healing semantics;
-- catalog Goety Witchcraft/taglock behavior;
-- catalog Goety Iron 3.1;
-- catalog Goety Cataclysm 1.21.1-1.8.2;
-- identify public integration/API hooks suitable for Black Arcana without bypassing provider authority.
+- [`FOCUS-CATALOG.md`](FOCUS-CATALOG.md) — current official public base Focus inventory and individual verified examples.
+- [`RITUALS-PROGRESSION.md`](RITUALS-PROGRESSION.md) — ritual types, research, Soul Energy and Lichdom public contracts.
+- [`TECHNICAL-AUDIT.md`](TECHNICAL-AUDIT.md) — exact release/source/provenance limits and QA queue.
+- [`INTEGRATION-RULES.md`](INTEGRATION-RULES.md) — Black Arcana provider authority, settlement and deduplication contract.
 
 ## Phase 3 gate
 
-Goety-related Black Arcana implementation is `BLOCKED` until the installed 3.1.4 registry and relevant addon surfaces are reconciled.
+Goety-related Black Arcana implementation remains `BLOCKED` until the relevant installed 3.1.4 behavior and addon surfaces are reconciled sufficiently to prove a real semantic gap.
+
+Do not promote this provider to `SOURCE-PINNED 3.1.4` or claim `JAR 110/110` unless exact evidence closes those separate gates.
