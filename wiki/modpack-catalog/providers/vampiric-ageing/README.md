@@ -1,6 +1,6 @@
 # Vampiric Ageing 1.4.21 — provider audit
 
-Status: `SOURCE-PINNED 1.4.21 / CORE AGEING + ACTIONS + TAINTED BLOOD + WEREWOLF INTEROP CATALOGED / RUNTIME QA PENDING`
+Status: `SOURCE-PINNED 1.4.21 / GRANULAR SOURCE CATALOG COMPLETE / RUNTIME QA PENDING`
 
 ## Version authority
 
@@ -39,8 +39,8 @@ Werewolf registration is conditional on the `werewolves` mod being loaded; that 
 | `IAction` registrations | **9** |
 | `ISkill` registrations | **10** |
 | Own item registrations | **4** |
-| Own mob-effect registrations | **1** (`tainted_blood`) |
-| Own oil registrations | **1** (`seniority`) |
+| Own mob-effect registrations | **1** (`vampiricageing:tainted_blood_effect`) |
+| Own oil registrations | **1** (`vampiricageing:seniority_oil`) |
 | Serialized AgeingManager attachment | **1** |
 
 The 9 actions are eight entries in `VampiricAgeingActions` plus `improved_senses_action`, which is registered through `WerewolfAgeingSkills` only when Werewolves support is active.
@@ -144,17 +144,18 @@ Alternatives:
 11. **Werewolf mechanics are provider overlays on Werewolves' Bite/Howl/Form/Sense pipelines.** Do not duplicate the underlying action or food settlement.
 12. **Death reset is enabled by default.** With default `ageLostOnDeath=0`, normal player death resets Age to 0; optional partial rank loss is config-driven. Permanent Tainted transformation has a separate death-reset toggle, default false.
 13. **Optional high-age vampire immortality is disabled by default.** It intercepts lethal non-killing-source damage at LOWEST priority and can optionally settle blood loss through the real Vampirism blood bar; it must not be pre-charged or independently resurrected by Black Arcana.
+14. **Tainted Blood survival acquisition is provider-native.** Five Alchemical Table bottle recipes, Tainted Concentrate and the Mother Core-based permanent Elixir route are cataloged; Black Arcana should not bypass those skill/recipe gates by default.
 
 ## Documents
 
 - [`PROGRESSION-CATALOG.md`](./PROGRESSION-CATALOG.md) — Age Types, methods, ranks, attributes and progression settlement.
 - [`ACTION-CATALOG.md`](./ACTION-CATALOG.md) — all 9 registered actions and their gates/default contracts.
-- [`TAINTED-BLOOD-AND-WEREWOLVES.md`](./TAINTED-BLOOD-AND-WEREWOLVES.md) — Hunter cumulative Tainted Age and Werewolves overlays.
+- [`TAINTED-BLOOD-AND-WEREWOLVES.md`](./TAINTED-BLOOD-AND-WEREWOLVES.md) — Hunter cumulative Tainted Age, survival acquisition and Werewolves overlays.
 - [`TECHNICAL-AUDIT.md`](./TECHNICAL-AUDIT.md) — attachment, lifecycle, event/mixin surfaces and static discrepancies.
 - [`INTEGRATION-RULES.md`](./INTEGRATION-RULES.md) — Black Arcana authority/settlement contract.
 
 ## Closure state
 
-The installed 1.4.21 source line is pinned and the provider's core Age Types, Ageing Methods, registered actions/skills, Tainted Blood system, Werewolves overlays, major config defaults and integration boundaries are cataloged.
+The installed 1.4.21 source line is pinned and the provider's core Age Types, all 8 registered Ageing Methods, all 9 registered actions, all 10 registered skills, Tainted Blood system/acquisition, Werewolves overlays, major config defaults, mixin surface and integration boundaries are cataloged.
 
 Do **not** mark `RUNTIME QA CONFIRMED`. Runtime validation remains required for action timing units, Celerity magnitude, DBNO/neonatal modifier direction, Bat Mode synchronization, Tainted state lifecycle and mixin compatibility against the exact installed Vampirism/Werewolves versions.
