@@ -2,9 +2,11 @@
 
 ## Status
 
-`EXACT SOURCE-VERSION REGISTRY 9/9 / EFFECT PAYLOADS AUDITED / ACQUISITION+RUNTIME QA PENDING / LICENSE CONFLICT`
+`EXACT SOURCE-VERSION REGISTRY 9/9 / EFFECT PAYLOADS AUDITED / MORTAR ACQUISITION AUDITED / DELIVERY INVENTORY PARTIAL / RUNTIME QA PENDING / LICENSE CONFLICT`
 
 Exact source checkpoint: `MrFrostyDev/Toxony_Mod@881bf7fe632659e748c279966a2bf49b99f7503f`.
+
+Detailed processing/delivery facts: [Processing, acquisition and delivery](../processing/README.md).
 
 ## Registry — 9/9
 
@@ -19,6 +21,35 @@ Exact source checkpoint: `MrFrostyDev/Toxony_Mod@881bf7fe632659e748c279966a2bf49
 | `toxony:smoke_oil` | Slowness + Blindness + Weakness | Toxony oil-applicable item tag |
 | `toxony:regeneration_oil` | Regeneration + Instant Health | Toxony oil-applicable item tag |
 | `toxony:witchfire_oil` | `toxony:toxin` + `toxony:flammable` | Toxony oil-applicable item tag |
+
+## Mending Oil is not a tenth registered Oil
+
+The provider also exposes a dedicated `mending_oil_pot` item/block and Mortar recipe. It is implemented through a special `MendingOilPotItem`/block path rather than an additional entry in the nine-entry custom Oil registry.
+
+Therefore:
+
+- registered Oils remain **9/9**;
+- Mending Oil Pot remains a real provider capability/delivery item;
+- it must not be counted as `toxony:mending_oil` unless such a registry entry is separately proven.
+
+## Mortar acquisition for Oil/Tox delivery items
+
+Exact 0.10.7 Mortar recipes include:
+
+- Poison Oil Pot — Honeycomb + Poison Paste + Empty Oil Pot;
+- Fire Resistance Oil Pot — Honeycomb + Magma Cream + Empty Oil Pot;
+- Glowing Oil Pot — Honeycomb + Glow Ink Sac + Empty Oil Pot;
+- Fatigue Oil Pot — Honeycomb + Fermented Spider Eye + Water Hemlock + Empty Oil Pot;
+- Acid Oil Pot — Honeycomb + Toxic Paste + 2× Acid Slimeball + Empty Oil Pot;
+- Mending Oil Pot — Honeycomb + Toxic Paste + Toxic Spit + Ocelot Mint + Empty Oil Pot;
+- Toxin Tox Pot — Honeycomb + Toxin + Toxic Paste + Empty Tox Pot;
+- Regeneration Tox Pot — Honeycomb + Ghast Tear + Sunspot + Empty Tox Pot;
+- Smoke Tox Pot — Honeycomb + Fermented Spider Eye + Moonlight Hemlock + Empty Tox Pot;
+- Acid Tox Pot — Honeycomb + Warproot + Acid Slimeball + Bog Bone + Empty Tox Pot;
+- Witchfire Tox Pot — Honeycomb + Blaze Powder + Warproot + Empty Tox Pot;
+- Oil Base — Honeycomb + Toxic Paste → 2 Oil Base.
+
+This confirms acquisition is provider alchemy, not generic spell learning.
 
 ## Provider identity
 
@@ -49,8 +80,8 @@ A future Witchcraft capability may consume a real Toxony Oil item or state only 
 
 ## Fields still open
 
-- full 0.10.7 crafting/processing graph for all nine Oils;
-- exact duration/amplifier settlement for every delivery surface;
+- individual inventories for non-Mortar processing families;
+- complete duration/amplifier/max-use table for every delivery item;
 - interaction with modded weapons/projectiles in the installed pack;
 - stable supported external API for reading/applying Oil state;
 - runtime QA against the installed JAR.
