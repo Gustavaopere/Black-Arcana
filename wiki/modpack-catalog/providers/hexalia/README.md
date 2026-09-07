@@ -1,153 +1,210 @@
-# Hexalia
+# Hexalia — filename/source release 1.3.6, installed runtime metadata 1.3.5
 
-Status: `PHASE 2 — PROVIDER AUDIT IN PROGRESS`
+## Status
+
+`EXACT PUBLIC NEOFORGE RELEASE 1.3.6 / SOURCE-PINNED RELEASE COMMIT 4952c652 / MIT / PHYSICAL FILENAME 1.3.6 / INSTALLED RUNTIME METADATA 1.3.5 / BREWS 8/8 / NATURE'S RITUAL 19/19 PLAYER-FACING / CELESTIAL INFUSION 6/6 / MUTATION 21/21 / MORTAR & PESTLE 12/12 / CENSER 10/10 / IDOLS AUDITED / EXACT INSTALLED-JAR EQUIVALENCE + RUNTIME/API QA PENDING`
 
 ## Runtime identity
 
-- Provider: **Hexalia**
-- Installed JAR: `hexalia-neoforge-1.3.6.jar`
-- Runtime version recorded by current modlist/Notion: `1.3.5`
-- Loader/game: NeoForge 1.21.1
-- Role: `RITUAL / BREWING / WITCHCRAFT PROVIDER`
-- Runtime/version authority: current modlist snapshot (2026-09-06) + reconciled Notion sheet.
+The current physical modlist remains authority for what actually loads in the pack:
 
-The filename/runtime mismatch is intentional and must remain visible. Do not normalize `1.3.6` and `1.3.5` into one unqualified version string.
+- provider: **Hexalia**;
+- installed JAR: `hexalia-neoforge-1.3.6.jar`;
+- mod id: `hexalia`;
+- runtime version reported by the installed JAR: `1.3.5`;
+- mixin config: `hexalia-neoforge.mixins.json`;
+- loader/game: NeoForge 1.21.1;
+- role: `RITUAL / BREWING / WITCHCRAFT PROVIDER`.
 
-## Provenance / source boundary
+The filename/runtime mismatch is real and must remain visible. Black Arcana must not normalize `1.3.6` and `1.3.5` into one unqualified version string.
 
-The public upstream repository identifies Hexalia as plant-based magic/witchery with rituals and brewing. GitHub repository metadata currently exposes `license: null`; therefore Black Arcana may use public documentation and clean-room observed/provider facts for catalog/deduplication, but **must not copy or derive implementation from Hexalia source unless a compatible license or explicit permission is later established and recorded in the project provenance ledger**.
+## Exact public release + source pin
 
-Source inspection performed during Phase 2 is used here only to record observable/provider-owned behavior and current content identity. It is not implementation authorization.
+CurseForge publishes the NeoForge 1.21.1 artifact as:
+
+- project ID `962878`;
+- file ID `8658488`;
+- file name `hexalia-neoforge-1.3.6.jar`;
+- release date `2026-08-16`;
+- release line `Hexalia 1.3.6-1.21.1 - NeoForge`;
+- license `MIT`.
+
+The official source repository `AstralyaStudios/Hexalia` contains commit:
+
+`4952c65233bf31e9f0d3e55ff76be7fa1007ee3d`
+
+with message `Release Hexalia 1.3.6`, also dated 2026-08-16. At that pin `gradle.properties` declares `mod_version=1.3.6` and `minecraft_version=1.21.1`, while NeoForge metadata declares MIT licensing, `modId = "hexalia"` and `version = "${version}"`.
+
+Source inspection for release-line cataloging is therefore pinned and license-permitted. No upstream code/assets are copied or adapted into Black Arcana.
+
+### Important equivalence limitation
+
+The public release filename and source pin say `1.3.6`, while the installed JAR reports runtime `1.3.5`. That prevents a stronger claim that the installed binary is byte-for-byte/metadata-equivalent to the pinned source build.
+
+Consequently:
+
+- source-derived registry/data/behavior facts are `SOURCE-PINNED 1.3.6`;
+- installed presence/filename/runtime remain `MODLIST-PINNED`;
+- exact installed-runtime behavior remains QA-gated where integration depends on it.
+
+## Documentation freshness
+
+The official GitHub Wiki currently identifies its supported version as `1.3.3`; it is useful for player-facing concepts, but 1.3.6 pinned source/data and the publisher changelog take precedence for version-specific facts.
+
+The 1.3.6 changelog records, among other fixes, Mortar & Pestle recipe/documentation corrections and makes Nature's Ritual nearby-crop requirement configurable `0–32`, default `8`.
+
+## Canonical subcatalogs
+
+### Small Cauldron brews — 8/8
+
+- [Brew catalog](brews/README.md)
+
+The source-pinned 1.3.6 catalog contains Arachnid Grace, Bloodlust, Daybloom, Hollow Silence, Homestead, Siphon, Slimewalker and Spikeskin. All eight source recipes are cataloged individually.
+
+Provider descriptions and located executable paths do not agree perfectly for several brews. Bloodlust, Hollow Silence, Siphon, Slimewalker and Spikeskin retain explicit runtime/behavior QA blockers rather than having missing semantics inferred.
+
+### Nature's Ritual — 19/19 player-facing
+
+- [Nature's Ritual catalog](rituals/NATURES-RITUAL-CATALOG.md)
+- [Ritual output capability audit](rituals/RITUAL-OUTPUT-CAPABILITIES.md)
+
+`debug_natures_ritual` exists at the source pin but is deliberately excluded from player-facing counts.
+
+The source-pinned lifecycle uses a Ritual Table, Hex Focus, cardinal Ritual Braziers two blocks from the table, salt on each used brazier and a configurable mature-crop requirement. Default crop requirement is `8` in radius `8`; consumed mature crops are reset to age 0 on successful completion.
+
+Duration is `40 ticks × number of used braziers`: two-brazier recipes complete in 80 ticks and four-brazier recipes in 160 ticks.
+
+Capability-bearing outputs include Aegiflora, Astrylis, Grimshade, Lourdes, Morphora, Nautilite, Windsong, four elemental nodes, Rootshaper, Kelpweave Blade, Sage Pendant, Rabbage Seeds and the four Bloomwrap armor pieces.
+
+Important source-level examples:
+
+- Aegiflora intercepts Creeper-sourced explosions within radius 8 and has a two-charge wither/destroy lifecycle;
+- Grimshade performs skeleton/wither conversions and provides a timed non-player Wither/Weakness field;
+- Nautilite provides aquatic Conduit Power/Mining Fatigue cleansing and damages Drowned/Guardians before self-destruction at expiry;
+- Windsong destroys nearby projectiles while active, then destroys itself;
+- Lourdes periodically removes harmful effects and maintains Regeneration on players/animals;
+- Morphora executes provider `hexalia:mutation` recipes across a horizontal radius fixed at 3 in the located path;
+- Rootshaper provides provider-owned adaptive pickaxe/shovel behavior plus shift-triggered 3×3 mining;
+- Kelpweave Blade has water/rain dash, Slowness-on-hit and probabilistic water repair;
+- Sage Pendant modifies XP-orb pickup value while in offhand and consumes durability;
+- Bloomwrap pieces provide separate knockback, reflection, regeneration and movement behaviors.
+
+### Celestial Infusion — 6/6
+
+- [Celestial Infusion catalog](infusions/CELESTIAL-INFUSION-CATALOG.md)
+
+The six source-pinned transformations are Galeberries, Celestial Crystal and four Silkweave→Moonweave armor upgrades.
+
+The located provider lifecycle requires a valid item in a Ritual Brazier, Hex Focus, open sky/sun visibility and three Celestial/Withered Celestial Blooms in radius 3. Channel duration is 120 ticks; invalid sky/bloom state cancels. On completion the three blooms degrade one stage. Salting is not checked by the audited Celestial Infusion start path.
+
+### Mutation — 21/21
+
+- [Mutation catalog](mutations/MUTATION-CATALOG.md)
+
+The source pin registers 21 `hexalia:mutation` recipes: 11 vanilla→vanilla transmutations plus 10 transformations into Hexalia plants/saplings/content.
+
+Morphora/Mutavis remain provider authority for this transformation graph. A config field `morphoraRadius` defaults to 6, but the located Morphora activation path uses fixed `MUTATION_RADIUS = 3`; this mismatch remains a provider/runtime QA item rather than being silently reconciled.
+
+### Mortar & Pestle — 12/12
+
+- [Mortar & Pestle catalog](processing/MORTAR-AND-PESTLE-CATALOG.md)
+
+The source-pinned recipe type is shapeless with 1–3 ingredients. The block entity has three unit input slots and requires three completed 20-tick spins before output settlement. A player may trigger valid spins manually, and a neighbor redstone signal may also start them.
+
+The 12 cataloged recipes include mundane conversions plus Hexalia Salt, Mutavis, Siren Paste, Dream Paste, Spirit Powder, Ghost Powder, Fragrant Nectar, Brambleguard Salve and Mender's Salve.
+
+Brambleguard and Mender's both use a 60-tick salve application and apply their effect for 1800 ticks. Both clear canonical `hexalia:bleeding` at application. Brambleguard then additionally removes active effects every tick when their registry path contains `bleed` or `bleeding`, regardless of namespace; Mender's applies vanilla Regeneration and does not supply that ongoing generic purge.
+
+### Censer — 10/10 combinations
+
+- [Censer effect catalog](censer/CENSER-EFFECT-CATALOG.md)
+
+The source-pinned Censer is a persistent provider-owned two-herb effect engine. Default effect radius is 16, default burn duration is 7200 ticks and handlers pulse on a 40-tick interval. Player ignition and dispenser ignition are both supported paths.
+
+The 10 registered combinations cover Tidewarden, Ethereal Grazing, Tide's Memory, Miner's Respite, Phantom Drift, Undead Veil, Withering Calm, Hollow Aura, Blighted Bloom and Tidal Pull.
+
+This is a high-impact cross-domain surface: it can buff players, breed animals, spawn items, repair anvils, relocate items, calm undead/mobs, apply Wither, purge all MobEffects, mutate local blocks/Mushroom Cows and pull animals/monsters/items. Black Arcana must not reinterpret the repeating provider pulses as casts or double-settle their effects.
+
+`Hollow Aura` is particularly relevant to interoperability because the source removes every active MobEffect from each LivingEntity in range without namespace/category filtering. `Blighted Bloom` is world-mutating provider behavior and must not be silently routed through Black Arcana's cast pipeline; any pack-wide protection bridge requires an explicit verified contract.
+
+### Idols
+
+- [Idols and capability-bearing items](items/IDOLS-AND-CAPABILITY-ITEMS.md)
+
+Source-pinned derived idols:
+
+- Clarity Idol — server weather set to clear with provider duration 6000;
+- Rainfall Idol — rain with provider duration 6000;
+- Tempest Idol — rain + thunder with provider duration 6000;
+- Purity Idol — removes enchantments tagged as vanilla curses from the item in the opposite hand and is consumed only when removal succeeds.
+
+The four elemental nodes are registered as ordinary items/reagents; their names do not prove an autonomous elemental-resource runtime.
 
 ## Core witchcraft loop
 
 Hexalia owns a preparation-first witchcraft loop rather than an instant spellbook loop:
 
 1. acquire magical herbs/materials;
-2. process ingredients (including Mortar & Pestle paths);
-3. prepare Small Cauldron / Nature's Ritual / Celestial Infusion content;
-4. satisfy environmental/equipment conditions;
-5. receive a provider-owned brew, ritual output, node, item or equipment effect.
+2. refine ingredients through provider processing such as Mortar & Pestle;
+3. prepare Small Cauldron, Nature's Ritual, Celestial Infusion or Censer content;
+4. satisfy provider environmental/equipment conditions;
+5. receive provider-owned brews, ritual outputs, mutations, fields, items or equipment effects.
 
-### Small Cauldron behavior
-
-Current Verdant Grimoire documentation states:
-
-- fill with water;
-- heat from below;
-- add ingredients;
-- stir with a Ladle to begin cooking;
-- heat must remain present;
-- invalid combinations create a **Spoiled Mixture** that emits corrupted energy and can harm nearby entities until cleansed/removed;
-- overcooking reduces yield;
-- correct preparation/timing is part of the mechanic.
-
-This preparation loop is canonical provider behavior and is not to be replaced by a Black Arcana instant-cast clone.
-
-## Current brew catalog
-
-The current Grimoire enumerates eight Small Cauldron brews. Seven apply a 240-second provider effect; Homestead is a one-shot teleport consumable.
-
-| ID / name | Recipe inputs | Preparation | Provider behavior | Dedup impact |
-|---|---|---|---|---|
-| `hexalia:brew_of_arachnid_grace` — Arachnid Grace | Spider Eye + Ghost Powder + Black Dye + String | Small Cauldron, `duration=4800` | 240 s; wall-climb while colliding and not crouching; removes Poison; water/rain applies Weakness; provider description also states cobweb immunity | blocks generic witch wall-climb / poison-immunity brew clones |
-| `hexalia:brew_of_bloodlust` — Bloodlust | Mandrake + Spirit Powder + Tree Resin + Rotten Flesh | Small Cauldron, `duration=4800` | 240 s; provider description: increases strength and restores part of damage dealt, while Regeneration is disabled. Current effect class actively removes effects whose registry path contains `regeneration` | overlaps offensive/lifesteal blood-adjacent witch brews; **not** a blood reservoir spell |
-| `hexalia:brew_of_daybloom` — Daybloom | Sunfire Tomato + Spirit Powder + Glow Berries + Witchweed | Small Cauldron, `duration=4800` | 240 s; every 100 ticks checks sunlight. No sun: 1.5 magic damage and speed modifier removed. Sun available: heals `2.0 × sunlightGenerationMultiplier` and grants movement-speed multiplier `0.05 × (amplifier+1) × sunlightGenerationMultiplier` | blocks generic sunlight-heal/speed potion; relevant to Celestial design but remains Witchcraft/Nature provider-owned |
-| `hexalia:brew_of_hollow_silence` — Hollow Silence | Feather + Ghost Powder + Chillberries + Sculk | Small Cauldron, `duration=4800` | 240 s; registered effect class itself has no tick logic; provider localization describes silenced presence near sound-sensitive entities with periodic vision clouding. Exact event hooks remain to be traced before treating those secondary semantics as implementation-grade | blocks generic stealth-vs-sound brew only after hook verification |
-| `hexalia:brew_of_homestead` — Homestead | Tree Resin + Ender Pearl + Spirit Powder + Galeberries | Small Cauldron, `duration=4800` | one-shot consumable; attempts provider safe-return to player spawn and applies vanilla Nausea/Confusion for 600 ticks (30 s) after teleport | blocks generic witch return-home potion |
-| `hexalia:brew_of_siphon` — Siphon | Dream Paste + Siren Paste + Iron Ingot + Redstone | Small Cauldron, `duration=4800` | 240 s; provider description: increased mining speed and nearby item attraction, with extra exhaustion on block break. Runtime tick attracts/picks up nearby item entities with radius `config.siphonRadius + amplifier`; also registers +0.4 attack-speed attribute value | blocks magnetic/item-siphon witch brew clones |
-| `hexalia:brew_of_slimewalker` — Slimewalker | Slime Ball + Chillberries + Tree Resin + Feather | Small Cauldron, `duration=4800` | 240 s; sets fall distance to zero; on ground applies short Slowness; when landing under its bounce condition launches entity upward at Y velocity 1.0 and emits slime feedback | blocks generic fall/bounce witch brew clones |
-| `hexalia:brew_of_spikeskin` — Spikeskin | Celestial Crystal + Iron Nugget + Sweet Berries + Tree Resin | Small Cauldron, `duration=4800` | 240 s; provider description: increased armor + reflected incoming damage + movement penalty. Registered movement modifier is -10% total; armor modifier uses custom amount calculation `3.0 × (amplifier+1)` | blocks generic thorns/armor witch brew clones |
-
-### Related non-brew preparations already in provider surface
-
-- `Brambleguard Salve`: 90 s provider effect; provider localization describes increased magical/physical resistance and Bleeding prevention/removal.
-- `Mender's Salve`: 90 s vanilla Regeneration provider consumable.
-- `Bleeding`: harmful provider effect; localization describes damage over time similar to Poison.
-- `Overfed`: provider effect; saturation preservation with movement penalty.
-- `Stunned`: provider harmful immobilization effect.
-
-These are capability-bearing entries and will receive granular pages if they materially participate in the final overlap matrix.
-
-## Nature's Ritual — confirmed outputs in current generated data
-
-Current 1.21.1 generated resources prove `hexalia:natures_ritual` recipes for multiple outputs. Player-facing outputs found so far include:
-
-- `Aegiflora`
-- `Astrylis`
-- `Grimshade`
-- `Lourdes`
-- `Morphora`
-- `Nautilite`
-- `Windsong`
-- `Air Node`
-- `Earth Node`
-- `Fire Node`
-- `Water Node`
-- `Rootshaper`
-- `Kelpweave Blade`
-- `Rabbage Seeds`
-- Bloomwrap armor pieces
-
-`debug_natures_ritual` exists in generated data but is explicitly **not** counted as player-facing content.
-
-Exact ingredient/output semantics for each current ritual remain to be expanded into the Hexalia subcatalog.
-
-## Celestial Infusion — confirmed provider surface
-
-Current generated/Grimoire data includes Celestial Infusion outputs such as:
-
-- Celestial Crystal;
-- Galeberries;
-- Moonweave Hood;
-- Moonweave Mantle;
-- Moonweave Bindings;
-- Moonweave Footwraps.
-
-This is important to Black Arcana's planned Divine/Celestial discipline: the name/theme does **not** make Hexalia a Holy spell provider, but any future celestial crafting/infusion must remain distinct from this existing lunar/celestial witchcraft preparation path.
+Black Arcana integrates around that identity rather than reproducing it as an instant cast system.
 
 ## Deduplication consequences
 
 ### Witchcraft
 
-Black Arcana Witchcraft must **integrate, not replace**, Hexalia's:
-
-- cauldron brewing;
-- herbs/material preparation;
-- provider brews;
-- Nature's Ritual;
-- Celestial Infusion;
-- Mortar & Pestle processing;
-- mutations/provider transformations;
-- nodes/idols where mechanically relevant.
-
-A future Black Arcana recipe may require or transform a real Hexalia preparation, but must not silently recreate its result as a generic spell.
+Black Arcana Witchcraft must integrate, not replace, Hexalia's cauldron brewing, herbs/material preparation, salves, Nature's Ritual, Celestial Infusion, Mortar & Pestle, Censer, mutations and capability-bearing idols/equipment.
 
 ### Blood / Binding
 
-`Brew of Bloodlust` is blood-themed but is **not** evidence of a blood-volume resource, external blood reservoir, blood link, or blood-only casting authority. It does not occupy the planned Hematic Reservoir / typed blood-binding architecture.
+`Brew of Bloodlust` is blood-themed but is not evidence of blood-volume storage, an external blood reservoir, blood-link authority or blood-only casting settlement. It does not occupy the planned Hematic Reservoir / typed blood-binding architecture.
+
+### Souls / spirits
+
+`hexalia:spirit_powder` is a concrete Hexalia reagent produced by its Mortar & Pestle graph. It is not Malum's spirit economy, Eidolon soul state or a Black Arcana soul resource.
 
 ### Divine / Celestial
 
-`Daybloom` and Celestial Infusion create real overlap with solar/celestial presentation. The planned Divine school must therefore reserve its identity for Holy/miracle/authority semantics rather than merely 'sun-powered buff' or 'celestial crystal crafting'.
+Daybloom and Celestial Infusion create genuine solar/celestial overlap. Divine/Celestial Black Arcana identity must remain materially distinct from this preparation/lunar/crafting path.
+
+### Persistent fields / wards / environmental effects
+
+Aegiflora, Windsong, Grimshade, Nautilite, Lourdes and especially the Censer demonstrate that Hexalia already owns multiple persistent local-effect fields. A Black Arcana field/domain must preserve its own identity, bounded execution and `WorldEffectPolicy` requirements instead of cloning these witchcraft utilities.
+
+### Weather / environment
+
+Hexalia already owns consumable clear/rain/thunder weather idols. A generic duplicate weather-control spell is therefore poor deduplication. Any Black Arcana grand-weather mechanic would still need distinct forbidden identity, hazards, budgets and canonical `WorldEffectPolicy` handling.
+
+### Curse / status cleansing
+
+Purity Idol already owns straightforward removal of vanilla curse-tagged enchantments from an opposite-hand item. Censer Hollow Aura additionally owns a broad local MobEffect purge. Neither behavior owns Black Arcana Corruption, Arcane Strain or Arcane Backlash unless those channels are deliberately represented through an overlapping provider surface, which current architecture does not require.
 
 ### Order / Chaos
 
-No current Hexalia evidence audited here establishes the planned server-authoritative imposed-law or causal/probability systems. Individual rituals must still be checked before those gaps can be declared free.
+No audited Hexalia source-pinned surface proves Black Arcana's proposed server-authoritative imposed-law or causal/probability mechanics. The current catalog does not reserve those identities for Hexalia.
 
-## Acquisition / learning
+## Safe integration posture
 
-The provider progression is documented through the **Verdant Grimoire** and recipe/advancement surface. Brews require their actual ingredients and Small Cauldron process; they are not learned as Iron's scrolls. Nature's Ritual and Celestial Infusion likewise remain provider-owned preparation systems.
+- No second Hexalia recipe engine.
+- No second registry of brew/salve/Censer effects.
+- No re-settlement of a provider ritual, mutation, weather action, Censer pulse or item consumption.
+- No Mastery from continuous proximity to a node/plant/ritual/Censer or from redstone/dispenser automation.
+- Any progression event requires discrete causal evidence and deduplication; automated provider paths must not invent a player owner.
+- Do not create duplicate resources for Hexalia reagents.
+- Source pin authorizes factual cataloging, not copying upstream code/assets into Black Arcana.
+- Source class visibility alone is not a supported integration/API contract.
 
-## Open audit items
+## Remaining open audit items
 
-- enumerate every current Nature's Ritual recipe and its exact acquisition/result;
-- enumerate every Celestial Infusion recipe;
-- enumerate Mortar & Pestle transformations relevant to magical recipes;
-- trace Hollow Silence event hooks before promoting its sound/vision behavior from provider-description confidence to runtime-confirmed confidence;
-- catalog mutation mechanics and all capability-bearing idols/nodes;
-- verify whether any current integration API/event exists that can be used without source-derived implementation.
+1. reconcile exact installed-JAR identity against public File ID `8658488` and explain why runtime metadata reports `1.3.5`;
+2. retain explicit runtime QA for brew description/source discrepancies, especially Hollow Silence, Bloodlust, Siphon, Slimewalker and Spikeskin;
+3. identify supported/stable integration API or event surfaces; do not couple to implementation classes merely because they are visible;
+4. perform exact pack runtime QA for brews, rituals, Celestial Infusion, mutations, Mortar & Pestle, salves, Censer and idols before promoting source-derived formulas to installed-runtime facts;
+5. run cross-mod interaction QA where provider behavior is deliberately broad, especially Brambleguard bleed-path removal, Censer Hollow Aura, Blighted Bloom and weather/world-changing items.
 
 ## Phase 3 gate
 
-Hexalia integration is `BLOCKED FOR IMPLEMENTATION` until the full provider subcatalog and semantic matrix are complete.
+Hexalia now has granular source-pinned semantic coverage across its major witchcraft preparation and persistent-effect systems, but implementation remains `BLOCKED / FAIL-CLOSED FOR PROVIDER-SPECIFIC HOOKS` until stable integration boundaries and the installed `1.3.6 filename / 1.3.5 runtime` equivalence question are resolved where required. Source catalog completion is not installed-runtime validation.

@@ -1,259 +1,221 @@
-# Malum
+# Malum 1.8.2 — provider catalog
 
-Status: `PHASE 2 — PROVIDER AUDIT IN PROGRESS`
+## Status
 
-## Runtime identity
+`EXACT RELEASE 1.8.2 / EXACT VERSION COMMIT IDENTIFIED / PUBLISHER 1.8+1.8.2 CHANGELOG SURFACE VERIFIED / SOURCE-LICENSE CONFLICT BLOCKS IMPLEMENTATION-INTERNAL PROMOTION / EXACT REGISTRY+RUNTIME QA PENDING`
 
-- Provider: **Malum**
-- Installed JAR: `malum-1.21.1-1.8.2.jar`
-- Runtime version: `1.8.2`
-- Loader/game: NeoForge 1.21.1
-- Role: `SPIRIT ARCANA / SPIRIT RESOURCE / RITE / TOTEM / PACT PROVIDER`
-- Installed ecosystem additions: Gaze `1.1.7.1`, Malum: Vestis, JEI Malum.
+## Installed authority
 
-The current modlist is authoritative for installed `1.8.2`.
+- provider: **Malum**
+- mod id: `malum`
+- installed JAR: `malum-1.21.1-1.8.2.jar`
+- runtime version: `1.8.2`
+- loader/game: NeoForge 1.21.1
+- role: `SPIRIT ARCANA / TYPED SPIRIT RESOURCE / SPIRIT RITE / TOTEM / GEAS-PROGRESSION PROVIDER`
+- installed ecosystem additions: Gaze `1.1.7.1`; Malum: Vestis; JEI Malum.
 
-## Version / source boundary
+The current physical modlist is authoritative for installed identity.
 
-The public `SammySemicolon/Malum-Mod` `1.21.1` branch is newer than the installed artifact. At the time of this audit its `gradle.properties` reports **Malum 1.9.0**, while the pack runs **1.8.2**.
+CurseForge independently identifies `malum-1.21.1-1.8.2.jar` as the latest 1.21.1 NeoForge release, published on `2025-12-08`.
 
-Therefore Phase 2 separates evidence:
+## Exact version commit
 
-- facts independently documented for 1.8.2 or visible in pack/current public release metadata may be treated as installed-provider facts;
-- registry/content found only on the newer 1.9.0 source branch is marked **NEWER-BRANCH EVIDENCE — VERIFY IN 1.8.2**;
-- no 1.9.0-only capability is counted as installed coverage until confirmed against 1.8.2.
+The official `SammySemicolon/Malum-Mod` history contains commit:
 
-The upstream repository metadata does not currently expose a GitHub license object and the current source branch itself declares `mod_license=All Rights Reserved`. Public distribution pages may display other license metadata, but Black Arcana must treat implementation reuse as **not authorized by this audit** until exact artifact/source licensing is reconciled in the provenance ledger.
+`03b743a37f3eeb0cc7f4364f0730e1f135f78408`
 
-## Installed 1.8.2 provider identity — proven
+at `2025-12-08T08:23:22Z`.
 
-Malum is a spirit/soul-magic system where spirits are **typed provider resources**, not a generic mana bar. Current project guides and public 1.8.2 evidence establish:
+Its `gradle.properties` declares:
 
-- spirit harvesting / Spirit Reaping from creatures;
-- typed spirits used as crafting/ritual ingredients;
+- `minecraft_version=1.21.1`;
+- `mod_id=malum`;
+- `mod_version=1.8.2`;
+- `lodestone_version=1.8.2.523`.
+
+This is strong version-line evidence and lets the audit anchor publisher-authored release/changelog material to the exact installed line.
+
+## License/provenance conflict — implementation source remains blocked
+
+There is a material license inconsistency:
+
+- the public CurseForge project/release surface declares **GNU LGPLv3**;
+- the exact `1.8.2` commit's `gradle.properties` declares `mod_license=All Rights Reserved`;
+- the repository root at that commit does not expose a root `LICENSE` file that resolves the conflict;
+- GitHub repository metadata exposes no license object.
+
+Therefore Black Arcana does **not** promote exact-source implementation internals from this commit into implementable integration contracts. Until the conflict is resolved by an authoritative upstream license statement, the source-code layer is treated as `READABLE VERSION EVIDENCE / IMPLEMENTATION REUSE OR SOURCE-DERIVED SPEC BLOCKED`.
+
+Publisher-authored changelogs and public gameplay documentation may still establish externally documented behavior, but they do not authorize copying code/assets or inventing hidden APIs.
+
+## Provider identity — installed-line facts
+
+Malum is a Spirit Arcana system where spirits are **typed provider resources**, not a generic mana bar. The current project guide and publisher documentation establish:
+
+- spirit harvesting / Spirit Reaping;
+- typed spirits used as provider resources and ingredients;
 - Spirit Infusion;
 - Spirit Focusing;
 - Spirit Rites / totem magic;
+- Spirit Rite Locus/Anchor behavior in the 1.8 line;
 - spirit-powered gear, runes, tools, weapons and curios;
-- Encyclopedia Arcana progression.
+- Encyclopedia Arcana progression;
+- Soulbinding as a provider crafting/process vocabulary;
+- Geas/Pact/Oath/Authority progression existing in the installed 1.8 line.
 
-An issue explicitly filed against **Malum 1.8.2** shows datapack recipe syntax consuming typed spirit resources such as `malum:earthen`, confirming that provider-owned spirit typing is part of the installed line.
+Exact registry counts and full registry ids remain separate gates.
 
-## Spirit type registry
+## Exact 1.8 publisher changelog — registry and rite architecture
 
-### Newer 1.9.0 branch evidence — verification required for installed 1.8.2
+The publisher's `changelogs/1.8.txt`, present at the exact 1.8.2 version commit, states that:
 
-The current 1.21.1 source branch registers nine Spirit Arcana types:
+- **Spirit Types** moved to a Deferred Registry;
+- spirit registry names now include a mod identifier plus name, explicitly affecting third-party compatibility;
+- **Spirit Rites** moved to a Deferred Registry;
+- addon rite providers such as Gaze need compatibility updates for that change;
+- many Spirit Rites were redone;
+- world-affecting rites now use a **Rite Locus** system;
+- **Rite Anchors** can define a travel vector for a Rite Locus and different spirits can empower the locus differently;
+- **Rite Unwaver** kills/removes an active Rite Locus when found.
 
-1. `malum:sacred`
-2. `malum:wicked`
-3. `malum:arcane`
-4. `malum:eldritch`
-5. `malum:aerial`
-6. `malum:aqueous`
-7. `malum:earthen`
-8. `malum:infernal`
-9. `malum:umbral`
+This proves those architectural concepts belong to the installed 1.8 generation. It does **not** prove every registry entry currently seen on the later 1.9.0 branch exists unchanged in 1.8.2.
 
-The first eight are also grouped as base/aspected spirits in current source. `umbral` has a specialized `UmbralSpiritArcanaType`.
+## Geas / Pacts / Oaths / Authorities — confirmed in installed line
 
-**Do not yet claim all nine exist unchanged in installed 1.8.2.** Exact 1.8.2 registry extraction remains required. At minimum, typed spirit resource semantics and `earthen` are directly supported for the installed release line.
+The old preparatory catalog classified Geas as possible newer-branch-only content. That is no longer correct.
 
-## Spirit Rites
+The publisher's 1.8 changelog explicitly discusses multiple Geas entries, including:
 
-Malum Totem/Spirit Rite magic is a persistent area/world-effect system and is semantically distinct from instant Iron's spellcasting.
+- Pact of the Prospector;
+- Pact of the Profane Glutton;
+- Pact of the Berserker;
+- Pact of Wyrd Reconstruction;
+- Pact of the Cloudskipper;
+- Oath of the Overkeen Eye;
+- Oath of Unmakers Disdain;
+- Oath of Unsighted Resistance;
+- Authority of the Gleeful Target.
 
-### Newer 1.9.0 branch rite registry — verify against 1.8.2
+The publisher's **1.8.2** changelog additionally changes:
 
-Current branch defines 24 named rites, grouped in six families of four:
+- Pact of the Lone Druid;
+- Pact of the High Priest;
+- Pact of the Prospector;
+- Pact of the Blastweaver, renamed from Pact of the Pyromaniac.
 
-#### Sacred-style group
+Therefore:
 
-- Rite of Healing
-- Rite of Nourishment
-- Rite of Nurturing
-- Rite of Lust
+- `Geas/Pact/Oath/Authority exists in 1.8.2` = **PROVEN**;
+- `the later 1.9.0 branch has exactly 34 active entries in the installed 1.8.2 JAR` = **NOT PROVEN**;
+- commented-out Bond prototypes from newer source are **not installed-gameplay evidence** and remain excluded.
 
-#### Wicked-style group
+This is already a strong deduplication constraint for Black Arcana Binding: a feature is not novel merely because it calls a persistent tradeoff a Pact, Geas or Oath.
 
-- Rite of Harming
-- Rite of Empowerment
-- Rite of Culling
-- Rite of Raising
+## 1.8.2 publisher changes with integration relevance
 
-#### Aerial-style group
+The exact `1.8.2` changelog documents several behavior changes relevant to external systems:
 
-- Rite of Howling Gale
-- Rite of Sky Tether
-- Rite of Gravity
-- Rite of Ascension
+- the healing rite now triggers only when healing would have an effect;
+- Spellwoven Sprites break blocks as if the player did it and fire `BlockDropsEvent` with the breaker listed as the player;
+- Belt of the Prospector grants a documented chance to obtain Avarice from collecting valuables;
+- Avarice changes fortune chance and can stack to a documented cap;
+- multiple Geas were rebalanced/renamed in 1.8.2.
 
-#### Aqueous-style group
+For Black Arcana/RPG causality, the Spellwoven Sprite note is particularly important: publisher documentation explicitly attributes the block-break event to the player. That still requires runtime/provider integration QA before using it as a mastery source, but it is stronger than inferring player authorship from a servant simply being nearby.
 
-- Rite of Flowing Grasp
-- Rite of Good Tides (`rite_of_good_ties` registry path in current source)
-- Rite of Soaking
-- Rite of Sapping
-
-#### Earthen-style group
-
-- Rite of Stone Ward
-- Rite of Oaken Might
-- Rite of Creation
-- Rite of Destruction
-
-#### Infernal-style group
-
-- Rite of Burning Fervor
-- Rite of Fiery Embrace
-- Rite of Smelting
-- Rite of Quickening
-
-The current branch's rite-effect registry confirms effect families including healing, nourishment, nurturing, animal love, harming, empowerment, culling, monster raising, wind/sky/gravity effects, fluid/growth/extraction effects, stone/creation/destruction and infernal/smelting/furnace acceleration.
-
-These names are **not yet counted as exact installed 1.8.2 capability coverage** until artifact/version reconciliation is complete.
-
-## Geas / Pacts / Oaths / Authorities
-
-### Newer 1.9.0 branch evidence — high relevance to Binding, but not yet installed-proof
-
-The current source branch contains a first-class `GeasEffectType` registry with **34 active entries** across Pacts, Oaths and Authorities.
-
-Active pact names include, among others:
-
-- Pact of Defiance
-- Pact of the Parasite
-- Pact of the Lifeweaver
-- Pact of the Warlock
-- Pact of the Reaper
-- Pact of the Berserker
-- Pact of the Fortress
-- Pact of the Shield
-- Pact of Reciprocation
-- Pact of the Shattering Addict
-- Pact of the Arcanaphage
-- Pact of Rune Exploitation
-- Pact of Self Care
-- Pact of the High Priest
-- Pact of Patience Repaid
-- Pact of the Windswept
-- Pact of the Continuing Shot
-- Pact of the Skybreaker
-- Pact of Contentedness
-- Pact of the Lone Druid
-- Pact of the Profane Ascetic
-- Pact of the Profane Glutton
-- Pact of Combustion
-- Pact of the Prospector
-- Pact of the Blastweaver
-- Pact of Wyrd Reconstruction
-
-Current branch also registers six Oaths and two Authorities.
-
-Two multiplayer `Bond` concepts are present only as **commented-out source prototypes**:
-
-- Bond of Beloved Chains — proposed shared visibility/healing/no-friendly-fire semantics;
-- Bond of Death's Seekers — proposed distributed damage/scythe/armor tradeoffs.
-
-These commented entries are **not gameplay and must never be counted as provider coverage**. They are recorded only because they show the provider's design vocabulary.
-
-### Binding consequence
-
-Until exact 1.8.2 verification is complete, Black Arcana must assume that generic `pact/geas/oath` design is collision-prone. The intended Arcana Vincular delta should stay centered on **cross-provider typed relationship + external resource routing + transactional reserve/commit/refund**, not merely on naming a buff a Pact.
-
-## Spirit-resource authority
+## Typed spirit-resource authority
 
 A Malum spirit is not interchangeable with:
 
 - Goety Soul Energy;
-- Eidolon Soul Shards;
+- Eidolon Soul capability/Soul Shards;
+- Gravebound Souls;
 - Iron's mana;
-- blood mB / Hematic Reservoir;
-- Infernal Lava mB;
-- Toxony affinity/toxicity;
+- Vampirism blood;
+- Black Arcana Blood Reservoir mB;
+- Black Arcana Infernal Lava mB;
+- Toxony toxicity/affinity;
 - generic XP or health.
 
-Black Arcana's current Malum bridge already follows the correct authority principle: real provider spirit resources are queried/consumed/refunded by typed identity rather than synthesized from generic death events. Exact death→spirit attribution remains fail-closed where no causal provider hook proves the generated value.
+At minimum, the installed release line publicly demonstrates typed spirit recipe semantics, including `malum:earthen` in 1.8.2 datapack/issue evidence. The full installed 1.8.2 Spirit Type registry remains pending and must not be replaced with the later 1.9.0 nine-type list until independently confirmed.
 
-## Soulbinding / crafting surface
+## Black Arcana 07.02 boundary
 
-The current source family includes explicit `Soulbinding` recipes and Spirit Infusion/Focusing recipes that consume typed spirit counts. Even before every recipe is enumerated, this establishes an important dedup rule:
+Black Arcana already uses the correct authority posture for Malum:
 
-- `soulbinding` in Malum is a provider crafting/process term;
-- Black Arcana must not use the same term for an unrelated generic player-to-player binding system without clear namespace/UI distinction;
-- recipes that spend Malum spirits must continue to spend Malum spirits rather than a converted generic `soul mana` balance.
+- real Malum spirit resources are provider-owned;
+- automatic generic `death -> Malum spirit` harvesting is **fail-closed** when no verified causal/value hook proves the exact generated spirit identity/count;
+- Black Arcana must not synthesize a second spirit economy from generic death events;
+- read/consume/refund operations must use a verified provider boundary and preserve exactly-once settlement.
 
-Exact 1.8.2 Soulbinding recipe catalog remains pending.
+The Phase 2 catalog must not weaken that existing runtime safety decision merely because an exact 1.8.2 version commit was found.
 
-## Divine / Infernal overlap
+## Spirit Rites and world effects
 
-If confirmed in installed 1.8.2, Sacred and Infernal spirits create **resource-level thematic overlap** with the planned Divine and Infernal schools. This does not make Malum the owner of Holy miracles or the Nether-only Infernal Lava reservoir, but it blocks treating `sacred essence` or `infernal spirit` as newly invented resources.
+Malum Spirit Rites are persistent area/world effects rather than ordinary instant spell casts. The 1.8 changelog proves a Rite Locus model for world-affecting rites.
 
-The intended separation should remain:
+Consequences:
 
-- Malum Sacred/Infernal Spirit → typed spirit arcana reagent/resource;
-- Divine/Celestial → Holy/miracle/theurgy authority and celestial conditions/providers;
-- Infernal Lava → Nether-only external fluid/reservoir authority for Black Arcana's future Infernal system.
+- do not map a Rite Locus tick to repeated Black Arcana casts;
+- do not award mastery per tick merely because an area effect remains active;
+- do not reapply world mutation through Black Arcana `WorldEffectPolicy` after Malum already performed a provider-owned mutation;
+- if Black Arcana initiates a cross-provider operation, both the provider contract and Black Arcana world-safety admission must be preserved without double-processing.
 
-## Acquisition / progression
+The full 1.8.2 rite registry, recipes, ranges, durations and locus budgets remain pending.
 
-Malum progression is provider-owned through:
+## Geas collision with Binding / Pact design
 
-- Encyclopedia Arcana;
-- spirit harvesting/reaping;
-- Spirit Infusion;
-- Spirit Focusing;
-- totems / Spirit Rites;
-- soulbinding/ritual/crafting chains;
-- equipment and spirit-based materials.
+Malum already proves first-class Geas/Pact/Oath/Authority gameplay in the installed line. Therefore Arcana Vincular must not degenerate into a second generic pact-buff system.
 
-Black Arcana should not grant Malum spirit knowledge merely because a player learns a Black Arcana Soul/Binding perk.
+Its remaining viable delta is the previously approved architecture around:
+
+- typed persistent relationships;
+- explicit external resource authorities;
+- transactional reserve/commit/refund;
+- consent/ownership/protection;
+- lifecycle and recursion prevention;
+- cross-provider routing without collapsing provider resources.
+
+A name change is not a semantic gap.
+
+## Sacred / Infernal overlap
+
+Later branch evidence shows Sacred/Infernal spirit terminology, but the complete installed 1.8.2 spirit registry has not yet been reconciled. Do not promote all later spirit names to installed coverage merely because the overall typed-spirit system is proven.
+
+The safe separation remains:
+
+- Malum spirits = typed Spirit Arcana resources/reagents;
+- Divine/Celestial = Holy/miracle/theurgy domain if a distinct gap survives provider audit;
+- Black Arcana Infernal Lava = proposed Nether-bound external fluid/reservoir authority, not a renamed Malum spirit.
 
 ## Installed addon boundaries
 
 ### Gaze 1.1.7.1
 
-Extends Malum's ecosystem and must be cataloged separately where it adds player-facing capabilities.
+Separate Malum ecosystem addon. The 1.8 changelog explicitly notes that rite addons such as Gaze had to adapt to the Deferred Registry change, reinforcing that Gaze-provided rites must not be counted as base Malum content.
 
 ### Malum: Vestis
 
-Equipment/vanity extension; classify capability-by-capability rather than assuming new spell authority.
+Separate equipment/vanity extension. Classify capability-by-capability rather than assuming new spell authority.
 
 ### JEI Malum
 
-UI/recipe support, not a spell provider.
+UI/recipe support, not a magic authority.
 
-## Deduplication consequences
+## Exact gates still open
 
-Malum materially occupies or threatens overlap with:
-
-- typed soul/spirit resources;
-- spirit harvesting;
-- spirit crafting/infusion/focusing;
-- persistent totem/rite effects;
-- pacts/geas/oaths if present in the installed line;
-- healing/harming/raising/gravity/ward/smelting effect families through rites;
-- sacred/infernal thematic resources.
-
-This strongly narrows the Black Arcana gaps:
-
-- no generic `spirit mana`;
-- no duplicate spirit-harvest economy;
-- no generic pact system until 1.8.2 Geas presence is verified;
-- no new Sacred/Infernal spirit reagent names that collide with Malum;
-- Arcana Vincular remains viable specifically as a cross-provider typed router/relationship system.
-
-## Open audit items
-
-- extract exact installed 1.8.2 spirit type registry;
-- determine which of the current 24 rites existed in 1.8.2 and record exact recipes/ranges/effects;
-- determine whether Geas/Pacts/Oaths/Authorities are present in 1.8.2 or are 1.9.0 additions;
-- enumerate 1.8.2 Soulbinding recipes;
-- catalog Spirit Reaping causal hooks and exact output identity;
-- catalog Gaze and Vestis capability deltas;
-- identify public integration/API surfaces safe for Black Arcana;
-- reconcile exact license/provenance for the installed 1.8.2 source line.
+1. reconcile the full installed 1.8.2 Spirit Type registry without relying on later 1.9.0-only source;
+2. reconcile the exact installed 1.8.2 Spirit Rite registry and rite recipes/effects;
+3. enumerate the complete installed 1.8.2 Geas/Pact/Oath/Authority set and acquisition model;
+4. enumerate installed 1.8.2 Soulbinding/Infusion/Focusing recipes where relevant to deduplication;
+5. identify a safe public integration boundary for spirit query/consume/refund and spirit-reaping causality;
+6. validate Rite Locus/world-effect lifecycle and dedup semantics in runtime;
+7. validate Spellwoven Sprite player-attributed block breaking in the exact modpack before RPG mastery consumes it;
+8. reconcile the upstream license conflict before source-code internals inform implementable Black Arcana specs;
+9. catalog Gaze/Vestis deltas separately.
 
 ## Phase 3 gate
 
-Malum-related implementation is `BLOCKED` until exact 1.8.2 artifact capability reconciliation is complete.
+Malum-related new design remains `BLOCKED` until enough of the exact 1.8.2 provider surface is reconciled to distinguish true gaps from renames/partial overlaps.
+
+Finding the exact version commit does **not** by itself authorize source-internal integration.
