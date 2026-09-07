@@ -51,7 +51,7 @@ Autoridade de presença/JAR/versão deste checkpoint: `modlist(1).txt` com **612
 | `disenchanting_table` | Dis-Enchanting Table | `disenchanting_table-merged-1.21.1-5.0.2.jar` | `5.0.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `discerning_the_eldritch` | Discerning The Eldritch | `discerning_the_eldritch-1.4.4-1.21.jar` | `1.4.4-1.21` | SOURCE-PINNED 1.4.4 / CATÁLOGO 22/22 COMPLETO / RUNTIME QA PENDENTE | Δ 1.4.3-1.21→1.4.4-1.21 |
 | `dreamless_spells` | Dreamless Spells | `dreamless_spells-1.1.9.jar` | `1.1.9` | SOURCE-PINNED 1.1.9 / CATÁLOGO 4/4 COMPLETO / EMPTY PROGRESSION + COUNTERSPELL OVERLAY QA-BLOCKED / RUNTIME QA PENDENTE |  |
-| `eidolon_repraised` | Eidolon:Repraised | `eidolon_repraised-1.21.1-0.5.0.2.jar` | `0.5.0.2` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
+| `eidolon_repraised` | Eidolon:Repraised | `eidolon_repraised-1.21.1-0.5.0.2.jar` | `0.5.0.2` | SOURCE-PINNED 0.5.0.2 / SPELL 20/20 / OFFICIAL CHANTS 18/18 / CONVERSIONS 4/4 / RITUAL RECIPES 24/24 / RESEARCH 16/16 / RUNTIME QA + SURVIVAL REACHABILITY PENDENTES |  |
 | `emf_compat_iron_spells` | EMF Compat: Iron's Spells | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | `2.0.0` | COBERTURA ADICIONADA 2026-09-06 / COMPAT VISUAL / CATÁLOGO GRANULAR PENDENTE | novo na cobertura mágica do guia |
 | `ess_requiem` | Ender's Spells and Stuff: Requiem | `ess_requiem-0.1.7.jar` | `0.1.7` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `efiscompat` | Epic Fight & Iron's Spellbook animation compat | `efiscompat-3.1.0.jar` | `3.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -120,5 +120,6 @@ Autoridade de presença/JAR/versão deste checkpoint: `modlist(1).txt` com **612
 - Sete entradas que já estavam na cobertura consolidada de 2026-09-06 foram materializadas aqui: `apothic_attributes`, `apothic_spawners`, `apothic_compat`, `apothic_compats`, `irons_spells_js`, `kubejsarsnouveau` e `emf_compat_iron_spells`.
 - Duas entradas novas da modlist 612 foram triadas como magic-related e adicionadas: `ironsable_wind` e `morerelics`.
 - Drifts confirmados contra a modlist física e o Notion: Apotheosis `8.7.0→8.8.0`, Ars 'n' Spells `3.2.4→3.3.0` e Vampirism `1.10.12→1.10.13`.
+- `eidolon_repraised` foi fechado em source na versão `0.5.0.2`: spell registry 20/20, chants oficiais 18/18, conversions 4/4, ritual recipes 24/24 e research registry 16/16; runtime QA e survival reachability permanecem pendentes.
 - `morerelics` permanece **fail-closed** para integração/catalogação semântica até a incompatibilidade declarada com a linha Relics `0.12` instalada ser tratada como risco operacional e revalidada.
 - Nenhuma entrada é promovida a “catalogada” apenas por estar presente nesta fila.
