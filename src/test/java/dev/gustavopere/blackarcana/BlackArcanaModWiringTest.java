@@ -33,6 +33,17 @@ class BlackArcanaModWiringTest {
         assertRegistered(source, "MinecraftNoeticRuntime");
     }
 
+    @Test
+    void noeticViewClientboundTransportIsRegisteredOnModBus() throws IOException {
+        String source = Files.readString(MOD_SOURCE);
+        assertTrue(
+            source.contains("import dev.gustavopere.blackarcana.network.neoforge.NoeticViewNetworkBridge;"),
+            "The composition root must import the Noetic clientbound transport bridge");
+        assertTrue(
+            source.contains("modEventBus.addListener(NoeticViewNetworkBridge::register);"),
+            "The Noetic clientbound payload must be registered on the mod event bus");
+    }
+
     private static void assertRegistered(String source, String runtime) {
         assertTrue(
             source.contains("import dev.gustavopere.blackarcana.integration.neoforge." + runtime + ";"),
