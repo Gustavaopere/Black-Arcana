@@ -12,7 +12,7 @@ This directory is the canonical Phase 2 inventory for every magic-relevant top-l
 - Phase 2I provider checkpoint through PR #75 — merged at `main@12f752eab7d6fc2861fb2c6e722b70c33bf82cf5`, including Vampirism Integrations, Werewolves, Goety, Goety addons, Malum evidence reconciliation and major Hexalia inventories.
 - Phase 2J Toxony checkpoint — merged through PR #78 at `main@15f03291bc1d2955dc7faab8cfa4ef4eb991f4af`; exact 0.10.7 Toxicity/Oil/Mutagen/Affinity factual catalog and provenance boundary are canonical.
 - Phase 2K Mobstein checkpoint — merged through PR #79 at `main@3fa87ec0c43b4e57e06b540642f99ef258459358`; exact installed 5.4.4 artifact plus publisher-public resurrection/anatomy/experiment/structure coverage are canonical under the ARR/public-only boundary.
-- Phase 2L Apprentice's Codex candidate checkpoint — current branch `docs/magic-catalog-phase2l-apprentice-codex`; exact installed `0.9.7.1` identity and exact source pin `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`, with 83/83 spell pages and provider-wide registry/acquisition/compat coverage complete at source-catalog level. It is not canonical until PR/CI/merge complete.
+- Phase 2L Apprentice's Codex checkpoint — exact installed `0.9.7.1` identity and exact source pin `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`, with 83/83 spell pages and provider-wide registry/acquisition/compat coverage complete at source-catalog level; full runtime QA remains separately pending.
 - Subsequent Phase 2 documentation is merged incrementally when coherent and CI-green; an incremental merge does not mean the complete catalog is finished.
 
 The Phase 2 baseline established the magic-relevant registry and a first set of provider pages, while multiple exact spell/glyph/ritual/power inventories remain explicitly incomplete.
@@ -161,7 +161,7 @@ Examples include:
 
 ### Next high-value provider checkpoint
 
-Phase 2L does **not** preselect its successor. After Phase 2L is merged, the next provider checkpoint must be chosen only after a fresh read of the then-current `main`, physical modlist, Notion context and provider audit queue, preserving any parallel work already integrated. A stale “next provider” recommendation must never override that reconciliation.
+Phase 2L does **not** preselect its successor. After Phase 2L is merged, the next provider checkpoint must be chosen only after a fresh read of the then-current `main`, physical modlist, Notion context and provider audit queue, preserving any newer parallel catalog work already merged into `main`. A stale “next provider” recommendation must never override that reconciliation.
 
 ## Output
 
