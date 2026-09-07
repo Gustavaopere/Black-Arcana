@@ -27,4 +27,4 @@ Authority = Iron's teleport pipeline + echo entity. Não implementar segundo ret
 
 ## QA
 
-Validar obstáculos,跨-dimension/portal interactions e anti-magic com player montado. Falhas devem manter comportamento provider-native.
+Validar obstáculos, interações entre dimensões/portais e anti-magic com player montado. Falhas devem manter comportamento provider-native.
