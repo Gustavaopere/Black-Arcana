@@ -28,7 +28,9 @@ class NoeticViewSyncServiceTest {
         List<NoeticViewTransitionTracker.Transition> begin = NoeticViewSyncService.reconcile(
                 runtime,
                 tracker,
-                id -> id.equals(target) ? OptionalInt.of(27) : OptionalInt.empty());
+                (viewerId, targetId) -> viewerId.equals(viewer) && targetId.equals(target)
+                        ? OptionalInt.of(27)
+                        : OptionalInt.empty());
         assertEquals(List.of(new NoeticViewTransitionTracker.Transition(
                 viewer,
                 new NoeticViewPayload(
@@ -40,7 +42,9 @@ class NoeticViewSyncServiceTest {
         assertEquals(List.of(), NoeticViewSyncService.reconcile(
                 runtime,
                 tracker,
-                id -> id.equals(target) ? OptionalInt.of(27) : OptionalInt.empty()));
+                (viewerId, targetId) -> viewerId.equals(viewer) && targetId.equals(target)
+                        ? OptionalInt.of(27)
+                        : OptionalInt.empty()));
 
         runtime.close(viewer, NoeticObservationSession.CloseReason.EXPLICIT);
         assertEquals(List.of(new NoeticViewTransitionTracker.Transition(
@@ -49,7 +53,10 @@ class NoeticViewSyncServiceTest {
                         ArcanaProtocol.VERSION,
                         NoeticViewPayload.Action.END,
                         NoeticObservationKind.BORROWED_SIGHT,
-                        27))), NoeticViewSyncService.reconcile(runtime, tracker, id -> OptionalInt.empty()));
+                        27))), NoeticViewSyncService.reconcile(
+                                runtime,
+                                tracker,
+                                (viewerId, targetId) -> OptionalInt.empty()));
         assertEquals(0, tracker.trackedCount());
     }
 
@@ -61,7 +68,7 @@ class NoeticViewSyncServiceTest {
         NoeticViewTransitionTracker tracker = new NoeticViewTransitionTracker(1);
         runtime.start(viewer, target, NoeticObservationKind.BORROWED_SIGHT, 0L, 20);
 
-        NoeticViewSyncService.reconcile(runtime, tracker, id -> OptionalInt.of(9));
+        NoeticViewSyncService.reconcile(runtime, tracker, (viewerId, targetId) -> OptionalInt.of(9));
 
         assertEquals(List.of(new NoeticViewTransitionTracker.Transition(
                 viewer,
@@ -69,7 +76,10 @@ class NoeticViewSyncServiceTest {
                         ArcanaProtocol.VERSION,
                         NoeticViewPayload.Action.END,
                         NoeticObservationKind.BORROWED_SIGHT,
-                        9))), NoeticViewSyncService.reconcile(runtime, tracker, id -> OptionalInt.empty()));
+                        9))), NoeticViewSyncService.reconcile(
+                                runtime,
+                                tracker,
+                                (viewerId, targetId) -> OptionalInt.empty()));
         assertEquals(0, tracker.trackedCount());
     }
 }
