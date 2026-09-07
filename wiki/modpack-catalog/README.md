@@ -31,12 +31,13 @@ including the current provider inventory, deduplication policy and audit queue.
 `meta/PROVIDER-AUDIT-QUEUE.md` remains the full 103-provider queue. Narrow status overlays may be used during incremental provider work to avoid destructive whole-table rewrites. Current overlays:
 
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md) — prevails only for `goety_cataclysm` and `goetyiron`;
-- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md) — prevails only for `malum`, `hexalia`, `toxony` and `mobstein` until integral queue regeneration.
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md) — prevails only for `malum`, `hexalia`, `toxony`, `mobstein` and `monstersspellbooks` until integral queue regeneration.
 
 Capability-matrix deltas follow the same narrow-overlay rule:
 
 - [`meta/CAPABILITY-MATRIX-DELTA-TOXONY.md`](meta/CAPABILITY-MATRIX-DELTA-TOXONY.md) records the current Toxony semantic delta;
-- [`meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md`](meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md) records the current Mobstein resurrection/body/experiment semantic delta.
+- [`meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md`](meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md) records the current Mobstein resurrection/body/experiment semantic delta;
+- [`meta/CAPABILITY-MATRIX-DELTA-MONSTERS-SPELLBOOKS.md`](meta/CAPABILITY-MATRIX-DELTA-MONSTERS-SPELLBOOKS.md) records the current Monsters & Spellbooks Necro/Aero-correction/gear semantic delta.
 
 These overlays prevail only for the families they name until the main matrix is regenerated.
 
@@ -81,7 +82,8 @@ Examples:
 - Malum: Spirit Rites / Geas-Pacts / spirits / systems;
 - Hexalia: brews / rituals / infusions / mutations / processing / censer / items;
 - Toxony: effects / oils / mutagens, with Toxicity/Tolerance/Affinity progression documented as provider systems;
-- Mobstein: resurrection/body/organ/experiment systems documented under its provider directory without inventing registry-level subclasses that public evidence does not prove.
+- Mobstein: resurrection/body/organ/experiment systems documented under its provider directory without inventing registry-level subclasses that public evidence does not prove;
+- Monsters & Spellbooks: current Necro/provider-level semantics plus publisher changelog evidence, while exact 0.0.16.3 registry membership remains explicitly incomplete and stale Aero assumptions are corrected rather than preserved.
 
 No category is invented merely to make the directory tree look symmetrical.
 
@@ -119,6 +121,7 @@ Ars Nouveau is compositional. Phase 2 catalogs forms, effects, augments, rituals
 - Blood Binding is not a separate school: the existing Iron's **Blood** school is the target of the planned blood-resource reform.
 - Chaos and Order remain candidate Iron's schools pending complete semantic deduplication.
 - Infernal remains candidate pending full audit of Fire, Goety, Cataclysm/Ignis, Soul Fire and related providers.
+- Monsters & Spellbooks **Aero** is not counted as active exact-current school coverage: 0.0.16.2 soft-deletes it and redirects to SnackPirate's Aeromancy, and 0.0.16.3 removes remaining Aero files/content. The generic project header still saying two schools is stale/ambiguous relative to these exact release notes.
 
 ## High-value providers already advanced
 
@@ -136,7 +139,8 @@ The granular queue plus explicit overlays remain authoritative for exact per-row
 - Malum `1.8.2` — exact version-line metadata/publisher changelog advanced Spirit Rite/Geas/spirit-resource coverage, but source-internal completion remains blocked by licensing conflict and runtime QA;
 - Hexalia — public 1.3.6 source pin with MIT provenance; 8/8 brews, 19/19 player-facing Nature's Ritual recipes, 6/6 Celestial Infusions, 21/21 mutations, 12/12 Mortar recipes, 10/10 Censer combinations and major capability-bearing items audited; installed filename/runtime-version mismatch and API/runtime QA remain;
 - Toxony `0.10.7` — exact installed artifact + exact public source-version pin; 5/5 harmful effects, 9/9 Oils, 7/7 Mutagen effect IDs, 11/11 Affinities, threshold selection, major Mutagen mechanics and external compat overlaps audited factually; GPLv3/LGPLv3 provenance conflict, supported-API and runtime gates remain fail-closed;
-- Mobstein `5.4.4` — exact installed artifact + exact CurseForge release; publisher guide closes 10 resurrected forms, 6 Surgery Stretch types, 7 failed experiments and the major body/organ/syringe/structure/Witherstein semantics; 5.4.4's Sable compatibility claim is recorded, while ARR/no official source/API and exact current-stack runtime QA keep provider-specific integration fail-closed.
+- Mobstein `5.4.4` — exact installed artifact + exact CurseForge release; publisher guide closes 10 resurrected forms, 6 Surgery Stretch types, 7 failed experiments and the major body/organ/syringe/structure/Witherstein semantics; 5.4.4's Sable compatibility claim is recorded, while ARR/no official source/API and exact current-stack runtime QA keep provider-specific integration fail-closed;
+- Monsters & Spellbooks `0.0.16.3` — exact installed artifact + exact CurseForge file; publisher project/release history establishes large Necro/curses/summon/gear coverage and corrects Aero to legacy/soft-deleted, while the linked source remains at metadata 0.0.14/ARR versus current CurseForge MIT, so exact current registry/API/acquisition and source-derived implementation stay fail-closed.
 
 Source-pinned means the source catalog is tied to an exact revision. Release/artifact-pinned is weaker and is stated separately. Neither state means runtime validation unless that gate is separately recorded.
 
@@ -144,9 +148,10 @@ Source-pinned means the source catalog is tied to an exact revision. Release/art
 
 Examples include:
 
-- exact installed capability reconciliation for **Monsters & Spellbooks 0.0.16.3** and other still-generic base/cross-domain providers;
+- exact installed capability reconciliation for **More Relics 1.7.7** and other still-generic base/cross-domain providers;
 - remaining Malum registry details that cannot be promoted safely under the current provenance conflict;
-- exact runtime/API reconciliation for Hexalia, Toxony and Mobstein after their factual/semantic catalogs;
+- exact runtime/API reconciliation for Hexalia, Toxony, Mobstein and Monsters & Spellbooks after their factual/semantic catalogs;
+- exact current Monsters & Spellbooks spell registry/acquisition and exact-version source/license reconciliation;
 - exact current inventories/numbers for providers such as Apprentice's Codex, Cataclysm: Spellbooks, Leyline and Somake where exact installed internals remain incomplete;
 - remaining Ars base/addon primitives not yet normalized to the same confidence level;
 - pending Iron's ecosystem content/gear/compat providers listed in `meta/PROVIDER-AUDIT-QUEUE.md`;
@@ -156,9 +161,9 @@ Examples include:
 
 ### Next high-value provider checkpoint
 
-After the Mobstein reconciliation, the next adjacent unresolved provider in the canonical queue is **Monsters & Spellbooks `0.0.16.3`**.
+After the Monsters & Spellbooks reconciliation, the next adjacent unresolved provider in the canonical queue is **More Relics `1.7.7`**.
 
-Before cataloging Monsters & Spellbooks, its exact installed JAR/mod id/runtime identity must be re-read from the current modlist and any source/API claims must be tied to exact public version evidence and provenance. The existing provider page/queue is not sufficient authority by itself.
+Before cataloging More Relics, re-read its exact installed JAR/mod id/runtime identity from the current modlist and reconcile its exact public dependency/version support against the installed Relics `0.12.8`. The current curatorial decision `Manter` is not evidence that provider-specific hooks are compatible.
 
 ## Output
 
