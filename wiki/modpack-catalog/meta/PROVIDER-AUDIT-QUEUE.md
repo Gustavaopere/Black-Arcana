@@ -43,7 +43,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `crystal_chronicles` | CrystalChronicles | `crystal_chronicles-0.1.3-alpha.jar` | `0.1.3-alpha` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `darkermagic` | Deeper and Darker: Spellbooks | `darkermagic-1.3.3-1.21.1-ver.b.jar` | `1.3.3-1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `disenchanting_table` | Dis-Enchanting Table | `disenchanting_table-merged-1.21.1-5.0.2.jar` | `5.0.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `discerning_the_eldritch` | Discerning The Eldritch | `discerning_the_eldritch-1.4.4-1.21.jar` | `1.4.4-1.21` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 1.4.3-1.21→1.4.4-1.21 |
+| `discerning_the_eldritch` | Discerning The Eldritch | `discerning_the_eldritch-1.4.4-1.21.jar` | `1.4.4-1.21` | SOURCE-PINNED 1.4.4 / CATÁLOGO 22/22 COMPLETO / RUNTIME QA PENDENTE | Δ 1.4.3-1.21→1.4.4-1.21 |
 | `dreamless_spells` | Dreamless Spells | `dreamless_spells-1.1.9.jar` | `1.1.9` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `eidolon_repraised` | Eidolon:Repraised | `eidolon_repraised-1.21.1-0.5.0.2.jar` | `0.5.0.2` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
 | `ess_requiem` | Ender's Spells and Stuff: Requiem | `ess_requiem-0.1.7.jar` | `0.1.7` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -60,13 +60,13 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `hazennstuff` | Hazen N Stuff | `hazennstuff-1.4.0.14.jar` | `1.4.0.14` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `hazentouvelib` | HazentouveLib | `hazentouvelib-1.0.9.jar` | `1.0.9` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `hexalia` | Hexalia | `hexalia-neoforge-1.3.6.jar` | `1.3.5` | GUIA+WEB LIDOS / RITUAIS-BREWS CATÁLOGO PENDENTE |  |
-| `iss_magicfromtheeast` | ISS: Magic From The East | `iss_magicfromtheeast-1.1.5.jar` | `1.1.5` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `iss_magicfromtheeast` | ISS: Magic From The East | `iss_magicfromtheeast-1.1.5.jar` | `1.1.5` | SOURCE-PINNED 1.1.5 / CATÁLOGO 22/22 COMPLETO / RUNTIME QA PENDENTE |  |
 | `ignissoulfires_spellbooks` | Ignis Soulfires: Spellbooks | `ignissoulfires_spellbooks-1.1.0.jar` | `1.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `immersive_portal_irons_spells_n_spellbooks_addon` | Immersive Portal - Iron's Spells 'n Spellbooks Addon | `immersive_portal_irons_spells_n_spellbooks_addon-1.0.1.jar` | `1.0.1` | BRIDGE DE PORTAL / ARQUITETURA DOCUMENTADA |  |
 | `irons_apothic` | Iron's Apothic | `irons_apothic-2.2.1.jar` | `2.2.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `irons_jewelry` | Iron's Gems 'n Jewelry | `irons_jewelry-1.21.1-2.0.2.jar` | `1.21.1-2.0.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `irons_lib` | Iron's Lib | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `irons_spellbooks` | Iron's Spells 'n Spellbooks | `irons_spellbooks-1.21.1-3.16.3.jar` | `1.21.1-3.16.3` | BASE PROVIDER / CATÁLOGO COMPLETO PENDENTE |  |
+| `irons_spellbooks` | Iron's Spells 'n Spellbooks | `irons_spellbooks-1.21.1-3.16.3.jar` | `1.21.1-3.16.3` | BASE PROVIDER / CATÁLOGO 110/110 COMPLETO |  |
 | `recolor_tablet` | Iron's Spells 'n Spellbooks: Recolor | `recolor_tablet-1.3.2+1.21.1.jar` | `1.3.2+1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 1.2.5+1.21.1→1.3.2+1.21.1 |
 | `ironsable` | Ironsable | `ironsable-1.2.0.jar` | `1.2.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `legendary_spellbooks` | Legendary Spellbooks | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -77,7 +77,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `monsterspellbooks` | Monsters & Spellbooks | `monsterspellbooks-0.0.16.3.jar` | `0.0.16.3` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 0.0.14→0.0.16.3 |
 | `not_enough_glyphs` | Not Enough Glyphs | `not_enough_glyphs-1.21.1-4.6.1.jar` | `4.6.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `ozymandias_sundries` | Ozymandias Sundries | `ozymandias_sundries-0.0.5.jar` | `0.0.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `paladin_spells` | Paladin Spells - Iron's Spells 'n Spellbooks Addon | `paladin_spells-1.21.1-1.1.1.jar` | `1.21.1-1.1.1` | SOURCE AUDIT 1.21.1 / 5 SPELLS / LIVE QA PENDENTE |  |
+| `paladin_spells` | Paladin Spells - Iron's Spells 'n Spellbooks Addon | `paladin_spells-1.21.1-1.1.1.jar` | `1.21.1-1.1.1` | SOURCE AUDIT 1.21.1 / CATÁLOGO 5/5 COMPLETO / LIVE QA PENDENTE |  |
 | `relics` | Relics | `relics-1.21.1-0.12.8.jar` | `0.12.8` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `reliquary` | Reliquary Reincarnations | `reliquary-1.21.1-2.0.80.1570.jar` | `2.0.80` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `reliquified_ars_nouveau` | Reliquified Ars Nouveau | `reliquified_ars_nouveau-1.21.1-0.8.1.jar` | `0.8.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
