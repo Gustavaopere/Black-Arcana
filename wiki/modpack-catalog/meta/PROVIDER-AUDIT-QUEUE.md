@@ -68,7 +68,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `irons_lib` | Iron's Lib | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `irons_spellbooks` | Iron's Spells 'n Spellbooks | `irons_spellbooks-1.21.1-3.16.3.jar` | `1.21.1-3.16.3` | BASE PROVIDER / CATÁLOGO 110/110 COMPLETO |  |
 | `recolor_tablet` | Iron's Spells 'n Spellbooks: Recolor | `recolor_tablet-1.3.2+1.21.1.jar` | `1.3.2+1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 1.2.5+1.21.1→1.3.2+1.21.1 |
-| `ironsable` | Ironsable | `ironsable-1.2.0.jar` | `1.2.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `ironsable` | Ironsable | `ironsable-1.2.0.jar` | `1.2.0` | RELEASE-PINNED 1.2.0 / RUNTIME REGISTRY 7/7 / CATÁLOGO 7/7 COMPLETO / 10 BASE-SPELL PHYSICS OVERLAYS / JAR BYTECODE QA PENDENTE |  |
 | `legendary_spellbooks` | Legendary Spellbooks | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `leylines` | Leyline Spellbooks | `leylines-1.0.3.jar` | `1.0.3` | RELEASE EXATA 1.0.3 / SOURCE PÚBLICO NÃO LOCALIZADO / JAR EXTRACTION PENDENTE |  |
 | `malum` | Malum | `malum-1.21.1-1.8.2.jar` | `1.8.2` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
