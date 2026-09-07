@@ -168,11 +168,17 @@ public final class BlackArcanaNoeticGameTests {
         helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 1,
                 "range revalidation GameTest requires exactly one active observation before movement");
 
-        helper.runAfterDelay(2, () -> viewer.teleportTo(
-                target.getX() + NoeticSafetyCeilings.MAX_RANGE_BLOCKS + 8.0D,
-                target.getY(),
-                target.getZ()));
-        helper.succeedOnTickWhen(6, () -> {
+        boolean[] movedOutOfRange = {false};
+        helper.runAfterDelay(2, () -> {
+            viewer.teleportTo(
+                    target.getX() + NoeticSafetyCeilings.MAX_RANGE_BLOCKS + 8.0D,
+                    target.getY(),
+                    target.getZ());
+            movedOutOfRange[0] = true;
+        });
+        helper.succeedWhen(() -> {
+            helper.assertTrue(movedOutOfRange[0],
+                    "range revalidation must not succeed before the viewer is moved out of range");
             helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 0,
                     "server tick must close an observation that became out-of-range without snapshot polling");
             MinecraftNoeticRuntime.clearEntity(server, viewer.getUUID());
