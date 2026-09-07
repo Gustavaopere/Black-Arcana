@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 /** Stateless projection of bounded canonical Noetic sessions into client presentation transitions. */
 final class NoeticViewSyncService {
@@ -16,7 +16,7 @@ final class NoeticViewSyncService {
     static List<NoeticViewTransitionTracker.Transition> reconcile(
             NoeticObservationRuntime runtime,
             NoeticViewTransitionTracker tracker,
-            Function<UUID, OptionalInt> loadedTargetIds
+            BiFunction<UUID, UUID, OptionalInt> loadedTargetIds
     ) {
         Objects.requireNonNull(runtime, "runtime");
         Objects.requireNonNull(tracker, "tracker");
