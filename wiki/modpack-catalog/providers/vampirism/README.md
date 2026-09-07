@@ -1,6 +1,6 @@
 # Vampirism 1.10.13 — provider audit
 
-Status: `SOURCE-PINNED 1.10.13 / CATÁLOGO GRANULAR BASE COMPLETO / RUNTIME QA + BLOODLINES/VAMPIRE SPELLS INTEROP PENDENTES`
+Status: `SOURCE-PINNED 1.10.13 / CATÁLOGO GRANULAR BASE COMPLETO / VAMPIRE SPELLS 0.0.9 SOURCE-CATALOGADO / RUNTIME QA + BLOODLINES/DEMAIS ADDON INTEROP PENDENTES`
 
 ## Autoridade da versão
 
@@ -68,6 +68,7 @@ Black Arcana deve tratar essas superfícies como provider-native first. Não dev
 - [`TASK-MINION-REFINEMENT-CATALOG.md`](./TASK-MINION-REFINEMENT-CATALOG.md): 46 tasks, 10 NPC Entity Actions, 7 Minion Tasks e 47 refinements.
 - [`TECHNICAL-AUDIT.md`](./TECHNICAL-AUDIT.md): API pública, registries, hooks, gates, authority, causalidade e riscos.
 - [`INTEGRATION-RULES.md`](./INTEGRATION-RULES.md): contrato Black Arcana ↔ Vampirism, incluindo reservoir, deduplicação e fail-closed.
+- [`../vampire-spells-addon/README.md`](../vampire-spells-addon/README.md): bridge 0.0.9 source-pinned entre Iron's Blood/Holy e Vampirism; não altera a authority das native Actions.
 
 ## Regra de autoridade
 
@@ -113,12 +114,15 @@ Black Arcana deve tratar essas superfícies como provider-native first. Não dev
 8. **Natural regeneration não é lifesteal.** O blood/saturation loop cura nativamente; perks de vampirismo devem preservar a causalidade de dano/origem em vez de classificar `LivingHealEvent` genericamente.
 9. **Reservatório grande pode usar o fluido real**, mas capacidade/volume do tanque não altera implicitamente a barra nativa 20/20 do jogador.
 10. **Village capture tem hooks públicos próprios.** Completion-sensitive rewards devem preferir `VillagerCaptureFinish.Post`, não o início da captura.
+11. **Vampire Spells Addon é bridge estreita, não unificação global.** A release 0.0.9 pode substituir atomicamente mana por blood em casts Blood elegíveis e aplica overlays Holy, mas native Vampirism Actions continuam fora do spell pipeline.
 
 ## Estado de fechamento desta auditoria
 
 O **catálogo granular base** do provider está fechado em source para 1.10.13: actions, skill registries/topologia, progressão normal/Lord, blood economy, tasks, minions, refinements, attributes, registries públicos, hooks/events e contrato Black Arcana foram documentados.
 
-Isso **não** significa runtime QA confirmado e **não** incorpora automaticamente semântica de addons instalados.
+A bridge **Vampire Spells Addon 0.0.9** também possui agora contrato source-pinned separado. Isso não promove os internals do addon a runtime confirmado no pack e não altera a authority das native Vampirism Actions.
+
+Isso **não** significa runtime QA confirmado e **não** incorpora automaticamente semântica de outros addons instalados.
 
 ## Fail-closed / runtime QA ainda necessário
 
@@ -132,7 +136,8 @@ Permanecem pendentes:
 - validar Hunter Table/Trainer e Altares sob reload/interrupção;
 - validar Lord Task rewards e ausência de duplicate settlement;
 - validar village capture hooks em runtime;
-- validar compatibilidade **Bloodlines 3.0.9** e **Vampire Spells Addon 0.0.9** antes de atribuir a eles qualquer override sobre Vampirism base;
+- validar compatibilidade **Bloodlines 3.0.9** antes de atribuir bloodline-specific overrides sobre Vampirism base;
+- validar **Vampire Spells Addon 0.0.9** em runtime contra o Iron's `3.16.3` instalado, incluindo reflection/mixins e ausência de double settlement;
 - validar deduplicação de kills/tasks/village capture com progressão Black Arcana.
 
 Até esses testes, o provider pode ser usado como autoridade documental/source-pinned, mas **não recebe estado de runtime QA confirmado**.
