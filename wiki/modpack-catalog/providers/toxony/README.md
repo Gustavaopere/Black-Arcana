@@ -1,216 +1,289 @@
-# Toxony
+# Toxony 0.10.7 — toxicology, oils and mutagen authority
 
-Status: `PHASE 2 — PROVIDER AUDIT IN PROGRESS`
+## Status
+
+`EXACT INSTALLED ARTIFACT 0.10.7 / EXACT PUBLIC SOURCE VERSION PIN 881bf7fe / 5 HARMFUL EFFECTS / 9 OILS / 7 MUTAGEN EFFECTS / 11 AFFINITIES / THRESHOLD MODEL AUDITED / IRON'S+VAMPIRISM+WEREWOLVES COMPAT SOURCE-OBSERVED / LICENSE CONFLICT GPLv3↔LGPLv3 / RUNTIME+API QA PENDING / FAIL-CLOSED FOR PROVIDER-SPECIFIC IMPLEMENTATION`
 
 ## Runtime identity
 
-- Provider: **Toxony**
-- Installed JAR: `toxony-0.10.7.jar`
-- Runtime version: `0.10.7`
-- Loader/game: NeoForge 1.21.1
-- Role: `TOXICITY / ALCHEMY / MUTAGEN / OIL PROVIDER`
-- Current modlist is authoritative for installed version.
+Current physical modlist authority:
 
-## Provenance / license
+- provider: **Toxony**;
+- installed JAR: `toxony-0.10.7.jar`;
+- mod id: `toxony`;
+- runtime version: `0.10.7`;
+- mixin config: `toxony.mixins.json`;
+- SHA-1: `d92e0d0ae2ece85c353f22463fbc7c61595fca20`;
+- CurseForge/package fingerprint: `1401862999`;
+- loader/game: NeoForge 1.21.1;
+- role: `TOXICITY / ALCHEMY / MUTAGEN / OIL PROVIDER`.
 
-Public upstream repository: `MrFrostyDev/Toxony_Mod`.
+The modlist remains authoritative for the binary actually installed in the pack.
 
-GitHub repository metadata currently reports `GPL-3.0`. Phase 2 may use provider documentation and source-visible runtime facts for auditing. Any Phase 3 code reuse/derivation must still pass the Black Arcana provenance ledger and GPL compatibility/obligation review; this page is **not** authorization to copy code.
+## Exact public source checkpoint
 
-## Provider identity
+Official public repository: `MrFrostyDev/Toxony_Mod`.
 
-Toxony is not an Iron's spell school. It is a player-state and preparation system built around:
+Exact version-line commit audited:
 
-- Toxicity / tolerance;
-- ingredient affinities and knowledge;
-- toxin effects;
-- oils applicable to equipment/projectiles;
-- mutagen transformations at toxicity thresholds;
-- Mortar & Pestle / Crucible / Alembic / Alchemical Forge progression;
-- monster-hunter gear and delivery systems.
+`881bf7fe632659e748c279966a2bf49b99f7503f`
 
-For Black Arcana Witchcraft, Toxony should remain the authority for toxicology and mutagenesis.
+At that commit:
 
-## Harmful effect catalog
+- `minecraft_version=1.21.1`;
+- `neo_version=21.1.221`;
+- `mod_id=toxony`;
+- `mod_version=0.10.7`;
+- Curios build dependency `9.5.1+1.21.1`;
+- Iron's build dependency `1.21.1-3.16.0`.
 
-Current registry exposes five Toxony harmful effects:
+The commit itself performs the public `0.10.6 -> 0.10.7` version bump and includes the 0.10.7 Plaguebringer recipe correction/update line.
 
-| ID | Provider description / role | Dedup impact |
-|---|---|---|
-| `toxony:hunt` | increases damage taken from wolves and attackers carrying Beast Mutagen | do not create a separate witch 'marked prey' toxin with the same condition |
-| `toxony:toxin` | causes large health loss over time and can kill rather than stopping at one heart | canonical lethal-toxin family |
-| `toxony:acid` | health loss over time plus temporary armor effectiveness reduction | canonical acid/corrosion family |
-| `toxony:flammable` | vulnerability to open flame; proximity can ignite target | canonical flammability primer |
-| `toxony:cripple` | increased physical damage taken | canonical physical-vulnerability toxin family |
+### License conflict — implementation gate
 
-## Oil registry
+The exact source checkpoint contains contradictory publisher evidence:
 
-Current provider registry exposes nine oils:
+- `gradle.properties` declares `GNU LGPL 3.0`;
+- public release metadata also identifies the project/release as LGPLv3;
+- the root `LICENSE` file at the same commit contains the **GNU GPL v3** license text.
 
-| Oil | Applied effects / semantic role |
-|---|---|
-| `toxony:poison_oil` | Poison |
-| `toxony:toxin_oil` | Toxony Toxin |
-| `toxony:fatigue_oil` | Slowness + Mining Fatigue + Weakness |
-| `toxony:fire_resistance_oil` | Fire Resistance |
-| `toxony:glowing_oil` | Glowing; applicability is restricted to weapon-enchantable items |
-| `toxony:acid_oil` | Toxony Acid |
-| `toxony:smoke_oil` | Slowness + Blindness + Weakness |
-| `toxony:regeneration_oil` | Regeneration + Instant Health |
-| `toxony:witchfire_oil` | Toxony Toxin + Flammable |
+Black Arcana therefore treats the source as usable for **read-only factual cataloging**, but not as an implementation-derivation authority until the upstream licensing conflict is reconciled.
 
-### Current delivery/capacity facts
+Consequences:
 
-The installed provider exposes oil pots, tox pots, bolts and wearable storage. Current item definitions show, among others:
+- no Toxony code/assets are copied or adapted;
+- source-visible classes/methods are not promoted automatically to supported API contracts;
+- provider-specific adapters remain fail-closed;
+- source-observed formulas and hooks remain separate from installed-runtime validation.
 
-- ordinary oil pots generally have 5 durability uses;
-- Tox pots generally have 3 durability uses;
-- Oil Pot Sash durability 16;
-- Oil Pot Bandolier durability 40;
-- Eternal Plague durability 64;
-- Poison/Glowing/Fire Resistance/Fatigue oil pots use provider max-use metadata 150;
-- Acid oil pot duration parameter 400;
-- Toxin, Regeneration, Smoke, Acid and Witchfire tox pots use provider max-use metadata 100;
-- dedicated bolts exist for Poison, Glowing, Witchfire, Toxin, Smoke and Regeneration.
+See [Technical audit](TECHNICAL-AUDIT.md).
 
-These parameters are provider internals exposed in current public source and must not be converted into Black Arcana constants without Phase 3 provenance/API review. For deduplication, the important fact is that Toxony already owns both **weapon coating** and **projectile delivery** of these chemical effects.
+## Provider identity and authority
 
-## Toxicity consumables / blends
+Toxony is not an Iron's spell school and not a Black Arcana resource provider. It owns a preparation/transformation system around:
 
-Current item definitions prove a tiered toxicity/tolerance economy. Representative current values:
+- player Toxicity and Tolerance;
+- threshold progression;
+- ingredient knowledge;
+- weighted Affinities;
+- persistent Mutagen state;
+- harmful toxin/corrosion effects;
+- Oils and delivery items/projectiles;
+- Mortar & Pestle, Crucible, Alembic and Alchemical Forge progression;
+- monster-hunter weapons/armor and compatibility behavior.
 
-| Item | Tox | Tolerance | Tier | Effect |
-|---|---:|---:|---:|---|
-| Poison Blend | 30 | 15 | 0 | Poison, 1000 ticks |
-| Toxic Blend | 40 | 25 | 1 | Toxin, 1000 ticks |
-| Pure Blend | 65 | 40 | 3 | Toxin, 1800 ticks |
-| Toxin item | 50 | 10 | 1 | Toxin II, 600 ticks |
+Black Arcana must not create a second generic Toxicity bar, duplicate Mutagen ledger or parallel Oil registry.
 
-Plants/materials also carry toxicity and **affinities** (examples include Forest, Cold, Sun, Ocean, Decay, Wind, Heat and Soul). Those affinities feed mutagen selection.
+## Canonical subcatalogs
 
-## Mutagen system
+- [Effects — 5/5](effects/README.md)
+- [Oils — 9/9](oils/README.md)
+- [Mutagens + Affinities + thresholds](mutagens/README.md)
+- [Technical/API/provenance audit](TECHNICAL-AUDIT.md)
+- [Black Arcana integration rules](INTEGRATION-RULES.md)
 
-Current registry exposes seven mutagen effects:
+## Registry counts at the exact 0.10.7 source checkpoint
 
-- `toxony:beast_mutagen`
-- `toxony:spirit_mutagen`
-- `toxony:aqua_mutagen`
-- `toxony:hollow_mutagen`
-- `toxony:necrotic_mutagen`
-- `toxony:infernal_mutagen`
-- `toxony:mob_mutagen`
+### Harmful effects — 5
 
-When toxicity crosses a new threshold, the provider performs mutagen selection **server-side** from accumulated affinity weights, can award multiple mutagens when multiple thresholds are skipped, clears accumulated affinities after selection, applies the mutagen state, and synchronizes ToxData to the player. This is provider-owned transformation authority and should not be reproduced as a Black Arcana parallel mutation tracker.
+1. `toxony:hunt`
+2. `toxony:toxin`
+3. `toxony:acid`
+4. `toxony:flammable`
+5. `toxony:cripple`
 
-### Beast Mutagen
+### Oils — 9
 
-- stage 0: hitting an entity grants a small burst of speed;
-- stage 1: +15% damage; meat yields more hunger/saturation;
-- stage 2: at night +30% movement speed and attacks apply Hunt.
+1. `toxony:poison_oil`
+2. `toxony:toxin_oil`
+3. `toxony:fatigue_oil`
+4. `toxony:fire_resistance_oil`
+5. `toxony:glowing_oil`
+6. `toxony:acid_oil`
+7. `toxony:smoke_oil`
+8. `toxony:regeneration_oil`
+9. `toxony:witchfire_oil`
 
-Public source also contains explicit Iron's compatibility for Nature Spell Power in this mutagen family. Exact modifier values/hooks will be cataloged separately before any bridge design.
+### Mutagen effects — 7
 
-### Aqua Mutagen
+1. `toxony:beast_mutagen`
+2. `toxony:spirit_mutagen`
+3. `toxony:aqua_mutagen`
+4. `toxony:hollow_mutagen`
+5. `toxony:necrotic_mutagen`
+6. `toxony:infernal_mutagen`
+7. `toxony:mob_mutagen`
 
-- stage 0: bonus oxygen in water;
-- stage 1: increased swim speed and normal mining speed underwater;
-- stage 2: regeneration and 2× oxygen in water; attacks create heavy knockback; +30% damage taken from fire-based sources.
+`mob_mutagen` is a distinct mob-toxicity transformation path. It is not one of the six player Affinity-selected candidates.
 
-### Hollow Mutagen
+## Toxicity / Tolerance / threshold state
 
-- stage 0: faster soul-sand traversal and increased knockback resistance;
-- stage 1: 15% damage reduction and slower hunger drain;
-- stage 2: permanent night vision, wall climbing, high knockback resistance, Weakness under direct sunlight.
+The exact source checkpoint stores synchronized player state for:
 
-### Necrotic Mutagen
+- Toxicity;
+- Tolerance;
+- current threshold;
+- Affinity weights;
+- up to three Mutagen entries;
+- known ingredients;
+- death state.
 
-- stage 0: raw food/rotten flesh heals; Hunger immunity;
-- stage 1: Poison/Wither immunity, retaliatory Poison, treated as undead;
-- stage 2: attacks apply Wither; one fatal-damage recovery to half health with a **2-day lockout**; Weakness under direct sunlight.
+Source constants:
 
-### Infernal Mutagen
+| Field | 0.10.7 source value |
+|---|---:|
+| minimum Tolerance | `10` |
+| default Tolerance | `30` |
+| maximum Tolerance | `999` |
+| maximum Mutagen entries | `3` |
+| threshold multiplier | `100` |
+| initial threshold goal | `100` |
 
-- stage 0: reduced damage while on fire;
-- stage 1: attackers are ignited; crouch-right-click can convert furnace-charcoal-compatible items into charcoal;
-- stage 2: Fire/Lava immunity; attacks ignite targets for 6 seconds; Weakness in water/rain.
+Threshold goal uses the provider triangular-number function:
 
-### Spirit Mutagen
+`goal(threshold) = ((threshold + 1) * (threshold + 2) / 2) * 100`
 
-- stage 0: 50% less damage from spirit-family entities (provider description cites Phantoms/Vexes) and 50% less fall damage;
-- stage 1: 20% chance to ignore physical damage and turn invisible; attacks may summon one Guided Spirit that damages/slows the target;
-- stage 2: permanent Slow Falling; summons three Guided Spirits instead of one; +30% magic damage taken.
+Because advancement checks use strict `tox > goal`, the practical player threshold crossings inside the 999 Tolerance ceiling are:
 
-### Mob Mutagen
+- first: `tox > 100`;
+- second: `tox > 300`;
+- third: `tox > 600`.
 
-Provider localization currently exposes increased total health and increased speed. Granular tier/selection semantics remain to be traced.
+A requested Toxicity value above current Tolerance is clamped to Tolerance and marks provider `deathState=true`. Toxicity at or below zero resets threshold progression. This state remains entirely Toxony-owned.
 
-## Explicit current integrations
+## Affinity registry — 11/11
 
-Public provider documentation declares compatibility with:
+| Affinity | Source index | Player Mutagen candidates |
+|---|---:|---|
+| `toxony:moon` | 1 | Beast, Spirit, Hollow |
+| `toxony:sun` | 2 | Beast, Infernal |
+| `toxony:ocean` | 3 | Aqua |
+| `toxony:forest` | 4 | Beast |
+| `toxony:wind` | 5 | Aqua |
+| `toxony:cold` | 6 | Hollow, Necrotic |
+| `toxony:soul` | 7 | Spirit, Necrotic |
+| `toxony:decay` | 8 | Necrotic |
+| `toxony:nether` | 9 | Infernal |
+| `toxony:end` | 10 | none |
+| `toxony:heat` | 11 | Infernal |
 
-- **Vampirism**: silver weapons gain value against vampires/werewolves;
-- **Iron's Spells 'n Spellbooks**: certain mutagens grant School Spell Power;
-- **Curios**: Toxicity Gauge can occupy a Charm slot.
+When a player gains one or more thresholds, the provider sums accumulated Affinity weights into each candidate Mutagen. Every candidate linked to an Affinity receives that Affinity's full weight. The greatest score wins, then Affinities are cleared.
 
-These integrations are high-priority dedup/authority surfaces. Black Arcana should prefer them rather than recreate spell-power mutagen bonuses.
+If several thresholds are skipped at once, selection is repeated once per skipped threshold **before** the shared Affinity map is cleared, so the same weighting basis may produce multiple entries.
 
-## Witchcraft consequences
+If no candidate exists, the source falls back to Beast Mutagen.
 
-Toxony materially occupies all of the following witchcraft niches:
+### Tie-order QA blocker
 
-- toxic ingredient knowledge;
-- toxicity/tolerance meter;
-- mutagen transformation;
-- affinity-driven transformation selection;
-- Poison/Toxin/Acid/Flammable/Cripple effects;
-- weapon oils;
-- throwable tox/oil delivery;
-- toxin bolts;
-- toxic plants and processing infrastructure.
+The located selection path uses a `HashMap` and replaces the winner only on a strictly greater score. It defines no explicit stable tie-break for equal scores. Black Arcana must not rely on a deterministic provider tie outcome until runtime/API behavior is verified.
 
-Therefore future Black Arcana/Hexalia witchcraft may **use Toxony reagents, oils, toxicity state or mutagens as provider-backed ingredients/conditions**, but must not introduce:
+## Mutagen stacking identity
 
-- a second generic Toxicity bar;
-- duplicate Poison/Toxin/Acid oils;
-- duplicate generic mutagen tiers;
-- a second affinity-selection system with the same purpose.
+The provider stores at most three Mutagen entries. Adding a fourth removes the oldest entry. Duplicate entries are not rejected; when the active Mutagen effects are rebuilt, duplicate entries stack the MobEffect amplifier.
 
-## Infernal consequences
+For catalog terminology:
 
-`Infernal Mutagen` occupies **personal fire adaptation**, not the planned Nether-only `Infernal Lava` reservoir economy. The planned Infernal school can remain distinct if it is based on external Nether resource authority, binding/reservoir infrastructure and destructive spellcasting rather than duplicating the mutagen's fire immunity/ignition traits.
+- amplifier `0` = first copy / stage 0;
+- amplifier `1` = second copy / stage 1;
+- amplifier `2` = third copy / stage 2.
 
-## Divine/Celestial consequences
+Do not convert these stages into Black Arcana progression levels.
 
-Toxony has Sun/Moon ingredient affinities and mutagen weaknesses to sunlight. These are chemistry/affinity semantics, not Holy miracle authority. They still block trivial 'sun ingredient = Divine spell' duplication.
+## Important correction — Necrotic resurrection
 
-## Binding / Souls consequences
+Previous catalog text described a **2-day lockout**. That is not the executable 0.10.7 source value.
 
-`Spirit Mutagen` already owns spirit-themed evasion and Guided Spirit summons. A future Binding/Soul system must use actual provider-owned soul/spirit resources or contracts and not recreate those combat effects as generic 'spirit bond' perks.
+The exact source sets:
 
-## Acquisition / progression
+`DEFAULT_RESURRECTION_COOLDOWN = 200`
 
-Toxony progression is tied to:
+with `48000` present only as a commented historical value. At 20 ticks/s, the source-observed cooldown is **10 seconds**.
 
-- Lost Journal / knowledge;
-- ingredient discovery;
-- ingredient affinities;
-- toxicity and tolerance;
-- threshold crossing;
-- processing blocks (Mortar & Pestle, Redstone Mortar, Copper Crucible, Alembic, Alchemical Forge);
-- prepared oils/toxins and delivery gear.
+At Necrotic stage 2, when the provider resurrection gate is active and the entity is dead/dying, health is restored to half maximum and the 200-tick cooldown starts.
 
-Mutagens are not ordinary potion effects that should be granted freely by Black Arcana. Their provider threshold and affinity progression is part of their identity.
+This is a high-impact runtime QA item because a stale description would materially change balance/dedup conclusions.
 
-## Open audit items
+## Iron's Spell Power compatibility — source-observed
 
-- enumerate all Affinities and exact mutagen mappings;
-- catalog exact oil crafting/processing recipes and acquisition gates;
-- catalog every Toxony–Iron's School Spell Power modifier and its values;
-- catalog Vampirism silver compatibility quantitatively;
-- record toxicity threshold formula/state limits from provider API/public behavior;
-- determine clean public API/event surfaces available for Black Arcana integration;
-- split oils/mutagens into individual capability pages for the final Wiki navigation.
+The Toxony 0.10.7 source was built against Iron's `1.21.1-3.16.0`; the current pack uses Iron's `1.21.1-3.16.3`.
+
+At Mutagen amplifier >=1, five source classes attempt to resolve an Iron's attribute and add `0.20` with `ADD_MULTIPLIED_TOTAL`:
+
+| Mutagen | Iron's attribute | Source modifier |
+|---|---|---:|
+| Beast | `nature_spell_power` | `+0.20` |
+| Aqua | `ice_spell_power` | `+0.20` |
+| Spirit | `evocation_spell_power` | `+0.20` |
+| Necrotic | `blood_spell_power` | `+0.20` |
+| Infernal | `fire_spell_power` | `+0.20` |
+
+These are Toxony-owned provider bonuses. Black Arcana and RPG Skill Tree must not add a second copy to “represent” the same Mutagen.
+
+Exact behavior with Iron's 3.16.3 remains runtime QA pending.
+
+## Vampirism / Werewolves silver compatibility — source-observed
+
+The exact source declares provider tag keys:
+
+- `vampirism:vampire`;
+- `werewolves:werewolf`.
+
+Its silver-damage helper multiplies damage by `1.5` when the target EntityType matches either tag. At the audited source pin, direct usages located include the Toxony Flintlock Ball and Flail Ball damage paths.
+
+Do not generalize this to “all silver items in the pack deal +50%” without separate evidence.
+
+## Curios compatibility
+
+Public provider documentation/release history identifies the Toxicity Gauge as Curios Charm-compatible. Curios remains authority for slot/equipment state. Black Arcana must not poll or mirror that state into a second equipment ledger.
+
+## Witchcraft / domain deduplication consequences
+
+Toxony materially occupies:
+
+- lethal toxin and corrosion families;
+- flammability priming;
+- weapon coatings and projectile chemical delivery;
+- player Toxicity/Tolerance progression;
+- affinity-weighted transformations;
+- persistent Mutagen stages;
+- spirit-themed combat adaptation;
+- personal fire adaptation;
+- conditional resurrection;
+- toxic ingredient discovery/alchemy.
+
+Consequently:
+
+- Hexalia/Black Arcana witchcraft may consume or react to provider-owned Toxony state only through a verified boundary;
+- Black Arcana must not introduce duplicate generic Poison/Toxin/Acid oils;
+- Black Arcana must not build a second affinity-to-mutagen progression graph;
+- Infernal Mutagen does not occupy the planned external Nether-fluid reservoir architecture, but it does occupy personal fire immunity/ignition adaptation;
+- Spirit Mutagen does not become a Black Arcana soul resource merely because it summons Guided Spirits;
+- Necrotic resurrection is a genuine overlap for resurrection/life-preservation semantics and must be accounted for in capability deduplication.
+
+## Safe integration posture
+
+- Toxony owns Toxicity, Tolerance, thresholds, Affinities, Mutagen state and Oil state.
+- No Black Arcana resource conversion may silently mutate those values.
+- No duplicate Iron's Spell Power modifier for an already-applied Mutagen.
+- No Mastery from continuous Toxicity/Mutagen ticks.
+- No double-processing of Toxony oil/projectile damage/effects.
+- The existence of `xyz.yfrostyf.toxony.api.*` packages is not, by itself, proof of a stable supported external API contract.
+- Source event classes are useful evidence of provider architecture but remain `NOT APPROVED AS ADAPTER BOUNDARY` until licensing, compatibility and runtime gates are reconciled.
+
+## Remaining open gates
+
+1. reconcile the GPLv3 root `LICENSE` versus LGPLv3 metadata/release declarations;
+2. verify installed JAR/runtime equivalence with source commit `881bf7fe...` where integration depends on internals;
+3. validate Toxony 0.10.7 against the pack's Iron's 3.16.3 rather than source baseline 3.16.0;
+4. execute runtime QA for threshold/tie behavior, duplicate Mutagen stacking and Necrotic resurrection cooldown;
+5. enumerate/cross-check player-facing recipes/acquisition for Oils and key alchemical blocks where needed for Wiki completeness;
+6. verify supported public API/event stability before implementing an adapter;
+7. validate Vampirism/Werewolves tag behavior against the exact installed provider versions.
 
 ## Phase 3 gate
 
-Toxony integration is `BLOCKED FOR IMPLEMENTATION` until provider/API surface and semantic overlaps are fully reconciled.
+Toxony now has a strong exact-version **factual** catalog, but provider-specific integration remains:
+
+`BLOCKED / FAIL-CLOSED`
+
+until license provenance, supported API boundary and exact-pack runtime compatibility are resolved. Source visibility is not implementation permission and source catalog completion is not runtime validation.
