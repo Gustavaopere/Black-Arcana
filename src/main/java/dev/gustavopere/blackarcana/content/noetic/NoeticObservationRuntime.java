@@ -60,6 +60,18 @@ public final class NoeticObservationRuntime {
         return Optional.ofNullable(sessionsByViewer.get(viewerId));
     }
 
+    /** Immutable value snapshots of the currently active bounded sessions. */
+    public synchronized List<ActiveSession> activeSessions() {
+        return sessionsByViewer.values().stream()
+                .map(session -> new ActiveSession(
+                        session.viewerId(),
+                        session.targetId(),
+                        session.kind(),
+                        session.startedAtTick(),
+                        session.expiresAtTick()))
+                .toList();
+    }
+
     public synchronized int activeCount() {
         return sessionsByViewer.size();
     }
@@ -109,5 +121,22 @@ public final class NoeticObservationRuntime {
             if (session.close(NoeticObservationSession.CloseReason.SERVER_STOP)) closed++;
         }
         return closed;
+    }
+
+    public record ActiveSession(
+            UUID viewerId,
+            UUID targetId,
+            NoeticObservationKind kind,
+            long startedAtTick,
+            long expiresAtTick
+    ) {
+        public ActiveSession {
+            Objects.requireNonNull(viewerId, "viewerId");
+            Objects.requireNonNull(targetId, "targetId");
+            Objects.requireNonNull(kind, "kind");
+            if (startedAtTick < 0L || expiresAtTick <= startedAtTick) {
+                throw new IllegalArgumentException("Noetic active-session snapshot tick bounds are invalid");
+            }
+        }
     }
 }
