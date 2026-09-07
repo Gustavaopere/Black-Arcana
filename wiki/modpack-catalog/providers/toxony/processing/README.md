@@ -2,7 +2,7 @@
 
 ## Status
 
-`7 RECIPE FAMILIES CONFIRMED / MORTAR 19/19 SOURCE-GENERATED RECIPES AUDITED / CORE OIL DELIVERY CAPACITY PRESERVED / OTHER FAMILY INVENTORIES PENDING / LICENSE+RUNTIME QA PENDING`
+`7 RECIPE FAMILIES CONFIRMED / MORTAR 19/19 SOURCE-GENERATED RECIPES AUDITED / CORE OIL DELIVERY CAPACITY PRESERVED / MENDING UNLOCK MISMATCH RECORDED / OTHER FAMILY INVENTORIES PENDING / LICENSE+RUNTIME QA PENDING`
 
 Exact source checkpoint: `MrFrostyDev/Toxony_Mod@881bf7fe632659e748c279966a2bf49b99f7503f`.
 
@@ -48,6 +48,15 @@ The exact `ToxonyMortarRecipes` source builds 19 generated recipes.
 | Mending Oil Pot | Honeycomb + Toxic Paste + Toxic Spit + Ocelot Mint | Empty Oil Pot |
 
 `Mending Oil Pot` is a dedicated special item/block path rather than one of the nine entries in the custom Oil registry. It must not be counted as a tenth registered Oil.
+
+### Mending Oil unlock mismatch
+
+The exact datagen source contains a provider-side discovery inconsistency:
+
+- recipe consumption uses `EMPTY_OIL_POT`;
+- the `unlockedByItems("has_empty_oil_pot", ...)` criterion is supplied `EMPTY_TOX_POT`.
+
+This is recorded as `SOURCE QA MISMATCH / RUNTIME BEHAVIOR NOT INFERRED`. Black Arcana must not patch around it or assume which item the upstream author intended. Recipe visibility/unlock behavior should be tested against the installed JAR if integration or Wiki acquisition guidance depends on it.
 
 ### Tier 2 Tox Pots — 5
 
