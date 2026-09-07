@@ -1,27 +1,27 @@
 # Bloodlines 3.0.9 — provider audit
 
-Status: `SOURCE-PINNED 3.0.9 / CORE REGISTRIES + PROGRESSION + RESOURCE AUTHORITY CATALOGED / ACTION DETAIL + RUNTIME QA PENDENTES`
+Status: `SOURCE-PINNED 3.0.9 / GRANULAR SOURCE CATALOG COMPLETE / RUNTIME QA + INSTALLED-ADDON INTEROP PENDING`
 
-## Autoridade da versão
+## Version authority
 
 - mod id: `bloodlines`
-- JAR instalado: `bloodlines-1.21-3.0.9.jar`
+- installed JAR: `bloodlines-1.21-3.0.9.jar`
 - runtime/version: `1.21-3.0.9`
 - Minecraft: `1.21.1`
 - loader: NeoForge
-- provider base obrigatório: Vampirism `1.10.13`
-- source oficial: `TheDrOfDoctoring/bloodlines`
-- source pin exato usado nesta auditoria: `c8fd517d204d09dfcb9a544c17d7df87755eaa5c`
+- required base provider: Vampirism `1.10.13`
+- official source: `TheDrOfDoctoring/bloodlines`
+- exact source pin: `c8fd517d204d09dfcb9a544c17d7df87755eaa5c`
 
-Esse commit é a autoridade escolhida porque contém as alterações da linha 3.0.9 e o próprio `gradle.properties` declara `mod_version=1.21-3.0.9`. O commit posterior em `master` observado durante a auditoria altera traduções, portanto não é necessário promovê-lo a autoridade mecânica desta build.
+This pin is the mechanical authority for the installed 3.0.9 line. Public prose and later commits are not promoted over the exact source when they disagree with it.
 
-## O que Bloodlines é no pack
+## Provider role in the pack
 
-Bloodlines é um addon estrutural de Vampirism. Ele não cria uma engine mágica independente; ele amplia as facções Vampire/Hunter com uma segunda camada de identidade e progressão que reutiliza registries, `ISkill`, `ISkillTree`, `IAction`, `Task` e o `SkillHandler` de Vampirism.
+Bloodlines is a structural Vampirism addon. It does not introduce a separate magic engine; it adds a second identity/progression layer to Vampire/Hunter players while reusing Vampirism registries and handlers for skills, skill trees, actions and tasks.
 
-A build 3.0.9 registra cinco bloodlines:
+The installed build registers five Bloodlines:
 
-| Bloodline | Faction base | Skill tree |
+| Bloodline | Base faction | Skill tree |
 |---|---|---|
 | Noble | Vampire | `bloodlines:vampire/noble` |
 | Zealot | Vampire | `bloodlines:vampire/zealot` |
@@ -29,17 +29,17 @@ A build 3.0.9 registra cinco bloodlines:
 | Bloodknight | Vampire | `bloodlines:vampire/bloodknight` |
 | Gravebound | Hunter | `bloodlines:hunter/gravebound` |
 
-O registry próprio de bloodlines é sincronizado e usa `bloodlines:empty` como default key. Cada `IBloodline` pertence a exatamente uma faction base.
+The custom Bloodline registry is synchronized and uses `bloodlines:empty` as its default key.
 
-## Inventário estrutural confirmado em source
+## Source-level inventory closed
 
-| Superfície | Quantidade confirmada |
+| Surface | Confirmed count |
 |---|---:|
-| Bloodlines registradas | **5** |
-| Vampire bloodlines | **4** |
-| Hunter bloodlines | **1** |
+| Bloodlines | **5** |
+| Vampire Bloodlines | **4** |
+| Hunter Bloodlines | **1** |
 | Bloodline skill trees | **5** |
-| `ISkill` registrations, incluindo roots/rank skills | **101** |
+| `ISkill` registrations | **101** |
 | Noble skills | **19** |
 | Zealot skills | **19** |
 | Ectotherm skills | **19** |
@@ -48,91 +48,102 @@ O registry próprio de bloodlines é sincronizado e usa `bloodlines:empty` como 
 | `IAction` registrations | **29** |
 | Rank tasks | **15** |
 | Bloodline-perk tasks | **7** |
-| Task keys Bloodlines | **22** |
-| Bloodline ranks | **4 por bloodline** |
-| Mob effects próprios auditados no core | **4** (`blood_frenzy`, `heinous_curse`, `cold_blooded`, `soul_rending`) |
+| Total Bloodlines task keys | **22** |
+| Bloodline ranks | **4 per Bloodline** |
+| Own mob effects audited in core | **4** (`blood_frenzy`, `heinous_curse`, `cold_blooded`, `soul_rending`) |
 
-## Autoridades provider-native
+## Provider-native authority
 
-### Identidade, rank e state
+### Identity, rank and state
 
-`BloodlineManager` é um NeoForge attachment de player e é a autoridade sobre:
+`BloodlineManager` is a serialized NeoForge Player attachment with `copyOnDeath()` and is authoritative for:
 
-- bloodline atual;
+- current Bloodline;
 - rank 0–4;
-- wallet de Bloodline perk points;
-- contador de Bloodline skills habilitadas;
-- state específico da bloodline, quando existente;
-- serialização/sincronização desses valores.
+- Bloodline perk-point wallet;
+- charged enabled-Bloodline-skill count;
+- optional Bloodline-specific state;
+- persistence and synchronization.
 
-Trocar/remover bloodline desabilita as skills da bloodline anterior no `SkillHandler` do Vampirism, limpa os Bloodline perk points, limpa o state específico e força recálculo dos skill-tree locks.
+Changing/removing Bloodline also disables previous Bloodline skills through Vampirism's `SkillHandler`, clears Bloodline points/state, recalculates skill-tree locks and refreshes attributes. Black Arcana must not replace this lifecycle with a scoreboard/tag/NBT shadow copy.
 
 ### Rank
 
-Rank é separado de perk points. `BloodlineParentSkill` representa os marcos de Rank 1–4 e não consome Bloodline perk point. Os ranks 2–4 são entregues por `BloodlineRankReward` através de tasks; o reward só aplica a transição se `currentRank == targetRank - 1`, impedindo skip direto pelo pipeline normal.
+Rank and perk points are separate systems. `BloodlineParentSkill` represents the Rank 1–4 milestones without charging Bloodline perk points. Ranks 2–4 settle through `BloodlineRankReward`; the normal reward path requires `currentRank == targetRank - 1` and therefore does not support silent rank skipping.
 
-### Bloodline perk points
+### Bloodline perk wallet
 
-O wallet próprio persiste:
+Persistent fields:
 
-- `blSkillPoints` — pontos vindos de tasks;
-- `blOtherSkillPoints` — pontos de outras fontes autorizadas;
-- `blEnabledSkills` — número de Bloodline skills cobradas como habilitadas.
+- `blSkillPoints` — task points;
+- `blOtherSkillPoints` — other authorized points;
+- `blEnabledSkills` — charged enabled skills.
 
 `remaining = max(0, taskSkillPoints + otherSkillPoints - enabledSkills)`.
 
-`BloodlinePerkReward` adiciona pontos com `fromTask=true` e sincroniza o `BloodlineManager`.
-
 ### Skills
 
-As Bloodline skills continuam registradas no `VampirismRegistries.Keys.SKILL`. As trees continuam sujeitas ao `SkillHandler` do Vampirism para node topology, parents, sibling exclusivity, tree locks e habilitação/desabilitação.
-
-Bloodlines injeta gates adicionais:
-
-- bloodline perk point disponível quando `requiresBloodlineSkillPoints()`;
-- `requiredBloodlineRank()`;
-- bloqueio de unlock manual para default/rank skills configuradas.
+Bloodline skills are registered in Vampirism's skill registry and remain subject to Vampirism tree topology/parents/sibling locks plus Bloodlines-specific point/rank/default-skill gates injected into `SkillHandler`.
 
 ### Actions
 
-As 29 actions são registradas diretamente em `VampirismRegistries.Keys.ACTION`. Portanto cooldown, duration, activation/deactivation e selection permanecem dentro do pipeline de `IActionHandler` do Vampirism, com gates adicionais da bloodline quando aplicáveis.
+All 29 Bloodlines actions are registered in Vampirism's action registry. Vampirism's `IActionHandler` remains the timer/activation lifecycle authority, with Bloodlines extending behavior through its action classes and `ActionHandler` mixin.
 
-## Findings de alta importância
+## Source findings that remain runtime-QA gates
 
-1. **Não existe justificativa para um segundo BloodlineManager Black Arcana.** Bloodline id/rank/points/state já possuem attachment próprio, NBT e sync.
-2. **Bloodline perk points não são skill points comuns.** O addon mantém wallet próprio e UI própria.
-3. **Existe uma discrepância estática a validar em runtime.** Bloodline skills com `getSkillPointCost() > 0` continuam passando pelo `SkillHandler.canSkillBeEnabled` do Vampirism, que verifica os skill points normais, enquanto Bloodlines também exige seu wallet próprio. O README do provider afirma que Bloodline skills usam Bloodline perk points *instead of regular skill points*. Não classificar como bug nem compensar externamente até runtime QA.
-4. **O wallet próprio cobra uma unidade por skill habilitada**, mesmo quando `getSkillPointCost()` da skill é 2 ou 3. Isso reforça a necessidade de validar o dual-gate acima em runtime.
-5. **Perk tasks são estruturalmente repetíveis.** Seus rewards chamam `resetUniqueTask`, que remove o estado de concluída e a instância unique no `TaskManager` do Vampirism. Gravebound possui `MaxPerkUnlocker` em três faixas e encerra a rota de task points em 15; Noble/Zealot/Ectotherm/Bloodknight não possuem esse cap adicional no source 3.0.9.
-6. **`MaxPerkUnlocker.CODEC` possui nomes de campos invertidos nos getters.** O round-trip interno pode permanecer autoconsistente, mas datapacks externos devem tratar `maxPerkPoints`/`minPerkPoints` como superfície de risco até QA.
-7. **Gravebound Souls são recurso próprio, não Soul Energy genérica.** O state persiste souls, max souls, total devoured, Phylactery, Mist Form e Possession. Sem Phylactery, `getMaxSouls()` retorna 4.
-8. **Noble e Bloodknight alteram o settlement de sangue usando APIs/eventos de Vampirism.** Não bypassar `BloodDrinkEvent`, `VampirePlayer.drinkBlood`, `useBlood`, saturation ou exhaustion.
-9. **Ectotherm possui uma referência estática a `ZEALOT_POISONED_STRIKE` no seu `onCrit`.** Como o Zealot handler também implementa Poisoned Strike, isso deve ser tratado como discrepância/QA cross-bloodline, não corrigido por inferência.
-10. **Mudança de faction base remove a bloodline.** `PlayerFactionEvent.FactionLevelChanged` para level 0 ou troca de faction limpa o BloodlineManager e seus states.
+1. **Bloodline points vs normal Vampirism points:** Bloodlines adds its own point gate but some Bloodline skills still expose ordinary `getSkillPointCost()` values. Runtime behavior must be verified before any payment/respec bridge.
+2. **Own wallet charges one enabled skill**, even when a skill exposes cost 2–3 on the Vampirism side.
+3. **Repeating perk tasks:** reward settlement resets unique tasks. Gravebound caps task-derived Bloodline points at 15 through three `MaxPerkUnlocker` ranges; the other four Bloodlines have no analogous source cap.
+4. **`MaxPerkUnlocker.CODEC` min/max naming is inverted** in its getter mapping.
+5. **Ectotherm cross-reference:** `BloodlineFrost.onCrit` tests `ZEALOT_POISONED_STRIKE`.
+6. **Shadowwalk distance mismatch:** Bloodlines defines its own max-distance config, but the audited action uses Vampirism Teleport distance.
+7. **Bloodknight upkeep mismatch:** Sanguine Infusion, Blood Hunt and Daywalker debit 2 blood per interval while config comments describe one.
+8. **Sorcerous Strike reachability:** registry/node/action/config exist, but the node is absent from the configured Gravebound tree and rank defaults.
+9. **Sorcerous Strike Wither mismatch:** specific config default is 8 s, while the hit hook uses the general action duration, 10 s by default.
+10. **Devour Soul success semantics:** an invalid LivingEntity target can cause the action method to return success without a completed devour.
+11. **Mist Form strict Soul threshold:** deactivation-resurrection requires `souls > requiredSouls`; exactly the configured cost enters the death path.
+12. **Wall Climb client-side movement:** vertical velocity is modified on the client path and therefore needs dedicated-server QA.
+13. **Heinous Elixir documentation drift:** exact 3.0.9 source config default is **15 seconds**, while public prose describing 30 seconds is stale/inconsistent for this build.
 
-## Joining/leaving confirmado
+None of these findings is silently patched by the catalog.
 
-O README oficial e os hooks de source foram reconciliados:
+## Joining/leaving confirmed
 
-- Noble: Vampire sem bloodline, Lord level mínimo configurável, Baron sob Weakness e abaixo do health threshold configurável, atacado com Lordslayer Injection; unique route pode ser desabilitada por config.
-- Zealot: Vampire sem bloodline usa Zealot Ritual Catalyst no Zealot Altar; ritual server-side de 700 ticks, com join no tick restante 50; morrendo/interrompendo a entidade do player, o ritual aborta.
-- Ectotherm: Vampire sem bloodline sob `Cold Blooded`, em água, sofrendo dano solar letal; o event é cancelado, `Cold Blooded` removido, Sunscreen aplicado e Ectotherm concedido.
-- Bloodknight: Vampire sem bloodline que sobrevive até o término de `Heinous Curse`, quando a unique route está habilitada.
-- Gravebound: Hunter sem bloodline sob `Soul Rending` + `Heinous Curse`, diante de dano letal e com Phylactery livre próxima; o dano é cancelado, a Phylactery recebe ownership e o novo Gravebound inicia com 10 souls.
-- Leaving: a documentação oficial define Purity Injection como saída canônica; a remoção final deve sempre passar pelo `BloodlineManager`/helper do provider para limpar skills, points, state e Phylactery/possession corretamente.
+- **Noble:** Vampire without Bloodline, configured minimum Lord rank, weakened Vampire Baron under the configured health threshold, Lordslayer Injection.
+- **Zealot:** Vampire without Bloodline, Zealot Ritual Catalyst + Zealot Altar; 700-tick ritual, join at remaining tick 50, abort if player is missing/dead.
+- **Ectotherm:** Vampire without Bloodline under `Cold Blooded`, in water, receiving lethal Vampirism sun damage; lethal event is canceled and Ectotherm is granted.
+- **Bloodknight:** Vampire without Bloodline surviving through the end of `Heinous Curse`; exact source default Heinous Elixir duration is **15 s**.
+- **Gravebound:** Hunter without Bloodline under `Soul Rending` + `Heinous Curse`, lethal hit, nearby unowned Phylactery; join binds ownership and initializes 10 Souls.
+- **Leaving:** Purity Injection is handled through a mixin into Vampirism's **Med Chair**, invoking full Bloodline lifecycle cleanup rather than a generic item-use path.
 
-## Documentos deste provider
+Changing/losing the base Vampirism faction also clears Bloodline state through the provider event lifecycle.
 
-- [`BLOODLINE-CATALOG.md`](./BLOODLINE-CATALOG.md): as cinco bloodlines, identity, joins, innate mechanics e recursos.
-- [`SKILL-CATALOG.md`](./SKILL-CATALOG.md): inventário 101, custos/gates e topologias das cinco trees.
-- [`ACTION-CATALOG.md`](./ACTION-CATALOG.md): registry 29/29, ownership e semântica auditada; números não revalidados ficam fail-closed.
-- [`PROGRESSION-AND-TASKS.md`](./PROGRESSION-AND-TASKS.md): ranks, 22 tasks, rewards, repetibilidade e perk wallet.
-- [`RESOURCE-AUTHORITY.md`](./RESOURCE-AUTHORITY.md): Vampirism blood vs Bloodlines bloodline points vs Gravebound souls/Phylactery.
-- [`TECHNICAL-AUDIT.md`](./TECHNICAL-AUDIT.md): registries, attachment, events, mixins, discrepancies e QA gates.
-- [`INTEGRATION-RULES.md`](./INTEGRATION-RULES.md): contrato Black Arcana ↔ Bloodlines/Vampirism.
+## Resource authority
 
-## Estado de fechamento
+Three resource domains are deliberately distinct:
 
-O provider está source-pinned na build exata instalada e já possui registry, progressão, joining/leaving, trees, wallet e resource authority confirmados. O fechamento granular ainda exige concluir o detalhe de todas as 29 actions e números/config defaults relevantes, além de runtime QA da build instalada.
+1. **Vampirism blood/saturation/exhaustion** — base-provider authority;
+2. **Bloodline perk points** — Bloodlines wallet;
+3. **Gravebound Souls + Phylactery storage/state** — Bloodlines authority.
 
-Não marcar `RUNTIME QA CONFIRMED`, não corrigir o dual-gate de points e não promover semântica de Vampire Spells Addon para Bloodlines antes da auditoria separada desse addon.
+They must not be collapsed into a generic Black Arcana resource by naming similarity.
+
+## Documents
+
+- [`BLOODLINE-CATALOG.md`](./BLOODLINE-CATALOG.md): five Bloodlines, identity, joins, innate mechanics and state.
+- [`SKILL-CATALOG.md`](./SKILL-CATALOG.md): 101/101 skills, costs/gates, sibling choices and tree topology.
+- [`ACTION-CATALOG.md`](./ACTION-CATALOG.md): 29/29 actions, defaults, settlement semantics and static discrepancies.
+- [`PROGRESSION-AND-TASKS.md`](./PROGRESSION-AND-TASKS.md): ranks, 22 tasks, rewards, repeatability and perk wallet.
+- [`RESOURCE-AUTHORITY.md`](./RESOURCE-AUTHORITY.md): Vampirism blood vs Bloodline points vs Gravebound Souls/Phylactery.
+- [`TECHNICAL-AUDIT.md`](./TECHNICAL-AUDIT.md): registry/attachment lifecycle, events, mixins, authority boundaries and QA matrix.
+- [`INTEGRATION-RULES.md`](./INTEGRATION-RULES.md): Black Arcana ↔ Bloodlines/Vampirism provider-native-first contract.
+
+## Closure state
+
+The **granular source catalog is complete** for the exact installed Bloodlines 3.0.9 build: registries, Bloodlines, skills/trees, actions, tasks/progression, joining/leaving, resource authority, persistent state, high-impact mixins/events and Black Arcana integration constraints are documented.
+
+This does **not** grant `RUNTIME QA CONFIRMED`.
+
+Runtime validation is still required for the known discrepancies, dedicated-server movement/network behavior, task/point settlement, Blood/Gravebound resource conservation, Mist Form/Possession and exact interop with the installed Vampirism/addon stack.
+
+Vampire Spells Addon 0.0.9 has now been source-cataloged separately on the same catalog branch; Bloodlines must still be runtime-tested together with that addon before any cross-addon behavior is promoted from fail-closed.
