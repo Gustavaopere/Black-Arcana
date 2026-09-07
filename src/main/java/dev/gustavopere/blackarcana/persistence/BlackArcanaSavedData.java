@@ -390,7 +390,12 @@ public final class BlackArcanaSavedData extends SavedData {
                 ListTag spellList = tag.getList("spells", Tag.TAG_STRING);
                 if (spellList.size() > ArcanaCastRequest.MAX_LOADOUT_SLOTS) continue;
                 List<ArcanaSpellId> spells = new ArrayList<>(spellList.size());
-                for (int j = 0; j < spellList.size(); j++) spells.add(ArcanaSpellId.parse(spellList.getString(j)));
+                Set<ArcanaSpellId> unique = new HashSet<>(spellList.size());
+                for (int j = 0; j < spellList.size(); j++) {
+                    ArcanaSpellId spell = ArcanaSpellId.parse(spellList.getString(j));
+                    if (!unique.add(spell)) throw new IllegalArgumentException("duplicate persisted loadout spell");
+                    spells.add(spell);
+                }
                 result.put(caster, List.copyOf(spells));
             } catch (RuntimeException ignored) { }
         }

@@ -110,7 +110,7 @@ public final class ArcanaServerRuntimeManager {
         if (runtime == null) return new LoadoutSnapshotPayload(ArcanaProtocol.VERSION, List.of());
 
         LoadoutUpdateService service = new LoadoutUpdateService(
-                runtime.spells(), runtime.loadouts(), spellId -> runtime.spells().resolve(spellId).isPresent());
+                runtime.spells(), runtime.loadouts(), runtime::hasInstalledEngine);
         LoadoutUpdateService.Result result = service.apply(player.getUUID(), update.parsedSpellIds());
         if (result.decision().allowed()) persist(server, server.overworld().getGameTime());
         return new LoadoutSnapshotPayload(

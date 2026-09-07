@@ -16,11 +16,7 @@ public final class LoadoutRegistry implements CastRequestValidator {
 
     public synchronized void setLoadout(UUID casterId, List<ArcanaSpellId> spells) {
         Objects.requireNonNull(casterId, "casterId");
-        Objects.requireNonNull(spells, "spells");
-        if (spells.size() > ArcanaCastRequest.MAX_LOADOUT_SLOTS) {
-            throw new IllegalArgumentException("loadout exceeds maximum slot count");
-        }
-        loadouts.put(casterId, List.copyOf(spells));
+        loadouts.put(casterId, validateLoadout(spells));
     }
 
     public synchronized List<ArcanaSpellId> getLoadout(UUID casterId) {
@@ -38,11 +34,7 @@ public final class LoadoutRegistry implements CastRequestValidator {
         Map<UUID, List<ArcanaSpellId>> validated = new HashMap<>();
         snapshot.forEach((caster, spells) -> {
             Objects.requireNonNull(caster, "casterId");
-            Objects.requireNonNull(spells, "spells");
-            if (spells.size() > ArcanaCastRequest.MAX_LOADOUT_SLOTS) {
-                throw new IllegalArgumentException("loadout exceeds maximum slot count");
-            }
-            validated.put(caster, List.copyOf(spells));
+            validated.put(caster, validateLoadout(spells));
         });
         loadouts.clear();
         loadouts.putAll(validated);
@@ -63,5 +55,17 @@ public final class LoadoutRegistry implements CastRequestValidator {
             return ArcanaDecision.deny("loadout_spell_mismatch", "requested spell does not match the server-owned loadout slot");
         }
         return ArcanaDecision.allow();
+    }
+
+    private static List<ArcanaSpellId> validateLoadout(List<ArcanaSpellId> spells) {
+        Objects.requireNonNull(spells, "spells");
+        if (spells.size() > ArcanaCastRequest.MAX_LOADOUT_SLOTS) {
+            throw new IllegalArgumentException("loadout exceeds maximum slot count");
+        }
+        List<ArcanaSpellId> candidate = List.copyOf(spells);
+        if (candidate.stream().distinct().count() != candidate.size()) {
+            throw new IllegalArgumentException("loadout contains duplicate spells");
+        }
+        return candidate;
     }
 }

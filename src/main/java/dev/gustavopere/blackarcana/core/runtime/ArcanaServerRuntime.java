@@ -241,6 +241,7 @@ public final class ArcanaServerRuntime {
         ArcanaCastEngine checkedEngine = Objects.requireNonNull(engine, "engine");
         engines.put(checkedId, checkedEngine.withHazardGate(hazardGate));
     }
+    public boolean hasInstalledEngine(ArcanaSpellId spellId) { return engines.containsKey(Objects.requireNonNull(spellId, "spellId")); }
     public void removeEngine(ArcanaSpellId spellId) { engines.remove(Objects.requireNonNull(spellId, "spellId")); }
     public void configureWorldEffects(WorldEffectPolicyConfig config) { worldEffectPolicy.updateConfig(Objects.requireNonNull(config, "config")); }
     public void setRuntimeGroupMigrations(RuntimeGroupMigrations migrations) { this.groupMigrations = Objects.requireNonNull(migrations, "migrations"); }
