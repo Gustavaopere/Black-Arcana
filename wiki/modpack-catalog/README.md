@@ -27,6 +27,8 @@ Global catalog metadata lives under:
 
 including the current provider inventory, deduplication policy and audit queue.
 
+`meta/PROVIDER-AUDIT-QUEUE.md` remains the full 103-provider queue. During the long-running PR #75, narrowly scoped status overlays may be used to avoid destructive whole-table rewrites; the current overlay is [`meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md), which prevails only for `goety_cataclysm` and `goetyiron` until the next integral queue consolidation.
+
 ## Authority order
 
 1. Current physical modlist snapshot from **2026-09-07** is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. It contains **612 top-level entries including NeoForge**; internal `jarjar` dependencies do not count as top-level providers.
@@ -106,7 +108,7 @@ Ars Nouveau is compositional. Phase 2 catalogs forms, effects, augments, rituals
 
 ## Source/release-pinned high-value providers already advanced
 
-The granular queue remains authoritative for exact per-row status. At this checkpoint, major audits include:
+The granular queue remains authoritative for exact per-row status, with any explicitly linked narrow delta overlay taking precedence only for its named rows. At this checkpoint, major audits include:
 
 - Iron's base spell registry/catalog;
 - Ypsilon's Fundamentalism, Asterism Arcanum, Dreamless and other audited Iron's addons;
