@@ -27,6 +27,12 @@ class BlackArcanaModWiringTest {
         assertRegistered(source, "MinecraftForbiddenDomainRuntime");
     }
 
+    @Test
+    void noeticLifecycleRuntimeIsRegisteredOnGameBus() throws IOException {
+        String source = Files.readString(MOD_SOURCE);
+        assertRegistered(source, "MinecraftNoeticRuntime");
+    }
+
     private static void assertRegistered(String source, String runtime) {
         assertTrue(
             source.contains("import dev.gustavopere.blackarcana.integration.neoforge." + runtime + ";"),
