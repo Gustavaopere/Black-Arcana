@@ -82,4 +82,16 @@ class LoadoutRegistryTest {
         assertThrows(IllegalArgumentException.class, () -> registry.restoreSnapshot(Map.of(other, tooMany)));
         assertEquals(List.of(original), registry.getLoadout(CASTER));
     }
+
+    @Test
+    void duplicateSetIsRejectedWithoutOverwritingPriorState() {
+        LoadoutRegistry registry = new LoadoutRegistry();
+        ArcanaSpellId original = spell("original").id();
+        ArcanaSpellId duplicate = spell("duplicate").id();
+        registry.setLoadout(CASTER, List.of(original));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> registry.setLoadout(CASTER, List.of(duplicate, duplicate)));
+        assertEquals(List.of(original), registry.getLoadout(CASTER));
+    }
 }
