@@ -2,21 +2,27 @@
 
 ## Estado
 
-`94/94 providers do guia anterior presentes na modlist atual — catálogo granular em andamento`
+`103 providers mágicos/cross-domain na cobertura atual — 101 do snapshot reconciliado em 2026-09-06 + 2 novas entradas magic-related da modlist de 2026-09-07 — catálogo granular em andamento`
 
-Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LIDO` significa apenas que a descrição sistêmica já foi revisada; não significa que todos os spells/rituais/efeitos já foram individualizados.
+Autoridade de presença/JAR/versão deste checkpoint: `modlist(1).txt` com **612 entradas top-level** + Auditoria Mestre da Modlist no Notion, reconciliadas em 2026-09-07. Dependências `jarjar` internas não contam como providers top-level.
 
-| Mod ID | Nome atual | JAR atual | Versão atual | Estado da auditoria | Delta desde guia |
+`GUIA LIDO` significa apenas que a descrição sistêmica já foi revisada; não significa que todos os spells/rituais/efeitos já foram individualizados. Entradas novas ou com versão alterada permanecem fail-closed para qualquer detalhe não revalidado na versão atual.
+
+| Mod ID | Nome atual | JAR atual | Versão atual | Estado da auditoria | Delta desde guia/checkpoint anterior |
 |---|---|---|---|---|---|
 | `create_enchantment_industry_plus` | — | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | `1.1.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `aces_spell_utils` | Ace's Spell Utils | `aces_spell_utils-1.2.7.2-1.21.1.jar` | `1.2.7.2-1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 1.2.7.1-1.21.1→1.2.7.2-1.21.1 |
 | `acolyte` | Acolyte | `acolyte-1.0.3.jar` | `1.0.3` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `alshanex_familiars` | Alshanex's Familiars Mod | `alshanex_familiars-1.21.1_v4.0.3.jar` | `1.21.1_v4.0.3` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `apotheosis` | Apotheosis | `Apotheosis-1.21.1-8.7.0.jar` | `8.7.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `apotheosis` | Apotheosis | `Apotheosis-1.21.1-8.8.0.jar` | `8.8.0` | VERSÃO ATUAL RECONCILIADA / CATÁLOGO GRANULAR PENDENTE | Δ 8.7.0→8.8.0 |
 | `apotheoticcreation` | Apotheosis/Create Addon | `apotheoticcreation-2.0.0.jar` | `2.0.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `apothic_attributes` | Apothic Attributes | `ApothicAttributes-1.21.1-2.10.1.jar` | `2.10.1` | COBERTURA ADICIONADA 2026-09-06 / CATÁLOGO GRANULAR PENDENTE | novo na cobertura mágica do guia |
+| `apothic_compat` | Apothic Compat | `apothic_compat-2.0.2.jar` | `2.0.2` | COBERTURA ADICIONADA 2026-09-06 / CATÁLOGO GRANULAR PENDENTE | novo na cobertura mágica do guia |
+| `apothic_compats` | Apothic Compats | `apothic_compats-0.2.4.2.jar` | `0.2.4.2` | COBERTURA ADICIONADA 2026-09-06 / CATÁLOGO GRANULAR PENDENTE | novo na cobertura mágica do guia |
 | `apothic_enchanting` | Apothic Enchanting | `ApothicEnchanting-1.21.1-1.6.2.jar` | `1.6.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 1.6.1→1.6.2 |
+| `apothic_spawners` | Apothic Spawners | `ApothicSpawners-1.21.1-1.4.0.jar` | `1.4.0` | COBERTURA ADICIONADA 2026-09-06 / CATÁLOGO GRANULAR PENDENTE | novo na cobertura mágica do guia |
 | `apprenticecodex` | Apprentice's Codex | `apprentice_codex-0.9.7.1+mc1.21.1.jar` | `0.9.7.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `ars_n_spells` | Ars 'n' Spells | `ars_n_spells-3.2.4.jar` | `3.2.4` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 3.2.2→3.2.4 |
+| `ars_n_spells` | Ars 'n' Spells | `ars_n_spells-3.3.0.jar` | `3.3.0` | INSTALADO 3.3.0 / 3.2.4 CATALOGADO / DELTA 3.3.0 EM REVALIDAÇÃO / FAIL-CLOSED PARA DETALHES NÃO RECONFIRMADOS | Δ 3.2.4→3.3.0 |
 | `ars_additions` | Ars Additions | `ars_additions-1.21.1-21.3.0.jar` | `1.21.1-21.3.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `ars_controle` | Ars Controle | `ars_controle-1.21.1-1.6.15.jar` | `1.21.1-1.6.15` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `ars_creo` | Ars Creo | `ars_creo-1.21.1-5.4.0.jar` | `5.4.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -46,6 +52,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `discerning_the_eldritch` | Discerning The Eldritch | `discerning_the_eldritch-1.4.4-1.21.jar` | `1.4.4-1.21` | SOURCE-PINNED 1.4.4 / CATÁLOGO 22/22 COMPLETO / RUNTIME QA PENDENTE | Δ 1.4.3-1.21→1.4.4-1.21 |
 | `dreamless_spells` | Dreamless Spells | `dreamless_spells-1.1.9.jar` | `1.1.9` | SOURCE-PINNED 1.1.9 / CATÁLOGO 4/4 COMPLETO / EMPTY PROGRESSION + COUNTERSPELL OVERLAY QA-BLOCKED / RUNTIME QA PENDENTE |  |
 | `eidolon_repraised` | Eidolon:Repraised | `eidolon_repraised-1.21.1-0.5.0.2.jar` | `0.5.0.2` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
+| `emf_compat_iron_spells` | EMF Compat: Iron's Spells | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | `2.0.0` | COBERTURA ADICIONADA 2026-09-06 / COMPAT VISUAL / CATÁLOGO GRANULAR PENDENTE | novo na cobertura mágica do guia |
 | `ess_requiem` | Ender's Spells and Stuff: Requiem | `ess_requiem-0.1.7.jar` | `0.1.7` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `efiscompat` | Epic Fight & Iron's Spellbook animation compat | `efiscompat-3.1.0.jar` | `3.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `familiarslib` | FamiliarsLib | `familiarslib-1.21.1-1.7.1.jar` | `1.21.1-1.7` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -67,14 +74,18 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `irons_jewelry` | Iron's Gems 'n Jewelry | `irons_jewelry-1.21.1-2.0.2.jar` | `1.21.1-2.0.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `irons_lib` | Iron's Lib | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `irons_spellbooks` | Iron's Spells 'n Spellbooks | `irons_spellbooks-1.21.1-3.16.3.jar` | `1.21.1-3.16.3` | BASE PROVIDER / CATÁLOGO 110/110 COMPLETO |  |
+| `irons_spells_js` | Iron's Spellbooks KubeJS | `irons_spells_js-4.0.3.jar` | `4.0.3` | COBERTURA ADICIONADA 2026-09-06 / SCRIPTING-INTEGRATION / CATÁLOGO GRANULAR PENDENTE | novo na cobertura mágica do guia |
 | `recolor_tablet` | Iron's Spells 'n Spellbooks: Recolor | `recolor_tablet-1.3.2+1.21.1.jar` | `1.3.2+1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 1.2.5+1.21.1→1.3.2+1.21.1 |
 | `ironsable` | Ironsable | `ironsable-1.2.0.jar` | `1.2.0` | RELEASE-PINNED 1.2.0 / RUNTIME REGISTRY 7/7 / CATÁLOGO 7/7 COMPLETO / 10 BASE-SPELL PHYSICS OVERLAYS / JAR BYTECODE QA PENDENTE |  |
+| `ironsable_wind` | Ironsable x Wind's Spellbooks | `ironsable-wind-1.0.0.jar` | `1.0.0` | NOVO 2026-09-07 / BRIDGE MAGIC-COMPAT / CATÁLOGO GRANULAR PENDENTE | novo na modlist 612 |
+| `kubejsarsnouveau` | kubejsarsnouveau | `kubejsarsnouveau-1.3.2.jar` | `1.3.2` | COBERTURA ADICIONADA 2026-09-06 / SCRIPTING-INTEGRATION / CATÁLOGO GRANULAR PENDENTE | novo na cobertura mágica do guia |
 | `legendary_spellbooks` | Legendary Spellbooks | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | SOURCE-PINNED 0.3.2 / CATÁLOGO 30/30 COMPLETO / RUNTIME QA PENDENTE |  |
 | `leylines` | Leyline Spellbooks | `leylines-1.0.3.jar` | `1.0.3` | EXACT-ARTIFACT-PINNED 1.0.3 / 9 SIGNATURE NAMES PÚBLICOS / INVENTÁRIO TOTAL NÃO VERIFICADO / BYTECODE EXTRACTION PENDENTE / FAIL-CLOSED |  |
 | `malum` | Malum | `malum-1.21.1-1.8.2.jar` | `1.8.2` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
 | `vestis` | Malum: Vestis | `vestis-1.1.0.jar` | `1.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `mobstein` | Mobstein | `mobstein-5.4.4-neoforge-1.21.1.jar` | `5.4.4` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `monsterspellbooks` | Monsters & Spellbooks | `monsterspellbooks-0.0.16.3.jar` | `0.0.16.3` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 0.0.14→0.0.16.3 |
+| `morerelics` | More Relics | `morerelics-1.7.7-1.21.1.jar` | `1.7.7` | NOVO 2026-09-07 / ALTO RISCO: INCOMPATIBILIDADE DECLARADA COM RELICS 0.12 INSTALADO / CATÁLOGO PENDENTE / FAIL-CLOSED | novo na modlist 612 |
 | `not_enough_glyphs` | Not Enough Glyphs | `not_enough_glyphs-1.21.1-4.6.1.jar` | `4.6.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `ozymandias_sundries` | Ozymandias Sundries | `ozymandias_sundries-0.0.5.jar` | `0.0.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `paladin_spells` | Paladin Spells - Iron's Spells 'n Spellbooks Addon | `paladin_spells-1.21.1-1.1.1.jar` | `1.21.1-1.1.1` | SOURCE AUDIT 1.21.1 / CATÁLOGO 5/5 COMPLETO / LIVE QA PENDENTE |  |
@@ -95,7 +106,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `tunes_n_tomes` | Tunes 'n Tomes Mod | `tunes_n_tomes-1.1.0-HOTFIX.jar` | `1.1.0-HOTFIX` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `vampire_spells_addon` | Vampire Spells Addon | `vampire_spells_addon-neoforge-1.21.1-0.0.9.jar` | `1.21.1-0.0.9` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `vampiricageing` | Vampiric Ageing | `vampiricageing-1.21-1.4.21.jar` | `1.21-1.4.21` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `vampirism` | Vampirism | `Vampirism-1.21-1.10.12.jar` | `1.10.12` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `vampirism` | Vampirism | `Vampirism-1.21-1.10.13.jar` | `1.10.13` | VERSÃO ATUAL RECONCILIADA / CATÁLOGO GRANULAR PENDENTE | Δ 1.10.12→1.10.13 |
 | `vampirism_integrations` | Vampirism Integrations | `vampirism_integrations-1.21.1-1.10.2.jar` | `1.10.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `werewolves` | Werewolves | `Werewolves-1.21-2.0.3.3.jar` | `2.0.3.3` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `wind_spellbooks` | Wind's Spellbooks : Iron's Spells 'n Spellbooks Addon | `wind_spellbooks-1.0.5.jar` | `1.0.5` | RELEASE-PINNED 1.0.5 / RUNTIME REGISTRY 7/7 / SEMANTIC CATALOG 7/7 / SOURCE-JAR DECOMPILATION PENDENTE |  |
@@ -103,6 +114,11 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `ypfundamentals` | Ypsilon's Fundamentalism | `ypfundamentals-1.1.7.1.jar` | `1.1.7.1` | SOURCE-PINNED 1.1.7.1 / CATÁLOGO 15/15 COMPLETO / 13 PRINCIPLES AUDITADOS / RUNTIME QA PENDENTE |  |
 | `reliquified_artifacts` | reliquified_artifacts | `reliquified_artifacts-1.21.1-1.0.8.jar` | `1.0.8` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 
-## Observação
+## Reconciliação 2026-09-07
 
-A lista de 94 é a interseção entre o guia mágico anterior e a instalação atual. Itens novos da modlist que não estavam nesse snapshot também precisam passar pela triagem magic-related antes de a auditoria global ser considerada encerrada.
+- A fila canônica deixou de ser a interseção histórica de 94 providers e passou a refletir a cobertura mágica/cross-domain vigente: **103 entradas**.
+- Sete entradas que já estavam na cobertura consolidada de 2026-09-06 foram materializadas aqui: `apothic_attributes`, `apothic_spawners`, `apothic_compat`, `apothic_compats`, `irons_spells_js`, `kubejsarsnouveau` e `emf_compat_iron_spells`.
+- Duas entradas novas da modlist 612 foram triadas como magic-related e adicionadas: `ironsable_wind` e `morerelics`.
+- Drifts confirmados contra a modlist física e o Notion: Apotheosis `8.7.0→8.8.0`, Ars 'n' Spells `3.2.4→3.3.0` e Vampirism `1.10.12→1.10.13`.
+- `morerelics` permanece **fail-closed** para integração/catalogação semântica até a incompatibilidade declarada com a linha Relics `0.12` instalada ser tratada como risco operacional e revalidada.
+- Nenhuma entrada é promovida a “catalogada” apenas por estar presente nesta fila.
