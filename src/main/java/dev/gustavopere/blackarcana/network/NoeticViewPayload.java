@@ -12,10 +12,14 @@ public record NoeticViewPayload(
         int targetEntityId
 ) {
     public NoeticViewPayload {
+        ArcanaProtocol.requireCompatible(protocolVersion);
         Objects.requireNonNull(action, "action");
         Objects.requireNonNull(kind, "kind");
         if (kind != NoeticObservationKind.BORROWED_SIGHT) {
             throw new IllegalArgumentException("Noetic view payload currently supports Borrowed Sight only: " + kind);
+        }
+        if (targetEntityId < 0) {
+            throw new IllegalArgumentException("Noetic view target entity id must be non-negative");
         }
     }
 
