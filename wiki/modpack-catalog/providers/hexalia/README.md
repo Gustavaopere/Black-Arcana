@@ -2,7 +2,7 @@
 
 ## Status
 
-`EXACT PUBLIC NEOFORGE RELEASE 1.3.6 / SOURCE-PINNED RELEASE COMMIT 4952c652 / MIT / PHYSICAL FILENAME 1.3.6 / INSTALLED RUNTIME METADATA 1.3.5 / BREWS 8/8 / NATURE'S RITUAL 19/19 PLAYER-FACING / CELESTIAL INFUSION 6/6 / MUTATION 21/21 / MORTAR & PESTLE 12/12 / IDOLS AUDITED / EXACT INSTALLED-JAR EQUIVALENCE + RUNTIME/API QA PENDING`
+`EXACT PUBLIC NEOFORGE RELEASE 1.3.6 / SOURCE-PINNED RELEASE COMMIT 4952c652 / MIT / PHYSICAL FILENAME 1.3.6 / INSTALLED RUNTIME METADATA 1.3.5 / BREWS 8/8 / NATURE'S RITUAL 19/19 PLAYER-FACING / CELESTIAL INFUSION 6/6 / MUTATION 21/21 / MORTAR & PESTLE 12/12 / CENSER 10/10 / IDOLS AUDITED / EXACT INSTALLED-JAR EQUIVALENCE + RUNTIME/API QA PENDING`
 
 ## Runtime identity
 
@@ -115,6 +115,18 @@ The 12 cataloged recipes include mundane conversions plus Hexalia Salt, Mutavis,
 
 Brambleguard and Mender's both use a 60-tick salve application and apply their effect for 1800 ticks. Both clear canonical `hexalia:bleeding` at application. Brambleguard then additionally removes active effects every tick when their registry path contains `bleed` or `bleeding`, regardless of namespace; Mender's applies vanilla Regeneration and does not supply that ongoing generic purge.
 
+### Censer — 10/10 combinations
+
+- [Censer effect catalog](censer/CENSER-EFFECT-CATALOG.md)
+
+The source-pinned Censer is a persistent provider-owned two-herb effect engine. Default effect radius is 16, default burn duration is 7200 ticks and handlers pulse on a 40-tick interval. Player ignition and dispenser ignition are both supported paths.
+
+The 10 registered combinations cover Tidewarden, Ethereal Grazing, Tide's Memory, Miner's Respite, Phantom Drift, Undead Veil, Withering Calm, Hollow Aura, Blighted Bloom and Tidal Pull.
+
+This is a high-impact cross-domain surface: it can buff players, breed animals, spawn items, repair anvils, relocate items, calm undead/mobs, apply Wither, purge all MobEffects, mutate local blocks/Mushroom Cows and pull animals/monsters/items. Black Arcana must not reinterpret the repeating provider pulses as casts or double-settle their effects.
+
+`Hollow Aura` is particularly relevant to interoperability because the source removes every active MobEffect from each LivingEntity in range without namespace/category filtering. `Blighted Bloom` is world-mutating provider behavior and must not be silently routed through Black Arcana's cast pipeline; any pack-wide protection bridge requires an explicit verified contract.
+
 ### Idols
 
 - [Idols and capability-bearing items](items/IDOLS-AND-CAPABILITY-ITEMS.md)
@@ -134,9 +146,9 @@ Hexalia owns a preparation-first witchcraft loop rather than an instant spellboo
 
 1. acquire magical herbs/materials;
 2. refine ingredients through provider processing such as Mortar & Pestle;
-3. prepare Small Cauldron, Nature's Ritual or Celestial Infusion content;
+3. prepare Small Cauldron, Nature's Ritual, Celestial Infusion or Censer content;
 4. satisfy provider environmental/equipment conditions;
-5. receive provider-owned brews, ritual outputs, mutations, items or equipment effects.
+5. receive provider-owned brews, ritual outputs, mutations, fields, items or equipment effects.
 
 Black Arcana integrates around that identity rather than reproducing it as an instant cast system.
 
@@ -144,7 +156,7 @@ Black Arcana integrates around that identity rather than reproducing it as an in
 
 ### Witchcraft
 
-Black Arcana Witchcraft must integrate, not replace, Hexalia's cauldron brewing, herbs/material preparation, salves, Nature's Ritual, Celestial Infusion, Mortar & Pestle, mutations and capability-bearing idols/equipment.
+Black Arcana Witchcraft must integrate, not replace, Hexalia's cauldron brewing, herbs/material preparation, salves, Nature's Ritual, Celestial Infusion, Mortar & Pestle, Censer, mutations and capability-bearing idols/equipment.
 
 ### Blood / Binding
 
@@ -158,13 +170,17 @@ Black Arcana Witchcraft must integrate, not replace, Hexalia's cauldron brewing,
 
 Daybloom and Celestial Infusion create genuine solar/celestial overlap. Divine/Celestial Black Arcana identity must remain materially distinct from this preparation/lunar/crafting path.
 
+### Persistent fields / wards / environmental effects
+
+Aegiflora, Windsong, Grimshade, Nautilite, Lourdes and especially the Censer demonstrate that Hexalia already owns multiple persistent local-effect fields. A Black Arcana field/domain must preserve its own identity, bounded execution and `WorldEffectPolicy` requirements instead of cloning these witchcraft utilities.
+
 ### Weather / environment
 
 Hexalia already owns consumable clear/rain/thunder weather idols. A generic duplicate weather-control spell is therefore poor deduplication. Any Black Arcana grand-weather mechanic would still need distinct forbidden identity, hazards, budgets and canonical `WorldEffectPolicy` handling.
 
-### Curse cleansing
+### Curse / status cleansing
 
-Purity Idol already owns straightforward removal of vanilla curse-tagged enchantments from an opposite-hand item. It does not own Black Arcana Corruption, Arcane Strain or Arcane Backlash.
+Purity Idol already owns straightforward removal of vanilla curse-tagged enchantments from an opposite-hand item. Censer Hollow Aura additionally owns a broad local MobEffect purge. Neither behavior owns Black Arcana Corruption, Arcane Strain or Arcane Backlash unless those channels are deliberately represented through an overlapping provider surface, which current architecture does not require.
 
 ### Order / Chaos
 
@@ -173,10 +189,10 @@ No audited Hexalia source-pinned surface proves Black Arcana's proposed server-a
 ## Safe integration posture
 
 - No second Hexalia recipe engine.
-- No second registry of brew/salve effects.
-- No re-settlement of a provider ritual, mutation, weather action or item consumption.
-- No Mastery from continuous proximity to a node/plant/ritual or from redstone mortar automation.
-- Any progression event requires discrete causal evidence and deduplication.
+- No second registry of brew/salve/Censer effects.
+- No re-settlement of a provider ritual, mutation, weather action, Censer pulse or item consumption.
+- No Mastery from continuous proximity to a node/plant/ritual/Censer or from redstone/dispenser automation.
+- Any progression event requires discrete causal evidence and deduplication; automated provider paths must not invent a player owner.
 - Do not create duplicate resources for Hexalia reagents.
 - Source pin authorizes factual cataloging, not copying upstream code/assets into Black Arcana.
 - Source class visibility alone is not a supported integration/API contract.
@@ -184,11 +200,11 @@ No audited Hexalia source-pinned surface proves Black Arcana's proposed server-a
 ## Remaining open audit items
 
 1. reconcile exact installed-JAR identity against public File ID `8658488` and explain why runtime metadata reports `1.3.5`;
-2. finish targeted executable-path review for brew description/source discrepancies, especially Hollow Silence and other explicitly QA-blocked brews;
+2. retain explicit runtime QA for brew description/source discrepancies, especially Hollow Silence, Bloodlust, Siphon, Slimewalker and Spikeskin;
 3. identify supported/stable integration API or event surfaces; do not couple to implementation classes merely because they are visible;
-4. perform exact pack runtime QA for brews, rituals, Celestial Infusion, mutations, Mortar & Pestle, salves and idols before promoting source-derived formulas to installed-runtime facts;
-5. run cross-mod interaction QA where provider behavior is deliberately broad, especially Brambleguard's registry-path-based bleed removal and weather/world-changing items.
+4. perform exact pack runtime QA for brews, rituals, Celestial Infusion, mutations, Mortar & Pestle, salves, Censer and idols before promoting source-derived formulas to installed-runtime facts;
+5. run cross-mod interaction QA where provider behavior is deliberately broad, especially Brambleguard bleed-path removal, Censer Hollow Aura, Blighted Bloom and weather/world-changing items.
 
 ## Phase 3 gate
 
-Hexalia now has granular source-pinned semantic coverage across its major witchcraft preparation systems, but implementation remains `BLOCKED / FAIL-CLOSED FOR PROVIDER-SPECIFIC HOOKS` until stable integration boundaries and the installed `1.3.6 filename / 1.3.5 runtime` equivalence question are resolved where required. Source catalog completion is not installed-runtime validation.
+Hexalia now has granular source-pinned semantic coverage across its major witchcraft preparation and persistent-effect systems, but implementation remains `BLOCKED / FAIL-CLOSED FOR PROVIDER-SPECIFIC HOOKS` until stable integration boundaries and the installed `1.3.6 filename / 1.3.5 runtime` equivalence question are resolved where required. Source catalog completion is not installed-runtime validation.
