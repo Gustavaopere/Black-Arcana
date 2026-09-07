@@ -147,4 +147,36 @@ public final class BlackArcanaNoeticGameTests {
                 "denied foreign familiar observation must leave no active Noetic state");
         helper.succeed();
     }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void observationRangeIsRevalidatedWithoutSnapshotPolling(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        var viewer = helper.makeMockServerPlayerInLevel();
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(3, 2, 3));
+        viewer.teleportTo(target.getX() + 2.0D, target.getY(), target.getZ());
+
+        var decision = MinecraftNoeticRuntime.startObservation(
+                server,
+                viewer.getUUID(),
+                target.getUUID(),
+                NoeticObservationKind.ASTRAL_SEVERANCE,
+                40,
+                false);
+        helper.assertTrue(decision.allowed(),
+                "range revalidation GameTest requires a valid initial Astral Severance session: " + decision.code());
+        helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 1,
+                "range revalidation GameTest requires exactly one active observation before movement");
+
+        helper.runAfterDelay(2, () -> viewer.teleportTo(
+                target.getX() + NoeticSafetyCeilings.MAX_RANGE_BLOCKS + 8.0D,
+                target.getY(),
+                target.getZ()));
+        helper.succeedOnTickWhen(6, () -> {
+            helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 0,
+                    "server tick must close an observation that became out-of-range without snapshot polling");
+            MinecraftNoeticRuntime.clearEntity(server, viewer.getUUID());
+            MinecraftNoeticRuntime.clearEntity(server, target.getUUID());
+        });
+    }
 }
