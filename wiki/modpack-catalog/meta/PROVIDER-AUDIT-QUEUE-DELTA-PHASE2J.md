@@ -12,6 +12,7 @@ This file is a narrow status overlay over `PROVIDER-AUDIT-QUEUE.md`. It prevails
 | `hexalia` | `hexalia-neoforge-1.3.6.jar` / runtime metadata `1.3.5` | `PUBLIC RELEASE+SOURCE PIN 1.3.6 / MIT / BREWS 8/8 / NATURE'S RITUAL 19/19 PLAYER-FACING / CELESTIAL INFUSION 6/6 / MUTATION 21/21 / MORTAR 12/12 / CENSER 10/10 / IDOLS+MAJOR CAPABILITY OUTPUTS AUDITED / INSTALLED FILENAME↔RUNTIME VERSION MISMATCH + API/RUNTIME QA PENDING` |
 | `toxony` | `toxony-0.10.7.jar` / runtime `0.10.7` | `EXACT INSTALLED ARTIFACT + EXACT PUBLIC 0.10.7 SOURCE VERSION PIN 881bf7fe / EFFECTS 5/5 / OILS 9/9 / MUTAGEN EFFECTS 7/7 / AFFINITIES 11/11 / THRESHOLD MODEL + IRON'S/VAMPIRISM/WEREWOLVES COMPAT FACTUALLY AUDITED / GPLv3↔LGPLv3 LICENSE CONFLICT / RUNTIME+SUPPORTED-API QA PENDING / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
 | `mobstein` | `mobstein-5.4.4-neoforge-1.21.1.jar` / runtime `5.4.4` | `EXACT INSTALLED ARTIFACT + EXACT CURSEFORGE RELEASE 8040734 / PUBLISHER GUIDE AUDITED / RESURRECTED FORMS 10/10 / SURGERY TYPES 6/6 / FAILED EXPERIMENTS 7/7 / BODIES+ORGANS+SYRINGES+STRUCTURES+WITHERSTEIN SEMANTICS ADVANCED / 5.4.4 SABLE-COMPAT CLAIM RECORDED / ARR / NO OFFICIAL SOURCE/API PIN LOCATED / REGISTRY+RUNTIME QA PENDING / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
+| `monstersspellbooks` | `monstersspellbooks-0.0.16.3.jar` / runtime `0.0.16.3` | `EXACT INSTALLED ARTIFACT + EXACT CURSEFORGE FILE 8788560 / PUBLISHER PROJECT+CHANGELOG AUDITED / NECRO CURRENT PRIMARY SCHOOL / 90+ SPELL CLAIM + GEAR+MOBS+STRUCTURES COVERAGE / AERO SOFT-DELETED 0.0.16.2 + REMNANTS REMOVED 0.0.16.3 / LINKED SOURCE MAIN STILL 0.0.14 + ARR WHILE CURSEFORGE DISPLAYS MIT / EXACT CURRENT REGISTRY+API+ACQUISITION INCOMPLETE / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
 
 ## Malum interpretation
 
@@ -104,6 +105,56 @@ Therefore:
 - no Mobstein-specific adapter is approved;
 - integration remains fail-closed until a supported public boundary and exact-pack runtime behavior are proven.
 
+## Monsters & Spellbooks interpretation
+
+The full queue row `GUIA LIDO / CATÁLOGO GRANULAR PENDENTE` is now stale for provider-level semantic coverage, but **not** for exact spell-registry completion.
+
+Phase 2J revalidated the physical/current release identity:
+
+- `monstersspellbooks-0.0.16.3.jar`;
+- mod id `monstersspellbooks`;
+- runtime `0.0.16.3`;
+- local SHA-1 `b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e`;
+- CurseForge project `1428928`;
+- exact file `8788560`, uploaded 2026-09-01.
+
+Publisher evidence establishes substantial current provider coverage:
+
+- `90+` spells;
+- `12+` armor sets;
+- `30+` weapons;
+- `5+` ores;
+- `10+` accessories + a new accessory slot;
+- `10+` spellcasting mobs;
+- `2+` overworld structures;
+- Necro as the main current school, focused on debuffs, damage over time and curses;
+- Arch single-school and Hybrid paired-school gear progression;
+- current-line Iron's Gems 'n Jewelry compatibility.
+
+Exact-release drift also corrects stale Aero assumptions:
+
+- 0.0.16.2 explicitly soft-deletes Aero and points users to SnackPirate's Aeromancy;
+- 0.0.16.3 removes remaining Aero files/content to avoid tag interference.
+
+Therefore Monsters & Spellbooks Aero is treated as **legacy/soft-deleted**, not active exact-current school authority without runtime proof.
+
+### Source/license blocker
+
+CurseForge links `RedReaper28/Monsters-Spellbooks-1.21.1`, but the repository's only inspected branch/head still declares:
+
+- `mod_version=0.0.14`;
+- `mod_license=All Rights Reserved`;
+- Iron's baseline `1.21.1-3.15.4`.
+
+The current CurseForge project displays MIT and the installed release is 0.0.16.3. The repository's `TEMPLATE_LICENSE.txt` applies MIT only to NeoForged MDK template files and does not resolve provider licensing.
+
+Consequently:
+
+- do not derive the exact 0.0.16.3 registry/API from the stale source tree;
+- exact current spell membership, IDs, numbers and acquisition remain incomplete unless publisher/runtime evidence closes them;
+- provider-specific implementation remains fail-closed;
+- publisher changelogs are retained as semantic/historical evidence only, with later removals/reworks taking precedence.
+
 ## Phase 3 consequence
 
 None of these rows becomes an automatic Phase 3 implementation approval.
@@ -112,9 +163,12 @@ None of these rows becomes an automatic Phase 3 implementation approval.
 - Hexalia: installed-runtime/API gates remain.
 - Toxony: license/API/runtime gates remain.
 - Mobstein: ARR/no-source/API/runtime gates remain.
+- Monsters & Spellbooks: exact-current source/license/registry/API/acquisition/runtime gates remain.
 
 Provider-native authority and fail-closed integration remain mandatory.
 
 ## Next provider checkpoint
 
-After the Mobstein checkpoint, the next adjacent unresolved provider in the canonical queue is **Monsters & Spellbooks `0.0.16.3`** (`monsterspellbooks-0.0.16.3.jar`). Its installed identity must be revalidated against the current modlist and exact public release/source/provenance evidence before any registry, spell or implementation claim is promoted.
+After the Monsters & Spellbooks checkpoint, the next adjacent unresolved provider in the canonical queue is **More Relics `1.7.7`** (`morerelics-1.7.7-1.21.1.jar`).
+
+Its physical identity is already present in the 2026-09-07 modlist, but the current guide flags a provider-version risk against the installed Relics `0.12.8`. Before advancing the row, revalidate the exact publisher release, dependency/version declarations, public source/provenance and current-pack compatibility posture. `Manter` is a curatorial decision, not proof of compatibility.
