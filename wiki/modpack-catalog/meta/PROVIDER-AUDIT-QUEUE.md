@@ -44,7 +44,7 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `darkermagic` | Deeper and Darker: Spellbooks | `darkermagic-1.3.3-1.21.1-ver.b.jar` | `1.3.3-1.21.1` | RELEASE-PINNED VER B / INVENTÁRIO 4/4 COMPLETO / SOURCE 1.3.0 BASELINE / BYTECODE 1.3.3 + RUNTIME QA PENDENTES |  |
 | `disenchanting_table` | Dis-Enchanting Table | `disenchanting_table-merged-1.21.1-5.0.2.jar` | `5.0.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `discerning_the_eldritch` | Discerning The Eldritch | `discerning_the_eldritch-1.4.4-1.21.jar` | `1.4.4-1.21` | SOURCE-PINNED 1.4.4 / CATÁLOGO 22/22 COMPLETO / RUNTIME QA PENDENTE | Δ 1.4.3-1.21→1.4.4-1.21 |
-| `dreamless_spells` | Dreamless Spells | `dreamless_spells-1.1.9.jar` | `1.1.9` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `dreamless_spells` | Dreamless Spells | `dreamless_spells-1.1.9.jar` | `1.1.9` | SOURCE-PINNED 1.1.9 / CATÁLOGO 4/4 COMPLETO / EMPTY PROGRESSION + COUNTERSPELL OVERLAY QA-BLOCKED / RUNTIME QA PENDENTE |  |
 | `eidolon_repraised` | Eidolon:Repraised | `eidolon_repraised-1.21.1-0.5.0.2.jar` | `0.5.0.2` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
 | `ess_requiem` | Ender's Spells and Stuff: Requiem | `ess_requiem-0.1.7.jar` | `0.1.7` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `efiscompat` | Epic Fight & Iron's Spellbook animation compat | `efiscompat-3.1.0.jar` | `3.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
