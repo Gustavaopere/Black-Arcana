@@ -69,8 +69,8 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `irons_spellbooks` | Iron's Spells 'n Spellbooks | `irons_spellbooks-1.21.1-3.16.3.jar` | `1.21.1-3.16.3` | BASE PROVIDER / CATÁLOGO 110/110 COMPLETO |  |
 | `recolor_tablet` | Iron's Spells 'n Spellbooks: Recolor | `recolor_tablet-1.3.2+1.21.1.jar` | `1.3.2+1.21.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE | Δ 1.2.5+1.21.1→1.3.2+1.21.1 |
 | `ironsable` | Ironsable | `ironsable-1.2.0.jar` | `1.2.0` | RELEASE-PINNED 1.2.0 / RUNTIME REGISTRY 7/7 / CATÁLOGO 7/7 COMPLETO / 10 BASE-SPELL PHYSICS OVERLAYS / JAR BYTECODE QA PENDENTE |  |
-| `legendary_spellbooks` | Legendary Spellbooks | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `leylines` | Leyline Spellbooks | `leylines-1.0.3.jar` | `1.0.3` | RELEASE EXATA 1.0.3 / SOURCE PÚBLICO NÃO LOCALIZADO / JAR EXTRACTION PENDENTE |  |
+| `legendary_spellbooks` | Legendary Spellbooks | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | SOURCE-PINNED 0.3.2 / CATÁLOGO 30/30 COMPLETO / RUNTIME QA PENDENTE |  |
+| `leylines` | Leyline Spellbooks | `leylines-1.0.3.jar` | `1.0.3` | EXACT-ARTIFACT-PINNED 1.0.3 / 9 SIGNATURE NAMES PÚBLICOS / INVENTÁRIO TOTAL NÃO VERIFICADO / BYTECODE EXTRACTION PENDENTE / FAIL-CLOSED |  |
 | `malum` | Malum | `malum-1.21.1-1.8.2.jar` | `1.8.2` | BASE RITUAL/RESOURCE PROVIDER / CATÁLOGO PENDENTE |  |
 | `vestis` | Malum: Vestis | `vestis-1.1.0.jar` | `1.1.0` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `mobstein` | Mobstein | `mobstein-5.4.4-neoforge-1.21.1.jar` | `5.4.4` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
@@ -98,8 +98,8 @@ Esta tabela usa a modlist atual como autoridade de JAR/mod id/versão. `GUIA LID
 | `vampirism` | Vampirism | `Vampirism-1.21-1.10.12.jar` | `1.10.12` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `vampirism_integrations` | Vampirism Integrations | `vampirism_integrations-1.21.1-1.10.2.jar` | `1.10.2` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `werewolves` | Werewolves | `Werewolves-1.21-2.0.3.3.jar` | `2.0.3.3` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `wind_spellbooks` | Wind's Spellbooks : Iron's Spells 'n Spellbooks Addon | `wind_spellbooks-1.0.5.jar` | `1.0.5` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
-| `woodwalkers_spellbooks` | Woodwalkers SpellBooks | `woodwalkers_spellbooks-0.3.1-BETA.jar` | `0.3.1-BETA` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
+| `wind_spellbooks` | Wind's Spellbooks : Iron's Spells 'n Spellbooks Addon | `wind_spellbooks-1.0.5.jar` | `1.0.5` | RELEASE-PINNED 1.0.5 / RUNTIME REGISTRY 7/7 / SEMANTIC CATALOG 7/7 / SOURCE-JAR DECOMPILATION PENDENTE |  |
+| `woodwalkers_spellbooks` | Woodwalkers SpellBooks | `woodwalkers_spellbooks-0.3.1-BETA.jar` | `0.3.1-BETA` | SOURCE-PINNED 0.3.1-BETA / CATÁLOGO 1/1 COMPLETO / RUNTIME QA PENDENTE |  |
 | `ypfundamentals` | Ypsilon's Fundamentalism | `ypfundamentals-1.1.7.1.jar` | `1.1.7.1` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 | `reliquified_artifacts` | reliquified_artifacts | `reliquified_artifacts-1.21.1-1.0.8.jar` | `1.0.8` | GUIA LIDO / CATÁLOGO GRANULAR PENDENTE |  |
 
