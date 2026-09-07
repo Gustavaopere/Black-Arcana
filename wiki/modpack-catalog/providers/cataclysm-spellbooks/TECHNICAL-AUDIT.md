@@ -1,80 +1,166 @@
-# Cataclysm: Spellbooks — catálogo do provider
+# Cataclysm: Spellbooks — technical audit
 
-## Estado
+## State
 
-`EXTERNAL PROVIDER / INSTALLED 1.1.13 — PUBLIC SOURCE BASELINE 1.1.11 — CURRENT-JAR EXTRACTION REQUIRED`
+`EXTERNAL PROVIDER / INSTALLED 1.1.13 BETA / PUBLIC 1.1.11-LABELLED SOURCE BASELINE / EXACT CURRENT REGISTRY BLOCKED`
 
-## Versão instalada
+## Evidence ladder
+
+### Authority 1 — physical pack
+
+The current Black Arcana modlist contains:
 
 - JAR: `cataclysm_spellbooks-1.1.13-1.21.jar`
-- Minecraft/loader: NeoForge 1.21.1
-- release pública: 02/09/2026, beta
-- release notes: updated arts, more spells ported, bug fixes, new boss.
+- mod id: `cataclysm_spellbooks`
+- runtime version: `1.1.13-1.21`
 
-## Limitação de evidência
+This is the authority for installed identity.
 
-O repositório público oficial 1.21.1 ainda declara `mod_version=1.1.11-1.21` e seu histórico público de código não acompanha a publicação 1.1.13. Portanto:
+### Authority 2 — current publisher file metadata
 
-- nomes/arquitetura da 1.1.11 são úteis como **baseline de deduplicação**;
-- números da 1.1.11 NÃO são canonizados como valores da 1.1.13;
-- qualquer custo/dano/cooldown final da instalação atual exige extração do JAR 1.1.13 ou runtime/config do pack.
+CurseForge File ID `8792628` confirms:
 
-## Escopo público atual
+- filename `cataclysm_spellbooks-1.1.13-1.21.jar`;
+- NeoForge;
+- Minecraft `1.21.1`;
+- Beta channel;
+- upload date `2026-09-02`;
+- publisher delta: updated art, more spells ported, bug fixes and a new boss;
+- explicit beta stability warning.
 
-A página atual do mod declara **65 spells** no total e escolas novas Abyssal e Technomancy, além de spells distribuídos em escolas do Iron's.
+The current project description states **65 new spells** and identifies Abyssal and Technomancy as provider schools.
 
-O catálogo completo de 65 entradas será construído a partir da versão instalada, não apenas da árvore pública antiga.
+### Authority 3 — public source baseline only
 
-## Ignis/Fire — baseline público 1.1.11
+Official repository: `AceTheEldritchKing/Cataclysm_Spellbooks_1.21.1`.
 
-O registry público contém pelo menos estas implementações Fire ligadas à fantasia de Ignis:
+Pinned factual snapshot: `82a0af71f051058fe515c8b1cb9168e7f972f41c`.
 
-1. `Incineration`
-2. `Infernal Strike`
-3. `Conjure Ignited Reinforcement`
-4. `Hellish Blade`
-5. `Bone Storm`
-6. `Bone Pierce` / Blazing Bone Spit
-7. `Ashen Breath`
-8. `Abyss Fireball`
-9. `Tectonic Tremble`
+At that commit:
 
-Há ainda conceitos comentados no source antigo, como Avatar of Flame, Infernal Inhalation e Scorched Earth, que NÃO devem ser tratados como spells atuais até comprovação no JAR 1.1.13.
+- `gradle.properties` still declares `mod_version=1.1.11-1.21`;
+- the source cannot be assumed equivalent to the installed 1.1.13 beta;
+- `SpellRegistries.java` contains 34 concrete `registerSpell(...)` calls;
+- `CSSchoolRegistry.java` registers Abyssal, Technomancy and Sand;
+- Technomancy has zero concrete registrations in that old `SpellRegistries.java` despite its school existing.
 
-## Aquisição dos Ignis spells — baseline
+The detailed 34-entry inventory is in [`SOURCE-1.1.11-BASELINE.md`](SOURCE-1.1.11-BASELINE.md).
 
-`AbstractIgnisSpell` do source público antigo:
+## What the baseline can establish
 
-- `allowLooting() = false`;
-- `canBeCraftedBy(player)` exige `Cataclysm BURNING_ASHES` no inventário via `Ace's Spell Utils`.
+The old source is strong enough to prove historical/provider identity and semantic occupancy, including:
 
-Isso estabelece uma identidade provider-native forte: progressão Ignis baseada em Burning Ashes. A Wiki não deve substituir isso por uma receita Black Arcana sem motivo.
+- Abyssal combat/control and underwater magic;
+- Ender/void/gravity capabilities;
+- Evocation theft;
+- Holy Cataclysm-derived summons;
+- a large Fire/Ignis line;
+- Ice/Maledictus combat and summon effects;
+- Sand/desert content using a provider-owned Sand sub-school;
+- provider-native spell classes built on Iron's spell API.
 
-## Relação com a nova Magia Infernal
+It also proves that provider-owned schools can delegate selected mechanics back to Iron's. For example, the Sand sub-school uses its own school resource id while reusing Iron's Nature spell power/resistance and Nature damage/cast sound.
 
-A Magia Infernal proposta deve **integrar e reaproveitar** esses spells quando cobrirem o papel pretendido. A nova Lava Infernal serve para conteúdo novo de alto nível/infrastructure, não para obrigar todos os spells Cataclysm existentes a abandonar a economia provider-native.
+## What the baseline cannot establish
 
-Exemplos de sobreposição já bloqueados:
+The old source does **not** prove for 1.1.13:
 
-- linha/erupção de pilares infernais → comparar primeiro com Incineration;
-- projectile/incinerator + marca → Infernal Strike;
-- vertical locking blade → Hellish Blade;
-- radial blazing bone barrage → Bone Storm;
-- single blazing bone projectile → Bone Pierce;
-- cone/breath de cinzas → Ashen Breath;
-- impacto sísmico vulcânico → Tectonic Tremble.
+- the 65 exact current spell resource IDs;
+- exact current school distribution;
+- exact current rarity/levels/cooldowns;
+- mana/cast/range/damage/healing formulas;
+- current acquisition/loot/crafting rules;
+- current spellbook/item/entity/effect registries;
+- the identity or behavior of the new 1.1.13 boss;
+- which old WIP comments became implemented;
+- which old implementations were removed, renamed or reworked.
 
-## QA baseline
+The arithmetic gap `65 - 34 = 31` is only a provider-scale difference between two evidence surfaces. It is not an exact release diff.
 
-A source tree 1.1.11 possui construções suspeitas/bugs claros que podem ter sido corrigidos em 1.1.13. Exemplo: `IncinerationSpell` contém `if (isSoul);` imediatamente antes de um bloco de spawn, tornando esse bloco incondicional em Java. O changelog da 1.1.13 afirma genericamente 'fixed bugs', mas não prova quais correções entraram.
+## Baseline examples — do not promote to 1.1.13 balance
 
-Por isso nenhum número baseline vira balanceamento canônico atual.
+### Void Beam
 
-## Próximo passo obrigatório
+At the pinned 1.1.11-labelled source snapshot, `VoidBeamSpell` declares:
 
-1. obter/extrair o JAR 1.1.13 efetivamente usado pelo pack;
-2. listar os 65 spell IDs atuais;
-3. extrair class/config de cada spell;
-4. comparar com 1.1.11 para detectar novos/alterados/removidos;
-5. individualizar todos os spells relevantes;
-6. fechar matriz de colisão com Infernal, Divine, Chaos, Order e demais escolas.
+- resource id `cataclysm_spellbooks:void_beam`;
+- Abyssal school;
+- Epic minimum rarity;
+- max level 3;
+- cooldown 20 seconds;
+- base mana 100 + 10/level;
+- base spell power 5 + 5/level;
+- Instant cast;
+- target helper range 32;
+- recast count `1 + spellLevel`.
+
+These are **baseline facts only**.
+
+### Sandstorm
+
+At the same snapshot, `SandstormSpell` declares:
+
+- resource id `cataclysm_spellbooks:sandstorm`;
+- provider Sand school;
+- Rare minimum rarity;
+- max level 3;
+- cooldown 30 seconds;
+- base mana 60 + 10/level;
+- base spell power 2 + 2/level;
+- cast time 25 ticks;
+- Long cast type.
+
+Again, none of those numbers is current until 1.1.13 is independently proven.
+
+## Acquisition evidence boundary
+
+The older source includes provider-native acquisition restrictions for some families. For example, historical Ignis spell code checks Cataclysm resources such as Burning Ashes. That establishes a real provider-owned progression pattern, but exact current 1.1.13 acquisition must be revalidated before any recipe/loot table is canonized.
+
+Black Arcana must preserve provider-native acquisition where it remains current rather than replacing it with a duplicate Black Arcana economy for thematic uniformity.
+
+## Architecture / authority consequence
+
+- Iron's owns the standard spell substrate it exposes to addons.
+- Cataclysm: Spellbooks owns its spell/content registrations and provider-local state.
+- L_Ender's Cataclysm owns original Cataclysm entities/materials/mechanics.
+- Black Arcana owns only Black Arcana runtime and may observe/integrate through a real boundary.
+
+No Cataclysm: Spellbooks cast may be double-settled by Black Arcana. No second mana charge, duplicate cooldown, duplicate damage/heal, duplicate summon or duplicate world effect is allowed merely because Black Arcana is tracking Arcane Danger or semantic overlap.
+
+## Deduplication gates
+
+The exact 1.1.13 current table remains required before finalizing:
+
+- **Infernal** against Fire/Ignis/soul-fire providers;
+- **Order** against Technomancy control/construct/projectile capabilities;
+- **Chaos** against boss-derived spectacle/reality-like effects;
+- future Space/Displacement additions against provider Void/gravity content;
+- summon/familiar candidates against provider summon roles.
+
+The old 34-entry baseline is enough to reject obvious duplicates, but not enough to prove a gap.
+
+## License / clean-room finding
+
+At the pinned source commit:
+
+- `TEMPLATE_LICENSE.txt` contains **PolyForm Shield License 1.0.0**;
+- `gradle.properties` declares `mod_license=All Rights Reserved`;
+- current CurseForge metadata labels the project PolyForm Shield License 1.0.0.
+
+This is not treated as a source-reuse grant for Black Arcana. PolyForm Shield also includes a noncompete restriction. The project therefore uses the source only as `REFERENCE_ONLY` factual evidence; no code/assets are copied or adapted.
+
+## Current blocking condition
+
+The official CurseForge download path was reached and verified, but the permitted tools did not receive the binary JAR payload for inspection. No decompilation was performed and no current bytecode was inferred from the stale source.
+
+**PENDÊNCIA — REQUER ARTEFATO EXATO / NAVEGAÇÃO EXTERNA CAPAZ DE ENTREGAR O BINÁRIO**
+
+Required closure sequence:
+
+1. obtain the exact `cataclysm_spellbooks-1.1.13-1.21.jar` through an authorized inspectable path;
+2. verify artifact hash/metadata;
+3. enumerate current spell/school/item/entity/effect registries without copying implementation;
+4. reconcile the exact 65 current spell identities against the 34-entry public-source baseline;
+5. extract only factual current configs/contracts needed by the catalog;
+6. run full-pack/runtime QA for any compatibility assertion;
+7. only then close the provider's exact-current Phase 2 spell inventory gate.
