@@ -11,6 +11,8 @@ This directory is the canonical Phase 2 inventory for every magic-relevant top-l
 - Phase 2 coherent checkpoint through PR #74 — merged at `main@aafea4b7e49dc5571ac006b3202be61862326e63`.
 - Phase 2I provider checkpoint through PR #75 — merged at `main@12f752eab7d6fc2861fb2c6e722b70c33bf82cf5`, including Vampirism Integrations, Werewolves, Goety, Goety addons, Malum evidence reconciliation and major Hexalia inventories.
 - Phase 2J Toxony checkpoint — merged through PR #78 at `main@15f03291bc1d2955dc7faab8cfa4ef4eb991f4af`; exact 0.10.7 Toxicity/Oil/Mutagen/Affinity factual catalog and provenance boundary are canonical.
+- Phase 2K Mobstein checkpoint — merged through PR #79 at `main@3fa87ec0c43b4e57e06b540642f99ef258459358`; exact installed 5.4.4 artifact plus publisher-public resurrection/anatomy/experiment/structure coverage are canonical under the ARR/public-only boundary.
+- Phase 2L Apprentice's Codex checkpoint — exact installed `0.9.7.1` identity and exact source pin `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`, with 83/83 spell pages and provider-wide registry/acquisition/compat coverage complete at source-catalog level; full runtime QA remains separately pending.
 - Subsequent Phase 2 documentation is merged incrementally when coherent and CI-green; an incremental merge does not mean the complete catalog is finished.
 
 The Phase 2 baseline established the magic-relevant registry and a first set of provider pages, while multiple exact spell/glyph/ritual/power inventories remain explicitly incomplete.
@@ -33,12 +35,14 @@ including the current provider inventory, deduplication policy and audit queue.
 
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md) — prevails only for `goety_cataclysm` and `goetyiron`;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md) — prevails only for `malum`, `hexalia` and `toxony` until integral queue regeneration;
-- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2K.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2K.md) — prevails only for `mobstein` until integral queue regeneration.
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2K.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2K.md) — prevails only for `mobstein` until integral queue regeneration;
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2L.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2L.md) — prevails only for `apprenticecodex` after Phase 2L is merged, while preserving its explicit runtime-QA flags.
 
 Capability-matrix deltas follow the same narrow-overlay rule:
 
 - [`meta/CAPABILITY-MATRIX-DELTA-TOXONY.md`](meta/CAPABILITY-MATRIX-DELTA-TOXONY.md) records Toxony's current semantic delta;
-- [`meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md`](meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md) records Mobstein's corporeal-resurrection/anatomy/experiment overlap.
+- [`meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md`](meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md) records Mobstein's corporeal-resurrection/anatomy/experiment overlap;
+- [`meta/CAPABILITY-MATRIX-DELTA-APPRENTICE-CODEX.md`](meta/CAPABILITY-MATRIX-DELTA-APPRENTICE-CODEX.md) records Apprentice's Codex overlap, especially with Familiars & Divination, sensing, storage, mobility and provider-owned alternative casting surfaces.
 
 ## Authority order
 
@@ -75,6 +79,7 @@ Examples:
 
 - Iron's: `providers/irons-spells/<school>/<spell>.md`;
 - Asterism/Paladin/Dreamless and other school-based Iron's addons: `providers/<addon>/<school>/<spell>.md`;
+- Apprentice's Codex: `providers/apprentice-codex/<school>/<spell>.md` for its 83 Iron's-native spells, plus provider-wide item/block/effect/attribute, School Affinity, acquisition and compatibility inventories;
 - Ars Nouveau: `providers/ars-nouveau/glyphs/forms|effects|augments/<glyph>.md`, plus `rituals/` and `systems/`;
 - Goety: Focuses / rituals / brews / servants / systems;
 - Goety Cataclysm and Goety Iron: separate addon-provider directories; they are not folded into Goety's base Focus count;
@@ -136,7 +141,8 @@ The granular queue plus explicit overlays remain authoritative for exact per-row
 - Malum `1.8.2` — exact version-line metadata/publisher changelog advanced Spirit Rite/Geas/spirit-resource coverage, but source-internal completion remains blocked by licensing conflict and runtime QA;
 - Hexalia — public 1.3.6 source pin with MIT provenance; 8/8 brews, 19/19 player-facing Nature's Ritual recipes, 6/6 Celestial Infusions, 21/21 mutations, 12/12 Mortar recipes, 10/10 Censer combinations and major capability-bearing items audited; installed filename/runtime-version mismatch and API/runtime QA remain;
 - Toxony `0.10.7` — exact installed artifact + exact public source-version pin; 5/5 harmful effects, 9/9 Oils, 7/7 Mutagen effect IDs, 11/11 Affinities, threshold selection, major Mutagen mechanics, processing and external compat overlaps audited factually; GPLv3/LGPLv3 provenance conflict, supported-API and runtime gates remain fail-closed;
-- Mobstein `5.4.4` — exact installed artifact + exact CurseForge File ID 8040734 and publisher current guide/release lineage; corporeal resurrection, ten resurrected creature families, anatomy/organ extraction, Surgery Stretch + four internal modifiers, Subject Assembly, Igor + seven failed experiments, syringe family, three structures, Dr. Mobstenio and three-stage Witherstein cataloged; ARR means no source/bytecode decompilation, internal registries/API and exact Sable 2.0.5 seam remain fail-closed.
+- Mobstein `5.4.4` — exact installed artifact + exact CurseForge File ID 8040734 and publisher current guide/release lineage; corporeal resurrection, ten resurrected creature families, anatomy/organ extraction, Surgery Stretch + four internal modifiers, Subject Assembly, Igor + seven failed experiments, syringe family, three structures, Dr. Mobstenio and three-stage Witherstein cataloged; ARR means no source/bytecode decompilation, internal registries/API and exact Sable 2.0.5 seam remain fail-closed;
+- Apprentice's Codex `0.9.7.1` — exact installed artifact + exact source pin `305ea6a...`; **83/83** spell registry IDs across nine Iron's schools have source-pinned pages, with exact **167/167 item IDs**, **20/20 block IDs**, static/dynamic effect and provider-attribute inventories, 25-slot School Affinity, acquisition surfaces and optional-compat inventory cataloged. Full 612-mod runtime/config QA remains explicit rather than inferred.
 
 Source-pinned means the source catalog is tied to an exact revision. Release/artifact-pinned is weaker and is stated separately. Neither state means runtime validation unless that gate is separately recorded.
 
@@ -145,8 +151,8 @@ Source-pinned means the source catalog is tied to an exact revision. Release/art
 Examples include:
 
 - remaining Malum registry details that cannot be promoted safely under the current provenance conflict;
-- exact runtime/API reconciliation for Hexalia, Toxony and Mobstein after their factual catalogs;
-- exact current inventories/numbers for providers such as Apprentice's Codex, Cataclysm: Spellbooks, Leyline and Somake where exact installed internals remain incomplete;
+- exact runtime/API reconciliation for Hexalia, Toxony, Mobstein and Apprentice's Codex after their factual/source catalogs;
+- exact current inventories/numbers for providers such as Cataclysm: Spellbooks, Leyline and Somake where exact installed internals remain incomplete;
 - remaining Ars base/addon primitives not yet normalized to the same confidence level;
 - pending Iron's ecosystem content/gear/compat providers listed in `meta/PROVIDER-AUDIT-QUEUE.md`;
 - provider-specific acquisition, IDs, costs and formulas wherever public evidence is still incomplete;
@@ -155,9 +161,7 @@ Examples include:
 
 ### Next high-value provider checkpoint
 
-With Mobstein `5.4.4` now reconciled to the strongest public evidence allowed by its All Rights Reserved posture, the next high-value standalone provider from the exact-inventory backlog is **Apprentice's Codex `0.9.7.1`**.
-
-Before cataloging Apprentice's Codex, its exact installed JAR/mod id/runtime identity must be re-read from the current modlist and any source/API/public inventory claim must be tied to the exact installed release line. Existing generic guide text is context, not registry authority.
+Phase 2L does **not** preselect its successor. After Phase 2L is merged, the next provider checkpoint must be chosen only after a fresh read of the then-current `main`, physical modlist, Notion context and provider audit queue, preserving any newer parallel catalog work already merged into `main`. A stale “next provider” recommendation must never override that reconciliation.
 
 ## Output
 
