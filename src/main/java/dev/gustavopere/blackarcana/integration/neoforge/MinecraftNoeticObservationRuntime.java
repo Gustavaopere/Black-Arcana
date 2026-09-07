@@ -146,7 +146,20 @@ public final class MinecraftNoeticObservationRuntime {
                 iterator.remove();
                 continue;
             }
-            if (findLoadedLivingTarget(server, entry.getValue().targetId()) == null) {
+
+            NoeticObservationSession session = observations.session(viewerId).orElse(null);
+            if (session == null || !session.targetId().equals(entry.getValue().targetId())) {
+                if (session != null) {
+                    observations.clearViewer(viewerId, NoeticObservationSession.CloseReason.TARGET_UNAVAILABLE);
+                }
+                iterator.remove();
+                continue;
+            }
+
+            LoadedLivingTarget target = findLoadedLivingTarget(server, session.targetId());
+            NoeticObservationFacts facts = facts(viewer, target, entry.getValue().explicitConsent());
+            ArcanaDecision revalidation = NoeticObservationPolicy.authorize(session.kind(), facts);
+            if (!revalidation.allowed()) {
                 observations.clearViewer(viewerId, NoeticObservationSession.CloseReason.TARGET_UNAVAILABLE);
                 iterator.remove();
             }
