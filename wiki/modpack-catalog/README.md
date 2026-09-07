@@ -31,9 +31,14 @@ including the current provider inventory, deduplication policy and audit queue.
 `meta/PROVIDER-AUDIT-QUEUE.md` remains the full 103-provider queue. Narrow status overlays may be used during incremental provider work to avoid destructive whole-table rewrites. Current overlays:
 
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md) — prevails only for `goety_cataclysm` and `goetyiron`;
-- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md) — prevails only for `malum`, `hexalia` and `toxony` until integral queue regeneration.
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md) — prevails only for `malum`, `hexalia`, `toxony` and `mobstein` until integral queue regeneration.
 
-Capability-matrix deltas follow the same narrow-overlay rule. [`meta/CAPABILITY-MATRIX-DELTA-TOXONY.md`](meta/CAPABILITY-MATRIX-DELTA-TOXONY.md) records the current Toxony semantic delta until the main matrix is regenerated.
+Capability-matrix deltas follow the same narrow-overlay rule:
+
+- [`meta/CAPABILITY-MATRIX-DELTA-TOXONY.md`](meta/CAPABILITY-MATRIX-DELTA-TOXONY.md) records the current Toxony semantic delta;
+- [`meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md`](meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md) records the current Mobstein resurrection/body/experiment semantic delta.
+
+These overlays prevail only for the families they name until the main matrix is regenerated.
 
 ## Authority order
 
@@ -75,7 +80,8 @@ Examples:
 - Goety Cataclysm and Goety Iron: separate addon-provider directories; they are not folded into Goety's base Focus count;
 - Malum: Spirit Rites / Geas-Pacts / spirits / systems;
 - Hexalia: brews / rituals / infusions / mutations / processing / censer / items;
-- Toxony: effects / oils / mutagens, with Toxicity/Tolerance/Affinity progression documented as provider systems.
+- Toxony: effects / oils / mutagens, with Toxicity/Tolerance/Affinity progression documented as provider systems;
+- Mobstein: resurrection/body/organ/experiment systems documented under its provider directory without inventing registry-level subclasses that public evidence does not prove.
 
 No category is invented merely to make the directory tree look symmetrical.
 
@@ -129,7 +135,8 @@ The granular queue plus explicit overlays remain authoritative for exact per-row
 - Goety Iron `3.1` — exact installed artifact/File ID/hash and release changelog pinned; eight public servant names cataloged while source/API internals remain unverified/fail-closed;
 - Malum `1.8.2` — exact version-line metadata/publisher changelog advanced Spirit Rite/Geas/spirit-resource coverage, but source-internal completion remains blocked by licensing conflict and runtime QA;
 - Hexalia — public 1.3.6 source pin with MIT provenance; 8/8 brews, 19/19 player-facing Nature's Ritual recipes, 6/6 Celestial Infusions, 21/21 mutations, 12/12 Mortar recipes, 10/10 Censer combinations and major capability-bearing items audited; installed filename/runtime-version mismatch and API/runtime QA remain;
-- Toxony `0.10.7` — exact installed artifact + exact public source-version pin; 5/5 harmful effects, 9/9 Oils, 7/7 Mutagen effect IDs, 11/11 Affinities, threshold selection, major Mutagen mechanics and external compat overlaps audited factually; GPLv3/LGPLv3 provenance conflict, supported-API and runtime gates remain fail-closed.
+- Toxony `0.10.7` — exact installed artifact + exact public source-version pin; 5/5 harmful effects, 9/9 Oils, 7/7 Mutagen effect IDs, 11/11 Affinities, threshold selection, major Mutagen mechanics and external compat overlaps audited factually; GPLv3/LGPLv3 provenance conflict, supported-API and runtime gates remain fail-closed;
+- Mobstein `5.4.4` — exact installed artifact + exact CurseForge release; publisher guide closes 10 resurrected forms, 6 Surgery Stretch types, 7 failed experiments and the major body/organ/syringe/structure/Witherstein semantics; 5.4.4's Sable compatibility claim is recorded, while ARR/no official source/API and exact current-stack runtime QA keep provider-specific integration fail-closed.
 
 Source-pinned means the source catalog is tied to an exact revision. Release/artifact-pinned is weaker and is stated separately. Neither state means runtime validation unless that gate is separately recorded.
 
@@ -137,9 +144,9 @@ Source-pinned means the source catalog is tied to an exact revision. Release/art
 
 Examples include:
 
-- exact installed capability reconciliation for **Mobstein 5.4.4** and other still-generic base/cross-domain providers;
+- exact installed capability reconciliation for **Monsters & Spellbooks 0.0.16.3** and other still-generic base/cross-domain providers;
 - remaining Malum registry details that cannot be promoted safely under the current provenance conflict;
-- exact runtime/API reconciliation for Hexalia and Toxony after their factual source catalogs;
+- exact runtime/API reconciliation for Hexalia, Toxony and Mobstein after their factual/semantic catalogs;
 - exact current inventories/numbers for providers such as Apprentice's Codex, Cataclysm: Spellbooks, Leyline and Somake where exact installed internals remain incomplete;
 - remaining Ars base/addon primitives not yet normalized to the same confidence level;
 - pending Iron's ecosystem content/gear/compat providers listed in `meta/PROVIDER-AUDIT-QUEUE.md`;
@@ -149,9 +156,9 @@ Examples include:
 
 ### Next high-value provider checkpoint
 
-After the Malum/Hexalia/Toxony reconciliation, the next provider from the previously grouped open set is **Mobstein `5.4.4`**.
+After the Mobstein reconciliation, the next adjacent unresolved provider in the canonical queue is **Monsters & Spellbooks `0.0.16.3`**.
 
-Before cataloging Mobstein, its exact installed JAR/mod id/runtime identity must be re-read from the current modlist and any source/API claims must be tied to exact public version evidence and provenance. The existing provider page/queue is not sufficient authority by itself.
+Before cataloging Monsters & Spellbooks, its exact installed JAR/mod id/runtime identity must be re-read from the current modlist and any source/API claims must be tied to exact public version evidence and provenance. The existing provider page/queue is not sufficient authority by itself.
 
 ## Output
 
