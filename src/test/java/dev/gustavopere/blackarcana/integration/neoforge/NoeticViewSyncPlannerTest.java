@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NoeticViewSyncPlannerTest {
     @Test
-    void projectsOnlyBorrowedSightWithLoadedTargets() {
+    void projectsOnlyBorrowedSightWithViewerScopedLoadedTargets() {
         UUID borrowedViewer = UUID.randomUUID();
         UUID borrowedTarget = UUID.randomUUID();
         UUID namescryViewer = UUID.randomUUID();
@@ -36,7 +36,9 @@ class NoeticViewSyncPlannerTest {
 
         Map<UUID, NoeticViewTransitionTracker.Desired> desired = NoeticViewSyncPlanner.project(
                 sessions,
-                targetId -> targetId.equals(borrowedTarget) ? OptionalInt.of(17) : OptionalInt.empty());
+                (viewerId, targetId) -> viewerId.equals(borrowedViewer) && targetId.equals(borrowedTarget)
+                        ? OptionalInt.of(17)
+                        : OptionalInt.empty());
 
         assertEquals(Map.of(
                 borrowedViewer,
@@ -53,6 +55,6 @@ class NoeticViewSyncPlannerTest {
 
         assertEquals(Map.of(), NoeticViewSyncPlanner.project(
                 sessions,
-                ignored -> OptionalInt.of(-1)));
+                (viewerId, targetId) -> OptionalInt.of(-1)));
     }
 }
