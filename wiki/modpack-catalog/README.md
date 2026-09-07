@@ -8,6 +8,7 @@ This directory is the canonical Phase 2 inventory for every magic-relevant top-l
 
 - Phase 1 — architecture/plans/Wiki structure — merged through PR #61 at `main@edcc9f8cf1d582681d4b7d2aa1facbcb39b99ae9`.
 - Phase 2 baseline — provider inventory + first granular catalogs + capability matrix — merged through PR #62 at `main@17f87619bc8ed71023bc80d0adb752c13dc8c6c4`.
+- Phase 2 coherent checkpoint through PR #74 — merged at `main@aafea4b7e49dc5571ac006b3202be61862326e63`.
 - Subsequent Phase 2 documentation is merged incrementally when coherent and CI-green; an incremental merge does not mean the complete catalog is finished.
 
 The Phase 2 baseline established the magic-relevant registry and a first set of provider pages, while multiple exact spell/glyph/ritual/power inventories remain explicitly incomplete.
@@ -28,12 +29,12 @@ including the current provider inventory, deduplication policy and audit queue.
 
 ## Authority order
 
-1. `modlist.txt` snapshot from 2026-09-06 is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. The snapshot contains 607 top-level entries.
+1. Current physical modlist snapshot from **2026-09-07** is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. It contains **612 top-level entries including NeoForge**; internal `jarjar` dependencies do not count as top-level providers.
 2. Current Notion pages and project guides provide ecosystem classification, gameplay context and known compatibility notes.
 3. Official/public documentation, public APIs, changelogs and clean-room observable behavior provide granular spell/glyph/ritual/power facts.
 4. External source code may only inform an implementable specification when the exact license permits that use and the provenance ledger requirement has already been satisfied.
 
-Old guide versions never override the current JAR/runtime identity.
+Old guide versions never override the current JAR/runtime identity. A physical version update does not revalidate an old API/hook automatically.
 
 ## Catalog unit
 
@@ -102,16 +103,34 @@ Ars Nouveau is compositional. Phase 2 catalogs forms, effects, augments, rituals
 - Chaos and Order remain candidate Iron's schools pending complete semantic deduplication.
 - Infernal remains candidate pending full audit of Fire, Goety, Cataclysm/Ignis, Soul Fire and related providers.
 
+## Source-pinned high-value providers already advanced
+
+The granular queue remains authoritative for exact per-row status. At this checkpoint, major source-pinned audits include:
+
+- Iron's base spell registry/catalog;
+- Ypsilon's Fundamentalism, Asterism Arcanum, Dreamless and other audited Iron's addons;
+- Eidolon: Repraised `0.5.0.2` — spells/chants/conversions/ritual recipes/research inventoried in source, runtime QA pending;
+- Vampirism `1.10.13` + Bloodlines `3.0.9` + Vampiric Ageing `1.4.21` + Vampire Spells Addon `0.0.9` — provider authority/resources/actions/progression cataloged in source, runtime/inter-addon QA pending;
+- Vampirism Integrations `1.10.2` — Cold Sweat eligibility and Jade discovery cataloged without inferring runtime activation;
+- Werewolves `2.0.3.3` — faction/forms/actions/skills/effects/leveling/Lord/minions/refinements cataloged in source, runtime/Epic Fight QA pending.
+
+Source-pinned means the source catalog is tied to an exact revision. It does **not** mean exact installed-JAR equivalence or runtime validation unless those gates are separately recorded.
+
 ## Known Phase 2 work still open
 
 Examples include:
 
-- finish Iron's base catalog: Ice, Lightning and Nature currently remain after the first 75/110 individual fichas;
-- exact current inventories/numbers for providers such as Apprentice's Codex, Cataclysm: Spellbooks, Dreamless, Leyline and Somake;
-- exact installed capability reconciliation for Goety 3.1.4, Malum 1.8.2, Eidolon, Hexalia, Toxony, Vampirism/Bloodlines/Werewolves, Mobstein and related addons;
-- remaining Ars addon primitives not yet normalized to the same confidence level;
+- exact installed capability reconciliation for **Goety 3.1.4**, **Malum 1.8.2**, Hexalia, Toxony and Mobstein;
+- exact current inventories/numbers for providers such as Apprentice's Codex, Cataclysm: Spellbooks, Leyline and Somake where exact installed internals remain incomplete;
+- remaining Ars base/addon primitives not yet normalized to the same confidence level;
+- pending Iron's ecosystem content/gear/compat providers listed in `meta/PROVIDER-AUDIT-QUEUE.md`;
 - provider-specific acquisition, IDs, costs and formulas wherever public evidence is still incomplete;
+- exact runtime/config/client QA for source-cataloged providers where explicitly recorded;
 - final semantic disposition of every row in `CAPABILITY-MATRIX.md`.
+
+### Next high-value base-provider checkpoint
+
+After the Eidolon and Vampirism/Werewolves source audits, **Goety `3.1.4`** is the next primary supernatural/magic provider to reconcile at granular level. It must be audited provider-native-first: Soul Energy, focuses/spells, rituals, servants, progression and addon boundaries remain Goety-owned unless an explicit safe integration contract proves otherwise.
 
 ## Output
 
