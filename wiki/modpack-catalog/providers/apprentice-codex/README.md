@@ -2,7 +2,7 @@
 
 ## Status
 
-`EXACT INSTALLED ARTIFACT 0.9.7.1 / EXACT SOURCE VERSION PIN 305ea6a / MIT CODE + CC0 ORIGINAL ASSETS / IRON'S 3.16.3 BASELINE MATCHES PACK / 83/83 SPELL REGISTRY IDS FROZEN / 9 IRON'S SCHOOLS / PLAYER GUIDE TEXT SOURCE-PINNED / NUMERIC PER-SPELL AUDIT IN PROGRESS / ITEMS+BLOCKS+COMPAT+ACQUISITION INVENTORIES PENDING / RUNTIME QA PENDING`
+`EXACT INSTALLED ARTIFACT 0.9.7.1 / EXACT SOURCE VERSION PIN 305ea6a / MIT CODE + CC0 ORIGINAL ASSETS / IRON'S 3.16.3 BASELINE MATCHES PACK / 83/83 SPELLS SOURCE-CATALOGED / 9 IRON'S SCHOOLS / SCHOOL AFFINITY AUDITED / SUPPORT REGISTRIES AUDITED / ACQUISITION SURFACES AUDITED / OPTIONAL COMPAT MATRIX RECONCILED WITH PACK / RUNTIME QA PENDING`
 
 ## Installed identity
 
@@ -15,7 +15,7 @@ Current physical modlist authority:
 - mixin config: `mixins.apprenticecodex.json`;
 - SHA-1: `b514315add32b93b0049c8673075627d7ef812e0`;
 - package fingerprint: `702285225`;
-- loader/game: NeoForge 1.21.1.
+- loader/game: NeoForge `21.1.248` / Minecraft 1.21.1.
 
 The physical modlist remains authoritative for the binary actually installed.
 
@@ -32,17 +32,18 @@ The commit's only codebase delta is the version change `0.9.7 -> 0.9.7.1` in `gr
 Exact checkpoint metadata includes:
 
 - Minecraft `1.21.1`;
-- NeoForge `21.1.228` build baseline;
+- NeoForge `21.1.228` source build baseline;
 - Java 21 project line;
 - mod id `apprenticecodex`;
 - mod version `0.9.7.1`;
 - Iron's Spells 'n Spellbooks `1.21.1-3.16.3`;
+- Iron's Lib `1.21.1-2.1.0`;
 - Curios `9.5.1+1.21.1`;
 - GeckoLib `4.8.3`;
 - Create `6.0.10` development/optional-compat baseline;
 - Sable `2.0.3` development/optional-compat baseline.
 
-The pack also uses Iron's `3.16.3`, so the core spell-provider baseline matches exactly. Optional provider versions must still be reconciled individually; for example, the pack's Sable is `2.0.5`, not source-dev `2.0.3`.
+The pack uses Iron's `3.16.3`, Iron's Lib `2.1.0`, Curios `9.5.1+1.21.1`, Create `6.0.10` and compatible/newer GeckoLib. Optional provider versions are reconciled in [`COMPATIBILITY.md`](COMPATIBILITY.md); source-dev baselines are not silently promoted to pack runtime versions.
 
 ## Provenance
 
@@ -57,9 +58,9 @@ Black Arcana uses the source read-only for factual cataloging. No upstream code/
 
 ## Critical registry correction — 83 spells, not approximately 60
 
-The current public project description says the addon contains "around 60 spells". The exact 0.9.7.1 `SpellRegistry` registers **83** spells.
+The public project description can describe the addon as containing roughly 60 spells. The exact 0.9.7.1 `SpellRegistry` registers **83** spells.
 
-For the installed build, the exact source registry supersedes the approximate marketing count.
+For the installed build, the exact source registry supersedes an approximate marketing count.
 
 | Iron's school | Exact count |
 |---|---:|
@@ -188,9 +189,11 @@ Apprentice's Codex creates **no new spell school** in this registry. It register
 - `apprenticecodex:otherworld_lens`
 - `apprenticecodex:mana_transcription`
 
+Each registry entry now has a source-pinned per-spell page under its school directory. Numeric formulas, duration/range constants, acquisition restrictions and delegated manager/entity details are recorded at the highest confidence supported by the exact 0.9.7.1 source; unknown entity/config/runtime values remain explicitly pending rather than inferred.
+
 ## Release 0.9.7.1 additions
 
-The exact public 0.9.7.1 changelog explicitly calls out four new spells:
+The exact public 0.9.7.1 changelog calls out four new spells:
 
 - Combustion Jet;
 - Blood Brand;
@@ -199,11 +202,21 @@ The exact public 0.9.7.1 changelog explicitly calls out four new spells:
 
 All four are present in the exact 83-spell registry.
 
+## Provider-wide systems
+
+Phase 2L also audits the provider surfaces that materially affect deduplication and integration:
+
+- [`SCHOOL-AFFINITY.md`](SCHOOL-AFFINITY.md) — 25-slot dynamic affinity system, exact modifiers and potion variants;
+- [`SUPPORT-CONTENT.md`](SUPPORT-CONTENT.md) — block/effect/attribute registries plus provider equipment/casting-item families;
+- [`ACQUISITION.md`](ACQUISITION.md) — spell eligibility rules, recipes, Errand Mage, loot and learning boundaries;
+- [`COMPATIBILITY.md`](COMPATIBILITY.md) — exact compat package inventory reconciled against the physical pack;
+- [`INTEGRATION-RULES.md`](INTEGRATION-RULES.md) — Black Arcana/RPG authority and deduplication contracts.
+
 ## Provider identity
 
-Apprentice's Codex is an Iron's-native **spell/content/equipment/utility addon** rather than a second magic engine. Its spells consume/use Iron's spell-school and mana semantics unless a specific provider item deliberately modifies casting.
+Apprentice's Codex is an Iron's-native **spell/content/equipment/utility addon** rather than a second magic engine. Its spells use Iron's spell-school and mana semantics unless a specific provider item deliberately modifies casting.
 
-Public/source-visible capability families include:
+Source-confirmed capability families include:
 
 - summoned magical firearms/blades/weapons;
 - barriers, guard and evasion;
@@ -221,34 +234,31 @@ Public/source-visible capability families include:
 
 ## Authority consequence
 
-Apprentice's Codex remains authority for its spell implementations, custom items/entities/blocks and optional compatibility behavior. Iron's remains authority for the core spell registry, schools, mana and standard spell lifecycle that the addon uses.
+Apprentice's Codex remains authority for its spell implementations, custom items/entities/blocks, temporary states and optional compatibility behavior. Iron's remains authority for the core spell registry, schools, mana and standard spell lifecycle that the addon uses.
 
 Black Arcana must not:
 
-- duplicate these 83 capabilities simply under different names/VFX;
+- duplicate these 83 capabilities merely under different names/VFX;
 - create a second mana payment for their casts;
 - re-settle their damage/healing/world effects;
 - treat an Apprentice spell as a Black Arcana cast unless a real cross-provider contract says so;
-- infer optional compat activation from source development dependencies alone.
+- infer optional compat activation from source development dependencies alone;
+- convert School Affinity into RPG Mastery or Black Arcana Arcane Danger state.
 
 ## Canonical navigation
 
-Per-school/per-spell files are being filled from the exact 0.9.7.1 source pin:
-
 - [`blood/`](blood/README.md)
-- `ender/`
-- `evocation/`
-- `fire/`
-- `holy/`
-- `ice/`
-- `lightning/`
-- `nature/`
-- `eldritch/`
-
-Additional provider-wide inventories for equipment, blocks, recipes/acquisition and optional compatibility remain part of this Phase 2L checkpoint.
+- [`ender/`](ender/README.md)
+- [`evocation/`](evocation/README.md)
+- [`fire/`](fire/README.md)
+- [`holy/`](holy/README.md)
+- [`ice/`](ice/README.md)
+- [`lightning/`](lightning/README.md)
+- [`nature/`](nature/README.md)
+- [`eldritch/`](eldritch/README.md)
 
 ## Validation state
 
-`SOURCE REGISTRY EXACT / INSTALLED JAR IDENTITY EXACT / RUNTIME QA NOT YET COMPLETE`
+`SOURCE REGISTRY EXACT / 83 SPELL PAGES PRESENT / SUPPORT SYSTEMS SOURCE-AUDITED / INSTALLED JAR IDENTITY EXACT / FULL RUNTIME QA NOT YET COMPLETE`
 
-The exact source pin supports factual source-derived cataloging. It does not by itself prove every optional mod bridge is active in the user's full 612-mod runtime.
+The exact source pin supports factual source-derived cataloging. It does not by itself prove every optional mod bridge is active in the user's full 612-mod runtime. Phase 2L therefore closes source/catalog coverage while preserving runtime-QA flags wherever provider/environment behavior still requires execution.
