@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 /** Pure bounded projection from canonical Noetic sessions to Borrowed Sight presentation intent. */
 final class NoeticViewSyncPlanner {
@@ -20,7 +20,7 @@ final class NoeticViewSyncPlanner {
 
     static Map<UUID, NoeticViewTransitionTracker.Desired> project(
             List<NoeticObservationRuntime.ActiveSession> sessions,
-            Function<UUID, OptionalInt> loadedEntityIdResolver
+            BiFunction<UUID, UUID, OptionalInt> loadedEntityIdResolver
     ) {
         Objects.requireNonNull(sessions, "sessions");
         Objects.requireNonNull(loadedEntityIdResolver, "loadedEntityIdResolver");
@@ -33,7 +33,7 @@ final class NoeticViewSyncPlanner {
             }
 
             OptionalInt targetEntityId = Objects.requireNonNull(
-                    loadedEntityIdResolver.apply(session.targetId()), "targetEntityId");
+                    loadedEntityIdResolver.apply(session.viewerId(), session.targetId()), "targetEntityId");
             if (targetEntityId.isEmpty() || targetEntityId.getAsInt() < 0) {
                 continue;
             }
