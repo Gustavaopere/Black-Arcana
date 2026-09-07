@@ -68,7 +68,9 @@ Core dependency alignment is strong:
 - Epic Fight `21.17.3.1` — exact optional source baseline;
 - Iron's Jewelry `2.0.2`, Atlas API `1.2.0`, Malum `1.8.2`, Lodestone `1.8.2`, Patchouli `93` — exact source baselines where declared.
 
-Several optional providers are newer than the development baseline and are version-eligible but still need runtime QA. Better Combat and Botania are absent. The exact `sodiumdynamiclights` mod id used by the provider's Sodium Dynamic Lights compatibility class is absent, so that specific surface remains inactive even though Sodium/LambDynamicLights exist in the pack.
+Several optional providers are newer than the development baseline and are version-eligible but still need runtime QA. Better Combat and Botania are absent. The exact `sodiumdynamiclights` mod id used by the provider's Sodium Dynamic Lights compatibility class is absent, so that specific surface remains inactive even though other dynamic-light infrastructure exists in the pack.
+
+The exact 0.9.7.1 failure behavior is not uniform: Ars Nouveau and Sodium Dynamic Lights catch reflective/linkage failures, and Lootr is guarded by provider presence plus target namespace; **Create, Sable and Epic Fight guard provider absence but convert reflective linkage failures to `IllegalStateException` once the provider is present**. Their exact version alignment therefore does not close the runtime-QA gate. Black Arcana-owned optional integrations remain governed by D009 and must fail safely rather than reproducing those provider hard-fail semantics.
 
 ## Authority consequence
 
@@ -100,7 +102,7 @@ Source/catalog completeness is not runtime proof. Remaining QA includes, where r
 - full 612-mod client/server load compatibility;
 - final pack config/datapack overrides;
 - delegated manager/entity constants marked pending in individual pages;
-- optional compat activation in the actual pack;
+- optional compat activation in the actual pack, especially the Create/Sable/Epic Fight hard-fail linkage seams;
 - acquisition/economy behavior after pack overrides;
 - server/client behavior for high-risk world-changing or movement spells.
 
