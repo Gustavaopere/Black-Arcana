@@ -49,7 +49,7 @@ A simple damage/healing link is **not a gap** because Ars Elemental `Life Link` 
 
 ### Cross-engine casting and mana
 
-Ars 'n' Spells 3.2.4 already covers the installed generic Ars Nouveau ↔ Iron's bridge for mana/progression interoperability, binding/transcription and casting Ars spells from Iron's spellbooks/native wheel. A Black Arcana feature that only repeats that bridge is not a gap. Any integration must preserve one causal cast and one canonical resource settlement rather than process the same action once per host engine.
+Ars 'n' Spells **3.3.0 is the installed bridge** and current official release material continues to cover generic Ars Nouveau ↔ Iron's mana/progression interoperability, inscription/transcription and casting Ars spells from Iron's spellbooks/native wheel. The 3.3.0 release also reports reworked resource payment, long-cast handling and protection against stale/repeated cross-cast requests. A Black Arcana feature that only repeats that bridge is not a gap. Any integration must preserve one causal cast and one canonical provider settlement rather than process the same action once per host engine.
 
 ### Conditional casting
 
