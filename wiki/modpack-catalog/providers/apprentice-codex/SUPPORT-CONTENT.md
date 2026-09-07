@@ -1,0 +1,184 @@
+# Apprentice's Codex — support content registry audit
+
+Source checkpoint: `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` / provider `0.9.7.1`.
+
+This page records provider-owned content outside the 83 spell registry. It is an interoperability catalog, not a license to copy implementation or assets.
+
+## Blocks — exact registry
+
+The exact `BlockRegistry` registers these provider blocks:
+
+### Spell-created/runtime blocks
+
+- `mage_light_torch`
+- `wizardlamp_lantern`
+- `frost_rune_trap`
+- `healing_bloom_light`
+- `personal_shelf_chest`
+- `rift_hole`
+- `otherworld_lens_lens`
+
+These belong to their originating Apprentice spell lifecycles. Black Arcana must not treat their placement/removal as independent Black Arcana world effects after provider settlement.
+
+### Infrastructure / stations
+
+- `magnetic_stability_anchor`
+- `apprentice_desk`
+- `spellcaster_workbench`
+- `spellcaster_accessory_case`
+- `spell_dispenser`
+- `spell_calibration_bench`
+- `arcanum_in_a_jar`
+- `creative_spell_dispenser`
+- `essence_smoker`
+- `atelier_station`
+- `alchemy_brewer`
+
+### Flora
+
+- `comfort_berry_bush`
+- `potted_comfort_berry_bush`
+
+The potted variant is registered into the vanilla flower pot during common setup.
+
+## Static mob effects — exact registry
+
+The provider registers 20 named static effects:
+
+- `arcane_charge`
+- `casting_mobility`
+- `craftsmans_delight_mobility`
+- `divine_possession`
+- `intelligence`
+- `long_stride_mobility`
+- `mana_regeneration`
+- `mist_form`
+- `palette_reception`
+- `echo_spell`
+- `phalanx_stance`
+- `sense_sensor`
+- `spectral_wing`
+- `thermal_processing`
+- `penetrated_armor`
+- `frost_trapped`
+- `notched_frozen`
+- `gravity_bound`
+- `inert_mana_shield`
+- `blood_engraved`
+
+In addition, School Affinity dynamically registers 25 slot-backed effects; see `SCHOOL-AFFINITY.md`.
+
+## Provider attribute
+
+The exact provider attribute registry adds one synced attribute:
+
+`apprenticecodex:max_enchantment_table_level`
+
+It is a ranged attribute with default/minimum `0` and maximum `2048`. This is provider state and must not be replaced by an RPG attribute of similar name.
+
+## Item/content families
+
+The exact `ItemRegistry` is substantially broader than spell scrolls. Important provider-owned families include:
+
+### Summoned-weapon presentation/support items
+
+Examples registered directly include the Sky Edge Sword, Bound Sword/Bow, Commence Fire Rifle, Quick Arms Handgun, Breaching Enemy Shotgun, Silent Assassin Rifle, Lethal Assault Rifle, Dual Acrobat SMG, Thermal Process Thrower, Fly Swatter Launcher and Artisan Smash Launcher.
+
+These item registrations do not create extra casts: when used as summoned-weapon representations they remain part of the originating spell lifecycle.
+
+### Spellcaster ammunition and crafting materials
+
+The provider registers multiple spellcaster-round casings and finished rounds, including rapid, basic, arcane, advanced, spell-dominator and multi-purpose variants, plus molds, bullet heads, propellant and incomplete-round materials.
+
+### Armor families
+
+The source registers complete armor sets/families for:
+
+- Apprentice Mage;
+- Enchantress;
+- Soulcollector;
+- Stealth Rune;
+- Chromatic Magia Dress;
+- Element Maiden Robe;
+- Magi Agent Suit.
+
+Exact per-piece behavior remains provider-owned and should be audited at the individual item class if a future integration needs a concrete hook.
+
+### Curios/accessories
+
+Provider Curios include, among others:
+
+- Scarlet Thirst;
+- Craftsman's Delight;
+- Protection Spell Supporter;
+- Spellcaster Ammo Pouch;
+- Spellcaster Quiver;
+- Absorption Amplify Amulet;
+- Autocast Amulet;
+- Satellite Followcast Amulet;
+- Mana Thruster;
+- Magi Compressor Gadget;
+- Jumpcast Charm;
+- Spell Cast Parrying Ring;
+- Attackcast Ring;
+- Ashen/Enchanted Circlets;
+- Mana Shield Charm;
+- Ender Grimoire;
+- Archivist's Grimoire;
+- Spellcaster Accessory Case;
+- Explorer's Codex;
+- Isekai Travel Guidebook;
+- Spellstained Runic Tablet.
+
+Equipping one of these is not by itself a Black Arcana/RPG progression event. Triggered casts must retain provider causal identity.
+
+### Casting weapons and alternate cast surfaces
+
+The item registry includes:
+
+- multiple Spellcaster Guns;
+- material-tier Spell Amplifiers;
+- Photon Siphon and Explorer's Cane;
+- Spellcaster's / Alchemist's Flasks;
+- Wooden Wand;
+- Pastel Staff;
+- Multicast Echo Staff;
+- Zenith Staff;
+- Focus Staffbow;
+- Smashcast Scepter;
+- Multipurpose Staffrifle;
+- Scrollcaster Gauntlet;
+- Chargecast Catalystbook;
+- Circuit Heat Staff;
+- Charged Twin Blade Staff;
+- Mana Force Blade + sheath;
+- Spell Side Edge + generated mirror;
+- Spellcharged Greatsword;
+- material-tier Swingcast Staffs;
+- Mithril Freecast Staff;
+- Revolvercast Staff;
+- Crystal Bladed Staff;
+- Illuminate Stellar / Unite Luna staffs;
+- Elemental Bow;
+- Reflectcast Shield, Parrycast Buckler and Bulwark Greatshield.
+
+These are alternate provider cast/equipment surfaces. Black Arcana must not infer a second resource settlement or replay casts generated by them.
+
+### Mobility/vehicle
+
+- `floatmount_broom`
+- `hoverride_broom`
+
+Call Broom and Assist Wings have provider-specific interactions with this family. Broom movement remains provider vehicle state, not a continuous spell-progression stream.
+
+### Food/material utility
+
+Comfort Berries and Comfort Sandwich are registered food paths that apply provider `mana_regeneration`; the registry also includes arcane/spellstained materials and utility items such as `storage_stabilizer`, `luminous_device`, `grimoire_manifest`, `instant_search_brazier`, and `anti_mana_arrow`.
+
+## Boundary consequence
+
+The presence of an item/block/effect in this registry proves provider ownership and identity, not the full player-facing behavior of every class. Any future bridge requiring exact damage, storage, cast trigger, equipment modifier, Curios slot, block interaction or persistence semantics must inspect that exact class and version before implementation.
+
+## Confidence
+
+`SOURCE-PINNED REGISTRIES / EXACT BLOCK+STATIC EFFECT+ATTRIBUTE IDENTITIES / ITEM FAMILIES SOURCE-CONFIRMED / INDIVIDUAL ITEM BEHAVIOR AUDIT ONLY WHEN REQUIRED BY A REAL BRIDGE`
