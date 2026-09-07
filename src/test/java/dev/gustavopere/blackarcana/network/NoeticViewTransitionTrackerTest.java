@@ -3,7 +3,9 @@ package dev.gustavopere.blackarcana.network;
 import dev.gustavopere.blackarcana.content.noetic.NoeticObservationKind;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,6 +58,55 @@ class NoeticViewTransitionTrackerTest {
                                 29)),
                 tracker.reconcile(viewer, Optional.of(new NoeticViewTransitionTracker.Desired(
                         NoeticObservationKind.BORROWED_SIGHT, 29))));
+    }
+
+    @Test
+    void canonicalBatchReconciliationClosesMissingViewersWithoutScanningPlayers() {
+        NoeticViewTransitionTracker tracker = new NoeticViewTransitionTracker(2);
+        UUID first = UUID.randomUUID();
+        UUID second = UUID.randomUUID();
+        NoeticViewTransitionTracker.Desired firstView = new NoeticViewTransitionTracker.Desired(
+                NoeticObservationKind.BORROWED_SIGHT, 17);
+        NoeticViewTransitionTracker.Desired secondView = new NoeticViewTransitionTracker.Desired(
+                NoeticObservationKind.BORROWED_SIGHT, 29);
+        Map<UUID, NoeticViewTransitionTracker.Desired> desired = new LinkedHashMap<>();
+        desired.put(first, firstView);
+        desired.put(second, secondView);
+
+        assertEquals(List.of(
+                        new NoeticViewTransitionTracker.Transition(first, new NoeticViewPayload(
+                                ArcanaProtocol.VERSION,
+                                NoeticViewPayload.Action.BEGIN,
+                                NoeticObservationKind.BORROWED_SIGHT,
+                                17)),
+                        new NoeticViewTransitionTracker.Transition(second, new NoeticViewPayload(
+                                ArcanaProtocol.VERSION,
+                                NoeticViewPayload.Action.BEGIN,
+                                NoeticObservationKind.BORROWED_SIGHT,
+                                29))),
+                tracker.reconcileAll(desired));
+        assertTrue(tracker.reconcileAll(desired).isEmpty());
+
+        assertEquals(List.of(new NoeticViewTransitionTracker.Transition(first, new NoeticViewPayload(
+                        ArcanaProtocol.VERSION,
+                        NoeticViewPayload.Action.END,
+                        NoeticObservationKind.BORROWED_SIGHT,
+                        17))),
+                tracker.reconcileAll(Map.of(second, secondView)));
+        assertTrue(tracker.reconcileAll(Map.of(second, secondView)).isEmpty());
+    }
+
+    @Test
+    void batchSnapshotAboveTrackerCapacityFailsClosed() {
+        NoeticViewTransitionTracker tracker = new NoeticViewTransitionTracker(1);
+        NoeticViewTransitionTracker.Desired desired = new NoeticViewTransitionTracker.Desired(
+                NoeticObservationKind.BORROWED_SIGHT, 4);
+        Map<UUID, NoeticViewTransitionTracker.Desired> oversized = new LinkedHashMap<>();
+        oversized.put(UUID.randomUUID(), desired);
+        oversized.put(UUID.randomUUID(), desired);
+
+        assertThrows(IllegalArgumentException.class, () -> tracker.reconcileAll(oversized));
+        assertEquals(0, tracker.trackedCount());
     }
 
     @Test
