@@ -9,5 +9,6 @@ public enum ArcanaIntegrationCapability {
     RITUAL_HOST,
     SOUL_RESOURCE,
     SOURCE_RESOURCE,
-    MANA_RESOURCE
+    MANA_RESOURCE,
+    FAMILIAR_OWNERSHIP
 }
