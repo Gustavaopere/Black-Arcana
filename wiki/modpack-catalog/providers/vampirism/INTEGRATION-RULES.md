@@ -1,6 +1,6 @@
 # Black Arcana ↔ Vampirism 1.10.13 — Integration Rules
 
-Status: `CONTRATO SOURCE-PINNED / PROVIDER-NATIVE FIRST / FAIL-CLOSED / RUNTIME QA PENDENTE`
+Status: `CONTRATO SOURCE-PINNED / PROVIDER-NATIVE FIRST / VAMPIRE SPELLS 0.0.9 INTEROP SOURCE-CATALOGADO / FAIL-CLOSED / RUNTIME QA PENDENTE`
 
 Canonical provider source: `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`.
 
@@ -326,11 +326,34 @@ Bloodlines is installed and overlays specialization/progression on Vampirism. Un
 
 ### Vampire Spells Addon 0.0.9
 
-Installed bridge between Vampirism and Iron's-style spell systems. Until separately audited:
+The installed bridge is source-pinned to official release `1.21.1-0.0.9`, commit `2d36e94e67611a316b7311b11e4574b499025580`. Its authority is the **cross-provider transaction policy** for Iron's Blood/Holy spells involving Vampirism; it does not own native Vampirism Actions.
 
-- do not equate native Vampirism Actions to spells;
-- do not attach Iron's mana/cast semantics to native actions;
-- do not assume every addon spell consumes Vampirism blood or requires Vampire faction.
+Confirmed rules:
+
+- native Vampirism Actions remain actions and do not inherit Iron's mana/cast/cooldown semantics;
+- eligible Vampire casts of Iron's Blood School may replace the **current cast's** mana payment with an atomic Vampirism blood payment;
+- default mode uses blood only when mana cannot cover the full current price; forced blood-only mode is configurable;
+- Ray of Siphoning is explicitly excluded from resource substitution and remains mana-paid;
+- Devour's Vampire mana multiplier is applied before any blood fallback calculation;
+- all Vampire Blood-school casts receive the addon's provider-event cooldown multiplier;
+- Ray/Devour blood restoration is settled from correlated delivered health damage through Vampirism's real blood API;
+- Holy damage/heal/utility overlays are owned by the addon and must not be reapplied by Black Arcana.
+
+Deduplication rule:
+
+`one Iron's cast -> one resource settlement -> one downstream addon settlement`
+
+Black Arcana must not:
+
+- precharge the same blood before the addon;
+- refund blood after the addon based only on observed bar delta;
+- run a second generic mana↔blood converter for the same cast;
+- count pre-cast, blood debit, damage pulse and blood restoration as independent casts/actions;
+- generalize this bridge into a global unification of Vampirism blood with Iron's mana.
+
+Runtime caveat: the addon's own compatibility audit explicitly pinned Iron's 3.16.2 while the pack currently installs 3.16.3. The declared metadata range includes 3.16.3, but Black Arcana consumers that depend on the addon's reflection/mixin internals remain fail-closed until the installed combination passes runtime QA.
+
+Canonical addon documentation: [`../vampire-spells-addon/README.md`](../vampire-spells-addon/README.md) and [`../vampire-spells-addon/TECHNICAL-AUDIT.md`](../vampire-spells-addon/TECHNICAL-AUDIT.md).
 
 ### Vampiric Ageing 1.4.21
 
@@ -371,6 +394,7 @@ Client-only information may drive UI/preflight but not:
 | installed version changed without revalidation | disable version-sensitive path |
 | only client evidence exists | no authoritative reward/mutation |
 | Bloodlines-specific state unknown | no bloodline-specific integration |
+| Vampire Spells reflection/mixin contract unverified on installed Iron's | no Black Arcana dependency on that internal bridge path |
 | duplicate causal id | no second settlement |
 
 ## 19. Canonical test matrix for implementation/validation
@@ -437,17 +461,18 @@ Client-only information may drive UI/preflight but not:
 - Bat + Epic Fight/stamina/movement;
 - Jump Boost + movement systems;
 - Teleport + dimensions/portals;
-- Vampire Spells Addon coexistence;
+- Vampire Spells Addon 0.0.9 load/reflection/mixins with Iron's 3.16.3;
+- Vampire Spells resource fallback/deduplication + Ray/Devour + Holy matrix;
 - Bloodlines coexistence;
 - Vampiric Ageing coexistence.
 
 ## 20. Closure condition
 
-This integration contract is source-approved for the base provider only when:
+This integration contract is source-approved for the Vampirism base provider when:
 
 - exact installed 1.10.13 remains the target;
 - provider APIs/registries above resolve as expected;
 - Black Arcana uses the stated authority boundary;
 - runtime tests still pending are not represented as passed.
 
-Bloodlines/Vampire Spells semantics remain separate audit work and cannot be inferred from this base-provider contract.
+Vampire Spells Addon 0.0.9 now has a separate source-pinned contract and may be referenced only within that documented boundary. Its installed Iron's 3.16.3 runtime/mixin QA remains pending. Bloodlines semantics remain separate audit work and cannot be inferred from this base-provider contract.
