@@ -14,6 +14,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -87,6 +88,15 @@ public final class MinecraftNoeticGazeRuntime {
         long nowTick = server.overworld().getGameTime();
         ServerState state = states.computeIfAbsent(server, ignored -> new ServerState());
         pruneDiminishingReturns(state, nowTick);
+
+        Long playerImmunityUntil = state.playerImmunityUntil.get(targetId);
+        if (target instanceof ServerPlayer
+                && playerImmunityUntil != null
+                && nowTick < playerImmunityUntil) {
+            return deny(
+                    "gaze_player_reapplication_immunity",
+                    "Player target remains inside the canonical Stillness reapplication-immunity window");
+        }
         if (state.byCaster.containsKey(casterId)) {
             return deny("gaze_caster_busy", "Caster already owns an active Gaze of Stillness session");
         }
@@ -124,6 +134,11 @@ public final class MinecraftNoeticGazeRuntime {
                 new DrState(
                         Math.min(NoeticSafetyCeilings.MAX_GAZE_DR_STACKS, priorApplications + 1),
                         nowTick + NoeticSafetyCeilings.GAZE_DR_RESET_TICKS));
+        if (target instanceof ServerPlayer) {
+            state.playerImmunityUntil.put(
+                    targetId,
+                    nowTick + NoeticSafetyCeilings.GAZE_PLAYER_REAPPLICATION_IMMUNITY_TICKS);
+        }
         restoreStillnessAnchor(target, session);
         return ArcanaDecision.allow();
     }
@@ -137,7 +152,7 @@ public final class MinecraftNoeticGazeRuntime {
         enforceStillnessMovement(server, target);
     }
 
-    /** Applies the same lock after entity work so AI/travel during the tick cannot accumulate X/Z drift. */
+    /** Applies the same lock after entity work so AI/travel during the entity tick cannot accumulate X/Z drift. */
     public synchronized void enforceStillnessAfterEntityTick(MinecraftServer server, LivingEntity target) {
         enforceStillnessMovement(server, target);
     }
@@ -236,7 +251,7 @@ public final class MinecraftNoeticGazeRuntime {
         long nowTick = server.overworld().getGameTime();
         pruneDiminishingReturns(state, nowTick);
         if (state.byCaster.isEmpty()) {
-            if (state.drByTarget.isEmpty()) states.remove(server);
+            if (state.drByTarget.isEmpty() && state.playerImmunityUntil.isEmpty()) states.remove(server);
             return;
         }
 
@@ -266,7 +281,11 @@ public final class MinecraftNoeticGazeRuntime {
             restoreStillnessAnchor(target, session);
         }
         for (UUID casterId : closeCasters) closeSession(state, casterId);
-        if (state.byCaster.isEmpty() && state.drByTarget.isEmpty()) states.remove(server);
+        if (state.byCaster.isEmpty()
+                && state.drByTarget.isEmpty()
+                && state.playerImmunityUntil.isEmpty()) {
+            states.remove(server);
+        }
     }
 
     public synchronized int activeGazes(MinecraftServer server) {
@@ -289,7 +308,12 @@ public final class MinecraftNoeticGazeRuntime {
         }
         closeCasters.forEach(casterId -> closeSession(state, casterId));
         state.drByTarget.remove(entityId);
-        if (state.byCaster.isEmpty() && state.drByTarget.isEmpty()) states.remove(server);
+        state.playerImmunityUntil.remove(entityId);
+        if (state.byCaster.isEmpty()
+                && state.drByTarget.isEmpty()
+                && state.playerImmunityUntil.isEmpty()) {
+            states.remove(server);
+        }
         return closeCasters.size();
     }
 
@@ -417,6 +441,7 @@ public final class MinecraftNoeticGazeRuntime {
 
     private static void pruneDiminishingReturns(ServerState state, long nowTick) {
         state.drByTarget.entrySet().removeIf(entry -> entry.getValue().resetAtTick() <= nowTick);
+        state.playerImmunityUntil.entrySet().removeIf(entry -> entry.getValue() <= nowTick);
     }
 
     private static void closeSession(ServerState state, UUID casterId) {
@@ -436,6 +461,7 @@ public final class MinecraftNoeticGazeRuntime {
         private final Map<UUID, StillnessSession> byCaster = new LinkedHashMap<>();
         private final Map<UUID, UUID> casterByTarget = new HashMap<>();
         private final Map<UUID, DrState> drByTarget = new LinkedHashMap<>();
+        private final Map<UUID, Long> playerImmunityUntil = new LinkedHashMap<>();
     }
 
     private record StillnessSession(

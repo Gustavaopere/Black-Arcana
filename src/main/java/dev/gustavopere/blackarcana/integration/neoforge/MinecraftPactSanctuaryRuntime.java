@@ -130,15 +130,16 @@ public final class MinecraftPactSanctuaryRuntime {
                 familiarId,
                 spec,
                 sanitizedMembers,
-                Math.addExact(nowTick, spec.durationTicks()));
+                Math.addExact(nowTick, spec.durationTicks()),
+                nowTick);
         state.byFamiliar.put(familiarId, active);
         state.familiarByOwner.put(ownerId, familiarId);
         return ArcanaDecision.allow();
     }
 
     /**
-     * Revalidates every active aura and clears at most the bounded candidate budget per sanctuary.
-     * The returned value is the number of hostile mob targets suppressed during this tick.
+     * Revalidates every active aura each server tick while spatial entity queries are throttled to
+     * the canonical refresh cadence. The returned value is the number of hostile mob targets suppressed.
      */
     public synchronized int tick(MinecraftServer server) {
         Objects.requireNonNull(server, "server");
@@ -172,7 +173,13 @@ public final class MinecraftPactSanctuaryRuntime {
                 closeFamiliars.add(active.familiarId);
                 continue;
             }
+            if (nowTick < active.nextRefreshAtTick) {
+                continue;
+            }
 
+            active.nextRefreshAtTick = Math.addExact(
+                    nowTick,
+                    NoeticSafetyCeilings.SANCTUARY_REFRESH_INTERVAL_TICKS);
             suppressed += suppressEligibleTargets(server, runtime, level, owner, familiar, active);
         }
 
@@ -341,19 +348,22 @@ public final class MinecraftPactSanctuaryRuntime {
         private final PactSanctuarySpec spec;
         private final LinkedHashSet<UUID> members;
         private final long expiresAtTick;
+        private long nextRefreshAtTick;
 
         private ActiveSanctuary(
                 UUID ownerId,
                 UUID familiarId,
                 PactSanctuarySpec spec,
                 Set<UUID> members,
-                long expiresAtTick
+                long expiresAtTick,
+                long nextRefreshAtTick
         ) {
             this.ownerId = Objects.requireNonNull(ownerId, "ownerId");
             this.familiarId = Objects.requireNonNull(familiarId, "familiarId");
             this.spec = Objects.requireNonNull(spec, "spec");
             this.members = new LinkedHashSet<>(Objects.requireNonNull(members, "members"));
             this.expiresAtTick = expiresAtTick;
+            this.nextRefreshAtTick = nextRefreshAtTick;
         }
     }
 }

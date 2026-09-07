@@ -13,6 +13,7 @@ import dev.gustavopere.blackarcana.content.noetic.PactSanctuarySpec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
@@ -24,6 +25,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.Collections;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -192,6 +194,7 @@ public final class MinecraftNoeticRuntime {
         MinecraftServer server = event.getServer();
         ServerState state = STATES.get(server);
         if (state == null) return;
+        settlePendingDeaths(server, state);
         state.observation.tick(server);
         state.gaze.tick(server);
         state.sanctuary.tick(server);
@@ -206,19 +209,46 @@ public final class MinecraftNoeticRuntime {
                 NoeticObservationSession.CloseReason.VIEWER_LOGOUT);
     }
 
+    /**
+     * A LivingDeathEvent is not final while lower-priority resurrection listeners may still cancel it.
+     * Queue only bounded loaded-only cleanup work; ServerTick.Post settles the final alive/dead state.
+     */
     private static void onLivingDeath(LivingDeathEvent event) {
         MinecraftServer server = event.getEntity().level().getServer();
         if (server == null) return;
-        clearLifecycleEntity(
-                server,
-                event.getEntity().getUUID(),
-                NoeticObservationSession.CloseReason.VIEWER_DEATH);
+        ServerState state = STATES.get(server);
+        if (state == null) return;
+        if (state.pendingDeaths.size() < NoeticSafetyCeilings.MAX_PENDING_DEATH_CLEANUPS) {
+            state.pendingDeaths.add(event.getEntity().getUUID());
+        }
+    }
+
+    private static void settlePendingDeaths(MinecraftServer server, ServerState state) {
+        if (state.pendingDeaths.isEmpty()) return;
+        Set<UUID> pending = new LinkedHashSet<>(state.pendingDeaths);
+        state.pendingDeaths.clear();
+        for (UUID entityId : pending) {
+            LivingEntity entity = findLoadedLivingEntity(server, entityId);
+            if (entity != null && entity.isAlive()) {
+                continue;
+            }
+            clearLifecycleEntity(server, entityId, NoeticObservationSession.CloseReason.VIEWER_DEATH);
+        }
+    }
+
+    private static LivingEntity findLoadedLivingEntity(MinecraftServer server, UUID entityId) {
+        for (ServerLevel level : server.getAllLevels()) {
+            Entity entity = level.getEntity(entityId);
+            if (entity instanceof LivingEntity living) return living;
+        }
+        return null;
     }
 
     private static void onServerStopped(ServerStoppedEvent event) {
         MinecraftServer server = event.getServer();
         ServerState state = STATES.remove(server);
         if (state == null) return;
+        state.pendingDeaths.clear();
         state.observation.clearForServerStop();
         state.gaze.clearForServerStop(server);
         state.sanctuary.clearForServerStop(server);
@@ -231,6 +261,7 @@ public final class MinecraftNoeticRuntime {
     ) {
         ServerState state = STATES.get(server);
         if (state == null) return 0;
+        state.pendingDeaths.remove(entityId);
         int changed = 0;
         if (state.observation.clearViewer(entityId, viewerReason)) changed++;
         changed += state.observation.clearTarget(entityId);
@@ -258,5 +289,6 @@ public final class MinecraftNoeticRuntime {
         private final MinecraftNoeticGazeRuntime gaze = new MinecraftNoeticGazeRuntime(nullifications);
         private final MinecraftPactSanctuaryRuntime sanctuary =
                 new MinecraftPactSanctuaryRuntime(familiarOwnership);
+        private final LinkedHashSet<UUID> pendingDeaths = new LinkedHashSet<>();
     }
 }
