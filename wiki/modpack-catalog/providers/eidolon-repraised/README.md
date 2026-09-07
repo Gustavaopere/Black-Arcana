@@ -9,231 +9,199 @@
 - loader: NeoForge
 - source oficial: `Alexthw46/Eidolon-Repraised`
 - source pin exato da versão: `696a47333e43970be7f697790eac0af76b6a04b8`
-- estado: **SOURCE-PINNED 0.5.0.2 / SPELL REGISTRY 20/20 INVENTARIADO / SEMÂNTICA PRINCIPAL AUDITADA / RITUAIS E DATA-DRIVEN CHANTS AINDA EM EXPANSÃO / RUNTIME QA PENDENTE**
+- estado: **SOURCE-PINNED 0.5.0.2 / SPELL REGISTRY 20/20 / OFFICIAL CHANTS 18/18 / CONVERSIONS 4/4 / GENERIC RITUAL PROTOTYPES 10/10 / OFFICIAL RITUAL RECIPES 24/24 / RESEARCH REGISTRY 16/16 INVENTORIADOS / RUNTIME QA + FULL SURVIVAL REACHABILITY PENDENTES**
 
-O commit acima é o commit que altera `mod_version` para `0.5.0.2`; o head atual da branch 1.21.1 já está em 0.5.0.3 e não é usado como autoridade para esta auditoria.
+O source pin acima é o commit que altera `mod_version` para `0.5.0.2`. O head atual da branch 1.21.1 já avançou para 0.5.0.3 e não é usado como autoridade para a build instalada.
 
-Eidolon não deve ser modelado como um simples addon de spells. Na versão instalada ele expõe, de forma provider-native:
+A auditoria de source da superfície mágica principal desta versão está fechada em inventário. Isso **não equivale a runtime QA**: settlement de alguns spells, empacotamento exato do JAR, reachability survival e interações com o modpack ainda precisam ser testados.
 
-- capability própria de mana;
-- capability de reputação/devotion por divindade;
-- capability de soul;
+## Arquitetura provider-native
+
+Eidolon 0.5.0.2 é um provider completo de:
+
+- mana própria;
+- Light/Dark reputation/devotion;
+- soul capability;
 - research/knowledge;
-- um sistema de `Sign`/`SignSequence` para chants;
+- 11 Signs + SignSequence;
+- chants data-driven;
+- chant conversions;
+- prayers/effigy/altar;
+- rituais e sacrifícios;
+- summons ritualísticos;
+- crafting ritualístico com health requirement;
+- estrutura/divination via ritual locator;
 - `SpellCastEvent.Pre` cancelável e `SpellCastEvent.Post`;
-- spells estáticos configuráveis por custo e delay;
-- prayers ligadas a altar/effigy, reputação e cooldown;
-- recipes data-driven de chant/command chant e conversões;
-- rituais, sacrifícios e progressão teúrgica separados do spell registry.
+- server config por spell para custo/delay e parâmetros específicos.
 
-Isso faz de Eidolon um provider de **mana + theurgy/devotion + soul + research + ritual + chant**, com autoridade própria sobre custo, gates e settlement.
+Black Arcana deve tratar cada eixo como provider-owned. Mana, soul e devotion do Eidolon não são intercambiáveis com Ars Source, Iron's mana, Goety Soul Energy, Malum spirits ou recursos próprios do Black Arcana.
 
-## Sign registry
+## Inventários fechados no source 0.5.0.2
 
-A build 0.5.0.2 registra 11 signs:
+### Signs — 11/11
 
-| Sign | ID |
-|---|---|
-| Wicked | `eidolon_repraised:wicked` |
-| Sacred | `eidolon_repraised:sacred` |
-| Blood | `eidolon_repraised:blood` |
-| Soul | `eidolon_repraised:soul` |
-| Mind | `eidolon_repraised:mind` |
-| Flame | `eidolon_repraised:flame` |
-| Winter | `eidolon_repraised:winter` |
-| Harmony | `eidolon_repraised:harmony` |
-| Death | `eidolon_repraised:death` |
-| Warding | `eidolon_repraised:warding` |
-| Magic | `eidolon_repraised:magic` |
+`wicked`, `sacred`, `blood`, `soul`, `mind`, `flame`, `winter`, `harmony`, `death`, `warding`, `magic`.
 
-A sequência de signs faz parte da identidade runtime do spell. Black Arcana não deve reinterpretar a combinação de signs como uma escola própria nem duplicar a resolução do provider.
+A sequência ordenada faz parte da identidade de chant e deve ser resolvida pelo provider.
 
-## Spell registry 20/20
+### Spell registry — 20/20
 
-`Spells.init()` registra exatamente 20 entradas provider-native na versão 0.5.0.2:
+`Spells.init()` registra 20 entradas técnicas:
 
-| # | Spell / chant | ID canônico | Signs | Classe / função principal |
-|---:|---|---|---|---|
-| 1 | Dark Prayer | `eidolon_repraised:dark_prayer` | Wicked ×3 | Prayer / devoção Dark |
-| 2 | Darklight Chant | `eidolon_repraised:darklight_chant` | Wicked, Flame, Wicked, Flame | Ghost light alinhada a Dark / Glowing |
-| 3 | Dark Animal Sacrifice | `eidolon_repraised:dark_animal_sacrifice` | Wicked, Blood, Wicked | Sacrifício animal / reputação Dark |
-| 4 | Dark Touch | `eidolon_repraised:dark_touch` | Wicked, Soul, Wicked, Soul | Conversão dark ou `NECROTIC` em equipamento |
-| 5 | Frost Touch | `eidolon_repraised:frost_touch` | Wicked, Winter, Blood, Winter, Wicked | Congela water source / aplica Chilled |
-| 6 | Dark Villager Sacrifice | `eidolon_repraised:dark_villager_sacrifice` | Blood, Wicked, Blood, Soul | Sacrifício de aldeão / reputação Dark |
-| 7 | Zombify Villager | `eidolon_repraised:zombify_villager` | Death, Blood, Wicked, Death, Soul, Blood | Conversão para zombie villager |
-| 8 | Enthrall Undead | `eidolon_repraised:enthrall_spell` | Wicked, Mind, Magic, Magic, Mind | Thrall/control de undead |
-| 9 | Light Prayer | `eidolon_repraised:light_prayer` | Sacred ×3 | Prayer / devoção Light |
-| 10 | Fire Chant | `eidolon_repraised:fire_chant` | Flame ×3 | Acende blocos/burners ou incendeia entidade |
-| 11 | Light Chant | `eidolon_repraised:light_chant` | Sacred, Flame, Sacred, Flame | Ghost light alinhada a Light / Glowing |
-| 12 | Holy Touch | `eidolon_repraised:holy_touch` | Sacred, Soul, Sacred, Soul | Conversão light ou `CONSECRATED` em equipamento |
-| 13 | Lay on Hands | `eidolon_repraised:lay_on_hands` | Flame, Soul, Sacred, Soul, Sacred | Cura + limpeza de efeitos curáveis por leite |
-| 14 | Cure Zombie | `eidolon_repraised:cure_zombie` | Sacred, Soul, Mind, Harmony, Flame, Soul | Cura/conversão de zombie villager |
-| 15 | Smite Chant | `eidolon_repraised:smite_chant` | Flame, Magic, Sacred, Death, Magic, Sacred | Dano mágico + Weakness contra undead |
-| 16 | Sunder Armor | `eidolon_repraised:sunder_armor` | Flame, Magic, Wicked, Magic, Flame | Aplica Vulnerable |
-| 17 | Reinforce Armor | `eidolon_repraised:reinforce_armor` | Sacred, Warding, Sacred, Warding, Sacred | Buff/consagração defensiva de armadura |
-| 18 | Create Water | `eidolon_repraised:create_water` | Winter, Winter, Flame, Flame | Criação/manipulação de água |
-| 19 | Undead Lure | `eidolon_repraised:undead_lure` | Mind, Magic, Wicked | Atração/controle de undead |
-| 20 | Basic Incense | `eidolon_repraised:basic_incense` | sem sequência fixa no registro | PrayerSpell dummy usada pelo sistema de incense |
+1. `dark_prayer`
+2. `darklight_chant`
+3. `dark_animal_sacrifice`
+4. `dark_touch`
+5. `frost_touch`
+6. `dark_villager_sacrifice`
+7. `zombify_villager`
+8. `enthrall_spell`
+9. `light_prayer`
+10. `fire_chant`
+11. `light_chant`
+12. `holy_touch`
+13. `lay_on_hands`
+14. `cure_zombie`
+15. `smite_chant`
+16. `sunder_armor`
+17. `reinforce_armor`
+18. `create_water`
+19. `undead_lure`
+20. `basic_incense`
 
-### Observação sobre `basic_incense`
+O catálogo detalhado de custos, gates, delays, efeitos e anomalias está em `SPELL-CATALOG.md`.
 
-O próprio source marca `CENSER` como `// dummy`. Ele é um `PrayerSpell` registrado sem sign sequence fixa. Portanto ele pertence ao spell registry técnico, mas **não deve ser apresentado ao jogador como um chant convencional** sem validação da superfície de gameplay do incense.
+### Official chant recipes — 18/18
 
-## Custos, delay e autoridade de cast
+`EidChantProvider` gera 18 chants normais. `undead_lure` e `basic_incense` não entram nesse datagen:
 
-`StaticSpell` define:
+- `undead_lure` está registrado, custa 50 no source, mas seu `cast()` é vazio na versão exata auditada;
+- `basic_incense` é marcado `// dummy` e pertence ao subsystem de incense.
 
-- `cost` por spell, sobreponível por config server;<br>
-- `delay` em ticks, também configurável por spell;<br>
-- gate de mana antes do cast;<br>
-- `SpellCastEvent.Pre` cancelável;<br>
-- `SpellCastEvent.Post` após o efeito.
+Portanto **20 entries de registry != 20 chants survival**.
 
-Quando `getCost() > 0`, o cast falha para jogador não criativo se a capability de mana do Eidolon estiver abaixo do custo. O provider é a autoridade de custo e do momento de settlement. Black Arcana deve observar o cast causal já validado e **não debitar mana novamente**.
+### Chant conversions — 4/4
 
-O delay default de `StaticSpell` é 10 ticks salvo override. `FireTouchSpell`, por exemplo, usa delay base 5 ticks.
+- Gold Inlay -> Holy Symbol, Light devotion ≥10;
+- Pewter Inlay -> Unholy Symbol, Dark devotion ≥10;
+- Black Wool -> Top Hat, neutral, devotion 0;
+- music-disc tag -> Parousia Disc, neutral, devotion 0.
 
-## Spells com semântica e números verificados
+Dark/Holy Touch resolvem essas conversões pelo RecipeManager. Black Arcana não deve duplicar output, gate ou preço.
 
-### Lay on Hands — `lay_on_hands`
+### Rituals — 24/24 official recipes
 
-- custo base: **15 mana**;
-- alvo: LivingEntity não-undead sob ray trace; fallback para o próprio caster;
-- cura base: **5**;
-- scaling: `+ 0.05 × reputação Light`;
-- remove efeitos não benéficos curáveis por `EffectCures.MILK`;
-- ao curar outra entidade que estava abaixo da vida máxima, concede research `HEAL_VILLAGER` e **+3 reputação Light** por default;
-- todos esses parâmetros de cura/reputação possuem config server.
+O runtime possui 10 prototypes genéricos em `RitualRegistry`, mas o datagen oficial gera **24 receitas**:
 
-### Fire Chant — `fire_chant`
+- 10 generic rituals;
+- 11 summon rituals;
+- 2 brazier crafting rituals;
+- 1 Catacombs location ritual.
 
-- custo base: **10 mana**;
-- delay base: **5 ticks**;
-- requer research `FIRE_SPELL`;
-- acende Candle/Campfire compatível;
-- inicia `IBurner` compatível;
-- em entidade, aplica **200 fire ticks**;
-- settlement de mana é provider-native após um alvo válido.
+Esse ponto corrige uma inferência anterior: os summon constants comentados em `RitualRegistry` não tornam os summons inativos. `SummonRitualRecipe` instancia `SummonRitual` diretamente a partir do entity id, e os 11 JSONs estão presentes nos generated resources do source pinado.
 
-### Frost Touch — `frost_touch`
+Ver `RITUAL-CATALOG.md` e `DATA-DRIVEN-CATALOG.md`.
 
-- custo base: **20 mana**;
-- requer research `FROST_SPELL`;
-- transforma water source atingida em Ice;
-- em LivingEntity aplica `CHILLED_EFFECT` por **200 ticks**.
+### Research — 16/16 registry keys
 
-### Darklight Chant / Light Chant
+`core`, `pewter_crucible`, `soul_enchanter`, `arcane_gold`, `shadow_gem`, `improved_crucible`, `candle`, `wooden_altar`, `deity_altar`, `chants`, `frost_spell`, `fire_spell`, `necrotic_touch`, `soulfire_wand`, `prestigious_palm`, `soulfire_ritual`.
 
-- custo base: **3 mana**;
-- exigem pelo menos **3 reputation** com a divindade correspondente;
-- em bloco, criam `GhostLight` alinhada à divindade;
-- em LivingEntity aplicam **Glowing por 200 ticks**.
+A árvore completa de tasks/prerequisites e a reachability no pack ainda precisam de validação integral. Ver `PROGRESSION.md`.
 
-### Dark Touch — `dark_touch`
+## Cobertura semântica já provada
 
-- custo base fallback: **20 mana**;
-- exige pelo menos **10 reputation Dark**;
-- trabalha sobre exatamente um ItemEntity próximo ao ponto alvo;
-- primeiro tenta `ChantConversionRecipe` compatível com devoção Dark ou deity dummy;
-- a receita pode declarar custo próprio; caso contrário usa o custo do spell;
-- converte a maior quantidade que a mana atual consegue pagar;
-- se não houver recipe e o item for damageable com stack size 1, aplica componente `NECROTIC = 50` pagando o custo;
-- enquanto `NECROTIC > 0`, ataques com o item convertem parte do dano original em Wither damage e decrementam uma carga em hit bem-sucedido.
+### Healing / purification
 
-### Holy Touch — `holy_touch`
+- `lay_on_hands`: heal base 5 + `0.05 × Light reputation`, com limpeza de efeitos harmful curáveis por leite;
+- `purify`: conversões de Zombie Villager/Zombified Piglin/Zoglin;
+- `cure_zombie`: prayer/cast Light que converte Zombie Villager.
 
-- usa a mesma arquitetura de conversão do Dark Touch;
-- exige pelo menos **10 reputation Light**;
-- quando não existe conversion recipe e o item é elegível, aplica `CONSECRATED = 50` pagando o custo;
-- contra alvo undead, uma arma consecrated multiplica o dano corrente por **1.5** e consome uma carga;
-- o provider também força o bônus de Smite em entidades tratadas como undead por sua lógica de Undeath quando necessário.
+### Holy / dark / devotion
 
-### Smite Chant — `smite_chant`
+- Light/Dark prayers;
+- Holy/Dark Touch;
+- Smite;
+- deity-specific reputation gates;
+- altar-driven reputation/mana loop.
 
-- custo configurado no spell: **40 mana**;
-- só aceita LivingEntity na tag vanilla `EntityTypeTags.UNDEAD`;
-- dano base configurável: **10 magic damage**;
-- em hit bem-sucedido aplica **Weakness III** (`amplifier 2`) por **200 ticks**;
-- concede research `SMITE_UNDEAD`.
+### Soul / death
 
-> Nota de auditoria: a implementação de `SmiteSpell.cast()` não chama `IMana.expendMana` diretamente. Como o framework base apenas checa mana em `canCast` e o gasto normal é feito por cada implementação concreta, o custo efetivamente liquidado de Smite precisa de **runtime QA**. Black Arcana não deve “corrigir” isso debitando por fora, pois isso alteraria authority e poderia causar double-charge caso outro path do provider faça o settlement.
+- soul capability própria;
+- Crystal ritual produz 1–3 Soul Shards por valid undead kill bem-sucedido;
+- Absorption captura/serializa entidades em Summoning Staff;
+- summons consomem Soul Shard em suas receitas.
 
-### Sunder Armor — `sunder_armor`
+### Summons
 
-- custo declarado: **50 mana**;
-- aplica `VULNERABLE_EFFECT` por **1200 ticks**, amplifier 0, a um LivingEntity atingido.
+11 official summon ritual recipes: Zombie, Skeleton, Phantom, Creeper, Wither Skeleton, Husk ×3, Drowned ×3, Stray, Wraith, Slimy Slug ×3 e Raven ×3.
 
-> Nota de auditoria: `ApplyPotionSpell.cast()` apenas aplica o efeito e não chama `IMana.expendMana`. Assim como Smite, o settlement efetivo do custo precisa de runtime QA antes de qualquer integração econômica.
+`SummonRitual` usa `MobSpawnType.MOB_SUMMONED`, mas não estabelece por si só ownership/taming. Não inferir servant/familiar ownership apenas pela spawn cause.
 
-## Prayer / devotion loop
+### Time
 
-`PrayerSpell` não é um spell comum de dano:
+`daylight` e `moonlight` alteram `PrimaryLevelData.dayTime` em +100 por tick durante suas janelas provider-native.
 
-- exige uma `EffigyTileEntity` pronta próxima;
-- verifica cooldown/reputation via capability provider-native;
-- ao concluir, chama `effigy.pray()`;
-- calcula `AltarInfo` e adiciona reputação da divindade;
-- atualiza mana máxima e mana atual com base em reputação, altar capacity e altar power;
-- registra o momento da oração na capability de reputation.
+### AI / attraction / repulsion
 
-Defaults do PrayerSpell:
+`allure` e `repelling` injetam goals provider-native em animais/monstros. `enthrall_spell` possui um contrato separado de enthrall/taming para undead válidos.
 
-- base reputation: **1**;
-- altar power multiplier: **0.25**;
-- cooldown default retornado pelo provider: **21000 ticks** (~17m30s em 20 TPS), configurável por server config.
+### Divination
 
-Isso prova que mana e devotion do Eidolon são um loop econômico próprio. Não devem ser fundidos automaticamente com Ars Source, Iron's mana, Goety Soul Energy ou recursos do Black Arcana.
+`ritual_locate_catacombs` materializa `LocationRitual` para a tag de Catacombs com Map + Compass + Magic Ink + Raven Feather.
 
-## Progressão / gates
+### Ritual crafting / life-cost
 
-Gates confirmados no source incluem pelo menos:
+Sapping Sword usa health requirement 20; Sanguine Amulet usa health requirement 40. Esses custos são parte da transação ritual do Eidolon e não devem ser debitados novamente.
 
-- research/knowledge para Fire Chant e Frost Touch;
-- reputation mínima Dark para Dark Touch;
-- reputation mínima Light para Holy Touch;
-- deity/effigy/cooldown para prayers;
-- target/type gates específicos para Smite, conversões, cura e outros chants;
-- recipes data-driven para conversões e chants externos.
+## Pontos fail-closed / QA
 
-O inventário de research e a cadeia survival completa de desbloqueio ainda precisam ser documentados em profundidade antes de declarar a progressão Eidolon fechada.
+### Settlement de mana não provado em alguns paths
 
-## Deduplicação / integração Black Arcana
+O framework base valida mana, mas não centraliza o gasto. As implementações concretas normalmente chamam `IMana.expendMana(...)`. No exact source 0.5.0.2 permanecem ambíguos:
 
-### Provider-native first
+- `smite_chant` — custo declarado 40, sem gasto direto visível em `cast()`;
+- `sunder_armor` — custo 50 via `ApplyPotionSpell`, sem gasto direto visível;
+- `reinforce_armor` — custo 50 via `ApplyPotionSpell`, mesma condição;
+- `create_water` — air-placement gasta mana, branch `LiquidBlockContainer` não mostra gasto direto;
+- `undead_lure` — custo 50 e `canCast=true`, mas `cast()` vazio.
 
-Black Arcana pode observar `SpellCastEvent.Pre/Post`, resultados do mundo e progressão para perks/quests, mas não deve:
+Black Arcana não deve corrigir isso externamente nem assumir cast grátis.
 
-- debitar Eidolon mana uma segunda vez;
-- recalcular reputation/devotion de prayer;
-- aplicar de novo `NECROTIC`, `CONSECRATED`, `CHILLED`, `VULNERABLE` ou outros efeitos;
-- substituir SignSequence por heurística própria;
-- reproduzir ChantConversionRecipe fora do provider;
-- conceder research que o Eidolon não concedeu;
-- tratar prayer como cast genérico sem altar;
-- fundir soul/reputation/mana do Eidolon com recursos de outros providers sem contrato explícito.
+### Dynamic Enthrall cost
 
-### Authority e causalidade
+`enthrall_spell` usa custo efetivo `2 × baseCost × healthRatio`; com base 50, `100 × currentHealth/maxHealth`. Nunca substituir por custo fixo 50.
 
-Um cast Eidolon deve gerar uma única identidade causal. Se uma perk Black Arcana reagir ao evento provider-native, a reação deve ser deduplicada contra efeitos observados subsequentemente no mundo para não contar o mesmo cast duas vezes.
+### Command chant extension surface
 
-### Fail-closed
+`CommandChantRecipe` existe e pode materializar `ExecCommandSpell`. Com command blocks habilitados, comandos configurados são executados server-side usando permission level 2. O datagen oficial auditado não gera command chant, mas datapacks podem fornecer um.
 
-Spells cujo gasto de mana aparente não é liquidado diretamente na implementação concreta — pelo menos `SmiteSpell` e `ApplyPotionSpell`/`SunderArmorSpell` no source auditado — permanecem **fail-closed para integrações econômicas** até runtime QA. Não se presume “cast grátis” nem se injeta correção externa.
+Integrações Black Arcana devem tratar command chants como uma superfície privilegiada/untrusted e nunca repetir comandos, elevar permissões ou inferir efeito seguro sem inspecionar a receita carregada.
 
-## Próximas etapas da auditoria Eidolon
+## Authority / deduplication
 
-1. extrair e catalogar os demais parâmetros concretos dos 20 spells;
-2. inventariar `RitualRegistry` separadamente do spell registry;
-3. inventariar recipes data-driven de chant/command chant/conversion;
-4. mapear `Researches` e gates survival;
-5. mapear soul capability e seus consumers/producers;
-6. executar runtime QA dos settlements e dos eventos Pre/Post;
-7. só então promover o provider para `CATÁLOGO GRANULAR COMPLETO`.
+Provider-native first:
 
-## Proveniência
+- Eidolon liquida mana/reputation/soul/health/ritual inputs;
+- Eidolon resolve SignSequence e recipes;
+- Eidolon aplica efeitos e progressão;
+- Eidolon decide prayer cooldown, altar power/capacity e effigy readiness;
+- Eidolon decide entity capture/summon/conversion.
 
-- presença/JAR/versão: modlist 612 + Auditoria Mestre do Notion, reconciliadas em 2026-09-07;
-- source version pin: commit `696a47333e43970be7f697790eac0af76b6a04b8`, cujo `gradle.properties` declara `mod_version=0.5.0.2`;
-- spell registry/signs/framework: source oficial pinado;
-- números acima: classes concretas da mesma versão;
-- runtime behavior ainda não foi testado nesta etapa.
+Black Arcana pode observar para perks/quests/integrations, mas deve preservar uma única causal identity por ação e deduplicar `SpellCastEvent`, world deltas, kills, captures, time mutation e effect application.
+
+## Arquivos desta auditoria
+
+- `SPELL-CATALOG.md` — 20 registry entries com números e gates;
+- `RITUAL-CATALOG.md` — 10 generic prototypes + 24 official ritual recipes e semântica;
+- `DATA-DRIVEN-CATALOG.md` — 18 chants, 4 conversions, 24 ritual recipes e command-chant extension;
+- `PROGRESSION.md` — research/devotion/soul;
+- `TECHNICAL-AUDIT.md` — authority, settlement anomalies e runtime QA;
+- `INTEGRATION-RULES.md` — contrato Black Arcana.
+
+## Proveniência / confiança
+
+- presença/JAR/versão: modlist 612 + Auditoria Mestre do Notion, reconciliadas em 2026-09-07 — HIGH;
+- version pin: commit `696a47333e43970be7f697790eac0af76b6a04b8` declara `mod_version=0.5.0.2` — HIGH;
+- registries/classes/datagen/generated resources: source oficial no mesmo pin — HIGH para semântica de source;
+- byte-for-byte equality com o JAR instalado: ainda não verificada;
+- dedicated-server/runtime behavior: ainda não testado nesta fase.
