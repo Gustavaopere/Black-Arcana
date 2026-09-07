@@ -36,7 +36,7 @@ The following relationships are required to build/test/run the project but do no
 
 Until that final reconciliation is recorded, these entries may support normal platform/build/test use but are `REVIEW_REQUIRED` for any stronger redistribution or source-derivation claim.
 
-## Dependency / compatibility evidence — 2026-08-30
+## Dependency / compatibility evidence — through 2026-09-07
 
 | Upstream | Exact build/pack evidence | Intended use | Source/asset derivation status |
 | --- | --- | --- | --- |
@@ -44,6 +44,8 @@ Until that final reconciliation is recorded, these entries may support normal pl
 | Ars Nouveau | CurseForge file `8517890`, pack/build baseline `5.13.0` | `DEPENDENCY_API`, `COMPATIBILITY_TARGET` | code license has been observed as LGPLv3 with separately restricted assets; exact source revision for this binary is not pinned here, so `DERIVED_CODE`/assets remain `REVIEW_REQUIRED` |
 | Eidolon: Repraised | CurseForge file `8064602`, version `1.21.1-0.5.0.2` | `DEPENDENCY_API`, `COMPATIBILITY_TARGET` for occult/ritual integration | LGPLv3 observed for the project line; exact source revision not pinned here, so derivation remains `REVIEW_REQUIRED` |
 | Malum | pack baseline `1.8.2` | optional spirit/soul `DEPENDENCY_API / COMPATIBILITY_TARGET` | LGPLv3 observed for the project line; exact source revision and obligations not pinned here, so derivation remains `REVIEW_REQUIRED` |
+| Vampirism Integrations | installed `1.10.2`; exact source `TeamLapen/VampirismIntegrations@bff02b9686408691aea2c0c910ccb712edb18bd5` | `REFERENCE_ONLY / COMPATIBILITY_TARGET` source audit for loader eligibility, Cold Sweat/Jade behavior and conditional data maps | exact pinned `LICENCE` is GNU LGPL v3. Source was inspected read-only to derive factual catalog constraints; no source code/assets are copied or adapted. Any future `DERIVED_CODE` proposal still requires a separate derivation-register entry and LGPL compliance review |
+| Werewolves | installed `2.0.3.3`; exact source `TeamLapen/Werewolves@b72635b3e014e406b25bb79adb9d340f7443660b` | `REFERENCE_ONLY / COMPATIBILITY_TARGET` source audit for faction/forms/actions/skills/effects/leveling/Lord/minion/refinement semantics | exact pinned `LICENSE` is GNU LGPL v3. Source was inspected read-only to derive factual catalog constraints; no source code/assets are copied or adapted. Any future `DERIVED_CODE` proposal still requires a separate derivation-register entry and LGPL compliance review |
 | RPG Skill Tree | sibling repository `Gustavaopere/neoforge-rpg-skilltree` | progression/mastery/attribute provider | API/compatibility integration only. Black Arcana must not copy implementation across repositories without separately resolving that repository's exact license/provenance obligations |
 | Curios | Stage 05A baseline `9.5.1+1.21.1` | optional equipment snapshot `DEPENDENCY_API` | LGPLv3-or-later observed historically; exact source revision not pinned here, so source derivation remains `REVIEW_REQUIRED` |
 
