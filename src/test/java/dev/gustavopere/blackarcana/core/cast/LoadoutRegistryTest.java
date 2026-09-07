@@ -94,4 +94,17 @@ class LoadoutRegistryTest {
                 () -> registry.setLoadout(CASTER, List.of(duplicate, duplicate)));
         assertEquals(List.of(original), registry.getLoadout(CASTER));
     }
+
+    @Test
+    void duplicateRestoreIsRejectedWithoutOverwritingPriorState() {
+        LoadoutRegistry registry = new LoadoutRegistry();
+        ArcanaSpellId original = spell("original").id();
+        ArcanaSpellId duplicate = spell("duplicate").id();
+        registry.setLoadout(CASTER, List.of(original));
+
+        UUID other = UUID.fromString("11111111-2222-3333-4444-555555555555");
+        assertThrows(IllegalArgumentException.class,
+                () -> registry.restoreSnapshot(Map.of(other, List.of(duplicate, duplicate))));
+        assertEquals(List.of(original), registry.getLoadout(CASTER));
+    }
 }
