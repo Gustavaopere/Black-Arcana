@@ -91,6 +91,77 @@ public final class NoeticPactSanctuaryGameTests {
     }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void trialEncounterBreezeIsExcludedFromSanctuaryControl(GameTestHelper helper) {
+        MinecraftServer server = helper.getLevel().getServer();
+        LivingEntity owner = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 2));
+        LivingEntity familiar = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 2));
+        LivingEntity member = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 3));
+        Mob breeze = helper.spawnWithNoFreeWill(EntityType.BREEZE, new BlockPos(3, 2, 2));
+
+        FamiliarOwnershipRegistry ownership = ownershipFor(owner.getUUID(), familiar.getUUID());
+        MinecraftPactSanctuaryRuntime runtime = new MinecraftPactSanctuaryRuntime(ownership);
+        breeze.setTarget(member);
+
+        ArcanaDecision activation = runtime.activate(
+                server,
+                owner.getUUID(),
+                familiar.getUUID(),
+                new PactSanctuarySpec(3, 200, 1),
+                Set.of(member.getUUID()));
+
+        helper.assertTrue(activation.allowed(), "owned familiar must activate the sanctuary for the Breeze exclusion test");
+        int suppressed = runtime.tick(server);
+        helper.assertTrue(suppressed == 0,
+                "trial encounter Breeze must remain fail-closed and must not be pacified by Pact Sanctuary");
+        helper.assertTrue(breeze.getTarget() == member,
+                "Pact Sanctuary must preserve the current target of a non-allowlisted Breeze");
+
+        runtime.clearEntity(server, familiar.getUUID());
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
+    public static void protectedMemberCannotBeAcquiredAsNewTarget(GameTestHelper helper) {
+        MinecraftServer server = helper.getLevel().getServer();
+        LivingEntity owner = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 2));
+        LivingEntity familiar = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 2));
+        LivingEntity member = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 3));
+        Mob attacker = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(3, 2, 2));
+
+        FamiliarOwnershipProvider provider = new FamiliarOwnershipProvider() {
+            @Override
+            public String providerId() {
+                return "gametest:target_change:" + familiar.getUUID();
+            }
+
+            @Override
+            public Result ownership(UUID requestedOwner, Object candidate) {
+                if (!(candidate instanceof LivingEntity living)) return Result.UNSUPPORTED;
+                return requestedOwner.equals(owner.getUUID()) && living.getUUID().equals(familiar.getUUID())
+                        ? Result.OWNED
+                        : Result.UNSUPPORTED;
+            }
+        };
+        helper.assertTrue(MinecraftNoeticRuntime.registerFamiliarOwnershipProvider(server, provider),
+                "target-change GameTest must register one unique bounded ownership provider");
+
+        ArcanaDecision activation = MinecraftNoeticRuntime.activateSanctuary(
+                server,
+                owner.getUUID(),
+                familiar.getUUID(),
+                new PactSanctuarySpec(3, 200, 1),
+                Set.of(member.getUUID()));
+        helper.assertTrue(activation.allowed(), "global runtime must activate the owned Sanctuary fixture");
+
+        attacker.setTarget(member);
+        helper.assertTrue(attacker.getTarget() == null,
+                "LivingChangeTargetEvent must cancel acquisition of a protected member before mob AI can use it");
+
+        MinecraftNoeticRuntime.clearEntity(server, familiar.getUUID());
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 100)
     public static void foreignOrUnsupportedFamiliarFailsClosed(GameTestHelper helper) {
         MinecraftServer server = helper.getLevel().getServer();
         LivingEntity owner = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 2));

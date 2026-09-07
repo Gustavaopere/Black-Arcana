@@ -12,6 +12,8 @@ public final class NoeticSafetyCeilings {
     public static final int MAX_ACTIVE_GAZES = 64;
     public static final double MAX_GAZE_RANGE_BLOCKS = 24.0D;
     public static final int MAX_GAZE_DURATION_TICKS = 160;
+    /** Conservative Stage 07.07 PvP cap; Stage 08 may tune lower but never above the generic ceiling. */
+    public static final int MAX_PLAYER_GAZE_DURATION_TICKS = 40;
     public static final int GAZE_PLAYER_REAPPLICATION_IMMUNITY_TICKS = 80;
     public static final int MIN_GAZE_PLAYER_REAPPLICATION_IMMUNITY_TICKS = 40;
     public static final int MAX_NULLIFIABLE_EFFECT_TYPES = 128;

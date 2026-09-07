@@ -113,9 +113,14 @@ public final class MinecraftNoeticGazeRuntime {
             return deny("gaze_dr_capacity", "Diminishing-return registry reached its hard bounded capacity");
         }
 
+        int playerControlCapTicks = target instanceof ServerPlayer
+                ? Math.min(
+                        authorization.limits().maxControlTicks(),
+                        NoeticSafetyCeilings.MAX_PLAYER_GAZE_DURATION_TICKS)
+                : authorization.limits().maxControlTicks();
         int effectiveTicks = NoeticGazePolicy.effectiveControlTicks(
                 requestedDurationTicks,
-                authorization.limits().maxControlTicks(),
+                playerControlCapTicks,
                 priorApplications);
         if (effectiveTicks <= 0) {
             return deny("gaze_dr_immunity", "Target is temporarily immune after repeated gaze control");
@@ -152,7 +157,7 @@ public final class MinecraftNoeticGazeRuntime {
         enforceStillnessMovement(server, target);
     }
 
-    /** Applies the same lock after entity work so AI/travel during the entity tick cannot accumulate X/Z drift. */
+    /** Applies the same lock after entity work so AI/travel during the tick cannot accumulate X/Z drift. */
     public synchronized void enforceStillnessAfterEntityTick(MinecraftServer server, LivingEntity target) {
         enforceStillnessMovement(server, target);
     }

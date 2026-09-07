@@ -13,7 +13,6 @@ import dev.gustavopere.blackarcana.core.world.EntityInteractionType;
 import dev.gustavopere.blackarcana.core.world.EntityProtectionFacts;
 import dev.gustavopere.blackarcana.core.world.ProtectionQuery;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -41,8 +40,8 @@ import java.util.UUID;
  * Loaded-only, server-authoritative runtime for the Stage 07.07 Pact Sanctuary familiar aura.
  *
  * <p>The aura follows an explicitly owned familiar. It never acquires chunk tickets, never rewrites
- * teams/factions/brains and only clears the current hostile target of an ordinary mob when that target
- * is an explicitly supplied member currently inside the bounded familiar-centered aura.</p>
+ * teams/factions/brains and only suppresses targeting by explicitly eligible ordinary mobs when that
+ * target is an explicitly supplied member currently inside the bounded familiar-centered aura.</p>
  */
 public final class MinecraftPactSanctuaryRuntime {
     private static final TagKey<EntityType<?>> SANCTUARY_EXCLUDED = TagKey.create(
@@ -190,6 +189,53 @@ public final class MinecraftPactSanctuaryRuntime {
         return suppressed;
     }
 
+    /**
+     * Called from LivingChangeTargetEvent before a mob can consume a newly acquired target in AI.
+     * The check is loaded-only and scans at most the bounded active-sanctuary registry; it performs
+     * no entity query and reuses the same eligibility/protection authority as periodic settlement.
+     */
+    public synchronized boolean blocksTargetChange(
+            MinecraftServer server,
+            Mob attacker,
+            LivingEntity proposedTarget
+    ) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(attacker, "attacker");
+        Objects.requireNonNull(proposedTarget, "proposedTarget");
+        ServerState state = states.get(server);
+        if (state == null || !attacker.isAlive() || !proposedTarget.isAlive()) return false;
+        if (!(attacker.level() instanceof ServerLevel level) || proposedTarget.level() != level) return false;
+        if (!isSanctuaryControlEligible(attacker)) return false;
+
+        ArcanaServerRuntime runtime = ArcanaServerRuntimeManager.get(server).orElse(null);
+        if (runtime == null) return false;
+        long nowTick = server.overworld().getGameTime();
+
+        for (ActiveSanctuary active : state.byFamiliar.values()) {
+            if (nowTick >= active.expiresAtTick || !active.members.contains(proposedTarget.getUUID())) continue;
+
+            LivingEntity owner = findLoadedLivingEntity(server, active.ownerId);
+            LivingEntity familiar = findLoadedLivingEntity(server, active.familiarId);
+            if (owner == null || familiar == null || !owner.isAlive() || !familiar.isAlive()
+                    || owner.level() != level || familiar.level() != level) {
+                continue;
+            }
+            if (familiarOwnership.ownership(active.ownerId, familiar) != FamiliarOwnershipProvider.Result.OWNED) {
+                continue;
+            }
+
+            double radiusSquared = (double) active.spec.radiusBlocks() * active.spec.radiusBlocks();
+            if (familiar.distanceToSqr(attacker) > radiusSquared
+                    || familiar.distanceToSqr(proposedTarget) > radiusSquared) {
+                continue;
+            }
+            if (controlAuthorized(server, runtime, level, owner, attacker, active.ownerId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public synchronized int activeSanctuaries(MinecraftServer server) {
         Objects.requireNonNull(server, "server");
         ServerState state = states.get(server);
@@ -239,6 +285,7 @@ public final class MinecraftPactSanctuaryRuntime {
     ) {
         int radius = active.spec.radiusBlocks();
         double r = radius;
+        double radiusSquared = r * r;
         AABB bounds = new AABB(
                 familiar.getX() - r,
                 familiar.getY() - r,
@@ -251,33 +298,16 @@ public final class MinecraftPactSanctuaryRuntime {
         level.getEntities(
                 EntityTypeTest.forClass(Mob.class),
                 bounds,
-                mob -> mob.isAlive() && mob != familiar,
+                mob -> isSanctuaryCandidate(mob, level, familiar, active, radiusSquared),
                 candidates,
                 NoeticSafetyCeilings.MAX_SANCTUARY_MOBS_PER_TICK);
 
-        double radiusSquared = r * r;
         int suppressed = 0;
         for (Mob mob : candidates) {
-            if (familiar.distanceToSqr(mob) > radiusSquared) continue;
-            if (!isSanctuaryControlEligible(mob)) continue;
-
+            if (!isSanctuaryCandidate(mob, level, familiar, active, radiusSquared)) continue;
             LivingEntity hostileTarget = mob.getTarget();
-            if (hostileTarget == null || hostileTarget.level() != level) continue;
-            if (!active.members.contains(hostileTarget.getUUID())) continue;
-            if (!hostileTarget.isAlive() || familiar.distanceToSqr(hostileTarget) > radiusSquared) continue;
-
-            EntityProtectionFacts facts = MinecraftEntityProtectionResolver.resolve(server, owner, mob);
-            if (facts.boss() || facts.invulnerable()) continue;
-
-            EntityInteractionAuthorization authorization = runtime.entityInteractionAdmission().authorize(
-                    EntityInteractionType.CONTROL,
-                    facts,
-                    new ProtectionQuery(
-                            active.ownerId,
-                            level.dimension().location().toString(),
-                            mob.getUUID().toString(),
-                            EntityInteractionType.CONTROL));
-            if (!authorization.decision().allowed()) continue;
+            if (hostileTarget == null) continue;
+            if (!controlAuthorized(server, runtime, level, owner, mob, active.ownerId)) continue;
 
             mob.setTarget(null);
             suppressed++;
@@ -285,23 +315,56 @@ public final class MinecraftPactSanctuaryRuntime {
         return suppressed;
     }
 
+    private static boolean isSanctuaryCandidate(
+            Mob mob,
+            ServerLevel level,
+            LivingEntity familiar,
+            ActiveSanctuary active,
+            double radiusSquared
+    ) {
+        if (!mob.isAlive() || mob == familiar || mob.level() != level || !isSanctuaryControlEligible(mob)) {
+            return false;
+        }
+        if (familiar.distanceToSqr(mob) > radiusSquared) return false;
+        LivingEntity hostileTarget = mob.getTarget();
+        if (hostileTarget == null || hostileTarget.level() != level || !hostileTarget.isAlive()) return false;
+        if (!active.members.contains(hostileTarget.getUUID())) return false;
+        return familiar.distanceToSqr(hostileTarget) <= radiusSquared;
+    }
+
+    private static boolean controlAuthorized(
+            MinecraftServer server,
+            ArcanaServerRuntime runtime,
+            ServerLevel level,
+            LivingEntity owner,
+            Mob mob,
+            UUID ownerId
+    ) {
+        EntityProtectionFacts facts = MinecraftEntityProtectionResolver.resolve(server, owner, mob);
+        if (facts.boss() || facts.invulnerable()) return false;
+
+        EntityInteractionAuthorization authorization = runtime.entityInteractionAdmission().authorize(
+                EntityInteractionType.CONTROL,
+                facts,
+                new ProtectionQuery(
+                        ownerId,
+                        level.dimension().location().toString(),
+                        mob.getUUID().toString(),
+                        EntityInteractionType.CONTROL));
+        return authorization.decision().allowed();
+    }
+
     /**
-     * Pact Sanctuary is deliberately fail-closed for event/encounter mobs. Vanilla raid mobs and
-     * Wardens are excluded explicitly. Data packs/providers can extend the exclusion tag. Unknown
-     * modded mob types are not treated as ordinary mobs unless they opt in through the eligible tag.
+     * Pact Sanctuary is fail-closed. Even vanilla mobs require explicit ordinary-mob admission through
+     * the eligible tag; event/encounter exclusions win over eligibility, and providers/datapacks may
+     * extend either tag without broad namespace assumptions.
      */
     private static boolean isSanctuaryControlEligible(Mob mob) {
         EntityType<?> type = mob.getType();
         if (mob instanceof Raider || type == EntityType.WARDEN || type.is(SANCTUARY_EXCLUDED)) {
             return false;
         }
-
-        ResourceLocation typeId = BuiltInRegistries.ENTITY_TYPE.getKey(type);
-        if (typeId == null) return false;
-        if (!"minecraft".equals(typeId.getNamespace()) && !type.is(SANCTUARY_ELIGIBLE)) {
-            return false;
-        }
-        return true;
+        return type.is(SANCTUARY_ELIGIBLE);
     }
 
     private static boolean allAuraChunksLoaded(ServerLevel level, BlockPos center, int radius) {

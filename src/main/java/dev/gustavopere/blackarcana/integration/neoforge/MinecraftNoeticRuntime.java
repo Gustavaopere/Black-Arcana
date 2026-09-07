@@ -15,7 +15,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
@@ -53,6 +55,7 @@ public final class MinecraftNoeticRuntime {
         gameBus.addListener(MinecraftNoeticRuntime::onServerStarted);
         gameBus.addListener(MinecraftNoeticRuntime::onEntityTickPre);
         gameBus.addListener(MinecraftNoeticRuntime::onEntityTickPost);
+        gameBus.addListener(MinecraftNoeticRuntime::onLivingChangeTarget);
         gameBus.addListener(MinecraftNoeticRuntime::onServerTick);
         gameBus.addListener(MinecraftNoeticRuntime::onPlayerLoggedOut);
         gameBus.addListener(MinecraftNoeticRuntime::onLivingDeath);
@@ -187,6 +190,20 @@ public final class MinecraftNoeticRuntime {
         ServerState state = STATES.get(server);
         if (state != null) {
             state.gaze.enforceStillnessAfterEntityTick(server, living);
+        }
+    }
+
+    private static void onLivingChangeTarget(LivingChangeTargetEvent event) {
+        if (!(event.getEntity() instanceof Mob mob)
+                || !(mob.level() instanceof ServerLevel level)) {
+            return;
+        }
+        LivingEntity proposedTarget = event.getNewAboutToBeSetTarget();
+        if (proposedTarget == null) return;
+        MinecraftServer server = level.getServer();
+        ServerState state = STATES.get(server);
+        if (state != null && state.sanctuary.blocksTargetChange(server, mob, proposedTarget)) {
+            event.setCanceled(true);
         }
     }
 
