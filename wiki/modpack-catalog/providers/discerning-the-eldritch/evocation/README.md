@@ -1,3 +1,6 @@
-# Discerning The Eldritch — Evocation
+# Evocation — Discerning The Eldritch
 
-Spells do addon classificados como Evocation ficam nesta pasta.
+**2/2 registered spells catalogados.**
+
+- `boogie-woogie.md`
+- `guardians-gaze.md`

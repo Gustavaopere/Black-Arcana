@@ -1,74 +1,88 @@
-# Discerning The Eldritch
+# Discerning The Eldritch — provider canônico
 
-Status: `CURRENT 1.4.4 IDENTITY VERIFIED; PUBLIC SPELL PAGE HAS AN INTERNAL COUNT DISCREPANCY`
+Status: `INSTALLED 1.4.4-1.21 / SOURCE-PINNED / 22 REGISTERED SPELLS / CATALOG IN PROGRESS`
 
-- Current JAR: `discerning_the_eldritch-1.4.4-1.21.jar`
-- Mod id: `discerning_the_eldritch`
-- Runtime version: `1.4.4-1.21`
-- Provider class: `SPELL PROVIDER / CONTENT ADDON`
-- Primary casting authority: Iron's Spells 'n Spellbooks.
-- Current license: PolyForm Shield License 1.0.0.
+- **JAR do pack:** `discerning_the_eldritch-1.4.4-1.21.jar`
+- **Mod ID:** `discerning_the_eldritch`
+- **Version authority:** modlist atual + upstream branch `1.21`
+- **Source pin auditado:** `AceTheEldritchKing/Discerning_The_Eldritch@7bbd81f902c65a4452f47656ebd948cae8cd5833`
+- **Upstream `gradle.properties`:** `mod_version=1.4.4-1.21`; branch 1.21 atualizada em 2026-09-05.
+- **Casting authority:** Iron's Spells 'n Spellbooks.
 
-## Current-version note
+## Correção da contagem antiga
 
-Version **1.4.4** was published on 2026-09-05. Its public changelog records only:
+A página pública histórica dizia “15 spells” e enumerava apenas 14. O **registry exato da versão 1.4.4** resolve a discrepância: `SpellRegistries` registra **22 `AbstractSpell`** ativos.
 
-- crash fix for the latest Ace's Spell Utils;
-- config issue fix.
+| Classificação real | Quantidade |
+|---|---:|
+| Eldritch | 9 |
+| Blood | 1 |
+| Evocation | 2 |
+| Fire | 2 |
+| Holy | 1 |
+| Ice | 2 |
+| Ritual (`discerning_the_eldritch:ritual`) | 5 |
+| **Total registrado** | **22** |
 
-No new 1.4.4 spell is claimed by that changelog, so the public project spell list is used as the current feature baseline unless the installed JAR proves otherwise.
+Comentários de ideias futuras no registry (Meteorology, Apocalypse, Eternal Chains, Malevolent Maelstrom etc.) **não são registrations** e não entram no catálogo ativo.
 
-## Public spell list
+## Escola Ritual
 
-The current project page says the mod contains **15 new spells**. However, the same page's `Current Spells` text explicitly enumerates only **14 named entries** in the material currently published. Phase 2 records that discrepancy instead of inventing a fifteenth spell.
+O addon registra uma escola própria `discerning_the_eldritch:ritual`, com focus tag, Ritual Power, Ritual Resist, targeting color e Ritual damage type próprios. `AbstractRitualSpell` estabelece gates comuns:
 
-| Spell | School | Public semantic behavior |
-|---|---|---|
-| `Silence` | Eldritch | Prevent target from casting spells |
-| `Esoteric Edge` | Eldritch | Large slash; additional damage while holding a weapon |
-| `Boogie Woogie` | Evocation | Swap caster and target positions |
-| `Guardian's Gaze` | Evocation | Ray-like attack that applies Mining Fatigue |
-| `Otherworldly Presence` | Eldritch | Teleport plus temporary state preventing taking/dealing damage and preventing casting |
-| `Abracadabra` | Eldritch | Buff with incoming-damage cap and negative-potion-effect prevention; configurable |
-| `Conjure: Forsaken Aid` | Eldritch | Summon one of multiple eldritch allied entities |
-| `Conjure: Gaoler` | Eldritch | Summon Gaoler; hostile targeting can include the caster |
-| `Esoteric Strike` | Eldritch | Forward punch; damage scales from attack damage |
-| `Mend Flesh` | Eldritch | Small heal plus configurable lifesteal/healing interaction when gaining XP orbs |
-| `Rift Walker` | Eldritch | Forward teleport leaving unstable rifts at origin/destination that explode later |
-| `Exorcism` | Holy | Removes insanity stacks; only enabled if the insanity system is enabled |
-| `Crystalline Carver` | Ice | Multi-slash, Chilled/Frostbite buildup, final hit gains bonus from Frostbite stacks |
-| `Glacial Cleave` | Ice | Low-damage icy slash that encases targets in an icy tomb |
+- `allowCrafting=false` e `canBeCraftedBy=false`;
+- rituais complexos não entram em loot normal;
+- super-complexos falham via `SPELLBOOK` e `SWORD`;
+- complexos não-super falham via `SPELLBOOK`;
+- cast de ritual é não-interruptível pelo contrato base.
 
-### Public count discrepancy
+Cada ritual preserva overrides próprios de `isComplex`/`isSuperComplex`.
 
-- Page claim: **15 spells**.
-- Names explicitly listed in current page text: **14**.
-- Resolution: `PENDING CURRENT JAR RESOURCE / UPDATED OFFICIAL PAGE EVIDENCE`.
+## Inventário exato 1.4.4
 
-The catalog must not silently turn a planned, removed or omitted entry into a current spell.
+### Eldritch — 9
 
-## Deduplication impact
+`silence`, `conjure_forsaken_aid`, `esoteric_edge`, `conjure_gaoler`, `otherworldly_presence`, `mend_flesh`, `rift_walker`, `abracadabra`, `esoteric_strike`.
 
-### Order / anti-casting
+### Blood — 1
 
-`Silence` directly covers spellcasting denial. `Abracadabra` covers a defensive damage cap and debuff prevention. `Otherworldly Presence` applies a more complex temporary no-damage/no-offense/no-casting state. A Black Arcana Order spell cannot claim generic “seal casting”, “cap incoming damage” or “enter invulnerable neutral state” as untouched space without a real systems delta.
+`vein_ripper`.
 
-### Space / Chaos
+### Evocation — 2
 
-`Boogie Woogie`, `Otherworldly Presence` and `Rift Walker` provide transposition, teleport and delayed rift explosions. Doctor Strange/Scarlet-Witch-inspired spatial visuals do not create a new mechanic by themselves.
+`boogie_woogie`, `guardians_gaze`.
 
-### Summoning / Binding
+### Fire — 2
 
-`Conjure: Forsaken Aid` and `Conjure: Gaoler` occupy eldritch summon space. They do not implement Black Arcana's persistent typed resource links, but they must be included in summon/familiar deduplication.
+`soul_slice`, `soul_set_ablaze`.
 
-### Holy / cleansing
+### Holy — 1
 
-`Exorcism` is a conditional cleansing spell linked to an insanity system. Divine/Order cleansing must deduplicate against it and Iron's base Cleanse.
+`exorcism`.
 
-## Provenance / confidence
+### Ice — 2
 
-- Presence/version: current modlist + current 1.4.4 file page — HIGH.
-- Current public spell names/semantic descriptions: current project page — HIGH for the 14 names above.
-- Claimed total 15 vs enumerated 14: unresolved public-source inconsistency, explicitly retained.
-- Exact mana/cooldown/level/value formulas: `PENDING` unless separately confirmed.
-- No Java bytecode was decompiled.
+`glacial_edge`, `crystalline_carver`. A documentação pública usa “Glacial Cleave”; o registry/source real é `glacial_edge` / `GlacialEdgeSpell`.
+
+### Ritual — 5
+
+`call_ascended_one`, `blades_of_rancor`, `zealous_harbinger`, `ravenous_revenant`, `libras_judgement`.
+
+## Sistemas provider-native relevantes
+
+- `SpellPreCastEvent` cancela casts de jogadores com `SILENCE_POTION_EFFECT`.
+- Casts Eldritch incrementam Insanity somente quando o sistema opcional está habilitado; default upstream é `false`, max default 15.
+- `METAPHYSICAL_POTION_EFFECT` também cancela novos casts pelo server event.
+- Mend Flesh possui heal inicial e efeito reativo; lifesteal-on-hit e heal-on-XP são configuráveis, ambos default `true`.
+- Abracadabra possui damage cap configurável (default habilitado, base cap 80) e bloqueio de efeitos harmful configurável (default habilitado), respeitando `BYPASS_ABRACADABRA`.
+- Summons usam `SpellSummonEvent`/`SummonManager` quando apropriado; bridges não devem duplicar lifecycle.
+
+## Deduplicação imediata
+
+Este provider já ocupa: hard anti-casting; damage-cap defense; harmful-effect prevention; neutral/metaphysical teleport state; transposition; Eldritch weapon-scaled slashes/punches; controlled and feral Eldritch summons; Blood lifesteal dash/cleave; Soul Fire stack-spending attacks; Insanity cleanse; Frostbite combo; boss ritual summon; Ritual homing blades; predator/prey hunting state; health-threshold judgement.
+
+Black Arcana não deve reproduzir esses contracts apenas alterando nome/VFX.
+
+## Regra de evidência
+
+Valores abaixo são extraídos do branch 1.21 pinado. Quando comportamento está dentro de projectile/entity/event não auditado diretamente, a ficha marca `NÃO VERIFICADO` e mantém a entity/effect do provider como authority. Bugs estáticos detectados são QA blockers, não correções silenciosas.
