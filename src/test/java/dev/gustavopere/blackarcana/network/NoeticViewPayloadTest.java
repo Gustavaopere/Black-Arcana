@@ -14,4 +14,18 @@ class NoeticViewPayloadTest {
                 NoeticObservationKind.ASTRAL_SEVERANCE,
                 17));
     }
+
+    @Test
+    void malformedBorrowedSightPayloadFailsClosed() {
+        assertThrows(IllegalArgumentException.class, () -> new NoeticViewPayload(
+                ArcanaProtocol.VERSION + 1,
+                NoeticViewPayload.Action.BEGIN,
+                NoeticObservationKind.BORROWED_SIGHT,
+                17));
+        assertThrows(IllegalArgumentException.class, () -> new NoeticViewPayload(
+                ArcanaProtocol.VERSION,
+                NoeticViewPayload.Action.BEGIN,
+                NoeticObservationKind.BORROWED_SIGHT,
+                -1));
+    }
 }
