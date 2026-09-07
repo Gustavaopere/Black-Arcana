@@ -1,83 +1,73 @@
 # Sworn Protector
 
-## Estado
-
-`EXTERNAL PROVIDER / INSTALLED — WIP UPSTREAM — AUTHORITY QA BLOCKER`
-
-## Identidade
-
+- **Status:** PRESENTE — current 1.1.1 changelog removes WIP from released spells; stale README wording is not current authority
 - **ID:** `paladin_spells:sworn_protector`
-- **Escola:** Holy
-- **Raridade mínima:** Rare
-- **Nível máximo:** 10
-- **Função:** proteção de aliados / redirecionamento de dano
-- **Cast type:** Instant
-- **Animation:** `CHARGE_RAISED_HAND`
+- **School:** Holy
+- **Levels:** 1–10
+- **Min rarity:** Rare
+- **Cast:** Instant / 0 ticks
+- **Mana neutral:** 30–165
+- **Cooldown:** 35 s
+- **Spell power neutral:** 10–55
+- **Range source:** 36–90 blocks
+- **Duration neutral:** 17–26 s
+- **Role:** redirect a percentage of nearby player damage to protector
 
-O README upstream marca explicitamente o spell como `WIP`.
+## Formulas
 
-## Custo e casting — source 1.21.1
+The range helper is named `getRange(int spellPower)` but the call site passes **spellLevel**:
 
-- `baseManaCost = 30`
-- `manaCostPerLevel = 15`
-- `baseSpellPower = 10`
-- `spellPowerPerLevel = 5`
-- `castTime = 0`
-- **Cooldown:** `35 s`
+`range = (10 + 2*spellLevel)*3`
 
-## Duração
+Redirect:
 
-`durationSeconds = 15 + 20 * getSpellPower(level, caster) / 100`
+`normalized=(level-1)/(maxLevel-1)`
 
-## Raio
+`scaled=normalized^(0.6/(1+0.1*getSpellPower))`
 
-A implementação chama `getRange(spellLevel)` e a função calcula:
+`armorBonus=0.20*armor/(armor+100)`
 
-`range = (10 + spellLevel * 2) * 3`
+`redirect=min(1.0, 0.20 + 0.60*scaled + armorBonus)`
 
-Observação: o parâmetro da função é nomeado `spellPower`, mas recebe `spellLevel` no call site auditado.
+At level 1 this starts at 20% + armor bonus; at level 10 it reaches 80% + armor bonus before the 100% cap.
 
-## Percentual de redirecionamento
+`duration = 15 + 0.20*getSpellPower`.
 
-`normalizedLevel = (level - 1) / (maxLevel - 1)`
+## Server settlement design
 
-`scaledValue = normalizedLevel ^ (0.6 / (1 + 0.1 * getSpellPower))`
+`SwornProtectorEvent` listens to `LivingIncomingDamageEvent` server-side and:
 
-`armorBonus = 0.20 * armor / (armor + 100)`
+1. only protects Player victims;
+2. ignores already-redirected damage to prevent recursion;
+3. searches protectors with the effect in a broad 64-block box;
+4. filters by each protector's stored range;
+5. chooses the nearest eligible protector;
+6. refuses redirect when protector is the attacker;
+7. subtracts the redirected portion from victim damage;
+8. hurts protector exactly once with dedicated `paladin_spells` redirect damage type.
 
-`redirect = min(1.0, 0.20 + scaledValue * 0.60 + armorBonus)`
+This is a strong exactly-once causal boundary and must remain provider-native.
 
-Logo, o contrato pretendido começa em torno de uma base de 20% antes do componente da curva/armor e possui cap técnico de 100%.
+## Authority blocker found in exact 1.1.1 source
 
-## Event de redirecionamento
+The current `SwornProtectorSpell.onCast` writes `sworn_protector_redirect`, `sworn_protector_range` and `SWORN_PROTECTOR_EFFECT` only inside:
 
-O event server-side:
+`if (level.isClientSide) { ... }`
 
-- só considera vítima `Player`;
-- ignora dano já classificado como redirect para evitar recursão;
-- procura protectors com o effect em raio bruto de 64;
-- filtra pelo range persistido de cada protector;
-- escolhe o protector elegível mais próximo;
-- impede redirect quando o próprio protector é o atacante;
-- reduz o dano da vítima pela parcela redirecionada;
-- aplica essa parcela ao protector usando damage type próprio `REDIRECT`.
+The redirection event explicitly runs server-side. Client persistent data/effects are not a valid substitute for server-authoritative state.
 
-## Authority blocker
+Therefore the semantic design/event settlement is fully documented, but **functional activation is `LIVE-JAR/GAMETEST REQUIRED`**. Black Arcana must not silently emulate the missing server state in this catalog branch.
 
-Na fonte 1.21 auditada, `onCast` grava `sworn_protector_redirect`, `sworn_protector_range` e aplica `SWORN_PROTECTOR_EFFECT` **somente dentro de `if (level.isClientSide)`**.
+## Mandatory matrix
 
-Já o event que executa a mecânica retorna quando está no cliente e exige o effect/persistent data no servidor. Isso é uma inconsistência aparente forte.
+- target: self as protector; protected victims are nearby Players chosen later by event;
+- PvP: attacker==protector guard confirmed; broader party/team/protection semantics `NÃO VERIFICADO`;
+- bosses/summons: not protected victims unless Player; damage source attacker can vary;
+- acquisition/focus/ritual: specific route `NÃO VERIFICADO`;
+- VFX/audio: Bulwark start sound + `CHARGE_RAISED_HAND`; tether visualization not source-confirmed;
+- dedup: occupies ally-damage interception/protector-link signature;
+- fail-closed: no bridge redirection until server authority is proven/corrected.
 
-Até GameTest/live-JAR demonstrar comportamento válido ou uma correção ser aplicada, Black Arcana não deve depender deste spell para contratos server-authoritative.
+## Source
 
-## Aquisição
-
-`TBD — Iron's generic acquisition / pack config`.
-
-## VFX
-
-A fantasia de juramento/protetor combina com tether dourado entre protector e aliados protegidos. Qualquer tether deve ser puramente presentation de relações server-confirmed; o cliente não escolhe quem recebe redirect.
-
-## Deduplicação
-
-O conceito “redirecionar dano de aliados próximos para o caster” já existe. Novos vínculos Divinos de proteção devem reutilizar/corrigir este provider quando possível ou possuir delta explícito.
+Paladin branch `1.21@31f64ccdb39d062b21cc25d434cb62d6463b486e`, `SwornProtectorSpell` + `SwornProtectorEvent`; changelog 1.1.1.

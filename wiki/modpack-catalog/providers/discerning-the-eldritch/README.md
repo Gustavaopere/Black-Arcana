@@ -1,74 +1,91 @@
-# Discerning The Eldritch
+# Discerning The Eldritch — provider canônico
 
-Status: `CURRENT 1.4.4 IDENTITY VERIFIED; PUBLIC SPELL PAGE HAS AN INTERNAL COUNT DISCREPANCY`
+Status: `INSTALLED 1.4.4-1.21 / SOURCE-PINNED / 22/22 REGISTERED SPELLS CATALOGED`
 
-- Current JAR: `discerning_the_eldritch-1.4.4-1.21.jar`
-- Mod id: `discerning_the_eldritch`
-- Runtime version: `1.4.4-1.21`
-- Provider class: `SPELL PROVIDER / CONTENT ADDON`
-- Primary casting authority: Iron's Spells 'n Spellbooks.
-- Current license: PolyForm Shield License 1.0.0.
+- **JAR do pack:** `discerning_the_eldritch-1.4.4-1.21.jar`
+- **Mod ID:** `discerning_the_eldritch`
+- **Version authority:** modlist atual + upstream branch `1.21`
+- **Source pin auditado:** `AceTheEldritchKing/Discerning_The_Eldritch@7bbd81f902c65a4452f47656ebd948cae8cd5833`
+- **Upstream `gradle.properties`:** `mod_version=1.4.4-1.21`
+- **Casting authority:** Iron's Spells 'n Spellbooks
 
-## Current-version note
+# Cobertura: **22/22 — DOCUMENTATION COMPLETE**
 
-Version **1.4.4** was published on 2026-09-05. Its public changelog records only:
+A antiga página pública dizia “15 spells” e enumerava 14. O registry exato 1.4.4 resolve a discrepância: são **22 registrations reais**.
 
-- crash fix for the latest Ace's Spell Utils;
-- config issue fix.
+| School/classificação | Registrations | Fichas |
+|---|---:|---:|
+| Eldritch | 9 | 9 |
+| Blood | 1 | 1 |
+| Evocation | 2 | 2 |
+| Fire | 2 | 2 |
+| Holy | 1 | 1 |
+| Ice | 2 | 2 |
+| Ritual (`discerning_the_eldritch:ritual`) | 5 | 5 |
+| **Total** | **22** | **22** |
 
-No new 1.4.4 spell is claimed by that changelog, so the public project spell list is used as the current feature baseline unless the installed JAR proves otherwise.
+Comentários de ideias futuras no registry não são spells ativos e não inflam a contagem.
 
-## Public spell list
+## Inventário exato
 
-The current project page says the mod contains **15 new spells**. However, the same page's `Current Spells` text explicitly enumerates only **14 named entries** in the material currently published. Phase 2 records that discrepancy instead of inventing a fifteenth spell.
+### Eldritch
+`silence`, `conjure_forsaken_aid`, `esoteric_edge`, `conjure_gaoler`, `otherworldly_presence`, `mend_flesh`, `rift_walker`, `abracadabra`, `esoteric_strike`.
 
-| Spell | School | Public semantic behavior |
-|---|---|---|
-| `Silence` | Eldritch | Prevent target from casting spells |
-| `Esoteric Edge` | Eldritch | Large slash; additional damage while holding a weapon |
-| `Boogie Woogie` | Evocation | Swap caster and target positions |
-| `Guardian's Gaze` | Evocation | Ray-like attack that applies Mining Fatigue |
-| `Otherworldly Presence` | Eldritch | Teleport plus temporary state preventing taking/dealing damage and preventing casting |
-| `Abracadabra` | Eldritch | Buff with incoming-damage cap and negative-potion-effect prevention; configurable |
-| `Conjure: Forsaken Aid` | Eldritch | Summon one of multiple eldritch allied entities |
-| `Conjure: Gaoler` | Eldritch | Summon Gaoler; hostile targeting can include the caster |
-| `Esoteric Strike` | Eldritch | Forward punch; damage scales from attack damage |
-| `Mend Flesh` | Eldritch | Small heal plus configurable lifesteal/healing interaction when gaining XP orbs |
-| `Rift Walker` | Eldritch | Forward teleport leaving unstable rifts at origin/destination that explode later |
-| `Exorcism` | Holy | Removes insanity stacks; only enabled if the insanity system is enabled |
-| `Crystalline Carver` | Ice | Multi-slash, Chilled/Frostbite buildup, final hit gains bonus from Frostbite stacks |
-| `Glacial Cleave` | Ice | Low-damage icy slash that encases targets in an icy tomb |
+### Blood
+`vein_ripper`.
 
-### Public count discrepancy
+### Evocation
+`boogie_woogie`, `guardians_gaze`.
 
-- Page claim: **15 spells**.
-- Names explicitly listed in current page text: **14**.
-- Resolution: `PENDING CURRENT JAR RESOURCE / UPDATED OFFICIAL PAGE EVIDENCE`.
+### Fire
+`soul_slice`, `soul_set_ablaze`.
 
-The catalog must not silently turn a planned, removed or omitted entry into a current spell.
+### Holy
+`exorcism`.
 
-## Deduplication impact
+### Ice
+`glacial_edge`, `crystalline_carver`. Public-facing “Glacial Cleave” maps to registry ID `glacial_edge` / class `GlacialEdgeSpell`.
 
-### Order / anti-casting
+### Ritual
+`call_ascended_one`, `blades_of_rancor`, `zealous_harbinger`, `ravenous_revenant`, `libras_judgement`.
 
-`Silence` directly covers spellcasting denial. `Abracadabra` covers a defensive damage cap and debuff prevention. `Otherworldly Presence` applies a more complex temporary no-damage/no-offense/no-casting state. A Black Arcana Order spell cannot claim generic “seal casting”, “cap incoming damage” or “enter invulnerable neutral state” as untouched space without a real systems delta.
+## Escola Ritual própria
 
-### Space / Chaos
+`DTESchoolRegistry` registra `discerning_the_eldritch:ritual` com focus tag, Ritual Power, Ritual Resist, sound e Ritual damage type próprios.
 
-`Boogie Woogie`, `Otherworldly Presence` and `Rift Walker` provide transposition, teleport and delayed rift explosions. Doctor Strange/Scarlet-Witch-inspired spatial visuals do not create a new mechanic by themselves.
+`AbstractRitualSpell` estabelece:
 
-### Summoning / Binding
+- crafting proibido;
+- complex rituals não entram no loot genérico;
+- super-complex: bloqueado via SPELLBOOK e SWORD;
+- complex non-super: bloqueado via SPELLBOOK;
+- casts ritual base não são interruptíveis.
 
-`Conjure: Forsaken Aid` and `Conjure: Gaoler` occupy eldritch summon space. They do not implement Black Arcana's persistent typed resource links, but they must be included in summon/familiar deduplication.
+Overrides individuais estão nas fichas.
 
-### Holy / cleansing
+## Systems provider-native relevantes
 
-`Exorcism` is a conditional cleansing spell linked to an insanity system. Divine/Order cleansing must deduplicate against it and Iron's base Cleanse.
+- Silence e Metaphysical cancelam Iron's `SpellPreCastEvent` server-side.
+- Insanity é opcional, default off; max default 15.
+- Mend Flesh reactive healing é config-driven.
+- Abracadabra possui damage-cap e harmful-effect gate configuráveis.
+- Summons usam `SpellSummonEvent` / `SummonManager` quando são summons controlados.
+- Soul Fire attacks consomem `SOUL_FIRE_STACKS` da arma.
+- Frostbite combo usa `FROSTBITE_LEVEL` attachment + `CHILLED`.
+- Exorcism existe como cleanse específico do próprio Insanity system.
 
-## Provenance / confidence
+## Deduplicação
 
-- Presence/version: current modlist + current 1.4.4 file page — HIGH.
-- Current public spell names/semantic descriptions: current project page — HIGH for the 14 names above.
-- Claimed total 15 vs enumerated 14: unresolved public-source inconsistency, explicitly retained.
-- Exact mana/cooldown/level/value formulas: `PENDING` unless separately confirmed.
-- No Java bytecode was decompiled.
+O provider ocupa anti-cast, damage-cap defense, harmful-effect immunity gate, metaphysical teleport lockout, entity-position swap, weapon-scaled Eldritch attacks, controlled/feral summons, Blood lifesteal engage, Soul Fire stack spending, Insanity cleanse, Frozen Weapon bonus, Frostbite combo, boss ritual summon, cursor-homing ritual blades, Predator/Prey hunting state e HP-threshold judgement.
+
+Black Arcana não deve duplicar esses contracts por rename/VFX.
+
+## QA blockers estáticos
+
+- Ravenous Revenant: branch Predator+Prey de 25 damage é logicamente inalcançável e não adiciona a jaw ao level.
+- Zealous Harbinger: primeira posição `z+i` é imediatamente sobrescrita por `z-i` em cada projectile.
+- Guardian's Gaze: block-particle `else if` está aninhado sob `ENTITY`, portanto é inalcançável.
+- Crystalline Carver: `isFinalCast` é campo mutável na instância do spell registrada; possível shared-state entre casters exige GameTest/runtime QA.
+- Otherworldly Presence: anti-cast é source-confirmed; a alegação pública de neutralizar damage ainda requer localização/QA do settlement atual.
+
+Esses itens são observações de source 1.4.4, não correções runtime deste chat.

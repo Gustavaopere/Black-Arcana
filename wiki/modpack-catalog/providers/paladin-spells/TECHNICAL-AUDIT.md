@@ -1,72 +1,84 @@
-# Paladin Spells — catálogo do provider
+# Paladin Spells — technical audit 1.1.1
 
-## Estado
+## Exact source pin
 
-`EXTERNAL PROVIDER / INSTALLED — SOURCE AUDIT 1.21.1 COMPLETE FOR SPELL REGISTRY; LIVE-JAR QA PENDING`
+- installed: `paladin_spells-1.21.1-1.1.1.jar`;
+- branch: `Kaufko/Paladin-Spells` → `1.21`;
+- audited head: `31f64ccdb39d062b21cc25d434cb62d6463b486e`;
+- head message: `Fixed server crash due to using client only class`;
+- upstream `gradle.properties`: `minecraft_version=1.21.1`, `mod_version=1.21.1-1.1.1`.
 
-## Versão instalada
+## Registry
 
-- JAR do pack: `paladin_spells-1.21.1-1.1.1.jar`
-- mod id: `paladin_spells`
-- fonte auditada: branch upstream `1.21`, commit `31f64ccdb39d062b21cc25d434cb62d6463b486e`
-- upstream `gradle.properties`: Minecraft 1.21.1 / mod version 1.21.1-1.1.1.
+`PaladinSpellRegistry` registers exactly five spells into Iron's `SPELL_REGISTRY_KEY`:
 
-## Papel
+- `paladin_spells:taunt`;
+- `paladin_spells:bulwark`;
+- `paladin_spells:sworn_protector`;
+- `paladin_spells:bedrock_skin`;
+- `paladin_spells:ram`.
 
-Addon de Iron's Spells focado em paladino/tank. Registra cinco spells Holy:
+All five use `SchoolRegistry.HOLY_RESOURCE` and minimum rarity Rare.
 
-1. `paladin_spells:taunt`
-2. `paladin_spells:bulwark`
-3. `paladin_spells:sworn_protector`
-4. `paladin_spells:bedrock_skin`
-5. `paladin_spells:ram`
+## Current-release correction
 
-O próprio README upstream descreve Sworn Protector como `WIP`.
+The upstream README still labels Sworn Protector WIP, but the 1.1.1 changelog explicitly says WIP was removed from two spells because they are released. For current-state cataloging the release changelog outranks stale README wording.
 
-## Aquisição
+## Iron's inherited formula
 
-O source tree 1.21 auditado não contém loot/acquisition data próprio dos spells; em `data/paladin_spells` foi encontrado apenas `damage_type`. Os spells são registrados diretamente no `SpellRegistry` do Iron's.
+Installed Iron's 3.16.3 `AbstractSpell` confirms:
 
-Portanto a Wiki **não afirma** ainda uma fonte de scroll/loot específica do addon. A aquisição deve ser validada contra o sistema genérico/config/loot do Iron's e contra o JAR/config do modpack antes de preencher `Como obter` como canônico.
+`mana = (baseManaCost + manaCostPerLevel*(level-1)) * configManaMultiplier`
 
-## Fórmulas comuns
+`spellPower = (baseSpellPower + spellPowerPerLevel*(level-1)) * genericSpellPower * HolyPower * configPowerMultiplier`
 
-Os campos `baseManaCost`, `manaCostPerLevel`, `baseSpellPower` e `spellPowerPerLevel` vêm das classes 1.21 do provider. A fórmula final usada pelo Iron's para mana/power efetivos e modificadores do jogador deve ser documentada a partir da versão instalada do Iron's; não é reimplementada nesta Wiki por inferência.
+Individual pages therefore show neutral/base ranges plus formulas that consume final `getSpellPower` where applicable.
 
-## QA blockers encontrados na auditoria
-
-### Sworn Protector
-
-Na branch 1.21, `onCast` aplica persistent data e o efeito somente dentro de `if (level.isClientSide)`, enquanto o event handler de redirect roda apenas no servidor. Isso cria uma incompatibilidade aparente de authority. O spell permanece `QA BLOCKER — LIVE JAR VALIDATION` até teste no pack ou correção do provider/bridge.
+## QA findings
 
 ### Bulwark
 
-`BulwarkEffect` registra `Attributes.ARMOR` com operação `ADD_MULTIPLIED_TOTAL` e amount `0.0`, enquanto o spell usa um amplifier calculado. Sem outra lógica server-side não encontrada no provider, isso parece incapaz de produzir o aumento pretendido. O spell permanece `QA REQUIRED` antes de ser reutilizado como fundação de Magia Divina.
+- spell power baseline: 15→60;
+- duration formula: `min(5 + 0.15*spellPower, 35)`;
+- amplifier: `round(spellPower*10)`;
+- `BulwarkEffect` declares `Attributes.ARMOR`, `ADD_MULTIPLIED_TOTAL`, amount `0.0`.
+
+No separate Bulwark event handler was found. Live validation is mandatory before using Bulwark as an armor-authority dependency.
+
+### Sworn Protector
+
+The server event is structurally robust in several ways: it only handles player victims, ignores redirect damage recursively, chooses the closest eligible protector, checks stored per-protector range, avoids redirect when the protector is the attacker, subtracts the redirected portion exactly once and hurts the protector with a dedicated `REDIRECT` damage type.
+
+However, the current spell's `onCast` applies effect and persistent redirect/range data only when `level.isClientSide`. The event explicitly returns client-side. Static source therefore shows a server-authority mismatch requiring live validation/fix upstream before Black Arcana relies on it.
+
+### Bedrock Skin
+
+- server cast writes `bedrock_skin_reduction` persistent float;
+- repository search finds that key only in spell/effect declarations, not a damage handler;
+- effect independently declares +10 Armor ADD_VALUE and the spell uses amplifier `level-1`;
+- `BedrockSkinEntity` roots horizontal movement by mounting the caster onto an invulnerable anchor that only moves vertically and discards after duration/dismount.
+
+The immobilization contract is source-confirmed; percentage mitigation settlement is not.
 
 ### Ram
 
-A classe do spell aplica `mobAttack` a todos os `LivingEntity` encontrados no AABB do dash, exceto o caster, sem filtro de ally/friendly-fire dentro da própria classe. Uma camada global pode alterar o resultado, portanto comportamento PvP/party precisa de teste no modpack.
+- server cast generates dash `ImpulseCastData` and directly sets movement;
+- swept AABB is movement vector expansion +1.5;
+- every alive LivingEntity except the caster is hurt with `mobAttack` and knocked back;
+- no friendly-fire/party gate appears here;
+- `vec.add(0,0.25,0)` is called without reassigning the immutable Vec3 return when grounded; static source suggests the intended extra vertical vector component may be lost, although the caster is separately moved upward by 1.5 blocks.
 
-## Visual
+### Taunt
 
-O pack deve preservar a mecânica provider-native, mas a apresentação atual pode ser elevada quando houver método seguro. Taunt usa `ANGRY_VILLAGER` como partícula de feedback; isso é funcional, porém abaixo do novo padrão visual da Wiki e entra como `VFX UPGRADE CANDIDATE`.
+- scans nearby `Mob` instances;
+- only `Enemy` mobs receive the effect;
+- stores caster UUID in mob persistent data;
+- `TauntEffect` runs every tick, resolves the UUID server-side, sets mob target/aggressive and sets last-hurt-by-player when the taunter is a player.
 
-## Deduplicação para Magia Divina
+This is the provider-native authority for forced aggro; bridges should not issue parallel `setTarget` loops.
 
-Não criar clones dos cinco papéis abaixo:
+## Acquisition and assets
 
-- self armor amplification → comparar primeiro com Bulwark;
-- AoE threat/forced target → Taunt;
-- damage redirection/protector link → Sworn Protector;
-- rooted heavy mitigation → Bedrock Skin;
-- armor-scaling holy charge → Ram.
+Provider-specific acquisition data was not confirmed. Exact scroll generation/Inscription/loot behavior remains `NÃO VERIFICADO`.
 
-Novos spells Divinos precisam oferecer outra decisão mecânica, por exemplo julgamento celeste, consagração, purificação, banimento ou Miracle-tier infrastructure.
-
-## Páginas
-
-- `bulwark.md`
-- `taunt.md`
-- `sworn-protector.md`
-- `bedrock-skin.md`
-- `ram.md`
+Presentation is provider-native. Black Arcana may improve visuals only through non-authoritative presentation layers that do not duplicate effects, target selection or damage settlement.

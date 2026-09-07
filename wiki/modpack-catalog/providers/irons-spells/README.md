@@ -3,7 +3,7 @@
 - **Mod ID:** `irons_spellbooks`
 - **JAR do pack:** `irons_spellbooks-1.21.1-3.16.3.jar`
 - **Runtime:** `1.21.1-3.16.3`
-- **Regra desta Wiki:** TODO spell existente recebe um arquivo `.md`, mesmo quando não há alteração planejada pelo Black Arcana. Spells deprecated ainda presentes no provider recebem ficha histórica/semântica, mas não inflam a contagem ativa do catálogo oficial.
+- **Regra:** todo spell ativo recebe ficha canônica individual; implementações deprecated preservadas não inflam a contagem ativa.
 
 ## Progresso do catálogo individual
 
@@ -15,114 +15,42 @@
 | Evocation | 17 | 17 | `COMPLETO` |
 | Fire | 13 | 13 | `COMPLETO` |
 | Holy | 12 | 12 | `COMPLETO` |
-| Ice | 12 | 0 | `PENDENTE` |
-| Lightning | 10 | 0 | `PENDENTE` |
-| Nature | 13 | 0 | `PENDENTE` |
+| Ice | 12 | 12 | `COMPLETO` |
+| Lightning | 10 | 10 | `COMPLETO` |
+| Nature | 13 | 13 | `COMPLETO` |
 
-**Cobertura ativa atual:** 75/110 spells do Iron's base possuem ficha individual canônica.
+# Cobertura do Iron's base: **110/110 — COMPLETO**
 
-`COMPLETO` aqui significa que existe ficha individual para todos os spells **ativos** da escola e que cada campo obrigatório foi preenchido com evidência verificável ou marcado explicitamente `NÃO VERIFICADO`. Não significa que campos ainda desconhecidos tenham sido observados ou inferidos. VFX/runtime, fórmulas internas, loot específico, PvP/boss/summon policy, itens/rituais e QA client-real permanecem desconhecidos quando a respectiva ficha assim registrar.
+Todos os spells ativos das nove escolas nativas possuem ficha individual na hierarquia `providers/irons-spells/<escola>/<spell>.md`.
 
-### Spells legados/deprecated preservados fora da contagem ativa
+`COMPLETO` significa cobertura documental: cada ficha registra os campos obrigatórios com evidência verificável ou `NÃO VERIFICADO`. Não significa que todos os internals de entities/effects tenham sido decompilados, nem que QA visual/client-real esteja encerrado.
 
-- `holy/cloud-of-regeneration.md` — implementação Holy ainda presente no source 3.16.3, `Deprecated=true` no `DefaultConfig`, ausente do catálogo oficial ativo atual. Mantido para provenance/deduplicação histórica sem alterar a cobertura ativa 75/110 nem o total ativo de 110 spells.
+## Provenance
 
-## Escolas nativas do Iron's base
+- catálogo player-facing atual: `https://iron.wiki/spells/`;
+- source instalado auditado: `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`;
+- esse commit declara Minecraft `1.21.1` e mod version `1.21.1-3.16.3` no próprio `gradle.properties`;
+- quando a documentação pública e o source divergem, ambas as evidências são preservadas e a divergência é explicitada;
+- IDs históricos não são renomeados na Wiki: por exemplo Acid Spit=`acid_orb` e Poison Spray=`poison_breath`.
 
-A build atual do catálogo oficial ativo possui 9 escolas nativas:
+## Spells legados/deprecated fora da contagem ativa
 
-1. Blood — 10 spells
-2. Eldritch — 7 spells
-3. Ender — 16 spells
-4. Evocation — 17 spells
-5. Fire — 13 spells
-6. Holy — 12 spells
-7. Ice — 12 spells
-8. Lightning — 10 spells
-9. Nature — 13 spells
+- `holy/cloud-of-regeneration.md` — implementação ainda presente no source 3.16.3, `Deprecated=true`, ausente do catálogo ativo.
 
-**Total ativo do Iron's base: 110 spells.**
+## Escolas nativas
 
-## Estrutura física obrigatória
+Blood 10; Eldritch 7; Ender 16; Evocation 17; Fire 13; Holy 12; Ice 12; Lightning 10; Nature 13. **Total: 110.**
 
-O catálogo do Iron's é organizado pela classificação nativa mais forte do provider: **escola**.
-
-```text
-providers/irons-spells/
-├── README.md
-├── PROVIDER-AUDIT.md
-├── blood/
-├── eldritch/
-├── ender/
-├── evocation/
-├── fire/
-├── holy/
-├── ice/
-├── lightning/
-└── nature/
-```
-
-Cada spell fica em:
+## Estrutura e ownership
 
 `providers/irons-spells/<escola>/<spell>.md`
 
-Exemplos:
+Spells de addons permanecem no provider que realmente os registra, mesmo quando usam uma escola do Iron's. A cobertura 110/110 **não** significa que o ecossistema Iron's do modpack esteja todo catalogado: addons/providers externos continuam no backlog próprio.
 
-- `providers/irons-spells/blood/acupuncture.md`
-- `providers/irons-spells/ender/portal.md`
-- `providers/irons-spells/holy/sunbeam.md`
+## Próximo gate
 
-Spells de addons **não são movidos para a pasta do Iron's base**. A origem real permanece sendo o addon que registrou o spell, mesmo quando ele usa uma escola do Iron's. Exemplos:
+Depois do base 110/110, o trabalho migra para os providers/addons instalados e para suas classificações nativas. Fase 3/criação de spells novas continua dependente de deduplicação contra esse ecossistema ampliado; o base completo sozinho não prova uma lacuna.
 
-- `providers/asterism-arcanum/astral/<spell>.md`
-- `providers/paladin-spells/holy/<spell>.md`
-- `providers/dreamless-spells/empty/<spell>.md`
+## Campos obrigatórios
 
-Isso preserva simultaneamente duas dimensões úteis para auditoria: **provider de origem** e **escola/classificação**.
-
-## Escolas adicionais no modpack
-
-As 9 escolas acima NÃO representam todas as escolas existentes no pack. Um snapshot real do runtime registrou **36 escolas Iron's** depois que os addons foram carregados.
-
-Escolas adicionais já comprovadas no stack incluem, entre outras:
-
-- Astral — Asterism Arcanum
-- Radiance — HazentouveLib/Hazen ecosystem
-- Shadow — HazentouveLib/Hazen ecosystem
-- Cosmic — HazentouveLib/Hazen ecosystem
-- Aqua — Somake
-- Symmetry — Somake
-- Empty — Dreamless Spells
-- Sound — infraestrutura FamiliarsLib/addons associados
-
-A lista exata das 36 escolas será reconstruída a partir do runtime/JARs atuais; nenhum nome será inventado para completar a contagem.
-
-## Campos obrigatórios por magia
-
-Cada ficha deve registrar, quando a informação existir e puder ser verificada:
-
-- status no modpack;
-- provider e mod ID;
-- JAR/versão;
-- spell ID;
-- escola/tipo;
-- descrição funcional;
-- níveis e raridade;
-- cast type / cast time / channel;
-- recurso usado;
-- custo;
-- cooldown;
-- dano/cura e tipo de dano;
-- alcance, raio/área e duração;
-- scaling/fórmulas/caps;
-- targets, PvP, bosses e summons;
-- condições e requisitos;
-- como obter, fabricar, ganhar e aprender;
-- itens/focus/rituais necessários;
-- VFX, partículas, textura, animação e áudio;
-- integrações/bridges;
-- deduplicação e sobreposições;
-- bugs/QA/fail-closed relevantes;
-- fonte/evidência e estado de verificação.
-
-Campos ainda não comprovados ficam `NÃO VERIFICADO`; nunca são preenchidos por suposição. Uma escola só recebe `COMPLETO` quando todos os spells ativos têm ficha e os campos obrigatórios estão explicitamente resolvidos como evidência ou `NÃO VERIFICADO`.
+Status/provider/versão/ID/escola; descrição; níveis/raridade; cast/channel; recurso/custo/cooldown; dano/cura/tipo; alcance/área/duração; scaling/caps; targets/PvP/bosses/summons; requisitos/obtenção/aprendizado; itens/focus/rituais; VFX/animação/áudio; bridges; deduplicação; bugs/QA/fail-closed; fonte/evidência.

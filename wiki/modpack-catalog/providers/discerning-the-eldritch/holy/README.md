@@ -1,3 +1,3 @@
-# Discerning The Eldritch — Holy
+# Holy — Discerning The Eldritch
 
-Spells do addon classificados como Holy ficam nesta pasta.
+**1/1 registered spell catalogado:** `exorcism.md`.
