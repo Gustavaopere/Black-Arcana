@@ -1,6 +1,6 @@
 # Wind Burst
 
-Status: `SOURCE-PINNED 5.13.1 / AIR CONTROL EFFECT`
+Status: `SOURCE-PINNED 5.13.1 / AIR CONTROL EFFECT / SEMANTICS+ACQUISITION AUDITED`
 
 - Registry id: `ars_nouveau:glyph_wind_burst`
 - Display name: `Wind Burst`
@@ -21,6 +21,14 @@ Pinned defaults:
 - default mana: `30`.
 
 Compatible augments are AOE, Amplify, Dampen and Sensitive. Sensitive sets the caster as explosion owner so the caster can ignore the provider's knockback behavior.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `minecraft:wind_charge` ×4 + `ars_nouveau:air_essence`.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Black Arcana boundary
 

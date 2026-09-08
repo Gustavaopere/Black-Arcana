@@ -1,6 +1,6 @@
 # Rewind
 
-Status: `SOURCE-PINNED 5.13.1 / TIME-MANIPULATION EFFECT`
+Status: `SOURCE-PINNED 5.13.1 / TIME-MANIPULATION EFFECT / SEMANTICS+ACQUISITION AUDITED`
 
 - Registry id: `ars_nouveau:rewind`
 - Display name: `Rewind`
@@ -24,6 +24,14 @@ For entities it requires `IRewindable`, rejects the provider rewind blacklist an
 The provider config explicitly warns that entities **anywhere** track rewind state and that a high tracking value is unsuitable for low-spec machines.
 
 Compatible augments are Extend Time and Duration Down.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:manipulation_essence` + `minecraft:clock` ×3.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Black Arcana boundary
 

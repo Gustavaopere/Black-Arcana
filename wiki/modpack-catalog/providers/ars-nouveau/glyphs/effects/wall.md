@@ -1,6 +1,6 @@
 # Ars Nouveau — Wall
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_wall`
 - Display name: Wall
@@ -15,6 +15,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Wall converts the remaining spell into an `EntityWallSpell`: it creates a child context, cancels the original continuation, installs a new resolver, orients the wall from caster facing and stores area, speed, duration, targeting and gravity behavior. Sensitive targets blocks instead of entities; Dampen suppresses gravity. Wall is registered in `EffectReset.RESET_LIMITS`.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:manipulation_essence` + `minecraft:dragon_breath` + `#c:storage_blocks/diamond` + `#c:rods/blaze` ×2.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

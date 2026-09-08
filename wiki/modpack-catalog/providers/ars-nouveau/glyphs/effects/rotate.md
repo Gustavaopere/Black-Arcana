@@ -1,6 +1,6 @@
 # Ars Nouveau — Rotate
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_rotate`
 - Display name: Rotate
@@ -14,6 +14,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Rotate changes entity/block orientation. Amplification adds clockwise rotations; Dampen produces counter-clockwise rotation; Sensitive changes block axis where possible or forces entity look direction; Randomize selects arbitrary rotation. Projectile velocity is rotated alongside projectile orientation. AOE/Pierce expand block coverage.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:manipulation_essence`.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

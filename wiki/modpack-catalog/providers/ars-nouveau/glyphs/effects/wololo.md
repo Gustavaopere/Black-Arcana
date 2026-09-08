@@ -1,6 +1,6 @@
 # Wololo
 
-Status: `SOURCE-PINNED 5.13.1 / MANIPULATION EFFECT`
+Status: `SOURCE-PINNED 5.13.1 / MANIPULATION EFFECT / SEMANTICS+ACQUISITION AUDITED`
 
 - Registry id: `ars_nouveau:wololo`
 - Display name: `Wololo`
@@ -22,6 +22,14 @@ The pinned source can:
 - use a bounded crafting-recipe cache (`MAX_RECIPE_CACHE = 16`).
 
 Compatible augments are `Randomize` and `Sensitive`.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:abjuration_essence` + `#c:dyes` ×3.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Black Arcana boundary
 

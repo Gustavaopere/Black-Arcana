@@ -1,6 +1,6 @@
 # Ars Nouveau — Summon Undead
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_summon_undead`
 - Display name: Summon Undead
@@ -15,6 +15,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Summons temporary allied `SummonSkeleton` entities. Pierce switches them to bows; Amplify upgrades weapon quality, including stronger swords/axes or bow Power enchantment depending on amplification. Split adds additional skeletons. The caster receives Summoning Sickness for the summon lifetime.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:conjuration_essence` + `minecraft:bone` + `minecraft:wither_skeleton_skull`.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 
