@@ -1,96 +1,139 @@
 # Cataclysm: Spellbooks
 
-Status: `CURRENT INSTALLED 1.1.13 BETA VERIFIED; PROVIDER SCALE/SCHOOLS VERIFIED; EXACT 1.1.13 SPELL TABLE PENDING`
+Status: `CURRENT 1.1.13 BETA PINNED / PUBLIC CURRENT SCALE VERIFIED / 1.1.11 SOURCE BASELINE CATALOGED / EXACT 1.1.13 REGISTRY PENDING`
+
+## Current installed identity
 
 - Current JAR: `cataclysm_spellbooks-1.1.13-1.21.jar`
 - Mod id: `cataclysm_spellbooks`
 - Runtime version: `1.1.13-1.21`
-- Current installed channel: **Beta**, uploaded 2026-09-02.
+- Minecraft / loader: `1.21.1` / NeoForge
+- Current installed channel: **Beta**
+- CurseForge project ID: `1099461`
+- Exact current CurseForge file ID: `8792628`
+- Uploaded: `2026-09-02`
 - Provider class: `SPELL PROVIDER / CONTENT ADDON`
-- Primary dependencies: Iron's Spells 'n Spellbooks + L_Ender's Cataclysm.
-- Current license: PolyForm Shield License 1.0.0.
+- Primary dependencies: Iron's Spells 'n Spellbooks + L_Ender's Cataclysm
 
-## Version authority warning
+The physical Black Arcana modlist is authority for presence and installed identity. The current CurseForge file page independently agrees with the exact filename, NeoForge 1.21.1, Beta channel and File ID.
 
-CurseForge's main 1.21.1 release card still highlights `1.1.11`, but the current Black Arcana modlist explicitly contains the newer **`1.1.13-1.21` beta**. The 1.1.13 file page confirms:
+## Current publisher-visible surface
 
-- NeoForge 1.21.1;
-- file ID `8792628`;
-- 1.1 MB;
-- Beta channel;
-- changelog summary: updated art, more spells ported, bug fixes and a new boss;
-- warning that the beta is broadly playable but may still contain bugs.
+The current project page states that Cataclysm: Spellbooks adds **65 new spells** and exposes Abyssal and Technomancy as provider schools. It also describes the addon as Cataclysm↔Iron's content rather than a replacement magic engine.
 
-Phase 2 therefore catalogs against the installed beta, not the older release badge.
+The exact 1.1.13 file changelog confirms only a coarse delta:
 
-## Current public scale and schools
+- updated art;
+- more spells ported;
+- bug fixes;
+- a new boss;
+- publisher warning that the beta is broadly playable but may still contain bugs.
 
-The current public project description states:
+These publisher claims are current enough for provider-level cataloging, but they do not expose the complete 65-entry registry, individual values or the identity of every change from 1.1.11.
 
-- **65 new spells** total;
-- new **Abyssal** school;
-- new **Technomancy** school;
-- Abyssal contains Leviathan-based spells;
-- Technomancy is inspired by The Harbinger;
-- additional armor, weapons, mobs and Cataclysm-linked progression exist around the spell content.
+## Source-version boundary
 
-Historical public changelogs also show that the Technomancy update added 33 spells at the time, 22 of them Technomancy, and reworked older Ignis/Maledictus spell acquisition. Those historical counts explain the provider's growth but do not replace the installed 1.1.13 catalog.
+The project-linked official GitHub repository does **not** match the installed beta.
+
+At public commit `82a0af71f051058fe515c8b1cb9168e7f972f41c`:
+
+- `gradle.properties` declares `mod_version=1.1.11-1.21`;
+- Minecraft is `1.21.1`;
+- NeoForge baseline is `21.1.219`;
+- Iron's baseline is `1.21-3.8.0`;
+- `SpellRegistries.java` contains **34 concrete registrations**;
+- `CSSchoolRegistry.java` registers Abyssal, Technomancy and a provider-owned Sand sub-school.
+
+That source snapshot is cataloged in [`SOURCE-1.1.11-BASELINE.md`](SOURCE-1.1.11-BASELINE.md). It is useful for semantic/deduplication history but is **not** promoted to exact 1.1.13 runtime authority.
+
+The numerical difference between the current public claim of 65 spells and the 34 registered entries in the old source snapshot is 31. It is not valid to infer that the installed beta simply adds 31 unchanged IDs: intermediate releases may add, remove, rename, port or rework content.
 
 ## Exact current spell table status
 
-The public project page exposes the total count and school identities but does not publish the complete current 1.1.13 list of all 65 names/registry IDs/values in a trustworthy single table.
+Current evidence supports:
 
-The project-linked GitHub repository is archived as of 2026-04-01 and therefore cannot be assumed to represent the newer 2026-09-02 installed beta.
+- installed 1.1.13 artifact identity — `VERIFIED`;
+- current provider-level 65-spell claim — `VERIFIED PUBLISHER CLAIM`;
+- Abyssal and Technomancy current provider-school presence — `VERIFIED PUBLISHER CLAIM`;
+- 1.1.11-labelled public-source baseline — `PINNED`, 34 concrete registrations;
+- exact 1.1.13 65-spell names/registry IDs — `PENDING CURRENT ARTIFACT OR MATCHING SOURCE`;
+- exact 1.1.13 mana/cooldown/damage/range/cast/acquisition values — `PENDING`;
+- exact 1.1.13 boss/entity/item registry delta — `PENDING`.
 
-Phase 2 consequently records:
+No WIP comment from the older source is treated as a current spell.
 
-- installed beta identity — VERIFIED;
-- 65-spell public current count — VERIFIED PUBLIC CLAIM;
-- Abyssal/Technomancy schools — VERIFIED;
-- exact 1.1.13 65-spell inventory — `PENDING CURRENT DISTRIBUTED-JAR RESOURCE OR UPDATED OFFICIAL DOCUMENTATION`;
-- exact mana/cooldown/damage/acquisition — `PENDING`.
+## Provider-native authority
 
-No archived-source list will be silently promoted to 1.1.13.
+Iron's remains authority for the canonical addon-facing casting substrate used by these spells: standard spell registration/cast lifecycle, mana, school framework and spell-power plumbing where the provider delegates to Iron's.
 
-## Known public current/historical spell references
+Cataclysm: Spellbooks owns:
 
-Public current/historical project changelogs expose some names, which are useful as presence candidates but are not treated as the complete 1.1.13 table without current validation. Examples include:
+- its registered spells;
+- its provider-owned schools/sub-school and provider attributes/damage types where present;
+- its spellbooks, weapons, armor, entities, effects and provider-local state;
+- Cataclysm-derived acquisition/progression rules introduced by this addon;
+- its own boss/content additions.
 
-- `Pharaoh's Wrath` — public 1.1.11 changelog states it belongs to the Sand school;
-- `Abyssal Blast` — historical public changelog references cooldown adjustment;
-- `Tidal Tear` — historical public changelog references SFX adjustment;
-- `Tentacle Laceration` — historical public changelog references target requirement;
-- `Hellish Blade` — reworked during the Technomancy-era update;
-- `Infernal Strike` — reworked during the Technomancy-era update;
-- `Malevolent Battlefield` — reworked during the Technomancy-era update.
+L_Ender's Cataclysm remains authority for Cataclysm's original mobs, bosses, materials and mechanics. Theme provenance does not transfer runtime ownership of a Cataclysm: Spellbooks spell back to the base Cataclysm mod.
 
-These names remain `CURRENT PRESENCE TO VERIFY` unless 1.1.13 resources confirm them.
+Black Arcana must not:
 
-## Deduplication impact
+- charge a second mana/resource for a normal provider cast;
+- replay provider damage/healing/summon settlement;
+- duplicate provider cooldowns;
+- convert provider-local state into Black Arcana authority;
+- treat spectacular Cataclysm presentation as proof of a semantic gap;
+- invent compatibility hooks against the beta without an exact supported seam.
 
-### Infernal / Black Flame / Cataclysm
+## Current deduplication impact
 
-This provider directly occupies Cataclysm boss-derived magic and includes historically documented Ignis/Maledictus/infernal spell content. Black Arcana's Infernal school cannot be finalized before the installed 1.1.13 spells are enumerated and compared together with:
+### Infernal / Black Flame / Fire
+
+The 1.1.11-labelled baseline already contains nine concrete Fire/Ignis registrations, including Incineration, Infernal Strike, Hellish Blade, Bone Storm, Bone Pierce, Ashen Breath and Tectonic Tremble. These are enough to block naive reskins in Black Arcana even before the exact 1.1.13 table is available.
+
+Infernal remains a candidate school only after comparison against:
 
 - Iron's Fire;
+- Cataclysm: Spellbooks current Fire/Ignis content;
 - Black Arcana Black Flame;
-- Ignis Soulfires;
-- Ignis Soulfires: Spellbooks;
-- Soul Fire'd;
-- Somake's Infernal/Soul Fire ritual path.
+- Ignis Soulfires and Ignis Soulfires: Spellbooks;
+- Soul Fire'd and other soul-fire providers;
+- Somake's infernal/soul-fire ritual surface.
 
 ### Order / Technomancy
 
-Technomancy may overlap controlled fields, projectiles, beams, summons, mechanical constraints or battlefield systems. Order must be compared mechanically, not aesthetically, against the installed Technomancy spell set once extracted.
+The current publisher explicitly exposes Technomancy. The old 1.1.11-labelled source registers the Technomancy school but no concrete Technomancy spells, proving that the source snapshot cannot stand in for the current provider.
 
-### Chaos / boss magic
+Order candidates involving controlled beams, projectiles, constructs, battlefield systems, mechanical suppression or deterministic machine-like magic must be compared against the exact current Technomancy set when it becomes available.
 
-Cataclysm-derived boss attacks can look like high-tier chaos/reality magic. Visual spectacle is not semantic uniqueness. Chaos candidates remain blocked until the 65-spell installed set is resolved.
+### Chaos / boss-derived magic
 
-## Provenance / confidence
+Cataclysm boss-derived attacks can visually resemble high-tier chaos/reality magic. Presentation alone is not a semantic gap. Chaos candidates remain blocked until their mechanics are compared against the current 65-spell set.
 
-- Presence/version/channel/file ID: current modlist + current 1.1.13 CurseForge file page — HIGH.
-- 65-spell count and Abyssal/Technomancy school claims: current public project page — HIGH at provider level.
-- Archived GitHub source: explicitly considered stale for installed 1.1.13 unless a fact is separately current-validated.
-- Exact 1.1.13 spell inventory and numbers: `PENDING`.
-- No Java bytecode was decompiled.
+### Space / gravity / displacement
+
+The old source baseline already includes Void Rune, Void Bulwark, Gravity Storm and Gravitational Pull. Black Arcana Space/Displacement content must preserve its own approved domain contracts and avoid duplicating these provider-owned capabilities merely with different VFX.
+
+### Summons / familiars
+
+The baseline includes multiple Cataclysm-derived summons. These do not automatically become Black Arcana familiars; provider summons retain provider authority. Any future overlap with Familiars & Divination is semantic and must be resolved by role, persistence, control model and acquisition, not by creature appearance.
+
+## World-effect safety
+
+Provider spells remain provider-owned. Black Arcana must not intercept and reapply their block/entity effects as if they originated from the Black Arcana canonical pipeline.
+
+For any independently implemented Black Arcana spell with destructive terrain effects, Black Arcana's own `WorldEffectPolicy` remains mandatory. A provider's willingness to destroy blocks is not permission to bypass Black Arcana safety policy.
+
+## Provenance / license posture
+
+Current CurseForge metadata labels the project **PolyForm Shield License 1.0.0**. The public source snapshot contains `TEMPLATE_LICENSE.txt` with PolyForm Shield 1.0.0, but its `gradle.properties` simultaneously declares `mod_license=All Rights Reserved`.
+
+Because those source-level declarations are not internally uniform and PolyForm Shield includes a noncompete restriction, Black Arcana treats the source strictly as `REFERENCE_ONLY / COMPATIBILITY_TARGET` for factual clean-room cataloging. No source code or assets are copied/adapted.
+
+## Remaining hard blocker
+
+**PENDÊNCIA — REQUER ARTEFATO EXATO / NAVEGAÇÃO EXTERNA CAPAZ DE ENTREGAR O BINÁRIO**
+
+The official CurseForge download flow exposed the 1.1.13 file page and download countdown but did not expose the JAR bytes to the permitted inspection tools in this session. Therefore exact current registry extraction remains fail-closed.
+
+Phase 2M may advance the provider from a generic pending row to a rigorously bounded partial catalog, but it does **not** close the exact-current per-spell inventory gate.

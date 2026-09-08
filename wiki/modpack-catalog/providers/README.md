@@ -14,9 +14,11 @@ Cada mod/provider possui sua própria pasta:
 
 Dentro dela, a organização usa a **classificação nativa mais útil e comprovada daquele provider**. Não forçamos uma taxonomia única para todos os mods.
 
+Um mesmo `mod id` não deve possuir duas árvores paralelas. Na Phase 2N, o conteúdo duplicado de Leyline Spellbooks foi consolidado de `providers/leylines/` para a árvore canônica `providers/leyline-spellbooks/`, preservando as fichas de spells, progressão e rifts.
+
 ### Iron's Spells e addons baseados em escolas
 
-Usam escola como primeira subpasta:
+Usam escola como primeira subpasta quando a escola/registry membership está comprovada:
 
 `providers/<provider>/<school>/<spell>.md`
 
@@ -26,6 +28,10 @@ Exemplos:
 - `irons-spells/holy/sunbeam.md`
 - `asterism-arcanum/astral/<spell>.md`
 - `dreamless-spells/empty/<spell>.md`
+
+Leyline Spellbooks é uma exceção deliberada ao layout school-first: como o registry exato 1.0.3 não está disponível, os nove nomes públicos permanecem em `leyline-spellbooks/spells/` sem inventar school/registry IDs por ficha. O provider anuncia a escola Leyline, mas isso não prova o registro individual de cada spell.
+
+Somake Spells segue a mesma regra de evidência. A árvore preparatória já possui diretórios de escolas/famílias, porém Phase 2O **não** preenche uma falsa lista `50+` a partir deles. Nomes publicados em changelogs são catalogados em `somake-spells/PUBLIC-NAMED-SPELLS.md` com release de origem e estado current-line/historical. Somente uma futura prova de registry atual autoriza promover membership completa para fichas school-first.
 
 ### Ars Nouveau e addons de spellcraft modular
 
@@ -52,7 +58,7 @@ Subpastas só são criadas quando a categoria é comprovada no provider atual. N
 
 ## Auditorias técnicas
 
-Auditorias de source/runtime que preservam detalhes adicionais ficam dentro do próprio provider em `audits/` ou em `TECHNICAL-AUDIT.md`. Elas são evidência auxiliar; a ficha individual na classificação nativa continua sendo a referência de gameplay para cada capacidade.
+Auditorias de source/runtime que preservam detalhes adicionais ficam dentro do próprio provider em `audits/` ou em `TECHNICAL-AUDIT.md`. Elas são evidência auxiliar; a ficha individual na classificação nativa continua sendo a referência de gameplay para cada capacidade quando sua identidade atual estiver comprovada.
 
 No Iron's, por exemplo, auditorias source 3.16.3 antigas foram preservadas sob `irons-spells/audits/` em vez de manter uma segunda árvore paralela.
 
