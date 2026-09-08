@@ -21,7 +21,8 @@ Subplans:
 - [`03-contextual-hud.md`](03-contextual-hud.md) — contextual selected-spell, hazard/gate/result presentation plus planned cooldown/cost/channel/timer presentation rules;
 - [`04-accessibility-client-config.md`](04-accessibility-client-config.md) — client-only preferences, reduced motion/flashes/particles, rebindability, keyboard accessibility and optional controller boundary;
 - [`05-final-client-validation-handoff.md`](05-final-client-validation-handoff.md) — exact real-client closeout campaign and evidence procedure;
-- [`06-modpack-coexistence.md`](06-modpack-coexistence.md) — coexistence with Spell Actionbar, Iron's, Epic Fight/EFIS, Controlling and future optional input providers without duplicating authority.
+- [`06-modpack-coexistence.md`](06-modpack-coexistence.md) — coexistence with Spell Actionbar, Iron's, Epic Fight/EFIS, Controlling and future optional input providers without duplicating authority;
+- [`07-presentation-data-contracts.md`](07-presentation-data-contracts.md) — audited server/client presentation authority, current synchronized-data coverage and the exact contract gates for cooldown, cost, charges, channels and timers.
 
 The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented; the latest physical modlist prevails for installed coexistence surfaces and versions.
 
@@ -94,6 +95,8 @@ Planned refinements include, subject to the detailed gates in each subplan:
 - direct current-pack coexistence testing with external casting/actionbar/combat surfaces before adding compatibility code.
 
 None of those bullet points is claimed as implemented merely because it is planned here.
+
+`07-presentation-data-contracts.md` now freezes the evidence gate behind those data-driven refinements. In particular, current cooldown snapshots are keyed by canonical cooldown `groupId` while spell presentation metadata does not synchronize spell→group mapping, so a generic per-spell cooldown widget is not yet authorized. Exact cost, charge state, channel session/progress and ritual/domain timer presentation likewise require bounded server-authored contracts before implementation. Corruption/Strain client values remain intentionally withheld pending separate approval. Existing spell identity/name/icon, loadout, cast-result and hazard presentation contracts remain usable within their current bounds.
 
 ## Automated evidence
 
