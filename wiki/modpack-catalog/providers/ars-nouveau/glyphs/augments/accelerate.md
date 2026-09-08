@@ -10,8 +10,16 @@
 
 Adds **+1.0** to Ars Nouveau's acceleration modifier. Provider glyphs that declare Accelerate compatible interpret that stat; Projectile uses it to increase projectile velocity.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `minecraft:powered_rail` + `minecraft:sugar` + `minecraft:clock`.
+- Source-default recipe XP: **55 XP** (Tier II).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 Ars Nouveau owns augment compatibility, acceleration semantics and effective configured cost. Black Arcana must not treat this modifier as a universal projectile-speed API.
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
