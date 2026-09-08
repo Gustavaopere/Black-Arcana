@@ -4,11 +4,38 @@
 
 `IMPLEMENTED / FINAL VALIDATION DEFERRED`
 
-The deterministic Stage 05 runtime is implemented on `main`. The remaining acceptance surface is the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`; automated CI is supporting evidence and does not convert those manual rows to PASS.
+The deterministic Stage 05 runtime is implemented on `main`. The remaining mandatory acceptance surface is the real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md`; automated CI is supporting evidence and does not convert those manual rows to PASS.
+
+This directory is also the canonical planning memory for any remaining Stage 05 UX hardening/refinement. Planned refinements are clearly separated from already-implemented runtime behavior.
+
+## Where the plans are
+
+Start here:
+
+- **Master plan:** [`00-master-plan.md`](00-master-plan.md)
+
+Subplans:
+
+- [`01-input-loadouts.md`](01-input-loadouts.md) — input lifecycle, keybinds, 16-slot loadout, eight direct quick-casts, editor, persistence and synchronization;
+- [`02-radial-wheel.md`](02-radial-wheel.md) — eight-slot pages, selection/cast separation, paging, geometry and planned icon/cooldown affordances;
+- [`03-contextual-hud.md`](03-contextual-hud.md) — contextual selected-spell, hazard/gate/result presentation plus planned cooldown/cost/channel/timer presentation rules;
+- [`04-accessibility-client-config.md`](04-accessibility-client-config.md) — client-only preferences, reduced motion/flashes/particles, rebindability, keyboard accessibility and optional controller boundary;
+- [`05-final-client-validation-handoff.md`](05-final-client-validation-handoff.md) — exact real-client closeout campaign and evidence procedure.
+
+The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented.
 
 ## Objective
 
-Deliver direct, low-clutter casting after server contracts and integrations are stable: no universal staff requirement, no permanent extra mana HUD, fast loadouts, readable authoritative failure reasons, and rebindable input.
+Deliver direct, low-clutter casting after server contracts and integrations are stable:
+
+- no universal staff requirement;
+- no permanent extra mana HUD;
+- fast loadouts;
+- concise radial selection;
+- readable authoritative failure reasons;
+- rebindable input;
+- presentation accessibility where practical;
+- no transfer of gameplay authority to the client.
 
 ## Canonical implementation
 
@@ -18,6 +45,39 @@ Deliver direct, low-clutter casting after server contracts and integrations are 
 - `BlackArcanaHudLayer` is contextual/event-driven, uses synchronized server presentation/cooldown/hazard/result state, and displays the bounded server-authored denial detail rather than inventing a client-side gate reason.
 - `BlackArcanaClientConfig` owns presentation-only preferences: HUD enable/scale/anchor, feedback duration/intensity, radial hold/toggle, particle density, reduced motion and reduced flashes. These settings do not participate in gameplay validation.
 - `BlackArcanaClient` is a physical-client entrypoint (`Dist.CLIENT`); dedicated-server runtime registration remains in the common mod entrypoint without loading client classes.
+
+## Current bounded UX facts
+
+- canonical loadout maximum: **16 slots**;
+- current radial: **8 visible slots per page**;
+- current direct quick-cast mappings: **8**, unbound by default;
+- radial default key: `R`;
+- selected-cast default key: `V`;
+- loadout-editor mapping: unbound by default;
+- radial modes: `TOGGLE` and `HOLD`;
+- feedback levels: `MINIMAL`, `STANDARD`, `VERBOSE`.
+
+These are current implementation facts, not a requirement that future versions can never change. Any change must preserve server authority, bounds and migration/rebind safety.
+
+## Planned refinement summary
+
+The master/subplans now explicitly retain the forward-looking UX targets that were obscured when PR #73 canonicalized Stage 05 around the already-implemented runtime.
+
+Planned refinements include, subject to the detailed gates in each subplan:
+
+- actually using synchronized `iconId` in loadout/radial presentation;
+- better slot ordering/awareness in the 16-slot loadout editor;
+- client-only search and supported metadata filters;
+- compact cooldown/readiness affordance from synchronized server state;
+- provider cost preview only through a bounded server-authored presentation contract;
+- channel/charge presentation only through canonical server-owned session semantics;
+- temporary ritual/domain timers only for owned/supported state;
+- keyboard-only radial operation;
+- semantic non-color-only state cues;
+- systematic reduced-motion/reduced-flash/particle consumption by future effects;
+- controller integration only if a real compatible provider enters the modlist/API surface.
+
+None of those bullet points is claimed as implemented merely because it is planned here.
 
 ## Automated evidence
 
@@ -35,10 +95,25 @@ The executable closeout plan is `plans/05-casting-ux/05-final-client-validation-
 
 It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/evidence requirements, defines PASS/FAIL/BLOCKED/Stage-09 carry handling, preserves the server-authoritative casting boundaries and specifies the synchronization/CI/merge gate required before this Stage can leave `FINAL VALIDATION DEFERRED`.
 
-Creating or merging that handoff document does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
+Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
+
+## Implementation rule for planned refinements
+
+A planned refinement does not automatically reopen or block Stage 05 closeout.
+
+Before implementing one, classify it as either:
+
+- `REQUIRED TO FIX A VALIDATION FAIL` — blocks the affected acceptance row until fixed;
+- `APPROVED STAGE 05 HARDENING` — may merge without changing authority, then affected rows are retested;
+- `OPTIONAL FOLLOW-UP` — does not block Stage 05 validation unless explicitly promoted to a requirement;
+- `CARRIED TO STAGE 09` — future presentation/compatibility item whose real effect surface does not yet exist.
+
+This prevents an endless UX wish list from making completion impossible while still preserving a precise roadmap.
 
 ## Exit criteria
 
 The deterministic exit criterion is satisfied: a player can equip/select/cast Black Arcana spells through a concise workflow while spell availability, progression, cooldown, resource cost and denial remain server-authoritative.
 
-Real-client keyboard/controller variants, GUI focus, death/relog behavior, common resolutions/GUI scales and presentation accessibility remain `FINAL VALIDATION DEFERRED` until directly observed through the Stage 05 manual runbook. No manual PASS is inferred from CI.
+Stage 05 reaches `VALIDATED / COMPLETE` only after all applicable manual rows are directly observed on an exact build and any legitimate future-only rows are explicitly carried forward rather than falsely marked PASS.
+
+No manual PASS is inferred from CI.
