@@ -21,10 +21,18 @@ Its default mana cost is **5**; the effective cost remains provider-configurable
 
 The exact source exposes **no compatible augments** for this Form.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `minecraft:iron_boots` + `#minecraft:wooden_pressure_plates`.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned: using the crafted Glyph server-side records it in Ars player data and consumes the Glyph in survival. Runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Authority / Black Arcana consequence
 
 Ars Nouveau owns this under-caster target-selection behavior. Black Arcana must not reuse its nearby-entity selection as an implicit targeting contract: Black Arcana target geometry remains server-validated and bounded. The provider capability also occupies the generic "resolve magic directly beneath the caster" niche for deduplication analysis.
 
 ## Validation state
 
-`SOURCE-PINNED 5.13.1 / SEMANTICS AUDITED / PACK RUNTIME QA PENDING`
+`SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / PACK RUNTIME QA PENDING`

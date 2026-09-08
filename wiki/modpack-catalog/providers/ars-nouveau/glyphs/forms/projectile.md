@@ -27,12 +27,20 @@ The exact source permits:
 
 `MethodProjectile` explicitly marks itself as a default starter glyph.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `minecraft:fletching_table` + `minecraft:arrow`.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **yes**. When runtime config preserves this default, the player is treated as already knowing Projectile without consuming a Glyph item.
+- The generated recipe still exists; the Ars Glyph-use path rejects learning while the part is currently considered a starter.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Authority / Black Arcana consequence
 
 Ars Nouveau owns this projectile cast method, projectile entity lifecycle, provider mana/config values and glyph compatibility. Black Arcana must not replace it with a second Ars projectile pipeline. A Black Arcana projectile spell may exist only as Black Arcana-owned content entering the canonical Black Arcana cast pipeline, with its own bounded targeting/effect contracts and a material forbidden-domain distinction.
 
 ## Validation state
 
-`SOURCE-PINNED 5.13.1 / SEMANTICS AUDITED / PACK RUNTIME QA PENDING`
+`SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / PACK RUNTIME QA PENDING`
 
 This page records source facts, not proof that the installed 612-mod pack preserves every default config value.
