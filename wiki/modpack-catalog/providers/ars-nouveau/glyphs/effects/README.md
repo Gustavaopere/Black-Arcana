@@ -1,10 +1,10 @@
 # Ars Nouveau 5.13.1 — Effects
 
-Status: `67/67 SOURCE-PINNED / INDIVIDUAL PAGES COMPLETE`
+Status: `67/67 SOURCE-PINNED / INDIVIDUAL PAGES COMPLETE / ACQUISITION 67/67 COMPLETE / RUNTIME+CONFIG QA PENDING`
 
 Exact source pin: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`.
 
-The production 5.13.1 `APIRegistry` registers **67 core Effects**. Every Effect has an individual page in this directory.
+The production 5.13.1 `APIRegistry` registers **67 core Effects**. Every Effect has an individual page in this directory, and every page now carries its source-generated acquisition recipe/default recipe XP/starter-learning boundary from the same 5.13.1 pin.
 
 ## Inventory
 
@@ -84,6 +84,8 @@ The production 5.13.1 `APIRegistry` registers **67 core Effects**. Every Effect 
 - Independent Black Arcana destructive effects still route through `WorldEffectPolicy`; provider-owned world mutation is observed, not replayed.
 - Visual effects never become gameplay authority.
 
-## Remaining Ars Nouveau provider work
+## Provider checkpoint
 
-Closing 67/67 Effects does not close the provider. Phase 2M still needs granular coverage for 24 rituals, 6 familiars, 20 perks and provider-wide systems/infrastructure/acquisition/runtime boundaries before Ars Nouveau can be considered source-catalog complete.
+The Effect source catalog is closed at **67/67 semantics + 67/67 acquisition** for the exact 5.13.1 source pin. Provider-wide completion is tracked by the Phase 2P checkpoint and separately includes 5/5 Forms, 13/13 Augments, 24/24 Rituals, 6/6 Familiars, 20/20 Perks/Threads and the provider systems inventory.
+
+Remaining work is validation, not missing Effect inventory: effective runtime/config values, claim/protection behavior where the inspected execution path does not prove it, client presentation/accessibility and full 612-entry modpack interoperability remain explicit QA gates.

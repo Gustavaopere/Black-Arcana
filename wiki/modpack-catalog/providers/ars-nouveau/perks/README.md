@@ -1,10 +1,12 @@
 # Ars Nouveau — Perks / Threads
 
-State: `20/20 SOURCE-PINNED / INDIVIDUAL PAGES COMPLETE / SLOT-PROVIDER MATRIX AUDIT IN PROGRESS / RUNTIME QA PENDING`
+State: `20/20 SOURCE-PINNED / INDIVIDUAL PAGES COMPLETE / 12/12 ARMOR SLOT PROVIDERS SOURCE-PINNED / RUNTIME QA PENDING`
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`.
 
 A registry de produção 5.13.1 registra exatamente 20 perks. O catálogo segue exclusivamente essa registry; classes auxiliares presentes na pasta de source não viram perks ativos por associação nominal.
+
+A matriz provider-native de slots de armadura também está fechada em [`../systems/perk-slot-providers.md`](../systems/perk-slot-providers.md): **12/12 providers** auditados para os quatro slots de armadura nos layouts Tier I, Tier II e Tier III.
 
 ## Contrato provider-native
 
