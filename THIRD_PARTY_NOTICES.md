@@ -32,7 +32,7 @@ The following relationships are required to build/test/run the project but do no
 | NeoForge | `21.1.248` | `PLATFORM_API_RUNTIME` | final Stage 09 audit must record the exact release/license/notices that apply to the release relationship |
 | ModDevGradle | `2.0.144` | `BUILD_TOOL` | final Stage 09 audit must record exact release/license provenance; build use is not source derivation |
 | Gradle | `9.2.1` bootstrap | `BUILD_TOOL` | final Stage 09 audit must record exact distribution/license provenance where relevant |
-| JUnit | `5.11.4` | `TEST_TOOL`; exact release/license provenance remains a final hardening audit item |
+| JUnit | `5.11.4` | `TEST_TOOL` | test-only relationship; final audit records exact license provenance where relevant |
 
 Until that final reconciliation is recorded, these entries may support normal platform/build/test use but are `REVIEW_REQUIRED` for any stronger redistribution or source-derivation claim.
 
