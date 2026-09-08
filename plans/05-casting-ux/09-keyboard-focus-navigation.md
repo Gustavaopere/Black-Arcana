@@ -160,15 +160,13 @@ A keyboard navigation action makes keyboard focus the primary focus cue.
 
 ### 6.1 Initial focus
 
-When the radial opens through keyboard input, keyboard focus should start predictably.
-
-Preferred order:
+When the radial opens through keyboard input, keyboard focus starts predictably:
 
 1. selected slot if that slot is visible on the opening page;
 2. otherwise the first visible slot on the current page;
 3. no focus only when no visible slot exists.
 
-The current radial already opens on the page derived from the selected slot, so the usual path should focus the selected slot.
+The current radial already opens on the page derived from the selected slot, so the usual path focuses the selected slot.
 
 ### 6.2 Focus identity
 
@@ -181,38 +179,54 @@ This matters because:
 - focus must survive deterministic page movement;
 - UI code must not confuse `visibleIndex` with the canonical loadout slot.
 
-### 6.3 Focus navigation without breaking current paging
+### 6.3 Canonical radial traversal contract
 
 The current runtime already uses:
 
 - `Left` / `Page Up` for previous radial page;
 - `Right` / `Page Down` for next radial page.
 
-The first keyboard-navigation implementation should **not silently repurpose those keys** without a real-client migration/usability decision.
+The first keyboard-navigation implementation must **not silently repurpose those keys**.
 
-Preferred first implementation:
+Canonical first-implementation controls:
 
-- `Tab` → focus next visible wedge;
-- `Shift+Tab` → focus previous visible wedge;
+- `Tab` → focus next visible wedge on the **current page**;
+- `Shift+Tab` → focus previous visible wedge on the **current page**;
 - `Enter` or `Space` → select the focused wedge and close the radial;
 - `Page Up` → previous page;
 - `Page Down` → next page;
-- preserve current `Left`/`Right` page behavior unless a separately reviewed usability change replaces it;
+- `Left` → previous page, preserving current behavior;
+- `Right` → next page, preserving current behavior;
 - `Escape` → close without changing selection.
 
-This gives keyboard-only operation while preserving existing page controls.
+Traversal boundary is now frozen:
 
-The exact use of Enter/Space must be validated against vanilla `Screen` behavior before implementation; do not invent raw key handling that conflicts with superclass accessibility semantics.
+- `Tab` **wraps within the current visible page**: advancing from the last visible wedge moves focus to the first visible wedge on that same page;
+- `Shift+Tab` **wraps within the current visible page**: moving backward from the first visible wedge moves focus to the last visible wedge on that same page;
+- Tab traversal never changes radial page;
+- page changes occur only through the existing page controls listed above;
+- a one-entry page keeps focus on that single entry under Tab or Shift+Tab;
+- an empty visible set has no focus and consumes no activation.
+
+This boundary is canonical for tests and implementation. It must not be deferred to GREEN implementation choice.
+
+The exact use of Enter/Space must still be validated against vanilla `Screen` behavior before implementation; do not invent raw key handling that conflicts with superclass accessibility semantics.
 
 ### 6.4 Page transition focus
 
 When moving between radial pages:
 
-- if the current selected slot belongs to the destination page, focus may land on that selected slot;
-- otherwise preserve a deterministic relative wedge position when possible;
-- otherwise focus the first visible destination slot;
-- never leave focus pointing to an off-page canonical slot;
-- empty pages are impossible after canonical clamping and must fail safely if state becomes stale.
+1. if the current selected slot belongs to the destination page, focus that selected slot;
+2. otherwise preserve the prior visible wedge position when that position exists on the destination page;
+3. otherwise clamp to the last visible wedge on the destination page;
+4. if no visible slot exists, clear focus.
+
+Additional rules:
+
+- page transition never activates a wedge;
+- page transition never casts;
+- focus never points to an off-page canonical slot;
+- empty pages are impossible after canonical page clamping and must fail safely if stale state violates that assumption.
 
 ### 6.5 Selection
 
@@ -289,12 +303,13 @@ This is presentation only; 05.07 still governs which data is legitimate to rende
 
 ### 8.1 Initial focus
 
-When the loadout editor opens, keyboard focus should start on:
+When the loadout editor opens, keyboard focus starts on:
 
 1. the first visible entry that is already part of the synchronized loadout when practical; or
-2. the first visible entry.
+2. the first visible entry;
+3. no focus when the available list is empty.
 
-A future search/filter operation may need a separate focus-reset rule, but search is not currently implemented.
+A future search/filter operation needs a separate focus-reset rule, but search is not currently implemented.
 
 ### 8.2 Row focus
 
@@ -309,9 +324,9 @@ Focus must remain bounded against:
 - empty presentation sets;
 - future search/filter subsets.
 
-### 8.3 Row navigation
+### 8.3 Canonical row navigation contract
 
-Preferred first implementation while the loadout screen owns focus:
+First-implementation controls while the loadout screen owns focus:
 
 - `Up` → previous visible/available row;
 - `Down` → next visible/available row;
@@ -322,17 +337,25 @@ Preferred first implementation while the loadout screen owns focus:
 - `Backspace` / `Delete` → clear the local draft, preserving existing behavior;
 - `Escape` → close without applying new draft changes.
 
-This avoids changing the current Enter-to-apply contract merely to gain row activation.
+Row-boundary behavior is also frozen:
+
+- `Up` at the first row of the current page **clamps** to that first row;
+- `Down` at the last row of the current page **clamps** to that last row;
+- Up/Down do not wrap and do not change pages;
+- page traversal remains explicit through Left/Right/Page Up/Page Down;
+- an empty list has no focused row and Space performs no toggle.
+
+This avoids changing the current Enter-to-apply contract merely to gain row activation and makes RED/GREEN traversal expectations deterministic.
 
 ### 8.4 Page movement
 
 After moving pages:
 
-- focus must move to a valid row on the new page;
-- preserve relative row position when possible;
-- otherwise clamp to the last available row on that page;
-- an empty presentation set produces no row focus;
-- page changes themselves do not toggle draft membership.
+1. preserve the prior relative row position when that row exists on the destination page;
+2. otherwise clamp to the last available row on that page;
+3. an empty presentation set produces no row focus.
+
+Page changes themselves do not toggle draft membership or apply the draft.
 
 ### 8.5 Toggle behavior
 
@@ -348,7 +371,7 @@ Backspace/Delete currently clears the draft.
 
 Because draft changes remain local until apply, this is not a direct server mutation.
 
-Nevertheless keyboard-focus implementation must ensure:
+Keyboard-focus implementation must ensure:
 
 - Delete on a focused row does **not** become “remove only this row” accidentally;
 - existing clear-all semantics are preserved unless a separately reviewed UX change intentionally changes them;
@@ -377,7 +400,7 @@ The visual design must follow 05.08 so focused, hovered and chosen states cannot
 
 ### Open
 
-Initialize bounded focus from current synchronized client snapshots.
+Initialize bounded focus from current synchronized client snapshots using Sections 6.1 and 8.1.
 
 ### Resize / GUI scale change
 
@@ -579,8 +602,12 @@ Add failing tests for:
 - empty loadout creates no focus;
 - Tab advances through current-page canonical slots;
 - Shift+Tab moves backward;
-- traversal wraps or clamps according to the final implementation decision, documented before GREEN;
+- Tab from the last visible wedge wraps to the first visible wedge on the same page;
+- Shift+Tab from the first visible wedge wraps to the last visible wedge on the same page;
+- Tab/Shift+Tab never change page;
+- a single-entry page remains focused on that entry under either traversal direction;
 - Page Up/Page Down move to valid destination-page focus;
+- Left/Right preserve current page-change behavior;
 - focus never points outside current visible slots;
 - activate focused wedge invokes selection semantics only;
 - close without activate preserves prior selected slot;
@@ -594,6 +621,9 @@ Add failing tests for:
 
 - focus initializes to a valid row;
 - Up/Down stay bounded;
+- Up at first row clamps to first row;
+- Down at last row clamps to last row;
+- Up/Down never change page;
 - page movement preserves/clamps relative focus;
 - Space toggles only focused draft entry;
 - Enter still means apply rather than row toggle;
@@ -622,6 +652,8 @@ After implementation, directly test:
 
 - mouse-only selection still works;
 - keyboard-only focus traversal;
+- Tab wrap from last→first on each page;
+- Shift+Tab wrap from first→last on each page;
 - keyboard-only selection;
 - `TOGGLE` mode;
 - `HOLD` mode;
@@ -636,6 +668,7 @@ After implementation, directly test:
 ### Loadout
 
 - keyboard-only row traversal;
+- Up/Down clamping at page boundaries;
 - keyboard-only draft toggle;
 - keyboard page movement;
 - Enter apply;
@@ -675,6 +708,9 @@ A 05.09 implementation must not merge with:
 - focus movement changing server loadout;
 - keyboard activation using a second cast path;
 - radial close implicitly selecting a different spell;
+- Tab/Shift+Tab changing radial pages;
+- radial traversal failing the frozen same-page wrap contract;
+- loadout Up/Down wrapping or changing pages instead of clamping;
 - page movement producing invalid/off-page focus;
 - Enter unexpectedly changing from apply semantics without an explicit reviewed UX migration;
 - screen navigation leaking through to world casting;
@@ -754,6 +790,8 @@ This plan does not authorize:
 
 - current mouse/keyboard behavior is recorded accurately;
 - radial keyboard focus has deterministic initialization/navigation/activation semantics;
+- radial Tab/Shift+Tab traversal is frozen as same-page wrap behavior;
+- loadout Up/Down boundary behavior is frozen as same-page clamp behavior;
 - loadout keyboard focus has deterministic row/page/toggle/apply semantics;
 - existing Left/Right/PageUp/PageDown and Enter/Delete behavior is preserved unless separately reviewed;
 - focus, hover, selection and draft membership remain semantically distinct under 05.08;
