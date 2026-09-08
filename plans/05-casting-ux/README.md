@@ -20,9 +20,10 @@ Subplans:
 - [`02-radial-wheel.md`](02-radial-wheel.md) — eight-slot pages, selection/cast separation, paging, geometry and planned icon/cooldown affordances;
 - [`03-contextual-hud.md`](03-contextual-hud.md) — contextual selected-spell, hazard/gate/result presentation plus planned cooldown/cost/channel/timer presentation rules;
 - [`04-accessibility-client-config.md`](04-accessibility-client-config.md) — client-only preferences, reduced motion/flashes/particles, rebindability, keyboard accessibility and optional controller boundary;
-- [`05-final-client-validation-handoff.md`](05-final-client-validation-handoff.md) — exact real-client closeout campaign and evidence procedure.
+- [`05-final-client-validation-handoff.md`](05-final-client-validation-handoff.md) — exact real-client closeout campaign and evidence procedure;
+- [`06-modpack-coexistence.md`](06-modpack-coexistence.md) — coexistence with Spell Actionbar, Iron's, Epic Fight/EFIS, Controlling and future optional input providers without duplicating authority.
 
-The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented.
+The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented; the latest physical modlist prevails for installed coexistence surfaces and versions.
 
 ## Objective
 
@@ -35,6 +36,7 @@ Deliver direct, low-clutter casting after server contracts and integrations are 
 - readable authoritative failure reasons;
 - rebindable input;
 - presentation accessibility where practical;
+- safe coexistence with the actual modpack's other casting/input/combat UIs;
 - no transfer of gameplay authority to the client.
 
 ## Canonical implementation
@@ -59,9 +61,22 @@ Deliver direct, low-clutter casting after server contracts and integrations are 
 
 These are current implementation facts, not a requirement that future versions can never change. Any change must preserve server authority, bounds and migration/rebind safety.
 
+## Current modpack coexistence facts
+
+The current physical modlist confirms relevant adjacent surfaces:
+
+- Iron's Spells 'n Spellbooks `1.21.1-3.16.3`;
+- Spell Actionbar `1.1.4`;
+- Epic Fight `21.17.3.1`;
+- Epic Fight & Iron's Spellbook animation compat (`efiscompat`) `3.1.0`;
+- Controlling `19.0.5`;
+- no confirmed top-level general controller framework.
+
+Presence does not prove an integration API. The default Stage 05 strategy is **coexistence without forced unification**. See `06-modpack-coexistence.md` for exact deduplication, keybinding, HUD-overlap, Epic Fight and optional-integration rules.
+
 ## Planned refinement summary
 
-The master/subplans now explicitly retain the forward-looking UX targets that were obscured when PR #73 canonicalized Stage 05 around the already-implemented runtime.
+The master/subplans explicitly retain the forward-looking UX targets that were obscured when PR #73 canonicalized Stage 05 around the already-implemented runtime.
 
 Planned refinements include, subject to the detailed gates in each subplan:
 
@@ -75,7 +90,8 @@ Planned refinements include, subject to the detailed gates in each subplan:
 - keyboard-only radial operation;
 - semantic non-color-only state cues;
 - systematic reduced-motion/reduced-flash/particle consumption by future effects;
-- controller integration only if a real compatible provider enters the modlist/API surface.
+- controller integration only if a real compatible provider enters the modlist/API surface;
+- direct current-pack coexistence testing with external casting/actionbar/combat surfaces before adding compatibility code.
 
 None of those bullet points is claimed as implemented merely because it is planned here.
 
@@ -94,6 +110,8 @@ Follow-up hardening is canonical:
 The executable closeout plan is `plans/05-casting-ux/05-final-client-validation-handoff.md`.
 
 It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/evidence requirements, defines PASS/FAIL/BLOCKED/Stage-09 carry handling, preserves the server-authoritative casting boundaries and specifies the synchronization/CI/merge gate required before this Stage can leave `FINAL VALIDATION DEFERRED`.
+
+`06-modpack-coexistence.md` adds the real-pack coexistence planning layer. Its scenarios become blocking only when they reveal a required input/readability/authority failure; cosmetic unification or unsupported optional bridges do not automatically block Stage 05.
 
 Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
 

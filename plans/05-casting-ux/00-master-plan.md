@@ -10,13 +10,20 @@ It does **not** claim that every UX enhancement described below already exists. 
 
 Baseline used to author this plan: `main@cad9b133fc06048f718c6a408a7e9aca2c360364`.
 
+Coexistence reconciliation baseline: `main@acbea2c897805e0d51476360c27adfd20fabfc64`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
 - NeoForge `21.1.248` from the current physical modlist;
 - Java `21`;
 - `Controlling 19.0.5` is present and may improve vanilla keybinding discovery, but Black Arcana must not require it for core input;
+- `Spell Actionbar 1.1.4` is present as an external casting UI surface;
+- `Iron's Spells 'n Spellbooks 1.21.1-3.16.3` is present as an external spell/resource provider;
+- `Epic Fight 21.17.3.1` and `efiscompat 3.1.0` are present as combat/animation environment and Iron's-specific compatibility respectively;
 - no top-level general controller framework such as Controlify/Controllable/MidnightControls was found in the current physical modlist, so gamepad-specific support is not a current guaranteed provider contract.
+
+Presence/version does not establish an integration API. Direct bridges require exact-version API/source verification.
 
 ## 1. Purpose
 
@@ -123,7 +130,8 @@ Stage 05 is divided into the following canonical planning documents:
 2. `02-radial-wheel.md` — radial interaction, paging, visual affordances, selection/cast separation and compact layouts;
 3. `03-contextual-hud.md` — selected-spell, cooldown/gate/hazard/result presentation and anti-clutter rules;
 4. `04-accessibility-client-config.md` — rebindability, presentation preferences, motion/flash/particle policy and optional controller boundary;
-5. `05-final-client-validation-handoff.md` — exact real-client closeout campaign.
+5. `05-final-client-validation-handoff.md` — exact real-client closeout campaign;
+6. `06-modpack-coexistence.md` — coexistence with installed casting/actionbar/combat/keybinding surfaces and exact-version integration gates.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -389,3 +397,21 @@ This plan does not authorize:
 - silent key remapping of other mods;
 - copying third-party UI assets/code without compatible permission;
 - reopening already-frozen server runtime contracts without an explicit architectural decision.
+
+## 15. Current modpack coexistence rule
+
+The installed pack already contains casting and combat UI surfaces that can overlap Stage 05 presentation.
+
+`06-modpack-coexistence.md` is the canonical plan for this layer.
+
+The default strategy is:
+
+- **coexist, do not duplicate**;
+- Black Arcana remains transient/contextual while installed provider action bars retain their own state;
+- no Spell Actionbar integration is assumed from presence alone;
+- EFIS compatibility for Iron's does not imply a Black Arcana↔Epic Fight bridge;
+- Controlling may improve key discovery but is not required;
+- no controller API is assumed while no controller provider is physically present;
+- direct interoperability code is added only after a real conflict/requirement and exact-version API verification.
+
+Real-pack coexistence findings may become Stage 05 blockers only when they break required input/readability/authority; cosmetic unification remains an optional follow-up.
