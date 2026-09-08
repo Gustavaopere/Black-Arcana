@@ -242,7 +242,7 @@ public final class MinecraftNoeticRuntime {
     ) {
         ServerPlayer viewer = server.getPlayerList().getPlayer(viewerId);
         if (viewer == null) return OptionalInt.empty();
-        Entity target = viewer.level().getEntity(targetId);
+        Entity target = viewer.serverLevel().getEntity(targetId);
         if (!(target instanceof LivingEntity living) || !living.isAlive()) {
             return OptionalInt.empty();
         }
