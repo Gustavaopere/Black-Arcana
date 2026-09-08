@@ -1,9 +1,10 @@
 # Phase 2U — Ars Elemental 0.7.10.1 checkpoint
 
-Status: `SOURCE CATALOG COMPLETE / INSTALLED CONFIG + RUNTIME QA PENDING`
+Status: `SOURCE CATALOG COMPLETE / FINAL MAIN RECONCILED / INSTALLED CONFIG + RUNTIME QA DEFERRED`
 
 Execution branch: `docs/magic-catalog-phase2u-ars-elemental`
 Base main at phase start: `019eb1723b7a70b9fd888ce44d1eb9b85dfa7b13`
+Final pre-merge reconciliation: `main@db7f4858b3c5eda3bba957db7de194228b6d4df6` merged into the execution branch through synchronization PR #113; branch reconciliation checkpoint `09ec2220978850b50f070aee9414e2f1ae434033`.
 Provider source pin: `Alexthw46/Ars-Elemental@fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`
 Ars Nouveau 5.13.1 API pin: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 Physical JAR: `ars_elemental-1.21.1-0.7.10.1.jar`
@@ -47,7 +48,7 @@ No divergence is resolved by inference. Runtime/license questions remain fail-cl
 - Conjure Island: Archwood Forest inherits radius 7, +1 radius per consumed Source Gem, `getSourceCost() = 50`, and a Source request after every five successful block placements.
 - Forestation — Archwood inherits radius 7, +1 radius per consumed Source Gem and `getSourceCost() = 0` from `AbstractRitual`.
 
-## Remaining Phase 2U validation
+## Deferred installed-runtime/config validation
 
 - compare real generated/installed Ars Elemental config and datapack values against the source defaults;
 - validate the 39 glyph registrations and conditional Nullify acquisition in the installed runtime;
@@ -56,7 +57,16 @@ No divergence is resolved by inference. Runtime/license questions remain fail-cl
 - validate armor perk-provider layout/modifier stacking;
 - validate worldgen, Flashing-biome lightning and Archwood rituals in dedicated-server/full-pack runtime;
 - validate network payload registration/server Curio Bag revalidation and client behavior;
-- resolve license metadata discrepancy before any future source copying/derivative implementation/asset reuse;
-- final main synchronization, diff review, fresh CI and merge.
+- resolve license metadata discrepancy before any future source copying/derivative implementation/asset reuse.
 
-These remaining checks are runtime/config/provenance gates, not missing source-catalog entries. This checkpoint is documentation/catalog state only and does not promote a Black Arcana runtime Stage.
+These are runtime/config/provenance gates, not missing source-catalog entries, and they are not reported as PASS by Phase 2U.
+
+## Final merge gate
+
+- current `main` reconciliation: complete through PR #113 against `main@db7f4858b3c5eda3bba957db7de194228b6d4df6`;
+- final catalog-only diff review: complete before this checkpoint update; no Java/runtime/Gradle/workflow path is part of Phase 2U;
+- exact final execution HEAD CI: must be GREEN after this checkpoint commit;
+- review threads: must remain clear;
+- merge: only after the exact final HEAD satisfies the gates above.
+
+This checkpoint is documentation/catalog state only and does not promote a Black Arcana runtime Stage.
