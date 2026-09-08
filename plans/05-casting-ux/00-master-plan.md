@@ -22,6 +22,8 @@ Loadout-editor planning baseline: `main@db7f4858b3c5eda3bba957db7de194228b6d4df6
 
 Feedback-orchestration reconciliation baseline: `main@310c280419b49e5a57077e3460d956ac3dcd27e1`.
 
+Iconography/resource-resolution planning baseline: `main@48cb9a430e0526899e8ae1588283b31de71cadfb`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -145,6 +147,20 @@ Current Stage 05 screens already have partial keyboard support, but not complete
 
 `09-keyboard-focus-navigation.md` is the planning authority for completing keyboard-only focus/navigation without changing those existing semantics silently or creating new gameplay authority.
 
+### 3.8 Current spell-icon presentation behavior
+
+`SpellPresentationPayload.Entry` currently synchronizes:
+
+- `spellId`;
+- `translationKey`;
+- `iconId`.
+
+The current payload requires `iconId` to be non-blank and within `ArcanaProtocol.MAX_ICON_ID_LENGTH`, but the payload itself does not parse the string as a Minecraft resource identifier or prove that the referenced client resource exists.
+
+Current `BlackArcanaRadialScreen`, `BlackArcanaLoadoutScreen` and `BlackArcanaHudLayer` consume presentation names but do not call `entry.iconId()` or render spell textures. At baseline `48cb9a43...`, `src/main/resources/assets/black_arcana/` contains only `lang/` and no project spell-icon texture tree.
+
+`12-iconography-resource-resolution.md` is the planning authority for introducing safe client-side icon resolution/fallback later without changing spell identity or gameplay authority.
+
 ## 4. Plan package
 
 Stage 05 is divided into the following canonical planning documents:
@@ -159,7 +175,8 @@ Stage 05 is divided into the following canonical planning documents:
 8. `08-visual-language-state-semantics.md` — cross-surface meaning for selection/focus, forecast, authoritative result, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
 9. `09-keyboard-focus-navigation.md` — deterministic keyboard-only focus/navigation for radial and loadout screens while preserving current mouse behavior, server authority and global keybinding boundaries;
 10. `10-loadout-editor-information-architecture.md` — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation limits and the metadata/protocol gates for richer editor feedback;
-11. `11-contextual-feedback-orchestration.md` — bounded arbitration, priority, supersession, correlation and timing across current selection context, advisory forecast and authoritative cast-result channels.
+11. `11-contextual-feedback-orchestration.md` — bounded arbitration, priority, supersession, correlation and timing across current selection context, advisory forecast and authoritative cast-result channels;
+12. `12-iconography-resource-resolution.md` — synchronized spell-icon resource parsing/resolution, fallback, reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -203,6 +220,8 @@ After intent, the client may present only synchronized or server-authored inform
 The client must never infer a successful cast solely from local preflight.
 
 Selection context, advisory forecast and authoritative cast result are independent channels under `11-contextual-feedback-orchestration.md`. A result may render without spell attribution when the client cannot safely correlate its `castId` to the submitted spell/slot; it must never be labeled with the current selection by inference.
+
+Spell icon art is supplemental presentation only. A synchronized `iconId` may be resolved under 05.12, but failed art resolution never changes canonical spell identity, selection, admission or cast result.
 
 ## 6. UX principles
 
@@ -255,14 +274,20 @@ They may be implemented only through the subplans and only if they preserve the 
 
 ### 7.1 Use the synchronized spell icon
 
-`SpellPresentationPayload.Entry` already carries `iconId`, but current loadout/radial rendering is primarily text/card based.
+`SpellPresentationPayload.Entry` already carries `iconId`, but current loadout/radial/HUD rendering does not consume it.
+
+`12-iconography-resource-resolution.md` is the canonical resource lifecycle/fallback plan for this refinement.
 
 Plan:
 
-- render server-authorized spell icons in loadout and radial surfaces;
-- keep a text/name fallback when an icon cannot be resolved;
+- parse/resolve only the synchronized bounded `iconId` through supported client resource semantics;
+- render server-authored spell icon identity in loadout/radial surfaces where the resource actually resolves;
+- keep a text/name fallback when an icon cannot be parsed or resolved;
+- never infer a replacement texture path from the spell ID or provider namespace;
 - never let missing client artwork invalidate spell identity or casting;
-- keep resource identifiers bounded and presentation-only.
+- invalidate positive/negative resolution assumptions on resource reload;
+- keep provider artwork clean-room/provenance boundaries explicit;
+- keep HUD icon use optional when it would compete with denial/danger readability or 05.11 result correlation.
 
 ### 7.2 Improve loadout organization
 
@@ -276,7 +301,7 @@ Plan:
 - make removal compaction and trailing-slot addition semantics explicit;
 - add bounded client-side search over synchronized display name/canonical id;
 - keep provider/domain/school filters unavailable until real bounded server-authored metadata exists;
-- use synchronized `iconId` with text fallback;
+- use synchronized `iconId` with 05.12-safe text fallback;
 - define local dirty/reset/clear/cancel state without claiming server acceptance;
 - preserve close-after-apply unless a robust explicit acknowledgement contract is deliberately added;
 - never infer acceptance/rejection reason from snapshot equality.
@@ -287,7 +312,7 @@ The original Stage 05 design target was a compact 6–10-slot ring; the implemen
 
 Planned improvements may add:
 
-- icon + short name on normal viewports;
+- safely resolved icon + short name on normal viewports under 05.12;
 - selected-state emphasis;
 - cooldown/readiness affordance only after the selected spell can be mapped to its canonical server-authored cooldown group as required by `07-presentation-data-contracts.md`;
 - static danger affordance where available;
@@ -311,6 +336,7 @@ Future additions must satisfy these rules:
 - Corruption/Strain values remain intentionally unsynchronized until separately approved;
 - denial: display the server-authored bounded reason;
 - result identity: do not attribute a received result to the current selected spell without safe correlation;
+- optional selected-spell icon: obey 05.12 and never let current-selection art imply a result association forbidden by 05.11;
 - no permanent resource UI by default.
 
 ### 7.5 Accessibility completion
@@ -403,6 +429,7 @@ Expected defaults:
 - cast result/denial: server-authored event result identified by `castId`;
 - optional pending cast-result correlation: bounded client-local presentation context keyed by emitted `castId`, never gameplay authority;
 - hazard/gate forecast: bounded request/response, stale-response protected and scoped to spell/request/preflight;
+- spell icon identity: bounded synchronized `iconId`; actual resource syntax/existence remains client presentation resolution under 05.12;
 - cost/charge/channel/timer presentation: unavailable until the corresponding bounded server-authored contract exists;
 - Corruption/Strain current values: intentionally absent until separately approved;
 - client config: local presentation state only.
@@ -425,6 +452,7 @@ Stage 05 is not allowed to become a client or server tick-cost sink.
 - HUD rendering is contextual and returns early while inactive;
 - forecast refresh must remain bounded/rate-limited and stale-response protected;
 - any future pending-result correlation/dedup cache must be bounded by count and age and cleared on session reset;
+- icon resolution must not perform per-frame filesystem/JAR scans, remote downloads or unbounded cache growth, and any positive/negative cache must respect resource reload;
 - no UI feature may trigger global server scans;
 - icon lookup and text layout should be cached or bounded where profiling proves necessary.
 
@@ -435,7 +463,7 @@ The UX must degrade safely.
 Examples:
 
 - missing presentation entry → canonical ID/name fallback, no gameplay denial invented;
-- missing icon → text fallback;
+- malformed/unresolvable `iconId` → 05.12 text/presentation fallback, never an invented path, blocked state or screen-breaking exception;
 - stale selected slot → reconcile to current synchronized loadout;
 - invalid/empty screen focus → clear or clamp focus to a valid visible entry; never activate an off-page/stale item;
 - rejected loadout update → server state wins, but do not invent the rejection reason when only a canonical snapshot is available;
@@ -463,15 +491,16 @@ When a planned refinement is approved for implementation:
 7. for keyboard/focus changes, preserve current screen-key contracts and use `09-keyboard-focus-navigation.md` to define focus lifecycle/activation before editing input handling;
 8. for loadout-editor changes, preserve dense ordered-list semantics and use `10-loadout-editor-information-architecture.md` before editing draft/order/search/apply behavior;
 9. for contextual-feedback changes, preserve independent selection/advisory/result channels and use `11-contextual-feedback-orchestration.md` before editing result correlation, timing, priority or dedup behavior;
-10. add deterministic RED tests for pure/state behavior where applicable;
-11. implement the minimum GREEN change;
-12. add/adjust GameTests only where world/network integration requires them;
-13. run full Black Arcana CI;
-14. execute the specific real-client rows affected by visual/input behavior;
-15. fetch `origin/main` again and reconcile;
-16. rerun CI on the reconciled HEAD;
-17. merge only after exact-head gates are green;
-18. record final main SHA and any still-deferred manual rows.
+10. for spell-icon/resource changes, use `12-iconography-resource-resolution.md` before adding resource lookup, cache/reload behavior or bundled icon assets;
+11. add deterministic RED tests for pure/state behavior where applicable;
+12. implement the minimum GREEN change;
+13. add/adjust GameTests only where world/network integration requires them;
+14. run full Black Arcana CI;
+15. execute the specific real-client rows affected by visual/input behavior;
+16. fetch `origin/main` again and reconcile;
+17. rerun CI on the reconciled HEAD;
+18. merge only after exact-head gates are green;
+19. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -498,9 +527,10 @@ This plan does not authorize:
 - an unbounded cast-result/history queue or notification feed;
 - a duplicate Iron's/Ars spell execution engine;
 - unbounded UI/network updates;
+- runtime downloading or arbitrary-filesystem loading of spell art;
 - forced gamepad dependencies;
 - silent key remapping of other mods;
-- copying third-party UI assets/code without compatible permission;
+- copying third-party UI/assets/code without compatible permission and provenance;
 - reopening already-frozen server runtime contracts without an explicit architectural decision.
 
 ## 15. Current modpack coexistence rule
@@ -594,7 +624,7 @@ Current planning rule:
 - adding appends to trailing unused capacity and removing compacts later entries unless a future canonical server representation changes;
 - search may operate locally on synchronized display-name/canonical-id data without changing draft order or server availability;
 - provider/domain/school filtering remains unavailable until those fields exist as bounded server-authored presentation metadata;
-- synchronized `iconId` may be used with safe text fallback; missing art is presentation fallback, not gameplay unavailability;
+- synchronized `iconId` may be used only through the 05.12 safe resolution/fallback lifecycle; missing art is presentation fallback, not gameplay unavailability;
 - Clear, Reset and Cancel are distinct local draft operations until Apply;
 - the current loadout reply is only a canonical snapshot and contains no request id, accepted/rejected flag or reason;
 - snapshot equality must never be treated as proof of acceptance;
@@ -624,3 +654,26 @@ Current planning rule:
 - no new protocol field is required merely because this plan exists; a server-authored spell/slot result extension requires a separate reviewed contract if later product requirements demand it.
 
 05.11 is not automatically a Stage 05 completion blocker. Correlation/orchestration hardening becomes mandatory only when a direct validation failure or an explicit reviewed decision promotes the observed presentation race to required work.
+
+## 21. Iconography and resource-resolution rule
+
+`12-iconography-resource-resolution.md` is the canonical planning layer for turning synchronized spell icon metadata into client artwork safely.
+
+Current planning rule:
+
+- canonical spell identity remains `spellId`; icon art is never identity or gameplay authority;
+- `SpellPresentationPayload.Entry.iconId` is synchronized, non-blank and length-bounded, but the current payload does not itself parse it as a Minecraft resource identifier or prove resource existence;
+- current radial, loadout editor and HUD do not consume `iconId`, so icon rendering remains future work;
+- future icon rendering parses/resolves only the explicit synchronized identifier through supported client resource semantics;
+- no spell-ID-to-texture, namespace-to-provider or translation-key-to-resource heuristic is allowed when resolution fails;
+- malformed, missing or disappearing icon resources degrade to 05.08 `PRESENTATION_FALLBACK`, preserving text/name and all gameplay state;
+- positive and negative resource-resolution assumptions must be invalidated appropriately on resource reload;
+- a changed synchronized `(spellId, iconId)` association invalidates stale presentation for that spell;
+- no per-frame filesystem/JAR scan, remote download, arbitrary filesystem access or unbounded cache is allowed;
+- provider namespace/resource presence does not create an integration API, transfer gameplay authority or grant redistribution permission;
+- provider artwork must not be copied/recolored/traced/bundled without compatible rights and recorded provenance;
+- Black Arcana-owned assets should be original/provenance-safe and remain subject to `SOURCES.md`, `THIRD_PARTY_NOTICES.md` and Stage 09 provenance review;
+- radial/editor may consume resolved icons while retaining complete text fallback; HUD icon use remains optional and subordinate to 05.03/05.11 readability/correlation;
+- any resolver/reload implementation remains physical-client-only and dedicated-server safe.
+
+05.12 is not automatically a Stage 05 completion blocker. Icon/resource hardening becomes mandatory only when an explicit reviewed decision or direct validation failure promotes the refinement to required work. Creating 05.12 does not add icon assets, runtime code or manual PASS evidence.
