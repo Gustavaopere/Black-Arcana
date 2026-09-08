@@ -24,7 +24,8 @@ Subplans:
 - [`06-modpack-coexistence.md`](06-modpack-coexistence.md) — coexistence with Spell Actionbar, Iron's, Epic Fight/EFIS, Controlling and future optional input providers without duplicating authority;
 - [`07-presentation-data-contracts.md`](07-presentation-data-contracts.md) — audited server/client presentation authority, current synchronized-data coverage and the exact contract gates for cooldown, cost, charges, channels and timers;
 - [`08-visual-language-state-semantics.md`](08-visual-language-state-semantics.md) — cross-surface semantic vocabulary for selection, forecast, denial, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
-- [`09-keyboard-focus-navigation.md`](09-keyboard-focus-navigation.md) — keyboard-only focus/navigation semantics for radial and loadout screens while preserving existing mouse behavior, server authority and current keybinding contracts.
+- [`09-keyboard-focus-navigation.md`](09-keyboard-focus-navigation.md) — keyboard-only focus/navigation semantics for radial and loadout screens while preserving existing mouse behavior, server authority and current keybinding contracts;
+- [`10-loadout-editor-information-architecture.md`](10-loadout-editor-information-architecture.md) — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation evidence limits and the metadata/protocol gates for richer editor feedback.
 
 The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented; the latest physical modlist prevails for installed coexistence surfaces and versions.
 
@@ -54,6 +55,7 @@ Deliver direct, low-clutter casting after server contracts and integrations are 
 ## Current bounded UX facts
 
 - canonical loadout maximum: **16 slots**;
+- current loadout representation: **ordered dense list** with no representable gaps between populated entries;
 - current radial: **8 visible slots per page**;
 - current direct quick-cast mappings: **8**, unbound by default;
 - radial default key: `R`;
@@ -84,8 +86,11 @@ The master/subplans explicitly retain the forward-looking UX targets that were o
 Planned refinements include, subject to the detailed gates in each subplan:
 
 - actually using synchronized `iconId` in loadout/radial presentation;
-- better slot ordering/awareness in the 16-slot loadout editor;
-- client-only search and supported metadata filters;
+- better slot ordering/awareness in the 16-slot loadout editor while preserving dense ordered-list semantics;
+- client-only search over real synchronized identity/name data;
+- provider/domain/school filters only after bounded server-authored metadata exists;
+- draft reset and explicit dirty-state semantics;
+- explicit apply/rejection feedback only after a bounded server-authored result contract exists;
 - compact cooldown/readiness affordance from synchronized server state;
 - provider cost preview only through a bounded server-authored presentation contract;
 - channel/charge presentation only through canonical server-owned session semantics;
@@ -105,6 +110,8 @@ None of those bullet points is claimed as implemented merely because it is plann
 
 `09-keyboard-focus-navigation.md` converts the existing keyboard-accessibility goal into an explicit screen-navigation contract. The current radial can page by keyboard but cannot focus/select wedges without a mouse, while the current loadout editor can apply/clear/page but cannot focus/toggle rows without a mouse. The plan adds no runtime itself: it specifies deterministic client-local focus, preserves existing Enter/Delete/page semantics, proposes screen-local traversal rather than new global default mappings, and requires keyboard activation to reuse the same existing selection/draft operations.
 
+`10-loadout-editor-information-architecture.md` freezes the next editor layer. It records that the server loadout is a dense ordered list rather than sixteen sparse cells, proves that populated-spell reordering can already travel through the current ordered full-snapshot protocol, limits search to real synchronized display-name/id data, keeps provider/domain/school filtering fail-closed without metadata, and records that the current snapshot reply cannot prove an explicit acceptance/rejection reason. Rich apply-result feedback therefore remains gated behind a future bounded server-authored result contract.
+
 ## Automated evidence
 
 Stage 05 has focused JUnit coverage for client selection, loadout drafts, HUD layout, radial layout/toggle semantics and small-viewport geometry. Server loadout persistence/validation and the complete project pipeline are exercised by the canonical CI suite.
@@ -123,7 +130,7 @@ It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/ev
 
 `06-modpack-coexistence.md` adds the real-pack coexistence planning layer. Its scenarios become blocking only when they reveal a required input/readability/authority failure; cosmetic unification or unsupported optional bridges do not automatically block Stage 05.
 
-`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md` and `09-keyboard-focus-navigation.md` are forward-looking authority/meaning/accessibility gates for future presentation refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
+`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md` and `10-loadout-editor-information-architecture.md` are forward-looking authority/meaning/accessibility/editor gates for future presentation refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
 
 Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
 

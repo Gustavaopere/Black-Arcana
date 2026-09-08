@@ -18,6 +18,8 @@ Visual-semantics planning baseline: `main@019eb1723b7a70b9fd888ce44d1eb9b85dfa7b
 
 Keyboard-focus planning baseline: `main@2df7cdedd0a73b5aed87ca9709699e139355fc84`.
 
+Loadout-editor planning baseline: `main@db7f4858b3c5eda3bba957db7de194228b6d4df6`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -97,6 +99,8 @@ The current editor:
 - sends an update request only when applied;
 - closes after sending, while the accepted server state remains canonical.
 
+The canonical loadout representation is an **ordered dense list**, not sixteen sparse nullable cells. Removing an entry compacts later positions; gaps between populated spells are not representable by the current server/protocol model.
+
 ### 3.4 Radial
 
 The current radial:
@@ -149,7 +153,8 @@ Stage 05 is divided into the following canonical planning documents:
 6. `06-modpack-coexistence.md` — coexistence with installed casting/actionbar/combat/keybinding surfaces and exact-version integration gates;
 7. `07-presentation-data-contracts.md` — audited server/client presentation authority, currently synchronized data and the contract gates for cooldown mapping, cost, charges, channels and timers;
 8. `08-visual-language-state-semantics.md` — cross-surface meaning for selection/focus, forecast, authoritative result, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
-9. `09-keyboard-focus-navigation.md` — deterministic keyboard-only focus/navigation for radial and loadout screens while preserving current mouse behavior, server authority and global keybinding boundaries.
+9. `09-keyboard-focus-navigation.md` — deterministic keyboard-only focus/navigation for radial and loadout screens while preserving current mouse behavior, server authority and global keybinding boundaries;
+10. `10-loadout-editor-information-architecture.md` — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation limits and the metadata/protocol gates for richer editor feedback.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -159,7 +164,7 @@ This master plan defines how those documents fit together. Detailed implementati
 
 Player opens the loadout editor through a rebindable mapping.
 
-The editor operates on a **draft** only. It may improve filtering, search, icons and ordering in future work, but applying always sends a bounded update request to the server. The UI must converge on the subsequently synchronized accepted state.
+The editor operates on a **draft** only. `10-loadout-editor-information-architecture.md` defines how future slot awareness, reordering, search, icon use, reset and apply reconciliation must preserve the current dense ordered server model. Applying always sends a bounded complete ordered update request to the server; the synchronized server snapshot remains canonical.
 
 ### 5.2 Select
 
@@ -252,16 +257,20 @@ Plan:
 
 ### 7.2 Improve loadout organization
 
-The current editor is a bounded membership list. Planned UX improvements may include:
+`10-loadout-editor-information-architecture.md` is the canonical plan for this refinement.
 
-- search by synchronized display name;
-- provider/domain/school grouping only when that metadata is actually available from a supported presentation contract;
-- explicit slot ordering/reordering while preserving the 16-slot server bound;
-- clear indication of which first-eight slots have direct quick-cast mappings;
-- icons plus concise hazard metadata;
-- server rejection feedback after apply rather than optimistic authority.
+Plan:
 
-No grouping label may be invented from client heuristics when provider metadata is absent.
+- expose current dense ordered positions 1–16 rather than pretending the server owns sixteen sparse cells;
+- mark positions 1–8 only as eligible for the existing direct quick-cast mappings, not as number-row bindings;
+- allow bounded local reordering of populated entries through the existing ordered full-list update contract;
+- make removal compaction and trailing-slot addition semantics explicit;
+- add bounded client-side search over synchronized display name/canonical id;
+- keep provider/domain/school filters unavailable until real bounded server-authored metadata exists;
+- use synchronized `iconId` with text fallback;
+- define local dirty/reset/clear/cancel state without claiming server acceptance;
+- preserve close-after-apply unless a robust explicit acknowledgement contract is deliberately added;
+- never infer acceptance/rejection reason from snapshot equality.
 
 ### 7.3 Improve radial affordances
 
@@ -376,7 +385,8 @@ Every UX addition must answer four questions before code is approved:
 
 Expected defaults:
 
-- loadout: server-owned persistent snapshot;
+- loadout: server-owned persistent ordered dense snapshot;
+- loadout draft/order/search state: client-local until Apply;
 - selected slot: client presentation state reconciled against server loadout;
 - screen focus/input modality: client-local transient state scoped to the open screen; no server synchronization;
 - cooldown: server-owned synchronized group snapshot; per-spell presentation additionally requires the authoritative spell→group relationship defined by `07-presentation-data-contracts.md`;
@@ -385,6 +395,8 @@ Expected defaults:
 - cost/charge/channel/timer presentation: unavailable until the corresponding bounded server-authored contract exists;
 - Corruption/Strain current values: intentionally absent until separately approved;
 - client config: local presentation state only.
+
+The current loadout snapshot reply proves canonical state, not an explicit accepted/rejected reason. Rich apply-result UX requires a separately reviewed bounded server-authored result contract; do not infer it from snapshot equality.
 
 Do not add per-tick full-state synchronization.
 
@@ -395,6 +407,8 @@ Stage 05 is not allowed to become a client or server tick-cost sink.
 - input polling may inspect registered mappings but must not scan world entities/chunks;
 - radial/loadout rendering works from local synchronized snapshots;
 - keyboard focus traversal operates only on the already bounded screen-local list and must not trigger world/provider scans or server requests;
+- loadout search/sort/filter operates only on the bounded synchronized presentation set and must not perform per-keystroke networking;
+- loadout reorder operates over at most 16 entries;
 - HUD rendering is contextual and returns early while inactive;
 - forecast refresh must remain bounded/rate-limited and stale-response protected;
 - no UI feature may trigger global server scans;
@@ -410,7 +424,9 @@ Examples:
 - missing icon → text fallback;
 - stale selected slot → reconcile to current synchronized loadout;
 - invalid/empty screen focus → clear or clamp focus to a valid visible entry; never activate an off-page/stale item;
-- rejected loadout update → server state wins;
+- rejected loadout update → server state wins, but do not invent the rejection reason when only a canonical snapshot is available;
+- loadout draft search/filter hides an entry → draft membership/order remains unchanged;
+- unavailable provider/domain/school metadata → omit those filters rather than infer from resource ids;
 - cooldown group received without a valid selected-spell mapping → omit generic spell cooldown rather than guess;
 - unavailable hazard forecast → show unavailable/static fallback, never partial value as complete;
 - provider preview unavailable → omit or label unavailable;
@@ -430,15 +446,16 @@ When a planned refinement is approved for implementation:
 5. for new presentation data, classify authority/current synchronization through `07-presentation-data-contracts.md` before changing protocol/UI;
 6. for any cross-surface visual state, classify its semantic family/meaning through `08-visual-language-state-semantics.md` before rendering;
 7. for keyboard/focus changes, preserve current screen-key contracts and use `09-keyboard-focus-navigation.md` to define focus lifecycle/activation before editing input handling;
-8. add deterministic RED tests for pure/state behavior where applicable;
-9. implement the minimum GREEN change;
-10. add/adjust GameTests only where world/network integration requires them;
-11. run full Black Arcana CI;
-12. execute the specific real-client rows affected by visual/input behavior;
-13. fetch `origin/main` again and reconcile;
-14. rerun CI on the reconciled HEAD;
-15. merge only after exact-head gates are green;
-16. record final main SHA and any still-deferred manual rows.
+8. for loadout-editor changes, preserve dense ordered-list semantics and use `10-loadout-editor-information-architecture.md` before editing draft/order/search/apply behavior;
+9. add deterministic RED tests for pure/state behavior where applicable;
+10. implement the minimum GREEN change;
+11. add/adjust GameTests only where world/network integration requires them;
+12. run full Black Arcana CI;
+13. execute the specific real-client rows affected by visual/input behavior;
+14. fetch `origin/main` again and reconcile;
+15. rerun CI on the reconciled HEAD;
+16. merge only after exact-head gates are green;
+17. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -461,6 +478,7 @@ This plan does not authorize:
 - client-authoritative casting;
 - client-side cost/cooldown/progression decisions;
 - automatic casting merely from radial selection or focus movement;
+- sparse loadout slots without a separate canonical server migration;
 - a duplicate Iron's/Ars spell execution engine;
 - unbounded UI/network updates;
 - forced gamepad dependencies;
@@ -536,9 +554,35 @@ Current planning rule:
 - activating a focused loadout row must reuse the existing local draft-toggle operation;
 - current screen-local page/apply/clear controls are preserved unless a separately reviewed UX migration explicitly changes them;
 - the first implementation should use screen-local navigation keys rather than adding global default mappings;
+- radial `Tab`/`Shift+Tab` traversal wraps only within the current visible page and never changes page;
+- loadout `Up`/`Down` traversal clamps within the current page and never wraps or changes page;
 - closing a radial through `TOGGLE`, `HOLD` release or Escape must not implicitly select the focused wedge;
 - a Stage 05 screen owning focus must continue suppressing normal world cast input;
 - mouse behavior remains supported and pointer/keyboard modality may coexist without collapsing `HOVERED`, `FOCUSED` and `SELECTED` semantics;
 - controller navigation remains optional/provider-dependent and, if later added, maps to the same screen operations rather than a new cast engine.
 
 05.09 is not automatically a Stage 05 completion blocker. Keyboard-only hardening becomes mandatory only if the manual accessibility requirements or direct real-client evidence promote the missing interaction to a required fix.
+
+## 19. Loadout-editor information-architecture rule
+
+`10-loadout-editor-information-architecture.md` is the canonical planning layer for future loadout-editor organization and apply-state hardening.
+
+Current planning rule:
+
+- the canonical loadout remains a dense ordered list of at most 16 unique spells;
+- gaps between populated positions are not representable and must not be faked client-side;
+- positions 1–8 are merely eligible for the existing direct quick-cast mappings, which remain unbound by default;
+- positions 9–16 are equally valid loadout positions without current direct quick-cast mappings;
+- the existing ordered full-list update path already preserves valid reorder operations, so basic populated-entry reordering does not require a protocol schema change;
+- adding appends to trailing unused capacity and removing compacts later entries unless a future canonical server representation changes;
+- search may operate locally on synchronized display-name/canonical-id data without changing draft order or server availability;
+- provider/domain/school filtering remains unavailable until those fields exist as bounded server-authored presentation metadata;
+- synchronized `iconId` may be used with safe text fallback; missing art is presentation fallback, not gameplay unavailability;
+- Clear, Reset and Cancel are distinct local draft operations until Apply;
+- the current loadout reply is only a canonical snapshot and contains no request id, accepted/rejected flag or reason;
+- snapshot equality must never be treated as proof of acceptance;
+- explicit save/rejection messaging requires a future bounded server-authored result contract with correlation/stale handling;
+- search text input must not cause existing Backspace/Delete/Enter screen shortcuts to fire accidentally;
+- no editor refinement creates a second persistence store, cast path or provider authority.
+
+05.10 is not automatically a Stage 05 completion blocker. Individual editor refinements become mandatory only when directly observed acceptance evidence or an explicit reviewed decision promotes them to required hardening.
