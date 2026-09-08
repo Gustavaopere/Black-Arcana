@@ -26,6 +26,8 @@ Iconography/resource-resolution planning baseline: `main@48cb9a430e0526899e8ae15
 
 Targeting/aim planning audit baseline: `main@4ce5699cc76b511804956f903559ae8f7e44ba12`; reconciled with `main@5b343dbb91ff15a08ca3a09d1e4ca9ac177b3dd2` before indexing.
 
+Spell-details/inspection planning audit baseline: `main@ede7dc310499ec21941504e8e6754d4f7c7f512e`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -173,6 +175,16 @@ Current `ArcanaTargetSpec.Kind` values are exactly `SELF`, `ENTITY`, `RAY`, `BLO
 
 `13-targeting-aim-presentation.md` is the planning authority for future reticle/target/geometry presentation around that boundary.
 
+### 3.10 Current spell-details/inspection behavior
+
+The current generic synchronized spell presentation entry contains only `spellId`, `translationKey` and `iconId`.
+
+The server-side `ArcanaSpellDefinition` additionally contains canonical `ArcanaCost cost` and `requestsWorldMutation`, but those server/runtime fields are **not** automatically client presentation data. Current generic presentation does not synchronize a long description, provider/domain/school classification, spell→cooldown-group relationship, target spec, charge/channel state, damage/effect magnitude or progression requirement.
+
+The current loadout editor may show a synchronized hazard/preflight tooltip on pointer hover, while the current radial shows bounded spell-name/hazard context. Neither surface is a generic full spell dossier.
+
+`14-spell-details-inspection-presentation.md` is the planning authority for any future richer tooltip/detail/inspection surface. It requires field-level authority classification, static-vs-dynamic separation and fail-closed omission rather than reconstructing runtime/provider facts from IDs or names.
+
 ## 4. Plan package
 
 Stage 05 is divided into the following canonical planning documents:
@@ -189,7 +201,8 @@ Stage 05 is divided into the following canonical planning documents:
 10. `10-loadout-editor-information-architecture.md` — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation limits and the metadata/protocol gates for richer editor feedback;
 11. `11-contextual-feedback-orchestration.md` — bounded arbitration, priority, supersession, correlation and timing across current selection context, advisory forecast and authoritative cast-result channels;
 12. `12-iconography-resource-resolution.md` — synchronized spell-icon resource parsing/resolution, fallback, reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance;
-13. `13-targeting-aim-presentation.md` — authority-safe reticle/aim/target presentation across current server target kinds, advisory target hints, stale-state/result correlation, world-safety boundaries, accessibility, performance and modpack coexistence.
+13. `13-targeting-aim-presentation.md` — authority-safe reticle/aim/target presentation across current server target kinds, advisory target hints, stale-state/result correlation, world-safety boundaries, accessibility, performance and modpack coexistence;
+14. `14-spell-details-inspection-presentation.md` — bounded spell inspection/details, field-level presentation authority, static/dynamic separation, provider/resource/cooldown/target/world/progression boundaries, localization, accessibility, performance and fail-closed behavior.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -200,6 +213,8 @@ This master plan defines how those documents fit together. Detailed implementati
 Player opens the loadout editor through a rebindable mapping.
 
 The editor operates on a **draft** only. `10-loadout-editor-information-architecture.md` defines how future slot awareness, reordering, search, icon use, reset and apply reconciliation must preserve the current dense ordered server model. Applying always sends a bounded complete ordered update request to the server; the synchronized server snapshot remains canonical.
+
+The loadout editor is also the preferred future surface for rich spell inspection under 05.14 because the player is already in a configuration context. Hover/focus/details interaction remains client-local presentation and must not toggle the draft or cast unless the existing explicit editor action is separately invoked.
 
 ### 5.2 Select
 
@@ -240,6 +255,8 @@ Target presentation follows the same anti-misattribution rule under 05.13: if th
 
 Spell icon art is supplemental presentation only. A synchronized `iconId` may be resolved under 05.12, but failed art resolution never changes canonical spell identity, selection, admission or cast result.
 
+Spell inspection under 05.14 is similarly supplemental. Static description/detail metadata and dynamic forecast/readiness data must retain their own authority/lifetime; a rich panel never becomes a substitute for cast-time server validation.
+
 ## 6. UX principles
 
 ### 6.1 Combat speed
@@ -263,6 +280,8 @@ A visual green/clear state means only what the server-authorized preview contrac
 
 Likewise, a local reticle/entity/block observation under 05.13 may communicate aim/focus but must not use language or styling equivalent to “valid”, “allowed”, “safe” or “will hit” unless an explicit bounded server-authored contract proves that exact fact.
 
+A detail line under 05.14 communicates only the fact its source contract owns. A configured cost does not prove affordability, a static target rule does not prove a current target, and a world-effect warning does not prove mutation permission.
+
 ### 6.4 Information hierarchy
 
 The UI should prioritize in this order:
@@ -273,7 +292,7 @@ The UI should prioritize in this order:
 4. dangerous-spell risk information;
 5. additional explanatory detail.
 
-Verbose detail belongs in tooltips or `VERBOSE` presentation rather than competing with combat visibility.
+Verbose detail belongs in tooltips or `VERBOSE`/inspection presentation rather than competing with combat visibility. 05.14 is the authority for deciding what such inspection may legitimately contain.
 
 For transient HUD arbitration specifically, 05.11 refines this generic information hierarchy: authoritative denial/result owns outcome emphasis over advisory forecast, while selected spell identity remains independent context rather than implicit result identity.
 
@@ -286,6 +305,8 @@ Important state must not depend exclusively on color. Labels, icons, symbols or 
 Keyboard focus introduced by future 05.09 work must use the `FOCUSED` semantic role from 05.08 and remain distinguishable from pointer hover and selected loadout state.
 
 Target/aim presentation introduced through 05.13 must likewise distinguish local observation from server-authored preview/result through redundant non-color-only cues.
+
+Inspection/detail presentation introduced through 05.14 must distinguish static identity/detail, advisory/dynamic preview, authoritative result, unknown/unavailable data and presentation fallback without flattening them into one stat sheet.
 
 ## 7. Planned UX refinements
 
@@ -433,6 +454,24 @@ Plan:
 - keep important aim state non-color-only and compatible with reduced-motion/reduced-flash policy;
 - coexist with Epic Fight, Iron's, Spell Actionbar and EFIS through Black Arcana-owned presentation only unless a real exact-version integration seam is verified.
 
+### 7.10 Spell details and inspection presentation
+
+`14-spell-details-inspection-presentation.md` closes the gap between the current compact combat UX and the need for richer explanatory spell information.
+
+Plan:
+
+- use the loadout editor as the primary candidate for rich inspection; keep radial/HUD detail concise;
+- treat current synchronized `spellId`/`translationKey`/`iconId` as the baseline generic static presentation contract;
+- do not expose `ArcanaSpellDefinition.cost`, `requestsWorldMutation` or other server/runtime facts merely by reaching into server objects from client GUI code;
+- add description/cost/cooldown/target/provider/domain/progression fields only through explicit bounded presentation contracts when a real product need exists;
+- preserve the difference between configured static facts, dynamic player-specific previews and authoritative cast results;
+- never infer provider/domain/school, cooldown group, target mode, damage/effect magnitude or progression gates from names/namespaces/icons;
+- keep provider resources/economics provider-owned and avoid duplicate bars/state;
+- preserve 05.13 world/target authority: a world-effect warning is not mutation permission and a target rule is not current target validity;
+- make long localization, keyboard focus, small viewports and non-color-only state first-class constraints;
+- avoid per-hover network requests, runtime JAR/tooltip scraping, global scans and unbounded detail caches;
+- keep provider descriptions/assets/UI clean-room and provider-owned unless rights/contracts explicitly allow reuse.
+
 ## 8. Input conflict policy for the large modpack
 
 The pack has many mods and therefore many mappings.
@@ -448,6 +487,8 @@ Rules:
 - future conflict-resolution UX remains presentation only and must not rewrite another mod's settings silently.
 
 Screen-local focus traversal defined by 05.09 should not register additional global `KeyMapping`s merely to move focus while a Black Arcana `Screen` already owns input.
+
+Inspection/details interaction under 05.14 should likewise remain screen-local where possible and must not create a new global default cast/details key without a separate demonstrated need.
 
 ## 9. Networking and state rules
 
@@ -469,17 +510,23 @@ Expected defaults:
 - optional pending cast-result correlation: bounded client-local presentation context keyed by emitted `castId`, never gameplay authority;
 - hazard/gate forecast: bounded request/response, stale-response protected and scoped to spell/request/preflight;
 - spell icon identity: bounded synchronized `iconId`; actual resource syntax/existence remains client presentation resolution under 05.12;
+- static spell inspection identity: current generic contract is `spellId` + `translationKey` + `iconId`; richer detail fields remain unavailable until explicitly synchronized under 05.07/05.14;
+- inspected spell/focus and formatted static detail cache: client-local presentation state only, reconciled against current synchronized snapshots and cleared/invalidated on relevant screen/session/language/resource changes;
 - local aim/crosshair observation: client-local transient presentation only;
 - current `targetHint`: bounded advisory intent data, not target authority;
 - generic target kind/range/LOS/geometry validity: unavailable to presentation unless the required bounded authoritative data is actually synchronized;
 - resolved target identity/impact: not proven by current `CastResultPayload`;
 - cost/charge/channel/timer presentation: unavailable until the corresponding bounded server-authored contract exists;
+- server `ArcanaSpellDefinition.cost`/`requestsWorldMutation`: server/runtime facts, not generic client presentation data merely because the fields exist;
+- long description/provider/domain/school/damage/progression detail: absent from the current generic spell presentation entry and must not be inferred;
 - Corruption/Strain current values: intentionally absent until separately approved;
 - client config: local presentation state only.
 
 The current loadout snapshot reply proves canonical state, not an explicit accepted/rejected reason. Rich apply-result UX requires a separately reviewed bounded server-authored result contract; do not infer it from snapshot equality.
 
 The current cast-result payload proves status/code/detail for its `castId`, not the identity of the client's current selection or current aim target. Unknown/unmatched result ids remain valid authoritative results but must not receive guessed spell/slot/target attribution.
+
+Static inspection metadata and dynamic preview/result state must not share one ambiguous cache/lifetime. A dynamic hazard/gate/provider preview never becomes permanent definition text simply because a details screen remains open.
 
 Do not add per-tick full-state synchronization.
 
@@ -497,6 +544,8 @@ Stage 05 is not allowed to become a client or server tick-cost sink.
 - any future pending-result correlation/dedup cache must be bounded by count and age and cleared on session reset;
 - icon resolution must not perform per-frame filesystem/JAR scans, remote downloads or unbounded cache growth, and any positive/negative cache must respect resource reload;
 - aim/reticle rendering may use bounded local observation but must not send per-frame target-preview requests, enumerate global entities/chunks or probe protection adapters every frame;
+- spell inspection must render primarily from bounded synchronized snapshots; pointer/focus traversal must not request a full server dossier per hover, scrape provider tooltips/JARs or build unbounded formatted-detail/history caches;
+- dynamic inspection previews, if ever required, must be rate-limited/correlated/stale-safe rather than hover-driven spam;
 - no UI feature may trigger global server scans;
 - icon lookup and text layout should be cached or bounded where profiling proves necessary.
 
@@ -508,12 +557,16 @@ Examples:
 
 - missing presentation entry → canonical ID/name fallback, no gameplay denial invented;
 - malformed/unresolvable `iconId` → 05.12 text/presentation fallback, never an invented path, blocked state or screen-breaking exception;
+- missing description/detail field → omit it rather than synthesizing lore/mechanics;
+- server runtime field exists but is not presentation-authorized → omit it rather than reading server internals from client UI;
 - stale selected slot → reconcile to current synchronized loadout;
+- stale/removed inspected spell → reconcile or clear inspection without mutating gameplay/draft state;
 - invalid/empty screen focus → clear or clamp focus to a valid visible entry; never activate an off-page/stale item;
 - rejected loadout update → server state wins, but do not invent the rejection reason when only a canonical snapshot is available;
 - loadout draft search/filter hides an entry → draft membership/order remains unchanged;
-- unavailable provider/domain/school metadata → omit those filters rather than infer from resource ids;
+- unavailable provider/domain/school metadata → omit those filters/details rather than infer from resource ids;
 - cooldown group received without a valid selected-spell mapping → omit generic spell cooldown rather than guess;
+- configured cost not synchronized for presentation → omit raw cost; current provider affordability is never inferred from a static descriptor;
 - unavailable hazard forecast → show unavailable/static fallback, never partial value as complete;
 - authoritative result with unknown/unmatched `castId` → render generic result without guessed spell/slot attribution;
 - local aim candidate changes before result → keep the new aim current but do not attach the old result to it;
@@ -540,15 +593,16 @@ When a planned refinement is approved for implementation:
 9. for contextual-feedback changes, preserve independent selection/advisory/result channels and use `11-contextual-feedback-orchestration.md` before editing result correlation, timing, priority or dedup behavior;
 10. for spell-icon/resource changes, use `12-iconography-resource-resolution.md` before adding resource lookup, cache/reload behavior or bundled icon assets;
 11. for reticle/aim/target-presentation changes, use `13-targeting-aim-presentation.md` before adding target overlays, geometry guides, target-preview synchronization or result/target attribution;
-12. add deterministic RED tests for pure/state behavior where applicable;
-13. implement the minimum GREEN change;
-14. add/adjust GameTests only where world/network integration requires them;
-15. run full Black Arcana CI;
-16. execute the specific real-client rows affected by visual/input behavior;
-17. fetch `origin/main` again and reconcile;
-18. rerun CI on the reconciled HEAD;
-19. merge only after exact-head gates are green;
-20. record final main SHA and any still-deferred manual rows.
+12. for spell-tooltip/detail/inspection changes, use `14-spell-details-inspection-presentation.md` before exposing new static/dynamic fields, provider facts, descriptions or detail caching;
+13. add deterministic RED tests for pure/state behavior where applicable;
+14. implement the minimum GREEN change;
+15. add/adjust GameTests only where world/network integration requires them;
+16. run full Black Arcana CI;
+17. execute the specific real-client rows affected by visual/input behavior;
+18. fetch `origin/main` again and reconcile;
+19. rerun CI on the reconciled HEAD;
+20. merge only after exact-head gates are green;
+21. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -579,6 +633,10 @@ This plan does not authorize:
 - runtime downloading or arbitrary-filesystem loading of spell art;
 - per-frame target-preview/protection/world scans;
 - using target presentation as an oracle for hidden/unloaded/protected information;
+- treating server runtime fields as client spell-detail data without an explicit presentation contract;
+- per-hover full server dossiers, provider-tooltip scraping or private reflection for inspection;
+- reconstructing damage/cost/cooldown/target/progression/provider truth from spell IDs, names, namespaces or icons;
+- copying third-party descriptions/tooltips/assets/layout trade dress without compatible permission and provenance;
 - forced gamepad dependencies;
 - silent key remapping of other mods;
 - copying third-party UI/assets/code without compatible permission and provenance;
@@ -609,6 +667,8 @@ Real-pack coexistence findings may become Stage 05 blockers only when they break
 Current audited boundary:
 
 - spell id/name/icon, accepted loadout, authoritative cast result and existing hazard presentation are available through current bounded synchronization;
+- the current generic spell presentation entry does not include a long description, provider/domain/school classification, target spec, progression requirement, damage/effect magnitude, static `ArcanaCost`, `requestsWorldMutation` or spell→cooldown-group relationship;
+- `ArcanaSpellDefinition` containing `cost`/`requestsWorldMutation` on the server does not itself authorize client presentation of those fields;
 - cooldown snapshots are authoritative by canonical `groupId`, but the current spell presentation payload does not synchronize the spell→cooldown-group relationship, so a generic per-spell cooldown widget must not guess that mapping;
 - exact resource/cost preview, charge-pool state, active channel progress and generic ritual/domain timers do not currently have sufficient Stage 05 client contracts;
 - Corruption/Strain current values remain intentionally withheld pending separate approval;
@@ -751,3 +811,29 @@ Current planning rule:
 - future target marker/reticle assets remain clean-room/provenance-safe and provider art is not copied/recolored/traced/bundled without compatible rights.
 
 05.13 is not automatically a Stage 05 completion blocker. Target/aim hardening becomes mandatory only when a direct real-client acceptance failure or explicit reviewed decision promotes a specific refinement. Creating 05.13 does not add reticles, overlays, protocol fields, target locks, assets, runtime behavior or manual PASS evidence.
+
+## 23. Spell details and inspection presentation rule
+
+`14-spell-details-inspection-presentation.md` is the canonical planning layer for richer tooltip/detail/inspection presentation without turning server/runtime/provider internals into client authority.
+
+Current planning rule:
+
+- current generic `SpellPresentationPayload.Entry` contains only `spellId`, `translationKey` and `iconId`;
+- `ArcanaSpellDefinition` additionally contains server-side `cost` and `requestsWorldMutation`, but their existence does not make them generic client presentation data;
+- the current loadout hover tooltip is hazard/preflight-specific and the radial exposes bounded name/hazard context; neither is a full spell dossier;
+- the loadout editor is the preferred future rich-inspection surface, while radial/HUD remain concise and low-clutter;
+- each desired detail field must be classified as synchronized static presentation, future bounded server-authored static detail, dynamic server-authored preview, authoritative event result, provider-owned external detail or unavailable/unknown;
+- static configured cost is distinct from current affordability and provider resources remain provider-owned;
+- per-spell cooldown requires the authoritative spell→group relationship; `groupId == spellId` must never be assumed;
+- charges/channels/timers remain server-owned and unavailable until a bounded lifecycle/presentation contract exists;
+- target/range/LOS/world-effect details remain subject to 05.13/Stage 04 authority; a rule/warning is not current target validity or mutation permission;
+- long description/provider/domain/school/damage/progression fields are absent from the current generic presentation entry and must not be inferred from names, namespaces, icons or wiki text;
+- existing hazard/gate forecast may be composed only with its existing bounded correlation/staleness semantics and never cached as immutable spell definition;
+- current Corruption/Strain values remain intentionally withheld until separately approved;
+- pointer/keyboard inspection changes presentation only and cannot cast or mutate the loadout draft implicitly;
+- descriptions/labels must be localized/bounded, and important states remain non-color-only and small-viewport safe;
+- inspection should be snapshot-driven; no per-hover full-server request, provider-tooltip scraping, private reflection, filesystem/JAR scanning or unbounded history/cache;
+- provider descriptions/assets/layout remain provider-owned/clean-room unless compatible rights and explicit integration contracts permit use;
+- missing detail fails closed by omission/unavailable presentation and never blocks a legitimate server cast merely because optional UI data is absent.
+
+05.14 is not automatically a Stage 05 completion blocker. Spell-inspection hardening becomes mandatory only when a direct real-client acceptance failure or explicit reviewed decision promotes a specific refinement. Creating 05.14 does not add description metadata, detail UI, new payload fields, provider adapters, assets, runtime behavior or manual PASS evidence.
