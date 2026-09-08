@@ -1,9 +1,10 @@
 # Phase 2W — Ars Hex 5.0.4b checkpoint
 
-Status: `SOURCE CATALOG COMPLETE / PRE-CI MAIN SYNC REQUIRED / INSTALLED JAR+CONFIG+RUNTIME QA DEFERRED`
+Status: `SOURCE CATALOG COMPLETE / PRE-CI MAIN SYNC COMPLETE / CI PENDING / INSTALLED JAR+CONFIG+RUNTIME QA DEFERRED`
 
 Execution branch: `docs/magic-catalog-phase2w-ars-hex`
 Base main at phase start: `f2169e77d2030f76be5bd555c99bf8b616c93b45`
+Pre-CI reconciliation: branch confirmed **0 commits behind** `main@f2169e77d2030f76be5bd555c99bf8b616c93b45`; exact diff remains confined to 11 files under `wiki/modpack-catalog/**`.
 Provider source checkpoint: `Alexthw46/Ars-Unity@b25528adf8c0135585cd6d654582efa147e0a227` (`RELEASE-ALIGNED`, not claimed byte-identical)
 Physical JAR: `ars_hex-1.21.1-5.0.4b.jar`
 Physical SHA-1: `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`
@@ -93,18 +94,14 @@ No Ars Hex mixin targets exist, but event/API/attribute/library compatibility is
 
 These are runtime/config/package gates, not missing source-catalog entries.
 
-## Pre-CI / merge gate
+## Final merge gate
 
-After this catalog commit:
-
-1. fetch current `main` again;
-2. reconcile semantically if it advanced;
-3. compare branch against latest `main` and require the delta to remain catalog-only;
-4. update this checkpoint/PR body if the reconciliation SHA changes;
-5. run fresh CI on the exact reconciled final HEAD;
-6. keep review threads clear;
-7. immediately before merge, fetch/reconcile `main` again and revalidate if needed;
-8. merge only after the final gates pass;
-9. confirm final `main` SHA.
+- pre-CI current-main reconciliation: complete against `main@f2169e77d2030f76be5bd555c99bf8b616c93b45`;
+- exact catalog-only diff review: complete before this checkpoint update;
+- fresh CI must pass on the exact final execution HEAD after this checkpoint commit;
+- immediately before merge, fetch `main` again and reconcile/revalidate if it advanced;
+- review threads must remain clear;
+- merge only after those gates pass;
+- confirm final `main` SHA after merge.
 
 Phase 2W is documentation/catalog state only and does not promote any Black Arcana runtime Stage.
