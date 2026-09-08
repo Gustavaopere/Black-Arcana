@@ -4,11 +4,15 @@
 
 Catalog the installed Ars Nouveau ↔ Sophisticated Storage compatibility layer without promoting a distinct official 0.3.0 artifact into exact physical-binary authority.
 
-## Baseline
+## Git synchronization
 
 - branch: `docs/magic-catalog-phase2ac-ars-sophisticated-compat`;
-- phase base/main considered: `ede7dc310499ec21941504e8e6754d4f7c7f512e`;
+- initial phase base: `ede7dc310499ec21941504e8e6754d4f7c7f512e`;
+- first reconciliation: `main@38d1ba6554314099420482f04b9fda03cbd2189d` (compile-only provider resolution hardening);
+- final pre-merge reconciliation recorded by this checkpoint: `main@c5c1fe1346f0e7e9e991018f62c2f2399b41075b` (Stage 05.14 documentation merge);
 - latest physical modlist supplied 2026-09-08: 595 top-level entries.
+
+The branch uses merge commits from current main rather than rebasing or discarding concurrent history. The resulting commit containing this checkpoint must receive a fresh exact-head CI before merge.
 
 ## Physical identity
 
@@ -63,9 +67,11 @@ Notion currently contains a stale Sophisticated Core 1.5.0 dependency value; thi
 
 Before merge:
 
-1. fetch latest `origin/main`;
-2. reconcile if it advanced;
+1. fetch latest `origin/main` again;
+2. reconcile again if it advanced;
 3. verify diff remains documentation-only under `wiki/modpack-catalog/**`;
 4. run exact reconciled-head CI;
-5. do not claim green if external CurseMaven 429 prevents the pipeline;
-6. merge only after required CI evidence is actually green.
+5. require JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke to pass;
+6. review PR discussions/threads;
+7. merge only after required evidence is actually green;
+8. confirm final `main` SHA after merge.
