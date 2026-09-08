@@ -15,14 +15,14 @@ Physical SHA-1: `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`
 - release-aligned source checkpoint and later-Notion-pin divergence;
 - build host pins and current physical host-version drift;
 - provider bootstrap/gating for Malum, Iron's and Hexerei;
-- Malum active path:
-  - 1/1 production glyph;
-  - 3/3 production Ars thread perks;
+- Malum-present/source-selected path:
+  - 1/1 production glyph registration in source;
+  - 3/3 production Ars thread perk registrations in source;
   - Enchanter's Scythe;
   - scythe-boomerang/Reactive seam;
   - LightManager bridge;
   - 5/5 committed Malum-conditioned acquisition recipes;
-- Iron's active path:
+- Iron's-present/source-selected path:
   - Ars→Iron school map;
   - exact school damage/resistance multiplier event path;
   - optional general SPELL_POWER merge path;
@@ -45,11 +45,11 @@ Physical SHA-1: `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`
 ## High-value factual consequences
 
 1. Ars Hex is a compatibility provider, not a new independent spell school.
-2. The current pack activates its Malum and Iron's modules, but not Hexerei/Hex Casting modules.
-3. Soul Shatter already performs an Ars spell-damage path with Malum Voodoo authority; BA must not replay that damage/spirit settlement.
-4. Enchanter's Scythe is a provider-owned Malum weapon→Ars resolver bridge with its own on-hit/boomerang/Reactive lifecycle.
-5. Iron school power/resistance is already applied to eligible Ars damage by the provider; a second BA/RPG bridge would double-process the same hit.
-6. Ars Elemental armor already receives Iron school-power modifiers through the provider's Sauce interface seam.
+2. The physical pack contains Malum and Iron's, so their source bootstrap conditions are eligible; successful installed-runtime execution remains deferred QA. Hexerei/Hex Casting are absent and their conditions are not current-pack eligible.
+3. Soul Shatter's selected source path performs Ars spell damage with Malum Voodoo authority; BA must not replay that provider damage/spirit settlement if confirmed active.
+4. Enchanter's Scythe source is a provider-owned Malum weapon→Ars resolver bridge with its own on-hit/boomerang/Reactive lifecycle.
+5. The selected Iron's source path applies Iron school power/resistance to eligible Ars damage; a second BA/RPG bridge around the same confirmed provider event would double-process the hit.
+6. The exact Ars Elemental source for the installed version line implements the Sauce interface consumed by Ars Hex's Iron bridge; installed interoperability remains QA.
 7. Two conceptual Iron scaling fields share one persisted config path in source; they cannot be documented as independently configured without installed config evidence.
 8. The optional general Iron merge source path reads general SPELL_POWER from the target. This is preserved as a source-risk observation rather than silently corrected.
 9. Source datagen intent is not equivalent to packaged JAR data when generated tag outputs are absent from the committed generated-resource tree.

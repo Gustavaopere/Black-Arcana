@@ -36,20 +36,20 @@ The physical pack instead contains Ars Nouveau 5.13.1, Ars Elemental 0.7.10.1, I
 
 ## Provider role
 
-Ars Hex is not a new independent magic school. It conditionally bridges Ars Nouveau to other magic providers:
+Ars Hex is not a new independent magic school. Its source bootstrap conditionally selects compatibility modules when the corresponding host mod is present:
 
-- **Malum** — installed and active in the physical pack;
-- **Iron's Spells 'n Spellbooks** — installed and active;
-- **Hexerei** — support exists in source, but Hexerei is absent from the physical modlist and the module is inactive;
-- **Ars Elemental/Sauce** — current installed armor implements the interface consumed by the Iron's bridge.
+- **Malum** — physically installed; the Malum module is selected by source bootstrap when Ars Hex initializes, but successful installed-runtime execution is still a QA gate;
+- **Iron's Spells 'n Spellbooks** — physically installed; the Iron's module is likewise selected by source bootstrap, with current-host runtime behavior still unverified;
+- **Hexerei** — support exists in source, but Hexerei is absent from the physical modlist, so its condition is not eligible in the current pack;
+- **Ars Elemental/Sauce** — the exact source for the installed Ars Elemental version line implements the interface consumed by the Iron's bridge; installed interoperability remains runtime QA.
 
 Each host retains authority over its own resource, attribute, spell or entity semantics. Ars Hex owns only the compatibility behavior it actually installs.
 
 ## Closed source catalog surface
 
-### Malum-active content
+### Malum-present / source-selected content
 
-[`GLYPHS.md`](GLYPHS.md) closes the single registered Malum-backed glyph:
+[`GLYPHS.md`](GLYPHS.md) closes the single registered Malum-backed glyph in the selected source path:
 
 - `ars_hex:glyph_soul_shatter` / Soul Shatter — Tier II, 30 mana, source-default damage 5, Amplify increment 3, Amplify limit 2, Amplify/Dampen compatible, Malum `VOODOO` damage source, Necromancy school while Ars Elemental is loaded.
 
@@ -62,7 +62,7 @@ Each host retains authority over its own resource, attribute, spell or entity se
 
 [`ACQUISITION.md`](ACQUISITION.md) records the five Malum-conditioned source recipes present in the release-aligned tree: one glyph recipe plus four Enchanting Apparatus recipes.
 
-### Iron's-active bridge
+### Iron's-present / source-selected bridge
 
 [`SYSTEMS.md`](SYSTEMS.md) records:
 
@@ -75,7 +75,7 @@ Each host retains authority over its own resource, attribute, spell or entity se
 
 ### Hexerei dormant source surface
 
-Hexerei is not installed. Source-only support is cataloged separately rather than counted as active runtime content:
+Hexerei is not installed. Source-only support is cataloged separately rather than counted as current runtime content:
 
 - 3 conditional items;
 - 1 conditional broom entity;
@@ -87,7 +87,7 @@ A fourth manual resource, `archwood_staff.json`, is conditioned on `hexcasting`,
 
 ### Registries / mixins / networking
 
-[`REGISTRIES.md`](REGISTRIES.md) separates active pack registries from dormant source registries. [`MIXIN-NETWORK-BOUNDARIES.md`](MIXIN-NETWORK-BOUNDARIES.md) records:
+[`REGISTRIES.md`](REGISTRIES.md) separates source-eligible current-provider registries from dormant source registries. [`MIXIN-NETWORK-BOUNDARIES.md`](MIXIN-NETWORK-BOUNDARIES.md) records:
 
 - `ars_hex.mixins.json` declares 0 common and 0 client mixins;
 - no provider-owned custom payload registration was identified in the audited source;
@@ -99,8 +99,8 @@ Ars Nouveau owns Ars mana, spell recipes/context/resolver, glyph learning and th
 
 Black Arcana therefore must not:
 
-- recalculate/reapply Ars Hex's Iron school-power/resistance bridge on the same Ars hit;
-- replay Soul Shatter damage or create a second spirit-reward settlement around it;
+- recalculate/reapply Ars Hex's Iron school-power/resistance bridge on the same Ars hit when that provider path is confirmed active;
+- replay Soul Shatter damage or create a second spirit-reward settlement around the provider path;
 - mirror Soul Ward, Spirit Spoils or Magic Proficiency into a second BA stat ledger;
 - replay Enchanter's Scythe on-hit spell execution or Reactive/boomerang processing;
 - infer that dormant Hexerei broom content is active merely because its classes/resources exist upstream.
