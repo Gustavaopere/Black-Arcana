@@ -90,6 +90,15 @@ Installed-first baseline is Curios NeoForge `9.5.1+1.21.1`. Curios integration i
 10. [RPG Skill Tree Integration](10-rpg-skilltree-integration.md)
 11. [HUD, Tooltip & Preflight](11-hud-tooltip-preflight.md)
 12. [Tests & Hardening](12-tests-hardening.md)
+13. [Final Validation Handoff](13-final-validation-handoff.md)
+
+## Final validation handoff
+
+`05A.12` closes the explicit automated hardening matrix, but it does not by itself validate real-client presentation or physically loaded optional providers. The executable closeout plan is `plans/05a-arcane-danger/13-final-validation-handoff.md`.
+
+That handoff separates automated evidence from real-client and real-provider/modpack acceptance, preserves D028–D031, records Curios as physically present in the current modlist, keeps real RPG Skill Tree provider acceptance blocked until an exact compatible artifact is physically present, and defines the synchronization/CI/post-merge gate required before this Stage can leave `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
+
+Creating or merging the handoff document does **not** validate Stage 05A, does not alter `plans/STATUS.md`, and does not convert any Stage 05/05A manual row to PASS.
 
 ## Exit criteria
 
