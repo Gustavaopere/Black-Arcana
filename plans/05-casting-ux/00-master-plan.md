@@ -14,6 +14,8 @@ Coexistence reconciliation baseline: `main@acbea2c897805e0d51476360c27adfd20fabf
 
 Presentation-contract audit baseline: `main@ef867a59c3be52f0592618b23300507ed40e4241`.
 
+Visual-semantics planning baseline: `main@019eb1723b7a70b9fd888ce44d1eb9b85dfa7b13`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -134,7 +136,8 @@ Stage 05 is divided into the following canonical planning documents:
 4. `04-accessibility-client-config.md` — rebindability, presentation preferences, motion/flash/particle policy and optional controller boundary;
 5. `05-final-client-validation-handoff.md` — exact real-client closeout campaign;
 6. `06-modpack-coexistence.md` — coexistence with installed casting/actionbar/combat/keybinding surfaces and exact-version integration gates;
-7. `07-presentation-data-contracts.md` — audited server/client presentation authority, currently synchronized data and the contract gates for cooldown mapping, cost, charges, channels and timers.
+7. `07-presentation-data-contracts.md` — audited server/client presentation authority, currently synchronized data and the contract gates for cooldown mapping, cost, charges, channels and timers;
+8. `08-visual-language-state-semantics.md` — cross-surface meaning for selection/focus, forecast, authoritative result, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -211,6 +214,8 @@ Verbose detail belongs in tooltips or `VERBOSE` presentation rather than competi
 ### 6.5 Visual independence
 
 Important state must not depend exclusively on color. Labels, icons, symbols or text should distinguish selected, unavailable, cooldown, danger and denial states even when color perception is limited.
+
+`08-visual-language-state-semantics.md` is the canonical meaning layer for these cross-surface states. It prevents selection from being rendered as readiness, forecast from being rendered as authoritative result, warning from being rendered as hard block and missing art from being rendered as gameplay unavailability.
 
 ## 7. Planned UX refinements
 
@@ -298,6 +303,20 @@ Therefore:
 - controller actions must map to the same client intent methods and canonical server pipeline;
 - absence or incompatibility must not break keyboard/mouse casting.
 
+### 7.7 Unify visual meaning without forcing visual sameness
+
+`08-visual-language-state-semantics.md` adds a cross-surface semantic contract.
+
+Plan:
+
+- define independent state families for focus/selection, admission/result, temporal state, hazard/risk, confidence and presentation fallback;
+- allow orthogonal states to compose instead of flattening everything into one good/bad color;
+- preserve the same semantic meaning across editor, radial and HUD even when each surface renders it differently;
+- use redundant non-color-only cues for important state;
+- keep provider-hosted external UI visually provider-owned while preserving Black Arcana meaning in its own contextual feedback;
+- keep palette/assets/animation values as a later implementation/art-review concern rather than inventing them in planning;
+- require clean-room provenance for any future visual/audio assets.
+
 ## 8. Input conflict policy for the large modpack
 
 The pack has many mods and therefore many mappings.
@@ -361,6 +380,8 @@ Examples:
 - network/session reset → clear stale client state before new snapshots;
 - incompatible optional integration → disable only that presentation seam.
 
+05.08 additionally requires that a presentation fallback remain visually distinct from gameplay unavailability: broken/missing art must not be rendered as a blocked spell, and unknown data must not be rendered as success/readiness.
+
 ## 12. Implementation order for any remaining Stage 05 work
 
 When a planned refinement is approved for implementation:
@@ -370,15 +391,16 @@ When a planned refinement is approved for implementation:
 3. read this master plan and the relevant subplan;
 4. inspect current runtime/tests rather than relying on old branch history;
 5. for new presentation data, classify authority/current synchronization through `07-presentation-data-contracts.md` before changing protocol/UI;
-6. add deterministic RED tests for pure/state behavior where applicable;
-7. implement the minimum GREEN change;
-8. add/adjust GameTests only where world/network integration requires them;
-9. run full Black Arcana CI;
-10. execute the specific real-client rows affected by visual/input behavior;
-11. fetch `origin/main` again and reconcile;
-12. rerun CI on the reconciled HEAD;
-13. merge only after exact-head gates are green;
-14. record final main SHA and any still-deferred manual rows.
+6. for any cross-surface visual state, classify its semantic family/meaning through `08-visual-language-state-semantics.md` before rendering;
+7. add deterministic RED tests for pure/state behavior where applicable;
+8. implement the minimum GREEN change;
+9. add/adjust GameTests only where world/network integration requires them;
+10. run full Black Arcana CI;
+11. execute the specific real-client rows affected by visual/input behavior;
+12. fetch `origin/main` again and reconcile;
+13. rerun CI on the reconciled HEAD;
+14. merge only after exact-head gates are green;
+15. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -440,3 +462,23 @@ Current audited boundary:
 - all future synchronization remains bounded, versioned, event-driven, stale-safe and presentation-only.
 
 Missing optional presentation data does not by itself reopen Stage 05 or convert the current manual-validation state. A contract becomes required only if explicitly promoted or needed to fix a directly observed acceptance failure.
+
+## 17. Visual-language and state-semantics rule
+
+`08-visual-language-state-semantics.md` is the canonical meaning layer **after** Section 16 establishes that a datum is legitimate to present.
+
+Current planning rule:
+
+- selection/focus describes interaction identity, never cast legality;
+- a server-authored forecast is visually and verbally distinct from an authoritative cast result;
+- warning/recommendation state is distinct from a hard blocking state;
+- meeting a danger recommendation never means the spell is safe from all Backlash/Corruption risk;
+- temporal UI such as cooldown/charges/channels/timers remains unavailable until Section 16/05.07 authorizes the corresponding data contract;
+- missing artwork/translation is presentation fallback, not gameplay unavailability;
+- unavailable/unknown data is never filled with a guessed ready/success state;
+- important state must not rely exclusively on color, motion, flashes, particles or audio;
+- editor, radial and HUD may render the same semantic role differently, but they must not assign it contradictory meanings;
+- provider-hosted/external UI remains visually provider-owned while Black Arcana retains its own transaction and contextual-feedback semantics;
+- new Black Arcana visual/audio assets remain subject to clean-room provenance and compatible licensing/permission.
+
+05.08 is not automatically a Stage 05 completion blocker. A semantic refinement becomes mandatory only when directly observed validation demonstrates a required readability/ambiguity failure or an explicit reviewed decision promotes it to required hardening.
