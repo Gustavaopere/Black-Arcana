@@ -34,6 +34,7 @@ PR #77 preserves the existing server-owned admission/ownership/session authority
 - `NoeticViewSyncPlanner` projects only `BORROWED_SIGHT`; `ASTRAL_SEVERANCE`, `NAMESCRY` and `OCCULT_APPRAISAL` cannot enter this camera channel;
 - `NoeticViewTransitionTracker` is bounded by the canonical active-session ceiling and emits idempotent BEGIN/END transitions only when desired presentation changes;
 - `MinecraftNoeticRuntime` resolves only the transition viewer and that viewer's already-loaded `ServerLevel` target by UUID, without global-player iteration or chunk forcing;
+- `MinecraftNoeticObservationRuntime.tick()` now revalidates the same canonical `NoeticObservationPolicy` used at admission for every bounded active session before presentation sync; target unload keeps the existing `TARGET_UNAVAILABLE` lifecycle reason, while loss of range/dimension/ownership/privacy authorization closes the server-owned session as `AUTHORIZATION_REVOKED`;
 - `NoeticViewNetworkBridge` registers a play-to-client payload and sends only to the authoritative viewer when the channel is present;
 - `BorrowedSightClientController`, loaded only from the `Dist.CLIENT` entrypoint, resolves only the server-authored runtime entity id from the already-loaded client level, moves only the physical camera, and restores it to the local player's body on END or target loss;
 - the client adapter creates no client-to-server gameplay packet path and cannot choose target, admission, duration, ownership or privacy state.
@@ -42,18 +43,14 @@ NeoForge 1.21–1.21.1 documentation confirms payload handlers registered withou
 
 ### Borrowed Sight evidence boundary
 
-Exact code checkpoint before this documentation update: PR #77 head `d221408400ecec4a4430df510823cfc6efc4be41`.
+TDD for the continuous-authorization regression was executed after PR #77 had been reconciled with `main@f9c3854bc7e5b2f1bd051434080f13ae3c7d5e5d` through synchronization PR #95:
 
-Black Arcana CI #1994 / `34185238779` passed on that exact head:
+- RED head `5eec2e7818dae68c75fcccc7e80600e7c43a290d`, Black Arcana CI #2005 / `34185866007`: **571 tests, exactly one failure**, `activeObservationTickRevalidatesCanonicalAuthorizationPolicy()`, proving active-session policy revalidation was absent;
+- GREEN code head `45f970edd10e20d41315cd1471471fadbef731fd`, Black Arcana CI #2010 / `34186494393`: GREEN in JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
 
-- JUnit;
-- diff sanity;
-- NeoForge build;
-- built-JAR verification;
-- Foundation GameTest server;
-- dedicated-server smoke.
+Earlier Borrowed Sight transport/client checkpoints remain useful TDD history, including `d221408400ecec4a4430df510823cfc6efc4be41` / CI #1994, but they are not the final merge evidence after the later authorization fix and documentation updates.
 
-That automated evidence proves compilation, deterministic server/domain contracts and dedicated-server safety for the implemented code path. It does **not** prove actual first-person camera feel, rendering compatibility, input behavior or restoration in the user's full physical-client modpack. Those remain direct real-client validation work under D031.
+Automated evidence proves compilation, deterministic server/domain contracts and dedicated-server safety for the implemented code path. It does **not** prove actual first-person camera feel, rendering compatibility, input behavior or restoration in the user's full physical-client modpack. Those remain direct real-client validation work under D031.
 
 ## Astral Severance — NOT IMPLEMENTED end-to-end
 
