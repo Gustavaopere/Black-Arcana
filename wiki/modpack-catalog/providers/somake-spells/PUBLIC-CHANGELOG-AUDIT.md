@@ -62,11 +62,11 @@ Conclusões seguras:
 
 Estado físico do pack atual:
 
-- Magic From the East — não localizado;
-- Born in Chaos 1.7.6 — presente;
+- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente; a pré-condição física para o caminho de integração Symmetry descrito pelo publisher está satisfeita;
+- Born in Chaos `1.7.6` — presente;
 - Better Combat — não localizado.
 
-Esses fatos permitem determinar apenas o caminho **publicamente esperado** de compatibilidade; runtime QA continua pendente.
+Esses fatos permitem determinar apenas o caminho **publicamente esperado/elegível** de compatibilidade. A ativação exata por registry/config/runtime continua pendente e não é inferida da presença do JAR.
 
 ## 1.0.7 — File ID 8003379 — 2026-04-28
 
