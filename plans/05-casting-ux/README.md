@@ -26,7 +26,8 @@ Subplans:
 - [`08-visual-language-state-semantics.md`](08-visual-language-state-semantics.md) — cross-surface semantic vocabulary for selection, forecast, denial, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
 - [`09-keyboard-focus-navigation.md`](09-keyboard-focus-navigation.md) — keyboard-only focus/navigation semantics for radial and loadout screens while preserving existing mouse behavior, server authority and current keybinding contracts;
 - [`10-loadout-editor-information-architecture.md`](10-loadout-editor-information-architecture.md) — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation evidence limits and the metadata/protocol gates for richer editor feedback;
-- [`11-contextual-feedback-orchestration.md`](11-contextual-feedback-orchestration.md) — bounded arbitration, priority, supersession, correlation and timing across selection context, server-authored forecasts and authoritative cast results.
+- [`11-contextual-feedback-orchestration.md`](11-contextual-feedback-orchestration.md) — bounded arbitration, priority, supersession, correlation and timing across selection context, server-authored forecasts and authoritative cast results;
+- [`12-iconography-resource-resolution.md`](12-iconography-resource-resolution.md) — synchronized `iconId` resolution, safe text fallback, resource-reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance.
 
 The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented; the latest physical modlist prevails for installed coexistence surfaces and versions.
 
@@ -50,6 +51,7 @@ Deliver direct, low-clutter casting after server contracts and integrations are 
 - `LoadoutNetworkBridge` synchronizes edits while `ArcanaServerRuntimeManager.handleLoadoutUpdate` validates spell availability and persists accepted loadouts through `BlackArcanaSavedData`.
 - `BlackArcanaRadialScreen` is a client-only selector. Choosing a wedge changes selection and closes the screen; it never executes a cast.
 - `BlackArcanaHudLayer` is contextual/event-driven and currently renders synchronized spell presentation, hazard/resistance, predictable-gate and cast-result feedback. Although cooldown-group snapshots are cached client-side, the current HUD does not render them directly as a per-spell cooldown widget.
+- `SpellPresentationPayload.Entry` currently synchronizes `spellId`, `translationKey` and bounded non-blank `iconId`, but current radial/loadout/HUD rendering does not consume `iconId`; icon rendering remains a planned client presentation refinement under 05.12.
 - `BlackArcanaClientConfig` owns presentation-only preferences: HUD enable/scale/anchor, feedback duration/intensity, radial hold/toggle, particle density, reduced motion and reduced flashes. These settings do not participate in gameplay validation.
 - `BlackArcanaClient` is a physical-client entrypoint (`Dist.CLIENT`); dedicated-server runtime registration remains in the common mod entrypoint without loading client classes.
 
@@ -86,7 +88,7 @@ The master/subplans explicitly retain the forward-looking UX targets that were o
 
 Planned refinements include, subject to the detailed gates in each subplan:
 
-- actually using synchronized `iconId` in loadout/radial presentation;
+- actually using synchronized `iconId` in loadout/radial presentation through one safe resource-resolution/fallback lifecycle rather than screen-specific path heuristics;
 - better slot ordering/awareness in the 16-slot loadout editor while preserving dense ordered-list semantics;
 - client-only search over real synchronized identity/name data;
 - provider/domain/school filters only after bounded server-authored metadata exists;
@@ -116,6 +118,8 @@ None of those bullet points is claimed as implemented merely because it is plann
 
 `11-contextual-feedback-orchestration.md` freezes the transient-feedback arbitration layer. Selection context, advisory forecast and authoritative cast result remain independent bounded channels; an authoritative result outranks contradictory advisory state, but `CastResultPayload` currently carries `castId/status/code/detail` without spell or slot identity. The HUD must therefore never attribute a received result to the current selection by inference. A future bounded client-local `castId -> attempted spell/slot` context may improve presentation without gaining gameplay authority; unknown/unmatched results remain safely displayable without spell attribution. The current low-clutter model remains latest-received-result wins rather than an unbounded notification history.
 
+`12-iconography-resource-resolution.md` freezes the resource-resolution layer for the already-synchronized icon identity. The current payload bounds `iconId` as text but does not itself parse it as a Minecraft resource identifier or prove that the resource exists. Future icon rendering must therefore parse/resolve through supported client resource semantics, fail to text/presentation fallback without changing spell validity, invalidate positive/negative assumptions on resource reload, avoid spell-ID/provider-path heuristics and preserve clean-room provenance. At baseline `48cb9a43...`, radial, loadout editor and HUD do not consume `iconId`, and the Black Arcana asset root contains only `lang/`; 05.12 adds no assets or runtime by itself.
+
 ## Automated evidence
 
 Stage 05 has focused JUnit coverage for client selection, loadout drafts, HUD layout, radial layout/toggle semantics and small-viewport geometry. Server loadout persistence/validation and the complete project pipeline are exercised by the canonical CI suite.
@@ -134,7 +138,7 @@ It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/ev
 
 `06-modpack-coexistence.md` adds the real-pack coexistence planning layer. Its scenarios become blocking only when they reveal a required input/readability/authority failure; cosmetic unification or unsupported optional bridges do not automatically block Stage 05.
 
-`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md` and `11-contextual-feedback-orchestration.md` are forward-looking authority/meaning/accessibility/editor/feedback gates for future presentation refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
+`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md`, `11-contextual-feedback-orchestration.md` and `12-iconography-resource-resolution.md` are forward-looking authority/meaning/accessibility/editor/feedback/resource-presentation gates for future refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
 
 Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
 
