@@ -4,7 +4,7 @@ Status: `SOURCE CATALOG COMPLETE / FINAL MAIN RECONCILED / INSTALLED CONFIG + RU
 
 Execution branch: `docs/magic-catalog-phase2u-ars-elemental`
 Base main at phase start: `019eb1723b7a70b9fd888ce44d1eb9b85dfa7b13`
-Final pre-merge reconciliation: `main@db7f4858b3c5eda3bba957db7de194228b6d4df6` merged into the execution branch through synchronization PR #113; branch reconciliation checkpoint `09ec2220978850b50f070aee9414e2f1ae434033`.
+Final pre-merge reconciliation: `main@52706b448a8153502885784c435a25aaf8352a12` merged into the execution branch through synchronization PR #115; branch reconciliation checkpoint `5d5577480d667057db0249330f4940256d63f662`.
 Provider source pin: `Alexthw46/Ars-Elemental@fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`
 Ars Nouveau 5.13.1 API pin: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 Physical JAR: `ars_elemental-1.21.1-0.7.10.1.jar`
@@ -63,7 +63,7 @@ These are runtime/config/provenance gates, not missing source-catalog entries, a
 
 ## Final merge gate
 
-- current `main` reconciliation: complete through PR #113 against `main@db7f4858b3c5eda3bba957db7de194228b6d4df6`;
+- current `main` reconciliation: complete through PR #115 against `main@52706b448a8153502885784c435a25aaf8352a12`;
 - final catalog-only diff review: complete before this checkpoint update; no Java/runtime/Gradle/workflow path is part of Phase 2U;
 - exact final execution HEAD CI: must be GREEN after this checkpoint commit;
 - review threads: must remain clear;
