@@ -14,6 +14,8 @@ Cada mod/provider possui sua própria pasta:
 
 Dentro dela, a organização usa a **classificação nativa mais útil e comprovada daquele provider**. Não forçamos uma taxonomia única para todos os mods.
 
+Um mesmo `mod id` não deve possuir duas árvores paralelas. Na Phase 2N, o conteúdo duplicado de Leyline Spellbooks foi consolidado de `providers/leylines/` para a árvore canônica `providers/leyline-spellbooks/`, preservando as fichas de spells, progressão e rifts.
+
 ### Iron's Spells e addons baseados em escolas
 
 Usam escola como primeira subpasta:
@@ -26,6 +28,8 @@ Exemplos:
 - `irons-spells/holy/sunbeam.md`
 - `asterism-arcanum/astral/<spell>.md`
 - `dreamless-spells/empty/<spell>.md`
+
+Leyline Spellbooks é uma exceção deliberada ao layout school-first neste checkpoint: como o registry exato 1.0.3 não está disponível, os nove nomes públicos permanecem em `leyline-spellbooks/spells/` sem inventar school/registry IDs por ficha. O provider anuncia a escola Leyline, mas isso não prova o registro individual de cada spell.
 
 ### Ars Nouveau e addons de spellcraft modular
 
