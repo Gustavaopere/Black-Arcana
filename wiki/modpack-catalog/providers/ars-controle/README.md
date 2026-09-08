@@ -1,6 +1,6 @@
 # Ars Controle — Ars Nouveau control/automation provider
 
-Status: `PHASE 2R / SOURCE-PINNED 1.6.15 CATALOG COMPLETE / FINAL DIFF+CI+MERGE PENDING / RUNTIME+PACK QA PENDING`
+Status: `PHASE 2R / SOURCE-PINNED 1.6.15 CATALOG COMPLETE / RUNTIME+CONFIG+CLIENT+PACK QA PENDING`
 
 ## Exact installed identity
 
@@ -75,12 +75,8 @@ A prior Notion dossier described "4 block entities" and "31 Ars/logic components
 - Remote multiple selection iterates a closed block box without an explicit source-visible volume/range cap in the audited path.
 - Portable Brazier Relay suppresses normal brazier ticking and reuses/recontextualizes the original Ars ritual object rather than cloning it.
 
-## Remaining Phase 2R closure
+## Delivery and later validation
 
-- review exact PR diff for scope and whitespace;
-- refetch and merge latest `main` if it advanced;
-- execute full repository CI on the exact reconciled HEAD;
-- only then mark PR ready and merge;
-- installed-JAR runtime/config/client/full-modpack QA remains a later explicit validation layer and is not inferred from source inspection.
+The source catalog is complete. PR delivery is tracked through the Phase 2R checkpoint and GitHub history; installed-JAR runtime/config/client/full-modpack QA remains a later explicit validation layer and is not inferred from source inspection.
 
 Shared provenance tables remain high-churn; `PROVENANCE-DELTA-PHASE2R-ARS-CONTROLE.md` is the authoritative narrow provenance overlay until those indexes are safely regenerated.
