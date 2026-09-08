@@ -15,8 +15,16 @@ Knocks entities according to provider caster orientation/position and target kno
 
 Compatible augments: Amplify, Dampen, AOE, Pierce, Sensitive, Extract. Sensitive is limited to 1 by default.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:air_essence` + `minecraft:piston` ×3.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 Ars owns `glyph_gust` motion/block conversion. Black Arcana movement remains server-validated and block movement remains subject to its own world-safety policy and bounded work.
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.

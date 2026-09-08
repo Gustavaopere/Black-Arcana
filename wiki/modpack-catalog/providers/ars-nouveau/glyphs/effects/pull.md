@@ -14,8 +14,16 @@ Pull moves entity targets toward the caster. On block targets it can convert har
 
 Compatible augments: Amplify, Dampen, AOE, Pierce, Sensitive. Sensitive is limited to 1 by default.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `minecraft:fishing_rod`.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 Ars owns Pull motion and block conversion. Black Arcana displacement remains server-owned and any block movement remains under `WorldEffectPolicy` and bounded work.
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.

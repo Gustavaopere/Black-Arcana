@@ -14,8 +14,16 @@ Heals a living target, with randomized stats able to alter the heal amount. Heal
 
 Compatible augments: Amplify, Dampen, Fortune, Randomize.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:abjuration_essence` + `minecraft:glistering_melon_slice` ×4 + `minecraft:golden_apple`.
+- Source-default recipe XP: **55 XP** (Tier II).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 Ars Nouveau owns healing, food exhaustion, undead/inverted-heal damage and configured values. Black Arcana must not create duplicate healing settlement, damage procs or progression awards from the same provider event.
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.

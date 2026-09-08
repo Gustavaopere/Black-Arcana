@@ -13,8 +13,16 @@ Ignite sets entities on fire for a configurable duration and can light/create fi
 
 Compatible augments: Extend Time, AOE, Pierce, Reduce Time, Sensitive. Sensitive is limited to 1 by default.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `minecraft:flint_and_steel` + `#minecraft:coals` ×3.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 Normal or magic fire created by Ars remains provider-owned. Black Arcana fire/world mutations must still route through `WorldEffectPolicy`; Sensitive's provider behavior is not a universal proof of world-safety for other spells.
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.

@@ -14,8 +14,16 @@ Creates Ars Nouveau's custom explosion at the resolved position. AOE raises blas
 
 Compatible augments: Amplify, Dampen, AOE, Extract. Amplify is limited to 2 by default.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:fire_essence` + `minecraft:tnt` ×3 + `minecraft:fire_charge`.
+- Source-default recipe XP: **55 XP** (Tier II).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 This is a destructive provider-native capability. Black Arcana must never route its own explosions through this as a way around `WorldEffectPolicy`; its destructive effects remain independently budgeted and policy-controlled.
 
-Status: `SOURCE-PINNED 5.13.1 / HIGH-RISK WORLD EFFECT / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / HIGH-RISK WORLD EFFECT / RUNTIME+CONFIG QA PENDING`.

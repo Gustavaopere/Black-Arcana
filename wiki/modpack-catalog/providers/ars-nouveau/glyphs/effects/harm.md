@@ -14,8 +14,17 @@ Without a Time augment, Harm attempts provider-owned magic damage against a non-
 
 Compatible augments: Amplify, Dampen, Extend Time, Reduce Time, Fortune, Randomize. Harm is explicitly a default starter glyph.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:earth_essence` + `minecraft:iron_sword` ×3.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **yes**.
+- When starter remains enabled by config, Ars treats Harm as already known; otherwise its Glyph-learning path remains provider-owned.
+- Runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 Ars owns this damage/Poison branch, invulnerability-frame interactions and provider damage source. Black Arcana must not double-process damage, lifesteal, mastery or Arcane Danger when observing Ars-owned Harm damage.
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
