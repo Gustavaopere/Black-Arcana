@@ -29,7 +29,8 @@ Subplans:
 - [`11-contextual-feedback-orchestration.md`](11-contextual-feedback-orchestration.md) — bounded arbitration, priority, supersession, correlation and timing across selection context, server-authored forecasts and authoritative cast results;
 - [`12-iconography-resource-resolution.md`](12-iconography-resource-resolution.md) — synchronized `iconId` resolution, safe text fallback, resource-reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance;
 - [`13-targeting-aim-presentation.md`](13-targeting-aim-presentation.md) — authority-safe reticle/aim/target presentation across the real server-owned target kinds, advisory `targetHint`, stale-state/result correlation, world-safety boundaries, accessibility and coexistence;
-- [`14-spell-details-inspection-presentation.md`](14-spell-details-inspection-presentation.md) — bounded spell inspection/detail presentation, field-level authority, static-vs-dynamic semantics, provider/world/target boundaries, localization, accessibility and fail-closed metadata behavior.
+- [`14-spell-details-inspection-presentation.md`](14-spell-details-inspection-presentation.md) — bounded spell inspection/detail presentation, field-level authority, static-vs-dynamic semantics, provider/world/target boundaries, localization, accessibility and fail-closed metadata behavior;
+- [`15-casting-vfx-audio-animation-presentation.md`](15-casting-vfx-audio-animation-presentation.md) — authority-safe casting VFX/audio/player-animation/camera/telegraph lifecycle, cast-result correlation, sensory-accessibility budgets, optional animation-provider boundaries and real-pack coexistence.
 
 The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented; the latest physical modlist prevails for installed coexistence surfaces and versions.
 
@@ -79,10 +80,16 @@ The current physical modlist confirms relevant adjacent surfaces:
 - Spell Actionbar `1.1.4`;
 - Epic Fight `21.17.3.1`;
 - Epic Fight & Iron's Spellbook animation compat (`efiscompat`) `3.1.0`;
+- Punchy `2.7e` + Punchy Epic Fight Compat `1.0.0`;
+- FirstPerson `2.7.2`;
+- Better Lock On `2.0.8-neoforge` + Lock-On Movement Fix `1.0.2`;
+- NotEnoughAnimations `1.12.4`;
+- Player Animator `2.0.4+1.21.1`;
+- Player Animation Library `1.1.6+mc.1.21.1`;
 - Controlling `19.0.5`;
 - no confirmed top-level general controller framework.
 
-Presence does not prove an integration API. The default Stage 05 strategy is **coexistence without forced unification**. See `06-modpack-coexistence.md` for exact deduplication, keybinding, HUD-overlap, Epic Fight and optional-integration rules.
+Presence does not prove an integration API. The default Stage 05 strategy is **coexistence without forced unification**. See `06-modpack-coexistence.md` for exact deduplication, keybinding, HUD-overlap, Epic Fight and optional-integration rules, and 05.15 for the audiovisual/player-animation/camera specialization. Player Animator and Player Animation Library are distinct installed provider surfaces and must not be treated as aliases by inference.
 
 ## Planned refinement summary
 
@@ -106,9 +113,12 @@ Planned refinements include, subject to the detailed gates in each subplan:
 - bounded feedback arbitration so current selection, forecast and authoritative result cannot be visually misattributed when their timing overlaps;
 - authority-safe aim/target presentation that distinguishes local observation from server resolution and never turns reticle state into cast/world-safety authority;
 - bounded spell inspection/detail presentation that shows only legitimately synchronized/server-authored facts and never reconstructs cost, cooldown, target, damage, provider or progression truth from IDs/names;
+- one bounded audiovisual cast lifecycle that distinguishes local intent, server forecast, authoritative result, server-owned runtime events, decorative effects and provider-owned presentation;
+- gameplay-relevant telegraphs only from server-owned geometry/lifecycle rather than local aim guesses;
+- optional player-animation/camera adapters only after exact-version API verification, with provider absence degrading presentation rather than denying valid gameplay;
 - systematic reduced-motion/reduced-flash/particle consumption by future effects;
 - controller integration only if a real compatible provider enters the modlist/API surface;
-- direct current-pack coexistence testing with external casting/actionbar/combat surfaces before adding compatibility code.
+- direct current-pack coexistence testing with external casting/actionbar/combat/animation/camera surfaces before adding compatibility code.
 
 None of those bullet points is claimed as implemented merely because it is planned here.
 
@@ -128,6 +138,8 @@ None of those bullet points is claimed as implemented merely because it is plann
 
 `14-spell-details-inspection-presentation.md` freezes the spell-inspection boundary around the deliberately small current presentation contract. `SpellPresentationPayload.Entry` exposes identity/name/icon metadata, while richer server/runtime facts such as `ArcanaSpellDefinition.cost`, `requestsWorldMutation`, target semantics, cooldown relationships and provider/progression state are not generic client presentation data merely because they exist internally. Future details therefore require field-level authority classification, bounded/versioned synchronization where genuinely needed, static-vs-dynamic separation, localization/accessibility bounds and provider-native/fail-closed behavior. 05.14 adds no description metadata, detail UI, protocol fields or runtime by itself.
 
+`15-casting-vfx-audio-animation-presentation.md` freezes the audiovisual cast-presentation boundary around the current server-authoritative runtime. Current Black Arcana has no generic cross-spell particle/sound/animation/camera system and the project asset root remains `lang/`-only at the 05.15 audit baseline. Future audiovisual work therefore distinguishes local intent from authoritative result, requires server-owned lifecycle/geometry for gameplay-relevant telegraphs, treats `castId` as the natural root correlation token where attribution is needed, keeps animation/camera provider failure as presentation degradation rather than gameplay denial, deduplicates provider-hosted presentation per root cast, consumes reduced-motion/reduced-flash/particle preferences and preserves Stage 07 ownership of per-spell audiovisual content. 05.15 adds no VFX/audio/animation assets, protocol fields, runtime adapters or manual PASS evidence by itself.
+
 ## Automated evidence
 
 Stage 05 has focused JUnit coverage for client selection, loadout drafts, HUD layout, radial layout/toggle semantics and small-viewport geometry. Server loadout persistence/validation and the complete project pipeline are exercised by the canonical CI suite.
@@ -146,7 +158,7 @@ It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/ev
 
 `06-modpack-coexistence.md` adds the real-pack coexistence planning layer. Its scenarios become blocking only when they reveal a required input/readability/authority failure; cosmetic unification or unsupported optional bridges do not automatically block Stage 05.
 
-`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md`, `11-contextual-feedback-orchestration.md`, `12-iconography-resource-resolution.md`, `13-targeting-aim-presentation.md` and `14-spell-details-inspection-presentation.md` are forward-looking authority/meaning/accessibility/editor/feedback/resource/target/inspection gates for future refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback/aim/inspection polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
+`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md`, `11-contextual-feedback-orchestration.md`, `12-iconography-resource-resolution.md`, `13-targeting-aim-presentation.md`, `14-spell-details-inspection-presentation.md` and `15-casting-vfx-audio-animation-presentation.md` are forward-looking authority/meaning/accessibility/editor/feedback/resource/target/inspection/audiovisual gates for future refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback/aim/inspection/VFX/audio/animation/camera polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
 
 Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
 
