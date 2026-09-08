@@ -1,67 +1,82 @@
-# Ars Controle
+# Ars Controle — Ars Nouveau control/automation provider
 
-Status: `CURRENT HIGH-IMPACT GLYPHS VERIFIED FROM ARS 1.21.1 PROVIDER-AWARE GUIDE; FULL ADDON AUDIT CONTINUES`
+Status: `PHASE 2R / SOURCE-PINNED 1.6.15 CATALOG COMPLETE / RUNTIME+CONFIG+CLIENT+PACK QA PENDING`
 
-- Current JAR: `ars_controle-1.21.1-1.6.15.jar`
+## Exact installed identity
+
+- JAR: `ars_controle-1.21.1-1.6.15.jar`
 - Mod id: `ars_controle`
 - Runtime version: `1.21.1-1.6.15`
-- Provider class: `ARS GLYPH / SYSTEM PROVIDER`
-- Primary casting authority: Ars Nouveau.
+- Physical SHA-1: `fdf381d5733698abe336354c7541299ab495ecae`
+- Loader/game: NeoForge 1.21.1
 
-## Current verified glyph surface
+## Exact source checkpoint
 
-The current Ars 1.21.1 guide exposes addon ownership by registry namespace. The following `ars_controle:` entries are verified in the current guide:
+Read-only factual cataloging is pinned to `Vonr/Ars-Controle@ecbb83ba512bc9ca7a025556fb9c62dbd32b6430`.
 
-| Glyph | Registry id | Tier | Base cost | Semantic role |
-|---|---|---:|---:|---|
-| Filter: Above | `ars_controle:glyph_filter_above` | 1 | 0 | resolve only above caster |
-| Filter: Below | `ars_controle:glyph_filter_below` | 1 | 0 | resolve only below caster |
-| Filter: Level | `ars_controle:glyph_filter_level` | 1 | 0 | resolve at caster elevation |
-| Filter: NOT | `ars_controle:glyph_filter_not` | 1 | 0 | invert next filter result |
-| Filter: OR | `ars_controle:glyph_filter_or` | 1 | 0 | resolve if either following filter is true |
-| Filter: Random | `ars_controle:glyph_filter_random` | 1 | 0 | probabilistic resolution gate |
-| Filter: XNOR | `ars_controle:glyph_filter_xnor` | 1 | 0 | resolve when two following filter results are equal |
-| Filter: XOR | `ars_controle:glyph_filter_xor` | 1 | 0 | resolve when exactly one following filter is true |
-| Precise Delay | `ars_controle:glyph_precise_delay` | 2 | 0 | deterministic tick-scale delayed continuation |
+At that revision `gradle.properties` declares:
 
-## Filter: Random — exact public probability semantics
+- `mc_version=1.21.1`;
+- `neo_version=21.1.217`;
+- `mod_id=ars_controle`;
+- `mod_version=1.6.15`;
+- `mod_license=LGPLv3`;
+- Ars Nouveau build baseline `5.10.6.1245`;
+- Curios baseline `9.0.12`;
+- CC:Tweaked baseline `1.112.0`.
 
-The current public guide documents:
+The root upstream `LICENSE` is GNU Lesser General Public License v3. Source is inspected read-only for factual cataloging; Black Arcana copies/adapts no upstream code or assets.
 
-- base resolution chance: **50%**;
-- with net Amplification `A`: `100% - 50% / (2^A)`;
-- with net Dampening `D`: `50% / (2^D)`.
+The physical pack is newer in important providers, including NeoForge `21.1.248`, Ars Nouveau `5.13.1` and Curios `9.5.1+1.21.1`; effective runtime compatibility is therefore a separate QA gate.
 
-This is not merely random visual selection. It is a genuine player-composable probability gate in the installed pack.
+## Provider authority
 
-## Deduplication impact
+Ars Nouveau remains authority for mana, Source, spell grammar, resolver/cast lifecycle and the base Ars ritual/warp infrastructure. Ars Controle owns only its added filters/effect, control blocks/items, persisted endpoint/reference state and provider-specific routing behavior.
 
-### Chaos
+Black Arcana must not turn a routed/delayed provider spell into a second cast, charge mana/cooldown/Mastery/Arcane Danger twice, infer valid remote endpoints from stale state, or treat Ars Controle infrastructure as permission to weaken Black Arcana targeting/world-safety rules.
 
-This addon proves that **probability manipulation already exists** in the current pack at the spell-composition level. Black Arcana Chaos cannot be approved on the premise that “sometimes the effect happens” or “the player can raise/lower a random chance” is unique.
+## Exact registry correction
 
-A candidate Chaos mechanic now needs a stronger delta, for example one or more of:
+The source-pinned release registers:
 
-- weighted families of outcomes rather than a binary resolve/fail gate;
-- persistent entropy/instability state carried between casts;
-- probability debt/compensation over repeated events;
-- controlled rule corruption in a bounded domain;
-- transactional world/entity state distortion with canonical rollback;
-- cross-provider outcome selection with explicit authority and deduplication.
+- 4 blocks;
+- 6 items: 4 block items + Remote + Portable Brazier Relay;
+- 3 BlockEntityTypes;
+- 2 persistent/network-synchronized data components;
+- 4 attachment types;
+- 1 creative tab;
+- 9 Ars spell parts: 1 effect + 8 filters.
 
-Those are design directions only; they remain blocked until all related providers are cataloged.
+The Temporal Stability Sensor is a registered block but has no BlockEntityType in `ACRegistry.Tiles`.
 
-### Order
+A prior Notion dossier described "4 block entities" and "31 Ars/logic components". Those values are retained as historical/editorial context only. They do not match the exact 1.6.15 registry: the current release source registers 3 block-entity types and 9 glyph/spell parts. Internal concepts/classes must not be promoted to player glyphs without registry evidence.
 
-The boolean filters (`NOT`, `OR`, `XNOR`, `XOR`) already allow logical spell constraints. Order therefore cannot claim generic “logic” as unique either. Its remaining candidate identity must involve authoritative imposed laws/seals/constraints at gameplay-state level, not just boolean composition inside one Ars spell chain.
+## Closed Phase 2R source catalog
 
-### Timing
+- exact registries: closed;
+- glyphs/spell parts: 9/9 individually cataloged;
+- default glyph acquisition: 9/9 resolved;
+- player-facing systems: 6/6 individually cataloged;
+- default system acquisition: 6/6 resolved;
+- persistence: 2 data components + 4 attachments classified;
+- networking: 5 payloads classified;
+- configs/defaults: classified;
+- capability delegation: classified;
+- mixin/validator/ritual relay behavior: classified;
+- optional ComputerCraft surface: classified and currently absent from physical pack;
+- provider authority/deduplication rules: closed;
+- narrow provider queue/capability/provenance deltas: written.
 
-`Precise Delay` directly occupies deterministic spell scheduling. Order/Chaos/temporal designs must avoid reproducing simple delayed execution.
+## Important source findings
 
-## Provenance / confidence
+- Warping Spell Prism can add a 600-tick provider region ticket by default; Black Arcana does not inherit that permission.
+- Prism helper calculates Source for entity targets, but the audited entity-hit execution returns before the block-target Source deduction path; runtime settlement is unresolved.
+- Scryer's Linkage declares `load_time=600`, but its audited 1.6.15 block/tile/capability paths do not demonstrate the matching region-ticket operation.
+- Remote multiple selection iterates a closed block box without an explicit source-visible volume/range cap in the audited path.
+- Portable Brazier Relay suppresses normal brazier ticking and reuses/recontextualizes the original Ars ritual object rather than cloning it.
 
-- Presence/version: current modlist — HIGH.
-- Registry ids, tiers, costs and public semantics above: current Ars 1.21.1 guide — HIGH.
-- Full addon inventory beyond the verified entries above: still under Phase 2 audit.
-- No Java bytecode was decompiled.
+## Delivery and later validation
+
+The source catalog is complete. PR delivery is tracked through the Phase 2R checkpoint and GitHub history; installed-JAR runtime/config/client/full-modpack QA remains a later explicit validation layer and is not inferred from source inspection.
+
+Shared provenance tables remain high-churn; `PROVENANCE-DELTA-PHASE2R-ARS-CONTROLE.md` is the authoritative narrow provenance overlay until those indexes are safely regenerated.
