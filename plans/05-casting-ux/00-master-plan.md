@@ -28,6 +28,8 @@ Targeting/aim planning audit baseline: `main@4ce5699cc76b511804956f903559ae8f7e4
 
 Spell-details/inspection planning audit baseline: `main@ede7dc310499ec21941504e8e6754d4f7c7f512e`.
 
+Casting audiovisual/animation planning audit baseline: `main@c5c1fe1346f0e7e9e991018f62c2f2399b41075b`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -37,6 +39,7 @@ Environment authority at this checkpoint:
 - `Spell Actionbar 1.1.4` is present as an external casting UI surface;
 - `Iron's Spells 'n Spellbooks 1.21.1-3.16.3` is present as an external spell/resource provider;
 - `Epic Fight 21.17.3.1` and `efiscompat 3.1.0` are present as combat/animation environment and Iron's-specific compatibility respectively;
+- `Punchy 2.7e`, Punchy Epic Fight Compat `1.0.0`, FirstPerson `2.7.2`, Better Lock On `2.0.8-neoforge`, Lock-On Movement Fix `1.0.2`, NotEnoughAnimations `1.12.4`, Player Animator `2.0.4+1.21.1` and Player Animation Library `1.1.6+mc.1.21.1` are present as additional animation/camera/combat-presentation coexistence surfaces;
 - no top-level general controller framework such as Controlify/Controllable/MidnightControls was found in the current physical modlist, so gamepad-specific support is not a current guaranteed provider contract.
 
 Presence/version does not establish an integration API. Direct bridges require exact-version API/source verification.
@@ -185,6 +188,14 @@ The current loadout editor may show a synchronized hazard/preflight tooltip on p
 
 `14-spell-details-inspection-presentation.md` is the planning authority for any future richer tooltip/detail/inspection surface. It requires field-level authority classification, static-vs-dynamic separation and fail-closed omission rather than reconstructing runtime/provider facts from IDs or names.
 
+### 3.11 Current casting audiovisual/animation behavior
+
+The current repository does not contain a generic cross-spell Black Arcana particle, sound, player-animation or camera-shake pipeline. Repository search at the 05.15 audit baseline did not identify generic use of particle emission, `playSound` or an animation-provider hook for cast presentation, and `src/main/resources/assets/black_arcana/` remains `lang/`-only.
+
+Current client preferences already expose particle density, reduced motion and reduced flashes, but those settings do not by themselves prove an implemented audiovisual casting layer. `CastResultPayload` proves bounded result data for a `castId` but does not generically carry resolved impact identity, target geometry, animation id, sound id, VFX id or channel progress.
+
+`15-casting-vfx-audio-animation-presentation.md` is the planning authority for any future cross-spell cast VFX/audio/player-animation/camera/telegraph lifecycle. It requires local-intent versus authoritative-result separation, bounded `castId` correlation, server-owned gameplay telegraphs, provider-host deduplication and fail-safe optional animation/camera adapters.
+
 ## 4. Plan package
 
 Stage 05 is divided into the following canonical planning documents:
@@ -202,7 +213,8 @@ Stage 05 is divided into the following canonical planning documents:
 11. `11-contextual-feedback-orchestration.md` — bounded arbitration, priority, supersession, correlation and timing across current selection context, advisory forecast and authoritative cast-result channels;
 12. `12-iconography-resource-resolution.md` — synchronized spell-icon resource parsing/resolution, fallback, reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance;
 13. `13-targeting-aim-presentation.md` — authority-safe reticle/aim/target presentation across current server target kinds, advisory target hints, stale-state/result correlation, world-safety boundaries, accessibility, performance and modpack coexistence;
-14. `14-spell-details-inspection-presentation.md` — bounded spell inspection/details, field-level presentation authority, static/dynamic separation, provider/resource/cooldown/target/world/progression boundaries, localization, accessibility, performance and fail-closed behavior.
+14. `14-spell-details-inspection-presentation.md` — bounded spell inspection/details, field-level presentation authority, static/dynamic separation, provider/resource/cooldown/target/world/progression boundaries, localization, accessibility, performance and fail-closed behavior;
+15. `15-casting-vfx-audio-animation-presentation.md` — authority-safe casting VFX/audio/player-animation/camera/telegraph lifecycle, `castId` correlation, provider-host deduplication, sensory-accessibility budgets, exact-version optional animation-provider boundaries and real-pack coexistence.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -236,6 +248,8 @@ Any future invocation surface — weapon, spellbook, staff, controller binding o
 
 A local crosshair candidate or future reticle/geometry guide remains presentation under 05.13. It must never be promoted into target admission, resolved impact identity or world-safety authority merely because it was visible when the intent was emitted.
 
+Any future audiovisual anticipation under 05.15 is equally non-authoritative: a local keypress/pose/particle cue cannot mean “cast accepted”. Committed release/impact/telegraph presentation must be driven by the authoritative result or a separately reviewed server-owned runtime presentation event appropriate to the exact phase.
+
 ### 5.4 Feedback
 
 After intent, the client may present only synchronized or server-authored information:
@@ -256,6 +270,8 @@ Target presentation follows the same anti-misattribution rule under 05.13: if th
 Spell icon art is supplemental presentation only. A synchronized `iconId` may be resolved under 05.12, but failed art resolution never changes canonical spell identity, selection, admission or cast result.
 
 Spell inspection under 05.14 is similarly supplemental. Static description/detail metadata and dynamic forecast/readiness data must retain their own authority/lifetime; a rich panel never becomes a substitute for cast-time server validation.
+
+Casting audiovisual presentation under 05.15 is also supplemental to gameplay authority. Provider animation failure, missing decorative particles or missing sound normally degrades presentation rather than denying an otherwise-valid Black Arcana cast. Gameplay-relevant telegraphs are the exception in the sense that their geometry/lifecycle must come from a canonical server-owned contract rather than decorative local inference.
 
 ## 6. UX principles
 
@@ -282,6 +298,8 @@ Likewise, a local reticle/entity/block observation under 05.13 may communicate a
 
 A detail line under 05.14 communicates only the fact its source contract owns. A configured cost does not prove affordability, a static target rule does not prove a current target, and a world-effect warning does not prove mutation permission.
 
+An audiovisual cue under 05.15 communicates only the phase/fact its trigger owns. Local anticipation cannot impersonate committed success, provider animation cannot prove Black Arcana transaction acceptance, and a decorative local area effect cannot impersonate canonical server target geometry.
+
 ### 6.4 Information hierarchy
 
 The UI should prioritize in this order:
@@ -307,6 +325,8 @@ Keyboard focus introduced by future 05.09 work must use the `FOCUSED` semantic r
 Target/aim presentation introduced through 05.13 must likewise distinguish local observation from server-authored preview/result through redundant non-color-only cues.
 
 Inspection/detail presentation introduced through 05.14 must distinguish static identity/detail, advisory/dynamic preview, authoritative result, unknown/unavailable data and presentation fallback without flattening them into one stat sheet.
+
+Audiovisual presentation introduced through 05.15 must preserve the same semantic distinctions across motion, sound, particles and animation. Essential states require a non-audio/non-particle fallback, and reduced-motion/reduced-flash settings must not change gameplay outcome.
 
 ## 7. Planned UX refinements
 
@@ -472,6 +492,29 @@ Plan:
 - avoid per-hover network requests, runtime JAR/tooltip scraping, global scans and unbounded detail caches;
 - keep provider descriptions/assets/UI clean-room and provider-owned unless rights/contracts explicitly allow reuse.
 
+### 7.11 Casting VFX, audio and animation presentation
+
+`15-casting-vfx-audio-animation-presentation.md` closes the remaining cross-cutting presentation gap between a server-authoritative cast and its future audiovisual expression.
+
+Plan:
+
+- classify every cue as local intent, server-authored forecast, authoritative cast result, server-owned runtime event, decorative local effect, provider-owned presentation or unknown/unavailable;
+- keep local anticipation restrained and never equivalent to authoritative cast acceptance;
+- use `castId` as the natural root correlation token for cues attached to one root cast when attribution is needed;
+- add a new bounded server presentation-event contract only when current result/state payloads cannot express a genuinely required server-owned phase;
+- require gameplay-relevant telegraphs to follow server-owned geometry/lifecycle rather than local crosshair guesses;
+- keep decorative particles density-scalable while providing a non-particle fallback for required telegraphs;
+- keep sound supplemental and never the only carrier of denial/danger/success state;
+- treat player animation as presentation: client keyframes never spend resources, start cooldowns, deal damage or authorize target/world effects;
+- verify exact APIs before choosing Player Animator, Player Animation Library, Epic Fight or another provider; do not conflate distinct installed animation libraries;
+- degrade safely when optional animation/camera providers are absent or incompatible instead of denying legitimate gameplay;
+- deduplicate Iron-hosted/provider-hosted presentation so one physical invocation does not produce overlapping provider + Black Arcana + compat animations/sounds/VFX by default;
+- keep camera motion bounded, reduced-motion aware and subordinate to targeting authority and the Stage 07.07 Borrowed Sight viewpoint lifecycle;
+- preserve Arcane Danger/Backlash causality and avoid turning backlash presentation into a normal offensive proc chain;
+- bound particles, active emitters, sounds, animation layers, camera effects, recipients, cue caches and packet rate/lifetime;
+- keep audiovisual assets original/project-owned or explicitly provenance-safe under `SOURCES.md`/`THIRD_PARTY_NOTICES.md`;
+- leave per-spell audiovisual choices with Stage 07 rather than creating a second spell-definition catalog in Stage 05.
+
 ## 8. Input conflict policy for the large modpack
 
 The pack has many mods and therefore many mappings.
@@ -489,6 +532,8 @@ Rules:
 Screen-local focus traversal defined by 05.09 should not register additional global `KeyMapping`s merely to move focus while a Black Arcana `Screen` already owns input.
 
 Inspection/details interaction under 05.14 should likewise remain screen-local where possible and must not create a new global default cast/details key without a separate demonstrated need.
+
+05.15 audiovisual presentation must not register a second cast key or derive gameplay authority from an animation-provider keybinding.
 
 ## 9. Networking and state rules
 
@@ -512,6 +557,10 @@ Expected defaults:
 - spell icon identity: bounded synchronized `iconId`; actual resource syntax/existence remains client presentation resolution under 05.12;
 - static spell inspection identity: current generic contract is `spellId` + `translationKey` + `iconId`; richer detail fields remain unavailable until explicitly synchronized under 05.07/05.14;
 - inspected spell/focus and formatted static detail cache: client-local presentation state only, reconciled against current synchronized snapshots and cleared/invalidated on relevant screen/session/language/resource changes;
+- local audiovisual anticipation: client-local presentation only and never proof of acceptance;
+- committed audiovisual result cue: authoritative-result driven and correlated by `castId` when spell/operation attribution is required;
+- gameplay-relevant impact/field/telegraph presentation: server-owned runtime event/state when current result payload cannot prove the required target/geometry/lifecycle;
+- provider-owned animation/VFX/audio state: external presentation authority only and never Black Arcana gameplay authority by implication;
 - local aim/crosshair observation: client-local transient presentation only;
 - current `targetHint`: bounded advisory intent data, not target authority;
 - generic target kind/range/LOS/geometry validity: unavailable to presentation unless the required bounded authoritative data is actually synchronized;
@@ -527,6 +576,8 @@ The current loadout snapshot reply proves canonical state, not an explicit accep
 The current cast-result payload proves status/code/detail for its `castId`, not the identity of the client's current selection or current aim target. Unknown/unmatched result ids remain valid authoritative results but must not receive guessed spell/slot/target attribution.
 
 Static inspection metadata and dynamic preview/result state must not share one ambiguous cache/lifetime. A dynamic hazard/gate/provider preview never becomes permanent definition text simply because a details screen remains open.
+
+Audiovisual cue state must likewise preserve phase/lifetime. A local intent cue cannot later be reused as proof of success, a stale channel animation must tear down, and an unmatched result uses generic audiovisual feedback rather than guessed spell/target attribution.
 
 Do not add per-tick full-state synchronization.
 
@@ -546,6 +597,8 @@ Stage 05 is not allowed to become a client or server tick-cost sink.
 - aim/reticle rendering may use bounded local observation but must not send per-frame target-preview requests, enumerate global entities/chunks or probe protection adapters every frame;
 - spell inspection must render primarily from bounded synchronized snapshots; pointer/focus traversal must not request a full server dossier per hover, scrape provider tooltips/JARs or build unbounded formatted-detail/history caches;
 - dynamic inspection previews, if ever required, must be rate-limited/correlated/stale-safe rather than hover-driven spam;
+- audiovisual presentation must define explicit count/rate/lifetime/distance budgets for particles, persistent emitters, sound instances, animation layers, camera effects, remote recipients and cue caches;
+- audiovisual presentation must not scan global entities/chunks, resolve provider registries/resources every frame, query protection systems every frame or send network traffic per animation/particle frame;
 - no UI feature may trigger global server scans;
 - icon lookup and text layout should be cached or bounded where profiling proves necessary.
 
@@ -573,6 +626,12 @@ Examples:
 - target kind/range/geometry metadata unavailable → omit exact target-volume/validity claims rather than reconstruct server rules client-side;
 - world/protection preview unavailable → do not imply mutation permission or reveal protected/hidden state;
 - provider preview unavailable → omit or label unavailable;
+- optional animation/camera provider absent or incompatible → omit that provider-specific presentation; do not deny an otherwise-valid Black Arcana cast;
+- missing decorative particle/sound/animation asset → presentation fallback/omission, not spell unavailability;
+- missing authoritative target/field lifecycle contract → do not render a guaranteed gameplay telegraph from local guesses;
+- provider host already owns cast presentation → suppress duplicate Black Arcana host-level presentation unless an explicit composition rule exists;
+- Borrowed Sight active without a safe camera-composition rule → ordinary cosmetic camera effects yield rather than corrupt its viewpoint lifecycle;
+- stale audiovisual/channel state → tear it down without mutating gameplay;
 - network/session reset → clear stale client state before new snapshots;
 - incompatible optional integration → disable only that presentation seam.
 
@@ -594,15 +653,16 @@ When a planned refinement is approved for implementation:
 10. for spell-icon/resource changes, use `12-iconography-resource-resolution.md` before adding resource lookup, cache/reload behavior or bundled icon assets;
 11. for reticle/aim/target-presentation changes, use `13-targeting-aim-presentation.md` before adding target overlays, geometry guides, target-preview synchronization or result/target attribution;
 12. for spell-tooltip/detail/inspection changes, use `14-spell-details-inspection-presentation.md` before exposing new static/dynamic fields, provider facts, descriptions or detail caching;
-13. add deterministic RED tests for pure/state behavior where applicable;
-14. implement the minimum GREEN change;
-15. add/adjust GameTests only where world/network integration requires them;
-16. run full Black Arcana CI;
-17. execute the specific real-client rows affected by visual/input behavior;
-18. fetch `origin/main` again and reconcile;
-19. rerun CI on the reconciled HEAD;
-20. merge only after exact-head gates are green;
-21. record final main SHA and any still-deferred manual rows.
+13. for casting VFX/audio/player-animation/camera/telegraph work, use `15-casting-vfx-audio-animation-presentation.md` before adding audiovisual resources, result/runtime cue protocols, animation-provider adapters or camera effects;
+14. add deterministic RED tests for pure/state behavior where applicable;
+15. implement the minimum GREEN change;
+16. add/adjust GameTests only where world/network integration requires them;
+17. run full Black Arcana CI;
+18. execute the specific real-client rows affected by visual/input behavior;
+19. fetch `origin/main` again and reconcile;
+20. rerun CI on the reconciled HEAD;
+21. merge only after exact-head gates are green;
+22. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -636,7 +696,15 @@ This plan does not authorize:
 - treating server runtime fields as client spell-detail data without an explicit presentation contract;
 - per-hover full server dossiers, provider-tooltip scraping or private reflection for inspection;
 - reconstructing damage/cost/cooldown/target/progression/provider truth from spell IDs, names, namespaces or icons;
-- copying third-party descriptions/tooltips/assets/layout trade dress without compatible permission and provenance;
+- client animation keyframes as gameplay authority for cost/cooldown/damage/target/world mutation;
+- gameplay-relevant telegraph geometry reconstructed from local aim when the server contract does not provide it;
+- global/per-frame entity/chunk/protection/provider scans for audiovisual decoration;
+- mandatory Epic Fight/Punchy/FirstPerson/Player Animator/Player Animation Library dependency for core Black Arcana casting;
+- conflating Player Animator and Player Animation Library merely because both are installed;
+- duplicate provider + Black Arcana animation/audio/VFX for one hosted root cast by default;
+- audio-only or decorative-particle-only critical state;
+- permanent camera takeover or a generic camera system that silently overrides Stage 07.07 Borrowed Sight;
+- copying third-party descriptions/tooltips/assets/layout trade dress/VFX/sounds/animations without compatible permission and provenance;
 - forced gamepad dependencies;
 - silent key remapping of other mods;
 - copying third-party UI/assets/code without compatible permission and provenance;
@@ -658,6 +726,8 @@ The default strategy is:
 - no controller API is assumed while no controller provider is physically present;
 - direct interoperability code is added only after a real conflict/requirement and exact-version API verification.
 
+05.15 specializes this coexistence rule for player animation, first-person body/camera, lock-on, Punchy, provider-hosted audiovisual presentation and the two distinct installed player-animation libraries. Presence of those mods remains a QA/integration fact, not proof of an API seam.
+
 Real-pack coexistence findings may become Stage 05 blockers only when they break required input/readability/authority; cosmetic unification remains an optional follow-up.
 
 ## 16. Presentation data authority rule
@@ -671,6 +741,7 @@ Current audited boundary:
 - `ArcanaSpellDefinition` containing `cost`/`requestsWorldMutation` on the server does not itself authorize client presentation of those fields;
 - cooldown snapshots are authoritative by canonical `groupId`, but the current spell presentation payload does not synchronize the spell→cooldown-group relationship, so a generic per-spell cooldown widget must not guess that mapping;
 - exact resource/cost preview, charge-pool state, active channel progress and generic ritual/domain timers do not currently have sufficient Stage 05 client contracts;
+- current generic cast result does not identify resolved impact/target geometry or audiovisual resource identity, so gameplay-relevant audiovisual attribution beyond generic result state requires a separately reviewed bounded server-owned event/state when genuinely needed;
 - Corruption/Strain current values remain intentionally withheld pending separate approval;
 - external-provider resources/cooldowns remain provider-owned unless an exact supported presentation seam is deliberately adopted;
 - all future synchronization remains bounded, versioned, event-driven, stale-safe and presentation-only.
@@ -837,3 +908,30 @@ Current planning rule:
 - missing detail fails closed by omission/unavailable presentation and never blocks a legitimate server cast merely because optional UI data is absent.
 
 05.14 is not automatically a Stage 05 completion blocker. Spell-inspection hardening becomes mandatory only when a direct real-client acceptance failure or explicit reviewed decision promotes a specific refinement. Creating 05.14 does not add description metadata, detail UI, new payload fields, provider adapters, assets, runtime behavior or manual PASS evidence.
+
+## 24. Casting VFX, audio and animation presentation rule
+
+`15-casting-vfx-audio-animation-presentation.md` is the canonical planning layer for future cross-spell cast VFX, sound, player animation, camera feedback and gameplay-relevant telegraphs.
+
+Current planning rule:
+
+- current Black Arcana has no generic cross-spell particle/sound/player-animation/camera runtime or bundled audiovisual asset tree; the 05.15 baseline remains planning-only;
+- local input/keypress presentation is `LOCAL_INTENT_PRESENTATION` and never proof of server acceptance, resource spend, cooldown readiness, target validity or world-effect admission;
+- a generic success/denial audiovisual cue may follow authoritative `CastResultPayload` state, with `castId` used for bounded correlation when spell/operation attribution is required;
+- current result payload does not generically prove resolved impact identity or target geometry, so impact/field/telegraph presentation that needs those facts requires a separately reviewed bounded server-owned runtime event/state;
+- gameplay-relevant telegraphs must derive geometry/lifetime from server-owned state and must not force-load chunks or query protection/world state per render frame;
+- decorative particles may obey the existing density multiplier, but a zero-density setting cannot erase the sole mandatory gameplay telegraph;
+- sound is supplemental and never the only carrier of denial, danger or other critical state;
+- player animation is presentation only; client keyframes never authorize or time canonical resource/cooldown/damage/target/world-effect settlement;
+- optional animation-provider failure normally removes only that presentation layer rather than denying a valid cast;
+- Epic Fight, EFIS, Punchy, FirstPerson, Better Lock On, Player Animator and Player Animation Library remain exact-version coexistence/provider surfaces; presence does not prove an API, and Player Animator/Player Animation Library must not be conflated;
+- provider-hosted casts are deduplicated per root invocation/`castId` so provider + Black Arcana + compatibility animation/audio/VFX do not stack unintentionally;
+- camera motion is bounded, reduced-motion aware, non-authoritative for targeting and subordinate to the Stage 07.07 Borrowed Sight viewpoint lifecycle when no safe composition rule exists;
+- Arcane Danger/Backlash audiovisuals preserve the existing hazard causal model and never become a normal offensive proc/cast chain;
+- audiovisual work has explicit particle/emitter/sound/animation/camera/recipient/cache/rate/lifetime budgets and never uses global/per-frame discovery scans;
+- common/server presentation-event data remains dedicated-server safe and must not eagerly load client renderer/animation-provider classes;
+- per-spell audiovisual identity remains Stage 07 content responsibility while 05.15 owns the cross-cutting lifecycle, authority, accessibility, coexistence and resource/provenance rules;
+- Black Arcana audiovisual assets remain original/project-owned or explicitly provenance-safe under `SOURCES.md`, `THIRD_PARTY_NOTICES.md` and Stage 09 review;
+- missing optional audiovisual resources or adapters fail closed by presentation fallback/omission and never invent gameplay truth.
+
+05.15 is not automatically a Stage 05 completion blocker. Audiovisual hardening becomes mandatory only when a direct real-client acceptance failure, a concrete Stage 07 content requirement or an explicit reviewed decision promotes a specific refinement. Creating 05.15 does not add VFX/audio/animation assets, protocol fields, provider adapters, runtime behavior or manual PASS evidence.
