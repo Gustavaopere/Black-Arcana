@@ -12,6 +12,8 @@ Baseline used to author this plan: `main@cad9b133fc06048f718c6a408a7e9aca2c36036
 
 Coexistence reconciliation baseline: `main@acbea2c897805e0d51476360c27adfd20fabfc64`.
 
+Presentation-contract audit baseline: `main@ef867a59c3be52f0592618b23300507ed40e4241`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -131,7 +133,8 @@ Stage 05 is divided into the following canonical planning documents:
 3. `03-contextual-hud.md` — selected-spell, cooldown/gate/hazard/result presentation and anti-clutter rules;
 4. `04-accessibility-client-config.md` — rebindability, presentation preferences, motion/flash/particle policy and optional controller boundary;
 5. `05-final-client-validation-handoff.md` — exact real-client closeout campaign;
-6. `06-modpack-coexistence.md` — coexistence with installed casting/actionbar/combat/keybinding surfaces and exact-version integration gates.
+6. `06-modpack-coexistence.md` — coexistence with installed casting/actionbar/combat/keybinding surfaces and exact-version integration gates;
+7. `07-presentation-data-contracts.md` — audited server/client presentation authority, currently synchronized data and the contract gates for cooldown mapping, cost, charges, channels and timers.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -164,7 +167,7 @@ Any future invocation surface — weapon, spellbook, staff, controller binding o
 After intent, the client may present only synchronized or server-authored information:
 
 - selection state;
-- cooldown state where synchronized;
+- cooldown state where the selected spell can be bound to an authoritative synchronized cooldown group under `07-presentation-data-contracts.md`;
 - predictable gate category where supported;
 - danger tier and Arcane Resistance forecast where supported;
 - authoritative cast success/denial feedback;
@@ -247,7 +250,7 @@ Planned improvements may add:
 
 - icon + short name on normal viewports;
 - selected-state emphasis;
-- cooldown/readiness affordance using synchronized cooldown data;
+- cooldown/readiness affordance only after the selected spell can be mapped to its canonical server-authored cooldown group as required by `07-presentation-data-contracts.md`;
 - static danger affordance where available;
 - page indicator and keyboard/mouse navigation clarity;
 - optional resource/cost summary only if a bounded server-authored presentation contract exists.
@@ -258,12 +261,15 @@ Nested domain/loadout navigation is **not** automatically approved. It should be
 
 The original Stage 05 candidate list included selected spell, short cooldown, provider-specific cost, charge/channel state, denial reason and temporary ritual/domain timers.
 
-Current implementation already covers part of this surface. Future additions must satisfy these rules:
+Current implementation already covers part of this surface. `07-presentation-data-contracts.md` is the authority/data-availability gate for the remaining items.
 
-- cooldown: use synchronized server state;
+Future additions must satisfy these rules:
+
+- cooldown: the current client receives cooldown-group snapshots, but generic per-spell display requires an authoritative spell→group mapping; never assume `groupId == spellId`;
 - provider cost: do not recompute provider economics client-side; add a bounded presentation contract if exact preview is needed;
-- channel/charge: display only server-owned session state or bounded client prediction explicitly labeled as presentation;
-- ritual/domain timers: only for Black Arcana-owned active state or a supported provider presentation seam;
+- channel/charge: display only server-owned state exposed through a bounded synchronization/lifecycle contract; local key duration is never authority;
+- ritual/domain timers: only for Black Arcana-owned active state or a supported provider presentation seam, through an owner-specific bounded contract;
+- Corruption/Strain values remain intentionally unsynchronized until separately approved;
 - denial: display the server-authored bounded reason;
 - no permanent resource UI by default.
 
@@ -319,9 +325,11 @@ Expected defaults:
 
 - loadout: server-owned persistent snapshot;
 - selected slot: client presentation state reconciled against server loadout;
-- cooldown: server-owned synchronized snapshot;
+- cooldown: server-owned synchronized group snapshot; per-spell presentation additionally requires the authoritative spell→group relationship defined by `07-presentation-data-contracts.md`;
 - cast result/denial: server-authored event result;
 - hazard/gate forecast: bounded request/response, stale-response protected;
+- cost/charge/channel/timer presentation: unavailable until the corresponding bounded server-authored contract exists;
+- Corruption/Strain current values: intentionally absent until separately approved;
 - client config: local presentation state only.
 
 Do not add per-tick full-state synchronization.
@@ -347,6 +355,7 @@ Examples:
 - missing icon → text fallback;
 - stale selected slot → reconcile to current synchronized loadout;
 - rejected loadout update → server state wins;
+- cooldown group received without a valid selected-spell mapping → omit generic spell cooldown rather than guess;
 - unavailable hazard forecast → show unavailable/static fallback, never partial value as complete;
 - provider preview unavailable → omit or label unavailable;
 - network/session reset → clear stale client state before new snapshots;
@@ -360,15 +369,16 @@ When a planned refinement is approved for implementation:
 2. verify no concurrent PR owns the same Stage 05 surface;
 3. read this master plan and the relevant subplan;
 4. inspect current runtime/tests rather than relying on old branch history;
-5. add deterministic RED tests for pure/state behavior where applicable;
-6. implement the minimum GREEN change;
-7. add/adjust GameTests only where world/network integration requires them;
-8. run full Black Arcana CI;
-9. execute the specific real-client rows affected by visual/input behavior;
-10. fetch `origin/main` again and reconcile;
-11. rerun CI on the reconciled HEAD;
-12. merge only after exact-head gates are green;
-13. record final main SHA and any still-deferred manual rows.
+5. for new presentation data, classify authority/current synchronization through `07-presentation-data-contracts.md` before changing protocol/UI;
+6. add deterministic RED tests for pure/state behavior where applicable;
+7. implement the minimum GREEN change;
+8. add/adjust GameTests only where world/network integration requires them;
+9. run full Black Arcana CI;
+10. execute the specific real-client rows affected by visual/input behavior;
+11. fetch `origin/main` again and reconcile;
+12. rerun CI on the reconciled HEAD;
+13. merge only after exact-head gates are green;
+14. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -415,3 +425,18 @@ The default strategy is:
 - direct interoperability code is added only after a real conflict/requirement and exact-version API verification.
 
 Real-pack coexistence findings may become Stage 05 blockers only when they break required input/readability/authority; cosmetic unification remains an optional follow-up.
+
+## 16. Presentation data authority rule
+
+`07-presentation-data-contracts.md` is the canonical plan for deciding whether a planned HUD/radial/loadout datum is currently safe to render or requires a new server-authored contract first.
+
+Current audited boundary:
+
+- spell id/name/icon, accepted loadout, authoritative cast result and existing hazard presentation are available through current bounded synchronization;
+- cooldown snapshots are authoritative by canonical `groupId`, but the current spell presentation payload does not synchronize the spell→cooldown-group relationship, so a generic per-spell cooldown widget must not guess that mapping;
+- exact resource/cost preview, charge-pool state, active channel progress and generic ritual/domain timers do not currently have sufficient Stage 05 client contracts;
+- Corruption/Strain current values remain intentionally withheld pending separate approval;
+- external-provider resources/cooldowns remain provider-owned unless an exact supported presentation seam is deliberately adopted;
+- all future synchronization remains bounded, versioned, event-driven, stale-safe and presentation-only.
+
+Missing optional presentation data does not by itself reopen Stage 05 or convert the current manual-validation state. A contract becomes required only if explicitly promoted or needed to fix a directly observed acceptance failure.
