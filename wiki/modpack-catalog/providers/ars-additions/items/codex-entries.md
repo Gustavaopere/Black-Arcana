@@ -1,6 +1,6 @@
 # Codex Entry / Lost Codex Entry / Ancient Codex Entry
 
-Status: `SOURCE-PINNED 21.3.0 / GLYPH-LEARNING SEMANTICS AUDITED / ACQUISITION PARTIAL`
+Status: `SOURCE-PINNED 21.3.0 / GLYPH-LEARNING SEMANTICS AUDITED / DEFAULT ACQUISITION DISPOSITION PINNED`
 
 Exact source pin: `Jarva/Ars-Additions@91f102a90dc058cf40e4eac5a67a881e48b856b4`.
 
@@ -32,13 +32,18 @@ If no eligible glyph remains, no duplicate unlock is fabricated. Instead the pro
 
 These fallback values are vanilla XP, not Ars recipe XP, RPG Skill Tree XP, Mastery or Black Arcana progression.
 
-## Acquisition evidence
+## Default acquisition
 
-`AddonSetup` adds the normal Codex Entry to Ars Nouveau `DungeonLootTables.BASIC_LOOT`.
+The exact release-line README for the 21.3.0 source pin explicitly states:
 
-The exact Ars Additions ruined-portal chest table also contains **1–4 normal Codex Entries** in a guaranteed one-roll pool for that table.
+- Tier I Codex Entry is obtainable in basic dungeon loot;
+- higher-tier Lost and Ancient variants are **unobtainable by default**.
 
-The current exact-source pass did not prove a recipe/loot injection for Lost Codex Entry or Ancient Codex Entry. Their registry/runtime semantics are confirmed, but acquisition remains `UNPROVEN IN CURRENT SOURCE PASS` rather than inferred from names or tier.
+Executable source agrees for Tier I: `AddonSetup` adds the normal Codex Entry to Ars Nouveau `DungeonLootTables.BASIC_LOOT`.
+
+Ars Additions' own Arcane Library, Nexus Tower and Ruined Portal chest tables each also include **1–4 normal Codex Entries**.
+
+No default recipe/loot path is therefore assigned to Lost/Ancient merely because those item registries exist. Datapacks/modpack customization may still add acquisition later; that would be effective-pack configuration and must be checked separately.
 
 ## Authority / deduplication
 

@@ -1,6 +1,6 @@
 # Ars Additions 21.3.0 — Stateful systems
 
-Status: `SOURCE-PINNED / SYSTEM AUTHORITY AUDIT IN PROGRESS / RUNTIME+PACK QA PENDING`
+Status: `SOURCE-PINNED / MATERIAL SYSTEM SURFACES AUDITED / RUNTIME+PACK QA PENDING`
 
 Exact source pin: `Jarva/Ars-Additions@91f102a90dc058cf40e4eac5a67a881e48b856b4`.
 
@@ -15,6 +15,11 @@ This directory tracks provider-owned systems whose behavior cannot be represente
 - [Memory Crystal](memory-crystal.md)
 - [Advanced Dominion Wand](advanced-dominion-wand.md)
 - [XP Jar](xp-jar.md)
+- [Spellweave](spellweave.md)
+- [Enchanting Wixie](enchanting-wixie.md)
+- [Bulk Scribing](bulk-scribing.md)
+- [Locate Structure recipe system](structure-locator.md)
+- [Local weather infrastructure](local-weather-infrastructure.md) — registered plumbing but dormant in the audited production path, therefore not counted as active magic.
 
 ## Cross-provider boundary
 
