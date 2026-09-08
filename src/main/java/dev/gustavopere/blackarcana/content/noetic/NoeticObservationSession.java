@@ -12,6 +12,7 @@ public final class NoeticObservationSession {
         VIEWER_LOGOUT,
         VIEWER_DEATH,
         TARGET_UNAVAILABLE,
+        AUTHORIZATION_REVOKED,
         SERVER_STOP
     }
 
