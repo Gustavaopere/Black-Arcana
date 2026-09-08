@@ -23,22 +23,9 @@ Physical modlist evidence is authoritative for installed filename/mod id/runtime
 
 ## Current public scope
 
-The current publisher page describes Somake as adding **over 50 spells** with emphasis on:
+The current publisher page describes Somake as adding **over 50 spells** with emphasis on Lightning, Fire, Aqua and Symmetry, plus Blood/Ender content and elemental `charges`, including addon element integrations.
 
-- Lightning;
-- Fire;
-- Aqua;
-- Symmetry;
-- Blood/Ender content;
-- elemental `charges`, including addon element integrations.
-
-It also documents:
-
-- a Somake **Aqua School** for 1.21.1;
-- equipment and armor families;
-- evolving Grimoires;
-- tier-book progression / Upgrade Forge from the release lineage;
-- a Soul Fire / Infernal Fire ritual progression using Cataclysm's Altar of Ignis.
+It also documents a Somake **Aqua School** for 1.21.1, equipment/armor, evolving Grimoires, tier-book progression / Upgrade Forge from the release lineage and a Soul Fire / Infernal Fire ritual progression using Cataclysm's Altar of Ignis.
 
 `50+` is a publisher scale statement, **not** a verified current registry count. The changelog history itself names more Blood content than the current page's simplified `1 Blood` summary would suggest, so school totals are not inferred from marketing prose.
 
@@ -78,6 +65,7 @@ Present:
 - Iron's Spells 'n Spellbooks `1.21.1-3.16.3`;
 - L_Ender's Cataclysm `3.33`;
 - Apothic Attributes `2.10.1`;
+- Magic From the East / `iss_magicfromtheeast` `1.1.5`;
 - Born in Chaos `1.7.6`;
 - GTBC's Geomancy Plus `1.1.0-1.21.1`;
 - Tunes 'n Tomes `1.1.0-HOTFIX`;
@@ -86,10 +74,9 @@ Present:
 
 Not located in the physical modlist:
 
-- Magic From the East;
 - Better Combat.
 
-Presence satisfies a compatibility precondition only; it is not evidence that every optional integration path is runtime-active.
+Presence satisfies a compatibility precondition only; it is not evidence that every optional integration path is runtime-active. Because Magic From the East is physically present, the publisher-described **Symmetry integration path is eligible**; exact active spells/IDs still require runtime/config evidence.
 
 ## Aqua / T.O Magic coexistence
 
@@ -97,28 +84,13 @@ Somake states that Aqua was created to cover the absence of Aqua/T.O Magic on 1.
 
 The current pack does contain `traveloptics-4.4.0.1-1.21.1.jar`, but the T.O Magic publisher currently labels that 1.21.1 build **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**.
 
-Therefore:
-
-- Somake Aqua is physically present;
-- T.O Magic 1.21.1 alpha is also physically present;
-- the historical publisher migration statement does **not** prove that authority has migrated to this deprecated alpha;
-- duplicate school/registry/runtime interaction is a live QA blocker.
+Therefore Somake Aqua and the T.O Magic alpha are both physically present, but the historical migration statement does **not** prove that authority migrated to this deprecated alpha. Duplicate school/registry/runtime interaction is a live QA blocker.
 
 Until runtime/API evidence resolves it, Black Arcana must not select one provider's Aqua identity by assumption or create another Aqua pipeline.
 
 ## Publicly named current-line spell evidence
 
-1.0.8 directly adds/references, among others:
-
-- Ritual Flame;
-- Custodia Caeli;
-- Bloody Legacy;
-- Fragmented Requiem;
-- The Rose's Secret;
-- Jingle Bell;
-- Chain Connection (moved to Aqua);
-- Fire Orbs (rework);
-- Ignis Shield (rework).
+1.0.8 directly adds/references Ritual Flame, Custodia Caeli, Bloody Legacy, Fragmented Requiem, The Rose's Secret, Jingle Bell, Chain Connection (moved to Aqua), Fire Orbs (rework) and Ignis Shield (rework).
 
 1.0.7 publicly introduced Guardian/Blessed/Cursed Connection, Bloodmark, Water Control and Firestorm Vortex. Those older names remain separately marked `CURRENT REGISTRY UNVERIFIED` unless 1.0.8 re-confirms them.
 
@@ -128,22 +100,9 @@ See the dedicated inventory for exact evidence posture. None of these names impl
 
 ## Authority / deduplication
 
-Somake owns its provider-specific:
+Somake owns its provider-specific spell semantics, Aqua/Symmetry content it registers, Elemental Charges, tier-book/Grimoire/Upgrade Forge progression, Soul Fire/Infernal Fire ritual progression and item/equipment evolution.
 
-- spell semantics;
-- Aqua/Symmetry content it registers;
-- Elemental Charges;
-- tier-book/Grimoire/Upgrade Forge progression;
-- Soul Fire/Infernal Fire ritual progression;
-- item/equipment evolution.
-
-Black Arcana must not:
-
-- create a parallel Somake charge ledger;
-- duplicate provider ritual completion/rewards;
-- write guessed Somake school/spell IDs;
-- duplicate generic Water Control, damage-link/heal-link, blood-zone or fire-vortex mechanics without a material forbidden-magic delta;
-- transfer Somake runtime authority to RPG Skill Tree.
+Black Arcana must not create a parallel Somake charge ledger, duplicate provider ritual completion/rewards, write guessed Somake school/spell IDs, duplicate generic Water Control/damage-link/heal-link/blood-zone/fire-vortex mechanics without a material forbidden-magic delta, or transfer Somake runtime authority to RPG Skill Tree.
 
 RPG Skill Tree may provide progression/mastery/perks only through a real contract. It does not own Somake casting/resources or Black Arcana magic runtime.
 
