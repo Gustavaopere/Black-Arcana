@@ -10,9 +10,12 @@ import dev.gustavopere.blackarcana.content.noetic.NoeticPerceptionSnapshot;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
 import dev.gustavopere.blackarcana.content.noetic.NullificationRegistry;
 import dev.gustavopere.blackarcana.content.noetic.PactSanctuarySpec;
+import dev.gustavopere.blackarcana.network.NoeticViewTransitionTracker;
+import dev.gustavopere.blackarcana.network.neoforge.NoeticViewNetworkBridge;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -31,6 +34,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 
@@ -213,8 +217,36 @@ public final class MinecraftNoeticRuntime {
         if (state == null) return;
         settlePendingDeaths(server, state);
         state.observation.tick(server);
+        syncObservationViews(server, state);
         state.gaze.tick(server);
         state.sanctuary.tick(server);
+    }
+
+    private static void syncObservationViews(MinecraftServer server, ServerState state) {
+        NoeticViewSyncService.dispatch(
+                state.observations,
+                state.viewTransitions,
+                (viewerId, targetId) -> loadedBorrowedSightTargetId(server, viewerId, targetId),
+                (viewerId, payload) -> {
+                    ServerPlayer viewer = server.getPlayerList().getPlayer(viewerId);
+                    if (viewer != null) {
+                        NoeticViewNetworkBridge.send(viewer, payload);
+                    }
+                });
+    }
+
+    private static OptionalInt loadedBorrowedSightTargetId(
+            MinecraftServer server,
+            UUID viewerId,
+            UUID targetId
+    ) {
+        ServerPlayer viewer = server.getPlayerList().getPlayer(viewerId);
+        if (viewer == null) return OptionalInt.empty();
+        Entity target = viewer.level().getEntity(targetId);
+        if (!(target instanceof LivingEntity living) || !living.isAlive()) {
+            return OptionalInt.empty();
+        }
+        return OptionalInt.of(living.getId());
     }
 
     private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
@@ -301,6 +333,8 @@ public final class MinecraftNoeticRuntime {
                 new NoeticObservationRuntime(NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS);
         private final MinecraftNoeticObservationRuntime observation =
                 new MinecraftNoeticObservationRuntime(observations, familiarOwnership);
+        private final NoeticViewTransitionTracker viewTransitions =
+                new NoeticViewTransitionTracker(NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS);
         private final NullificationRegistry nullifications =
                 new NullificationRegistry(NoeticSafetyCeilings.MAX_NULLIFIABLE_EFFECT_TYPES);
         private final MinecraftNoeticGazeRuntime gaze = new MinecraftNoeticGazeRuntime(nullifications);
