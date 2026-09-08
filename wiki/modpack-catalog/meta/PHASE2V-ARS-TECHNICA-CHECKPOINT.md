@@ -1,9 +1,10 @@
 # Phase 2V — Ars Technica 2.7.6 checkpoint
 
-Status: `SOURCE CATALOG COMPLETE / FINAL MAIN SYNC + CI PENDING / INSTALLED CONFIG + RUNTIME QA DEFERRED`
+Status: `SOURCE CATALOG COMPLETE / FINAL MAIN SYNC COMPLETE / CI PENDING / INSTALLED CONFIG + RUNTIME QA DEFERRED`
 
 Execution branch: `docs/magic-catalog-phase2v-ars-technica`
 Base main at phase start: `310c280419b49e5a57077e3460d956ac3dcd27e1`
+Pre-CI reconciliation: branch confirmed **0 commits behind** `main@310c280419b49e5a57077e3460d956ac3dcd27e1`; exact diff remains confined to `wiki/modpack-catalog/**`.
 Provider source pin: `zeroregard/Ars-Technica@bf34b58ff8908837e5894dee773d3afbd98aa3e3`
 Provider build dependencies: Ars Nouveau `5.11.0.1267`, Create `6.0.8`
 Inherited Ars source checkpoint where required: `baileyholl/Ars-Nouveau@f89dacc5d7467aae8497d98e95dad8347a8d7d21`
@@ -77,11 +78,11 @@ These are runtime/config/provenance gates, not missing source-catalog entries.
 
 ## Final merge gate
 
-- fetch current `main` again immediately before merge;
-- reconcile any advancement semantically into the branch;
-- inspect the exact reconciled diff;
-- require fresh CI on that exact HEAD;
-- require no blocking review threads;
+- pre-CI current-main reconciliation: complete against `main@310c280419b49e5a57077e3460d956ac3dcd27e1`;
+- exact catalog-only diff review: complete before this checkpoint commit;
+- fresh CI must pass on the exact final execution HEAD after this commit;
+- immediately before merge, fetch `main` again and reconcile/revalidate if it advanced;
+- review threads must remain clear;
 - merge only after those gates pass;
 - confirm final `main` SHA after merge.
 
