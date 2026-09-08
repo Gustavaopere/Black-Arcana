@@ -1,9 +1,11 @@
 # Phase 2Y — Ars Nouveau's Flavors & Delight 2.2.2 checkpoint
 
-Status: `SOURCE CATALOG COMPLETE / INITIAL MAIN SYNC COMPLETE / CI PENDING / INSTALLED JAR + CURRENT-HOST RUNTIME QA DEFERRED`
+Status: `SOURCE CATALOG COMPLETE / PRE-CI MAIN SYNC COMPLETE / CI PENDING / INSTALLED JAR + CURRENT-HOST RUNTIME QA DEFERRED`
 
 Execution branch: `docs/magic-catalog-phase2y-ars-delight`
 Base `main` at phase start: `4ce5699cc76b511804956f903559ae8f7e44ba12`
+Pre-CI `main` confirmed: `4ce5699cc76b511804956f903559ae8f7e44ba12`
+Pre-CI branch relation: `0 behind / catalog-only delta under wiki/modpack-catalog/**`
 Provider source checkpoint: `Minecraft-LightLand/Ars-Nouveau-Flavors-Delight@1443c80842575f7d775c522d2b2cd32441592e26` (`VERSION-ALIGNED 2.2.2`, not claimed byte-identical)
 Physical JAR: `arsdelight-2.2.2.jar`
 Physical mod id/version: `arsdelight` / `2.2.2`
@@ -81,16 +83,17 @@ Physical CurseForge hash: `1990459316`
 
 These are runtime/package gates, not missing factual source-catalog entries.
 
-## Merge gate
+## Pre-CI / merge gate
 
-1. create the source-catalog commit on this branch;
-2. re-fetch current `main` and reconcile if it advanced;
-3. review exact branch diff and keep it documentation-only;
-4. open/refresh the Phase 2Y PR;
-5. require fresh exact-head CI;
-6. keep review threads clear;
-7. immediately before merge, fetch/reconcile `main` again and revalidate if needed;
-8. merge only after those gates pass;
-9. confirm final `main` SHA.
+Pre-CI synchronization and diff review are complete against `main@4ce5699cc76b511804956f903559ae8f7e44ba12`; the branch was 0 commits behind and its delta was confined to ten new files under `wiki/modpack-catalog/**` before this checkpoint update.
+
+Remaining gate:
+
+1. open/refresh the Phase 2Y PR;
+2. require fresh CI on the exact final execution HEAD;
+3. keep review threads clear;
+4. immediately before merge, fetch/reconcile `main` again and revalidate if needed;
+5. merge only after those gates pass;
+6. confirm final `main` SHA.
 
 Phase 2Y is documentation/catalog state only and does not promote any Black Arcana runtime Stage.
