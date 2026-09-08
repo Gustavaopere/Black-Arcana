@@ -29,6 +29,14 @@ Follow-up hardening is canonical:
 - PR #57 hardened the 854×480 / GUI-scale-4 layouts. Final head `01a77eab641896173585b66c6310662d820c9f0c` passed workflow `34010736078` (#1169); merge `f2bb9a19db92d869e4443b2047ad1c913f8d2a29` passed exact-SHA workflow `34010968124` (#1170), including JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
 - Canonical artifact for that hardening checkpoint: `black-arcana-f2bb9a19db92d869e4443b2047ad1c913f8d2a29`, artifact ID `9982472491`, SHA-256 `1ba6949ceb04f261646548b6d99a158f4f40211a5017ca1911c0e1a732f86cdb`.
 
+## Final validation handoff
+
+The executable closeout plan is `plans/05-casting-ux/05-final-client-validation-handoff.md`.
+
+It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/evidence requirements, defines PASS/FAIL/BLOCKED/Stage-09 carry handling, preserves the server-authoritative casting boundaries and specifies the synchronization/CI/merge gate required before this Stage can leave `FINAL VALIDATION DEFERRED`.
+
+Creating or merging that handoff document does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
+
 ## Exit criteria
 
 The deterministic exit criterion is satisfied: a player can equip/select/cast Black Arcana spells through a concise workflow while spell availability, progression, cooldown, resource cost and denial remain server-authoritative.
