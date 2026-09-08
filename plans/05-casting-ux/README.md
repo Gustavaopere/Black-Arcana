@@ -23,7 +23,8 @@ Subplans:
 - [`05-final-client-validation-handoff.md`](05-final-client-validation-handoff.md) — exact real-client closeout campaign and evidence procedure;
 - [`06-modpack-coexistence.md`](06-modpack-coexistence.md) — coexistence with Spell Actionbar, Iron's, Epic Fight/EFIS, Controlling and future optional input providers without duplicating authority;
 - [`07-presentation-data-contracts.md`](07-presentation-data-contracts.md) — audited server/client presentation authority, current synchronized-data coverage and the exact contract gates for cooldown, cost, charges, channels and timers;
-- [`08-visual-language-state-semantics.md`](08-visual-language-state-semantics.md) — cross-surface semantic vocabulary for selection, forecast, denial, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity.
+- [`08-visual-language-state-semantics.md`](08-visual-language-state-semantics.md) — cross-surface semantic vocabulary for selection, forecast, denial, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
+- [`09-keyboard-focus-navigation.md`](09-keyboard-focus-navigation.md) — keyboard-only focus/navigation semantics for radial and loadout screens while preserving existing mouse behavior, server authority and current keybinding contracts.
 
 The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented; the latest physical modlist prevails for installed coexistence surfaces and versions.
 
@@ -89,7 +90,7 @@ Planned refinements include, subject to the detailed gates in each subplan:
 - provider cost preview only through a bounded server-authored presentation contract;
 - channel/charge presentation only through canonical server-owned session semantics;
 - temporary ritual/domain timers only for owned/supported state;
-- keyboard-only radial operation;
+- keyboard-only radial and loadout-screen navigation without adding another gameplay cast path;
 - semantic non-color-only state cues;
 - one cross-surface semantic vocabulary so selection, forecast, warning, hard block, authoritative denial, unavailable state and presentation fallback never drift into contradictory meanings;
 - systematic reduced-motion/reduced-flash/particle consumption by future effects;
@@ -101,6 +102,8 @@ None of those bullet points is claimed as implemented merely because it is plann
 `07-presentation-data-contracts.md` freezes the evidence gate behind data-driven refinements. In particular, current cooldown snapshots are keyed by canonical cooldown `groupId` while spell presentation metadata does not synchronize spell→group mapping, so a generic per-spell cooldown widget is not yet authorized. Exact cost, charge state, channel session/progress and ritual/domain timer presentation likewise require bounded server-authored contracts before implementation. Corruption/Strain client values remain intentionally withheld pending separate approval. Existing spell identity/name/icon, loadout, cast-result and hazard presentation contracts remain usable within their current bounds.
 
 `08-visual-language-state-semantics.md` then freezes the meaning layer **after** data authority is established. It separates selection/focus from legality, forecast from authoritative cast result, warning from hard block, and presentation fallback from gameplay unavailability. It also defines how those meanings compose across editor, radial, HUD and future provider-hosted surfaces without relying only on color/motion/audio or copying another mod's presentation language.
+
+`09-keyboard-focus-navigation.md` converts the existing keyboard-accessibility goal into an explicit screen-navigation contract. The current radial can page by keyboard but cannot focus/select wedges without a mouse, while the current loadout editor can apply/clear/page but cannot focus/toggle rows without a mouse. The plan adds no runtime itself: it specifies deterministic client-local focus, preserves existing Enter/Delete/page semantics, proposes screen-local traversal rather than new global default mappings, and requires keyboard activation to reuse the same existing selection/draft operations.
 
 ## Automated evidence
 
@@ -120,7 +123,7 @@ It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/ev
 
 `06-modpack-coexistence.md` adds the real-pack coexistence planning layer. Its scenarios become blocking only when they reveal a required input/readability/authority failure; cosmetic unification or unsupported optional bridges do not automatically block Stage 05.
 
-`07-presentation-data-contracts.md` and `08-visual-language-state-semantics.md` are forward-looking authority/meaning gates for future presentation refinements. They do not make optional cooldown/cost/channel/timer/iconography/art polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
+`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md` and `09-keyboard-focus-navigation.md` are forward-looking authority/meaning/accessibility gates for future presentation refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
 
 Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
 

@@ -16,6 +16,8 @@ Presentation-contract audit baseline: `main@ef867a59c3be52f0592618b23300507ed40e
 
 Visual-semantics planning baseline: `main@019eb1723b7a70b9fd888ce44d1eb9b85dfa7b13`.
 
+Keyboard-focus planning baseline: `main@2df7cdedd0a73b5aed87ca9709699e139355fc84`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -126,6 +128,15 @@ Current presentation-only options are:
 - reduced motion;
 - reduced flashes.
 
+### 3.7 Current screen keyboard behavior
+
+Current Stage 05 screens already have partial keyboard support, but not complete keyboard-only navigation:
+
+- radial: `Left`/`Page Up` and `Right`/`Page Down` change pages, while wedge hover/selection remains pointer-driven;
+- loadout editor: Enter applies, Backspace/Delete clears the draft, and Left/Right/Page Up/Page Down change pages, while row focus/toggle remains pointer-driven.
+
+`09-keyboard-focus-navigation.md` is the planning authority for completing keyboard-only focus/navigation without changing those existing semantics silently or creating new gameplay authority.
+
 ## 4. Plan package
 
 Stage 05 is divided into the following canonical planning documents:
@@ -137,7 +148,8 @@ Stage 05 is divided into the following canonical planning documents:
 5. `05-final-client-validation-handoff.md` — exact real-client closeout campaign;
 6. `06-modpack-coexistence.md` — coexistence with installed casting/actionbar/combat/keybinding surfaces and exact-version integration gates;
 7. `07-presentation-data-contracts.md` — audited server/client presentation authority, currently synchronized data and the contract gates for cooldown mapping, cost, charges, channels and timers;
-8. `08-visual-language-state-semantics.md` — cross-surface meaning for selection/focus, forecast, authoritative result, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity.
+8. `08-visual-language-state-semantics.md` — cross-surface meaning for selection/focus, forecast, authoritative result, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
+9. `09-keyboard-focus-navigation.md` — deterministic keyboard-only focus/navigation for radial and loadout screens while preserving current mouse behavior, server authority and global keybinding boundaries.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -158,6 +170,8 @@ Player selects through one of these presentation paths:
 - selected-slot state reconciled against the current synchronized loadout.
 
 Selection alone must not execute gameplay.
+
+A future keyboard-focus layer may choose the radial slot that receives the existing selection operation, but moving focus itself remains client-local and non-casting.
 
 ### 5.3 Cast
 
@@ -216,6 +230,8 @@ Verbose detail belongs in tooltips or `VERBOSE` presentation rather than competi
 Important state must not depend exclusively on color. Labels, icons, symbols or text should distinguish selected, unavailable, cooldown, danger and denial states even when color perception is limited.
 
 `08-visual-language-state-semantics.md` is the canonical meaning layer for these cross-surface states. It prevents selection from being rendered as readiness, forecast from being rendered as authoritative result, warning from being rendered as hard block and missing art from being rendered as gameplay unavailability.
+
+Keyboard focus introduced by future 05.09 work must use the `FOCUSED` semantic role from 05.08 and remain distinguishable from pointer hover and selected loadout state.
 
 ## 7. Planned UX refinements
 
@@ -317,6 +333,22 @@ Plan:
 - keep palette/assets/animation values as a later implementation/art-review concern rather than inventing them in planning;
 - require clean-room provenance for any future visual/audio assets.
 
+### 7.8 Complete keyboard-only screen navigation
+
+`09-keyboard-focus-navigation.md` closes the planning gap between rebindable global casting input and pointer-dependent screen interaction.
+
+Plan:
+
+- keep focus/navigation state client-local and transient;
+- do not add new global default mappings for the first implementation;
+- preserve the radial's existing page controls and the loadout editor's existing Enter/apply, Delete/clear and page semantics unless a separately reviewed migration changes them;
+- add deterministic keyboard focus over current bounded radial/loadout lists;
+- activate a focused radial wedge through the existing selection path only, never a cast path;
+- toggle a focused loadout row through the existing local `LoadoutDraft` operation, with network update only on apply;
+- distinguish keyboard `FOCUSED`, pointer `HOVERED`, selected loadout state and draft membership under 05.08;
+- preserve mouse behavior and the no-cast-through-screen invariant;
+- keep future controller navigation provider-dependent and mapped to the same screen operations rather than new gameplay logic.
+
 ## 8. Input conflict policy for the large modpack
 
 The pack has many mods and therefore many mappings.
@@ -331,6 +363,8 @@ Rules:
 - do not hijack provider keybindings from Iron's, Ars or other magic engines;
 - future conflict-resolution UX remains presentation only and must not rewrite another mod's settings silently.
 
+Screen-local focus traversal defined by 05.09 should not register additional global `KeyMapping`s merely to move focus while a Black Arcana `Screen` already owns input.
+
 ## 9. Networking and state rules
 
 Every UX addition must answer four questions before code is approved:
@@ -344,6 +378,7 @@ Expected defaults:
 
 - loadout: server-owned persistent snapshot;
 - selected slot: client presentation state reconciled against server loadout;
+- screen focus/input modality: client-local transient state scoped to the open screen; no server synchronization;
 - cooldown: server-owned synchronized group snapshot; per-spell presentation additionally requires the authoritative spell→group relationship defined by `07-presentation-data-contracts.md`;
 - cast result/denial: server-authored event result;
 - hazard/gate forecast: bounded request/response, stale-response protected;
@@ -359,6 +394,7 @@ Stage 05 is not allowed to become a client or server tick-cost sink.
 
 - input polling may inspect registered mappings but must not scan world entities/chunks;
 - radial/loadout rendering works from local synchronized snapshots;
+- keyboard focus traversal operates only on the already bounded screen-local list and must not trigger world/provider scans or server requests;
 - HUD rendering is contextual and returns early while inactive;
 - forecast refresh must remain bounded/rate-limited and stale-response protected;
 - no UI feature may trigger global server scans;
@@ -373,6 +409,7 @@ Examples:
 - missing presentation entry → canonical ID/name fallback, no gameplay denial invented;
 - missing icon → text fallback;
 - stale selected slot → reconcile to current synchronized loadout;
+- invalid/empty screen focus → clear or clamp focus to a valid visible entry; never activate an off-page/stale item;
 - rejected loadout update → server state wins;
 - cooldown group received without a valid selected-spell mapping → omit generic spell cooldown rather than guess;
 - unavailable hazard forecast → show unavailable/static fallback, never partial value as complete;
@@ -392,15 +429,16 @@ When a planned refinement is approved for implementation:
 4. inspect current runtime/tests rather than relying on old branch history;
 5. for new presentation data, classify authority/current synchronization through `07-presentation-data-contracts.md` before changing protocol/UI;
 6. for any cross-surface visual state, classify its semantic family/meaning through `08-visual-language-state-semantics.md` before rendering;
-7. add deterministic RED tests for pure/state behavior where applicable;
-8. implement the minimum GREEN change;
-9. add/adjust GameTests only where world/network integration requires them;
-10. run full Black Arcana CI;
-11. execute the specific real-client rows affected by visual/input behavior;
-12. fetch `origin/main` again and reconcile;
-13. rerun CI on the reconciled HEAD;
-14. merge only after exact-head gates are green;
-15. record final main SHA and any still-deferred manual rows.
+7. for keyboard/focus changes, preserve current screen-key contracts and use `09-keyboard-focus-navigation.md` to define focus lifecycle/activation before editing input handling;
+8. add deterministic RED tests for pure/state behavior where applicable;
+9. implement the minimum GREEN change;
+10. add/adjust GameTests only where world/network integration requires them;
+11. run full Black Arcana CI;
+12. execute the specific real-client rows affected by visual/input behavior;
+13. fetch `origin/main` again and reconcile;
+14. rerun CI on the reconciled HEAD;
+15. merge only after exact-head gates are green;
+16. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -422,7 +460,7 @@ This plan does not authorize:
 - a second mana bar;
 - client-authoritative casting;
 - client-side cost/cooldown/progression decisions;
-- automatic casting merely from radial selection;
+- automatic casting merely from radial selection or focus movement;
 - a duplicate Iron's/Ars spell execution engine;
 - unbounded UI/network updates;
 - forced gamepad dependencies;
@@ -473,6 +511,7 @@ Current planning rule:
 - a server-authored forecast is visually and verbally distinct from an authoritative cast result;
 - warning/recommendation state is distinct from a hard blocking state;
 - meeting a danger recommendation never means the spell is safe from all Backlash/Corruption risk;
+- `DANGER_PRESENT` applies only to synchronized non-`NORMAL` danger tiers; a synchronized `NORMAL` profile does not activate danger styling;
 - temporal UI such as cooldown/charges/channels/timers remains unavailable until Section 16/05.07 authorizes the corresponding data contract;
 - missing artwork/translation is presentation fallback, not gameplay unavailability;
 - unavailable/unknown data is never filled with a guessed ready/success state;
@@ -482,3 +521,24 @@ Current planning rule:
 - new Black Arcana visual/audio assets remain subject to clean-room provenance and compatible licensing/permission.
 
 05.08 is not automatically a Stage 05 completion blocker. A semantic refinement becomes mandatory only when directly observed validation demonstrates a required readability/ambiguity failure or an explicit reviewed decision promotes it to required hardening.
+
+## 18. Keyboard-focus and screen-navigation rule
+
+`09-keyboard-focus-navigation.md` is the canonical planning layer for completing keyboard-only interaction inside Stage 05 screens.
+
+Current planning rule:
+
+- focus is client-local transient state and is never synchronized as gameplay state;
+- radial keyboard focus is distinct from pointer hover and selected loadout state;
+- loadout row focus is distinct from local draft membership and accepted server loadout state;
+- moving focus never casts, mutates server state or sends a network request;
+- activating a focused radial wedge must reuse the existing non-casting selection operation;
+- activating a focused loadout row must reuse the existing local draft-toggle operation;
+- current screen-local page/apply/clear controls are preserved unless a separately reviewed UX migration explicitly changes them;
+- the first implementation should use screen-local navigation keys rather than adding global default mappings;
+- closing a radial through `TOGGLE`, `HOLD` release or Escape must not implicitly select the focused wedge;
+- a Stage 05 screen owning focus must continue suppressing normal world cast input;
+- mouse behavior remains supported and pointer/keyboard modality may coexist without collapsing `HOVERED`, `FOCUSED` and `SELECTED` semantics;
+- controller navigation remains optional/provider-dependent and, if later added, maps to the same screen operations rather than a new cast engine.
+
+05.09 is not automatically a Stage 05 completion blocker. Keyboard-only hardening becomes mandatory only if the manual accessibility requirements or direct real-client evidence promote the missing interaction to a required fix.
