@@ -14,8 +14,16 @@ If the provider summon gate allows the caster, the effect spawns **three** allie
 
 Compatible augments: Extend Time, Reduce Time through Ars Nouveau's common summon-augment set.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:conjuration_essence` + `minecraft:totem_of_undying`.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 Ars Nouveau owns summon gating, Vex ownership/lifecycle and Summoning Sickness. Black Arcana must not create a parallel ownership ledger or bypass provider summon restrictions when interacting with these entities.
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.

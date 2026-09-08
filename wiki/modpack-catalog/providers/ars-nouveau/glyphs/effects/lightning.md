@@ -14,8 +14,16 @@ Spawns Ars Nouveau's custom LightningEntity at the resolved location and transfe
 
 Compatible augments: Amplify, Dampen, Extend Time, Reduce Time. Amplify is limited to 2 by default.
 
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:air_essence` + `minecraft:lightning_rod` ×3 + `minecraft:heart_of_the_sea`.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
+
 ## Boundary
 
 Ars owns LightningEntity, Shocked and provider damage semantics. Black Arcana must preserve causal identity and avoid duplicate lightning damage/proc/mastery processing.
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME+CONFIG QA PENDING`.
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
