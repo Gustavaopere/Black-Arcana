@@ -1,6 +1,6 @@
 # Prestidigitation
 
-Status: `SOURCE-PINNED 5.13.1 / CONJURATION-PRESENTATION EFFECT`
+Status: `SOURCE-PINNED 5.13.1 / CONJURATION-PRESENTATION EFFECT / SEMANTICS+ACQUISITION AUDITED`
 
 - Registry id: `ars_nouveau:glyph_prestidigitation`
 - Display name: `Prestidigitation`
@@ -17,6 +17,14 @@ For temporary entity/block presentation, the pinned source derives duration from
 Compatible augments are Extend Time, Duration Down and Amplify.
 
 The class also drives inventory-tick particle presentation for items carrying the provider `PRESTIDIGITATION` data component.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:conjuration_essence`.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Black Arcana boundary
 

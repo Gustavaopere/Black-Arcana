@@ -1,6 +1,6 @@
 # Ars Nouveau — Name
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_name`
 - Display name: Name
@@ -12,6 +12,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Name derives a new name first from an available Name Tag through the Ars inventory manager, otherwise from the held caster tool's configured spell name. It can rename entities, held off-hand items, dropped item stacks, skull ownership text and nameable container blocks. Named mobs are marked persistent.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:manipulation_essence` + `minecraft:name_tag`.
+- Source-default recipe XP: **55 XP** (Tier II).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

@@ -1,6 +1,6 @@
 # Ars Nouveau — Evaporate
 
-Status: `SOURCE-PINNED 5.13.1 / CLAIM/RUNTIME QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / CLAIM/RUNTIME QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_evaporate`
 - Display name: Evaporate
@@ -16,6 +16,14 @@ Evaporate removes fluid blocks in the affected area and clears the `WATERLOGGED`
 ## Safety note
 
 The inspected `EffectEvaporate` path does not itself show the claim check used by several other Ars block-mutating effects. That absence is recorded as a runtime/full-pack protection QA item rather than silently assuming equivalent protection behavior.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:manipulation_essence` + `minecraft:sponge` ×3.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

@@ -1,6 +1,6 @@
 # Reset
 
-Status: `SOURCE-PINNED 5.13.1 / CONTEXT-MANIPULATION EFFECT`
+Status: `SOURCE-PINNED 5.13.1 / CONTEXT-MANIPULATION EFFECT / SEMANTICS+ACQUISITION AUDITED`
 
 - Registry id: `ars_nouveau:reset`
 - Display name: `Reset`
@@ -21,6 +21,14 @@ The pinned source:
 - bypasses combination and occurrence limits for spell parts registered in `EffectReset.RESET_LIMITS`.
 
 The class has no compatible augments and no mana cost.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `minecraft:target`.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Black Arcana boundary
 

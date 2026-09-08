@@ -1,6 +1,6 @@
 # Ars Nouveau — Freeze
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_freeze`
 - Display name: Freeze
@@ -15,6 +15,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 On living targets, Freeze applies vanilla Slowness. On blocks it can convert water to Ice (or Frosted Ice with Sensitive), lava to Obsidian/Cobblestone, extinguish fire, upgrade Ice to Packed Ice and Packed Ice to Blue Ice. AOE/Pierce expand the affected block set.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:water_essence` + `minecraft:snow_block` ×2.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

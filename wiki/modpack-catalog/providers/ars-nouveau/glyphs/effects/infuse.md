@@ -1,6 +1,6 @@
 # Ars Nouveau — Infuse
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_infuse`
 - Display name: Infuse
@@ -14,6 +14,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Infuse obtains potion contents from Ars' potion-provider/inventory surfaces. Priority is: an `IPotionProvider` item or flask (one use consumed), then a normal PotionItem (one item consumed and bottle returned), then a nearby Potion Jar with more than 100 units (100 removed). Direct entity resolution applies the potion contents; AOE spawns a splash potion and Extend Time spawns a lingering potion.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:abjuration_essence` + `minecraft:glass_bottle` + `#c:rods/blaze`.
+- Source-default recipe XP: **55 XP** (Tier II).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

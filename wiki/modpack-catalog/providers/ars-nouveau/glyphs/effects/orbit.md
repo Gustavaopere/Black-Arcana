@@ -1,6 +1,6 @@
 # Orbit
 
-Status: `SOURCE-PINNED 5.13.1 / GLYPH EFFECT`
+Status: `SOURCE-PINNED 5.13.1 / GLYPH EFFECT / SEMANTICS+ACQUISITION AUDITED`
 
 - Registry id: `ars_nouveau:glyph_orbit`
 - Display name: `Orbit`
@@ -25,6 +25,14 @@ Compatible augments in the pinned source are:
 - Extend Time;
 - Duration Down;
 - Sensitive.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `minecraft:compass` + `minecraft:ender_eye` + `#c:rods/blaze`.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Black Arcana boundary
 
