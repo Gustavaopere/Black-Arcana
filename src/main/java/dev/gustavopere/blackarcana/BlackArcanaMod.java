@@ -29,6 +29,7 @@ import dev.gustavopere.blackarcana.network.neoforge.HazardPreflightSyncService;
 import dev.gustavopere.blackarcana.network.neoforge.HazardResistanceForecastNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.HazardResistanceForecastService;
 import dev.gustavopere.blackarcana.network.neoforge.LoadoutNetworkBridge;
+import dev.gustavopere.blackarcana.network.neoforge.NoeticViewNetworkBridge;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
@@ -44,6 +45,7 @@ public final class BlackArcanaMod {
         modEventBus.addListener(ArcanaNetworkBridge::register);
         modEventBus.addListener(HazardResistanceForecastNetworkBridge::register);
         modEventBus.addListener(LoadoutNetworkBridge::register);
+        modEventBus.addListener(NoeticViewNetworkBridge::register);
         ArcanaNetworkBridge.installServerHandler(ArcanaServerRuntimeManager::handleCastIntent);
         ArcanaNetworkBridge.installClientResultHandler(ClientArcanaSyncState::acceptResult);
         ArcanaNetworkBridge.installClientCooldownHandler(ClientArcanaSyncState::acceptCooldowns);
