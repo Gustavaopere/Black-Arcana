@@ -165,13 +165,13 @@ Describes Black Arcana danger semantics.
 
 Conceptual roles:
 
-- `DANGER_PRESENT` — the selected spell has synchronized danger metadata;
+- `DANGER_PRESENT` — the selected spell has synchronized **non-`NORMAL`** danger tier metadata; mere presence of a synchronized `NORMAL` profile does not activate danger styling;
 - `BELOW_MINIMUM` — server-authored hazard presentation says the relevant minimum threshold is not met;
 - `BELOW_RECOMMENDED` — warning state; not guaranteed failure;
 - `RECOMMENDATION_MET` — recommendation is met; never equivalent to “safe”;
 - `HAZARD_FORECAST_UNAVAILABLE` — dynamic resistance forecast is unavailable/stale while static metadata may still be valid.
 
-Danger styling must not imply that meeting a recommendation removes Backlash/Corruption risk.
+Danger styling must not imply that meeting a recommendation removes Backlash/Corruption risk. A synchronized `NORMAL` profile remains ordinary presentation state and must not be promoted to `DANGER_PRESENT` merely because hazard metadata exists.
 
 ### 4.5 Presentation confidence state
 
@@ -220,7 +220,8 @@ Required response:
 | blocked gate forecast | admission forecast | “this bounded predicted category currently blocks” | “the final cast request already happened” |
 | cast denial | authoritative result | “server denied this exact request” | “generic long-lived spell status” |
 | cast success | authoritative result | “server reported success for this request” | “future casts are ready” |
-| static danger tier | hazard | “spell has this synchronized danger metadata” | “player will definitely Backlash” |
+| non-`NORMAL` static danger tier | hazard | “spell has synchronized danger metadata whose tier is non-normal” | “player will definitely Backlash” |
+| `NORMAL` static danger tier | ordinary/static metadata | “no danger styling is activated from tier alone” | `DANGER_PRESENT` |
 | below recommended resistance | hazard warning | “risk recommendation is not met” | “hard cast denial unless server says minimum blocks” |
 | recommendation met | hazard information | “recommendation threshold is met” | “magic is safe/no corruption/backlash” |
 | cooldown state, once mapped | temporal | “server-owned cooldown group has remaining time” | “client may authorize cast when visual timer reaches zero” |
@@ -262,7 +263,7 @@ This priority is about what receives scarce visual space. It does not merge stat
 ### 6.2 Event vs persistent state
 
 - `CAST_DENIED` and `CAST_SUCCEEDED` are short-lived request-result events.
-- `SELECTED`, accepted loadout membership and current danger metadata are stateful presentation facts.
+- `SELECTED`, accepted loadout membership and current **non-`NORMAL`** danger metadata are stateful presentation facts; a synchronized `NORMAL` profile does not create a danger state.
 - Forecasts are stateful only while their stale-state identity remains valid.
 - Cooldown/charge/channel/timer presentation, when implemented, follows owner-specific lifecycle rules from 05.07.
 
@@ -317,7 +318,6 @@ Important states should be represented by at least two channels where practical,
 Color alone is not enough.
 
 ### 7.3 Decorative intensity is subordinate
-
 Decorative runes, glows, particles, pulsing borders or animated flourishes may reinforce identity, but they must not obscure:
 
 - spell name;
