@@ -1,86 +1,97 @@
 # Ars Elemental
 
-Status: `HIGH-IMPACT CURRENT GLYPHS VERIFIED; COMPLETE ADDON PRIMITIVE PASS STILL OPEN`
+Status: `SOURCE CATALOG COMPLETE / INSTALLED CONFIG + RUNTIME QA PENDING`
 
 - Current JAR: `ars_elemental-1.21.1-0.7.10.1.jar`
+- Physical SHA-1: `a1e4021177aae0e16c1f7c6487a82f0b68bbade3`
 - Mod id: `ars_elemental`
 - Runtime version: `0.7.10.1`
-- Provider class: `ARS GLYPH / SYSTEM PROVIDER`
+- Source checkpoint: `Alexthw46/Ars-Elemental@fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`
+- Ars Nouveau 5.13.1 API checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
+- Provider class: `ARS NOUVEAU ADDON / GLYPH + RITUAL + FAMILIAR + PERK + GEAR + WORLD SYSTEM PROVIDER`
 - Primary casting authority: Ars Nouveau.
 
-## Current verified capability surface
+The exact source checkpoint is used as a semantic source pin for 0.7.10.1. It is not cryptographic proof that the installed JAR was built from that exact commit.
 
-The provider-aware current Ars 1.21.1 guide exposes many `ars_elemental:` primitives. High-impact entries already verified for Phase 2 include:
+## Source-pinned surface
 
-| Glyph | Registry id | Type / tier | Semantic role |
-|---|---|---|---|
-| Arc Projectile | `ars_elemental:glyph_arc_projectile` | Form / T2 | gravity-affected projectile / bounce via Pierce |
-| Bubble Shield | `ars_elemental:glyph_bubble_shield` | Effect / T2 | mana-backed damage reduction and some debuff protection |
-| Charm | `ars_elemental:glyph_charm` | Effect / T2 | temporary hostile domination / tame-love interactions |
-| Cauterize | `ars_elemental:glyph_cauterize` | Effect / T3 | self-harming cleanse of milk-curable harmful effects |
-| Cavitate | `ars_elemental:glyph_cavitate` | Effect / T3 | water-pressure area damage / soaked interaction |
-| Conflagrate | `ars_elemental:glyph_conflagrate` | Effect / T3 | fire-state detonation / secondary explosive behavior |
-| Conjure Terrain | `ars_elemental:glyph_conjure_terrain` | Effect / T1 | terrain creation/composition |
-| Create Geyser | `ars_elemental:glyph_geyser` | Effect / T2 | temporary geyser / vertical force / soaked interaction |
-| Discharge | `ars_elemental:glyph_discharge` | Effect / T2 | consumes shocked/static state into damage / nearby shock |
-| Envenom | `ars_elemental:glyph_envenom` | Effect / T2 | poison escalation into stronger venom |
-| Homing Projectile | `ars_elemental:glyph_homing_projectile` | Form / T3 | target-seeking projectile |
-| Life Link | `ars_elemental:glyph_life_link` | Effect / T3 | bidirectional/reversible damage-healing relationship |
-| Mist Cloud | `ars_elemental:glyph_mist` | Effect / T2 | vision denial + mob target loss |
-| Nullify Defense | `ars_elemental:glyph_nullify_defense` | Effect / T3 | removes target's post-hit innate immunity window |
-| Oxidize | `ars_elemental:glyph_oxidize` | Effect / T3 | temporary armor reduction / block oxidation interaction |
-| Phantom Grasp | `ars_elemental:glyph_phantom_grasp` | Effect / T2 | heals undead; harms/exhausts living targets |
-| Poison Spores | `ars_elemental:glyph_poison_spores` | Effect / T2 | conditional poison/hunger spreading damage field |
-| Propagate Arc | `ars_elemental:glyph_propagator_arc` | Effect / T2 | re-emits remaining chain as Arc Projectile |
-| Propagate Homing | `ars_elemental:glyph_propagator_homing` | Effect / T3 | re-emits remaining chain as Homing Projectile |
-| Rage | `ars_elemental:glyph_rage` | Effect / T3 | forced hostility/friendly-fire behavior + damage increase |
-| Sliding | `ars_elemental:glyph_slip_feet` | Effect / T2 | slippery-foot locomotion state |
-| Spark | `ars_elemental:glyph_spark` | Effect / T1 | lightning damage + shocked state, stronger on wet targets |
-| Spike | `ars_elemental:glyph_spike` | Effect / T2 | persistent/falling dripstone damage geometry |
-| Summon Bee | `ars_elemental:glyph_summon_bee` | Effect / T2 | temporary combat summons + Summoning Sickness |
-| Summon Slime | `ars_elemental:glyph_summon_slime` | Effect / T2 | temporary combat summons + Summoning Sickness |
-| Water Jet | `ars_elemental:glyph_water_jet` | Effect / T3 | delayed high-pressure armor-ignoring water attack |
-| Watery Grave | `ars_elemental:glyph_watery_grave` | Effect / T2 | air-supply depletion / drowning / downward control |
+The production/source audit closes:
 
-The current guide additionally exposes creature-category filters (`Aerial`, `Aquatic`, `Fiery`, `Insect`, `Summon`, `Undead` and inverse forms). Those are targeting primitives and will be normalized in the full addon pass rather than counted as distinct combat spells.
+- 39/39 production spell parts: 23 effects, 2 cast methods, 2 propagators and 12 creature-category filters;
+- exact source-default tier/mana plus compatible augments and provider-specific config/limit knobs for all 39 spell parts;
+- 39/39 generated glyph learning recipes;
+- 8/8 rituals, including inherited Ars 5.13.1 semantics for both Archwood rituals;
+- 3/3 familiars;
+- 3/3 Ars perks/threads and their event/attribute paths;
+- 12 elemental armor sets, 48 armor pieces total, all registered as Ars perk providers;
+- 8 SpellCaster providers;
+- 32 EntityTypes;
+- 16/16 mixins: 14 common and 2 client;
+- 2/2 registered network payloads;
+- Ars Source-capable advanced relays plus elemental machines, foci, bangles, caster tomes and spell infrastructure;
+- provider worldgen and Ars-core mutation boundaries.
 
-## Life Link — direct Arcana Vincular overlap
+`MethodCarianPhalanx` exists in source but is only registered under `!isProduction()`. It is not part of the production JAR glyph surface.
 
-The current public guide describes `Life Link` as follows at the semantic level:
+See:
 
-- creates a life-force link between caster and target;
-- damage dealt to the caster is shared with the target;
-- healing received by the target is shared with the caster;
-- `Sensitive` reverses the direction;
-- `Cut` can sever the link.
+- [GLYPHS.md](GLYPHS.md)
+- [ACQUISITION.md](ACQUISITION.md)
+- [RITUALS.md](RITUALS.md)
+- [FAMILIARS.md](FAMILIARS.md)
+- [PERKS.md](PERKS.md)
+- [SYSTEMS.md](SYSTEMS.md)
+- [MIXIN-BOUNDARIES.md](MIXIN-BOUNDARIES.md)
+- [REGISTRIES.md](REGISTRIES.md)
 
-This is direct mechanical overlap with any proposed Black Arcana spell whose sole identity is “link two beings and share damage/healing”.
+## Authority and deduplication
 
-Black Arcana's prospective **Arcana Vincular** delta must therefore be broader and infrastructural:
+Ars Nouveau and Ars Elemental remain authority for their own mana, Source, glyph resolution, spell-cost calculation, spell modifiers, familiars, rituals, perk threads, elemental gear, entities and provider world effects.
 
-- persistent typed links rather than one generic health-sharing effect;
-- explicit ownership and consent/protection gates;
-- sources such as blood reservoir, spirit inventory, familiar/servant, ritual artifact or living donor;
-- transactional reserve/commit/refund for cast costs;
-- fail-closed behavior when the linked source is unavailable;
-- no recursive damage/heal loops across providers;
-- canonical link lifecycle, persistence and cleanup.
+Black Arcana must not:
 
-## Chaos overlap
+- settle a second mana/Source cost for a provider cast;
+- treat child projectiles, propagators or familiar event callbacks as new root casts;
+- replay provider block mutation, biome conversion, lightning, summons or ritual effects;
+- duplicate perk/focus/familiar damage or cost modifiers;
+- derive gameplay authority from client VFX or rendering state.
 
-`Charm`, `Rage`, homing/propagation, pressure/fire detonations and state-driven combos occupy many effects that could visually resemble chaos magic. They do not prove entropy/reality manipulation, but they eliminate generic mind-control, random-looking projectile and explosive-state mechanics as sufficient deltas.
+Independent Black Arcana destructive effects still pass through `WorldEffectPolicy`.
 
-## Order overlap
+## High-impact overlaps
 
-`Bubble Shield`, `Nullify Defense`, creature filters and state-aware control already supply protection/filter/constraint primitives. Order requires a server-authoritative law/seal layer, not a renamed Ars filter or barrier.
+### Arcana Vincular
 
-## Witchcraft / toxin overlap
+`ars_elemental:glyph_life_link` directly occupies generic damage/healing life-link semantics. Black Arcana's Vincular identity therefore requires a larger typed-link infrastructure: explicit ownership/consent rules, persistence/lifecycle, transactional cost sources, failure behavior and loop prevention.
 
-`Envenom`, `Poison Spores`, `Charm`, `Rage` and `Phantom Grasp` directly intersect poison, curse, domination and occult-support fantasies. Hexalia/Toxony must be cataloged alongside this provider before integrated Witchcraft is finalized.
+### Chaos
 
-## Provenance / confidence
+Charm, Rage, state detonations, homing/propagation and Randomize-compatible effects mean that generic mind control, explosions or visually erratic projectiles are not a sufficient Chaos delta.
 
-- Presence/version: current modlist — HIGH.
-- Registry IDs and semantics above: current provider-aware Ars 1.21.1 guide — HIGH.
-- Complete Ars Elemental inventory: still `IN PROGRESS`; the table is a high-impact subset, not a false claim of completeness.
-- No Java bytecode was decompiled.
+### Order
+
+Bubble Shield, Nullify Defense and the twelve targeting filters already provide protection/filter/constraint primitives. Order requires canonical law/seal/contract semantics rather than renamed filters or barriers.
+
+### Witchcraft / toxin
+
+Envenom, Poison Spores, Charm, Rage and Phantom Grasp overlap toxin, curse, domination and occult-support fantasies.
+
+## Verified source divergences
+
+### Familiar cost descriptions
+
+The Flarecannon and Flashjack book descriptions say their relevant spell costs are reduced by 20%. Their source handlers instead subtract `spell.getCost() * 0.5` from `event.currentCost`. This remains `DESCRIPTION-PATH DIVERGENCE / RUNTIME QA REQUIRED`; the catalog does not choose one behavior by inference.
+
+### Summoning Thread sickness description
+
+The provider description says Summoning Sickness is reduced by 10% per tier. The exact event handler multiplies duration by `1 - countForPerk(...) / 10`. Ars 5.13.1 `countForPerk` returns the maximum worn slot value; for ordinary values 1–3, Java integer division makes the divisor term 0 and leaves the source-path multiplier at 1. This remains `DESCRIPTION-PATH DIVERGENCE / RUNTIME QA REQUIRED`.
+
+### License metadata
+
+The exact README and `neoforge.mods.toml` say LGPL v3, while the root `LICENSE` contains GPL v3 text. Phase 2U records the discrepancy and remains clean-room; it does not resolve the license by assumption.
+
+## QA state
+
+The source catalog is complete for the pinned surface and dependencies used by this phase. Still pending are comparison against the real installed/generated Ars Elemental config/datapack and runtime/client/dedicated/full-modpack interoperability checks. Those pending observations do not convert source defaults into installed-runtime claims.
+
+This provider catalog does not promote any Black Arcana runtime Stage.
