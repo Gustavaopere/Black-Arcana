@@ -1,9 +1,10 @@
 # Phase 2X — Ars Morph 2.0.0 checkpoint
 
-Status: `SOURCE CATALOG COMPLETE / PRE-CI MAIN SYNC REQUIRED / INSTALLED JAR+RUNTIME QA DEFERRED`
+Status: `SOURCE CATALOG COMPLETE / PRE-CI MAIN SYNC COMPLETE / INSTALLED JAR+RUNTIME QA DEFERRED`
 
 Execution branch: `docs/magic-catalog-phase2x-ars-morph`
 Base main at phase start: `7c7a7de74cccdfb6e81820a9d7aecea18de7d55b`
+Pre-CI main confirmed: `7c7a7de74cccdfb6e81820a9d7aecea18de7d55b`
 Provider source checkpoint: `Alexthw46/Ars-Morph@4a5a2c706fe5a316fc9ad03ac37a3ac1d1dc3c58` (`RELEASE-ALIGNED`, not claimed byte-identical)
 Physical JAR: `ars_morph-1.21.1-2.0.0.jar`
 Physical SHA-1: `68ff47cc58c0ffe9570bb907f65c2910311ed45f`
@@ -86,16 +87,18 @@ These are runtime/package gates, not missing source-catalog entries.
 
 ## Pre-CI / merge gate
 
-After this catalog commit:
+Pre-CI sync result:
 
-1. fetch current `main` again;
-2. reconcile semantically if it advanced;
-3. compare branch against latest `main` and require the delta to remain catalog-only;
-4. update this checkpoint/PR body if reconciliation SHA changes;
-5. run fresh CI on the exact reconciled final HEAD;
-6. keep review threads clear;
-7. immediately before merge, fetch/reconcile `main` again and revalidate if needed;
-8. merge only after those gates pass;
-9. confirm final `main` SHA.
+- current `main` re-fetched after the catalog commit: `7c7a7de74cccdfb6e81820a9d7aecea18de7d55b`;
+- branch compare at that checkpoint: 0 behind, catalog-only delta under `wiki/modpack-catalog/**`.
+
+Remaining merge gate:
+
+1. open/refresh the Phase 2X PR on this checkpointed branch;
+2. run fresh CI on the exact final HEAD;
+3. keep review threads clear;
+4. immediately before merge, fetch/reconcile `main` again and revalidate if needed;
+5. merge only after those gates pass;
+6. confirm final `main` SHA.
 
 Phase 2X is documentation/catalog state only and does not promote any Black Arcana runtime Stage.
