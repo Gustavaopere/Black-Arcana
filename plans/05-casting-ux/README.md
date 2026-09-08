@@ -27,7 +27,8 @@ Subplans:
 - [`09-keyboard-focus-navigation.md`](09-keyboard-focus-navigation.md) — keyboard-only focus/navigation semantics for radial and loadout screens while preserving existing mouse behavior, server authority and current keybinding contracts;
 - [`10-loadout-editor-information-architecture.md`](10-loadout-editor-information-architecture.md) — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation evidence limits and the metadata/protocol gates for richer editor feedback;
 - [`11-contextual-feedback-orchestration.md`](11-contextual-feedback-orchestration.md) — bounded arbitration, priority, supersession, correlation and timing across selection context, server-authored forecasts and authoritative cast results;
-- [`12-iconography-resource-resolution.md`](12-iconography-resource-resolution.md) — synchronized `iconId` resolution, safe text fallback, resource-reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance.
+- [`12-iconography-resource-resolution.md`](12-iconography-resource-resolution.md) — synchronized `iconId` resolution, safe text fallback, resource-reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance;
+- [`13-targeting-aim-presentation.md`](13-targeting-aim-presentation.md) — authority-safe reticle/aim/target presentation across the real server-owned target kinds, advisory `targetHint`, stale-state/result correlation, world-safety boundaries, accessibility and coexistence.
 
 The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented; the latest physical modlist prevails for installed coexistence surfaces and versions.
 
@@ -102,6 +103,7 @@ Planned refinements include, subject to the detailed gates in each subplan:
 - semantic non-color-only state cues;
 - one cross-surface semantic vocabulary so selection, forecast, warning, hard block, authoritative denial, unavailable state and presentation fallback never drift into contradictory meanings;
 - bounded feedback arbitration so current selection, forecast and authoritative result cannot be visually misattributed when their timing overlaps;
+- authority-safe aim/target presentation that distinguishes local observation from server resolution and never turns reticle state into cast/world-safety authority;
 - systematic reduced-motion/reduced-flash/particle consumption by future effects;
 - controller integration only if a real compatible provider enters the modlist/API surface;
 - direct current-pack coexistence testing with external casting/actionbar/combat surfaces before adding compatibility code.
@@ -119,6 +121,8 @@ None of those bullet points is claimed as implemented merely because it is plann
 `11-contextual-feedback-orchestration.md` freezes the transient-feedback arbitration layer. Selection context, advisory forecast and authoritative cast result remain independent bounded channels; an authoritative result outranks contradictory advisory state, but `CastResultPayload` currently carries `castId/status/code/detail` without spell or slot identity. The HUD must therefore never attribute a received result to the current selection by inference. A future bounded client-local `castId -> attempted spell/slot` context may improve presentation without gaining gameplay authority; unknown/unmatched results remain safely displayable without spell attribution. The current low-clutter model remains latest-received-result wins rather than an unbounded notification history.
 
 `12-iconography-resource-resolution.md` freezes the resource-resolution layer for the already-synchronized icon identity. The current payload bounds `iconId` as text but does not itself parse it as a Minecraft resource identifier or prove that the resource exists. Future icon rendering must therefore parse/resolve through supported client resource semantics, fail to text/presentation fallback without changing spell validity, invalidate positive/negative assumptions on resource reload, avoid spell-ID/provider-path heuristics and preserve clean-room provenance. At baseline `48cb9a43...`, radial, loadout editor and HUD do not consume `iconId`, and the Black Arcana asset root contains only `lang/`; 05.12 adds no assets or runtime by itself.
+
+`13-targeting-aim-presentation.md` freezes the target/aim presentation boundary around the existing server targeting runtime. Current `ClientInputController` only submits an advisory entity `targetHint` when `Minecraft.hitResult` is an `EntityHitResult`; `ServerEntityTargetSelector` resolves the canonical `ArcanaTargetSpec.Kind` paths from live server state, and `WorldEffectAdmissionService` remains the terrain-admission authority. Any future reticle, entity/block marker or area guide must therefore expose local uncertainty honestly, avoid per-frame network/protection/world scans, preserve `castId` correlation and never imply target legality, resolved impact identity or world-mutation permission without an explicit bounded server-authored presentation contract. 05.13 adds no reticle/runtime/protocol/asset or manual PASS evidence by itself.
 
 ## Automated evidence
 
@@ -138,7 +142,7 @@ It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/ev
 
 `06-modpack-coexistence.md` adds the real-pack coexistence planning layer. Its scenarios become blocking only when they reveal a required input/readability/authority failure; cosmetic unification or unsupported optional bridges do not automatically block Stage 05.
 
-`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md`, `11-contextual-feedback-orchestration.md` and `12-iconography-resource-resolution.md` are forward-looking authority/meaning/accessibility/editor/feedback/resource-presentation gates for future refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
+`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md`, `11-contextual-feedback-orchestration.md`, `12-iconography-resource-resolution.md` and `13-targeting-aim-presentation.md` are forward-looking authority/meaning/accessibility/editor/feedback/resource/target-presentation gates for future refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback/aim polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
 
 Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
 
