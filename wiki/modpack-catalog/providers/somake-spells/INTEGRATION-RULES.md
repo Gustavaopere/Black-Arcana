@@ -111,11 +111,19 @@ Any Black Arcana immunity/ward candidate must be deduplicated semantically and m
 
 ## Optional integrations
 
-Current pack has Born in Chaos, Geomancy Plus, Tunes 'n Tomes and Mowzie's Mobs. Magic From the East and Better Combat are not present.
+Current pack has:
+
+- Magic From the East / `iss_magicfromtheeast` `1.1.5`;
+- Born in Chaos `1.7.6`;
+- Geomancy Plus `1.1.0-1.21.1`;
+- Tunes 'n Tomes `1.1.0-HOTFIX`;
+- Mowzie's Mobs `1.8.2`.
+
+Better Combat is not located in the current physical modlist.
 
 Do not hard-depend on an optional provider merely because it is present in this pack snapshot. Somake's own optional gating remains provider authority.
 
-For Magic From the East absence, the 1.0.8 publisher says most relevant Symmetry content becomes ice-based. Treat that as publisher-described expected behavior, not as proof of exact current spell IDs/damage types until runtime inspection.
+For **Magic From the East presence**, the 1.0.8 publisher says its spells remain available for Symmetry. The physical precondition is therefore satisfied in this pack, but exact active spell IDs, configs, hook path and runtime effects remain unverified. Do not infer them from JAR presence alone.
 
 For Born in Chaos presence, the publisher says ritual progression can extend to Infernal Fire. Runtime QA must still confirm current config/recipe reachability.
 
