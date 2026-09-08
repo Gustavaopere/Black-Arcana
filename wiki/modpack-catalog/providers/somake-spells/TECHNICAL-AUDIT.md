@@ -46,11 +46,11 @@ Uma eventual inspeção técnica do JAR para interoperabilidade exigiria o artef
 
 ### Optional/public compatibility
 
+- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente; o publisher 1.0.8 o marca como opcional e diz que, quando presente, seus spells continuam disponíveis para Symmetry; registry/config activation exata permanece runtime-QA pending;
 - Born in Chaos `1.7.6` — presente;
 - GTBC's Geomancy Plus `1.1.0-1.21.1` — presente;
 - Tunes 'n Tomes `1.1.0-HOTFIX` — presente;
 - Mowzie's Mobs `1.8.2` — presente; 1.0.7 documentava gate para três Connection spells;
-- Magic From the East — não localizado na modlist atual;
 - Better Combat — não localizado na modlist atual.
 
 ### Coexistência com T.O Magic n' Extras
