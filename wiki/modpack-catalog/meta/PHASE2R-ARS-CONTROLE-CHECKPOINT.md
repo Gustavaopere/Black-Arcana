@@ -1,6 +1,6 @@
 # Phase 2R — Ars Controle 1.6.15 checkpoint
 
-Status: `SOURCE CATALOG COMPLETE / FINAL DIFF+SYNC+CI+MERGE PENDING / RUNTIME+PACK QA PENDING`
+Status: `SOURCE CATALOG COMPLETE / DELIVERY GATES TRACKED IN PR #99 / RUNTIME+CONFIG+CLIENT+PACK QA PENDING`
 
 Execution branch: `docs/magic-catalog-phase2r-ars-controle`
 PR: `#99`
@@ -42,13 +42,8 @@ Physical SHA-1: `fdf381d5733698abe336354c7541299ab495ecae`
 
 `SOURCES.md`, `THIRD_PARTY_NOTICES.md` and `docs/provenance/REFERENCE_LEDGER.md` are high-churn shared surfaces. The narrow Phase 2R provenance overlay is authoritative for Ars Controle until a safe shared-index regeneration/reconciliation; no unrelated entry is overwritten by this phase.
 
-## Remaining before Phase 2R merge
+## Delivery gates
 
-1. Review exact PR diff; no runtime/Stage files may be introduced.
-2. Verify diff sanity/trailing whitespace.
-3. Refetch `main` and reconcile if advanced.
-4. Run full CI on the final reconciled PR HEAD.
-5. Resolve blocking review findings if any.
-6. Merge only if exact-head gates are green.
+PR #99 is the authoritative delivery record for exact-head diff review, latest-main reconciliation, CI status, review closure and merge evidence. Those transient repository-delivery facts are intentionally not frozen as a permanent `PENDING` status in this catalog checkpoint.
 
-Runtime/config/client/full-modpack acceptance is not part of the source-catalog merge claim and remains pending.
+Runtime/config/client/full-modpack acceptance is not part of the source-catalog completion claim and remains pending until directly observed.
