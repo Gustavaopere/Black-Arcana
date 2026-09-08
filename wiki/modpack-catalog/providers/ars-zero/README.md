@@ -1,79 +1,113 @@
 # Ars Zero
 
-Status: `PHASE 2 — CURRENT 2.0.2 CAPABILITY SURFACE NORMALIZED; EXACT BALANCE/REGISTRY FIELDS PARTIAL`
+Status: `PHASE 2AE — RELEASE-PINNED 2.0.2 / 12 CURRENT UNIQUE GLYPH CAPABILITIES NORMALIZED / MULTIPHASE + VOXEL + STATIC-STAFF SURFACES CATALOGED / EXACT BINARY INTERNALS FAIL-CLOSED`
 
 ## Runtime identity
 
 - Mod id: `ars_zero`
-- Current JAR: `ars_zero-1.21.1-2.0.2.jar`
+- Current physical JAR: `ars_zero-1.21.1-2.0.2.jar`
 - Runtime version: `2.0.2`
 - Loader/game: NeoForge 1.21.1
-- Phase 2 class: `ARS GLYPH / SYSTEM PROVIDER`
+- Physical SHA-1: `ac9b6e6f7a2bd403ee7cdc16023509fde7c4e1d0`
+- CurseForge project: `1377482`
+- CurseForge file: `8703997`
+- Phase 2 class: `ARS GLYPH / CAST-DEVICE / WORLD-CAPABILITY PROVIDER`
 
-## Multi-phase casting equipment
+The current 2026-09-08 physical modlist is authority for installed identity. The official 2.0.2 CurseForge file/release notes are the exact release-level functional authority available in this audit. The public upstream GitHub `1.21.1` branch is older than the 2.0.2 release and therefore is **not** treated as exact 2.0.2 source authority.
 
-### Spell Staff
+## Catalog result
 
-The current public documentation describes a three-phase spell container: begin, tick and end. Each phase can carry up to ten glyph slots and the staff can continuously execute its channel/tick behavior while use is held.
+Phase 2AE closes the currently public unique glyph capability surface at **12** entries:
 
-### Psion's Circlet
+1. Temporal Context Form;
+2. Near Form;
+3. Push;
+4. Select;
+5. Conjure Voxel;
+6. Anchor;
+7. Remove Gravity;
+8. Convergence;
+9. Geometrize;
+10. Conjure Blight;
+11. Beam;
+12. Conjure Arcane Shield.
 
-Tier-3 Curios head equipment using the same begin/tick/end phase model with up to ten glyph slots per phase, triggered through its channel input.
+`AOE II`, `AOE III`, `Amplifier II` and `Amplifier III` remain disabled-by-default copied compatibility content in the public provider documentation and are not counted as unique Ars Zero gaps.
 
-These systems already cover a substantial portion of persistent/channelled and phase-dependent spell sequencing. A Black Arcana design must prove a stronger semantic delta before adding a separate generic “multi-stage cast” engine.
+See [`GLYPH-CATALOG.md`](GLYPH-CATALOG.md) for the per-capability evidence/disposition matrix.
 
-## Current documented glyphs
+## Multiphase authority
 
-| Capability | Public semantic role |
-|---|---|
-| Temporal Context | Form/context primitive for time- or phase-sensitive spell behavior. |
-| Near | Form for nearby-context targeting. |
-| Push | Forced movement. |
-| Select | Selection/context primitive. |
-| Conjure Voxel | Creates Ars Zero voxel constructs. |
-| Anchor | Anchoring/control primitive. |
-| Remove Gravity | Gravity suppression/control. |
-| Convergence | Convergence/context primitive. |
-| Geometrize | Patterned/geometric application of subsequent spell behavior. |
-| Conjure Blight | Blight-oriented conjuration/effect capability. |
-| Beam | Beam-form spell delivery. |
+Ars Zero already owns a real multiphase spell-device model around **Begin / Tick / End** phases:
 
-The current public 2.0.2 page also lists AOE II/III and Amplifier II/III as disabled-by-default copied compatibility content; they are not treated as unique Ars Zero gaps.
+- Spell Staff family: up to ten glyph slots per phase and continuous held-use casting;
+- Psion's Circlet: Curios head device using the same three-phase model;
+- Multi-phase Turret: block/turret execution of phase-aware spells.
 
-## Geometrize history still relevant to the current line
+The exact 2.0.2 release additionally documents server-side hardening around multiphase/parchment/circlet packet handling and live cast-context cleanup. Black Arcana must not create a second generic multiphase Ars execution path merely to observe or integrate these casts.
 
-The public 1.21.1 changelog history for the same provider documents Geometrize augments `Cube`, `Sphere`, `Flatten` and `Hollow`, plus compound uses such as Geometrize + Break and Geometrize + Conjure Terrain. The current 2.0.2 public page still exposes Geometrize itself.
+## Static staffs and acquisition
 
-For Phase 2 this proves that generic geometric placement, shape selection and hollow/flatten-style composition are already represented in the installed Ars ecosystem. Exact current registry IDs/costs for each historical augment remain to be normalized before implementation work relies on them.
+The current 2.0.x release line establishes seven static staffs in production:
 
-## Other verified content
+- Staff of Telekinesis;
+- Staff of Aetherwalk;
+- Staff of Demonbane;
+- Staff of Geometrize;
+- Staff of Convergence / Explosion Arch Wizard;
+- Staff of Lakes;
+- Staff of Switcheroo.
 
-- Multi-phase Turret: executes phase-aware Ars Zero spell behavior from a block/turret context.
-- Voxel system with documented elemental/material families including Arcane, Fire, Water, Wind, Stone, Ice and Lightning; voxels can participate in environmental interactions and voxel-to-voxel collisions.
+The 2.0.2 NeoForge release specifically promoted the latter five from development-only registrations to production and made them Necropolis Lich-exclusive drops. Telekinesis/Aetherwalk were already production static staffs in the immediately preceding release line. Exact preset spell payloads, registry IDs, filial internals and item NBT/components are not promoted here without exact 2.0.2 binary/source evidence.
+
+## World/system capabilities
+
+Ars Zero also exposes provider-owned surfaces beyond glyph registration:
+
+- elemental voxel entities with Arcane, Fire, Water, Wind, Stone, Ice and Lightning variants;
+- voxel-vs-world and voxel-vs-voxel interactions;
+- Blight liquid / Blight Forest content;
+- Necropolis structure and Lich encounter/loot;
+- Arcane Shield entity/barrier behavior;
+- geometry-process lifecycle;
+- Temporal Anchor state;
+- bounded/protected world mutation for Conjure Blight and temporal restoration in the 2.0.2 release.
+
+See [`SYSTEMS-AND-EQUIPMENT.md`](SYSTEMS-AND-EQUIPMENT.md).
 
 ## Deduplication impact
 
-Ars Zero materially overlaps these candidate Black Arcana families:
+Ars Zero materially overlaps candidate Black Arcana capability families around:
 
+- channelled / multiphase casting;
 - geometry / patterned placement;
 - gravity and forced movement;
 - beam delivery;
+- barriers/shields;
+- persistent localized constructs;
 - blight/corruption-like presentation;
-- channelled / multi-phase casting;
-- persistent localized constructs.
+- contextual selection/marking;
+- source/mana concentration and environmental interactions.
 
-Overlap of presentation is not equivalence. Black Arcana Corruption remains its own provider-owned danger channel, and an Ars Zero Blight capability must not be silently mapped into Black Arcana Corruption without a verified bridge.
+These are overlap signals, not automatic semantic equivalence. In particular, Ars Zero Blight is **not** Black Arcana Corruption, Arcane Strain or Arcane Danger. A future bridge must preserve provider identity and causal ownership.
 
 ## Authority / fail-closed
 
-- Ars Nouveau/Ars Zero own glyph execution and their spell-container semantics.
-- Black Arcana must not re-run a glyph through a second cast path merely to observe it.
-- No Black Arcana mechanic may infer corruption, Arcane Strain, mastery or resource settlement from an Ars Zero effect without an explicit causal adapter.
-- Unknown numeric/registry details remain fail-closed for implementation.
+- Ars Nouveau/Ars Zero own glyph execution, Ars mana/Source semantics and their cast-device lifecycle.
+- Black Arcana retains authority over its own canonical casting pipeline, spell domains, Arcane Danger and world-safety policy.
+- Never double-cast, double-debit mana/Source or convert an observed Ars Zero effect into a Black Arcana cast.
+- Client packets/presentation are never promoted to gameplay authority.
+- Geometry, temporal restoration and blight placement must not bypass provider claim/world-bound checks.
+- No Mastery, Corruption, Strain or resource settlement is inferred from mere effect presence without a real causal adapter.
+- Exact registry IDs, costs, formulas, configs and public API signatures that cannot be proven from exact 2.0.2 evidence remain `NÃO VERIFICADO` / fail-closed.
 
-## Provenance / confidence
+## Validation boundary
 
-- Presence/version: current 2026-09-06 modlist — HIGH.
-- Current 2.0.2 equipment/glyph/voxel list: current public project documentation — HIGH at semantic level.
-- Geometrize shape augments: public current-line 1.21.1 changelog history — HIGH for feature existence; exact 2.0.2 registry/balance normalization remains pending.
-- No Java bytecode was decompiled.
+This is a documentation/audit closure, not runtime integration. No Black Arcana Stage 07 spell or Stage 08 balance decision is promoted by this catalog pass. Full binary extraction/runtime QA against the exact installed JAR remains pending.
+
+## Evidence
+
+- [`EVIDENCE-AND-PROVENANCE.md`](EVIDENCE-AND-PROVENANCE.md)
+- Official project page: https://www.curseforge.com/minecraft/mc-mods/ars-zero
+- Exact NeoForge 1.21.1 release: https://www.curseforge.com/minecraft/mc-mods/ars-zero/files/8703997
+- Public upstream repository (historical source only for this release audit): https://github.com/zeroregard/Ars-Zero
