@@ -30,6 +30,8 @@ Spell-details/inspection planning audit baseline: `main@ede7dc310499ec21941504e8
 
 Casting audiovisual/animation planning audit baseline: `main@c5c1fe1346f0e7e9e991018f62c2f2399b41075b`.
 
+Onboarding/discoverability planning audit baseline: `main@55939167301dfea71b0516b5b1acdb1844ca3305`.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -196,6 +198,16 @@ Current client preferences already expose particle density, reduced motion and r
 
 `15-casting-vfx-audio-animation-presentation.md` is the planning authority for any future cross-spell cast VFX/audio/player-animation/camera/telegraph lifecycle. It requires local-intent versus authoritative-result separation, bounded `castId` correlation, server-owned gameplay telegraphs, provider-host deduplication and fail-safe optional animation/camera adapters.
 
+### 3.12 Current onboarding/discoverability behavior
+
+Current language resources already define the Black Arcana key category plus localized names for radial, cast-selected, loadout-editor and all eight quick-cast mappings. They also contain bounded radial/loadout in-screen hints.
+
+Those labels do not constitute a first-use discovery system. The current editor and all eight direct quick-cast mappings remain unbound by default, and repository search at the 05.16 audit baseline did not identify a generic Black Arcana onboarding/tutorial/discoverability subsystem.
+
+Current binding state is a local client fact. Documentation defaults such as `R` and `V` must therefore never be presented as the player's current key after rebinding, and `Unbound` must be treated as a valid presentation state rather than an invented fallback key.
+
+`16-onboarding-discoverability-contextual-help.md` is the planning authority for future first-use guidance, current-binding/unbound presentation, bounded contextual help, dismissal/re-entry, localization/accessibility and tutorial/control coexistence. It keeps help preferences client-only and never treats tutorial completion as casting, progression, Mastery or unlock authority.
+
 ## 4. Plan package
 
 Stage 05 is divided into the following canonical planning documents:
@@ -214,7 +226,8 @@ Stage 05 is divided into the following canonical planning documents:
 12. `12-iconography-resource-resolution.md` — synchronized spell-icon resource parsing/resolution, fallback, reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance;
 13. `13-targeting-aim-presentation.md` — authority-safe reticle/aim/target presentation across current server target kinds, advisory target hints, stale-state/result correlation, world-safety boundaries, accessibility, performance and modpack coexistence;
 14. `14-spell-details-inspection-presentation.md` — bounded spell inspection/details, field-level presentation authority, static/dynamic separation, provider/resource/cooldown/target/world/progression boundaries, localization, accessibility, performance and fail-closed behavior;
-15. `15-casting-vfx-audio-animation-presentation.md` — authority-safe casting VFX/audio/player-animation/camera/telegraph lifecycle, `castId` correlation, provider-host deduplication, sensory-accessibility budgets, exact-version optional animation-provider boundaries and real-pack coexistence.
+15. `15-casting-vfx-audio-animation-presentation.md` — authority-safe casting VFX/audio/player-animation/camera/telegraph lifecycle, `castId` correlation, provider-host deduplication, sensory-accessibility budgets, exact-version optional animation-provider boundaries and real-pack coexistence;
+16. `16-onboarding-discoverability-contextual-help.md` — first-use discoverability, live binding/unbound presentation, bounded contextual help, dismissal/re-entry, localization/accessibility and modpack-safe tutorial coexistence without progression authority.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -227,6 +240,8 @@ Player opens the loadout editor through a rebindable mapping.
 The editor operates on a **draft** only. `10-loadout-editor-information-architecture.md` defines how future slot awareness, reordering, search, icon use, reset and apply reconciliation must preserve the current dense ordered server model. Applying always sends a bounded complete ordered update request to the server; the synchronized server snapshot remains canonical.
 
 The loadout editor is also the preferred future surface for rich spell inspection under 05.14 because the player is already in a configuration context. Hover/focus/details interaction remains client-local presentation and must not toggle the draft or cast unless the existing explicit editor action is separately invoked.
+
+Because the editor is currently unbound by default, future 05.16 discoverability may explain how to reach/configure that action using the player's actual current binding state. Help never auto-binds a key, opens a cast path, applies a draft or treats the editor's unbound state as server-side unavailability.
 
 ### 5.2 Select
 
@@ -249,6 +264,8 @@ Any future invocation surface — weapon, spellbook, staff, controller binding o
 A local crosshair candidate or future reticle/geometry guide remains presentation under 05.13. It must never be promoted into target admission, resolved impact identity or world-safety authority merely because it was visible when the intent was emitted.
 
 Any future audiovisual anticipation under 05.15 is equally non-authoritative: a local keypress/pose/particle cue cannot mean “cast accepted”. Committed release/impact/telegraph presentation must be driven by the authoritative result or a separately reviewed server-owned runtime presentation event appropriate to the exact phase.
+
+05.16 help may teach that selection and casting are separate, but dismissing/completing guidance never emits a cast intent or satisfies a server gate.
 
 ### 5.4 Feedback
 
@@ -273,6 +290,8 @@ Spell inspection under 05.14 is similarly supplemental. Static description/detai
 
 Casting audiovisual presentation under 05.15 is also supplemental to gameplay authority. Provider animation failure, missing decorative particles or missing sound normally degrades presentation rather than denying an otherwise-valid Black Arcana cast. Gameplay-relevant telegraphs are the exception in the sense that their geometry/lifecycle must come from a canonical server-owned contract rather than decorative local inference.
 
+Contextual help under 05.16 is subordinate to authoritative feedback. It may explain how to find controls or interpret generic concepts, but it must not replace a server denial with an inferred diagnosis or visually outrank mandatory danger/result information.
+
 ## 6. UX principles
 
 ### 6.1 Combat speed
@@ -290,6 +309,8 @@ When the player is idle, Black Arcana should largely disappear from the screen.
 
 Persistent bars, permanent spell panels and always-on explanatory text are avoided unless a later requirement demonstrates that contextual presentation is insufficient.
 
+First-use/contextual help under 05.16 follows the same rule: use bounded, dismissible guidance plus a deterministic re-entry path rather than a permanent tutorial overlay or unbounded notification history.
+
 ### 6.3 Explicit authority
 
 A visual green/clear state means only what the server-authorized preview contract actually proves. `CLEAR` must not be presented as guaranteed cast success because target resolution, replay admission, world policy and hazard activation can still fail at cast time.
@@ -299,6 +320,8 @@ Likewise, a local reticle/entity/block observation under 05.13 may communicate a
 A detail line under 05.14 communicates only the fact its source contract owns. A configured cost does not prove affordability, a static target rule does not prove a current target, and a world-effect warning does not prove mutation permission.
 
 An audiovisual cue under 05.15 communicates only the phase/fact its trigger owns. Local anticipation cannot impersonate committed success, provider animation cannot prove Black Arcana transaction acceptance, and a decorative local area effect cannot impersonate canonical server target geometry.
+
+A help hint under 05.16 communicates only its source category. Current client binding/unbound state is a local presentation fact, while progression/cost/cooldown/target/hazard/world authority remains server-owned.
 
 ### 6.4 Information hierarchy
 
@@ -314,6 +337,8 @@ Verbose detail belongs in tooltips or `VERBOSE`/inspection presentation rather t
 
 For transient HUD arbitration specifically, 05.11 refines this generic information hierarchy: authoritative denial/result owns outcome emphasis over advisory forecast, while selected spell identity remains independent context rather than implicit result identity.
 
+Optional onboarding/help never displaces authoritative denial, hazard or gameplay telegraph information. When space is constrained, help yields first and remains recoverable through its revisitable surface.
+
 ### 6.5 Visual independence
 
 Important state must not depend exclusively on color. Labels, icons, symbols or text should distinguish selected, unavailable, cooldown, danger and denial states even when color perception is limited.
@@ -327,6 +352,8 @@ Target/aim presentation introduced through 05.13 must likewise distinguish local
 Inspection/detail presentation introduced through 05.14 must distinguish static identity/detail, advisory/dynamic preview, authoritative result, unknown/unavailable data and presentation fallback without flattening them into one stat sheet.
 
 Audiovisual presentation introduced through 05.15 must preserve the same semantic distinctions across motion, sound, particles and animation. Essential states require a non-audio/non-particle fallback, and reduced-motion/reduced-flash settings must not change gameplay outcome.
+
+Onboarding/help under 05.16 must remain readable without color, sound or animation; current binding labels and explicit `Unbound` presentation must be textual/semantic rather than encoded only by a decorative cue.
 
 ## 7. Planned UX refinements
 
@@ -515,6 +542,25 @@ Plan:
 - keep audiovisual assets original/project-owned or explicitly provenance-safe under `SOURCES.md`/`THIRD_PARTY_NOTICES.md`;
 - leave per-spell audiovisual choices with Stage 07 rather than creating a second spell-definition catalog in Stage 05.
 
+### 7.12 Onboarding, discoverability and contextual help
+
+`16-onboarding-discoverability-contextual-help.md` closes the usability gap between a functioning Stage 05 runtime and a player actually discovering the configuration/select/cast workflow in a large modpack.
+
+Plan:
+
+- treat current binding and explicit unbound state as client-local presentation facts;
+- resolve current key labels dynamically rather than hardcoding default `R`/`V` instructions after rebinding;
+- teach the minimum concept flow: configure loadout → select → explicit cast → optional quick slots → read server feedback;
+- keep first-use guidance bounded/non-blocking and provide deterministic re-entry after dismissal;
+- keep help preferences separate from gameplay/progression persistence;
+- never award spells, Mastery, perks or satisfy progression gates from tutorial completion/dismissal;
+- never auto-cast, auto-apply a draft or silently bind/rebind keys;
+- keep Controlling optional and use normal Minecraft key-mapping semantics as the core discovery path;
+- preserve 05.11 denial priority and 05.08 hazard/result semantics; help never replaces authoritative server feedback with an inferred diagnosis;
+- localize reusable help copy, account for long strings/small viewports and keep essential help text independent of color/audio/motion;
+- use event-driven bounded triggers rather than per-tick polling, provider scans or network spam;
+- coexist with other modpack tutorial/quest/control surfaces through optional adapters only after exact-version evidence, suppressing duplicate tutorial spam where a real composition contract exists.
+
 ## 8. Input conflict policy for the large modpack
 
 The pack has many mods and therefore many mappings.
@@ -535,6 +581,8 @@ Inspection/details interaction under 05.14 should likewise remain screen-local w
 
 05.15 audiovisual presentation must not register a second cast key or derive gameplay authority from an animation-provider keybinding.
 
+05.16 help must show the player's actual current binding or explicit unbound state, never documentation defaults as runtime truth. It may guide the player toward normal key settings but never silently resolve a conflict or rewrite another mod's mapping. Controlling remains optional.
+
 ## 9. Networking and state rules
 
 Every UX addition must answer four questions before code is approved:
@@ -550,6 +598,8 @@ Expected defaults:
 - loadout draft/order/search state: client-local until Apply;
 - selected slot: client presentation state reconciled against server loadout;
 - screen focus/input modality: client-local transient state scoped to the open screen; no server synchronization;
+- current Black Arcana key mapping/bound-or-unbound label: client-local configuration fact;
+- help topic/session/dismissal state: client presentation state only; durable storage, if later approved, remains completely separate from gameplay/progression persistence;
 - cooldown: server-owned synchronized group snapshot; per-spell presentation additionally requires the authoritative spell→group relationship defined by `07-presentation-data-contracts.md`;
 - cast result/denial: server-authored event result identified by `castId`;
 - optional pending cast-result correlation: bounded client-local presentation context keyed by emitted `castId`, never gameplay authority;
@@ -579,6 +629,8 @@ Static inspection metadata and dynamic preview/result state must not share one a
 
 Audiovisual cue state must likewise preserve phase/lifetime. A local intent cue cannot later be reused as proof of success, a stale channel animation must tear down, and an unmatched result uses generic audiovisual feedback rather than guessed spell/target attribution.
 
+Help state under 05.16 never becomes gameplay state. Dismissing/seeing a topic cannot satisfy a cast gate, progression requirement or server transaction, and a corrupt/reset help preference must never reset loadouts, cooldowns, Mastery, hazards or provider resources.
+
 Do not add per-tick full-state synchronization.
 
 ## 10. Performance budgets
@@ -599,6 +651,8 @@ Stage 05 is not allowed to become a client or server tick-cost sink.
 - dynamic inspection previews, if ever required, must be rate-limited/correlated/stale-safe rather than hover-driven spam;
 - audiovisual presentation must define explicit count/rate/lifetime/distance budgets for particles, persistent emitters, sound instances, animation layers, camera effects, remote recipients and cue caches;
 - audiovisual presentation must not scan global entities/chunks, resolve provider registries/resources every frame, query protection systems every frame or send network traffic per animation/particle frame;
+- onboarding/help triggers must be event-driven, bounded by topic/count/lifetime and idle-cost-negligible after dismissal/disablement;
+- onboarding/help must not poll provider/world/progression state every tick, send per-tick packets, perform remote HTTP documentation lookup during gameplay or retain an unbounded history of shown hints;
 - no UI feature may trigger global server scans;
 - icon lookup and text layout should be cached or bounded where profiling proves necessary.
 
@@ -632,6 +686,11 @@ Examples:
 - provider host already owns cast presentation → suppress duplicate Black Arcana host-level presentation unless an explicit composition rule exists;
 - Borrowed Sight active without a safe camera-composition rule → ordinary cosmetic camera effects yield rather than corrupt its viewpoint lifecycle;
 - stale audiovisual/channel state → tear it down without mutating gameplay;
+- current binding unavailable → show generic action name or explicit unbound/settings guidance; never invent `R`, `V` or another fallback key;
+- optional Controlling/help-provider integration unavailable → retain the normal Minecraft/local discoverability path;
+- corrupt/missing help-state storage → reset only help presentation state; never gameplay/progression state;
+- stale help topic references a removed action → suppress/reset that topic rather than teach an obsolete binding;
+- user disables optional hints → authoritative denial/hazard/telegraph presentation remains unaffected;
 - network/session reset → clear stale client state before new snapshots;
 - incompatible optional integration → disable only that presentation seam.
 
@@ -654,15 +713,16 @@ When a planned refinement is approved for implementation:
 11. for reticle/aim/target-presentation changes, use `13-targeting-aim-presentation.md` before adding target overlays, geometry guides, target-preview synchronization or result/target attribution;
 12. for spell-tooltip/detail/inspection changes, use `14-spell-details-inspection-presentation.md` before exposing new static/dynamic fields, provider facts, descriptions or detail caching;
 13. for casting VFX/audio/player-animation/camera/telegraph work, use `15-casting-vfx-audio-animation-presentation.md` before adding audiovisual resources, result/runtime cue protocols, animation-provider adapters or camera effects;
-14. add deterministic RED tests for pure/state behavior where applicable;
-15. implement the minimum GREEN change;
-16. add/adjust GameTests only where world/network integration requires them;
-17. run full Black Arcana CI;
-18. execute the specific real-client rows affected by visual/input behavior;
-19. fetch `origin/main` again and reconcile;
-20. rerun CI on the reconciled HEAD;
-21. merge only after exact-head gates are green;
-22. record final main SHA and any still-deferred manual rows.
+14. for onboarding/discoverability/contextual-help work, use `16-onboarding-discoverability-contextual-help.md` before adding first-use prompts, current-binding labels, hint persistence, tutorial-provider adapters or control/help surfaces;
+15. add deterministic RED tests for pure/state behavior where applicable;
+16. implement the minimum GREEN change;
+17. add/adjust GameTests only where world/network integration requires them;
+18. run full Black Arcana CI;
+19. execute the specific real-client rows affected by visual/input behavior;
+20. fetch `origin/main` again and reconcile;
+21. rerun CI on the reconciled HEAD;
+22. merge only after exact-head gates are green;
+23. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -704,7 +764,13 @@ This plan does not authorize:
 - duplicate provider + Black Arcana animation/audio/VFX for one hosted root cast by default;
 - audio-only or decorative-particle-only critical state;
 - permanent camera takeover or a generic camera system that silently overrides Stage 07.07 Borrowed Sight;
-- copying third-party descriptions/tooltips/assets/layout trade dress/VFX/sounds/animations without compatible permission and provenance;
+- tutorial/help completion as a spell unlock, Mastery grant, progression gate or cast authority;
+- automatic spell granting, auto-casting, auto-equipping a loadout or auto-applying a draft from onboarding;
+- silent binding/rebinding or forcing default keys for all quick-cast slots;
+- a mandatory Controlling/controller/tutorial-provider dependency for core discoverability;
+- a permanent tutorial HUD, unbounded hint history or per-tick tutorial eligibility scanning;
+- remote web documentation as a runtime dependency for basic casting usability;
+- copying third-party descriptions/tooltips/assets/layout trade dress/VFX/sounds/animations/tutorial prose without compatible permission and provenance;
 - forced gamepad dependencies;
 - silent key remapping of other mods;
 - copying third-party UI/assets/code without compatible permission and provenance;
@@ -728,6 +794,8 @@ The default strategy is:
 
 05.15 specializes this coexistence rule for player animation, first-person body/camera, lock-on, Punchy, provider-hosted audiovisual presentation and the two distinct installed player-animation libraries. Presence of those mods remains a QA/integration fact, not proof of an API seam.
 
+05.16 specializes discoverability/help coexistence. Controlling may make mappings easier to find but is not required; external provider/tutorial/quest surfaces retain their own authority and presentation, and a future Black Arcana adapter must suppress duplicate tutorial spam only through an explicit supported composition contract.
+
 Real-pack coexistence findings may become Stage 05 blockers only when they break required input/readability/authority; cosmetic unification remains an optional follow-up.
 
 ## 16. Presentation data authority rule
@@ -742,6 +810,8 @@ Current audited boundary:
 - cooldown snapshots are authoritative by canonical `groupId`, but the current spell presentation payload does not synchronize the spell→cooldown-group relationship, so a generic per-spell cooldown widget must not guess that mapping;
 - exact resource/cost preview, charge-pool state, active channel progress and generic ritual/domain timers do not currently have sufficient Stage 05 client contracts;
 - current generic cast result does not identify resolved impact/target geometry or audiovisual resource identity, so gameplay-relevant audiovisual attribution beyond generic result state requires a separately reviewed bounded server-owned event/state when genuinely needed;
+- current key mapping/bound-or-unbound state is local client configuration, not server presentation authority;
+- help topic/dismissal preference is client presentation state and does not become gameplay/progression state;
 - Corruption/Strain current values remain intentionally withheld pending separate approval;
 - external-provider resources/cooldowns remain provider-owned unless an exact supported presentation seam is deliberately adopted;
 - all future synchronization remains bounded, versioned, event-driven, stale-safe and presentation-only.
@@ -935,3 +1005,29 @@ Current planning rule:
 - missing optional audiovisual resources or adapters fail closed by presentation fallback/omission and never invent gameplay truth.
 
 05.15 is not automatically a Stage 05 completion blocker. Audiovisual hardening becomes mandatory only when a direct real-client acceptance failure, a concrete Stage 07 content requirement or an explicit reviewed decision promotes a specific refinement. Creating 05.15 does not add VFX/audio/animation assets, protocol fields, provider adapters, runtime behavior or manual PASS evidence.
+
+## 25. Onboarding, discoverability and contextual-help rule
+
+`16-onboarding-discoverability-contextual-help.md` is the canonical planning layer for making the existing Stage 05 workflow discoverable without making tutorial state authoritative.
+
+Current planning rule:
+
+- radial currently defaults to `R`, cast-selected to `V`, loadout editor is unbound and all eight direct quick-cast mappings are unbound; defaults are documentation facts, not permanent current-binding truth;
+- current language resources already localize the Black Arcana key category/actions and bounded in-screen radial/loadout hints, but those do not prove a generic first-use onboarding subsystem;
+- repository search at the 05.16 baseline did not identify a generic Black Arcana onboarding/tutorial/discoverability runtime;
+- current bound/unbound key state is client-local presentation data and future help resolves that live state instead of hardcoding default keys;
+- explicit `Unbound` is a valid state; help points toward normal control configuration rather than inventing a key or declaring the server feature unavailable;
+- first-use guidance teaches the minimum concept flow without auto-casting, auto-applying a loadout or creating a mandatory tutorial quest;
+- help dismissal/seen/reset state is client presentation only and must remain separated from loadouts, cooldowns, charges, spell unlocks, Mastery, rituals, Corruption/Strain and provider resources;
+- completing or dismissing help never grants spells, Mastery/perks, satisfies progression, changes hazard values or authorizes a cast;
+- optional help never outranks or suppresses authoritative denial, hazard or gameplay-relevant telegraph presentation;
+- one-shot guidance requires a deterministic re-entry path so dismissal is recoverable after rebinding, modpack updates or a long absence;
+- Controlling may improve key discovery but remains optional; Black Arcana uses normal Minecraft key mappings as its guaranteed baseline and does not silently rewrite another mod's controls;
+- future controller/tutorial/quest-provider integration requires exact-version evidence and a narrow adapter; provider absence falls back to the minimal local discoverability path;
+- reusable help copy remains localized/bounded, important guidance is not color/audio/motion-only, and small viewport/high GUI-scale behavior requires direct validation;
+- onboarding triggers are event-driven/bounded, not per-tick world/provider/progression scans or network polling;
+- remote web documentation is never required for basic in-game usability;
+- corrupt/missing help preferences fail by resetting/omitting help presentation only, never gameplay state;
+- third-party tutorial prose/layouts/branded assets remain clean-room/provenance protected.
+
+05.16 is not automatically a Stage 05 completion blocker. Discoverability hardening becomes mandatory only when a direct real-client acceptance failure, explicit reviewed UX decision or concrete downstream product requirement promotes a specific refinement. Creating 05.16 does not add tutorial UI, toast notifications, new key mappings, client persistence, protocol fields, provider adapters, runtime behavior or manual PASS evidence.

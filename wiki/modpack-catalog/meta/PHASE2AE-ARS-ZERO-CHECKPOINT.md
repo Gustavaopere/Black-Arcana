@@ -9,11 +9,12 @@ Continue the canonical Phase 2 magic-provider catalog by closing the installed A
 - repository: `Gustavaopere/Black-Arcana`;
 - branch: `docs/magic-catalog-phase2ae-ars-zero`;
 - initial/fresh base: `main@55939167301dfea71b0516b5b1acdb1844ca3305`;
-- base commit includes the Stage 05.15 casting audiovisual plan and the latest merged Ars Sophisticated Compatibility catalog;
+- first pre-merge reconciliation: `main@7362cc5ec6e09a9aa79adf43751d366de1dd70d3`;
+- the intervening main delta touched only `plans/05-casting-ux/**`, so it was semantically merged without overwriting the Phase 2AE provider files;
 - concurrent open provider PRs observed before work: Ars Nouveau: Two-Way Portals, Ars Polymorphia and Ars Sable; this phase deliberately does not touch their provider directories;
 - latest physical modlist supplied 2026-09-08: 595 top-level entries; NeoForge `21.1.248`.
 
-The branch must be reconciled again with the latest `origin/main` immediately before merge. Any CI evidence from before that reconciliation is not final merge evidence.
+The branch must still fetch/recheck `origin/main` immediately before the final merge action. Any CI evidence from before the last reconciliation is not final merge evidence.
 
 ## Physical identity
 
