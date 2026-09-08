@@ -1,74 +1,130 @@
-# Leylines — Iron's Spells 'n Spellbooks Addon
+# Leyline Spellbooks 1.0.3
 
-Status: `CURRENT 1.0.3 SYSTEM IDENTITY VERIFIED; GRANULAR SPELL LIST PENDING`
+Status: `EXACT INSTALLED ARTIFACT IDENTITY / 9 PUBLIC SIGNATURE NAMES / COMPLETE REGISTRY UNKNOWN / FAIL-CLOSED`
+
+## Installed authority
 
 - Current JAR: `leylines-1.0.3.jar`
 - Mod id: `leylines`
 - Runtime version: `1.0.3`
+- Minecraft / loader: `1.21.1` / NeoForge
+- CurseForge project: `1636676`
+- CurseForge file: `8565076`
+- Release date: `2026-08-02`
+- License: `All Rights Reserved`
+- Physical modlist hash: `5307a4edc885ab949eed4438d9d7f9cb6176421d`
 - Provider class: `SPELL PROVIDER / CONTENT + WORLD SYSTEM ADDON`
-- Primary casting authority: Iron's Spells 'n Spellbooks.
-- Current license: All Rights Reserved.
+- Required casting provider: Iron's Spells 'n Spellbooks
 
-## Current public identity
+The physical modlist is authoritative for the installed JAR/runtime/hash. An older catalog note associated SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` with this CurseForge file through an external index. That value does **not** match the current physical modlist and is no longer accepted as the installed-artifact hash.
 
-The current public project description defines Leylines around:
+## Official provider identity
 
-- underground ley currents;
-- time manipulation;
-- portals;
-- night-charged pillars;
-- wave-based rifts;
-- a dedicated new spell school;
-- world generation / structures tied to the leyline system.
+The publisher describes Leyline Spellbooks as an Iron's addon with a dedicated **Leyline** school built around underground arcane currents, spatial/temporal manipulation and a world loop of night-time pillars and wave-based Leyline Rifts.
 
-This is not only a spell pack. It combines spell semantics with world-state encounters and infrastructure.
+The provider therefore owns more than discrete casts. Its semantic surface includes:
 
-## Current 1.0.3 rift authority behavior
+- Leyline school identity;
+- underground ley-current/world infrastructure;
+- night-time pillar discovery/charging;
+- Leyline Rift encounter lifecycle;
+- theme loot, XP and Ley Crystal reward chance;
+- Leyline Codex and Ley Staff attunement/progression surfaces;
+- spell behavior exposed through Iron's casting substrate.
 
-The public 1.0.3 changelog establishes important encounter rules:
+## Public signature-spell lower bound
 
-- dying during an active rift immediately fails the encounter and prevents completion reward/crystal;
-- boss-bar cleanup occurs on death, respawn, logout and dimension change;
-- moving more than **60 blocks** from an active rift collapses/fails it;
-- encounter mobs wandering more than **40 blocks** away are pulled back to the arena;
-- rift enemies are kept persistent enough that player death cannot falsely clear/complete the event;
-- `/leylines spawnpillar` is an operator/debug command, not normal progression.
+The official project page names **nine** signature spells. It explicitly ends with `and more`, so nine is a public lower bound, **not** a complete registry count.
 
-These are server/gameplay authority facts relevant to any Black Arcana integration around rifts/domains.
+1. [Blink Step](spells/blink-step.md) — vanish/reappear with a burst of haste.
+2. [Rift Gate](spells/rift-gate.md) — place two linked portals.
+3. [Chrono Tether](spells/chrono-tether.md) — slow what is ahead while accelerating the caster.
+4. [Temporal Stutter](spells/temporal-stutter.md) — briefly freeze a foe in its timeline.
+5. [Fissure](spells/fissure.md) — rupture the ground and launch enemies upward.
+6. [Anchor Recall](spells/anchor-recall.md) — mark a position and later return to it.
+7. [Beam](spells/beam.md) — name confirmed; individual mechanics not published.
+8. [Ley Blast](spells/ley-blast.md) — name confirmed; individual mechanics not published.
+9. [Eclipse](spells/eclipse.md) — name confirmed; individual mechanics not published.
 
-## Exact spell catalog status
+The public page groups Beam, Ley Blast and Eclipse under a general sentence about building charges, spending power and reshaping combat. No individual charge contract is assigned without exact-artifact evidence.
 
-The current public material collected in this pass proves the provider's thematic/system surface but does not publish a trustworthy complete `1.0.3` named spell table with registry IDs and quantitative values.
+## World / progression evidence
 
-Therefore:
+See:
 
-- time manipulation — VERIFIED provider capability family;
-- portals — VERIFIED provider capability family;
-- ley-current infrastructure — VERIFIED;
-- wave/rift encounters — VERIFIED;
-- exact spell names/IDs — `PENDING`;
-- exact spell costs/cooldowns/ranges — `PENDING`;
-- exact pillar charging/resource formulas — `PENDING`.
+- [RIFT-ENCOUNTERS.md](RIFT-ENCOUNTERS.md) — publisher-confirmed encounter behavior, including 1.0.3 reliability/arena rules;
+- [PROGRESSION.md](PROGRESSION.md) — publisher-confirmed pillar/rift/reward/attunement surface;
+- [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md) — artifact/provenance/evidence ceiling.
 
-## Deduplication impact
+The 1.0.3 changelog confirms, at provider-semantic level:
 
-### Order / Space / Doctor Strange-Fate inspiration
+- death during an active rift fails the encounter and prevents completion loot/crystal;
+- boss-bar cleanup on death, respawn, logout and dimension change;
+- abandonment beyond 60 blocks collapses the active rift;
+- wave mobs beyond 40 blocks are pulled back to the arena;
+- encounter mobs persist across brief player death rather than causing false clear;
+- `/leylines spawnpillar` is permission-level-2 admin/debug tooling, not survival progression.
 
-Leylines directly occupies **time + portals + spatial rifts**. Combined with Iron's Ender/Eldritch, Ars Blink/Exchange/Rewind, Asterism Astral Echo, Immersive Portals integration and Black Arcana 07.04, generic portal/time-warp spells are already heavily covered.
+## Authority and deduplication
 
-Order candidates must prove a law/seal/constraint delta rather than merely making a circular portal or slowing/rewinding something.
+Iron's owns the generic addon-facing spellcasting substrate and mana/cast lifecycle where Leyline delegates to it. Leyline Spellbooks owns its school/content semantics, provider progression and rift encounter state.
 
-### Chaos / domains
+Black Arcana must not create parallel authority for:
 
-Wave rifts and ley infrastructure can create high-chaos presentation, but the semantic distinction remains important: Leylines is a structured world-current/rift system. Black Arcana Chaos must not duplicate its encounter/rift lifecycle under a different visual theme.
+- Rift Gate portal-pair state;
+- Anchor Recall anchor persistence;
+- Leyline charge/accounting;
+- pillar charging;
+- rift waves, completion, abandonment or rewards;
+- provider spell cooldown/cost/targeting;
+- unknown Leyline registry content.
 
-### Forbidden Domains
+### Space / portals
 
-The 60-block abandonment rule, 40-block mob leash and explicit cleanup behavior are useful comparison points for Black Arcana 07.06. Black Arcana must preserve its own canonical bounded-domain authority and should integrate with Leyline encounters only through explicit bridge rules, never by hijacking provider-owned rift completion state.
+Rift Gate and Anchor Recall make generic paired-portal and return-anchor concepts provider-occupied. Black Arcana spatial content needs a mechanically distinct forbidden-magic contract and must not write provider portal/anchor state.
 
-## Provenance / confidence
+### Time / control
 
-- Presence/version: current modlist and current public file page — HIGH.
-- System identity and 1.0.3 encounter rules: current public CurseForge project/changelog — HIGH.
-- Full current spell table: `UNVERIFIED / PENDING`.
-- No Java bytecode was decompiled.
+Chrono Tether and Temporal Stutter occupy temporal acceleration/slow and brief temporal freeze semantics. Do not implement a second effect/tick-rate pipeline merely to recreate these outcomes.
+
+### World rupture / control
+
+Fissure already occupies ground-rupture + vertical displacement at semantic level. Whether it changes blocks is unknown and must not be inferred.
+
+### Chaos / domains / rifts
+
+Leyline Rifts are provider-owned bounded wave encounters. Black Arcana domains and Chaos effects remain separate authorities and must not claim Leyline completion, rewards or lifecycle.
+
+### Order
+
+Time, portals and spatial control are not sufficient evidence that Leyline is an Order provider. Order candidates still require their own law/seal/constraint identity and semantic deduplication.
+
+## Current exactness ceiling
+
+Verified:
+
+- exact installed JAR name/mod id/runtime;
+- physical modlist hash;
+- exact CurseForge project/file/release identity;
+- ARR license;
+- provider school/world-loop description;
+- nine public signature names and six individually described semantics;
+- public 1.0.3 rift rules.
+
+Not verified:
+
+- total spell count;
+- spell registry IDs/classes;
+- levels/rarities/mana/cooldowns/cast times/ranges/damage formulas;
+- exact charge implementation;
+- item/block/entity/effect/attribute registry inventories;
+- recipes/loot probabilities;
+- persistence/network/API hooks;
+- multiplayer ownership semantics;
+- exact supported integration seam beyond normal Iron's addon dependency.
+
+No public source repository for the exact 1.0.3 build was located. The official CurseForge download flow was reached, but the permitted browser/runtime did not expose inspectable JAR bytes. No Java bytecode was decompiled.
+
+**PENDÊNCIA — REQUER ARTEFATO EXATO INSPECIONÁVEL / NAVEGAÇÃO EXTERNA CAPAZ DE ENTREGAR O BINÁRIO**
+
+Until that gate is resolved, this provider remains `FAIL-CLOSED` for internal/API claims and must not be marked `9/9 COMPLETE` or registry-complete.
