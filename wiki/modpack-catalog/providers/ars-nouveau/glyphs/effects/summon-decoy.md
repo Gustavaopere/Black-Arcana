@@ -1,6 +1,6 @@
 # Ars Nouveau — Summon Decoy
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_summon_decoy`
 - Display name: Summon Decoy
@@ -14,6 +14,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Summons an `EntityDummy` decoy and redirects nearby `Mob` targets within an inflated 20×10×20 search volume to attack the decoy. The spell applies a minimal Summoning Sickness duration after creation.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:conjuration_essence` + `minecraft:armor_stand` ×4.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

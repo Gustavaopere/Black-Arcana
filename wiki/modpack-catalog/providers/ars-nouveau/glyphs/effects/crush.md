@@ -1,6 +1,6 @@
 # Ars Nouveau — Crush
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_crush`
 - Display name: Crush
@@ -16,6 +16,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Crush uses Ars `CrushRecipe` data to transform eligible blocks into recipe outputs, optionally placing a block result and spawning remaining outputs. Sensitive enables processing nearby dropped items, with a source cap of `4 + 4*AOE + 4*Pierce` items per resolution. Against entities it deals provider Crush damage; underwater targets take triple the base component before amplification.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:earth_essence` + `minecraft:grindstone` + `minecraft:piston`.
+- Source-default recipe XP: **55 XP** (Tier II).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

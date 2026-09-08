@@ -1,6 +1,6 @@
 # Ars Nouveau — Glide
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_glide`
 - Display name: Glide
@@ -14,6 +14,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Applies Ars' Glide effect, allowing elytra-like flight behavior. The source also exposes `canGlide`, which treats either the Glide effect or Ars' Gliding Perk as sufficient for provider gliding eligibility.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:air_essence` + `minecraft:elytra` + `#c:gems/diamond` ×3.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 
