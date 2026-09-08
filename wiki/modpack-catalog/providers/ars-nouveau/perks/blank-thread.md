@@ -2,8 +2,8 @@
 
 State: `SOURCE-PINNED 5.13.1`
 
-Registry id: `ars_nouveau:blank_thread`  
-Class: `EmptyPerk`  
+Registry id: `ars_nouveau:blank_thread`
+Class: `EmptyPerk`
 Minimum slot: ONE (default contract; no override)
 
 ## Papel

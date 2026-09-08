@@ -2,7 +2,7 @@
 
 State: `SOURCE-PINNED 5.13.1 / RUNTIME QA PENDING`
 
-Registry id: `ars_nouveau:thread_high_step`  
+Registry id: `ars_nouveau:thread_high_step`
 Minimum slot: ONE (default)
 
 ## Efeito confirmado

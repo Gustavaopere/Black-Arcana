@@ -2,8 +2,8 @@
 
 State: `SOURCE-PINNED 5.13.1 / SOURCE-DESCRIPTION DIVERGENCE / RUNTIME QA PENDING`
 
-Registry id: `ars_nouveau:familiar_drygmy`  
-Conversion entity: Ars Nouveau `EntityDrygmy`  
+Registry id: `ars_nouveau:familiar_drygmy`
+Conversion entity: Ars Nouveau `EntityDrygmy`
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 
 ## Aquisição

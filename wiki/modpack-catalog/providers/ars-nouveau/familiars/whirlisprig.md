@@ -2,8 +2,8 @@
 
 State: `SOURCE-PINNED 5.13.1 / RUNTIME QA PENDING`
 
-Registry id: `ars_nouveau:familiar_whirlisprig`  
-Conversion entity: Ars Nouveau `Whirlisprig`  
+Registry id: `ars_nouveau:familiar_whirlisprig`
+Conversion entity: Ars Nouveau `Whirlisprig`
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 
 ## Aquisição

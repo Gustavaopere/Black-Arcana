@@ -2,7 +2,7 @@
 
 State: `SOURCE-PINNED 5.13.1 / RUNTIME QA PENDING`
 
-Registry id: `ars_nouveau:thread_depths`  
+Registry id: `ars_nouveau:thread_depths`
 Minimum slot: ONE (default)
 
 ## Respiração submersa

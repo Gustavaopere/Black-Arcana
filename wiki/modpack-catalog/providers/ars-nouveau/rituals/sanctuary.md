@@ -2,8 +2,8 @@
 
 State: `SOURCE-PINNED 5.13.1 / RUNTIME QA PENDING`
 
-Provider: Ars Nouveau 5.13.1  
-Registry id: `ars_nouveau:ritual_sanctuary`  
+Provider: Ars Nouveau 5.13.1
+Registry id: `ars_nouveau:ritual_sanctuary`
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 
 ## Função

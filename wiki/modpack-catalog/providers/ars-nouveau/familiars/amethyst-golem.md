@@ -2,8 +2,8 @@
 
 State: `SOURCE-PINNED 5.13.1 / CONSTRUCTOR-TYPE MISMATCH / RUNTIME QA PENDING`
 
-Registry id: `ars_nouveau:familiar_amethyst_golem`  
-Conversion entity: Ars Nouveau `AmethystGolem`  
+Registry id: `ars_nouveau:familiar_amethyst_golem`
+Conversion entity: Ars Nouveau `AmethystGolem`
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 
 ## Aquisição
@@ -29,7 +29,6 @@ Em `LivingDamageEvent.Post`, quando:
 - existe Amethyst Golem familiar do alvo;
 - a source entity é `LivingEntity`;
 - o atacante está a menos de 3 blocos do jogador,
-
 o atacante recebe `knockback(0.5f, ...)` para afastá-lo do owner.
 
 ### Amethyst Shard / Shielding

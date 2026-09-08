@@ -2,8 +2,8 @@
 
 State: `SOURCE-PINNED 5.13.1 / RUNTIME QA PENDING`
 
-Registry id: `ars_nouveau:familiar_starbuncle`  
-Conversion entity: Ars Nouveau `Starbuncle`  
+Registry id: `ars_nouveau:familiar_starbuncle`
+Conversion entity: Ars Nouveau `Starbuncle`
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 
 ## Aquisição

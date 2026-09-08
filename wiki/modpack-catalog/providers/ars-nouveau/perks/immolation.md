@@ -2,7 +2,7 @@
 
 State: `SOURCE-PINNED 5.13.1 / DESCRIPTION-PATH DIVERGENCE / RUNTIME QA PENDING`
 
-Registry id: `ars_nouveau:thread_immolation`  
+Registry id: `ars_nouveau:thread_immolation`
 Minimum slot: ONE (default)
 
 ## Efeito confirmado
