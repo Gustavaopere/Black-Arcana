@@ -63,7 +63,8 @@ Additional provider surfaces cataloged:
 - Begin/Tick/End Spell Staff family;
 - Psion's Circlet;
 - Multi-phase Turret;
-- seven production static staffs;
+- five static staffs directly named/promoted by the exact 2.0.2 NeoForge release;
+- two additional static-staff names retained only as earlier official 2.0.x lineage evidence;
 - seven public voxel variants;
 - Blight/Blight Forest;
 - Necropolis/Lich loot/acquisition;

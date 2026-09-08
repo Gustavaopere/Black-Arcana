@@ -48,17 +48,17 @@ The exact 2.0.2 release additionally documents server-side hardening around mult
 
 ## Static staffs and acquisition
 
-The current 2.0.x release line establishes seven static staffs in production:
+The exact NeoForge 1.21.1 2.0.2 changelog directly names five static staffs promoted to full production:
 
-- Staff of Telekinesis;
-- Staff of Aetherwalk;
 - Staff of Demonbane;
 - Staff of Geometrize;
 - Staff of Convergence / Explosion Arch Wizard;
 - Staff of Lakes;
 - Staff of Switcheroo.
 
-The 2.0.2 NeoForge release specifically promoted the latter five from development-only registrations to production and made them Necropolis Lich-exclusive drops. Telekinesis/Aetherwalk were already production static staffs in the immediately preceding release line. Exact preset spell payloads, registry IDs, filial internals and item NBT/components are not promoted here without exact 2.0.2 binary/source evidence.
+That release makes those five Necropolis Lich-exclusive drops with no crafting recipes and connects them to Lich equipment, creative-tab registration, filial crafting inputs and protection upgrades.
+
+Earlier official 2.0.x release material additionally documents **Staff of Telekinesis** and **Staff of Aetherwalk** as production static-staff lineage. Because the exact 2.0.2 file page does not re-enumerate those two by name, Phase 2AE records them as **lineage-supported**, not as direct exact-file inventory proof. Exact preset spell payloads, registry IDs, filial internals and item components remain unverified.
 
 ## World/system capabilities
 

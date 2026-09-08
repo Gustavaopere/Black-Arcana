@@ -18,23 +18,30 @@ Provider block/turret that executes phase-aware spells. The 2.0.x release line a
 
 ## Static staff surface
 
-Current 2.0.x production staff family:
+### Direct exact-2.0.2 names
 
-1. Staff of Telekinesis;
-2. Staff of Aetherwalk;
-3. Staff of Demonbane;
-4. Staff of Geometrize;
-5. Staff of Convergence / Explosion Arch Wizard;
-6. Staff of Lakes;
-7. Staff of Switcheroo.
+The exact NeoForge 1.21.1 2.0.2 release directly names five production staffs:
 
-Exact 2.0.2 NeoForge notes promote Demonbane, Geometrize, Convergence, Lakes and Switcheroo to full production 1.21.1 items and attach them to Lich equipment/loot, creative-tab registration, filial crafting inputs and protection upgrades. The release makes these five Necropolis Lich-exclusive drops with no crafting recipes. The Lich's held staff is guaranteed under normal mob-loot rules, with Looting increasing random bonus quantity.
+1. Staff of Demonbane;
+2. Staff of Geometrize;
+3. Staff of Convergence / Explosion Arch Wizard;
+4. Staff of Lakes;
+5. Staff of Switcheroo.
 
-Exact registry IDs, preset spell compounds, colors/tiers/filial data and protection-upgrade implementation remain unverified here because the public exact 2.0.2 source/binary is not available to this audit.
+The exact release makes those five Necropolis Lich-exclusive drops with no crafting recipes and adds their production item/preset/presentation/acquisition integration.
+
+### Earlier 2.0.x lineage evidence
+
+Earlier official release material additionally documents:
+
+- Staff of Telekinesis;
+- Staff of Aetherwalk.
+
+Those two names are retained as lineage-supported capability evidence, but are not mislabeled as directly re-enumerated by the exact 2.0.2 file page. Exact 2.0.2 item registry IDs/presets/components remain fail-closed until binary/source inspection.
 
 ## Conjure Arcane Shield
 
-The immediately preceding NeoForge 2.0.1 release introduced Conjure Arcane Shield as a Tier-2 Manipulation glyph with barrier durability/lifespan and augment support; the exact 2.0.2 release explicitly fixes its projectile ownership, durability, split limit and collision behavior, confirming the mechanic remains part of 2.0.2.
+The exact 2.0.2 release explicitly fixes Arcane Shield projectile ownership, durability enforcement, split limits and surrounding-shield collision behavior, which confirms the mechanic is active in 2.0.2. Older official 2.0.x cross-version release notes describe a stationary spherical barrier with projectile/melee absorption, durability/lifespan and augment interactions; those detailed semantics are retained only as lineage corroboration, not exact 2.0.2 numeric/API authority.
 
 For Black Arcana this is an external barrier capability. Do not mirror shield durability or collision state in a BA-owned ledger absent a verified adapter.
 

@@ -15,7 +15,7 @@ This catalog records the **publicly evidenced current capability surface** for i
 | Geometrize | official current project page + 2.0.2 packet security | geometric resolution of forwarded spells; can combine with terrain/break behavior | geometry-process lifecycle provider-owned; client move/cancel is not authority |
 | Conjure Blight | official current project page + exact 2.0.2 world-safety fixes | places damaging Blight liquid; exact release applies claim/world-bound checks | **not** Black Arcana Corruption; preserve claim/world safety and provider identity |
 | Beam | official current project page + exact 2.0.2 lifetime change | repeated hit resolver with mana drain per hit | continuous delivery/resource overlap; no double debit or second hit loop |
-| Conjure Arcane Shield | exact 2.0.2 fixes + immediately preceding 2.0.1 NeoForge release introduction | stationary spherical barrier with projectile/melee absorption and durability semantics | barrier overlap only; provider barrier lifecycle remains external |
+| Conjure Arcane Shield | exact 2.0.2 fixes confirm the active mechanic; older official 2.0.x cross-version notes describe barrier semantics | magic barrier/shield capability; exact 2.0.2 registry/cost values unverified | barrier overlap only; provider barrier lifecycle remains external |
 
 ## Disabled-by-default compatibility glyphs
 
