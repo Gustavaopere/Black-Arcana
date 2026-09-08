@@ -1,6 +1,6 @@
 # Bubble
 
-Status: `SOURCE-PINNED 5.13.1 / WATER CONTROL EFFECT`
+Status: `SOURCE-PINNED 5.13.1 / WATER CONTROL EFFECT / SEMANTICS+ACQUISITION AUDITED`
 
 - Registry id: `ars_nouveau:glyph_bubble`
 - Display name: `Bubble`
@@ -23,6 +23,14 @@ Pinned defaults:
 Compatible augments are Extend Time, Amplify, Dampen and Duration Down.
 
 The bubble carries owner information for non-fake casters and controls captured-entity lift/pop behavior in its own entity runtime.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `#c:feathers` ×3 + `minecraft:water_bucket` + `#minecraft:boats` + `ars_nouveau:water_essence`.
+- Source-default recipe XP: **27 XP** (Tier I).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Black Arcana boundary
 
