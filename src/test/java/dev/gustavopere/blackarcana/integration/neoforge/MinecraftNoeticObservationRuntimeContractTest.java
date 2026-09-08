@@ -10,7 +10,10 @@ import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
 import net.minecraft.server.MinecraftServer;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.lang.reflect.RecordComponent;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MinecraftNoeticObservationRuntimeContractTest {
+    private static final Path RUNTIME_SOURCE = repositoryRoot()
+            .resolve("src/main/java/dev/gustavopere/blackarcana/integration/neoforge/MinecraftNoeticObservationRuntime.java");
+
     @Test
     void snapshotSchemaExposesOnlyWhitelistedPerceptionFields() {
         assertTrue(NoeticPerceptionSnapshot.class.isRecord());
@@ -109,5 +115,37 @@ class MinecraftNoeticObservationRuntimeContractTest {
         assertEquals(int.class,
                 MinecraftNoeticObservationRuntime.class.getMethod(
                         "clearForServerStop").getReturnType());
+    }
+
+    @Test
+    void activeObservationTickRevalidatesCanonicalAuthorizationPolicy() throws IOException {
+        String source = Files.readString(RUNTIME_SOURCE);
+        int tickStart = source.indexOf("public synchronized void tick(MinecraftServer server)");
+        assertTrue(tickStart >= 0, "Noetic observation adapter must expose its lifecycle tick");
+        int nextMethod = source.indexOf("\n    public synchronized", tickStart + 1);
+        String tick = source.substring(tickStart, nextMethod < 0 ? source.length() : nextMethod);
+
+        assertTrue(tick.contains("NoeticObservationPolicy.authorize(session.kind(), facts)"),
+                "active observations must revalidate the same canonical authorization policy used at admission");
+        assertTrue(tick.contains("entry.getValue().explicitConsent()"),
+                "revalidation must preserve the server-owned consent evidence captured for the session");
+        assertTrue(tick.contains("NoeticObservationSession.CloseReason.AUTHORIZATION_REVOKED"),
+                "range/ownership/dimension policy loss must close the canonical session explicitly");
+    }
+
+    private static Path repositoryRoot() {
+        String workspace = System.getenv("GITHUB_WORKSPACE");
+        if (workspace != null && !workspace.isBlank()) {
+            return Path.of(workspace);
+        }
+
+        Path candidate = Path.of("").toAbsolutePath();
+        while (candidate != null) {
+            if (Files.exists(candidate.resolve("settings.gradle")) && Files.isDirectory(candidate.resolve(".github"))) {
+                return candidate;
+            }
+            candidate = candidate.getParent();
+        }
+        throw new IllegalStateException("Unable to locate repository root from test working directory");
     }
 }

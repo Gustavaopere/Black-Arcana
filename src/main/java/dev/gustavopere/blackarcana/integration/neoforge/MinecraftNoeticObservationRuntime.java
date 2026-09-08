@@ -135,6 +135,12 @@ public final class MinecraftNoeticObservationRuntime {
         while (iterator.hasNext()) {
             Map.Entry<UUID, AuthorizationContext> entry = iterator.next();
             UUID viewerId = entry.getKey();
+            NoeticObservationSession session = observations.session(viewerId).orElse(null);
+            if (session == null) {
+                iterator.remove();
+                continue;
+            }
+
             ServerPlayer viewer = server.getPlayerList().getPlayer(viewerId);
             if (viewer == null) {
                 observations.clearViewer(viewerId, NoeticObservationSession.CloseReason.VIEWER_LOGOUT);
@@ -146,8 +152,18 @@ public final class MinecraftNoeticObservationRuntime {
                 iterator.remove();
                 continue;
             }
-            if (findLoadedLivingTarget(server, entry.getValue().targetId()) == null) {
+
+            LoadedLivingTarget target = findLoadedLivingTarget(server, entry.getValue().targetId());
+            if (target == null) {
                 observations.clearViewer(viewerId, NoeticObservationSession.CloseReason.TARGET_UNAVAILABLE);
+                iterator.remove();
+                continue;
+            }
+
+            NoeticObservationFacts facts = facts(viewer, target, entry.getValue().explicitConsent());
+            ArcanaDecision revalidation = NoeticObservationPolicy.authorize(session.kind(), facts);
+            if (!revalidation.allowed()) {
+                observations.clearViewer(viewerId, NoeticObservationSession.CloseReason.AUTHORIZATION_REVOKED);
                 iterator.remove();
             }
         }

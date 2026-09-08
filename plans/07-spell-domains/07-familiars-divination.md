@@ -2,11 +2,11 @@
 
 ## State
 
-`IN PROGRESS — SERVER SUBSTRATE MERGED / CLIENT OBSERVATION SPELLS NOT YET IMPLEMENTED`
+`IN PROGRESS — SERVER SUBSTRATE MERGED / BORROWED SIGHT CODE PATH IMPLEMENTED / ASTRAL SEVERANCE + SPECIFICATION GATE PENDING`
 
-PR #72 merged the bounded server-side Noetic/familiar/gaze/sanctuary substrate at `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`. Its exact-SHA automated gates are valid evidence for that substrate. They do **not** prove production camera/HUD/input for remote-view mechanics.
+PR #72 merged the bounded server-side Noetic/familiar/gaze/sanctuary substrate at `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`. PR #77 now adds the bounded server-authored Borrowed Sight BEGIN/END presentation channel and physical-client camera adapter on top of that canonical substrate.
 
-Stage 07.07 is therefore not promoted as a completed domain, and Stage 08 must not treat it as canonical balance input yet.
+This does **not** promote Stage 07.07 as a completed domain. Astral Severance still lacks its canonical astral avatar/viewpoint implementation, the complete per-spell specification gate is still open, and real-client Borrowed Sight acceptance has not been executed. Stage 08 must therefore not treat 07.07 as canonical balance input yet.
 
 ## Implemented server substrate
 
@@ -24,27 +24,49 @@ The merged runtime provides:
 
 These are reusable prerequisites, not proof that every approved spell is invocable end-to-end.
 
-## Blocking spell implementation gaps
-
-### Astral Severance — NOT IMPLEMENTED end-to-end
-
-Canonical design requires a controllable non-combat viewpoint/avatar while the physical body remains vulnerable, with hard range, timeout/interruption return, no unauthorized projection interaction, and logout/death restoration.
-
-The current server observation API accepts an already-loaded `LivingEntity` target and owns session/snapshot state only. It does not create or control an astral avatar/viewpoint, does not provide production client camera/input, and therefore cannot satisfy Astral Severance by itself. This is implementation work, not deferred manual evidence.
-
-### Borrowed Sight — NOT IMPLEMENTED end-to-end
+## Borrowed Sight — production code path implemented
 
 Canonical design requires channeling the viewpoint of an owned familiar or explicitly consenting bonded target, with range/channel cost and return on interruption/unload.
 
-The current server policy correctly rejects foreign ownership and can authorize an owned familiar, but there is no production client camera/input/network flow that invokes and follows the authorized session. GameTests of the server admission boundary do not substitute for that missing implementation.
+PR #77 preserves the existing server-owned admission/ownership/session authority and adds only presentation derived from those canonical sessions:
+
+- `NoeticObservationRuntime.activeSessions()` exposes immutable bounded value snapshots for projection; it does not create a second session authority;
+- `NoeticViewSyncPlanner` projects only `BORROWED_SIGHT`; `ASTRAL_SEVERANCE`, `NAMESCRY` and `OCCULT_APPRAISAL` cannot enter this camera channel;
+- `NoeticViewTransitionTracker` is bounded by the canonical active-session ceiling and emits idempotent BEGIN/END transitions only when desired presentation changes;
+- `MinecraftNoeticRuntime` resolves only the transition viewer and that viewer's already-loaded `ServerLevel` target by UUID, without global-player iteration or chunk forcing;
+- `MinecraftNoeticObservationRuntime.tick()` now revalidates the same canonical `NoeticObservationPolicy` used at admission for every bounded active session before presentation sync; target unload keeps the existing `TARGET_UNAVAILABLE` lifecycle reason, while loss of range/dimension/ownership/privacy authorization closes the server-owned session as `AUTHORIZATION_REVOKED`;
+- `NoeticViewNetworkBridge` registers a play-to-client payload and sends only to the authoritative viewer when the channel is present;
+- `BorrowedSightClientController`, loaded only from the `Dist.CLIENT` entrypoint, resolves only the server-authored runtime entity id from the already-loaded client level, moves only the physical camera, and restores it to the local player's body on END or target loss;
+- the client adapter creates no client-to-server gameplay packet path and cannot choose target, admission, duration, ownership or privacy state.
+
+NeoForge 1.21–1.21.1 documentation confirms payload handlers registered without `PayloadRegistrar#executesOn(HandlerThread.NETWORK)` execute on the main thread by default. PR #77 does not switch handler thread.
+
+### Borrowed Sight evidence boundary
+
+TDD for the continuous-authorization regression was executed after PR #77 had been reconciled with `main@f9c3854bc7e5b2f1bd051434080f13ae3c7d5e5d` through synchronization PR #95:
+
+- RED head `5eec2e7818dae68c75fcccc7e80600e7c43a290d`, Black Arcana CI #2005 / `34185866007`: **571 tests, exactly one failure**, `activeObservationTickRevalidatesCanonicalAuthorizationPolicy()`, proving active-session policy revalidation was absent;
+- GREEN code head `45f970edd10e20d41315cd1471471fadbef731fd`, Black Arcana CI #2010 / `34186494393`: GREEN in JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
+
+Earlier Borrowed Sight transport/client checkpoints remain useful TDD history, including `d221408400ecec4a4430df510823cfc6efc4be41` / CI #1994, but they are not the final merge evidence after the later authorization fix and documentation updates.
+
+Automated evidence proves compilation, deterministic server/domain contracts and dedicated-server safety for the implemented code path. It does **not** prove actual first-person camera feel, rendering compatibility, input behavior or restoration in the user's full physical-client modpack. Those remain direct real-client validation work under D031.
+
+## Astral Severance — NOT IMPLEMENTED end-to-end
+
+Canonical design requires a controllable non-combat viewpoint/avatar while the physical body remains vulnerable, with hard range, timeout/interruption return, no unauthorized projection interaction, and logout/death restoration.
+
+The current server observation API accepts an already-loaded `LivingEntity` target and owns session/snapshot state only. Borrowed Sight's new camera channel deliberately refuses `ASTRAL_SEVERANCE`; reusing an arbitrary observed entity as the astral body would violate the required identity, authority and interaction model.
+
+A future Astral Severance implementation must therefore define and implement a canonical bounded astral viewpoint/avatar lifecycle before any client camera/input path is enabled for that observation kind. Until then it remains fail-closed.
 
 ## Specification gate
 
 `plans/07-spell-domains/README.md` requires every spell to define fantasy, host integration, invocation, target rules, resource cost, cooldown, scaling equation, progression gate, world-effect mode, boss/PvP behavior, config surface, tests and provenance.
 
-The existing candidate entries for the 07.07 spell family do not yet freeze all of those fields. Until the per-spell specifications and the missing production mechanics are implemented/reviewed, 07.07 remains `IN PROGRESS` and Stage 08 must not tune these spells by inventing missing values.
+The existing candidate entries for the 07.07 spell family do not yet freeze all of those fields. Borrowed Sight's production presentation path does not authorize Stage 08 to invent missing balance values. Until the per-spell specifications and Astral Severance mechanics are completed/reviewed, 07.07 remains `IN PROGRESS`.
 
-## Existing automated evidence — server substrate only
+## Existing automated evidence — merged server substrate
 
 - final PR #72 runtime head: `673aff57e15ec29a6fc0d6a94f0034726b99a4c1`;
 - Black Arcana CI #1562 / `34069825298`: GREEN;

@@ -55,6 +55,19 @@ class MinecraftNoeticRuntimeWiringTest {
                 "A protected Sanctuary target acquisition must be cancelled before AI can attack");
     }
 
+    @Test
+    void borrowedSightViewSyncUsesActiveSessionProjectionWithoutGlobalPlayerIteration() throws IOException {
+        String source = Files.readString(RUNTIME_SOURCE);
+        assertTrue(source.contains("NoeticViewSyncService.dispatch("),
+                "Borrowed Sight presentation must be reconciled from the canonical active-session projection");
+        assertTrue(source.contains("server.getPlayerList().getPlayer(viewerId)"),
+                "Borrowed Sight sync must resolve only the viewer referenced by a transition");
+        assertTrue(source.contains("viewer.serverLevel().getEntity(targetId)"),
+                "Borrowed Sight sync must resolve the UUID target from the viewer's already-loaded server level");
+        assertFalse(source.contains("server.getPlayerList().getPlayers()"),
+                "Borrowed Sight sync must not scan the global player list every server tick");
+    }
+
     private static Path repositoryRoot() {
         String workspace = System.getenv("GITHUB_WORKSPACE");
         if (workspace != null && !workspace.isBlank()) {
