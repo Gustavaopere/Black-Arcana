@@ -62,8 +62,8 @@ class MinecraftNoeticRuntimeWiringTest {
                 "Borrowed Sight presentation must be reconciled from the canonical active-session projection");
         assertTrue(source.contains("server.getPlayerList().getPlayer(viewerId)"),
                 "Borrowed Sight sync must resolve only the viewer referenced by a transition");
-        assertTrue(source.contains("viewer.level().getEntity(targetId)"),
-                "Borrowed Sight sync must resolve the target from the viewer's already-loaded server level");
+        assertTrue(source.contains("viewer.serverLevel().getEntity(targetId)"),
+                "Borrowed Sight sync must resolve the UUID target from the viewer's already-loaded server level");
         assertFalse(source.contains("server.getPlayerList().getPlayers()"),
                 "Borrowed Sight sync must not scan the global player list every server tick");
     }
