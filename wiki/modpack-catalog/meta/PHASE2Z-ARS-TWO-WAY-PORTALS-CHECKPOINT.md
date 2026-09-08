@@ -1,9 +1,11 @@
 # Phase 2Z — Ars Nouveau: Two-Way Portals 2.0.0 checkpoint
 
-Status: `CATALOG COMPLETE TO AVAILABLE EVIDENCE / EXACT 2.0.0 JAR EXTRACTION + CURRENT-HOST QA DEFERRED`
+Status: `CATALOG COMPLETE TO AVAILABLE EVIDENCE / PRE-CI MAIN SYNC COMPLETE / CI PENDING / EXACT 2.0.0 JAR EXTRACTION + CURRENT-HOST QA DEFERRED`
 
 Execution branch: `docs/magic-catalog-phase2z-two-way-portals`
 Base main at phase start: `5b343dbb91ff15a08ca3a09d1e4ca9ac177b3dd2`
+Pre-CI reconciled main: `ede7dc310499ec21941504e8e6754d4f7c7f512e`
+Pre-CI relation: `0 behind`; exact delta remains confined to eight new files under `wiki/modpack-catalog/**`.
 Physical JAR: `ars_two_way_portals-2.0.0.jar`
 Physical mod id/version: `ars_two_way_portals` / `2.0.0`
 Physical SHA-1: `233846fc30667893c5f36a719da576d5eed43f5c`
@@ -84,5 +86,15 @@ The explicit 1.21.1 note is treated as the stronger release-specific signal. Exa
 - client + dedicated-server + full-pack interop.
 
 These are runtime/binary gates, not missing catalog statements that can be safely inferred from the available public baseline.
+
+## Final gate
+
+- pre-CI synchronization complete against `main@ede7dc310499ec21941504e8e6754d4f7c7f512e`;
+- branch confirmed 0 commits behind after semantic merge of concurrent Stage 05.13 plan work;
+- exact diff confirmed catalog-only under `wiki/modpack-catalog/**`;
+- require fresh CI on the exact HEAD produced by this checkpoint update;
+- immediately before merge, fetch `main` again and reconcile/revalidate if it advanced;
+- keep PR review threads clear;
+- merge only with exact expected head SHA and confirm final main SHA.
 
 Phase 2Z is documentation/catalog work only and does not promote any Black Arcana runtime Stage.
