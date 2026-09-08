@@ -1,6 +1,11 @@
 # Ars Elemental 0.7.10.1 — perks and perk providers
 
-Status: `3/3 PERKS + 48/48 ARMOR PERK PROVIDERS SOURCE-PINNED / RUNTIME QA PENDING`
+Status: `3/3 PERKS + 48/48 ARMOR PERK PROVIDERS SOURCE-PINNED / SUMMONING DESCRIPTION-PATH DIVERGENCE / RUNTIME QA PENDING`
+
+Source checkpoints:
+
+- Ars Elemental: `Alexthw46/Ars-Elemental@fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`
+- Ars Nouveau 5.13.1 perk utility: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 
 ## Registered perks
 
@@ -30,15 +35,29 @@ Acquisition datagen: Blank Thread reagent; 2× Air Essence; Lightning Rod; Flash
 
 ### `ars_elemental:thread_summon`
 
-The perk adds provider `SUMMON_POWER` through an item attribute modifier:
+`SummonPerk.applyAttributeModifiers` adds provider `SUMMON_POWER`:
 
 - modifier amount: `slotValue - 1`;
 - operation: `ADD_VALUE`;
 - modifier id: `ars_elemental:summon_power`.
 
-The provider description additionally claims Summon Sickness reduction by 10% per tier. That reduction path is not established by `SummonPerk` itself in this pass and remains `IMPLEMENTATION PATH AUDIT PENDING` rather than being inferred.
+`SummonEvents.summonPowerup` then adds the owner's current `SUMMON_POWER` attribute value to damage dealt by an Ars `ISummon` before the hit resolves.
 
 Acquisition datagen: Blank Thread reagent; 2× Conjuration Essence; Echo Shard; 2× Wilden-drop tag ingredient.
+
+#### Summoning Sickness divergence
+
+The provider description says Summoning Sickness is reduced by 10% for each tier. The exact executable handler is present in `SummonEvents.summonSickReduction` and computes:
+
+`duration = duration * (1 - PerkUtil.countForPerk(SummonPerk.INSTANCE, entity) / 10)`
+
+At the exact Ars Nouveau 5.13.1 pin, `PerkUtil.countForPerk` returns the **maximum perk slot value** found on worn armor. Normal Ars perk slots are values 1, 2 or 3. Because the expression uses integer division, `1/10`, `2/10` and `3/10` all evaluate to 0 before subtraction.
+
+Therefore the source path observed for ordinary slot values leaves the duration multiplier at `1`, not 0.9/0.8/0.7. Phase 2U records this as:
+
+`DESCRIPTION-PATH DIVERGENCE / RUNTIME QA REQUIRED`
+
+The catalog does not silently replace the executable expression with the provider description. A runtime check is still required because event ordering or another installed component could affect the observed final duration.
 
 ## Armor perk providers — 48 pieces
 
@@ -50,8 +69,11 @@ Per-piece slot list:
 - Medium: every piece `[ONE,TWO,THREE]`.
 - Light: head `[ONE,TWO,THREE]`; chest `[TWO,TWO,THREE]`; legs `[TWO,TWO,THREE]`; boots `[ONE,TWO,THREE]`.
 
-`makePerkList` wraps the same slot list four times. Phase 2U does not assign semantics to that outer list dimension without checking the exact Ars perk-provider API.
+`makePerkList` wraps the same slot list four times. Phase 2U does not assign semantics to that outer list dimension beyond the exact Ars provider contract without runtime/API evidence.
 
-## Resource boundary
+## Authority and deduplication
 
-Armor mana and regen bonuses are provider-native Ars mana modifications. They are not RPG Skill Tree attributes and do not authorize a second Black Arcana resource.
+- Ars Nouveau/Ars Elemental own perk storage, slot values, effect callbacks and `SUMMON_POWER`.
+- RPG Skill Tree does not become owner of these Threads merely because it provides progression elsewhere.
+- Black Arcana must not add a parallel poison/shock/summon-damage modifier for the same provider callback.
+- Armor mana and regen bonuses remain provider-native Ars mana modifications and do not authorize a second Black Arcana resource.
