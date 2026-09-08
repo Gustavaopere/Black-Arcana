@@ -1,10 +1,10 @@
 # Phase 2W — Ars Hex 5.0.4b checkpoint
 
-Status: `SOURCE CATALOG COMPLETE / PRE-CI MAIN SYNC COMPLETE / CI PENDING / INSTALLED JAR+CONFIG+RUNTIME QA DEFERRED`
+Status: `SOURCE CATALOG COMPLETE / LATEST-MAIN RECONCILED / CI PENDING / INSTALLED JAR+CONFIG+RUNTIME QA DEFERRED`
 
 Execution branch: `docs/magic-catalog-phase2w-ars-hex`
 Base main at phase start: `f2169e77d2030f76be5bd555c99bf8b616c93b45`
-Pre-CI reconciliation: branch confirmed **0 commits behind** `main@f2169e77d2030f76be5bd555c99bf8b616c93b45`; exact diff remains confined to 11 files under `wiki/modpack-catalog/**`.
+Latest pre-CI reconciliation: `main@ea49faf7f553b4129e7088aa07705fc400ab8a4b` was merged into the execution branch through merge commit `5cf78aa2b49a7e16b309347a157b77bc57f578c2`; compare then confirmed **0 commits behind** and the exact PR delta remained confined to 11 files under `wiki/modpack-catalog/**`. The concurrent main delta was confined to `plans/05-casting-ux/**` and had no path overlap with Phase 2W.
 Provider source checkpoint: `Alexthw46/Ars-Unity@b25528adf8c0135585cd6d654582efa147e0a227` (`RELEASE-ALIGNED`, not claimed byte-identical)
 Physical JAR: `ars_hex-1.21.1-5.0.4b.jar`
 Physical SHA-1: `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`
@@ -96,8 +96,8 @@ These are runtime/config/package gates, not missing source-catalog entries.
 
 ## Final merge gate
 
-- pre-CI current-main reconciliation: complete against `main@f2169e77d2030f76be5bd555c99bf8b616c93b45`;
-- exact catalog-only diff review: complete before this checkpoint update;
+- latest current-main reconciliation: complete against `main@ea49faf7f553b4129e7088aa07705fc400ab8a4b` through merge commit `5cf78aa2b49a7e16b309347a157b77bc57f578c2`;
+- exact catalog-only diff review: complete after that reconciliation;
 - fresh CI must pass on the exact final execution HEAD after this checkpoint commit;
 - immediately before merge, fetch `main` again and reconcile/revalidate if it advanced;
 - review threads must remain clear;
