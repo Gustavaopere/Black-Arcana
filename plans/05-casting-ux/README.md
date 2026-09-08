@@ -45,7 +45,7 @@ Deliver direct, low-clutter casting after server contracts and integrations are 
 - `ClientInputController` owns client intent emission only. Quick-cast and selected-cast input send `CastIntentPayload`; gameplay admission remains in the server runtime.
 - `LoadoutNetworkBridge` synchronizes edits while `ArcanaServerRuntimeManager.handleLoadoutUpdate` validates spell availability and persists accepted loadouts through `BlackArcanaSavedData`.
 - `BlackArcanaRadialScreen` is a client-only selector. Choosing a wedge changes selection and closes the screen; it never executes a cast.
-- `BlackArcanaHudLayer` is contextual/event-driven, uses synchronized server presentation/cooldown/hazard/result state, and displays the bounded server-authored denial detail rather than inventing a client-side gate reason.
+- `BlackArcanaHudLayer` is contextual/event-driven and currently renders synchronized spell presentation, hazard/resistance, predictable-gate and cast-result feedback. Although cooldown-group snapshots are cached client-side, the current HUD does not render them directly as a per-spell cooldown widget.
 - `BlackArcanaClientConfig` owns presentation-only preferences: HUD enable/scale/anchor, feedback duration/intensity, radial hold/toggle, particle density, reduced motion and reduced flashes. These settings do not participate in gameplay validation.
 - `BlackArcanaClient` is a physical-client entrypoint (`Dist.CLIENT`); dedicated-server runtime registration remains in the common mod entrypoint without loading client classes.
 
