@@ -1,62 +1,65 @@
-# Ars Creo
+# Ars Creo — Ars Nouveau ↔ Create bridge provider
 
-Status: `PHASE 2 — CURRENT 5.4.0 BRIDGE CAPABILITIES VERIFIED; NOT A GLYPH PROVIDER`
+Status: `PHASE 2S / SOURCE-PINNED 5.4.0 CATALOG COMPLETE / RUNTIME+PACK QA PENDING`
 
-## Runtime identity
+## Exact installed identity
 
+- JAR: `ars_creo-1.21.1-5.4.0.jar`
 - Mod id: `ars_creo`
-- Current JAR: `ars_creo-1.21.1-5.4.0.jar`
 - Runtime version: `5.4.0`
-- Loader/game: NeoForge 1.21.1
-- Correct Phase 2 class: `BRIDGE / COMPAT / PROGRESSION`
-- Granular spell/glyph catalog: `NO / CONDITIONAL`
+- Physical SHA-1: `22a6afd4fbe76354acc9c1ba076c89a94d120d94`
+- Physical base providers: Ars Nouveau `5.13.1`, Create `6.0.10`
 
-The PR #62 baseline registry classified Ars Creo as `ARS GLYPH / SYSTEM PROVIDER`. Granular verification does not support that interpretation. The current public 5.4.0 surface is a functional Ars Nouveau ↔ Create integration layer centered on contraptions, turrets, Source and rituals.
+## Exact source checkpoint
 
-## Verified bridge capabilities
+Read-only factual audit is pinned to `baileyholl/Ars-Creo@6a99d36fab441653478fc49de8f28164f0894eb2`, commit message `5.4.0`.
 
-### Starbuncle Wheel
+The exact source declares Minecraft 1.21.1 and requires Ars Nouveau `>=5.0.0`, Create `>=6.0.9` and NeoForge `>=21`. The physical pack satisfies those declared ranges, but compatibility with the newer installed Ars/Create builds remains runtime QA.
 
-Generates Create kinetic output through Starbuncle-powered infrastructure. Create remains authority for stress/kinetics; Ars remains authority for its magical actors/resources.
+## Classification
 
-### Spell Turrets on Create contraptions
+Ars Creo 5.4.0 is a `BRIDGE / COMPAT / INFRASTRUCTURE` provider, not a glyph provider.
 
-Current public documentation supports running Ars spell turrets as part of moving Create contraptions.
+Exact own registry:
 
-Variants/behaviors documented by the provider include:
+- 1 block;
+- 1 BlockEntityType;
+- 1 block item;
+- 1 creative tab;
+- 2 Create Display Sources;
+- 0 Ars Creo glyph/spell-part registries found.
 
-- Timer Turret — fires on an interval while used in the contraption context;
-- Basic Spell Turret — can fire from interaction in the contraption context;
-- Enhanced Spell Turret — can react to newly reached block positions.
+The own block/item/BE is `ars_creo:starbuncle_wheel`.
 
-### Source Jars on contraptions
+## Material bridge surface
 
-Source Jars can participate in contraptions and provide Source to compatible turret behavior. This must not be reinterpreted as global or free Source access.
+Seven source-pinned behavior families are cataloged:
 
-### Ritual support on contraptions
+1. Starbuncle Wheel kinetic generation;
+2. moving Ars Spell Turrets;
+3. Ars Source Jars as contraption Source providers;
+4. moving Ars Portal Blocks;
+5. moving Ars Ritual Blocks;
+6. Ars Potion Jar ↔ Create potion-fluid capability;
+7. Create Display Sources for Ars turrets and Source Jars.
 
-The current 5.4.0 changelog explicitly adds ritual support on contraptions.
+## Authority
 
-## Deduplication / authority
+- Create owns contraption state, movement, kinetic/stress, Display Link and fluid transport primitives.
+- Ars Nouveau owns spell grammar/resolver, Source, turrets, Portal behavior, Ritual identity/effects and Potion Jar contents.
+- Ars Creo owns only the adapter behavior joining those surfaces.
+- Black Arcana does not create a second Create↔Ars bridge, second Source ledger, second cast settlement or second ritual/portal execution.
 
-Ars Creo proves that `magic on moving Create contraptions` is already a provider-owned capability family. A future Black Arcana spell/system is not novel merely because it casts from a moving airship/contraption.
+Moving turret casts use Ars `SpellContext`, an Ars fake player and an Ars Creo `ContraptionCaster` whose caster type is `OTHER`; mana expenditure is manually replaced by provider Source settlement. Ownership/Mastery must therefore not be assigned to an arbitrary player by proximity or contraption ownership inference.
 
-Required boundaries:
+## Exact corrections against editorial material
 
-- Create owns contraption/kinetic state;
-- Ars Nouveau owns spell execution and Source;
-- Ars Creo owns the translation that lets those systems operate together;
-- Black Arcana must not create a parallel Create↔Ars bridge or double-fire the same turret/ritual event;
-- Source and kinetic settlement remain provider-native;
-- moving/sublevel coordinates must still respect whatever Sable/Aeronautics boundary is authoritative for the actual host context.
+The Notion dossier's eight-block/eight-BE inventory is stale for exact 5.4.0. Names such as `source_motor`, `source_gearbox`, converter/correspondent blocks and related machinery do not appear in the exact registry/tree.
 
-## Why no glyph catalog
+The Starbuncle Wheel runtime does not search for a living Starbuncle. Its exact recipe uses a Starbuncle Charm + Create Water Wheel; runtime speed is config-driven and receives the gold-block positional bonus.
 
-The current public 5.4.0 material verified for this pass does not expose a discrete Ars Creo glyph list. Its player-facing contribution is integration/infrastructure. Therefore the baseline `Granular capability catalog = YES` is corrected to `NO / CONDITIONAL`: catalog bridge behaviors and authority, but do not invent glyphs.
+## Provenance warning
 
-## Provenance / confidence
+Source metadata declares `LGPLv3`, while the exact root `LICENSE` file is the Unlicense/public-domain dedication text. Phase 2S records this as `LICENSE METADATA DIVERGENCE` and does not resolve it by assumption. Source use in this phase remains read-only factual inspection; no upstream code/assets are copied or adapted.
 
-- Presence/version: current 2026-09-06 modlist — HIGH.
-- Contraption turrets, Source Jar behavior, Starbuncle Wheel and 5.4.0 ritual support: current public Ars Creo project/changelog — HIGH at feature level.
-- No current public glyph inventory found for 5.4.0 in this pass.
-- No Java bytecode was decompiled.
+Runtime/config/client/full-pack QA remains pending. Phase 2S does not promote any Black Arcana runtime Stage or adapter.
