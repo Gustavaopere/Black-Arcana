@@ -1,6 +1,6 @@
 # 05.05 — Final Real-Client Validation Handoff
 
-> **For agentic workers:** execute this document as a closeout plan. Do not implement new Casting & UX features unless a recorded real-client `FAIL` demonstrates a regression. Preserve the server-authoritative contracts in `plans/DECISIONS.md`, especially D005, D006, D019, D020, D023, D024, D029 and D031.
+> **For agentic workers:** execute this document as a closeout plan. Do not implement new Casting & UX features unless a recorded real-client `FAIL` demonstrates a regression or the current plan explicitly classifies the change as approved hardening. Preserve the server-authoritative contracts in `plans/DECISIONS.md`, especially D005, D006, D019, D020, D023, D024, D029 and D031.
 
 ## Goal
 
@@ -8,7 +8,9 @@ Close the remaining Stage 05 acceptance surface with reproducible real-client ev
 
 ## Current canonical state
 
-- Baseline used to prepare this handoff: `main@1efe0eb2d4e0b93f130d16c84ea5ccfc6cf244dd`.
+- Original baseline used to prepare this handoff: `main@1efe0eb2d4e0b93f130d16c84ea5ccfc6cf244dd`.
+- Current planning reconciliation baseline: `main@acbea2c897805e0d51476360c27adfd20fabfc64`.
+- Stage 05 planning package was expanded on PR #101 and is canonical on `main` from merge `76d6d18aa3f63c899d7af60ffc58387b53cd463c`.
 - Minecraft: `1.21.1`.
 - NeoForge in the current physical modlist: `21.1.248`.
 - Java: `21`.
@@ -17,8 +19,22 @@ Close the remaining Stage 05 acceptance surface with reproducible real-client ev
 - The acceptance authority for manual rows is `docs/qa/casting-ux-manual-matrix.md`.
 - The execution procedure is `docs/qa/casting-ux-real-client-runbook.md`.
 - Deterministic controls live under `docs/qa/fixtures/stage05-real-client/` and are test fixtures only, never production gameplay data.
+- The current physical modlist also contains Spell Actionbar `1.1.4`, Iron's Spells `1.21.1-3.16.3`, Epic Fight `21.17.3.1`, EFIS Compat `3.1.0` and Controlling `19.0.5`; no top-level general controller framework is currently confirmed.
 
 The old feature branch `feat/05-casting-ux` is historical and must not be reused as an implementation base. Any closeout or bug-fix branch starts from the latest `origin/main` and records the exact base SHA.
+
+## Planning-scope rule
+
+The forward-looking refinements in `00-master-plan.md`, 05.01–05.04 and `06-modpack-coexistence.md` do **not** automatically become Stage 05 release blockers merely because they are documented.
+
+Before real-client execution, every not-yet-implemented refinement must remain classified as one of:
+
+- `REQUIRED TO FIX A VALIDATION FAIL`;
+- `APPROVED STAGE 05 HARDENING`;
+- `OPTIONAL FOLLOW-UP`;
+- `CARRIED TO STAGE 09`.
+
+The closeout campaign validates the implemented Stage 05 contract and the current required pack coexistence surface. It does not implement the whole future UX roadmap as a prerequisite for completion.
 
 ## Architecture and authority boundaries
 
@@ -30,6 +46,7 @@ This validation must preserve the current architecture rather than silently rede
 4. `BlackArcanaHudLayer` is contextual and displays synchronized/server-authored presentation. It does not synthesize authoritative gate results.
 5. `BlackArcanaClientConfig` contains client presentation preferences only.
 6. Real-client validation must not introduce a second casting path, second resource authority, client-side admission shortcut or per-tick state synchronization.
+7. External action bars/combat UIs remain authority for their own provider state; coexistence does not transfer their state into Black Arcana or vice versa.
 
 If a manual failure appears to require changing one of those boundaries, stop that fix and record an architectural blocker instead of weakening the contract.
 
@@ -37,11 +54,13 @@ If a manual failure appears to require changing one of those boundaries, stop th
 
 ### Read before execution
 
+- `plans/05-casting-ux/00-master-plan.md`
 - `plans/05-casting-ux/README.md`
 - `plans/05-casting-ux/01-input-loadouts.md`
 - `plans/05-casting-ux/02-radial-wheel.md`
 - `plans/05-casting-ux/03-contextual-hud.md`
 - `plans/05-casting-ux/04-accessibility-client-config.md`
+- `plans/05-casting-ux/06-modpack-coexistence.md`
 - `plans/DECISIONS.md`
 - `plans/STATUS.md`
 - `docs/qa/casting-ux-manual-matrix.md`
@@ -58,6 +77,8 @@ If a manual failure appears to require changing one of those boundaries, stop th
 - `src/main/java/dev/gustavopere/blackarcana/client/HudLayout.java`
 - `src/main/java/dev/gustavopere/blackarcana/client/RadialLayout.java`
 - `src/main/java/dev/gustavopere/blackarcana/network/ClientArcanaSyncState.java`
+
+External-provider code is inspected only if a directly observed conflict requires a real integration seam. Presence in the modlist is not authorization to invent or depend on private APIs.
 
 ### Existing focused automated coverage
 
@@ -79,9 +100,11 @@ Automated tests are regression gates. They never substitute for a row that expli
 
 - [ ] Fetch the latest `origin/main` immediately before the campaign and record its full SHA.
 - [ ] Confirm the closeout branch contains no unmerged runtime work that changes Stage 05 behavior.
+- [ ] Re-read the latest physical modlist and record the exact current modpack snapshot used for the client campaign.
+- [ ] Confirm the relevant current-pack coexistence surfaces and versions before testing; do not reuse the planning-baseline versions if the modlist has changed.
 - [ ] Use the successful `main` CI artifact whose name matches that exact SHA: `black-arcana-<full commit SHA>`.
 - [ ] If the exact artifact is unavailable, build exactly that SHA locally; do not substitute another revision without changing the recorded tested SHA.
-- [ ] Use a Minecraft `1.21.1` / NeoForge `21.1.248` / Java `21` test instance matching the current project environment.
+- [ ] Use a Minecraft `1.21.1` / current physical-modlist NeoForge / Java `21` test instance matching the current project environment.
 - [ ] Install only the Stage 05 fixture required for the scenarios being exercised, and keep it out of production data.
 - [ ] Create `docs/qa/casting-ux-real-client-evidence.md` on the closeout branch using the evidence fields from the canonical runbook.
 - [ ] Record at the top of that report: tested SHA, Minecraft version, NeoForge version, Java version, modpack/modlist snapshot identification, test date, client display mode and GPU/OS only when relevant to a visual failure.
@@ -98,6 +121,9 @@ Automated tests are regression gates. They never substitute for a row that expli
 
 - [ ] Rebind radial, selected-cast and available quick-slot mappings through the vanilla controls screen.
 - [ ] Confirm key conflicts remain discoverable and that a usable non-conflicting binding can be selected.
+- [ ] Confirm the loadout editor mapping is usable after assigning a key and remains unbound safely when no key is assigned.
+- [ ] Exercise the first eight direct quick-cast slots through temporary non-conflicting bindings where the test loadout permits them.
+- [ ] Build/restore a full bounded **16-slot** loadout where legitimate synchronized spells permit it; verify slots beyond the eight direct quick-cast mappings remain reachable through normal selection/radial flow.
 - [ ] With inventory open, press selected-cast and quick-cast bindings; no cast intent may fire through the GUI.
 - [ ] Repeat with chat and one additional normal Minecraft `Screen`.
 - [ ] Edit the loadout, apply it, close the editor and reopen it; the synchronized server response must be the state shown after reopen.
@@ -110,7 +136,8 @@ Automated tests are regression gates. They never substitute for a row that expli
 - selection/loadout editing never grants authority;
 - GUI focus suppresses direct cast input;
 - reconnect converges from server snapshots;
-- no stale client state executes or visually masquerades as current authority.
+- no stale client state executes or visually masquerades as current authority;
+- the 16-slot server bound remains usable even though only eight direct quick-cast mappings exist.
 
 ### FAIL triage
 
@@ -151,7 +178,8 @@ Record only combinations the real client actually permits. Do not infer an untes
 - [ ] Verify left-clicking a wedge changes the selected spell and closes the wheel without executing a cast.
 - [ ] Execute a separate cast input afterward to prove selection and casting are distinct operations.
 - [ ] `HOLD`: open while holding the key, release it and confirm the wheel closes without a stuck key/input state.
-- [ ] Page through a loadout large enough to require multiple radial pages when the synchronized test loadout permits it.
+- [ ] Exercise a full 16-slot synchronized loadout when legitimate content permits it and verify both eight-slot radial pages are reachable.
+- [ ] Verify the radial initially opens on/reconciles to the page containing the selected slot where the current implementation specifies that behavior.
 - [ ] Confirm hit regions remain usable and no visible card is clipped outside the viewport.
 
 ### PASS invariants
@@ -159,7 +187,8 @@ Record only combinations the real client actually permits. Do not infer an untes
 - radial interaction is client presentation only;
 - selection never executes gameplay;
 - no stuck input after close;
-- layout remains on-screen/readable at every tested viewport/GUI scale.
+- layout remains on-screen/readable at every tested viewport/GUI scale;
+- all legitimate bounded loadout slots remain reachable through paging.
 
 Any failure that suggests adding a client-side cast shortcut is an architectural rejection, not an acceptable fix.
 
@@ -241,8 +270,72 @@ If that state cannot be produced without changing production semantics, mark the
 - [ ] Do not claim effect-level compliance for reduced motion/flashes/particles where the corresponding Black Arcana effect does not yet exist; use `NOT APPLICABLE / CARRIED TO STAGE 09` exactly as authorized by the matrix closure rule.
 - [ ] Remove/reset relevant client-config entries through a normal supported config-reset path and verify NeoForge defaults recover safely.
 - [ ] Verify none of these client preferences changes damage, power, cooldown, cost, progression, targeting, hazard admission or world mutation authority.
+- [ ] Confirm all core keyboard/mouse actions remain usable without any controller framework installed.
 
 A configuration preference changing gameplay authority is a release-blocking regression.
+
+Controller-specific acceptance is not required while no controller provider exists in the physical modlist. A future provider must be verified separately rather than fabricating a PASS now.
+
+---
+
+## Task 5A — Validate current-modpack coexistence
+
+**Deliverable:** direct evidence that required Black Arcana input/readability/authority remains usable alongside the current pack's other casting/combat UI surfaces.
+
+Use `06-modpack-coexistence.md` as the planning authority for this task.
+
+### Installed-surface preflight
+
+At execution time, confirm exact current versions again. The planning baseline includes:
+
+- Spell Actionbar `1.1.4`;
+- Iron's Spells `1.21.1-3.16.3`;
+- Epic Fight `21.17.3.1`;
+- EFIS Compat `3.1.0`;
+- Controlling `19.0.5`.
+
+Do not treat those planning versions as immutable if the physical modlist changed.
+
+### Spell Actionbar / provider HUD coexistence
+
+- [ ] With the installed external action bar visible in a normal legitimate provider state, remain idle in Black Arcana and verify Black Arcana does not create a permanent duplicate resource/action bar.
+- [ ] Trigger a Black Arcana authoritative denial while the external action bar is visible and verify the denial remains readable.
+- [ ] Select a dangerous Black Arcana spell and verify transient hazard/gate context remains readable without claiming provider-resource authority.
+- [ ] Repeat representative overlap checks at the small-window and default-resolution matrix points.
+- [ ] If the overlap is resolved by an existing Black Arcana anchor/scale preference, record the tested setting rather than adding compatibility code automatically.
+
+### Epic Fight coexistence
+
+- [ ] Open/close the Black Arcana radial outside battle mode.
+- [ ] Open/close the Black Arcana radial while battle mode is active.
+- [ ] Cast the selected Black Arcana spell while battle mode is active.
+- [ ] Exercise a temporary non-conflicting Black Arcana quick-cast binding while battle mode is active.
+- [ ] Verify one physical input produces at most one Black Arcana cast intent/result.
+- [ ] Verify radial close does not leave stuck mouse/key state.
+- [ ] Verify ordinary battle-mode transitions do not crash Black Arcana client presentation.
+
+The installed EFIS compatibility addon proves only its own advertised Iron's/Epic Fight role; it is not treated as a Black Arcana bridge.
+
+### Controlling / keybinding coexistence
+
+- [ ] Verify Black Arcana key mappings are discoverable/searchable through the installed keybinding UI.
+- [ ] Verify ordinary vanilla key rebind behavior remains sufficient and no Black Arcana gameplay requires Controlling-specific authority.
+- [ ] Record any direct conflict involving default `R` or `V`; do not change defaults solely from static inference.
+
+### Result classification
+
+A coexistence result is Stage-05-blocking only when it breaks a **required** current behavior, for example:
+
+- duplicate Black Arcana cast from one physical action;
+- unusable required denial/danger feedback with no safe Black Arcana configuration;
+- stuck input/crash in ordinary supported casting flow;
+- external UI/input bypasses Black Arcana server authority;
+- provider resource/cooldown is processed twice;
+- required Black Arcana key action cannot be rebound/used in the current pack.
+
+Cosmetic animation mismatch, deeper UI unification, automatic HUD avoidance and controller integration without a controller provider are `OPTIONAL FOLLOW-UP` unless separately promoted.
+
+If a direct compatibility fix is required, exact provider API/source/docs for the installed version must be verified before implementation.
 
 ---
 
@@ -257,11 +350,13 @@ Use exactly:
 - `BLOCKED` — scenario could not be legitimately exercised;
 - `NOT APPLICABLE / CARRIED TO STAGE 09` — only for genuinely future-only presentation features allowed by the matrix.
 
-For every matrix row, `docs/qa/casting-ux-real-client-evidence.md` must include:
+For every matrix row and every required coexistence scenario, `docs/qa/casting-ux-real-client-evidence.md` must include:
 
 - Matrix row / scenario;
 - Tested commit SHA;
 - Minecraft / NeoForge instance identification;
+- Modpack/modlist snapshot identifier;
+- Relevant external UI/combat surface versions when applicable;
 - Relevant client settings;
 - Steps performed;
 - Observed result;
@@ -277,7 +372,7 @@ For every `FAIL`, additionally record:
 - fix commit SHA;
 - rerun evidence on the fixed exact SHA.
 
-A fixed failure changes only the rows actually rerun. Never bulk-convert untouched rows to PASS.
+A fixed failure changes only the rows/scenarios actually rerun. Never bulk-convert untouched rows to PASS.
 
 ---
 
@@ -288,9 +383,12 @@ A fixed failure changes only the rows actually rerun. Never bulk-convert untouch
 ### Preconditions before changing Stage state
 
 - [ ] Every applicable row in `docs/qa/casting-ux-manual-matrix.md` has direct evidence.
+- [ ] Every required current-modpack coexistence scenario from Task 5A has evidence or a justified non-blocking disposition.
 - [ ] No applicable row remains `FAIL`.
+- [ ] No required coexistence scenario remains an unresolved blocking `FAIL`.
 - [ ] Every `BLOCKED` row is either explicitly accepted as an external/manual limitation for Stage 09 or resolved and rerun.
-- [ ] Future-only presentation rows use `NOT APPLICABLE / CARRIED TO STAGE 09` only where the matrix already permits that classification.
+- [ ] Future-only presentation rows use `NOT APPLICABLE / CARRIED TO STAGE 09` only where the matrix/plan permits that classification.
+- [ ] Optional roadmap refinements remain optional unless explicitly promoted; they are not silently converted into closeout requirements.
 - [ ] The evidence report references the exact tested commit(s).
 - [ ] Any implementation fixes have focused RED→GREEN regression coverage where technically representable.
 
@@ -301,7 +399,7 @@ Immediately before the closeout PR is finalized:
 1. fetch the latest `origin/main`;
 2. reconcile `main` into the closeout branch without discarding concurrent work;
 3. review `main..HEAD` semantically;
-4. rerun affected manual rows if the reconciliation changed any Stage 05 runtime/client surface;
+4. rerun affected manual/coexistence rows if the reconciliation changed any Stage 05 runtime/client surface or a relevant installed-mod version;
 5. run the full canonical automated gate on the reconciled HEAD.
 
 CI evidence from before the last relevant synchronization is not final evidence.
@@ -309,12 +407,16 @@ CI evidence from before the last relevant synchronization is not final evidence.
 ### Files to update only after the gate is satisfied
 
 - `docs/qa/casting-ux-manual-matrix.md` — replace only exercised row states from evidence;
+- `docs/qa/casting-ux-real-client-evidence.md` — preserve exact evidence and current-pack coexistence observations;
 - `plans/05-casting-ux/01-input-loadouts.md` — promote state only if its applicable rows are satisfied;
 - `plans/05-casting-ux/02-radial-wheel.md` — promote state only if its applicable rows are satisfied;
 - `plans/05-casting-ux/03-contextual-hud.md` — promote state only if its applicable rows are satisfied;
 - `plans/05-casting-ux/04-accessibility-client-config.md` — promote state only if its applicable rows are satisfied or correctly carried to Stage 09;
+- `plans/05-casting-ux/06-modpack-coexistence.md` — record the exact tested coexistence snapshot and remaining optional follow-ups; do not invent provider integration status;
 - `plans/05-casting-ux/README.md` — remove `FINAL VALIDATION DEFERRED` only when the Stage-level gate is satisfied;
 - `plans/STATUS.md` — record the final validated state and exact evidence/CI SHAs.
+
+`00-master-plan.md` remains planning authority and does not become an implementation-complete claim merely because validation closes.
 
 Do not change those status declarations merely because this handoff document exists.
 
@@ -339,11 +441,12 @@ The exact workflow names/commands are taken from the current repository at execu
 The closeout PR may merge only after:
 
 1. direct-client evidence is recorded for applicable Stage 05 rows;
-2. all implementation `FAIL`s are fixed and rerun;
-3. the branch is reconciled with the latest relevant `main`;
-4. the full automated gate is green on the reconciled HEAD;
-5. review threads are resolved;
-6. the final diff does not weaken casting/server authority.
+2. required current-pack coexistence evidence is recorded;
+3. all implementation/blocking coexistence `FAIL`s are fixed and rerun;
+4. the branch is reconciled with the latest relevant `main`;
+5. the full automated gate is green on the reconciled HEAD;
+6. review threads are resolved;
+7. the final diff does not weaken casting/server authority.
 
 After merge, confirm the final `main` SHA and the exact post-merge CI result before declaring Stage 05 validated.
 
@@ -357,7 +460,11 @@ This handoff does **not** authorize:
 - client-authored hazard/gate truth;
 - provider-specific gameplay authority moved into UI code;
 - new spell content;
-- Stage 05 redesign for aesthetics unrelated to a recorded FAIL;
+- implementing every optional UX refinement before closeout;
+- forced Spell Actionbar unification without a verified API and requirement;
+- treating EFIS Compat as a Black Arcana integration;
+- speculative controller support while no provider is installed;
+- Stage 05 redesign for aesthetics unrelated to a recorded FAIL or separately approved hardening;
 - fake PASS states from screenshots, code inspection, GameTests or CI alone;
 - weakening or deleting validation gates to obtain green.
 
@@ -365,6 +472,6 @@ This handoff does **not** authorize:
 
 Use this only after every gate above is actually satisfied:
 
-> Stage 05 Casting & UX was validated on exact client build `<tested-main-sha>` using Minecraft 1.21.1 / NeoForge 21.1.248 / Java 21. Direct evidence is recorded in `docs/qa/casting-ux-real-client-evidence.md`; applicable manual matrix rows are PASS or explicitly carried according to the canonical closure rule. The final reconciled closeout HEAD `<head-sha>` passed the complete automated gate, the PR merged as `<merge-sha>`, and post-merge `main` verification `<workflow/run>` is GREEN.
+> Stage 05 Casting & UX was validated on exact client build `<tested-main-sha>` using Minecraft 1.21.1 / NeoForge `<tested-neoforge-version>` / Java 21 and modpack snapshot `<modlist-snapshot>`. Direct evidence is recorded in `docs/qa/casting-ux-real-client-evidence.md`; applicable manual matrix rows are PASS or explicitly carried according to the canonical closure rule, and required current-pack coexistence scenarios have no unresolved blocking FAIL. The final reconciled closeout HEAD `<head-sha>` passed the complete automated gate, the PR merged as `<merge-sha>`, and post-merge `main` verification `<workflow/run>` is GREEN.
 
 Until those values exist as real evidence, Stage 05 remains `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
