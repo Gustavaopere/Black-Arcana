@@ -91,17 +91,29 @@ If future additions exceed a compact readable panel, information should move int
 
 The following are `PLANNED / NOT YET CLAIMED AS IMPLEMENTED`.
 
+`07-presentation-data-contracts.md` is the authority and synchronization gate for every new datum described below. A desired visual element is not implementable merely because the corresponding server runtime state exists.
+
 ### 1. Cooldown affordance
 
 The original Stage 05 design target included a short cooldown indicator.
 
+Current audited boundary:
+
+- `CooldownSnapshotPayload` synchronizes authoritative cooldown state by canonical `groupId`;
+- `SpellPresentationPayload` does not currently synchronize the selected spell's cooldown-group mapping;
+- D018 allows shared cooldown groups, so the client must never assume `groupId == spellId`.
+
 Plan:
 
-- use synchronized server-owned cooldown state;
+- add generic per-spell cooldown/readiness only after a bounded server-authored spell→cooldown-group relationship exists;
+- use the received server-owned remaining time only through that valid mapping;
 - prefer a concise remaining-time/readiness indicator;
 - hide it while irrelevant/ready unless persistent display proves necessary;
-- clear or omit stale cooldown information rather than extrapolating beyond the synchronized contract;
+- any local countdown between snapshots is presentation-only and a later server snapshot wins;
+- clear or omit stale/unmapped cooldown information rather than extrapolating beyond the synchronized contract;
 - do not create a second client cooldown authority.
+
+Status: `BLOCKED ON PRESENTATION MAPPING CONTRACT` for a generic selected-spell cooldown widget.
 
 ### 2. Provider-resource/cost summary
 
@@ -110,28 +122,42 @@ The original design target included provider-specific cost.
 Plan:
 
 - do not compute Iron's mana, Ars Source, Malum spirits, item, health or composite costs client-side from duplicated formulas;
+- do not use descriptive `SpellImplementationSpec.resourceCost` text as live gameplay authority;
 - first verify whether an existing server-authored bounded presentation contract is sufficient;
-- if not, design a dedicated bounded presentation field/payload;
+- if not, design a dedicated bounded presentation result under `07-presentation-data-contracts.md`;
 - mark unavailable when a provider cannot safely preview exact cost;
-- never reserve/debit a resource from HUD preview.
+- never reserve/debit a resource from HUD preview;
+- preserve mixed ownership for Black Arcana-owned spells hosted by Iron's: host presentation does not transfer Black Arcana transaction authority to Iron's.
+
+Status: `BLOCKED ON BOUNDED SERVER/PROVIDER PREVIEW CONTRACT` for exact cost display.
 
 ### 3. Charge/channel presentation
 
 D024 requires channeling to converge on the canonical cast engine.
 
-If a Black Arcana spell exposes a server-owned charge/channel session, planned HUD presentation may show:
+`07-presentation-data-contracts.md` distinguishes two separate server-owned concepts that currently lack Stage 05 client state:
 
-- charging state;
-- bounded progress;
-- minimum/maximum timing markers where the server contract exposes them;
+- reusable charge pools (`ArcanaChargeSpec` plus server charge runtime);
+- active channel sessions (`ArcanaChannelManager` plus `ArcanaChannelSpec`).
+
+If future Black Arcana spells require these visuals, planned HUD presentation may show, once the appropriate bounded contract exists:
+
+- available/max charge pool state and recharge presentation;
+- accepted charging/channel state;
+- bounded channel progress;
+- minimum/maximum timing markers exposed by the server contract;
 - cancel/release affordance text.
 
 Rules:
 
 - client-reported channel duration is never authoritative;
 - HUD progress is presentation only;
+- local key timing cannot substitute for a server-accepted channel lifecycle;
 - release still enters the same canonical server coordinator;
-- no channel bar exists for spells that do not use that mechanic.
+- charge consume/recharge remains server-owned;
+- no charge/channel bar exists for spells that do not use that mechanic.
+
+Status: `BLOCKED ON CHARGE/CHANNEL PRESENTATION CONTRACTS`.
 
 ### 4. Ritual/domain timer presentation
 
@@ -139,10 +165,12 @@ The original Stage 05 candidate list included temporary grand-ritual/domain time
 
 Only add a timer when:
 
-- Black Arcana owns the active state; or
+- Black Arcana owns the active state and exposes a bounded owner-specific timer presentation contract; or
 - an external provider exposes a supported bounded presentation seam.
 
-Do not poll the world or infer remaining duration from particles/entities.
+Do not poll the world or infer remaining duration from particles/entities, first-observed spawn time or chunk state.
+
+Status: `BLOCKED ON OWNER-SPECIFIC TIMER CONTRACT`.
 
 ### 5. Cast target feedback
 
@@ -159,12 +187,14 @@ Any target preview must preserve D019 server geometry and privacy/protection bou
 Where appropriate, use synchronized spell icon plus semantic symbols for:
 
 - selected spell;
-- cooldown;
+- cooldown only after the mapping contract exists;
 - danger;
 - blocked gate;
 - unavailable preview.
 
 Icons supplement text and color; they do not replace necessary labels.
+
+The existing synchronized `SpellPresentationPayload.Entry.iconId` is sufficient for the spell-icon presentation refinement; missing artwork still falls back to text and never changes cast validity.
 
 ## Anti-clutter rules
 
@@ -210,6 +240,8 @@ On reload/provider/profile change:
 
 - new static preflight wins;
 - mismatched older forecast is ignored;
+- cooldown spell→group mapping, if implemented later, must be invalidated/replaced with the authoritative policy revision rather than retained blindly;
+- future charge/channel/timer presentation must define its own bounded stale-state identity under `07-presentation-data-contracts.md`;
 - reconnect clears prior session presentation before new snapshots arrive.
 
 ## F1 / vanilla GUI policy
@@ -240,6 +272,8 @@ Preserve:
 - forecast request rate limiting outside the render loop;
 - bounded text wrapping and finite scale-fit attempts.
 
+Future cooldown/charge/channel/timer synchronization must remain event-driven under D023 rather than becoming a per-tick full-state stream.
+
 ## Automated coverage
 
 `HudLayoutTest`, `HazardForecastPresentationTest` and `SmallViewportLayoutContractTest` cover deterministic HUD geometry and synchronized presentation behavior. The project CI verifies dedicated-server startup, guarding the no-client-classloading boundary.
@@ -254,14 +288,18 @@ Preserve:
 - stale forecast rejection;
 - anchor/scale containment;
 - line wrapping/truncation;
-- semantic status mapping.
+- semantic status mapping;
+- shared cooldown-group mapping once implemented;
+- client interpolation remains presentation-only.
 
 ### Network/state
 
 - reconnect clears stale result/forecast;
 - reload invalidates mismatched forecast;
 - unavailable provider preview remains unavailable;
-- cooldown/cost/channel additions use server-authored state only.
+- cooldown mapping rejects/omits an unmapped selected spell rather than assuming spell id equals group id;
+- future charge/channel/timer additions use bounded server-authored state only;
+- future cost preview is side-effect-free and does not settle resources.
 
 ### Real client
 
@@ -273,11 +311,14 @@ Preserve:
 - hazard minimum/recommended scenarios;
 - CLEAR/COOLDOWN/COST and supported additional gate states;
 - F1/hidden GUI;
-- reduced motion/flash interactions where applicable.
+- reduced motion/flash interactions where applicable;
+- any newly implemented cooldown/charge/channel/timer display against the exact server transition that produced it.
 
 ## Deferred acceptance
 
 Actual readability, overlap and visual timing across the real-client resolution/GUI-scale matrix remain PENDING until directly observed.
+
+Missing optional cost/charge/channel/timer presentation is not automatically a Stage 05 blocker. If a direct validation failure promotes one of those features to required work, its corresponding data contract must be implemented and validated first.
 
 ## Exit criteria
 
@@ -287,6 +328,7 @@ Actual readability, overlap and visual timing across the real-client resolution/
 - server denial is displayed accurately;
 - dangerous-spell forecast wording remains factual;
 - stale forecast/gate state cannot override current snapshots;
+- any implemented cooldown/cost/charge/channel/timer feature obeys `07-presentation-data-contracts.md` and never invents client authority;
 - all anchors/scales remain readable in the required manual matrix;
 - no provider economics or gameplay authority is duplicated client-side;
 - dedicated server remains free of client-class loading;
