@@ -1,6 +1,11 @@
 # Ars Elemental 0.7.10.1 — rituals
 
-Status: `8/8 RITUAL REGISTRATIONS SOURCE-PINNED / INSTALLED RUNTIME QA PENDING`
+Status: `8/8 RITUAL REGISTRATIONS + INHERITED DEFAULTS SOURCE-PINNED / INSTALLED RUNTIME QA PENDING`
+
+Source checkpoints:
+
+- Ars Elemental: `Alexthw46/Ars-Elemental@fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`
+- Ars Nouveau 5.13.1 ritual bases: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 
 All eight entries are registered through Ars `RitualRegistry` by `ArsNouveauRegistry.registerRituals()`.
 
@@ -54,30 +59,56 @@ All eight entries are registered through Ars `RitualRegistry` by `ArsNouveauRegi
 
 ## `ars_elemental:ritual_archwood_forest`
 
-Extends Ars `ConjureBiomeRitual`.
+Extends exact Ars Nouveau 5.13.1 `ConjureBiomeRitual`.
 
-- Base biome target is Ars Nouveau Archwood Forest.
-- Creates grass on the top layer and dirt underneath through `stateForPos`.
-- Consuming at most one Archfruit Pod can switch the target biome:
+Provider-specific behavior:
+
+- base biome target is Ars Nouveau Archwood Forest;
+- grass is placed at `ritualY - 1`, dirt at the other generated layers;
+- at most one consumed Archfruit Pod changes the target biome:
   - Bombegrante -> Blazing Forest;
   - Frostaya -> Cascading Forest;
   - Mendosteen -> Flourishing Forest;
   - Bastion -> Vexing Caves;
-  - Flashing Pod -> Flashing Forest.
-- Non-default selected biome is persisted in ritual NBT.
-- Provider text states radius 7 and Source Gems add +1 radius each; exact inherited superclass cost/limits are not restated without re-auditing the Ars base implementation.
+  - Flashing Pod -> Flashing Forest;
+- non-default selected biome is persisted in ritual NBT.
+
+Inherited exact behavior:
+
+- base radius: 7;
+- each consumed Ars Source Gem adds its stack count to the radius;
+- tracker is initialized around `getPos().below(3)` with the resolved radius;
+- each successful placement also calls Ars `RitualUtil.changeBiome` for that position;
+- `blocksBeforeSourceNeeded = 5`;
+- after five successful block placements the ritual marks itself as needing Source;
+- `getSourceCost()` returns 50;
+- tracker and radius are persisted by the base ritual.
+
+This means the source contract is **50 Ars Source per five successful placement steps**, not a Black Arcana cost and not a one-time 50-Source total inferred from the tablet description.
 
 ## `ars_elemental:ritual_archwood_forestation`
 
-Extends Ars `FeaturePlacementRitual`.
+Extends exact Ars Nouveau 5.13.1 `FeaturePlacementRitual`.
 
-- Always adds a Bonemeal feature.
-- A consumed specific Archwood sapling selects Blazing, Cascading, Vexing, Flourishing or Flashing feature families.
-- Selected families place their corresponding tree, thematic resource/plant and Archfruit Pod.
-- Without a specific variant it draws from all five Archwood tree families and all five pod families.
-- Adds provider `PlaceableLightFeature` after the variant features.
-- Provider text states a 7x7 circular area and Source Gem radius augmentation; inherited superclass cost/limits are not inferred here.
+Provider-specific behavior:
+
+- always adds a Bonemeal feature;
+- a consumed specific Archwood sapling selects Blazing, Cascading, Vexing, Flourishing or Flashing feature families;
+- selected families place their corresponding tree, thematic resource/plant and Archfruit Pod;
+- without a specific variant it draws from all five Archwood tree families and all five pod families;
+- adds provider `PlaceableLightFeature` after the variant features.
+
+Inherited exact behavior:
+
+- base `checkRadius`: 7;
+- each consumed Ars Source Gem increases `checkRadius` by its stack count;
+- target positions are generated within the radius, shuffled, and processed feature-by-feature;
+- the tick loop returns after one successful feature placement, or advances until the ritual finishes;
+- `featureIndex`, `positionIndex` and `checkRadius` are persisted;
+- the base class does not override `getSourceCost()`; exact `AbstractRitual.getSourceCost()` therefore supplies **0**.
+
+The Source Gems here are radius augment inputs. The inherited source path does not establish an ongoing positive Source pull for this ritual at this pin.
 
 ## World-safety boundary
 
-The two Archwood rituals are provider-owned world mutation/biome operations. Black Arcana may observe their results for compatibility but must not replay them or claim ownership. Independent Black Arcana world effects continue through `WorldEffectPolicy`.
+The two Archwood rituals are provider-owned world mutation/biome operations. Black Arcana may observe their results for compatibility but must not replay them or claim ownership. Independent Black Arcana destructive effects continue through `WorldEffectPolicy`.
