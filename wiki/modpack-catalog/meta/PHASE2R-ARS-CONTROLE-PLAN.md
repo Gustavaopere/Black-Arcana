@@ -2,13 +2,15 @@
 
 Status: `PLANNING / NO RUNTIME IMPLEMENTATION`
 
-Baseline Black Arcana: `main@4053c060bb7e4c3f57ca06f49295868277a6eb57`.
+Initial Black Arcana baseline used to start this plan: `main@4053c060bb7e4c3f57ca06f49295868277a6eb57`.
 
-This document plans the next unclaimed Phase 2 provider audit after the current Ars Nouveau checkpoint while preserving the concurrent Ars Additions work in PR #94. It is a catalog/provenance/deduplication plan only. It does not promote a Black Arcana runtime Stage, does not modify Stage 07.07, and does not authorize Phase 3 implementation.
+Reconciled baseline before handoff: `main@29c239adf21f523ae5688e7a7baba29f956bebf4`, merged into this branch by synchronization PR #97 as branch merge commit `1fedc1117d5954fe15d79356313b2fa754f92ec7`.
+
+This document plans the next unclaimed Phase 2 provider audit after the canonical Ars Nouveau and Ars Additions checkpoints. Ars Additions Phase 2Q was merged as PR #94 while this plan was being written; its work is preserved by the synchronization above. This is a catalog/provenance/deduplication plan only. It does not promote a Black Arcana runtime Stage, does not modify Stage 07.07, and does not authorize Phase 3 implementation.
 
 ## 1. Why this provider is next
 
-Ars Controle is physically present in the current 2026-09-07 modlist and remains granular-catalog pending in the canonical provider queue. No Ars Controle-specific branch was found during the pre-work reconciliation. Ars Additions is already owned by concurrent draft PR #94, so this plan intentionally avoids that provider and its paths.
+Ars Controle is physically present in the current 2026-09-07 modlist and remains granular-catalog pending in the canonical provider queue. No Ars Controle-specific branch was found during the pre-work reconciliation. Ars Additions is now canonical on `main` through PR #94, so Phase 2R can proceed adjacently without competing for provider ownership or redoing Phase 2Q.
 
 Current physical identity:
 
@@ -21,6 +23,7 @@ Current physical identity:
 Current provider context:
 
 - Ars Nouveau: `ars_nouveau-1.21.1-5.13.1.jar` / `5.13.1`;
+- Ars Additions: canonical Phase 2Q catalog merged through PR #94 on `main@29c239adf21f523ae5688e7a7baba29f956bebf4`;
 - Curios: `curios-neoforge-9.5.1+1.21.1.jar` / `9.5.1+1.21.1`;
 - CC:Tweaked / ComputerCraft was not located as a top-level JAR in the current physical modlist, so its Ars Controle path is currently optional/absent until a later modlist proves otherwise.
 
@@ -297,13 +300,13 @@ Avoid destructive regeneration of the full provider queue while narrow concurren
 ## 11. Execution order
 
 1. Re-fetch `origin/main` and active PRs before editing provider files.
-2. If PR #94 or another concurrent branch touches Ars Controle/meta files, reconcile ownership before continuing.
+2. If a new concurrent branch touches Ars Controle or the same meta overlays, reconcile ownership before continuing; do not reopen or overwrite the already-merged Ars Additions Phase 2Q work.
 3. Pin provenance and source/version evidence.
 4. Exhaustively enumerate registrations on the exact 1.6.15 source checkpoint.
 5. Close glyph pages and acquisition.
 6. Close block/item/system pages.
 7. Audit persistence, networking, configs, capabilities and optional compat.
-8. Reconcile every capability against Ars Nouveau, Black Arcana and already-cataloged providers.
+8. Reconcile every capability against Ars Nouveau, Ars Additions, Black Arcana and already-cataloged providers.
 9. Write narrow queue/capability overlays only after semantic dispositions are decided.
 10. Review diff for accidental runtime/Stage changes.
 11. Re-fetch `origin/main`; merge current main into the branch if it advanced.
