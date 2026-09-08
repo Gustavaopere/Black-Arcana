@@ -6,6 +6,8 @@
 
 This document records the current HUD contract and the plan for any remaining feedback/presentation work. Planned additions are not implementation claims.
 
+`11-contextual-feedback-orchestration.md` is the canonical planning authority for overlap, priority, supersession, timing and correlation between selection context, advisory forecast and authoritative cast-result feedback.
+
 ## Goal
 
 Show the minimum information necessary to cast confidently without turning Black Arcana into a permanently occupied HUD stack.
@@ -36,6 +38,9 @@ Combat readability has priority over completeness. Persistent detail belongs in 
 - `VERBOSE` may additionally show successful-cast feedback.
 - Recent selection may show the selected spell plus synchronized hazard/gate presentation.
 - Recent cast results show the bounded authoritative server denial detail. The client does not synthesize a gate reason.
+- Selected-spell presentation and latest cast-result presentation are independently sourced and can be recent at the same time.
+- `CastResultPayload` currently carries `castId/status/code/detail` but no `spellId` or loadout slot. Current selection therefore cannot be treated as authoritative identity for that result.
+- The current renderer can juxtapose current selected-spell context with a latest result when their windows overlap; 05.11 records this as a presentation-correlation hardening gap rather than an implemented fix.
 - Layout is anchorable/scalable, wraps text and can scale down to remain within small viewports.
 - Provider adapters may expose presentation data, but gameplay authority remains server-side.
 - Dedicated-server startup must remain free of client classloading.
@@ -45,6 +50,8 @@ Combat readability has priority over completeness. Persistent detail belongs in 
 ### Selected spell
 
 Uses the current reconciled client selection against the synchronized server loadout plus synchronized spell presentation metadata.
+
+This identifies the **current selection**, not necessarily the spell that produced the latest received cast result.
 
 ### Static danger preflight
 
@@ -75,15 +82,21 @@ Current categories include:
 
 Uses the synchronized `CastResultPayload`. Denial text comes from the bounded server-authored detail.
 
+The payload identifies the cast by `castId` but does not currently include spell/slot identity. Without a separately proven correlation context, the safe presentation is therefore the authoritative result itself, not a claim that the currently selected spell produced it.
+
 ## Information hierarchy
 
-The contextual panel should prioritize lines in this order:
+For future arbitration under 05.11, semantic emphasis should prioritize:
 
-1. selected spell;
-2. danger/resistance status when relevant;
-3. predictable gate state when relevant;
-4. authoritative cast denial;
-5. success feedback only in `VERBOSE`.
+1. authoritative cast denial;
+2. authoritative success when `VERBOSE` permits it;
+3. current hard-block/warning forecast for the current selected spell;
+4. current selected-spell identity/context;
+5. lower-value explanatory detail.
+
+This is semantic priority, not a claim that the current renderer already implements all arbitration rules or that physical vertical line order must literally match the list.
+
+An authoritative result must never be rewritten by a preview. A forecast and a result may coexist, but the UI must keep their meanings distinct and must not visually attribute the result to the current selection unless a safe cast-id correlation exists.
 
 If future additions exceed a compact readable panel, information should move into another contextual surface rather than allowing the HUD to grow indefinitely.
 
@@ -92,6 +105,8 @@ If future additions exceed a compact readable panel, information should move int
 The following are `PLANNED / NOT YET CLAIMED AS IMPLEMENTED`.
 
 `07-presentation-data-contracts.md` is the authority and synchronization gate for every new datum described below. A desired visual element is not implementable merely because the corresponding server runtime state exists.
+
+`11-contextual-feedback-orchestration.md` is additionally required whenever a refinement changes transient-event priority, lifetime, deduplication or result/selection association.
 
 ### 1. Cooldown affordance
 
@@ -196,12 +211,26 @@ Icons supplement text and color; they do not replace necessary labels.
 
 The existing synchronized `SpellPresentationPayload.Entry.iconId` is sufficient for the spell-icon presentation refinement; missing artwork still falls back to text and never changes cast validity.
 
+### 7. Feedback correlation hardening
+
+The current result schema echoes `castId` but not spell/slot identity.
+
+Planned safe options are defined by 05.11:
+
+- baseline: render result without spell attribution when no correlation exists;
+- optional no-protocol hardening: keep a small bounded client-only pending context keyed by emitted `castId`, containing attempted spell/slot solely for presentation correlation;
+- unknown/unmatched result id: retain generic authoritative result, omit guessed spell identity;
+- richer server-authored result identity: only through a separately reviewed bounded protocol change if product requirements actually need it.
+
+A client correlation table is never admission, replay, cost, cooldown or spell-identity authority for the server.
+
 ## Anti-clutter rules
 
 - no permanent Black Arcana mana/resource bar by default;
 - no permanent selected-spell panel while idle beyond configured duration;
 - no full spell description in combat HUD;
 - no repeating success spam in `MINIMAL` or `STANDARD`;
+- no unbounded cast-result/history queue;
 - no duplicate provider HUD if the provider already owns the exact same resource presentation unless an explicit integration design justifies it;
 - no more lines than can fit safely after wrapping/scaling; overflow triggers a design change, not off-screen rendering.
 
@@ -219,6 +248,8 @@ A cast-result denial is the actual bounded server result for that request.
 
 The UI must not merge these into language that implies the preview itself denied the cast.
 
+When a denial and advisory forecast disagree, the denial owns outcome emphasis. If the denial cannot be safely correlated to a spell identity, it remains authoritative but must be shown without guessed attribution.
+
 ## Hazard wording policy
 
 Danger presentation must remain factual:
@@ -230,11 +261,20 @@ Danger presentation must remain factual:
 
 Never state that a recommended threshold makes dangerous magic safe.
 
-## Stale-state policy
+## Stale-state and overlap policy
 
 HUD state is cleared/reconciled on session change.
 
 A dynamic forecast may render only when it matches the current static preflight metadata for the same spell.
+
+Transient-event arbitration additionally follows 05.11:
+
+- cast A result arriving after selection changes to B must not be described as B's result unless a safe cast-id correlation proves the attempted identity;
+- B's forecast remains scoped to B and must not rewrite A's authoritative result;
+- the current bounded result model is latest-received-result wins; an older result is not pinned merely because a newer success is visually suppressed at `STANDARD`;
+- repeated identical text is not a dedup key; any future presentation dedup uses `castId`;
+- another `Screen` hides the contextual HUD but does not pause or extend transient selection/result timers;
+- reconnect/session change clears any future pending-correlation or presentation-dedup state.
 
 On reload/provider/profile change:
 
@@ -270,7 +310,8 @@ Preserve:
 - no per-frame network requests;
 - bounded synchronized snapshots;
 - forecast request rate limiting outside the render loop;
-- bounded text wrapping and finite scale-fit attempts.
+- bounded text wrapping and finite scale-fit attempts;
+- any future pending-cast correlation or result-dedup cache bounded by count and age.
 
 Future cooldown/charge/channel/timer synchronization must remain event-driven under D023 rather than becoming a per-tick full-state stream.
 
@@ -286,6 +327,11 @@ Future cooldown/charge/channel/timer synchronization must remain event-driven un
 - selection/result time windows;
 - `MINIMAL/STANDARD/VERBOSE` density;
 - stale forecast rejection;
+- cast A → select B before result A → no false B attribution;
+- rapid A/B results → latest received result owns the result channel;
+- forecast `CLEAR` followed by authoritative denial → denial owns outcome emphasis;
+- unmatched `castId` → result remains present without guessed spell/slot;
+- another `Screen` during the result window → hidden presentation does not pause/extend the timer;
 - anchor/scale containment;
 - line wrapping/truncation;
 - semantic status mapping;
@@ -294,8 +340,9 @@ Future cooldown/charge/channel/timer synchronization must remain event-driven un
 
 ### Network/state
 
-- reconnect clears stale result/forecast;
+- reconnect clears stale result/forecast and any future pending correlation/dedup state;
 - reload invalidates mismatched forecast;
+- forecast request id/spell/preflight correlation remains bounded;
 - unavailable provider preview remains unavailable;
 - cooldown mapping rejects/omits an unmapped selected spell rather than assuming spell id equals group id;
 - future charge/channel/timer additions use bounded server-authored state only;
@@ -307,6 +354,8 @@ Future cooldown/charge/channel/timer synchronization must remain event-driven un
 - GUI scale Auto/2/3/4 where available;
 - all five anchors at 0.5×/1×/2×;
 - authoritative denial timing/readability;
+- cast A → change selection → receive A result, verifying no false association after hardening is implemented;
+- rapid cast/result overlap at each feedback level after hardening is implemented;
 - idle disappearance;
 - hazard minimum/recommended scenarios;
 - CLEAR/COOLDOWN/COST and supported additional gate states;
@@ -320,6 +369,8 @@ Actual readability, overlap and visual timing across the real-client resolution/
 
 Missing optional cost/charge/channel/timer presentation is not automatically a Stage 05 blocker. If a direct validation failure promotes one of those features to required work, its corresponding data contract must be implemented and validated first.
 
+05.11 planning does not itself make feedback-correlation hardening a blocker. It becomes required only if an explicit reviewed decision or direct validation evidence promotes the observed association gap to required Stage 05 work.
+
 ## Exit criteria
 
 05.03 is fully validated only when:
@@ -328,6 +379,7 @@ Missing optional cost/charge/channel/timer presentation is not automatically a S
 - server denial is displayed accurately;
 - dangerous-spell forecast wording remains factual;
 - stale forecast/gate state cannot override current snapshots;
+- any implemented result-correlation hardening obeys 05.11 and never turns client presentation context into gameplay authority;
 - any implemented cooldown/cost/charge/channel/timer feature obeys `07-presentation-data-contracts.md` and never invents client authority;
 - all anchors/scales remain readable in the required manual matrix;
 - no provider economics or gameplay authority is duplicated client-side;
