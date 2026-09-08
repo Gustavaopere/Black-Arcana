@@ -1,12 +1,13 @@
 # Ars Elemental
 
-Status: `SOURCE SURFACE + ACQUISITION INVENTORY COMPLETE / PER-GLYPH DEFAULTS + RUNTIME QA PENDING`
+Status: `SOURCE CATALOG COMPLETE / INSTALLED CONFIG + RUNTIME QA PENDING`
 
 - Current JAR: `ars_elemental-1.21.1-0.7.10.1.jar`
 - Physical SHA-1: `a1e4021177aae0e16c1f7c6487a82f0b68bbade3`
 - Mod id: `ars_elemental`
 - Runtime version: `0.7.10.1`
 - Source checkpoint: `Alexthw46/Ars-Elemental@fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`
+- Ars Nouveau 5.13.1 API checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
 - Provider class: `ARS NOUVEAU ADDON / GLYPH + RITUAL + FAMILIAR + PERK + GEAR + WORLD SYSTEM PROVIDER`
 - Primary casting authority: Ars Nouveau.
 
@@ -14,18 +15,21 @@ The exact source checkpoint is used as a semantic source pin for 0.7.10.1. It is
 
 ## Source-pinned surface
 
-The production bootstrap registers:
+The production/source audit closes:
 
-- 39 production spell parts: 23 effects, 2 cast methods, 2 propagators and 12 creature-category filters;
-- 8 rituals;
-- 3 familiars;
-- 3 Ars perks/threads;
+- 39/39 production spell parts: 23 effects, 2 cast methods, 2 propagators and 12 creature-category filters;
+- exact source-default tier/mana plus compatible augments and provider-specific config/limit knobs for all 39 spell parts;
+- 39/39 generated glyph learning recipes;
+- 8/8 rituals, including inherited Ars 5.13.1 semantics for both Archwood rituals;
+- 3/3 familiars;
+- 3/3 Ars perks/threads and their event/attribute paths;
 - 12 elemental armor sets, 48 armor pieces total, all registered as Ars perk providers;
 - 8 SpellCaster providers;
 - 32 EntityTypes;
-- 16 mixins: 14 common and 2 client;
-- 2 network payloads;
-- Ars Source-capable advanced relays plus other elemental machines, foci, bangles, caster tomes and spell infrastructure.
+- 16/16 mixins: 14 common and 2 client;
+- 2/2 registered network payloads;
+- Ars Source-capable advanced relays plus elemental machines, foci, bangles, caster tomes and spell infrastructure;
+- provider worldgen and Ars-core mutation boundaries.
 
 `MethodCarianPhalanx` exists in source but is only registered under `!isProduction()`. It is not part of the production JAR glyph surface.
 
@@ -72,11 +76,15 @@ Bubble Shield, Nullify Defense and the twelve targeting filters already provide 
 
 Envenom, Poison Spores, Charm, Rage and Phantom Grasp overlap toxin, curse, domination and occult-support fantasies.
 
-## Verified divergences
+## Verified source divergences
 
 ### Familiar cost descriptions
 
 The Flarecannon and Flashjack book descriptions say their relevant spell costs are reduced by 20%. Their source handlers instead subtract `spell.getCost() * 0.5` from `event.currentCost`. This remains `DESCRIPTION-PATH DIVERGENCE / RUNTIME QA REQUIRED`; the catalog does not choose one behavior by inference.
+
+### Summoning Thread sickness description
+
+The provider description says Summoning Sickness is reduced by 10% per tier. The exact event handler multiplies duration by `1 - countForPerk(...) / 10`. Ars 5.13.1 `countForPerk` returns the maximum worn slot value; for ordinary values 1–3, Java integer division makes the divisor term 0 and leaves the source-path multiplier at 1. This remains `DESCRIPTION-PATH DIVERGENCE / RUNTIME QA REQUIRED`.
 
 ### License metadata
 
@@ -84,6 +92,6 @@ The exact README and `neoforge.mods.toml` say LGPL v3, while the root `LICENSE` 
 
 ## QA state
 
-Source registry/acquisition/boundary inventory is complete. Individual source-default tier/mana/config behavior still needs normalization where not already audited, and installed-JAR config/client/dedicated/full-pack QA remains pending.
+The source catalog is complete for the pinned surface and dependencies used by this phase. Still pending are comparison against the real installed/generated Ars Elemental config/datapack and runtime/client/dedicated/full-modpack interoperability checks. Those pending observations do not convert source defaults into installed-runtime claims.
 
 This provider catalog does not promote any Black Arcana runtime Stage.
