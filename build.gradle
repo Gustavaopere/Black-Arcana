@@ -22,11 +22,15 @@ repositories {
             includeGroup 'io.redspace'
         }
     }
-    maven {
-        name = 'CurseMaven'
-        url = 'https://www.cursemaven.com'
-        content {
-            includeGroup 'curse.maven'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = 'https://api.modrinth.com/maven'
+            }
+        }
+        filter {
+            includeGroup 'maven.modrinth'
         }
     }
 }
@@ -95,14 +99,16 @@ dependencies {
     compileOnly "io.redspace:irons_spellbooks:${irons_spells_version}:api"
 
     // Ars Nouveau does not publish a dedicated API classifier; compile against the exact
-    // installed-pack baseline without transitives and isolate provider loading behind entrypoints.
-    compileOnly("curse.maven:ars-nouveau-401955:${ars_nouveau_file_id}") {
+    // installed-pack release mirrored by Modrinth, without transitives, and isolate provider
+    // loading behind entrypoints.
+    compileOnly("maven.modrinth:${ars_nouveau_modrinth_project_id}:${ars_nouveau_modrinth_version_id}") {
         transitive = false
     }
 
     // Eidolon 1.21.1 exposes its ritual classes in an api package but no standalone API jar.
-    // Compile against the exact pack release; all binary references remain in optional adapter classes.
-    compileOnly("curse.maven:eidolon-repraised-870250:${eidolon_repraised_file_id}") {
+    // Compile against the exact installed-pack release mirrored by Modrinth; all binary
+    // references remain in optional adapter classes.
+    compileOnly("maven.modrinth:${eidolon_repraised_modrinth_project_id}:${eidolon_repraised_modrinth_version_id}") {
         transitive = false
     }
 
