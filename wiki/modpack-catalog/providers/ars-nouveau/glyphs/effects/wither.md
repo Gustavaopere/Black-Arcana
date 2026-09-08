@@ -1,6 +1,6 @@
 # Ars Nouveau — Wither
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_wither`
 - Display name: Wither
@@ -15,6 +15,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Applies vanilla Wither using Ars' potion-effect path. Amplify raises effect level; Time augments modify duration.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:abjuration_essence` + `minecraft:wither_skeleton_skull` ×3.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

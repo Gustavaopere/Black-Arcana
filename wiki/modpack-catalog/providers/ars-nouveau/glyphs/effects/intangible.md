@@ -1,6 +1,6 @@
 # Ars Nouveau — Intangible
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_intangible`
 - Display name: Intangible
@@ -14,6 +14,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Intangible replaces eligible non-air blocks with Ars `Intangible Air`, storing the original block-state id in the tile so the block can later return. Blocks with block entities, blacklisted blocks, unharvestable blocks and claim-denied positions are skipped. AOE/Pierce expand coverage; Amplify/Dampen change harvest hardness eligibility.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:manipulation_essence` + `minecraft:phantom_membrane` ×3 + `#c:ender_pearls` ×2.
+- Source-default recipe XP: **160 XP** (Tier III).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 

@@ -1,6 +1,6 @@
 # Ars Nouveau — Flare
 
-Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
+Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME CONFIG QA PENDING`
 
 - Registry id: `ars_nouveau:glyph_flare`
 - Display name: Flare
@@ -15,6 +15,14 @@ Status: `SOURCE-PINNED 5.13.1 / RUNTIME CONFIG QA PENDING`
 ## Provider-native behavior
 
 Flare only damages living targets already burning, standing in fire, or carrying Ars' Blasting effect. Successful use spawns damaging Cinder entities around the target; block casts can trigger from nearby fire. If the target has Blasting, Flare removes that effect and immediately detonates the provider Blasting explosion at increased strength. AOE increases the number of spawned Cinders. Cinders use Mage Fire and do not spread normal fire to terrain.
+
+## Acquisition / learning
+
+- Provider-generated Glyph recipe: `ars_nouveau:fire_essence` + `minecraft:flint_and_steel` ×2 + `minecraft:fire_charge` ×2 + `minecraft:blaze_rod`.
+- Source-default recipe XP: **55 XP** (Tier II).
+- Starter default: **no**.
+- Learning is Ars-owned and consumes the Glyph in survival after a successful server-side unlock; runtime config may change enabled/starter/tier behavior.
+- Full 85/85 acquisition table: [`ACQUISITION.md`](../../ACQUISITION.md).
 
 ## Authority / deduplication
 
