@@ -1,6 +1,6 @@
 # Ars Controle — Ars Nouveau control/automation provider
 
-Status: `PHASE 2R / SOURCE-PINNED 1.6.15 CATALOG MATERIAL SURFACE CLOSED / GLOBAL DELTAS+FINAL QA PENDING`
+Status: `PHASE 2R / SOURCE-PINNED 1.6.15 CATALOG COMPLETE / FINAL DIFF+CI+MERGE PENDING / RUNTIME+PACK QA PENDING`
 
 ## Exact installed identity
 
@@ -51,20 +51,21 @@ The Temporal Stability Sensor is a registered block but has no BlockEntityType i
 
 A prior Notion dossier described "4 block entities" and "31 Ars/logic components". Those values are retained as historical/editorial context only. They do not match the exact 1.6.15 registry: the current release source registers 3 block-entity types and 9 glyph/spell parts. Internal concepts/classes must not be promoted to player glyphs without registry evidence.
 
-## Closed Phase 2R material surface
+## Closed Phase 2R source catalog
 
-- exact registries: source-pinned;
+- exact registries: closed;
 - glyphs/spell parts: 9/9 individually cataloged;
-- default glyph acquisition: 9/9 source-pinned;
+- default glyph acquisition: 9/9 resolved;
 - player-facing systems: 6/6 individually cataloged;
 - default system acquisition: 6/6 resolved;
 - persistence: 2 data components + 4 attachments classified;
 - networking: 5 payloads classified;
-- configs/defaults: source-pinned;
-- capability delegation: source-pinned;
-- mixin/ritual relay behavior: source-pinned;
-- optional ComputerCraft surface: source-pinned and currently absent from physical pack;
-- provider authority/deduplication rules: source-pinned.
+- configs/defaults: classified;
+- capability delegation: classified;
+- mixin/validator/ritual relay behavior: classified;
+- optional ComputerCraft surface: classified and currently absent from physical pack;
+- provider authority/deduplication rules: closed;
+- narrow provider queue/capability/provenance deltas: written.
 
 ## Important source findings
 
@@ -76,10 +77,10 @@ A prior Notion dossier described "4 block entities" and "31 Ars/logic components
 
 ## Remaining Phase 2R closure
 
-- write narrow global provider/capability/provenance deltas;
-- reconcile shared provenance indexes without destroying concurrent work;
-- review PR diff for scope/whitespace;
-- refetch and merge latest `main` if it advances;
+- review exact PR diff for scope and whitespace;
+- refetch and merge latest `main` if it advanced;
 - execute full repository CI on the exact reconciled HEAD;
-- only then mark PR ready/merge;
+- only then mark PR ready and merge;
 - installed-JAR runtime/config/client/full-modpack QA remains a later explicit validation layer and is not inferred from source inspection.
+
+Shared provenance tables remain high-churn; `PROVENANCE-DELTA-PHASE2R-ARS-CONTROLE.md` is the authoritative narrow provenance overlay until those indexes are safely regenerated.
