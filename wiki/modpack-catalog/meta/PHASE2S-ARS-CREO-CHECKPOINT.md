@@ -1,8 +1,8 @@
 # Phase 2S — Ars Creo 5.4.0 checkpoint
 
-Status: `SOURCE CATALOG COMPLETE / FINAL DIFF+SYNC+CI+MERGE PENDING / RUNTIME+PACK QA PENDING`
+Status: `SOURCE CATALOG COMPLETE / RUNTIME+CONFIG+CLIENT+PACK QA PENDING`
 
-Execution branch: `docs/magic-catalog-phase2s-ars-creo`
+Execution branch used: `docs/magic-catalog-phase2s-ars-creo`
 PR: `#104`
 Base main at phase start: `acbea2c897805e0d51476360c27adfd20fabfc64`
 Provider source pin: `baileyholl/Ars-Creo@6a99d36fab441653478fc49de8f28164f0894eb2`
