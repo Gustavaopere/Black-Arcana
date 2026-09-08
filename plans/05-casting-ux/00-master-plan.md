@@ -24,6 +24,8 @@ Feedback-orchestration reconciliation baseline: `main@310c280419b49e5a57077e3460
 
 Iconography/resource-resolution planning baseline: `main@48cb9a430e0526899e8ae1588283b31de71cadfb`.
 
+Targeting/aim planning audit baseline: `main@4ce5699cc76b511804956f903559ae8f7e44ba12`; reconciled with `main@5b343dbb91ff15a08ca3a09d1e4ca9ac177b3dd2` before indexing.
+
 Environment authority at this checkpoint:
 
 - Minecraft `1.21.1`;
@@ -161,6 +163,16 @@ Current `BlackArcanaRadialScreen`, `BlackArcanaLoadoutScreen` and `BlackArcanaHu
 
 `12-iconography-resource-resolution.md` is the planning authority for introducing safe client-side icon resolution/fallback later without changing spell identity or gameplay authority.
 
+### 3.9 Current targeting/aim behavior
+
+Current `ClientInputController.castSlot` reads `Minecraft.hitResult` and only emits a non-blank `targetHint` when the local hit is an `EntityHitResult`. That hint is encoded as an `ArcanaTargetReference.EntityRef` and remains advisory.
+
+Current `ArcanaTargetSpec.Kind` values are exactly `SELF`, `ENTITY`, `RAY`, `BLOCK`, `CONE`, `SPHERE`, `CYLINDER`, `PROJECTILE` and `LINKED`. `ServerEntityTargetSelector` resolves these modes from live server state; explicit `ENTITY`/`PROJECTILE` paths may consult the advisory entity hint, while block/ray/area/linked paths remain server-resolved.
+
+`CastResultPayload` contains `castId/status/code/detail` but no resolved target identity. `WorldEffectAdmissionService` plus `ConfigurableWorldEffectPolicy` remain authoritative for actual terrain work. Therefore the client currently has no generic server-authored target-validity/world-mutation-permission contract.
+
+`13-targeting-aim-presentation.md` is the planning authority for future reticle/target/geometry presentation around that boundary.
+
 ## 4. Plan package
 
 Stage 05 is divided into the following canonical planning documents:
@@ -176,7 +188,8 @@ Stage 05 is divided into the following canonical planning documents:
 9. `09-keyboard-focus-navigation.md` — deterministic keyboard-only focus/navigation for radial and loadout screens while preserving current mouse behavior, server authority and global keybinding boundaries;
 10. `10-loadout-editor-information-architecture.md` — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation limits and the metadata/protocol gates for richer editor feedback;
 11. `11-contextual-feedback-orchestration.md` — bounded arbitration, priority, supersession, correlation and timing across current selection context, advisory forecast and authoritative cast-result channels;
-12. `12-iconography-resource-resolution.md` — synchronized spell-icon resource parsing/resolution, fallback, reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance.
+12. `12-iconography-resource-resolution.md` — synchronized spell-icon resource parsing/resolution, fallback, reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance;
+13. `13-targeting-aim-presentation.md` — authority-safe reticle/aim/target presentation across current server target kinds, advisory target hints, stale-state/result correlation, world-safety boundaries, accessibility, performance and modpack coexistence.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -206,6 +219,8 @@ An explicit cast input emits one bounded cast intent containing only canonical i
 
 Any future invocation surface — weapon, spellbook, staff, controller binding or accessibility shortcut — must terminate in the same canonical server cast pipeline rather than creating another execution route.
 
+A local crosshair candidate or future reticle/geometry guide remains presentation under 05.13. It must never be promoted into target admission, resolved impact identity or world-safety authority merely because it was visible when the intent was emitted.
+
 ### 5.4 Feedback
 
 After intent, the client may present only synchronized or server-authored information:
@@ -220,6 +235,8 @@ After intent, the client may present only synchronized or server-authored inform
 The client must never infer a successful cast solely from local preflight.
 
 Selection context, advisory forecast and authoritative cast result are independent channels under `11-contextual-feedback-orchestration.md`. A result may render without spell attribution when the client cannot safely correlate its `castId` to the submitted spell/slot; it must never be labeled with the current selection by inference.
+
+Target presentation follows the same anti-misattribution rule under 05.13: if the current aim changes before a result arrives, the result must not be visually attached to the new candidate, and the current `CastResultPayload` does not authorize target attribution by itself.
 
 Spell icon art is supplemental presentation only. A synchronized `iconId` may be resolved under 05.12, but failed art resolution never changes canonical spell identity, selection, admission or cast result.
 
@@ -244,6 +261,8 @@ Persistent bars, permanent spell panels and always-on explanatory text are avoid
 
 A visual green/clear state means only what the server-authorized preview contract actually proves. `CLEAR` must not be presented as guaranteed cast success because target resolution, replay admission, world policy and hazard activation can still fail at cast time.
 
+Likewise, a local reticle/entity/block observation under 05.13 may communicate aim/focus but must not use language or styling equivalent to “valid”, “allowed”, “safe” or “will hit” unless an explicit bounded server-authored contract proves that exact fact.
+
 ### 6.4 Information hierarchy
 
 The UI should prioritize in this order:
@@ -265,6 +284,8 @@ Important state must not depend exclusively on color. Labels, icons, symbols or 
 `08-visual-language-state-semantics.md` is the canonical meaning layer for these cross-surface states. It prevents selection from being rendered as readiness, forecast from being rendered as authoritative result, warning from being rendered as hard block and missing art from being rendered as gameplay unavailability.
 
 Keyboard focus introduced by future 05.09 work must use the `FOCUSED` semantic role from 05.08 and remain distinguishable from pointer hover and selected loadout state.
+
+Target/aim presentation introduced through 05.13 must likewise distinguish local observation from server-authored preview/result through redundant non-color-only cues.
 
 ## 7. Planned UX refinements
 
@@ -394,6 +415,24 @@ Plan:
 - preserve mouse behavior and the no-cast-through-screen invariant;
 - keep future controller navigation provider-dependent and mapped to the same screen operations rather than new gameplay logic.
 
+### 7.9 Targeting and aim presentation
+
+`13-targeting-aim-presentation.md` closes the presentation gap around the already server-authoritative target resolver.
+
+Plan:
+
+- treat local crosshair/hit observation as responsive presentation only;
+- preserve advisory `targetHint` semantics and the canonical server `TargetSelector` path;
+- never infer target kind/range/LOS/friendly/world-policy truth from spell name, icon, namespace or local geometry when the required metadata is not synchronized;
+- support future reticle/entity/block/area guides only from bounded legitimate data, with explicit uncertainty semantics;
+- do not send network requests merely because the aim candidate changes;
+- do not scan global entities/chunks or query protection systems per frame;
+- never use current aim to attribute an older `CastResultPayload` to a target;
+- preserve `WorldEffectAdmissionService`/`ConfigurableWorldEffectPolicy` authority for terrain work;
+- prevent target UI from becoming an oracle for hidden/unloaded/protected information;
+- keep important aim state non-color-only and compatible with reduced-motion/reduced-flash policy;
+- coexist with Epic Fight, Iron's, Spell Actionbar and EFIS through Black Arcana-owned presentation only unless a real exact-version integration seam is verified.
+
 ## 8. Input conflict policy for the large modpack
 
 The pack has many mods and therefore many mappings.
@@ -430,13 +469,17 @@ Expected defaults:
 - optional pending cast-result correlation: bounded client-local presentation context keyed by emitted `castId`, never gameplay authority;
 - hazard/gate forecast: bounded request/response, stale-response protected and scoped to spell/request/preflight;
 - spell icon identity: bounded synchronized `iconId`; actual resource syntax/existence remains client presentation resolution under 05.12;
+- local aim/crosshair observation: client-local transient presentation only;
+- current `targetHint`: bounded advisory intent data, not target authority;
+- generic target kind/range/LOS/geometry validity: unavailable to presentation unless the required bounded authoritative data is actually synchronized;
+- resolved target identity/impact: not proven by current `CastResultPayload`;
 - cost/charge/channel/timer presentation: unavailable until the corresponding bounded server-authored contract exists;
 - Corruption/Strain current values: intentionally absent until separately approved;
 - client config: local presentation state only.
 
 The current loadout snapshot reply proves canonical state, not an explicit accepted/rejected reason. Rich apply-result UX requires a separately reviewed bounded server-authored result contract; do not infer it from snapshot equality.
 
-The current cast-result payload proves status/code/detail for its `castId`, not the identity of the client's current selection. Unknown/unmatched result ids remain valid authoritative results but must not receive guessed spell/slot attribution.
+The current cast-result payload proves status/code/detail for its `castId`, not the identity of the client's current selection or current aim target. Unknown/unmatched result ids remain valid authoritative results but must not receive guessed spell/slot/target attribution.
 
 Do not add per-tick full-state synchronization.
 
@@ -453,6 +496,7 @@ Stage 05 is not allowed to become a client or server tick-cost sink.
 - forecast refresh must remain bounded/rate-limited and stale-response protected;
 - any future pending-result correlation/dedup cache must be bounded by count and age and cleared on session reset;
 - icon resolution must not perform per-frame filesystem/JAR scans, remote downloads or unbounded cache growth, and any positive/negative cache must respect resource reload;
+- aim/reticle rendering may use bounded local observation but must not send per-frame target-preview requests, enumerate global entities/chunks or probe protection adapters every frame;
 - no UI feature may trigger global server scans;
 - icon lookup and text layout should be cached or bounded where profiling proves necessary.
 
@@ -472,6 +516,9 @@ Examples:
 - cooldown group received without a valid selected-spell mapping → omit generic spell cooldown rather than guess;
 - unavailable hazard forecast → show unavailable/static fallback, never partial value as complete;
 - authoritative result with unknown/unmatched `castId` → render generic result without guessed spell/slot attribution;
+- local aim candidate changes before result → keep the new aim current but do not attach the old result to it;
+- target kind/range/geometry metadata unavailable → omit exact target-volume/validity claims rather than reconstruct server rules client-side;
+- world/protection preview unavailable → do not imply mutation permission or reveal protected/hidden state;
 - provider preview unavailable → omit or label unavailable;
 - network/session reset → clear stale client state before new snapshots;
 - incompatible optional integration → disable only that presentation seam.
@@ -492,15 +539,16 @@ When a planned refinement is approved for implementation:
 8. for loadout-editor changes, preserve dense ordered-list semantics and use `10-loadout-editor-information-architecture.md` before editing draft/order/search/apply behavior;
 9. for contextual-feedback changes, preserve independent selection/advisory/result channels and use `11-contextual-feedback-orchestration.md` before editing result correlation, timing, priority or dedup behavior;
 10. for spell-icon/resource changes, use `12-iconography-resource-resolution.md` before adding resource lookup, cache/reload behavior or bundled icon assets;
-11. add deterministic RED tests for pure/state behavior where applicable;
-12. implement the minimum GREEN change;
-13. add/adjust GameTests only where world/network integration requires them;
-14. run full Black Arcana CI;
-15. execute the specific real-client rows affected by visual/input behavior;
-16. fetch `origin/main` again and reconcile;
-17. rerun CI on the reconciled HEAD;
-18. merge only after exact-head gates are green;
-19. record final main SHA and any still-deferred manual rows.
+11. for reticle/aim/target-presentation changes, use `13-targeting-aim-presentation.md` before adding target overlays, geometry guides, target-preview synchronization or result/target attribution;
+12. add deterministic RED tests for pure/state behavior where applicable;
+13. implement the minimum GREEN change;
+14. add/adjust GameTests only where world/network integration requires them;
+15. run full Black Arcana CI;
+16. execute the specific real-client rows affected by visual/input behavior;
+17. fetch `origin/main` again and reconcile;
+18. rerun CI on the reconciled HEAD;
+19. merge only after exact-head gates are green;
+20. record final main SHA and any still-deferred manual rows.
 
 ## 13. Stage 05 completion rule
 
@@ -521,6 +569,7 @@ This plan does not authorize:
 
 - a second mana bar;
 - client-authoritative casting;
+- client-authoritative target resolution, target legality or world-safety decisions;
 - client-side cost/cooldown/progression decisions;
 - automatic casting merely from radial selection or focus movement;
 - sparse loadout slots without a separate canonical server migration;
@@ -528,6 +577,8 @@ This plan does not authorize:
 - a duplicate Iron's/Ars spell execution engine;
 - unbounded UI/network updates;
 - runtime downloading or arbitrary-filesystem loading of spell art;
+- per-frame target-preview/protection/world scans;
+- using target presentation as an oracle for hidden/unloaded/protected information;
 - forced gamepad dependencies;
 - silent key remapping of other mods;
 - copying third-party UI/assets/code without compatible permission and provenance;
@@ -677,3 +728,26 @@ Current planning rule:
 - any resolver/reload implementation remains physical-client-only and dedicated-server safe.
 
 05.12 is not automatically a Stage 05 completion blocker. Icon/resource hardening becomes mandatory only when an explicit reviewed decision or direct validation failure promotes the refinement to required work. Creating 05.12 does not add icon assets, runtime code or manual PASS evidence.
+
+## 22. Targeting and aim presentation rule
+
+`13-targeting-aim-presentation.md` is the canonical planning layer for reticle, aim candidate, target marker and target-geometry presentation around the current server-owned targeting runtime.
+
+Current planning rule:
+
+- `ArcanaTargetReference` is the server-resolved target representation; it is not a license for client-authored authoritative target coordinates;
+- current `ArcanaTargetSpec.Kind` values are `SELF`, `ENTITY`, `RAY`, `BLOCK`, `CONE`, `SPHERE`, `CYLINDER`, `PROJECTILE` and `LINKED`;
+- current `ClientInputController` only emits an advisory entity `targetHint` from local `EntityHitResult`; other target modes remain server-resolved;
+- `ArcanaCastIngressService` explicitly preserves advisory target-hint semantics and feeds the canonical server cast engine;
+- `ServerEntityTargetSelector` resolves target candidates from live server state with bounded range/LOS/player/friendly/loaded-chunk behavior appropriate to each target path;
+- a local crosshair candidate, block outline, ray line or area guide is therefore presentation only unless a future bounded server-authored preview contract proves a stronger fact;
+- the current `CastResultPayload` does not carry resolved target identity, so result-to-target attribution must never follow the current crosshair by inference;
+- `WorldEffectAdmissionService` plus `ConfigurableWorldEffectPolicy`, loaded-chunk guards, world-effect profiles/budgets and protection gateways remain execution-time world-safety authority;
+- target UI must not imply mutation permission or expose hidden/unloaded/protected information through speculative probing;
+- target/aim presentation must not send per-frame network requests, perform global entity/chunk scans or query protection adapters every render frame;
+- local observation, any future server-authored preview and authoritative result must remain semantically distinct and stale-safe;
+- important target state must remain understandable without relying only on red/green color, pulsing, flashes, particles or audio;
+- Epic Fight, Iron's, Spell Actionbar and EFIS remain owners of their own UI/combat surfaces; Black Arcana must not monkey-patch or assume integration APIs from presence alone;
+- future target marker/reticle assets remain clean-room/provenance-safe and provider art is not copied/recolored/traced/bundled without compatible rights.
+
+05.13 is not automatically a Stage 05 completion blocker. Target/aim hardening becomes mandatory only when a direct real-client acceptance failure or explicit reviewed decision promotes a specific refinement. Creating 05.13 does not add reticles, overlays, protocol fields, target locks, assets, runtime behavior or manual PASS evidence.
