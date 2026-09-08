@@ -1,54 +1,54 @@
-# Ars Elemancy
+# Ars Elemancy — dual/quad-element gear provider
 
-Status: `PHASE 2 — CURRENT 1.18.3 EQUIPMENT SPECIALIZATION VERIFIED; NO GLYPH CATALOG PROVEN`
+Status: `PHASE 2T / SOURCE-PINNED 1.18.3 CATALOG COMPLETE / RUNTIME+PACK QA PENDING`
 
-## Runtime identity
+## Installed identity
 
-- Mod id: `ars_elemancy`
-- Current JAR: `ars_elemancy-1.21.1-1.18.3.jar`
-- Runtime version: `1.18.3`
-- Loader/game: NeoForge 1.21.1
-- Correct Phase 2 class: `GEAR / ENCHANT / SUPPORT CONTENT`
-- Granular spell/glyph catalog: `NO / CONDITIONAL`
+- mod id: `ars_elemancy`
+- physical JAR: `ars_elemancy-1.21.1-1.18.3.jar`
+- runtime version: `1.18.3`
+- physical SHA-1: `f7e01437c86fc74e2abb2ad93554dc20c30b214b`
+- source checkpoint: `Lyrellion/Ars-Elemancy@dfb18286106aca1ca39a9b0053d64a1ef5041751`
+- physical host providers: Ars Nouveau `5.13.1`, Ars Elemental `0.7.10.1`
 
-The PR #62 baseline registry classified Ars Elemancy as `ARS GLYPH / SYSTEM PROVIDER`. Current public 1.18.3 evidence instead describes an Ars Elemental extension centered on dual- and quad-element armor/foci and supporting presentation/progression.
+The source checkpoint itself declares `mod_version=1.18.3`; matching version numbers do not prove the installed JAR was built byte-for-byte from that exact commit.
 
-## Verified equipment specializations
+## Correct provider class
 
-The current public project material names these elemental specializations:
+`GEAR / ELEMENTAL SPECIALIZATION / ARS ELEMENTAL COMPAT`
 
-- Cindermancer
-- Lavamancer
-- Miremancer
-- Siltmancer
-- Tempestmancer
-- Vapormancer
-- Elemancer — all-four-elements equipment/set identity
+Ars Elemancy does **not** register a glyph family or a second casting engine. `registerGlyphs()` and `registerPerks()` are empty at the exact checkpoint.
 
-These are equipment/focus identities. Their existence does not imply a distinct spell/glyph registry owned by Ars Elemancy.
+It instead provides seven equipment identities:
 
-## Current 1.18.3 notes
+| Identity | School contract |
+|---|---|
+| Tempest | Air + Water |
+| Cinder | Air + Fire |
+| Silt | Air + Earth |
+| Mire | Earth + Water |
+| Vapor | Fire + Water |
+| Lava | Fire + Earth |
+| Elemancer | Ars `ELEMENTAL` / all-element identity |
 
-Public 1.18.3 material also documents:
+## Exact owned content
 
-- improved/higher thread-slot behavior when the compatible All the Arcanist Gear environment is present;
-- Starbuncle reskin behavior through naming;
-- a known presentation issue around quad-element armor animations.
+- 105 item registrations;
+- 84 armor items = 21 four-piece sets;
+- 7 foci;
+- 7 essences;
+- 7 bangles;
+- 0 provider-owned blocks found;
+- 33 ArmorMaterial registrations;
+- 3 new Ars PerkSlot values: 4, 5 and 6;
+- 1 local RecipeType + 1 local RecipeSerializer registration named `armor_upgrade`;
+- 1 creative tab;
+- 0 custom network payloads registered.
 
-Those are gear/compat/presentation surfaces, not evidence for new glyph mechanics.
+See `REGISTRIES.md`, `EQUIPMENT-CATALOG.md`, `ACQUISITION.md`, `FOCI.md`, `BANGLES.md`, `ARMOR.md`, `CONFIG-COMPAT.md` and `TECHNICAL-AUDIT.md`.
 
-## Deduplication / authority
+## Authority
 
-Ars Elemancy is relevant to Phase 2 because it can alter how an elemental build is equipped and represented. It must not be counted as an independent spell provider when evaluating whether Black Arcana has a mechanical gap.
+Ars Nouveau owns spell grammar, mana, perk registry and spell execution. Ars Elemental/Sauce own the elemental attribute and elemental-equipment contracts used here. Ars Elemancy owns its fused equipment identities and their direct item behavior. Black Arcana does not replay mana discounts, focus amplification, environmental Curio effects, bangle attributes, armor attributes or elemental resistance handling.
 
-- Ars Elemental/Ars Nouveau remain authority for the underlying elemental spell/glyph system.
-- Equipment bonuses must not be counted twice through both host and addon paths.
-- A Black Arcana school is not novel merely because it combines multiple elemental affinities into a named armor identity.
-- No glyph IDs, spell costs or cast semantics are inferred from the equipment names.
-
-## Provenance / confidence
-
-- Presence/version: current 2026-09-06 modlist — HIGH.
-- Specialization names and 1.18.3 feature notes: current public Ars Elemancy project/release material — HIGH at feature level.
-- Separate glyph inventory: not proven in the current public material used for this pass.
-- No Java bytecode was decompiled.
+No Black Arcana runtime Stage or adapter is promoted by this source catalog.
