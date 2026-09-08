@@ -25,7 +25,8 @@ Subplans:
 - [`07-presentation-data-contracts.md`](07-presentation-data-contracts.md) — audited server/client presentation authority, current synchronized-data coverage and the exact contract gates for cooldown, cost, charges, channels and timers;
 - [`08-visual-language-state-semantics.md`](08-visual-language-state-semantics.md) — cross-surface semantic vocabulary for selection, forecast, denial, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
 - [`09-keyboard-focus-navigation.md`](09-keyboard-focus-navigation.md) — keyboard-only focus/navigation semantics for radial and loadout screens while preserving existing mouse behavior, server authority and current keybinding contracts;
-- [`10-loadout-editor-information-architecture.md`](10-loadout-editor-information-architecture.md) — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation evidence limits and the metadata/protocol gates for richer editor feedback.
+- [`10-loadout-editor-information-architecture.md`](10-loadout-editor-information-architecture.md) — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation evidence limits and the metadata/protocol gates for richer editor feedback;
+- [`11-contextual-feedback-orchestration.md`](11-contextual-feedback-orchestration.md) — bounded arbitration, priority, supersession, correlation and timing across selection context, server-authored forecasts and authoritative cast results.
 
 The master plan prevails for Stage 05 planning structure; `plans/DECISIONS.md` prevails for architecture/authority contracts; current production code/tests prevail for what is actually implemented; the latest physical modlist prevails for installed coexistence surfaces and versions.
 
@@ -98,6 +99,7 @@ Planned refinements include, subject to the detailed gates in each subplan:
 - keyboard-only radial and loadout-screen navigation without adding another gameplay cast path;
 - semantic non-color-only state cues;
 - one cross-surface semantic vocabulary so selection, forecast, warning, hard block, authoritative denial, unavailable state and presentation fallback never drift into contradictory meanings;
+- bounded feedback arbitration so current selection, forecast and authoritative result cannot be visually misattributed when their timing overlaps;
 - systematic reduced-motion/reduced-flash/particle consumption by future effects;
 - controller integration only if a real compatible provider enters the modlist/API surface;
 - direct current-pack coexistence testing with external casting/actionbar/combat surfaces before adding compatibility code.
@@ -111,6 +113,8 @@ None of those bullet points is claimed as implemented merely because it is plann
 `09-keyboard-focus-navigation.md` converts the existing keyboard-accessibility goal into an explicit screen-navigation contract. The current radial can page by keyboard but cannot focus/select wedges without a mouse, while the current loadout editor can apply/clear/page but cannot focus/toggle rows without a mouse. The plan adds no runtime itself: it specifies deterministic client-local focus, preserves existing Enter/Delete/page semantics, proposes screen-local traversal rather than new global default mappings, and requires keyboard activation to reuse the same existing selection/draft operations.
 
 `10-loadout-editor-information-architecture.md` freezes the next editor layer. It records that the server loadout is a dense ordered list rather than sixteen sparse cells, proves that populated-spell reordering can already travel through the current ordered full-snapshot protocol, limits search to real synchronized display-name/id data, keeps provider/domain/school filtering fail-closed without metadata, and records that the current snapshot reply cannot prove an explicit acceptance/rejection reason. Rich apply-result feedback therefore remains gated behind a future bounded server-authored result contract.
+
+`11-contextual-feedback-orchestration.md` freezes the transient-feedback arbitration layer. Selection context, advisory forecast and authoritative cast result remain independent bounded channels; an authoritative result outranks contradictory advisory state, but `CastResultPayload` currently carries `castId/status/code/detail` without spell or slot identity. The HUD must therefore never attribute a received result to the current selection by inference. A future bounded client-local `castId -> attempted spell/slot` context may improve presentation without gaining gameplay authority; unknown/unmatched results remain safely displayable without spell attribution. The current low-clutter model remains latest-received-result wins rather than an unbounded notification history.
 
 ## Automated evidence
 
@@ -130,7 +134,7 @@ It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/ev
 
 `06-modpack-coexistence.md` adds the real-pack coexistence planning layer. Its scenarios become blocking only when they reveal a required input/readability/authority failure; cosmetic unification or unsupported optional bridges do not automatically block Stage 05.
 
-`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md` and `10-loadout-editor-information-architecture.md` are forward-looking authority/meaning/accessibility/editor gates for future presentation refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
+`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md` and `11-contextual-feedback-orchestration.md` are forward-looking authority/meaning/accessibility/editor/feedback gates for future presentation refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
 
 Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
 
