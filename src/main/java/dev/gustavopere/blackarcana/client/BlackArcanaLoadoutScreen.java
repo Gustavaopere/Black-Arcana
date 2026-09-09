@@ -9,11 +9,13 @@ import dev.gustavopere.blackarcana.network.SpellPresentationPayload;
 import dev.gustavopere.blackarcana.network.neoforge.LoadoutNetworkBridge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,8 +26,12 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
     private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private final List<ArcanaSpellId> available;
+    private final Map<ArcanaSpellId, String> searchDisplayNames;
     private final Set<ArcanaSpellId> accepted;
     private final LoadoutDraft draft;
+    private List<ArcanaSpellId> filteredAvailable;
+    private String searchQuery = "";
+    private EditBox searchBox;
     private int page;
     private int focusedIndex = -1;
     private KeyboardFocusNavigation.InputModality inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
@@ -40,6 +46,12 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         available = presentation.keySet().stream()
                 .sorted(Comparator.comparing(ArcanaSpellId::canonical))
                 .toList();
+        Map<ArcanaSpellId, String> resolvedDisplayNames = new HashMap<>();
+        presentation.forEach((spell, entry) -> resolvedDisplayNames.put(
+                spell,
+                Component.translatable(entry.translationKey()).getString()));
+        searchDisplayNames = Map.copyOf(resolvedDisplayNames);
+        filteredAvailable = available;
         List<ArcanaSpellId> acceptedLoadout = ClientArcanaSyncState.loadoutSnapshot();
         accepted = Set.copyOf(acceptedLoadout);
         draft = new LoadoutDraft(acceptedLoadout);
@@ -56,28 +68,41 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     protected void init() {
         super.init();
         LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
-        if (available.isEmpty()) {
+        searchBox = new EditBox(
+                font,
+                layout.left(),
+                layout.searchY(),
+                layout.panelWidth(),
+                layout.searchHeight(),
+                Component.translatable("screen.black_arcana.loadout.search"));
+        searchBox.setHint(Component.translatable("screen.black_arcana.loadout.search"));
+        searchBox.setMaxLength(96);
+        searchBox.setValue(searchQuery);
+        searchBox.setResponder(this::onSearchChanged);
+        addRenderableWidget(searchBox);
+
+        if (filteredAvailable.isEmpty()) {
             page = 0;
             focusedIndex = -1;
             return;
         }
 
-        if (focusedIndex >= 0 && focusedIndex < available.size()) {
-            page = layout.clampPage(available.size(), focusedIndex / layout.rowsPerPage());
+        if (focusedIndex >= 0 && focusedIndex < filteredAvailable.size()) {
+            page = layout.clampPage(filteredAvailable.size(), focusedIndex / layout.rowsPerPage());
             return;
         }
 
-        page = layout.clampPage(available.size(), page);
+        page = layout.clampPage(filteredAvailable.size(), page);
         int preferred = firstVisibleAcceptedIndex(layout);
         focusedIndex = KeyboardFocusNavigation.loadoutInitialFocus(
-                available.size(), page, layout.rowsPerPage(), preferred);
+                filteredAvailable.size(), page, layout.rowsPerPage(), preferred);
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         graphics.fill(0, 0, width, height, 0x77000000);
         LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
-        page = layout.clampPage(available.size(), page);
+        page = layout.clampPage(filteredAvailable.size(), page);
         int left = layout.left();
         int top = layout.top();
         int panelWidth = layout.panelWidth();
@@ -85,17 +110,17 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         int rowHeight = layout.rowHeight();
         List<ArcanaSpellId> draftSnapshot = draft.snapshot();
 
-        graphics.fill(left - 8, top - 24, left + panelWidth + 8,
+        graphics.fill(left - 8, layout.panelTop(), left + panelWidth + 8,
                 top + rowsPerPage * rowHeight + 48, 0xE0100C14);
-        graphics.drawCenteredString(font, title, width / 2, top - 16, 0xFFF0E4F0);
+        graphics.drawCenteredString(font, title, width / 2, layout.titleY(), 0xFFF0E4F0);
 
         Component pointerTooltip = null;
         int hoveredIndex = -1;
         int start = page * rowsPerPage;
-        int end = Math.min(available.size(), start + rowsPerPage);
+        int end = Math.min(filteredAvailable.size(), start + rowsPerPage);
         int textOffsetY = Math.max(2, (rowHeight - font.lineHeight) / 2);
         for (int index = start; index < end; index++) {
-            ArcanaSpellId spell = available.get(index);
+            ArcanaSpellId spell = filteredAvailable.get(index);
             int row = index - start;
             int y = top + row * rowHeight;
             boolean chosen = draft.contains(spell);
@@ -130,7 +155,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         }
         updatePointerModality(mouseX, mouseY, hoveredIndex >= 0);
 
-        int pages = layout.pageCount(available.size());
+        int pages = layout.pageCount(filteredAvailable.size());
         graphics.drawCenteredString(font,
                 Component.translatable("screen.black_arcana.loadout.page", page + 1, pages),
                 width / 2,
@@ -148,7 +173,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         int tooltipY = mouseY;
         if (inputModality == KeyboardFocusNavigation.InputModality.KEYBOARD
                 && focusedIndex >= start && focusedIndex < end) {
-            tooltip = hazardTooltip(hazards.get(available.get(focusedIndex))).orElse(null);
+            tooltip = hazardTooltip(hazards.get(filteredAvailable.get(focusedIndex))).orElse(null);
             tooltipX = left + panelWidth;
             tooltipY = top + (focusedIndex - start) * rowHeight + rowHeight / 2;
         }
@@ -161,7 +186,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
             LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
-            page = layout.clampPage(available.size(), page);
+            page = layout.clampPage(filteredAvailable.size(), page);
             int left = layout.left();
             int top = layout.top();
             int panelWidth = layout.panelWidth();
@@ -170,9 +195,13 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             if (mouseX >= left && mouseX <= left + panelWidth && mouseY >= top) {
                 int row = (int) ((mouseY - top) / rowHeight);
                 int index = page * rowsPerPage + row;
-                if (row >= 0 && row < rowsPerPage && index < available.size()) {
+                if (row >= 0 && row < rowsPerPage && index < filteredAvailable.size()) {
                     inputModality = KeyboardFocusNavigation.InputModality.POINTER;
-                    draft.toggle(available.get(index));
+                    if (searchBox != null && searchBox.isFocused()) {
+                        searchBox.setFocused(false);
+                        setFocused(null);
+                    }
+                    draft.toggle(filteredAvailable.get(index));
                     return true;
                 }
             }
@@ -187,6 +216,21 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             apply();
             return true;
         }
+        if (keyCode == GLFW.GLFW_KEY_TAB) {
+            inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
+            if (searchBox == null) return false;
+            if (searchBox.isFocused()) {
+                searchBox.setFocused(false);
+                setFocused(null);
+            } else {
+                setFocused(searchBox);
+                searchBox.setFocused(true);
+            }
+            return true;
+        }
+        if (searchBox != null && searchBox.isFocused()) {
+            return super.keyPressed(keyCode, scanCode, modifiers);
+        }
         if (keyCode == GLFW.GLFW_KEY_BACKSPACE || keyCode == GLFW.GLFW_KEY_DELETE) {
             inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
             draft.clear();
@@ -199,22 +243,22 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         }
 
         LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
-        page = layout.clampPage(available.size(), page);
+        page = layout.clampPage(filteredAvailable.size(), page);
         if (keyCode == GLFW.GLFW_KEY_UP) {
             inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
             focusedIndex = KeyboardFocusNavigation.loadoutMoveRow(
-                    available.size(), page, layout.rowsPerPage(), focusedIndex, -1);
-            return focusedIndex >= 0 || !available.isEmpty();
+                    filteredAvailable.size(), page, layout.rowsPerPage(), focusedIndex, -1);
+            return focusedIndex >= 0 || !filteredAvailable.isEmpty();
         }
         if (keyCode == GLFW.GLFW_KEY_DOWN) {
             inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
             focusedIndex = KeyboardFocusNavigation.loadoutMoveRow(
-                    available.size(), page, layout.rowsPerPage(), focusedIndex, 1);
-            return focusedIndex >= 0 || !available.isEmpty();
+                    filteredAvailable.size(), page, layout.rowsPerPage(), focusedIndex, 1);
+            return focusedIndex >= 0 || !filteredAvailable.isEmpty();
         }
         if (keyCode == GLFW.GLFW_KEY_SPACE) {
             inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
-            return toggleFocusedDraft(focusedIndex, available, draft);
+            return toggleFocusedDraft(focusedIndex, filteredAvailable, draft);
         }
         if (keyCode == GLFW.GLFW_KEY_LEFT || keyCode == GLFW.GLFW_KEY_PAGE_UP) {
             changePage(layout, -1);
@@ -237,6 +281,16 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 ArcanaProtocol.VERSION,
                 draft.snapshot().stream().map(ArcanaSpellId::canonical).toList()));
         onClose();
+    }
+
+    private void onSearchChanged(String query) {
+        searchQuery = query;
+        filteredAvailable = LoadoutCatalogSearch.filter(available, searchDisplayNames, query);
+        LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
+        page = 0;
+        int preferred = firstVisibleAcceptedIndex(layout);
+        focusedIndex = KeyboardFocusNavigation.loadoutInitialFocus(
+                filteredAvailable.size(), page, layout.rowsPerPage(), preferred);
     }
 
     static boolean toggleFocusedDraft(
@@ -279,18 +333,18 @@ public final class BlackArcanaLoadoutScreen extends Screen {
 
     private void changePage(LoadoutLayout layout, int direction) {
         inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
-        int destination = layout.clampPage(available.size(), page + direction);
+        int destination = layout.clampPage(filteredAvailable.size(), page + direction);
         if (destination == page) return;
         focusedIndex = KeyboardFocusNavigation.loadoutFocusAfterPageChange(
-                available.size(), page, destination, layout.rowsPerPage(), focusedIndex);
+                filteredAvailable.size(), page, destination, layout.rowsPerPage(), focusedIndex);
         page = destination;
     }
 
     private int firstVisibleAcceptedIndex(LoadoutLayout layout) {
         int start = page * layout.rowsPerPage();
-        int end = Math.min(available.size(), start + layout.rowsPerPage());
+        int end = Math.min(filteredAvailable.size(), start + layout.rowsPerPage());
         for (int index = start; index < end; index++) {
-            if (accepted.contains(available.get(index))) return index;
+            if (accepted.contains(filteredAvailable.get(index))) return index;
         }
         return -1;
     }
