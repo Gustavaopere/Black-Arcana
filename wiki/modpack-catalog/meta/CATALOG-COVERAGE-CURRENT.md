@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AN revision: 42/100 = 42%.**
+**Coverage represented by this Phase 2AO revision: 43/100 = 43%.**
 
-Phase 2AN was branched from canonical `main@192f5d3c109189a9fee5fb3fc247bfbd75a93b68`, where Phase 2AM / PR #147 made component #41 canonical and coverage reached **41/100 = 41%**. Component #42 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AN branch/PR, canonical coverage remains **41/100 = 41%**.
+Phase 2AO was branched from canonical `main@994d2983f0ec54fd54455a14abad473ebaea86bc`, where Phase 2AN / PR #149 made component #42 canonical and coverage reached **42/100 = 42%**. Component #43 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AO branch/PR, canonical coverage remains **42/100 = 42%**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -159,9 +159,9 @@ No exact public source for fix 1.0.2 was located. Exact mixin classes/counts/tar
 
 This point is awarded for closing the **compatibility component's identity/authority/deduplication surface at the publisher evidence ceiling**, not for claiming source-internal implementation closure.
 
-## Phase 2AN — Apothic Attributes component #42 candidate
+## Phase 2AN — Apothic Attributes component #42, canonical
 
-Phase 2AN closes `apothic_attributes` at the exact source-version evidence ceiling as a combat/attribute/effect support provider:
+Phase 2AN / PR #149 is canonical at merge SHA `994d2983f0ec54fd54455a14abad473ebaea86bc` and closed `apothic_attributes` at the exact source-version evidence ceiling as a combat/attribute/effect support provider:
 
 - physical artifact `ApothicAttributes-1.21.1-2.10.1.jar`, SHA-1 `6a6b84d09801621df5cc2c8a68f35bd93a6cda0f`;
 - exact official source pin `Shadows-of-Fire/Apothic-Attributes@686361b2c7b0e76bf4158890bb8a2e42ef805622`;
@@ -177,6 +177,29 @@ Phase 2AN closes `apothic_attributes` at the exact source-version evidence ceili
 Apothic owns its generic combat math, cooldown subsystem and modifier bridge. Black Arcana retains canonical cast/cost/target/effect/cooldown authority, Corruption, Strain, Arcane Danger, Backlash no-proc semantics and WorldEffectPolicy. `apothic_attributes:cooldown_reduction` does not automatically become a BA cooldown modifier, and BA must not route Backlash into Apothic offensive proc chains.
 
 Source↔physical-JAR byte reproducibility and full-modpack combat-provider interaction remain QA/fail-closed rather than guessed. Root source code is MIT, assets are All Rights Reserved, and `StackAttributeModifiersEvent.java` carries a file-level Forge Development LLC / SPDX LGPL-2.1-only header; this catalog performs read-only inspection only.
+
+## Phase 2AO — Soul Fire'd component #43 candidate
+
+Phase 2AO closes `soul_fire_d` 6.1.0 at the exact physical/publisher/source evidence ceiling as a Prometheus-backed Soul Fire content provider:
+
+- physical artifact `soul-fire-d-neoforge-1.21-6.1.0.jar`, SHA-1 `877002a5aa386f9011ebc4eb3360a7647ac359d9`;
+- exact CurseForge project/file `662413 / 7364962`, release 2025-12-22 for NeoForge 1.21/1.21.1;
+- exact official source branch `Crystal-Nest/soul-fire-d:1.21@0cc7a03b950e74742eb75f51642cc7a0190c7127` declares version 6.1.0, Java 21, Cobweb 1.4.0 and Prometheus 1.2.5;
+- physical pack matches Cobweb 1.4.0 and Prometheus 1.2.5 exactly;
+- since 6.0.0 the generic Fire API moved to Prometheus; exact physical Prometheus 1.2.5 source pin `Crystal-Nest/prometheus:1.21@3edbe979b3a383b526f38daeba4eb35d18283a9d` confirms the consumed framework boundary;
+- **0 standalone spells, 0 glyphs, 0 rituals and 0 provider mana/cast resource**;
+- both exact common and NeoForge mixin manifests contain zero mixins;
+- one Soul Fire definition supplied through Prometheus: `minecraft:soul`, light 10, damage value 2, vanilla Soul Fire flame particle;
+- one associated `minecraft:soul_fire_charge` resource/item/recipe family, with exact recipe output 16;
+- two exact enchantments: `minecraft:soul_fire_aspect` and `minecraft:soul_flame`, both delegating ignition to `prometheus:ignite` with fire type `soul`;
+- one provider-owned NeoForge GLM serializer, `soul_fire_d:chest_loot_modifier`;
+- one bundled Bastion modifier with independent 5% level-1 enchanted-book additions for each enchantment.
+
+Prometheus owns the generic fire framework/API; Soul Fire'd owns Soul-specific definitions/content/enchantments/acquisition. Black Arcana retains its canonical magic/hazard/world-safety runtime and must not treat provider fire/enchantment causality as a second cast pipeline or bypass `WorldEffectPolicy`.
+
+License metadata is intentionally unresolved for reuse: exact source metadata/root text are GPL-3.0-or-later/GPLv3, while publisher surfaces label the distributed project Custom License / Crystal Nest Community License v1. Source inspection is read-only and no code/assets are copied.
+
+The point is awarded because the exact 6.1.0 component identity, content surface, authority migration and deduplication boundary are closed without claiming source/JAR byte reproducibility or full-pack runtime interoperability.
 
 ## Partial providers still receive zero points
 
