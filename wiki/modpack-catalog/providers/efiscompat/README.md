@@ -50,7 +50,7 @@ At the exact 3.1.0 source revision:
 - 12 required mixins total:
   - 6 client mixins;
   - 6 common mixins;
-- 5 common config values;
+- 6 common config values;
 - 1 JSON reload listener rooted at `spell_animations`;
 - 1 nine-field animation-set schema for chant/cast/continuous + left/right staff variants;
 - built-in data-driven mappings for Iron's plus selected addon spells, with a default fallback mapping;
@@ -85,7 +85,7 @@ The physical pack currently has:
 - ESS Requiem `0.1.7`;
 - T.O Magic n' Extras / Traveloptics `4.4.0.1-1.21.1`;
 - Ace's Spell Utils `1.2.7.2-1.21.1`;
-- Player Animator `2.0.4+1.21.1` present both as top-level and jarjar metadata in the current inventory.
+- Player Animator `2.0.4+1.21.1` present in the current inventory.
 
 The declared dependency ranges are satisfied by the physical host versions, but that is not proof that every required mixin target and event-order interaction remains binary-compatible. Full-modpack runtime QA therefore remains fail-closed.
 
@@ -133,7 +133,7 @@ Exact common config values:
 - `EnableSkillCooldown` — default `true`;
 - `EnableDodgeCancelling` — default `true`.
 
-The Java class exposes five `ConfigValue` fields after grouping the two hide booleans and three casting-interaction controls plus the staff list; semantically the TOML surface contains the six keys above. Catalog consumers should preserve the actual keys rather than normalize them into Black Arcana settings.
+The Java class exposes six `ConfigValue` fields matching the six TOML keys above. Catalog consumers should preserve the actual keys rather than normalize them into Black Arcana settings.
 
 ## Black Arcana authority
 
