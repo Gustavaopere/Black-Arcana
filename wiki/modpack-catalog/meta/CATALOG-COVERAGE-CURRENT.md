@@ -93,7 +93,7 @@ Phase 2AJ / PR #143 is canonical at merge SHA `83a5cbf95e2e2eeb8c4e5e161aa2eb590
 - 27 unconditional `example_*` item registrations classified as example/support registry objects, not standalone spells;
 - 8 optional protocol `4.0.0` S2C visual payloads;
 - 2 required mixins and 5 common config values;
-- reusable entity/boss/item/summon/domain/VFX API plus provider-owned event/helper boundaries and host-version mismatch against the physical pack.
+- reusable entity/boss/item/summon/domain/VFX API plus provider-owned event runtime for attribute/proc helpers.
 
 Source targets NeoForge 21.1.230 / Iron's 3.11.0 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3. That remains a runtime integration QA boundary, not a reason to invent or withhold semantic registry identities. Source↔physical-JAR byte equality is not asserted.
 
