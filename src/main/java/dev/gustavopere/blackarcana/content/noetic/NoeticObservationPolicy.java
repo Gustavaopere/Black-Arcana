@@ -12,6 +12,17 @@ public final class NoeticObservationPolicy {
         Objects.requireNonNull(kind, "kind");
         Objects.requireNonNull(facts, "facts");
 
+        /*
+         * Astral Severance does not observe an arbitrary LivingEntity. It has a dedicated server-owned
+         * projection identity/lifecycle, so the generic observation route must reject it before target facts
+         * can accidentally grant authority to a borrowed entity identity.
+         */
+        if (kind == NoeticObservationKind.ASTRAL_SEVERANCE) {
+            return ArcanaDecision.deny(
+                    "noetic_astral_requires_projection_lifecycle",
+                    "Astral Severance requires the dedicated server-owned projection lifecycle");
+        }
+
         if (!facts.targetLoaded()) {
             return ArcanaDecision.deny("noetic_target_unloaded", "Noetic observation never force-loads an unavailable target");
         }
@@ -40,7 +51,7 @@ public final class NoeticObservationPolicy {
             case OCCULT_APPRAISAL -> facts.lineOfSight()
                     ? ArcanaDecision.allow()
                     : ArcanaDecision.deny("noetic_appraisal_los", "Occult Appraisal requires live line of sight");
-            case ASTRAL_SEVERANCE -> ArcanaDecision.allow();
+            case ASTRAL_SEVERANCE -> throw new IllegalStateException("Astral Severance must use its dedicated projection lifecycle");
         };
     }
 }
