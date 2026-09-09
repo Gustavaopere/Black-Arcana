@@ -2,13 +2,16 @@
 
 ## State
 
-`IMPLEMENTED IN PR #157 / AUTOMATED GATES GREEN / REAL-CLIENT VALIDATION DEFERRED`
+`MERGED / AUTOMATED GATES GREEN / REAL-CLIENT VALIDATION DEFERRED`
 
 This document records the implemented Stage 05 keyboard-only navigation and focus semantics inside Black Arcana's existing client screens.
 
 Planning baseline: `main@2df7cdedd0a73b5aed87ca9709699e139355fc84`.
 Implementation branch baseline: `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`.
 Implementation PR: **#157 — `feat: implement Stage 05 keyboard focus navigation`**.
+Canonical runtime merge: `29a0099e899e03d80bf904c2d5ead72f40421fe8`.
+Exact-SHA post-merge workflow: `34405514309` — GREEN through JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke and canonical QA artifact publication.
+Canonical QA artifact: `black-arcana-29a0099e899e03d80bf904c2d5ead72f40421fe8`, artifact ID `10125267266`, SHA-256 `de2da7faf18971c9f6e06b7b5896b0390c03c3a9b058b549f7b72eb6d5ec6030`.
 
 The implementation is deliberately client-local. It adds no gameplay-authoritative packet, server focus state, provider hook, persistence channel, second cast path or new global key mapping. Real-client accessibility/coexistence acceptance remains deferred and must not be inferred from automated CI.
 
@@ -606,11 +609,13 @@ Covered contracts include:
 - loadout page reconciliation;
 - empty-state safety.
 
-### 19.2 Screen-integration RED → GREEN
+### 19.2 Screen integration and promotion
 
 - RED commit `9032aaae705cb426e59f056a1293a01c81a22dca`: screen integration/wiring contracts were added before radial/loadout production wiring; CI failed in `Unit tests` as expected.
 - GREEN implementation head `8fcc90fc4b5e5b82519d63c5a1d2a93b543820da`: full CI pipeline passed after radial/loadout integration.
 - reviewed semantic/test head `3e560b202a0fd35630fd366293d35c7ad03ca31e`: workflow `34403555530` passed JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
+- final reconciled PR head `4f451a67d471f9373ff64050f5284a66e0869fd1`: both push workflow `34405021764` and PR workflow `34405028047` passed the complete pre-merge gate.
+- canonical merge `29a0099e899e03d80bf904c2d5ead72f40421fe8`: exact-SHA post-merge workflow `34405514309` passed the complete pipeline and published the canonical QA artifact recorded above.
 
 Additional regression coverage verifies:
 
@@ -628,7 +633,7 @@ Automated tests are implementation evidence only. They do not convert Section 20
 
 Automated focus tests are insufficient for physical input acceptance.
 
-After merge, directly test:
+Directly test:
 
 ### Radial
 
@@ -684,7 +689,7 @@ All rows remain `PENDING` until directly observed. CI does not make them PASS.
 
 ---
 
-## 21. Acceptance failures that block merge/release acceptance
+## 21. Acceptance failures that block release acceptance
 
 05.09 must not be accepted with:
 
@@ -729,7 +734,7 @@ Do not implement all of them merely because they are listed.
 
 ## 23. Relationship to Stage 05 completion
 
-05.09 is now an implemented Stage 05 follow-up hardening change, but it does **not** change the parent Stage 05 validation state.
+05.09 is an implemented and merged Stage 05 follow-up hardening change, but it does **not** change the parent Stage 05 validation state.
 
 Current parent state remains:
 
@@ -737,9 +742,9 @@ Current parent state remains:
 
 Reason:
 
-- deterministic keyboard focus/navigation behavior is implemented and automated gates are green on reviewed code heads;
+- deterministic keyboard focus/navigation behavior is implemented, merged and automated gates are green on both the final PR head and exact merge SHA;
 - the Stage 05 real-client visual/input matrix remains genuinely unexecuted;
-- the new physical-input/accessibility/coexistence rows in Section 20 are also unexecuted.
+- the physical-input/accessibility/coexistence rows in Section 20 are also unexecuted.
 
 The current manual matrix and real-client runbook remain the authority for actual closeout PASS/BLOCKED status.
 
@@ -768,9 +773,9 @@ The current manual matrix and real-client runbook remain the authority for actua
 
 ---
 
-## 25. Implementation exit criteria
+## 25. Implementation promotion evidence
 
-The implementation portion of 05.09 is ready for promotion when all of the following hold on the final reconciled PR HEAD:
+The implementation portion of 05.09 has satisfied its deterministic promotion criteria:
 
 - current mouse/keyboard behavior is recorded accurately;
 - radial keyboard focus has deterministic initialization/navigation/activation semantics;
@@ -785,8 +790,9 @@ The implementation portion of 05.09 is ready for promotion when all of the follo
 - stale/resize/session focus behavior is bounded;
 - performance remains bounded/client-local;
 - RED→GREEN evidence exists for deterministic behavior and screen wiring;
-- final reconciled PR HEAD passes the complete CI pipeline;
-- PR review has no unresolved blocking findings;
+- final reconciled PR HEAD passed the complete CI pipeline;
+- PR review had no unresolved blocking findings;
+- exact merge SHA passed the complete post-merge CI pipeline and published the canonical QA artifact;
 - Stage 05 real-client validation state remains unchanged and explicitly deferred.
 
-Even after implementation merge, 05.09 is **not** `VALIDATED / COMPLETE` until the applicable Section 20/manual Stage 05 acceptance rows have direct evidence.
+05.09 is **not** `VALIDATED / COMPLETE` until the applicable Section 20/manual Stage 05 acceptance rows have direct evidence.
