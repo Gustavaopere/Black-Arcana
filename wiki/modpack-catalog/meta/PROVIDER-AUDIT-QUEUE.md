@@ -39,7 +39,7 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `create_enchantment_industry_plus` | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | EXACT PHYSICAL+OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / UNDECLARED CREATE DRAGONS PLUS DATA DEPENDENCY / COMPONENT #44 CANDIDATE / LICENSE-METADATA + BYTE+FULL-PACK QA FAIL-CLOSED |
+| `create_enchantment_industry_plus` | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | EXACT PHYSICAL+OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / CREATE METADATA TABLE MIS-KEYED / UNDECLARED CREATE DRAGONS PLUS DATA DEPENDENCY / COMPONENT #44 CANDIDATE / LICENSE-METADATA + BYTE+FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -50,8 +50,8 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 - Exact source data contains 6 addon recipe JSONs: 2 filling, 1 grinding, 2 mixing and 1 pressing route.
 - Exact source also overlays `create_enchantment_industry:recipes/mixing/ink` with `neoforge:never`, disabling that host recipe rather than adding a seventh processing route.
 - Exact source tree exposes 0 standalone spells, 0 glyphs, 0 rituals, 0 provider mana/cast resource, 0 mixin configs and no provider network/persistence surface observed.
-- Declared dependencies: Create `[6.0.4,6.1.0)`, Create: Enchantment Industry `[2.0.0,)`, NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)`.
-- Physical pack uses Create `6.0.10` and Create: Enchantment Industry `2.5.3b`, satisfying those declared ranges.
+- Addon-keyed metadata declares NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)` and Create: Enchantment Industry `[2.0.0,)`.
+- The source also contains Create range `[6.0.4,6.1.0)` under mis-keyed table `[[dependencies.create_enchantment_industry]]`, not `[[dependencies.create_enchantment_industry_plus]]`; physical Create `6.0.10` satisfies the numeric range, while physical-JAR metadata parity and loader interpretation remain **NÃO VERIFICADO**.
 - Four exact recipe routes reference `create_dragons_plus:black_dye` or `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in metadata. The current pack contains Create: Dragons Plus `1.11.8b`; this is recorded as an undeclared data-level dependency, not converted into a fabricated formal dependency.
 - Publisher-facing documentation describes an Ink Sac drain/recovery path, but the exact 1.1.1 source tree contains no `emptying`/drain recipe. That route remains fail-closed until physical provider/recipe identity is proven.
 - Exact source metadata and Modrinth indicate MIT, CurseForge labels LGPLv3 and repository `LICENSE.txt` is Forge-origin LGPL boilerplate. Reuse remains review-required; inspection is factual/read-only.
@@ -65,7 +65,7 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 - Create Enchantment Industry Plus owns only its `sac` item and recipe/data overlays.
 - Black Arcana retains canonical casting, costs, BA cooldowns/charges, targeting, hazards, Corruption, Strain, Arcane Danger, Backlash causality and `WorldEffectPolicy`.
 - Recipe objects are not spells and do not create a second Black Arcana magic pipeline.
-- RPG Skill Tree receives no processing or magic runtime authority.
+- RPG Skill Tree recebe no processing or magic runtime authority.
 
 ## Phase 2AO — Soul Fire'd 6.1.0 — canonical predecessor
 
