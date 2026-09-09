@@ -17,12 +17,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /** Client-only draft editor. Apply sends intent; the server response remains canonical. */
 public final class BlackArcanaLoadoutScreen extends Screen {
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
     private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private final List<ArcanaSpellId> available;
+    private final Set<ArcanaSpellId> accepted;
     private final LoadoutDraft draft;
     private int page;
 
@@ -33,7 +35,9 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         available = presentation.keySet().stream()
                 .sorted(Comparator.comparing(ArcanaSpellId::canonical))
                 .toList();
-        draft = new LoadoutDraft(ClientArcanaSyncState.loadoutSnapshot());
+        List<ArcanaSpellId> acceptedLoadout = ClientArcanaSyncState.loadoutSnapshot();
+        accepted = Set.copyOf(acceptedLoadout);
+        draft = new LoadoutDraft(acceptedLoadout);
     }
 
     public static void open() {
@@ -67,11 +71,21 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             int row = index - start;
             int y = top + row * rowHeight;
             boolean chosen = draft.contains(spell);
+            CastingUxSemantics.LoadoutMembership membership = CastingUxSemantics.loadoutMembership(
+                    accepted.contains(spell), chosen);
             boolean hovered = mouseX >= left && mouseX <= left + panelWidth
                     && mouseY >= y && mouseY < y + rowHeight - 2;
-            int background = hovered ? 0xDD4E3155 : chosen ? 0xCC33223A : 0xAA1A141E;
+            int background = switch (membership) {
+                case NOT_INCLUDED -> 0xAA1A141E;
+                case ACCEPTED -> 0xCC33223A;
+                case DRAFT_ADDED -> 0xCC423049;
+                case DRAFT_REMOVED -> 0xCC241A28;
+            };
             graphics.fill(left, y, left + panelWidth, y + rowHeight - 2, background);
-            String prefix = chosen ? "[x] " : "[ ] ";
+            if (hovered) {
+                graphics.fill(left, y, left + 2, y + rowHeight - 2, 0xFFF2D0F2);
+            }
+            String prefix = membershipPrefix(membership);
             graphics.drawString(font, prefix + displayName(spell, panelWidth),
                     left + 8, y + textOffsetY, 0xFFFFFFFF, false);
             if (hovered) {
@@ -155,6 +169,15 @@ public final class BlackArcanaLoadoutScreen extends Screen {
 
     static Optional<Component> hazardTooltip(HazardPreflightPayload.Entry entry) {
         return entry == null ? Optional.empty() : Optional.of(BlackArcanaHudLayer.preflightLine(entry));
+    }
+
+    static String membershipPrefix(CastingUxSemantics.LoadoutMembership membership) {
+        return switch (membership) {
+            case NOT_INCLUDED -> "[ ] ";
+            case ACCEPTED -> "[x] ";
+            case DRAFT_ADDED -> "[+] ";
+            case DRAFT_REMOVED -> "[-] ";
+        };
     }
 
     private String displayName(ArcanaSpellId spell, int panelWidth) {

@@ -21,6 +21,7 @@
   "screen.black_arcana.loadout.hint": "%s selected · Enter: apply · Delete: clear · Esc: cancel",
   "hud.black_arcana.selected": "Selected: %s",
   "hud.black_arcana.denied": "Denied: %s",
+  "hud.black_arcana.cast_failed": "Cast failed: %s",
   "hud.black_arcana.cast_success": "Cast accepted",
   "hazard.black_arcana.preflight": "Danger: %s · Arcane Resistance: minimum %s, recommended %s",
   "hazard.black_arcana.preflight.normal": "Danger: %s",

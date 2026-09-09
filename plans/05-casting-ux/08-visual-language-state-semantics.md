@@ -2,11 +2,13 @@
 
 ## State
 
-`PLANNING / NO RUNTIME CHANGE / CROSS-SURFACE UX SEMANTICS`
+`IMPLEMENTED / AUTOMATED GATES GREEN / FINAL CLIENT VALIDATION DEFERRED`
 
-This document defines the canonical visual-language and state-semantics plan for Black Arcana Casting & UX.
+This document defines the canonical visual-language and state-semantics contract for Black Arcana Casting & UX.
 
 Baseline used to author this plan: `main@019eb1723b7a70b9fd888ce44d1eb9b85dfa7b13`.
+
+Implementation baseline: `main@e8b7c4a0b77c2f803423047f5d1442f870d02fc8`. The bounded runtime checkpoint reached branch head `8f7777c68852f829e360f75b62dd7a8d88e59c93`, and Black Arcana CI #2183 (`34305182690`) passed unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke on that exact code head.
 
 Environment authority at this checkpoint:
 
@@ -21,7 +23,19 @@ Environment authority at this checkpoint:
 
 Presence/version is coexistence context only. It does not create a provider API or transfer visual/gameplay authority.
 
-This plan is deliberately presentation-focused. It does **not** add Java classes, packets, registries, assets, shaders, animations, sounds, controller hooks or provider integrations.
+The original planning revision was deliberately presentation-focused and added no runtime. The implementation checkpoint now realizes only the bounded semantic roles already supported by current client/server presentation contracts; it adds no packet schema, gameplay authority, provider bridge, shader, texture, sound, animation or controller integration.
+
+### Implemented checkpoint
+
+The currently-authorized 05.08 core is implemented as follows:
+
+- `CastingUxSemantics` is a pure client-presentation mapping layer for focus, admission/result, hazard and loadout-membership roles. It performs no world query, gameplay admission, resource/cooldown inference or provider call.
+- `BlackArcanaRadialScreen` now derives selected/hovered/composite focus through that semantic layer. Normal cards render redundant non-color markers (`[S]`, `>`, `>[S]`); compact cards use bounded condensed tokens (`S`, `>`, `>S`) so focus and slot identity remain inside the card. Selection still never executes a cast.
+- `BlackArcanaLoadoutScreen` snapshots the synchronized accepted loadout separately from its local draft and distinguishes not-included, accepted, draft-added and draft-removed rows with `[ ]`, `[x]`, `[+]` and `[-]`. Sending an update remains intent only; the client does not claim acceptance from packet emission.
+- `BlackArcanaHudLayer` maps actual `ArcanaCastResult.Status` values into authoritative denial, effect failure and success semantics, with separate player-facing wording. Forecast categories remain distinct from actual cast results. Hazard tier/resistance presentation also consumes the shared semantic mapping.
+- The only new resource content in this checkpoint is localized text for the distinct effect-failure result. No new visual/audio asset or provider-owned material is introduced.
+
+The real-client visual/input matrix remains `PENDING`. Automated success proves deterministic engineering gates only; it does not establish readability, contrast, overlap or other direct-client PASS evidence.
 
 ---
 
@@ -142,6 +156,8 @@ Conceptual states:
 - `CAST_DENIED` — the actual server cast request was denied;
 - `CAST_SUCCEEDED` — the actual server cast request succeeded where success feedback is enabled.
 
+The implemented mapper also preserves `CAST_FAILED` for the existing authoritative `EFFECT_FAILED` result. An effect failure is neither a forecast nor a completed successful cast.
+
 `FORECAST_CLEAR` must not be visually synonymous with `CAST_SUCCEEDED`.
 
 ### 4.3 Temporal readiness state
@@ -219,6 +235,7 @@ Required response:
 | `CLEAR` gate forecast | admission forecast | “no predictable projected gate currently blocks” | “cast guaranteed to succeed” |
 | blocked gate forecast | admission forecast | “this bounded predicted category currently blocks” | “the final cast request already happened” |
 | cast denial | authoritative result | “server denied this exact request” | “generic long-lived spell status” |
+| cast effect failure | authoritative result | “server reported that this request reached an effect failure” | “forecast denial” or “successful effect” |
 | cast success | authoritative result | “server reported success for this request” | “future casts are ready” |
 | non-`NORMAL` static danger tier | hazard | “spell has synchronized danger metadata whose tier is non-normal” | “player will definitely Backlash” |
 | `NORMAL` static danger tier | ordinary/static metadata | “no danger styling is activated from tier alone” | `DANGER_PRESENT` |
@@ -262,12 +279,12 @@ This priority is about what receives scarce visual space. It does not merge stat
 
 ### 6.2 Event vs persistent state
 
-- `CAST_DENIED` and `CAST_SUCCEEDED` are short-lived request-result events.
+- `CAST_DENIED`, `CAST_FAILED` and `CAST_SUCCEEDED` are short-lived request-result events.
 - `SELECTED`, accepted loadout membership and current **non-`NORMAL`** danger metadata are stateful presentation facts; a synchronized `NORMAL` profile does not create a danger state.
 - Forecasts are stateful only while their stale-state identity remains valid.
 - Cooldown/charge/channel/timer presentation, when implemented, follows owner-specific lifecycle rules from 05.07.
 
-A short-lived denial must not permanently recolor the spell as unavailable after the event lifetime ends.
+A short-lived denial or effect failure must not permanently recolor the spell as unavailable after the event lifetime ends.
 
 ### 6.3 Unknown beats guess
 
@@ -316,6 +333,8 @@ Important states should be represented by at least two channels where practical,
 - optional sound.
 
 Color alone is not enough.
+
+The implemented radial/loadout checkpoint applies this directly: focus/selection and accepted/draft membership have textual markers in addition to fill/border differences.
 
 ### 7.3 Decorative intensity is subordinate
 Decorative runes, glows, particles, pulsing borders or animated flourishes may reinforce identity, but they must not obscure:
@@ -386,7 +405,8 @@ Preferred semantic distinctions:
 - warning: “Below recommended” rather than “Unsafe” if the server contract only defines a recommendation;
 - recommendation met: “Recommendation met” rather than “Safe”;
 - unavailable preview: “Unavailable” rather than guessed zero/empty values;
-- authoritative denial: actual bounded server-authored denial detail.
+- authoritative denial: actual bounded server-authored denial detail;
+- authoritative effect failure: failure wording distinct from both denial and success.
 
 ### 10.2 Translation rules
 
@@ -427,16 +447,16 @@ Primary questions:
 
 The editor must not overload rows with live combat readiness unless a later requirement demonstrates that this improves configuration usability.
 
-Planned semantic layers:
+Implemented semantic layers:
 
-- accepted synchronized state;
-- local draft delta;
-- slot position/order;
-- optional danger metadata;
-- optional spell icon;
-- future provider/domain/school filters only from server-authored presentation metadata.
+- accepted synchronized membership snapshot;
+- local draft-added/draft-removed membership delta;
+- pointer emphasis that does not erase membership meaning;
+- existing optional danger tooltip data.
 
-A draft change should look distinct from an authoritative denial/block.
+Still-planned layers include richer slot position/order presentation, optional spell icon presentation and future provider/domain/school filters only after server-authored presentation metadata exists.
+
+A draft change looks distinct from accepted synchronized membership and remains distinct from an authoritative denial/block.
 
 ### 11.2 Radial wheel
 
@@ -457,7 +477,7 @@ Normal-space priority:
 3. concise block/cooldown/warning cue when safely available;
 4. page/slot identity.
 
-Detailed denial text remains better suited to the contextual HUD/result feedback.
+The implemented checkpoint maps selection and pointer hover independently and renders a composite marker when both apply. Detailed denial text remains better suited to the contextual HUD/result feedback.
 
 ### 11.3 Contextual HUD
 
@@ -470,11 +490,12 @@ Primary questions:
 The HUD owns the highest-fidelity transient wording for:
 
 - authoritative denial;
+- authoritative effect failure;
 - danger threshold explanation;
 - forecast category;
 - future bounded cooldown/cost/channel/timer detail if those contracts are deliberately approved.
 
-The HUD must remain transient/contextual.
+The implemented checkpoint keeps authoritative denial, effect failure and success as distinct result semantics and does not reinterpret a forecast as an actual cast result. The HUD remains transient/contextual.
 
 ### 11.4 External/provider-hosted invocation surfaces
 
@@ -516,6 +537,8 @@ Motion must not:
 - ignore the reduced-motion preference.
 
 Reduced motion should replace decorative movement with static emphasis where necessary.
+
+The current 05.08 implementation uses no new motion, flash, particle or audio dependency, so reduced-motion/reduced-flash/particle settings do not need a new runtime branch for this checkpoint.
 
 ### 12.2 Flashes
 
@@ -564,7 +587,9 @@ A large source of UI ambiguity is the interval between local intent and server s
 
 ### 13.1 Loadout apply
 
-Current editor behavior closes after sending the update. If a future UX exposes an awaiting-response state, the meanings must remain:
+Current editor behavior closes after sending the update. The implemented membership markers compare the server-synchronized snapshot captured when the screen opens with the local draft; they do not claim that a later submitted update has been accepted.
+
+If a future UX exposes an awaiting-response state, the meanings must remain:
 
 - `DRAFT_ONLY` — local unsent draft;
 - `SUBMITTED / AWAITING AUTHORITATIVE SNAPSHOT` — request sent, no acceptance claim;
@@ -610,7 +635,7 @@ On disconnect/session change:
 4. External UI being visible does not make its state part of Black Arcana's semantic matrix.
 5. Black Arcana denial/danger information must remain readable when external casting/combat UI is present.
 
-Real-client coexistence evidence remains mandatory for required rows; this plan does not convert them to PASS.
+Real-client coexistence evidence remains mandatory for required rows; this implementation does not convert them to PASS.
 
 ---
 
@@ -631,6 +656,8 @@ When space shrinks:
 - use icon/symbol with text fallback;
 - move details to focused/center presentation;
 - do not shrink hit regions below practical usability merely to retain ornament.
+
+Normal radial cards budget the full focus/slot prefix before truncating the spell name and defensively bound the assembled label. Compact radial cards use condensed non-color focus tokens (`S`, `>`, `>S`) plus a hard whole-label width bound, so selected/hover meaning and slot identity remain inside the card instead of overflowing into neighboring wedges.
 
 ### 15.3 HUD
 
@@ -680,6 +707,8 @@ Allowed sources include:
 Do not copy/retrace provider UI textures, icons, spell glyphs, models, sounds or animations merely because they are useful references.
 
 Behavioral/reference study may inform **what information must be readable**, not produce a clone of another mod's protected presentation.
+
+This implementation checkpoint adds no third-party visual/audio asset, so no new third-party asset provenance entry is required by 05.08 itself.
 
 ---
 
@@ -731,37 +760,37 @@ Core Black Arcana keyboard/mouse casting and contextual presentation continue.
 
 ---
 
-## 19. Planned semantic implementation architecture
+## 19. Implemented semantic architecture
 
-This section defines planning boundaries, not concrete classes.
+The bounded core is now implemented by a small client-only semantic mapping layer, `CastingUxSemantics`, which converts already-authorized presentation facts into surface-neutral semantic roles.
 
-When implementation is eventually approved, prefer a small client-only semantic mapping layer that converts already-authorized presentation facts into surface-neutral semantic roles.
+The mapping layer:
 
-The mapping layer should:
+- consumes Black Arcana-owned DTO/snapshot values and client-local selection/draft facts only;
+- does not query world entities/chunks;
+- does not call resource/cost/cooldown admission services as gameplay authority;
+- contains no provider implementation classes;
+- is reused by editor/radial/HUD for the states currently authorized by 05.07;
+- keeps surface geometry/rendering separate from state meaning;
+- remains deterministic and is covered by pure unit tests.
 
-- consume Black Arcana-owned DTO/snapshot values only;
-- not query world entities/chunks;
-- not call resource/cost/cooldown admission services as gameplay authority;
-- not contain provider implementation classes in common code;
-- make the same semantic role reusable by editor/radial/HUD;
-- keep surface geometry/rendering separate from state meaning;
-- remain deterministic enough for pure unit testing.
+No giant universal UI-state packet was introduced. 05.07 authority/lifecycle boundaries remain primary.
 
-Do not create a giant universal UI-state packet merely to simplify rendering. 05.07 authority/lifecycle boundaries remain primary.
+Current structure:
 
-Conceptual structure:
-
-`server-authored/client-local presentation fact -> semantic role(s) -> surface-specific rendering`
+`server-authored/client-local presentation fact -> CastingUxSemantics role(s) -> surface-specific rendering`
 
 Not:
 
 `surface visual guess -> gameplay fact`.
 
+Temporal readiness, richer provider metadata and other states still blocked by 05.07 remain unimplemented rather than guessed.
+
 ---
 
 ## 20. Implementation gate for any 05.08-backed visual change
 
-Before code/assets are written:
+The current checkpoint followed this gate, and future 05.08-backed changes must continue to do so:
 
 1. fetch latest `origin/main` and record SHA;
 2. confirm no concurrent PR owns the same Stage 05 surface;
@@ -777,7 +806,7 @@ Before code/assets are written:
 12. write deterministic RED tests for semantic-state mapping/helpers where applicable;
 13. implement minimum GREEN presentation change;
 14. run dedicated-server/client-classloading safeguards and full CI;
-15. execute affected real-client rows;
+15. execute affected real-client rows before claiming direct visual acceptance;
 16. re-fetch/reconcile latest `main`;
 17. rerun exact-head validation before merge.
 
@@ -785,24 +814,26 @@ Aesthetic preference alone is not permission to add a new gameplay-data contract
 
 ---
 
-## 21. Automated test plan for future implementation
+## 21. Automated coverage and remaining test plan
 
-Where applicable, pure/client-state tests should cover:
+The implementation checkpoint adds:
 
-- selection and hover remain independent;
-- draft-only vs synchronized accepted loadout state;
-- forecast clear does not map to cast success;
-- warning vs hard block are distinct;
-- authoritative denial overrides lower-priority transient presentation without becoming persistent spell state;
-- stale forecast maps to unavailable/static fallback;
-- missing icon maps to art fallback only;
+- `CastingUxSemanticsTest` for focus independence, forecast/result distinction, effect failure, hazard state and accepted-vs-draft membership;
+- `CastingUxSurfaceSemanticsTest` for radial non-color focus markers, loadout membership markers and HUD result-key separation, including regression coverage for focus-prefix width budgeting and compact focus tokens.
+
+The code checkpoint `8f7777c68852f829e360f75b62dd7a8d88e59c93` passed Black Arcana CI #2183 (`34305182690`) through unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. The P2 radial-label regression was reproduced by test-only head `de7b5a98d10d0b71c956709864a18e6644926ab5` in CI #2192 (`34307107427`), which failed because the bounded-label helpers did not yet exist; the minimal production fix then passed the same full deterministic pipeline at head `8b049ad56053c69829abf67e146a722bfd69ae3a` in CI #2196 (`34307398154`).
+
+Future implementation where applicable should additionally cover:
+
+- stale forecast maps to unavailable/static fallback beyond the existing preflight-match regression;
+- missing icon maps to art fallback only when 05.12 is implemented;
 - missing cooldown mapping produces no guessed per-spell cooldown;
 - provider preview unavailable does not generate a fake value;
-- semantic composition for selected + danger + cooldown + hover remains deterministic;
+- semantic composition for future selected + danger + cooldown + focus remains deterministic;
 - feedback-level reductions remove detail without changing semantic truth;
-- reduced-motion/reduced-flash branches preserve non-motion/non-flash cues;
+- reduced-motion/reduced-flash branches preserve non-motion/non-flash cues when such effects exist;
 - long translations keep critical state markers intact;
-- session reset clears transient semantic state.
+- session reset clears any future transient semantic state.
 
 Tests should target pure/state logic rather than pixel-perfect colors unless a later stable render-test framework is deliberately introduced.
 
@@ -810,7 +841,7 @@ Tests should target pure/state logic rather than pixel-perfect colors unless a l
 
 ## 22. Real-client validation plan
 
-Any implemented 05.08 visual refinement must be observed under the canonical Stage 05 matrix where relevant.
+The implemented 05.08 visual refinement must still be observed under the canonical Stage 05 matrix where relevant.
 
 Minimum representative visual checks:
 
@@ -829,26 +860,27 @@ Minimum representative visual checks:
 Observe specifically:
 
 - selected vs hovered distinction;
+- accepted vs local draft delta distinction;
 - warning vs hard block distinction;
-- forecast vs authoritative denial wording;
+- forecast vs authoritative denial/effect-failure wording;
 - missing/unavailable state clarity;
-- text/icon fallback behavior;
+- text/icon fallback behavior where implemented;
 - no essential state carried only by color/motion/particles/audio;
 - no new overlap that makes required denial/danger state unreadable.
 
-Direct real-client observations become evidence only when attached to the exact tested SHA. Planning/CI does not convert rows to PASS.
+Direct real-client observations become evidence only when attached to the exact tested SHA. Planning or automated CI does not convert rows to PASS.
 
 ---
 
 ## 23. Relationship to Stage 05 completion
 
-05.08 is a planning refinement, not a new completion blocker by itself.
+05.08 began as a planning refinement. Its currently-authorized semantic core is now implemented as Stage 05 hardening, but that does not change the global validation state by itself.
 
 The current Stage 05 state remains:
 
 `IMPLEMENTED / FINAL VALIDATION DEFERRED`
 
-A visual-language item becomes mandatory only when:
+A later visual-language item becomes mandatory only when:
 
 - an existing required manual row fails because current semantics are ambiguous/unreadable; or
 - an explicit reviewed decision promotes the refinement to required Stage 05 hardening.
@@ -859,13 +891,13 @@ Otherwise it remains:
 - `OPTIONAL FOLLOW-UP`; or
 - `CARRIED TO STAGE 09`.
 
-The existence of this plan does not require implementing every conceptual icon, animation, badge, cooldown display, channel bar or provider visual integration before Stage 05 can close.
+Implementing the bounded semantic core does not require implementing every conceptual icon, animation, badge, cooldown display, channel bar or provider visual integration before Stage 05 can close.
 
 ---
 
 ## 24. Non-goals
 
-This plan does not authorize:
+This implementation does not authorize:
 
 - new gameplay state;
 - client-authoritative casting;
@@ -881,26 +913,28 @@ This plan does not authorize:
 - speculative controller APIs;
 - world/entity scanning for presentation;
 - copying another mod's protected visual/audio assets;
-- fixed palette/font claims without an implementation/art-review task;
-- declaring visual/manual validation complete from planning or automated CI.
+- declaring visual/manual validation complete from automated CI.
 
 ---
 
-## 25. Exit criteria for this planning task
+## 25. Exit criteria / implementation status
 
-05.08 is planning-complete when:
+The original 05.08 planning criteria are satisfied, and the bounded implementation checkpoint satisfies the deterministic engineering criteria that current contracts support:
 
 - cross-surface state families are explicit;
 - selection/focus is separated from cast legality;
 - forecast is separated from authoritative result;
+- authoritative effect failure is separated from both denial and success;
 - warning is separated from hard block;
 - danger recommendation wording cannot imply safety;
-- temporal UI remains gated by 05.07 contracts;
+- temporal UI remains gated by 05.07 contracts rather than guessed;
 - missing data/art degrades without changing gameplay semantics;
-- editor/radial/HUD/provider-hosted surfaces share one semantic vocabulary while retaining their own geometry/lifecycle;
-- state does not rely exclusively on color/motion/flashes/particles/audio;
-- provider/domain/school visuals require real metadata rather than heuristics;
-- asset provenance/clean-room boundaries are explicit;
-- implementation/test/real-client gates are defined;
+- current editor/radial/HUD surfaces consume one semantic mapping layer while retaining their own geometry/lifecycle;
+- current selected/hovered and accepted/draft cues do not rely exclusively on color;
+- provider/domain/school visuals still require real metadata rather than heuristics;
+- no provider integration or third-party art/audio asset was added;
+- deterministic RED→GREEN tests and full branch CI are present;
 - Stage 05 validation state remains unchanged;
-- no Java/runtime/network/art implementation is included in this planning change.
+- real-client validation remains explicitly deferred and no manual PASS is inferred.
+
+Future semantic states that require missing 05.07 contracts remain fail-closed/unimplemented.

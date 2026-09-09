@@ -21,6 +21,7 @@
   "screen.black_arcana.loadout.hint": "%s selecionados · Enter: aplicar · Delete: limpar · Esc: cancelar",
   "hud.black_arcana.selected": "Selecionado: %s",
   "hud.black_arcana.denied": "Negado: %s",
+  "hud.black_arcana.cast_failed": "Conjuração falhou: %s",
   "hud.black_arcana.cast_success": "Conjuração aceita",
   "hazard.black_arcana.preflight": "Perigo: %s · Resistência Arcana: mínima %s, recomendada %s",
   "hazard.black_arcana.preflight.normal": "Perigo: %s",
