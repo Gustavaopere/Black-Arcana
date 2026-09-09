@@ -145,7 +145,7 @@ The provider owns reconciliation around Iron's casts, not a second spell runtime
 
 Phase 2AM / PR #147 is canonical at merge SHA `192f5d3c109189a9fee5fb3fc247bfbd75a93b68` and closed `reliquified_lenders_cataclysm_new_relics_fix` at the exact physical/publisher evidence ceiling as a bounded Relics 0.10→0.12 compatibility bridge:
 
-- physical artifact `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar`, SHA-1 `9d4710e665ec74af917bb9f5f819154ca9f74ca0`;
+- physical artifact `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar`, SHA-1 `9d4710e665ec74af917bbf5f819154ca9f74ca0`;
 - exact CurseForge project/file `1665965 / 8778365`, release 2026-08-31;
 - publisher environment Client & Server and license All Rights Reserved;
 - original target addon explicitly `Reliquified L_Ender's Cataclysm 0.1.1`;
@@ -212,7 +212,7 @@ Phase 2AP closes `create_enchantment_industry_plus` 1.1.1 at the exact physical/
 - exactly **6 addon recipe JSONs**: two filling, one grinding, two mixing and one pressing route;
 - exactly **1 host-recipe disable overlay** under `create_enchantment_industry:recipes/mixing/ink` using `neoforge:never`;
 - no mixin configuration, provider packet or persistence surface observed in the exact source tree;
-- declared dependencies: Create `[6.0.4,6.1.0)`, Create: Enchantment Industry `[2.0.0,)`, NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)`;
+- addon-keyed metadata declares NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)` and Create: Enchantment Industry `[2.0.0,)`; the source also contains Create range `[6.0.4,6.1.0)` under the mis-keyed table `[[dependencies.create_enchantment_industry]]`, so physical-JAR parity and loader interpretation of that Create block remain fail-closed;
 - four recipe routes directly reference `create_dragons_plus:black_dye` or `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in metadata; the current physical pack contains Create: Dragons Plus 1.11.8b, so this is recorded as an undeclared data-level dependency rather than hidden or replaced;
 - publisher-facing documentation describes an Ink Sac drain/recovery route, but the exact 1.1.1 source tree contains no `emptying`/drain recipe. That path remains fail-closed until its physical provider/recipe identity is proven.
 
