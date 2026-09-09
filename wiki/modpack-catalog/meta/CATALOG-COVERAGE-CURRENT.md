@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AJ revision: 38/100 = 38%.**
+**Coverage represented by this Phase 2AK revision: 39/100 = 39%.**
 
-Canonical `main` immediately before Phase 2AJ is **37/100 = 37%** at `9e2011a46e228fb8e2dd7c9d275c6f43290f6bb8`. Component #38 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AJ branch/PR, canonical coverage remains 37/100.
+Phase 2AK was branched from canonical `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b`, where Phase 2AJ / PR #143 made component #38 canonical and coverage reached **38/100 = 38%**. Component #39 is valid only if this exact revision is reconciled with the latest main, passes CI on that reconciled HEAD and is merged. Repository history, not branch wording alone, determines whether that condition has been satisfied.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -73,29 +73,39 @@ Evidence is strong for exact physical/release identity and public feature/releas
 
 However, the publisher states `over 50 spells` while the public changelog exposes only a subset, and no exact-current publisher source/registry/API or equivalent complete 1.0.8-fix inventory is available through the inspected evidence. Therefore Somake remains **partial** and receives **0** new component points.
 
-## Phase 2AJ — Ace's Spell Utils component #38 candidate
+## Phase 2AJ — Ace's Spell Utils component #38, canonical
 
-Phase 2AJ closes `aces_spell_utils` at the exact source-version evidence ceiling:
+Phase 2AJ / PR #143 is canonical at merge SHA `83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b` and closed `aces_spell_utils` at the exact source-version evidence ceiling:
 
 - physical artifact `aces_spell_utils-1.2.7.2-1.21.1.jar`, SHA-1 `8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca`;
-- exact publisher release project/file `1299492 / 8789930`, 2026-09-02;
-- exact official source-version pin `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`, whose metadata declares `mod_version=1.2.7.2-1.21.1`;
-- **0 standalone provider spell registrations** — no `registerSpell(...)` call / no provider spell-registry registration surface in the exact source;
+- exact official source-version pin `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`;
+- **0 standalone provider spell registrations**;
 - 3 Iron's SchoolTypes (`ritual`, `hydro`, `technomancy`);
-- 19 attributes, including 13 shared runtime attributes and 6 school power/resistance attributes;
-- 3 school damage-type keys;
-- 1 serialized copy-on-death attachment;
-- 1 custom particle type;
-- 14 tag contracts;
-- 8 rarity enum extensions;
-- 27 unconditional `example_*` item registrations classified as example/support registry objects, not standalone spells;
-- 8 optional protocol `4.0.0` S2C visual payloads;
-- 2 required mixins and 5 common config values;
-- reusable entity/boss/item/summon/domain/VFX API plus provider-owned event runtime for attribute/proc helpers.
+- 19 attributes, 3 school damage-type keys, 14 tag contracts and 8 rarity extensions;
+- 1 attachment, 1 particle, 27 registered example/support items, 8 S2C VFX payloads, 2 required mixins and 5 config values;
+- provider-native authority boundaries for Iron's casting/mana/cooldowns and Ace's proc/API runtime.
 
-Source targets NeoForge 21.1.230 / Iron's 3.11.0 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3. That remains a runtime integration QA boundary, not a reason to invent or withhold semantic registry identities. Source↔physical-JAR byte equality is not asserted.
+Source targets NeoForge 21.1.230 / Iron's 3.11.0 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3; source↔physical-JAR byte equality and host runtime parity remain QA/fail-closed rather than guessed.
 
-The point is awarded because this component is an **API/library provider whose complete own registry/runtime surface is closed**, including the exact result that its standalone spell inventory is zero. Consumer-addon spells remain under those addons' namespaces and authority.
+## Phase 2AK — EMF Compat: Iron's Spells component #39 candidate
+
+Phase 2AK closes `emf_compat_iron_spells` as a client presentation compatibility component:
+
+- physical artifact `emf_compat_iron_spells_1.21.1_2.0.0.jar`, SHA-1 `515b545870fce128bbf01a0ccacdd19566ed3b22`;
+- exact official source revision `victorkozhokin/emf-compat@79d730a9d02275b7d721967c75f5f22dc815d9dc`;
+- exact subproject metadata `mod_version=2.0.0`, Java 21, `GNU GPL 3.0`;
+- **0 standalone spells and 0 provider gameplay registry surface**;
+- complete addon package surface: 5 Java classes;
+- exactly 3 required client mixins: `PlayerModelMixin`, `PlayerRendererMixin`, `EMFAnimationPauseHandlerMixin`;
+- 2 provider config booleans;
+- `iron_spells` pose source priority 10;
+- first-person EMF vanilla-model condition while local-player casting under Iron's first-person arm/item settings;
+- client-only hard dependency ranges: Core >=2.0.0, Iron's >=3.15.0, EMF >=3.3.2;
+- physical pack uses Core 2.0.0, Iron's 3.16.3 and EMF 3.3.5.
+
+The component owns visual pose compatibility only. Iron's remains cast/resource/cooldown authority, and Black Arcana must not interpret these client hooks as cast authority or duplicate the Iron's-specific EMF pose adapter.
+
+Byte-for-byte source/JAR equivalence and full-pack rendering QA remain separate; they do not reopen the semantic inventory closure.
 
 ## Partial providers still receive zero points
 
