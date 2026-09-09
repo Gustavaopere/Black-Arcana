@@ -18,11 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AH / PR #140 está canônica em `main@e8b7c4a0b77c2f803423047f5d1442f870d02fc8`;
-- cobertura canônica atual: **37/100 = 37%**;
-- Phase 2AI re-audita `somakespells` sob a regra atual de fechamento;
-- Somake permanece parcial porque o inventário granular atual 1.0.8-fix não está fechado;
-- Phase 2AI produz **0 delta de cobertura**;
+- Phase 2AI / PR #141 está canônica em `main@9e2011a46e228fb8e2dd7c9d275c6f43290f6bb8`;
+- cobertura canônica antes da Phase 2AJ: **37/100 = 37%**;
+- esta revisão Phase 2AJ fecha `aces_spell_utils` como componente #38 ao limite exato de source-version disponível;
+- quando esta revisão estiver reconciliada, validada e em `main`: **38/100 = 38%**;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -36,26 +35,38 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AI — Somake Spells 1.0.8-fix
+## Phase 2AJ — Ace's Spell Utils 1.2.7.2
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `somakespells` | `somakespells-1.0.8-1.21.1-fix.jar` | EXACT PHYSICAL+RELEASE IDENTITY / OFFICIAL 1.0.x RELEASE SURFACE AUDITED / PUBLISHER `OVER 50` SCALE / COMPLETE CURRENT SPELL REGISTRY NOT AVAILABLE / EXACT SOURCE+API NOT LOCATED / AQUA↔T.O RUNTIME QA BLOCKED / ZERO COVERAGE DELTA / FAIL-CLOSED |
+| `aces_spell_utils` | `aces_spell_utils-1.2.7.2-1.21.1.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / API+LIBRARY PROVIDER / 0 STANDALONE SPELL REGISTRATIONS / 3 SCHOOLS / 19 ATTRIBUTES / 3 DAMAGE TYPES / 14 TAGS / 8 RARITIES / 27 EXAMPLE ITEM REGISTRATIONS / 8 S2C VFX PAYLOADS / 2 REQUIRED MIXINS / 5 CONFIG VALUES / COMPONENT #38 CANDIDATE / HOST-VERSION+BYTE-EQUIVALENCE QA FAIL-CLOSED |
 
 ### Evidence boundary
 
-- Physical SHA-1: `b0ad94c1504709662bee2d08700375ccecbb5ec7`.
-- CurseForge project/file: `1461634 / 8417850`, exact 1.0.8-fix release dated 2026-07-12.
-- Exact fix repairs Symmetry and Spirit Elemental Charges not applying buffs.
-- Official 1.0.8/1.0.7/1.0.6 notes expose named spell/progression migrations, but they are not a cumulative registry manifest.
-- Publisher says `over 50 spells`; this cannot be converted into exact count, IDs, school totals or current membership.
-- No publisher-controlled exact 1.0.8-fix source revision or complete current registry/API table was located.
-- The exact current JAR was not directly inspectable through the available repository/web tooling in this phase; no class/API/registry internals are invented.
-- Physical `traveloptics` 1.21.1 alpha/deprecated coexistence keeps Somake Aqua authority/runtime interaction QA-blocked.
+- Physical SHA-1: `8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca`.
+- CurseForge project/file: `1299492 / 8789930`, exact 1.2.7.2 release dated 2026-09-02.
+- Official exact-version source: `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`.
+- Source `gradle.properties` declares exactly `mod_version=1.2.7.2-1.21.1`.
+- No `registerSpell(...)` call and no provider standalone spell-registry registration surface were found: exact provider spell count is **0**.
+- School registry IDs are `aces_spell_utils:ritual`, `aces_spell_utils:hydro`, `aces_spell_utils:technomancy`.
+- Publisher display language may call Ritual `Occult`; exact registry remains `ritual`.
+- Source Java supplier `ABYSSAL` actually registers `hydro`; do not fabricate an Abyssal school.
+- Source targets NeoForge 21.1.230 / Iron's 3.11.0 while pack uses NeoForge 21.1.248 / Iron's 3.16.3. Exact host-runtime parity remains QA/fail-closed.
+- Exact source-version pin is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
 
-### Closure condition
+### Provider authority
 
-Somake may only leave the partial bucket after trusted exact-current inventory evidence becomes available, such as a clean-room exact-artifact registry/resource inventory, publisher-controlled exact source/registry/API, or equivalent trusted exact inventory evidence. Runtime Aqua/T.O and optional-provider QA remain separate gates.
+- Iron's owns underlying spell casting, mana and cooldown authority.
+- Ace's owns shared attributes/proc helpers, API classes, mixins, attachment, VFX transport and example runtime it registers.
+- consuming addons own concrete spells/entities/items built on the Ace's API.
+- Black Arcana does not duplicate these pipelines and retains its own canonical casting, Corruption, Strain, Arcane Danger and WorldEffectPolicy.
+- RPG Skill Tree remains progression/mastery only through real contracts.
+
+## Phase 2AI — canonical predecessor, zero delta
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `somakespells` | `somakespells-1.0.8-1.21.1-fix.jar` | CANÔNICO VIA PR #141 / EXACT PHYSICAL+RELEASE IDENTITY / OFFICIAL 1.0.x RELEASE SURFACE AUDITED / PUBLISHER `OVER 50` SCALE / COMPLETE CURRENT SPELL REGISTRY NOT AVAILABLE / EXACT SOURCE+API NOT LOCATED / AQUA↔T.O RUNTIME QA BLOCKED / ZERO COVERAGE DELTA / FAIL-CLOSED |
 
 ## Phase 2AH — canonical predecessor
 
@@ -77,21 +88,22 @@ Somake may only leave the partial bucket after trusted exact-current inventory e
 
 ## Concorrência — não colidir
 
-Phase 2AI reutiliza a árvore Somake já canônica da antiga Phase 2O / PR #86. Não existe PR Somake aberto equivalente no início desta fase; a nova branch foi criada sobre a `main` atual em vez de reviver a branch histórica stale.
+Phase 2AJ foi aberta sobre `main@9e2011a46e228fb8e2dd7c9d275c6f43290f6bb8` depois de rechecagem de branches/PRs. Não havia branch nem PR equivalente para `aces_spell_utils`.
 
-Antes de selecionar qualquer provider seguinte, reexecutar pesquisa de PRs/branches; não confiar em listas de concorrência antigas.
+Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AI
+## Próxima seleção após Phase 2AJ
 
-Como Somake permanece parcial, o próximo provider deve ser escolhido por probabilidade real de fechamento, não pela ordem histórica. Antes da seleção:
+Selecionar somente depois de:
 
 1. fetch da `main` mais recente;
-2. verificação da modlist física atual;
-3. pesquisa de PR/branch equivalente;
-4. leitura do catálogo já canônico;
-5. confirmação da versão exata e do melhor source/API/release aplicável.
+2. confirmação do merge/CI da Phase 2AJ;
+3. verificação da modlist física atual;
+4. pesquisa de PR/branch equivalente;
+5. leitura do catálogo já canônico;
+6. confirmação da versão exata e do melhor source/API/release aplicável.
 
-Preferir um componente cujo inventário atual possa ser fechado sem inferência. `cataclysm_spellbooks`, `gaze` e `leylines` permanecem candidatos parciais a reavaliação, sujeitos a evidência e concorrência atuais.
+Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
 
 ## Providers parcialmente fechados — não contam como concluídos
 
@@ -107,10 +119,13 @@ Exemplos atuais:
 - presença/versão vêm da modlist/JAR atual, não do snapshot histórico;
 - README preparatório, guia lido ou branch antiga não equivale a catálogo canônico;
 - source público de versão diferente não autoriza promover internals da versão instalada;
+- exact source-version pin não equivale automaticamente a byte-for-byte JAR reproducibility;
+- library/API provider pode fechar com zero spells se zero registro próprio for demonstrado e suas superfícies reais estiverem inventariadas;
+- registry/example object não vira spell por contagem;
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
-- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle ou world mutation de provider;
-- source-family label não deve ser confundido com SchoolType sem evidência;
+- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline ou world mutation de provider;
+- source-family label ou Java symbol não deve ser confundido com registry ID sem evidência;
 - provider parcial continua zero até inventário atual fechar ao teto de evidência aceito;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.
 

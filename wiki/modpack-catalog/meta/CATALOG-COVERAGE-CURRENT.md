@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Canonical current coverage: 37/100 = 37%.**
+**Coverage represented by this Phase 2AJ revision: 38/100 = 38%.**
 
-Phase 2AH / PR #140 is canonical on `main@e8b7c4a0b77c2f803423047f5d1442f870d02fc8` and supplied component #37. Phase 2AI re-audits Somake 1.0.8-fix but does **not** increment the numerator because the exact current granular inventory remains unresolved.
+Canonical `main` immediately before Phase 2AJ is **37/100 = 37%** at `9e2011a46e228fb8e2dd7c9d275c6f43290f6bb8`. Component #38 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AJ branch/PR, canonical coverage remains 37/100.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -62,7 +62,7 @@ The point is awarded for closing the **provider component at its evidence ceilin
 
 ## Phase 2AI — Somake audit, zero delta
 
-Phase 2AI re-audits `somakespells-1.0.8-1.21.1-fix.jar` from the already-merged Phase 2O provider tree.
+Phase 2AI / PR #141 is canonical on `main@9e2011a46e228fb8e2dd7c9d275c6f43290f6bb8` and re-audits `somakespells-1.0.8-1.21.1-fix.jar` from the already-merged Phase 2O provider tree.
 
 Evidence is strong for exact physical/release identity and public feature/release-line behavior, including:
 
@@ -73,7 +73,29 @@ Evidence is strong for exact physical/release identity and public feature/releas
 
 However, the publisher states `over 50 spells` while the public changelog exposes only a subset, and no exact-current publisher source/registry/API or equivalent complete 1.0.8-fix inventory is available through the inspected evidence. Therefore Somake remains **partial** and receives **0** new component points.
 
-Canonical coverage stays **37/100 = 37%**.
+## Phase 2AJ — Ace's Spell Utils component #38 candidate
+
+Phase 2AJ closes `aces_spell_utils` at the exact source-version evidence ceiling:
+
+- physical artifact `aces_spell_utils-1.2.7.2-1.21.1.jar`, SHA-1 `8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca`;
+- exact publisher release project/file `1299492 / 8789930`, 2026-09-02;
+- exact official source-version pin `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`, whose metadata declares `mod_version=1.2.7.2-1.21.1`;
+- **0 standalone provider spell registrations** — no `registerSpell(...)` call / no provider spell-registry registration surface in the exact source;
+- 3 Iron's SchoolTypes (`ritual`, `hydro`, `technomancy`);
+- 19 attributes, including 13 shared runtime attributes and 6 school power/resistance attributes;
+- 3 school damage-type keys;
+- 1 serialized copy-on-death attachment;
+- 1 custom particle type;
+- 14 tag contracts;
+- 8 rarity enum extensions;
+- 27 unconditional `example_*` item registrations classified as example/support registry objects, not standalone spells;
+- 8 optional protocol `4.0.0` S2C visual payloads;
+- 2 required mixins and 5 common config values;
+- reusable entity/boss/item/summon/domain/VFX API plus provider-owned event runtime for attribute/proc helpers.
+
+Source targets NeoForge 21.1.230 / Iron's 3.11.0 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3. That remains a runtime integration QA boundary, not a reason to invent or withhold semantic registry identities. Source↔physical-JAR byte equality is not asserted.
+
+The point is awarded because this component is an **API/library provider whose complete own registry/runtime surface is closed**, including the exact result that its standalone spell inventory is zero. Consumer-addon spells remain under those addons' namespaces and authority.
 
 ## Partial providers still receive zero points
 
