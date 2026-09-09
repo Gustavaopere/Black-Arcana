@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AQ revision: 45/100 = 45%.**
+**Current canonical coverage: 45/100 = 45%.**
 
-Phase 2AP / PR #151 is canonical at merge SHA `70a97ec0cf58cecebe4054f43ea5b212e757e365` and made component #44 canonical, so current canonical coverage is **44/100 = 44%**. Component #45 becomes canonical only when this Phase 2AQ revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AQ branch/PR, canonical coverage remains **44/100 = 44%**.
+Phase 2AQ / PR #152 is canonical at merge SHA `bdf5271c265b5f40ee5a9e7695c7d71374a4c31c` and made component #45 canonical. Phase 2AP / PR #151 remains component #44 at merge SHA `70a97ec0cf58cecebe4054f43ea5b212e757e365`. The Phase 2AP metadata correction in PR #153 has **zero coverage delta**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -212,7 +212,7 @@ Phase 2AP / PR #151 is canonical at merge SHA `70a97ec0cf58cecebe4054f43ea5b212e
 - exactly **6 addon recipe JSONs**: two filling, one grinding, two mixing and one pressing route;
 - exactly **1 host-recipe disable overlay** under `create_enchantment_industry:recipes/mixing/ink` using `neoforge:never`;
 - no mixin configuration, provider packet or persistence surface observed in the exact source tree;
-- declared dependencies: Create `[6.0.4,6.1.0)`, Create: Enchantment Industry `[2.0.0,)`, NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)`;
+- addon-keyed metadata declares NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)` and Create: Enchantment Industry `[2.0.0,)`; the source also contains Create range `[6.0.4,6.1.0)` under the mis-keyed table `[[dependencies.create_enchantment_industry]]`, so physical-JAR parity and loader interpretation of that Create block remain fail-closed;
 - four recipe routes directly reference `create_dragons_plus:black_dye` or `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in metadata; the current physical pack contains Create: Dragons Plus 1.11.8b, so this is recorded as an undeclared data-level dependency rather than hidden or replaced;
 - publisher-facing documentation describes an Ink Sac drain/recovery route, but the exact 1.1.1 source tree contains no `emptying`/drain recipe. That path remains fail-closed until its physical provider/recipe identity is proven.
 
@@ -222,9 +222,9 @@ License metadata remains a reuse-review boundary: exact source metadata and Modr
 
 The point was awarded because the exact 1.1.1 semantic component was closed without pretending source/JAR byte reproducibility or full-pack recipe interoperability had been proven.
 
-## Phase 2AQ — Apothic Compat component #45 candidate
+## Phase 2AQ — Apothic Compat component #45, canonical
 
-Phase 2AQ closes `apothic_compat` 2.0.2 at the exact physical/publisher/tagged-source evidence ceiling as an Apotheosis loot-category data-map and affix-blacklist compatibility provider:
+Phase 2AQ / PR #152 is canonical at merge SHA `bdf5271c265b5f40ee5a9e7695c7d71374a4c31c` and closed `apothic_compat` 2.0.2 at the exact physical/publisher/tagged-source evidence ceiling as an Apotheosis loot-category data-map and affix-blacklist compatibility provider:
 
 - physical artifact `apothic_compat-2.0.2.jar`, SHA-1 `868506b8367be2c155acde0ef186b5a3e6ba8db9`;
 - exact CurseForge project/file `1516278 / 8219980`, NeoForge 1.21.1 release dated 2026-06-09;
@@ -245,7 +245,7 @@ The exact source also exposes a static QA edge case: after a non-empty blacklist
 
 Exact command names from the tagged 2.0.2 source supersede later/editorial renamed forms such as `/apothiccategorycompat` or `/acc`. Continued-port target registry parity and physical Apotheosis 8.8.0 private-field compatibility likewise remain fail-closed until runtime verification.
 
-The component point becomes canonical only after latest-main reconciliation, CI GREEN on the exact reconciled HEAD and merge. Source/release-asset/physical-JAR byte reproducibility is not asserted without a direct byte comparison.
+The point was awarded after exact-head CI GREEN and merge. Source/release-asset/physical-JAR byte reproducibility is not asserted without a direct byte comparison.
 
 ## Partial providers still receive zero points
 

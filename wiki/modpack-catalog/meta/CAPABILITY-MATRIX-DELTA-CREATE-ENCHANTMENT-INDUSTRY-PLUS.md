@@ -17,8 +17,8 @@ Scope: exact physical `create_enchantment_industry_plus` 1.1.1 + exact official 
 | Mixing route A | ink sac + water → CDP black dye + `sac` | Create + CDP + CEI Plus | no duplicate conservation settlement |
 | Mixing route B | wither rose + water → CDP black dye | Create + CDP + CEI Plus | no duplicate recipe |
 | Public drain flow | described publicly; absent from exact 1.1.1 source tree | owner not proven | fail-closed / do not invent |
-| Declared Create dependency | `[6.0.4,6.1.0)` | provider metadata | physical Create 6.0.10 satisfies |
-| Declared CEI dependency | `[2.0.0,)` | provider metadata | physical CEI 2.5.3b satisfies |
+| Create metadata range | `[6.0.4,6.1.0)` under mis-keyed `dependencies.create_enchantment_industry` table | source metadata anomaly | physical Create 6.0.10 present; addon-owned declaration/loader treatment not asserted |
+| Declared CEI dependency | `[2.0.0,)` under addon dependency table | provider metadata | physical CEI 2.5.3b satisfies |
 | Create Dragons Plus dependency | used by recipe data, not declared in metadata | CDP content/type authority | record implicit data dependency; no synthetic fallback |
 | Java source files | 2 | CEI Plus | tiny closed source surface |
 | Mixins | 0 | none | no inferred hidden hook |

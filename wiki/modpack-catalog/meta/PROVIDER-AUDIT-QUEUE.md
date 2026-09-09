@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AP / PR #151 está canônica em `main@70a97ec0cf58cecebe4054f43ea5b212e757e365`;
-- cobertura canônica na Phase 2AQ: **44/100 = 44%**;
-- esta revisão Phase 2AQ fecha `apothic_compat` como componente #45 ao limite exato de physical+publisher+tagged-source disponível;
-- o resultado **45/100 = 45%** só é canônico depois de latest-main gate, CI GREEN no HEAD reconciliado e merge;
+- Phase 2AQ / PR #152 está canônica em `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`;
+- cobertura canônica atual: **45/100 = 45%**;
+- Phase 2AP / PR #151 permanece componente #44 canônico em `main@70a97ec0cf58cecebe4054f43ea5b212e757e365`;
+- PR #153 corrige somente a evidência de metadata da Phase 2AP e possui **zero delta de cobertura**;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,11 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AQ — Apothic Compat 2.0.2
+## Phase 2AQ — Apothic Compat 2.0.2 — canonical
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `apothic_compat` | `apothic_compat-2.0.2.jar` | EXACT PHYSICAL+PUBLISHER+TAGGED OFFICIAL SOURCE VERSION / APOTHEOSIS LOOT-CATEGORY DATA-MAP + AFFIX-BLACKLIST COMPAT / 0 SPELLS+GLYPHS+RITUALS / 0 MIXINS / 4 JAVA CLASSES / 13 BOW CATEGORY OVERRIDES / 1 CONFIG KEY / 2 COMMAND ROOTS+ALIASES / 3 EVENT HOOKS / COMPONENT #45 CANDIDATE / PRIVATE-REFLECTION+BYTE+FULL-PACK QA FAIL-CLOSED |
+| `apothic_compat` | `apothic_compat-2.0.2.jar` | CANÔNICO VIA PR #152 / EXACT PHYSICAL+PUBLISHER+TAGGED OFFICIAL SOURCE VERSION / APOTHEOSIS LOOT-CATEGORY DATA-MAP + AFFIX-BLACKLIST COMPAT / 0 SPELLS+GLYPHS+RITUALS / 0 MIXINS / 4 JAVA CLASSES / 13 BOW CATEGORY OVERRIDES / 1 CONFIG KEY / 2 COMMAND ROOTS+ALIASES / 3 EVENT HOOKS / COMPONENT #45 / PRIVATE-REFLECTION+BYTE+FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -59,6 +59,8 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 - Continued-port item registry parity and data-map priority across the physical pack remain fail-closed until runtime verification.
 - Root tagged source and exact NeoForge metadata are MIT. Inspection is factual/read-only; no code/assets are copied.
 - Exact tagged source/release asset are not promoted to byte-for-byte physical-JAR identity without direct reproducibility comparison.
+- Final PR-head CI #2228 (`34358226123`) passed on `7c69cee76d3bb866e4cdd3ff8a2748bef43df639`.
+- Exact post-merge `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c` CI #2230 (`34358659906`) passed the full pipeline.
 
 ### Provider authority
 
@@ -73,7 +75,7 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `create_enchantment_industry_plus` | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | CANÔNICO VIA PR #151 / EXACT PHYSICAL+OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / UNDECLARED CREATE DRAGONS PLUS DATA DEPENDENCY / COMPONENT #44 / LICENSE-METADATA + BYTE+FULL-PACK QA FAIL-CLOSED |
+| `create_enchantment_industry_plus` | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | CANÔNICO VIA PR #151 / EXACT PHYSICAL+OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / CREATE METADATA TABLE MIS-KEYED / UNDECLARED CREATE DRAGONS PLUS DATA DEPENDENCY / COMPONENT #44 / LICENSE-METADATA + BYTE+FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -84,8 +86,8 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 - Exact source data contains 6 addon recipe JSONs: 2 filling, 1 grinding, 2 mixing and 1 pressing route.
 - Exact source also overlays `create_enchantment_industry:recipes/mixing/ink` with `neoforge:never`, disabling that host recipe rather than adding a seventh processing route.
 - Exact source tree exposes 0 standalone spells, 0 glyphs, 0 rituals, 0 provider mana/cast resource, 0 mixin configs and no provider network/persistence surface observed.
-- Declared dependencies: Create `[6.0.4,6.1.0)`, Create: Enchantment Industry `[2.0.0,)`, NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)`.
-- Physical pack uses Create `6.0.10` and Create: Enchantment Industry `2.5.3b`, satisfying those declared ranges.
+- Addon-keyed metadata declares NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)` and Create: Enchantment Industry `[2.0.0,)`.
+- The source also contains Create range `[6.0.4,6.1.0)` under mis-keyed table `[[dependencies.create_enchantment_industry]]`, not `[[dependencies.create_enchantment_industry_plus]]`; physical Create `6.0.10` satisfies the numeric range, while physical-JAR metadata parity and loader interpretation remain **NÃO VERIFICADO**.
 - Four exact recipe routes reference `create_dragons_plus:black_dye` or `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in metadata. The current pack contains Create: Dragons Plus `1.11.8b`; this is recorded as an undeclared data-level dependency, not converted into a fabricated formal dependency.
 - Publisher-facing documentation describes an Ink Sac drain/recovery path, but the exact 1.1.1 source tree contains no `emptying`/drain recipe. That route remains fail-closed until physical provider/recipe identity is proven.
 - Exact source metadata and Modrinth indicate MIT, CurseForge labels LGPLv3 and repository `LICENSE.txt` is Forge-origin LGPL boilerplate. Reuse remains review-required; inspection is factual/read-only.
@@ -307,22 +309,26 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-A branch Phase 2AQ `docs/magic-catalog-phase2aq-apothic-compat-2.0.2` já existia em paralelo enquanto Phase 2AP era concluída. Seu trabalho preparatório foi preservado e reconciliado semanticamente com `main@70a97ec0cf58cecebe4054f43ea5b212e757e365` por merge commit `404d6b2646da578de30e9e288e6e493ac4bb8c03`; após essa reconciliação a branch ficou 0 commits atrás da main.
+Phase 2AQ / PR #152 já está canônica em `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`. O PR #153 é o follow-up ativo de correção factual da Phase 2AP e deve preservar integralmente os arquivos adicionados pela 2AQ.
 
-Nenhuma PR equivalente de Apothic Compat foi encontrada antes da retomada da Phase 2AQ. PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
+A CI #2229 do antigo HEAD do PR #153 foi invalidada como evidência final quando a main avançou com a Phase 2AQ. A correção precisa ser reconciliada com `main@bdf5271c...` e revalidada em um novo HEAD antes do merge.
+
+PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AQ
+## Próxima seleção após a correção Phase 2AP / PR #153
 
 Selecionar somente depois de:
 
-1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AQ;
-3. verificação da modlist física atual;
-4. pesquisa de PR/branch equivalente;
-5. leitura do catálogo já canônico;
-6. confirmação da versão exata e do melhor source/API/release aplicável.
+1. reconciliação e CI GREEN do PR #153 no HEAD exato;
+2. latest-main gate imediatamente pré-merge;
+3. merge e confirmação do `main` final;
+4. CI pós-merge no SHA exato da main;
+5. verificação da modlist física atual;
+6. pesquisa de PR/branch equivalente;
+7. leitura do catálogo já canônico;
+8. confirmação da versão exata e do melhor source/API/release aplicável.
 
 Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
 
