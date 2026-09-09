@@ -130,7 +130,7 @@ Component #46 is only represented by this branch. It becomes canonical after lat
 - Exact source tree exposes 0 standalone spells, 0 glyphs, 0 rituals, 0 provider mana/cast resource, 0 mixin configs and no provider network/persistence surface observed.
 - Addon-keyed metadata declares NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)` and Create: Enchantment Industry `[2.0.0,)`.
 - The source also contains Create range `[6.0.4,6.1.0)` under mis-keyed table `[[dependencies.create_enchantment_industry]]`, not `[[dependencies.create_enchantment_industry_plus]]`; physical Create `6.0.10` satisfies the numeric range, while physical-JAR metadata parity and loader interpretation remain **NÃO VERIFICADO**.
-- Four exact recipe routes reference `create_dragons_plus:black_dye` or `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in metadata. The current pack contains Create: Dragons Plus `1.11.8b`; this is recorded as an undeclared data-level dependency, not converted into a fabricated formal dependency.
+- Four recipe routes reference `create_dragons_plus:black_dye` or `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in metadata. The current pack contains Create: Dragons Plus `1.11.8b`; this is recorded as an undeclared data-level dependency, not converted into a fabricated formal dependency.
 - Publisher-facing documentation describes an Ink Sac drain/recovery path, but the exact 1.1.1 source tree contains no `emptying`/drain recipe. That route remains fail-closed until physical provider/recipe identity is proven.
 - Exact source metadata and Modrinth indicate MIT, CurseForge labels LGPLv3 and repository `LICENSE.txt` is Forge-origin LGPL boilerplate. Reuse remains review-required; inspection is factual/read-only.
 - Exact source-version pin is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
@@ -158,7 +158,7 @@ Component #46 is only represented by this branch. It becomes canonical after lat
 - Official exact source branch: `Crystal-Nest/soul-fire-d:1.21@0cc7a03b950e74742eb75f51642cc7a0190c7127`.
 - Exact source metadata: version 6.1.0, Java 21, NeoForge baseline 21.0.143/range `[21.0,)`, Cobweb 1.4.0, Prometheus 1.2.5.
 - Physical pack uses Cobweb 1.4.0 and Prometheus 1.2.5 exactly and NeoForge 21.1.248 satisfies the loader range.
-- Since Soul Fire'd 6.0.0 the generic Fire API moved to Prometheus. Exact physical Prometheus 1.2.5 source is pinned at `Crystal-Nest/prometheus:1.21@3edbe979b3a383b526f38daeba4eb35d18283a9d` only to establish the consumed provider boundary.
+- Since Soul Fire'd 6.0.0 the generic fire API moved to Prometheus. Exact physical Prometheus 1.2.5 source is pinned at `Crystal-Nest/prometheus:1.21@3edbe979b3a383b526f38daeba4eb35d18283a9d` only to establish the consumed provider boundary.
 - Exact Prometheus defines Soul Fire type `minecraft:soul`; Soul Fire'd supplies its definition through Prometheus with light 10, damage value 2 and the vanilla Soul Fire flame particle.
 - Soul Fire'd requests associated fire-charge registration through Prometheus; exact resources/recipe identify `minecraft:soul_fire_charge`, recipe output 16.
 - Exact `CommonModLoader` registers only the fire definition plus Cobweb static enchantment datapack at top position; NeoForge loader additionally registers the loot serializer.
@@ -218,7 +218,7 @@ Component #46 is only represented by this branch. It becomes canonical after lat
 
 ### Evidence boundary
 
-- Physical SHA-1: `9d4710e665ec74af917bb9f5f819154ca9f74ca0`.
+- Physical SHA-1: `9d4710e665ec74af917bbf5f819154ca9f74ca0`.
 - CurseForge project/file: `1665965 / 8778365`, exact 1.0.2 release dated 2026-08-31.
 - Publisher: NeoForge 1.21.1, Client & Server, All Rights Reserved.
 - Publisher defines the component as a bridge allowing Reliquified L_Ender's Cataclysm `0.1.1` to work with newer Relics `0.12` after old Relics `0.10` classes/methods changed or disappeared.
@@ -296,7 +296,7 @@ Component #46 is only represented by this branch. It becomes canonical after lat
 - EMF Compat: Iron's owns only the client pose compatibility adapter.
 - EMF Compat Core / EMF own their shared presentation APIs/runtime.
 - Black Arcana must not treat EMF pose state or client casting state as server authority and must not duplicate this Iron's-specific pose adapter.
-- RPG Skill Tree receives no progression authority from this visual layer.
+- RPG Skill Tree recebe no progression authority from this visual layer.
 
 ## Phase 2AJ — Ace's Spell Utils 1.2.7.2 — canonical predecessor
 
