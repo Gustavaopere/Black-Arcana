@@ -77,7 +77,7 @@ Both use the Prometheus `prometheus:ignite` effect with `fire_type: "soul"`.
 
 - max level 2;
 - direct post-attack victim effect;
-- duration 4 seconds at level I + 4 seconds per level above first;
+- duration expression base `4.0`, plus `4.0` per level above first; no unit is inferred beyond the exact provider data/API contract;
 - exclusive set `#prometheus:exclusive_set/fire_aspect`;
 - supported items `#minecraft:enchantable/fire_aspect`.
 
