@@ -197,10 +197,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 int index = page * rowsPerPage + row;
                 if (row >= 0 && row < rowsPerPage && index < filteredAvailable.size()) {
                     inputModality = KeyboardFocusNavigation.InputModality.POINTER;
-                    if (searchBox != null && searchBox.isFocused()) {
-                        searchBox.setFocused(false);
-                        setFocused(null);
-                    }
+                    clearSearchFocus();
                     draft.toggle(filteredAvailable.get(index));
                     return true;
                 }
@@ -291,6 +288,12 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         int preferred = firstVisibleAcceptedIndex(layout);
         focusedIndex = KeyboardFocusNavigation.loadoutInitialFocus(
                 filteredAvailable.size(), page, layout.rowsPerPage(), preferred);
+    }
+
+    private void clearSearchFocus() {
+        if (searchBox == null || !searchBox.isFocused()) return;
+        searchBox.setFocused(false);
+        setFocused(null);
     }
 
     static boolean toggleFocusedDraft(
