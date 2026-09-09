@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AL / PR #145 está canônica em `main@433233164f61bbf6b6d5cb8aa9625cf286a79a23`;
-- cobertura canônica na criação da Phase 2AM: **40/100 = 40%**;
-- esta revisão Phase 2AM fecha `reliquified_lenders_cataclysm_new_relics_fix` como componente #41 ao limite exato de evidência física/publisher disponível;
-- o resultado **41/100 = 41%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
+- Phase 2AM / PR #147 está canônica em `main@192f5d3c109189a9fee5fb3fc247bfbd75a93b68`;
+- cobertura canônica na criação da Phase 2AN: **41/100 = 41%**;
+- esta revisão Phase 2AN fecha `apothic_attributes` como componente #42 ao limite exato de source-version disponível;
+- o resultado **42/100 = 42%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,42 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AM — Reliquified L_Ender's Cataclysm New Relics Fix 1.0.2
+## Phase 2AN — Apothic Attributes 2.10.1
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `reliquified_lenders_cataclysm_new_relics_fix` | `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar` | EXACT PHYSICAL+PUBLISHER 1.0.2 / RELICS 0.10→0.12 COMPATIBILITY BRIDGE / 5 EXISTING RELICS IN PUBLISHED SCOPE / 8 PUBLISHED REPAIR FAMILIES / 0 NEW SEMANTIC RELIC IDS / 0 PUBLISHED STANDALONE SPELL IDS / 1.0.2 BASE-CLASS-ONLY TRANSFORM SCOPE / COMPONENT #41 CANDIDATE / EXACT SOURCE+MIXIN+PACKET+PERSISTENCE INTERNALS FAIL-CLOSED |
+| `apothic_attributes` | `ApothicAttributes-1.21.1-2.10.1.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / COMBAT+ATTRIBUTE+EFFECT SUPPORT PROVIDER / 0 STANDALONE SPELLS+GLYPHS+RITUALS OBSERVED / 22 ATTRIBUTES / 7 EFFECTS / 31 POTIONS / 37 BREWING MIXES / 5 DAMAGE TYPES / COMPONENT+ATTACHMENT+SLOT REGISTRIES / 2 CLIENTBOUND PAYLOADS / 8 MIXINS / SERVER ABILITY COOLDOWNS / CONDITIONAL CURIOS BRIDGE / COMPONENT #42 CANDIDATE / BYTE+FULL-PACK QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `6a6b84d09801621df5cc2c8a68f35bd93a6cda0f`.
+- Official exact-version source: `Shadows-of-Fire/Apothic-Attributes@686361b2c7b0e76bf4158890bb8a2e42ef805622`.
+- Source metadata declares exactly version `2.10.1`, Minecraft 1.21.1, Java 21, NeoForge baseline 21.1.235 and Placebo 9.9.0; Curios is optional.
+- Physical pack uses NeoForge 21.1.248, Placebo 9.9.2 and Curios 9.5.1+1.21.1.
+- Exact source tree exposes no standalone spell/glyph/ritual registration surface; path-level recheck found no `spell`, `glyph` or `ritual` paths.
+- Closed central content surface: 2 synchronized custom registries, 22 attributes, 7 effects, 31 potions, 37 generated brewing mixes, 5 damage types, 2 data components, 3 attachments, 7 equipment-slot objects, 11 slot groups, 3 provider tag contracts, 1 particle and 1 sound.
+- Networking surface observed: exactly 2 clientbound PLAY payloads; no provider C2S cast-intent path was found.
+- Runtime surface includes 7 common + 1 client mixin, combat/attribute handlers and the public server-side `AbilityCooldowns` subsystem.
+- Curios compat is conditional and bridges modifier-source/stack-attribute composition; Curios remains slot/inventory authority.
+- Exact source discrepancy retained: `DetonationEffect` consumes fire ticks but its damage call uses `ALObjects.DamageTypes.BLEEDING` even though `DETONATION` is separately registered/tagged.
+- `current_hp_damage` is tagged physical and cannot critically strike; `detonation`, `fire_damage` and `cold_damage` enter the NeoForge magic tag; bleeding/detonation/fire/cold bypass armor.
+- Root upstream source code license is MIT, assets are All Rights Reserved; `StackAttributeModifiersEvent.java` has a file-level Forge Development LLC / SPDX LGPL-2.1-only header.
+- Exact source-version pin is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
+
+### Provider authority
+
+- Apothic Attributes owns its armor/protection replacement formulas, penetration/shred, crit, auxiliary damage, dodge, life steal/overheal, projectile modifiers, healing/XP/mining modifiers, potion/effect behavior and `AbilityCooldowns` runtime.
+- Curios owns Curios inventory and slot state; Apothic only owns its conditional modifier bridge.
+- Black Arcana retains canonical casting, transactional costs, BA cooldowns/charges, targeting, Corruption, Strain, Arcane Danger, Backlash and WorldEffectPolicy.
+- `apothic_attributes:cooldown_reduction` does not automatically apply to Black Arcana cooldowns.
+- BA Backlash must not be deliberately routed through Apothic crit/life-steal/auxiliary-damage proc chains.
+- RPG Skill Tree remains progression/Mastery/perk authority only through real contracts.
+
+## Phase 2AM — Reliquified L_Ender's Cataclysm New Relics Fix 1.0.2 — canonical predecessor
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `reliquified_lenders_cataclysm_new_relics_fix` | `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar` | CANÔNICO VIA PR #147 / EXACT PHYSICAL+PUBLISHER 1.0.2 / RELICS 0.10→0.12 COMPATIBILITY BRIDGE / 5 EXISTING RELICS IN PUBLISHED SCOPE / 8 PUBLISHED REPAIR FAMILIES / 0 NEW SEMANTIC RELIC IDS / 0 PUBLISHED STANDALONE SPELL IDS / 1.0.2 BASE-CLASS-ONLY TRANSFORM SCOPE / COMPONENT #41 / EXACT SOURCE+MIXIN+PACKET+PERSISTENCE INTERNALS FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -176,18 +207,18 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AM foi aberta sobre `main@433233164f61bbf6b6d5cb8aa9625cf286a79a23` após rechecagem de branches/PRs. Não havia branch nem PR equivalente para `reliquified_lenders_cataclysm_new_relics_fix`.
+Phase 2AN foi aberta sobre `main@192f5d3c109189a9fee5fb3fc247bfbd75a93b68` após duas reconciliações por avanço concorrente: PR #145 ocupou Phase 2AL/component #40 e PR #147 ocupou Phase 2AM/component #41. As PRs Apothic stale #146 e #148 foram fechadas sem merge e não são autoridade.
 
 PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AM
+## Próxima seleção após Phase 2AN
 
 Selecionar somente depois de:
 
 1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AM;
+2. confirmação do merge/CI da Phase 2AN;
 3. verificação da modlist física atual;
 4. pesquisa de PR/branch equivalente;
 5. leitura do catálogo já canônico;
