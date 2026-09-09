@@ -148,7 +148,7 @@ public final class BlackArcanaRadialScreen extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (shouldCloseFromOpenKey(
-                BlackArcanaClientConfig.RadialBehavior.get(),
+                BlackArcanaClientConfig.RADIAL_BEHAVIOR.get(),
                 BlackArcanaKeyMappings.OPEN_RADIAL.matches(keyCode, scanCode))) {
             onClose();
             return true;
