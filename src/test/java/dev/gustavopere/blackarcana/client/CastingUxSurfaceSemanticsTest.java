@@ -7,11 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CastingUxSurfaceSemanticsTest {
     @Test
-    void radialFocusUsesNonColorMarkersWithoutConflatingSelectedAndHovered() {
+    void radialFocusUsesNonColorMarkersWithoutConflatingSelectedHoveredAndFocused() {
         assertEquals("", BlackArcanaRadialScreen.focusPrefix(CastingUxSemantics.FocusState.NONE));
         assertEquals("[S] ", BlackArcanaRadialScreen.focusPrefix(CastingUxSemantics.FocusState.SELECTED));
         assertEquals("> ", BlackArcanaRadialScreen.focusPrefix(CastingUxSemantics.FocusState.HOVERED));
+        assertEquals("[F] ", BlackArcanaRadialScreen.focusPrefix(CastingUxSemantics.FocusState.FOCUSED));
         assertEquals(">[S] ", BlackArcanaRadialScreen.focusPrefix(CastingUxSemantics.FocusState.SELECTED_HOVERED));
+        assertEquals("[F][S] ", BlackArcanaRadialScreen.focusPrefix(CastingUxSemantics.FocusState.SELECTED_FOCUSED));
+        assertEquals(">[F] ", BlackArcanaRadialScreen.focusPrefix(CastingUxSemantics.FocusState.HOVERED_FOCUSED));
+        assertEquals(">[F][S] ", BlackArcanaRadialScreen.focusPrefix(CastingUxSemantics.FocusState.SELECTED_HOVERED_FOCUSED));
     }
 
     @Test
@@ -25,7 +29,11 @@ class CastingUxSurfaceSemanticsTest {
         assertEquals("", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.NONE));
         assertEquals("S", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.SELECTED));
         assertEquals(">", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.HOVERED));
+        assertEquals("F", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.FOCUSED));
         assertEquals(">S", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.SELECTED_HOVERED));
+        assertEquals("FS", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.SELECTED_FOCUSED));
+        assertEquals(">F", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.HOVERED_FOCUSED));
+        assertEquals(">FS", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.SELECTED_HOVERED_FOCUSED));
     }
 
     @Test
