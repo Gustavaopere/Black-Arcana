@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AM / PR #147 está canônica em `main@192f5d3c109189a9fee5fb3fc247bfbd75a93b68`;
-- cobertura canônica na criação da Phase 2AN: **41/100 = 41%**;
-- esta revisão Phase 2AN fecha `apothic_attributes` como componente #42 ao limite exato de source-version disponível;
-- o resultado **42/100 = 42%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
+- Phase 2AN / PR #149 está canônica em `main@994d2983f0ec54fd54455a14abad473ebaea86bc`;
+- cobertura canônica na criação da Phase 2AO: **42/100 = 42%**;
+- esta revisão Phase 2AO fecha `soul_fire_d` como componente #43 ao limite exato de physical+publisher+source-version disponível;
+- o resultado **43/100 = 43%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,45 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AN — Apothic Attributes 2.10.1
+## Phase 2AO — Soul Fire'd 6.1.0
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `apothic_attributes` | `ApothicAttributes-1.21.1-2.10.1.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / COMBAT+ATTRIBUTE+EFFECT SUPPORT PROVIDER / 0 STANDALONE SPELLS+GLYPHS+RITUALS OBSERVED / 22 ATTRIBUTES / 7 EFFECTS / 31 POTIONS / 37 BREWING MIXES / 5 DAMAGE TYPES / COMPONENT+ATTACHMENT+SLOT REGISTRIES / 2 CLIENTBOUND PAYLOADS / 8 MIXINS / SERVER ABILITY COOLDOWNS / CONDITIONAL CURIOS BRIDGE / COMPONENT #42 CANDIDATE / BYTE+FULL-PACK QA FAIL-CLOSED |
+| `soul_fire_d` | `soul-fire-d-neoforge-1.21-6.1.0.jar` | EXACT PHYSICAL+PUBLISHER+OFFICIAL SOURCE VERSION / PROMETHEUS-BACKED SOUL-FIRE CONTENT PROVIDER / 0 SPELLS+GLYPHS+RITUALS / 0 MIXINS / 1 SOUL FIRE TYPE + 1 ASSOCIATED FIRE CHARGE / 2 ENCHANTMENTS / STATIC DATAPACK / 1 NEOFORGE GLM SERIALIZER + BASTION ACQUISITION / COMPONENT #43 CANDIDATE / LICENSE-METADATA CONFLICT + BYTE+FULL-PACK QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `877002a5aa386f9011ebc4eb3360a7647ac359d9`.
+- CurseForge project/file: `662413 / 7364962`, exact NeoForge 1.21/1.21.1 release dated 2025-12-22.
+- Official exact source branch: `Crystal-Nest/soul-fire-d:1.21@0cc7a03b950e74742eb75f51642cc7a0190c7127`.
+- Exact source metadata: version 6.1.0, Java 21, NeoForge baseline 21.0.143/range `[21.0,)`, Cobweb 1.4.0, Prometheus 1.2.5.
+- Physical pack uses Cobweb 1.4.0 and Prometheus 1.2.5 exactly and NeoForge 21.1.248 satisfies the loader range.
+- Since Soul Fire'd 6.0.0 the generic fire API moved to Prometheus. Exact physical Prometheus 1.2.5 source is pinned at `Crystal-Nest/prometheus:1.21@3edbe979b3a383b526f38daeba4eb35d18283a9d` only to establish the consumed provider boundary.
+- Exact Prometheus defines Soul Fire type `minecraft:soul`; Soul Fire'd supplies its definition through Prometheus with light 10, damage value 2 and the vanilla Soul Fire flame particle.
+- Soul Fire'd requests associated fire-charge registration through Prometheus; exact resources/recipe identify `minecraft:soul_fire_charge`, recipe output 16.
+- Exact `CommonModLoader` registers only the fire definition plus Cobweb static enchantment datapack at top position; NeoForge loader additionally registers the loot serializer.
+- Exact common and NeoForge mixin manifests both contain empty common/client/server arrays: active mixin count **0**.
+- Static datapack contains exactly `minecraft:soul_fire_aspect` and `minecraft:soul_flame`, both using `prometheus:ignite` with fire type `soul`.
+- NeoForge registers one global-loot-modifier serializer: `soul_fire_d:chest_loot_modifier`.
+- Bundled Bastion modifier independently rolls 5% for a level-1 Soul Fire Aspect book and 5% for a level-1 Soul Flame book in `minecraft:chests/bastion_other`.
+- Exact source tree exposes no standalone spell/glyph/ritual or provider mana/cast-resource surface.
+- Exact source/root metadata is GPL-3.0-or-later/GPLv3 while publisher surfaces label the release Custom License / Crystal Nest Community License v1. Reuse/derivation remains blocked pending independent reconciliation.
+- Exact source-version pin is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
+
+### Provider authority
+
+- Prometheus 1.2.5 owns the generic Fire API/runtime/component registration framework.
+- Soul Fire'd 6.1.0 owns Soul-specific definition/content, two enchantments, static data and loot acquisition.
+- Cobweb owns the static/dynamic registration support it provides.
+- Black Arcana retains canonical casting, costs, BA cooldowns/charges, targeting, hazards, Corruption, Strain, Arcane Danger, Backlash causality and `WorldEffectPolicy`.
+- A provider Soul Fire type never authorizes bypassing BA world-effect policy or treating generic fire/enchantment callbacks as a second BA cast pipeline.
+- RPG Skill Tree receives no fire or magic runtime authority.
+
+## Phase 2AN — Apothic Attributes 2.10.1 — canonical predecessor
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `apothic_attributes` | `ApothicAttributes-1.21.1-2.10.1.jar` | CANÔNICO VIA PR #149 / EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / COMBAT+ATTRIBUTE+EFFECT SUPPORT PROVIDER / 0 STANDALONE SPELLS+GLYPHS+RITUALS OBSERVED / 22 ATTRIBUTES / 7 EFFECTS / 31 POTIONS / 37 BREWING MIXES / 5 DAMAGE TYPES / COMPONENT+ATTACHMENT+SLOT REGISTRIES / 2 CLIENTBOUND PAYLOADS / 8 MIXINS / SERVER ABILITY COOLDOWNS / CONDITIONAL CURIOS BRIDGE / COMPONENT #42 / BYTE+FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -207,24 +241,24 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AN foi aberta sobre `main@192f5d3c109189a9fee5fb3fc247bfbd75a93b68` após duas reconciliações por avanço concorrente: PR #145 ocupou Phase 2AL/component #40 e PR #147 ocupou Phase 2AM/component #41. As PRs Apothic stale #146 e #148 foram fechadas sem merge e não são autoridade.
+Phase 2AO usa `docs/magic-catalog-phase2ao-soul-fire-d-6.1.0` sobre `main@994d2983f0ec54fd54455a14abad473ebaea86bc`. A branch já existia quando a criação foi tentada, mas seu HEAD era exatamente a mesma main e não havia trabalho divergente nem PR equivalente; o ref não foi movido nem sobrescrito.
 
 PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AN
+## Próxima seleção após Phase 2AO
 
 Selecionar somente depois de:
 
 1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AN;
+2. confirmação do merge/CI da Phase 2AO;
 3. verificação da modlist física atual;
 4. pesquisa de PR/branch equivalente;
 5. leitura do catálogo já canônico;
 6. confirmação da versão exata e do melhor source/API/release aplicável.
 
-`soul_fire_d` permanece como o outro candidato atual adicionado ao denominador e ainda exige classificação/fechamento em fase própria. Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
+Os dois componentes adicionados ao denominador após a baseline histórica (`reliquified_lenders_cataclysm_new_relics_fix` e `soul_fire_d`) já ficam semanticamente fechados quando 2AO se tornar canônica. Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
 
 ## Providers parcialmente fechados — não contam como concluídos
 
@@ -243,12 +277,13 @@ Exemplos atuais:
 - exact source-version pin não equivale automaticamente a byte-for-byte JAR reproducibility;
 - library/API ou compat provider pode fechar com zero spells se zero registro próprio for demonstrado e suas superfícies reais estiverem inventariadas;
 - compatibility bridge pode fechar semanticamente no publisher evidence ceiling quando o escopo público atual é explicitamente bounded e nenhuma identidade nova é atribuída, mantendo internals não publicados fail-closed;
+- API/framework que migrou para sibling provider deve manter a authority no provider atual; não atribuir API histórica ao consumer instalado;
 - client presentation hook não é cast authority;
 - cross-provider cast cancellation/reconciliation não vira segundo cast authority;
-- registry/example/animation/compatibility object não vira spell por contagem;
+- registry/example/animation/compatibility/fire object não vira spell por contagem;
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
-- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, presentation adapter ou world mutation de provider;
+- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, fire-framework settlement, presentation adapter ou world mutation de provider;
 - source-family label ou Java symbol não deve ser confundido com registry ID sem evidência;
 - provider parcial continua zero até inventário atual fechar ao teto de evidência aceito;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.
