@@ -1,103 +1,107 @@
 # Not Enough Glyphs
 
-Status: `PHASE 2 — CURRENT 4.6.1 HIGH-IMPACT CAPABILITIES NORMALIZED; COMPLETE PRIMITIVE PASS STILL OPEN`
+Status: `PHASE 2AF — SOURCE-PINNED 4.6.1 / CURRENT-PACK REGISTRATION MATRIX COMPLETE / 40 REGISTERED PRIMITIVES, 39 SOURCE-ENABLED / SPELL BINDER + PERKS + RUNTIME BOUNDARIES AUDITED / FULL-MODPACK QA PENDING`
 
 ## Runtime identity
 
 - Mod id: `not_enough_glyphs`
-- Current JAR: `not_enough_glyphs-1.21.1-4.6.1.jar`
+- Physical JAR: `not_enough_glyphs-1.21.1-4.6.1.jar`
 - Runtime version: `4.6.1`
+- Physical SHA-1: `e5fd04b7c40d6d5a9aea5d6356f3eb628941fca4`
+- Embedded Sauce: `0.0.42.89`
 - Loader/game: NeoForge 1.21.1
-- Phase 2 class: `ARS GLYPH / SYSTEM PROVIDER`
+- Phase 2 class: `ARS GLYPH / FALLBACK-COMPAT / CAST-DEVICE / PERK PROVIDER`
+- Exact source-semver pin: `Alexthw46/NotEnoughGlyphs@2f0c7b9fcf802c7e85b4ed4d7ed94123bcee398b`
 
-## Verified current capabilities
+The source commit declares `mod_version=4.6.1`. This is a source-semver pin, not a claim that the public source tree was independently reproduced byte-for-byte into the physical installed JAR.
 
-### Trail / Echoing Projectile
+## Current-pack registration result
 
-Projectile-oriented form that can resolve the configured spell along the projectile trail before the projectile expires. This is already a provider-native moving-path/repeated-delivery primitive.
+Registration is conditional on loaded providers. In the physical 2026-09-08 pack:
 
-### Plow
+- `ars_elemental` **is installed** → NEG does not register its local Arc/Homing fallbacks; it only references the four real Ars Elemental primitives in its internal `registeredSpells` list and enables four Elemental Binder focus perks.
+- `ars_controle` **is installed** → NEG does not register its local `ars_controle:filter_random` fallback.
+- `toomanyglyphs` **is absent** → NEG registers 14 Too Many Glyphs fallback primitives under the historical `toomanyglyphs` namespace.
+- `arsomega` **is absent** → NEG registers 8 Ars Omega fallback primitives under `arsomega`.
+- `ars_trinkets` **is absent** → NEG registers 2 Ars Trinkets fallback filters under `ars_trinkets`.
+- `ars_scalaes` is absent, but Resize is registered unconditionally under `ars_scalaes` by current NEG source.
 
-Agricultural/hoe-style operation exposed as a glyph capability.
+Result for this pack: **40 calls to `APIRegistry.registerSpell` by NEG**. `not_enough_glyphs:momentum` is still registered but explicitly returns `isEnabled() = false`, so **39 are source-enabled before user/provider config**.
 
-### Plane
+The internal documentation list additionally contains four real Ars Elemental primitives. They are **not** counted as NEG registrations.
 
-Area/geometry primitive described as a non-repeating linger-like plane. Public examples include circles/cylinders and hollow-square style applications depending on composition.
+See [`REGISTRATION-MATRIX.md`](REGISTRATION-MATRIX.md) and [`glyphs/`](glyphs/).
 
-### Contingencies
+## Spell Binder correction
 
-Current 1.21.1+ system that stores a spell and executes it when its condition occurs. Public documentation states:
+The old catalog sentence “stores up to 25 spells” was too coarse. Exact 4.6.1 source exposes two distinct surfaces:
 
-- mana is paid on the initial contingency cast rather than repeatedly on each later trigger;
-- only one contingency is active at a time;
-- death is a documented example trigger/use case.
+- item capability/container: **25 storage slots**;
+- Ars caster data: `BinderCasterData(10)` = **10 caster/radial spell slots**;
+- `SpellBinder.getBinderCaster` synchronizes the **first 10** inventory slots into the caster.
 
-This materially overlaps generic “cast X automatically when Y happens” design space.
+The container visibly exposes slots 0–24. `Events.attachCaps` also reacts to changes across the 25-slot item handler and calls `setSpell(..., slot)`. How slots 10–24 interact with the 10-slot caster is therefore a **runtime QA item**, not something to infer from storage capacity.
 
-### SpellBinder
+See [`SPELL-BINDER-AND-PERKS.md`](SPELL-BINDER-AND-PERKS.md).
 
-Stores up to 25 spells using supported carrier sources such as caster tomes or spell parchments.
+## Provider-owned systems
 
-## Binder threads
+NEG 4.6.1 additionally registers:
 
-Current public documentation exposes binder modifiers including:
+- one Spell Binder item;
+- one `spell_holder` menu;
+- one network-synchronized Binder caster data component;
+- two custom projectile entities: `trail` and `missile`;
+- three NEG MobEffects: `grow`, `shrink`, `stuffed`;
+- two C2S custom payloads for opening the Binder and selecting a caster slot;
+- 13 Binder perks/threads in this pack: nine base + four Ars Elemental focus threads;
+- particle/timeline integrations and turret behavior for Trail, Missile and Ray;
+- two mixins extending Ars Scribe's Table / Summoning Focus behavior.
 
-- Focus — with Shapers/Summoning/Elemental variants when the relevant integration is available;
-- Randomize — causes random buff/debuff behavior per glyph in the documented binder context;
-- Slow Power;
-- Cheap Damage;
-- Sharp Pages;
-- Hard Cover.
+## High-impact coverage
 
-Exact formulas for every thread are not normalized here unless explicitly present in current public documentation.
+Current NEG coverage materially overlaps generic design space for:
 
-## Repacked/migrated glyph families
+- contingency/event-triggered Ars casting;
+- ray, missile, trail and propagated-projectile delivery;
+- chained resolution;
+- planar/circular/hollow geometry;
+- target-filter predicates;
+- block tilling/flattening;
+- entity mounting;
+- feeding/Stuffed/crush interaction;
+- resize/grow/shrink;
+- multi-spell storage/casting device;
+- Binder focus, crit, damage, knockback, mana-discount and random spell-stat modifiers.
 
-Not Enough Glyphs includes compatibility/repacked capabilities from earlier addons and automatically disables repacked entries when the original provider is present where supported.
-
-Current public 1.21.1 material references, among others:
-
-- Ray;
-- Chain;
-- Redirect Placement;
-- several filters from Too Many Glyphs;
-- vanilla-form propagators + Flatten from Omega;
-- Arc/Homing projectile forms and propagators originating from Ars Elemental coverage;
-- Filter Self / Filter Not Self from Trinkets-era coverage.
-
-This makes ownership/deduplication especially important: a capability appearing in NEG documentation is not automatically owned uniquely by NEG if the original addon is installed and the repacked copy disables itself.
-
-## Important current ownership correction — Random filter
-
-The current 4.5.1+ changelog explicitly moved the `Random` filter to Ars Controle. Therefore:
-
-- `Filter: Random` is treated as Ars Controle coverage in the current pack;
-- NEG's `Randomize` Binder thread remains a different, binder-specific randomization capability;
-- Black Arcana must not count these as two independent generic probability gaps.
-
-## Deduplication impact
-
-Not Enough Glyphs already covers or contributes to:
-
-- event-triggered/contingency casting;
-- repeated projectile-path spell delivery;
-- planar/geometric placement;
-- spell storage/containerization;
-- binder-specific randomization;
-- multiple filter/propagator utility families.
-
-A future Chaos mechanic cannot use “random outcome” alone as novelty. A future Order/geometry mechanic cannot use “plane/hollow geometry” alone as novelty. A future emergency spell cannot use “automatically trigger this stored spell on condition” alone as novelty.
+These overlaps are not automatically Black Arcana gaps.
 
 ## Authority / fail-closed
 
-- Ars Nouveau remains authority for glyph execution and mana settlement.
-- NEG-owned repacked entries must respect the provider's own disable/delegation behavior when original addons are present.
-- Contingency must not be mirrored by Black Arcana as a second trigger that executes the same stored action twice.
-- Unknown costs, registry IDs and thread formulas remain `UNVERIFIED` rather than inferred.
+- Ars Nouveau/NEG/Sauce remain authority for their glyph execution, contingency storage/triggers, caster state and mana settlement.
+- Historical namespaces on fallback primitives are deliberately preserved; NEG implementing a fallback does not make Black Arcana the owner of that capability.
+- Black Arcana must not replay a provider cast, duplicate a contingency trigger, double-debit Ars mana, mirror Binder state, or spawn a second provider projectile merely to observe the action.
+- `Plow` contains an explicit provider claim-respect check. `Flatten` does not expose the same explicit check in its audited class; effective protection is therefore a QA question, not a declared bypass or declared safety guarantee.
+- Client packets are requests. Server handlers re-resolve the Binder from the declared hand before mutating/opening provider state.
+- Exact behavior inherited only from Sauce/Ars base classes remains attributed to those bases unless directly observed in NEG source.
 
-## Provenance / confidence
+## Validation boundary
 
-- Presence/version: current 2026-09-06 modlist — HIGH.
-- Capability semantics and migration notes: current public Not Enough Glyphs 4.6.1 project/changelog — HIGH at feature level.
-- Complete current glyph/filter inventory and all numeric values: still `IN PROGRESS`.
-- No Java bytecode was decompiled.
+This phase closes the source-level current-pack inventory and provider contract. It does **not** claim:
+
+- byte-for-byte source/JAR reproducibility;
+- real-client/full-modpack interop PASS;
+- that Binder storage slots 10–24 are castable;
+- that every downstream world mutation has been tested against the user's protection/claim stack;
+- that a Phase 3 Black Arcana feature is now approved.
+
+Phase 3 remains blocked by the canonical deduplication rule.
+
+## Files
+
+- [`REGISTRATION-MATRIX.md`](REGISTRATION-MATRIX.md)
+- [`SPELL-BINDER-AND-PERKS.md`](SPELL-BINDER-AND-PERKS.md)
+- [`RUNTIME-BOUNDARIES.md`](RUNTIME-BOUNDARIES.md)
+- [`DELEGATION-AND-DISABLED.md`](DELEGATION-AND-DISABLED.md)
+- [`EVIDENCE-AND-PROVENANCE.md`](EVIDENCE-AND-PROVENANCE.md)
+- [`glyphs/`](glyphs/)
