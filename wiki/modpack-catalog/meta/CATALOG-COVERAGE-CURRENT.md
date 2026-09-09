@@ -20,11 +20,14 @@ The historical 2026-09-07 queue used **612 top-level entries / 103 candidate com
 
 ## Current working denominator
 
-The current operational denominator remains **100 magic/cross-domain component units** from the physical reconciliation introduced in Phase 2AF:
+The current operational denominator remains **100 magic/cross-domain component units** after direct ID reconciliation of the historical 103-candidate set against the physical modlist:
 
-- 98 entries from the former 103-unit candidate set still survive the current physical modlist;
-- 5 former entries are no longer physically present: `ars_morph`, `backportedspellbooks`, `crystal_chronicles`, `gtbcs_geomancy_plus`, `woodwalkers_spellbooks`;
-- 2 current magic/cross-domain candidates not represented by the old 103-unit baseline remain under classification: `soul_fire_d` and `reliquified_lenders_cataclysm_new_relics_fix`.
+- **98** of the former 103 candidate mod IDs still survive the current physical modlist;
+- the **5 actually absent** former candidates are `ars_morph`, `morerelics`, `reliquary`, `vestis` and `woodwalkers_spellbooks`;
+- **2** current magic/cross-domain candidates not represented by the old 103-unit baseline remain under classification: `soul_fire_d` and `reliquified_lenders_cataclysm_new_relics_fix`;
+- therefore `103 - 5 + 2 = 100` current operational units.
+
+Correction from the earlier Phase 2AF reconciliation text: `backportedspellbooks`, `crystal_chronicles` and `gtbcs_geomancy_plus` are physically present in the same 595-entry / SHA-1 `7aaece...` modlist and must not be listed as removed.
 
 This denominator is operational, not immutable. Reconcile it whenever the physical provider set changes.
 
