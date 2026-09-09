@@ -7,8 +7,8 @@ Phase 2AU audits `apothic_enchanting` 1.6.2 against the current physical modpack
 ## Canonical base
 
 - initial Phase 2AU branch base: `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`
-- latest reconciled `main`: `29a0099e899e03d80bf904c2d5ead72f40421fe8`
-- the intervening PR #157 is Stage 05 keyboard-focus work and has zero catalog coverage delta; none of its 11 changed files overlaps this Phase 2AU catalog tranche
+- latest reconciled `main`: `78639998c212e91469e9036484bd5ac2ac9b699b`
+- intervening PRs #157 and #159 are Stage 05 keyboard-focus work with zero catalog coverage delta; none of their changed files overlaps this Phase 2AU catalog tranche
 - canonical component count on the reconciled base: **48/100 = 48%**
 - Phase 2AT / PR #156 is canonical as component #48 (`apothic_spawners` 1.4.0)
 
