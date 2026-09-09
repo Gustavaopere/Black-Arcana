@@ -20,6 +20,7 @@ public final class BlackArcanaRadialScreen extends Screen {
     private static final double PREFERRED_INNER_HIT_RADIUS = 28.0D;
     private static final double HIT_RADIUS_PADDING = 34.0D;
     private static final int VIEWPORT_MARGIN = 4;
+    private static final int CARD_TEXT_PADDING = 2;
 
     private final List<ArcanaSpellId> loadout;
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
@@ -96,10 +97,17 @@ public final class BlackArcanaRadialScreen extends Screen {
             graphics.fill(x - card.halfWidth(), y - card.halfHeight(),
                     x + card.halfWidth(), y + card.halfHeight(), background);
 
-            String prefix = focusPrefix(focus);
-            String label = card.compact()
-                    ? prefix + (slot + 1)
-                    : prefix + (slot + 1) + " · " + displayName(spell, card.halfWidth() * 2 - 18);
+            int maxLabelWidth = Math.max(1, card.halfWidth() * 2 - CARD_TEXT_PADDING * 2);
+            String label;
+            if (card.compact()) {
+                String compactLabel = compactFocusPrefix(focus) + (slot + 1);
+                label = font.plainSubstrByWidth(compactLabel, maxLabelWidth);
+            } else {
+                String fixedPrefix = focusPrefix(focus) + (slot + 1) + " · ";
+                int nameBudget = spellNameWidthBudget(maxLabelWidth, font.width(fixedPrefix));
+                String name = nameBudget > 0 ? displayName(spell, nameBudget) : "";
+                label = font.plainSubstrByWidth(fixedPrefix + name, maxLabelWidth);
+            }
             graphics.drawCenteredString(font, label, x, y - 4, 0xFFFFFFFF);
         }
 
@@ -140,7 +148,7 @@ public final class BlackArcanaRadialScreen extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (shouldCloseFromOpenKey(
-                BlackArcanaClientConfig.RADIAL_BEHAVIOR.get(),
+                BlackArcanaClientConfig.RadialBehavior.get(),
                 BlackArcanaKeyMappings.OPEN_RADIAL.matches(keyCode, scanCode))) {
             onClose();
             return true;
@@ -170,6 +178,22 @@ public final class BlackArcanaRadialScreen extends Screen {
             case HOVERED -> "> ";
             case SELECTED_HOVERED -> ">[S] ";
         };
+    }
+
+    static String compactFocusPrefix(CastingUxSemantics.FocusState focus) {
+        return switch (focus) {
+            case NONE -> "";
+            case SELECTED -> "S";
+            case HOVERED -> ">";
+            case SELECTED_HOVERED -> ">S";
+        };
+    }
+
+    static int spellNameWidthBudget(int labelWidth, int fixedPrefixWidth) {
+        if (labelWidth < 0 || fixedPrefixWidth < 0) {
+            throw new IllegalArgumentException("radial label widths cannot be negative");
+        }
+        return Math.max(0, labelWidth - fixedPrefixWidth);
     }
 
     @Override
