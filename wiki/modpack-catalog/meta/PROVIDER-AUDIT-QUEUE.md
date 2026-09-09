@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AO / PR #150 está canônica em `main@068ca67e786d95255ccecb70433dd66d26a4b3e4`;
-- cobertura canônica na criação da Phase 2AP: **43/100 = 43%**;
-- esta revisão Phase 2AP fecha `create_enchantment_industry_plus` como componente #44 ao limite exato de physical+source-version disponível;
-- o resultado **44/100 = 44%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
+- Phase 2AQ / PR #152 está canônica em `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`;
+- cobertura canônica atual: **45/100 = 45%**;
+- Phase 2AP / PR #151 permanece componente #44 canônico em `main@70a97ec0cf58cecebe4054f43ea5b212e757e365`;
+- PR #153 corrige somente a evidência de metadata da Phase 2AP e possui **zero delta de cobertura**;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,47 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AP — Create Enchantment Industry Plus 1.1.1
+## Phase 2AQ — Apothic Compat 2.0.2 — canonical
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `create_enchantment_industry_plus` | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | EXACT PHYSICAL+OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / CREATE METADATA TABLE MIS-KEYED / UNDECLARED CREATE DRAGONS PLUS DATA DEPENDENCY / COMPONENT #44 CANDIDATE / LICENSE-METADATA + BYTE+FULL-PACK QA FAIL-CLOSED |
+| `apothic_compat` | `apothic_compat-2.0.2.jar` | CANÔNICO VIA PR #152 / EXACT PHYSICAL+PUBLISHER+TAGGED OFFICIAL SOURCE VERSION / APOTHEOSIS LOOT-CATEGORY DATA-MAP + AFFIX-BLACKLIST COMPAT / 0 SPELLS+GLYPHS+RITUALS / 0 MIXINS / 4 JAVA CLASSES / 13 BOW CATEGORY OVERRIDES / 1 CONFIG KEY / 2 COMMAND ROOTS+ALIASES / 3 EVENT HOOKS / COMPONENT #45 / PRIVATE-REFLECTION+BYTE+FULL-PACK QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `868506b8367be2c155acde0ef186b5a3e6ba8db9`.
+- CurseForge project/file: `1516278 / 8219980`, exact NeoForge 1.21.1 release dated 2026-06-09.
+- Exact official GitHub release tag: `v2.0.2-neoforge-1.21.1`; published release asset `apothic_compat-2.0.2.jar` has SHA-256 `eaee4ee2be65b95fe10ee749dc2d023b90fb63338825f5ba0b697124f42295de`.
+- Exact tagged source revision: `Nightwielder23/apothic-category-compat@cebf69a37f8c6573fc0c0295e627f4636e7bd026`.
+- Exact metadata declares `mod_version=2.0.2`, Minecraft 1.21.1, NeoForge baseline 21.1.230, Apotheosis baseline 8.5.4 and runtime Apotheosis range `[8.5,9)`.
+- Physical pack uses Apotheosis `8.8.0`, Placebo `9.9.2` and Apothic Attributes `2.10.1`; the declared Apotheosis range is satisfied, but private-reflection parity is not inferred from semver.
+- Exact source tree exposes 4 Java classes, 0 mixins, 0 standalone spells, 0 glyphs, 0 rituals, 0 provider mana/cast resource and no provider packet/persistence surface observed.
+- Exact `data/apotheosis/data_maps/item/loot_category_overrides.json` contains 13 explicit item mappings, all to `apotheosis:bow`.
+- Exact config has one semantic key, `affix_blacklist`, in `apothic_compat-common.toml`.
+- Exact commands are `/apothiccompat reload` and `/ac reload`, permission level 2. Later/editorial `/apothiccategorycompat` or `/acc` naming is not projected onto installed 2.0.2.
+- Exact runtime hooks are command registration, `ServerStartedEvent` blacklist application and full `OnDatapackSyncEvent` blacklist reapplication.
+- `AffixBlacklist` filters the host affix-by-type pool by reflectively writing private `AffixRegistry.byType`; reflection failure is caught/logged and is not a supported Black Arcana integration seam.
+- Static QA edge: changing an already-applied non-empty blacklist to empty and running only `/ac reload` returns before reconstructing the filtered host pool. A host pool rebuild lifecycle is distinct; live unblacklist semantics remain runtime-QA pending.
+- Continued-port item registry parity and data-map priority across the physical pack remain fail-closed until runtime verification.
+- Root tagged source and exact NeoForge metadata are MIT. Inspection is factual/read-only; no code/assets are copied.
+- Exact tagged source/release asset are not promoted to byte-for-byte physical-JAR identity without direct reproducibility comparison.
+- Final PR-head CI #2228 (`34358226123`) passed on `7c69cee76d3bb866e4cdd3ff8a2748bef43df639`.
+- Exact post-merge `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c` CI #2230 (`34358659906`) passed the full pipeline.
+
+### Provider authority
+
+- Apotheosis owns loot-category semantics/data-map interpretation, affix identities/registry/pools, affix rolling and synchronization.
+- Apothic Compat owns only its 13 contributed data-map values, affix-blacklist policy/reapplication and command UX.
+- Black Arcana retains canonical casting, transactional costs, BA cooldowns/charges, targeting, hazards, Corruption, Strain, Arcane Danger, Backlash causality and `WorldEffectPolicy`.
+- `apotheosis:bow`, the blacklist and provider affix pool are not Black Arcana spell-domain/cast/proc authority.
+- BA must not duplicate the same category mappings or copy the provider's private reflection seam as a generic proc-suppression mechanism.
+- RPG Skill Tree receives no affix/category or magic runtime authority.
+
+## Phase 2AP — Create Enchantment Industry Plus 1.1.1 — canonical predecessor
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `create_enchantment_industry_plus` | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | CANÔNICO VIA PR #151 / EXACT PHYSICAL+OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / CREATE METADATA TABLE MIS-KEYED / UNDECLARED CREATE DRAGONS PLUS DATA DEPENDENCY / COMPONENT #44 / LICENSE-METADATA + BYTE+FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -273,22 +309,26 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AP usa `docs/magic-catalog-phase2ap-create-enchantment-industry-plus-1.1.1` sobre `main@068ca67e786d95255ccecb70433dd66d26a4b3e4`. Nenhuma branch/PR equivalente existia quando a Phase 2AP foi iniciada.
+Phase 2AQ / PR #152 já está canônica em `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`. O PR #153 é o follow-up ativo de correção factual da Phase 2AP e deve preservar integralmente os arquivos adicionados pela 2AQ.
+
+A CI #2229 do antigo HEAD do PR #153 foi invalidada como evidência final quando a main avançou com a Phase 2AQ. A correção precisa ser reconciliada com `main@bdf5271c...` e revalidada em um novo HEAD antes do merge.
 
 PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AP
+## Próxima seleção após a correção Phase 2AP / PR #153
 
 Selecionar somente depois de:
 
-1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AP;
-3. verificação da modlist física atual;
-4. pesquisa de PR/branch equivalente;
-5. leitura do catálogo já canônico;
-6. confirmação da versão exata e do melhor source/API/release aplicável.
+1. reconciliação e CI GREEN do PR #153 no HEAD exato;
+2. latest-main gate imediatamente pré-merge;
+3. merge e confirmação do `main` final;
+4. CI pós-merge no SHA exato da main;
+5. verificação da modlist física atual;
+6. pesquisa de PR/branch equivalente;
+7. leitura do catálogo já canônico;
+8. confirmação da versão exata e do melhor source/API/release aplicável.
 
 Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
 
@@ -312,10 +352,11 @@ Exemplos atuais:
 - API/framework que migrou para sibling provider deve manter a authority no provider atual; não atribuir API histórica ao consumer instalado;
 - client presentation hook não é cast authority;
 - cross-provider cast cancellation/reconciliation não vira segundo cast authority;
-- registry/example/animation/compatibility/fire/recipe object não vira spell por contagem;
+- registry/example/animation/compatibility/fire/recipe/data-map/affix object não vira spell por contagem;
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
-- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, fire-framework settlement, recipe/resource settlement, presentation adapter ou world mutation de provider;
+- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, fire-framework settlement, recipe/resource settlement, loot-category/affix settlement, presentation adapter ou world mutation de provider;
+- private reflection usada internamente por provider não é automaticamente API de integração segura para Black Arcana;
 - source-family label ou Java symbol não deve ser confundido com registry ID sem evidência;
 - provider parcial continua zero até inventário atual fechar ao teto de evidência aceito;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.

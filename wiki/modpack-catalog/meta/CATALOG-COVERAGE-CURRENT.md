@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AP revision: 44/100 = 44%.**
+**Current canonical coverage: 45/100 = 45%.**
 
-Phase 2AO / PR #150 is canonical at merge SHA `068ca67e786d95255ccecb70433dd66d26a4b3e4` and made component #43 canonical, so current canonical coverage is **43/100 = 43%**. Component #44 becomes canonical only when this Phase 2AP revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AP branch/PR, canonical coverage remains **43/100 = 43%**.
+Phase 2AQ / PR #152 is canonical at merge SHA `bdf5271c265b5f40ee5a9e7695c7d71374a4c31c` and made component #45 canonical. Phase 2AP / PR #151 remains component #44 at merge SHA `70a97ec0cf58cecebe4054f43ea5b212e757e365`. The Phase 2AP metadata correction in PR #153 has **zero coverage delta**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -145,7 +145,7 @@ The provider owns reconciliation around Iron's casts, not a second spell runtime
 
 Phase 2AM / PR #147 is canonical at merge SHA `192f5d3c109189a9fee5fb3fc247bfbd75a93b68` and closed `reliquified_lenders_cataclysm_new_relics_fix` at the exact physical/publisher evidence ceiling as a bounded Relics 0.10→0.12 compatibility bridge:
 
-- physical artifact `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar`, SHA-1 `9d4710e665ec74af917bbf5f819154ca9f74ca0`;
+- physical artifact `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar`, SHA-1 `9d4710e665ec74af917bb9f5f819154ca9f74ca0`;
 - exact CurseForge project/file `1665965 / 8778365`, release 2026-08-31;
 - publisher environment Client & Server and license All Rights Reserved;
 - original target addon explicitly `Reliquified L_Ender's Cataclysm 0.1.1`;
@@ -201,9 +201,9 @@ License metadata is intentionally unresolved for reuse: exact source metadata/ro
 
 The point is awarded because the exact 6.1.0 component identity, content surface, authority migration and deduplication boundary are closed without claiming source/JAR byte reproducibility or full-pack runtime interoperability.
 
-## Phase 2AP — Create Enchantment Industry Plus component #44 candidate
+## Phase 2AP — Create Enchantment Industry Plus component #44, canonical
 
-Phase 2AP closes `create_enchantment_industry_plus` 1.1.1 at the exact physical/source evidence ceiling as a small Create / Create: Enchantment Industry recipe-and-content extension:
+Phase 2AP / PR #151 is canonical at merge SHA `70a97ec0cf58cecebe4054f43ea5b212e757e365` and closed `create_enchantment_industry_plus` 1.1.1 at the exact physical/source evidence ceiling as a small Create / Create: Enchantment Industry recipe-and-content extension:
 
 - physical artifact `create_enchantment_industry_plus-1.1.1-1.21.1.jar`, SHA-1 `c7e87eb00e10cb347f6372e17d38da51ce6f1975`;
 - exact official source pin `TiesToetToet/create_enchantment_industry_plus@fb97ed35288f7ff2c80d43ef33f051db93d281d5`, whose metadata declares version 1.1.1 for Minecraft 1.21.1;
@@ -220,7 +220,32 @@ Create owns machine/process execution, Create: Enchantment Industry owns its exp
 
 License metadata remains a reuse-review boundary: exact source metadata and Modrinth indicate MIT, CurseForge labels LGPLv3, and the repository `LICENSE.txt` is Forge-origin LGPL boilerplate. Source/data inspection is read-only and no code/assets are copied.
 
-The point is awarded only after latest-main reconciliation, exact-head CI GREEN and merge because the exact 1.1.1 semantic component is closed without pretending source/JAR byte reproducibility or full-pack recipe interoperability has been proven.
+The point was awarded because the exact 1.1.1 semantic component was closed without pretending source/JAR byte reproducibility or full-pack recipe interoperability had been proven.
+
+## Phase 2AQ — Apothic Compat component #45, canonical
+
+Phase 2AQ / PR #152 is canonical at merge SHA `bdf5271c265b5f40ee5a9e7695c7d71374a4c31c` and closed `apothic_compat` 2.0.2 at the exact physical/publisher/tagged-source evidence ceiling as an Apotheosis loot-category data-map and affix-blacklist compatibility provider:
+
+- physical artifact `apothic_compat-2.0.2.jar`, SHA-1 `868506b8367be2c155acde0ef186b5a3e6ba8db9`;
+- exact CurseForge project/file `1516278 / 8219980`, NeoForge 1.21.1 release dated 2026-06-09;
+- exact official GitHub release tag `v2.0.2-neoforge-1.21.1`, with published asset SHA-256 `eaee4ee2be65b95fe10ee749dc2d023b90fb63338825f5ba0b697124f42295de`;
+- exact tagged source revision `Nightwielder23/apothic-category-compat@cebf69a37f8c6573fc0c0295e627f4636e7bd026`, whose metadata declares `mod_version=2.0.2`, Minecraft 1.21.1 and NeoForge baseline 21.1.230;
+- runtime metadata requires Apotheosis `[8.5,9)`; physical Apotheosis 8.8.0 satisfies that declared range;
+- **0 standalone spells, 0 glyphs, 0 rituals and 0 provider mana/cast resource**;
+- **0 mixins**, **4 Java classes**, one provider data-map resource and no provider packet/persistence surface observed;
+- exactly **13 loot-category data-map overrides**, all mapping explicit third-party item IDs to `apotheosis:bow`;
+- one config key, `affix_blacklist`, stored in `apothic_compat-common.toml`;
+- exact command identities `/apothiccompat reload` and `/ac reload`, permission level 2;
+- three NeoForge lifecycle/event hooks: command registration, server-start blacklist application and full datapack-sync blacklist reapplication;
+- affix-blacklist runtime rebuilds the host affix-by-type selection pool while leaving the backing affix registry intact, and catches private-reflection failure rather than propagating it.
+
+Apotheosis owns loot-category semantics/data-map interpretation, affix identities/registry/pools, rolling and synchronization. Apothic Compat owns only its contributed mappings, blacklist policy/reapplication and command UX. Black Arcana retains all canonical spell/cast/hazard/world-safety authority and must not use this provider's reflection into private `AffixRegistry.byType` as a BA extension seam.
+
+The exact source also exposes a static QA edge case: after a non-empty blacklist has filtered the host pool, changing the blacklist to empty and running only `/ac reload` returns before reconstructing the already-filtered `byType` map. A normal Apotheosis pool rebuild lifecycle is distinct. Live removal semantics therefore remain runtime-QA pending.
+
+Exact command names from the tagged 2.0.2 source supersede later/editorial renamed forms such as `/apothiccategorycompat` or `/acc`. Continued-port target registry parity and physical Apotheosis 8.8.0 private-field compatibility likewise remain fail-closed until runtime verification.
+
+The point was awarded after exact-head CI GREEN and merge. Source/release-asset/physical-JAR byte reproducibility is not asserted without a direct byte comparison.
 
 ## Partial providers still receive zero points
 
