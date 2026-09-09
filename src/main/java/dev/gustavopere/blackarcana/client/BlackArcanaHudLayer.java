@@ -1,8 +1,8 @@
 package dev.gustavopere.blackarcana.client;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
+import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
-import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
@@ -52,9 +52,13 @@ public final class BlackArcanaHudLayer {
         boolean resultRecent = result.isPresent() && resultTick.isPresent()
                 && HudLayout.isRecent(now, resultTick.getAsLong(), feedbackDuration);
         BlackArcanaClientConfig.FeedbackLevel level = BlackArcanaClientConfig.FEEDBACK_LEVEL.get();
-        boolean denialRecent = resultRecent && !"SUCCESS".equals(result.orElseThrow().status());
+        CastingUxSemantics.AdmissionState resultState = resultRecent
+                ? resultSemanticState(result.orElseThrow())
+                : null;
+        boolean problemRecent = resultState == CastingUxSemantics.AdmissionState.CAST_DENIED
+                || resultState == CastingUxSemantics.AdmissionState.CAST_FAILED;
 
-        if (level == BlackArcanaClientConfig.FeedbackLevel.MINIMAL && !denialRecent) return;
+        if (level == BlackArcanaClientConfig.FeedbackLevel.MINIMAL && !problemRecent) return;
         if (!selectionRecent && !resultRecent) return;
 
         List<Component> lines = new ArrayList<>(4);
@@ -67,11 +71,13 @@ public final class BlackArcanaHudLayer {
         }
         if (resultRecent) {
             CastResultPayload payload = result.orElseThrow();
-            if (!"SUCCESS".equals(payload.status())) {
+            if (problemRecent) {
                 // The detail is the bounded server result; the client never invents a gate reason.
-                lines.add(Component.translatable("hud.black_arcana.denied", Component.literal(payload.detail())));
+                lines.add(Component.translatable(
+                        resultTranslationKey(resultState),
+                        Component.literal(payload.detail())));
             } else if (level == BlackArcanaClientConfig.FeedbackLevel.VERBOSE) {
-                lines.add(Component.translatable("hud.black_arcana.cast_success"));
+                lines.add(Component.translatable(resultTranslationKey(resultState)));
             }
         }
         if (lines.isEmpty()) return;
@@ -151,7 +157,10 @@ public final class BlackArcanaHudLayer {
         if (selected.isEmpty()) return Optional.empty();
         ArcanaSpellId spell = selected.orElseThrow();
         HazardPreflightPayload.Entry entry = ClientArcanaSyncState.hazardPreflightSnapshot().get(spell);
-        if (entry == null || entry.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
+        if (entry == null
+                || CastingUxSemantics.hazardForTier(entry.parsedTier()) == CastingUxSemantics.HazardState.NONE) {
+            return Optional.empty();
+        }
 
         Optional<HazardResistanceForecastPayload> forecast = ClientArcanaSyncState.hazardResistanceForecast(spell);
         if (forecast.isPresent()) {
@@ -168,7 +177,10 @@ public final class BlackArcanaHudLayer {
         if (selected.isEmpty()) return Optional.empty();
         ArcanaSpellId spell = selected.orElseThrow();
         HazardPreflightPayload.Entry entry = ClientArcanaSyncState.hazardPreflightSnapshot().get(spell);
-        if (entry == null || entry.parsedTier() == ArcaneDangerTier.NORMAL) return Optional.empty();
+        if (entry == null
+                || CastingUxSemantics.hazardForTier(entry.parsedTier()) == CastingUxSemantics.HazardState.NONE) {
+            return Optional.empty();
+        }
 
         Optional<HazardResistanceForecastPayload> forecast = ClientArcanaSyncState.hazardResistanceForecast(spell);
         if (forecast.isEmpty()) return Optional.empty();
@@ -192,19 +204,21 @@ public final class BlackArcanaHudLayer {
     static Component resistanceForecastLine(HazardResistanceForecastPayload forecast) {
         Component tier = Component.translatable(
             "hazard.black_arcana.tier." + forecast.parsedTier().name().toLowerCase(Locale.ROOT));
-        if (!forecast.available()) {
+        CastingUxSemantics.HazardState semantic = CastingUxSemantics.hazardForResistance(forecast.parsedStatus());
+        if (semantic == CastingUxSemantics.HazardState.FORECAST_UNAVAILABLE) {
             return Component.translatable(
                 "hazard.black_arcana.forecast.unavailable",
                 tier,
                 Component.literal(formatResistance(forecast.minimumArcaneResistance())),
                 Component.literal(formatResistance(forecast.recommendedArcaneResistance())));
         }
-        Component status = Component.translatable(switch (forecast.parsedStatus()) {
+        Component status = Component.translatable(switch (semantic) {
             case BELOW_MINIMUM -> "hazard.black_arcana.forecast.status.blocked";
             case BELOW_RECOMMENDED -> "hazard.black_arcana.forecast.status.below_recommended";
-            case RECOMMENDED -> "hazard.black_arcana.forecast.status.recommended";
-            case NORMAL -> "hazard.black_arcana.forecast.status.normal";
-            case UNAVAILABLE -> "hazard.black_arcana.forecast.status.unavailable";
+            case RECOMMENDATION_MET -> "hazard.black_arcana.forecast.status.recommended";
+            case NONE -> "hazard.black_arcana.forecast.status.normal";
+            case DANGER_PRESENT -> throw new IllegalStateException("tier-only danger state is not a resistance forecast state");
+            case FORECAST_UNAVAILABLE -> throw new IllegalStateException("unavailable forecast handled above");
         });
         return Component.translatable(
             "hazard.black_arcana.forecast",
@@ -226,10 +240,20 @@ public final class BlackArcanaHudLayer {
         };
     }
 
+    static String resultTranslationKey(CastingUxSemantics.AdmissionState state) {
+        return switch (state) {
+            case CAST_DENIED -> "hud.black_arcana.denied";
+            case CAST_FAILED -> "hud.black_arcana.cast_failed";
+            case CAST_SUCCEEDED -> "hud.black_arcana.cast_success";
+            case FORECAST_CLEAR, FORECAST_BLOCKED, FORECAST_UNAVAILABLE ->
+                    throw new IllegalArgumentException("forecast state is not an authoritative cast result");
+        };
+    }
+
     static Component preflightLine(HazardPreflightPayload.Entry entry) {
         Component tier = Component.translatable(
                 "hazard.black_arcana.tier." + entry.parsedTier().name().toLowerCase(Locale.ROOT));
-        if (entry.parsedTier() == ArcaneDangerTier.NORMAL) {
+        if (CastingUxSemantics.hazardForTier(entry.parsedTier()) == CastingUxSemantics.HazardState.NONE) {
             return Component.translatable("hazard.black_arcana.preflight.normal", tier);
         }
         return Component.translatable(
@@ -237,6 +261,10 @@ public final class BlackArcanaHudLayer {
                 tier,
                 Component.literal(formatResistance(entry.minimumArcaneResistance())),
                 Component.literal(formatResistance(entry.recommendedArcaneResistance())));
+    }
+
+    private static CastingUxSemantics.AdmissionState resultSemanticState(CastResultPayload payload) {
+        return CastingUxSemantics.admissionForResult(ArcanaCastResult.Status.valueOf(payload.status()));
     }
 
     private static Optional<ArcanaSpellId> selectedSpell() {
