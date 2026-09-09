@@ -2,7 +2,7 @@
 
 ## Provider closure signal
 
-Monsters & Spellbooks contributes a large Iron's-hosted spell surface: **98 registered spell objects** in the current public registry inventory, plus a genuine Necro school and a retained/soft-deleted Aero SchoolType surface.
+Monsters & Spellbooks contributes a large Iron's-hosted spell surface: **98 registered spell objects** in the current public registry inventory. The inspected source also exposes Necro and Aero SchoolType registrations, but those school observations are not exact 0.0.16.3 binary pins; Aero runtime existence is specifically `NÃO VERIFICADO` because the exact release line removes Aero content.
 
 This delta is for deduplication. It does **not** declare 98 Black Arcana gaps.
 
@@ -41,13 +41,13 @@ These labels only establish **review queues**. Individual equivalence requires b
 
 ## Authority matrix
 
-| Capability surface | Authority |
+| Capability surface | Authority/evidence boundary |
 |---|---|
-| spell registration/implementation | Monsters & Spellbooks |
+| spell registration/implementation | Monsters & Spellbooks, hosted by Iron's; 98 source identities closed semantically |
 | host cast engine | Iron's Spells 'n Spellbooks |
 | provider spell mana/cooldown | Iron's/provider contracts |
-| Necro school power/resistance/damage identity | Monsters & Spellbooks |
-| retained Aero school base stat/damage linkage | provider source reusing Iron's Evocation contracts |
+| source-observed Necro school power/resistance/damage identity | Monsters & Spellbooks source; exact installed parity not asserted |
+| source-observed Aero school | stale source-head observation; installed 0.0.16.3 existence `NÃO VERIFICADO` after release-line removal |
 | Black Arcana Corruption/Strain/Arcane Danger | Black Arcana only |
 | Black Arcana destructive mutations | Black Arcana `WorldEffectPolicy` only |
 | RPG Skill Tree Mastery/progression | sibling RPG provider only through real boundary |
@@ -63,10 +63,11 @@ Specific no-duplication rules:
 - do not mirror a provider summon into another authoritative entity lifecycle;
 - do not create a second Necro stat ledger;
 - do not convert provider Necro effects into Corruption/Strain without a causal adapter;
-- do not treat retained Aero SchoolType presence as an active Aero spell inventory.
+- do not assume `monstersspellbooks:aero` exists in the installed 0.0.16.3 runtime;
+- do not treat Aero's source-head SchoolType observation as an active spell inventory.
 
 ## Evidence ceiling
 
-The 98-registration inventory is closed at semantic/source identity level. Exact 0.0.16.3 numerical and API internals remain fail-closed because the contemporaneous public source tree keeps stale 0.0.14 build metadata.
+The 98-registration inventory is closed at semantic/source identity level. Exact 0.0.16.3 numerical/API internals and uncertain installed-school surfaces remain fail-closed because the contemporaneous public source tree keeps stale 0.0.14 build metadata and the release line explicitly removes Aero content.
 
-This closure is sufficient to move the provider out of the `inventory unknown` bucket; it is not sufficient to authorize runtime integration against unverified exact binary signatures.
+This closure is sufficient to move the provider out of the `inventory unknown` bucket; it is not sufficient to authorize runtime integration against unverified exact binary signatures or school registrations.
