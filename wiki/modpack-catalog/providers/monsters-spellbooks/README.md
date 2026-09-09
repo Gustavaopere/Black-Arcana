@@ -14,7 +14,7 @@
 
 ## Provider role and authority
 
-Monsters & Spellbooks is an Iron's Spells 'n Spellbooks addon. The addon owns its spell implementations, its own registered schools/attributes/effects/equipment/mobs and the gameplay semantics implemented behind those registrations. Iron's remains the casting framework/resource/cooldown/spell-registry authority used by those spells.
+Monsters & Spellbooks is an Iron's Spells 'n Spellbooks addon. The addon owns its spell implementations and provider-defined school/attribute/effect/equipment/mob semantics where those surfaces exist in the installed release. Iron's remains the casting framework/resource/cooldown/spell-registry authority used by those spells.
 
 Black Arcana must not create a second Iron's cast path, second mana debit, mirrored cooldown ledger, duplicate summon lifecycle or duplicate provider world mutation merely because a Monsters & Spellbooks spell overlaps a Black Arcana fantasy.
 
@@ -45,24 +45,31 @@ See [`SPELL-CATALOG.md`](./SPELL-CATALOG.md) for the complete 98-entry source in
 
 ## School surface
 
-The current public source registers two provider-owned `SchoolType` objects:
+The inspected public source head contains two `SchoolType` registrations:
 
 - `monstersspellbooks:necro`
 - `monstersspellbooks:aero`
 
-The exact 0.0.16.2 release explicitly says Aero was soft-deleted in favor of Snackpirate's Aeromancy. The current `ModSpellRegistry` contains no Aero spell registrations. Therefore Aero is recorded as a retained/compatibility school surface, not as an active spell family for the 98-spell inventory.
+This is a **source-head observation**, not proof that both objects exist in the installed 0.0.16.3 binary. The exact 0.0.16.2 release says Aero was soft-deleted, the exact 0.0.16.3 release says remaining Aero content was deleted, and the current source metadata is not an exact 0.0.16.3 build pin. The current source `ModSpellRegistry` contains zero Aero spell registrations.
+
+Therefore:
+
+- the 98-spell semantic inventory contains **0 Aero spell registrations**;
+- `monstersspellbooks:aero` existence in the installed 0.0.16.3 JAR is **`NÃO VERIFICADO`** until exact-JAR evidence is obtained;
+- deduplication and future adapters must not assume the Aero SchoolType exists at runtime.
 
 See [`SCHOOLS-AND-AUTHORITY.md`](./SCHOOLS-AND-AUTHORITY.md).
 
 ## Evidence boundary
 
-The exact installed/release identity is `0.0.16.3`, but the current public repository's `gradle.properties` still declares `mod_version=0.0.14`, NeoForge `21.1.216` and Iron's `3.15.4`. The source head is contemporaneous with the September 1 release and its release-interval diff supports the current inventory, but it is **not promoted as an exact 0.0.16.3 build pin**.
+The exact installed/release identity is `0.0.16.3`, but the current public repository's `gradle.properties` still declares `mod_version=0.0.14`, NeoForge `21.1.216` and Iron's `3.15.4`. The source head is contemporaneous with the September 1 release and its release-interval diff supports the current spell inventory, but it is **not promoted as an exact 0.0.16.3 build pin**.
 
 Accordingly:
 
 - exact physical/release identity: verified;
 - 98 registration inventory at the current public source head: verified;
 - stability of `ModSpellRegistry` across the public 0.0.16.2/0.0.16.3 work interval: verified;
+- Aero SchoolType existence in the installed 0.0.16.3 binary: `NÃO VERIFICADO`;
 - exact 0.0.16.3 binary registry paths, constructor signatures, mana values, cooldowns, tiers, scaling formulas and config values: `NÃO VERIFICADO` unless separately proven;
 - no source field is silently upgraded to exact-JAR authority.
 
@@ -80,4 +87,4 @@ See [`EVIDENCE-AND-PROVENANCE.md`](./EVIDENCE-AND-PROVENANCE.md).
 
 ## Catalog state
 
-Phase 2AH closes the provider at the strongest evidence currently available: exact artifact/release identity plus a complete 98-registration semantic inventory from the contemporaneous official source line, with exact 0.0.16.3 internals kept fail-closed.
+Phase 2AH closes the provider at the strongest evidence currently available: exact artifact/release identity plus a complete 98-registration semantic inventory from the contemporaneous official source line, with exact 0.0.16.3 internals and uncertain installed-school surfaces kept fail-closed.
