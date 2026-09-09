@@ -17,6 +17,7 @@
   "screen.black_arcana.radial.page": "Página %s / %s",
   "screen.black_arcana.radial.hint": "Clique esquerdo para selecionar; conjurar continua sendo uma ação separada",
   "screen.black_arcana.loadout": "Loadout da Black Arcana",
+  "screen.black_arcana.loadout.search": "Buscar feitiços",
   "screen.black_arcana.loadout.page": "Página %s / %s",
   "screen.black_arcana.loadout.hint": "%s selecionados · Enter: aplicar · Delete: limpar · R: restaurar · Esc: cancelar",
   "screen.black_arcana.loadout.slot": "S%s",
