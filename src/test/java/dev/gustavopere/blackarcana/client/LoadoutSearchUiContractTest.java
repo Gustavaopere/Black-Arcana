@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.client;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -20,12 +21,16 @@ class LoadoutSearchUiContractTest {
     @Test
     void responsiveHeaderReservesSearchFieldInsideSmallViewport() {
         LoadoutLayout layout = LoadoutLayout.forViewport(214, 120);
+        int panelTop = layoutInt(layout, "panelTop");
+        int titleY = layoutInt(layout, "titleY");
+        int searchY = layoutInt(layout, "searchY");
+        int searchHeight = layoutInt(layout, "searchHeight");
 
-        assertTrue(layout.panelTop() >= 0);
-        assertTrue(layout.titleY() >= layout.panelTop());
-        assertTrue(layout.searchY() > layout.titleY());
-        assertTrue(layout.searchHeight() > 0);
-        assertTrue(layout.searchY() + layout.searchHeight() <= layout.top());
+        assertTrue(panelTop >= 0);
+        assertTrue(titleY >= panelTop);
+        assertTrue(searchY > titleY);
+        assertTrue(searchHeight > 0);
+        assertTrue(searchY + searchHeight <= layout.top());
         assertTrue(layout.top() + layout.rowsPerPage() * layout.rowHeight() + 48 <= 120);
     }
 
@@ -63,9 +68,17 @@ class LoadoutSearchUiContractTest {
         assertTrue(focusedGuard < reset, "typing R in search must not reset the draft");
         assertTrue(source.contains("setFocused(searchBox);"));
         assertTrue(source.contains("setFocused(null);"));
-        assertTrue(source.contains("return super.keyPressed(keyCode, scanCode, modifiers);"));
         assertTrue(source.contains("return super.keyPressed(keyCode, scanCode, modifiers);"),
-                "Escape must continue through Screen when search owns focus");
+                "search-owned editing keys and Escape must continue through Screen/widget routing");
+    }
+
+    private static int layoutInt(LoadoutLayout layout, String methodName) {
+        try {
+            Method method = LoadoutLayout.class.getDeclaredMethod(methodName);
+            return (int) method.invoke(layout);
+        } catch (ReflectiveOperationException exception) {
+            return fail("LoadoutLayout." + methodName + "() is missing or invalid", exception);
+        }
     }
 
     private static int occurrences(String haystack, String needle) {
