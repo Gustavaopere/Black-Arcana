@@ -4,9 +4,9 @@
 
 **Coverage represented by this Phase 2AU revision: 49/100 = 49%.**
 
-The canonical base for this branch is `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`, where canonical coverage is **48/100 = 48%** after Phase 2AT / PR #156 merged `apothic_spawners` 1.4.0 as component #48.
+The latest reconciled repository base for this branch is `main@29a0099e899e03d80bf904c2d5ead72f40421fe8`, where canonical catalog coverage remains **48/100 = 48%** after Phase 2AT / PR #156 merged `apothic_spawners` 1.4.0 as component #48. The intervening PR #157 is Stage 05 keyboard-focus work and has zero catalog coverage delta; none of its changed files overlaps this Phase 2AU tranche.
 
-Phase 2AU represents candidate component **#49**, `apothic_enchanting` 1.6.2. The numerator becomes canonical only after latest-main reconciliation, CI GREEN on the reconciled HEAD, merge and post-merge `main` confirmation.
+Phase 2AU represents candidate component **#49**, `apothic_enchanting` 1.6.2. The numerator becomes canonical only after CI GREEN on the exact reconciled HEAD, a final latest-main gate, merge and post-merge `main` confirmation.
 
 The detailed pre-Phase-2AU cumulative coverage text is preserved byte-for-byte in [`CATALOG-COVERAGE-CURRENT-PRE-PHASE2AU.md`](./CATALOG-COVERAGE-CURRENT-PRE-PHASE2AU.md). Provider-specific evidence remains in `wiki/modpack-catalog/providers/**` and the corresponding phase checkpoint/capability files.
 
