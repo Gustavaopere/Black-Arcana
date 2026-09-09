@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AK / PR #144 está canônica em `main@73a425051d242a33af157a3f73ca816498e8eba8`;
-- cobertura canônica na criação da Phase 2AL: **39/100 = 39%**;
-- esta revisão Phase 2AL fecha `efiscompat` como componente #40 ao limite exato de source-version disponível;
-- o resultado **40/100 = 40%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
+- Phase 2AL / PR #145 está canônica em `main@433233164f61bbf6b6d5cb8aa9625cf286a79a23`;
+- cobertura canônica na criação da Phase 2AM: **40/100 = 40%**;
+- esta revisão Phase 2AM fecha `reliquified_lenders_cataclysm_new_relics_fix` como componente #41 ao limite exato de evidência física/publisher disponível;
+- o resultado **41/100 = 41%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,39 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AL — `efiscompat` 3.1.0
+## Phase 2AM — Reliquified L_Ender's Cataclysm New Relics Fix 1.0.2
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `efiscompat` | `efiscompat-3.1.0.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / EPIC FIGHT↔IRON'S CASTING-INTERACTION+ANIMATION COMPAT / 0 SPELLS / 28 JAVA FILES / 35 ANIMATION ACCESSORS / 12 REQUIRED MIXINS (6 CLIENT + 6 COMMON) / 6 CONFIG KEYS / DATA-DRIVEN SPELL-ANIMATION MAP / IRON'S PRECAST+CANCEL RECONCILIATION / COMPONENT #40 CANDIDATE / LICENSE-CONFLICT + BYTE/HOST/FULL-PACK QA FAIL-CLOSED |
+| `reliquified_lenders_cataclysm_new_relics_fix` | `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar` | EXACT PHYSICAL+PUBLISHER 1.0.2 / RELICS 0.10→0.12 COMPATIBILITY BRIDGE / 5 EXISTING RELICS IN PUBLISHED SCOPE / 8 PUBLISHED REPAIR FAMILIES / 0 NEW SEMANTIC RELIC IDS / 0 PUBLISHED STANDALONE SPELL IDS / 1.0.2 BASE-CLASS-ONLY TRANSFORM SCOPE / COMPONENT #41 CANDIDATE / EXACT SOURCE+MIXIN+PACKET+PERSISTENCE INTERNALS FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `9d4710e665ec74af917bb9f5f819154ca9f74ca0`.
+- CurseForge project/file: `1665965 / 8778365`, exact 1.0.2 release dated 2026-08-31.
+- Publisher: NeoForge 1.21.1, Client & Server, All Rights Reserved.
+- Publisher defines the component as a bridge allowing Reliquified L_Ender's Cataclysm `0.1.1` to work with newer Relics `0.12` after old Relics `0.10` classes/methods changed or disappeared.
+- Exact physical required stack includes Relics `0.12.8`, Curios `9.5.1+1.21.1`, OctoLib `0.6.2`, L_Ender's Cataclysm `3.33` and Reliquified L_Ender's Cataclysm `0.1.1`.
+- Publisher names exactly five fixed existing relics: Void Cloak, Scouring Eye, Void Vortex in Bottle, Vacuum Glove and Void Bubble.
+- Publisher lists repair of `IRelicItem` startup/API breakage, RelicTemplate conversion, Curios/modifiers, stats/levels/ranks/cooldowns/XP, legacy active abilities, player-motion networking, ability order/progression values and descriptions/tooltips.
+- Exact file 1.0.2 changelog narrows the bridge to the addon's base class and prevents global `RelicItem` modification.
+- No exact public source for the fix was located; exact mixin classes/counts/targets, bytecode transforms, packet schema and persistence keys remain fail-closed.
+- Original addon's current public `1.21.1` branch declares `mod_version=0.2`, so it is not substituted for the physical target addon `0.1.1` or for missing fix source.
+
+### Provider authority
+
+- Relics owns current framework/rank/level/XP/cooldown infrastructure.
+- Reliquified L_Ender's Cataclysm owns the five relic identities and content behavior.
+- Curios owns equip-slot infrastructure.
+- this fix owns only old-addon→new-Relics compatibility translation.
+- Black Arcana does not duplicate template/modifier/progression/cooldown/ability/network adaptation and retains its own canonical magic runtime.
+- RPG Skill Tree receives no relic or magic runtime authority from this compatibility component.
+
+## Phase 2AL — `efiscompat` 3.1.0 — canonical predecessor
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `efiscompat` | `efiscompat-3.1.0.jar` | CANÔNICO VIA PR #145 / EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / EPIC FIGHT↔IRON'S CASTING-INTERACTION+ANIMATION COMPAT / 0 SPELLS / 28 JAVA FILES / 35 ANIMATION ACCESSORS / 12 REQUIRED MIXINS (6 CLIENT + 6 COMMON) / 6 CONFIG KEYS / DATA-DRIVEN SPELL-ANIMATION MAP / IRON'S PRECAST+CANCEL RECONCILIATION / COMPONENT #40 / LICENSE-CONFLICT + BYTE/HOST/FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -148,24 +176,24 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AL foi aberta sobre `main@73a425051d242a33af157a3f73ca816498e8eba8` após rechecagem de branches/PRs. Não havia branch nem PR equivalente para `efiscompat`.
+Phase 2AM foi aberta sobre `main@433233164f61bbf6b6d5cb8aa9625cf286a79a23` após rechecagem de branches/PRs. Não havia branch nem PR equivalente para `reliquified_lenders_cataclysm_new_relics_fix`.
 
 PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AL
+## Próxima seleção após Phase 2AM
 
 Selecionar somente depois de:
 
 1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AL;
+2. confirmação do merge/CI da Phase 2AM;
 3. verificação da modlist física atual;
 4. pesquisa de PR/branch equivalente;
 5. leitura do catálogo já canônico;
 6. confirmação da versão exata e do melhor source/API/release aplicável.
 
-Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
+`soul_fire_d` permanece como o outro candidato atual adicionado ao denominador e ainda exige classificação/fechamento em fase própria. Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
 
 ## Providers parcialmente fechados — não contam como concluídos
 
@@ -183,12 +211,13 @@ Exemplos atuais:
 - source público de versão diferente não autoriza promover internals da versão instalada;
 - exact source-version pin não equivale automaticamente a byte-for-byte JAR reproducibility;
 - library/API ou compat provider pode fechar com zero spells se zero registro próprio for demonstrado e suas superfícies reais estiverem inventariadas;
+- compatibility bridge pode fechar semanticamente no publisher evidence ceiling quando o escopo público atual é explicitamente bounded e nenhuma identidade nova é atribuída, mantendo internals não publicados fail-closed;
 - client presentation hook não é cast authority;
 - cross-provider cast cancellation/reconciliation não vira segundo cast authority;
-- registry/example/animation object não vira spell por contagem;
+- registry/example/animation/compatibility object não vira spell por contagem;
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
-- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, presentation adapter ou world mutation de provider;
+- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, presentation adapter ou world mutation de provider;
 - source-family label ou Java symbol não deve ser confundido com registry ID sem evidência;
 - provider parcial continua zero até inventário atual fechar ao teto de evidência aceito;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.
