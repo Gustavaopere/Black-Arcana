@@ -38,10 +38,10 @@ Current public source registry inventory:
 - 25 necro;
 - 2 technomancy.
 
-Provider-owned SchoolTypes observed in the current source:
+SchoolTypes observed in the current public source head:
 
-- `monstersspellbooks:necro` — active provider school surface;
-- `monstersspellbooks:aero` — retained school object, but exact 0.0.16.2 release says Aero is soft-deleted and current `ModSpellRegistry` has zero Aero registrations.
+- `monstersspellbooks:necro` — source-observed provider school surface; exact 0.0.16.3 release contains Necro fixes rather than a removal signal, but exact installed class/registry parity is not asserted;
+- `monstersspellbooks:aero` — source-head observation only. Exact 0.0.16.2 says Aero was soft-deleted, exact 0.0.16.3 says remaining Aero content was deleted, and current `ModSpellRegistry` has zero Aero registrations. **Installed 0.0.16.3 Aero SchoolType existence is `NÃO VERIFICADO`.**
 
 ## Evidence layering
 
@@ -59,16 +59,16 @@ Explicit mismatch:
 - source dependency pins still say NeoForge 21.1.216 / Iron's 3.15.4;
 - pack authority is NeoForge 21.1.248 / Iron's 3.16.3 / Monsters & Spellbooks 0.0.16.3.
 
-Therefore exact 0.0.16.3 class signatures/numerics/config/network/save internals remain `NÃO VERIFICADO`.
+Therefore exact 0.0.16.3 class signatures/numerics/config/network/save internals and uncertain installed-school surfaces remain `NÃO VERIFICADO`.
 
 ## Architecture consequences
 
 - Iron's remains host cast/mana/cooldown authority.
-- Monsters & Spellbooks owns its spell/school/effect semantics.
+- Monsters & Spellbooks owns its spell/school/effect semantics where those surfaces exist at runtime.
 - Black Arcana does not duplicate provider casting, resource settlement, summons, forms or mutations.
 - provider Necro is not Black Arcana Corruption/Strain/Souls/Mastery by implication.
 - destructive Black Arcana-owned effects continue through `WorldEffectPolicy`.
-- retained Aero SchoolType is not counted as an active spell family.
+- Aero contributes zero spell registrations and its installed 0.0.16.3 SchoolType existence must not be assumed.
 - 98 provider spell identities are deduplication input, not 98 Black Arcana implementation gaps.
 
 ## Files in this phase
@@ -87,6 +87,7 @@ Therefore exact 0.0.16.3 class signatures/numerics/config/network/save internals
 The provider may be semantically catalog-closed while these binary/runtime questions remain explicitly deferred:
 
 - exact installed-JAR registry paths and numeric spell config;
+- installed Aero SchoolType presence/absence;
 - exact 0.0.16.3 targeting/friendly-fire/claim semantics;
 - exact summon/form cleanup and persistence behavior;
 - real full-modpack runtime compatibility;
