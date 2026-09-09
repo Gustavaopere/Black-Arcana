@@ -7,7 +7,7 @@ import dev.gustavopere.blackarcana.network.HazardResistanceForecastPayload;
 import java.util.Objects;
 
 /**
- * Pure client-presentation semantics for Stage 05.08.
+ * Pure client-presentation semantics for Stage 05.08/05.09.
  *
  * <p>This class maps facts the client already legitimately owns or has received from the server into
  * surface-neutral semantic roles. It performs no gameplay admission, world queries, provider calls or
@@ -18,7 +18,11 @@ public final class CastingUxSemantics {
         NONE,
         SELECTED,
         HOVERED,
-        SELECTED_HOVERED
+        FOCUSED,
+        SELECTED_HOVERED,
+        SELECTED_FOCUSED,
+        HOVERED_FOCUSED,
+        SELECTED_HOVERED_FOCUSED
     }
 
     public enum AdmissionState {
@@ -49,9 +53,17 @@ public final class CastingUxSemantics {
     private CastingUxSemantics() { }
 
     public static FocusState focus(boolean selected, boolean hovered) {
+        return focus(selected, hovered, false);
+    }
+
+    public static FocusState focus(boolean selected, boolean hovered, boolean focused) {
+        if (selected && hovered && focused) return FocusState.SELECTED_HOVERED_FOCUSED;
         if (selected && hovered) return FocusState.SELECTED_HOVERED;
+        if (selected && focused) return FocusState.SELECTED_FOCUSED;
+        if (hovered && focused) return FocusState.HOVERED_FOCUSED;
         if (selected) return FocusState.SELECTED;
         if (hovered) return FocusState.HOVERED;
+        if (focused) return FocusState.FOCUSED;
         return FocusState.NONE;
     }
 

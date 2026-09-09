@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-09-08
+Last updated: 2026-09-09
 
 ## Current state
 
@@ -17,6 +17,8 @@ Stage 04 World Safety is ✅ complete, verified and merged at `b5a515335544cee52
 Stage 05 Casting & UX is `IMPLEMENTED / FINAL VALIDATION DEFERRED`. Its implementation is merged and its deterministic automated gates are green, but the required real-client visual/input matrix in `docs/qa/casting-ux-manual-matrix.md` remains genuinely unexecuted. Every applicable manual row remains `PENDING` until directly observed.
 
 Stage 05 follow-up hardening is canonical without changing that validation state. PR #56 fixed same-key `TOGGLE` radial close and merged at `206e37134b37447b9573541c7013e36dd45654a6`; post-merge workflow `34008702833` (#1152) passed the full pipeline. PR #57 then hardened the 854×480 / GUI-scale-4 preflight geometry: responsive loadout pagination, compact non-overlapping radial cards, viewport-bounded HUD layout and wrapped server-authored denial/hazard/gate text with bounded effective-scale fallback. Its final PR head `01a77eab641896173585b66c6310662d820c9f0c` passed workflow `34010736078` (#1169), and canonical merge `f2bb9a19db92d869e4443b2047ad1c913f8d2a29` passed exact-SHA post-merge workflow `34010968124` (#1170), including JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke and main-only artifact publication. Canonical artifact: `black-arcana-f2bb9a19db92d869e4443b2047ad1c913f8d2a29`, artifact ID `9982472491`, SHA-256 `1ba6949ceb04f261646548b6d99a158f4f40211a5017ca1911c0e1a732f86cdb`. These automated results are supporting evidence only and do not convert any real-client matrix row to PASS.
+
+Stage 05.09 keyboard-focus/navigation hardening is implemented in PR #157 on branch `feat/stage05-keyboard-focus-navigation` from `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`. The change adds only client-local deterministic focus/navigation state: radial Tab/Shift+Tab same-page wrap, selection-only Enter/Space activation, loadout Up/Down clamp, Space draft toggle, page-focus reconciliation, keyboard/pointer modality and non-color focus cues. It adds no cast packet/path, server focus state, provider hook, persistence or global key mapping. TDD RED commits `dc457ad711ba02e9e14bdc04d3a61e69752d8425` and `9032aaae705cb426e59f056a1293a01c81a22dca` failed at the intended missing-production boundaries; reviewed code head `3e560b202a0fd35630fd366293d35c7ad03ca31e` passed full workflow `34403555530`. The subsequent documentation commits require the normal fresh final-HEAD CI gate before merge. Physical keyboard/accessibility/coexistence rows remain `PENDING` and are not inferred from CI.
 
 Stage 05A Arcane Danger is `IMPLEMENTED / FINAL VALIDATION DEFERRED`. Its server/gameplay contracts are frozen and materially implemented: danger profiles, Arcane/Corruption Resistance, corruption/strain persistence and recovery, causal confirmed-damage/backlash settlement, equipment/Curios/RPG providers, emergency protection, read-only server-authored resistance/gate forecast, loadout tooltip and the 05A.12 automated hardening matrix are present. Remaining presentation acceptance is part of the same deferred real-client campaign; no manual acceptance is inferred from automated evidence.
 
@@ -37,7 +39,7 @@ Stage 08 Progression & Balance starts only after Stage 07 implementation is cano
 | 02 Arcana Core | ✅ Complete | branch `33169091342` + post-merge `33169344809` green |
 | 03 Integration Layer | ✅ Complete | merged at `359dff66...`; branch + post-merge CI green |
 | 04 World Safety | ✅ Complete | merged at `b5a51533...`; branch + post-merge CI green |
-| 05 Casting & UX | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | PR #56 toggle-close fix + PR #57 small-viewport hardening canonical at `f2bb9a19...`; exact-SHA #1170 green with artifact; real-client matrix remains PENDING |
+| 05 Casting & UX | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | PR #56 toggle-close + PR #57 small-viewport hardening canonical; PR #157 implements 05.09 keyboard focus/navigation with full automated code-head CI green; final PR-head/post-merge CI still required; real-client matrix remains PENDING |
 | 05A Arcane Danger | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | server contracts frozen; automated presentation/hardening advanced; real-client presentation acceptance remains |
 | 06 Rituals | 🟨 IMPLEMENTED / FINAL VALIDATION DEFERRED | canonical on `main` at `4a79d440...`; post-merge full CI green; real-modpack/manual host acceptance deferred |
 | 07 Spell Domains | 🟦 IN PROGRESS — 07.01–07.06 CANONICAL / 07.07 PARTIAL CANONICAL RUNTIME | #72 Noetic substrate + #77 Borrowed Sight are merged; #138 adds partial Astral server lifecycle only; avatar/viewpoint/control/cast wiring + seven-spell specification gate remain pending; real-client Borrowed Sight acceptance deferred |
@@ -58,7 +60,7 @@ Stages 00, 01, 02, 03 and 04 are complete and may change only through explicit f
 
 ## Stage 05 / 05A deferred validation ledger
 
-The real-client visual/input matrix remains in `docs/qa/casting-ux-manual-matrix.md`. Execute it later using `docs/qa/casting-ux-real-client-runbook.md`, an exact-SHA `main` CI artifact and the removable fixture under `docs/qa/fixtures/stage05-real-client/` where applicable.
+The real-client visual/input matrix remains in `docs/qa/casting-ux-manual-matrix.md`. Execute it later using `docs/qa/casting-ux-real-client-runbook.md`, an exact-SHA `main` CI artifact and the removable fixture under `docs/qa/fixtures/stage05-real-client/` where applicable. Stage 05.09 additionally requires direct radial/loadout keyboard traversal, activation/cancel, pointer↔keyboard modality, viewport readability and coexistence checks; these are still `PENDING` until physically observed.
 
 Do not rename Stage 05/05A task files to ✅ merely because downstream implementation advances. Direct client evidence is still required for rows that explicitly require it. Corruption/strain client values remain intentionally absent until a bounded server-authored synchronization contract is separately approved.
 

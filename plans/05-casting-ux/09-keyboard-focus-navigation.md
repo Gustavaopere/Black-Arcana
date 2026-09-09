@@ -2,55 +2,64 @@
 
 ## State
 
-`PLANNING / NO RUNTIME CHANGE / ACCESSIBLE SCREEN NAVIGATION`
+`IMPLEMENTED IN PR #157 / AUTOMATED GATES GREEN / REAL-CLIENT VALIDATION DEFERRED`
 
-This document defines the canonical Stage 05 plan for keyboard-only navigation and focus semantics inside Black Arcana's existing client screens.
+This document records the implemented Stage 05 keyboard-only navigation and focus semantics inside Black Arcana's existing client screens.
 
-Baseline used to author this plan: `main@2df7cdedd0a73b5aed87ca9709699e139355fc84`.
+Planning baseline: `main@2df7cdedd0a73b5aed87ca9709699e139355fc84`.
+Implementation branch baseline: `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`.
+Implementation PR: **#157 — `feat: implement Stage 05 keyboard focus navigation`**.
 
-This is a planning artifact only. It does **not** add key mappings, focus state, widgets, controller hooks, packets, client config, Java runtime behavior or visual assets.
+The implementation is deliberately client-local. It adds no gameplay-authoritative packet, server focus state, provider hook, persistence channel, second cast path or new global key mapping. Real-client accessibility/coexistence acceptance remains deferred and must not be inferred from automated CI.
 
 ---
 
-## 1. Why this plan exists
+## 1. Why this work exists
 
-Keyboard-only operation is already an explicit planned refinement in:
+Keyboard-only operation is an explicit Stage 05 refinement in:
 
 - `02-radial-wheel.md`;
 - `04-accessibility-client-config.md`;
 - `08-visual-language-state-semantics.md`.
 
-The current runtime only partially satisfies that goal.
+Before 05.09, both Black Arcana client screens required pointer precision for part of their interaction model. PR #157 closes that deterministic runtime gap while preserving the existing mouse paths and server authority.
 
-### Current radial behavior
+### Implemented radial behavior
 
-`BlackArcanaRadialScreen` currently supports:
+`BlackArcanaRadialScreen` now supports:
 
-- mouse hover;
-- mouse left-click selection;
-- left arrow / Page Up for previous page;
-- right arrow / Page Down for next page;
+- mouse hover and mouse left-click selection;
+- client-local canonical keyboard focus;
+- deterministic initial focus on the selected visible slot, otherwise first visible slot;
+- `Tab` / `Shift+Tab` same-page focus traversal with wrap;
+- `Left` / `Page Up` previous-page behavior;
+- `Right` / `Page Down` next-page behavior;
+- page-change focus reconciliation;
+- `Enter` / keypad Enter / `Space` selection-only activation of the focused wedge;
 - the configured radial open key closing a `TOGGLE` radial;
-- `HOLD` close when the radial key is released.
+- `HOLD` close when the radial key is released;
+- independent keyboard/pointer presentation modality;
+- non-color focus cues that remain distinct from hover and selected state.
 
-It does **not** currently expose a keyboard focus index for visible wedges and does not select a wedge through keyboard-only input.
+Selecting from the radial still only changes `ClientLoadoutSelection`, marks the contextual selection change and closes the screen. It does **not** cast.
 
-### Current loadout-editor behavior
+### Implemented loadout-editor behavior
 
-`BlackArcanaLoadoutScreen` currently supports:
+`BlackArcanaLoadoutScreen` now supports:
 
-- mouse hover;
-- mouse left-click draft toggle;
-- Enter / keypad Enter to apply the draft;
-- Backspace / Delete to clear the draft;
-- left arrow / Page Up for previous page;
-- right arrow / Page Down for next page.
+- mouse hover and mouse left-click draft toggle;
+- deterministic client-local row focus using the absolute synchronized `available` index;
+- `Up` / `Down` row navigation with same-page clamp;
+- `Space` toggling only the focused `LoadoutDraft` entry;
+- `Enter` / keypad Enter applying the complete draft through the existing loadout update path;
+- `Backspace` / `Delete` preserving the existing clear-all local-draft behavior;
+- `Left` / `Page Up` previous-page behavior;
+- `Right` / `Page Down` next-page behavior;
+- page-change focus reconciliation preserving/clamping relative row position;
+- keyboard-focused hazard tooltip presentation;
+- independent pointer/keyboard modality and a visible non-color `[F]` focus cue.
 
-It does **not** currently expose keyboard row focus or a keyboard-only draft-toggle path.
-
-Therefore a player who cannot or does not want to use precise mouse pointing cannot currently complete every Stage 05 screen interaction through keyboard input alone.
-
-05.09 plans that missing interaction layer without changing Black Arcana gameplay authority.
+No focus move and no `Space` draft toggle sends a cast request or directly changes server-owned accepted loadout state.
 
 ---
 
@@ -58,7 +67,7 @@ Therefore a player who cannot or does not want to use precise mouse pointing can
 
 Keyboard navigation is presentation/input ergonomics only.
 
-It must preserve:
+It preserves:
 
 - D005 — direct casting remains available without a universal staff requirement;
 - D006 — server owns cast legality, resource cost, cooldown, progression, targeting and world effects;
@@ -70,7 +79,7 @@ It must preserve:
 
 Keyboard focus itself is **client-local transient state**.
 
-It must never:
+It does not:
 
 - modify the accepted loadout merely by moving focus;
 - cast a spell merely by moving focus;
@@ -102,23 +111,25 @@ The meanings remain independent:
 - `DRAFT_ONLY` = local unsaved editor membership/change;
 - accepted loadout = latest synchronized server-owned state.
 
+`CastingUxSemantics.FocusState` now represents the bounded combinations required by the radial: none, selected, hovered, focused and their composites. Focus is not presented as legality, readiness or server acceptance.
+
 A focused row/wedge is not automatically selected, accepted, ready or cast.
 
 ---
 
-## 4. Input-design rule: no new global default key required
+## 4. Input-design rule: no new global default key
 
-The first implementation of keyboard-only screen navigation should use keys **while a Black Arcana screen already owns focus** rather than registering more global Minecraft key mappings.
+The implementation uses keys **while a Black Arcana screen already owns focus** rather than registering more global Minecraft key mappings.
 
 Reasons:
 
 - the modpack already has many key mappings;
 - direct quick-cast slots are intentionally unbound by default;
-- navigation keys inside an open `Screen` do not need to consume another global binding;
+- navigation keys inside an open `Screen` do not need another global binding;
 - this keeps Controlling/vanilla keybinding surfaces simpler;
 - controller integration remains a separate optional provider-dependent layer.
 
-No new default global mapping is approved by this plan.
+No new global mapping was added by PR #157.
 
 If later evidence shows a dedicated global navigation mapping is required, it needs a fresh current-modpack key-conflict audit before implementation.
 
@@ -126,33 +137,30 @@ If later evidence shows a dedicated global navigation mapping is required, it ne
 
 ## 5. Input modality model
 
-Stage 05 screens may receive both pointer and keyboard input.
+Stage 05 screens receive both pointer and keyboard input.
 
-The implementation should track **active navigation modality** for presentation only.
-
-Conceptual modalities:
+The implementation tracks presentation-only modality through `KeyboardFocusNavigation.InputModality`:
 
 - `POINTER`;
 - `KEYBOARD`.
 
-These names are conceptual, not required Java enum names.
-
 ### Pointer activity
 
-A meaningful mouse movement over an interactive row/wedge or a mouse click may make pointer hover the primary focus cue.
+Meaningful pointer movement over an interactive row/wedge, or mouse activation, makes pointer presentation primary without silently rewriting canonical keyboard focus.
 
 ### Keyboard activity
 
-A keyboard navigation action makes keyboard focus the primary focus cue.
+A handled keyboard navigation/activation action makes keyboard presentation primary.
 
 ### Rules
 
 - switching modality never sends gameplay intent by itself;
-- pointer hover does not silently rewrite keyboard focus unless a deliberate implementation rule says so;
+- pointer hover does not silently rewrite keyboard focus;
 - keyboard focus does not move the physical mouse cursor;
-- the focused spell/tooltip may follow the active modality;
+- focused spell/tooltip presentation follows keyboard modality;
+- pointer hover presentation follows pointer modality;
 - selected loadout state remains independent of modality;
-- modality is cleared when the screen closes.
+- screen-local focus/modality disappears with the screen instance.
 
 ---
 
@@ -160,13 +168,13 @@ A keyboard navigation action makes keyboard focus the primary focus cue.
 
 ### 6.1 Initial focus
 
-When the radial opens through keyboard input, keyboard focus starts predictably:
+When the radial opens, keyboard focus initializes predictably:
 
 1. selected slot if that slot is visible on the opening page;
 2. otherwise the first visible slot on the current page;
 3. no focus only when no visible slot exists.
 
-The current radial already opens on the page derived from the selected slot, so the usual path focuses the selected slot.
+The current radial opens on the page derived from the selected slot, so the normal path focuses the selected slot.
 
 ### 6.2 Focus identity
 
@@ -181,43 +189,32 @@ This matters because:
 
 ### 6.3 Canonical radial traversal contract
 
-The current runtime already uses:
-
-- `Left` / `Page Up` for previous radial page;
-- `Right` / `Page Down` for next radial page.
-
-The first keyboard-navigation implementation must **not silently repurpose those keys**.
-
-Canonical first-implementation controls:
+The implemented screen-local controls are:
 
 - `Tab` → focus next visible wedge on the **current page**;
 - `Shift+Tab` → focus previous visible wedge on the **current page**;
-- `Enter` or `Space` → select the focused wedge and close the radial;
+- `Enter`, keypad Enter or `Space` → select the focused wedge and close the radial;
 - `Page Up` → previous page;
 - `Page Down` → next page;
-- `Left` → previous page, preserving current behavior;
-- `Right` → next page, preserving current behavior;
-- `Escape` → close without changing selection.
+- `Left` → previous page, preserving existing behavior;
+- `Right` → next page, preserving existing behavior;
+- `Escape` → vanilla screen close without changing selection.
 
-Traversal boundary is now frozen:
+Traversal boundary is frozen and implemented:
 
-- `Tab` **wraps within the current visible page**: advancing from the last visible wedge moves focus to the first visible wedge on that same page;
-- `Shift+Tab` **wraps within the current visible page**: moving backward from the first visible wedge moves focus to the last visible wedge on that same page;
+- `Tab` wraps last → first on the current visible page;
+- `Shift+Tab` wraps first → last on the current visible page;
 - Tab traversal never changes radial page;
-- page changes occur only through the existing page controls listed above;
-- a one-entry page keeps focus on that single entry under Tab or Shift+Tab;
-- an empty visible set has no focus and consumes no activation.
-
-This boundary is canonical for tests and implementation. It must not be deferred to GREEN implementation choice.
-
-The exact use of Enter/Space must still be validated against vanilla `Screen` behavior before implementation; do not invent raw key handling that conflicts with superclass accessibility semantics.
+- page changes occur only through the existing page controls;
+- a one-entry page keeps focus on that single entry;
+- an empty visible set has no focus and activation safely does nothing.
 
 ### 6.4 Page transition focus
 
 When moving between radial pages:
 
 1. if the current selected slot belongs to the destination page, focus that selected slot;
-2. otherwise preserve the prior visible wedge position when that position exists on the destination page;
+2. otherwise preserve the prior visible wedge position when it exists on the destination page;
 3. otherwise clamp to the last visible wedge on the destination page;
 4. if no visible slot exists, clear focus.
 
@@ -226,30 +223,28 @@ Additional rules:
 - page transition never activates a wedge;
 - page transition never casts;
 - focus never points to an off-page canonical slot;
-- empty pages are impossible after canonical page clamping and must fail safely if stale state violates that assumption.
+- empty/stale states fail safely through bounded helper logic.
 
 ### 6.5 Selection
 
-Keyboard selection must reuse the same existing client selection operation used by mouse selection:
+Keyboard selection reuses the same existing client selection operation used by mouse selection:
 
 - select canonical slot in `ClientLoadoutSelection`;
 - mark contextual selection change;
 - close the radial;
 - do **not** cast.
 
-No keyboard-only code path may call a different gameplay/cast engine.
+`BlackArcanaRadialScreen.selectFocused(...)` is a bounded selection seam for tests and does not call a cast engine or cast network bridge.
 
 ### 6.6 `TOGGLE` mode
 
-Keyboard focus must coexist with the existing `TOGGLE` behavior.
-
-The radial open key remains a close action when the same mapping is pressed while the radial is open.
+The radial open key remains a close action when the same mapping is pressed while a `TOGGLE` radial is open.
 
 That close action:
 
 - does not select the focused wedge automatically;
 - does not cast;
-- clears transient focus state with the screen lifecycle.
+- discards transient focus state with the screen instance.
 
 ### 6.7 `HOLD` mode
 
@@ -257,9 +252,11 @@ In `HOLD` mode:
 
 - the radial remains open only while the configured radial key is down;
 - keyboard focus may move while it is held;
-- releasing the radial key closes without automatically selecting the focused wedge unless the player explicitly activated selection before release;
-- focus handling must not interfere with detection of the radial key release;
-- no stuck key/cursor state is allowed after close.
+- releasing the radial key closes without automatically selecting the focused wedge unless selection was explicitly activated first;
+- focus handling does not replace the existing release-close check;
+- no server focus state exists to become stuck across close/reconnect.
+
+A physical-client check for stuck cursor/key behavior remains part of deferred manual validation.
 
 ---
 
@@ -269,31 +266,27 @@ In `HOLD` mode:
 
 Pointer hover remains calculated from current mouse geometry.
 
-It must not become `SELECTED` merely because keyboard focus exists elsewhere.
+It does not become `SELECTED` merely because keyboard focus exists elsewhere.
 
 ### 7.2 Focus visualization
 
 05.08 requires `FOCUSED`, `HOVERED` and `SELECTED` to remain distinguishable.
 
-A later implementation may render them differently, but the semantic priority is:
+The radial now composes these facts independently. Focus has a distinct border/background treatment and a non-color `[F]`/compact `F` marker; selected and hovered markers remain independently representable.
 
-- focused = keyboard target;
-- hovered = mouse target;
-- selected = currently selected loadout slot.
-
-The same wedge may legitimately have two or three of those roles simultaneously.
+The same wedge may legitimately have two or three roles simultaneously.
 
 ### 7.3 Tooltip/center presentation
 
-When the active modality is keyboard, focused spell information should be eligible to drive:
+When active modality is keyboard, focused spell information can drive:
 
 - compact-mode tooltip equivalent;
-- center spell identity;
-- static danger line.
+- focused spell identity;
+- static hazard line.
 
-When the active modality is pointer, hover may drive those details.
+When active modality is pointer, hover drives those details.
 
-Fallback remains current selected spell when neither temporary focus exists.
+Fallback remains the current selected spell when neither temporary target applies.
 
 This is presentation only; 05.07 still governs which data is legitimate to render.
 
@@ -303,49 +296,47 @@ This is presentation only; 05.07 still governs which data is legitimate to rende
 
 ### 8.1 Initial focus
 
-When the loadout editor opens, keyboard focus starts on:
+When the loadout editor initializes, keyboard focus starts on:
 
-1. the first visible entry that is already part of the synchronized loadout when practical; or
-2. the first visible entry;
+1. the first visible entry already part of the synchronized accepted loadout when practical;
+2. otherwise the first visible entry;
 3. no focus when the available list is empty.
 
-A future search/filter operation needs a separate focus-reset rule, but search is not currently implemented.
+A future search/filter operation needs a separate focus-reset rule; search is not currently implemented.
 
 ### 8.2 Row focus
 
 Focus uses the absolute index in the `available` synchronized presentation list.
 
-The implementation must not identify a row solely by screen Y coordinate.
+The implementation does not identify a row solely by screen Y coordinate.
 
-Focus must remain bounded against:
+Focus remains bounded across:
 
 - page changes;
 - viewport/layout recalculation;
 - empty presentation sets;
-- future search/filter subsets.
+- current screen-instance lifecycle.
 
 ### 8.3 Canonical row navigation contract
 
-First-implementation controls while the loadout screen owns focus:
+Implemented controls while the loadout screen owns focus:
 
 - `Up` → previous visible/available row;
 - `Down` → next visible/available row;
 - `Space` → toggle the focused spell in the local `LoadoutDraft`;
-- `Left` / `Page Up` → previous page, preserving existing behavior;
-- `Right` / `Page Down` → next page, preserving existing behavior;
-- `Enter` / keypad Enter → apply the draft, preserving existing behavior;
-- `Backspace` / `Delete` → clear the local draft, preserving existing behavior;
-- `Escape` → close without applying new draft changes.
+- `Left` / `Page Up` → previous page;
+- `Right` / `Page Down` → next page;
+- `Enter` / keypad Enter → apply the draft;
+- `Backspace` / `Delete` → clear the local draft;
+- `Escape` → vanilla screen close without applying new draft changes.
 
-Row-boundary behavior is also frozen:
+Row-boundary behavior is frozen and implemented:
 
-- `Up` at the first row of the current page **clamps** to that first row;
-- `Down` at the last row of the current page **clamps** to that last row;
+- `Up` at the first row of the current page clamps to that first row;
+- `Down` at the last row of the current page clamps to that last row;
 - Up/Down do not wrap and do not change pages;
 - page traversal remains explicit through Left/Right/Page Up/Page Down;
 - an empty list has no focused row and Space performs no toggle.
-
-This avoids changing the current Enter-to-apply contract merely to gain row activation and makes RED/GREEN traversal expectations deterministic.
 
 ### 8.4 Page movement
 
@@ -359,22 +350,22 @@ Page changes themselves do not toggle draft membership or apply the draft.
 
 ### 8.5 Toggle behavior
 
-Keyboard `Space` must invoke the same bounded `LoadoutDraft.toggle` semantics as mouse left-click.
+Keyboard `Space` invokes the same bounded `LoadoutDraft.toggle` semantics used by mouse interaction.
 
 It does not send a network update.
 
-Only the existing apply operation sends the complete bounded draft intent to the server.
+Only the existing apply operation sends the complete bounded draft intent to the server through `LoadoutNetworkBridge`.
 
 ### 8.6 Clear behavior
 
-Backspace/Delete currently clears the draft.
+Backspace/Delete continue to clear the draft.
 
 Because draft changes remain local until apply, this is not a direct server mutation.
 
-Keyboard-focus implementation must ensure:
+The implementation preserves:
 
-- Delete on a focused row does **not** become “remove only this row” accidentally;
-- existing clear-all semantics are preserved unless a separately reviewed UX change intentionally changes them;
+- Delete on a focused row is **not** “remove only this row”;
+- existing clear-all semantics;
 - focus remains valid after draft clear because `available` entries still exist.
 
 ---
@@ -383,38 +374,37 @@ Keyboard-focus implementation must ensure:
 
 Mouse hover and keyboard focus are independent.
 
-Rules:
+Rules implemented by the editor:
 
 - a mouse click toggles the clicked spell using the existing draft path;
 - pointer hover may drive hazard tooltip presentation;
-- keyboard focus may drive an equivalent tooltip/focus presentation when keyboard modality is active;
+- keyboard focus drives equivalent hazard tooltip presentation when keyboard modality is active;
 - mouse movement does not apply or submit draft state;
 - keyboard focus does not imply the row is included in the draft;
-- chosen `[x]` state continues to describe `draft.contains(spell)`, not focus.
-
-The visual design must follow 05.08 so focused, hovered and chosen states cannot be confused.
+- accepted/draft membership markers continue to describe `CastingUxSemantics.loadoutMembership(...)`, not focus;
+- focused rows add a separate non-color `[F]` marker.
 
 ---
 
 ## 10. Focus lifecycle and stale-state rules
 
-### Open
+### Open / init
 
 Initialize bounded focus from current synchronized client snapshots using Sections 6.1 and 8.1.
 
 ### Resize / GUI scale change
 
-If screen dimensions/layout change while open:
+When `Screen.init()` runs again after resize/layout change:
 
 - keep the same canonical focused item when it still exists;
 - recalculate its visual location from the current layout;
-- clamp page/focus if the previous visible arrangement is no longer valid.
+- clamp page/focus if the previous arrangement is no longer valid.
 
 ### Synchronized snapshot replacement
 
 Current screens snapshot state at construction rather than live-replacing their lists.
 
-05.09 does not change that contract by itself.
+05.09 does not change that contract.
 
 If a future screen becomes live-updating:
 
@@ -436,13 +426,13 @@ New screens initialize from fresh synchronized snapshots.
 
 ## 11. No-cast-through-screen invariant
 
-`ClientInputController` already suppresses direct cast processing while a `Screen` owns focus.
+`ClientInputController` suppresses direct cast processing while a `Screen` owns focus.
 
-05.09 must preserve that invariant.
+05.09 preserves that architecture and does not add a cast bridge to either screen.
 
 A key such as Space, Enter, arrow, Tab, Page Up or Page Down used inside a Black Arcana screen must not simultaneously trigger a normal world cast intent.
 
-This requires real-client validation because physical key mappings and event ordering can interact with the large modpack.
+Static/wiring tests protect the absence of a screen-local cast path, but physical key mapping/event ordering in the full modpack still requires direct real-client validation.
 
 Any duplicate world cast generated while a Stage 05 screen is open is a blocking regression.
 
@@ -450,7 +440,7 @@ Any duplicate world cast generated while a Stage 05 screen is open is a blocking
 
 ## 12. Rebindability and Controlling
 
-05.09 does not add global key mappings for focus traversal.
+05.09 adds no global key mapping for focus traversal.
 
 Therefore:
 
@@ -466,11 +456,11 @@ If implementation later adds a new global action, 05.06 key-conflict rules apply
 
 ## 13. Controller boundary
 
-No general controller framework is currently confirmed in the physical modlist.
+No general controller framework is confirmed in the current physical modlist.
 
-Therefore controller implementation remains optional/provider-dependent.
+Controller implementation remains optional/provider-dependent.
 
-05.09 still defines a useful future boundary: a verified controller integration should map directional/focus/activate/cancel actions onto the same **screen navigation operations**, not create controller-specific gameplay logic.
+A future verified controller integration should map directional/focus/activate/cancel actions onto the same **screen navigation operations**, not create controller-specific gameplay logic.
 
 A future provider may map:
 
@@ -484,43 +474,49 @@ But:
 - exact provider/version/API must be verified first;
 - keyboard/mouse remains fully functional without the provider;
 - activation must reuse existing radial selection/loadout draft operations;
-- no provider button sends an authoritative cast result from the client.
+- no provider button may send an authoritative cast result from the client.
 
 ---
 
 ## 14. Accessibility requirements
 
-Keyboard-only navigation is an accessibility feature, but it must not create a second semantic mode.
+Keyboard-only navigation is an accessibility feature, but it does not create a second semantic authority mode.
 
-Requirements:
+Implemented deterministic requirements:
 
 - focused state has a visible non-color-only cue;
 - focus order is deterministic;
-- the player can identify which item will activate before activation;
+- the player can identify the keyboard target before activation;
 - no pointer precision is required to select a radial wedge;
 - no pointer precision is required to toggle a loadout entry;
-- closing/cancelling is always available;
+- closing/cancelling remains available;
 - selection and activation remain distinct where the existing surface defines them as distinct;
-- important hazard/denial information remains available when keyboard modality is active;
-- focus cues remain readable at the Stage 05 small-viewport matrix.
+- keyboard-focused hazard information is available from already-synchronized data.
 
-Reduced motion/flashes must apply to any future animated focus treatment.
+Still requiring direct real-client evidence:
+
+- readability at the Stage 05 small-viewport matrix;
+- no stuck cursor/key state;
+- physical keyboard/pointer modality behavior in the target pack;
+- interaction with Controlling, Spell Actionbar and Epic Fight.
+
+Reduced motion/flashes must apply to any future animated focus treatment. PR #157 adds no new animation.
 
 ---
 
 ## 15. Localization and labels
 
-Keyboard navigation should not require embedding English key names into immutable strings.
+The implementation does not add a new immutable English-only player-facing navigation hint.
 
-Any future player-facing navigation hint should:
+Existing localized screen/key labels remain unchanged. The visual focus marker is symbolic (`[F]`) rather than a sentence containing hardcoded English key names.
+
+Any future expanded navigation hint should:
 
 - use translation keys;
-- use Minecraft-supported key-label components where appropriate instead of hardcoded English names;
+- use Minecraft-supported key-label components where appropriate;
 - remain optional/compact on small viewports;
-- not require displaying every possible action simultaneously;
+- not require displaying every action simultaneously;
 - preserve semantic action wording after rebinding global keys.
-
-Screen-local controls such as Tab/Space/Enter may be documented through translatable hints, but the final implementation should use actual localized key names where the API supports that safely.
 
 ---
 
@@ -535,11 +531,11 @@ The following 05.08 semantic roles are directly relevant to 05.09:
 | radial chosen slot | `SELECTED` | existing client selection; still non-casting |
 | loadout row included in unsaved draft | `DRAFT_ONLY` / draft membership | not server acceptance |
 | loadout accepted snapshot | synchronized authoritative loadout | server remains authority |
-| keyboard focus + danger | orthogonal composition | danger styling only for non-`NORMAL` tier under 05.08 |
+| keyboard focus + danger | orthogonal composition | danger styling only for authorized hazard facts |
 | keyboard focus + forecast block | orthogonal composition | focus does not cause block |
 | focus with missing icon | `FOCUSED + PRESENTATION_FALLBACK` | spell remains valid |
 
-No single focus border/color may be reused as an authoritative denial marker.
+No single focus border/color is reused as an authoritative denial marker.
 
 ---
 
@@ -547,12 +543,12 @@ No single focus border/color may be reused as an authoritative denial marker.
 
 Keyboard focus state is tiny client-local state.
 
-Implementation must not introduce:
+The implementation introduces no:
 
 - world scans;
 - entity scans;
 - chunk queries;
-- server requests on every focus move;
+- server requests on focus movement;
 - per-tick full state synchronization;
 - provider API calls merely to move focus;
 - dynamic allocation proportional to world state.
@@ -565,88 +561,74 @@ Loadout editor remains bounded by synchronized spell presentation limits and vie
 
 ---
 
-## 18. Planned implementation architecture
+## 18. Implemented architecture
 
-This section describes planning shape, not required class names.
+PR #157 uses a small deterministic client-only helper, `KeyboardFocusNavigation`, rather than putting page/traversal math into gameplay/network code.
 
-Prefer a small deterministic client-only focus/navigation state helper rather than embedding unrelated key rules throughout render code.
+Its responsibilities are bounded to:
 
-Conceptual responsibilities:
-
-- current focused canonical index;
-- active input modality;
-- next/previous focus traversal;
-- page transition reconciliation;
-- focus initialization;
+- input modality identity;
+- radial initial focus;
+- radial next/previous same-page traversal;
+- radial page-transition focus reconciliation;
+- loadout initial focus;
+- loadout row clamp navigation;
+- loadout page-transition focus reconciliation;
 - invalid/empty-state clamping.
 
 Surface code remains responsible for:
 
-- rendering;
-- geometry;
-- invoking the existing draft/selection operation when activation occurs.
+- rendering and geometry;
+- pointer hit testing;
+- invoking existing draft/selection operations when activation occurs.
 
-Do not put casting, cost, cooldown, hazard or provider authority into the focus helper.
-
----
-
-## 19. TDD plan for future implementation
-
-When 05.09 implementation is approved, start with pure deterministic tests.
-
-### 19.1 Radial RED tests
-
-Add failing tests for:
-
-- focus initializes to selected visible slot;
-- empty loadout creates no focus;
-- Tab advances through current-page canonical slots;
-- Shift+Tab moves backward;
-- Tab from the last visible wedge wraps to the first visible wedge on the same page;
-- Shift+Tab from the first visible wedge wraps to the last visible wedge on the same page;
-- Tab/Shift+Tab never change page;
-- a single-entry page remains focused on that entry under either traversal direction;
-- Page Up/Page Down move to valid destination-page focus;
-- Left/Right preserve current page-change behavior;
-- focus never points outside current visible slots;
-- activate focused wedge invokes selection semantics only;
-- close without activate preserves prior selected slot;
-- `TOGGLE` close key does not select focused wedge;
-- `HOLD` release does not select focused wedge;
-- pointer modality and keyboard modality are distinguishable.
-
-### 19.2 Loadout RED tests
-
-Add failing tests for:
-
-- focus initializes to a valid row;
-- Up/Down stay bounded;
-- Up at first row clamps to first row;
-- Down at last row clamps to last row;
-- Up/Down never change page;
-- page movement preserves/clamps relative focus;
-- Space toggles only focused draft entry;
-- Enter still means apply rather than row toggle;
-- Delete/Backspace preserve current clear-all draft contract;
-- focus survives local draft toggle/clear because available list is unchanged;
-- empty list is safe;
-- close without apply leaves server update unsent.
-
-### 19.3 Integration regression tests
-
-Where technically representable:
-
-- a Black Arcana `Screen` owning focus suppresses direct cast processing;
-- one keyboard activation causes one local draft/selection operation;
-- no network cast packet is generated merely by focus movement.
+The helper contains no casting, cost, cooldown, hazard, persistence or provider authority.
 
 ---
 
-## 20. Real-client validation plan
+## 19. TDD implementation evidence
+
+05.09 was implemented through explicit RED → GREEN cycles.
+
+### 19.1 Navigation helper RED → GREEN
+
+- RED commit `dc457ad711ba02e9e14bdc04d3a61e69752d8425`: deterministic navigation contracts were added before production helper code; CI failed in `Unit tests` as expected.
+- GREEN helper commit `c7f196daf5d0737b371f6e23b40db7b7885821b7`: `KeyboardFocusNavigation` satisfied those pure contracts; unit tests and subsequent automated stages advanced successfully.
+
+Covered contracts include:
+
+- radial initial focus and empty safety;
+- Tab/Shift+Tab same-page wrap;
+- single-entry stability;
+- radial page reconciliation;
+- loadout initial focus;
+- Up/Down same-page clamp;
+- loadout page reconciliation;
+- empty-state safety.
+
+### 19.2 Screen-integration RED → GREEN
+
+- RED commit `9032aaae705cb426e59f056a1293a01c81a22dca`: screen integration/wiring contracts were added before radial/loadout production wiring; CI failed in `Unit tests` as expected.
+- GREEN implementation head `8fcc90fc4b5e5b82519d63c5a1d2a93b543820da`: full CI pipeline passed after radial/loadout integration.
+- reviewed semantic/test head `3e560b202a0fd35630fd366293d35c7ad03ca31e`: workflow `34403555530` passed JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
+
+Additional regression coverage verifies:
+
+- focused/hovered/selected semantic combinations;
+- non-color radial focus markers;
+- radial activation uses selection semantics only;
+- loadout `Space` toggles only the focused draft entry;
+- source wiring contains no new cast-packet path merely for focus navigation.
+
+Automated tests are implementation evidence only. They do not convert Section 20 real-client rows to PASS.
+
+---
+
+## 20. Real-client validation plan — still pending
 
 Automated focus tests are insufficient for physical input acceptance.
 
-After implementation, directly test:
+After merge, directly test:
 
 ### Radial
 
@@ -698,11 +680,13 @@ Repeat representative keyboard-only behavior with:
 
 No current external provider must be modified to support the navigation.
 
+All rows remain `PENDING` until directly observed. CI does not make them PASS.
+
 ---
 
-## 21. Acceptance failures that block implementation merge
+## 21. Acceptance failures that block merge/release acceptance
 
-A 05.09 implementation must not merge with:
+05.09 must not be accepted with:
 
 - keyboard focus causing a cast;
 - focus movement changing server loadout;
@@ -712,12 +696,14 @@ A 05.09 implementation must not merge with:
 - radial traversal failing the frozen same-page wrap contract;
 - loadout Up/Down wrapping or changing pages instead of clamping;
 - page movement producing invalid/off-page focus;
-- Enter unexpectedly changing from apply semantics without an explicit reviewed UX migration;
+- Enter unexpectedly changing from apply semantics;
 - screen navigation leaking through to world casting;
 - stuck key/cursor state;
 - focus invisible except by color;
 - keyboard navigation breaking current mouse behavior;
 - mandatory dependence on Controlling or a controller provider.
+
+Deterministic items are covered by current tests/wiring review. Physical-input/coexistence items remain release/manual acceptance obligations under D031.
 
 ---
 
@@ -743,27 +729,25 @@ Do not implement all of them merely because they are listed.
 
 ## 23. Relationship to Stage 05 completion
 
-05.09 is a planning refinement and does not automatically reopen Stage 05 completion requirements.
+05.09 is now an implemented Stage 05 follow-up hardening change, but it does **not** change the parent Stage 05 validation state.
 
-Current state remains:
+Current parent state remains:
 
 `IMPLEMENTED / FINAL VALIDATION DEFERRED`
 
-Keyboard-only radial/loadout operation becomes a required Stage 05 fix only when:
+Reason:
 
-- the current manual/accessibility acceptance criteria explicitly require it; or
-- a directly observed accessibility/usability failure is promoted to blocking; or
-- an explicit reviewed decision promotes 05.09 to required hardening.
+- deterministic keyboard focus/navigation behavior is implemented and automated gates are green on reviewed code heads;
+- the Stage 05 real-client visual/input matrix remains genuinely unexecuted;
+- the new physical-input/accessibility/coexistence rows in Section 20 are also unexecuted.
 
-Otherwise implementation may remain an approved follow-up or Stage 09 carry.
-
-The current manual matrix remains the authority for actual closeout PASS/BLOCKED status.
+The current manual matrix and real-client runbook remain the authority for actual closeout PASS/BLOCKED status.
 
 ---
 
 ## 24. Non-goals
 
-This plan does not authorize:
+05.09 does not authorize or implement:
 
 - new gameplay key mappings by default;
 - client-authoritative casting;
@@ -780,26 +764,29 @@ This plan does not authorize:
 - provider-specific input hooks without verified APIs;
 - world/entity scans for navigation;
 - turning focus into server-persistent state;
-- declaring keyboard accessibility validated from this planning document.
+- declaring keyboard accessibility manually validated from CI.
 
 ---
 
-## 25. Exit criteria for this planning task
+## 25. Implementation exit criteria
 
-05.09 is planning-complete when:
+The implementation portion of 05.09 is ready for promotion when all of the following hold on the final reconciled PR HEAD:
 
 - current mouse/keyboard behavior is recorded accurately;
 - radial keyboard focus has deterministic initialization/navigation/activation semantics;
-- radial Tab/Shift+Tab traversal is frozen as same-page wrap behavior;
-- loadout Up/Down boundary behavior is frozen as same-page clamp behavior;
+- radial Tab/Shift+Tab traversal is same-page wrap;
+- loadout Up/Down behavior is same-page clamp;
 - loadout keyboard focus has deterministic row/page/toggle/apply semantics;
-- existing Left/Right/PageUp/PageDown and Enter/Delete behavior is preserved unless separately reviewed;
+- existing Left/Right/PageUp/PageDown and Enter/Delete behavior is preserved;
 - focus, hover, selection and draft membership remain semantically distinct under 05.08;
-- no new global default mapping is required;
+- no new global default mapping exists;
 - no focus action grants gameplay authority;
 - controller support remains optional/provider-dependent;
-- stale/resize/session focus behavior is defined;
+- stale/resize/session focus behavior is bounded;
 - performance remains bounded/client-local;
-- TDD and real-client validation requirements are explicit;
-- Stage 05 validation state remains unchanged;
-- no Java/runtime/network/provider implementation is included in this planning change.
+- RED→GREEN evidence exists for deterministic behavior and screen wiring;
+- final reconciled PR HEAD passes the complete CI pipeline;
+- PR review has no unresolved blocking findings;
+- Stage 05 real-client validation state remains unchanged and explicitly deferred.
+
+Even after implementation merge, 05.09 is **not** `VALIDATED / COMPLETE` until the applicable Section 20/manual Stage 05 acceptance rows have direct evidence.
