@@ -9,6 +9,7 @@ import java.util.Objects;
 
 /** Unsaved client draft. It has no gameplay authority until the server accepts an update packet. */
 public final class LoadoutDraft {
+    private final List<ArcanaSpellId> baseline;
     private final List<ArcanaSpellId> spells = new ArrayList<>();
 
     public LoadoutDraft(List<ArcanaSpellId> initial) {
@@ -19,7 +20,8 @@ public final class LoadoutDraft {
         if (initial.stream().distinct().count() != initial.size()) {
             throw new IllegalArgumentException("initial loadout contains duplicate spells");
         }
-        spells.addAll(initial);
+        baseline = List.copyOf(initial);
+        spells.addAll(baseline);
     }
 
     public boolean toggle(ArcanaSpellId spell) {
@@ -42,6 +44,15 @@ public final class LoadoutDraft {
 
     public boolean contains(ArcanaSpellId spell) {
         return spells.contains(Objects.requireNonNull(spell, "spell"));
+    }
+
+    public boolean isDirty() {
+        return !spells.equals(baseline);
+    }
+
+    public void reset() {
+        spells.clear();
+        spells.addAll(baseline);
     }
 
     public void clear() {
