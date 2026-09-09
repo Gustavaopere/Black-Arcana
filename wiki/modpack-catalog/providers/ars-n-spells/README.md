@@ -1,113 +1,128 @@
-# Ars 'n' Spells
+# Ars 'n' Spells 3.3.2
 
-Status: `PHASE 2 — CURRENT 3.3.0 INSTALLED; CROSS-ENGINE BRIDGE VERIFIED; 3.3.0 DELTA PARTIALLY NORMALIZED`
+Status: `PHASE 2AG — INSTALLED 3.3.2 / EXACT RELEASE DELTA / NEOFORGE 1.21.1 SOURCE BASELINE 3.3.0`
 
-## Runtime identity
+## Physical identity
 
 - Mod id: `ars_n_spells`
-- Current JAR: `ars_n_spells-3.3.0.jar`
-- Runtime version: `3.3.0`
-- Loader/game: NeoForge 1.21.1
-- Correct Phase 2 class: `BRIDGE / COMPAT / PROGRESSION`
-- Granular capability catalog: `YES` — because the bridge exposes discrete rituals and cross-engine casting/progression behavior.
-- Previous catalog baseline: `3.2.4`.
+- Physical JAR: `ars_n_spells-3.3.2.jar`
+- Runtime version: `3.3.2`
+- SHA-1: `2d2274ff786c42ea46c53fec866116f83d98fe5a`
+- Minecraft: `1.21.1`
+- Loader: NeoForge `21.1.248`
+- Physical companion engines relevant to this bridge: Ars Nouveau `5.13.1`, Iron's Spells 'n Spellbooks `1.21.1-3.16.3`, Ars Elemental `0.7.10.1`, Ars Zero `2.0.2`.
 
-The PR #62 baseline classified this component as `ARS GLYPH / SYSTEM PROVIDER`. Current public 3.3.0 evidence still identifies its primary role as bridging Ars Nouveau and Iron's Spells 'n Spellbooks rather than acting as an independent glyph provider.
+## Evidence layers
 
-## Verified cross-engine capabilities
+The installed artifact is **3.3.2**. The strongest public source available for the same loader/game line is the official `otectus/ars-n-spells` branch `port/neoforge-1.21.1` at commit `a9930223c96806e5d748ea69d02f9a32cab62de9`, whose `gradle.properties` declares `mod_version=3.3.0`, Minecraft `1.21.1`, NeoForge `21.1.248`, Ars Nouveau `5.13.1.1400` and Iron's `1.21.1-3.16.3`.
 
-Current public 3.3.0 project/release documentation describes the bridge as supporting configurable combinations of:
+Therefore this catalog deliberately distinguishes:
 
-- unification/sharing of mana behavior between Ars Nouveau and Iron's;
-- equipment bonuses that can apply across the two magic systems;
-- shared spell-school progression behavior;
-- cross-boundary casting between the systems;
-- binding custom Ars Nouveau spells into Iron's spellbooks;
-- using Iron's native spell wheel for bound Ars spells.
+1. **physical/release-exact 3.3.2 facts** — presence, version, hash and published 3.3.1/3.3.2 release deltas;
+2. **source-pinned 3.3.0 NeoForge facts** — registrations, registry paths, proxy pool, mana modes and implementation boundaries visible at the official 1.21.1 source pin;
+3. **unverified 3.3.2 binary internals** — exact class/signature/registry parity after 3.3.0 is not claimed without exact JAR extraction.
 
-These are authority-sensitive integration surfaces. Black Arcana must not create a second generic Ars↔Iron's mana/progression/casting bridge around them.
+The exact 3.3.1 release removes the transaction receipt HUD. The exact 3.3.2 release fixes contextual Iron's mana-bar visibility and states that there are **no config, network-protocol or save-format changes from 3.3.1**. Those deltas do not publicly announce gameplay registrations being added or removed, but absence from release notes is not promoted to byte-for-byte registry proof.
 
-## Bridge ritual baseline retained from 3.2.4
+## Provider classification
 
-The 3.2.4 audit established four bridge rituals in the 3.x line:
+Primary class: `BRIDGE / COMPAT / PROGRESSION`, with a real ritual/workstation surface.
 
-1. Spellbook Binding
-2. Spell Transcription
-3. Spell Uninscription
-4. Mana Infusion
+Ars 'n' Spells is not treated as a new independent spell engine. Its high-value capabilities are cross-engine routing and lifecycle:
 
-The same provider line also documents the Spell Loom as the survival path for carrier-scroll/spellbook workflows. The binding command `/ans bind_scroll_to_irons_book` was documented as respecting the configuration that controls whether Ars spells may be placed in Iron's spellbooks.
+- configurable Ars Nouveau ↔ Iron's mana/resource routing;
+- cross-engine casting and carrier-aware settlement;
+- shared school/progression/equipment behavior;
+- storing serialized Ars spells on supported carrier items;
+- exposing bound Ars spells through Iron's native spell wheel;
+- Spell Loom inscription/export workflows;
+- provider-owned ritual workflows.
 
-No ritual is treated as removed in 3.3.0 because the current 3.3.0 public material continues to describe the Spell Loom, Iron's scroll/spellbook carriers, inscription/transcription and cross-casting. Exact registry-by-registry parity with the 3.2.4 audit remains a runtime/source normalization task rather than an assumption.
+No Ars Nouveau glyph registrations owned by Ars 'n' Spells were proven in this pass.
 
-## Verified 3.3.0 delta
+## Current semantic ritual surface
 
-The installed NeoForge 1.21.1 file is the 3.3.0 release. Public 3.3.0 release notes report a substantial bridge/casting refresh, including:
+The exact 3.3.0 NeoForge source baseline registers five ritual identities under the physical pack condition where Iron's is installed:
 
-- reworked cross-mod spell casting and resource payment;
-- stronger handling of mana and other supported shared-resource paths;
-- improved Iron's scroll/spellbook carrier behavior and long-cast settlement;
-- improved school detection, custom-school support, progression tracking, equipment bonuses, mana limits, Resonance and Source Jar behavior;
-- improved inscription/transcription preservation of inventory contents and native spell data;
-- packet validation hardened against stale or repeated cross-cast requests;
-- a redesigned Spell Loom/interface and a much larger icon/background authoring surface.
+1. `ars_n_spells:spell_uninscription` — unconditional cleanup/uninscription ritual;
+2. `ars_n_spells:spell_transcription` — transcribes one supported spell source onto one blank carrier target;
+3. `ars_n_spells:spellbook_binding` — binds an exported Ars spell carrier into an Iron's spellbook/native wheel flow;
+4. `ars_n_spells:mana_infusion` — one-shot mana grant routed through the active provider bridge;
+5. `ars_n_spells:mana_well` — continuous area mana regeneration routed through the active provider bridge.
 
-The public source `CHANGELOG.md` for 3.3.0 additionally verifies optional addon-aware school resolution for Ars Elemental and Ars Zero using declared Ars metadata, with augments/cast methods/filters remaining generic rather than deciding the payload school. It also documents Covenant compatibility changes.
+Each primitive is cataloged under [`rituals/`](rituals/).
 
-### Evidence boundary
+The first four one-shot rituals use the provider's `AnsRitual` lifecycle at the 3.3.0 NeoForge source pin, whose default duration is 60 server ticks before `onEnd()`. `Mana Well` directly extends Ars's ritual base and has its own continuous tick behavior; it must not be mislabeled as a 60-tick one-shot ritual.
 
-The public release page and the public source changelog expose overlapping but not identical 3.3.0 summaries. Therefore:
+## Internal Iron's proxy registry is not eight new spells
 
-- features directly stated by either current official surface are accepted at feature level;
-- exact internal registry IDs, packet layouts, settlement ordering and every compatibility branch are **NOT inferred** from the older 3.2.4 implementation;
-- any integration that depends on an internal 3.3.0 signature remains fail-closed until source/JAR-level confirmation for that signature.
+When Iron's is present, the 3.3.0 NeoForge source registers a finite pool of eight real Iron's `AbstractSpell` registry objects:
 
-## Deduplication / authority
+`ars_n_spells:ars_cross_1` … `ars_n_spells:ars_cross_8`
 
-### Mana/resource routing
+These are **transport/proxy slots**, not eight distinct player-authored magic capabilities. The real payload is a serialized Ars spell selected for a particular carrier/book entry. The proxy exists so Iron's native spellbook wheel can resolve a legitimate registered spell id and delegate execution to the Ars cross-cast pipeline.
 
-Ars 'n' Spells already owns the installed generic Ars Nouveau ↔ Iron's mana-unification bridge. Black Arcana must not:
+Semantic dedup therefore records:
 
-- create a parallel combined mana pool for those same engines;
-- debit both host pools for one bridged cast unless the provider's canonical contract explicitly requires it;
-- refund one side independently after the bridge has committed the action;
-- infer free casting when one side is unavailable.
+- registry objects: 8 baseline proxy entries;
+- new standalone semantic spells contributed by those proxies: **0**;
+- hard native-wheel Ars-entry ceiling at the source baseline: **8 slots per book**.
 
-The 3.3.0 release explicitly reports reworked resource payment. That increases, rather than weakens, the requirement that Black Arcana observe the provider's settled result instead of reproducing the cost algorithm.
+See [`systems/cross-casting-and-proxy-pool.md`](systems/cross-casting-and-proxy-pool.md).
 
-### Spellbook/casting routing
+## Mana unification modes
 
-Bound Ars spells executed through an Iron's spellbook remain provider-routed cross-engine casts. Black Arcana observation/integration must preserve a single causal cast identity and avoid processing the same cast once as “Iron's” and again as “Ars”.
+The 3.3.0 NeoForge source baseline exposes five modes:
 
-The 3.3.0 release also reports protection against stale/repeated cross-cast requests. Black Arcana must not bypass that provider-native anti-replay boundary with an independent packet/cast path.
+- `ISS_PRIMARY` / `iss_primary`;
+- `ARS_PRIMARY` / `ars_primary`;
+- `HYBRID` / `hybrid`;
+- `SEPARATE` / `separate`;
+- `DISABLED` / `disabled`.
 
-### Progression/equipment
+`ISS_PRIMARY`, `ARS_PRIMARY` and `HYBRID` are provider-defined shared-pool modes; `SEPARATE` is the provider's dual-cost mode; `DISABLED` leaves the systems independent. Black Arcana does not reproduce these algorithms or invent a second unified mana ledger.
 
-Shared progression/equipment effects must remain provider-native. The existence of cross-system bonuses is not permission to mirror or recompute those bonuses in Black Arcana.
+See [`systems/mana-unification.md`](systems/mana-unification.md).
 
-### School resolution
+## Spell Loom / carriers
 
-For addon glyphs supported by Ars 'n' Spells, school ownership/resolution remains provider-native. Black Arcana must not infer a school from a registry-name heuristic when the bridge resolves it from Ars metadata or an explicit provider mapping.
+The provider owns the serialization/export/inscription lifecycle that lets Ars spell graphs be carried across the engine boundary. The 3.3.0 NeoForge source/release baseline includes correctness hardening so preview is non-mutating, reusable books/foci are not consumed as disposable sources, inscription handles stack counts deliberately, and cleanup removes ANS-owned cross-cast state without treating ordinary native spells as its own authority.
 
-## Phase 2 impact
+See [`systems/spell-loom-and-carriers.md`](systems/spell-loom-and-carriers.md).
 
-This bridge materially covers:
+## Black Arcana authority and deduplication
 
-- cross-engine mana/resource unification;
-- custom spell storage in another engine's spellbook;
-- cross-engine spell-wheel execution;
-- spell transcription/binding lifecycle;
-- progression/equipment interoperability;
-- provider-native cross-engine school resolution, including current addon-aware paths documented for Ars Elemental and Ars Zero.
+Black Arcana remains authoritative only for its own casting, hazards, Corruption, Strain, Arcane Danger and world-safety runtimes. Ars 'n' Spells remains authority for the Ars↔Iron's bridge behavior it actually owns.
 
-Any future Black Arcana “universal spellbook” or generic Ars/Iron's resource bridge must prove a distinct requirement that Ars 'n' Spells 3.3.0 cannot already satisfy.
+Black Arcana must not:
 
-## Provenance / confidence
+- create a second Ars↔Iron's combined mana pool or conversion ledger;
+- debit both host resources again after Ars 'n' Spells settles a bridged cast;
+- treat `ars_cross_*` as ordinary independent offensive spells and process them a second time;
+- mirror provider cooldown/progression/school attribution for the same causal cast;
+- bypass the provider's carrier validation, proxy allocation or native-wheel routing with a second cross-cast packet path;
+- infer exact 3.3.2 internal signatures from the 3.3.0 source baseline.
 
-- Presence/JAR/runtime: uploaded 612-entry modlist + Notion audit, reconciled 2026-09-07 — HIGH.
-- Exact current release: Ars 'n' Spells 3.3.0, NeoForge 1.21.1 — HIGH from the current official release page.
-- Cross-engine feature set: current official project/release documentation — HIGH at feature level.
-- Ars Elemental/Ars Zero school-resolution delta: public 3.3.0 source changelog — HIGH at documented behavior level.
-- Four-ritual details and command behavior: retained from the previously audited 3.2.4 baseline where current 3.3.0 evidence does not state a removal — MEDIUM/HIGH; exact 3.3.0 internals still require normalization.
-- Exact internal registry IDs, packet layouts and every configuration interaction in 3.3.0: not fully normalized in this pass.
-- No installed 3.3.0 Java bytecode was decompiled in this pass.
+For a provider-routed cast, Black Arcana integration must preserve one causal cast identity. If an integration needs an exact internal hook that is not proven on 3.3.2, it remains **fail-closed**.
+
+## World and hazard boundary
+
+Ars 'n' Spells does not transfer authority over Black Arcana Corruption, Strain, Arcane Danger or `WorldEffectPolicy`. Conversely, Black Arcana does not reinterpret provider mana/progression/casting state as its own hazard channels merely because both systems participate in a cast.
+
+If a Black Arcana effect triggered through an approved adapter performs destructive world mutation, that Black Arcana-owned mutation still requires the canonical `WorldEffectPolicy` path.
+
+## Current 3.3.2 HUD delta
+
+Current UI facts that matter to the catalog:
+
+- the transaction receipt HUD is **not current content**; it was removed in 3.3.1;
+- 3.3.2 fixes the contextual Iron's mana bar so full displayed mana hides correctly with fractional maximums and the XP bar can return at the XP anchor;
+- 3.3.2 states no config, network-protocol or save-format change from 3.3.1.
+
+These presentation changes do not grant the client any new gameplay authority.
+
+## Evidence/provenance
+
+See [`EVIDENCE-AND-PROVENANCE.md`](EVIDENCE-AND-PROVENANCE.md).
+
+Phase 3 remains blocked. This provider closure is deduplication evidence; it is not permission to add a competing universal mana/spellbook bridge to Black Arcana.
