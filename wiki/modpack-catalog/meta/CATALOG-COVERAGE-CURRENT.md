@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AO revision: 43/100 = 43%.**
+**Coverage represented by this Phase 2AP revision: 44/100 = 44%.**
 
-Phase 2AO was branched from canonical `main@994d2983f0ec54fd54455a14abad473ebaea86bc`, where Phase 2AN / PR #149 made component #42 canonical and coverage reached **42/100 = 42%**. Component #43 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AO branch/PR, canonical coverage remains **42/100 = 42%**.
+Phase 2AO / PR #150 is canonical at merge SHA `068ca67e786d95255ccecb70433dd66d26a4b3e4` and made component #43 canonical, so current canonical coverage is **43/100 = 43%**. Component #44 becomes canonical only when this Phase 2AP revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AP branch/PR, canonical coverage remains **43/100 = 43%**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -178,9 +178,9 @@ Apothic owns its generic combat math, cooldown subsystem and modifier bridge. Bl
 
 Source↔physical-JAR byte reproducibility and full-modpack combat-provider interaction remain QA/fail-closed rather than guessed. Root source code is MIT, assets are All Rights Reserved, and `StackAttributeModifiersEvent.java` carries a file-level Forge Development LLC / SPDX LGPL-2.1-only header; this catalog performs read-only inspection only.
 
-## Phase 2AO — Soul Fire'd component #43 candidate
+## Phase 2AO — Soul Fire'd component #43, canonical
 
-Phase 2AO closes `soul_fire_d` 6.1.0 at the exact physical/publisher/source evidence ceiling as a Prometheus-backed Soul Fire content provider:
+Phase 2AO / PR #150 is canonical at merge SHA `068ca67e786d95255ccecb70433dd66d26a4b3e4` and closed `soul_fire_d` 6.1.0 at the exact physical/publisher/source evidence ceiling as a Prometheus-backed Soul Fire content provider:
 
 - physical artifact `soul-fire-d-neoforge-1.21-6.1.0.jar`, SHA-1 `877002a5aa386f9011ebc4eb3360a7647ac359d9`;
 - exact CurseForge project/file `662413 / 7364962`, release 2025-12-22 for NeoForge 1.21/1.21.1;
@@ -200,6 +200,27 @@ Prometheus owns the generic fire framework/API; Soul Fire'd owns Soul-specific d
 License metadata is intentionally unresolved for reuse: exact source metadata/root text are GPL-3.0-or-later/GPLv3, while publisher surfaces label the distributed project Custom License / Crystal Nest Community License v1. Source inspection is read-only and no code/assets are copied.
 
 The point is awarded because the exact 6.1.0 component identity, content surface, authority migration and deduplication boundary are closed without claiming source/JAR byte reproducibility or full-pack runtime interoperability.
+
+## Phase 2AP — Create Enchantment Industry Plus component #44 candidate
+
+Phase 2AP closes `create_enchantment_industry_plus` 1.1.1 at the exact physical/source evidence ceiling as a small Create / Create: Enchantment Industry recipe-and-content extension:
+
+- physical artifact `create_enchantment_industry_plus-1.1.1-1.21.1.jar`, SHA-1 `c7e87eb00e10cb347f6372e17d38da51ce6f1975`;
+- exact official source pin `TiesToetToet/create_enchantment_industry_plus@fb97ed35288f7ff2c80d43ef33f051db93d281d5`, whose metadata declares version 1.1.1 for Minecraft 1.21.1;
+- **0 standalone spells, 0 glyphs, 0 rituals and 0 provider mana/cast resource**;
+- exactly 2 addon Java files and **1 registered addon item**, `create_enchantment_industry_plus:sac`;
+- exactly **6 addon recipe JSONs**: two filling, one grinding, two mixing and one pressing route;
+- exactly **1 host-recipe disable overlay** under `create_enchantment_industry:recipes/mixing/ink` using `neoforge:never`;
+- no mixin configuration, provider packet or persistence surface observed in the exact source tree;
+- declared dependencies: Create `[6.0.4,6.1.0)`, Create: Enchantment Industry `[2.0.0,)`, NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)`;
+- four recipe routes directly reference `create_dragons_plus:black_dye` or `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in metadata; the current physical pack contains Create: Dragons Plus 1.11.8b, so this is recorded as an undeclared data-level dependency rather than hidden or replaced;
+- publisher-facing documentation describes an Ink Sac drain/recovery route, but the exact 1.1.1 source tree contains no `emptying`/drain recipe. That path remains fail-closed until its physical provider/recipe identity is proven.
+
+Create owns machine/process execution, Create: Enchantment Industry owns its experience/enchantment-processing domain, Create: Dragons Plus owns the black-dye fluid and grinding type referenced by the data, and CEI Plus owns only its item/recipe overlays. Black Arcana retains its canonical magic runtime and must not duplicate processing/resource settlement or count these recipes as spells.
+
+License metadata remains a reuse-review boundary: exact source metadata and Modrinth indicate MIT, CurseForge labels LGPLv3, and the repository `LICENSE.txt` is Forge-origin LGPL boilerplate. Source/data inspection is read-only and no code/assets are copied.
+
+The point is awarded only after latest-main reconciliation, exact-head CI GREEN and merge because the exact 1.1.1 semantic component is closed without pretending source/JAR byte reproducibility or full-pack recipe interoperability has been proven.
 
 ## Partial providers still receive zero points
 
