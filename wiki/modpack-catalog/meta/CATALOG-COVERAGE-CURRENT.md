@@ -52,10 +52,11 @@ Phase 2AH closes `monstersspellbooks` as component **37** when this revision bec
 - exact CurseForge release: project/file `1428928 / 8788560`, 2026-09-01;
 - complete current public-source inventory: **98 explicit `registerSpell(...)` registrations**;
 - source-family distribution: blood 5, ender 12, evocation 3, fire 10, holy 4, hydro 8, ice 8, lightning 14, nature 7, necro 25, technomancy 2;
-- two source SchoolTypes observed: Necro plus retained Aero; Aero contributes zero current spell registrations and exact 0.0.16.2 release marks it soft-deleted;
+- two SchoolType registrations are observed in the inspected source head (`necro`, `aero`), but source metadata is not an exact 0.0.16.3 build pin;
+- Aero contributes zero spell registrations; exact 0.0.16.2 soft-deletes Aero and exact 0.0.16.3 deletes remaining Aero content, so installed `monstersspellbooks:aero` existence is **`NÃO VERIFICADO`**;
 - public source head `1ab9b72af2ea44c3c8b816e665d06531ea44ddc2` is contemporaneous with the release but still carries stale `mod_version=0.0.14` metadata;
 - `ModSpellRegistry` is unchanged across the public source interval containing the 0.0.16.2/0.0.16.3 work;
-- exact 0.0.16.3 binary numerical/API/config/network/save internals remain unverified/fail-closed.
+- exact 0.0.16.3 binary numerical/API/config/network/save internals and uncertain school parity remain unverified/fail-closed.
 
 The point is awarded for closing the **provider component at its evidence ceiling**, not for pretending the installed JAR was decompiled or that stale source metadata is an exact binary pin.
 
