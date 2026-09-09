@@ -1,6 +1,6 @@
 # Create Enchantment Industry Plus 1.1.1
 
-Status: `EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / CREATE DRAGONS PLUS DATA DEPENDENCY UNDECLARED / LICENSE-METADATA + FULL-PACK QA FAIL-CLOSED`
+Status: `EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / CREATE METADATA TABLE MIS-KEYED + CREATE DRAGONS PLUS DATA DEPENDENCY UNDECLARED / LICENSE-METADATA + FULL-PACK QA FAIL-CLOSED`
 
 ## Installed identity
 
@@ -80,16 +80,17 @@ The source contains the following six addon recipe definitions:
 
 The source also supplies `data/create_enchantment_industry/recipes/mixing/ink.json` containing only a `neoforge:never` condition. This is an explicit **disable overlay for a host recipe**, not a seventh addon processing route.
 
-## Create Dragons Plus dependency boundary
+## Metadata dependency boundary
 
-The exact NeoForge metadata declares required dependencies on:
+The exact NeoForge source metadata has addon-keyed required dependency tables for:
 
 - NeoForge `[21.1.0,)`;
 - Minecraft `[1.21.1,1.22)`;
-- Create `[6.0.4,6.1.0)`;
 - Create: Enchantment Industry `[2.0.0,)`.
 
-It does **not** declare Create: Dragons Plus, yet four of the six addon recipes reference `create_dragons_plus` content or a `create_dragons_plus` recipe type.
+The source file also contains a Create range `[6.0.4,6.1.0)`, but that block is written under `[[dependencies.create_enchantment_industry]]`, **not** under `[[dependencies.create_enchantment_industry_plus]]`. The physical pack contains Create `6.0.10`, which satisfies the numeric range, but the loader treatment and physical-JAR parity of this mis-keyed source table are not asserted without direct artifact evidence.
+
+Create: Dragons Plus is not declared in any metadata dependency table, yet four of the six addon recipes reference `create_dragons_plus` content or a `create_dragons_plus` recipe type.
 
 The current physical pack contains Create: Dragons Plus `1.11.8b`, so the referenced namespace is physically present in this pack. That does not convert the missing metadata dependency into a general compatibility guarantee. If Create: Dragons Plus is absent or changes those identifiers, the affected recipe subset must fail closed rather than being replaced with an invented Black Arcana fallback.
 
@@ -129,13 +130,14 @@ Closed semantically from exact evidence:
 - exact item count and identity;
 - exact six addon recipes;
 - exact host-recipe disable overlay;
-- exact declared dependency ranges;
+- exact source metadata dependency tables/ranges, including the mis-keyed Create block;
 - exact data-level reliance on Create: Dragons Plus identifiers;
 - exact zero-spell/glyph/ritual/mixin/network/persistence result for the inspected source tree.
 
 Still fail-closed:
 
 - byte-for-byte source/JAR reproducibility;
+- physical-JAR metadata parity and NeoForge loader interpretation of the mis-keyed Create dependency table;
 - full-modpack recipe reload/JEI/runtime behavior;
 - whether any provider outside this addon supplies the publicly described drain route;
 - behavior if Create: Dragons Plus identifiers change or the undeclared dependency is removed;
