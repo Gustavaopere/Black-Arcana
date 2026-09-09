@@ -192,6 +192,11 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             draft.clear();
             return true;
         }
+        if (keyCode == GLFW.GLFW_KEY_R) {
+            inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
+            draft.reset();
+            return true;
+        }
 
         LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
         page = layout.clampPage(available.size(), page);
