@@ -22,8 +22,18 @@ Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 - cobertura canônica antes da Phase 2AH: **36/100 = 36%**;
 - esta revisão Phase 2AH fecha `monstersspellbooks` como componente #37 ao limite de evidência disponível;
 - quando esta revisão estiver em `main`: **37/100 = 37%**;
-- provider parcial não recebe ponto inteiro;
-- denominador 100 permanece operacional e deve ser reconciliado se a modlist física mudar.
+- provider parcial não recebe ponto inteiro.
+
+### Reconciliação física corrigida do denominador
+
+A lista histórica possui 103 IDs. A comparação direta desses IDs contra a modlist física atual encontra:
+
+- 98 IDs históricos ainda presentes;
+- 5 ausentes reais: `ars_morph`, `morerelics`, `reliquary`, `vestis`, `woodwalkers_spellbooks`;
+- 2 candidatos magic/cross-domain atuais adicionados depois da lista histórica: `soul_fire_d`, `reliquified_lenders_cataclysm_new_relics_fix`;
+- denominador operacional: `103 - 5 + 2 = 100`.
+
+Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
 ## Phase 2AH — Monsters & Spellbooks
 
