@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AN / PR #149 está canônica em `main@994d2983f0ec54fd54455a14abad473ebaea86bc`;
-- cobertura canônica na criação da Phase 2AO: **42/100 = 42%**;
-- esta revisão Phase 2AO fecha `soul_fire_d` como componente #43 ao limite exato de physical+publisher+source-version disponível;
-- o resultado **43/100 = 43%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
+- Phase 2AO / PR #150 está canônica em `main@068ca67e786d95255ccecb70433dd66d26a4b3e4`;
+- cobertura canônica na criação da Phase 2AP: **43/100 = 43%**;
+- esta revisão Phase 2AP fecha `create_enchantment_industry_plus` como componente #44 ao limite exato de physical+source-version disponível;
+- o resultado **44/100 = 44%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,43 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AO — Soul Fire'd 6.1.0
+## Phase 2AP — Create Enchantment Industry Plus 1.1.1
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `soul_fire_d` | `soul-fire-d-neoforge-1.21-6.1.0.jar` | EXACT PHYSICAL+PUBLISHER+OFFICIAL SOURCE VERSION / PROMETHEUS-BACKED SOUL-FIRE CONTENT PROVIDER / 0 SPELLS+GLYPHS+RITUALS / 0 MIXINS / 1 SOUL FIRE TYPE + 1 ASSOCIATED FIRE CHARGE / 2 ENCHANTMENTS / STATIC DATAPACK / 1 NEOFORGE GLM SERIALIZER + BASTION ACQUISITION / COMPONENT #43 CANDIDATE / LICENSE-METADATA CONFLICT + BYTE+FULL-PACK QA FAIL-CLOSED |
+| `create_enchantment_industry_plus` | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | EXACT PHYSICAL+OFFICIAL SOURCE VERSION / CREATE+CEI RECIPE EXTENSION / 0 SPELLS+GLYPHS+RITUALS / 1 ITEM / 6 ADDON RECIPES + 1 HOST-RECIPE DISABLE / UNDECLARED CREATE DRAGONS PLUS DATA DEPENDENCY / COMPONENT #44 CANDIDATE / LICENSE-METADATA + BYTE+FULL-PACK QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `c7e87eb00e10cb347f6372e17d38da51ce6f1975`.
+- Exact official source: `TiesToetToet/create_enchantment_industry_plus@fb97ed35288f7ff2c80d43ef33f051db93d281d5`.
+- Exact source metadata declares version `1.1.1`, Minecraft 1.21.1 and NeoForge baseline 21.1.159.
+- Exact source package contains 2 addon Java files and exactly one registered addon item: `create_enchantment_industry_plus:sac`.
+- Exact source data contains 6 addon recipe JSONs: 2 filling, 1 grinding, 2 mixing and 1 pressing route.
+- Exact source also overlays `create_enchantment_industry:recipes/mixing/ink` with `neoforge:never`, disabling that host recipe rather than adding a seventh processing route.
+- Exact source tree exposes 0 standalone spells, 0 glyphs, 0 rituals, 0 provider mana/cast resource, 0 mixin configs and no provider network/persistence surface observed.
+- Declared dependencies: Create `[6.0.4,6.1.0)`, Create: Enchantment Industry `[2.0.0,)`, NeoForge `[21.1.0,)`, Minecraft `[1.21.1,1.22)`.
+- Physical pack uses Create `6.0.10` and Create: Enchantment Industry `2.5.3b`, satisfying those declared ranges.
+- Four exact recipe routes reference `create_dragons_plus:black_dye` or `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in metadata. The current pack contains Create: Dragons Plus `1.11.8b`; this is recorded as an undeclared data-level dependency, not converted into a fabricated formal dependency.
+- Publisher-facing documentation describes an Ink Sac drain/recovery path, but the exact 1.1.1 source tree contains no `emptying`/drain recipe. That route remains fail-closed until physical provider/recipe identity is proven.
+- Exact source metadata and Modrinth indicate MIT, CurseForge labels LGPLv3 and repository `LICENSE.txt` is Forge-origin LGPL boilerplate. Reuse remains review-required; inspection is factual/read-only.
+- Exact source-version pin is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
+
+### Provider authority
+
+- Create owns machine/process execution and Create recipe semantics.
+- Create: Enchantment Industry owns its experience/enchantment-processing domain.
+- Create: Dragons Plus owns the `black_dye` fluid and `grinding` recipe type referenced by CEI Plus data.
+- Create Enchantment Industry Plus owns only its `sac` item and recipe/data overlays.
+- Black Arcana retains canonical casting, costs, BA cooldowns/charges, targeting, hazards, Corruption, Strain, Arcane Danger, Backlash causality and `WorldEffectPolicy`.
+- Recipe objects are not spells and do not create a second Black Arcana magic pipeline.
+- RPG Skill Tree receives no processing or magic runtime authority.
+
+## Phase 2AO — Soul Fire'd 6.1.0 — canonical predecessor
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `soul_fire_d` | `soul-fire-d-neoforge-1.21-6.1.0.jar` | CANÔNICO VIA PR #150 / EXACT PHYSICAL+PUBLISHER+OFFICIAL SOURCE VERSION / PROMETHEUS-BACKED SOUL-FIRE CONTENT PROVIDER / 0 SPELLS+GLYPHS+RITUALS / 0 MIXINS / 1 SOUL FIRE TYPE + 1 ASSOCIATED FIRE CHARGE / 2 ENCHANTMENTS / STATIC DATAPACK / 1 NEOFORGE GLM SERIALIZER + BASTION ACQUISITION / COMPONENT #43 / LICENSE-METADATA CONFLICT + BYTE+FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -108,7 +140,7 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ### Evidence boundary
 
-- Physical SHA-1: `9d4710e665ec74af917bb9f5f819154ca9f74ca0`.
+- Physical SHA-1: `9d4710e665ec74af917bbf5f819154ca9f74ca0`.
 - CurseForge project/file: `1665965 / 8778365`, exact 1.0.2 release dated 2026-08-31.
 - Publisher: NeoForge 1.21.1, Client & Server, All Rights Reserved.
 - Publisher defines the component as a bridge allowing Reliquified L_Ender's Cataclysm `0.1.1` to work with newer Relics `0.12` after old Relics `0.10` classes/methods changed or disappeared.
@@ -241,24 +273,24 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AO usa `docs/magic-catalog-phase2ao-soul-fire-d-6.1.0` sobre `main@994d2983f0ec54fd54455a14abad473ebaea86bc`. A branch já existia quando a criação foi tentada, mas seu HEAD era exatamente a mesma main e não havia trabalho divergente nem PR equivalente; o ref não foi movido nem sobrescrito.
+Phase 2AP usa `docs/magic-catalog-phase2ap-create-enchantment-industry-plus-1.1.1` sobre `main@068ca67e786d95255ccecb70433dd66d26a4b3e4`. Nenhuma branch/PR equivalente existia quando a Phase 2AP foi iniciada.
 
 PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AO
+## Próxima seleção após Phase 2AP
 
 Selecionar somente depois de:
 
 1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AO;
+2. confirmação do merge/CI da Phase 2AP;
 3. verificação da modlist física atual;
 4. pesquisa de PR/branch equivalente;
 5. leitura do catálogo já canônico;
 6. confirmação da versão exata e do melhor source/API/release aplicável.
 
-Os dois componentes adicionados ao denominador após a baseline histórica (`reliquified_lenders_cataclysm_new_relics_fix` e `soul_fire_d`) já ficam semanticamente fechados quando 2AO se tornar canônica. Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
+Continuar preferindo componentes cuja superfície atual possa ser fechada sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais sob a evidência atual.
 
 ## Providers parcialmente fechados — não contam como concluídos
 
@@ -280,10 +312,10 @@ Exemplos atuais:
 - API/framework que migrou para sibling provider deve manter a authority no provider atual; não atribuir API histórica ao consumer instalado;
 - client presentation hook não é cast authority;
 - cross-provider cast cancellation/reconciliation não vira segundo cast authority;
-- registry/example/animation/compatibility/fire object não vira spell por contagem;
+- registry/example/animation/compatibility/fire/recipe object não vira spell por contagem;
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
-- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, fire-framework settlement, presentation adapter ou world mutation de provider;
+- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, fire-framework settlement, recipe/resource settlement, presentation adapter ou world mutation de provider;
 - source-family label ou Java symbol não deve ser confundido com registry ID sem evidência;
 - provider parcial continua zero até inventário atual fechar ao teto de evidência aceito;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.
