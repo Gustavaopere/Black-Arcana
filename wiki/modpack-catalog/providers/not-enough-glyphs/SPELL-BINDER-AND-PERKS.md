@@ -37,7 +37,11 @@ No local explicit slot-range guard was observed in `PacketSetBinderSlot`; range 
 
 ## Perk provider
 
-With Ars Elemental installed, current source registers **13 Binder perks/threads**:
+With Ars Elemental installed, current source registers **13 Binder perks/threads**.
+
+`postInit()` registers the Binder as a perk provider with three perk positions, each accepting Ars `PerkSlot.ONE` or `PerkSlot.TWO`. This is the provider's Binder perk layout; it is not RPG Skill Tree authority.
+
+The NEG mod constructor also sets Sauce `ENABLE_SPELL_CRIT = true`, which enables the Sauce spell-crit feature used by NEG's crit threads. Black Arcana must not treat that provider-global flag as its own crit system.
 
 ### Focus perks — 6
 
