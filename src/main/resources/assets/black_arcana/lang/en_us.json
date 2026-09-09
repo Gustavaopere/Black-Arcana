@@ -19,6 +19,8 @@
   "screen.black_arcana.loadout": "Black Arcana Loadout",
   "screen.black_arcana.loadout.page": "Page %s / %s",
   "screen.black_arcana.loadout.hint": "%s selected · Enter: apply · Delete: clear · Esc: cancel",
+  "screen.black_arcana.loadout.slot": "S%s",
+  "screen.black_arcana.loadout.slot.quick_eligible": "S%s · QC%s eligible",
   "hud.black_arcana.selected": "Selected: %s",
   "hud.black_arcana.denied": "Denied: %s",
   "hud.black_arcana.cast_failed": "Cast failed: %s",
