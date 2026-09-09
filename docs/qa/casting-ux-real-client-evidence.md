@@ -12,13 +12,13 @@ Automated CI, artifact publication, repository inspection and fixture availabili
 
 ---
 
-## 1. Candidate build freeze
+## 1. Preparation reference build
 
-This candidate was frozen before manual execution so the later evidence can identify one exact build rather than an approximate branch state.
+This build was recorded while the manual campaign infrastructure was being prepared. It is a historical, exact-SHA **preparation reference**, not an automatically selected manual campaign candidate.
 
 - Repository: `Gustavaopere/Black-Arcana`
-- Candidate `main` SHA: `d103b259eed27705b2d4e44cbec60d78d4228054`
-- Candidate commit: merge of PR #133, `docs: catalog Ars Zero 2.0.2 provider`
+- Preparation-reference `main` SHA: `d103b259eed27705b2d4e44cbec60d78d4228054`
+- Preparation-reference commit: merge of PR #133, `docs: catalog Ars Zero 2.0.2 provider`
 - Automated workflow: `Black Arcana CI`
 - Workflow run number: `#2123`
 - Workflow run ID: `34293089532`
@@ -30,13 +30,17 @@ This candidate was frozen before manual execution so the later evidence can iden
 - Artifact expires: `2026-09-16T00:03:44Z`
 - Artifact state at campaign preparation: `AVAILABLE / NOT EXPIRED`
 
-The successful automated workflow proves only that the candidate passed the repository's applicable automated delivery gate. It is **not** evidence that any visual/input/manual acceptance row passes.
+The successful automated workflow proves only that this reference build passed the repository's applicable automated delivery gate. It is **not** evidence that any visual/input/manual acceptance row passes, and it does not require the later manual campaign to use this SHA.
 
-### Candidate invalidation rule
+### Manual campaign candidate freeze rule
 
-If `origin/main` advances **before the real-client campaign begins**, do not silently treat this candidate as the latest build. Re-read the current physical modlist, freeze the exact `main` SHA actually selected for testing, use/build the matching exact-SHA artifact and update this header before recording manual results.
+The manual campaign candidate is selected **at the start of actual real-client execution**, before the first manual observation is recorded. Record the exact tested SHA, successful exact-SHA CI run, artifact/JAR identity and digest in section 3.
 
-If the campaign has already begun on this exact SHA, do not mix evidence from a later SHA into the same result set. A changed build requires an explicit new/revalidated campaign boundary for affected rows.
+The Git commit containing this evidence document does **not** have to equal the tested candidate SHA. Documentation-only commits made to prepare or record the campaign therefore do not recursively invalidate the candidate. The authority is the exact Black Arcana JAR actually installed in the client and the exact SHA/artifact recorded for that campaign.
+
+If `origin/main` advances before the first real-client observation, re-read the current physical modlist and deliberately choose which exact `main` SHA will be tested. Prefer the latest compatible successful `main` build unless a specific earlier exact-SHA build is intentionally being reproduced. Never silently describe this preparation reference as the latest build.
+
+Once the first real-client observation is recorded, the campaign candidate is locked. Do not mix evidence from a later Black Arcana JAR/SHA into that result set. Changing the tested build requires an explicit new/revalidated campaign boundary and repetition of every affected row.
 
 ---
 
@@ -76,6 +80,10 @@ The following fields must be filled from the actual Minecraft client used for ev
 
 - Manual campaign start date: `NOT RECORDED — MANUAL CAMPAIGN NOT STARTED`
 - Tester: `NOT RECORDED`
+- Manual campaign candidate SHA: `NOT SELECTED`
+- Candidate exact-SHA CI run number / ID: `NOT SELECTED`
+- Candidate canonical artifact name / ID: `NOT SELECTED`
+- Candidate artifact digest: `NOT SELECTED`
 - Client instance/profile identification: `NOT RECORDED`
 - Operating system: `NOT RECORDED`
 - GPU / driver: `NOT RECORDED`
@@ -83,10 +91,10 @@ The following fields must be filled from the actual Minecraft client used for ev
 - Native display resolution: `NOT RECORDED`
 - Java runtime actually used to launch the client: `NOT RECORDED`
 - Black Arcana JAR actually installed: `NOT RECORDED`
-- Artifact digest independently checked after extraction: `NOT RECORDED`
+- Artifact/JAR digest independently checked after extraction: `NOT RECORDED`
 - Stage 05 deterministic fixture installed: `NOT RECORDED`
 
-Do not copy these values from assumptions or from another machine. Record the actual client instance.
+Do not copy these values from assumptions or from another machine. Record the actual client instance and the actual Black Arcana JAR used for the first observation before assigning any manual result.
 
 ---
 
@@ -285,9 +293,10 @@ If a real-client `FAIL` is found, reproduce it on the exact tested SHA, add dete
 
 At preparation time:
 
-- exact candidate build: frozen;
-- automated CI: green;
-- canonical QA artifact: available;
+- exact preparation-reference build: recorded;
+- preparation-reference automated CI: green;
+- preparation-reference canonical QA artifact: recorded;
+- manual campaign candidate: `NOT SELECTED`;
 - latest physical modlist: checked;
 - manual client environment: not yet recorded;
 - Blocks A–H: not started;
