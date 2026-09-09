@@ -2,7 +2,7 @@
 
 ## Autoridade atual
 
-O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-AUDIT-QUEUE-PRE-PHASE2AU.md`](./PROVIDER-AUDIT-QUEUE-PRE-PHASE2AU.md).
+O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-AUDIT-QUEUE-PRE-PHASE2AV.md`](./PROVIDER-AUDIT-QUEUE-PRE-PHASE2AV.md).
 
 - Minecraft 1.21.1
 - NeoForge `21.1.248`
@@ -12,55 +12,79 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 
 ## Cobertura
 
-- branch inicialmente criada sobre `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`
-- base de repositório reconciliada: `main@78639998c212e91469e9036484bd5ac2ac9b699b`
-- PRs #157 e #159, entre essas bases, são trabalho Stage 05 de keyboard focus, sem delta de catálogo e sem sobreposição com os 8 arquivos da Phase 2AU
-- cobertura canônica na base reconciliada: **48/100 = 48%**
-- Phase 2AT / PR #156: `apothic_spawners`, componente #48, canônico
-- Phase 2AU: `apothic_enchanting` 1.6.2, **49/100 = 49% somente candidato** até CI GREEN no HEAD reconciliado + gate final de `main` + merge + confirmação pós-merge
+- branch Phase 2AV criada sobre `main@f3a3f95a10cf830b6bf973612d519e53d9168adc`;
+- esse `main` já contém Phase 2AU / PR #158;
+- cobertura canônica na base: **49/100 = 49%**;
+- Phase 2AU: `apothic_enchanting` 1.6.2, componente #49, canônico;
+- Phase 2AV: `apotheosis` 8.8.0, **50/100 = 50% somente candidato** até CI GREEN no HEAD reconciliado + gate final de `main` + merge + confirmação pós-merge.
 
-## Phase 2AU — Apothic Enchanting 1.6.2 — candidate #49
+## Phase 2AV — Apotheosis 8.8.0 — candidate #50
 
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
-| `apothic_enchanting` | `ApothicEnchanting-1.21.1-1.6.2.jar` | EXACT PHYSICAL + EXACT PUBLISHER + EXACT OFFICIAL SOURCE / ENCHANTING AUTHORITY / 20 ENCHANTMENT KEYS / ETERNA+QUANTA+ARCANA / MAX_ETERNA / INFUSION / RAVEN PERSISTENCE / 4 PLAY PAYLOADS / 20 MIXINS / ENMERCHANTABILITY DISCREPANCY QA / #49 CANDIDATE |
+| `apotheosis` | `Apotheosis-1.21.1-8.8.0.jar` | EXACT PHYSICAL + EXACT PUBLISHER + EXACT OFFICIAL SOURCE / ADVENTURE-RPG AUTHORITY / DYNAMIC REGISTRIES / WORLD TIER + INVADER STATE / AFFIX+GEM+LOOT / REFORGING+SALVAGING+AUGMENTING / 7 PAYLOAD PROVIDERS / NO STANDALONE CAST SURFACE OBSERVED / APOTHIC SIBLING DEDUP / #50 CANDIDATE |
 
 ### Evidence boundary
 
-- physical version 1.6.2, SHA-1 `2623af251d3ddeae1d8e710afa76afe753834bab`;
-- CurseForge project/file `1063926 / 8797650`, 2026-09-03, NeoForge 1.21.1;
-- exact source `Shadows-of-Fire/Apothic-Enchanting@00fbcf00a2f42701645daf8906e54f67ec65a5dc`, message `1.6.2`;
-- root tree `cad9b01b8d366e770cb811552884848afb320b30`;
-- Java subtree `7f20d16f0d3f0c49caa1c5ae4582f88b22e8bd42`, recursive `truncated=false`;
-- source ranges: Minecraft 1.21.1+, NeoForge 21.1.187+, Placebo 9.9.0+, Apothic Attributes 2.4.0+;
-- physical pack: NeoForge 21.1.248, Placebo 9.9.2, Apothic Attributes 2.10.1.
+- physical version 8.8.0, mod id `apotheosis`, SHA-1 `1e4837fcaf24fe73dba1082656736d872690b303`;
+- CurseForge project/file `313970 / 8826922`, published 2026-09-07, NeoForge / Minecraft 1.21.1;
+- exact source `Shadows-of-Fire/Apotheosis@e825cd9dcb9a6fff5e163659812ff32390e343a6`, message `8.8.0`;
+- root tree `98ffba7432210ac6b5d807a83fc8e49e74db31fd`;
+- exact Apotheosis Java package tree `a517a5e6ecf47bc1eae07c28206868a4317ffb8b`;
+- source baselines/ranges: Minecraft 1.21.1, Java 21, NeoForge 21.1.235+, Placebo 9.9.2+, Apothic Attributes 2.10.0+;
+- source metadata orders optional Apothic Enchanting 1.6.2+ and Apothic Spawners 1.4.0+ after Apotheosis and treats Curios as optional;
+- physical pack: NeoForge 21.1.248, Placebo 9.9.2, Apothic Attributes 2.10.1, Apothic Enchanting 1.6.2, Apothic Spawners 1.4.0.
 
-No standalone provider spell/glyph/ritual registry and no provider mana/cast resource were observed.
+`apothic_attributes`, `apothic_enchanting` and `apothic_spawners` retain separate provider authority and previous catalog components. Phase 2AV does not count them again.
 
 ### Runtime and authority boundary
 
-- Eterna, Quanta, Arcana, clues, blacklist, treasure and stability are provider enchanting statistics;
-- synced `apothic_enchanting:max_eterna`, default/range 100 / 0..100;
-- exactly 20 provider enchantment keys;
-- provider extension interfaces `EnchantableItem` and `EnchantmentStatBlock`;
-- data-backed `EnchantingStatRegistry`;
-- exact IMC method `set_ench_hard_cap`;
-- infusion and keep-NBT infusion serializers;
-- persistent `RavenTableStats` attachment;
-- PLAY payloads version `1`: `clue`, `stats`, `enchantment_info` clientbound; `set_raven_stats` serverbound;
-- Raven C2S is menu-gated and server-clamped; it is provider table state, not cast intent;
-- generated manifest: 17 common + 3 client mixins.
+Exact bootstrap declares provider registry keys for:
 
-Provider `Arcana` is an enchanting statistic; naming similarity does not transfer authority to/from Black Arcana. Apothic Enchanting owns its enchanting system and effects. Black Arcana retains canonical casting, targeting, transactional costs, BA cooldowns/charges, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash and world safety. RPG Skill Tree receives no direct provider enchanting-runtime authority.
+- `rarity`;
+- `affix`;
+- `gem`;
+- `affix_loot_entry`;
+- `invader`;
+- `rogue_spawner`;
+- `elite`;
+- `purity_weights`;
+- `augment`;
+- `tiered_augment`;
+- `rarity_override`.
 
-### Enchantability QA boundary
+Provider state includes player tier/unlocks, invader cooldown/data, spawn data, bonus loot tables and damage reductions. Provider components own affixed-item, gem, rarity and related item/UI state. Provider recipes/menus own reforging, salvaging, augmenting and gem-cutting workflows.
 
-The exact changelog puts the Enchantability redesign in 1.6.1. Version 1.6.2 fixes star-prefixed display and adds Raven JEI transfer. Exact 1.6.2 source tests `rand.nextFloat() >= chance` on the observed +1-level path; this is not silently normalized to changelog prose. Source/JAR parity and physical runtime reproduction remain fail-closed, and no confirmed runtime bug is asserted.
+No standalone provider spell/mana/ritual/casting registration or payload surface was observed in the exact source-tree/bootstrap/network audit. `Spellbreaker` is an affix name in the changelog, not a spell-runtime seam.
 
-### License / clean-room
+### Network boundary
+
+Registered payload providers:
+
+- `apotheosis:config` — CLIENTBOUND v4;
+- `apotheosis:boss_spawn` — CLIENTBOUND v1;
+- `apotheosis:link_item` — SERVERBOUND v1;
+- `apotheosis:radial_state` — BIDIRECTIONAL v1;
+- `apotheosis:gem_case_select` — BIDIRECTIONAL v1;
+- `apotheosis:world_tier` — BIDIRECTIONAL v1;
+- `apotheosis:reroll_result` — CLIENTBOUND v1.
+
+Serverbound/bidirectional paths retain provider validation: menu/slot context for item links, held item + registry gem for gem-case selection, and config/unlock checks for world-tier changes. These are provider interaction/state packets and must not enter Black Arcana's cast-intent pipeline.
+
+### Black Arcana boundary
+
+Apotheosis owns its Adventure/RPG gear, affix, gem, loot, encounter, world-tier and workstation runtime. Black Arcana retains canonical server-authoritative casting, targeting, transactional costs, BA cooldowns/charges, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash and world safety.
+
+No second mana/resource, no duplicate registry authority and no second cast pipeline are introduced. Future integration must use a proven provider-native exact-version seam behind an adapter; absent a safe seam, fail closed.
+
+### Reload / clean-room
+
+Provider registries are data-driven/synchronized. Do not build a stale mirrored registry or unbounded polling path. Reload-sensitive integration requires explicit invalidation/lifecycle handling.
+
+License layers:
 
 - root source code: MIT;
-- generated metadata: `MIT License`;
+- generated source metadata: MIT;
 - exact source assets: All Rights Reserved;
 - current CurseForge project surface: All Rights Reserved.
 
@@ -69,12 +93,13 @@ Read-only factual audit only; no code/assets/text copied or adapted.
 ### Remaining fail-closed QA
 
 - source↔physical-JAR reproducibility;
-- physical-vs-publisher hash equality;
-- full-pack reload/event ordering;
-- runtime Enchantability reproduction;
-- complete-pack mixin interactions;
-- optional compatibility paths;
-- non-API implementation stability.
+- physical-vs-publisher exact hash equality;
+- complete-pack reload/event ordering;
+- complete-pack mixin/runtime interactions;
+- dedicated/client smoke for provider paths;
+- optional Curios/Apothic compatibility behavior;
+- non-API implementation-class stability;
+- future-version parity.
 
 ### Canonicalization gate
 
@@ -84,7 +109,7 @@ Before merge:
 2. reconcile if it advanced;
 3. review final diff;
 4. require CI GREEN on the exact reconciled HEAD;
-5. merge;
+5. merge without discarding concurrent work;
 6. confirm final `main` SHA and applicable post-merge validation.
 
 Phase 3 remains blocked.
@@ -93,26 +118,26 @@ Phase 3 remains blocked.
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
-| 48 | 2AT / #156 | `apothic_spawners` | CANÔNICO em `3c9795820f48cbe01a28ed1d4c3f1238cce816a0` |
+| 49 | 2AU / #158 | `apothic_enchanting` | CANÔNICO em `f3a3f95a10cf830b6bf973612d519e53d9168adc` |
+| 48 | 2AT / #156 | `apothic_spawners` | CANÔNICO |
 | 47 | 2AS / #155 | `apothic_compats` | CANÔNICO |
 | 46 | 2AR / #154 | `backportedspellbooks` | CANÔNICO |
 | 45 | 2AQ / #152 | `apothic_compat` | CANÔNICO |
-| 44 | 2AP / #151 | `create_enchantment_industry_plus` | CANÔNICO |
 
 ## Concorrência
 
-Branch: `docs/magic-catalog-phase2au-apothic-enchanting-1.6.2`, criada originalmente sobre `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`, reconciliada primeiro com `main@29a0099e899e03d80bf904c2d5ead72f40421fe8` por merge commit `58df873b431c8da91fc6a74d642107a7bcd737cc` e novamente, após a PR #159, com `main@78639998c212e91469e9036484bd5ac2ac9b699b` por merge commit `cdbe48cc268c499306c8c87e37a15a08145fe2db`. Nenhuma reconciliação usou force-push. O gate inicial não encontrou trabalho equivalente. Repetir o gate imediatamente antes do merge; CI anterior à última reconciliação não é evidência final.
+Branch: `docs/magic-catalog-phase2av-apotheosis-8.8.0`, criada sobre `main@f3a3f95a10cf830b6bf973612d519e53d9168adc` após gate sem branch/PR Phase 2AV equivalente. Repetir o gate imediatamente antes do merge. CI anterior à última reconciliação não vale como evidência final.
 
 ## Próxima seleção
 
-Somente após merge + confirmação pós-merge da Phase 2AU. Continuar preferindo providers cujo inventário corrente possa ser fechado sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais e sem ponto adicional sob a evidência atual.
+Somente após merge + confirmação pós-merge da Phase 2AV. Continuar preferindo providers cujo inventário corrente possa ser fechado sem inferência. `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells` continuam parciais e sem ponto adicional sob a evidência atual.
 
 ## Regras
 
 - presença/versão vêm da modlist/JAR atual;
 - source-version pin não implica JAR reproducibility;
-- enchanting stat, enchantment, recipe, attachment, payload, mixin ou compat object não vira BA spell por contagem;
-- table UI payload não vira cast authority;
-- provider-owned stats preservam namespace/semântica;
+- affix, gem, rarity, world tier, invader, recipe, attachment, payload ou compat object não vira BA spell por contagem;
+- provider UI/state C2S não vira cast authority;
+- sibling mod não é absorvido por dependência temática;
 - integração sem seam seguro e exato permanece fail-closed;
 - Phase 3 permanece bloqueada até o catálogo provar lacunas reais.
