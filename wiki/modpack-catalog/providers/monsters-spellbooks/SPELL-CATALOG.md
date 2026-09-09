@@ -25,7 +25,7 @@ The public source diff covering the 0.0.16.2/0.0.16.3 work interval does not mod
 | technomancy | 2 |
 | **Total** | **98** |
 
-`aero` is absent from `ModSpellRegistry` even though a retained `aero` SchoolType exists in source; the exact 0.0.16.2 release describes Aero as soft-deleted.
+`aero` is absent from `ModSpellRegistry`. The inspected stale-metadata source head still contains an `aero` SchoolType registration, but the exact 0.0.16.2 release soft-deletes Aero and the exact 0.0.16.3 release deletes remaining Aero content. Therefore installed 0.0.16.3 `monstersspellbooks:aero` existence is **`NÃO VERIFICADO`** and is not part of this 98-spell inventory.
 
 ## Complete inventory
 
