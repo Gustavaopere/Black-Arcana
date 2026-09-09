@@ -40,13 +40,13 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `backportedspellbooks` | `backportedspellbooks-0.1.2.jar` | CANDIDATO PHASE 2AR / PHYSICAL FILENAME 0.1.2 + RUNTIME METADATA 0.1.0 / EXACT PUBLISHER FILE 8158731 + RELEASE-DAY OFFICIAL SOURCE / 6 SPELLS / 1 PALE FLORA SCHOOL / CONTENT+WORLDGEN+EQUIPMENT PROCS / COMPONENT #46 CANDIDATE / BYTE+HOST+DEPENDENCY+FULL-PACK QA FAIL-CLOSED |
+| `backportedspellbooks` | `backportedspellbooks-0.1.2.jar` | CANDIDATO PHASE 2AR / PHYSICAL FILENAME 0.1.2 + RUNTIME METADATA 0.1.0 / SHA-1 `747847c1f38c73250ebac05ea06b41a381187850` / EXACT PUBLISHER FILE 8158731 + RELEASE-DAY OFFICIAL SOURCE / 6 SPELLS / 1 PALE FLORA SCHOOL / CONTENT+WORLDGEN+EQUIPMENT PROCS / COMPONENT #46 CANDIDATE / BYTE+HOST+DEPENDENCY+FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
-- Physical filename: `backportedspellbooks-0.1.2.jar` in the current 595-entry modlist.
+- Physical artifact `backportedspellbooks-0.1.2.jar`, SHA-1 `747847c1f38c73250ebac05ea06b41a381187850`, is present in the current 595-entry modlist.
 - Physical runtime metadata reports mod ID `backportedspellbooks`, version `0.1.0`; do not rewrite this to 0.1.2.
-- Exact publisher release: CurseForge project/file `1283913 / 8158731`, released 2026-05-28 for NeoForge Minecraft 1.21.1, filename `backportedspellbooks-0.1.2.jar`.
+- Exact publisher release: CurseForge project/file `1543731 / 8158731`, released 2026-05-28 for NeoForge Minecraft 1.21.1, filename `backportedspellbooks-0.1.2.jar`.
 - Exact 0.1.2 publisher changelog names Miasmic Staff, Quicksilver Spellbook, Slime Boots, Slime Aspect, Sulfur Clouds, Sulfur Bomb, Sulfur Release, Corroded Fossils and Quicksilver in Sulfur Caves.
 - Official release-day source: `RedReaper28/BackportedSpellbooks-1.21.1@07cb65efca0c264762a21c2d6bce0f83e3947226`.
 - Release-day source metadata still declares `mod_version=0.1.0`, matching physical runtime metadata while differing from the public release/file label.
@@ -60,7 +60,7 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 - Source targets NeoForge 21.1.216 / Iron's 3.15.4 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3.
 - Source imports Iron's, Vanilla Backport and Ace's surfaces although inspected generated metadata formally declares only NeoForge/Minecraft; dependency/loader parity remains runtime QA.
 - Slime Boots exposes cooldown-related presentation/constants while the inspected fall hook does not show a cooldown gate; live behavior remains runtime QA.
-- No source↔physical-JAR byte equivalence is asserted. The physical exported modlist does not provide a Backported artifact SHA-1, so none is invented.
+- Physical SHA-1 is known, but source↔physical-JAR byte equivalence is not asserted.
 - CurseForge labels MIT while release-day source metadata declares All Rights Reserved. Inspection is factual/read-only; no code/assets are copied.
 
 ### Provider authority
