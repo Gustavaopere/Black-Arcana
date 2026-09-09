@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AK revision: 39/100 = 39%.**
+**Coverage represented by this Phase 2AL revision: 40/100 = 40%.**
 
-Phase 2AK was branched from canonical `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b`, where Phase 2AJ / PR #143 made component #38 canonical and coverage reached **38/100 = 38%**. Component #39 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AK branch/PR, canonical coverage remains **38/100 = 38%**.
+Phase 2AL was branched from canonical `main@73a425051d242a33af157a3f73ca816498e8eba8`, where Phase 2AK / PR #144 made component #39 canonical and coverage reached **39/100 = 39%**. Component #40 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AL branch/PR, canonical coverage remains **39/100 = 39%**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -97,9 +97,9 @@ Source targets NeoForge 21.1.230 / Iron's 3.11.0 while the pack uses NeoForge 21
 
 The point is awarded because this component is an **API/library provider whose complete own registry/runtime surface is closed**, including the exact result that its standalone spell inventory is zero. Consumer-addon spells remain under those addons' namespaces and authority.
 
-## Phase 2AK — EMF Compat: Iron's Spells component #39 candidate
+## Phase 2AK — EMF Compat: Iron's Spells component #39, canonical
 
-Phase 2AK closes `emf_compat_iron_spells` as a client presentation compatibility component:
+Phase 2AK / PR #144 is canonical at merge SHA `73a425051d242a33af157a3f73ca816498e8eba8` and closed `emf_compat_iron_spells` as a client presentation compatibility component:
 
 - physical artifact `emf_compat_iron_spells_1.21.1_2.0.0.jar`, SHA-1 `515b545870fce128bbf01a0ccacdd19566ed3b22`;
 - exact official source revision `victorkozhokin/emf-compat@79d730a9d02275b7d721967c75f5f22dc815d9dc`;
@@ -116,6 +116,24 @@ Phase 2AK closes `emf_compat_iron_spells` as a client presentation compatibility
 The component owns visual pose compatibility only. Iron's remains cast/resource/cooldown authority, and Black Arcana must not interpret these client hooks as cast authority or duplicate the Iron's-specific EMF pose adapter.
 
 Byte-for-byte source/JAR equivalence and full-pack rendering QA remain separate; they do not reopen the semantic inventory closure.
+
+## Phase 2AL — Apothic Attributes component #40 candidate
+
+Phase 2AL closes `apothic_attributes` at the exact public 2.10.1 source-version evidence ceiling:
+
+- physical artifact `ApothicAttributes-1.21.1-2.10.1.jar`, SHA-1 `6a6b84d09801621df5cc2c8a68f35bd93a6cda0f`;
+- exact official source-version pin `Shadows-of-Fire/Apothic-Attributes@686361b2c7b0e76bf4158890bb8a2e42ef805622`, whose metadata declares version `2.10.1`;
+- **0 standalone spell/glyph/ritual registration surface observed**;
+- 2 synchronized custom registries, 22 attributes, 7 mob effects, 31 potions, 37 generated brewing mixes and 5 damage types;
+- 2 data components, 3 attachments, 7 equipment-slot objects, 11 slot groups, 3 provider tag contracts, 1 particle and 1 sound;
+- 2 PLAY CLIENTBOUND payloads and no provider C2S cast-intent path observed;
+- 7 common + 1 client mixin;
+- provider-owned combat formulas/event runtime and public server-side `AbilityCooldowns` API;
+- optional Curios modifier bridge is eligible in the physical pack because Curios 9.5.1+1.21.1 is present;
+- exact `DetonationEffect` source uses `DamageTypes.BLEEDING` in its final-tick `hurt(...)` call despite a separately registered/tagged Detonation damage type; this discrepancy is retained literally;
+- root source license is MIT, assets are All Rights Reserved, and `StackAttributeModifiersEvent.java` carries a file-level Forge Development LLC / SPDX LGPL-2.1-only header.
+
+Apothic Attributes owns its generic combat/attribute/effect/cooldown helper runtime. Black Arcana must not duplicate armor/protection/crit/lifesteal/dodge/projectile calculations, must not automatically apply Apothic `cooldown_reduction` to BA cooldown groups, and must keep BA Backlash outside normal offensive proc chains. Source↔physical-JAR byte equivalence remains unclaimed.
 
 ## Partial providers still receive zero points
 
