@@ -13,8 +13,8 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 ## Cobertura
 
 - branch inicialmente criada sobre `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`
-- base de repositório reconciliada: `main@29a0099e899e03d80bf904c2d5ead72f40421fe8`
-- PR #157, entre essas bases, é trabalho Stage 05 de keyboard focus, sem delta de catálogo e sem sobreposição com os 8 arquivos da Phase 2AU
+- base de repositório reconciliada: `main@78639998c212e91469e9036484bd5ac2ac9b699b`
+- PRs #157 e #159, entre essas bases, são trabalho Stage 05 de keyboard focus, sem delta de catálogo e sem sobreposição com os 8 arquivos da Phase 2AU
 - cobertura canônica na base reconciliada: **48/100 = 48%**
 - Phase 2AT / PR #156: `apothic_spawners`, componente #48, canônico
 - Phase 2AU: `apothic_enchanting` 1.6.2, **49/100 = 49% somente candidato** até CI GREEN no HEAD reconciliado + gate final de `main` + merge + confirmação pós-merge
@@ -23,7 +23,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
-| `apothic_enchanting` | `ApothicEnchanting-1.21.1-1.6.2.jar` | EXACT PHYSICAL + EXACT PUBLISHER + EXACT OFFICIAL SOURCE / ENCHANTING AUTHORITY / 20 ENCHANTMENT KEYS / ETERNA+QUANTA+ARCANA / MAX_ETERNA / INFUSION / RAVEN PERSISTENCE / 4 PLAY PAYLOADS / 20 MIXINS / ENCHANTABILITY DISCREPANCY QA / #49 CANDIDATE |
+| `apothic_enchanting` | `ApothicEnchanting-1.21.1-1.6.2.jar` | EXACT PHYSICAL + EXACT PUBLISHER + EXACT OFFICIAL SOURCE / ENCHANTING AUTHORITY / 20 ENCHANTMENT KEYS / ETERNA+QUANTA+ARCANA / MAX_ETERNA / INFUSION / RAVEN PERSISTENCE / 4 PLAY PAYLOADS / 20 MIXINS / ENMERCHANTABILITY DISCREPANCY QA / #49 CANDIDATE |
 
 ### Evidence boundary
 
@@ -101,7 +101,7 @@ Phase 3 remains blocked.
 
 ## Concorrência
 
-Branch: `docs/magic-catalog-phase2au-apothic-enchanting-1.6.2`, criada originalmente sobre `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0` e reconciliada sem force-push com `main@29a0099e899e03d80bf904c2d5ead72f40421fe8` por merge commit `58df873b431c8da91fc6a74d642107a7bcd737cc`. O gate inicial não encontrou trabalho equivalente. Repetir o gate imediatamente antes do merge; CI anterior à última reconciliação não é evidência final.
+Branch: `docs/magic-catalog-phase2au-apothic-enchanting-1.6.2`, criada originalmente sobre `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`, reconciliada primeiro com `main@29a0099e899e03d80bf904c2d5ead72f40421fe8` por merge commit `58df873b431c8da91fc6a74d642107a7bcd737cc` e novamente, após a PR #159, com `main@78639998c212e91469e9036484bd5ac2ac9b699b` por merge commit `cdbe48cc268c499306c8c87e37a15a08145fe2db`. Nenhuma reconciliação usou force-push. O gate inicial não encontrou trabalho equivalente. Repetir o gate imediatamente antes do merge; CI anterior à última reconciliação não é evidência final.
 
 ## Próxima seleção
 
