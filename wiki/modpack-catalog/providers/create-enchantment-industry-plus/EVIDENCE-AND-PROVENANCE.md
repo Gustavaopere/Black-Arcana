@@ -61,18 +61,27 @@ Exact source tree results:
 - 0 provider mana/cast runtime;
 - no provider packet or persistence surface observed.
 
-## Declared dependency evidence
+## Metadata dependency evidence
 
-Exact `neoforge.mods.toml` declares:
+Exact `neoforge.mods.toml` has addon-keyed required dependency tables for:
 
 - NeoForge `[21.1.0,)`;
 - Minecraft `[1.21.1,1.22)`;
-- Create `[6.0.4,6.1.0)`;
 - Create: Enchantment Industry `[2.0.0,)`.
 
-The exact recipes additionally reference `create_dragons_plus:black_dye` and `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared as a metadata dependency. The current pack contains it, so this is recorded as an undeclared data-level dependency rather than converted into a fabricated formal dependency.
+The same source file contains a Create range `[6.0.4,6.1.0)`, but its table header is `[[dependencies.create_enchantment_industry]]`, not `[[dependencies.create_enchantment_industry_plus]]`. The current physical pack contains Create `6.0.10`, satisfying the numeric range, but this catalog does not promote the mis-keyed source block into a verified addon-owned dependency or claim how NeoForge treats it in the physical JAR without artifact-level evidence.
+
+The exact recipes additionally reference `create_dragons_plus:black_dye` and `create_dragons_plus:grinding`, but Create: Dragons Plus is not declared in any metadata dependency table. The current pack contains it, so this is recorded as an undeclared data-level dependency rather than converted into a fabricated formal dependency.
 
 ## Exact-source discrepancy ledger
+
+### Create dependency table mismatch
+
+- source intent/value: Create `[6.0.4,6.1.0)`;
+- exact table header: `[[dependencies.create_enchantment_industry]]`;
+- expected addon table for a normal CEI Plus declaration: `[[dependencies.create_enchantment_industry_plus]]`;
+- physical Create: `6.0.10`;
+- physical-JAR metadata parity / loader interpretation: **NÃO VERIFICADO**.
 
 ### Public drain flow
 
