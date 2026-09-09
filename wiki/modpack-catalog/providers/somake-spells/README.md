@@ -1,6 +1,6 @@
 # Somake Spells 1.0.8-fix
 
-Status: `EXACT-ARTIFACT-PINNED / PUBLISHER 50+ SCALE / PUBLIC CHANGELOG CATALOG ADVANCED / COMPLETE REGISTRY+API PENDING / FAIL-CLOSED`
+Status: `EXACT-ARTIFACT+RELEASE PINNED / OFFICIAL 1.0.x RELEASE SURFACE AUDITED / COMPLETE CURRENT REGISTRY UNVERIFIED / PHASE 2AI CLOSURE BLOCKED / FAIL-CLOSED`
 
 ## Installed identity
 
@@ -20,6 +20,14 @@ Status: `EXACT-ARTIFACT-PINNED / PUBLISHER 50+ SCALE / PUBLIC CHANGELOG CATALOG 
 - Casting substrate: Iron's Spells 'n Spellbooks
 
 Physical modlist evidence is authoritative for installed filename/mod id/runtime/hash. Publisher release metadata confirms the exact 1.0.8-fix line.
+
+## Phase 2AI closure audit
+
+Phase 2AI re-audited the already-merged Phase 2O material under the stricter current coverage rule. The official 1.0.x release line and exact 1.0.8-fix delta are cataloged as far as currently accessible publisher evidence allows, but no publisher-controlled exact source revision, complete 1.0.8-fix registry table, or equivalent exact current spell inventory was located.
+
+The publisher's `over 50 spells` statement remains a scale statement rather than a registry count. Changelog names are partial release evidence and are not promoted into a fabricated complete current inventory.
+
+Result: `somakespells` remains **partial and contributes zero additional coverage points**. Phase 2AI records the evidence ceiling and fail-closed boundary; it does not claim catalog closure. See [`../../meta/PHASE2AI-SOMAKE-1.0.8-FIX-CHECKPOINT.md`](../../meta/PHASE2AI-SOMAKE-1.0.8-FIX-CHECKPOINT.md).
 
 ## Current public scope
 

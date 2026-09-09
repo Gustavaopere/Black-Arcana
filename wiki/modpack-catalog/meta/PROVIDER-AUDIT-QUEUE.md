@@ -18,10 +18,11 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AG / PR #137 está canônica em `main@2de722272814d2d5664266f5fc8ad05ba25d2940`;
-- cobertura canônica antes da Phase 2AH: **36/100 = 36%**;
-- esta revisão Phase 2AH fecha `monstersspellbooks` como componente #37 ao limite de evidência disponível;
-- quando esta revisão estiver em `main`: **37/100 = 37%**;
+- Phase 2AH / PR #140 está canônica em `main@e8b7c4a0b77c2f803423047f5d1442f870d02fc8`;
+- cobertura canônica atual: **37/100 = 37%**;
+- Phase 2AI re-audita `somakespells` sob a regra atual de fechamento;
+- Somake permanece parcial porque o inventário granular atual 1.0.8-fix não está fechado;
+- Phase 2AI produz **0 delta de cobertura**;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,21 +36,32 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AH — Monsters & Spellbooks
+## Phase 2AI — Somake Spells 1.0.8-fix
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `monstersspellbooks` | `monstersspellbooks-0.0.16.3.jar` | EXACT PHYSICAL/RELEASE 0.0.16.3 / CURRENT OFFICIAL SOURCE HEAD `1ab9b72a...` WITH STALE 0.0.14 METADATA / 98 SPELL REGISTRATIONS CLOSED SEMANTICALLY / NECRO+AERO SCHOOLTYPES OBSERVED IN SOURCE ONLY / AERO 0 SPELL REGISTRATIONS + INSTALLED AERO SCHOOL STATE UNVERIFIED AFTER 0.0.16.3 CLEANUP / EXACT 0.0.16.3 NUMERICAL/API INTERNALS UNVERIFIED / PHASE 2AH CLOSURE REVISION |
+| `somakespells` | `somakespells-1.0.8-1.21.1-fix.jar` | EXACT PHYSICAL+RELEASE IDENTITY / OFFICIAL 1.0.x RELEASE SURFACE AUDITED / PUBLISHER `OVER 50` SCALE / COMPLETE CURRENT SPELL REGISTRY NOT AVAILABLE / EXACT SOURCE+API NOT LOCATED / AQUA↔T.O RUNTIME QA BLOCKED / ZERO COVERAGE DELTA / FAIL-CLOSED |
 
 ### Evidence boundary
 
-- Physical JAR SHA-1: `b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e`.
-- CurseForge project/file: `1428928 / 8788560`, exact 0.0.16.3 release dated 2026-09-01.
-- Current official source head: `RedReaper28/Monsters-Spellbooks-1.21.1@1ab9b72af2ea44c3c8b816e665d06531ea44ddc2`.
-- Current public `ModSpellRegistry` contains **98** explicit registrations: 5 blood, 12 ender, 3 evocation, 10 fire, 4 holy, 8 hydro, 8 ice, 14 lightning, 7 nature, 25 necro, 2 technomancy.
-- Public release-work compare from `823532a3...` to `1ab9b72a...` does not modify `ModSpellRegistry`, supporting inventory stability through the 0.0.16.2/0.0.16.3 work interval.
-- Exact 0.0.16.2 release says Aero was soft-deleted; exact 0.0.16.3 says remaining Aero content was deleted. The stale public source still contains an Aero SchoolType but zero Aero spell registrations. **Installed 0.0.16.3 Aero SchoolType existence is `NÃO VERIFICADO`.**
-- Source `gradle.properties` remains stale at `mod_version=0.0.14`, NeoForge 21.1.216 and Iron's 3.15.4; therefore exact installed-JAR class/API/numeric parity is not invented.
+- Physical SHA-1: `b0ad94c1504709662bee2d08700375ccecbb5ec7`.
+- CurseForge project/file: `1461634 / 8417850`, exact 1.0.8-fix release dated 2026-07-12.
+- Exact fix repairs Symmetry and Spirit Elemental Charges not applying buffs.
+- Official 1.0.8/1.0.7/1.0.6 notes expose named spell/progression migrations, but they are not a cumulative registry manifest.
+- Publisher says `over 50 spells`; this cannot be converted into exact count, IDs, school totals or current membership.
+- No publisher-controlled exact 1.0.8-fix source revision or complete current registry/API table was located.
+- The exact current JAR was not directly inspectable through the available repository/web tooling in this phase; no class/API/registry internals are invented.
+- Physical `traveloptics` 1.21.1 alpha/deprecated coexistence keeps Somake Aqua authority/runtime interaction QA-blocked.
+
+### Closure condition
+
+Somake may only leave the partial bucket after trusted exact-current inventory evidence becomes available, such as a clean-room exact-artifact registry/resource inventory, publisher-controlled exact source/registry/API, or equivalent trusted exact inventory evidence. Runtime Aqua/T.O and optional-provider QA remain separate gates.
+
+## Phase 2AH — canonical predecessor
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `monstersspellbooks` | `monstersspellbooks-0.0.16.3.jar` | CANÔNICO VIA PR #140 / EXACT PHYSICAL+RELEASE 0.0.16.3 / 98 SPELL REGISTRATIONS CLOSED SEMANTICALLY / NECRO+AERO SCHOOLTYPES OBSERVED IN SOURCE ONLY / AERO 0 SPELL REGISTRATIONS + INSTALLED AERO STATE UNVERIFIED AFTER 0.0.16.3 CLEANUP / EXACT BINARY NUMERICAL/API INTERNALS FAIL-CLOSED |
 
 ## Phase 2AG — canonical predecessor
 
@@ -65,13 +77,13 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Rechecado na abertura da Phase 2AH. Não existe PR/branch equivalente para `monstersspellbooks`.
+Phase 2AI reutiliza a árvore Somake já canônica da antiga Phase 2O / PR #86. Não existe PR Somake aberto equivalente no início desta fase; a nova branch foi criada sobre a `main` atual em vez de reviver a branch histórica stale.
 
 Antes de selecionar qualquer provider seguinte, reexecutar pesquisa de PRs/branches; não confiar em listas de concorrência antigas.
 
-## Próxima seleção após Phase 2AH
+## Próxima seleção após Phase 2AI
 
-Selecionar somente depois de:
+Como Somake permanece parcial, o próximo provider deve ser escolhido por probabilidade real de fechamento, não pela ordem histórica. Antes da seleção:
 
 1. fetch da `main` mais recente;
 2. verificação da modlist física atual;
@@ -79,14 +91,14 @@ Selecionar somente depois de:
 4. leitura do catálogo já canônico;
 5. confirmação da versão exata e do melhor source/API/release aplicável.
 
-Não escolher automaticamente um provider apenas porque o snapshot histórico ainda diz `PENDENTE`; PRs recentes e a árvore atual de `main` são a autoridade operacional.
+Preferir um componente cujo inventário atual possa ser fechado sem inferência. `cataclysm_spellbooks`, `gaze` e `leylines` permanecem candidatos parciais a reavaliação, sujeitos a evidência e concorrência atuais.
 
 ## Providers parcialmente fechados — não contam como concluídos
 
 Exemplos atuais:
 
 - `leylines` — nomes públicos parciais; inventário total atual não verificado;
-- `somakespells` — catálogo granular atual ainda não fechado;
+- `somakespells` — exact artifact/release e release-line auditados, mas inventário granular atual ainda não fechado;
 - `cataclysm_spellbooks` — artefato instalado 1.1.13 sem source público exato equivalente já fechado;
 - `gaze` — superfície pública auditada, mas registry/source-JAR exato ainda não fechado.
 
@@ -99,7 +111,7 @@ Exemplos atuais:
 - integração sem hook seguro permanece fail-closed;
 - Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle ou world mutation de provider;
 - source-family label não deve ser confundido com SchoolType sem evidência;
-- source-head SchoolType presence does not prove installed 0.0.16.3 registry presence;
+- provider parcial continua zero até inventário atual fechar ao teto de evidência aceito;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.
 
 ## Histórico
