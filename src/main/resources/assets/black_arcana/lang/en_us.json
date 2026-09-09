@@ -17,6 +17,7 @@
   "screen.black_arcana.radial.page": "Page %s / %s",
   "screen.black_arcana.radial.hint": "Left-click to select; cast remains a separate input",
   "screen.black_arcana.loadout": "Black Arcana Loadout",
+  "screen.black_arcana.loadout.search": "Search spells",
   "screen.black_arcana.loadout.page": "Page %s / %s",
   "screen.black_arcana.loadout.hint": "%s selected · Enter: apply · Delete: clear · R: reset · Esc: cancel",
   "screen.black_arcana.loadout.slot": "S%s",
