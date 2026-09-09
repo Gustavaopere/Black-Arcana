@@ -18,6 +18,16 @@ class CastingUxSemanticsTest {
     }
 
     @Test
+    void keyboardFocusRemainsIndependentFromSelectionAndPointerHover() {
+        assertEquals(CastingUxSemantics.FocusState.FOCUSED, CastingUxSemantics.focus(false, false, true));
+        assertEquals(CastingUxSemantics.FocusState.SELECTED_FOCUSED, CastingUxSemantics.focus(true, false, true));
+        assertEquals(CastingUxSemantics.FocusState.HOVERED_FOCUSED, CastingUxSemantics.focus(false, true, true));
+        assertEquals(
+                CastingUxSemantics.FocusState.SELECTED_HOVERED_FOCUSED,
+                CastingUxSemantics.focus(true, true, true));
+    }
+
+    @Test
     void forecastClearNeverCollapsesIntoAuthoritativeCastSuccess() {
         var forecast = CastingUxSemantics.admissionForGate(HazardResistanceForecastPayload.GateStatus.CLEAR);
         var result = CastingUxSemantics.admissionForResult(ArcanaCastResult.Status.SUCCESS);
