@@ -1,10 +1,16 @@
 package dev.gustavopere.blackarcana.client;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /** Pure client-local focus traversal for bounded Stage 05 screens. */
 final class ScreenFocusNavigation {
+    enum InputModality {
+        POINTER,
+        KEYBOARD
+    }
+
     private ScreenFocusNavigation() { }
 
     static int initialFocus(List<Integer> visible, int preferred) {
@@ -47,5 +53,22 @@ final class ScreenFocusNavigation {
         if (relativePosition < 0) relativePosition = 0;
         relativePosition = Math.min(relativePosition, destination.size() - 1);
         return destination.get(relativePosition);
+    }
+
+    static List<Integer> pageIndices(int totalEntries, int page, int pageSize) {
+        if (totalEntries < 0) throw new IllegalArgumentException("totalEntries cannot be negative");
+        if (page < 0) throw new IllegalArgumentException("page cannot be negative");
+        if (pageSize <= 0) throw new IllegalArgumentException("pageSize must be positive");
+        int start = Math.min(totalEntries, page * pageSize);
+        int end = Math.min(totalEntries, start + pageSize);
+        List<Integer> indices = new ArrayList<>(Math.max(0, end - start));
+        for (int index = start; index < end; index++) indices.add(index);
+        return List.copyOf(indices);
+    }
+
+    static int presentationFocus(InputModality modality, int hovered, int keyboardFocused, int fallback) {
+        Objects.requireNonNull(modality, "modality");
+        int primary = modality == InputModality.KEYBOARD ? keyboardFocused : hovered;
+        return primary >= 0 ? primary : fallback;
     }
 }
