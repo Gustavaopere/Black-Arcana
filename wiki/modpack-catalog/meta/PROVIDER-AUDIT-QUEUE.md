@@ -65,7 +65,7 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 - Create Enchantment Industry Plus owns only its `sac` item and recipe/data overlays.
 - Black Arcana retains canonical casting, costs, BA cooldowns/charges, targeting, hazards, Corruption, Strain, Arcane Danger, Backlash causality and `WorldEffectPolicy`.
 - Recipe objects are not spells and do not create a second Black Arcana magic pipeline.
-- RPG Skill Tree recebe no processing or magic runtime authority.
+- RPG Skill Tree receives no processing or magic runtime authority.
 
 ## Phase 2AO — Soul Fire'd 6.1.0 — canonical predecessor
 
