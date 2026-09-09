@@ -30,7 +30,7 @@ The original planning revision was deliberately presentation-focused and added n
 The currently-authorized 05.08 core is implemented as follows:
 
 - `CastingUxSemantics` is a pure client-presentation mapping layer for focus, admission/result, hazard and loadout-membership roles. It performs no world query, gameplay admission, resource/cooldown inference or provider call.
-- `BlackArcanaRadialScreen` now derives selected/hovered/composite focus through that semantic layer and renders redundant non-color markers (`[S]`, `>`, `>[S]`) while retaining existing client-only selection behavior. Selection still never executes a cast.
+- `BlackArcanaRadialScreen` now derives selected/hovered/composite focus through that semantic layer. Normal cards render redundant non-color markers (`[S]`, `>`, `>[S]`); compact cards use bounded condensed tokens (`S`, `>`, `>S`) so focus and slot identity remain inside the card. Selection still never executes a cast.
 - `BlackArcanaLoadoutScreen` snapshots the synchronized accepted loadout separately from its local draft and distinguishes not-included, accepted, draft-added and draft-removed rows with `[ ]`, `[x]`, `[+]` and `[-]`. Sending an update remains intent only; the client does not claim acceptance from packet emission.
 - `BlackArcanaHudLayer` maps actual `ArcanaCastResult.Status` values into authoritative denial, effect failure and success semantics, with separate player-facing wording. Forecast categories remain distinct from actual cast results. Hazard tier/resistance presentation also consumes the shared semantic mapping.
 - The only new resource content in this checkpoint is localized text for the distinct effect-failure result. No new visual/audio asset or provider-owned material is introduced.
@@ -657,7 +657,7 @@ When space shrinks:
 - move details to focused/center presentation;
 - do not shrink hit regions below practical usability merely to retain ornament.
 
-The current marker prefix is retained even in compact radial cards, so compact layout does not reduce selected/hover meaning to color alone.
+Normal radial cards budget the full focus/slot prefix before truncating the spell name and defensively bound the assembled label. Compact radial cards use condensed non-color focus tokens (`S`, `>`, `>S`) plus a hard whole-label width bound, so selected/hover meaning and slot identity remain inside the card instead of overflowing into neighboring wedges.
 
 ### 15.3 HUD
 
@@ -819,9 +819,9 @@ Aesthetic preference alone is not permission to add a new gameplay-data contract
 The implementation checkpoint adds:
 
 - `CastingUxSemanticsTest` for focus independence, forecast/result distinction, effect failure, hazard state and accepted-vs-draft membership;
-- `CastingUxSurfaceSemanticsTest` for radial non-color focus markers, loadout membership markers and HUD result-key separation.
+- `CastingUxSurfaceSemanticsTest` for radial non-color focus markers, loadout membership markers and HUD result-key separation, including regression coverage for focus-prefix width budgeting and compact focus tokens.
 
-The code checkpoint `8f7777c68852f829e360f75b62dd7a8d88e59c93` passed Black Arcana CI #2183 (`34305182690`) through unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
+The code checkpoint `8f7777c68852f829e360f75b62dd7a8d88e59c93` passed Black Arcana CI #2183 (`34305182690`) through unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. The P2 radial-label regression was reproduced by test-only head `de7b5a98d10d0b71c956709864a18e6644926ab5` in CI #2192 (`34307107427`), which failed because the bounded-label helpers did not yet exist; the minimal production fix then passed the same full deterministic pipeline at head `8b049ad56053c69829abf67e146a722bfd69ae3a` in CI #2196 (`34307398154`).
 
 Future implementation where applicable should additionally cover:
 
