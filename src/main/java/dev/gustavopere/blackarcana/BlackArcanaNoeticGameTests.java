@@ -33,12 +33,11 @@ public final class BlackArcanaNoeticGameTests {
                     server,
                     viewer.getUUID(),
                     target.getUUID(),
-                    NoeticObservationKind.ASTRAL_SEVERANCE,
+                    NoeticObservationKind.NAMESCRY,
                     20,
                     false);
             helper.assertTrue(decision.allowed(),
-                    "already-loaded same-dimension target must pass bounded Astral Severance admission: "
-                            + decision.code());
+                    "already-loaded same-dimension NPC must pass bounded Namescry admission: " + decision.code());
             helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 1,
                     "successful observation must create exactly one server-owned session");
 
@@ -62,7 +61,51 @@ public final class BlackArcanaNoeticGameTests {
         }
 
         helper.assertTrue(MinecraftNoeticRuntime.activeStateCount(server) == 0,
-                "explicit cleanup must leave no active Noetic session/gaze/sanctuary state");
+                "explicit cleanup must leave no active Noetic observation/astral/gaze/sanctuary state");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void astralSeveranceUsesDedicatedServerOwnedIdentityAndExactReturn(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        var caster = helper.makeMockServerPlayerInLevel();
+
+        try {
+            var start = MinecraftNoeticRuntime.activateAuthorizedAstralProjection(
+                    server,
+                    caster.getUUID(),
+                    20,
+                    8.0D);
+            helper.assertTrue(start.decision().allowed(),
+                    "authorized loaded living caster must enter the dedicated Astral lifecycle: "
+                            + start.decision().code());
+            var projection = start.projection().orElse(null);
+            helper.assertTrue(projection != null,
+                    "successful Astral lifecycle activation must allocate one server-owned identity");
+            if (projection != null) {
+                helper.assertTrue(projection.casterId().equals(caster.getUUID()),
+                        "projection caster identity must remain the physical player");
+                helper.assertTrue(projection.physicalBodyId().equals(caster.getUUID()),
+                        "projection must never replace the physical body identity");
+                helper.assertTrue(!MinecraftNoeticRuntime.requestAstralReturn(
+                                server, caster.getUUID(), UUID.randomUUID()),
+                        "foreign/stale projection identity must not terminate the active session");
+                helper.assertTrue(MinecraftNoeticRuntime.requestAstralReturn(
+                                server, caster.getUUID(), projection.projectionId()),
+                        "exact server-authored projection identity must permit explicit return");
+                helper.assertTrue(!MinecraftNoeticRuntime.requestAstralReturn(
+                                server, caster.getUUID(), projection.projectionId()),
+                        "replayed explicit return must be an idempotent no-op");
+            }
+            helper.assertTrue(MinecraftNoeticRuntime.activeAstralProjections(server) == 0,
+                    "explicit return must leave no active Astral projection");
+        } finally {
+            MinecraftNoeticRuntime.clearEntity(server, caster.getUUID());
+        }
+
+        helper.assertTrue(MinecraftNoeticRuntime.activeStateCount(server) == 0,
+                "Astral lifecycle GameTest cleanup must leave no Stage 07.07 state");
         helper.succeed();
     }
 
