@@ -27,15 +27,23 @@ public final class BlackArcanaRadialScreen extends Screen {
     private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private int page;
     private int hoveredSlot = -1;
+    private int keyboardFocusedSlot = -1;
+    private ScreenFocusNavigation.InputModality modality = ScreenFocusNavigation.InputModality.KEYBOARD;
+    private int lastMouseX = Integer.MIN_VALUE;
+    private int lastMouseY = Integer.MIN_VALUE;
 
     private BlackArcanaRadialScreen() {
         super(Component.translatable("screen.black_arcana.radial"));
         this.loadout = ClientArcanaSyncState.loadoutSnapshot();
         this.presentation = ClientArcanaSyncState.presentationSnapshot();
         this.hazards = ClientArcanaSyncState.hazardPreflightSnapshot();
+        int selectedSlot = ClientInputController.selection().selectedSlot();
         this.page = RadialLayout.clampPage(
                 loadout.size(),
-                ClientInputController.selection().selectedSlot() / RadialLayout.SLOTS_PER_PAGE);
+                selectedSlot / RadialLayout.SLOTS_PER_PAGE);
+        this.keyboardFocusedSlot = ScreenFocusNavigation.initialFocus(
+                RadialLayout.visibleSlots(loadout.size(), page),
+                selectedSlot);
     }
 
     public static void open() {
@@ -67,9 +75,17 @@ public final class BlackArcanaRadialScreen extends Screen {
         double outerHitRadius = Math.max(innerHitRadius + 1.0D, radius + HIT_RADIUS_PADDING);
 
         List<Integer> visible = RadialLayout.visibleSlots(loadout.size(), page);
-        hoveredSlot = RadialLayout.hoveredSlot(
+        int newHoveredSlot = RadialLayout.hoveredSlot(
                 loadout.size(), page, mouseX, mouseY, centerX, centerY,
                 innerHitRadius, outerHitRadius);
+        if (lastMouseX != Integer.MIN_VALUE
+                && (mouseX != lastMouseX || mouseY != lastMouseY)
+                && newHoveredSlot >= 0) {
+            modality = ScreenFocusNavigation.InputModality.POINTER;
+        }
+        lastMouseX = mouseX;
+        lastMouseY = mouseY;
+        hoveredSlot = newHoveredSlot;
 
         for (int visibleIndex = 0; visibleIndex < visible.size(); visibleIndex++) {
             int slot = visible.get(visibleIndex);
@@ -80,6 +96,8 @@ public final class BlackArcanaRadialScreen extends Screen {
             int y = (int) Math.round(point.y());
             boolean selected = slot == ClientInputController.selection().selectedSlot();
             boolean hovered = slot == hoveredSlot;
+            boolean keyboardFocused = modality == ScreenFocusNavigation.InputModality.KEYBOARD
+                    && slot == keyboardFocusedSlot;
             CastingUxSemantics.FocusState focus = CastingUxSemantics.focus(selected, hovered);
             int background = switch (focus) {
                 case NONE -> 0xB815101A;
@@ -96,14 +114,20 @@ public final class BlackArcanaRadialScreen extends Screen {
                     x + card.halfWidth() + 1, y + card.halfHeight() + 1, border);
             graphics.fill(x - card.halfWidth(), y - card.halfHeight(),
                     x + card.halfWidth(), y + card.halfHeight(), background);
+            if (keyboardFocused) {
+                graphics.fill(x + card.halfWidth() - 2, y - card.halfHeight(),
+                        x + card.halfWidth(), y + card.halfHeight(), 0xFFFFE8FF);
+            }
 
             int maxLabelWidth = Math.max(1, card.halfWidth() * 2 - CARD_TEXT_PADDING * 2);
             String label;
             if (card.compact()) {
-                String compactLabel = compactFocusPrefix(focus) + (slot + 1);
+                String compactLabel = keyboardFocusPrefix(keyboardFocused, true)
+                        + compactFocusPrefix(focus) + (slot + 1);
                 label = font.plainSubstrByWidth(compactLabel, maxLabelWidth);
             } else {
-                String fixedPrefix = focusPrefix(focus) + (slot + 1) + " · ";
+                String fixedPrefix = keyboardFocusPrefix(keyboardFocused, false)
+                        + focusPrefix(focus) + (slot + 1) + " · ";
                 int nameBudget = spellNameWidthBudget(maxLabelWidth, font.width(fixedPrefix));
                 String name = nameBudget > 0 ? displayName(spell, nameBudget) : "";
                 label = font.plainSubstrByWidth(fixedPrefix + name, maxLabelWidth);
@@ -129,7 +153,7 @@ public final class BlackArcanaRadialScreen extends Screen {
                     0xFFD0C6D0);
         }
         super.render(graphics, mouseX, mouseY, partialTick);
-        if (card.compact() && hoveredSlot >= 0) {
+        if (card.compact() && modality == ScreenFocusNavigation.InputModality.POINTER && hoveredSlot >= 0) {
             focusedSpellName().ifPresent(line -> graphics.renderTooltip(font, line, mouseX, mouseY));
         }
     }
@@ -137,9 +161,8 @@ public final class BlackArcanaRadialScreen extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && hoveredSlot >= 0) {
-            ClientInputController.selection().select(hoveredSlot, loadout);
-            ClientUxState.markSelectionChanged();
-            onClose();
+            modality = ScreenFocusNavigation.InputModality.POINTER;
+            selectSlotAndClose(hoveredSlot);
             return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -153,15 +176,53 @@ public final class BlackArcanaRadialScreen extends Screen {
             onClose();
             return true;
         }
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            onClose();
+            return true;
+        }
+        if (keyCode == GLFW.GLFW_KEY_TAB) {
+            List<Integer> visible = RadialLayout.visibleSlots(loadout.size(), page);
+            int direction = (modifiers & GLFW.GLFW_MOD_SHIFT) != 0 ? -1 : 1;
+            keyboardFocusedSlot = ScreenFocusNavigation.moveWrapped(visible, keyboardFocusedSlot, direction);
+            modality = ScreenFocusNavigation.InputModality.KEYBOARD;
+            return true;
+        }
+        if (isKeyboardActivationKey(keyCode)) {
+            if (keyboardFocusedSlot >= 0 && keyboardFocusedSlot < loadout.size()) {
+                modality = ScreenFocusNavigation.InputModality.KEYBOARD;
+                selectSlotAndClose(keyboardFocusedSlot);
+                return true;
+            }
+            return super.keyPressed(keyCode, scanCode, modifiers);
+        }
         if (keyCode == GLFW.GLFW_KEY_PAGE_UP || keyCode == GLFW.GLFW_KEY_LEFT) {
-            page = RadialLayout.clampPage(loadout.size(), page - 1);
+            movePage(-1);
             return true;
         }
         if (keyCode == GLFW.GLFW_KEY_PAGE_DOWN || keyCode == GLFW.GLFW_KEY_RIGHT) {
-            page = RadialLayout.clampPage(loadout.size(), page + 1);
+            movePage(1);
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    private void movePage(int delta) {
+        List<Integer> source = RadialLayout.visibleSlots(loadout.size(), page);
+        int destinationPage = RadialLayout.clampPage(loadout.size(), page + delta);
+        page = destinationPage;
+        List<Integer> destination = RadialLayout.visibleSlots(loadout.size(), page);
+        keyboardFocusedSlot = ScreenFocusNavigation.transitionFocus(
+                source,
+                destination,
+                keyboardFocusedSlot,
+                ClientInputController.selection().selectedSlot());
+        modality = ScreenFocusNavigation.InputModality.KEYBOARD;
+    }
+
+    private void selectSlotAndClose(int slot) {
+        ClientInputController.selection().select(slot, loadout);
+        ClientUxState.markSelectionChanged();
+        onClose();
     }
 
     static boolean shouldCloseFromOpenKey(
@@ -169,6 +230,17 @@ public final class BlackArcanaRadialScreen extends Screen {
             boolean openKeyPressed
     ) {
         return behavior == BlackArcanaClientConfig.RadialBehavior.TOGGLE && openKeyPressed;
+    }
+
+    static boolean isKeyboardActivationKey(int keyCode) {
+        return keyCode == GLFW.GLFW_KEY_ENTER
+                || keyCode == GLFW.GLFW_KEY_KP_ENTER
+                || keyCode == GLFW.GLFW_KEY_SPACE;
+    }
+
+    static String keyboardFocusPrefix(boolean focused, boolean compact) {
+        if (!focused) return "";
+        return compact ? "F" : "[F] ";
     }
 
     static String focusPrefix(CastingUxSemantics.FocusState focus) {
@@ -202,10 +274,16 @@ public final class BlackArcanaRadialScreen extends Screen {
     }
 
     private Optional<ArcanaSpellId> focusedSpell() {
-        if (hoveredSlot >= 0 && hoveredSlot < loadout.size()) {
-            return Optional.of(loadout.get(hoveredSlot));
+        int fallback = ClientInputController.selection().selectedSlot();
+        int focused = ScreenFocusNavigation.presentationFocus(
+                modality,
+                hoveredSlot,
+                keyboardFocusedSlot,
+                fallback);
+        if (focused >= 0 && focused < loadout.size()) {
+            return Optional.of(loadout.get(focused));
         }
-        return ClientInputController.selection().selected(loadout);
+        return Optional.empty();
     }
 
     private Optional<Component> focusedSpellName() {
