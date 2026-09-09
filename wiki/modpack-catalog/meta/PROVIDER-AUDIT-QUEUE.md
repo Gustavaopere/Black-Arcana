@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AI / PR #141 está canônica em `main@9e2011a46e228fb8e2dd7c9d275c6f43290f6bb8`;
-- cobertura canônica antes da Phase 2AJ: **37/100 = 37%**;
-- esta revisão Phase 2AJ fecha `aces_spell_utils` como componente #38 ao limite exato de source-version disponível;
-- quando esta revisão estiver reconciliada, validada e em `main`: **38/100 = 38%**;
+- Phase 2AJ / PR #143 está canônica em `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b`;
+- cobertura canônica na criação da Phase 2AK: **38/100 = 38%**;
+- esta revisão Phase 2AK fecha `emf_compat_iron_spells` como componente #39 ao limite exato de source-version disponível;
+- o resultado **39/100 = 39%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,39 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AJ — Ace's Spell Utils 1.2.7.2
+## Phase 2AK — EMF Compat: Iron's Spells 2.0.0
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `aces_spell_utils` | `aces_spell_utils-1.2.7.2-1.21.1.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / API+LIBRARY PROVIDER / 0 STANDALONE SPELL REGISTRATIONS / 3 SCHOOLS / 19 ATTRIBUTES / 3 DAMAGE TYPES / 14 TAGS / 8 RARITIES / 27 EXAMPLE ITEM REGISTRATIONS / 8 S2C VFX PAYLOADS / 2 REQUIRED MIXINS / 5 CONFIG VALUES / COMPONENT #38 CANDIDATE / HOST-VERSION+BYTE-EQUIVALENCE QA FAIL-CLOSED |
+| `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION / CLIENT PRESENTATION COMPAT / 0 SPELLS / 0 GAMEPLAY REGISTRY / 5 JAVA CLASSES / 3 REQUIRED CLIENT MIXINS / 2 CONFIG KEYS / POSE SOURCE PRIORITY 10 / FIRST-PERSON EMF CONDITION / COMPONENT #39 CANDIDATE / BYTE-EQUIVALENCE + FULL-PACK RENDER QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `515b545870fce128bbf01a0ccacdd19566ed3b22`.
+- Official source revision: `victorkozhokin/emf-compat@79d730a9d02275b7d721967c75f5f22dc815d9dc`.
+- Exact NeoForge 1.21.1 subproject metadata declares `mod_version=2.0.0`, Java 21 and `mod_license=GNU GPL 3.0`.
+- Complete addon Java surface: `EMFCompatIronSpellsMod`, `IronSpellsCompat`, `PlayerModelMixin`, `PlayerRendererMixin`, `EMFAnimationPauseHandlerMixin`.
+- Required mixin manifest contains exactly the three client mixins above and no common/server mixins.
+- Config keys: `ironspells.enabled` and `ironspells.bodyFollowArms`, both default true.
+- Casting state is consumed from Iron's client data only; the compat does not originate or authorize a cast.
+- Source build baseline: NeoForge 21.1.230, Iron's 3.15.6, EMF 3.3.2.
+- Runtime metadata requires Core >=2.0.0, Iron's >=3.15.0 and EMF >=3.3.2, client-side. Physical pack uses Core 2.0.0, Iron's 3.16.3 and EMF 3.3.5.
+- Some public web file indices remain stale at 1.0.0; physical artifact + exact publisher source metadata are used as stronger version evidence.
+- Exact source version is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
+
+### Provider authority
+
+- Iron's owns casting state, spells, mana, cooldowns and remote synced cast state.
+- EMF Compat: Iron's owns only the client pose compatibility adapter.
+- EMF Compat Core / EMF own their shared presentation APIs/runtime.
+- Black Arcana must not treat EMF pose state or client casting state as server authority and must not duplicate this Iron's-specific pose adapter.
+- RPG Skill Tree receives no progression authority from this visual layer.
+
+## Phase 2AJ — Ace's Spell Utils 1.2.7.2 — canonical predecessor
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `aces_spell_utils` | `aces_spell_utils-1.2.7.2-1.21.1.jar` | CANÔNICO VIA PR #143 / EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / API+LIBRARY PROVIDER / 0 STANDALONE SPELL REGISTRATIONS / 3 SCHOOLS / 19 ATTRIBUTES / 3 DAMAGE TYPES / 14 TAGS / 8 RARITIES / 27 EXAMPLE ITEM REGISTRATIONS / 8 S2C VFX PAYLOADS / 2 REQUIRED MIXINS / 5 CONFIG VALUES / COMPONENT #38 / HOST-VERSION+BYTE-EQUIVALENCE QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -88,16 +116,16 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AJ foi aberta sobre `main@9e2011a46e228fb8e2dd7c9d275c6f43290f6bb8` depois de rechecagem de branches/PRs. Não havia branch nem PR equivalente para `aces_spell_utils`.
+Phase 2AK foi aberta sobre `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b` após rechecagem de branches/PRs. Não havia branch nem PR equivalente para `emf_compat_iron_spells`.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AJ
+## Próxima seleção após Phase 2AK
 
 Selecionar somente depois de:
 
 1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AJ;
+2. confirmação do merge/CI da Phase 2AK;
 3. verificação da modlist física atual;
 4. pesquisa de PR/branch equivalente;
 5. leitura do catálogo já canônico;
@@ -120,11 +148,12 @@ Exemplos atuais:
 - README preparatório, guia lido ou branch antiga não equivale a catálogo canônico;
 - source público de versão diferente não autoriza promover internals da versão instalada;
 - exact source-version pin não equivale automaticamente a byte-for-byte JAR reproducibility;
-- library/API provider pode fechar com zero spells se zero registro próprio for demonstrado e suas superfícies reais estiverem inventariadas;
+- library/API ou compat provider pode fechar com zero spells se zero registro próprio for demonstrado e suas superfícies reais estiverem inventariadas;
+- client presentation hook não é cast authority;
 - registry/example object não vira spell por contagem;
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
-- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline ou world mutation de provider;
+- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, presentation adapter ou world mutation de provider;
 - source-family label ou Java symbol não deve ser confundido com registry ID sem evidência;
 - provider parcial continua zero até inventário atual fechar ao teto de evidência aceito;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.
