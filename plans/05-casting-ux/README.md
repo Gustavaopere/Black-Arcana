@@ -23,7 +23,7 @@ Subplans:
 - [`05-final-client-validation-handoff.md`](05-final-client-validation-handoff.md) — exact real-client closeout campaign and evidence procedure;
 - [`06-modpack-coexistence.md`](06-modpack-coexistence.md) — coexistence with Spell Actionbar, Iron's, Epic Fight/EFIS, Controlling and future optional input providers without duplicating authority;
 - [`07-presentation-data-contracts.md`](07-presentation-data-contracts.md) — audited server/client presentation authority, current synchronized-data coverage and the exact contract gates for cooldown, cost, charges, channels and timers;
-- [`08-visual-language-state-semantics.md`](08-visual-language-state-semantics.md) — cross-surface semantic vocabulary for selection, forecast, denial, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
+- [`08-visual-language-state-semantics.md`](08-visual-language-state-semantics.md) — implemented bounded cross-surface semantic core for focus, admission/result, hazard and accepted-vs-draft loadout state, plus the remaining vocabulary/accessibility gates for future presentation;
 - [`09-keyboard-focus-navigation.md`](09-keyboard-focus-navigation.md) — keyboard-only focus/navigation semantics for radial and loadout screens while preserving existing mouse behavior, server authority and current keybinding contracts;
 - [`10-loadout-editor-information-architecture.md`](10-loadout-editor-information-architecture.md) — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation evidence limits and the metadata/protocol gates for richer editor feedback;
 - [`11-contextual-feedback-orchestration.md`](11-contextual-feedback-orchestration.md) — bounded arbitration, priority, supersession, correlation and timing across selection context, server-authored forecasts and authoritative cast results;
@@ -54,6 +54,7 @@ Deliver direct, low-clutter casting after server contracts and integrations are 
 - `ClientInputController` owns client intent emission only. Quick-cast and selected-cast input send `CastIntentPayload`; gameplay admission remains in the server runtime.
 - `LoadoutNetworkBridge` synchronizes edits while `ArcanaServerRuntimeManager.handleLoadoutUpdate` validates spell availability and persists accepted loadouts through `BlackArcanaSavedData`.
 - `BlackArcanaRadialScreen` is a client-only selector. Choosing a wedge changes selection and closes the screen; it never executes a cast.
+- `CastingUxSemantics` maps already-authorized client/server presentation facts into surface-neutral focus, admission/result, hazard and loadout-membership roles. The radial consumes distinct selected/hovered/composite roles with non-color markers; the loadout editor distinguishes synchronized accepted membership from local draft additions/removals; the HUD distinguishes authoritative denial, effect failure and success without converting forecasts into cast results. This layer has no gameplay admission or provider authority.
 - `BlackArcanaHudLayer` is contextual/event-driven and currently renders synchronized spell presentation, hazard/resistance, predictable-gate and cast-result feedback. Although cooldown-group snapshots are cached client-side, the current HUD does not render them directly as a per-spell cooldown widget.
 - `SpellPresentationPayload.Entry` currently synchronizes `spellId`, `translationKey` and bounded non-blank `iconId`, but current radial/loadout/HUD rendering does not consume `iconId`; icon rendering remains a planned client presentation refinement under 05.12.
 - `BlackArcanaClientConfig` owns presentation-only preferences: HUD enable/scale/anchor, feedback duration/intensity, radial hold/toggle, particle density, reduced motion and reduced flashes. These settings do not participate in gameplay validation.
@@ -104,15 +105,14 @@ Planned refinements include, subject to the detailed gates in each subplan:
 - better slot ordering/awareness in the 16-slot loadout editor while preserving dense ordered-list semantics;
 - client-only search over real synchronized identity/name data;
 - provider/domain/school filters only after bounded server-authored metadata exists;
-- draft reset and explicit dirty-state semantics;
+- draft reset and explicit dirty-state semantics beyond the now-implemented accepted-vs-local-draft membership cues;
 - explicit apply/rejection feedback only after a bounded server-authored result contract exists;
 - compact cooldown/readiness affordance from synchronized server state;
 - provider cost preview only through a bounded server-authored presentation contract;
 - channel/charge presentation only through canonical server-owned session semantics;
 - temporary ritual/domain timers only for owned/supported state;
 - keyboard-only radial and loadout-screen navigation without adding another gameplay cast path;
-- semantic non-color-only state cues;
-- one cross-surface semantic vocabulary so selection, forecast, warning, hard block, authoritative denial, unavailable state and presentation fallback never drift into contradictory meanings;
+- broader semantic non-color-only state cues beyond the implemented selected/hovered and accepted/draft markers;
 - bounded feedback arbitration so current selection, forecast and authoritative result cannot be visually misattributed when their timing overlaps;
 - authority-safe aim/target presentation that distinguishes local observation from server resolution and never turns reticle state into cast/world-safety authority;
 - bounded spell inspection/detail presentation that shows only legitimately synchronized/server-authored facts and never reconstructs cost, cooldown, target, damage, provider or progression truth from IDs/names;
@@ -126,11 +126,11 @@ Planned refinements include, subject to the detailed gates in each subplan:
 - controller integration only if a real compatible provider enters the modlist/API surface;
 - direct current-pack coexistence testing with external casting/actionbar/combat/animation/camera/tutorial/control surfaces before adding compatibility code.
 
-None of those bullet points is claimed as implemented merely because it is planned here.
+None of those remaining bullet points is claimed as implemented merely because it is planned here.
 
 `07-presentation-data-contracts.md` freezes the evidence gate behind data-driven refinements. In particular, current cooldown snapshots are keyed by canonical cooldown `groupId` while spell presentation metadata does not synchronize spell→group mapping, so a generic per-spell cooldown widget is not yet authorized. Exact cost, charge state, channel session/progress and ritual/domain timer presentation likewise require bounded server-authored contracts before implementation. Corruption/Strain client values remain intentionally withheld pending separate approval. Existing spell identity/name/icon, loadout, cast-result and hazard presentation contracts remain usable within their current bounds.
 
-`08-visual-language-state-semantics.md` then freezes the meaning layer **after** data authority is established. It separates selection/focus from legality, forecast from authoritative cast result, warning from hard block, and presentation fallback from gameplay unavailability. It also defines how those meanings compose across editor, radial, HUD and future provider-hosted surfaces without relying only on color/motion/audio or copying another mod's presentation language.
+`08-visual-language-state-semantics.md` freezes the meaning layer **after** data authority is established and now implements its bounded currently-authorized core through `CastingUxSemantics`. Selection/focus remains separate from legality, forecast remains separate from authoritative cast result, effect failure remains separate from denial/success, and accepted server loadout membership remains separate from unsent local draft deltas. Temporal/provider states that 05.07 cannot currently authorize remain omitted rather than inferred.
 
 `09-keyboard-focus-navigation.md` converts the existing keyboard-accessibility goal into an explicit screen-navigation contract. The current radial can page by keyboard but cannot focus/select wedges without a mouse, while the current loadout editor can apply/clear/page but cannot focus/toggle rows without a mouse. The plan adds no runtime itself: it specifies deterministic client-local focus, preserves existing Enter/Delete/page semantics, proposes screen-local traversal rather than new global default mappings, and requires keyboard activation to reuse the same existing selection/draft operations.
 
@@ -157,6 +157,7 @@ Follow-up hardening is canonical:
 - PR #56 fixed same-key `TOGGLE` radial close; merge `206e37134b37447b9573541c7013e36dd45654a6`; post-merge workflow `34008702833` (#1152) GREEN.
 - PR #57 hardened the 854×480 / GUI-scale-4 layouts. Final head `01a77eab641896173585b66c6310662d820c9f0c` passed workflow `34010736078` (#1169); merge `f2bb9a19db92d869e4443b2047ad1c913f8d2a29` passed exact-SHA workflow `34010968124` (#1170), including JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
 - Canonical artifact for that hardening checkpoint: `black-arcana-f2bb9a19db92d869e4443b2047ad1c913f8d2a29`, artifact ID `9982472491`, SHA-256 `1ba6949ceb04f261646548b6d99a158f4f40211a5017ca1911c0e1a732f86cdb`.
+- Stage 05.08 followed two explicit RED→GREEN cycles. CI #2173 (`34303964888`) failed because `CastingUxSemantics` did not yet exist; code checkpoint `8be77235f8118d28d41d467f5245066e65560758` passed CI #2175 (`34304304807`); the second RED CI #2177 (`34304569061`) failed because radial/loadout/HUD had not yet consumed the semantic helpers; reconciled code head `8f7777c68852f829e360f75b62dd7a8d88e59c93` passed CI #2183 (`34305182690`) through unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
 
 ## Final validation handoff
 
@@ -166,9 +167,9 @@ It maps the remaining manual matrix to 05.01–05.04, freezes the exact-build/ev
 
 `06-modpack-coexistence.md` adds the real-pack coexistence planning layer. Its scenarios become blocking only when they reveal a required input/readability/authority failure; cosmetic unification or unsupported optional bridges do not automatically block Stage 05.
 
-`07-presentation-data-contracts.md`, `08-visual-language-state-semantics.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md`, `11-contextual-feedback-orchestration.md`, `12-iconography-resource-resolution.md`, `13-targeting-aim-presentation.md`, `14-spell-details-inspection-presentation.md`, `15-casting-vfx-audio-animation-presentation.md` and `16-onboarding-discoverability-contextual-help.md` are forward-looking authority/meaning/accessibility/editor/feedback/resource/target/inspection/audiovisual/discoverability gates for future refinements. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback/aim/inspection/VFX/audio/animation/camera/onboarding polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
+`08-visual-language-state-semantics.md` now has a bounded implemented semantic core whose direct visual acceptance remains deferred. `07-presentation-data-contracts.md`, `09-keyboard-focus-navigation.md`, `10-loadout-editor-information-architecture.md`, `11-contextual-feedback-orchestration.md`, `12-iconography-resource-resolution.md`, `13-targeting-aim-presentation.md`, `14-spell-details-inspection-presentation.md`, `15-casting-vfx-audio-animation-presentation.md` and `16-onboarding-discoverability-contextual-help.md` retain forward-looking authority/accessibility/editor/feedback/resource/target/inspection/audiovisual/discoverability gates for refinements not yet implemented. They do not make optional cooldown/cost/channel/timer/iconography/art/keyboard-navigation/editor/feedback/aim/inspection/VFX/audio/animation/camera/onboarding polish mandatory for Stage 05 closeout unless a directly observed validation failure or explicit reviewed decision promotes a specific refinement.
 
-Creating or merging planning documents does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
+Implementing or merging a deterministic refinement does **not** validate Stage 05 by itself. Manual matrix states change only from direct real-client observations recorded through the canonical runbook.
 
 ## Implementation rule for planned refinements
 
