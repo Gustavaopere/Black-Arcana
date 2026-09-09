@@ -1,0 +1,85 @@
+# Phase 2AN checkpoint — Apothic Attributes 2.10.1
+
+## State
+
+`CATALOG CLOSURE CANDIDATE / EXACT SOURCE-VERSION PIN / NOT CANONICAL UNTIL LATEST-MAIN RECONCILIATION + EXACT-HEAD CI GREEN + MERGE`
+
+## Base
+
+- initial canonical `main`: `192f5d3c109189a9fee5fb3fc247bfbd75a93b68`
+- predecessor: Phase 2AM / PR #147, component #41 (`reliquified_lenders_cataclysm_new_relics_fix`)
+- branch: `docs/magic-catalog-phase2an-apothic-attributes-2.10.1`
+- canonical coverage at branch creation: `41/100 = 41%`
+- proposed result after canonical merge: `42/100 = 42%`
+
+Apothic was audited concurrently across two main advances. PR #145 first occupied Phase 2AL/component #40 with `efiscompat`; PR #147 then occupied Phase 2AM/component #41 with Reliquified Cataclysm Fix. This branch is created directly from `main@192f5d3c109189a9fee5fb3fc247bfbd75a93b68` and semantically preserves both predecessors. Superseded Apothic branches/PRs are not merge authority.
+
+## Physical identity
+
+- artifact: `ApothicAttributes-1.21.1-2.10.1.jar`
+- mod id: `apothic_attributes`
+- version: `2.10.1`
+- SHA-1: `6a6b84d09801621df5cc2c8a68f35bd93a6cda0f`
+- physical NeoForge: `21.1.248`
+- physical Placebo: `9.9.2`
+- physical Curios: `9.5.1+1.21.1`
+
+## Exact source
+
+`Shadows-of-Fire/Apothic-Attributes@686361b2c7b0e76bf4158890bb8a2e42ef805622`
+
+Source metadata is exact semantic version 2.10.1 and targets Minecraft 1.21.1 / Java 21 / NeoForge 21.1.235 / Placebo 9.9.0, with Curios optional. Generated runtime metadata declares compatible minimum ranges satisfied by the physical pack.
+
+## Closed inventory
+
+- 0 standalone spells/glyphs/rituals observed;
+- 2 synchronized custom registries;
+- 22 attributes;
+- 7 mob effects;
+- 31 potions;
+- 37 generated brewing mixes;
+- 5 damage types;
+- 2 data components;
+- 3 attachments;
+- 7 equipment slot objects;
+- 11 slot groups;
+- 3 provider tags;
+- 1 particle + 1 sound;
+- 2 clientbound PLAY payloads;
+- 7 common + 1 client mixin;
+- server-side `AbilityCooldowns` public API;
+- conditional Curios modifier bridge;
+- provider config/combat formulas and reload behavior.
+
+## Critical boundaries
+
+- no second cast engine or mana/resource authority is introduced by this provider;
+- Apothic owns its combat formulas and generic proc runtime;
+- BA Backlash remains BA-owned and must not trigger normal Apothic offensive proc chains by intentional integration;
+- Apothic `cooldown_reduction` does not automatically apply to BA cooldowns;
+- Curios remains Curios authority, Apothic owns only its modifier bridge, and BA retains its bounded snapshot provider;
+- exact Detonation source discrepancy (`DamageTypes.BLEEDING` call) is recorded literally rather than corrected by assumption;
+- Phase 3 remains blocked.
+
+## Provenance
+
+- root upstream source license: MIT;
+- upstream assets: All Rights Reserved;
+- `StackAttributeModifiersEvent.java` has a file-level Forge Development LLC / SPDX LGPL-2.1-only header;
+- source inspection is read-only factual cataloging;
+- no code/assets copied or adapted;
+- byte-for-byte source/JAR equality is not claimed.
+
+## Merge protocol
+
+Before merge:
+
+1. fetch latest `main`;
+2. reconcile if advanced;
+3. review diff for preservation of prior canonical evidence;
+4. ensure central provenance ledger/indices are updated;
+5. run Black Arcana CI on exact reconciled HEAD;
+6. require applicable unit/diff/build/JAR/GameTest/dedicated-server gates GREEN;
+7. resolve review findings;
+8. merge only with expected exact HEAD;
+9. confirm final `main` SHA and post-merge CI evidence.
