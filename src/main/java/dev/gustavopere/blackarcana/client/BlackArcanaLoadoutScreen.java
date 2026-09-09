@@ -83,6 +83,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         int panelWidth = layout.panelWidth();
         int rowsPerPage = layout.rowsPerPage();
         int rowHeight = layout.rowHeight();
+        List<ArcanaSpellId> draftSnapshot = draft.snapshot();
 
         graphics.fill(left - 8, top - 24, left + panelWidth + 8,
                 top + rowsPerPage * rowHeight + 48, 0xE0100C14);
@@ -116,8 +117,11 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             if (focused) {
                 graphics.fill(left + 3, y, left + 5, y + rowHeight - 2, 0xFF9DD9FF);
             }
-            String prefix = (focused ? "[F] " : "") + membershipPrefix(membership);
-            graphics.drawString(font, prefix + displayName(spell, panelWidth),
+            String prefix = (focused ? "[F] " : "")
+                    + slotPrefix(draftSnapshot, spell)
+                    + membershipPrefix(membership);
+            int nameWidth = Math.max(1, panelWidth - 16 - font.width(prefix));
+            graphics.drawString(font, prefix + displayName(spell, nameWidth),
                     left + 8, y + textOffsetY, 0xFFFFFFFF, false);
             if (hovered) {
                 hoveredIndex = index;
@@ -133,7 +137,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 top + rowsPerPage * rowHeight + 4,
                 0xFFBFAFBF);
         graphics.drawCenteredString(font,
-                Component.translatable("screen.black_arcana.loadout.hint", draft.snapshot().size()),
+                Component.translatable("screen.black_arcana.loadout.hint", draftSnapshot.size()),
                 width / 2,
                 top + rowsPerPage * rowHeight + 20,
                 0xFFD8CCD8);
@@ -243,6 +247,22 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         return entry == null ? Optional.empty() : Optional.of(BlackArcanaHudLayer.preflightLine(entry));
     }
 
+    static String slotPrefix(List<ArcanaSpellId> draftSnapshot, ArcanaSpellId spell) {
+        return LoadoutEditorSemantics.slotPosition(draftSnapshot, spell)
+                .map(position -> {
+                    Component label = position.quickCastEligible()
+                            ? Component.translatable(
+                                    "screen.black_arcana.loadout.slot.quick_eligible",
+                                    position.slotNumber(),
+                                    position.quickCastSlot())
+                            : Component.translatable(
+                                    "screen.black_arcana.loadout.slot",
+                                    position.slotNumber());
+                    return "[" + label.getString() + "] ";
+                })
+                .orElse("");
+    }
+
     static String membershipPrefix(CastingUxSemantics.LoadoutMembership membership) {
         return switch (membership) {
             case NOT_INCLUDED -> "[ ] ";
@@ -280,11 +300,11 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         lastMouseY = mouseY;
     }
 
-    private String displayName(ArcanaSpellId spell, int panelWidth) {
+    private String displayName(ArcanaSpellId spell, int maxWidth) {
         SpellPresentationPayload.Entry entry = presentation.get(spell);
         String raw = entry == null
                 ? spell.path().replace('_', ' ')
                 : Component.translatable(entry.translationKey()).getString();
-        return font.plainSubstrByWidth(raw, Math.max(1, panelWidth - 50));
+        return font.plainSubstrByWidth(raw, Math.max(1, maxWidth));
     }
 }
