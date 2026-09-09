@@ -2,9 +2,11 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AG revision: 36/100 = 36%.**
+**Canonical coverage: 36/100 = 36%.**
 
-Canonical `main` immediately before Phase 2AG is **35/100 = 35%** at `6ef2fb6fee567dc4fbe3d340166829d042132bfb`. The 36th point becomes canonical only when this revision is merged to `main`; while it exists only on the Phase 2AG branch/PR, the canonical value remains 35/100.
+Phase 2AG / PR #137 is merged to canonical `main@2de722272814d2d5664266f5fc8ad05ba25d2940` and closed `ars_n_spells` as component **36**.
+
+Phase 2AH audits `monstersspellbooks` but does **not** increment the numerator: exact physical/release 0.0.16.3 is known, while the official public source head still declares mod 0.0.14 and older host versions. An unresolved current-version registry/internals delta receives zero closed-component points.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -30,26 +32,34 @@ This denominator is operational, not immutable. Reconcile it whenever the physic
 
 ## Closed component count
 
-Phase 2AF / PR #135 is canonical and closed `not_enough_glyphs` as component **35**.
+- component **35**: `not_enough_glyphs`, canonical via PR #135;
+- component **36**: `ars_n_spells`, canonical via PR #137.
 
-Phase 2AG closes `ars_n_spells` as component **36** at the available evidence ceiling:
+Phase 2AG closed Ars 'n' Spells at its evidence ceiling while explicitly retaining unknown exact 3.3.2 internal signatures as fail-closed. That closure is now canonical.
 
-- exact physical/release identity: Ars 'n' Spells `3.3.2`;
-- official NeoForge 1.21.1 source baseline: `3.3.0` at `a9930223c96806e5d748ea69d02f9a32cab62de9`;
-- 5 ritual identities under the physical pack condition where Iron's is present;
-- 5 provider-owned mana-unification modes;
-- Spell Loom/carrier lifecycle;
-- cross-cast settlement and finite 8-slot native-wheel proxy pool;
-- 8 `ars_cross_*` proxy registry objects explicitly excluded from standalone semantic-spell inflation;
-- exact 3.3.1 receipt-HUD removal and exact 3.3.2 contextual mana-HUD fix;
-- exact 3.3.2 internal signatures remain unverified/fail-closed rather than guessed.
+## Phase 2AH partial checkpoint — Monsters & Spellbooks
 
-The point is awarded for closing the **provider component at its evidence ceiling**, not for pretending the exact 3.3.2 JAR was decompiled.
+Exact current artifact/release evidence:
+
+- `monstersspellbooks-0.0.16.3.jar`;
+- SHA-1 `b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e`;
+- CurseForge project/file `1428928/8788560`;
+- publisher scale `90+ spells / 2 new spell schools`.
+
+Official public source baseline:
+
+- `RedReaper28/Monsters-Spellbooks-1.21.1@1ab9b72af2ea44c3c8b816e665d06531ea44ddc2`;
+- 98 source-baseline spell registrations across 11 families;
+- source-baseline `necro` and `aero` school registrations;
+- build metadata still declares mod `0.0.14`, NeoForge `21.1.216`, Iron's `1.21.1-3.15.4`.
+
+Because exact 0.0.16.3 registry/API parity is not proven and the exact release's Aero-removal note conflicts with residual Aero registration in the public source head, this provider remains **PARTIAL / ZERO NEW POINTS**.
 
 ## Partial providers still receive zero points
 
 Examples include:
 
+- `monstersspellbooks` — exact 0.0.16.3 artifact/release, but public source build metadata remains 0.0.14 and exact current registry parity is unresolved;
 - `leylines` — public signature names known, total current inventory not verified;
 - `somakespells` — current granular inventory not closed;
 - `cataclysm_spellbooks` — installed 1.1.13 remains ahead of the exact public source inventory already audited;

@@ -18,49 +18,46 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AF / PR #135 está canônica em `main@6ef2fb6fee567dc4fbe3d340166829d042132bfb`;
-- cobertura canônica antes da Phase 2AG: **35/100 = 35%**;
-- esta revisão Phase 2AG fecha `ars_n_spells` como componente #36;
-- quando esta revisão estiver em `main`: **36/100 = 36%**;
+- Phase 2AF / PR #135 fechou componente #35;
+- Phase 2AG / PR #137 está canônica em `main@2de722272814d2d5664266f5fc8ad05ba25d2940` e fechou componente #36;
+- cobertura canônica atual: **36/100 = 36%**;
+- Phase 2AH avança `monstersspellbooks` apenas como checkpoint parcial e soma **0 pontos**;
 - provider parcial não recebe ponto inteiro;
 - denominador 100 permanece operacional e deve ser reconciliado se a modlist física mudar.
 
-## Phase 2AG — Ars 'n' Spells
+## Phase 2AH — Monsters & Spellbooks
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `ars_n_spells` | `ars_n_spells-3.3.2.jar` | EXACT PHYSICAL/RELEASE 3.3.2 / OFFICIAL NEOFORGE 1.21.1 SOURCE BASELINE 3.3.0 @ `a9930223...` / 5 RITUAIS SOB PACK COM IRON'S / 5 MANA MODES / SPELL LOOM + CARRIERS / 8 PROXY TRANSPORT SLOTS, 0 STANDALONE SEMANTIC SPELLS / EXACT 3.3.2 INTERNALS UNVERIFIED / PHASE 2AG CLOSURE REVISION |
+| `monstersspellbooks` | `monstersspellbooks-0.0.16.3.jar` | EXACT PHYSICAL/RELEASE 0.0.16.3 / SHA-1 `b3aa89fd...` / CF `1428928/8788560` / PUBLIC CURRENT SOURCE HEAD `1ab9b72...` WITH STALE BUILD METADATA 0.0.14 / 98 SOURCE-BASELINE SPELL REGISTRATIONS / SOURCE SCHOOLS NECRO+AERO / EXACT CURRENT REGISTRY/API+AERO STATE UNVERIFIED / PARTIAL / 0 NEW COVERAGE POINTS |
 
-### Evidence boundary
+### Phase 2AH evidence boundary
 
-- Exact physical JAR SHA-1: `2d2274ff786c42ea46c53fec866116f83d98fe5a`.
-- Exact 3.3.1 release removes the transaction receipt HUD.
-- Exact 3.3.2 release fixes contextual Iron's mana-HUD visibility and declares no config, network-protocol or save-format change from 3.3.1.
-- Official NeoForge 1.21.1 source branch is version 3.3.0, not 3.3.2; class/signature/registry parity on the installed binary is therefore not invented.
-- The current semantic catalog records five ritual identities, five mana modes, the provider-owned carrier/cross-cast lifecycle and the fixed eight-slot Iron's proxy pool.
-- `ars_cross_1..8` are real registry objects used as transport slots; they do not create eight fixed semantic spells for deduplication.
+- Current publisher surface says `90+ spells` and `2 new spell schools`.
+- Official public source head registers 98 spell objects across 11 families but its build metadata still declares mod `0.0.14`, NeoForge `21.1.216` and Iron's `1.21.1-3.15.4`.
+- Exact installed pack uses 0.0.16.3, NeoForge `21.1.248` and Iron's `1.21.1-3.16.3`.
+- Exact 0.0.16.3 changelog says some Aero remnants were removed; public source still registers an Aero school and no Aero spells. Current Aero state is therefore fail-closed.
+- CurseForge says MIT while source `gradle.properties` says All Rights Reserved; `TEMPLATE_LICENSE.txt` applies to the MDK template, not the addon implementation. Provenance remains review-required/read-only.
 
-## Phase 2AF — canonical predecessor
+## Phase 2AG — canonical predecessor
 
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
-| `not_enough_glyphs` | `not_enough_glyphs-1.21.1-4.6.1.jar` | CANÔNICO VIA PR #135 / SOURCE-PINNED 4.6.1 / 40 REGISTROS CONDICIONAIS / 39 SOURCE-ENABLED / 4 FORMS + 36 EFFECTS / BINDER 25 STORAGE + 10 CASTER / 13 PERKS |
-
-A antiga marcação de NEG como `CATÁLOGO GRANULAR PENDENTE` permanece obsoleta.
+| `ars_n_spells` | `ars_n_spells-3.3.2.jar` | CANÔNICO VIA PR #137 / EXACT PHYSICAL+RELEASE 3.3.2 / OFFICIAL NEOFORGE 1.21.1 SOURCE BASELINE 3.3.0 / 5 RITUAIS / 5 MANA MODES / SPELL LOOM+CARRIERS / 8 PROXY TRANSPORT SLOTS, 0 STANDALONE SEMANTIC SPELLS / EXACT 3.3.2 INTERNALS FAIL-CLOSED |
 
 ## Concorrência — não colidir
 
-Rechecado na abertura da Phase 2AG. Continuam abertos trabalhos dedicados para:
+Rechecado na abertura da Phase 2AH. Permanecem reservados por trabalhos dedicados:
 
 - `ars_two_way_portals` — PR #125;
 - `ars_polymorphia` — PR #126;
 - `ars_sable` — PR #128.
 
-Esses providers não devem ser editados por esta fase. Rechecá-los novamente antes de qualquer seleção futura.
+Rechecar estado real das PRs antes da próxima seleção.
 
-## Próxima seleção após Phase 2AG
+## Próxima seleção após Phase 2AH
 
-Selecionar somente depois de:
+O componente #37 continua disponível. Selecionar apenas depois de:
 
 1. fetch da `main` mais recente;
 2. verificação da modlist física atual;
@@ -68,12 +65,13 @@ Selecionar somente depois de:
 4. leitura do catálogo já canônico;
 5. confirmação da versão exata e do melhor source/API/release aplicável.
 
-Não escolher automaticamente um provider apenas porque o snapshot histórico ainda diz `PENDENTE`; PRs recentes e a árvore atual de `main` são a autoridade operacional.
+Preferir um provider cuja evidência current-exact permita realmente fechar o componente; não inflar a cobertura para compensar blockers de artifact/source.
 
 ## Providers parcialmente fechados — não contam como concluídos
 
 Exemplos atuais:
 
+- `monstersspellbooks` — source baseline amplo, mas exact 0.0.16.3 registry/API parity não fechada;
 - `leylines` — nomes públicos parciais; inventário total atual não verificado;
 - `somakespells` — catálogo granular atual ainda não fechado;
 - `cataclysm_spellbooks` — artefato instalado 1.1.13 sem source público exato equivalente já fechado;
@@ -87,7 +85,7 @@ Exemplos atuais:
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
 - Black Arcana não duplica mana, casting, cooldown, contingency, targeting ou world mutation de provider;
-- proxy/bridge transport identity não deve ser confundida com spell semântico adicional;
+- nomes temáticos (`soul`, `lich`, `gravity`, `space`, etc.) exigem comparação semântica, não equivalência automática;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.
 
 ## Histórico
