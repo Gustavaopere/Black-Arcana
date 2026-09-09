@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AG revision: 36/100 = 36%.**
+**Coverage represented by this Phase 2AH revision: 37/100 = 37%.**
 
-Canonical `main` immediately before Phase 2AG is **35/100 = 35%** at `6ef2fb6fee567dc4fbe3d340166829d042132bfb`. The 36th point becomes canonical only when this revision is merged to `main`; while it exists only on the Phase 2AG branch/PR, the canonical value remains 35/100.
+Canonical `main` immediately before Phase 2AH is **36/100 = 36%** at `2de722272814d2d5664266f5fc8ad05ba25d2940`. The 37th point becomes canonical only when this revision is merged to `main`; while it exists only on the Phase 2AH branch/PR, the canonical value remains 36/100.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -32,7 +32,7 @@ This denominator is operational, not immutable. Reconcile it whenever the physic
 
 Phase 2AF / PR #135 is canonical and closed `not_enough_glyphs` as component **35**.
 
-Phase 2AG closes `ars_n_spells` as component **36** at the available evidence ceiling:
+Phase 2AG / PR #137 is canonical and closed `ars_n_spells` as component **36** at the available evidence ceiling:
 
 - exact physical/release identity: Ars 'n' Spells `3.3.2`;
 - official NeoForge 1.21.1 source baseline: `3.3.0` at `a9930223c96806e5d748ea69d02f9a32cab62de9`;
@@ -41,10 +41,20 @@ Phase 2AG closes `ars_n_spells` as component **36** at the available evidence ce
 - Spell Loom/carrier lifecycle;
 - cross-cast settlement and finite 8-slot native-wheel proxy pool;
 - 8 `ars_cross_*` proxy registry objects explicitly excluded from standalone semantic-spell inflation;
-- exact 3.3.1 receipt-HUD removal and exact 3.3.2 contextual mana-HUD fix;
 - exact 3.3.2 internal signatures remain unverified/fail-closed rather than guessed.
 
-The point is awarded for closing the **provider component at its evidence ceiling**, not for pretending the exact 3.3.2 JAR was decompiled.
+Phase 2AH closes `monstersspellbooks` as component **37** when this revision becomes canonical:
+
+- exact physical identity: `monstersspellbooks-0.0.16.3.jar`, SHA-1 `b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e`;
+- exact CurseForge release: project/file `1428928 / 8788560`, 2026-09-01;
+- complete current public-source inventory: **98 explicit `registerSpell(...)` registrations**;
+- source-family distribution: blood 5, ender 12, evocation 3, fire 10, holy 4, hydro 8, ice 8, lightning 14, nature 7, necro 25, technomancy 2;
+- two source SchoolTypes observed: Necro plus retained Aero; Aero contributes zero current spell registrations and exact 0.0.16.2 release marks it soft-deleted;
+- public source head `1ab9b72af2ea44c3c8b816e665d06531ea44ddc2` is contemporaneous with the release but still carries stale `mod_version=0.0.14` metadata;
+- `ModSpellRegistry` is unchanged across the public source interval containing the 0.0.16.2/0.0.16.3 work;
+- exact 0.0.16.3 binary numerical/API/config/network/save internals remain unverified/fail-closed.
+
+The point is awarded for closing the **provider component at its evidence ceiling**, not for pretending the installed JAR was decompiled or that stale source metadata is an exact binary pin.
 
 ## Partial providers still receive zero points
 
