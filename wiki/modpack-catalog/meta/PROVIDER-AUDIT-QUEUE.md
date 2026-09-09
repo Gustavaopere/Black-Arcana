@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AJ / PR #143 está canônica em `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b`;
-- cobertura canônica na criação da Phase 2AK: **38/100 = 38%**;
-- esta revisão Phase 2AK fecha `emf_compat_iron_spells` como componente #39 ao limite exato de source-version disponível;
-- o resultado **39/100 = 39%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
+- Phase 2AK / PR #144 está canônica em `main@73a425051d242a33af157a3f73ca816498e8eba8`;
+- cobertura canônica na criação da Phase 2AL: **39/100 = 39%**;
+- esta revisão Phase 2AL fecha `efiscompat` como componente #40 ao limite exato de source-version disponível;
+- o resultado **40/100 = 40%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,43 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AK — EMF Compat: Iron's Spells 2.0.0
+## Phase 2AL — `efiscompat` 3.1.0
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION / CLIENT PRESENTATION COMPAT / 0 SPELLS / 0 GAMEPLAY REGISTRY / 5 JAVA CLASSES / 3 REQUIRED CLIENT MIXINS / 2 CONFIG KEYS / POSE SOURCE PRIORITY 10 / FIRST-PERSON EMF CONDITION / COMPONENT #39 CANDIDATE / BYTE-EQUIVALENCE + FULL-PACK RENDER QA FAIL-CLOSED |
+| `efiscompat` | `efiscompat-3.1.0.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / EPIC FIGHT↔IRON'S CASTING-INTERACTION+ANIMATION COMPAT / 0 SPELLS / 28 JAVA FILES / 35 ANIMATION ACCESSORS / 12 REQUIRED MIXINS (6 CLIENT + 6 COMMON) / 6 CONFIG KEYS / DATA-DRIVEN SPELL-ANIMATION MAP / IRON'S PRECAST+CANCEL RECONCILIATION / COMPONENT #40 CANDIDATE / LICENSE-CONFLICT + BYTE/HOST/FULL-PACK QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `4250e1c65732d70d1091cc50b84a91b6ed5b2b3f`.
+- CurseForge project/file: `1109064 / 8372294`, release `3.1.0` dated 2026-07-05.
+- Official exact-version source: `domanhthang2110/efiscompat@b4b58aff86e707420fac8a7c29fe647d7f5aaac4` on branch `1.21.1`.
+- The pinned commit is titled `Fixed dedicated server crash` and changes `mod_version=3.0.0` to `3.1.0`.
+- Exact source metadata: Minecraft 1.21.1, Java 21, NeoForge baseline 21.1.219, Iron's baseline 3.15.6.
+- Generated runtime metadata requires BOTH-side Epic Fight `[21,)` and Iron's `[1.21.1-3.15.0,)`.
+- Physical pack uses Epic Fight `21.17.3.1` and Iron's `1.21.1-3.16.3`; declared ranges are satisfied, but exact mixin/API/event-order parity remains runtime QA.
+- Standalone provider spell count is **0**; Iron's `SpellRegistry` is queried only to resolve host spells for animation selection.
+- Exact source surface contains 28 Java files, 35 provider animation accessors, 12 required mixins and 6 common config keys.
+- `SpellAnimationLoader` provides a reloadable 9-role chant/cast/continuous + staff-side mapping with default fallback.
+- Server-relevant compatibility includes an Iron's pre-cast veto from Epic Fight stun/recent-action state and cancellation of active Iron's casts from Epic Fight skill/guard/dodge paths.
+- `MixinComboBasicAttack` targets `com.p1nero.invincible.skill.ComboBasicAttack`; physical target owner/presence is not established from the top-level modlist and remains fail-closed QA.
+- License metadata conflict is preserved: CurseForge labels MIT, exact source metadata declares `GNU GPLv3`, and no root `LICENSE` file was observed at the source pin.
+- Exact source-version pin is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
+
+### Provider authority
+
+- Iron's owns spells, cast state, mana, spell effects and cooldown semantics.
+- Epic Fight owns combat action/stun/skill/animation state.
+- `efiscompat` owns only the reconciliation policy and animation compatibility around those providers.
+- Black Arcana must not duplicate the same Iron's↔Epic Fight interruption/animation layer or route BA-native spells through Iron's to inherit it.
+- Black Arcana retains canonical casting/cost/target/effect/cooldown, Corruption, Strain, Arcane Danger, ritual/hazard and `WorldEffectPolicy` authority.
+- RPG Skill Tree receives no magic runtime authority from this compat.
+
+## Phase 2AK — EMF Compat: Iron's Spells 2.0.0 — canonical predecessor
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | CANÔNICO VIA PR #144 / EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION / CLIENT PRESENTATION COMPAT / 0 SPELLS / 0 GAMEPLAY REGISTRY / 5 JAVA CLASSES / 3 REQUIRED CLIENT MIXINS / 2 CONFIG KEYS / POSE SOURCE PRIORITY 10 / FIRST-PERSON EMF CONDITION / COMPONENT #39 / BYTE-EQUIVALENCE + FULL-PACK RENDER QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -116,16 +148,18 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AK foi aberta sobre `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b` após rechecagem de branches/PRs. Não havia branch nem PR equivalente para `emf_compat_iron_spells`.
+Phase 2AL foi aberta sobre `main@73a425051d242a33af157a3f73ca816498e8eba8` após rechecagem de branches/PRs. Não havia branch nem PR equivalente para `efiscompat`.
+
+PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AK
+## Próxima seleção após Phase 2AL
 
 Selecionar somente depois de:
 
 1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AK;
+2. confirmação do merge/CI da Phase 2AL;
 3. verificação da modlist física atual;
 4. pesquisa de PR/branch equivalente;
 5. leitura do catálogo já canônico;
@@ -150,7 +184,8 @@ Exemplos atuais:
 - exact source-version pin não equivale automaticamente a byte-for-byte JAR reproducibility;
 - library/API ou compat provider pode fechar com zero spells se zero registro próprio for demonstrado e suas superfícies reais estiverem inventariadas;
 - client presentation hook não é cast authority;
-- registry/example object não vira spell por contagem;
+- cross-provider cast cancellation/reconciliation não vira segundo cast authority;
+- registry/example/animation object não vira spell por contagem;
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
 - Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, presentation adapter ou world mutation de provider;
