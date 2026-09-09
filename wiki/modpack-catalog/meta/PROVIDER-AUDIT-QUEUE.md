@@ -39,7 +39,7 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `monstersspellbooks` | `monstersspellbooks-0.0.16.3.jar` | EXACT PHYSICAL/RELEASE 0.0.16.3 / CURRENT OFFICIAL SOURCE HEAD `1ab9b72a...` WITH STALE 0.0.14 METADATA / 98 SPELL REGISTRATIONS CLOSED SEMANTICALLY / NECRO SCHOOL ACTIVE / AERO SCHOOL RETAINED BUT 0 ACTIVE REGISTRATIONS AFTER SOFT DELETE / EXACT 0.0.16.3 NUMERICAL/API INTERNALS UNVERIFIED / PHASE 2AH CLOSURE REVISION |
+| `monstersspellbooks` | `monstersspellbooks-0.0.16.3.jar` | EXACT PHYSICAL/RELEASE 0.0.16.3 / CURRENT OFFICIAL SOURCE HEAD `1ab9b72a...` WITH STALE 0.0.14 METADATA / 98 SPELL REGISTRATIONS CLOSED SEMANTICALLY / NECRO+AERO SCHOOLTYPES OBSERVED IN SOURCE ONLY / AERO 0 SPELL REGISTRATIONS + INSTALLED AERO SCHOOL STATE UNVERIFIED AFTER 0.0.16.3 CLEANUP / EXACT 0.0.16.3 NUMERICAL/API INTERNALS UNVERIFIED / PHASE 2AH CLOSURE REVISION |
 
 ### Evidence boundary
 
@@ -48,7 +48,7 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 - Current official source head: `RedReaper28/Monsters-Spellbooks-1.21.1@1ab9b72af2ea44c3c8b816e665d06531ea44ddc2`.
 - Current public `ModSpellRegistry` contains **98** explicit registrations: 5 blood, 12 ender, 3 evocation, 10 fire, 4 holy, 8 hydro, 8 ice, 14 lightning, 7 nature, 25 necro, 2 technomancy.
 - Public release-work compare from `823532a3...` to `1ab9b72a...` does not modify `ModSpellRegistry`, supporting inventory stability through the 0.0.16.2/0.0.16.3 work interval.
-- Exact 0.0.16.2 release says Aero was soft-deleted. Current source still registers an Aero SchoolType but zero Aero spell registrations.
+- Exact 0.0.16.2 release says Aero was soft-deleted; exact 0.0.16.3 says remaining Aero content was deleted. The stale public source still contains an Aero SchoolType but zero Aero spell registrations. **Installed 0.0.16.3 Aero SchoolType existence is `NÃO VERIFICADO`.**
 - Source `gradle.properties` remains stale at `mod_version=0.0.14`, NeoForge 21.1.216 and Iron's 3.15.4; therefore exact installed-JAR class/API/numeric parity is not invented.
 
 ## Phase 2AG — canonical predecessor
@@ -99,7 +99,7 @@ Exemplos atuais:
 - integração sem hook seguro permanece fail-closed;
 - Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle ou world mutation de provider;
 - source-family label não deve ser confundido com SchoolType sem evidência;
-- provider-retained school objects sem spell registrations não devem inflar o inventário ativo;
+- source-head SchoolType presence does not prove installed 0.0.16.3 registry presence;
 - Phase 3 continua bloqueada até o catálogo/deduplicação provar lacunas reais.
 
 ## Histórico
