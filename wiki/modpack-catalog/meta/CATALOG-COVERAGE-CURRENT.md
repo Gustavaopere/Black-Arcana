@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AL revision: 40/100 = 40%.**
+**Coverage represented by this Phase 2AM revision: 41/100 = 41%.**
 
-Phase 2AL was branched from canonical `main@73a425051d242a33af157a3f73ca816498e8eba8`, where Phase 2AK / PR #144 made component #39 canonical and coverage reached **39/100 = 39%**. Component #40 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AL branch/PR, canonical coverage remains **39/100 = 39%**.
+Phase 2AM was branched from canonical `main@433233164f61bbf6b6d5cb8aa9625cf286a79a23`, where Phase 2AL / PR #145 made component #40 canonical and coverage reached **40/100 = 40%**. Component #41 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AM branch/PR, canonical coverage remains **40/100 = 40%**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -24,7 +24,7 @@ The current operational denominator remains **100 magic/cross-domain component u
 
 - **98** of the former 103 candidate mod IDs still survive the current physical modlist;
 - the **5 actually absent** former candidates are `ars_morph`, `morerelics`, `reliquary`, `vestis` and `woodwalkers_spellbooks`;
-- **2** current magic/cross-domain candidates not represented by the old 103-unit baseline remain under classification: `soul_fire_d` and `reliquified_lenders_cataclysm_new_relics_fix`;
+- **2** current magic/cross-domain candidates not represented by the old 103-unit baseline are `soul_fire_d` and `reliquified_lenders_cataclysm_new_relics_fix`;
 - therefore `103 - 5 + 2 = 100` current operational units.
 
 Correction from the earlier Phase 2AF reconciliation text: `backportedspellbooks`, `crystal_chronicles` and `gtbcs_geomancy_plus` are physically present in the same 595-entry / SHA-1 `7aaece...` modlist and must not be listed as removed.
@@ -117,9 +117,9 @@ The component owns visual pose compatibility only. Iron's remains cast/resource/
 
 Byte-for-byte source/JAR equivalence and full-pack rendering QA remain separate; they do not reopen the semantic inventory closure.
 
-## Phase 2AL — `efiscompat` component #40 candidate
+## Phase 2AL — `efiscompat` component #40, canonical
 
-Phase 2AL closes `efiscompat` at the exact source-version evidence ceiling as an Epic Fight↔Iron's casting-interaction and animation compatibility component:
+Phase 2AL / PR #145 is canonical at merge SHA `433233164f61bbf6b6d5cb8aa9625cf286a79a23` and closed `efiscompat` at the exact source-version evidence ceiling as an Epic Fight↔Iron's casting-interaction and animation compatibility component:
 
 - physical artifact `efiscompat-3.1.0.jar`, SHA-1 `4250e1c65732d70d1091cc50b84a91b6ed5b2b3f`;
 - exact CurseForge project/file `1109064 / 8372294`, release 2026-07-05;
@@ -140,6 +140,24 @@ One common mixin targets `com.p1nero.invincible.skill.ComboBasicAttack`; exact t
 License metadata is also intentionally unresolved: CurseForge labels MIT while exact source metadata declares `GNU GPLv3`, with no root `LICENSE` file observed at the pin. Source inspection is read-only and no code/assets are copied.
 
 The provider owns reconciliation around Iron's casts, not a second spell runtime. Black Arcana therefore must not duplicate Iron's↔Epic Fight interruption/animation handling or route BA-native spells through Iron's just to inherit this compatibility.
+
+## Phase 2AM — Reliquified L_Ender's Cataclysm New Relics Fix component #41 candidate
+
+Phase 2AM closes `reliquified_lenders_cataclysm_new_relics_fix` at the exact physical/publisher evidence ceiling as a bounded Relics 0.10→0.12 compatibility bridge:
+
+- physical artifact `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar`, SHA-1 `9d4710e665ec74af917bb9f5f819154ca9f74ca0`;
+- exact CurseForge project/file `1665965 / 8778365`, release 2026-08-31;
+- publisher environment Client & Server and license All Rights Reserved;
+- original target addon explicitly `Reliquified L_Ender's Cataclysm 0.1.1`;
+- physical stack includes Relics 0.12.8, Curios 9.5.1, OctoLib 0.6.2, Cataclysm 3.33 and the target addon 0.1.1;
+- exactly five existing addon relics are named in the fix scope: Void Cloak, Scouring Eye, Void Vortex in Bottle, Vacuum Glove and Void Bubble;
+- eight public repair families cover removed `IRelicItem`, RelicTemplate conversion, Curios/modifiers, progression/cooldowns/XP, active abilities, player-motion networking, order/values and descriptions/tooltips;
+- exact 1.0.2 changelog narrows the bridge to the addon's base class and prevents global `RelicItem` modifications;
+- **0 new semantic relic identities** and **0 standalone spell identities** are published as fix-owned content.
+
+No exact public source for fix 1.0.2 was located. Exact mixin classes/counts/targets, transform signatures, packet schema and persistence keys remain fail-closed and are not invented. The original addon's current public `1.21.1` branch already declares `mod_version=0.2`, so it is not substituted for the physical target addon `0.1.1` or for missing fix source.
+
+This point is awarded for closing the **compatibility component's identity/authority/deduplication surface at the publisher evidence ceiling**, not for claiming source-internal implementation closure.
 
 ## Partial providers still receive zero points
 
