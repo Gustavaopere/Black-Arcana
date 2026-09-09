@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
@@ -23,10 +24,13 @@ import java.util.Set;
 
 /** Client-only draft editor. Apply sends intent; the server response remains canonical. */
 public final class BlackArcanaLoadoutScreen extends Screen {
+    private static final int ICON_SIZE = 16;
+
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
     private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private final List<ArcanaSpellId> available;
     private final Map<ArcanaSpellId, String> searchDisplayNames;
+    private final Map<ArcanaSpellId, ResourceLocation> icons;
     private final Set<ArcanaSpellId> accepted;
     private final LoadoutDraft draft;
     private List<ArcanaSpellId> filteredAvailable;
@@ -46,11 +50,21 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         available = presentation.keySet().stream()
                 .sorted(Comparator.comparing(ArcanaSpellId::canonical))
                 .toList();
+        Minecraft minecraft = Minecraft.getInstance();
         Map<ArcanaSpellId, String> resolvedDisplayNames = new HashMap<>();
-        presentation.forEach((spell, entry) -> resolvedDisplayNames.put(
-                spell,
-                Component.translatable(entry.translationKey()).getString()));
+        Map<ArcanaSpellId, ResourceLocation> resolvedIcons = new HashMap<>();
+        presentation.forEach((spell, entry) -> {
+            resolvedDisplayNames.put(
+                    spell,
+                    Component.translatable(entry.translationKey()).getString());
+            resolvedIcons.put(
+                    spell,
+                    SpellIconResolver.resolve(
+                            entry.iconId(),
+                            id -> minecraft.getResourceManager().getResource(id).isPresent()));
+        });
         searchDisplayNames = Map.copyOf(resolvedDisplayNames);
+        icons = Map.copyOf(resolvedIcons);
         filteredAvailable = available;
         List<ArcanaSpellId> acceptedLoadout = ClientArcanaSyncState.loadoutSnapshot();
         accepted = Set.copyOf(acceptedLoadout);
@@ -142,12 +156,18 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             if (focused) {
                 graphics.fill(left + 3, y, left + 5, y + rowHeight - 2, 0xFF9DD9FF);
             }
+
+            ResourceLocation icon = icons.getOrDefault(spell, SpellIconResolver.PLACEHOLDER);
+            int iconY = y + Math.max(1, (rowHeight - ICON_SIZE) / 2);
+            graphics.blit(icon, left + 8, iconY, 0.0F, 0.0F, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+
             String prefix = (focused ? "[F] " : "")
                     + slotPrefix(draftSnapshot, spell)
                     + membershipPrefix(membership);
-            int nameWidth = Math.max(1, panelWidth - 16 - font.width(prefix));
+            int textX = left + 8 + ICON_SIZE + 4;
+            int nameWidth = Math.max(1, left + panelWidth - 8 - textX - font.width(prefix));
             graphics.drawString(font, prefix + displayName(spell, nameWidth),
-                    left + 8, y + textOffsetY, 0xFFFFFFFF, false);
+                    textX, y + textOffsetY, 0xFFFFFFFF, false);
             if (hovered) {
                 hoveredIndex = index;
                 pointerTooltip = hazardTooltip(hazards.get(spell)).orElse(null);
