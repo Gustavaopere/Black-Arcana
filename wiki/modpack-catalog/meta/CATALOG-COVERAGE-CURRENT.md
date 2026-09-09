@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AM revision: 41/100 = 41%.**
+**Coverage represented by this Phase 2AN revision: 42/100 = 42%.**
 
-Phase 2AM was branched from canonical `main@433233164f61bbf6b6d5cb8aa9625cf286a79a23`, where Phase 2AL / PR #145 made component #40 canonical and coverage reached **40/100 = 40%**. Component #41 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AM branch/PR, canonical coverage remains **40/100 = 40%**.
+Phase 2AN was branched from canonical `main@192f5d3c109189a9fee5fb3fc247bfbd75a93b68`, where Phase 2AM / PR #147 made component #41 canonical and coverage reached **41/100 = 41%**. Component #42 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AN branch/PR, canonical coverage remains **41/100 = 41%**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -141,9 +141,9 @@ License metadata is also intentionally unresolved: CurseForge labels MIT while e
 
 The provider owns reconciliation around Iron's casts, not a second spell runtime. Black Arcana therefore must not duplicate Iron's↔Epic Fight interruption/animation handling or route BA-native spells through Iron's just to inherit this compatibility.
 
-## Phase 2AM — Reliquified L_Ender's Cataclysm New Relics Fix component #41 candidate
+## Phase 2AM — Reliquified L_Ender's Cataclysm New Relics Fix component #41, canonical
 
-Phase 2AM closes `reliquified_lenders_cataclysm_new_relics_fix` at the exact physical/publisher evidence ceiling as a bounded Relics 0.10→0.12 compatibility bridge:
+Phase 2AM / PR #147 is canonical at merge SHA `192f5d3c109189a9fee5fb3fc247bfbd75a93b68` and closed `reliquified_lenders_cataclysm_new_relics_fix` at the exact physical/publisher evidence ceiling as a bounded Relics 0.10→0.12 compatibility bridge:
 
 - physical artifact `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar`, SHA-1 `9d4710e665ec74af917bb9f5f819154ca9f74ca0`;
 - exact CurseForge project/file `1665965 / 8778365`, release 2026-08-31;
@@ -158,6 +158,25 @@ Phase 2AM closes `reliquified_lenders_cataclysm_new_relics_fix` at the exact phy
 No exact public source for fix 1.0.2 was located. Exact mixin classes/counts/targets, transform signatures, packet schema and persistence keys remain fail-closed and are not invented. The original addon's current public `1.21.1` branch already declares `mod_version=0.2`, so it is not substituted for the physical target addon `0.1.1` or for missing fix source.
 
 This point is awarded for closing the **compatibility component's identity/authority/deduplication surface at the publisher evidence ceiling**, not for claiming source-internal implementation closure.
+
+## Phase 2AN — Apothic Attributes component #42 candidate
+
+Phase 2AN closes `apothic_attributes` at the exact source-version evidence ceiling as a combat/attribute/effect support provider:
+
+- physical artifact `ApothicAttributes-1.21.1-2.10.1.jar`, SHA-1 `6a6b84d09801621df5cc2c8a68f35bd93a6cda0f`;
+- exact official source pin `Shadows-of-Fire/Apothic-Attributes@686361b2c7b0e76bf4158890bb8a2e42ef805622`;
+- exact source metadata declares version 2.10.1, Minecraft 1.21.1, Java 21, NeoForge baseline 21.1.235 and Placebo 9.9.0, with Curios optional;
+- **0 standalone spell/glyph/ritual registrations observed** in the exact source tree;
+- 2 synchronized custom registries, 22 attributes, 7 effects, 31 potions, 37 brewing mixes and 5 damage types;
+- 2 data components, 3 attachments, 7 built-in equipment-slot objects, 11 slot groups, 3 provider tag contracts, 1 particle and 1 sound;
+- 2 clientbound PLAY payloads, 7 common + 1 client mixin;
+- provider-owned combat formula/proc runtime and server-side `AbilityCooldowns` API;
+- conditional Curios attribute/modifier bridge under the physical pack's Curios 9.5.1 path;
+- exact `DetonationEffect` discrepancy is preserved literally: its damage call uses `DamageTypes.BLEEDING` despite a separately registered/tagged `DETONATION` damage type.
+
+Apothic owns its generic combat math, cooldown subsystem and modifier bridge. Black Arcana retains canonical cast/cost/target/effect/cooldown authority, Corruption, Strain, Arcane Danger, Backlash no-proc semantics and WorldEffectPolicy. `apothic_attributes:cooldown_reduction` does not automatically become a BA cooldown modifier, and BA must not route Backlash into Apothic offensive proc chains.
+
+Source↔physical-JAR byte reproducibility and full-modpack combat-provider interaction remain QA/fail-closed rather than guessed. Root source code is MIT, assets are All Rights Reserved, and `StackAttributeModifiersEvent.java` carries a file-level Forge Development LLC / SPDX LGPL-2.1-only header; this catalog performs read-only inspection only.
 
 ## Partial providers still receive zero points
 
