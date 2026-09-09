@@ -36,7 +36,13 @@ Exact CurseForge file:
 - Client & Server publisher environment;
 - MIT publisher license.
 
-The publisher release describes the first NeoForge 1.21.1/Apotheosis 8.x build, identifies the data-map model and enumerates the item overrides that the exact source confirms.
+Exact GitHub release tag:
+
+- `v2.0.2-neoforge-1.21.1`;
+- asset `apothic_compat-2.0.2.jar`;
+- published asset SHA-256 `eaee4ee2be65b95fe10ee749dc2d023b90fb63338825f5ba0b697124f42295de`.
+
+The release describes the first NeoForge 1.21.1/Apotheosis 8.x build, identifies the data-map model and enumerates the item overrides that the exact source confirms.
 
 ## Exact official source evidence
 
@@ -44,7 +50,7 @@ Repository:
 
 `Nightwielder23/apothic-category-compat`
 
-Exact source pin:
+Exact release tag resolves to source pin:
 
 `cebf69a37f8c6573fc0c0295e627f4636e7bd026`
 
@@ -64,6 +70,8 @@ Exact tree facts:
 - one NeoForge mod metadata file;
 - root `LICENSE` is MIT.
 
+Exact source command identities are `/apothiccompat reload` and `/ac reload`, both permission level 2. Editorial references to `/apothiccategorycompat` or `/acc` reflect renamed/newer lines and are not promoted into the installed 2.0.2 contract.
+
 ## License / clean-room
 
 The exact root `LICENSE` and exact NeoForge metadata both declare MIT. The publisher surfaces also label MIT.
@@ -78,7 +86,7 @@ Closed from exact evidence:
 
 - physical identity/version/hash;
 - exact publisher release;
-- exact source version/revision;
+- exact tagged source version/revision;
 - declared dependencies;
 - 4-class source surface;
 - 0-mixin result;
@@ -89,7 +97,7 @@ Closed from exact evidence:
 
 Still fail-closed:
 
-- byte-for-byte source/JAR reproducibility;
+- byte-for-byte source/release-asset/physical-JAR reproducibility;
 - exact runtime behavior against physical Apotheosis 8.8.0's private `AffixRegistry.byType` field;
 - full-modpack interaction with all 13 target item providers;
 - whether every target item is present/unchanged in the current pack at runtime unless separately verified;
@@ -97,4 +105,6 @@ Still fail-closed:
 
 ## Component-order note
 
-This audit is being prepared on Phase 2AQ because a concurrently created Phase 2AP branch already reserves `create_enchantment_industry_plus` 1.1.1. Phase 2AP's coverage result is not yet canonical, so this branch must not pre-allocate a final component ordinal or canonical numerator before reconciling that concurrent work.
+Phase 2AP / PR #151 is now canonical at `main@70a97ec0cf58cecebe4054f43ea5b212e757e365` and closed `create_enchantment_industry_plus` as component #44. The pre-existing Phase 2AQ branch was reconciled with that main by merge commit `404d6b2646da578de30e9e288e6e493ac4bb8c03` without discarding either line of work.
+
+Therefore Apothic Compat is now **component #45 candidate**. Canonical coverage remains **44/100 = 44%** until the exact reconciled Phase 2AQ HEAD passes CI and is merged; proposed post-merge coverage is **45/100 = 45%**.
