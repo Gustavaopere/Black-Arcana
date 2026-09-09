@@ -27,15 +27,20 @@ public final class BlackArcanaRadialScreen extends Screen {
     private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private int page;
     private int hoveredSlot = -1;
+    private int focusedSlot;
+    private KeyboardFocusNavigation.InputModality inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
+    private boolean pointerSeeded;
+    private int lastMouseX;
+    private int lastMouseY;
 
     private BlackArcanaRadialScreen() {
         super(Component.translatable("screen.black_arcana.radial"));
         this.loadout = ClientArcanaSyncState.loadoutSnapshot();
         this.presentation = ClientArcanaSyncState.presentationSnapshot();
         this.hazards = ClientArcanaSyncState.hazardPreflightSnapshot();
-        this.page = RadialLayout.clampPage(
-                loadout.size(),
-                ClientInputController.selection().selectedSlot() / RadialLayout.SLOTS_PER_PAGE);
+        int selectedSlot = ClientInputController.selection().selectedSlot();
+        this.page = RadialLayout.clampPage(loadout.size(), selectedSlot / RadialLayout.SLOTS_PER_PAGE);
+        this.focusedSlot = KeyboardFocusNavigation.radialInitialFocus(loadout.size(), page, selectedSlot);
     }
 
     public static void open() {
@@ -70,6 +75,7 @@ public final class BlackArcanaRadialScreen extends Screen {
         hoveredSlot = RadialLayout.hoveredSlot(
                 loadout.size(), page, mouseX, mouseY, centerX, centerY,
                 innerHitRadius, outerHitRadius);
+        updatePointerModality(mouseX, mouseY, hoveredSlot >= 0);
 
         for (int visibleIndex = 0; visibleIndex < visible.size(); visibleIndex++) {
             int slot = visible.get(visibleIndex);
@@ -80,17 +86,24 @@ public final class BlackArcanaRadialScreen extends Screen {
             int y = (int) Math.round(point.y());
             boolean selected = slot == ClientInputController.selection().selectedSlot();
             boolean hovered = slot == hoveredSlot;
-            CastingUxSemantics.FocusState focus = CastingUxSemantics.focus(selected, hovered);
+            boolean focused = slot == focusedSlot;
+            CastingUxSemantics.FocusState focus = CastingUxSemantics.focus(selected, hovered, focused);
             int background = switch (focus) {
                 case NONE -> 0xB815101A;
                 case SELECTED -> 0xCC3D2748;
                 case HOVERED, SELECTED_HOVERED -> 0xDD6B376D;
+                case FOCUSED -> 0xCC273448;
+                case SELECTED_FOCUSED -> 0xDD4A3452;
+                case HOVERED_FOCUSED, SELECTED_HOVERED_FOCUSED -> 0xEE714578;
             };
             int border = switch (focus) {
                 case NONE -> 0xFF5A4A60;
                 case SELECTED -> 0xFFB991C0;
                 case HOVERED -> 0xFFF2D0F2;
                 case SELECTED_HOVERED -> 0xFFFFE8FF;
+                case FOCUSED -> 0xFF9DD9FF;
+                case SELECTED_FOCUSED -> 0xFFC4DEFF;
+                case HOVERED_FOCUSED, SELECTED_HOVERED_FOCUSED -> 0xFFFFFFFF;
             };
             graphics.fill(x - card.halfWidth() - 1, y - card.halfHeight() - 1,
                     x + card.halfWidth() + 1, y + card.halfHeight() + 1, border);
@@ -129,17 +142,33 @@ public final class BlackArcanaRadialScreen extends Screen {
                     0xFFD0C6D0);
         }
         super.render(graphics, mouseX, mouseY, partialTick);
-        if (card.compact() && hoveredSlot >= 0) {
-            focusedSpellName().ifPresent(line -> graphics.renderTooltip(font, line, mouseX, mouseY));
+        int temporarySlot = activeTemporarySlot();
+        if (card.compact() && temporarySlot >= 0) {
+            int tooltipX = mouseX;
+            int tooltipY = mouseY;
+            if (inputModality == KeyboardFocusNavigation.InputModality.KEYBOARD) {
+                int visibleIndex = visible.indexOf(temporarySlot);
+                if (visibleIndex >= 0) {
+                    RadialLayout.Point point = RadialLayout.slotCenter(
+                            visibleIndex, visible.size(), centerX, centerY, radius);
+                    tooltipX = (int) Math.round(point.x());
+                    tooltipY = (int) Math.round(point.y()) + card.halfHeight() + 4;
+                }
+            }
+            int finalTooltipX = tooltipX;
+            int finalTooltipY = tooltipY;
+            focusedSpellName().ifPresent(line -> graphics.renderTooltip(font, line, finalTooltipX, finalTooltipY));
         }
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && hoveredSlot >= 0) {
-            ClientInputController.selection().select(hoveredSlot, loadout);
-            ClientUxState.markSelectionChanged();
-            onClose();
+            inputModality = KeyboardFocusNavigation.InputModality.POINTER;
+            if (selectFocusedSlot(hoveredSlot, loadout, ClientInputController.selection())) {
+                ClientUxState.markSelectionChanged();
+                onClose();
+            }
             return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -153,12 +182,27 @@ public final class BlackArcanaRadialScreen extends Screen {
             onClose();
             return true;
         }
+        if (keyCode == GLFW.GLFW_KEY_TAB) {
+            inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
+            int direction = (modifiers & GLFW.GLFW_MOD_SHIFT) != 0 ? -1 : 1;
+            focusedSlot = KeyboardFocusNavigation.radialTraverse(loadout.size(), page, focusedSlot, direction);
+            return focusedSlot >= 0 || !RadialLayout.visibleSlots(loadout.size(), page).isEmpty();
+        }
+        if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER || keyCode == GLFW.GLFW_KEY_SPACE) {
+            inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
+            if (selectFocusedSlot(focusedSlot, loadout, ClientInputController.selection())) {
+                ClientUxState.markSelectionChanged();
+                onClose();
+                return true;
+            }
+            return super.keyPressed(keyCode, scanCode, modifiers);
+        }
         if (keyCode == GLFW.GLFW_KEY_PAGE_UP || keyCode == GLFW.GLFW_KEY_LEFT) {
-            page = RadialLayout.clampPage(loadout.size(), page - 1);
+            changePage(-1);
             return true;
         }
         if (keyCode == GLFW.GLFW_KEY_PAGE_DOWN || keyCode == GLFW.GLFW_KEY_RIGHT) {
-            page = RadialLayout.clampPage(loadout.size(), page + 1);
+            changePage(1);
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
@@ -171,12 +215,24 @@ public final class BlackArcanaRadialScreen extends Screen {
         return behavior == BlackArcanaClientConfig.RadialBehavior.TOGGLE && openKeyPressed;
     }
 
+    static boolean selectFocusedSlot(
+            int focusedSlot,
+            List<ArcanaSpellId> loadout,
+            ClientLoadoutSelection selection
+    ) {
+        return selection.select(focusedSlot, loadout);
+    }
+
     static String focusPrefix(CastingUxSemantics.FocusState focus) {
         return switch (focus) {
             case NONE -> "";
             case SELECTED -> "[S] ";
             case HOVERED -> "> ";
+            case FOCUSED -> "[F] ";
             case SELECTED_HOVERED -> ">[S] ";
+            case SELECTED_FOCUSED -> "[F][S] ";
+            case HOVERED_FOCUSED -> ">[F] ";
+            case SELECTED_HOVERED_FOCUSED -> ">[F][S] ";
         };
     }
 
@@ -185,7 +241,11 @@ public final class BlackArcanaRadialScreen extends Screen {
             case NONE -> "";
             case SELECTED -> "S";
             case HOVERED -> ">";
+            case FOCUSED -> "F";
             case SELECTED_HOVERED -> ">S";
+            case SELECTED_FOCUSED -> "FS";
+            case HOVERED_FOCUSED -> ">F";
+            case SELECTED_HOVERED_FOCUSED -> ">FS";
         };
     }
 
@@ -201,10 +261,36 @@ public final class BlackArcanaRadialScreen extends Screen {
         return false;
     }
 
-    private Optional<ArcanaSpellId> focusedSpell() {
-        if (hoveredSlot >= 0 && hoveredSlot < loadout.size()) {
-            return Optional.of(loadout.get(hoveredSlot));
+    private void changePage(int direction) {
+        inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
+        int destination = RadialLayout.clampPage(loadout.size(), page + direction);
+        if (destination == page) return;
+        focusedSlot = KeyboardFocusNavigation.radialFocusAfterPageChange(
+                loadout.size(), page, destination,
+                ClientInputController.selection().selectedSlot(), focusedSlot);
+        page = destination;
+    }
+
+    private void updatePointerModality(int mouseX, int mouseY, boolean overInteractiveSlot) {
+        if (!pointerSeeded) {
+            pointerSeeded = true;
+        } else if (overInteractiveSlot && (mouseX != lastMouseX || mouseY != lastMouseY)) {
+            inputModality = KeyboardFocusNavigation.InputModality.POINTER;
         }
+        lastMouseX = mouseX;
+        lastMouseY = mouseY;
+    }
+
+    private int activeTemporarySlot() {
+        if (inputModality == KeyboardFocusNavigation.InputModality.POINTER) {
+            return hoveredSlot >= 0 && hoveredSlot < loadout.size() ? hoveredSlot : -1;
+        }
+        return focusedSlot >= 0 && focusedSlot < loadout.size() ? focusedSlot : -1;
+    }
+
+    private Optional<ArcanaSpellId> focusedSpell() {
+        int temporary = activeTemporarySlot();
+        if (temporary >= 0) return Optional.of(loadout.get(temporary));
         return ClientInputController.selection().selected(loadout);
     }
 
