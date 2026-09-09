@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AH revision: 37/100 = 37%.**
+**Canonical current coverage: 37/100 = 37%.**
 
-Canonical `main` immediately before Phase 2AH is **36/100 = 36%** at `2de722272814d2d5664266f5fc8ad05ba25d2940`. The 37th point becomes canonical only when this revision is merged to `main`; while it exists only on the Phase 2AH branch/PR, the canonical value remains 36/100.
+Phase 2AH / PR #140 is canonical on `main@e8b7c4a0b77c2f803423047f5d1442f870d02fc8` and supplied component #37. Phase 2AI re-audits Somake 1.0.8-fix but does **not** increment the numerator because the exact current granular inventory remains unresolved.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -46,7 +46,7 @@ Phase 2AG / PR #137 is canonical and closed `ars_n_spells` as component **36** a
 - 8 `ars_cross_*` proxy registry objects explicitly excluded from standalone semantic-spell inflation;
 - exact 3.3.2 internal signatures remain unverified/fail-closed rather than guessed.
 
-Phase 2AH closes `monstersspellbooks` as component **37** when this revision becomes canonical:
+Phase 2AH / PR #140 is canonical and closed `monstersspellbooks` as component **37**:
 
 - exact physical identity: `monstersspellbooks-0.0.16.3.jar`, SHA-1 `b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e`;
 - exact CurseForge release: project/file `1428928 / 8788560`, 2026-09-01;
@@ -60,12 +60,27 @@ Phase 2AH closes `monstersspellbooks` as component **37** when this revision bec
 
 The point is awarded for closing the **provider component at its evidence ceiling**, not for pretending the installed JAR was decompiled or that stale source metadata is an exact binary pin.
 
+## Phase 2AI — Somake audit, zero delta
+
+Phase 2AI re-audits `somakespells-1.0.8-1.21.1-fix.jar` from the already-merged Phase 2O provider tree.
+
+Evidence is strong for exact physical/release identity and public feature/release-line behavior, including:
+
+- exact File ID `8417850` and physical SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`;
+- exact 1.0.8-fix Symmetry/Spirit Elemental Charge correction;
+- official 1.0.x changelog names and migrations;
+- provider-owned Aqua/Symmetry/charge/progression/ritual/equipment capability families.
+
+However, the publisher states `over 50 spells` while the public changelog exposes only a subset, and no exact-current publisher source/registry/API or equivalent complete 1.0.8-fix inventory is available through the inspected evidence. Therefore Somake remains **partial** and receives **0** new component points.
+
+Canonical coverage stays **37/100 = 37%**.
+
 ## Partial providers still receive zero points
 
 Examples include:
 
 - `leylines` — public signature names known, total current inventory not verified;
-- `somakespells` — current granular inventory not closed;
+- `somakespells` — exact physical/release surface is audited, but current granular spell inventory is not closed;
 - `cataclysm_spellbooks` — installed 1.1.13 remains ahead of the exact public source inventory already audited;
 - `gaze` — public surface audited, exact current registry/source-JAR closure still pending.
 
