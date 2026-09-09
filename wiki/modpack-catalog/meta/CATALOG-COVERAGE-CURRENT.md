@@ -2,7 +2,9 @@
 
 ## Operational percentage
 
-**Current canonical coverage: 45/100 = 45%.**
+**Coverage represented by this Phase 2AR revision: 46/100 = 46%.**
+
+The latest canonical `main` before this branch is `67966f99e07890741773f44e920ded20d2bd5666`, where canonical coverage remains **45/100 = 45%**. Phase 2AR represents candidate component #46 and becomes canonical only after latest-main reconciliation, CI GREEN on the reconciled HEAD, merge, and post-merge `main` confirmation.
 
 Phase 2AQ / PR #152 is canonical at merge SHA `bdf5271c265b5f40ee5a9e7695c7d71374a4c31c` and made component #45 canonical. Phase 2AP / PR #151 remains component #44 at merge SHA `70a97ec0cf58cecebe4054f43ea5b212e757e365`. The Phase 2AP metadata correction in PR #153 has **zero coverage delta**.
 
@@ -246,6 +248,31 @@ The exact source also exposes a static QA edge case: after a non-empty blacklist
 Exact command names from the tagged 2.0.2 source supersede later/editorial renamed forms such as `/apothiccategorycompat` or `/acc`. Continued-port target registry parity and physical Apotheosis 8.8.0 private-field compatibility likewise remain fail-closed until runtime verification.
 
 The point was awarded after exact-head CI GREEN and merge. Source/release-asset/physical-JAR byte reproducibility is not asserted without a direct byte comparison.
+
+## Phase 2AR — Backported Spellbooks component #46, candidate
+
+Phase 2AR closes `backportedspellbooks` at a layered physical/publisher/release-day-source evidence ceiling while preserving the version discrepancy instead of normalizing it:
+
+- physical artifact `backportedspellbooks-0.1.2.jar`, SHA-1 `747847c1f38c73250ebac05ea06b41a381187850`, is present in the current 595-entry modlist;
+- physical runtime metadata reports mod ID `backportedspellbooks`, version `0.1.0`;
+- exact publisher release is CurseForge project/file `1543731 / 8158731`, released 2026-05-28 for NeoForge Minecraft 1.21.1, filename `backportedspellbooks-0.1.2.jar`;
+- official release-day source pin is `RedReaper28/BackportedSpellbooks-1.21.1@07cb65efca0c264762a21c2d6bce0f83e3947226`;
+- that source still declares `mod_version=0.1.0`, matching the physical runtime metadata while differing from the public file/release label;
+- release-day `ModSpellRegistry` closes exactly **6 provider spells**: `slime_aspect`, `sulfur_bomb`, `sulfur_clouds`, `sulfur_release`, `pale_thorn`, `resin_spray`;
+- the exact 0.1.2 publisher changelog names the first four as the release delta; Pale Thorn and Resin Spray predate it;
+- one Pale Flora school/sub-school surface is registered;
+- supporting source inventory includes 19 item registry objects including block-items, 4 blocks, 5 entity types, 4 effects, 2 particle types, 1 fluid + 1 fluid type and 19 recipe JSONs;
+- two exact NeoForge biome modifiers place Corroded Fossil and Quicksilver ore features in `minecraft:sulfur_caves` at `underground_ores`;
+- server-side equipment hooks cover Miasma Staff and Garden Rapier post-damage procs plus Slime Boots fall cancellation;
+- no provider custom payload registration, provider SavedData/attachment/data-component persistence subsystem or mixin configuration was observed in the inspected release-day source tree; these remain source observations, not physical-bytecode claims.
+
+Iron's owns host casting/mana/cooldown/container semantics. Backported Spellbooks owns its six spell identities, Pale Flora content, effects/entities/equipment/worldgen and provider procs. Vanilla Backport and Ace's retain authority over the consumed surfaces they provide. Black Arcana does not clone these spells, duplicate the equipment proc/fall pipeline, introduce a second mana/cooldown settlement path or reinterpret provider worldgen as BA `WorldEffectPolicy` authority.
+
+Static/runtime QA remains explicit: physical SHA-1 is known but source↔JAR byte equivalence is not proven; source targets NeoForge 21.1.216 / Iron's 3.15.4 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3; source imports Iron's, Vanilla Backport and Ace's although the inspected generated metadata template formally lists only NeoForge/Minecraft; Slime Boots exposes cooldown presentation/constants while the inspected fall hook does not show a cooldown gate; full-pack event ordering, network sync, provider config values, duplicate-proc behavior and dedicated-server operation remain unverified.
+
+License evidence is also intentionally unresolved for reuse: CurseForge labels MIT while release-day source metadata declares All Rights Reserved. Inspection is factual/read-only and no third-party code/assets are copied.
+
+The represented numerator is 46 only for this Phase 2AR revision. Component #46 becomes canonical only after latest-main reconciliation, CI GREEN, merge and post-merge `main` confirmation.
 
 ## Partial providers still receive zero points
 

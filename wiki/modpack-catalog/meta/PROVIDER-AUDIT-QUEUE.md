@@ -18,10 +18,11 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AQ / PR #152 está canônica em `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`;
-- cobertura canônica atual: **45/100 = 45%**;
-- Phase 2AP / PR #151 permanece componente #44 canônico em `main@70a97ec0cf58cecebe4054f43ea5b212e757e365`;
-- PR #153 corrige somente a evidência de metadata da Phase 2AP e possui **zero delta de cobertura**;
+- `main@67966f99e07890741773f44e920ded20d2bd5666` é a base canônica desta Phase 2AR;
+- cobertura canônica nessa base: **45/100 = 45%**;
+- esta revisão Phase 2AR representa **46/100 = 46%** apenas como candidato até CI GREEN + merge + confirmação pós-merge;
+- Phase 2AQ / PR #152 permanece componente #45 canônico em `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`;
+- PR #153 corrigiu somente a evidência de metadata da Phase 2AP, com **zero delta de cobertura**;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -34,6 +35,47 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 - denominador operacional: `103 - 5 + 2 = 100`.
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
+
+## Phase 2AR — Backported Spellbooks — candidate #46
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `backportedspellbooks` | `backportedspellbooks-0.1.2.jar` | CANDIDATO PHASE 2AR / PHYSICAL FILENAME 0.1.2 + RUNTIME METADATA 0.1.0 / SHA-1 `747847c1f38c73250ebac05ea06b41a381187850` / EXACT PUBLISHER FILE 8158731 + RELEASE-DAY OFFICIAL SOURCE / 6 SPELLS / 1 PALE FLORA SCHOOL / CONTENT+WORLDGEN+EQUIPMENT PROCS / COMPONENT #46 CANDIDATE / BYTE+HOST+DEPENDENCY+FULL-PACK QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical artifact `backportedspellbooks-0.1.2.jar`, SHA-1 `747847c1f38c73250ebac05ea06b41a381187850`, is present in the current 595-entry modlist.
+- Physical runtime metadata reports mod ID `backportedspellbooks`, version `0.1.0`; do not rewrite this to 0.1.2.
+- Exact publisher release: CurseForge project/file `1543731 / 8158731`, released 2026-05-28 for NeoForge Minecraft 1.21.1, filename `backportedspellbooks-0.1.2.jar`.
+- Exact 0.1.2 publisher changelog names Miasmic Staff, Quicksilver Spellbook, Slime Boots, Slime Aspect, Sulfur Clouds, Sulfur Bomb, Sulfur Release, Corroded Fossils and Quicksilver in Sulfur Caves.
+- Official release-day source: `RedReaper28/BackportedSpellbooks-1.21.1@07cb65efca0c264762a21c2d6bce0f83e3947226`.
+- Release-day source metadata still declares `mod_version=0.1.0`, matching physical runtime metadata while differing from the public release/file label.
+- Release-day `ModSpellRegistry` closes exactly 6 provider spells: `slime_aspect`, `sulfur_bomb`, `sulfur_clouds`, `sulfur_release`, `pale_thorn`, `resin_spray`.
+- The first four are the exact publisher 0.1.2 spell delta; Pale Thorn and Resin Spray predate it.
+- One provider Pale Flora school/sub-school surface is registered.
+- Supporting source inventory includes 19 item registry objects including block-items, 4 blocks, 5 entity types, 4 effects, 2 particles, 1 fluid + 1 fluid type and 19 recipe JSONs.
+- Exact biome modifiers add Corroded Fossil and Quicksilver ore placed features to `minecraft:sulfur_caves` at `underground_ores`.
+- Server-side equipment hooks include Miasma Staff and Garden Rapier post-damage logic plus Slime Boots fall cancellation.
+- No provider custom payload registration, SavedData/attachment/data-component persistence subsystem or mixin configuration was observed in the inspected release-day source tree; these are source observations, not physical-bytecode claims.
+- Source targets NeoForge 21.1.216 / Iron's 3.15.4 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3.
+- Source imports Iron's, Vanilla Backport and Ace's surfaces although inspected generated metadata formally declares only NeoForge/Minecraft; dependency/loader parity remains runtime QA.
+- Slime Boots exposes cooldown-related presentation/constants while the inspected fall hook does not show a cooldown gate; live behavior remains runtime QA.
+- Physical SHA-1 is known, but source↔physical-JAR byte equivalence is not asserted.
+- CurseForge labels MIT while release-day source metadata declares All Rights Reserved. Inspection is factual/read-only; no code/assets are copied.
+
+### Provider authority
+
+- Iron's owns host casting, mana, cooldown/container and host spell runtime.
+- Backported Spellbooks owns its six spell identities, Pale Flora content, provider effects/entities/equipment/worldgen and equipment procs.
+- Vanilla Backport owns its consumed backported content/attributes/sounds.
+- Ace's Spell Utils owns its consumed shared attributes/rarities/utilities.
+- Black Arcana retains canonical casting, transactional costs, BA cooldowns/charges, targeting, hazards, Corruption, Strain, Arcane Danger, Backlash causality and `WorldEffectPolicy`.
+- BA must not clone the six spells, double-process the provider equipment/fall hooks, add a second mana/cooldown settlement or treat provider worldgen as BA mutation authority.
+- RPG Skill Tree receives no provider spell/effect/proc/worldgen runtime authority.
+
+### Canonicalization gate
+
+Component #46 is only represented by this branch. It becomes canonical after latest-main reconciliation, CI GREEN on the reconciled HEAD, merge and post-merge `main` confirmation. Phase 3 remains blocked.
 
 ## Phase 2AQ — Apothic Compat 2.0.2 — canonical
 
@@ -309,22 +351,18 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AQ / PR #152 já está canônica em `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`. O PR #153 é o follow-up ativo de correção factual da Phase 2AP e deve preservar integralmente os arquivos adicionados pela 2AQ.
-
-A CI #2229 do antigo HEAD do PR #153 foi invalidada como evidência final quando a main avançou com a Phase 2AQ. A correção precisa ser reconciliada com `main@bdf5271c...` e revalidada em um novo HEAD antes do merge.
-
-PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
+A Phase 2AR foi criada sobre `main@67966f99e07890741773f44e920ded20d2bd5666`. Nenhum PR equivalente de Backported Spellbooks foi encontrado no gate inicial. PRs antigos de Ars permanecem concorrência separada e não são usados como autoridade contra a main mais recente.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após a correção Phase 2AP / PR #153
+## Próxima seleção após Phase 2AR
 
 Selecionar somente depois de:
 
-1. reconciliação e CI GREEN do PR #153 no HEAD exato;
-2. latest-main gate imediatamente pré-merge;
+1. latest-main gate imediatamente pré-merge;
+2. CI GREEN no HEAD reconciliado da Phase 2AR;
 3. merge e confirmação do `main` final;
-4. CI pós-merge no SHA exato da main;
+4. CI pós-merge no SHA exato da main, quando aplicável;
 5. verificação da modlist física atual;
 6. pesquisa de PR/branch equivalente;
 7. leitura do catálogo já canônico;
