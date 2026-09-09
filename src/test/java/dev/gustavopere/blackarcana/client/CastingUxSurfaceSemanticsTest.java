@@ -15,6 +15,20 @@ class CastingUxSurfaceSemanticsTest {
     }
 
     @Test
+    void radialNameBudgetSubtractsCompleteFocusAndSlotPrefix() {
+        assertEquals(22, BlackArcanaRadialScreen.spellNameWidthBudget(64, 42));
+        assertEquals(0, BlackArcanaRadialScreen.spellNameWidthBudget(26, 30));
+    }
+
+    @Test
+    void compactRadialFocusMarkersStayDistinctWithoutUsingLongBracketPrefixes() {
+        assertEquals("", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.NONE));
+        assertEquals("S", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.SELECTED));
+        assertEquals(">", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.HOVERED));
+        assertEquals(">S", BlackArcanaRadialScreen.compactFocusPrefix(CastingUxSemantics.FocusState.SELECTED_HOVERED));
+    }
+
+    @Test
     void loadoutRowsDistinguishAcceptedStateFromUnsentDraftDeltas() {
         assertEquals("[ ] ", BlackArcanaLoadoutScreen.membershipPrefix(CastingUxSemantics.LoadoutMembership.NOT_INCLUDED));
         assertEquals("[x] ", BlackArcanaLoadoutScreen.membershipPrefix(CastingUxSemantics.LoadoutMembership.ACCEPTED));
