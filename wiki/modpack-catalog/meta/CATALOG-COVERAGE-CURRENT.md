@@ -4,7 +4,7 @@
 
 **Coverage represented by this Phase 2AK revision: 39/100 = 39%.**
 
-Phase 2AK was branched from canonical `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b`, where Phase 2AJ / PR #143 made component #38 canonical and coverage reached **38/100 = 38%**. Component #39 is valid only if this exact revision is reconciled with the latest main, passes CI on that reconciled HEAD and is merged. Repository history, not branch wording alone, determines whether that condition has been satisfied.
+Phase 2AK was branched from canonical `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b`, where Phase 2AJ / PR #143 made component #38 canonical and coverage reached **38/100 = 38%**. Component #39 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AK branch/PR, canonical coverage remains **38/100 = 38%**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -78,14 +78,24 @@ However, the publisher states `over 50 spells` while the public changelog expose
 Phase 2AJ / PR #143 is canonical at merge SHA `83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b` and closed `aces_spell_utils` at the exact source-version evidence ceiling:
 
 - physical artifact `aces_spell_utils-1.2.7.2-1.21.1.jar`, SHA-1 `8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca`;
-- exact official source-version pin `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`;
-- **0 standalone provider spell registrations**;
+- exact publisher release project/file `1299492 / 8789930`, 2026-09-02;
+- exact official source-version pin `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`, whose metadata declares `mod_version=1.2.7.2-1.21.1`;
+- **0 standalone provider spell registrations** — no `registerSpell(...)` call / no provider spell-registry registration surface in the exact source;
 - 3 Iron's SchoolTypes (`ritual`, `hydro`, `technomancy`);
-- 19 attributes, 3 school damage-type keys, 14 tag contracts and 8 rarity extensions;
-- 1 attachment, 1 particle, 27 registered example/support items, 8 S2C VFX payloads, 2 required mixins and 5 config values;
-- provider-native authority boundaries for Iron's casting/mana/cooldowns and Ace's proc/API runtime.
+- 19 attributes, including 13 shared runtime attributes and 6 school power/resistance attributes;
+- 3 school damage-type keys;
+- 1 serialized copy-on-death attachment;
+- 1 custom particle type;
+- 14 tag contracts;
+- 8 rarity enum extensions;
+- 27 unconditional `example_*` item registrations classified as example/support registry objects, not standalone spells;
+- 8 optional protocol `4.0.0` S2C visual payloads;
+- 2 required mixins and 5 common config values;
+- reusable entity/boss/item/summon/domain/VFX API plus provider-owned event runtime for attribute/proc helpers.
 
-Source targets NeoForge 21.1.230 / Iron's 3.11.0 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3; source↔physical-JAR byte equality and host runtime parity remain QA/fail-closed rather than guessed.
+Source targets NeoForge 21.1.230 / Iron's 3.11.0 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3. That remains a runtime integration QA boundary, not a reason to invent or withhold semantic registry identities. Source↔physical-JAR byte equality is not asserted.
+
+The point is awarded because this component is an **API/library provider whose complete own registry/runtime surface is closed**, including the exact result that its standalone spell inventory is zero. Consumer-addon spells remain under those addons' namespaces and authority.
 
 ## Phase 2AK — EMF Compat: Iron's Spells component #39 candidate
 
