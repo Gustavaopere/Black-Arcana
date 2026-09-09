@@ -2,7 +2,7 @@
 
 ## Autoridade atual
 
-Este arquivo é a fila operacional corrente. O snapshot detalhado anterior à Phase 2AS foi preservado byte-for-byte em [`PROVIDER-AUDIT-QUEUE-PRE-PHASE2AS.md`](./PROVIDER-AUDIT-QUEUE-PRE-PHASE2AS.md). O snapshot histórico de 2026-09-07 permanece em [`PROVIDER-AUDIT-QUEUE-2026-09-07.md`](./PROVIDER-AUDIT-QUEUE-2026-09-07.md).
+Este arquivo é a fila operacional corrente. O snapshot detalhado anterior à Phase 2AT foi preservado byte-for-byte em [`PROVIDER-AUDIT-QUEUE-PRE-PHASE2AT.md`](./PROVIDER-AUDIT-QUEUE-PRE-PHASE2AT.md). O snapshot histórico de 2026-09-07 permanece em [`PROVIDER-AUDIT-QUEUE-2026-09-07.md`](./PROVIDER-AUDIT-QUEUE-2026-09-07.md).
 
 Autoridade física deste checkpoint:
 
@@ -18,12 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- `main@ac4df420158616d2fb993fb5fbf6b8325c207c27` é a base canônica desta Phase 2AS;
-- cobertura canônica nessa base: **46/100 = 46%**;
-- Phase 2AR / PR #154 fechou `backportedspellbooks` como componente #46 e já está canônica;
-- esta revisão Phase 2AS representa **47/100 = 47%** apenas como candidato até reconciliação final + CI GREEN + merge + confirmação pós-merge;
-- Phase 2AQ / PR #152 permanece componente #45 canônico em `main@bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`;
-- PR #153 corrigiu somente evidência de metadata da Phase 2AP, com **zero delta de cobertura**;
+- `main@063135e690b4c066db582be1be6dd1e1387f1758` é a base canônica desta Phase 2AT;
+- cobertura canônica nessa base: **47/100 = 47%**;
+- Phase 2AS / PR #155 fechou `apothic_compats` como componente #47 e já está canônica; workflow pós-merge #2239 é GREEN no SHA exato;
+- esta revisão Phase 2AT representa **48/100 = 48%** apenas como candidato até reconciliação final + CI GREEN + merge + confirmação pós-merge;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -37,69 +35,83 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção preservada: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AS — Apothic Compats 0.2.4.2 — candidate #47
+## Phase 2AT — Apothic Spawners 1.4.0 — candidate #48
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `apothic_compats` | `apothic_compats-0.2.4.2.jar` | CANDIDATO PHASE 2AS / EXACT PHYSICAL 0.2.4.2 + EXACT OFFICIAL SOURCE VERSION / APOTHEOSIS COMPAT DATAPACK+RUNTIME HELPERS / 0 SPELLS+GLYPHS+RITUALS / 0 CAST RESOURCE / ARS NOUVEAU+MALUM COMPATS / 3 MIXINS / 4 MALUM CUSTOM AFFIX CODECS / PROJECTILE ATTRIBUTE PASS / COMPONENT #47 CANDIDATE / APOTHEOSIS-DRIFT+BYTE+FULL-PACK QA FAIL-CLOSED |
+| `apothic_spawners` | `ApothicSpawners-1.21.1-1.4.0.jar` | CANDIDATO PHASE 2AT / EXACT PHYSICAL 1.4.0 + EXACT OFFICIAL RELEASE SOURCE / SPAWNER LIFECYCLE+PERSISTENCE+MODIFIER PROVIDER / 0 SPELLS+GLYPHS+RITUALS / 0 CAST RESOURCE / 16 STATS / 32 STOCK MODIFIER RECIPES / 2 MIXINS / 1 CLIENTBOUND CONFIG PAYLOAD / NUCLEAR SPAWNER BOUNDED REACTION / COMPONENT #48 CANDIDATE / BYTE+FULL-PACK QA FAIL-CLOSED |
 
 ### Evidence boundary
 
-- Physical artifact `apothic_compats-0.2.4.2.jar`, mod ID `apothic_compats`, version 0.2.4.2, SHA-1 `46d3699a4af63531fe84c69fdd2623fbe71fbc75`.
-- Exact official source: `ianm1647/apothic-compats@0b9c900344dc536e4748e3ad0f3f18e03f2c3ba4`.
-- Exact root tree: `76e2e650732584a315b3faa3ab94ff8953e6caad`; exact Java subtree was recursively inspected with `truncated=false`.
-- Exact source metadata: Minecraft 1.21.1, version 0.2.4.2, NeoForge development baseline 21.1.242, MIT metadata.
-- Exact generated metadata requires NeoForge, Minecraft, Placebo `[9.6.1,)` and Apotheosis `[8.0.1,)`; Ars Nouveau, Malum and other targets are compatibility targets rather than hard TOML dependencies.
-- Source development Apotheosis baseline is 8.6.0 while the physical pack contains Apotheosis 8.8.0; runtime/data compatibility remains fail-closed QA.
-- Complete exact source tree exposes **0 standalone spells, 0 glyphs, 0 rituals, 0 provider-owned mana/cast resource, 0 provider cast controller and 0 provider packet/payload surface observed**.
-- Exact mixin count is 3: Candle Holder, Double Skull and Skull Candle adapters to Apothic Enchanting `EnchantmentStatBlock` Arcana/Quanta stats.
-- Optional Curios content registers 11 provider items when Curios is loaded and provider config enables it.
+- Physical artifact `ApothicSpawners-1.21.1-1.4.0.jar`, mod ID `apothic_spawners`, version 1.4.0, SHA-1 `b3be29751daea738e691db8949cce079e5aae3be`.
+- Publisher file: CurseForge project/file `986583 / 8469405`, released 2026-07-20 for NeoForge Minecraft 1.21.1.
+- Official repository: `Shadows-of-Fire/Apothic-Spawners`.
+- Exact release commit: `d3bc0b40d46bee476fc770f8e4e44a1c35ecddd3`, message `1.4.0`.
+- Exact release tree: `7cd127fe22a9810b22bd8203cb2286d53b840e25`.
+- The later `1.21` branch HEAD is five commits ahead only in translation/schema documentation; exact compare showed no Java/gameplay datapack drift.
+- Exact source metadata closes Minecraft 1.21.1, Java 21, NeoForge 21.1.187+ and Placebo 9.9.0+; the physical pack has NeoForge 21.1.248 and Placebo 9.9.2.
+- Complete exact source surface exposes **0 standalone spells, 0 glyphs, 0 rituals, 0 provider-owned mana/cast resource and no provider C2S cast-intent path**.
 
-### Ars Nouveau boundary
+### Runtime / registry boundary
 
-- Physical Ars Nouveau: 5.13.1.
-- One conditional provider gem: `apothic_compats:ars_nouveau/mana`.
-- Gem/affix definitions consume Ars-native max mana, mana regen, spell damage, warding and mob-effect surfaces; they do **not** create another Ars mana/casting authority.
-- 14 Ars affix-loot equipment entries, 3 Ars gear sets and 3 regular Wilden invaders are source-closed.
-- Ancient variants exist in source but also require Ancient Reforging; no Ancient Reforging identifier is present in the current physical modlist, so those variants are not promoted to active-pack behavior.
+- Exact Java source count: 27 files.
+- Exactly 16 `spawner_stat` registry identities.
+- Exactly 32 stock modifier recipes: 16 direct + 16 inverse.
+- Modifier operations observed: `add` and `set`.
+- One `spawner_modifier` recipe type/serializer.
+- One Capturing enchantment effect component, one modifier advancement trigger, one spawn-egg item-sub-predicate, entity blacklist tag and unstable-spawner loot key.
+- Exactly 2 common mixins and 0 client mixins.
+- Mixins replace the vanilla Spawner block/item implementation and `MOB_SPAWNER` block-entity factory with provider equivalents; they do not establish casting authority.
+- Five config values.
+- One PLAY clientbound configuration payload, protocol/version string `2`; no C2S spell/cast controller is present.
+- Explicit tile NBT persistence includes stats, player-modified state, instability countdown and captured spawn data.
+- Provider events own Capturing, Echoing loot/XP, No-AI/movable behavior, spawn-egg blacklist and spawner-specific despawn semantics.
 
-### Malum boundary
+### Nuclear Spawner boundary
 
-- Physical Malum: 1.8.2.
-- Exactly 3 provider gems: `malum/soul_stained`, `malum/thief`, `malum/etheric` under the `apothic_compats` namespace.
-- Provider definitions consume Malum/Lodestone/Apothic attributes and effects, including Soul Ward, scythe proficiency, charge, arcane resonance and magic-stat surfaces.
-- `ModAffixRegistry` conditionally registers exactly 4 Malum custom affix codecs: `scythe_thunderstruck`, `scythe_cleaving`, `staff_thunderstruck`, `staff_cleaving`.
-- Cleaving may issue additional normal player attacks against nearby eligible entities with a provider-local recursion guard.
-- Thunderstruck applies nearby provider-created mob-attack damage tagged lightning and bypass-armor.
-- These are provider affix procs, not Black Arcana spells or Backlash.
+Exact 1.4.0 behavior closes the bounded instability reaction:
 
-### Runtime glue boundary
+- instability countdown: 60 ticks;
+- provider removes/replaces the spawner as part of its own lifecycle;
+- explosion radius: 8;
+- 12 spawn attempts from the captured spawn snapshot;
+- provider loot key `apothic_spawners:gameplay/unstable_spawner`.
 
-- `AttributeEvents` processes server-side projectile join, scales projectile velocity by Apothic `ARROW_VELOCITY`, and uses persistent-data boolean `apothic_compats.proj.done` to prevent repeat application.
-- The marker is one-shot event deduplication, not a player/world magic persistence subsystem.
-- `AffixEvents` handles a high-priority invulnerability check and delegates only to provider Aether/Create affix helpers when those targets are loaded.
-- No mod ID `ae2` is present in the physical inventory; source AE2 compatibility remains dormant in this snapshot.
+This is a provider-owned world reaction, not a Black Arcana spell. For BA-caused destruction/mutation, BA first applies canonical `WorldEffectPolicy`. If that permitted world effect naturally transitions an Apothic spawner into provider instability, the subsequent provider transition remains Apothic Spawners authority and must not be processed a second time by BA.
 
 ### Provider authority
 
-- Apotheosis/Apothic owns affix, gem, loot, category, invader and generic attribute/proc semantics.
-- Ars Nouveau owns Ars spells, mana, effects, entities and equipment runtime.
-- Malum/Lodestone owns Malum magic attributes/effects/charge/Soul Ward/item semantics.
-- Apothic Enchanting owns its Eterna/Quanta/Arcana enchanting-stat semantics; provider `Arcana` does not equal Black Arcana `Arcane Danger`.
-- Apothic Compats owns only its compatibility definitions, custom affix codecs, conditional Curios content and exact observed event/mixin glue.
+- Apothic Spawners owns spawner stats, modifier recipes, block/item/block-entity lifecycle, tile persistence, Capturing/Echoing, its config payload and Nuclear Spawner behavior.
 - Black Arcana retains canonical server-authoritative casting, transactional costs, targeting, BA cooldowns/charges, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash causality and `WorldEffectPolicy`.
-- BA must not duplicate the projectile velocity pass, create a second Ars/Malum resource settlement path, or re-enter Cleaving/Thunderstruck as BA offensive proc chains.
-- RPG Skill Tree receives no runtime authority.
+- Capturing/Echoing are not promoted to BA spell identities merely because they have magical theming.
+- BA must not duplicate the 16-stat modifier runtime, mirror provider NBT, add a second loot/XP pass, alter generic mob despawn from thematic similarity, or invoke provider Nuclear Spawner helpers to bypass world policy.
+- RPG Skill Tree receives no spawner-runtime authority; any progression effect requires a real bounded contract rather than direct mutation of provider internals.
+
+### License / clean-room boundary
+
+License evidence remains layered rather than flattened: source code/generated metadata indicate MIT, source assets are All Rights Reserved, and the current CurseForge project surface labels the project All Rights Reserved. This audit is factual/read-only; no provider code/assets/text are copied into Black Arcana.
+
+### Remaining fail-closed QA
+
+- byte-for-byte source↔physical-JAR reproducibility;
+- direct physical-vs-publisher-file hash equality;
+- complete-modpack reload/event ordering;
+- provider explosion interaction with protection/world-policy mods;
+- alternate spawner implementation compatibility;
+- external machine-spawner/summon integration.
+
+These unresolved QA rows do not hide a known spell/cast surface; they remain runtime compatibility validation, not a reason to invent provider magic identities.
 
 ### Canonicalization gate
 
-Component #47 is only represented by this branch until the final gate. It becomes canonical after latest-main reconciliation, CI GREEN on the reconciled HEAD, merge and post-merge `main` confirmation. Phase 3 remains blocked.
+Component #48 is only represented by this branch until the final gate. It becomes canonical after latest-main reconciliation, CI GREEN on the reconciled HEAD, merge and post-merge `main` confirmation. Phase 3 remains blocked.
 
 ## Immediate canonical predecessors
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
-| 46 | Phase 2AR / PR #154 | `backportedspellbooks` | CANÔNICO em `main@ac4df420158616d2fb993fb5fbf6b8325c207c27`; 6 spells + Pale Flora + bounded content/worldgen/procs |
+| 47 | Phase 2AS / PR #155 | `apothic_compats` | CANÔNICO em `main@063135e690b4c066db582be1be6dd1e1387f1758`; post-merge workflow #2239 GREEN |
+| 46 | Phase 2AR / PR #154 | `backportedspellbooks` | CANÔNICO em `ac4df420158616d2fb993fb5fbf6b8325c207c27`; 6 spells + Pale Flora + bounded content/worldgen/procs |
 | 45 | Phase 2AQ / PR #152 | `apothic_compat` | CANÔNICO em `bdf5271c265b5f40ee5a9e7695c7d71374a4c31c`; 0 spells, 13 loot-category overrides + affix blacklist compat |
 | 44 | Phase 2AP / PR #151 | `create_enchantment_industry_plus` | CANÔNICO; PR #153 posterior corrigiu metadata com zero delta |
 | 43 | Phase 2AO / PR #150 | `soul_fire_d` | CANÔNICO |
@@ -113,27 +125,28 @@ Component #47 is only represented by this branch until the final gate. It become
 | 36 | Phase 2AG / PR #137 | `ars_n_spells` | CANÔNICO |
 | 35 | Phase 2AF / PR #135 | `not_enough_glyphs` | CANÔNICO |
 
-O detalhamento completo anterior permanece no snapshot PRE-PHASE2AS e nos arquivos individuais de provider/phase.
+O detalhamento completo anterior permanece no snapshot PRE-PHASE2AT e nos arquivos individuais de provider/phase.
 
 ## Concorrência — não colidir
 
-A Phase 2AS foi criada sobre `main@ac4df420158616d2fb993fb5fbf6b8325c207c27`. Nenhum PR/branch equivalente de Apothic Compats foi encontrado no gate inicial.
+A Phase 2AT foi criada sobre `main@063135e690b4c066db582be1be6dd1e1387f1758`. Nenhum PR/branch equivalente de Apothic Spawners foi encontrado no gate inicial; a branch corrente é `docs/magic-catalog-phase2at-apothic-spawners-1.4.0`.
 
 Antes do merge:
 
 1. buscar `origin/main` novamente;
-2. se `main` avançou, reconciliar semanticamente a branch antes de validar;
-3. não usar CI anterior à última reconciliação como evidência final;
-4. revisar diff final para garantir escopo documental e preservação de trabalhos simultâneos;
-5. executar/confirmar CI no HEAD exato reconciliado;
-6. somente então mergear e confirmar SHA final da `main`.
+2. verificar se o HEAD da própria branch/PR mudou;
+3. se `main` avançou, reconciliar semanticamente a branch antes de validar;
+4. não usar CI anterior à última reconciliação como evidência final;
+5. revisar diff final para garantir escopo documental e preservação de trabalhos simultâneos;
+6. executar/confirmar CI no HEAD exato reconciliado;
+7. somente então mergear e confirmar SHA final da `main`.
 
-## Próxima seleção após Phase 2AS
+## Próxima seleção após Phase 2AT
 
 Selecionar somente depois de:
 
 1. latest-main gate imediatamente pré-merge;
-2. CI GREEN no HEAD reconciliado da Phase 2AS;
+2. CI GREEN no HEAD reconciliado da Phase 2AT;
 3. merge e confirmação do `main` final;
 4. CI pós-merge no SHA exato da main, quando aplicável;
 5. verificação da modlist física atual;
@@ -163,11 +176,11 @@ Exemplos atuais:
 - API/framework que migrou para sibling provider deve manter authority no provider atual;
 - client presentation hook não é cast authority;
 - cross-provider cast cancellation/reconciliation não vira segundo cast authority;
-- registry/example/animation/compatibility/fire/recipe/data-map/affix/gem object não vira spell por contagem;
+- registry/example/animation/compatibility/fire/recipe/data-map/affix/gem/spawner-stat/modifier object não vira spell por contagem;
 - provider magic attribute/resource referenced by a compat does not transfer that resource authority to the compat or to Black Arcana;
 - capabilities repacked mantêm provenance/namespace e não criam duplicata semântica automaticamente;
 - integração sem hook seguro permanece fail-closed;
-- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, fire-framework settlement, recipe/resource settlement, loot-category/affix/gem settlement, presentation adapter, projectile attribute pass ou world mutation de provider;
+- Black Arcana não duplica mana, casting, cooldown, targeting, summon lifecycle, proc pipeline, relic migration/settlement, fire-framework settlement, recipe/resource settlement, loot-category/affix/gem settlement, presentation adapter, projectile attribute pass, spawner modifier/persistence lifecycle ou world mutation de provider;
 - private reflection usada internamente por provider não é automaticamente API de integração segura para Black Arcana;
 - source-family label ou Java symbol não deve ser confundido com registry ID sem evidência;
 - provider parcial continua zero até inventário atual fechar ao teto de evidência aceito;
@@ -175,6 +188,6 @@ Exemplos atuais:
 
 ## Histórico
 
-Para o estado operacional detalhado imediatamente anterior a esta Phase 2AS, consultar `PROVIDER-AUDIT-QUEUE-PRE-PHASE2AS.md`.
+Para o estado operacional detalhado imediatamente anterior a esta Phase 2AT, consultar `PROVIDER-AUDIT-QUEUE-PRE-PHASE2AT.md`.
 
 Para os 103 candidatos e respectivos estados do checkpoint de 2026-09-07, consultar `PROVIDER-AUDIT-QUEUE-2026-09-07.md`. Antes de retomar qualquer linha histórica, reconciliar presença e versão contra a modlist física atual.
