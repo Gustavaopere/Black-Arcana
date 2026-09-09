@@ -2,9 +2,9 @@
 
 ## Operational percentage
 
-**Coverage represented by this Phase 2AK revision: 39/100 = 39%.**
+**Coverage represented by this Phase 2AL revision: 40/100 = 40%.**
 
-Phase 2AK was branched from canonical `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b`, where Phase 2AJ / PR #143 made component #38 canonical and coverage reached **38/100 = 38%**. Component #39 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AK branch/PR, canonical coverage remains **38/100 = 38%**.
+Phase 2AL was branched from canonical `main@73a425051d242a33af157a3f73ca816498e8eba8`, where Phase 2AK / PR #144 made component #39 canonical and coverage reached **39/100 = 39%**. Component #40 becomes canonical only when this revision is reconciled with the latest main, passes CI on that exact reconciled HEAD and is merged. While this revision exists only on the Phase 2AL branch/PR, canonical coverage remains **39/100 = 39%**.
 
 This metric is intentionally conservative. It measures **current magic/cross-domain provider components closed to the strongest evidence presently available**, not a guessed percentage of every individual spell object. A provider with a partial current inventory or unresolved current-version delta contributes zero closed component points.
 
@@ -97,9 +97,9 @@ Source targets NeoForge 21.1.230 / Iron's 3.11.0 while the pack uses NeoForge 21
 
 The point is awarded because this component is an **API/library provider whose complete own registry/runtime surface is closed**, including the exact result that its standalone spell inventory is zero. Consumer-addon spells remain under those addons' namespaces and authority.
 
-## Phase 2AK — EMF Compat: Iron's Spells component #39 candidate
+## Phase 2AK — EMF Compat: Iron's Spells component #39, canonical
 
-Phase 2AK closes `emf_compat_iron_spells` as a client presentation compatibility component:
+Phase 2AK / PR #144 is canonical at merge SHA `73a425051d242a33af157a3f73ca816498e8eba8` and closed `emf_compat_iron_spells` as a client presentation compatibility component:
 
 - physical artifact `emf_compat_iron_spells_1.21.1_2.0.0.jar`, SHA-1 `515b545870fce128bbf01a0ccacdd19566ed3b22`;
 - exact official source revision `victorkozhokin/emf-compat@79d730a9d02275b7d721967c75f5f22dc815d9dc`;
@@ -116,6 +116,30 @@ Phase 2AK closes `emf_compat_iron_spells` as a client presentation compatibility
 The component owns visual pose compatibility only. Iron's remains cast/resource/cooldown authority, and Black Arcana must not interpret these client hooks as cast authority or duplicate the Iron's-specific EMF pose adapter.
 
 Byte-for-byte source/JAR equivalence and full-pack rendering QA remain separate; they do not reopen the semantic inventory closure.
+
+## Phase 2AL — `efiscompat` component #40 candidate
+
+Phase 2AL closes `efiscompat` at the exact source-version evidence ceiling as an Epic Fight↔Iron's casting-interaction and animation compatibility component:
+
+- physical artifact `efiscompat-3.1.0.jar`, SHA-1 `4250e1c65732d70d1091cc50b84a91b6ed5b2b3f`;
+- exact CurseForge project/file `1109064 / 8372294`, release 2026-07-05;
+- exact official source pin `domanhthang2110/efiscompat@b4b58aff86e707420fac8a7c29fe647d7f5aaac4` on the dedicated `1.21.1` branch;
+- the pinned commit is itself the 3.1.0 `Fixed dedicated server crash` commit and changes source `mod_version` from 3.0.0 to 3.1.0;
+- **0 standalone provider spells** and no provider-owned mana/resource system;
+- 28 Java source files;
+- 35 provider Epic Fight animation accessors;
+- 12 required mixins: 6 client + 6 common;
+- 6 common config keys;
+- data-driven `spell_animations` reload with 9 chant/cast/continuous + staff-side roles and default fallback;
+- real server-side casting interaction: Iron's pre-cast veto from Epic Fight state plus Iron's cast cancellation on skill/guard/dodge paths;
+- exact runtime metadata requires BOTH-side Epic Fight `[21,)` and Iron's `[1.21.1-3.15.0,)`;
+- physical pack uses Epic Fight 21.17.3.1 and Iron's 3.16.3.
+
+One common mixin targets `com.p1nero.invincible.skill.ComboBasicAttack`; exact target ownership/presence is not proven from the top-level physical inventory and remains runtime QA/fail-closed.
+
+License metadata is also intentionally unresolved: CurseForge labels MIT while exact source metadata declares `GNU GPLv3`, with no root `LICENSE` file observed at the pin. Source inspection is read-only and no code/assets are copied.
+
+The provider owns reconciliation around Iron's casts, not a second spell runtime. Black Arcana therefore must not duplicate Iron's↔Epic Fight interruption/animation handling or route BA-native spells through Iron's just to inherit this compatibility.
 
 ## Partial providers still receive zero points
 
