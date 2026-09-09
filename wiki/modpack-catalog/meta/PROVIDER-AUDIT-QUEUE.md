@@ -18,10 +18,10 @@ O snapshot histórico de 2026-09-07 usava 612 entradas / 103 candidatos e não �
 
 Ver [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
 
-- Phase 2AJ / PR #143 está canônica em `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b`;
-- cobertura canônica na criação da Phase 2AK: **38/100 = 38%**;
-- esta revisão Phase 2AK fecha `emf_compat_iron_spells` como componente #39 ao limite exato de source-version disponível;
-- o resultado **39/100 = 39%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
+- Phase 2AK / PR #144 está canônica em `main@73a425051d242a33af157a3f73ca816498e8eba8`;
+- cobertura canônica na criação da Phase 2AL: **39/100 = 39%**;
+- esta revisão Phase 2AL fecha `apothic_attributes` como componente #40 ao limite exato de source-version disponível;
+- o resultado **40/100 = 40%** só é canônico depois de reconciliação com a latest main, CI GREEN no HEAD reconciliado e merge;
 - provider parcial não recebe ponto inteiro.
 
 ### Reconciliação física corrigida do denominador
@@ -35,11 +35,44 @@ A lista histórica possui 103 IDs. A comparação direta desses IDs contra a mod
 
 Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus` estão fisicamente presentes e não devem aparecer como removidos.
 
-## Phase 2AK — EMF Compat: Iron's Spells 2.0.0
+## Phase 2AL — Apothic Attributes 2.10.1
 
 | Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION / CLIENT PRESENTATION COMPAT / 0 SPELLS / 0 GAMEPLAY REGISTRY / 5 JAVA CLASSES / 3 REQUIRED CLIENT MIXINS / 2 CONFIG KEYS / POSE SOURCE PRIORITY 10 / FIRST-PERSON EMF CONDITION / COMPONENT #39 CANDIDATE / BYTE-EQUIVALENCE + FULL-PACK RENDER QA FAIL-CLOSED |
+| `apothic_attributes` | `ApothicAttributes-1.21.1-2.10.1.jar` | EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION / COMBAT+ATTRIBUTE+EFFECT SUPPORT PROVIDER / 0 STANDALONE SPELLS+GLYPHS+RITUALS OBSERVED / 2 SYNCED CUSTOM REGISTRIES / 22 ATTRIBUTES / 7 EFFECTS / 31 POTIONS / 37 BREWING MIXES / 5 DAMAGE TYPES / 2 DATA COMPONENTS / 3 ATTACHMENTS / 7 EQUIPMENT SLOTS + 11 GROUPS / 2 CLIENTBOUND PAYLOADS / 8 MIXINS / SERVER-SIDE ABILITY COOLDOWNS / CURIOS BRIDGE ACTIVE-IN-PACK / COMPONENT #40 CANDIDATE / BYTE-EQUIVALENCE + FULL-PACK INTERACTION QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `6a6b84d09801621df5cc2c8a68f35bd93a6cda0f`.
+- Official exact source revision: `Shadows-of-Fire/Apothic-Attributes@686361b2c7b0e76bf4158890bb8a2e42ef805622`.
+- Source metadata declares exactly version 2.10.1, Minecraft 1.21.1, Java 21, NeoForge 21.1.235 and Placebo 9.9.0; Curios is optional.
+- Generated runtime metadata requires Minecraft >=1.21.1, NeoForge >=21.1.235 and Placebo >=9.9.0, side BOTH. Physical pack uses NeoForge 21.1.248 and Placebo 9.9.2.
+- Curios `9.5.1+1.21.1` is physically present, so the provider's conditional Curios compat path is eligible to activate.
+- Central `ALObjects` inventory is closed: 22 attributes, 7 effects, 31 potions, 5 damage types, 2 data components, 3 attachments, 7 equipment-slot objects, 11 slot groups, 3 provider tags, 1 particle and 1 sound.
+- `MiscDatagen` defines 37 generated brewing mixes.
+- Exactly two observed provider payloads are PLAY CLIENTBOUND (`config`, `crit_particle`), both provider version `1`; no provider C2S cast-intent path was observed.
+- Exact mixin manifest: 7 common + 1 client.
+- Source changelog: 2.10.1 adds JEI exclusion zones; 2.10.0 introduced unified cooldown support + `cooldown_reduction`.
+- Exact source version is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
+
+### Provider authority
+
+- Apothic Attributes owns its generic armor/protection formulas, penetration/shred, crit, auxiliary hit damage, dodge, life-steal/overheal, projectile/arrow scaling, healing/XP/mining attributes, potion/effect runtime and its `AbilityCooldowns` API.
+- Curios owns Curios inventory/slot state; Apothic owns only its conditional attribute/modifier bridge.
+- Black Arcana retains casting, transactional costs, BA cooldowns/charges, targeting, Corruption, Strain, Arcane Danger, Backlash and WorldEffectPolicy.
+- `apothic_attributes:cooldown_reduction` must not affect BA cooldown groups without a separately proven contract.
+- BA Backlash must not intentionally enter normal Apothic offensive crit/lifesteal/aux-damage proc paths.
+- RPG Skill Tree remains progression/mastery only through real contracts.
+
+### Exact-source discrepancy retained
+
+`DetonationEffect` clears remaining fire ticks and computes final-tick damage, but its exact `hurt(...)` call uses `ALObjects.DamageTypes.BLEEDING` even though a separate Detonation damage type is registered/tagged. The catalog records this source behavior literally and does not silently substitute the Detonation key.
+
+## Phase 2AK — EMF Compat: Iron's Spells 2.0.0 — canonical predecessor
+
+| Mod ID | Artefato físico | Estado da auditoria |
+|---|---|---|
+| `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | CANÔNICO VIA PR #144 / EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION / CLIENT PRESENTATION COMPAT / 0 SPELLS / 0 GAMEPLAY REGISTRY / 5 JAVA CLASSES / 3 REQUIRED CLIENT MIXINS / 2 CONFIG KEYS / POSE SOURCE PRIORITY 10 / FIRST-PERSON EMF CONDITION / COMPONENT #39 / BYTE-EQUIVALENCE + FULL-PACK RENDER QA FAIL-CLOSED |
 
 ### Evidence boundary
 
@@ -116,16 +149,16 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 
 ## Concorrência — não colidir
 
-Phase 2AK foi aberta sobre `main@83a5cbf95e2e2eeb8c4e5e161aa2eb590b78712b` após rechecagem de branches/PRs. Não havia branch nem PR equivalente para `emf_compat_iron_spells`.
+Phase 2AL foi aberta sobre `main@73a425051d242a33af157a3f73ca816498e8eba8` após rechecagem de trabalho equivalente. Não havia commit/branch/PR equivalente para `apothic_attributes` nesta passagem.
 
 Antes do merge, buscar `main` novamente e reconciliar qualquer avanço. CI anterior à última reconciliação não vale como evidência final.
 
-## Próxima seleção após Phase 2AK
+## Próxima seleção após Phase 2AL
 
 Selecionar somente depois de:
 
 1. fetch da `main` mais recente;
-2. confirmação do merge/CI da Phase 2AK;
+2. confirmação do merge/CI da Phase 2AL;
 3. verificação da modlist física atual;
 4. pesquisa de PR/branch equivalente;
 5. leitura do catálogo já canônico;
