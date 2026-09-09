@@ -2,15 +2,15 @@
 
 ## Operational percentage
 
-**Canonical coverage at the reconciled Phase 2AV base: 49/100 = 49%.**
+**Canonical coverage at the reconciled Phase 2AW base: 50/100 = 50%.**
 
-`main@f3a3f95a10cf830b6bf973612d519e53d9168adc` is the branch base. That commit merged Phase 2AU / PR #158 and makes `apothic_enchanting` 1.6.2 canonical component **#49**.
+`main@517b3e9c6da648c1470c227a11f571d951fbee47` merged Phase 2AV / PR #160 and makes `apotheosis` 8.8.0 canonical component **#50**. Exact-SHA post-merge workflow #2295 / run `34417733744` completed successfully on that main commit.
 
-Phase 2AV represents candidate component **#50**, `apotheosis` 8.8.0. Therefore this revision describes **50/100 = 50% only as a candidate** until CI GREEN on the exact reconciled HEAD, a final latest-main gate, merge and post-merge `main` confirmation.
+Phase 2AW represents candidate component **#51**, `apotheoticcreation` 2.0.0. Therefore this revision describes **51/100 = 51% only as a candidate** until CI GREEN on the exact reconciled HEAD, a final latest-main gate, merge and post-merge `main` confirmation.
 
-The complete pre-Phase-2AV current-coverage text is preserved byte-for-byte in [`CATALOG-COVERAGE-CURRENT-PRE-PHASE2AV.md`](./CATALOG-COVERAGE-CURRENT-PRE-PHASE2AV.md). Provider-specific evidence lives under `wiki/modpack-catalog/providers/**` plus the corresponding phase checkpoint/capability files.
+The complete pre-Phase-2AW current-coverage text is preserved byte-for-byte in [`CATALOG-COVERAGE-CURRENT-PRE-PHASE2AW.md`](./CATALOG-COVERAGE-CURRENT-PRE-PHASE2AW.md). Provider-specific evidence lives under `wiki/modpack-catalog/providers/**` plus the corresponding phase checkpoint/capability files.
 
-This metric counts current magic/cross-domain provider components closed to the strongest available evidence. It is not a percentage of spell/enchantment/registry objects, and partial provider inventories receive zero closed-component points.
+This metric counts current magic/cross-domain provider components closed to the strongest available evidence. It is not a percentage of spells, affixes, filters or registry objects, and partial provider inventories receive zero closed-component points.
 
 ## Physical anchor
 
@@ -42,35 +42,38 @@ The denominator must be reconciled whenever the physical provider set changes.
 | 46 | Phase 2AR / PR #154 | `backportedspellbooks` | canonical |
 | 47 | Phase 2AS / PR #155 | `apothic_compats` | canonical |
 | 48 | Phase 2AT / PR #156 | `apothic_spawners` | canonical |
-| 49 | Phase 2AU / PR #158 | `apothic_enchanting` | canonical at `main@f3a3f95a10cf830b6bf973612d519e53d9168adc` |
-| 50 | Phase 2AV | `apotheosis` | candidate in this revision |
+| 49 | Phase 2AU / PR #158 | `apothic_enchanting` | canonical |
+| 50 | Phase 2AV / PR #160 | `apotheosis` | canonical at `main@517b3e9c6da648c1470c227a11f571d951fbee47` |
+| 51 | Phase 2AW | `apotheoticcreation` | candidate in this revision |
 
 Components #1–#41 remain part of the same canonical numerator and are preserved by the prior cumulative snapshots/provider records.
 
-## Phase 2AV — Apotheosis 8.8.0 component #50, candidate
+## Phase 2AW — Apotheotic Creation 2.0.0 component #51, candidate
 
-Phase 2AV closes the installed `apotheosis` Adventure/RPG provider at exact physical + publisher + exact official source evidence:
+Phase 2AW closes the installed narrow Create ↔ Apotheosis filter bridge at exact physical + publisher + exact official source evidence:
 
-- physical artifact `Apotheosis-1.21.1-8.8.0.jar`, mod id `apotheosis`, SHA-1 `1e4837fcaf24fe73dba1082656736d872690b303`;
-- CurseForge project/file `313970 / 8826922`, released 2026-09-07 for NeoForge / Minecraft 1.21.1;
-- exact official source `Shadows-of-Fire/Apotheosis@e825cd9dcb9a6fff5e163659812ff32390e343a6`, root tree `98ffba7432210ac6b5d807a83fc8e49e74db31fd`;
-- exact metadata: Minecraft 1.21.1, Java 21, NeoForge 21.1.235+, Placebo 9.9.2+, Apothic Attributes 2.10.0+, with separately ordered optional Apothic Enchanting 1.6.2+ and Apothic Spawners 1.4.0+;
-- exact physical pack satisfies those declared minimums with NeoForge 21.1.248, Placebo 9.9.2, Apothic Attributes 2.10.1, Apothic Enchanting 1.6.2 and Apothic Spawners 1.4.0;
-- exact bootstrap owns dynamic/data-backed registries for rarity, affix, gem, affix loot, invader, rogue spawner, elite, purity weights, augment, tiered augment and rarity override;
-- provider attachments/components own player world-tier unlock/state, invader/spawn state, bonus loot/damage reduction metadata and affixed/gem/rarity/UI item state;
-- provider owns reforging, salvaging, augmenting, gem cutting and related menu/recipe surfaces;
-- seven registered payload providers: configuration and boss/reroll S2C state plus provider-gated item-link/radial/gem-case/world-tier C2S/bidirectional state;
-- no standalone spell/mana/ritual/casting registration or payload surface was observed in the exact 8.8.0 source-tree/bootstrap/network audit.
+- physical artifact `apotheoticcreation-2.0.0.jar`, mod id `apotheoticcreation`, SHA-1 `6bbb91aea834941b47a6af3318b091f64e4375ab`;
+- physical Create 6.0.10 and Apotheosis 8.8.0;
+- CurseForge project/file `956637 / 8391265`, release 2026-07-08 for NeoForge / Minecraft 1.21.1;
+- publisher Source link resolves to `maxpowa/ApotheoticCreation`;
+- exact official source `maxpowa/ApotheoticCreation@ed56ccf54e1be132c983c524597300e852098840`, source tree `5c5d51ef69b5f0f50d398d7f0479b8ca83894f7d`;
+- exact metadata: Minecraft 1.21.1, NeoForge development baseline 21.1.235, mod version 2.0.0, Create range `[6,)`, Apotheosis range `[8,)`, MIT;
+- recursive exact tree is complete (`truncated=false`) and contains one Java source file;
+- that class registers exactly two Create `ITEM_ATTRIBUTE_TYPE` entries: `apotheoticcreation:rarity` and `apotheoticcreation:affix`;
+- rarity matching reads Apotheosis `LootRarity` / `RarityRegistry` state through provider helpers/codecs;
+- affix matching reads Apotheosis `AffixRegistry` / item-affix state through provider helpers/codecs;
+- visible affix enumeration intentionally excludes affix paths `socket` and `durable`;
+- no addon-owned spell/mana/ritual/casting, payload/network, attachment or persistence surface was observed in the complete exact source tree.
 
-`apotheosis` does not absorb the already-cataloged `apothic_attributes`, `apothic_enchanting` or `apothic_spawners` components. Their separate mod IDs, artifacts and authority records remain intact.
+The addon is not authority for the data it translates. Apotheosis retains rarity/affix authority; Create retains Attribute Filter/logistics authority. Black Arcana must not mirror either registry or reinterpret Create downstream routing as its own cast/hazard runtime.
 
-Black Arcana retains canonical server-authoritative casting, targeting, transactional costs, BA cooldowns/charges, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash and world safety. Provider world-tier/UI C2S requests are not BA cast intents. Similar names or magical flavor do not create a bridge.
+Smart Observers, Brass Tunnels and other Create consumers are downstream consumers of normal Create filtering behavior, not separate hooks established by this addon. No special Black Arcana integration is justified merely by their thematic usefulness.
 
 ## Integration / clean-room boundary
 
-Exact source internals are used as read-only factual evidence only. The audit does not promote implementation classes into supported APIs. Any runtime integration must prefer a proven provider-native public/data/event seam, remain behind a Black Arcana adapter/boundary, preserve reload lifecycle and fail closed if no exact safe seam exists.
+Exact source internals are used read-only as factual evidence. The bridge already provides the provider-native interoperability seam; Black Arcana has no reason to duplicate its rarity/affix classification. Any future coupling must remain behind a specific boundary and fail closed if the exact provider contract is unavailable.
 
-Source code at the exact pin is MIT. Exact source assets are All Rights Reserved, and the current CurseForge project surface is labeled All Rights Reserved. No provider code/assets/text are copied or adapted.
+The exact source metadata and root license are MIT, and the current CurseForge project surface also labels the project MIT. No code/assets/text are copied or adapted.
 
 ## Partial providers still receive zero points
 
