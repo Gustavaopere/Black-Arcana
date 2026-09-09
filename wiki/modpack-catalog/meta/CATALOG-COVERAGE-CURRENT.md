@@ -4,7 +4,7 @@
 
 **Coverage represented by this Phase 2AU revision: 49/100 = 49%.**
 
-The latest reconciled repository base for this branch is `main@29a0099e899e03d80bf904c2d5ead72f40421fe8`, where canonical catalog coverage remains **48/100 = 48%** after Phase 2AT / PR #156 merged `apothic_spawners` 1.4.0 as component #48. The intervening PR #157 is Stage 05 keyboard-focus work and has zero catalog coverage delta; none of its changed files overlaps this Phase 2AU tranche.
+The latest reconciled repository base for this branch is `main@78639998c212e91469e9036484bd5ac2ac9b699b`, where canonical catalog coverage remains **48/100 = 48%** after Phase 2AT / PR #156 merged `apothic_spawners` 1.4.0 as component #48. Intervening PRs #157 and #159 are Stage 05 keyboard-focus work with zero catalog coverage delta and no overlap with this Phase 2AU tranche.
 
 Phase 2AU represents candidate component **#49**, `apothic_enchanting` 1.6.2. The numerator becomes canonical only after CI GREEN on the exact reconciled HEAD, a final latest-main gate, merge and post-merge `main` confirmation.
 
