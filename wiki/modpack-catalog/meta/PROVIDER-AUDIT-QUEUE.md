@@ -63,11 +63,32 @@ Correção: `backportedspellbooks`, `crystal_chronicles` e `gtbcs_geomancy_plus`
 - Black Arcana must not treat EMF pose state or client casting state as server authority and must not duplicate this Iron's-specific pose adapter.
 - RPG Skill Tree receives no progression authority from this visual layer.
 
-## Phase 2AJ — canonical predecessor
+## Phase 2AJ — Ace's Spell Utils 1.2.7.2 — canonical predecessor
 
-| Mod ID | Artefato físico | Estado |
+| Mod ID | Artefato físico | Estado da auditoria |
 |---|---|---|
-| `aces_spell_utils` | `aces_spell_utils-1.2.7.2-1.21.1.jar` | CANÔNICO VIA PR #143 / EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / API+LIBRARY PROVIDER / 0 STANDALONE SPELL REGISTRATIONS / 3 SCHOOLS / 19 ATTRIBUTES / 3 DAMAGE TYPES / 14 TAGS / 8 RARITIES / 27 EXAMPLE ITEMS / 8 S2C VFX PAYLOADS / 2 MIXINS / 5 CONFIG VALUES / COMPONENT #38 / HOST-VERSION+BYTE-EQUIVALENCE QA FAIL-CLOSED |
+| `aces_spell_utils` | `aces_spell_utils-1.2.7.2-1.21.1.jar` | CANÔNICO VIA PR #143 / EXACT PHYSICAL VERSION + EXACT OFFICIAL SOURCE VERSION PIN / API+LIBRARY PROVIDER / 0 STANDALONE SPELL REGISTRATIONS / 3 SCHOOLS / 19 ATTRIBUTES / 3 DAMAGE TYPES / 14 TAGS / 8 RARITIES / 27 EXAMPLE ITEM REGISTRATIONS / 8 S2C VFX PAYLOADS / 2 REQUIRED MIXINS / 5 CONFIG VALUES / COMPONENT #38 / HOST-VERSION+BYTE-EQUIVALENCE QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- Physical SHA-1: `8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca`.
+- CurseForge project/file: `1299492 / 8789930`, exact 1.2.7.2 release dated 2026-09-02.
+- Official exact-version source: `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`.
+- Source `gradle.properties` declares exactly `mod_version=1.2.7.2-1.21.1`.
+- No `registerSpell(...)` call and no provider standalone spell-registry registration surface were found: exact provider spell count is **0**.
+- School registry IDs are `aces_spell_utils:ritual`, `aces_spell_utils:hydro`, `aces_spell_utils:technomancy`.
+- Publisher display language may call Ritual `Occult`; exact registry remains `ritual`.
+- Source Java supplier `ABYSSAL` actually registers `hydro`; do not fabricate an Abyssal school.
+- Source targets NeoForge 21.1.230 / Iron's 3.11.0 while pack uses NeoForge 21.1.248 / Iron's 3.16.3. Exact host-runtime parity remains QA/fail-closed.
+- Exact source-version pin is not promoted to byte-for-byte source/JAR identity without reproducibility evidence.
+
+### Provider authority
+
+- Iron's owns underlying spell casting, mana and cooldown authority.
+- Ace's owns shared attributes/proc helpers, API classes, mixins, attachment, VFX transport and example runtime it registers.
+- consuming addons own concrete spells/entities/items built on the Ace's API.
+- Black Arcana does not duplicate these pipelines and retains its own canonical casting, Corruption, Strain, Arcane Danger and WorldEffectPolicy.
+- RPG Skill Tree remains progression/mastery only through real contracts.
 
 ## Phase 2AI — canonical predecessor, zero delta
 
