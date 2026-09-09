@@ -253,9 +253,9 @@ The point was awarded after exact-head CI GREEN and merge. Source/release-asset/
 
 Phase 2AR closes `backportedspellbooks` at a layered physical/publisher/release-day-source evidence ceiling while preserving the version discrepancy instead of normalizing it:
 
-- physical artifact filename `backportedspellbooks-0.1.2.jar` is present in the current 595-entry modlist;
+- physical artifact `backportedspellbooks-0.1.2.jar`, SHA-1 `747847c1f38c73250ebac05ea06b41a381187850`, is present in the current 595-entry modlist;
 - physical runtime metadata reports mod ID `backportedspellbooks`, version `0.1.0`;
-- exact publisher release is CurseForge project/file `1283913 / 8158731`, released 2026-05-28 for NeoForge Minecraft 1.21.1, filename `backportedspellbooks-0.1.2.jar`;
+- exact publisher release is CurseForge project/file `1543731 / 8158731`, released 2026-05-28 for NeoForge Minecraft 1.21.1, filename `backportedspellbooks-0.1.2.jar`;
 - official release-day source pin is `RedReaper28/BackportedSpellbooks-1.21.1@07cb65efca0c264762a21c2d6bce0f83e3947226`;
 - that source still declares `mod_version=0.1.0`, matching the physical runtime metadata while differing from the public file/release label;
 - release-day `ModSpellRegistry` closes exactly **6 provider spells**: `slime_aspect`, `sulfur_bomb`, `sulfur_clouds`, `sulfur_release`, `pale_thorn`, `resin_spray`;
@@ -268,7 +268,7 @@ Phase 2AR closes `backportedspellbooks` at a layered physical/publisher/release-
 
 Iron's owns host casting/mana/cooldown/container semantics. Backported Spellbooks owns its six spell identities, Pale Flora content, effects/entities/equipment/worldgen and provider procs. Vanilla Backport and Ace's retain authority over the consumed surfaces they provide. Black Arcana does not clone these spells, duplicate the equipment proc/fall pipeline, introduce a second mana/cooldown settlement path or reinterpret provider worldgen as BA `WorldEffectPolicy` authority.
 
-Static/runtime QA remains explicit: source targets NeoForge 21.1.216 / Iron's 3.15.4 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3; source imports Iron's, Vanilla Backport and Ace's although the inspected generated metadata template formally lists only NeoForge/Minecraft; Slime Boots exposes cooldown presentation/constants while the inspected fall hook does not show a cooldown gate; full-pack event ordering, network sync, provider config values, duplicate-proc behavior and dedicated-server operation remain unverified. Physical source↔JAR byte equivalence is not asserted, and no physical Backported artifact SHA-1 is invented because the exported modlist does not provide one.
+Static/runtime QA remains explicit: physical SHA-1 is known but source↔JAR byte equivalence is not proven; source targets NeoForge 21.1.216 / Iron's 3.15.4 while the pack uses NeoForge 21.1.248 / Iron's 3.16.3; source imports Iron's, Vanilla Backport and Ace's although the inspected generated metadata template formally lists only NeoForge/Minecraft; Slime Boots exposes cooldown presentation/constants while the inspected fall hook does not show a cooldown gate; full-pack event ordering, network sync, provider config values, duplicate-proc behavior and dedicated-server operation remain unverified.
 
 License evidence is also intentionally unresolved for reuse: CurseForge labels MIT while release-day source metadata declares All Rights Reserved. Inspection is factual/read-only and no third-party code/assets are copied.
 
