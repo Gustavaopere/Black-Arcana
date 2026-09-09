@@ -11,12 +11,13 @@ Phase 2AR audits `backportedspellbooks` against the current physical modpack and
 - physical modlist: 595 top-level entries
 - modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 - physical artifact filename: `backportedspellbooks-0.1.2.jar`
+- physical artifact SHA-1: `747847c1f38c73250ebac05ea06b41a381187850`
 - physical mod ID: `backportedspellbooks`
 - physical runtime metadata version: `0.1.0`
 
 ## Publisher/source evidence
 
-- CurseForge exact file: project `1283913`, file `8158731`, NeoForge Minecraft 1.21.1, released 2026-05-28, filename `backportedspellbooks-0.1.2.jar`.
+- CurseForge exact file: project `1543731`, file `8158731`, NeoForge Minecraft 1.21.1, released 2026-05-28, filename `backportedspellbooks-0.1.2.jar`.
 - Exact public 0.1.2 changelog adds Miasmic Staff, Quicksilver Spellbook, Slime Boots, Slime Aspect, Sulfur Clouds, Sulfur Bomb, Sulfur Release, plus Corroded Fossils and Quicksilver in Sulfur Caves.
 - Official public repository: `RedReaper28/BackportedSpellbooks-1.21.1`.
 - Release-day source pin: `07cb65efca0c264762a21c2d6bce0f83e3947226`.
@@ -63,8 +64,7 @@ No provider custom payload registration, provider SavedData/attachment/data-comp
 
 ## Static QA / unresolved boundaries
 
-- no byte-for-byte equivalence between physical JAR and source pin has been proven;
-- physical SHA-1 for the Backported artifact is not available in the current exported modlist text and is therefore not invented;
+- physical JAR SHA-1 is known, but no byte-for-byte equivalence between that artifact and the release-day source pin has been proven;
 - source targets NeoForge `21.1.216` and Iron's `1.21.1-3.15.4`, while the pack uses NeoForge `21.1.248` and Iron's `1.21.1-3.16.3`;
 - generated metadata observed in source formally declares NeoForge/Minecraft only even though code imports Iron's, Vanilla Backport and Ace's; loader/dependency parity remains runtime QA;
 - Slime Boots has cooldown-related presentation/constants but the inspected fall-event hook cancels fall without an observed cooldown gate; live semantics remain QA;
@@ -73,7 +73,7 @@ No provider custom payload registration, provider SavedData/attachment/data-comp
 
 ## Coverage decision
 
-This provider is eligible to become component **#46** because its semantic provider surface is closed at a defensible evidence ceiling: exact physical presence, exact publisher release identity/changelog, release-day official source, a complete six-spell registry and bounded supporting runtime/content surfaces.
+This provider is eligible to become component **#46** because its semantic provider surface is closed at a defensible evidence ceiling: exact physical presence and SHA-1, exact publisher release identity/changelog, release-day official source, a complete six-spell registry and bounded supporting runtime/content surfaces.
 
 The point is not canonical until this branch is reconciled with the latest `main`, CI is GREEN on the reconciled HEAD, the PR is merged and post-merge `main` is confirmed. Until then canonical coverage remains **45/100**.
 
