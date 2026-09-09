@@ -4,9 +4,9 @@ Phase 2AR candidate provider: `backportedspellbooks`.
 
 ## Evidence layers
 
-- Physical artifact: `backportedspellbooks-0.1.2.jar` in the current 595-entry modlist.
+- Physical artifact: `backportedspellbooks-0.1.2.jar` in the current 595-entry modlist, SHA-1 `747847c1f38c73250ebac05ea06b41a381187850`.
 - Runtime metadata reported by the physical inventory: `backportedspellbooks` version `0.1.0`.
-- Publisher release: CurseForge file `8158731`, released 2026-05-28 for NeoForge/Minecraft 1.21.1, filename `backportedspellbooks-0.1.2.jar`.
+- Publisher release: CurseForge project/file `1543731 / 8158731`, released 2026-05-28 for NeoForge/Minecraft 1.21.1, filename `backportedspellbooks-0.1.2.jar`.
 - Official release-day source: `RedReaper28/BackportedSpellbooks-1.21.1@07cb65efca0c264762a21c2d6bce0f83e3947226`.
 - Release-day source `gradle.properties` still declares `mod_version=0.1.0`; this agrees with physical runtime metadata but not with the public file/release label `0.1.2`.
 
@@ -53,7 +53,7 @@ The exact publisher 0.1.2 changelog names the first four as newly added in that 
 
 ## Fail-closed boundaries
 
-- physical JAR SHA/reproducibility has not been matched to the official source build;
+- physical SHA-1 is known, but reproducibility against the official source build has not been proven;
 - public release label `0.1.2` versus embedded/source `0.1.0` remains an explicit packaging/metadata discrepancy, not something to normalize away;
 - release-day source baseline targets NeoForge `21.1.216` and Iron's `1.21.1-3.15.4`, while the current pack uses NeoForge `21.1.248` and Iron's `1.21.1-3.16.3`;
 - direct source imports of Iron's, Vanilla Backport and Ace's are stronger than the generated metadata dependency table, which only formally declares NeoForge and Minecraft in the inspected template; runtime dependency/loader parity remains QA;
