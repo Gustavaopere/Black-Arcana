@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.integration.neoforge;
 
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.content.noetic.AstralSeveranceRuntime;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipProvider;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipRegistry;
 import dev.gustavopere.blackarcana.content.noetic.NoeticObservationKind;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
@@ -60,8 +62,10 @@ public final class MinecraftNoeticRuntime {
         gameBus.addListener(MinecraftNoeticRuntime::onEntityTickPre);
         gameBus.addListener(MinecraftNoeticRuntime::onEntityTickPost);
         gameBus.addListener(MinecraftNoeticRuntime::onLivingChangeTarget);
+        gameBus.addListener(MinecraftNoeticRuntime::onLivingDamagePost);
         gameBus.addListener(MinecraftNoeticRuntime::onServerTick);
         gameBus.addListener(MinecraftNoeticRuntime::onPlayerLoggedOut);
+        gameBus.addListener(MinecraftNoeticRuntime::onPlayerChangedDimension);
         gameBus.addListener(MinecraftNoeticRuntime::onLivingDeath);
         gameBus.addListener(MinecraftNoeticRuntime::onServerStopped);
     }
@@ -107,6 +111,78 @@ public final class MinecraftNoeticRuntime {
         return state == null ? Optional.empty() : state.observation.snapshot(server, viewerId);
     }
 
+    /**
+     * Activates only the bounded Astral Severance lifecycle after an upstream canonical cast transaction
+     * has already authorized the spell. This is not a second cast/admission path and does not select cost,
+     * cooldown, progression, avatar, movement or client presentation semantics.
+     */
+    public static AstralProjectionStart activateAuthorizedAstralProjection(
+            MinecraftServer server,
+            UUID casterId,
+            int durationTicks,
+            double maxRangeBlocks
+    ) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(casterId, "casterId");
+
+        ServerPlayer caster = server.getPlayerList().getPlayer(casterId);
+        if (caster == null) {
+            return AstralProjectionStart.denied(
+                    "astral_viewer_unloaded",
+                    "Astral Severance requires a loaded server player body");
+        }
+        if (!caster.isAlive()) {
+            return AstralProjectionStart.denied(
+                    "astral_viewer_dead",
+                    "Astral Severance requires a living physical body");
+        }
+
+        ServerState state = stateFor(server);
+        state.astral.expire(server.getTickCount());
+        AstralSeveranceRuntime.StartResult result = state.astral.start(
+                casterId,
+                server.getTickCount(),
+                durationTicks,
+                maxRangeBlocks);
+        return switch (result) {
+            case STARTED -> AstralProjectionStart.started(state.astral.projection(casterId).orElseThrow());
+            case CASTER_ALREADY_PROJECTED -> AstralProjectionStart.denied(
+                    "astral_viewer_active",
+                    "Caster already owns an active Astral Severance projection");
+            case GLOBAL_LIMIT -> AstralProjectionStart.denied(
+                    "astral_global_limit",
+                    "Astral Severance global active-projection ceiling is exhausted");
+            case INVALID_DURATION -> AstralProjectionStart.denied(
+                    "astral_duration",
+                    "Astral Severance duration is outside the hard Noetic ceiling");
+            case INVALID_RANGE -> AstralProjectionStart.denied(
+                    "astral_range",
+                    "Astral Severance range is outside the hard Noetic ceiling");
+            case IDENTITY_COLLISION -> AstralProjectionStart.denied(
+                    "astral_identity_collision",
+                    "Astral Severance could not allocate a unique server-owned projection identity");
+        };
+    }
+
+    public static Optional<AstralSeveranceRuntime.ActiveProjection> astralProjection(
+            MinecraftServer server,
+            UUID casterId
+    ) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(casterId, "casterId");
+        ServerState state = STATES.get(server);
+        return state == null ? Optional.empty() : state.astral.projection(casterId);
+    }
+
+    /** Exact-session explicit return. Wrong, stale or replayed projection identities are ignored. */
+    public static boolean requestAstralReturn(MinecraftServer server, UUID casterId, UUID projectionId) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(casterId, "casterId");
+        Objects.requireNonNull(projectionId, "projectionId");
+        ServerState state = STATES.get(server);
+        return state != null && state.astral.requestReturn(casterId, projectionId);
+    }
+
     public static ArcanaDecision startStillness(
             MinecraftServer server,
             UUID casterId,
@@ -146,6 +222,12 @@ public final class MinecraftNoeticRuntime {
         return state == null ? 0 : state.observations.activeCount();
     }
 
+    public static int activeAstralProjections(MinecraftServer server) {
+        Objects.requireNonNull(server, "server");
+        ServerState state = STATES.get(server);
+        return state == null ? 0 : state.astral.activeCount();
+    }
+
     public static int activeGazes(MinecraftServer server) {
         Objects.requireNonNull(server, "server");
         ServerState state = STATES.get(server);
@@ -159,7 +241,10 @@ public final class MinecraftNoeticRuntime {
     }
 
     public static int activeStateCount(MinecraftServer server) {
-        return activeObservations(server) + activeGazes(server) + activeSanctuaries(server);
+        return activeObservations(server)
+                + activeAstralProjections(server)
+                + activeGazes(server)
+                + activeSanctuaries(server);
     }
 
     /** Explicitly clears all Stage 07.07 state associated with an entity; repeated calls are idempotent. */
@@ -211,11 +296,23 @@ public final class MinecraftNoeticRuntime {
         }
     }
 
+    /** Actual post-mitigation health loss interrupts the physical body's active projection. */
+    private static void onLivingDamagePost(LivingDamageEvent.Post event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || event.getNewDamage() <= 0.0F) {
+            return;
+        }
+        ServerState state = STATES.get(player.serverLevel().getServer());
+        if (state != null) {
+            state.astral.close(player.getUUID(), AstralSeveranceRuntime.CloseReason.BODY_DAMAGED);
+        }
+    }
+
     private static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
         ServerState state = STATES.get(server);
         if (state == null) return;
         settlePendingDeaths(server, state);
+        state.astral.expire(server.getTickCount());
         state.observation.tick(server);
         syncObservationViews(server, state);
         state.gaze.tick(server);
@@ -258,6 +355,14 @@ public final class MinecraftNoeticRuntime {
                 NoeticObservationSession.CloseReason.VIEWER_LOGOUT);
     }
 
+    private static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        ServerState state = STATES.get(player.serverLevel().getServer());
+        if (state != null) {
+            state.astral.close(player.getUUID(), AstralSeveranceRuntime.CloseReason.DIMENSION_CHANGED);
+        }
+    }
+
     /**
      * A LivingDeathEvent is not final while lower-priority resurrection listeners may still cancel it.
      * Queue only bounded loaded-only cleanup work; ServerTick.Post settles the final alive/dead state.
@@ -298,6 +403,7 @@ public final class MinecraftNoeticRuntime {
         ServerState state = STATES.remove(server);
         if (state == null) return;
         state.pendingDeaths.clear();
+        state.astral.clearForServerStop();
         state.observation.clearForServerStop();
         state.gaze.clearForServerStop(server);
         state.sanctuary.clearForServerStop(server);
@@ -314,6 +420,14 @@ public final class MinecraftNoeticRuntime {
         int changed = 0;
         if (state.observation.clearViewer(entityId, viewerReason)) changed++;
         changed += state.observation.clearTarget(entityId);
+        AstralSeveranceRuntime.CloseReason astralReason = switch (viewerReason) {
+            case VIEWER_LOGOUT -> AstralSeveranceRuntime.CloseReason.VIEWER_LOGOUT;
+            case VIEWER_DEATH -> AstralSeveranceRuntime.CloseReason.BODY_DEATH;
+            case SERVER_STOP -> AstralSeveranceRuntime.CloseReason.SERVER_STOP;
+            case EXPLICIT, EXPIRED, TARGET_UNAVAILABLE, AUTHORIZATION_REVOKED ->
+                    AstralSeveranceRuntime.CloseReason.AUTHORIZATION_REVOKED;
+        };
+        if (state.astral.close(entityId, astralReason)) changed++;
         changed += state.gaze.clearEntity(server, entityId);
         changed += state.sanctuary.clearEntity(server, entityId);
         return changed;
@@ -326,6 +440,27 @@ public final class MinecraftNoeticRuntime {
         }
     }
 
+    public record AstralProjectionStart(
+            ArcanaDecision decision,
+            Optional<AstralSeveranceRuntime.ActiveProjection> projection
+    ) {
+        public AstralProjectionStart {
+            Objects.requireNonNull(decision, "decision");
+            Objects.requireNonNull(projection, "projection");
+            if (decision.allowed() != projection.isPresent()) {
+                throw new IllegalArgumentException("Astral projection start result must pair allow with exactly one projection");
+            }
+        }
+
+        private static AstralProjectionStart started(AstralSeveranceRuntime.ActiveProjection projection) {
+            return new AstralProjectionStart(ArcanaDecision.allow(), Optional.of(projection));
+        }
+
+        private static AstralProjectionStart denied(String code, String detail) {
+            return new AstralProjectionStart(ArcanaDecision.deny(code, detail), Optional.empty());
+        }
+    }
+
     private static final class ServerState {
         private final FamiliarOwnershipRegistry familiarOwnership =
                 new FamiliarOwnershipRegistry(NoeticSafetyCeilings.MAX_FAMILIAR_PROVIDERS);
@@ -335,6 +470,8 @@ public final class MinecraftNoeticRuntime {
                 new MinecraftNoeticObservationRuntime(observations, familiarOwnership);
         private final NoeticViewTransitionTracker viewTransitions =
                 new NoeticViewTransitionTracker(NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS);
+        private final AstralSeveranceRuntime astral =
+                new AstralSeveranceRuntime(NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS);
         private final NullificationRegistry nullifications =
                 new NullificationRegistry(NoeticSafetyCeilings.MAX_NULLIFIABLE_EFFECT_TYPES);
         private final MinecraftNoeticGazeRuntime gaze = new MinecraftNoeticGazeRuntime(nullifications);
