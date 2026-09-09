@@ -79,16 +79,27 @@ public final class BlackArcanaRadialScreen extends Screen {
             int y = (int) Math.round(point.y());
             boolean selected = slot == ClientInputController.selection().selectedSlot();
             boolean hovered = slot == hoveredSlot;
-            int background = hovered ? 0xDD6B376D : selected ? 0xCC3D2748 : 0xB815101A;
-            int border = hovered ? 0xFFF2D0F2 : selected ? 0xFFB991C0 : 0xFF5A4A60;
+            CastingUxSemantics.FocusState focus = CastingUxSemantics.focus(selected, hovered);
+            int background = switch (focus) {
+                case NONE -> 0xB815101A;
+                case SELECTED -> 0xCC3D2748;
+                case HOVERED, SELECTED_HOVERED -> 0xDD6B376D;
+            };
+            int border = switch (focus) {
+                case NONE -> 0xFF5A4A60;
+                case SELECTED -> 0xFFB991C0;
+                case HOVERED -> 0xFFF2D0F2;
+                case SELECTED_HOVERED -> 0xFFFFE8FF;
+            };
             graphics.fill(x - card.halfWidth() - 1, y - card.halfHeight() - 1,
                     x + card.halfWidth() + 1, y + card.halfHeight() + 1, border);
             graphics.fill(x - card.halfWidth(), y - card.halfHeight(),
                     x + card.halfWidth(), y + card.halfHeight(), background);
 
+            String prefix = focusPrefix(focus);
             String label = card.compact()
-                    ? Integer.toString(slot + 1)
-                    : (slot + 1) + " · " + displayName(spell, card.halfWidth() * 2 - 18);
+                    ? prefix + (slot + 1)
+                    : prefix + (slot + 1) + " · " + displayName(spell, card.halfWidth() * 2 - 18);
             graphics.drawCenteredString(font, label, x, y - 4, 0xFFFFFFFF);
         }
 
@@ -150,6 +161,15 @@ public final class BlackArcanaRadialScreen extends Screen {
             boolean openKeyPressed
     ) {
         return behavior == BlackArcanaClientConfig.RadialBehavior.TOGGLE && openKeyPressed;
+    }
+
+    static String focusPrefix(CastingUxSemantics.FocusState focus) {
+        return switch (focus) {
+            case NONE -> "";
+            case SELECTED -> "[S] ";
+            case HOVERED -> "> ";
+            case SELECTED_HOVERED -> ">[S] ";
+        };
     }
 
     @Override
