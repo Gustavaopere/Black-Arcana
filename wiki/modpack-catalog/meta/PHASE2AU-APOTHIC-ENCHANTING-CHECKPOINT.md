@@ -6,8 +6,10 @@ Phase 2AU audits `apothic_enchanting` 1.6.2 against the current physical modpack
 
 ## Canonical base
 
-- base `main`: `3c9795820f48cbe01a28ed1d4c3f1238cce816a0`
-- canonical component count on that base: **48/100 = 48%**
+- initial Phase 2AU branch base: `main@3c9795820f48cbe01a28ed1d4c3f1238cce816a0`
+- latest reconciled `main`: `29a0099e899e03d80bf904c2d5ead72f40421fe8`
+- the intervening PR #157 is Stage 05 keyboard-focus work and has zero catalog coverage delta; none of its 11 changed files overlaps this Phase 2AU catalog tranche
+- canonical component count on the reconciled base: **48/100 = 48%**
 - Phase 2AT / PR #156 is canonical as component #48 (`apothic_spawners` 1.4.0)
 
 ## Physical anchor
@@ -103,6 +105,6 @@ Fail-closed:
 
 The provider is eligible to become component **#49** because current physical identity plus exact 1.6.2 source close the provider-owned semantic surfaces relevant to Black Arcana deduplication, including the explicit result that its enchanting systems are not a second Black Arcana spell/casting authority.
 
-Until final latest-main reconciliation, exact-head CI GREEN, merge and post-merge `main` confirmation, canonical coverage remains **48/100 = 48%** and Phase 2AU represents **49/100 = 49%** only as a candidate.
+Until exact-head CI GREEN, final latest-main gate, merge and post-merge `main` confirmation, canonical coverage remains **48/100 = 48%** and Phase 2AU represents **49/100 = 49%** only as a candidate.
 
 Phase 3 remains blocked.
