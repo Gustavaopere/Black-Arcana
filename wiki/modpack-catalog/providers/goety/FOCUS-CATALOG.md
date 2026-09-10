@@ -120,6 +120,8 @@ The 110-name list remains useful as a documentary subset and for previously esta
 24. Corruption Focus
 25. Order Focus
 
+The earlier preparatory count of 24 Magic Focuses omitted **Order Focus**. The corrected legacy public-family count is 25, yielding 110 names across the Wiki subset.
+
 ### Necromancy — 11
 
 1. Rotting Focus
@@ -238,6 +240,7 @@ Goety Focuses are provider-owned spell/casting units used through compatible Wan
 
 - translate one Focus activation into a second Black Arcana cast;
 - externally charge Soul Energy for a Goety cast;
+- invent registry ids from English display names;
 - grant a Focus merely because an RPG mastery or Black Arcana domain has similar semantics;
 - treat a specialized Staff modifier as an independent spell event;
 - infer installed 3.1.4 registry membership from a 3.1.0/3.1.1 source line without exact reconciliation.
@@ -257,9 +260,21 @@ Therefore this reconciliation adds **0** to the strict semantic total. The globa
 
 ## Semantic overlap constraints
 
-The documented and source-visible Focus surface is already sufficient to prove broad overlap families that Phase 3 must not ignore: defense, healing/sustain, telekinesis/control, mobility, summoning/servants, fire/nether, frost, storm/lightning, earth/geomancy, abyss, void/displacement and projectile/area offense.
+The legacy public inventory is already sufficient to prove broad overlap families that Phase 3 must not ignore:
 
-This proves provider coverage, not exact implementation equivalence. Final Black Arcana design disposition still needs behavior-level evidence before declaring a concept duplicate or genuinely distinct.
+- **defense:** Iron Hide, Bulwark;
+- **healing/sustain:** Soul Heal, Leeching;
+- **telekinesis/control:** Telekinesis, Command, Weakening, Banish, Snaring;
+- **mobility:** Grapple, Leaping, Launching, Flight, Updraft, Blink, End Walk;
+- **summoning/servants:** Vexing, Rotting, Osseous, Vanguard, Blackguard, Guardian, Call, Troop and related families;
+- **fire/nether:** Ignite, Fire Breath and the full legacy Nether family;
+- **cold:** the full Frost family;
+- **storm/lightning:** the full Storm family;
+- **earth/terrain-facing magic:** Geomancy family;
+- **void/displacement:** Void family;
+- **projectile/area offense:** Arrow Rain, Sonic Boom, Eruption, Blizzard, Meteor Shower and others.
+
+The public source registry adds further current-line registry evidence beyond that 110-name documentary subset. This proves provider coverage, not exact implementation equivalence. Final Black Arcana design disposition still needs behavior-level evidence before declaring a concept duplicate or genuinely distinct.
 
 ## Clean-room policy
 
@@ -275,7 +290,7 @@ Do not create one `.md` per newly observed Focus from registry membership alone.
 2. current official documentation giving enough per-Focus mechanics to satisfy the catalog contract;
 3. direct runtime QA with reproducible evidence.
 
-Unknown numerical/mechanical fields remain fail-closed.
+Until then, unknown numeric/mechanical fields remain fail-closed instead of being copied from older Goety branches, unverified revisions or third-party forks.
 
 ## Addon exclusion
 
