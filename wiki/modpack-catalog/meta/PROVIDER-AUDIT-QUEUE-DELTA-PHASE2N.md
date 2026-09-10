@@ -9,7 +9,7 @@ This narrow overlay prevails only for mod id `leylines` until the integral 103-p
 - Minecraft/loader: `1.21.1` / NeoForge
 - CurseForge Project ID: `1636676`
 - CurseForge File ID: `8565076`
-- Physical modlist hash: `5307a4edc885ab949eed4438d9d7f9cb6176421d`
+- Physical modlist hash: `dfa6908731f432905caaaa1e53b4aedeaa26ed59`
 - License: `All Rights Reserved`
 - Current state: `EXACT INSTALLED IDENTITY 1.0.3 / PHYSICAL HASH CORRECTED / 9 PUBLIC SIGNATURE NAMES LOWER BOUND / PUBLISHER RIFT + PROGRESSION SURFACE CATALOGED / COMPLETE REGISTRY + BYTECODE/API QA PENDING / FAIL-CLOSED`
 
@@ -26,7 +26,7 @@ The publisher-facing surface is now normalized under the single canonical provid
 
 ## Provenance correction
 
-An older catalog note associated SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` with File ID `8565076` through an external index. The current physical modlist row for `leylines-1.0.3.jar` instead records `5307a4edc885ab949eed4438d9d7f9cb6176421d`. The physical modlist is authoritative for the installed artifact, so the external hash is retired as installed-artifact evidence.
+The current physical modlist row for `leylines-1.0.3.jar` records SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59`. An independent public manifest for CurseForge File ID `8565076` corroborates the same artifact/hash pair. A previous catalog revision incorrectly assigned SHA-1 `5307a4edc885ab949eed4438d9d7f9cb6176421d` to Leylines; independent public manifests instead associate that value with `letsdo-wildernature-neoforge-1.1.5.jar` / CurseForge File ID `8543233`. The stale value is rejected for Leylines.
 
 ## Structural correction
 

@@ -9,10 +9,10 @@
 - CurseForge File ID: `8565076`
 - release: `2026-08-02`, Release channel
 - Curse Maven coordinate: `curse.maven:leylines-irons-spells-n-spellbooks-addon-1636676:8565076`
-- physical modlist hash: `5307a4edc885ab949eed4438d9d7f9cb6176421d`
+- physical modlist hash: `dfa6908731f432905caaaa1e53b4aedeaa26ed59`
 - license: `All Rights Reserved`
 
-The current physical modlist is authoritative for the installed hash. Previous catalog material recorded `dfa6908731f432905caaaa1e53b4aedeaa26ed59` from a third-party index as the artifact SHA-1. That external value conflicts with the current physical row and is retired from installed-artifact provenance.
+The current physical modlist is authoritative for the installed hash. It records SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` for `leylines-1.0.3.jar`, and an independent public manifest for CurseForge File ID `8565076` corroborates that same artifact/hash pair. The previously recorded SHA-1 `5307a4edc885ab949eed4438d9d7f9cb6176421d` is rejected for Leylines; independent public manifests associate that value with `letsdo-wildernature-neoforge-1.1.5.jar` / CurseForge File ID `8543233`.
 
 ## Public source status
 
