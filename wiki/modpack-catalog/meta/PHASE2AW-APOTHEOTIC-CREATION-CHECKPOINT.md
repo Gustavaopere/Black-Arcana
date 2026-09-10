@@ -58,7 +58,7 @@ It registers exactly two types in Create's built-in item-attribute registry:
 1. `apotheoticcreation:rarity` → `RarityAttribute.Type`;
 2. `apotheoticcreation:affix` → `AffixAttribute.Type`.
 
-No addon-owned spell registry, mana/cast resource, ritual runtime, networking/payload class, saved state, attachment, mixin or second content registry is present in the complete exact source tree.
+The addon owns `MapCodec`/`StreamCodec` serialization for those two attribute values. Create owns the enclosing Attribute Filter storage/transport that may persist or synchronize them. No addon-owned spell registry, mana/cast resource, ritual runtime, standalone payload registration, SavedData, attachment, mixin or second content registry is present in the complete exact source tree.
 
 ### Rarity path
 
@@ -85,8 +85,8 @@ The exclusion is recorded as enumeration behavior only. This audit does not clai
 ## Authority/deduplication result
 
 - Apotheosis remains authority for rarities, affixes and item metadata.
-- Create remains authority for Attribute Filter semantics and logistics consumers.
-- Apotheotic Creation owns only the translation/registration bridge between those systems.
+- Create remains authority for Attribute Filter semantics, enclosing filter storage/transport and logistics consumers.
+- Apotheotic Creation owns the translation/registration bridge and serialization of its two attribute values.
 - Smart Observer, Brass Tunnel, funnel or other Create behavior remains downstream Create behavior, not an independent Apotheotic Creation API.
 - Apokinetics remains a different concern: machine gems/sockets/upgrades are not provided by Apotheotic Creation.
 - Black Arcana acquires no spell, resource, hazard, ritual, progression or world-effect authority from this addon.
