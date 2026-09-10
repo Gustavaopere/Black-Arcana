@@ -13,7 +13,7 @@ Therefore:
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
-The reconstructible semantic ledger now lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot and reconstruction base `main@1ef4d7f9c363bf8b37dd6ae8bf305f7750b6cedc`, it currently closes a **strict counted minimum of 729 semantic magic objects** from provider records that meet the ledger's inclusion rule. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
+The reconstructible semantic ledger now lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot and reconstruction base `main@4164857555331cba759406064459dc392f9c0b30`, it currently closes a **strict counted minimum of 745 semantic magic objects** from provider records that meet the ledger's inclusion rule. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
 
