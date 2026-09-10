@@ -1,6 +1,6 @@
 # Provider Audit Queue — Phase 2J delta
 
-Data: `2026-09-07`; Malum effective row reconciled `2026-09-10`.
+Data: `2026-09-07`; Malum and base-Goety effective rows reconciled `2026-09-10`.
 
 This file is a narrow status overlay over `PROVIDER-AUDIT-QUEUE.md`. It prevails only for the rows named below until the next integral regeneration of the 103-provider queue. It does not supersede `PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md` for Goety Cataclysm/Goety Iron.
 
@@ -9,8 +9,35 @@ This file is a narrow status overlay over `PROVIDER-AUDIT-QUEUE.md`. It prevails
 | Mod ID | Installed identity | Current effective audit state |
 |---|---|---|
 | `malum` | `malum-1.21.1-1.8.2.jar` / `1.8.2` | `RELEASE-BOUNDED CORE REGISTRY INVENTORIES CLOSED / SPIRIT RITES 26/26 PLAYER-FACING SEMANTIC IDENTITIES / GEAS EFFECT TYPES 37/37 NON-ADDITIVE / SPIRIT TYPES 9/9 NON-ADDITIVE / WHOLE-INTERVAL PATH HISTORY + SPECIAL-RITE CODEX REACHABILITY VERIFIED / SOURCE↔JAR EQUIVALENCE + RECIPES + RUNTIME/API/RESOURCE QA PENDING / LGPLv3↔ARR PROVENANCE CONFLICT BLOCKS SOURCE-DERIVED IMPLEMENTATION / FAIL-CLOSED` |
+| `goety` | `goety-3.1.4.jar` / runtime `3.1.4` / SHA-1 `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7` | `OPEN CURRENT REGISTRY / PUBLIC 1.21.1 SOURCE LINE VERIFIED THROUGH 3.1.1 / MODITEMS BLOB db3c63b3 STABLE ACROSS AUDITED 3.1.0→3.1.1 CHECKPOINTS / 123 ACTIVE FOCUS ITEM REGISTRATIONS FACTUALLY CLOSED FOR THAT PUBLIC SOURCE INTERVAL / LEGACY WIKI 110 IS INCOMPLETE / EXACT 3.1.4 JAR-SOURCE + SEMANTIC REACHABILITY/DEDUP + RITUAL IDENTITIES + RUNTIME/API QA PENDING / FAIL-CLOSED` |
 | `hexalia` | `hexalia-neoforge-1.3.6.jar` / runtime metadata `1.3.5` | `PUBLIC RELEASE+SOURCE PIN 1.3.6 / MIT / BREWS 8/8 / NATURE'S RITUAL 19/19 PLAYER-FACING / CELESTIAL INFUSION 6/6 / MUTATION 21/21 / MORTAR 12/12 / CENSER 10/10 / IDOLS+MAJOR CAPABILITY OUTPUTS AUDITED / INSTALLED FILENAME↔RUNTIME VERSION MISMATCH + API/RUNTIME QA PENDING` |
 | `toxony` | `toxony-0.10.7.jar` / runtime `0.10.7` | `EXACT INSTALLED ARTIFACT + EXACT PUBLIC 0.10.7 SOURCE VERSION PIN 881bf7fe / EFFECTS 5/5 / OILS 9/9 / MUTAGEN EFFECTS 7/7 / AFFINITIES 11/11 / THRESHOLD MODEL + IRON'S/VAMPIRISM/WEREWOLVES COMPAT FACTUALLY AUDITED / GPLv3↔LGPLv3 LICENSE CONFLICT / RUNTIME+SUPPORTED-API QA PENDING / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
+
+## Goety interpretation — reconciled 2026-09-10
+
+The old base-Goety catalog state treated the official Wiki list of 110 Focuses as the strongest current inventory and stated that no official/public 1.21.1 source line was available. That is stale.
+
+The strongest safe current claims are:
+
+- physical authority remains `goety-3.1.4.jar` / runtime `3.1.4`, SHA-1 `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7`;
+- public `Vivideru/Goety-3` is the 1.21.1+ source line;
+- audited checkpoint `4230e3bce2842779a6667ae6e5bfef8f53a27541` declares Goety `3.1.0` and checkpoint `6c41a04f2d712097c4461f969a6bb8ee277149ef` declares `3.1.1`;
+- no public source/tag matching distributed `3.1.2` or installed `3.1.4` has been established;
+- `src/main/java/com/Polarice3/Goety/common/items/ModItems.java` has blob `db3c63b366803e2d46aa4a996b5bb0f358437a7f` at both audited endpoints;
+- that registry contains **123 active Focus item registrations**: 26 Magic + 11 Necromancy + 11 Geomancy + 9 Frost + 12 Wild + 9 Wind + 11 Storm + 9 Abyss + 11 Nether + 14 Void;
+- the legacy 110-name Wiki list omits 13 source-registered Focus IDs and is therefore a documentary subset, not a complete current-source registry;
+- item registry membership is not automatically equivalent to a player-facing semantic action count;
+- exact 3.1.4 JAR/source equivalence, reachability, object-level deduplication and discrete ritual identities remain unresolved;
+- Goety contributes **+0** at this reconciliation checkpoint and the strict semantic minimum remains **796**;
+- Goety remains authority for Soul Energy, Focus casting, rituals, servants and its own lifecycle/settlement semantics.
+
+### Provenance boundary
+
+`Vivideru/Goety-3/LICENSE.txt` is mixed-license: original `src/main/java/com/Polarice3/` code is stated as MIT, while `src/main/java/com/Vivideru/` additions are All Rights Reserved unless specifically stated otherwise. The audited `ModItems.java` is in the `com/Polarice3` scope.
+
+The source is consulted read-only for factual identifiers/counts/blob/version provenance. No upstream implementation/assets/text are copied or adapted, the whole tree is not represented as MIT, and no source-derived 3.1.4 runtime/API contract is promoted.
+
+Goety is therefore **open with a current public registry baseline**, not `LOWER_BOUND` based on the legacy Wiki and not `SOURCE-PINNED 3.1.4`.
 
 ## Malum interpretation — reconciled 2026-09-10
 
@@ -71,6 +98,7 @@ Therefore source observations are factual catalog evidence only. Black Arcana do
 
 None of these rows becomes an automatic Phase 3 implementation approval.
 
+- Goety: public current-line registry evidence is stronger than the stale Wiki inventory, but exact 3.1.4 source/JAR, semantic reachability/deduplication, ritual identities and supported runtime/API seams remain fail-closed;
 - Malum: narrow semantic Rite inventory is closed, but source↔JAR equivalence, recipes, supported API/resource seams and runtime QA remain separate fail-closed gates;
 - Hexalia: installed-runtime/API gates remain;
 - Toxony: license/API/runtime gates remain.
