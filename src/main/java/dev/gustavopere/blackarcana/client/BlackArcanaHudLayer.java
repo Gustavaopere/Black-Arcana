@@ -57,26 +57,25 @@ public final class BlackArcanaHudLayer {
                 : null;
         boolean problemRecent = resultState == CastingUxSemantics.AdmissionState.CAST_DENIED
                 || resultState == CastingUxSemantics.AdmissionState.CAST_FAILED;
+        ContextualFeedbackOrchestration.Decision decision = ContextualFeedbackOrchestration.decide(
+                level, selectionRecent, resultRecent, resultState);
 
-        if (level == BlackArcanaClientConfig.FeedbackLevel.MINIMAL && !problemRecent) return;
-        if (!selectionRecent && !resultRecent) return;
+        if (!decision.showSelectionContext() && !decision.showAuthoritativeResult()) return;
 
         List<Component> lines = new ArrayList<>(4);
-        if (level != BlackArcanaClientConfig.FeedbackLevel.MINIMAL) {
+        if (decision.showSelectionContext()) {
             selectedSpellLine().ifPresent(lines::add);
-            if (selectionRecent) {
-                selectedHazardLine().ifPresent(lines::add);
-                selectedGateLine().ifPresent(lines::add);
-            }
+            selectedHazardLine().ifPresent(lines::add);
+            selectedGateLine().ifPresent(lines::add);
         }
-        if (resultRecent) {
+        if (decision.showAuthoritativeResult()) {
             CastResultPayload payload = result.orElseThrow();
             if (problemRecent) {
                 // The detail is the bounded server result; the client never invents a gate reason.
                 lines.add(Component.translatable(
                         resultTranslationKey(resultState),
                         Component.literal(payload.detail())));
-            } else if (level == BlackArcanaClientConfig.FeedbackLevel.VERBOSE) {
+            } else {
                 lines.add(Component.translatable(resultTranslationKey(resultState)));
             }
         }
