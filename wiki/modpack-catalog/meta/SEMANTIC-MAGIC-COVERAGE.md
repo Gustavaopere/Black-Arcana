@@ -163,7 +163,7 @@ These rows are deliberately **not additive to 796** until their exact/current in
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
 | [Cataclysm: Spellbooks](../providers/cataclysm-spellbooks/README.md) 1.1.13 | current publisher says **65 new spells**; public source baseline 1.1.11 contains 34 registrations | `LOWER_BOUND / OPEN CURRENT REGISTRY` | exact 1.1.13 names/IDs are not available; cannot perform one-object ownership/dedup verification |
-| [Goety](../providers/goety/README.md) 3.1.4 | current official documentation inventories **110 base Focuses** and provider model states that the Focus determines the spell | `LOWER_BOUND / OPEN JAR RECONCILIATION` | exact 3.1.4 Focus/JAR reconciliation remains pending; 13 ritual *types* are categories and are not blindly counted as 13 rites |
+| [Goety](../providers/goety/README.md) 3.1.4 | public 1.21.1 source line registers **123 active Focus items** in `ModItems.java`, stable at audited 3.1.0/3.1.1 checkpoints; the legacy Wiki 110-name list omits 13 of those registry identities | `OPEN CURRENT REGISTRY / EXACT 3.1.4 JAR-SOURCE RECONCILIATION PENDING` | exact installed 3.1.4 registry equivalence, player-facing semantic reachability/object-level deduplication and discrete ritual identities remain pending; item registration alone is not blindly counted as one semantic action |
 | [Leyline Spellbooks](../providers/leyline-spellbooks/README.md) 1.0.3 | **9** publisher-named signature spells followed by “and more” | `LOWER_BOUND` | nine is explicitly not a complete registry count |
 | [Somake Spells](../providers/somake-spells/README.md) 1.0.8-fix | publisher states **over 50 spells** | `LOWER_BOUND / OPEN CURRENT REGISTRY` | complete current registry, IDs and Aqua/T.O authority under the physical dual-installed stack remain unresolved |
 | [Gaze](../providers/gaze/README.md) 1.1.7.1 | publisher states **2 Geas** plus a new set of Rites | `LOWER_BOUND / OPEN` | rite registry and complete IDs/names are not published; exact source/JAR extraction pending |
@@ -193,7 +193,7 @@ To converge on a final denominator efficiently, prioritize:
 3. exact current inventory for `leylines` 1.0.3;
 4. exact Gaze 1.1.7.1 rites/Geas inventory;
 5. complete Alshanex's Familiars 4.0.3 spell/ritual inventory after the Sound→Tunes ownership migration;
-6. Goety 3.1.4 Focus/JAR and ritual-identity reconciliation;
+6. Goety 3.1.4 exact JAR/source reconciliation, Focus semantic reachability/deduplication and discrete ritual-identity inventory;
 7. current-pack config/reachability closure for conditional action/glyph rows.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
