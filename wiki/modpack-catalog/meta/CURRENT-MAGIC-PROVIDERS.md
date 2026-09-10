@@ -110,6 +110,12 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 
 A cobertura source-level não converte o addon em authority de Black Arcana nem em provider de Mastery do RPG Skill Tree.
 
+## Checkpoint Goety — reconciliação de evidência 3.1.x
+
+O artefato físico permanece `goety-3.1.4.jar` / runtime `3.1.4`. A linha pública `Vivideru/Goety-3` foi auditada nos checkpoints 3.1.0 e 3.1.1: `ModItems.java` mantém o mesmo blob e contém **123 registros ativos de itens Focus** no intervalo observado. A lista oficial da Wiki com 110 nomes continua válida como subconjunto documental, não como registry completo atual.
+
+Esse avanço é **evidence-only +0**: não existe pin público exato de source 3.1.4 estabelecido, e registry membership não fecha sozinho reachability, deduplicação semântica, custos, hooks ou runtime. Por isso o mínimo semântico estrito continua **796**, e Goety permanece authority de Soul Energy, Focus casting, servants, rituals e progression. O estado canônico detalhado está nos overlays de queue/capability e em `providers/goety/`.
+
 ## Regra de completude
 
 A Wiki só poderá declarar `CATÁLOGO MÁGICO COMPLETO` quando:
