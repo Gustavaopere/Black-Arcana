@@ -43,7 +43,7 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 ## Strict reconstructible counted minimum
 
-**770 semantic magic objects are currently reconstructible from canonical provider records.**
+**796 semantic magic objects are currently reconstructible from canonical provider records.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -54,7 +54,8 @@ Arithmetic cross-check by provider family:
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **54**;
 - Hexalia ritual/infusion layer: **25**;
-- total: `199 + 450 + 42 + 54 + 25 = 770`.
+- Malum Spirit Rite layer: **26**;
+- total: `199 + 450 + 42 + 54 + 25 + 26 = 796`.
 
 ### Counted ledger
 
@@ -89,7 +90,8 @@ Arithmetic cross-check by provider family:
 | [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike, whose survival reachability is unproven and is therefore conditional |
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 7 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear; Leap is conditional and Hide Name is presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
-| **Strict total** |  | **770** |  |  |
+| [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | stable `1.8.2` source interval contains 26 base-Malum `SpiritRiteType` registrations; 37 Geas effect-type identities and 9 spirit resource/type identities are tracked separately but excluded by metric scope |
+| **Strict total** |  | **796** |  |  |
 
 ### Hexalia release-boundary reconciliation
 
@@ -98,6 +100,20 @@ Hexalia remains an explicit physical/source identity mismatch: the installed fil
 The official source commit `ef34896fc1a2a02da46b49a46ca78ca236bdc2dc` (`Update 1.3.5`) declares `mod_version=1.3.5`; its immediate release successor `4952c65233bf31e9f0d3e55ff76be7fa1007ee3d` (`Release Hexalia 1.3.6`) declares `mod_version=1.3.6`. Comparing those checkpoints shows no Nature's Ritual or Celestial Infusion recipe JSON added, removed or modified. The official 1.3.5 publisher changelog also records restoration of the Galeberries Celestial Infusion recipe, so the six-infusion inventory is already present on the 1.3.5 release line.
 
 Therefore the intersection relevant to this metric is stable across the observed `1.3.5` metadata / `1.3.6` filename-source boundary: **19 player-facing Nature's Rituals + 6 Celestial Infusions = 25**. The debug Nature's Ritual is excluded. Exact installed-binary equivalence, runtime mechanics and provider API/hook QA remain open independently.
+
+### Malum 1.8.2 release-boundary reconciliation
+
+The physical instance identifies `malum-1.21.1-1.8.2.jar` / runtime `1.8.2`. The official `SammySemicolon/Malum-Mod` `1.21.1` history bounds the matching version line between `f56691e56e591a6d8d1859ff119e749375e14d61`, whose parent still declares `1.8.1`, and `03b743a37f3eeb0cc7f4364f0730e1f135f78408`, whose child advances to `1.8.3`.
+
+Across those two `1.8.2` endpoints, the relevant registry source blobs are identical:
+
+- `MalumSpiritRiteTypes.java` → `2b9e4e5445733dee4ed205e4331d55c93ac86028`, with **26 active base-Malum rite registrations**;
+- `MalumGeasEffectTypes.java` → `2aef164fcedae891b2c6805f2edbd8ee48cffbfe`, with **37 active Geas effect-type registrations**; two proposed Bonds and one Authority are commented out;
+- `MalumSpiritTypes.java` → `fa772479f0f73131dabf33d9342299c7e20405e1`, with **9 spirit resource/type registrations**.
+
+Only the **26 `SpiritRiteType` identities** are additive under this ledger's definition. The Geas registry is an effect/progression registry and the Spirit Type registry is a resource/type registry, both explicitly outside the counted semantic-action classes. Gaze-provided rites are not included in the base Malum 26.
+
+This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence claim. The upstream licensing inconsistency documented in the Malum provider catalog continues to block promotion of source implementation internals into Black Arcana integration contracts; runtime/API/recipe mechanics remain fail-closed until independently verified.
 
 ## Conditional objects excluded from the strict total
 
@@ -128,7 +144,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 770** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 796** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -138,7 +154,6 @@ These rows are deliberately **not additive to 770** until their exact/current in
 | [Somake Spells](../providers/somake-spells/README.md) 1.0.8-fix | publisher states **over 50 spells** | `LOWER_BOUND / OPEN CURRENT REGISTRY` | complete current registry, IDs and Aqua/T.O authority under the physical dual-installed stack remain unresolved |
 | [Gaze](../providers/gaze/README.md) 1.1.7.1 | publisher states **2 Geas** plus a new set of Rites | `LOWER_BOUND / OPEN` | rite registry and complete IDs/names are not published; exact source/JAR extraction pending |
 | [Ignis Soulfires: Spellbooks](../providers/ignis-soulfires-spellbooks/README.md) 1.1.0 | exact installed artifact and exact official CurseForge release are pinned (`project 1572171`, file `8620663`); publisher explicitly describes a Souled Ignitium Wizard Armor compatibility scope, while exact source/registry remains unavailable | `OPEN` | no safe 1.1.0 semantic registry inventory; publisher armor scope does not prove absence of spell/ritual registrations |
-| [Malum](../providers/malum/README.md) 1.8.2 | Spirit Rites and Geas/Pact/Oath/Authority systems are proven in the installed line | `OPEN` | exact 1.8.2 rite and Geas inventories remain unreconciled; later-branch counts are not imported |
 | [Alshanex's Familiars](../providers/alshanex-familiars/README.md) 4.0.3 | exact 4.0.3 release directly confirms **Fire Fist**; 4.0 introduced Switcheroo; 4.0 moved Sound ownership to Tunes; a data-driven ritual subsystem is documented | `LOWER_BOUND / OPEN CURRENT INVENTORY` | current lower bound is at least **1** directly evidenced spell; Switcheroo 4.0.3 presence and the complete current spell/ritual inventories remain unverified |
 | [Goety Cataclysm](../providers/goety-cataclysm/README.md) 1.21.1-1.8.2 | exact installed release; public semantic surface proves addon spells/abilities exist | `OPEN` | complete Focus/spell/ritual inventory unavailable for current build |
 | [Goety Iron](../providers/goety-iron/README.md) 3.1 | exact installed release; servant/focus/ritual bridge publicly established | `OPEN / BRIDGE-BOUNDED` | public servant list is not a spell inventory; focus/ritual registry totals are unverified |
@@ -147,9 +162,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **770 is not “770 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 770 by the 100 provider-component denominator. `52/100` and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 770 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **796 is not “796 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 796 by the 100 provider-component denominator. `52/100` and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 796 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
@@ -165,7 +180,6 @@ To converge on a final denominator efficiently, prioritize:
 4. exact Gaze 1.1.7.1 rites/Geas inventory;
 5. complete Alshanex's Familiars 4.0.3 spell/ritual inventory after the Sound→Tunes ownership migration;
 6. Goety 3.1.4 Focus/JAR and ritual-identity reconciliation;
-7. Malum 1.8.2 rites/Geas inventory;
-8. current-pack config/reachability closure for conditional action/glyph rows.
+7. current-pack config/reachability closure for conditional action/glyph rows.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
