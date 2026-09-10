@@ -1,6 +1,6 @@
 # Provider Audit Queue — Phase 2J delta
 
-Data: `2026-09-07`
+Data: `2026-09-07`; Malum effective row reconciled `2026-09-10`.
 
 This file is a narrow status overlay over `PROVIDER-AUDIT-QUEUE.md`. It prevails only for the rows named below until the next integral regeneration of the 103-provider queue. It does not supersede `PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md` for Goety Cataclysm/Goety Iron.
 
@@ -8,22 +8,27 @@ This file is a narrow status overlay over `PROVIDER-AUDIT-QUEUE.md`. It prevails
 
 | Mod ID | Installed identity | Current effective audit state |
 |---|---|---|
-| `malum` | `malum-1.21.1-1.8.2.jar` / `1.8.2` | `EXACT VERSION-LINE METADATA + PUBLISHER CHANGELOG AUDITED / SPIRIT RITE ARCHITECTURE + INSTALLED-LINE GEAS NAMES + SPIRIT RESOURCE MODEL ADVANCED / SOURCE-INTERNAL CATALOG BLOCKED BY LGPLv3↔ARR PROVENANCE CONFLICT / COMPLETE REGISTRIES+RUNTIME QA PENDING / FAIL-CLOSED` |
+| `malum` | `malum-1.21.1-1.8.2.jar` / `1.8.2` | `RELEASE-BOUNDED CORE REGISTRY INVENTORIES CLOSED / SPIRIT RITES 26/26 PLAYER-FACING SEMANTIC IDENTITIES / GEAS EFFECT TYPES 37/37 NON-ADDITIVE / SPIRIT TYPES 9/9 NON-ADDITIVE / WHOLE-INTERVAL PATH HISTORY + SPECIAL-RITE CODEX REACHABILITY VERIFIED / SOURCE↔JAR EQUIVALENCE + RECIPES + RUNTIME/API/RESOURCE QA PENDING / LGPLv3↔ARR PROVENANCE CONFLICT BLOCKS SOURCE-DERIVED IMPLEMENTATION / FAIL-CLOSED` |
 | `hexalia` | `hexalia-neoforge-1.3.6.jar` / runtime metadata `1.3.5` | `PUBLIC RELEASE+SOURCE PIN 1.3.6 / MIT / BREWS 8/8 / NATURE'S RITUAL 19/19 PLAYER-FACING / CELESTIAL INFUSION 6/6 / MUTATION 21/21 / MORTAR 12/12 / CENSER 10/10 / IDOLS+MAJOR CAPABILITY OUTPUTS AUDITED / INSTALLED FILENAME↔RUNTIME VERSION MISMATCH + API/RUNTIME QA PENDING` |
 | `toxony` | `toxony-0.10.7.jar` / runtime `0.10.7` | `EXACT INSTALLED ARTIFACT + EXACT PUBLIC 0.10.7 SOURCE VERSION PIN 881bf7fe / EFFECTS 5/5 / OILS 9/9 / MUTAGEN EFFECTS 7/7 / AFFINITIES 11/11 / THRESHOLD MODEL + IRON'S/VAMPIRISM/WEREWOLVES COMPAT FACTUALLY AUDITED / GPLv3↔LGPLv3 LICENSE CONFLICT / RUNTIME+SUPPORTED-API QA PENDING / PROVIDER-SPECIFIC IMPLEMENTATION FAIL-CLOSED` |
 
-## Malum interpretation
+## Malum interpretation — reconciled 2026-09-10
 
-The full queue still describes Malum as a generic base provider with catalog pending. That is stale relative to merged Phase 2I work.
+The full queue still describes Malum as a generic base provider with catalog pending. This overlay is authoritative for the Malum row until integral queue regeneration, and the old Phase 2I/2J interpretation is superseded by the release-bounded semantic audit.
 
-The strongest safe current claim remains limited by provenance:
+The strongest safe current claims are:
 
-- installed 1.8.2 identity is known;
-- publisher-authored 1.8/1.8.2 changelog evidence establishes the Deferred Registry transition, Rite Locus/Anchors architecture and named Geas/Pact/Oath/Authority surface;
-- exact source-internal registry/algorithm promotion remains blocked because upstream licensing evidence conflicts;
-- runtime QA remains separate.
+- installed physical identity remains `malum-1.21.1-1.8.2.jar` / runtime `1.8.2`;
+- the official `1.21.1` source history bounds the observed `1.8.2` interval from `f56691e56e591a6d8d1859ff119e749375e14d61` through `03b743a37f3eeb0cc7f4364f0730e1f135f78408`;
+- whole-interval path history plus stable endpoint blobs closes **26 active base `SpiritRiteType` registrations**, **37 active `GeasEffectType` registrations**, and **9 `SpiritArcanaType` registrations** for factual release-bounded accounting;
+- `TotemMagicEntries.java` plus all observed `CodexLangDatagen.java` snapshots in that interval independently establish that `undirected_rite` and `unchained_rite` are player-facing rite entries rather than sentinel/proxy slots;
+- only the **26 Spirit Rites** are additive under the current semantic-magic metric; Geas effect types and Spirit resource/type identities remain non-additive by definition;
+- the strict reconstructible semantic minimum therefore includes Malum **+26**, producing the current **796** total recorded in `SEMANTIC-MAGIC-COVERAGE.md`;
+- exact installed-JAR/source byte equivalence remains unproven;
+- exact recipes/inputs, numerical requirements, Rite Locus runtime lifecycle/budgets, resource query/consume/refund seams, reaping causality and safe public API/event hooks remain separate QA/integration gates;
+- the LGPLv3↔`All Rights Reserved` source-license conflict remains unresolved, so source-derived implementation/API specification and provider-resource mutation contracts remain blocked/fail-closed.
 
-Malum is therefore **advanced but not granular-complete**.
+Malum is therefore **closed for the narrow release-bounded semantic Rite inventory**, but it is **not provider-wide runtime/API/resource granular-complete** and receives no new implementation authority from this catalog result.
 
 ## Hexalia interpretation
 
@@ -66,12 +71,12 @@ Therefore source observations are factual catalog evidence only. Black Arcana do
 
 None of these rows becomes an automatic Phase 3 implementation approval.
 
-- Malum: provenance/API/runtime gates remain.
-- Hexalia: installed-runtime/API gates remain.
+- Malum: narrow semantic Rite inventory is closed, but source↔JAR equivalence, recipes, supported API/resource seams and runtime QA remain separate fail-closed gates;
+- Hexalia: installed-runtime/API gates remain;
 - Toxony: license/API/runtime gates remain.
 
 Provider-native authority and fail-closed integration remain mandatory.
 
-## Next provider checkpoint
+## Historical next-provider note
 
-After this Toxony checkpoint, the next base/cross-domain provider from the previously grouped open set is **Mobstein `5.4.4`**, subject to revalidation against the current modlist and public exact-version evidence before any source/internal claims.
+At the original Phase 2J checkpoint, the next grouped provider was Mobstein `5.4.4`; that historical pointer has since been completed and is not the current operational next-work queue. Current semantic-denominator closure order is maintained in `SEMANTIC-MAGIC-COVERAGE.md` and current operational project state in `plans/STATUS.md`.
