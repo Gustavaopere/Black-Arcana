@@ -41,12 +41,12 @@ The source declares required mod dependencies on Create `[6,)` and Apotheosis `[
 |---|---|---|
 | rarity filter attribute | `RarityAttribute.Type`, registered as `apotheoticcreation:rarity` | reads Apotheosis `LootRarity` via `AffixHelper`; Apotheosis remains rarity authority, Create remains filter/logistics authority |
 | affix filter attribute | `AffixAttribute.Type`, registered as `apotheoticcreation:affix` | reads Apotheosis affixes via `AffixHelper`; Apotheosis remains affix authority, Create remains filter/logistics authority |
-| rarity serialization | `LootRarity.CODEC` + `RarityRegistry.INSTANCE.holderStreamCodec()` | provider-native identity/serialization is reused; BA must not mirror a rarity registry |
-| affix serialization | `AffixRegistry.INSTANCE.holderCodec()` + holder stream codec | provider-native identity/serialization is reused; BA must not mirror an affix registry |
+| rarity serialization | `LootRarity.CODEC` + `RarityRegistry.INSTANCE.holderStreamCodec()` | addon owns serialization of this attribute value using provider-native rarity identity; BA must not mirror a rarity registry |
+| affix serialization | `AffixRegistry.INSTANCE.holderCodec()` + holder stream codec | addon owns serialization of this attribute value using provider-native affix identity; BA must not mirror an affix registry |
 | visible affix enumeration | `getAllAttributes` omits affix paths `socket` and `durable` | catalog records the exact UI/enumeration boundary; do not generalize to “every affix” |
 | downstream routing | normal Create consumers of `ItemAttribute` | Brass Tunnel, Smart Observer or other logistics behavior is Create-owned downstream behavior, not an independent addon hook |
-| state / persistence | no addon-owned persistence/attachment surface observed in the complete Java/source tree | no new BA state and no state-authority transfer |
-| networking | no addon-owned payload/network registration observed in the complete Java/source tree | no C2S/S2C bridge to BA casting |
+| persistence container | no addon-owned `SavedData`/attachment/container surface observed in the complete Java/source tree | Create owns enclosing filter storage; addon codecs may encode/decode the attribute value inside that container |
+| transport | no standalone addon-owned payload registration observed in the complete Java/source tree | Create owns enclosing filter synchronization/transport; addon `StreamCodec` may encode/decode the attribute value inside that flow; no C2S/S2C bridge to BA casting |
 | casting / mana / ritual / hazards | no such registration/resource/runtime surface exists in the complete Java source | Black Arcana retains all canonical magic-runtime authority |
 
 ## Matching semantics
@@ -54,6 +54,8 @@ The source declares required mod dependencies on Create `[6,)` and Apotheosis `[
 `RarityAttribute.appliesTo` obtains the item's Apotheosis rarity and fails false when the holder is unbound; otherwise it matches the selected provider rarity.
 
 `AffixAttribute.appliesTo` obtains the item's Apotheosis affix map and checks whether the selected provider affix holder is present. `AffixAttribute.Type.getAllAttributes` enumerates bound affixes but filters out paths `socket` and `durable` before exposing them as selectable attributes.
+
+The addon-defined `MapCodec`/`StreamCodec` pairs are part of the exact attribute contract. Their existence means the bridge owns serialization of its attribute values; it does not mean the addon owns Create's enclosing persisted filter container or network payload.
 
 The audit does not infer Create whitelist/blacklist, AND/OR combination, Smart Observer, Brass Tunnel or other routing semantics from this addon. Those remain Create-owned downstream behavior and require runtime QA where needed.
 
