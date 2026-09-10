@@ -36,7 +36,7 @@ The following relationships are required to build/test/run the project but do no
 
 Until that final reconciliation is recorded, these entries may support normal platform/build/test use but are `REVIEW_REQUIRED` for any stronger redistribution or source-derivation claim.
 
-## Dependency / compatibility evidence — through 2026-09-07
+## Dependency / compatibility evidence — through 2026-09-10
 
 | Upstream | Exact build/pack evidence | Intended use | Source/asset derivation status |
 | --- | --- | --- | --- |
