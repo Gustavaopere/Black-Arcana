@@ -2,7 +2,7 @@
 
 ## Status
 
-`RELEASE 1.8.2 / RELEASE-BOUNDED CORE REGISTRY INVENTORY CLOSED / PUBLISHER 1.8+1.8.2 CHANGELOG SURFACE VERIFIED / SOURCE-LICENSE CONFLICT BLOCKS IMPLEMENTATION-INTERNAL PROMOTION / RUNTIME/API QA PENDING`
+`RELEASE 1.8.2 / RELEASE-BOUNDED CORE REGISTRY INVENTORY CLOSED / WHOLE-INTERVAL PATH HISTORY VERIFIED / PUBLISHER 1.8+1.8.2 CHANGELOG SURFACE VERIFIED / SOURCE-LICENSE CONFLICT BLOCKS IMPLEMENTATION-INTERNAL PROMOTION / RUNTIME/API QA PENDING`
 
 ## Installed authority
 
@@ -27,7 +27,13 @@ The official `SammySemicolon/Malum-Mod` `1.21.1` history gives a bounded source 
 - `03b743a37f3eeb0cc7f4364f0730e1f135f78408` is the last observed `1.8.2` checkpoint before the next version transition;
 - its child `e875523840285212940aacb75627637909380175` declares `mod_version=1.8.3`.
 
-The `1.8.2` line therefore has explicit source-side lower and upper version boundaries. This supports release-bounded semantic inventory when the relevant registry blobs are identical at both ends of that interval. It does **not** establish byte-for-byte equivalence between any source commit and the installed JAR.
+Endpoint equality alone is not used to establish the inventory. Path-history queries were run across the complete observed `1.8.2` window for each registry file used below:
+
+- `MalumSpiritRiteTypes.java` — **0 commits** touch the path after entry into the 1.8.2 window and before the 1.8.3 transition;
+- `MalumSpiritTypes.java` — **0 commits** touch the path in that interval;
+- `MalumGeasEffectTypes.java` — the path is touched at `f56691e...`, the initial 1.8.2 checkpoint itself, and has **no later commit** before the 1.8.3 transition.
+
+Therefore there is no intervening registry edit-and-revert hidden by equal endpoint blobs on these three paths. Combined with identical endpoint blob SHAs, this closes the narrow release-bounded registry inventory while still **not** establishing byte-for-byte equivalence between any source commit and the installed JAR.
 
 The `1.8.2` checkpoints also declare:
 
@@ -47,15 +53,15 @@ There is a material license inconsistency:
 
 Therefore Black Arcana does **not** promote source implementation internals from this line into implementable integration contracts. Until the conflict is resolved by an authoritative upstream license statement, the source-code layer is treated as `READABLE VERSION/REGISTRY EVIDENCE / IMPLEMENTATION REUSE OR SOURCE-DERIVED SPEC BLOCKED`.
 
-Publisher-authored changelogs and public gameplay documentation may still establish externally documented behavior. Registry names/counts can be used as factual provenance and semantic-accounting evidence when release-bounded, but they do not authorize copying algorithms, method bodies, assets or hidden integration behavior.
+Publisher-authored changelogs and public gameplay documentation may still establish externally documented behavior. Read-only registry inspection in this audit is limited to factual names, counts, path history and immutable blob identity for provenance/semantic accounting. It does not authorize copying algorithms, method bodies, assets or hidden integration behavior.
 
 ## Release-bounded core registry inventory
 
-Three provider-owned registries remain byte-identical at the first and last observed `1.8.2` checkpoints:
+Whole-interval path history plus endpoint blob equality closes three provider-owned registries for factual accounting across the observed `1.8.2` line.
 
 ### Spirit Rite types — 26 registered identities
 
-`MalumSpiritRiteTypes.java` has blob SHA `2b9e4e5445733dee4ed205e4331d55c93ac86028` at both `f56691e...` and `03b743a...`.
+`MalumSpiritRiteTypes.java` has blob SHA `2b9e4e5445733dee4ed205e4331d55c93ac86028` at both `f56691e...` and `03b743a...`, with no intervening path commit during the 1.8.2 window.
 
 It contains **26 active base-Malum `SpiritRiteType` registrations**:
 
@@ -73,7 +79,7 @@ For the semantic-magic ledger, these **26 rites are additive** because a rite is
 
 ### Geas effect types — 37 active registered identities, non-additive
 
-`MalumGeasEffectTypes.java` has blob SHA `2aef164fcedae891b2c6805f2edbd8ee48cffbfe` at both ends of the `1.8.2` interval.
+`MalumGeasEffectTypes.java` has blob SHA `2aef164fcedae891b2c6805f2edbd8ee48cffbfe` at both ends of the `1.8.2` interval. Its only path touch in that interval is the initial `f56691e...` checkpoint; there is no later change before 1.8.3.
 
 It contains **37 active `GeasEffectType` registrations**:
 
@@ -88,7 +94,7 @@ These 37 entries are **not additive** to the current semantic-magic total. The l
 
 ### Spirit types — 9 registered resource/type identities, non-additive
 
-`MalumSpiritTypes.java` has blob SHA `fa772479f0f73131dabf33d9342299c7e20405e1` at both ends of the `1.8.2` interval.
+`MalumSpiritTypes.java` has blob SHA `fa772479f0f73131dabf33d9342299c7e20405e1` at both ends of the `1.8.2` interval, with no intervening path commit.
 
 It contains **9 registered `SpiritArcanaType` identities**:
 
