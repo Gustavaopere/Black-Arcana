@@ -60,17 +60,23 @@ public final class EquilibriumRiteGameTests {
     }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 60)
-    public static void bossHealthExchangeIsDisabledByDefault(GameTestHelper helper) throws Exception {
+    public static void bossHealthExchangeIsDisabledByDefault(GameTestHelper helper) {
         var source = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
         var target = helper.spawnWithNoFreeWill(EntityType.WITHER, new BlockPos(5, 2, 1));
-
         MinecraftServer server = helper.getLevel().getServer();
-        Object result = transfer(server, source.getUUID(), target.getUUID(), 4.0D, 1.0D);
-        ArcanaDecision decision = decision(result);
 
+        var facts = MinecraftEntityProtectionResolver.resolve(server, source, target);
+        helper.assertTrue(
+            facts.boss(),
+            "Wither fixture must resolve through the canonical c:bosses server tag");
+
+        ArcanaDecision decision = MinecraftEquilibriumRiteRuntime.equilibriumSpecificTargetAdmission(facts);
         helper.assertTrue(!decision.allowed(), "boss health exchange must be disabled by default");
         helper.assertTrue("equilibrium_boss_target_disabled".equals(decision.code()),
-            "boss denial must use the explicit Equilibrium policy code");
+            "boss denial must use the explicit Equilibrium policy code; actual=" + decision.code());
+
+        target.discard();
+        source.discard();
         helper.succeed();
     }
 

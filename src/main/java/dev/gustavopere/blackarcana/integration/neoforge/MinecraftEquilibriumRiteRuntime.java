@@ -11,7 +11,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -108,16 +107,8 @@ public final class MinecraftEquilibriumRiteRuntime {
         ServerLevel targetLevel
     ) {
         EntityProtectionFacts facts = MinecraftEntityProtectionResolver.resolve(server, source, target);
-        if (target instanceof Player) {
-            return ArcanaDecision.deny(
-                "equilibrium_player_target_disabled",
-                "Hostile player health exchange is disabled by default");
-        }
-        if (facts.boss()) {
-            return ArcanaDecision.deny(
-                "equilibrium_boss_target_disabled",
-                "Boss health exchange is disabled by default");
-        }
+        ArcanaDecision equilibriumAdmission = equilibriumSpecificTargetAdmission(facts);
+        if (!equilibriumAdmission.allowed()) return equilibriumAdmission;
 
         return runtime.entityInteractionAdmission().authorize(
             EntityInteractionType.DAMAGE,
@@ -128,6 +119,21 @@ public final class MinecraftEquilibriumRiteRuntime {
                 target.getUUID().toString(),
                 EntityInteractionType.DAMAGE))
             .decision();
+    }
+
+    static ArcanaDecision equilibriumSpecificTargetAdmission(EntityProtectionFacts facts) {
+        Objects.requireNonNull(facts, "facts");
+        if (facts.player()) {
+            return ArcanaDecision.deny(
+                "equilibrium_player_target_disabled",
+                "Hostile player health exchange is disabled by default");
+        }
+        if (facts.boss()) {
+            return ArcanaDecision.deny(
+                "equilibrium_boss_target_disabled",
+                "Boss health exchange is disabled by default");
+        }
+        return ArcanaDecision.allow();
     }
 
     private static LivingEntity findLoadedLivingEntity(MinecraftServer server, UUID entityId) {
