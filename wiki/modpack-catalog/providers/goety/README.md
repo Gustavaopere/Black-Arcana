@@ -131,6 +131,8 @@ See [`FOCUS-CATALOG.md`](FOCUS-CATALOG.md) for the registry/Wiki reconciliation 
 
 Official documentation identifies Soul Energy as Goety's main power source. Spells and artifices consume it. The player needs provider storage/access such as a suitable Totem in the hotbar/Charm slot or an active Arca to store/use Soul Energy.
 
+Documented acquisition includes mob kills, with provider-specific generation paths through artifices and, under provider gear/state, servant kills. Soul Energy also participates in provider sustain, including healing compatible servant families and healing a Lich where ordinary regeneration changes.
+
 Black Arcana must not synthesize a second Goety Soul Energy balance from death events. Any future integration must consume/query provider-owned state through a verified boundary.
 
 ## Focus casting model
@@ -143,19 +145,25 @@ Registry identity alone does not prove player-facing semantic eligibility. That 
 
 ## Ritual model
 
-Public documentation describes the Dark Altar as the centerpiece of most rituals, fed Soul Energy through the Cursed Cage/storage chain. The Wiki lists 13 ritual **types**: Animation, Forge, Geoturgy, Magic, Necroturgy, Deep, Frost, Sky, Storm, Adept Nether, Expert Nether, End and Sabbath.
+Public documentation describes the Dark Altar as the centerpiece of most rituals, fed Soul Energy through the Cursed Cage/storage chain. Publicly documented ritual behavior includes crafting provider items, summoning or transforming creatures, environmental/structural conditions, pedestal ingredients, sacrifices within the altar area and living conversion targets.
 
-Those are categories, not evidence of exactly 13 discrete ritual identities. Ritual cost, sacrifice/conversion identity and completion settlement remain Goety-owned, and exact ritual recipes/registries for 3.1.4 remain pending.
+The Wiki lists 13 ritual **types**: Animation, Forge, Geoturgy, Magic, Necroturgy, Deep, Frost, Sky, Storm, Adept Nether, Expert Nether, End and Sabbath. Those are categories, not evidence of exactly 13 discrete ritual identities.
+
+Ritual cost, sacrifice/conversion identity and completion settlement remain Goety-owned, and exact ritual recipes/registries for 3.1.4 remain pending.
 
 ## Research/progression
 
 Research Scrolls unlock provider rituals and servant/content gates. The public Research page lists ten named lines: Ravaging, Warred, Buried, Front, Haunting, Mistral, Floral, Bygone, Terminus and Forbidden.
 
+Terminus depends on Warred in the public progression. Forbidden gates Nameless/Lich content when the corresponding provider config requirement is enabled.
+
 Black Arcana must not grant an advanced Goety Focus/ritual merely because the player has a semantically similar school or mastery elsewhere.
 
 ## Servants
 
-Goety is a major servant authority. Servant ownership, persistence, summon caps, lifespan, healing and Summon Down semantics remain provider-native.
+Goety is a major servant authority. Public documentation describes servants as owned/summoned mobs that do not attack their owners and respond to owner combat relationships. Many Focus summons also apply **Summon Down**: later summoning while it is active increases spell Soul Energy cost and weakens subsequent summons; the public documentation states a stack ceiling of Summon Down V.
+
+Different servant families have provider gear-dependent persistence/healing rules. Servant ownership, persistence, summon caps, lifespan, healing and Summon Down semantics remain provider-native.
 
 Consequences:
 
@@ -164,9 +172,35 @@ Consequences:
 - Soul Energy healing must not be paid twice;
 - servant kills must not generate a second guessed Soul Energy reward.
 
-## Witchcraft and domain overlap
+## Witchcraft overlap
 
-Goety's public surfaces include witchcraft/preparation, necromancy, summoning, elemental families, utility/control and Void/Nether magic. These are direct deduplication constraints for future Black Arcana design, but semantic similarity does not transfer provider authority and does not by itself erase a Black Arcana concept.
+The public inventory exposes Goety witchcraft/preparation tools including Taglock Kit, Waystone, Cauldron Ladle, Brew, Splash Brew, Lingering Brew, Gas Brew and Refuse Bottle.
+
+This is a direct deduplication constraint for future Black Arcana witchcraft/sympathetic-magic work. Before creating a true-name/hair/blood/personal-object targeting token, the Goety Taglock semantics must be audited. If Goety already provides the required identity evidence, Black Arcana should integrate rather than clone it under another name.
+
+## Infernal/Nether overlap
+
+The legacy public base inventory already includes a substantial Nether family: Fireball, Lava Bomb, Bombardment, Meteor Shower, Magma Bomb, Fire Blast, Flame Strike, Wither Skull, Ghastly and Blazing, while the public source registry adds further current-line registry evidence beyond that 110-name documentary subset.
+
+Therefore a future Black Arcana Infernal domain cannot be justified as merely stronger Nether/fire magic. Its proposed provider-independent delta must survive comparison with Goety, Iron's Fire, Cataclysm/Ignis and Soulfire providers.
+
+## Soul/death overlap
+
+Goety already covers death-derived Soul Energy, soul-powered casting/artifices, necromancy, owned servants and soul-based sustain. This sharply constrains any generic Black Arcana `soul mana` concept.
+
+Goety Soul Energy remains distinct from:
+
+- Malum spirits;
+- Eidolon Soul capability/Soul Shards;
+- Gravebound Souls/Phylactery;
+- Vampirism blood;
+- Black Arcana resources.
+
+No conversion exists merely because the concepts share a soul/death theme.
+
+## Domain-overlap rule
+
+Goety's public surfaces span witchcraft/preparation, necromancy, summoning, elemental families, utility/control and Void/Nether magic. These are direct deduplication constraints for future Black Arcana design, but semantic similarity does not transfer provider authority and does not by itself erase a Black Arcana concept.
 
 A future Black Arcana feature must prove a provider-independent delta and a safe integration boundary instead of cloning Goety mechanics under another name.
 
