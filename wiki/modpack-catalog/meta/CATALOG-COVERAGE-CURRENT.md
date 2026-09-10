@@ -63,9 +63,10 @@ Phase 2AW closes the installed narrow Create ↔ Apotheosis filter bridge at exa
 - rarity matching reads Apotheosis `LootRarity` / `RarityRegistry` state through provider helpers/codecs;
 - affix matching reads Apotheosis `AffixRegistry` / item-affix state through provider helpers/codecs;
 - visible affix enumeration intentionally excludes affix paths `socket` and `durable`;
-- no addon-owned spell/mana/ritual/casting, payload/network, attachment or persistence surface was observed in the complete exact source tree.
+- addon-defined `MapCodec`/`StreamCodec` pairs serialize the two attribute values inside Create-owned filter storage/transport;
+- no addon-owned spell/mana/ritual/casting surface, standalone payload registration, SavedData or attachment container was observed in the complete exact source tree.
 
-The addon is not authority for the data it translates. Apotheosis retains rarity/affix authority; Create retains Attribute Filter/logistics authority. Black Arcana must not mirror either registry or reinterpret Create downstream routing as its own cast/hazard runtime.
+The addon is not authority for the data it translates. Apotheosis retains rarity/affix authority; Create retains Attribute Filter semantics, enclosing storage/transport and logistics authority. Apotheotic Creation owns the registration/translation bridge plus serialization of its two attribute values. Black Arcana must not mirror either registry or reinterpret Create downstream routing as its own cast/hazard runtime.
 
 Smart Observers, Brass Tunnels and other Create consumers are downstream consumers of normal Create filtering behavior, not separate hooks established by this addon. No special Black Arcana integration is justified merely by their thematic usefulness.
 
@@ -92,7 +93,7 @@ After each provider closure:
 2. reconcile concurrent PR/branch ownership;
 3. close the provider to the strongest exact evidence available;
 4. preserve physical/publisher/source/license evidence layers when they differ;
-5. merge only after latest-main reconciliation and CI GREEN on the reconciled HEAD;
+5. merge only after latest-main reconciliation and CI GREEN on the exact reconciled HEAD;
 6. increment the canonical numerator only after merge and post-merge main confirmation;
 7. change the denominator whenever physical reconciliation changes the provider set.
 
