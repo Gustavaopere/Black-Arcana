@@ -2,7 +2,7 @@
 
 ## Status
 
-`RELEASE 1.8.2 / RELEASE-BOUNDED CORE REGISTRY INVENTORY CLOSED / WHOLE-INTERVAL PATH HISTORY VERIFIED / PUBLISHER 1.8+1.8.2 CHANGELOG SURFACE VERIFIED / SOURCE-LICENSE CONFLICT BLOCKS IMPLEMENTATION-INTERNAL PROMOTION / RUNTIME/API QA PENDING`
+`RELEASE 1.8.2 / RELEASE-BOUNDED CORE REGISTRY INVENTORY CLOSED / SPECIAL RITES PLAYER-FACING PROVEN / WHOLE-INTERVAL PATH HISTORY VERIFIED / PUBLISHER 1.8+1.8.2 CHANGELOG SURFACE VERIFIED / SOURCE-LICENSE CONFLICT BLOCKS IMPLEMENTATION-INTERNAL PROMOTION / RUNTIME/API QA PENDING`
 
 ## Installed authority
 
@@ -27,14 +27,15 @@ The official `SammySemicolon/Malum-Mod` `1.21.1` history gives a bounded source 
 - `03b743a37f3eeb0cc7f4364f0730e1f135f78408` is the last observed `1.8.2` checkpoint before the next version transition;
 - its child `e875523840285212940aacb75627637909380175` declares `mod_version=1.8.3`.
 
-Endpoint equality alone is not used to establish the inventory or the supporting deduplication evidence. Path-history queries were run across the complete observed `1.8.2` window for every registry source file used below:
+Endpoint equality alone is not used to establish the inventory or the supporting semantic evidence. Path-history queries were run across the complete observed `1.8.2` window for the registry paths used below and for the player-facing progression path used to classify the two special rites:
 
 - `MalumSpiritRiteTypes.java` — **0 commits** touch the path after entry into the 1.8.2 window and before the 1.8.3 transition;
 - `MalumSpiritRiteEffectTypes.java` — **0 commits** touch the path in that interval; this is supporting deduplication evidence, not a fourth additive semantic inventory;
 - `MalumSpiritTypes.java` — **0 commits** touch the path in that interval;
-- `MalumGeasEffectTypes.java` — the path is touched at `f56691e...`, the initial 1.8.2 checkpoint itself, and has **no later commit** before the 1.8.3 transition.
+- `MalumGeasEffectTypes.java` — the path is touched at `f56691e...`, the initial 1.8.2 checkpoint itself, and has **no later commit** before the 1.8.3 transition;
+- `client/screen/codex/entries/TotemMagicEntries.java` — **0 commits** touch the path in that interval; the blob remains `d0ba29e52abcd1f26cfa92f20951c4981ae3c661` at both endpoints.
 
-Therefore there is no intervening registry edit-and-revert hidden by equal endpoint blobs on these four source paths. Combined with identical endpoint blob SHAs, this closes the three narrow release-bounded inventory registries and the supporting Rite-effect deduplication evidence while still **not** establishing byte-for-byte equivalence between any source commit and the installed JAR.
+Therefore there is no intervening registry or progression-entry edit-and-revert hidden by equal endpoint blobs on these stable paths. `CodexLangDatagen.java` is not treated as endpoint-stable: it is touched at exactly five checkpoints in the window (`f56691e...`, `3fb3c77...`, `a634061...`, `5a578eb...`, `fbcc606...`), and all five snapshots were checked for the two dedicated special-rite entries and their player-facing activation/presentation evidence.
 
 The `1.8.2` checkpoints also declare:
 
@@ -52,13 +53,13 @@ There is a material license inconsistency:
 - the repository root at those checkpoints does not expose a root `LICENSE` file that resolves the conflict;
 - GitHub repository metadata exposes no license object.
 
-Therefore Black Arcana does **not** promote source implementation internals from this line into implementable integration contracts. Until the conflict is resolved by an authoritative upstream license statement, the source-code layer is treated as `READABLE VERSION/REGISTRY EVIDENCE / IMPLEMENTATION REUSE OR SOURCE-DERIVED SPEC BLOCKED`.
+Therefore Black Arcana does **not** promote source implementation internals from this line into implementable integration contracts. Until the conflict is resolved by an authoritative upstream license statement, the source-code layer is treated as `READABLE VERSION/FACTUAL CATALOG EVIDENCE / IMPLEMENTATION REUSE OR SOURCE-DERIVED SPEC BLOCKED`.
 
-Publisher-authored changelogs and public gameplay documentation may still establish externally documented behavior. Read-only registry inspection in this audit is limited to factual names, counts, path history, immutable blob identity and deduplication for provenance/semantic accounting. It does not authorize copying algorithms, method bodies, assets or hidden integration behavior.
+Publisher-authored changelogs and public gameplay documentation may still establish externally documented behavior. Read-only source inspection in this audit is limited to factual names, counts, path history, immutable blob identity, player-facing progression/recipe-page presence and deduplication for provenance/semantic accounting. It does not authorize copying algorithms, method bodies, assets, upstream prose or hidden integration behavior.
 
 ## Release-bounded core registry inventory
 
-Whole-interval path history plus endpoint blob equality closes three provider-owned inventory registries for factual accounting across the observed `1.8.2` line. One additional Rite-effect registry is release-bounded only as supporting deduplication evidence and contributes no extra semantic-action identities.
+Whole-interval path history plus endpoint blob equality closes three provider-owned inventory registries for factual accounting across the observed `1.8.2` line. One additional Rite-effect registry is release-bounded only as supporting deduplication evidence and contributes no extra semantic-action identities. Player-facing progression evidence is handled separately so registry membership alone does not determine semantic eligibility.
 
 ### Spirit Rite types — 26 registered identities
 
@@ -74,9 +75,17 @@ It contains **26 active base-Malum `SpiritRiteType` registrations**:
 - Earthen: `rite_of_the_stone_ward`, `rite_of_the_oaken_might`, `rite_of_creation`, `rite_of_destruction`;
 - Infernal: `rite_of_the_burning_fervor`, `rite_of_the_fiery_embrace`, `rite_of_smelting`, `rite_of_quickening`.
 
-The supporting `MalumSpiritRiteEffectTypes.java` has blob SHA `e5fd8854c12783e4503475ccaf461c3a19c2a0b0` at both `f56691e...` and `03b743a...`, with no path commit anywhere in the observed 1.8.2 window. It registers separate `undirected_rite_effect` and `unchained_rite_effect` effect identities. This supports retaining the two corresponding `SpiritRiteType` registrations as distinct rather than treating them as one alias/proxy identity; the effect registry itself contributes **0** additional semantic objects.
+The supporting `MalumSpiritRiteEffectTypes.java` has blob SHA `e5fd8854c12783e4503475ccaf461c3a19c2a0b0` at both `f56691e...` and `03b743a...`, with no path commit anywhere in the observed 1.8.2 window. It registers separate `undirected_rite_effect` and `unchained_rite_effect` effect identities. This establishes that the two corresponding `SpiritRiteType` registrations do not share one effect identity; the effect registry itself contributes **0** additional semantic objects.
 
-For the semantic-magic ledger, these **26 rites are additive** because a rite is explicitly inside the metric definition.
+#### Player-facing eligibility of `undirected_rite` and `unchained_rite`
+
+Registry separation is not used by itself to count the two special rites. Exact `1.8.2` `TotemMagicEntries.java` adds `undirected_rite` and `unchained_rite` separately to `ArcanaProgressionScreen`. Each entry uses its corresponding `RiteHolder` in both a `SpiritRiteTextPage` and a `SpiritRiteRecipePage`; the Unchained entry additionally exposes Unchained Transmutation content. The file has blob `d0ba29e52abcd1f26cfa92f20951c4981ae3c661` at both release-window endpoints and **zero path commits** inside the observed `1.8.2` interval.
+
+As a second check, all five snapshots of `CodexLangDatagen.java` that exist in the release window preserve dedicated player-facing entries for both special rites. The Undirected entry consistently includes activation guidance requiring five runes. These observations prove player-facing rite reachability/presentation across the release line rather than mere technical registry existence.
+
+Therefore both special IDs satisfy the ledger's ritual/rite semantic class and are counted once each. This evidence does **not** close exact recipe contents, numerical requirements, runtime execution mechanics or source/JAR byte equivalence.
+
+For the semantic-magic ledger, the full **26 rites are additive**. Effects, recipe pages themselves and downstream locus/transmutation consequences do not create extra semantic objects.
 
 ### Geas effect types — 37 active registered identities, non-additive
 
@@ -111,7 +120,7 @@ It contains **9 registered `SpiritArcanaType` identities**:
 
 These are typed provider resource identities and therefore contribute **0** to the semantic-magic action total.
 
-This closure is deliberately narrow: the three registry inventories above are release-bounded factual evidence only, and the supporting Rite-effect registry is used only for deduplication of the two special rite identities. It does not promote source-internal APIs or implementation behavior into Black Arcana contracts.
+This closure is deliberately narrow: the three registry inventories above are release-bounded factual evidence only; the supporting Rite-effect registry is used only for deduplication; and the Codex/progression sources are used only to prove semantic reachability of the two special rites. It does not promote source-internal APIs or implementation behavior into Black Arcana contracts.
 
 ## Provider identity — installed-line facts
 
@@ -128,7 +137,7 @@ Malum is a Spirit Arcana system where spirits are **typed provider resources**, 
 - Soulbinding as a provider crafting/process vocabulary;
 - Geas/Pact/Oath/Authority progression existing in the installed 1.8 line.
 
-The base Spirit Rite, Geas and Spirit Type registry counts are now release-bounded for `1.8.2`. Runtime mechanics, acquisition paths, recipe sets and safe integration boundaries remain separate gates.
+The base Spirit Rite, Geas and Spirit Type registry counts are now release-bounded for `1.8.2`; the two special rites also have release-bounded player-facing progression evidence. Runtime mechanics, acquisition paths, recipe contents and safe integration boundaries remain separate gates.
 
 ## Exact 1.8 publisher changelog — registry and rite architecture
 
@@ -215,7 +224,7 @@ The Phase 2 catalog must not weaken that existing runtime safety decision merely
 
 Malum Spirit Rites are persistent area/world effects rather than ordinary instant spell casts. The 1.8 changelog proves a Rite Locus model for world-affecting rites.
 
-The base `1.8.2` rite registry is now release-bounded at **26 registered rite identities**. That closes the semantic count, but not their full execution contract.
+The base `1.8.2` rite registry is release-bounded at **26 registered rite identities**, and exact progression/Codex evidence proves the two special Arcane entries are player-facing rather than registry-only proxies. That closes the semantic count, but not the full execution contract.
 
 Consequences:
 
@@ -224,7 +233,7 @@ Consequences:
 - do not reapply world mutation through Black Arcana `WorldEffectPolicy` after Malum already performed a provider-owned mutation;
 - if Black Arcana initiates a cross-provider operation, both the provider contract and Black Arcana world-safety admission must be preserved without double-processing.
 
-Rite recipes, ranges, durations, locus budgets and exact runtime lifecycle remain pending.
+Rite recipe contents, ranges, durations, locus budgets and exact runtime lifecycle remain pending.
 
 ## Geas collision with Binding / Pact design
 
@@ -268,7 +277,7 @@ UI/recipe support, not a magic authority.
 ## Exact gates still open
 
 1. establish byte-for-byte source/JAR equivalence or extract the exact installed JAR registry only if later runtime QA requires that stronger proof; this is no longer required for the narrow semantic count;
-2. reconcile Spirit Rite recipes, ranges, durations, locus budgets and exact runtime lifecycle;
+2. reconcile Spirit Rite recipe contents, ranges, durations, locus budgets and exact runtime lifecycle; player-facing recipe-page presence for the two special rites is already proven but does not close those mechanics;
 3. reconcile Geas acquisition/lifecycle mechanics where needed for design collision analysis; the 37-entry active registry count itself is closed;
 4. enumerate installed `1.8.2` Soulbinding/Infusion/Focusing recipes where relevant to deduplication;
 5. identify a safe public integration boundary for spirit query/consume/refund and spirit-reaping causality;
@@ -279,6 +288,6 @@ UI/recipe support, not a magic authority.
 
 ## Phase 3 gate
 
-Malum is no longer an open blocker for the **narrow semantic-action count**: its 26 base rite identities are release-bounded and can enter the reconstructible minimum.
+Malum is no longer an open blocker for the **narrow semantic-action count**: its 26 base rite identities are release-bounded, and the two special Arcane rites have release-bounded player-facing progression evidence, so all 26 can enter the reconstructible minimum.
 
 Malum-dependent runtime implementation and any design that requires source-internal APIs, exact execution mechanics or provider resource mutation remain `BLOCKED / FAIL-CLOSED` until the corresponding gates above are resolved. The overall Phase 3 gate remains blocked by other provider inventories and the still-open denominator.
