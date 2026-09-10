@@ -10,8 +10,9 @@ Ars Nouveau was intentionally excluded because another active branch/PR already 
 
 - confirmed installed `leylines-1.0.3.jar`, mod id `leylines`, runtime `1.0.3`;
 - reconciled CurseForge Project `1636676` / File `8565076` / NeoForge 1.21.1 release identity;
-- corrected installed-artifact provenance to the current physical modlist hash `5307a4edc885ab949eed4438d9d7f9cb6176421d`;
-- retired the conflicting external-index SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` as installed-artifact evidence;
+- corrected installed-artifact provenance to the current physical modlist hash `dfa6908731f432905caaaa1e53b4aedeaa26ed59`;
+- independently corroborated that same SHA-1 against a public manifest for CurseForge File ID `8565076`;
+- rejected the stale SHA-1 `5307a4edc885ab949eed4438d9d7f9cb6176421d` for Leylines; independent public manifests associate it with `letsdo-wildernature-neoforge-1.1.5.jar` / File ID `8543233`;
 - consolidated duplicate provider trees into canonical `providers/leyline-spellbooks/`;
 - preserved the nine existing public spell pages and verified their fail-closed wording;
 - normalized the nine public signature names as a **lower bound**, because the publisher explicitly says `and more`;
