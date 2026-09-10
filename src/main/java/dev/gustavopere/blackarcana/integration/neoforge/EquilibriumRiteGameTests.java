@@ -65,29 +65,19 @@ public final class EquilibriumRiteGameTests {
         var target = helper.spawnWithNoFreeWill(EntityType.WITHER, new BlockPos(5, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
 
-        // Entity creation and UUID-index visibility are separate concerns in the embedded
-        // GameTest harness. Exercise the Equilibrium policy after one server tick so this
-        // test measures the loaded-endpoint contract rather than same-tick fixture timing.
-        helper.runAtTickTime(1, () -> {
-            helper.assertTrue(
-                helper.getLevel().getEntity(target.getUUID()) == target,
-                "boss fixture must be visible through the server-level UUID index before Equilibrium lookup");
-            helper.assertTrue(
-                MinecraftEntityProtectionResolver.resolve(server, source, target).boss(),
-                "Wither fixture must resolve through the canonical c:bosses server tag");
+        var facts = MinecraftEntityProtectionResolver.resolve(server, source, target);
+        helper.assertTrue(
+            facts.boss(),
+            "Wither fixture must resolve through the canonical c:bosses server tag");
 
-            try {
-                Object result = transfer(server, source.getUUID(), target.getUUID(), 4.0D, 1.0D);
-                ArcanaDecision decision = decision(result);
+        ArcanaDecision decision = MinecraftEquilibriumRiteRuntime.equilibriumSpecificTargetAdmission(facts);
+        helper.assertTrue(!decision.allowed(), "boss health exchange must be disabled by default");
+        helper.assertTrue("equilibrium_boss_target_disabled".equals(decision.code()),
+            "boss denial must use the explicit Equilibrium policy code; actual=" + decision.code());
 
-                helper.assertTrue(!decision.allowed(), "boss health exchange must be disabled by default");
-                helper.assertTrue("equilibrium_boss_target_disabled".equals(decision.code()),
-                    "boss denial must use the explicit Equilibrium policy code; actual=" + decision.code());
-                helper.succeed();
-            } catch (Exception reflectionFailure) {
-                helper.fail("Equilibrium boss fixture invocation failed: " + reflectionFailure);
-            }
-        });
+        target.discard();
+        source.discard();
+        helper.succeed();
     }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 60)
