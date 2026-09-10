@@ -100,25 +100,31 @@ This is a consumer/translation path. Apotheosis remains authority for `LootRarit
 
 The source proves an enumeration exclusion; it does not prove that every possible explicitly constructed/deserialized `AffixAttribute` for those IDs is universally impossible. The catalog therefore records only the narrower observed contract.
 
+## Serialization ownership
+
+The two attribute classes define their own `MapCodec` and `StreamCodec`. That means Apotheotic Creation owns serialization of the selected rarity/affix attribute value. Those codecs can participate when Create persists or synchronizes an enclosing Attribute Filter.
+
+This does **not** establish an addon-owned persistence or network subsystem. In the complete exact source tree there is no standalone payload registration, no SavedData, no attachment container and no independent filter-storage implementation. Create remains authority for the enclosing filter storage/transport lifecycle.
+
 ## Negative-surface evidence
 
 Because the recursive tree is complete and the Java surface is one class, the audit can close several addon-owned negative facts at this pin:
 
 - no standalone spell/glyph/ritual registry;
 - no mana/cast resource;
-- no addon-owned payload/network registration;
-- no addon-owned persistence/SavedData/attachment surface;
+- no standalone addon-owned payload registration;
+- no addon-owned SavedData/attachment/persistence container;
 - no mixin surface;
 - no separate affix/rarity content registry;
 - no machine-gem/socket/buff runtime.
 
-These claims are scoped to the exact 2.0.0 source pin and do not generalize to future versions.
+These negative claims are deliberately narrower than “no serialization”: the addon does own codecs for its two attribute values. They are scoped to the exact 2.0.0 source pin and do not generalize to future versions.
 
 ## Authority interpretation
 
 - Apotheosis owns affix and rarity definitions/state.
-- Create owns `ItemAttributeType`, Attribute Filter behavior and logistics consumers.
-- Apotheotic Creation owns only the narrow bridge registering provider-aware Create attribute types.
+- Create owns `ItemAttributeType` framework behavior, enclosing Attribute Filter storage/transport and logistics consumers.
+- Apotheotic Creation owns the narrow bridge registering provider-aware Create attribute types plus serialization of those two attribute values.
 - Downstream blocks such as Smart Observers, Brass Tunnels, funnels or other Create systems do not become independent addon APIs merely because they consume normal filters.
 - Apokinetics is a separate concern for machine-gem/socket/upgrades and is not replaced by this addon.
 - Black Arcana retains canonical casting, targeting, resource transaction, cooldown/charge, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash and world-safety authority.
