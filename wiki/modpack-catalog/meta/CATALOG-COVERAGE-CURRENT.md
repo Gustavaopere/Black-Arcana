@@ -13,7 +13,9 @@ Therefore:
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
-The previous chat working tally is not promoted into this canonical file without a reconstructible repository ledger. The semantic denominator must be rebuilt from provider evidence before a final percentage is declared.
+The reconstructible semantic ledger now lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot and reconstruction base `main@1ef4d7f9c363bf8b37dd6ae8bf305f7750b6cedc`, it currently closes a **strict counted minimum of 729 semantic magic objects** from provider records that meet the ledger's inclusion rule. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
+
+The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
 
 ## Internal provider-component closure metric
 
@@ -94,7 +96,7 @@ Examples remain:
 - `cataclysm_spellbooks` — installed 1.1.13 remains ahead of the exact public source baseline already audited;
 - `gaze` — exact current registry/source-JAR closure remains pending.
 
-These partials are also reasons the global semantic spell/magic denominator remains open.
+These partials are also reasons the global semantic spell/magic denominator remains open. Their current lower-bound/open evidence is tracked explicitly in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md) rather than being silently added to the strict semantic count.
 
 ## Update rule
 
