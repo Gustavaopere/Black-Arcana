@@ -12,11 +12,11 @@ Status: `EXACT INSTALLED ARTIFACT IDENTITY / 9 PUBLIC SIGNATURE NAMES / COMPLETE
 - CurseForge file: `8565076`
 - Release date: `2026-08-02`
 - License: `All Rights Reserved`
-- Physical modlist hash: `5307a4edc885ab949eed4438d9d7f9cb6176421d`
+- Physical modlist hash: `dfa6908731f432905caaaa1e53b4aedeaa26ed59`
 - Provider class: `SPELL PROVIDER / CONTENT + WORLD SYSTEM ADDON`
 - Required casting provider: Iron's Spells 'n Spellbooks
 
-The physical modlist is authoritative for the installed JAR/runtime/hash. An older catalog note associated SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` with this CurseForge file through an external index. That value does **not** match the current physical modlist and is no longer accepted as the installed-artifact hash.
+The physical modlist is authoritative for the installed JAR/runtime/hash. The current physical snapshot and an independent public manifest for CurseForge File ID `8565076` agree on SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59`. A previous catalog revision incorrectly assigned SHA-1 `5307a4edc885ab949eed4438d9d7f9cb6176421d` to Leylines; independent manifests associate that hash with `letsdo-wildernature-neoforge-1.1.5.jar` / CurseForge File ID `8543233`. That stale value is rejected for Leylines and must not be reintroduced.
 
 ## Official provider identity
 
@@ -104,7 +104,7 @@ Time, portals and spatial control are not sufficient evidence that Leyline is an
 Verified:
 
 - exact installed JAR name/mod id/runtime;
-- physical modlist hash;
+- physical modlist SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59`, independently corroborated against CurseForge File ID `8565076`;
 - exact CurseForge project/file/release identity;
 - ARR license;
 - provider school/world-loop description;
