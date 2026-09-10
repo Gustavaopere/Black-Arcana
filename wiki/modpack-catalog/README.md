@@ -35,13 +35,14 @@ including the current provider inventory, deduplication policy and audit queue.
 `meta/PROVIDER-AUDIT-QUEUE.md` remains the full 103-provider queue. Narrow status overlays may be used during incremental provider work to avoid destructive whole-table rewrites. Current overlays:
 
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md) — prevails only for `goety_cataclysm` and `goetyiron`;
-- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md) — prevails only for `malum`, `hexalia` and `toxony` until integral queue regeneration;
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md) — prevails for base `goety`, `malum`, `hexalia` and `toxony` until integral queue regeneration;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2K.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2K.md) — prevails only for `mobstein` until integral queue regeneration;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2L.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2L.md) — prevails only for `apprenticecodex`, while preserving its explicit runtime-QA flags;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2M.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2M.md) — prevails only for `cataclysm_spellbooks`, advancing the public/source baseline without pretending that the exact 1.1.13 spell table is resolved.
 
 Capability-matrix deltas follow the same narrow-overlay rule:
 
+- [`meta/CAPABILITY-MATRIX-DELTA-GOETY.md`](meta/CAPABILITY-MATRIX-DELTA-GOETY.md) supersedes only Goety-specific evidence clauses, reconciling the public 123-entry 3.1.0/3.1.1 Focus registry with the legacy 110-name Wiki subset while keeping exact 3.1.4 mechanics fail-closed;
 - [`meta/CAPABILITY-MATRIX-DELTA-TOXONY.md`](meta/CAPABILITY-MATRIX-DELTA-TOXONY.md) records Toxony's current semantic delta;
 - [`meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md`](meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md) records Mobstein's corporeal-resurrection/anatomy/experiment overlap;
 - [`meta/CAPABILITY-MATRIX-DELTA-APPRENTICE-CODEX.md`](meta/CAPABILITY-MATRIX-DELTA-APPRENTICE-CODEX.md) records Apprentice's Codex overlap, especially with Familiars & Divination, sensing, storage, mobility and provider-owned alternative casting surfaces;
@@ -49,7 +50,7 @@ Capability-matrix deltas follow the same narrow-overlay rule:
 
 ## Authority order
 
-1. Current physical modlist snapshot from **2026-09-07** is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. It contains **612 top-level entries including NeoForge**; internal `jarjar` dependencies do not count as top-level providers.
+1. Current physical modlist snapshot is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. The current file reports **595 top-level entries including NeoForge `21.1.248`** and has SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`; internal `jarjar` dependencies do not count as top-level providers.
 2. Current Notion pages and project guides provide ecosystem classification, gameplay context and known compatibility notes.
 3. Official/public documentation, public APIs, changelogs and clean-room observable behavior provide granular spell/glyph/ritual/power facts.
 4. External source code may only inform an implementable specification when the exact license permits that use and the provenance ledger requirement has already been satisfied.
@@ -139,7 +140,7 @@ The granular queue plus explicit overlays remain authoritative for exact per-row
 - Vampirism `1.10.13` + Bloodlines `3.0.9` + Vampiric Ageing `1.4.21` + Vampire Spells Addon `0.0.9` — provider authority/resources/actions/progression cataloged in source, runtime/inter-addon QA pending;
 - Vampirism Integrations `1.10.2` — Cold Sweat eligibility and Jade discovery cataloged without inferring runtime activation;
 - Werewolves `2.0.3.3` — faction/forms/actions/skills/effects/leveling/Lord/minions/refinements cataloged in source, runtime/Epic Fight QA pending;
-- Goety `3.1.4` — official public inventory normalized to 110 base Focuses, 12 Wands/Staffs, 13 ritual types and 10 Research lines; exact 3.1.4 source/JAR registries/API remain unverified and fail-closed;
+- Goety `3.1.4` — exact installed artifact/runtime identity is pinned; the public `Vivideru/Goety-3` 1.21.1 source line is audited at 3.1.0/3.1.1 with a stable `ModItems.java` blob and **123 active Focus item registrations**, while the official Wiki's 110 named base Focuses remain a documentary subset alongside 12 Wands/Staffs, 13 ritual types and 10 Research lines. Exact 3.1.4 JAR↔source equivalence, semantic reachability/deduplication, mechanics and API/runtime seams remain unverified and fail-closed;
 - Goety Cataclysm `1.21.1-1.8.2` — exact installed artifact/File ID/hash pinned and public semantic surface audited; matching 1.21.1 source revision not located and project is ARR, so granular internals remain unverified/fail-closed;
 - Goety Iron `3.1` — exact installed artifact/File ID/hash and release changelog pinned; eight public servant names cataloged while source/API internals remain unverified/fail-closed;
 - Malum `1.8.2` — exact version-line metadata/publisher changelog advanced Spirit Rite/Geas/spirit-resource coverage, but source-internal completion remains blocked by licensing conflict and runtime QA;
@@ -158,6 +159,7 @@ Examples include:
 - remaining Malum registry details that cannot be promoted safely under the current provenance conflict;
 - exact runtime/API reconciliation for Hexalia, Toxony, Mobstein and Apprentice's Codex after their factual/source catalogs;
 - exact current 1.1.13 Cataclysm: Spellbooks 65-spell registry/config/acquisition/entity delta, blocked on an inspectable current artifact or matching publisher source;
+- exact current Goety `3.1.4` JAR↔source reconciliation plus semantic reachability/deduplication for source-only Focus identities;
 - exact current inventories/numbers for providers such as Leyline and Somake where exact installed internals remain incomplete;
 - remaining Ars base/addon primitives not yet normalized to the same confidence level;
 - pending Iron's ecosystem content/gear/compat providers listed in `meta/PROVIDER-AUDIT-QUEUE.md`;
