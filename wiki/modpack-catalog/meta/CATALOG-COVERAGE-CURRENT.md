@@ -17,11 +17,11 @@ The previous chat working tally is not promoted into this canonical file without
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage at the reconciled Phase 2AX base: 51/100 = 51%.**
+**Canonical provider-component coverage after Phase 2AX: 52/100 = 52%.**
 
-`main@9cc91f1bf9b7f41708ea70635d5b36b282947866` contains Phase 2AW / PR #161 and the subsequent current-main validation. The immediate post-merge workflow for PR #161 (`#2308`, run `34419881990`) failed at Foundation GameTest after unit tests, diff sanity, NeoForge build and JAR verification had passed. This historical failure is not hidden. The later exact-current-main workflow `#2334` / run `34428143443` completed successfully through unit tests, diff sanity, NeoForge build, JAR verification, Foundation GameTest, dedicated-server smoke and QA-JAR publication on `main@9cc91f1...`. On the current integrated state, Apotheotic Creation is therefore canonical component **#51**.
+Phase 2AX / PR #166 merged to `main` as `4238275d2086a00c6f31960114733d74b8cdb1d8` after final pre-merge HEAD `b5b36a6fa3b1a5bf3b2add56ec3c604592f5ca71` passed Black Arcana CI #2336. The exact merge SHA then passed post-merge Black Arcana CI #2337 / workflow run `34430446827`, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
 
-Phase 2AX represents candidate component **#52**, `familiarslib` 1.7.1. Thus this revision describes **52/100 = 52% only as the internal provider-component candidate metric** until CI GREEN on the exact reconciled Phase 2AX HEAD, a final latest-main gate, merge and post-merge main confirmation.
+The historical Phase 2AW nuance remains recorded: its immediate post-merge workflow #2308 failed at Foundation GameTest after unit tests, diff sanity, NeoForge build and JAR verification had passed, while later current-main validation #2334 completed the full gate successfully. This does not change the canonical #51 status of Apotheotic Creation.
 
 The complete pre-Phase-2AX coverage text is preserved byte-for-byte in [`CATALOG-COVERAGE-CURRENT-PRE-PHASE2AX.md`](./CATALOG-COVERAGE-CURRENT-PRE-PHASE2AX.md). Provider-specific evidence lives under `wiki/modpack-catalog/providers/**` plus the corresponding phase checkpoint/capability files.
 
@@ -42,7 +42,7 @@ The internal operational denominator remains **100 magic/cross-domain component 
 - 2 current candidates added beyond the historical baseline: `soul_fire_d`, `reliquified_lenders_cataclysm_new_relics_fix`;
 - therefore `103 - 5 + 2 = 100`.
 
-FamiliarsLib was already one of those 100 component units, so Phase 2AX changes the component numerator only. The denominator must be reconciled whenever the physical provider set changes.
+FamiliarsLib was already one of those 100 component units, so Phase 2AX changed the component numerator only. The denominator must be reconciled whenever the physical provider set changes.
 
 ## Canonical recent closure sequence
 
@@ -52,12 +52,12 @@ FamiliarsLib was already one of those 100 component units, so Phase 2AX changes 
 | 48 | Phase 2AT / PR #156 | `apothic_spawners` | canonical |
 | 49 | Phase 2AU / PR #158 | `apothic_enchanting` | canonical |
 | 50 | Phase 2AV / PR #160 | `apotheosis` | canonical |
-| 51 | Phase 2AW / PR #161 | `apotheoticcreation` | canonical in current integrated `main@9cc91f1...`; historical immediate post-merge GameTest failure superseded by later full current-main GREEN validation |
-| 52 | Phase 2AX | `familiarslib` | candidate in this revision |
+| 51 | Phase 2AW / PR #161 | `apotheoticcreation` | canonical; historical immediate post-merge GameTest failure superseded by later full current-main GREEN validation |
+| 52 | Phase 2AX / PR #166 | `familiarslib` | canonical at `main@4238275d2086a00c6f31960114733d74b8cdb1d8`; post-merge CI #2337 GREEN |
 
 Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
 
-## Phase 2AX — FamiliarsLib 1.7.1 component #52, candidate
+## Phase 2AX — FamiliarsLib 1.7.1 component #52, canonical
 
 Phase 2AX closes the installed familiar-framework library to the strongest currently available evidence:
 

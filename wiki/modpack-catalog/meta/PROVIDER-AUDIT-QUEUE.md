@@ -8,33 +8,34 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+- `main` canônica após Phase 2AX: `4238275d2086a00c6f31960114733d74b8cdb1d8`
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-FamiliarsLib 1.7.x adiciona **0 magias semânticas independentes** neste fechamento. Seus spellcasting familiar abstractions e tags de Iron's consomem/classificam spells externos; o conteúdo histórico de Sound foi removido na linha 1.7 e movido para Tunes 'n Tomes.
+FamiliarsLib 1.7.x adiciona **0 magias semânticas independentes**. Seus spellcasting familiar abstractions e tags de Iron's consomem/classificam spells externos; o conteúdo histórico de Sound foi removido na linha 1.7 e movido para Tunes 'n Tomes.
 
 - delta de numerador semântico da Phase 2AX: **+0**;
 - delta de denominador semântico atribuível a FamiliarsLib: **+0**;
 - denominador global: ainda incompleto;
-- nenhuma porcentagem final de spells/magias é declarada por esta phase.
+- nenhuma porcentagem final de spells/magias é declarada pela Phase 2AX.
 
 ### Cobertura interna de componentes do catálogo
 
-- base reconciliada: `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`;
-- Phase 2AW / PR #161 está integrada e o estado corrente dessa main possui CI completa GREEN no run `34428143443` / #2334;
-- cobertura canônica de componentes na base: **51/100 = 51%**;
-- Phase 2AX: `familiarslib` 1.7.1, **52/100 = 52% somente candidato** até CI GREEN no HEAD reconciliado + gate final de `main` + merge + confirmação pós-merge.
+- Phase 2AX / PR #166 foi mergeada como `4238275d2086a00c6f31960114733d74b8cdb1d8`;
+- HEAD pré-merge `b5b36a6fa3b1a5bf3b2add56ec3c604592f5ca71` passou Black Arcana CI #2336;
+- o merge SHA exato passou Black Arcana CI #2337 / workflow run `34430446827` com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
+- cobertura canônica de componentes atual: **52/100 = 52%**.
 
 O valor 52/100 nunca substitui a métrica semântica de magias.
 
-## Phase 2AX — FamiliarsLib 1.7.1 — candidate #52
+## Phase 2AX — FamiliarsLib 1.7.1 — canonical #52
 
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
-| `familiarslib` | `familiarslib-1.21.1-1.7.1.jar` | EXACT PHYSICAL / EXACT PUBLISHER FILE / RELEASE-CORRELATED OFFICIAL SOURCE / FAMILIAR FRAMEWORK + ATTACHMENT + NETWORK AUTHORITY / IRON'S SPELL CLASSIFICATION CONSUMER / SOUND CONTENT REMOVED IN 1.7 / 0 INDEPENDENT SEMANTIC SPELLS / #52 CANDIDATE |
+| `familiarslib` | `familiarslib-1.21.1-1.7.1.jar` | EXACT PHYSICAL / EXACT PUBLISHER FILE / RELEASE-CORRELATED OFFICIAL SOURCE / FAMILIAR FRAMEWORK + ATTACHMENT + NETWORK AUTHORITY / IRON'S SPELL CLASSIFICATION CONSUMER / SOUND CONTENT REMOVED IN 1.7 / 0 INDEPENDENT SEMANTIC SPELLS / #52 CANONICAL / POST-MERGE CI GREEN |
 
 ### Evidence boundary
 
@@ -65,7 +66,7 @@ The Modrinth 1.7 changelog explicitly says Sound-school content was removed and 
 
 No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot be admitted merely because it is a familiar, tameable, spellcasting pet or nearby entity.
 
-Provider-specific ownership integration remains **fail-closed** until a current exact-version seam is proven and deliberately adapted. The catalog evidence identifies promising provider-owned familiar state, but source↔physical exactness and the intended stable public ownership contract are not closed strongly enough to promote a runtime adapter here.
+Provider-specific ownership integration remains **fail-closed** until a current exact-version seam is proven and deliberately adapted. The catalog evidence identifies provider-owned familiar state, but source↔physical exactness and a stable ownership contract are not closed strongly enough to promote a runtime adapter.
 
 ### License / clean-room
 
@@ -86,38 +87,30 @@ No reuse conclusion is inferred. Read-only factual audit only; no code/assets/te
 - optional-network compatibility under the exact pack;
 - resolution of publisher/source license disagreement if reuse were ever contemplated.
 
-None of these open QA items creates semantic spells or justifies an automatic Black Arcana integration.
-
-### Canonicalization gate
-
-Before merge:
-
-1. fetch latest `origin/main`;
-2. reconcile if it advanced;
-3. review final diff;
-4. require CI GREEN on the exact reconciled HEAD;
-5. merge without discarding concurrent work;
-6. confirm final `main` SHA and applicable post-merge validation.
-
-Phase 3 remains blocked.
+None of these open QA items creates semantic spells or invalidates the provider-component closure already merged and post-merge validated.
 
 ## Immediate predecessors
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
-| 51 | 2AW / #161 | `apotheoticcreation` | CANÔNICO no estado integrado corrente de `main@9cc91f1...`; ver nota histórica de GameTest no coverage/checkpoint |
+| 52 | 2AX / #166 | `familiarslib` | CANÔNICO em `main@4238275...`; CI pós-merge #2337 GREEN |
+| 51 | 2AW / #161 | `apotheoticcreation` | CANÔNICO; ver nota histórica de GameTest no coverage/checkpoint |
 | 50 | 2AV / #160 | `apotheosis` | CANÔNICO |
 | 49 | 2AU / #158 | `apothic_enchanting` | CANÔNICO |
 | 48 | 2AT / #156 | `apothic_spawners` | CANÔNICO |
-| 47 | 2AS / #155 | `apothic_compats` | CANÔNICO |
-
-## Concorrência
-
-Branch: `docs/magic-catalog-phase2ax-familiarslib-1.7.1`. A branch foi originalmente criada em `40fedc5...` e, antes da edição, fast-forwarded sem force para `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`. Repetir o gate imediatamente antes do merge. CI anterior à última reconciliação não vale como evidência final.
 
 ## Próxima seleção
 
-Somente após merge + confirmação pós-merge da Phase 2AX. Continuar preferindo providers cuja superfície corrente possa ser fechada sem inferência. Em paralelo, a reconstrução da métrica semântica deve priorizar os providers que ainda impedem um denominador completo, incluindo `cataclysm_spellbooks`, `gaze`, `leylines` e `somakespells`.
+A Phase 2AX está encerrada e não bloqueia mais a escolha do próximo provider. A próxima auditoria deve continuar preferindo superfícies atuais que possam ser fechadas sem inferência.
+
+Em paralelo, a reconstrução da métrica semântica deve priorizar os providers que ainda impedem um denominador completo, incluindo:
+
+- `cataclysm_spellbooks` — publisher atual informa 65 spells, mas registry exato 1.1.13 permanece aberto;
+- `gaze` — Rites/Geas atuais ainda não têm inventário granular completo;
+- `leylines` — nove nomes públicos são apenas lower bound;
+- `somakespells` — publisher informa `over 50 spells`, sem registry atual completo.
+
+Alshanex's Familiars também exige reconciliação própria antes de qualquer contagem: a linha 4.0 removeu a Sound School do provider e a moveu para Tunes 'n Tomes, enquanto documentação histórica ainda pode listar esses spells sob Alshanex. Não promover histórico a ownership atual.
 
 ## Regras
 
@@ -125,9 +118,9 @@ Somente após merge + confirmação pós-merge da Phase 2AX. Continuar preferind
 - source-version correlation não implica JAR reproducibility;
 - familiar framework não vira spell provider;
 - tag de spell externo não conta como spell novo;
-- histórico Sound anterior à 1.7 não conta para FamiliarsLib atual;
+- histórico Sound anterior à linha atual não conta no provider que deixou de possuí-lo;
 - componente fechado não altera automaticamente a contagem semântica de magias;
 - familiar ownership precisa de seam provider-native comprovado;
 - cliente envia intenção, nunca ownership authority;
 - integração sem seam seguro e exato permanece fail-closed;
-- Phase 3 permanece bloqueada até o catálogo provar lacunas reais.
+- Phase 3 permanece bloqueada até o catálogo provar lacunas reais e a cobertura semântica ser reconstruível.

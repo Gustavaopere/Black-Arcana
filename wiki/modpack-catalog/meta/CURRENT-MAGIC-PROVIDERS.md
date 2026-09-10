@@ -2,29 +2,32 @@
 
 ## Estado
 
-`AUDITORIA EM ANDAMENTO — autoridade física 2026-09-07`
+`AUDITORIA EM ANDAMENTO — autoridade física 2026-09-09`
 
-A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **612 entradas top-level incluindo NeoForge**. O guia mágico reconciliado em 2026-09-07 cobre **103 referências mágicas/cross-domain**. Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
+A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-## Freshness 2026-09-07
+O denominador interno corrente do catálogo foi reconciliado para **100 componentes mágicos/cross-domain**, dos quais **52 estão canônicos** após Phase 2AX / PR #166. Esse 52/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
-Updates mágicos confirmados no snapshot atual incluem:
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui.
+
+Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
+
+## Freshness histórica 2026-09-07
+
+O checkpoint de 2026-09-07 registrou updates como:
 
 - Apotheosis `8.7.0 → 8.8.0`;
-- Ars 'n' Spells `3.2.4 → 3.3.0`;
+- Ars 'n' Spells `3.2.4 → 3.3.0` naquele snapshot; o runtime físico atual está em `3.3.2`;
 - GTBC's SpellLib `2.1.0 → 2.2.0` (`2.2.0-1.21.1` no runtime);
 - Vampirism `1.10.12 → 1.10.13`.
 
-Novos módulos mágicos/cross-domain incorporados ao recorte atual incluem:
-
-- `ironsable-wind-1.0.0.jar` — bridge Wind's Spellbooks ↔ IronSable/Sable; compatibilidade física, não nova escola;
-- `morerelics-1.7.7-1.21.1.jar` — decisão curatorial `Manter`, porém contracts provider-specific permanecem fail-closed até compatibilidade real com Relics `0.12.8` ser comprovada.
+Esse bloco é histórico. Versões correntes devem sempre ser relidas da modlist física antes de qualquer nova auditoria.
 
 A presença/update de um JAR não revalida automaticamente hook, API ou compatibilidade já assumidos por auditorias anteriores.
 
 ## Delta histórico do snapshot 2026-09-06
 
-O snapshot anterior continha 607 entradas top-level. O guia mágico anterior catalogava 94 JARs/providers relevantes; todos esses 94 continuavam presentes naquele checkpoint, mas o guia histórico nunca foi autoridade de versão quando divergente da modlist física.
+O snapshot anterior continha 607 entradas top-level. O guia mágico anterior catalogava 94 JARs/providers relevantes; esses números são históricos e não substituem a reconciliação física atual.
 
 | Provider | Guia anterior | Snapshot 2026-09-06 |
 |---|---:|---:|
@@ -84,6 +87,15 @@ Ars Nouveau e seus addons devem ser catalogados em nível de glyph/form/augment 
 - Vampirism/Bloodlines e bridges mágicas;
 - demais providers ocultistas/alquímicos presentes.
 
+### Familiars e infraestrutura relacionada
+
+A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e `alshanex_familiars-1.21.1_v4.0.3.jar`. São componentes distintos e não compartilham automaticamente ownership semântico:
+
+- FamiliarsLib foi fechado na Phase 2AX como `LIBRARY_INFRA`/framework de familiar, com **0** novas magias semânticas independentes;
+- Alshanex's Familiars é consumidor/conteúdo concreto e requer auditoria própria da linha 4.0.3;
+- documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes 'n Tomes;
+- familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
+
 ## Checkpoint Apprentice's Codex — Phase 2L
 
 `apprenticecodex` está source-catalogado contra o artefato instalado `0.9.7.1` e o pin exato `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`:
@@ -109,3 +121,5 @@ A Wiki só poderá declarar `CATÁLOGO MÁGICO COMPLETO` quando:
 - aquisição, custo, dano/efeito, cooldown e scaling forem extraídos do provider/runtime/config, não inferidos;
 - sobreposições forem resolvidas por provider-native first;
 - novos spells Black Arcana tiverem justificativa de delta mecânico real.
+
+Até esses gates fecharem, Phase 3 permanece bloqueada.
