@@ -22,7 +22,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
-| `apotheoticcreation` | `apotheoticcreation-2.0.0.jar` | EXACT PHYSICAL + EXACT PUBLISHER + EXACT OFFICIAL SOURCE / CREATE ITEM ATTRIBUTE BRIDGE / `rarity` + `affix` TYPES / APOTHEOSIS DATA CONSUMER / NO OWN MAGIC RESOURCE / NO OWN NETWORK OR PERSISTENCE / #51 CANDIDATE |
+| `apotheoticcreation` | `apotheoticcreation-2.0.0.jar` | EXACT PHYSICAL + EXACT PUBLISHER + EXACT OFFICIAL SOURCE / CREATE ITEM ATTRIBUTE BRIDGE / `rarity` + `affix` TYPES / APOTHEOSIS DATA CONSUMER / CODECS OWN ATTRIBUTE VALUE SERIALIZATION / NO OWN MAGIC RESOURCE / NO STANDALONE PAYLOAD OR SAVEDDATA/ATTACHMENT CONTAINER / #51 CANDIDATE |
 
 ### Evidence boundary
 
@@ -46,13 +46,13 @@ The addon registers exactly two Create `ITEM_ATTRIBUTE_TYPE` entries:
 
 Visible affix enumeration excludes paths `socket` and `durable`. Do not summarize the addon as exposing every affix without this caveat.
 
-No addon-owned spell/mana/ritual/casting registry, payload/network class, persistence/attachment or parallel provider state is observed in the complete exact source tree.
+The addon defines `MapCodec`/`StreamCodec` serialization for its two attribute values, which may be persisted or synchronized inside Create's enclosing Attribute Filter infrastructure. No addon-owned spell/mana/ritual/casting registry, standalone payload registration, SavedData/attachment container or parallel provider state is observed in the complete exact source tree.
 
 ### Create / Apotheosis boundary
 
 - Apotheosis owns rarity/affix identity and item metadata.
-- Create owns Attribute Filter semantics and downstream logistics.
-- Apotheotic Creation owns the narrow registration/translation bridge only.
+- Create owns Attribute Filter semantics, enclosing filter storage/transport and downstream logistics.
+- Apotheotic Creation owns the narrow registration/translation bridge plus serialization of its two attribute values.
 - Smart Observers, Brass Tunnels, funnels and other filter consumers are downstream Create behavior, not separate addon hooks unless independently proven.
 - Apokinetics machine-gem/socket semantics remain a separate addon/provider concern.
 
@@ -114,6 +114,7 @@ Somente após merge + confirmação pós-merge da Phase 2AW. Continuar preferind
 - presença/versão vêm da modlist/JAR atual;
 - source-version pin não implica JAR reproducibility;
 - metadata bridge não vira authority dos dados traduzidos;
+- codec de atributo não vira ownership do container/payload do Create;
 - Create Attribute Filter não vira BA cast target/filter pipeline;
 - downstream Create logistics não vira hook próprio do addon por inferência;
 - integração sem seam seguro e exato permanece fail-closed;
