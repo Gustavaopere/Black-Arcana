@@ -1,9 +1,9 @@
 # Capability Matrix Delta — FamiliarsLib 1.7.1
 
-Phase: **2AX**  
-Physical provider: `familiarslib-1.21.1-1.7.1.jar`  
-Mod id: `familiarslib`  
-Runtime version: `1.21.1-1.7`  
+Phase: **2AX**
+Physical provider: `familiarslib-1.21.1-1.7.1.jar`
+Mod id: `familiarslib`
+Runtime version: `1.21.1-1.7`
 Physical SHA-1: `7fa3f3116e35c12456425ae195924ced33fcc2eb`
 
 ## Closure disposition
