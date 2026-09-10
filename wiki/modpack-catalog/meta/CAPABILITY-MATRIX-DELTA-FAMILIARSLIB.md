@@ -23,10 +23,13 @@ FamiliarsLib is a real familiar-framework provider, but it is **not an independe
 
 ## Provider-component coverage
 
-FamiliarsLib already belongs to the reconciled 100-component magic/cross-domain denominator. Closing it therefore changes only the internal provider-component numerator:
+FamiliarsLib already belongs to the reconciled 100-component magic/cross-domain denominator. Closing it changed only the internal provider-component numerator:
 
-- canonical base on `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`: **51/100**;
-- Phase 2AX candidate after this audit: **52/100**;
+- predecessor canonical base on `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`: **51/100**;
+- Phase 2AX / PR #166 canonicalized FamiliarsLib as component **#52**;
+- current canonical provider-component coverage after merge + post-merge validation: **52/100 = 52%**;
+- merge commit: `4238275d2086a00c6f31960114733d74b8cdb1d8`;
+- post-merge Black Arcana CI: #2337 / workflow run `34430446827` — **GREEN**;
 - denominator delta: **0**.
 
 This internal component metric is not the user-facing percentage of spells/magics.

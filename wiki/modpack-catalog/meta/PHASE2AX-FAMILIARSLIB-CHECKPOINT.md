@@ -2,20 +2,16 @@
 
 ## Scope
 
-Documentation/catalog closure for the physically installed FamiliarsLib component. No Black Arcana runtime code is added or changed by this phase.
+Documentation/catalog closure for the physically installed FamiliarsLib component. No Black Arcana runtime code was added or changed by this phase.
 
-## Reconciled base
+## Reconciled base and branch history
 
-- branch: `docs/magic-catalog-phase2ax-familiarslib-1.7.1`
-- base used for this audit: `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`
-- base tree: `eb941f254d7eedebaa533f3d5837c811c961e4f6`
-- current-main CI on that SHA: workflow run `34428143443` / run #2334 — **GREEN**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and QA-JAR publication
+- phase branch: `docs/magic-catalog-phase2ax-familiarslib-1.7.1`;
+- original branch point: `40fedc5b1658e90b51565690851c2ad113203763`;
+- reconciled pre-edit base: `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`;
+- the branch was fast-forwarded safely from the old point because the old point was an ancestor; no Phase 2AX work was discarded.
 
-The Phase 2AX branch originally existed at `40fedc5b1658e90b51565690851c2ad113203763`. It was fast-forwarded safely to `9cc91f1...`; comparison showed the old point was an ancestor, so no Phase 2AX work was discarded.
-
-## Predecessor reconciliation
-
-Phase 2AW / PR #161 merged as `6139f58bc0facaddc833fe4074f29dd1df4c6e75`. Its immediate post-merge run #2308 failed at Foundation GameTest while unit tests, diff sanity, NeoForge build and JAR verification succeeded. The later current-main run #2334 is fully green and includes that merge plus subsequent main work. Therefore the current integrated base treats Apotheotic Creation as canonical component #51 while retaining the historical validation note.
+Phase 2AW / PR #161 was already integrated on the reconciled base. Its immediate post-merge run #2308 failed at Foundation GameTest after unit tests, diff sanity, NeoForge build and JAR verification succeeded; later current-main run #2334 completed the full gate successfully. That historical nuance remains preserved.
 
 ## Physical identity
 
@@ -24,7 +20,7 @@ Current physical modlist authority:
 - top-level entries: **595**;
 - Minecraft: 1.21.1;
 - NeoForge: `21.1.248`;
-- modlist SHA-1 recorded by the existing reconciliation: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`;
+- modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`;
 - JAR: `familiarslib-1.21.1-1.7.1.jar`;
 - mod id: `familiarslib`;
 - runtime version: `1.21.1-1.7`;
@@ -79,10 +75,11 @@ Those tags classify provider-external Iron's spells. They are not spell registra
 
 ## Coverage disposition
 
-Internal provider-component metric:
+Internal provider-component metric after canonicalization:
 
-- canonical base: **51/100**;
-- Phase 2AX candidate: **52/100**;
+- predecessor canonical coverage: **51/100**;
+- Phase 2AX canonical component: **#52**;
+- current canonical coverage after Phase 2AX: **52/100 = 52%**;
 - denominator delta: **0**.
 
 User-facing semantic magic metric:
@@ -108,16 +105,16 @@ License surfaces disagree:
 
 No reuse permission is inferred from this conflict. The audit is factual/read-only and Black Arcana copies no provider code, assets or text.
 
-## Candidate gate
+## Canonicalization result
 
-Before Phase 2AX can become canonical:
+Phase 2AX completed the required gates:
 
-1. review the documentation diff;
-2. fetch latest `origin/main` again;
-3. merge/reconcile new main work if it advanced;
-4. run CI on the exact reconciled Phase 2AX HEAD;
-5. require GREEN;
-6. merge the PR without discarding concurrent work;
-7. confirm final `main` SHA and post-merge validation.
+- final pre-merge HEAD: `b5b36a6fa3b1a5bf3b2add56ec3c604592f5ca71`;
+- PR: **#166**;
+- pre-merge Black Arcana CI: **#2336 — GREEN** on the exact final HEAD;
+- latest-main gate immediately before merge: `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`, unchanged from the reconciled base;
+- merge commit: `4238275d2086a00c6f31960114733d74b8cdb1d8`;
+- post-merge `main`: confirmed at the exact merge SHA;
+- post-merge Black Arcana CI: **#2337 / workflow run `34430446827` — GREEN**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
 
-Phase 3 remains blocked.
+Therefore Phase 2AX is **CANONICAL / POST-MERGE VALIDATED**. Phase 3 remains blocked by the broader provider catalog/deduplication and reconstructible semantic denominator gates.
