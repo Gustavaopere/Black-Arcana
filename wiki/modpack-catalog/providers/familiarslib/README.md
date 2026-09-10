@@ -2,13 +2,15 @@
 
 ## Catalog status
 
-Phase 2AX catalogs installed `familiarslib` 1.7.1 as candidate provider component **#52**.
+Phase 2AX catalogs installed `familiarslib` 1.7.1 as canonical provider component **#52**.
 
-- reconciled base: `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`;
-- canonical internal component coverage at base: **51/100**;
-- candidate internal component coverage represented by this tranche: **52/100**;
+- reconciled audit base: `main@9cc91f1bf9b7f41708ea70635d5b36b282947866`;
+- predecessor canonical internal component coverage: **51/100**;
+- current canonical internal component coverage after Phase 2AX: **52/100**;
 - FamiliarsLib semantic spell/magic-object delta: **0**;
-- canonicalization requires latest-main reconciliation, CI GREEN on the exact reconciled HEAD, merge and post-merge main confirmation.
+- final pre-merge HEAD `b5b36a6fa3b1a5bf3b2add56ec3c604592f5ca71` passed Black Arcana CI #2336;
+- PR #166 merged as `4238275d2086a00c6f31960114733d74b8cdb1d8`;
+- exact merge SHA passed post-merge Black Arcana CI #2337 / workflow run `34430446827`.
 
 The component percentage is an internal catalog-completion metric. It is not the user-facing percentage of spells/magics.
 
