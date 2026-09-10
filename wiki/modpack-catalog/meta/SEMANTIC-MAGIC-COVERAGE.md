@@ -90,7 +90,7 @@ Arithmetic cross-check by provider family:
 | [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike, whose survival reachability is unproven and is therefore conditional |
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 7 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear; Leap is conditional and Hide Name is presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
-| [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | whole-interval path history plus stable endpoint blobs close 26 base-Malum `SpiritRiteType` registrations; 37 Geas effect-type identities and 9 spirit resource/type identities are tracked separately but excluded by metric scope |
+| [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
 | **Strict total** |  | **796** |  |  |
 
 ### Hexalia release-boundary reconciliation
@@ -108,18 +108,26 @@ The physical instance identifies `malum-1.21.1-1.8.2.jar` / runtime `1.8.2`. The
 Endpoint blob equality is not used alone. Path-history queries over the complete observed 1.8.2 window show:
 
 - `MalumSpiritRiteTypes.java` — no commit touches the path after entry into the window and before the 1.8.3 transition;
+- `MalumSpiritRiteEffectTypes.java` — no commit touches the path in that interval; supporting deduplication evidence only;
 - `MalumSpiritTypes.java` — no commit touches the path in that interval;
-- `MalumGeasEffectTypes.java` — the path is touched at the initial `f56691e...` checkpoint and has no later commit before the transition.
+- `MalumGeasEffectTypes.java` — the path is touched at the initial `f56691e...` checkpoint and has no later commit before the transition;
+- `client/screen/codex/entries/TotemMagicEntries.java` — no commit touches the path in that interval.
 
-That rules out an intermediate registry change followed by a revert on these paths. The endpoint blobs are also identical:
+The stable endpoint blobs are:
 
 - `MalumSpiritRiteTypes.java` → `2b9e4e5445733dee4ed205e4331d55c93ac86028`, with **26 active base-Malum rite registrations**;
+- `MalumSpiritRiteEffectTypes.java` → `e5fd8854c12783e4503475ccaf461c3a19c2a0b0`, used only to distinguish the two special rite/effect identities and adding **0** semantic objects;
 - `MalumGeasEffectTypes.java` → `2aef164fcedae891b2c6805f2edbd8ee48cffbfe`, with **37 active Geas effect-type registrations**; two proposed Bonds and one Authority are commented out;
-- `MalumSpiritTypes.java` → `fa772479f0f73131dabf33d9342299c7e20405e1`, with **9 spirit resource/type registrations**.
+- `MalumSpiritTypes.java` → `fa772479f0f73131dabf33d9342299c7e20405e1`, with **9 spirit resource/type registrations**;
+- `TotemMagicEntries.java` → `d0ba29e52abcd1f26cfa92f20951c4981ae3c661` at both endpoints.
 
-Only the **26 `SpiritRiteType` identities** are additive under this ledger's definition. The Geas registry is an effect/progression registry and the Spirit Type registry is a resource/type registry, both explicitly outside the counted semantic-action classes. Gaze-provided rites are not included in the base Malum 26.
+The semantic eligibility of `undirected_rite` and `unchained_rite` is not inferred from registry membership. Exact `TotemMagicEntries.setupEntries(ArcanaProgressionScreen)` adds both as separate progression entries, each with its corresponding `RiteHolder` represented by a `SpiritRiteTextPage` and a `SpiritRiteRecipePage`; Unchained additionally exposes transmutation content. Because the progression file is unchanged throughout the observed `1.8.2` interval, this player-facing surface is release-bounded rather than a single-checkpoint observation.
 
-This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence claim. The upstream licensing inconsistency documented in the Malum provider catalog continues to block promotion of source implementation internals into Black Arcana integration contracts; runtime/API/recipe mechanics remain fail-closed until independently verified.
+`CodexLangDatagen.java` is touched at exactly five checkpoints during the same interval — `f56691e...`, `3fb3c77...`, `a634061...`, `5a578eb...` and `fbcc606...`. Every snapshot preserves dedicated entries for the two special rites, and the Undirected entry preserves activation guidance using five runes. This is supporting player-facing/reachability evidence; upstream prose is not copied into Black Arcana.
+
+Therefore all **26 `SpiritRiteType` identities** satisfy the counted ritual/rite class for this ledger, including the two special Arcane rites. The Geas registry is an effect/progression registry, the Spirit Type registry is a resource/type registry, and Rite-effect entries are effects; all are explicitly outside the counted semantic-action classes. Gaze-provided rites are not included in the base Malum 26.
+
+This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence claim. Exact recipe contents, numerical mechanics, runtime lifecycle and provider API contracts remain open. The upstream licensing inconsistency documented in the Malum provider catalog continues to block promotion of source implementation internals into Black Arcana integration contracts.
 
 ## Conditional objects excluded from the strict total
 
