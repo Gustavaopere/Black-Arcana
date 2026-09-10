@@ -21,8 +21,8 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - NeoForge: **21.1.248**
 - physical modlist: **595 top-level entries**
 - physical modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- reconstruction base: `main@4164857555331cba759406064459dc392f9c0b30`
-- base post-merge validation: Black Arcana CI **#2342**, GREEN
+- reconstruction base: `main@4f3dab1a4801393873f9d4b7857782fcf6298e56`
+- base post-merge validation: Black Arcana CI **#2349**, attempt 2 GREEN on the exact base SHA
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -43,7 +43,7 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 ## Strict reconstructible counted minimum
 
-**745 semantic magic objects are currently reconstructible from canonical provider records.**
+**770 semantic magic objects are currently reconstructible from canonical provider records.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -53,7 +53,8 @@ Arithmetic cross-check by provider family:
 - Iron's ecosystem and spell-content addons: **450**;
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **54**;
-- total: `199 + 450 + 42 + 54 = 745`.
+- Hexalia ritual/infusion layer: **25**;
+- total: `199 + 450 + 42 + 54 + 25 = 770`.
 
 ### Counted ledger
 
@@ -87,7 +88,16 @@ Arithmetic cross-check by provider family:
 | [Vampirism](../providers/vampirism/README.md) | 1.10.13 | 19 | `COUNTED_SOURCE_PINNED` | 14 Vampire + 3 Hunter + 2 shared Lord registered player actions; counted as provider-native discrete supernatural actions, not Iron's spells |
 | [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike, whose survival reachability is unproven and is therefore conditional |
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 7 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear; Leap is conditional and Hide Name is presentation-only |
-| **Strict total** |  | **745** |  |  |
+| [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
+| **Strict total** |  | **770** |  |  |
+
+### Hexalia release-boundary reconciliation
+
+Hexalia remains an explicit physical/source identity mismatch: the installed file is `hexalia-neoforge-1.3.6.jar`, while its runtime metadata reports `1.3.5`. That prevents an exact installed-JAR/source-equivalence claim, but it no longer blocks this narrow semantic count.
+
+The official source commit `ef34896fc1a2a02da46b49a46ca78ca236bdc2dc` (`Update 1.3.5`) declares `mod_version=1.3.5`; its immediate release successor `4952c65233bf31e9f0d3e55ff76be7fa1007ee3d` (`Release Hexalia 1.3.6`) declares `mod_version=1.3.6`. Comparing those checkpoints shows no Nature's Ritual or Celestial Infusion recipe JSON added, removed or modified. The official 1.3.5 publisher changelog also records restoration of the Galeberries Celestial Infusion recipe, so the six-infusion inventory is already present on the 1.3.5 release line.
+
+Therefore the intersection relevant to this metric is stable across the observed `1.3.5` metadata / `1.3.6` filename-source boundary: **19 player-facing Nature's Rituals + 6 Celestial Infusions = 25**. The debug Nature's Ritual is excluded. Exact installed-binary equivalence, runtime mechanics and provider API/hook QA remain open independently.
 
 ## Conditional objects excluded from the strict total
 
@@ -118,7 +128,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 745** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 770** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -129,7 +139,6 @@ These rows are deliberately **not additive to 745** until their exact/current in
 | [Gaze](../providers/gaze/README.md) 1.1.7.1 | publisher states **2 Geas** plus a new set of Rites | `LOWER_BOUND / OPEN` | rite registry and complete IDs/names are not published; exact source/JAR extraction pending |
 | [Ignis Soulfires: Spellbooks](../providers/ignis-soulfires-spellbooks/README.md) 1.1.0 | exact installed artifact exists; public/source material found only for divergent 1.0.0 | `OPEN` | no safe 1.1.0 granular inventory |
 | [Malum](../providers/malum/README.md) 1.8.2 | Spirit Rites and Geas/Pact/Oath/Authority systems are proven in the installed line | `OPEN` | exact 1.8.2 rite and Geas inventories remain unreconciled; later-branch counts are not imported |
-| [Hexalia](../providers/hexalia/README.md) physical 1.3.6 / runtime metadata 1.3.5 | source-pinned 1.3.6 has 19 player-facing Nature's Ritual entries and 6 Celestial Infusions, plus brews/processing/mutations/Censer systems | `OPEN SCOPE / VERSION RECONCILIATION` | filename/runtime mismatch remains; ordinary recipes/processes must not be inflated into semantic magic objects before scope normalization |
 | [Alshanex's Familiars](../providers/alshanex-familiars/README.md) 4.0.3 | exact 4.0.3 release directly confirms **Fire Fist**; 4.0 introduced Switcheroo; 4.0 moved Sound ownership to Tunes; a data-driven ritual subsystem is documented | `LOWER_BOUND / OPEN CURRENT INVENTORY` | current lower bound is at least **1** directly evidenced spell; Switcheroo 4.0.3 presence and the complete current spell/ritual inventories remain unverified |
 | [Goety Cataclysm](../providers/goety-cataclysm/README.md) 1.21.1-1.8.2 | exact installed release; public semantic surface proves addon spells/abilities exist | `OPEN` | complete Focus/spell/ritual inventory unavailable for current build |
 | [Goety Iron](../providers/goety-iron/README.md) 3.1 | exact installed release; servant/focus/ritual bridge publicly established | `OPEN / BRIDGE-BOUNDED` | public servant list is not a spell inventory; focus/ritual registry totals are unverified |
@@ -138,11 +147,11 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **745 is not “745 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 745 by the 100 provider-component denominator. `52/100` and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 745 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **770 is not “770 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 770 by the 100 provider-component denominator. `52/100` and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 770 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
-5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned object may be countable while numerical settlement or compatibility remains fail-closed.
+5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
 7. Black Arcana's own proposed/implemented spells do not backfill missing provider evidence and do not reduce the provider denominator by assumption.
 
@@ -157,7 +166,6 @@ To converge on a final denominator efficiently, prioritize:
 5. complete Alshanex's Familiars 4.0.3 spell/ritual inventory after the Sound→Tunes ownership migration;
 6. Goety 3.1.4 Focus/JAR and ritual-identity reconciliation;
 7. Malum 1.8.2 rites/Geas inventory;
-8. Hexalia semantic-scope/version normalization;
-9. current-pack config/reachability closure for conditional action/glyph rows.
+8. current-pack config/reachability closure for conditional action/glyph rows.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
