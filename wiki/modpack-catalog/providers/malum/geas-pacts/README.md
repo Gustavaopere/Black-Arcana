@@ -2,62 +2,102 @@
 
 ## Estado
 
-`INSTALLED-LINE EXISTENCE PROVEN / 13 PUBLISHER-NAMED ENTRIES CONFIRMED ACROSS 1.8 + 1.8.2 CHANGELOGS / COMPLETE 1.8.2 REGISTRY UNVERIFIED / ACQUISITION+INTERNALS FAIL-CLOSED`
+`37 ACTIVE GEAS EFFECT-TYPE IDENTITIES RELEASE-BOUNDED / PACT+OATH+AUTHORITY+CREED SURFACE CLOSED / ACQUISITION+NUMERICAL EFFECTS+RUNTIME/API QA PENDING`
 
-Esta categoria registra somente Geas/Pacts/Oaths/Authorities que possuem evidência publisher-authored da linha instalada. Protótipos comentados em source, nomes observados apenas na branch posterior 1.9.x e contagens inferidas não contam como gameplay 1.8.2.
+A linha instalada 1.8.2 possui um inventário release-bounded de **37 registros ativos de `GeasEffectType`**: 28 Pacts, 6 Oaths, 2 Authorities e 1 Creed. Esse fechamento é factual para identidade/deduplicação; ele não transforma o registry de Geas em spell/action registry nem autoriza usar internals do provider como contrato de implementação.
 
-## Entradas nomeadas no changelog 1.8
+## Evidência de intervalo completo 1.8.2
 
-O changelog publisher-authored da geração 1.8, ancorado ao commit exato da linha 1.8.2 identificado no catálogo pai, nomeia explicitamente:
+A linha oficial `SammySemicolon/Malum-Mod` para Minecraft 1.21.1 é delimitada por:
 
-1. `Pact of the Prospector`
-2. `Pact of the Profane Glutton`
-3. `Pact of the Berserker`
-4. `Pact of Wyrd Reconstruction`
-5. `Pact of the Cloudskipper`
-6. `Oath of the Overkeen Eye`
-7. `Oath of Unmakers Disdain`
-8. `Oath of Unsighted Resistance`
-9. `Authority of the Gleeful Target`
+- `f56691e56e591a6d8d1859ff119e749375e14d61`, primeiro checkpoint observado com `mod_version=1.8.2`; o pai ainda declara `1.8.1`;
+- `03b743a37f3eeb0cc7f4364f0730e1f135f78408`, último checkpoint observado antes de o filho avançar para `1.8.3`.
 
-Esses nomes provam presença/alteração na geração 1.8, mas não fornecem por si só registry ID, recipe, acquisition, numerical effect ou runtime hook da build instalada.
+`MalumGeasEffectTypes.java` possui blob SHA `2aef164fcedae891b2c6805f2edbd8ee48cffbfe` nos dois extremos. A consulta ao histórico Git do próprio caminho durante toda a janela mostra somente o commit inicial `f56691e...`, que já estabelece a versão 1.8.2, e **nenhuma alteração posterior** antes da transição para 1.8.3. Assim, não existe alteração intermediária/reversão desse registry dentro da linha auditada.
 
-## Entradas nomeadas especificamente no changelog 1.8.2
+## Inventário ativo release-bounded
 
-A atualização publisher-authored `1.8.2` nomeia adicionalmente:
+### 28 Pacts
 
-10. `Pact of the Lone Druid`
-11. `Pact of the High Priest`
-12. `Pact of the Blastweaver`
+- `malum:pact_of_defiance`
+- `malum:pact_of_the_parasite`
+- `malum:pact_of_the_lifeweaver`
+- `malum:pact_of_the_warlock`
+- `malum:pact_of_the_reaper`
+- `malum:pact_of_the_berserker`
+- `malum:pact_of_the_fortress`
+- `malum:pact_of_the_shield`
+- `malum:pact_of_reciprocation`
+- `malum:pact_of_the_shattering_addict`
+- `malum:pact_of_the_arcanaphage`
+- `malum:pact_of_rune_exploitation`
+- `malum:pact_of_self_care`
+- `malum:pact_of_the_high_priest`
+- `malum:pact_of_tidal_affinity`
+- `malum:pact_of_patience_repaid`
+- `malum:pact_of_the_windswept`
+- `malum:pact_of_the_continuing_shot`
+- `malum:pact_of_the_cloudskipper`
+- `malum:pact_of_the_skybreaker`
+- `malum:pact_of_contentedness`
+- `malum:pact_of_the_lone_druid`
+- `malum:pact_of_the_profane_ascetic`
+- `malum:pact_of_the_profane_glutton`
+- `malum:pact_of_combustion`
+- `malum:pact_of_the_prospector`
+- `malum:pact_of_the_blastweaver`
+- `malum:pact_of_wyrd_reconstruction`
 
-Além disso, `Pact of the Prospector` volta a ser alterado na 1.8.2.
+### 6 Oaths
 
-`Pact of the Blastweaver` é documentado como o novo nome de `Pact of the Pyromaniac`. Portanto `Pact of the Pyromaniac` é tratado como **nome anterior/renomeado**, não como uma 13ª entrada ativa adicional.
+- `malum:oath_of_the_overkeen_eye`
+- `malum:oath_of_the_overburdened_mind`
+- `malum:oath_of_the_overeager_fist`
+- `malum:oath_of_unmakers_disdain`
+- `malum:oath_of_unsighted_resistance`
+- `malum:oath_of_the_undiscerned_maw`
 
-## Contagem segura
+### 2 Authorities
 
-A evidência atual confirma **12 nomes ativos/distintos** mencionados pelos changelogs 1.8/1.8.2, mais um nome histórico renomeado (`Pact of the Pyromaniac`).
+- `malum:authority_of_the_inverted_heart`
+- `malum:authority_of_the_gleeful_target`
 
-Isso **não** equivale a `12/12 COMPLETO`. A branch posterior contém uma superfície maior, mas ela não pode ser retroprojetada para o JAR `1.8.2` sem evidência exata.
+### 1 Creed
+
+- `malum:creed_of_the_blight_eater`
+
+Os protótipos `bond_of_beloved_chains`, `bond_of_deaths_seekers` e `authority_of_crushing_melancholy` aparecem comentados e não são registros ativos; portanto ficam excluídos.
+
+## Relação com os changelogs 1.8 / 1.8.2
+
+Os changelogs publisher-authored já confirmavam nominalmente parte dessa superfície, incluindo Prospector, Profane Glutton, Berserker, Wyrd Reconstruction, Cloudskipper, Overkeen Eye, Unmakers Disdain, Unsighted Resistance e Gleeful Target. O changelog 1.8.2 também altera Lone Druid, High Priest, Prospector e registra a mudança de nome de Pyromaniac para Blastweaver.
+
+`Pact of the Pyromaniac` é, portanto, nome histórico/renomeado e não uma 38ª identidade ativa adicional.
+
+## Contagem semântica
+
+Os **37 registros estão fechados para inventário factual**, mas contribuem **0** ao ledger atual de objetos mágicos semânticos. Esse ledger exclui effects/statuses e conta spell/glyph/rite ou ação sobrenatural discreta equivalente; o registry aqui auditado é explicitamente `GeasEffectType`, isto é, uma superfície de efeito/progressão persistente, não um registry de casts independente.
+
+A contagem é relevante para colisão temática e deduplicação de design, especialmente para Arcana Vincular, mas não deve ser somada como 37 spells/actions.
 
 ## Campos ainda não verificados
 
-Para cada entrada acima permanecem `NÃO VERIFICADO` quando não explicitados pelo changelog público:
+O inventário ativo e os IDs acima estão fechados release-bounded. Permanecem `NÃO VERIFICADO` quando não sustentados por documentação pública/runtime QA:
 
-- registry/content ID;
-- tier/classificação interna;
-- método de aquisição;
-- custo/recurso;
-- efeito quantitativo;
+- método de aquisição por entrada;
+- recipe/ritual ou pré-requisitos de obtenção;
+- custos/recursos;
+- efeitos quantitativos;
 - duração/cooldown;
-- condições de ativação/desativação;
-- persistência;
+- condições exatas de ativação/desativação;
+- persistência e migração;
 - incompatibilidades/mutual exclusion;
-- API/hook consumível por Black Arcana ou RPG Skill Tree.
+- safe public API/hook consumível por Black Arcana ou RPG Skill Tree;
+- equivalência byte-a-byte entre source e JAR físico.
 
 ## Deduplicação Black Arcana
 
-A existência instalada de Pacts/Oaths/Authorities é suficiente para bloquear qualquer alegação de novidade baseada apenas em:
+A superfície instalada de Pacts/Oaths/Authorities/Creed bloqueia qualquer alegação de novidade baseada apenas em:
 
 - “pacto permanente”;
 - “oath”;
