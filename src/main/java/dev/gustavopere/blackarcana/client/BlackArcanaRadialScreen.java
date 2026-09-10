@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
@@ -110,7 +111,15 @@ public final class BlackArcanaRadialScreen extends Screen {
             graphics.fill(x - card.halfWidth(), y - card.halfHeight(),
                     x + card.halfWidth(), y + card.halfHeight(), background);
 
-            int maxLabelWidth = Math.max(1, card.halfWidth() * 2 - CARD_TEXT_PADDING * 2);
+            int iconSize = card.compact() ? 6 : 8;
+            int contentLeft = x - card.halfWidth() + CARD_TEXT_PADDING;
+            ResourceLocation icon = currentIcon(spell);
+            graphics.blit(icon, contentLeft, y - iconSize / 2,
+                    0.0F, 0.0F, iconSize, iconSize, iconSize, iconSize);
+
+            int labelLeft = contentLeft + iconSize + CARD_TEXT_PADDING;
+            int labelRight = x + card.halfWidth() - CARD_TEXT_PADDING;
+            int maxLabelWidth = Math.max(1, labelRight - labelLeft);
             String label;
             if (card.compact()) {
                 String compactLabel = compactFocusPrefix(focus) + (slot + 1);
@@ -121,7 +130,7 @@ public final class BlackArcanaRadialScreen extends Screen {
                 String name = nameBudget > 0 ? displayName(spell, nameBudget) : "";
                 label = font.plainSubstrByWidth(fixedPrefix + name, maxLabelWidth);
             }
-            graphics.drawCenteredString(font, label, x, y - 4, 0xFFFFFFFF);
+            graphics.drawCenteredString(font, label, (labelLeft + labelRight) / 2, y - 4, 0xFFFFFFFF);
         }
 
         int centerTextWidth = Math.max(1, width - 16);
@@ -308,6 +317,15 @@ public final class BlackArcanaRadialScreen extends Screen {
         if (spell == null) return Optional.empty();
         HazardPreflightPayload.Entry entry = hazards.get(spell);
         return entry == null ? Optional.empty() : Optional.of(BlackArcanaHudLayer.preflightLine(entry));
+    }
+
+    private ResourceLocation currentIcon(ArcanaSpellId spell) {
+        SpellPresentationPayload.Entry entry = ClientArcanaSyncState.presentationSnapshot().get(spell);
+        if (entry == null) return SpellIconResolver.PLACEHOLDER;
+        Minecraft minecraft = Minecraft.getInstance();
+        return SpellIconResolver.resolve(
+                entry.iconId(),
+                id -> minecraft.getResourceManager().getResource(id).isPresent());
     }
 
     private Component boundedCenterLine(Component line, int maxWidth) {

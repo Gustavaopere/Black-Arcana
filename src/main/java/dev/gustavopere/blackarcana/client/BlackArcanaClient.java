@@ -16,6 +16,7 @@ public final class BlackArcanaClient {
         container.registerConfig(ModConfig.Type.CLIENT, BlackArcanaClientConfig.SPEC);
         modEventBus.addListener(BlackArcanaKeyMappings::register);
         modEventBus.addListener(BlackArcanaHudLayer::register);
+        modEventBus.addListener(SpellIconResolver::registerReloadListener);
         ClientInputController.register(NeoForge.EVENT_BUS);
         HazardResistanceForecastClientController.register(NeoForge.EVENT_BUS);
         BorrowedSightClientController.register(NeoForge.EVENT_BUS);
