@@ -90,7 +90,7 @@ Arithmetic cross-check by provider family:
 | [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike, whose survival reachability is unproven and is therefore conditional |
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 7 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear; Leap is conditional and Hide Name is presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
-| [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | stable `1.8.2` source interval contains 26 base-Malum `SpiritRiteType` registrations; 37 Geas effect-type identities and 9 spirit resource/type identities are tracked separately but excluded by metric scope |
+| [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | whole-interval path history plus stable endpoint blobs close 26 base-Malum `SpiritRiteType` registrations; 37 Geas effect-type identities and 9 spirit resource/type identities are tracked separately but excluded by metric scope |
 | **Strict total** |  | **796** |  |  |
 
 ### Hexalia release-boundary reconciliation
@@ -105,7 +105,13 @@ Therefore the intersection relevant to this metric is stable across the observed
 
 The physical instance identifies `malum-1.21.1-1.8.2.jar` / runtime `1.8.2`. The official `SammySemicolon/Malum-Mod` `1.21.1` history bounds the matching version line between `f56691e56e591a6d8d1859ff119e749375e14d61`, whose parent still declares `1.8.1`, and `03b743a37f3eeb0cc7f4364f0730e1f135f78408`, whose child advances to `1.8.3`.
 
-Across those two `1.8.2` endpoints, the relevant registry source blobs are identical:
+Endpoint blob equality is not used alone. Path-history queries over the complete observed 1.8.2 window show:
+
+- `MalumSpiritRiteTypes.java` — no commit touches the path after entry into the window and before the 1.8.3 transition;
+- `MalumSpiritTypes.java` — no commit touches the path in that interval;
+- `MalumGeasEffectTypes.java` — the path is touched at the initial `f56691e...` checkpoint and has no later commit before the transition.
+
+That rules out an intermediate registry change followed by a revert on these paths. The endpoint blobs are also identical:
 
 - `MalumSpiritRiteTypes.java` → `2b9e4e5445733dee4ed205e4331d55c93ac86028`, with **26 active base-Malum rite registrations**;
 - `MalumGeasEffectTypes.java` → `2aef164fcedae891b2c6805f2edbd8ee48cffbfe`, with **37 active Geas effect-type registrations**; two proposed Bonds and one Authority are commented out;
