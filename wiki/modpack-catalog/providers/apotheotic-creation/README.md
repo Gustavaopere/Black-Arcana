@@ -18,7 +18,7 @@ At the exact 2.0.0 source pin it registers two Create item-attribute types:
 - `apotheoticcreation:rarity`;
 - `apotheoticcreation:affix`.
 
-The implementation reads Apotheosis rarity/affix state and exposes it through Create's item-attribute contracts. It does not create a second rarity/affix system.
+The implementation reads Apotheosis rarity/affix state and exposes it through Create's item-attribute contracts. It also owns the `MapCodec`/`StreamCodec` serialization for those two attribute values. It does not create a second rarity/affix system or an independent filter storage/network stack.
 
 ## Provider boundaries
 
@@ -32,11 +32,12 @@ Create remains authority for:
 
 - `ItemAttributeType` registration semantics;
 - Attribute Filter configuration/matching framework;
+- enclosing filter persistence/synchronization;
 - downstream logistics that consume filters.
 
-Apotheotic Creation owns only the translation/registration bridge.
+Apotheotic Creation owns the translation/registration bridge and serialization of its two attribute values.
 
-Black Arcana remains authority for canonical casting, targeting, transactional costs, cooldowns/charges, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash and world safety. No addon filter packet/state is routed into BA's cast pipeline because no addon-owned packet/state surface is observed at this exact pin.
+Black Arcana remains authority for canonical casting, targeting, transactional costs, cooldowns/charges, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash and world safety. No standalone addon payload or persisted state container is routed into BA's cast pipeline; none is observed at this exact pin. The addon codecs remain part of Create's enclosing filter serialization path, not a Black Arcana transport seam.
 
 ## Exact behavior caveat
 
