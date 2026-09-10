@@ -27,13 +27,14 @@ The official `SammySemicolon/Malum-Mod` `1.21.1` history gives a bounded source 
 - `03b743a37f3eeb0cc7f4364f0730e1f135f78408` is the last observed `1.8.2` checkpoint before the next version transition;
 - its child `e875523840285212940aacb75627637909380175` declares `mod_version=1.8.3`.
 
-Endpoint equality alone is not used to establish the inventory. Path-history queries were run across the complete observed `1.8.2` window for each registry file used below:
+Endpoint equality alone is not used to establish the inventory or the supporting deduplication evidence. Path-history queries were run across the complete observed `1.8.2` window for every registry source file used below:
 
 - `MalumSpiritRiteTypes.java` — **0 commits** touch the path after entry into the 1.8.2 window and before the 1.8.3 transition;
+- `MalumSpiritRiteEffectTypes.java` — **0 commits** touch the path in that interval; this is supporting deduplication evidence, not a fourth additive semantic inventory;
 - `MalumSpiritTypes.java` — **0 commits** touch the path in that interval;
 - `MalumGeasEffectTypes.java` — the path is touched at `f56691e...`, the initial 1.8.2 checkpoint itself, and has **no later commit** before the 1.8.3 transition.
 
-Therefore there is no intervening registry edit-and-revert hidden by equal endpoint blobs on these three paths. Combined with identical endpoint blob SHAs, this closes the narrow release-bounded registry inventory while still **not** establishing byte-for-byte equivalence between any source commit and the installed JAR.
+Therefore there is no intervening registry edit-and-revert hidden by equal endpoint blobs on these four source paths. Combined with identical endpoint blob SHAs, this closes the three narrow release-bounded inventory registries and the supporting Rite-effect deduplication evidence while still **not** establishing byte-for-byte equivalence between any source commit and the installed JAR.
 
 The `1.8.2` checkpoints also declare:
 
@@ -53,11 +54,11 @@ There is a material license inconsistency:
 
 Therefore Black Arcana does **not** promote source implementation internals from this line into implementable integration contracts. Until the conflict is resolved by an authoritative upstream license statement, the source-code layer is treated as `READABLE VERSION/REGISTRY EVIDENCE / IMPLEMENTATION REUSE OR SOURCE-DERIVED SPEC BLOCKED`.
 
-Publisher-authored changelogs and public gameplay documentation may still establish externally documented behavior. Read-only registry inspection in this audit is limited to factual names, counts, path history and immutable blob identity for provenance/semantic accounting. It does not authorize copying algorithms, method bodies, assets or hidden integration behavior.
+Publisher-authored changelogs and public gameplay documentation may still establish externally documented behavior. Read-only registry inspection in this audit is limited to factual names, counts, path history, immutable blob identity and deduplication for provenance/semantic accounting. It does not authorize copying algorithms, method bodies, assets or hidden integration behavior.
 
 ## Release-bounded core registry inventory
 
-Whole-interval path history plus endpoint blob equality closes three provider-owned registries for factual accounting across the observed `1.8.2` line.
+Whole-interval path history plus endpoint blob equality closes three provider-owned inventory registries for factual accounting across the observed `1.8.2` line. One additional Rite-effect registry is release-bounded only as supporting deduplication evidence and contributes no extra semantic-action identities.
 
 ### Spirit Rite types — 26 registered identities
 
@@ -73,7 +74,7 @@ It contains **26 active base-Malum `SpiritRiteType` registrations**:
 - Earthen: `rite_of_the_stone_ward`, `rite_of_the_oaken_might`, `rite_of_creation`, `rite_of_destruction`;
 - Infernal: `rite_of_the_burning_fervor`, `rite_of_the_fiery_embrace`, `rite_of_smelting`, `rite_of_quickening`.
 
-The corresponding rite-effect registry also contains distinct effects for the two special rites. They are therefore retained as registered rite identities rather than treated as aliases/proxy slots.
+The supporting `MalumSpiritRiteEffectTypes.java` has blob SHA `e5fd8854c12783e4503475ccaf461c3a19c2a0b0` at both `f56691e...` and `03b743a...`, with no path commit anywhere in the observed 1.8.2 window. It registers separate `undirected_rite_effect` and `unchained_rite_effect` effect identities. This supports retaining the two corresponding `SpiritRiteType` registrations as distinct rather than treating them as one alias/proxy identity; the effect registry itself contributes **0** additional semantic objects.
 
 For the semantic-magic ledger, these **26 rites are additive** because a rite is explicitly inside the metric definition.
 
@@ -110,7 +111,7 @@ It contains **9 registered `SpiritArcanaType` identities**:
 
 These are typed provider resource identities and therefore contribute **0** to the semantic-magic action total.
 
-This closure is deliberately narrow: the three registry inventories above are release-bounded factual evidence only. It does not promote source-internal APIs or implementation behavior into Black Arcana contracts.
+This closure is deliberately narrow: the three registry inventories above are release-bounded factual evidence only, and the supporting Rite-effect registry is used only for deduplication of the two special rite identities. It does not promote source-internal APIs or implementation behavior into Black Arcana contracts.
 
 ## Provider identity — installed-line facts
 
