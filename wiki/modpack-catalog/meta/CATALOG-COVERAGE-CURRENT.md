@@ -13,7 +13,9 @@ Therefore:
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
-The reconstructible semantic ledger now lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot and reconstruction base `main@4164857555331cba759406064459dc392f9c0b30`, it currently closes a **strict counted minimum of 745 semantic magic objects** from provider records that meet the ledger's inclusion rule. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
+The reconstructible semantic ledger now lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot and reconstruction base `main@4f3dab1a4801393873f9d4b7857782fcf6298e56`, it currently closes a **strict counted minimum of 770 semantic magic objects** from provider records that meet the ledger's inclusion rule. The base passed Black Arcana CI **#2349**, attempt 2, on the exact SHA. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
+
+The latest semantic-only delta is **Hexalia +25**: 19 player-facing Nature's Ritual identities plus 6 Celestial Infusion identities are release-bounded across the observed 1.3.5 metadata / 1.3.6 filename-source boundary. Hexalia mutations, Mortar & Pestle recipes, Small Cauldron/brews, Censer combinations, idols and equipment remain outside this semantic-object metric. This semantic promotion does **not** change the internal provider-component closure metric below.
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
 
