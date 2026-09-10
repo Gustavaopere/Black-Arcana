@@ -28,7 +28,6 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private final List<ArcanaSpellId> available;
     private final Map<ArcanaSpellId, String> searchDisplayNames;
-    private final Map<ArcanaSpellId, ResourceLocation> icons;
     private final Set<ArcanaSpellId> accepted;
     private final LoadoutDraft draft;
     private List<ArcanaSpellId> filteredAvailable;
@@ -48,21 +47,11 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         available = presentation.keySet().stream()
                 .sorted(Comparator.comparing(ArcanaSpellId::canonical))
                 .toList();
-        Minecraft minecraft = Minecraft.getInstance();
         Map<ArcanaSpellId, String> resolvedDisplayNames = new HashMap<>();
-        Map<ArcanaSpellId, ResourceLocation> resolvedIcons = new HashMap<>();
-        presentation.forEach((spell, entry) -> {
-            resolvedDisplayNames.put(
-                    spell,
-                    Component.translatable(entry.translationKey()).getString());
-            resolvedIcons.put(
-                    spell,
-                    SpellIconResolver.resolve(
-                            entry.iconId(),
-                            id -> minecraft.getResourceManager().getResource(id).isPresent()));
-        });
+        presentation.forEach((spell, entry) -> resolvedDisplayNames.put(
+                spell,
+                Component.translatable(entry.translationKey()).getString()));
         searchDisplayNames = Map.copyOf(resolvedDisplayNames);
-        icons = Map.copyOf(resolvedIcons);
         filteredAvailable = available;
         List<ArcanaSpellId> acceptedLoadout = ClientArcanaSyncState.loadoutSnapshot();
         accepted = Set.copyOf(acceptedLoadout);
@@ -156,7 +145,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 graphics.fill(left + 3, y, left + 5, y + rowHeight - 2, 0xFF9DD9FF);
             }
 
-            ResourceLocation icon = icons.getOrDefault(spell, SpellIconResolver.PLACEHOLDER);
+            ResourceLocation icon = currentIcon(spell);
             int iconY = y + Math.max(1, (rowHeight - iconSize) / 2);
             graphics.blit(icon, left + 8, iconY, 0.0F, 0.0F, iconSize, iconSize, iconSize, iconSize);
 
@@ -257,7 +246,6 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             draft.reset();
             return true;
         }
-
         LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
         page = layout.clampPage(filteredAvailable.size(), page);
         boolean shiftDown = (modifiers & GLFW.GLFW_MOD_SHIFT) != 0;
@@ -408,6 +396,15 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         }
         lastMouseX = mouseX;
         lastMouseY = mouseY;
+    }
+
+    private ResourceLocation currentIcon(ArcanaSpellId spell) {
+        SpellPresentationPayload.Entry entry = ClientArcanaSyncState.presentationSnapshot().get(spell);
+        if (entry == null) return SpellIconResolver.PLACEHOLDER;
+        Minecraft minecraft = Minecraft.getInstance();
+        return SpellIconResolver.resolve(
+                entry.iconId(),
+                id -> minecraft.getResourceManager().getResource(id).isPresent());
     }
 
     private String displayName(ArcanaSpellId spell, int maxWidth) {
