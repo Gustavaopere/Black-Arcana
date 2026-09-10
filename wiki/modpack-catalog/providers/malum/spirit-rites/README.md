@@ -15,6 +15,8 @@ A linha oficial `SammySemicolon/Malum-Mod` para Minecraft 1.21.1 é delimitada p
 
 O blob de `MalumSpiritRiteTypes.java` é `2b9e4e5445733dee4ed205e4331d55c93ac86028` nos dois extremos. Além disso, a consulta ao histórico Git do próprio caminho durante toda a janela 1.8.2 retorna **nenhum commit intermediário**. Portanto não existe, nesse caminho, alteração temporária seguida de reversão entre os checkpoints usados para o fechamento semântico.
 
+Como evidência auxiliar de deduplicação dos dois rites especiais, `MalumSpiritRiteEffectTypes.java` possui blob SHA `e5fd8854c12783e4503475ccaf461c3a19c2a0b0` nos mesmos dois extremos, e o histórico Git desse caminho retorna **nenhum commit** em toda a janela 1.8.2. O arquivo registra efeitos separados `undirected_rite_effect` e `unchained_rite_effect`. Esse registry de efeitos não adiciona objetos ao ledger semântico; ele apenas sustenta que os dois `SpiritRiteType` especiais registrados no inventário primário não são um único alias/proxy compartilhado.
+
 ## Inventário base release-bounded — 26 rites
 
 Os 26 registros ativos base-Malum são:
@@ -27,7 +29,7 @@ Os 26 registros ativos base-Malum são:
 - Earthen: `malum:rite_of_the_stone_ward`, `malum:rite_of_the_oaken_might`, `malum:rite_of_creation`, `malum:rite_of_destruction`;
 - Infernal: `malum:rite_of_the_burning_fervor`, `malum:rite_of_the_fiery_embrace`, `malum:rite_of_smelting`, `malum:rite_of_quickening`.
 
-O registry de efeitos correspondente também possui efeitos distintos para `undirected_rite` e `unchained_rite`; eles são mantidos como identidades de rite e não tratados como aliases/proxies. Estes **26 rites** são os únicos objetos desta página adicionados ao ledger semântico atual.
+O registry de efeitos release-bounded acima possui efeitos distintos para `undirected_rite` e `unchained_rite`; eles são mantidos como identidades de rite e não tratados como aliases/proxies. Estes **26 rites** são os únicos objetos desta página adicionados ao ledger semântico atual.
 
 ## Arquitetura confirmada para a geração 1.8
 
