@@ -2,7 +2,7 @@
 
 ## Status
 
-`EXACT PHYSICAL 4.0.3 / EXACT PUBLISHER FILE 8675568 / 4.0 OWNERSHIP MIGRATION VERIFIED / SWITCHEROO + FIRE FIST CURRENT-LINE EVIDENCE / COMPLETE SPELL+RITUAL INVENTORY OPEN / RUNTIME QA PENDING / FAIL-CLOSED`
+`EXACT PHYSICAL 4.0.3 / EXACT PUBLISHER FILE 8675568 / 4.0 OWNERSHIP MIGRATION VERIFIED / FIRE FIST EXACT-4.0.3 EVIDENCE / SWITCHEROO 4.0 LINEAGE EVIDENCE / COMPLETE CURRENT SPELL+RITUAL INVENTORY OPEN / RUNTIME QA PENDING / FAIL-CLOSED`
 
 ## Installed authority
 
@@ -29,12 +29,13 @@ The physical pack contains Tunes n' Tomes 1.1.0-HOTFIX, so the compatibility pat
 
 ## Current-line discrete spell evidence
 
-Two Alshanex-owned spell identities are directly supported by current 4.x publisher evidence:
+The exact installed 4.0.3 release directly supports **one current Alshanex-owned spell identity**:
 
-1. **Switcheroo** — introduced in the 4.0 release; swaps the caster with the summoned familiar being aimed at and is described as obtainable pre-inscribed in the Tome of Alignment.
-2. **Fire Fist** — explicitly named by the exact 4.0.3 changelog through a crash fix for the spell.
+1. **Fire Fist** — explicitly named by the exact 4.0.3 changelog through a crash fix for the spell.
 
-These establish a semantic lower bound of **at least 2 current Alshanex-owned spells**. They do **not** establish a complete 4.0.3 spell registry. The semantic ledger therefore keeps Alshanex as `LOWER_BOUND / OPEN CURRENT INVENTORY` and does not add these two objects to the strict counted total yet.
+The 4.0 release also introduced **Switcheroo**, described as swapping the caster with the summoned familiar being aimed at and obtainable pre-inscribed in the Tome of Alignment. The intervening publisher changelogs checked for 4.0.1 and 4.0.2 document unrelated fixes and do not announce a Switcheroo removal or rename. That absence is **not** promoted to proof that Switcheroo remains registered in the installed 4.0.3 build.
+
+Therefore the current semantic lower bound is **at least 1** spell, with Switcheroo retained as **4.0 lineage evidence / current 4.0.3 presence not directly verified**. The complete 4.0.3 spell registry remains open. The semantic ledger does not add Alshanex objects to the strict counted total yet.
 
 ## Ritual surface
 
@@ -51,7 +52,7 @@ This prevents familiar spellcasting tags or repeated AI casts from becoming dupl
 ## Authority and deduplication
 
 - **FamiliarsLib** owns the technical familiar framework/lifecycle surfaces it provides.
-- **Alshanex's Familiars** owns its familiar content, provider-specific progression/rituals/items and its own spell identities such as Switcheroo/Fire Fist.
+- **Alshanex's Familiars** owns its familiar content, provider-specific progression/rituals/items and its own provider spell content.
 - **Tunes n' Tomes** owns the migrated Melodic/Sound spell content in the current 4.x ecosystem.
 - **Iron's Spells** remains authority for the generic spellcasting substrate and external spells that familiars select/cast.
 - **Black Arcana** retains authority over its own casting, Noetic sessions, spell domains, hazards, costs, cooldowns, targeting and world-safety runtime.
@@ -68,7 +69,7 @@ No generic documentation text is silently rewritten into a registry claim.
 
 1. obtain a complete version-bounded 4.0.3 spell inventory without decompiling the All Rights Reserved binary;
 2. enumerate the exact current ritual recipe set from publisher/source/data evidence if legally and technically available;
-3. confirm whether later 4.0.1/4.0.2/4.0.3 changes added, removed or renamed additional spell identities beyond the two directly proven here;
+3. directly verify current 4.0.3 presence/identity for Switcheroo and any other spells not named by the exact 4.0.3 release evidence;
 4. validate Alshanex 4.0.3 + FamiliarsLib 1.7.1 + Tunes n' Tomes 1.1.0-HOTFIX + Iron's 3.16.3 in dedicated runtime;
 5. identify stable provider-native ownership/lifecycle seams before any Black Arcana familiar adapter beyond already verified integrations.
 
@@ -77,4 +78,6 @@ No generic documentation text is silently rewritten into a registry claim.
 - physical modlist: current Black Arcana `modlist.txt`, SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 - exact 4.0.3 file: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/8675568`
 - 4.0 migration release: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/7920260`
+- 4.0.1 release: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/7934150`
+- 4.0.2 release: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/8059472`
 - publisher Wiki: `https://wiki.pixeldreamstudios.net/mods/alshanex-familiars`
