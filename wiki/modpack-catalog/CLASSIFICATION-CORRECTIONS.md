@@ -10,6 +10,7 @@ Status: `CANONICAL CORRECTION OVERLAY FOR THE PR #62 BASELINE REGISTRY`
 | 12 | Ars Elemancy 1.18.3 | `ARS GLYPH / SYSTEM PROVIDER` | `GEAR / ENCHANT / SUPPORT CONTENT` | `NO / CONDITIONAL` | Current 1.18.3 public surface is elemental armor/foci specializations and gear/compat behavior; no separate glyph inventory was proven. |
 | 16 | Ars 'n' Spells 3.2.4 | `ARS GLYPH / SYSTEM PROVIDER` | `BRIDGE / COMPAT / PROGRESSION` | `YES` | Current provider is an Ars Nouveau ↔ Iron's bridge for mana, progression, equipment, spellbooks/casting plus discrete bridge rituals. |
 | 20 | Ars Polymorphia 1.0.3 | `ARS GLYPH / SYSTEM PROVIDER` | `BRIDGE / COMPAT / PROGRESSION` | `NO / CONDITIONAL` | Current public function is Polymorph compatibility for Ars Nouveau Storage Lecterns; no spell/glyph system is exposed. |
+| 45 | Alshanex's Familiars 1.21.1_v4.0.3 | `BRIDGE / COMPAT / PROGRESSION` | `SPELL PROVIDER / CONTENT ADDON` | `PARTIAL / CONDITIONAL` | Current 4.x publisher evidence proves Alshanex-owned spell content: exact 4.0.3 directly names Fire Fist, while the 4.0 release introduces Switcheroo but its 4.0.3 presence remains unverified. Sound-school ownership moved to Tunes n' Tomes in 4.0. Complete current spell/ritual inventory remains open. |
 
 ## Why this matters
 
@@ -18,7 +19,7 @@ Phase 2 answers two separate questions:
 1. Is the component magic-relevant?
 2. Does it itself provide discrete gameplay capabilities that must be compared against proposed Black Arcana spells/systems?
 
-A compatibility mod can be highly relevant without being a spell provider. Inflating every Ars addon into `ARS GLYPH / SYSTEM PROVIDER` would create false coverage, false deduplication and false implementation requirements.
+A compatibility mod can be highly relevant without being a spell provider. Likewise, a familiar/content addon that also owns discrete player-facing spells must not remain classified as bridge-only after current provider evidence proves that spell surface. Classification follows demonstrated provider authority rather than theme or historical placement.
 
 ## Provider pages supporting this overlay
 
@@ -26,6 +27,7 @@ A compatibility mod can be highly relevant without being a spell provider. Infla
 - `providers/ars-elemancy/README.md`
 - `providers/ars-n-spells/README.md`
 - `providers/ars-polymorphia/README.md`
+- `providers/alshanex-familiars/README.md`
 
 ## Gate
 
