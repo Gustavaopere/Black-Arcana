@@ -15,6 +15,7 @@ public record LoadoutLayout(
     private static final int DEFAULT_ROWS_PER_PAGE = 8;
     private static final int DEFAULT_ROW_HEIGHT = 22;
     private static final int MIN_ROW_HEIGHT = 18;
+    private static final int DEFAULT_ICON_SIZE = 16;
     private static final int TITLE_TOP_OFFSET = 8;
     private static final int SEARCH_HEIGHT = 18;
     private static final int SEARCH_BOTTOM_GAP = 4;
@@ -59,6 +60,10 @@ public record LoadoutLayout(
 
     public int searchHeight() {
         return SEARCH_HEIGHT;
+    }
+
+    public int iconSize() {
+        return Math.max(1, Math.min(DEFAULT_ICON_SIZE, Math.max(1, rowHeight - 2)));
     }
 
     public int pageCount(int totalEntries) {

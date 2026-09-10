@@ -24,8 +24,6 @@ import java.util.Set;
 
 /** Client-only draft editor. Apply sends intent; the server response remains canonical. */
 public final class BlackArcanaLoadoutScreen extends Screen {
-    private static final int ICON_SIZE = 16;
-
     private final Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation;
     private final Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazards;
     private final List<ArcanaSpellId> available;
@@ -122,6 +120,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         int panelWidth = layout.panelWidth();
         int rowsPerPage = layout.rowsPerPage();
         int rowHeight = layout.rowHeight();
+        int iconSize = layout.iconSize();
         List<ArcanaSpellId> draftSnapshot = draft.snapshot();
 
         graphics.fill(left - 8, layout.panelTop(), left + panelWidth + 8,
@@ -158,13 +157,13 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             }
 
             ResourceLocation icon = icons.getOrDefault(spell, SpellIconResolver.PLACEHOLDER);
-            int iconY = y + Math.max(1, (rowHeight - ICON_SIZE) / 2);
-            graphics.blit(icon, left + 8, iconY, 0.0F, 0.0F, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+            int iconY = y + Math.max(1, (rowHeight - iconSize) / 2);
+            graphics.blit(icon, left + 8, iconY, 0.0F, 0.0F, iconSize, iconSize, iconSize, iconSize);
 
             String prefix = (focused ? "[F] " : "")
                     + slotPrefix(draftSnapshot, spell)
                     + membershipPrefix(membership);
-            int textX = left + 8 + ICON_SIZE + 4;
+            int textX = left + 8 + iconSize + 4;
             int nameWidth = Math.max(1, left + panelWidth - 8 - textX - font.width(prefix));
             graphics.drawString(font, prefix + displayName(spell, nameWidth),
                     textX, y + textOffsetY, 0xFFFFFFFF, false);
@@ -261,6 +260,16 @@ public final class BlackArcanaLoadoutScreen extends Screen {
 
         LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
         page = layout.clampPage(filteredAvailable.size(), page);
+        boolean shiftDown = (modifiers & GLFW.GLFW_MOD_SHIFT) != 0;
+        if (shiftDown && (keyCode == GLFW.GLFW_KEY_UP || keyCode == GLFW.GLFW_KEY_DOWN)) {
+            inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
+            moveFocusedDraft(
+                    focusedIndex,
+                    filteredAvailable,
+                    draft,
+                    keyCode == GLFW.GLFW_KEY_UP ? -1 : 1);
+            return true;
+        }
         if (keyCode == GLFW.GLFW_KEY_UP) {
             inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
             focusedIndex = KeyboardFocusNavigation.loadoutMoveRow(
@@ -323,6 +332,25 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     ) {
         if (focusedIndex < 0 || focusedIndex >= available.size()) return false;
         return draft.toggle(available.get(focusedIndex));
+    }
+
+    static boolean moveFocusedDraft(
+            int focusedIndex,
+            List<ArcanaSpellId> available,
+            LoadoutDraft draft,
+            int direction
+    ) {
+        if (direction != -1 && direction != 1) return false;
+        if (focusedIndex < 0 || focusedIndex >= available.size()) return false;
+
+        ArcanaSpellId focusedSpell = available.get(focusedIndex);
+        List<ArcanaSpellId> snapshot = draft.snapshot();
+        int fromIndex = snapshot.indexOf(focusedSpell);
+        if (fromIndex < 0) return false;
+
+        int toIndex = fromIndex + direction;
+        if (toIndex < 0 || toIndex >= snapshot.size()) return false;
+        return draft.move(fromIndex, toIndex);
     }
 
     static Optional<Component> hazardTooltip(HazardPreflightPayload.Entry entry) {
