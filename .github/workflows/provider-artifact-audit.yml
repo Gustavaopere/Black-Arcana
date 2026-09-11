@@ -85,17 +85,13 @@ jobs:
               report.append('')
 
               report.append('[provider-owned spell translation keys]')
-              lang_candidates = [n for n in names if n == 'assets/alshanex_familiars/lang/en_us.json']
               base_spell_keys = []
-              for n in lang_candidates:
-                  try:
-                      obj = json.loads(z.read(n))
-                  except Exception:
-                      continue
-                  if isinstance(obj, dict):
-                      for key in obj:
-                          if key.startswith('spell.alshanex_familiars.') and not key.endswith('.guide'):
-                              base_spell_keys.append(key)
+              lang_path = 'assets/alshanex_familiars/lang/en_us.json'
+              if lang_path in names:
+                  obj = json.loads(z.read(lang_path))
+                  for key in obj:
+                      if key.startswith('spell.alshanex_familiars.') and not key.endswith('.guide'):
+                          base_spell_keys.append(key)
               report.extend(sorted(set(base_spell_keys)) or ['<none>'])
               report.append(f'provider_spell_translation_count={len(set(base_spell_keys))}')
 
@@ -115,6 +111,44 @@ jobs:
             echo
             javap -classpath /tmp/provider.jar -p net.alshanex.alshanex_familiars.registry.PetSpellRegistry
           } | tee audit/pet-spell-registry-signatures.txt
+
+      - name: Map spell classes to literal provider ids without disassembly
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re
+          from zipfile import ZipFile
+
+          candidates = {
+              'end_mayhem', 'fire_fist', 'ice_age', 'ice_chamber',
+              'megido', 'summon_shadows', 'switcheroo'
+          }
+          rows = []
+          with ZipFile('/tmp/provider.jar') as z:
+              classes = sorted(n for n in z.namelist() if n.startswith('net/alshanex/alshanex_familiars/spells/') and n.endswith('.class'))
+              for path in classes:
+                  data = z.read(path)
+                  literals = set()
+                  for match in re.findall(rb'[ -~]{4,}', data):
+                      text = match.decode('ascii', 'ignore')
+                      for token in candidates:
+                          if token in text:
+                              literals.add(token)
+                  if literals:
+                      rows.append((path, ','.join(sorted(literals))))
+          print('EXACT CLASS LITERAL-ID MAP — filtered provider spell ids only')
+          print('No bytecode instructions or implementation bodies are decoded.')
+          for path, ids in rows:
+              print(f'{path} | {ids}')
+          print(f'mapped_class_count={len(rows)}')
+          with open('audit/spell-literal-id-map.txt', 'w', encoding='utf-8') as f:
+              f.write('EXACT CLASS LITERAL-ID MAP — filtered provider spell ids only\n')
+              f.write('No bytecode instructions or implementation bodies are decoded.\n')
+              for path, ids in rows:
+                  f.write(f'{path} | {ids}\n')
+              f.write(f'mapped_class_count={len(rows)}\n')
+          PY
 
       - name: Publish text-only audit report
         uses: actions/upload-artifact@v7
