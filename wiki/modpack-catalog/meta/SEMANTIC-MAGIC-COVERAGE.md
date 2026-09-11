@@ -23,7 +23,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - physical modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 - reconstruction base: `main@4f3dab1a4801393873f9d4b7857782fcf6298e56`
 - base post-merge validation: Black Arcana CI **#2349**, attempt 2 GREEN on the exact base SHA
-- latest completed catalog baseline entering Phase 2BE: `main@c5a46a622351b6d9157b4620ca5386889c7bd5f3`, with Black Arcana CI **#2467** GREEN after the Phase 2BD final-evidence reconciliation
+- Phase 2BE canonicalized at `main@cce7f51794e4e65b0d97511eb55f710afc6e02f0`: PR #189 exact HEAD `e787699d25b283b8040cd179f605143e8ee396de` passed Black Arcana CI **#2483**; the merge SHA passed Black Arcana CI **#2484 attempt 2** GREEN after attempt 1 ended on an external `code.redspace.io` read timeout before compilation/tests
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -44,9 +44,9 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 ## Strict reconstructible counted minimum
 
-**Phase 2BE candidate strict minimum: 874 semantic magic objects are reconstructible after applying the exact Cataclysm 1.1.13 closure.**
+**874 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BE.**
 
-The canonical `main` baseline entering PR #189 remains **815** until latest-main reconciliation, merge and exact post-merge validation promote this candidate. The semantic denominator remains incomplete, so neither value is a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
+This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
