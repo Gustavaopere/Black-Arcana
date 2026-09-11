@@ -12,6 +12,9 @@ Close the installed Cataclysm: Spellbooks 1.1.13 spell **identity/count inventor
 - NeoForge: `21.1.248`
 - modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 - durable closure PR: `#189`
+- audited PR HEAD: `e787699d25b283b8040cd179f605143e8ee396de` — Black Arcana CI **#2483 GREEN**
+- squash merge: `main@cce7f51794e4e65b0d97511eb55f710afc6e02f0`
+- post-merge validation: Black Arcana CI **#2484 attempt 2 GREEN** on that exact merge SHA; attempt 1 ended before compilation/tests on an external `code.redspace.io` read timeout fetching the Iron's API dependency
 - isolated non-merge evidence PR: `#188`
 
 ## Exact artifact evidence
@@ -56,13 +59,13 @@ Two classes with an additional `sandstorm` literal were separately disambiguated
 - `DesertWindsSpell -> desert_winds`;
 - `PharaohsWrathSpell -> pharaohs_wrath`.
 
-## Semantic/catalog delta proposed by PR #189
+## Semantic/catalog delta canonical after PR #189
 
 - Cataclysm: Spellbooks current semantic contribution: **+59** `COUNTED_EXACT` spells;
 - strict semantic minimum: **815 → 874**;
 - Iron ecosystem subtotal: **468 → 527**;
-- provider component: candidate **#55** on this PR, becoming canonical only after latest-main reconciliation, merge and exact post-merge validation;
-- structural component coverage candidate: **55/100 = 55%**.
+- provider component: canonical **#55** after merge and exact post-merge validation;
+- structural component coverage canonical: **55/100 = 55%**.
 
 The global semantic denominator remains incomplete; **874 is a strict counted minimum, not a semantic percentage**.
 
