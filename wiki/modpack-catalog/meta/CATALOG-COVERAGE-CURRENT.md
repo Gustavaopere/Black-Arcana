@@ -4,28 +4,31 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-Phase 2AX has a semantic delta of **0**: FamiliarsLib 1.7.x provides familiar lifecycle/data/networking and spellcasting interoperability, but the audited release-correlated source tree does not register an independent spell catalog. Its Iron's spell files are classification tags over external spells, and the 1.7 publisher changelog explicitly moves historical Sound-school content to Tunes 'n Tomes.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot it now closes a **strict counted minimum of 797 semantic magic objects** from provider records that meet the ledger's inclusion rule. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
+
+The latest semantic correction is **Werewolves +1**. Exact source pin `TeamLapen/Werewolves@b72635b3e014e406b25bb79adb9d340f7443660b` proves that `LEAP` is an `ActionSkill`, that `SURVIVAL31` grants it, that the node is connected into the generated normal `werewolf_level` tree, and that the provider has a dedicated server-handled Leap input path. Hidden-selector presentation therefore does not make Leap unreachable. Werewolves contributes **8** counted semantic actions rather than 7; `hide_name` remains excluded as presentation-only and the separate `no_leap_cooldown` refinement remains an open modifier-acquisition question rather than a separate semantic action. See [`SEMANTIC-MAGIC-DELTA-WEREWOLVES-LEAP.md`](./SEMANTIC-MAGIC-DELTA-WEREWOLVES-LEAP.md).
+
+Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publisher-defined shared spell/addon library/API infrastructure and does not establish an independent standalone spell catalog. Its reusable spell/helper, imbuement, Curio, trade, particle, summon and attribute surfaces do not mint semantic spell identities by themselves.
 
 Therefore:
 
-- semantic numerator delta from Phase 2AX: **+0**;
-- semantic denominator delta attributable to FamiliarsLib: **+0**;
+- semantic numerator delta from the Werewolves correction: **+1**;
+- semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
+- strict reconstructible semantic minimum: **797**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
-The reconstructible semantic ledger now lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot and reconstruction base `main@4f3dab1a4801393873f9d4b7857782fcf6298e56`, it currently closes a **strict counted minimum of 796 semantic magic objects** from provider records that meet the ledger's inclusion rule. The base passed Black Arcana CI **#2349**, attempt 2, on the exact SHA. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
+The preceding semantic-only promotion was **Malum +26**: whole-interval path history across the observed `1.8.2` source window plus stable endpoint blobs close 26 base-Malum `SpiritRiteType` identities. Release-bounded Codex evidence separately proves that the two special identities, `undirected_rite` and `unchained_rite`, are player-facing rather than sentinel/proxy slots: `TotemMagicEntries.setupEntries(ArcanaProgressionScreen)` adds each as a distinct progression entry backed by its corresponding `RiteHolder`, `SpiritRiteTextPage`, and `SpiritRiteRecipePage`, while every observed `CodexLangDatagen.java` snapshot in the 1.8.2 interval preserves dedicated entries for both. The same release-bounded audit also records 37 active `GeasEffectType` identities and 9 `SpiritArcanaType` resource identities, but those are excluded from the current semantic-action metric by definition. Exact installed-JAR/source equivalence and runtime/API/recipe mechanics remain separate gates. The preceding semantic-only promotion was **Hexalia +25**: 19 player-facing Nature's Ritual identities plus 6 Celestial Infusion identities release-bounded across the observed 1.3.5 metadata / 1.3.6 filename-source boundary. Neither semantic promotion changes the internal provider-component closure metric below.
 
-The latest semantic-only delta is **Malum +26**: whole-interval path history across the observed `1.8.2` source window plus stable endpoint blobs close 26 base-Malum `SpiritRiteType` identities. Release-bounded Codex evidence separately proves that the two special identities, `undirected_rite` and `unchained_rite`, are player-facing rather than sentinel/proxy slots: `TotemMagicEntries.setupEntries(ArcanaProgressionScreen)` adds each as a distinct progression entry backed by its corresponding `RiteHolder`, `SpiritRiteTextPage`, and `SpiritRiteRecipePage`, while every observed `CodexLangDatagen.java` snapshot in the 1.8.2 interval preserves dedicated entries for both. The same release-bounded audit also records 37 active `GeasEffectType` identities and 9 `SpiritArcanaType` resource identities, but those are excluded from the current semantic-action metric by definition. Exact installed-JAR/source equivalence and runtime/API/recipe mechanics remain separate gates. The preceding semantic-only promotion was **Hexalia +25**: 19 player-facing Nature's Ritual identities plus 6 Celestial Infusion identities release-bounded across the observed 1.3.5 metadata / 1.3.6 filename-source boundary. Neither semantic promotion changes the internal provider-component closure metric below.
-
-The current Goety reconciliation is an **evidence-only +0 delta**: the installed `goety-3.1.4.jar` remains physical authority, while public `Vivideru/Goety-3` checkpoints for 3.1.0 and 3.1.1 expose a stable `ModItems.java` blob containing 123 active Focus item registrations. The prior official-Wiki inventory of 110 named base Focuses is retained as a documentary subset rather than a complete current registry. Exact 3.1.4 JAR↔source equivalence, player-facing reachability, semantic deduplication and runtime/API seams remain open, so none of the additional registry identities enter the strict 796 minimum at this checkpoint. The authoritative Goety capability interpretation is recorded in [`CAPABILITY-MATRIX-DELTA-GOETY.md`](./CAPABILITY-MATRIX-DELTA-GOETY.md).
+The current Goety reconciliation remains an **evidence-only +0 delta**: the installed `goety-3.1.4.jar` is physical authority, while public `Vivideru/Goety-3` checkpoints for 3.1.0 and 3.1.1 expose a stable `ModItems.java` blob containing 123 active Focus item registrations. The prior official-Wiki inventory of 110 named base Focuses is retained as a documentary subset rather than a complete current registry. Exact 3.1.4 JAR↔source equivalence, player-facing reachability, semantic deduplication and runtime/API seams remain open, so none of the additional registry identities enter the strict **797** minimum at this checkpoint. The authoritative Goety capability interpretation is recorded in [`CAPABILITY-MATRIX-DELTA-GOETY.md`](./CAPABILITY-MATRIX-DELTA-GOETY.md).
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after Phase 2AX: 52/100 = 52%.**
+**Canonical provider-component coverage after Phase 2AY: 53/100 = 53%.**
 
-Phase 2AX / PR #166 merged to `main` as `4238275d2086a00c6f31960114733d74b8cdb1d8` after final pre-merge HEAD `b5b36a6fa3b1a5bf3b2add56ec3c604592f5ca71` passed Black Arcana CI #2336. The exact merge SHA then passed post-merge Black Arcana CI #2337 / workflow run `34430446827`, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
+Phase 2AY / PR #175 merged to `main` as `9a4e1cd6a462a278083ab946b5ed054864c3315e` after exact audited HEAD `2260c46261ac9ab99d839f307fd7b4519d38eef2` passed Black Arcana CI **#2420**. The exact merge SHA then passed post-merge Black Arcana CI **#2421**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
 
 The historical Phase 2AW nuance remains recorded: its immediate post-merge workflow #2308 failed at Foundation GameTest after unit tests, diff sanity, NeoForge build and JAR verification had passed, while later current-main validation #2334 completed the full gate successfully. This does not change the canonical #51 status of Apotheotic Creation.
 
@@ -48,7 +51,7 @@ The internal operational denominator remains **100 magic/cross-domain component 
 - 2 current candidates added beyond the historical baseline: `soul_fire_d`, `reliquified_lenders_cataclysm_new_relics_fix`;
 - therefore `103 - 5 + 2 = 100`.
 
-FamiliarsLib was already one of those 100 component units, so Phase 2AX changed the component numerator only. The denominator must be reconciled whenever the physical provider set changes.
+GTBC's SpellLib and FamiliarsLib were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
 
 ## Canonical recent closure sequence
 
@@ -60,8 +63,23 @@ FamiliarsLib was already one of those 100 component units, so Phase 2AX changed 
 | 50 | Phase 2AV / PR #160 | `apotheosis` | canonical |
 | 51 | Phase 2AW / PR #161 | `apotheoticcreation` | canonical; historical immediate post-merge GameTest failure superseded by later full current-main GREEN validation |
 | 52 | Phase 2AX / PR #166 | `familiarslib` | canonical at `main@4238275d2086a00c6f31960114733d74b8cdb1d8`; post-merge CI #2337 GREEN |
+| 53 | Phase 2AY / PR #175 | `gtbcs_spell_lib` | canonical at `main@9a4e1cd6a462a278083ab946b5ed054864c3315e`; post-merge CI #2421 GREEN |
 
 Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
+
+## Phase 2AY — GTBC's SpellLib 2.2.0 component #53, canonical
+
+Phase 2AY closes the physically installed shared spell/addon library to the strongest current publisher evidence:
+
+- physical artifact `gtbcs_spell_lib-2.2.0-1.21.1.jar`, mod id `gtbcs_spell_lib`, version `2.2.0`, physical SHA-1 `36cce8ab3117e89ae992a84a566d596709db2ffe`;
+- exact CurseForge project/file `1194714 / 8824651` for the installed 2.2.0 line;
+- publisher documentation defines SpellLib as reusable library/API infrastructure rather than standalone gameplay content;
+- exact 2.2.0 release notes add Healing Received, Damage Taken and Summon Health attributes;
+- reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon facilities are infrastructure consumed by addons and do not prove independent spell identities;
+- semantic magic delta: **0**;
+- no JAR decompilation or source copying was used; unsupported internal/API signatures remain fail-closed.
+
+Iron's and consuming addons retain authority for their concrete spell/casting identities. Black Arcana retains authority for its own canonical casting, costs, targeting/effects, cooldowns/charges, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash and WorldEffectPolicy.
 
 ## Phase 2AX — FamiliarsLib 1.7.1 component #52, canonical
 
@@ -81,15 +99,13 @@ Phase 2AX closes the installed familiar-framework library to the strongest curre
 
 ## Exactness and license boundary
 
-The source commit is release-correlated, not cryptographically tied to the installed binary: no matching release tag or reproducible-build proof was established. Do not call it an exact source-to-JAR pin.
-
-License surfaces also disagree: the release-correlated source property says `All Rights Reserved`, the current CurseForge project/file surface reports GPLv3, and the current Modrinth project surface reports MIT. This audit does not resolve that conflict into a reuse permission. Clean-room policy remains conservative: factual read-only inspection only; no provider code/assets/text are copied or adapted.
+FamiliarsLib's source commit is release-correlated, not cryptographically tied to the installed binary: no matching release tag or reproducible-build proof was established. Do not call it an exact source-to-JAR pin. Its observed license surfaces disagree, so no reuse conclusion is inferred. GTBC's SpellLib is treated conservatively as publisher/physical factual evidence only. Clean-room policy remains read-only factual inspection: no provider code/assets/text are copied or adapted.
 
 ## Black Arcana integration disposition
 
-FamiliarsLib remains authority for its own familiar attachment/lifecycle/networking framework. Iron's remains authority for the external spells referenced by FamiliarsLib tags and casting interoperability. Black Arcana remains authority for its own canonical magic runtime.
+FamiliarsLib remains authority for its own familiar attachment/lifecycle/networking framework. Iron's remains authority for the external spells referenced by FamiliarsLib tags and casting interoperability. GTBC's SpellLib remains authority for its library facilities. Black Arcana remains authority for its own canonical magic runtime.
 
-Stage 07.07 Borrowed Sight must not accept FamiliarsLib entities by thematic inference or generic tameable detection. A future bridge requires a verified provider-native ownership seam behind a dedicated adapter, with server-side revalidation and fail-closed behavior. Phase 2AX does **not** add that adapter.
+Stage 07.07 Borrowed Sight must not accept FamiliarsLib entities by thematic inference or generic tameable detection. A future bridge requires a verified provider-native ownership seam behind a dedicated adapter, with server-side revalidation and fail-closed behavior. Phase 2AX does **not** add that adapter, and Phase 2AY adds no runtime integration.
 
 ## Partial providers still receive zero component points
 
