@@ -63,21 +63,6 @@ public final class AstralSeveranceRuntime {
         this.projectionIdSupplier = Objects.requireNonNull(projectionIdSupplier, "projectionIdSupplier");
     }
 
-    /** Transitional legacy seam; the Minecraft adapter is migrated to the explicit server-authored origin next. */
-    public synchronized StartResult start(
-            UUID casterId,
-            long nowTick,
-            int durationTicks,
-            double maxRangeBlocks
-    ) {
-        return start(
-                casterId,
-                nowTick,
-                durationTicks,
-                maxRangeBlocks,
-                new AstralProjectionPose(0.0D, 0.0D, 0.0D, 0.0F, 0.0F));
-    }
-
     public synchronized StartResult start(
             UUID casterId,
             long nowTick,
