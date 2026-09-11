@@ -1,0 +1,121 @@
+name: Temporary Provider Artifact Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    if: github.head_ref == 'docs/provider-artifact-audit-alshanex-4.0.3'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download exact Alshanex 4.0.3 artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          URL='https://cursemaven.com/curse/maven/alshanexs-familiars-1171602/8675568/alshanexs-familiars-1171602-8675568.jar'
+          curl --fail --location --retry 3 --retry-delay 2 "$URL" -o /tmp/provider.jar
+          ACTUAL="$(sha1sum /tmp/provider.jar | awk '{print $1}')"
+          EXPECTED='e5051c2385a426d05bf203ba8081a23d891f6686'
+          printf 'expected_sha1=%s\nactual_sha1=%s\n' "$EXPECTED" "$ACTUAL" | tee audit/hash.txt
+          test "$ACTUAL" = "$EXPECTED"
+
+      - name: Extract factual inventory only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import PurePosixPath
+          from zipfile import ZipFile
+
+          jar = '/tmp/provider.jar'
+          report = []
+          with ZipFile(jar) as z:
+              names = sorted(z.namelist())
+              lower = {n: n.lower() for n in names}
+
+              report.append('EXACT JAR RESOURCE INVENTORY — Alshanex Familiars 4.0.3')
+              report.append('No class bytecode is decompiled; only archive paths and structured resource identifiers are inspected.')
+              report.append('')
+
+              report.append('[exact path hits: switcheroo / fire_fist]')
+              hits = [n for n in names if 'switcheroo' in lower[n] or 'fire_fist' in lower[n] or 'firefist' in lower[n]]
+              report.extend(hits or ['<none>'])
+              report.append('')
+
+              report.append('[provider class filenames containing Spell or Ritual]')
+              class_hits = [n for n in names if n.endswith('.class') and n.startswith('net/alshanex/') and ('spell' in lower[n] or 'ritual' in lower[n])]
+              report.extend(class_hits or ['<none>'])
+              report.append('')
+
+              report.append('[provider data JSON paths containing ritual]')
+              ritual_paths = [n for n in names if n.endswith('.json') and n.startswith('data/alshanex_familiars/') and 'ritual' in lower[n]]
+              report.extend(ritual_paths or ['<none>'])
+              report.append('')
+
+              report.append('[ritual_recipe JSON facts: path | type | result-id]')
+              ritual_facts = []
+              for n in names:
+                  if not (n.endswith('.json') and n.startswith('data/alshanex_familiars/')):
+                      continue
+                  try:
+                      obj = json.loads(z.read(n))
+                  except Exception:
+                      continue
+                  if not isinstance(obj, dict) or obj.get('type') != 'alshanex_familiars:ritual_recipe':
+                      continue
+                  result = obj.get('result')
+                  if isinstance(result, dict):
+                      result = result.get('id') or result.get('item') or result.get('name')
+                  ritual_facts.append((n, obj.get('type'), result))
+              for n, typ, result in ritual_facts:
+                  report.append(f'{n} | {typ} | {result}')
+              if not ritual_facts:
+                  report.append('<none>')
+              report.append(f'ritual_recipe_count={len(ritual_facts)}')
+              report.append('')
+
+              report.append('[provider language keys relevant to own spells]')
+              lang_candidates = [n for n in names if n.startswith('assets/alshanex_familiars/lang/') and n.endswith('en_us.json')]
+              keys = []
+              for n in lang_candidates:
+                  try:
+                      obj = json.loads(z.read(n))
+                  except Exception:
+                      continue
+                  if isinstance(obj, dict):
+                      for key in obj:
+                          k = key.lower()
+                          if ('spell' in k and 'alshanex' in k) or 'switcheroo' in k or 'fire_fist' in k or 'firefist' in k:
+                              keys.append(key)
+              report.extend(sorted(set(keys)) or ['<none>'])
+              report.append(f'relevant_language_key_count={len(set(keys))}')
+              report.append('')
+
+              report.append('[provider data spell-like JSON paths]')
+              spell_data = [n for n in names if n.endswith('.json') and n.startswith('data/alshanex_familiars/') and 'spell' in lower[n]]
+              report.extend(spell_data or ['<none>'])
+
+          text = '\n'.join(report) + '\n'
+          print(text)
+          with open('audit/report.txt', 'w', encoding='utf-8') as f:
+              f.write(text)
+          PY
+
+      - name: Publish text-only audit report
+        uses: actions/upload-artifact@v7
+        with:
+          name: alshanex-4.0.3-resource-audit
+          path: audit/*.txt
+          if-no-files-found: error
+          retention-days: 3
