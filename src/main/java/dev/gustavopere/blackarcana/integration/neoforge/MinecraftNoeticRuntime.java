@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.integration.neoforge;
 
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.content.noetic.AstralProjectionPose;
 import dev.gustavopere.blackarcana.content.noetic.AstralSeveranceRuntime;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipProvider;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipRegistry;
@@ -137,13 +138,20 @@ public final class MinecraftNoeticRuntime {
                     "Astral Severance requires a living physical body");
         }
 
+        AstralProjectionPose originPose = new AstralProjectionPose(
+                caster.getX(),
+                caster.getY(),
+                caster.getZ(),
+                caster.getYRot(),
+                caster.getXRot());
         ServerState state = stateFor(server);
         state.astral.expire(server.getTickCount());
         AstralSeveranceRuntime.StartResult result = state.astral.start(
                 casterId,
                 server.getTickCount(),
                 durationTicks,
-                maxRangeBlocks);
+                maxRangeBlocks,
+                originPose);
         return switch (result) {
             case STARTED -> AstralProjectionStart.started(state.astral.projection(casterId).orElseThrow());
             case CASTER_ALREADY_PROJECTED -> AstralProjectionStart.denied(
