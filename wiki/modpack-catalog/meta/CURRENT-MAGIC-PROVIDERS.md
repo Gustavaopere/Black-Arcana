@@ -2,11 +2,11 @@
 
 ## Estado
 
-`AUDITORIA EM ANDAMENTO — autoridade física 2026-09-09`
+`AUDITORIA EM ANDAMENTO — autoridade física 2026-09-11`
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo foi reconciliado para **100 componentes mágicos/cross-domain**, dos quais **52 estão canônicos** após Phase 2AX / PR #166. Esse 52/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo foi reconciliado para **100 componentes mágicos/cross-domain**, dos quais **54 estão canônicos** após Phase 2BD / PR #186. Esse 54/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
 A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui.
 
@@ -92,9 +92,15 @@ Ars Nouveau e seus addons devem ser catalogados em nível de glyph/form/augment 
 A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e `alshanex_familiars-1.21.1_v4.0.3.jar`. São componentes distintos e não compartilham automaticamente ownership semântico:
 
 - FamiliarsLib foi fechado na Phase 2AX como `LIBRARY_INFRA`/framework de familiar, com **0** novas magias semânticas independentes;
-- Alshanex's Familiars é consumidor/conteúdo concreto e requer auditoria própria da linha 4.0.3;
+- Alshanex's Familiars é consumidor/conteúdo concreto; Phase 2BD fecha a linha 4.0.3 em **7 spells próprios + 11 rituais próprios = 18 objetos semânticos**, usando o JAR exato hash-matched; runtime QA e seam de ownership continuam separados;
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes 'n Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
+
+## Checkpoint Alshanex's Familiars — Phase 2BD
+
+O artefato físico `alshanex_familiars-1.21.1_v4.0.3.jar` / SHA-1 `e5051c2385a426d05bf203ba8081a23d891f6686` foi materializado pelo File ID exato `8675568` em auditoria isolada e bateu criptograficamente com o pack. O inventário current-version fecha **7 spell registrations** e **11 `alshanex_familiars:ritual_recipe` identities**, totalizando **18 objetos mágicos semânticos `COUNTED_EXACT`**. Sound/Melodic continua pertencendo a Tunes n' Tomes e não é recontado.
+
+Esse fechamento é de catálogo/identidade. Runtime QA, valores numéricos e qualquer adapter Black Arcana↔Alshanex permanecem fail-closed até contrato provider-native seguro.
 
 ## Checkpoint Apprentice's Codex — Phase 2L
 
@@ -114,7 +120,7 @@ A cobertura source-level não converte o addon em authority de Black Arcana nem 
 
 O artefato físico permanece `goety-3.1.4.jar` / runtime `3.1.4`. A linha pública `Vivideru/Goety-3` foi auditada nos checkpoints 3.1.0 e 3.1.1: `ModItems.java` mantém o mesmo blob e contém **123 registros ativos de itens Focus** no intervalo observado. A lista oficial da Wiki com 110 nomes continua válida como subconjunto documental, não como registry completo atual.
 
-Esse avanço é **evidence-only +0**: não existe pin público exato de source 3.1.4 estabelecido, e registry membership não fecha sozinho reachability, deduplicação semântica, custos, hooks ou runtime. Por isso o mínimo semântico estrito continua **796**, e Goety permanece authority de Soul Energy, Focus casting, servants, rituals e progression. O estado canônico detalhado está nos overlays de queue/capability e em `providers/goety/`.
+Esse avanço é **evidence-only +0**: não existe pin público exato de source 3.1.4 estabelecido, e registry membership não fecha sozinho reachability, deduplicação semântica, custos, hooks ou runtime. Por isso Goety continua com delta próprio +0; após o fechamento exato de Alshanex 4.0.3, o mínimo semântico estrito global é **815**, e Goety permanece authority de Soul Energy, Focus casting, servants, rituals e progression. O estado canônico detalhado está nos overlays de queue/capability e em `providers/goety/`.
 
 ## Regra de completude
 

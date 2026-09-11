@@ -1,8 +1,8 @@
-# Alshanex's Familiars 4.0.3 — release-bounded partial catalog
+# Alshanex's Familiars 4.0.3 — exact artifact catalog
 
 ## Status
 
-`EXACT PHYSICAL 4.0.3 / EXACT PUBLISHER FILE 8675568 / 4.0 OWNERSHIP MIGRATION VERIFIED / FIRE FIST EXACT-4.0.3 EVIDENCE / SWITCHEROO 4.0 LINEAGE EVIDENCE / COMPLETE CURRENT SPELL+RITUAL INVENTORY OPEN / RUNTIME QA PENDING / FAIL-CLOSED`
+`EXACT PHYSICAL 4.0.3 / EXACT PUBLISHER FILE 8675568 / EXACT JAR HASH-MATCHED / 7/7 PROVIDER SPELL REGISTRATIONS / 11/11 PACKAGED RITUAL_RECIPE IDENTITIES / SOUND OWNERSHIP MIGRATED TO TUNES / 18 COUNTED SEMANTIC MAGICS / RUNTIME QA + ADAPTER SEAM PENDING`
 
 ## Installed authority
 
@@ -14,70 +14,89 @@
 - physical SHA-1: `e5051c2385a426d05bf203ba8081a23d891f6686`
 - CurseForge project / exact file: `1171602 / 8675568`
 - exact file published: `2026-08-18`, Release
-- declared license: All Rights Reserved
+- declared license: **All Rights Reserved**
 - required ecosystem: Iron's Spells 'n Spellbooks + FamiliarsLib infrastructure
 
-The physical modlist is authority for installed identity. Publisher file metadata independently confirms the exact 4.0.3 artifact.
+The physical modlist remains authority for installed identity. Phase 2BD independently materialized Curse Maven File ID `8675568` in an isolated GitHub Actions audit and verified byte identity against the physical SHA-1 before inspecting factual archive/registry metadata. See [`EXACT-4.0.3-ARTIFACT-AUDIT.md`](EXACT-4.0.3-ARTIFACT-AUDIT.md).
 
-## 4.0 ownership migration — Sound is not Alshanex-owned current spell content
+## Exact provider-owned spell inventory — 7
 
-The version-specific 4.0 release changelog states that **Sound School was removed from Alshanex's Familiars and moved to Tunes n' Tomes**, with Sound-related content including Bard converted to built-in compatibility with that separate mod.
+The exact JAR contains one `DeferredRegister<AbstractSpell>` surface in `PetSpellRegistry`. Its static initializer assigns seven spell fields through seven `registerSpell` calls with no conditional branch in that initializer. Class literals and the provider's own translation keys converge on these seven current IDs:
 
-This is the controlling current-line ownership evidence for semantic counting. Generic project/Wiki prose still displays historical Bard/Sound sections and therefore conflicts with the 4.0 migration changelog. Those stale sections must not be used to re-count the old Sound spell roster under Alshanex 4.x.
+| Registry field | Provider class | Exact spell ID | Catalog |
+|---|---|---|---|
+| `SUMMON_SHADOW` | `ShadowSummonSpell` | `alshanex_familiars:summon_shadows` | [Summon Shadows](spells/summon-shadows.md) |
+| `ICE_AGE` | `IceAgeSpell` | `alshanex_familiars:ice_age` | [Ice Age](spells/ice-age.md) |
+| `ICE_CHAMBER` | `IceChamberSpell` | `alshanex_familiars:ice_chamber` | [Ice Chamber](spells/ice-chamber.md) |
+| `MEGIDO` | `MegidoSpell` | `alshanex_familiars:megido` | [Megido](spells/megido.md) |
+| `HIKEN` | `HikenSpell` | `alshanex_familiars:fire_fist` | [Fire Fist](spells/fire-fist.md) |
+| `MAYHEM` | `EndMayhemSpell` | `alshanex_familiars:end_mayhem` | [End Mayhem](spells/end-mayhem.md) |
+| `FAMILIAR_SWAP` | `SwitcherooSpell` | `alshanex_familiars:switcheroo` | [Switcheroo](spells/switcheroo.md) |
 
-The physical pack contains Tunes n' Tomes 1.1.0-HOTFIX, so the compatibility path is eligible, but coexistence does not transfer Tunes-owned spell identities back to Alshanex.
+This closes the **current identity inventory**, not every numerical mechanic. Mana, cooldown, level scaling, damage formula, exact targeting details and acquisition remain provider-owned and are `NÃO VERIFICADO` in the individual pages unless supported by separate current evidence.
 
-## Current-line discrete spell evidence
+## Exact packaged ritual inventory — 11
 
-The exact installed 4.0.3 release directly supports **one current Alshanex-owned spell identity**:
+The exact JAR packages eleven JSON resources whose type is precisely `alshanex_familiars:ritual_recipe`. They are discrete provider ritual identities under the semantic-magic ledger, not ordinary crafting recipes:
 
-1. **Fire Fist** — explicitly named by the exact 4.0.3 changelog through a crash fix for the spell.
+| Ritual recipe ID | Result ID | Catalog |
+|---|---|---|
+| `archmage_shard` | `alshanex_familiars:archmage_shard` | [Archmage Shard](rituals/archmage-shard.md) |
+| `druid_shard` | `alshanex_familiars:druid_shard` | [Druid Shard](rituals/druid-shard.md) |
+| `frostling_shard` | `alshanex_familiars:frostling_shard` | [Frostling Shard](rituals/frostling-shard.md) |
+| `hunter_shard` | `alshanex_familiars:hunter_shard` | [Hunter Shard](rituals/hunter-shard.md) |
+| `lightning_mage_shard` | `alshanex_familiars:lightning_mage_shard` | [Lightning Mage Shard](rituals/lightning-mage-shard.md) |
+| `magic_power_tier_2` | `alshanex_familiars:magic_power_tier_2` | [Magic Power Tier 2](rituals/magic-power-tier-2.md) |
+| `magic_power_tier_3` | `alshanex_familiars:magic_power_tier_3` | [Magic Power Tier 3](rituals/magic-power-tier-3.md) |
+| `magic_resist_tier_2` | `alshanex_familiars:magic_resist_tier_2` | [Magic Resist Tier 2](rituals/magic-resist-tier-2.md) |
+| `magic_resist_tier_3` | `alshanex_familiars:magic_resist_tier_3` | [Magic Resist Tier 3](rituals/magic-resist-tier-3.md) |
+| `summoner_shard` | `alshanex_familiars:summoner_shard` | [Summoner Shard](rituals/summoner-shard.md) |
+| `truth_mirror` | `alshanex_familiars:truth_mirror` | [Truth Mirror](rituals/truth-mirror.md) |
 
-The 4.0 release also introduced **Switcheroo**, described as swapping the caster with the summoned familiar being aimed at and obtainable pre-inscribed in the Tome of Alignment. The intervening publisher changelogs checked for 4.0.1 and 4.0.2 document unrelated fixes and do not announce a Switcheroo removal or rename. That absence is **not** promoted to proof that Switcheroo remains registered in the installed 4.0.3 build.
+The provider Wiki independently documents the custom ritual subsystem and shard acquisition through rituals. Exact ingredient quantities, altar conditions, timing, multiplayer ownership and runtime settlement are intentionally not inferred from identity alone.
 
-Therefore the current semantic lower bound is **at least 1** spell, with Switcheroo retained as **4.0 lineage evidence / current 4.0.3 presence not directly verified**. The complete 4.0.3 spell registry remains open. The semantic ledger does not add Alshanex objects to the strict counted total yet.
+## Semantic-magic result
 
-## Ritual surface
+Under [`../../meta/SEMANTIC-MAGIC-COVERAGE.md`](../../meta/SEMANTIC-MAGIC-COVERAGE.md):
 
-The publisher Wiki documents a provider-owned, data-driven `alshanex_familiars:ritual_recipe` system used at the Origin Island and describes shard acquisition through rituals. That proves a current ritual subsystem exists.
+- provider-owned standalone spells: **7**;
+- provider-owned custom ritual identities: **11**;
+- Alshanex semantic contribution: **18**;
+- evidence state: `COUNTED_EXACT` for current identity/count inventory.
 
-However, the currently accessible public material does not provide a complete version-bounded list of 4.0.3 ritual recipes. The examples and statements that there is a shard for naturally spawning familiar categories are insufficient to manufacture an exact ritual count. Rituals therefore remain `OPEN` for semantic accounting.
+Familiar AI abilities, passives, lifecycle actions and casts of external Iron's spells remain excluded. They do not mint duplicate spell identities.
 
-## Familiar actions are not automatically semantic spells
+## 4.0 ownership migration — Sound remains Tunes-owned
 
-Familiars cast Iron's spells and expose provider abilities such as familiar-specific utility/combat behavior. The semantic ledger does not count every AI ability, pet passive, item proc or familiar lifecycle action as a spell. A capability is only added to the semantic denominator when its provider-owned discrete magical identity and current eligibility are established under the ledger rules.
+The version-specific 4.0 release moved Sound-school content out of Alshanex's Familiars and into Tunes n' Tomes. Generic/stale Bard/Sound prose is therefore historical context only. The current pack contains Tunes n' Tomes `1.1.0-HOTFIX`; its 16 counted Melodic spells remain owned and counted there exactly once.
 
-This prevents familiar spellcasting tags or repeated AI casts from becoming duplicate copies of Iron's-owned spells.
+## Authority and integration boundary
 
-## Authority and deduplication
+- **FamiliarsLib** owns its familiar framework/lifecycle surfaces.
+- **Alshanex's Familiars** owns these seven provider spell identities, eleven provider ritual identities, familiar content and provider-local progression/items.
+- **Tunes n' Tomes** owns the migrated Sound/Melodic spell content.
+- **Iron's Spells** owns the generic spellcasting substrate and any external Iron's spells selected/cast by familiars.
+- **Black Arcana** owns its own casting, spell domains, hazards, rituals, persistence, costs, cooldowns, targeting, Corruption, Strain, Arcane Danger, Backlash and `WorldEffectPolicy`.
 
-- **FamiliarsLib** owns the technical familiar framework/lifecycle surfaces it provides.
-- **Alshanex's Familiars** owns its familiar content, provider-specific progression/rituals/items and its own provider spell content.
-- **Tunes n' Tomes** owns the migrated Melodic/Sound spell content in the current 4.x ecosystem.
-- **Iron's Spells** remains authority for the generic spellcasting substrate and external spells that familiars select/cast.
-- **Black Arcana** retains authority over its own casting, Noetic sessions, spell domains, hazards, costs, cooldowns, targeting and world-safety runtime.
+No Black Arcana runtime adapter is created by this catalog closure. Stage 07.07 familiar ownership remains fail-closed until a stable provider-native ownership/lifecycle seam is verified and server-side revalidation is designed against the exact provider stack.
 
-Black Arcana must not infer a Borrowed Sight ownership bridge from tameability or familiar appearance. The existing Stage 07.07 rule remains: provider-native ownership must be verified behind an adapter and revalidated server-side.
+## Remaining gates outside catalog identity/count closure
 
-## Documentation drift recorded
+1. dedicated runtime QA for Alshanex 4.0.3 + FamiliarsLib 1.7.1 + Tunes n' Tomes 1.1.0-HOTFIX + Iron's 3.16.3;
+2. exact numerical spell mechanics where required for later capability deduplication;
+3. exact ritual ingredient/condition/settlement details where required for integration or balance;
+4. stable provider-native ownership/lifecycle seam before any Black Arcana familiar adapter.
 
-The current generic Alshanex project page and publisher Wiki continue to show Bard/Sound prose after the 4.0 migration. The project Notion dossier also contains inherited Sound/Bard language. Because the 4.0 release changelog is version-specific and later in the ownership history, this catalog treats those generic sections as stale for current spell ownership while preserving them as historical/contextual evidence.
+These do not reopen the exact current **7-spell + 11-ritual identity inventory**.
 
-No generic documentation text is silently rewritten into a registry claim.
+## Provenance / clean-room
 
-## Open gates
-
-1. obtain a complete version-bounded 4.0.3 spell inventory without decompiling the All Rights Reserved binary;
-2. enumerate the exact current ritual recipe set from publisher/source/data evidence if legally and technically available;
-3. directly verify current 4.0.3 presence/identity for Switcheroo and any other spells not named by the exact 4.0.3 release evidence;
-4. validate Alshanex 4.0.3 + FamiliarsLib 1.7.1 + Tunes n' Tomes 1.1.0-HOTFIX + Iron's 3.16.3 in dedicated runtime;
-5. identify stable provider-native ownership/lifecycle seams before any Black Arcana familiar adapter beyond already verified integrations.
+Alshanex's Familiars is All Rights Reserved. Phase 2BD used the exact binary only for read-only factual interoperability/catalog evidence: cryptographic identity, archive/resource paths, structured ritual type/result IDs, class/member signatures, filtered spell-ID literals and a narrow count/branch check of the registry static initializer. No spell implementation body, source code, assets, models, sounds or upstream prose are copied/adapted into Black Arcana.
 
 ## Sources
 
 - physical modlist: current Black Arcana `modlist.txt`, SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 - exact 4.0.3 file: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/8675568`
 - 4.0 migration release: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/7920260`
-- 4.0.1 release: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/7934150`
-- 4.0.2 release: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/8059472`
 - publisher Wiki: `https://wiki.pixeldreamstudios.net/mods/alshanex-familiars`
+- Phase 2BD isolated exact-artifact audit: GitHub Actions run `34649305941`, job `103427464735`, text-only evidence artifact `10283338450`
