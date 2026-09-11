@@ -1,0 +1,87 @@
+name: Phase 2BD Final Ledger Reconciliation
+
+on:
+  push:
+    branches:
+      - docs/alshanex-4.0.3-exact-catalog-closure
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reconcile current-state ledger wording
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def reconcile(path, old, new, label):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              old_count = text.count(old)
+              new_count = text.count(new)
+              assert (old_count, new_count) in {(1, 0), (0, 1)}, (
+                  f'{label}: expected exactly one old or reconciled occurrence, '
+                  f'found old={old_count}, reconciled={new_count}'
+              )
+              if old_count == 1:
+                  p.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          semantic = 'wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md'
+          reconcile(
+              semantic,
+              'These rows are deliberately **not additive to 797** until their exact/current inventory and deduplication state meet the inclusion rule.',
+              'These rows are deliberately **not additive to 815** until their exact/current inventory and deduplication state meet the inclusion rule.',
+              'open-blocker strict-total reference',
+          )
+          reconcile(
+              semantic,
+              '1. **797 is not “797 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.',
+              '1. **815 is not “815 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.',
+              'interpretation rule 1',
+          )
+          reconcile(
+              semantic,
+              '2. Do not divide 797 by the 100 provider-component denominator. `53/100` and semantic-magic coverage answer different questions.',
+              '2. Do not divide 815 by the 100 provider-component denominator. `54/100` and semantic-magic coverage answer different questions.',
+              'interpretation rule 2',
+          )
+          reconcile(
+              semantic,
+              '3. Do not add public lower bounds to 797 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.',
+              '3. Do not add public lower bounds to 815 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.',
+              'interpretation rule 3',
+          )
+          reconcile(
+              'wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md',
+              '- semantic numerator delta from the Werewolves correction: **+1**;',
+              "- semantic numerator delta from Alshanex's Familiars 4.0.3 exact closure: **+18**;\n- semantic numerator delta from the preceding Werewolves correction: **+1**;",
+              'coverage latest semantic delta summary',
+          )
+          print('Final Phase 2BD ledger reconciliation complete.')
+          PY
+
+      - name: Commit reconciliation
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo 'Ledger is already reconciled.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md \
+                  wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md
+          git commit -m 'docs: reconcile Phase 2BD ledger references'
+          git push origin HEAD:docs/alshanex-4.0.3-exact-catalog-closure
