@@ -1,4 +1,4 @@
-name: Phase 2BD Alshanex Catalog Runner
+name: Phase 2BD Alshanex Catalog Reconciliation
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  apply:
+  reconcile:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -18,60 +18,70 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Apply catalog closure from staged script
+      - name: Reconcile generated catalog state
         shell: bash
-        env:
-          PR_NUMBER: '186'
         run: |
           set -euo pipefail
-          if test -f wiki/modpack-catalog/meta/PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md; then
-            echo 'Phase 2BD closure already applied.'
-            exit 0
-          fi
           python3 - <<'PY'
           from pathlib import Path
-          import os
 
-          queue = Path('wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md')
-          queue_text = queue.read_text(encoding='utf-8')
-          old_anchor = '- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`'
-          expected_anchor = '- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`;'
-          lines = queue_text.splitlines()
-          old_count = sum(line == old_anchor for line in lines)
-          expected_count = sum(line == expected_anchor for line in lines)
-          assert (old_count, expected_count) in {(1, 0), (0, 1)}, (
-              'queue anchor state: expected exactly one legacy or generator-ready occurrence, '
-              f'found legacy={old_count}, generator_ready={expected_count}'
-          )
-          if old_count == 1:
-              queue.write_text(
-                  queue_text.replace(old_anchor + '\n', expected_anchor + '\n', 1),
-                  encoding='utf-8'
+          def reconcile(path, old, new, label):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              old_count = text.count(old)
+              new_count = text.count(new)
+              assert (old_count, new_count) in {(1, 0), (0, 1)}, (
+                  f'{label}: expected exactly one old or reconciled occurrence, '
+                  f'found old={old_count}, reconciled={new_count}'
               )
+              if old_count == 1:
+                  p.write_text(text.replace(old, new, 1), encoding='utf-8')
 
-          path = Path('.github/workflows/alshanex-catalog-closure.yml')
-          text = path.read_text(encoding='utf-8')
-          start_marker = "          python3 - <<'PY'\n"
-          end_marker = "\n          PY\n\n      - name: Commit catalog closure"
-          start = text.index(start_marker) + len(start_marker)
-          end = text.index(end_marker, start)
-          raw = text[start:end]
-          prefix = '          '
-          source = '\n'.join(line[len(prefix):] if line.startswith(prefix) else line for line in raw.split('\n'))
-          os.environ['PR_NUMBER'] = '186'
-          exec(compile(source, str(path) + ':embedded-phase2bd', 'exec'), {'__name__': '__main__'})
+          reconcile(
+              'wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md',
+              'Bloodlines remains **28 counted actions**, and the strict total remains **797**.',
+              'Bloodlines remains **28 counted actions**, and the strict total remains **815**.',
+              'Bloodlines strict-total cross-reference',
+          )
+          reconcile(
+              'wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md',
+              'A última correção de contagem continua sendo **Werewolves Leap +1**:',
+              'A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**:',
+              'queue latest-correction wording',
+          )
+          reconcile(
+              'wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md',
+              'O valor 53/100 nunca substitui a métrica semântica de magias.',
+              'O valor 54/100 nunca substitui a métrica semântica de magias.',
+              'queue component metric cross-reference',
+          )
+          reconcile(
+              'wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md',
+              '`AUDITORIA EM ANDAMENTO — autoridade física 2026-09-09`',
+              '`AUDITORIA EM ANDAMENTO — autoridade física 2026-09-11`',
+              'current provider physical-authority date',
+          )
+          reconcile(
+              'wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md',
+              'Esse 52/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.',
+              'Esse 54/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.',
+              'current provider component metric cross-reference',
+          )
+          print('Phase 2BD generated-state reconciliation complete.')
           PY
 
-      - name: Commit catalog closure
+      - name: Commit reconciliation
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet && git diff --cached --quiet; then
-            echo 'No catalog changes to commit.'
+          if git diff --quiet; then
+            echo 'Generated catalog is already reconciled.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add SOURCES.md THIRD_PARTY_NOTICES.md wiki/modpack-catalog
-          git commit -m 'docs: close Alshanex 4.0.3 exact magic catalog'
+          git add wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md \
+                  wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md \
+                  wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md
+          git commit -m 'docs: reconcile Phase 2BD generated catalog state'
           git push origin HEAD:docs/alshanex-4.0.3-exact-catalog-closure
