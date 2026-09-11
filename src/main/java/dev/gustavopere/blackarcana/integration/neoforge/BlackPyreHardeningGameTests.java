@@ -165,11 +165,12 @@ public final class BlackPyreHardeningGameTests {
     }
 
     @SuppressWarnings("removal")
-    @GameTest(template = "foundation_empty", timeoutTicks = 120)
+    @GameTest(template = "foundation_empty", timeoutTicks = 120, batch = "black_pyre_restart_isolation")
     public static void restartSimulationKeepsRollbackButNeverRevivesFrontier(GameTestHelper helper) throws Exception {
         MinecraftServer server = helper.getLevel().getServer();
         ArcanaServerRuntime runtime = requireRuntime(server);
         WorldEffectPolicyConfig previous = runtime.worldEffectPolicy().config();
+        resetBlackPyreState(server);
         var caster = helper.makeMockServerPlayerInLevel();
         BlockPos seed = helper.absolutePos(new BlockPos(6, 1, 2));
         BlockPos neighbor = seed.east();
@@ -202,12 +203,13 @@ public final class BlackPyreHardeningGameTests {
         } finally {
             runtime.configureWorldEffects(previous);
             runtime.tick(now + BlackPyreSafetyCeilings.MAX_LIFETIME_TICKS + 1L);
+            resetBlackPyreState(server);
         }
         helper.succeed();
     }
 
     @SuppressWarnings("removal")
-    @GameTest(template = "foundation_empty", timeoutTicks = 120)
+    @GameTest(template = "foundation_empty", timeoutTicks = 120, batch = "black_pyre_frontier_capacity_isolation")
     public static void fullModeCannotExceedConcurrentFrontierCeiling(GameTestHelper helper) throws Exception {
         MinecraftServer server = helper.getLevel().getServer();
         ArcanaServerRuntime runtime = requireRuntime(server);
