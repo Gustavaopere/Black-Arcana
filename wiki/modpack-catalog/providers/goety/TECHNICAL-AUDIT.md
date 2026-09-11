@@ -13,7 +13,7 @@ Current physical modpack authority establishes:
 - Minecraft: 1.21.1;
 - loader: NeoForge `21.1.248`.
 
-The current pack snapshot contains 612 top-level entries including NeoForge. Internal jarjar dependencies are not counted as top-level providers.
+The current pack snapshot contains **595 top-level entries including NeoForge**, as declared by the physical `modlist.txt` (`Mods count: 595`). Internal jarjar dependencies are not counted as top-level providers.
 
 ## Exact public release
 
@@ -61,6 +61,12 @@ Read-only factual enumeration yields **123 active Focus item registrations**:
 
 Total: **123**.
 
+The source also directly establishes that ordinary spell-bearing Focus registrations instantiate provider spell objects, for example the audited pattern `ITEMS.register("..._focus", () -> new MagicFocus(new ...Spell()))`. This is stronger than a display-name inventory: those entries are provider casting objects backed by Goety spell implementations in the public 3.1.1 source line.
+
+A second independent source surface exists under `src/main/resources/data/goety/recipe/focus/`. It contains provider-native acquisition recipes for a broad set of Focus identities, including examples such as `soul_bolt_focus`, `magic_bolt_focus`, `barricade_focus`, `rotting_focus`, `frost_nova_focus`, `fireball_focus`, `thunderstorm_focus` and `void_flash_focus`. Compatibility variants such as alternate recipe files do not create additional semantic Focus identities and must be deduplicated by resulting Focus.
+
+This materially weakens the old generic concern that the public registry might consist only of unreachable/internal names. It still does **not** establish that every one of the 123 registrations is survival-reachable, nor that the installed 3.1.4 artifact preserves the exact 3.1.1 registry/acquisition surface.
+
 The legacy Wiki catalog contains 110 names. The 13 source-registered IDs omitted there are:
 
 `illuminate_focus`, `earth_punch_focus`, `smack_stone_focus`, `ministrous_focus`, `carrion_focus`, `razor_wind_focus`, `surging_focus`, `sprightly_focus`, `thunderstorm_focus`, `water_whip_focus`, `hogging_focus`, `stellar_focus`, `void_flash_focus`.
@@ -79,8 +85,10 @@ It proves, for the audited public 3.1.0/3.1.1 source interval:
 
 - the existence of 123 active Focus item registrations in the audited registry file;
 - their category distribution;
+- that ordinary spell-bearing Focus registrations directly wrap provider spell objects through `MagicFocus(new ...Spell())`;
+- provider-native recipe acquisition for a broad subset of those Focus identities;
 - that at least 13 registry identities were missing from the prior 110-name Wiki inventory;
-- blob stability of that registry file between the two audited source checkpoints.
+- blob stability of the audited registry file between the two source checkpoints.
 
 It does **not** prove:
 
@@ -91,7 +99,7 @@ It does **not** prove:
 - a stable 3.1.4 integration API/event boundary;
 - exact ritual identity totals from the 13 documented ritual categories.
 
-Therefore the global semantic total remains **796** and Goety remains non-additive at this checkpoint.
+Therefore the global semantic total remains **797** and Goety remains non-additive at this checkpoint.
 
 ## License and clean-room provenance
 
@@ -127,6 +135,8 @@ Because exact 3.1.4 source is not pinned here, Black Arcana must not invent or c
 | public source checkpoints | 3.1.0 + 3.1.1 VERIFIED |
 | `ModItems.java` blob across audited checkpoints | STABLE / VERIFIED |
 | 123 active Focus item registrations in audited public source | VERIFIED FACTUAL REGISTRY EVIDENCE |
+| spell-bearing Focus → provider `Spell` construction in public source | VERIFIED FACTUAL SOURCE EVIDENCE |
+| provider-native Focus recipes in public source | VERIFIED FOR OBSERVED RECIPE IDENTITIES; NOT AN EXACT 3.1.4 COMPLETE REACHABILITY PROOF |
 | 110 Wiki names / 10 families | LEGACY PUBLIC DOCUMENTATION SUBSET |
 | 12 public Wands/Staffs | PUBLIC DOCUMENTATION INVENTORY |
 | 13 public ritual families/types | PUBLIC DOCUMENTATION INVENTORY; NOT DISCRETE RITUAL COUNT |
@@ -164,7 +174,8 @@ Do not silently extrapolate from 3.1.1 to 3.1.4. Do not treat unauthorized decom
 ### Focus reachability and semantic eligibility
 
 - reconcile exact 3.1.4 Focus registry identity;
-- determine player-facing/survival reachability for the 13 IDs newly exposed by source evidence;
+- reconcile the exact 3.1.4 recipe/acquisition surface against the public 3.1.1 Focus recipes;
+- determine player-facing/survival reachability for any registered Focus lacking a provider-native acquisition path;
 - distinguish aliases, technical/support items or other non-additive identities before semantic counting;
 - preserve one causal cast/action as one provider-owned semantic object.
 

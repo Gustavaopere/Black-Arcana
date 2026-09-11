@@ -54,7 +54,9 @@ It has blob `db3c63b366803e2d46aa4a996b5bb0f358437a7f` at both audited 3.1.0 and
 | Void | 14 |
 | **Total** | **123** |
 
-This does **not** establish that the installed 3.1.4 JAR contains exactly 123 Focuses, nor that all 123 item registrations are independently countable semantic magic objects under Black Arcana's denominator. Exact 3.1.4 JAR/source reconciliation, semantic reachability and object-level deduplication remain open.
+Ordinary spell-bearing registrations directly instantiate Goety spell objects through `MagicFocus(new ...Spell())`, and the public 3.1.1 tree independently exposes provider-native acquisition recipes under `src/main/resources/data/goety/recipe/focus/` for a broad set of Focus identities. Compatibility recipe variants are acquisition alternatives, not extra semantic spells.
+
+This materially strengthens the public-source evidence that these are real provider casting/acquisition objects rather than a name-only inventory. It still does **not** establish that the installed 3.1.4 JAR contains exactly 123 Focuses, that every registration is survival-reachable, or that all 123 are independently countable semantic magic objects under Black Arcana's denominator. Exact 3.1.4 JAR/source reconciliation and object-level deduplication remain open.
 
 ## License boundary
 
@@ -74,6 +76,7 @@ Confidence classes:
 
 - installed/release identity: **EXACT**;
 - public 1.21.1 source-line registry at 3.1.0/3.1.1: **CURRENT-LINE FACTUAL EVIDENCE**;
+- public 3.1.1 Focus construction/acquisition evidence: **CURRENT-LINE FACTUAL EVIDENCE**;
 - legacy official Wiki inventory: **PUBLIC DOCUMENTATION SUBSET**;
 - exact 3.1.4 implementation/source/API semantics: **UNVERIFIED / FAIL-CLOSED** unless separately evidenced;
 - exact runtime behavior in the physical pack: **UNVERIFIED**.
@@ -117,7 +120,7 @@ Other public documentation surfaces remain useful as documentary evidence, but a
 
 | Surface | Current evidence | Exact 3.1.4 reconciliation |
 |---|---|---|
-| Base Focuses | 123 active item registrations in public 3.1.0/3.1.1 registry; legacy Wiki names 110 | PENDING |
+| Base Focuses | 123 active item registrations in public 3.1.0/3.1.1 registry; spell-bearing entries wrap concrete provider spell objects; broad provider-native recipe surface exists in 3.1.1; legacy Wiki names 110 | PENDING |
 | Focus categories | 10 — Magic, Necromancy, Geomancy, Frost, Wild, Wind, Storm, Abyss, Nether, Void | PENDING |
 | Wands/staffs | 12 in public documentation | PENDING |
 | Ritual types | 13 public categories | PENDING at ritual-identity level |
@@ -141,7 +144,7 @@ A Wand/Staff contains a Focus; the Focus determines the spell. Public documentat
 
 Specialized staffs modify compatible Focus behavior. Those are variants inside provider cast semantics; Black Arcana must not observe one activation and process it as a second cast.
 
-Registry identity alone does not prove player-facing semantic eligibility. That is why the 123 public source registrations remain non-additive to the strict semantic total until exact/current reachability and deduplication are reconciled.
+The public 3.1.1 source adds stronger identity evidence: ordinary Focus registrations directly wrap concrete Goety spell objects, and many Focus identities have provider-native acquisition recipes. This narrows the reachability blocker but does not remove the exact-version gate. Installed 3.1.4 registry/acquisition equivalence remains unproven.
 
 ## Ritual model
 
@@ -217,7 +220,7 @@ Goety Iron `3.1` and Goety Cataclysm `1.21.1-1.8.2` are separate installed provi
 
 ## Semantic denominator and Phase 3 gate
 
-The strict reconstructible semantic total remains **796**. Goety contributes **+0 at this reconciliation checkpoint** because the public 123-Focus item registry is not exact 3.1.4 evidence and registry membership alone does not close semantic reachability/deduplication.
+The strict reconstructible semantic total remains **797**. Goety contributes **+0 at this reconciliation checkpoint** because the exact installed 3.1.4 registry/acquisition surface is not reconciled and object-level semantic deduplication remains open. Public 3.1.1 source now proves stronger spell-bearing Focus construction and broad provider-native acquisition evidence, but it is not exact 3.1.4 authority.
 
 Goety-related Black Arcana implementation remains `BLOCKED` until the relevant installed 3.1.4 behavior and addon surfaces are reconciled sufficiently to prove a real semantic gap and any required provider boundary.
 

@@ -52,6 +52,12 @@ Read-only factual inspection yields:
 
 This proves a 123-entry Focus **item registry** for the public 3.1.0/3.1.1 source interval. It does not prove `JAR 123/123` for installed 3.1.4 and does not automatically prove 123 independently countable semantic magic objects.
 
+The registry is nevertheless stronger than a name-only item list. Ordinary spell-bearing Focus entries are registered as `MagicFocus` instances wrapping concrete provider spell objects, using the audited form `ITEMS.register("..._focus", () -> new MagicFocus(new ...Spell()))`. Examples observed in the registry include Soul Bolt, Magic Bolt, Barricade, Rotting and other family entries.
+
+The public 3.1.1 source also exposes provider-native Focus acquisition recipes under `src/main/resources/data/goety/recipe/focus/`. That directory contains recipes yielding many of the same registered Focus identities across the ten families. Alternate compatibility recipes are acquisition variants and must be deduplicated by the resulting Focus identity; recipe-file count is not a semantic spell count.
+
+These two independent source surfaces substantially improve the reachability evidence for the public 3.1.1 line. They still do not prove that every registered Focus is survival-reachable or that installed 3.1.4 preserves the exact same registry and recipe set.
+
 ## Wiki-to-source reconciliation
 
 The prior catalog used the official Wiki list as if it were the complete current inventory. That assumption is false for the public 1.21.1 source line: the source registry contains 13 Focus identities omitted from the 110-name Wiki list.
@@ -247,16 +253,16 @@ Goety Focuses are provider-owned spell/casting units used through compatible Wan
 
 ## Semantic-count rule
 
-The source registry is stronger evidence than the stale 110-name Wiki list for the observed public source line, but it still does not satisfy the strict semantic inclusion rule for installed 3.1.4.
+The source registry is stronger evidence than the stale 110-name Wiki list for the observed public source line. Direct `MagicFocus(new ...Spell())` construction and provider-native Focus recipes also prove that a broad subset is genuine casting/acquisition content rather than a purely editorial inventory. The evidence still does not satisfy the strict semantic inclusion rule for installed 3.1.4.
 
 Reasons:
 
 - exact source-to-installed-JAR equivalence is not established;
-- item registration alone does not prove every entry is currently reachable/player-facing as a discrete semantic action;
+- the public source recipe surface has not yet been reconciled against all 123 registrations or the exact 3.1.4 artifact;
 - object-level deduplication against aliases/proxies/other provider surfaces has not been closed for the 13 newly exposed identities;
 - Goety ritual **types** are categories and are not blindly counted as ritual identities.
 
-Therefore this reconciliation adds **0** to the strict semantic total. The global reconstructible minimum remains **796**.
+Therefore this reconciliation adds **0** to the strict semantic total. The global reconstructible minimum remains **797**.
 
 ## Semantic overlap constraints
 
