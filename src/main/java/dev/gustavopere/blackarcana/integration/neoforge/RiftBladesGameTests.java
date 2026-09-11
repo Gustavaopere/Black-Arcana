@@ -24,21 +24,6 @@ public final class RiftBladesGameTests {
         var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
         var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(7, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
-        float healthBefore = target.getHealth();
-        double distanceBefore = caster.distanceToSqr(target);
-
-        double landingX = target.getX() - 2.0D;
-        double landingY = target.getY();
-        double landingZ = target.getZ();
-        BlockPos landingPos = BlockPos.containing(landingX, landingY, landingZ);
-        helper.getLevel().setBlockAndUpdate(landingPos, Blocks.AIR.defaultBlockState());
-        helper.getLevel().setBlockAndUpdate(landingPos.above(), Blocks.AIR.defaultBlockState());
-        var landingBox = caster.getBoundingBox().move(
-            landingX - caster.getX(),
-            landingY - caster.getY(),
-            landingZ - caster.getZ());
-        helper.assertTrue(helper.getLevel().noBlockCollision(caster, landingBox),
-            "Rift Blades safe-landing fixture must be collision-free before settlement");
 
         // The embedded GameTest harness may expose a newly spawned entity object before the
         // ServerLevel UUID index used by the production runtime sees it. Settle one server tick so
@@ -48,6 +33,21 @@ public final class RiftBladesGameTests {
                 "caster fixture must be visible through the server-level UUID index before Rift Blades lookup");
             helper.assertTrue(helper.getLevel().getEntity(target.getUUID()) == target,
                 "target fixture must be visible through the server-level UUID index before Rift Blades lookup");
+
+            float healthBefore = target.getHealth();
+            double distanceBefore = caster.distanceToSqr(target);
+            double landingX = target.getX() - 2.0D;
+            double landingY = target.getY();
+            double landingZ = target.getZ();
+            BlockPos landingPos = BlockPos.containing(landingX, landingY, landingZ);
+            helper.getLevel().setBlockAndUpdate(landingPos, Blocks.AIR.defaultBlockState());
+            helper.getLevel().setBlockAndUpdate(landingPos.above(), Blocks.AIR.defaultBlockState());
+            var landingBox = caster.getBoundingBox().move(
+                landingX - caster.getX(),
+                landingY - caster.getY(),
+                landingZ - caster.getZ());
+            helper.assertTrue(helper.getLevel().noBlockCollision(caster, landingBox),
+                "Rift Blades safe-landing fixture must be collision-free before settlement");
 
             try {
                 Object result = resolveMarkedStrike(
@@ -83,16 +83,6 @@ public final class RiftBladesGameTests {
         var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
         var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(7, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
-        float healthBefore = target.getHealth();
-        double casterXBefore = caster.getX();
-        double casterYBefore = caster.getY();
-        double casterZBefore = caster.getZ();
-        double landingX = target.getX() - 2.0D;
-        double landingY = target.getY();
-        double landingZ = target.getZ();
-        BlockPos blocked = BlockPos.containing(landingX, landingY, landingZ);
-        helper.getLevel().setBlockAndUpdate(blocked, Blocks.STONE.defaultBlockState());
-        helper.getLevel().setBlockAndUpdate(blocked.above(), Blocks.STONE.defaultBlockState());
 
         // The runtime resolves both endpoints through ServerLevel.getEntity(UUID). Give the GameTest
         // fixture one tick to enter that index before exercising damage plus optional displacement.
@@ -101,6 +91,17 @@ public final class RiftBladesGameTests {
                 "caster fixture must be visible through the server-level UUID index before Rift Blades lookup");
             helper.assertTrue(helper.getLevel().getEntity(target.getUUID()) == target,
                 "target fixture must be visible through the server-level UUID index before Rift Blades lookup");
+
+            float healthBefore = target.getHealth();
+            double casterXBefore = caster.getX();
+            double casterYBefore = caster.getY();
+            double casterZBefore = caster.getZ();
+            double landingX = target.getX() - 2.0D;
+            double landingY = target.getY();
+            double landingZ = target.getZ();
+            BlockPos blocked = BlockPos.containing(landingX, landingY, landingZ);
+            helper.getLevel().setBlockAndUpdate(blocked, Blocks.STONE.defaultBlockState());
+            helper.getLevel().setBlockAndUpdate(blocked.above(), Blocks.STONE.defaultBlockState());
 
             try {
                 Object result = resolveMarkedStrike(
