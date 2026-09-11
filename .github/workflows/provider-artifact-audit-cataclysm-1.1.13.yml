@@ -1,0 +1,243 @@
+name: Temporary Cataclysm Spellbooks 1.1.13 Artifact Audit
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-cataclysm-spellbooks-1.1.13
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download exact Cataclysm Spellbooks 1.1.13 artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          URL='https://cursemaven.com/curse/maven/cataclysm-spellbooks-1099461/8792628/cataclysm-spellbooks-1099461-8792628.jar'
+          curl --fail --location --retry 3 --retry-delay 2 "$URL" -o /tmp/provider.jar
+          ACTUAL="$(sha1sum /tmp/provider.jar | awk '{print $1}')"
+          EXPECTED='4af8348cc77bbff2ab7057c1fac26a5ab0a5b6a2'
+          printf 'expected_sha1=%s\nactual_sha1=%s\n' "$EXPECTED" "$ACTUAL" | tee audit/hash.txt
+          test "$ACTUAL" = "$EXPECTED"
+
+      - name: Extract factual archive and translation inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import re
+          from pathlib import PurePosixPath
+          from zipfile import ZipFile
+
+          jar = '/tmp/provider.jar'
+          report = []
+          registry_paths = []
+          root_spell_keys = set()
+
+          with ZipFile(jar) as z:
+              names = sorted(z.namelist())
+              report.append('EXACT JAR FACTUAL INVENTORY — Cataclysm Spellbooks 1.1.13')
+              report.append('Exact artifact identity is SHA-1-gated before inspection.')
+              report.append('No implementation body or asset is copied/adapted; archive/resource identities only in this step.')
+              report.append('')
+
+              report.append('[provider lang files]')
+              lang_paths = [n for n in names if n.startswith('assets/cataclysm_spellbooks/lang/') and n.endswith('.json')]
+              report.extend(lang_paths or ['<none>'])
+              report.append('')
+
+              report.append('[provider-owned spell translation keys — all]')
+              all_spell_keys = set()
+              en_path = 'assets/cataclysm_spellbooks/lang/en_us.json'
+              if en_path in names:
+                  obj = json.loads(z.read(en_path))
+                  if isinstance(obj, dict):
+                      for key in obj:
+                          if key.startswith('spell.cataclysm_spellbooks.'):
+                              all_spell_keys.add(key)
+                              remainder = key[len('spell.cataclysm_spellbooks.'):]
+                              if '.' not in remainder:
+                                  root_spell_keys.add(key)
+              report.extend(sorted(all_spell_keys) or ['<none>'])
+              report.append(f'all_spell_translation_key_count={len(all_spell_keys)}')
+              report.append('')
+
+              report.append('[provider-owned root spell translation keys — no subkey suffix]')
+              report.extend(sorted(root_spell_keys) or ['<none>'])
+              report.append(f'root_spell_translation_key_count={len(root_spell_keys)}')
+              report.append('')
+
+              report.append('[provider class filenames containing spell]')
+              spell_classes = [
+                  n for n in names
+                  if n.endswith('.class')
+                  and 'cataclysm' in n.lower()
+                  and 'spell' in n.lower()
+              ]
+              report.extend(spell_classes or ['<none>'])
+              report.append(f'provider_spell_named_class_count={len(spell_classes)}')
+              report.append('')
+
+              report.append('[candidate spell registry classes]')
+              for n in names:
+                  if not n.endswith('.class') or 'cataclysm' not in n.lower():
+                      continue
+                  base = PurePosixPath(n).name.lower()
+                  if ('spellregistr' in base or 'spellregistry' in base or 'spellsregistry' in base):
+                      registry_paths.append(n)
+              report.extend(registry_paths or ['<none>'])
+              report.append(f'candidate_spell_registry_class_count={len(registry_paths)}')
+              report.append('')
+
+              report.append('[provider data/resource paths containing spell]')
+              data_hits = [n for n in names if n.startswith('data/cataclysm_spellbooks/') and 'spell' in n.lower()]
+              report.extend(data_hits or ['<none>'])
+              report.append(f'provider_spell_data_path_count={len(data_hits)}')
+              report.append('')
+
+              report.append('[selected mod metadata lines]')
+              toml = 'META-INF/neoforge.mods.toml'
+              if toml in names:
+                  text = z.read(toml).decode('utf-8', 'replace')
+                  for line in text.splitlines():
+                      stripped = line.strip()
+                      if stripped.startswith('modId=') or stripped.startswith('version=') or stripped.startswith('displayName='):
+                          report.append(stripped)
+              else:
+                  report.append('<neoforge.mods.toml not found>')
+
+          with open('audit/resource-report.txt', 'w', encoding='utf-8') as f:
+              f.write('\n'.join(report) + '\n')
+          with open('audit/registry-class-paths.txt', 'w', encoding='utf-8') as f:
+              for n in registry_paths:
+                  f.write(n + '\n')
+          with open('audit/root-spell-ids.txt', 'w', encoding='utf-8') as f:
+              for key in sorted(root_spell_keys):
+                  f.write(key[len('spell.cataclysm_spellbooks.'):] + '\n')
+          print('\n'.join(report))
+          PY
+
+      - name: Inspect candidate registry declarations and narrow static registration facts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib
+          import re
+          import subprocess
+
+          paths = [p.strip() for p in pathlib.Path('audit/registry-class-paths.txt').read_text().splitlines() if p.strip()]
+          out = []
+          for path in paths:
+              cls = path[:-6].replace('/', '.')
+              out.append(f'=== {cls} ===')
+              out.append('[declarations: javap -p]')
+              decl = subprocess.run(['javap', '-classpath', '/tmp/provider.jar', '-p', cls], text=True, capture_output=True, check=True).stdout
+              for line in decl.splitlines():
+                  s = line.strip()
+                  if not s or s in {'{', '}'}:
+                      continue
+                  out.append(s)
+              abstract_fields = [line.strip() for line in decl.splitlines() if 'AbstractSpell' in line and ';' in line]
+              out.append(f'abstract_spell_field_signature_count={len(abstract_fields)}')
+
+              dis = subprocess.run(['javap', '-classpath', '/tmp/provider.jar', '-c', '-p', cls], text=True, capture_output=True, check=True).stdout
+              static = dis.split('static {};', 1)[1] if 'static {};' in dis else ''
+              if static:
+                  # Stop before any later method signature if javap ever emits one after <clinit>.
+                  chunks = static.split('\n\n', 1)
+                  static = chunks[0]
+              branches = 0
+              register_calls = 0
+              putstatic_fields = []
+              new_classes = []
+              filtered = []
+              for line in static.splitlines():
+                  if re.search(r'\b(if[a-z_]*|goto|tableswitch|lookupswitch)\b', line):
+                      branches += 1
+                  if 'registerSpell:' in line:
+                      register_calls += 1
+                  m = re.search(r'putstatic\s+.*Field\s+([A-Za-z0-9_$]+):', line)
+                  if m:
+                      putstatic_fields.append(m.group(1))
+                  m = re.search(r'new\s+#\d+\s+// class\s+([^\s]+)', line)
+                  if m and 'spell' in m.group(1).lower():
+                      new_classes.append(m.group(1).replace('/', '.'))
+                  if ('registerSpell:' in line or 'putstatic' in line or ('// class ' in line and 'spell' in line.lower()) or re.search(r'\b(if[a-z_]*|goto|tableswitch|lookupswitch)\b', line)):
+                      filtered.append(line.strip())
+              out.append('[filtered <clinit> registration facts only]')
+              out.extend(filtered or ['<no filtered static initializer facts>'])
+              out.append(f'registerSpell_call_count={register_calls}')
+              out.append(f'putstatic_field_count={len(putstatic_fields)}')
+              out.append('putstatic_fields=' + ','.join(putstatic_fields))
+              out.append(f'new_spell_class_count={len(new_classes)}')
+              out.append('new_spell_classes=' + ','.join(new_classes))
+              out.append(f'conditional_branch_count_in_static_initializer={branches}')
+              out.append('')
+
+          text = '\n'.join(out) + '\n'
+          pathlib.Path('audit/registry-facts.txt').write_text(text, encoding='utf-8')
+          print(text)
+          PY
+
+      - name: Map exact root spell ids to provider classes by filtered literals
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib
+          import re
+          from zipfile import ZipFile
+
+          ids = {line.strip() for line in pathlib.Path('audit/root-spell-ids.txt').read_text().splitlines() if line.strip()}
+          rows = []
+          seen_ids = set()
+          with ZipFile('/tmp/provider.jar') as z:
+              classes = sorted(
+                  n for n in z.namelist()
+                  if n.endswith('.class') and 'cataclysm' in n.lower() and 'spell' in n.lower()
+              )
+              for path in classes:
+                  data = z.read(path)
+                  literals = set()
+                  for match in re.findall(rb'[ -~]{3,}', data):
+                      text = match.decode('ascii', 'ignore')
+                      for token in ids:
+                          # Require token boundaries appropriate for registry/resource ids.
+                          if re.search(r'(?<![a-z0-9_])' + re.escape(token) + r'(?![a-z0-9_])', text):
+                              literals.add(token)
+                  if literals:
+                      seen_ids.update(literals)
+                      rows.append((path, sorted(literals)))
+
+          out = [
+              'EXACT FILTERED SPELL-ID LITERAL MAP — Cataclysm Spellbooks 1.1.13',
+              'Only current root translation IDs are searched as factual literals; no bytecode instructions or implementation bodies are retained.'
+          ]
+          for path, literals in rows:
+              out.append(f"{path} | {','.join(literals)}")
+          out.append(f'mapped_class_count={len(rows)}')
+          out.append(f'mapped_unique_spell_id_count={len(seen_ids)}')
+          missing = sorted(ids - seen_ids)
+          out.append('unmapped_root_spell_ids=' + ','.join(missing))
+          text = '\n'.join(out) + '\n'
+          pathlib.Path('audit/spell-literal-id-map.txt').write_text(text, encoding='utf-8')
+          print(text)
+          PY
+
+      - name: Publish text-only audit report
+        uses: actions/upload-artifact@v7
+        with:
+          name: cataclysm-spellbooks-1.1.13-exact-artifact-audit
+          path: audit/*.txt
+          if-no-files-found: error
+          retention-days: 3
