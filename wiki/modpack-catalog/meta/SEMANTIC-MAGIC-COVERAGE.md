@@ -88,11 +88,19 @@ Arithmetic cross-check by provider family:
 | [Tunes n' Tomes](../providers/tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | `COUNTED_RELEASE_BOUNDED` | current publisher Melodic roster enumerates 16 spells; migrated Sound ownership is not duplicated under Alshanex/FamiliarsLib |
 | [Eidolon: Repraised](../providers/eidolon-repraised/README.md) | 0.5.0.2 | 42 | `COUNTED_SOURCE_PINNED` | 18 normal/player-facing chants + 24 official ritual recipes; `undead_lure` empty cast and `basic_incense` dummy excluded; chant conversions are not extra spells |
 | [Vampirism](../providers/vampirism/README.md) | 1.10.13 | 19 | `COUNTED_SOURCE_PINNED` | 14 Vampire + 3 Hunter + 2 shared Lord registered player actions; counted as provider-native discrete supernatural actions, not Iron's spells |
-| [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike, whose survival reachability is unproven and is therefore conditional |
+| [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike; exact source registers its action/skill/node/config but omits the node from the configured Gravebound tree and from all rank-default grants, so it is not normally survival-reachable in this build |
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
 | **Strict total** |  | **797** |  |  |
+
+### Bloodlines 3.0.9 Sorcerous Strike reachability closure
+
+Exact installed-line source at `TheDrOfDoctoring/bloodlines@c8fd517d204d09dfcb9a544c17d7df87755eaa5c` registers Sorcerous Strike as `gravebound_crit_action`, registers the corresponding `BloodlineActionSkill`, creates a `gravebound_sorcerous_strike` skill node, and exposes its balance config. Those facts establish that the implementation exists; they do not establish normal player acquisition.
+
+The same exact source closes the missing reachability question: the generated configured Gravebound tree does not include `gravebound_sorcerous_strike`, and `HunterBloodlinesConfig.graveboundDefaults` grants only the four Gravebound rank nodes by default. Repository-wide inspection finds no provider-native alternate grant dedicated to Sorcerous Strike; generic Bloodline task/command surfaces add perk points rather than directly granting this skill. `SkillHandlerMixin` only adds Bloodlines-specific cost/rank/default checks around Vampirism skill enabling and does not create a second acquisition path.
+
+Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**, and the strict total remains **797**.
 
 ### Werewolves 2.0.3.3 Leap correction
 
@@ -139,7 +147,6 @@ This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence
 | Provider | Quantity | State | Reason |
 |---|---:|---|---|
 | Asterism Arcanum | 1 | `CONDITIONAL` | `astral_gateway` is registered but documented creative-only/unfinished |
-| Bloodlines | 1 | `CONDITIONAL` | `gravebound_crit_action` / Sorcerous Strike is registered, but survival-tree reachability is unproven |
 | Not Enough Glyphs | 39 | `CONDITIONAL` | current-pack source produces 40 `registerSpell` calls; `momentum` is source-disabled, leaving 39 source-enabled before user/provider config; exact active pack config remains to be reconciled |
 
 The four real Ars Elemental primitives referenced by Not Enough Glyphs are not NEG-owned registrations and are already counted under Ars Elemental. Historical fallback namespaces do not create a second owner when the real provider is present.
@@ -156,6 +163,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
 - [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — resource/behavior overlay over Iron's + Vampirism, no own spell set;
 - [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
+- Bloodlines `gravebound_crit_action` / Sorcerous Strike — registered implementation, but exact 3.0.9 configured tree and rank defaults provide no normal survival acquisition path;
 - IronSable's ten physicalized base Iron's spells — already owned/countable under Iron's;
 - Ars 'n' Spells `ars_cross_*` proxy registry pool — proxies, not eight semantic rituals/spells;
 - Ars Zero copied disabled AOE/Amplifier compatibility variants — not unique active glyph capabilities;
@@ -199,6 +207,6 @@ To converge on a final denominator efficiently, prioritize:
 4. exact Gaze 1.1.7.1 rites/Geas inventory;
 5. complete Alshanex's Familiars 4.0.3 spell/ritual inventory after the Sound→Tunes ownership migration;
 6. Goety 3.1.4 exact JAR/source reconciliation, Focus semantic reachability/deduplication and discrete ritual-identity inventory;
-7. current-pack config/reachability closure for remaining conditional action/glyph rows.
+7. current-pack config closure for the remaining conditional glyph/action rows.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
