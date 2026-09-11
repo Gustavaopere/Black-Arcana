@@ -72,7 +72,7 @@ Gaze therefore leaves the global denominator open, but should not be selected ag
 - CurseForge project/file `1194714 / 8824651`;
 - publisher defines SpellLib as shared library/API infrastructure with no standalone gameplay of its own;
 - 2.2.0 publisher delta adds Healing Received, Damage Taken and Summon Health attributes;
-- reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon surfaces are infraestrutura, not proof of provider-owned spell identities;
+- reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon surfaces are infrastructure, not proof of provider-owned spell identities;
 - no JAR decompilation or copied implementation/assets; unsupported internal signatures remain fail-closed.
 
 ### Authority boundary
