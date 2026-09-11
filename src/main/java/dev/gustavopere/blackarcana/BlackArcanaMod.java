@@ -5,6 +5,7 @@ import dev.gustavopere.blackarcana.config.ArcaneDangerDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcaneEquipmentDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcaneEquipmentSetBonusDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcanaSpellDataReloadListener;
+import dev.gustavopere.blackarcana.content.noetic.BlackArcanaNoeticEntities;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftAnchorRecallRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftArcaneDamagePipeline;
@@ -42,6 +43,7 @@ public final class BlackArcanaMod {
 
     public BlackArcanaMod(IEventBus modEventBus) {
         OptionalModEntrypoints.install(modEventBus);
+        BlackArcanaNoeticEntities.register(modEventBus);
         modEventBus.addListener(ArcanaNetworkBridge::register);
         modEventBus.addListener(HazardResistanceForecastNetworkBridge::register);
         modEventBus.addListener(LoadoutNetworkBridge::register);
