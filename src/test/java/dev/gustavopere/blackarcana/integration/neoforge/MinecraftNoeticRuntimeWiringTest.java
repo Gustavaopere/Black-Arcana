@@ -68,6 +68,30 @@ class MinecraftNoeticRuntimeWiringTest {
                 "Borrowed Sight sync must not scan the global player list every server tick");
     }
 
+    @Test
+    void astralActivationSeedsProjectionFromAuthoritativePhysicalBodyPose() throws IOException {
+        String source = Files.readString(RUNTIME_SOURCE);
+        int activationStart = source.indexOf("public static AstralProjectionStart activateAuthorizedAstralProjection");
+        assertTrue(activationStart >= 0, "Astral Severance must keep an explicit authorized activation seam");
+        int nextMethod = source.indexOf("\n    public static", activationStart + 1);
+        String activation = source.substring(activationStart, nextMethod < 0 ? source.length() : nextMethod);
+
+        assertTrue(activation.contains("new AstralProjectionPose("),
+                "Astral activation must materialize server-authored spatial state instead of a synthetic zero origin");
+        assertTrue(activation.contains("caster.getX()"),
+                "Astral origin X must come from the loaded authoritative physical body");
+        assertTrue(activation.contains("caster.getY()"),
+                "Astral origin Y must come from the loaded authoritative physical body");
+        assertTrue(activation.contains("caster.getZ()"),
+                "Astral origin Z must come from the loaded authoritative physical body");
+        assertTrue(activation.contains("caster.getYRot()"),
+                "Astral yaw must start from the authoritative physical body");
+        assertTrue(activation.contains("caster.getXRot()"),
+                "Astral pitch must start from the authoritative physical body");
+        assertTrue(activation.contains("maxRangeBlocks,\n                originPose"),
+                "The server-authored physical-body pose must be passed into the Astral lifecycle start call");
+    }
+
     private static Path repositoryRoot() {
         String workspace = System.getenv("GITHUB_WORKSPACE");
         if (workspace != null && !workspace.isBlank()) {
