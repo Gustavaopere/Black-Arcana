@@ -17,7 +17,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 
 A reconstrução estrita fecha agora **815 objetos mágicos semânticos**. Esse valor ainda é um mínimo contado, não um denominador final e não uma porcentagem global.
 
-A última correção de contagem continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
+A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
 GTBC's SpellLib 2.2.0 adiciona **0 magias semânticas independentes**. É infraestrutura de biblioteca/API compartilhada; atributos e helpers reutilizáveis não são identidades de spell próprias.
 
@@ -41,7 +41,7 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
 - cobertura canônica de componentes após Phase 2BD: **54/100 = 54%**.
 
-O valor 53/100 nunca substitui a métrica semântica de magias.
+O valor 54/100 nunca substitui a métrica semântica de magias.
 
 ## Phase 2BD — Alshanex's Familiars 4.0.3 — componente #54
 

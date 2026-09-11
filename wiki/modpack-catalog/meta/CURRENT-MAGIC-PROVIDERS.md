@@ -2,11 +2,11 @@
 
 ## Estado
 
-`AUDITORIA EM ANDAMENTO — autoridade física 2026-09-09`
+`AUDITORIA EM ANDAMENTO — autoridade física 2026-09-11`
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo foi reconciliado para **100 componentes mágicos/cross-domain**, dos quais **54 estão canônicos** após Phase 2BD / PR #186. Esse 52/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo foi reconciliado para **100 componentes mágicos/cross-domain**, dos quais **54 estão canônicos** após Phase 2BD / PR #186. Esse 54/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
 A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui.
 
