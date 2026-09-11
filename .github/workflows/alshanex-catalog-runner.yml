@@ -34,16 +34,20 @@ jobs:
 
           queue = Path('wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md')
           queue_text = queue.read_text(encoding='utf-8')
-          old_anchor = '- main canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`'
-          expected_anchor = '- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`'
-          old_count = queue_text.count(old_anchor)
-          expected_count = queue_text.count(expected_anchor)
+          old_anchor = '- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`'
+          expected_anchor = '- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`;'
+          lines = queue_text.splitlines()
+          old_count = sum(line == old_anchor for line in lines)
+          expected_count = sum(line == expected_anchor for line in lines)
           assert (old_count, expected_count) in {(1, 0), (0, 1)}, (
-              'queue anchor state: expected exactly one old or normalized occurrence, '
-              f'found old={old_count}, normalized={expected_count}'
+              'queue anchor state: expected exactly one legacy or generator-ready occurrence, '
+              f'found legacy={old_count}, generator_ready={expected_count}'
           )
           if old_count == 1:
-              queue.write_text(queue_text.replace(old_anchor, expected_anchor, 1), encoding='utf-8')
+              queue.write_text(
+                  queue_text.replace(old_anchor + '\n', expected_anchor + '\n', 1),
+                  encoding='utf-8'
+              )
 
           path = Path('.github/workflows/alshanex-catalog-closure.yml')
           text = path.read_text(encoding='utf-8')
