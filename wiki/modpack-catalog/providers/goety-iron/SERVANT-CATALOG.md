@@ -2,22 +2,29 @@
 
 ## Escopo
 
-Este arquivo registra somente entidades e mechanics afirmadas pela publicação oficial. Ele **não** representa dump de registry nem catálogo técnico completo do JAR.
+Este arquivo registra somente entidades e mechanics afirmadas por superfícies publisher-controlled. Ele **não** representa dump de registry nem catálogo técnico completo do JAR.
 
 ## Servants nomeados publicamente
 
+As descrições atuais não são idênticas: CurseForge enumera oito servants, enquanto Modrinth enumera esses mesmos oito mais **First Flamebearer Servant**. O changelog oficial pareado de `3.0.0` NeoForge / `2.1.0` Forge também cita First Flamebearer Servant, confirmando sua presença nominal na linha 1.21.1 atual.
+
+Assim, o conjunto público diretamente sustentado é de **pelo menos nove nomes**, sem alegação de completude de registry:
+
 | Nome público | Origem temática | Papel confirmado publicamente | Registry ID | Aquisição exata | Spell set / atributos |
 |---|---|---|---|---|---|
+| First Flamebearer Servant | Iron's Spells | servant; forma Ominous Trial e armor-swapping citados em 3.0.0/2.1.0 | NÃO VERIFICADO | mecanismo específico não fechado | NÃO VERIFICADO |
 | Pyromancer Servant | Iron's Spells | servant comandável | NÃO VERIFICADO | Focus ou ritual em alto nível; mapping específico não verificado | NÃO VERIFICADO |
 | Cryomancer Servant | Iron's Spells | servant comandável | NÃO VERIFICADO | idem | NÃO VERIFICADO |
 | Cleric Servant | Iron's Spells | servant comandável | NÃO VERIFICADO | idem | NÃO VERIFICADO |
 | Archevoker Servant | Iron's Spells | servant comandável | NÃO VERIFICADO | idem | NÃO VERIFICADO |
 | Necromancer Servant | Iron's Spells | servant comandável | NÃO VERIFICADO | idem | NÃO VERIFICADO |
 | Ancient Knight Servant | Iron's Spells | servant comandável | NÃO VERIFICADO | idem | NÃO VERIFICADO |
-| Dead King Servant | Iron's Spells | servant comandável | NÃO VERIFICADO | idem | NÃO VERIFICADO |
+| Dead King Servant | Iron's Spells | servant comandável; forma Ominous Trial citada em 3.0.0/2.1.0 | NÃO VERIFICADO | idem | NÃO VERIFICADO |
 | Alchemist Servant | Iron's Spells | servant comandável | NÃO VERIFICADO | idem | NÃO VERIFICADO |
 
-A página oficial usa a formulação `currently added include`, portanto esta lista não é promovida a `8/8 registry complete`.
+As páginas usam linguagem não exaustiva (`currently added include`) e a própria divergência entre CurseForge e Modrinth demonstra que a lista não deve ser promovida a `9/9 registry complete`.
+
+Histórico adicional: o changelog 2.0.0 da linha Forge também cita servant versions de Cultists e Icy Spider. Isso é evidência histórica de release, mas não é promovido silenciosamente a inventário atual 3.1 porque as superfícies atuais auditadas não os reconfirmam.
 
 ## Mechanics públicas adicionais
 
@@ -57,7 +64,8 @@ A 3.1 adiciona capacidade de a **Tincture of Forgetfulness** resetar o **Void Va
 
 ## Regras de uso no catálogo Black Arcana
 
-- Não converter os oito nomes públicos em registry IDs inventados.
+- Não converter os nove nomes públicos em registry IDs inventados.
+- Não tratar nove nomes como inventário completo da build.
 - Não atribuir mana/Soul Energy cost sem evidência exata.
 - Não classificar servants como summons Black Arcana.
 - Não conceder Mastery por mera presença/tick do servant.
