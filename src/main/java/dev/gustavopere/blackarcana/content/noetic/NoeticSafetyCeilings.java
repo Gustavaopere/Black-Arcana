@@ -5,6 +5,8 @@ public final class NoeticSafetyCeilings {
     public static final double MAX_RANGE_BLOCKS = 128.0D;
     public static final int MAX_DURATION_TICKS = 600;
     public static final int MAX_ACTIVE_SESSIONS = 64;
+    /** Absolute per-intent movement ceiling; final Astral Severance movement tuning may only be lower. */
+    public static final double MAX_ASTRAL_STEP_BLOCKS_PER_INTENT = 1.0D;
     public static final int MAX_EFFECT_IDS = 16;
     public static final int MAX_DISPLAY_NAME_LENGTH = 96;
     public static final int MAX_FAMILIAR_PROVIDERS = 16;
