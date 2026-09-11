@@ -1,0 +1,75 @@
+name: Temporary Cataclysm 1.1.13 ID Disambiguation
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-cataclysm-spellbooks-1.1.13
+
+permissions:
+  contents: read
+
+jobs:
+  disambiguate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download and hash-gate exact artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit-id
+          URL='https://cursemaven.com/curse/maven/cataclysm-spellbooks-1099461/8792628/cataclysm-spellbooks-1099461-8792628.jar'
+          curl --fail --location --retry 3 --retry-delay 2 "$URL" -o /tmp/provider.jar
+          ACTUAL="$(sha1sum /tmp/provider.jar | awk '{print $1}')"
+          EXPECTED='4af8348cc77bbff2ab7057c1fac26a5ab0a5b6a2'
+          printf 'expected_sha1=%s\nactual_sha1=%s\n' "$EXPECTED" "$ACTUAL" | tee audit-id/hash.txt
+          test "$ACTUAL" = "$EXPECTED"
+
+      - name: Extract constructor-only resource-id literals for ambiguous classes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib
+          import re
+          import subprocess
+
+          classes = [
+              'net.acetheeldritchking.cataclysm_spellbooks.spells.nature.DesertWindsSpell',
+              'net.acetheeldritchking.cataclysm_spellbooks.spells.holy.PharaohsWrathSpell',
+          ]
+          roots = {'desert_winds', 'pharaohs_wrath', 'sandstorm'}
+          out = [
+              'CONSTRUCTOR-ONLY RESOURCE-ID LITERALS — Cataclysm Spellbooks 1.1.13',
+              'Only filtered String constants from each no-arg constructor are retained; no effect/cast method body is retained.',
+              ''
+          ]
+          for cls in classes:
+              text = subprocess.run(['javap', '-classpath', '/tmp/provider.jar', '-c', '-p', cls], text=True, capture_output=True, check=True).stdout
+              simple = cls.rsplit('.', 1)[1]
+              marker = f'public {cls}();'
+              if marker not in text:
+                  raise SystemExit(f'constructor marker not found for {cls}')
+              section = text.split(marker, 1)[1]
+              section = section.split('\n\n', 1)[0]
+              literals = []
+              for line in section.splitlines():
+                  m = re.search(r'// String ([A-Za-z0-9_]+)', line)
+                  if m and m.group(1) in roots:
+                      literals.append(m.group(1))
+              out.append(f'{simple} | constructor_root_literals={",".join(literals)}')
+          text = '\n'.join(out) + '\n'
+          pathlib.Path('audit-id/constructor-id-facts.txt').write_text(text, encoding='utf-8')
+          print(text)
+          PY
+
+      - name: Publish text-only disambiguation report
+        uses: actions/upload-artifact@v7
+        with:
+          name: cataclysm-spellbooks-1.1.13-id-disambiguation
+          path: audit-id/*.txt
+          if-no-files-found: error
+          retention-days: 3
