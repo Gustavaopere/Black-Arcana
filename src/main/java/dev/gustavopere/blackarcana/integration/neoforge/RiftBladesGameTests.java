@@ -90,8 +90,10 @@ public final class RiftBladesGameTests {
             landingZ,
             8.0D);
 
-        helper.assertTrue(decision(result).allowed(),
-            "a blocked optional landing must not cancel an otherwise legal marked strike");
+        ArcanaDecision strikeDecision = decision(result);
+        helper.assertTrue(strikeDecision.allowed(),
+            "a blocked optional landing must not cancel an otherwise legal marked strike; code="
+                + strikeDecision.code());
         helper.assertTrue(damageDealt(result) > 0.0D && target.getHealth() < healthBefore,
             "damage settlement must remain independent from optional displacement");
         helper.assertTrue(!gapClosed(result), "blocked destination must fail closed for displacement");
