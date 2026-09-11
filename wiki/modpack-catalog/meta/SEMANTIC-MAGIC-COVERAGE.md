@@ -180,7 +180,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 797** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 815** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -197,9 +197,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **797 is not “797 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 797 by the 100 provider-component denominator. `53/100` and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 797 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **815 is not “815 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 815 by the 100 provider-component denominator. `54/100` and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 815 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.

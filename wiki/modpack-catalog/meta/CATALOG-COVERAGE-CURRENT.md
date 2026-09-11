@@ -14,7 +14,8 @@ Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publish
 
 Therefore:
 
-- semantic numerator delta from the Werewolves correction: **+1**;
+- semantic numerator delta from Alshanex's Familiars 4.0.3 exact closure: **+18**;
+- semantic numerator delta from the preceding Werewolves correction: **+1**;
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
 - strict reconstructible semantic minimum: **815**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
