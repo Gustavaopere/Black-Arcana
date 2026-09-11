@@ -46,6 +46,8 @@ The custom Bloodline registry is synchronized and uses `bloodlines:empty` as its
 | Bloodknight skills | **20** |
 | Gravebound skills | **24** |
 | `IAction` registrations | **29** |
+| Semantic player actions normally reachable under the current provider tree | **28** |
+| Registered-but-not-normally-reachable action | **1** — Sorcerous Strike |
 | Rank tasks | **15** |
 | Bloodline-perk tasks | **7** |
 | Total Bloodlines task keys | **22** |
@@ -89,6 +91,8 @@ Bloodline skills are registered in Vampirism's skill registry and remain subject
 
 All 29 Bloodlines actions are registered in Vampirism's action registry. Vampirism's `IActionHandler` remains the timer/activation lifecycle authority, with Bloodlines extending behavior through its action classes and `ActionHandler` mixin.
 
+One registered action, Sorcerous Strike, is excluded from the current semantic player-action count because its corresponding skill node is not connected to the exact generated Gravebound configured tree and is not present in any of the four Gravebound rank-default skill lists. No dedicated provider-native alternate grant for that skill is present in the exact source pin. Generic perk tasks and the Bloodline perk command add points, not Sorcerous Strike itself. This is a normal-provider survival reachability classification; operator commands or externally modified datapacks are outside that scope.
+
 ## Source findings that remain runtime-QA gates
 
 1. **Bloodline points vs normal Vampirism points:** Bloodlines adds its own point gate but some Bloodline skills still expose ordinary `getSkillPointCost()` values. Runtime behavior must be verified before any payment/respec bridge.
@@ -98,7 +102,7 @@ All 29 Bloodlines actions are registered in Vampirism's action registry. Vampiri
 5. **Ectotherm cross-reference:** `BloodlineFrost.onCrit` tests `ZEALOT_POISONED_STRIKE`.
 6. **Shadowwalk distance mismatch:** Bloodlines defines its own max-distance config, but the audited action uses Vampirism Teleport distance.
 7. **Bloodknight upkeep mismatch:** Sanguine Infusion, Blood Hunt and Daywalker debit 2 blood per interval while config comments describe one.
-8. **Sorcerous Strike reachability:** registry/node/action/config exist, but the node is absent from the configured Gravebound tree and rank defaults.
+8. **Sorcerous Strike reachability — CLOSED FOR SEMANTIC COUNT:** registry/node/action/config exist, but the exact configured Gravebound tree omits the node and rank defaults grant only `gravebound`, `gravebound_rank_2`, `gravebound_rank_3` and `gravebound_rank_4`; no dedicated normal-provider alternate grant was found. The action is therefore registered but not normally survival-reachable in the exact 3.0.9 build and contributes zero semantic objects.
 9. **Sorcerous Strike Wither mismatch:** specific config default is 8 s, while the hit hook uses the general action duration, 10 s by default.
 10. **Devour Soul success semantics:** an invalid LivingEntity target can cause the action method to return success without a completed devour.
 11. **Mist Form strict Soul threshold:** deactivation-resurrection requires `souls > requiredSouls`; exactly the configured cost enters the death path.
@@ -141,6 +145,8 @@ They must not be collapsed into a generic Black Arcana resource by naming simila
 ## Closure state
 
 The **granular source catalog is complete** for the exact installed Bloodlines 3.0.9 build: registries, Bloodlines, skills/trees, actions, tasks/progression, joining/leaving, resource authority, persistent state, high-impact mixins/events and Black Arcana integration constraints are documented.
+
+For the semantic denominator, the build contributes **28 normally reachable provider-owned supernatural actions**. Sorcerous Strike remains implemented and registered but is excluded because the exact normal Gravebound tree/default progression does not provide a normal acquisition path.
 
 This does **not** grant `RUNTIME QA CONFIRMED`.
 
