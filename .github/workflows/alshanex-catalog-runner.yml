@@ -41,6 +41,10 @@ jobs:
           raw = text[start:end]
           prefix = '          '
           source = '\n'.join(line[len(prefix):] if line.startswith(prefix) else line for line in raw.split('\n'))
+          source = source.replace(
+              "'- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`;'",
+              "'- main canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`;'"
+          )
           os.environ['PR_NUMBER'] = '186'
           exec(compile(source, str(path) + ':embedded-phase2bd', 'exec'), {'__name__': '__main__'})
           PY
