@@ -63,8 +63,8 @@ public final class AstralSeveranceRuntime {
         this.projectionIdSupplier = Objects.requireNonNull(projectionIdSupplier, "projectionIdSupplier");
     }
 
-    /** Package-private compatibility helper for deterministic legacy domain tests only. */
-    synchronized StartResult start(
+    /** Transitional legacy seam; the Minecraft adapter is migrated to the explicit server-authored origin next. */
+    public synchronized StartResult start(
             UUID casterId,
             long nowTick,
             int durationTicks,
