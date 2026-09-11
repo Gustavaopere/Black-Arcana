@@ -10,12 +10,12 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 /**
- * Bounded server-owned lifecycle for Astral Severance.
+ * Bounded server-owned lifecycle and pose authority for Astral Severance.
  *
- * <p>This runtime deliberately owns no arbitrary observed target, client-authored position, avatar entity,
- * camera state, resource provider or cooldown policy. It supplies the unique projection/session identity and
- * terminal lifecycle that a later canonical cast adapter may activate only after its upstream transaction has
- * already authorized the spell.</p>
+ * <p>This runtime owns the unique projection/session identity, immutable physical-body origin and current
+ * projection pose. Movement accepts bounded directional/look intent only; it never accepts client-authored
+ * coordinates. Resource, cooldown, progression, avatar entity and client presentation remain outside this
+ * domain runtime and must enter through their canonical authorities.</p>
  */
 public final class AstralSeveranceRuntime {
     public enum StartResult {
@@ -25,6 +25,15 @@ public final class AstralSeveranceRuntime {
         INVALID_DURATION,
         INVALID_RANGE,
         IDENTITY_COLLISION
+    }
+
+    public enum MoveResult {
+        MOVED,
+        NO_ACTIVE_PROJECTION,
+        WRONG_PROJECTION,
+        STALE_SEQUENCE,
+        INVALID_INTENT,
+        OUT_OF_RANGE
     }
 
     public enum CloseReason {
@@ -54,13 +63,30 @@ public final class AstralSeveranceRuntime {
         this.projectionIdSupplier = Objects.requireNonNull(projectionIdSupplier, "projectionIdSupplier");
     }
 
-    public synchronized StartResult start(
+    /** Package-private compatibility helper for deterministic legacy domain tests only. */
+    synchronized StartResult start(
             UUID casterId,
             long nowTick,
             int durationTicks,
             double maxRangeBlocks
     ) {
+        return start(
+                casterId,
+                nowTick,
+                durationTicks,
+                maxRangeBlocks,
+                new AstralProjectionPose(0.0D, 0.0D, 0.0D, 0.0F, 0.0F));
+    }
+
+    public synchronized StartResult start(
+            UUID casterId,
+            long nowTick,
+            int durationTicks,
+            double maxRangeBlocks,
+            AstralProjectionPose originPose
+    ) {
         Objects.requireNonNull(casterId, "casterId");
+        Objects.requireNonNull(originPose, "originPose");
         if (nowTick < 0L) {
             throw new IllegalArgumentException("Astral projection tick must be non-negative");
         }
@@ -95,7 +121,13 @@ public final class AstralSeveranceRuntime {
 
         projectionsByCaster.put(
                 casterId,
-                new ProjectionSession(casterId, projectionId, nowTick, expiresAtTick, maxRangeBlocks));
+                new ProjectionSession(
+                        casterId,
+                        projectionId,
+                        nowTick,
+                        expiresAtTick,
+                        maxRangeBlocks,
+                        originPose));
         return StartResult.STARTED;
     }
 
@@ -111,6 +143,56 @@ public final class AstralSeveranceRuntime {
 
     public synchronized int activeCount() {
         return projectionsByCaster.size();
+    }
+
+    /**
+     * Advances one already-authorized projection from bounded directional/look intent only.
+     * The physical-body origin is immutable for the session and the hard range is enforced before mutation.
+     */
+    public synchronized MoveResult move(UUID casterId, AstralProjectionMovementIntent intent) {
+        Objects.requireNonNull(casterId, "casterId");
+        Objects.requireNonNull(intent, "intent");
+        ProjectionSession session = projectionsByCaster.get(casterId);
+        if (session == null) {
+            return MoveResult.NO_ACTIVE_PROJECTION;
+        }
+        if (!session.projectionId.equals(intent.projectionId())) {
+            return MoveResult.WRONG_PROJECTION;
+        }
+        if (intent.sequence() <= session.lastAcceptedMovementSequence) {
+            return MoveResult.STALE_SEQUENCE;
+        }
+        if (!intent.axesWithinUnitBounds()) {
+            return MoveResult.INVALID_INTENT;
+        }
+
+        double yawRadians = Math.toRadians(intent.yaw());
+        double sinYaw = Math.sin(yawRadians);
+        double cosYaw = Math.cos(yawRadians);
+        double dx = -sinYaw * intent.forward() + cosYaw * intent.strafe();
+        double dz = cosYaw * intent.forward() + sinYaw * intent.strafe();
+        double dy = intent.vertical();
+        double magnitude = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (magnitude > 1.0D) {
+            dx /= magnitude;
+            dy /= magnitude;
+            dz /= magnitude;
+        }
+
+        double step = NoeticSafetyCeilings.MAX_ASTRAL_STEP_BLOCKS_PER_INTENT;
+        AstralProjectionPose candidate = new AstralProjectionPose(
+                session.currentPose.x() + dx * step,
+                session.currentPose.y() + dy * step,
+                session.currentPose.z() + dz * step,
+                intent.yaw(),
+                intent.pitch());
+        if (session.originPose.distanceTo(candidate) > session.maxRangeBlocks + 1.0E-9D) {
+            return MoveResult.OUT_OF_RANGE;
+        }
+
+        session.currentPose = candidate;
+        session.lastAcceptedMovementSequence = intent.sequence();
+        return MoveResult.MOVED;
     }
 
     /**
@@ -171,12 +253,17 @@ public final class AstralSeveranceRuntime {
             UUID physicalBodyId,
             long startedAtTick,
             long expiresAtTick,
-            double maxRangeBlocks
+            double maxRangeBlocks,
+            AstralProjectionPose originPose,
+            AstralProjectionPose currentPose,
+            long lastAcceptedMovementSequence
     ) {
         public ActiveProjection {
             Objects.requireNonNull(projectionId, "projectionId");
             Objects.requireNonNull(casterId, "casterId");
             Objects.requireNonNull(physicalBodyId, "physicalBodyId");
+            Objects.requireNonNull(originPose, "originPose");
+            Objects.requireNonNull(currentPose, "currentPose");
             if (!casterId.equals(physicalBodyId)) {
                 throw new IllegalArgumentException("Astral projection physical body must remain the canonical caster");
             }
@@ -188,6 +275,12 @@ public final class AstralSeveranceRuntime {
                     || maxRangeBlocks > NoeticSafetyCeilings.MAX_RANGE_BLOCKS) {
                 throw new IllegalArgumentException("Astral projection range is outside the hard Noetic ceiling");
             }
+            if (lastAcceptedMovementSequence < 0L) {
+                throw new IllegalArgumentException("Astral projection movement sequence cannot be negative");
+            }
+            if (originPose.distanceTo(currentPose) > maxRangeBlocks + 1.0E-9D) {
+                throw new IllegalArgumentException("Astral projection pose exceeds its authorized range");
+            }
         }
     }
 
@@ -197,6 +290,9 @@ public final class AstralSeveranceRuntime {
         private final long startedAtTick;
         private final long expiresAtTick;
         private final double maxRangeBlocks;
+        private final AstralProjectionPose originPose;
+        private AstralProjectionPose currentPose;
+        private long lastAcceptedMovementSequence;
         private CloseReason closeReason;
 
         private ProjectionSession(
@@ -204,13 +300,16 @@ public final class AstralSeveranceRuntime {
                 UUID projectionId,
                 long startedAtTick,
                 long expiresAtTick,
-                double maxRangeBlocks
+                double maxRangeBlocks,
+                AstralProjectionPose originPose
         ) {
             this.casterId = Objects.requireNonNull(casterId, "casterId");
             this.projectionId = Objects.requireNonNull(projectionId, "projectionId");
             this.startedAtTick = startedAtTick;
             this.expiresAtTick = expiresAtTick;
             this.maxRangeBlocks = maxRangeBlocks;
+            this.originPose = Objects.requireNonNull(originPose, "originPose");
+            this.currentPose = originPose;
         }
 
         private boolean expiredAt(long tick) {
@@ -233,7 +332,10 @@ public final class AstralSeveranceRuntime {
                     casterId,
                     startedAtTick,
                     expiresAtTick,
-                    maxRangeBlocks);
+                    maxRangeBlocks,
+                    originPose,
+                    currentPose,
+                    lastAcceptedMovementSequence);
         }
     }
 }
