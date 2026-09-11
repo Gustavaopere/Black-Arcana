@@ -44,9 +44,9 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 ## Strict reconstructible counted minimum
 
-**874 semantic magic objects are reconstructible after applying the exact Phase 2BE Cataclysm 1.1.13 closure.**
+**Phase 2BE candidate strict minimum: 874 semantic magic objects are reconstructible after applying the exact Cataclysm 1.1.13 closure.**
 
-This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
+The canonical `main` baseline entering PR #189 remains **815** until latest-main reconciliation, merge and exact post-merge validation promote this candidate. The semantic denominator remains incomplete, so neither value is a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 

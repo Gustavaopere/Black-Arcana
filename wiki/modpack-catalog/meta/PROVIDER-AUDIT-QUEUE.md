@@ -15,7 +15,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução Phase 2BE fecha **874 objetos mágicos semânticos** após aplicar o inventário exato Cataclysm 1.1.13. Esse valor ainda é um mínimo contado, não um denominador final e não uma porcentagem global.
+A reconstrução Phase 2BE propõe **874 objetos mágicos semânticos** após aplicar o inventário exato Cataclysm 1.1.13. O baseline canônico de `main` que entra no PR #189 permanece **815** até latest-main reconciliation, merge e validação pós-merge exata. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -28,7 +28,7 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - delta semântico Gaze 1.1.7.1: **+0**;
 - delta semântico Alshanex 4.0.3: **+18**;
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
-- mínimo estrito global: **874**;
+- mínimo estrito Phase 2BE candidato: **874**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 

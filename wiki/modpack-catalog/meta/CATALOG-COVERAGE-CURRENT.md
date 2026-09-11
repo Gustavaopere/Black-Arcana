@@ -4,7 +4,7 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot it now closes a **strict counted minimum of 874 semantic magic objects** from provider records that meet the ledger's inclusion rule. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BE now reconstructs a **candidate strict counted minimum of 874 semantic magic objects** from provider records that meet the ledger's inclusion rule. The canonical `main` baseline entering PR #189 remains **815** until latest-main reconciliation, merge and exact post-merge validation. The global denominator is still incomplete and no semantic percentage is declared.
 
 The latest semantic promotion proposed by Phase 2BE is **Cataclysm: Spellbooks +59**. Exact hash-matched 1.1.13 artifact evidence closes 59 unconditional provider spell registrations; ten additional root localization identities are not registered in the installed artifact and remain excluded. The generic/current 65-spell publisher scale is not substituted for the physical 1.1.13 registry. See [`../providers/cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md`](../providers/cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md).
 
@@ -61,7 +61,7 @@ The internal operational denominator remains **100 magic/cross-domain component 
 
 GTBC's SpellLib and FamiliarsLib were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
 
-## Canonical recent closure sequence
+## Recent canonical closures and current promotion candidate
 
 | Component | Phase / PR | Provider | Result |
 |---:|---|---|---|
