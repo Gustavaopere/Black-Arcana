@@ -1,0 +1,58 @@
+name: Phase 2BD Alshanex Catalog Runner
+
+on:
+  push:
+    branches:
+      - docs/alshanex-4.0.3-exact-catalog-closure
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply catalog closure from staged script
+        shell: bash
+        env:
+          PR_NUMBER: '186'
+        run: |
+          set -euo pipefail
+          if test -f wiki/modpack-catalog/meta/PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md; then
+            echo 'Phase 2BD closure already applied.'
+            exit 0
+          fi
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, textwrap
+
+          path = Path('.github/workflows/alshanex-catalog-closure.yml')
+          text = path.read_text(encoding='utf-8')
+          start_marker = "          python3 - <<'PY'\n"
+          end_marker = "\n          PY\n\n      - name: Commit catalog closure"
+          start = text.index(start_marker) + len(start_marker)
+          end = text.index(end_marker, start)
+          source = textwrap.dedent(text[start:end])
+          os.environ['PR_NUMBER'] = '186'
+          exec(compile(source, str(path) + ':embedded-phase2bd', 'exec'), {'__name__': '__main__'})
+          PY
+
+      - name: Commit catalog closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet && git diff --cached --quiet; then
+            echo 'No catalog changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add SOURCES.md THIRD_PARTY_NOTICES.md wiki/modpack-catalog
+          git commit -m 'docs: close Alshanex 4.0.3 exact magic catalog'
+          git push origin HEAD:docs/alshanex-4.0.3-exact-catalog-closure
