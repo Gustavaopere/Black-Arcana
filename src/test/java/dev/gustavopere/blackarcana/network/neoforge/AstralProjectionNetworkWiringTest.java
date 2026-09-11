@@ -10,9 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AstralProjectionNetworkWiringTest {
-    private static final Path NETWORK_ROOT = Path.of(
+    private static final Path PROJECT_ROOT = findProjectRoot();
+    private static final Path NETWORK_ROOT = PROJECT_ROOT.resolve(
             "src/main/java/dev/gustavopere/blackarcana/network/neoforge");
-    private static final Path MAIN_ROOT = Path.of(
+    private static final Path MAIN_ROOT = PROJECT_ROOT.resolve(
             "src/main/java/dev/gustavopere/blackarcana");
 
     @Test
@@ -61,5 +62,18 @@ class AstralProjectionNetworkWiringTest {
         assertTrue(mod.contains("modEventBus.addListener(AstralProjectionNetworkBridge::register)"));
         assertTrue(runtime.contains("AstralProjectionNetworkBridge.sendBegin"));
         assertTrue(runtime.contains("AstralProjectionNetworkBridge.sendEnd"));
+    }
+
+    private static Path findProjectRoot() {
+        Path current = Path.of("").toAbsolutePath().normalize();
+        while (current != null) {
+            if (Files.isDirectory(current.resolve("src/main/java"))
+                    && (Files.exists(current.resolve("build.gradle"))
+                    || Files.exists(current.resolve("build.gradle.kts")))) {
+                return current;
+            }
+            current = current.getParent();
+        }
+        throw new IllegalStateException("Could not locate Black Arcana project root from test working directory");
     }
 }
