@@ -72,7 +72,7 @@ Gaze therefore leaves the global denominator open, but should not be selected ag
 - CurseForge project/file `1194714 / 8824651`;
 - publisher defines SpellLib as shared library/API infrastructure with no standalone gameplay of its own;
 - 2.2.0 publisher delta adds Healing Received, Damage Taken and Summon Health attributes;
-- reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon surfaces are infrastructure, not proof of provider-owned spell identities;
+- reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon surfaces are infraestrutura, not proof of provider-owned spell identities;
 - no JAR decompilation or copied implementation/assets; unsupported internal signatures remain fail-closed.
 
 ### Authority boundary
@@ -127,7 +127,7 @@ The Modrinth 1.7 changelog explicitly says Sound-school content was removed and 
 
 ### Black Arcana / Stage 07.07 boundary
 
-No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot be admitted merely porque it is a familiar, tameable, spellcasting pet or nearby entity.
+No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot be admitted merely because it is a familiar, tameable, spellcasting pet or nearby entity.
 
 Provider-specific ownership integration remains **fail-closed** until a current exact-version seam is proven and deliberately adapted. The catalog evidence identifies provider-owned familiar state, but source↔physical exactness and a stable ownership contract are not closed strongly enough to promote a runtime adapter.
 
