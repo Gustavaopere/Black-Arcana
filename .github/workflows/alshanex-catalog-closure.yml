@@ -1,0 +1,563 @@
+name: Phase 2BD Alshanex Catalog Closure
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  apply-catalog-closure:
+    if: github.head_ref == 'docs/alshanex-4.0.3-exact-catalog-closure'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout head branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Apply exact-artifact catalog closure
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if test -f wiki/modpack-catalog/meta/PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md; then
+            echo 'Phase 2BD closure already applied; nothing to do.'
+            exit 0
+          fi
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, re
+
+          ROOT = Path('.')
+          pr = os.environ['PR_NUMBER']
+          base = 'dbdc952bdf528866ea4959876d1c493f4ecdb31c'
+          jar = 'alshanex_familiars-1.21.1_v4.0.3.jar'
+          sha1 = 'e5051c2385a426d05bf203ba8081a23d891f6686'
+          audit_run = '34649305941'
+          audit_job = '103427464735'
+          audit_artifact = '10283338450'
+
+          def read(path):
+              return (ROOT / path).read_text(encoding='utf-8')
+
+          def write(path, text):
+              p = ROOT / path
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(text, encoding='utf-8')
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise AssertionError(f'{label}: expected exactly one occurrence, found {count}')
+              return text.replace(old, new, 1)
+
+          def sub_once(text, pattern, repl, label, flags=0):
+              out, n = re.subn(pattern, repl, text, count=1, flags=flags)
+              if n != 1:
+                  raise AssertionError(f'{label}: expected one regex match, found {n}')
+              return out
+
+          # Provider root README: exact-current identity/count closure, runtime/API semantics still fail-closed.
+          provider_readme = f'''# Alshanex's Familiars 4.0.3 — exact artifact catalog
+
+## Status
+
+`EXACT PHYSICAL 4.0.3 / EXACT PUBLISHER FILE 8675568 / EXACT JAR HASH-MATCHED / 7/7 PROVIDER SPELL REGISTRATIONS / 11/11 PACKAGED RITUAL_RECIPE IDENTITIES / SOUND OWNERSHIP MIGRATED TO TUNES / 18 COUNTED SEMANTIC MAGICS / RUNTIME QA + ADAPTER SEAM PENDING`
+
+## Installed authority
+
+- provider: **Alshanex's Familiars**
+- mod id: `alshanex_familiars`
+- installed JAR: `{jar}`
+- runtime version: `1.21.1_v4.0.3`
+- Minecraft / loader: NeoForge 1.21.1
+- physical SHA-1: `{sha1}`
+- CurseForge project / exact file: `1171602 / 8675568`
+- exact file published: `2026-08-18`, Release
+- declared license: **All Rights Reserved**
+- required ecosystem: Iron's Spells 'n Spellbooks + FamiliarsLib infrastructure
+
+The physical modlist remains authority for installed identity. Phase 2BD independently materialized Curse Maven File ID `8675568` in an isolated GitHub Actions audit and verified byte identity against the physical SHA-1 before inspecting factual archive/registry metadata. See [`EXACT-4.0.3-ARTIFACT-AUDIT.md`](EXACT-4.0.3-ARTIFACT-AUDIT.md).
+
+## Exact provider-owned spell inventory — 7
+
+The exact JAR contains one `DeferredRegister<AbstractSpell>` surface in `PetSpellRegistry`. Its static initializer assigns seven spell fields through seven `registerSpell` calls with no conditional branch in that initializer. Class literals and the provider's own translation keys converge on these seven current IDs:
+
+| Registry field | Provider class | Exact spell ID | Catalog |
+|---|---|---|---|
+| `SUMMON_SHADOW` | `ShadowSummonSpell` | `alshanex_familiars:summon_shadows` | [Summon Shadows](spells/summon-shadows.md) |
+| `ICE_AGE` | `IceAgeSpell` | `alshanex_familiars:ice_age` | [Ice Age](spells/ice-age.md) |
+| `ICE_CHAMBER` | `IceChamberSpell` | `alshanex_familiars:ice_chamber` | [Ice Chamber](spells/ice-chamber.md) |
+| `MEGIDO` | `MegidoSpell` | `alshanex_familiars:megido` | [Megido](spells/megido.md) |
+| `HIKEN` | `HikenSpell` | `alshanex_familiars:fire_fist` | [Fire Fist](spells/fire-fist.md) |
+| `MAYHEM` | `EndMayhemSpell` | `alshanex_familiars:end_mayhem` | [End Mayhem](spells/end-mayhem.md) |
+| `FAMILIAR_SWAP` | `SwitcherooSpell` | `alshanex_familiars:switcheroo` | [Switcheroo](spells/switcheroo.md) |
+
+This closes the **current identity inventory**, not every numerical mechanic. Mana, cooldown, level scaling, damage formula, exact targeting details and acquisition remain provider-owned and are `NÃO VERIFICADO` in the individual pages unless supported by separate current evidence.
+
+## Exact packaged ritual inventory — 11
+
+The exact JAR packages eleven JSON resources whose type is precisely `alshanex_familiars:ritual_recipe`. They are discrete provider ritual identities under the semantic-magic ledger, not ordinary crafting recipes:
+
+| Ritual recipe ID | Result ID | Catalog |
+|---|---|---|
+| `archmage_shard` | `alshanex_familiars:archmage_shard` | [Archmage Shard](rituals/archmage-shard.md) |
+| `druid_shard` | `alshanex_familiars:druid_shard` | [Druid Shard](rituals/druid-shard.md) |
+| `frostling_shard` | `alshanex_familiars:frostling_shard` | [Frostling Shard](rituals/frostling-shard.md) |
+| `hunter_shard` | `alshanex_familiars:hunter_shard` | [Hunter Shard](rituals/hunter-shard.md) |
+| `lightning_mage_shard` | `alshanex_familiars:lightning_mage_shard` | [Lightning Mage Shard](rituals/lightning-mage-shard.md) |
+| `magic_power_tier_2` | `alshanex_familiars:magic_power_tier_2` | [Magic Power Tier 2](rituals/magic-power-tier-2.md) |
+| `magic_power_tier_3` | `alshanex_familiars:magic_power_tier_3` | [Magic Power Tier 3](rituals/magic-power-tier-3.md) |
+| `magic_resist_tier_2` | `alshanex_familiars:magic_resist_tier_2` | [Magic Resist Tier 2](rituals/magic-resist-tier-2.md) |
+| `magic_resist_tier_3` | `alshanex_familiars:magic_resist_tier_3` | [Magic Resist Tier 3](rituals/magic-resist-tier-3.md) |
+| `summoner_shard` | `alshanex_familiars:summoner_shard` | [Summoner Shard](rituals/summoner-shard.md) |
+| `truth_mirror` | `alshanex_familiars:truth_mirror` | [Truth Mirror](rituals/truth-mirror.md) |
+
+The provider Wiki independently documents the custom ritual subsystem and shard acquisition through rituals. Exact ingredient quantities, altar conditions, timing, multiplayer ownership and runtime settlement are intentionally not inferred from identity alone.
+
+## Semantic-magic result
+
+Under [`../../meta/SEMANTIC-MAGIC-COVERAGE.md`](../../meta/SEMANTIC-MAGIC-COVERAGE.md):
+
+- provider-owned standalone spells: **7**;
+- provider-owned custom ritual identities: **11**;
+- Alshanex semantic contribution: **18**;
+- evidence state: `COUNTED_EXACT` for current identity/count inventory.
+
+Familiar AI abilities, passives, lifecycle actions and casts of external Iron's spells remain excluded. They do not mint duplicate spell identities.
+
+## 4.0 ownership migration — Sound remains Tunes-owned
+
+The version-specific 4.0 release moved Sound-school content out of Alshanex's Familiars and into Tunes n' Tomes. Generic/stale Bard/Sound prose is therefore historical context only. The current pack contains Tunes n' Tomes `1.1.0-HOTFIX`; its 16 counted Melodic spells remain owned and counted there exactly once.
+
+## Authority and integration boundary
+
+- **FamiliarsLib** owns its familiar framework/lifecycle surfaces.
+- **Alshanex's Familiars** owns these seven provider spell identities, eleven provider ritual identities, familiar content and provider-local progression/items.
+- **Tunes n' Tomes** owns the migrated Sound/Melodic spell content.
+- **Iron's Spells** owns the generic spellcasting substrate and any external Iron's spells selected/cast by familiars.
+- **Black Arcana** owns its own casting, spell domains, hazards, rituals, persistence, costs, cooldowns, targeting, Corruption, Strain, Arcane Danger, Backlash and `WorldEffectPolicy`.
+
+No Black Arcana runtime adapter is created by this catalog closure. Stage 07.07 familiar ownership remains fail-closed until a stable provider-native ownership/lifecycle seam is verified and server-side revalidation is designed against the exact provider stack.
+
+## Remaining gates outside catalog identity/count closure
+
+1. dedicated runtime QA for Alshanex 4.0.3 + FamiliarsLib 1.7.1 + Tunes n' Tomes 1.1.0-HOTFIX + Iron's 3.16.3;
+2. exact numerical spell mechanics where required for later capability deduplication;
+3. exact ritual ingredient/condition/settlement details where required for integration or balance;
+4. stable provider-native ownership/lifecycle seam before any Black Arcana familiar adapter.
+
+These do not reopen the exact current **7-spell + 11-ritual identity inventory**.
+
+## Provenance / clean-room
+
+Alshanex's Familiars is All Rights Reserved. Phase 2BD used the exact binary only for read-only factual interoperability/catalog evidence: cryptographic identity, archive/resource paths, structured ritual type/result IDs, class/member signatures, filtered spell-ID literals and a narrow count/branch check of the registry static initializer. No spell implementation body, source code, assets, models, sounds or upstream prose are copied/adapted into Black Arcana.
+
+## Sources
+
+- physical modlist: current Black Arcana `modlist.txt`, SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+- exact 4.0.3 file: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/8675568`
+- 4.0 migration release: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/7920260`
+- publisher Wiki: `https://wiki.pixeldreamstudios.net/mods/alshanex-familiars`
+- Phase 2BD isolated exact-artifact audit: GitHub Actions run `{audit_run}`, job `{audit_job}`, text-only evidence artifact `{audit_artifact}`
+'''
+          write('wiki/modpack-catalog/providers/alshanex-familiars/README.md', provider_readme)
+
+          audit_doc = f'''# Alshanex's Familiars 4.0.3 — exact artifact audit
+
+## Purpose
+
+Close the current spell/ritual **identity inventory** against the exact physical 4.0.3 artifact without treating All Rights Reserved implementation as reusable source material.
+
+## Artifact identity
+
+- physical JAR: `{jar}`
+- mod id: `alshanex_familiars`
+- CurseForge project/file: `1171602 / 8675568`
+- expected physical SHA-1: `{sha1}`
+- isolated audit download SHA-1: `{sha1}` — exact match
+- audit run/job: `{audit_run} / {audit_job}`
+- text-only audit artifact: `{audit_artifact}`
+
+The audit materialized the file from the Curse Maven coordinate for the exact publisher File ID, then required the SHA-1 equality check to pass before any inventory inspection.
+
+## Spell registry facts retained
+
+Read-only factual inspection retained only:
+
+- `PetSpellRegistry` declares one `DeferredRegister<AbstractSpell>`;
+- seven `Supplier<AbstractSpell>` spell fields exist;
+- the static initializer assigns all seven through **7** `registerSpell` calls;
+- the initializer has **0 conditional branch instructions** in the narrow registration check;
+- exact provider classes and filtered literal IDs map 1:1 to seven current spell IDs.
+
+No spell method body, formula, effect implementation or source reconstruction is retained.
+
+## Ritual resource facts retained
+
+Archive/resource inspection found **11** JSON resources under the provider namespace whose exact type is `alshanex_familiars:ritual_recipe`. For each, the catalog retains only the recipe identity and result ID. The provider's public Wiki independently establishes that this is its player-facing ritual subsystem rather than ordinary crafting nomenclature.
+
+## Clean-room boundary
+
+This audit does **not** authorize implementation reuse. The project is treated as All Rights Reserved. Black Arcana copies/adapts no upstream code, assets, models, sounds or prose. Binary inspection is limited to factual interoperability/catalog evidence required to identify current registrations and avoid semantic duplication.
+
+## Result
+
+- exact current provider-owned spells: **7**;
+- exact packaged provider ritual identities: **11**;
+- semantic magic objects admitted by the ledger: **18**;
+- Sound/Melodic content: **0 additional Alshanex identities** because current ownership migrated to Tunes n' Tomes;
+- runtime QA/API adapter status: still separate and fail-closed where unverified.
+'''
+          write('wiki/modpack-catalog/providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md', audit_doc)
+
+          spells = [
+              ('summon-shadows', 'Summon Shadows', 'SUMMON_SHADOW', 'ShadowSummonSpell', 'summon_shadows', None),
+              ('ice-age', 'Ice Age', 'ICE_AGE', 'IceAgeSpell', 'ice_age', None),
+              ('ice-chamber', 'Ice Chamber', 'ICE_CHAMBER', 'IceChamberSpell', 'ice_chamber', None),
+              ('megido', 'Megido', 'MEGIDO', 'MegidoSpell', 'megido', None),
+              ('fire-fist', 'Fire Fist', 'HIKEN', 'HikenSpell', 'fire_fist', 'The exact 4.0.3 publisher changelog also names Fire Fist in a crash-fix entry.'),
+              ('end-mayhem', 'End Mayhem', 'MAYHEM', 'EndMayhemSpell', 'end_mayhem', None),
+              ('switcheroo', 'Switcheroo', 'FAMILIAR_SWAP', 'SwitcherooSpell', 'switcheroo', 'The 4.0 publisher release describes Switcheroo as swapping the caster with the summoned familiar being aimed at; the exact 4.0.3 JAR now directly proves the current registration identity.'),
+          ]
+          for slug, title, field, cls, sid, extra in spells:
+              extra_text = f'\n## Additional release evidence\n\n{extra}\n' if extra else ''
+              body = f'''# {title}
+
+- **Provider:** Alshanex's Familiars
+- **Mod ID:** `alshanex_familiars`
+- **Exact installed JAR:** `{jar}`
+- **Exact current spell ID:** `alshanex_familiars:{sid}`
+- **Registry field:** `PetSpellRegistry.{field}`
+- **Provider class identity:** `{cls}`
+- **Semantic class:** standalone provider spell
+- **Semantic state:** `COUNTED_EXACT`
+
+## Exact-current evidence
+
+The hash-matched 4.0.3 JAR declares this spell in the provider spell registry. The registry field is assigned through the exact registry initializer, and the corresponding provider class contains the filtered literal ID `{sid}`. The provider's `en_us` language resources also expose `spell.alshanex_familiars.{sid}`.
+{extra_text}
+## Mechanics / balance
+
+Exact 4.0.3 mana cost, cooldown, level range, damage/effect formula, targeting details and acquisition are **NÃO VERIFICADO** here unless separately stated above. Identity closure is not permission to infer numerical mechanics from class names or presentation.
+
+## Authority / deduplication
+
+This spell remains Alshanex-owned and executes through provider/Iron's authority as applicable. Black Arcana must not replay the cast, double-charge mana, duplicate cooldown settlement or treat a similar familiar theme as ownership transfer.
+
+## Provenance
+
+Read-only exact-artifact factual inspection only. No upstream implementation or asset is copied/adapted.
+'''
+              write(f'wiki/modpack-catalog/providers/alshanex-familiars/spells/{slug}.md', body)
+
+          rituals = [
+              ('archmage-shard', 'Archmage Shard', 'archmage_shard'),
+              ('druid-shard', 'Druid Shard', 'druid_shard'),
+              ('frostling-shard', 'Frostling Shard', 'frostling_shard'),
+              ('hunter-shard', 'Hunter Shard', 'hunter_shard'),
+              ('lightning-mage-shard', 'Lightning Mage Shard', 'lightning_mage_shard'),
+              ('magic-power-tier-2', 'Magic Power Tier 2', 'magic_power_tier_2'),
+              ('magic-power-tier-3', 'Magic Power Tier 3', 'magic_power_tier_3'),
+              ('magic-resist-tier-2', 'Magic Resist Tier 2', 'magic_resist_tier_2'),
+              ('magic-resist-tier-3', 'Magic Resist Tier 3', 'magic_resist_tier_3'),
+              ('summoner-shard', 'Summoner Shard', 'summoner_shard'),
+              ('truth-mirror', 'Truth Mirror', 'truth_mirror'),
+          ]
+          for slug, title, rid in rituals:
+              body = f'''# {title} ritual
+
+- **Provider:** Alshanex's Familiars
+- **Mod ID:** `alshanex_familiars`
+- **Exact installed JAR:** `{jar}`
+- **Exact recipe path:** `data/alshanex_familiars/recipe/ritual_recipes/{rid}.json`
+- **Recipe type:** `alshanex_familiars:ritual_recipe`
+- **Result ID:** `alshanex_familiars:{rid}`
+- **Semantic class:** provider ritual/rite
+- **Semantic state:** `COUNTED_EXACT`
+
+## Exact-current evidence
+
+The hash-matched 4.0.3 JAR packages this JSON as a custom `alshanex_familiars:ritual_recipe`, and the exact structured result points to `alshanex_familiars:{rid}`. It is therefore cataloged as one discrete provider ritual identity, not as an ordinary crafting recipe.
+
+## Mechanics / acquisition
+
+Exact ingredient quantities, altar/environment conditions, execution time, ownership rules, costs and settlement behavior are **NÃO VERIFICADO** in this identity page. Those details remain provider-owned until separately required and evidenced.
+
+## Authority / deduplication
+
+Black Arcana does not execute or settle this provider ritual on Alshanex's behalf. A semantically similar Black Arcana ritual requires a real independent delta and remains subject to Black Arcana's own ritual transaction, hazard and world-safety contracts.
+
+## Provenance
+
+Read-only exact-artifact structured-resource inspection only. No upstream implementation, assets or prose are copied/adapted.
+'''
+              write(f'wiki/modpack-catalog/providers/alshanex-familiars/rituals/{slug}.md', body)
+
+          checkpoint = f'''# Phase 2BD — Alshanex's Familiars 4.0.3 exact catalog closure
+
+## Scope
+
+Close the provider's current spell/ritual identity inventory against the exact installed artifact, preserving Sound→Tunes ownership and keeping runtime/API seams fail-closed.
+
+## Synchronization anchor
+
+- audited base: `main@{base}`
+- physical modlist: 595 top-level entries
+- NeoForge: `21.1.248`
+- modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+- closure PR: `#{pr}`
+
+## Exact artifact evidence
+
+- JAR: `{jar}`
+- CurseForge project/file: `1171602 / 8675568`
+- physical SHA-1: `{sha1}`
+- isolated exact-artifact audit run/job: `{audit_run} / {audit_job}`
+- hash comparison: exact match
+- retained evidence: factual archive/resource IDs, structured ritual type/result IDs, class/member signatures, filtered spell-ID literals, static registration count/branch facts
+- retained implementation bodies/assets: **none**
+
+## Closure result
+
+- 7/7 exact current provider spell registrations;
+- 11 exact packaged `alshanex_familiars:ritual_recipe` identities;
+- semantic delta: **+18**;
+- strict semantic minimum: **797 → 815**;
+- provider component: candidate **#54** on this PR, becoming canonical only after merge/latest-main reconciliation and post-merge validation;
+- Sound/Melodic migration remains owned by Tunes n' Tomes and adds **0 duplicate Alshanex identities**.
+
+## Remaining non-catalog gates
+
+Dedicated runtime QA, numerical mechanics and a stable provider-native familiar ownership/lifecycle seam remain pending. They do not reopen the exact current identity inventory and do not create a Black Arcana runtime adapter.
+
+## Clean-room
+
+Alshanex's Familiars is treated as All Rights Reserved. Exact binary inspection was factual and minimal; no implementation, assets, models, sounds or publisher prose were copied/adapted.
+'''
+          write('wiki/modpack-catalog/meta/PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md', checkpoint)
+
+          # Semantic ledger: current total +18, add exact row, close the open row/blocker.
+          path = 'wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md'
+          text = read(path)
+          text = replace_once(text,
+              '**797 semantic magic objects are currently reconstructible from canonical provider records.**',
+              '**815 semantic magic objects are currently reconstructible from canonical provider records.**',
+              'semantic headline')
+          text = replace_once(text,
+              "- Iron's ecosystem and spell-content addons: **450**;",
+              "- Iron's ecosystem and spell-content addons: **468**;",
+              'Iron family subtotal')
+          text = replace_once(text,
+              '- total: `199 + 450 + 42 + 55 + 25 + 26 = 797`.',
+              '- total: `199 + 468 + 42 + 55 + 25 + 26 = 815`.',
+              'semantic arithmetic')
+          tunes_line = "| [Tunes n' Tomes](../providers/tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | `COUNTED_RELEASE_BOUNDED` | current publisher Melodic roster enumerates 16 spells; migrated Sound ownership is not duplicated under Alshanex/FamiliarsLib |"
+          alshanex_line = "| [Alshanex's Familiars](../providers/alshanex-familiars/README.md) | 4.0.3 | 18 | `COUNTED_EXACT` | exact hash-matched JAR closes 7 provider-owned spell registrations + 11 packaged `alshanex_familiars:ritual_recipe` identities; migrated Sound/Tunes content and external familiar casts are excluded |"
+          text = replace_once(text, tunes_line, tunes_line + '\n' + alshanex_line, 'insert Alshanex counted row')
+          text = replace_once(text,
+              '| **Strict total** |  | **797** |  |  |',
+              '| **Strict total** |  | **815** |  |  |',
+              'strict total row')
+          text = sub_once(text,
+              r"^\| \[Alshanex's Familiars\]\(\.\./providers/alshanex-familiars/README\.md\) 4\.0\.3 \|.*$\n?",
+              '', 'remove Alshanex open row', flags=re.M)
+          text = replace_once(text,
+              "5. complete Alshanex's Familiars 4.0.3 spell/ritual inventory after the Sound→Tunes ownership migration;\n6. Goety 3.1.4 exact JAR/source reconciliation, Focus semantic reachability/deduplication and discrete ritual-identity inventory;\n7. current-pack config closure for the remaining conditional glyph/action rows.",
+              "5. Goety 3.1.4 exact JAR/source reconciliation, Focus semantic reachability/deduplication and discrete ritual-identity inventory;\n6. current-pack config closure for the remaining conditional glyph/action rows.",
+              'semantic blocker list')
+          marker = '### Hexalia release-boundary reconciliation'
+          section = f'''### Alshanex's Familiars 4.0.3 exact-artifact closure
+
+Phase 2BD materialized CurseForge File ID `8675568` through Curse Maven in an isolated audit and required SHA-1 `{sha1}` to match the physical modlist before inspection. The exact JAR closes seven unconditional provider-owned `AbstractSpell` registrations and eleven packaged JSON resources of custom type `alshanex_familiars:ritual_recipe`. These are discrete spell/ritual identities under this ledger, for **+18**.
+
+The seven spells are `summon_shadows`, `ice_age`, `ice_chamber`, `megido`, `fire_fist`, `end_mayhem` and `switcheroo`. The eleven rituals are the five familiar-shard rituals (`archmage`, `druid`, `frostling`, `hunter`, `lightning_mage`), `summoner_shard`, four magic power/resistance tier rituals and `truth_mirror`. Exact numerical mechanics and runtime QA remain separate gates.
+
+The 4.0 ownership migration remains controlling: Sound/Melodic content belongs to Tunes n' Tomes and is not counted again under Alshanex. Familiar AI/passives and casts of externally owned Iron's spells also add zero identities. Clean-room inspection retained only factual IDs/counts/signatures and structured resource facts; no upstream implementation/assets were copied or adapted. See [`../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md`](../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md).
+
+'''
+          text = replace_once(text, marker, section + marker, 'insert semantic closure section')
+          write(path, text)
+
+          # Current coverage: promote semantic minimum and component #54.
+          path = 'wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md'
+          text = read(path)
+          text = replace_once(text,
+              'it now closes a **strict counted minimum of 797 semantic magic objects**',
+              'it now closes a **strict counted minimum of 815 semantic magic objects**',
+              'coverage semantic headline')
+          text = replace_once(text,
+              '- strict reconstructible semantic minimum: **797**;',
+              '- strict reconstructible semantic minimum: **815**;',
+              'coverage semantic bullet')
+          text = replace_once(text,
+              'the strict **797** minimum at this checkpoint.',
+              'the strict **815** minimum at this checkpoint.',
+              'Goety current minimum reference')
+          latest_anchor = 'The latest semantic correction is **Werewolves +1**.'
+          latest_insert = f'''The latest semantic promotion is **Alshanex's Familiars +18**. Exact hash-matched 4.0.3 artifact evidence closes seven provider-owned spell registrations and eleven packaged custom `alshanex_familiars:ritual_recipe` identities. Sound/Melodic content remains counted only under Tunes n' Tomes, while familiar AI/passives and external Iron's spell casts remain excluded. See [`../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md`](../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md).
+
+The preceding semantic correction is **Werewolves +1**.'''
+          text = replace_once(text, latest_anchor, latest_insert, 'coverage latest promotion')
+          text = replace_once(text,
+              '**Canonical provider-component coverage after Phase 2AY: 53/100 = 53%.**',
+              '**Canonical provider-component coverage after Phase 2BD: 54/100 = 54%.**',
+              'component headline')
+          row53 = '| 53 | Phase 2AY / PR #175 | `gtbcs_spell_lib` | canonical at `main@9a4e1cd6a462a278083ab946b5ed054864c3315e`; post-merge CI #2421 GREEN |'
+          row54 = f'| 54 | Phase 2BD / PR #{pr} | `alshanex_familiars` | exact 4.0.3 identity inventory closure; merge/post-merge SHA+CI recorded by final reconciliation |'
+          text = replace_once(text, row53, row53 + '\n' + row54, 'component 54 row')
+          phase_marker = '## Phase 2AY — GTBC\'s SpellLib 2.2.0 component #53, canonical'
+          phase_section = f'''## Phase 2BD — Alshanex's Familiars 4.0.3 component #54
+
+Phase 2BD closes the current provider identity inventory against the exact physical artifact:
+
+- exact JAR `{jar}` / SHA-1 `{sha1}`;
+- isolated Curse Maven download of exact File ID `8675568` hash-matched the physical artifact;
+- 7 provider-owned spell registrations closed from exact registry/member/literal evidence;
+- 11 packaged custom `alshanex_familiars:ritual_recipe` identities closed from exact structured resources;
+- semantic delta: **+18**, strict counted minimum **815**;
+- Sound/Melodic content remains owned/counted under Tunes n' Tomes and is not duplicated;
+- runtime QA, numerical mechanics and future familiar adapter seams remain separately pending/fail-closed;
+- clean-room audit retained only factual identity/registry/resource evidence and copied no upstream implementation or assets.
+
+See [`PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md`](./PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md).
+
+'''
+          text = replace_once(text, phase_marker, phase_section + phase_marker, 'insert Phase 2BD coverage section')
+          text = replace_once(text,
+              'Examples remain:\n\n- `leylines`',
+              'Examples remain:\n\n- `leylines`',
+              'partials anchor no-op guard')
+          write(path, text)
+
+          # Queue: new evidence resolves Alshanex priority; keep remaining blockers fail-closed.
+          path = 'wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md'
+          text = read(path)
+          text = replace_once(text,
+              '- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`;',
+              f'- base auditada para Phase 2BD: `main@{base}`; fechamento Alshanex será promovido por PR #{pr};',
+              'queue main anchor')
+          text = replace_once(text,
+              'A reconstrução estrita fecha agora **797 objetos mágicos semânticos**.',
+              'A reconstrução estrita fecha agora **815 objetos mágicos semânticos**.',
+              'queue semantic headline')
+          text = replace_once(text,
+              '- mínimo estrito global: **797**;',
+              '- delta semântico Alshanex 4.0.3: **+18**;\n- mínimo estrito global: **815**;',
+              'queue semantic total')
+          text = replace_once(text,
+              '- cobertura canônica de componentes atual: **53/100 = 53%**.',
+              '- cobertura canônica de componentes após Phase 2BD: **54/100 = 54%**.',
+              'queue component total')
+          queue_marker = '## Reconciliação Gaze 1.1.7.1 — PR #180 — parcial, sem incremento de cobertura'
+          queue_section = f'''## Phase 2BD — Alshanex's Familiars 4.0.3 — componente #54
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `alshanex_familiars` | `{jar}` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT HASH-MATCHED ARTIFACT AUDIT / 7 SPELLS + 11 RITUALS / +18 SEMANTIC MAGICS / #54 |
+
+### Evidence boundary
+
+- physical SHA-1 `{sha1}`;
+- CurseForge project/file `1171602 / 8675568`;
+- isolated audit run/job `{audit_run} / {audit_job}` materialized the exact Curse Maven artifact and required hash equality;
+- exact spell inventory: 7 unconditional provider registry assignments/calls mapped to current IDs;
+- exact ritual inventory: 11 packaged resources of custom type `alshanex_familiars:ritual_recipe`;
+- Sound/Melodic ownership stays with Tunes n' Tomes; borrowed Iron's casts/familiar AI do not create duplicate semantic objects;
+- no upstream implementation/assets copied or adapted; runtime/API/ownership adapter seams remain fail-closed.
+
+'''
+          text = replace_once(text, queue_marker, queue_section + queue_marker, 'insert Phase2BD queue section')
+          predecessor = '| 53 | 2AY / #175 | `gtbcs_spell_lib` | CANÔNICO em `main@9a4e1cd...`; CI pós-merge #2421 GREEN |'
+          text = replace_once(text, predecessor, f'| 54 | 2BD / #{pr} | `alshanex_familiars` | exact 4.0.3 spell+ritual inventory closure; final merge SHA/CI recorded after promotion |\n' + predecessor, 'queue predecessor 54')
+          text = sub_once(text,
+              r"^- Alshanex's Familiars 4\.0\.3 — Sound migrou para Tunes; spell/ritual inventory atual ainda precisa ser fechado sem reaproveitar histórico obsoleto;\n",
+              '', 'remove Alshanex priority', flags=re.M)
+          write(path, text)
+
+          # Current provider summary: reconcile stale 52/100 + Goety minimum and record Alshanex closure.
+          path = 'wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md'
+          text = read(path)
+          text = replace_once(text,
+              'dos quais **52 estão canônicos** após Phase 2AX / PR #166.',
+              f'dos quais **54 estão canônicos** após Phase 2BD / PR #{pr}.',
+              'current providers component count')
+          text = replace_once(text,
+              'Por isso o mínimo semântico estrito continua **796**,',
+              'Por isso Goety continua com delta próprio +0; após o fechamento exato de Alshanex 4.0.3, o mínimo semântico estrito global é **815**,',
+              'current providers stale semantic minimum')
+          familiar_anchor = '- Alshanex\'s Familiars é consumidor/conteúdo concreto e requer auditoria própria da linha 4.0.3;'
+          familiar_repl = '- Alshanex\'s Familiars é consumidor/conteúdo concreto; Phase 2BD fecha a linha 4.0.3 em **7 spells próprios + 11 rituais próprios = 18 objetos semânticos**, usando o JAR exato hash-matched; runtime QA e seam de ownership continuam separados;'
+          text = replace_once(text, familiar_anchor, familiar_repl, 'current providers Alshanex bullet')
+          checkpoint_marker = "## Checkpoint Apprentice's Codex — Phase 2L"
+          current_section = f'''## Checkpoint Alshanex's Familiars — Phase 2BD
+
+O artefato físico `{jar}` / SHA-1 `{sha1}` foi materializado pelo File ID exato `8675568` em auditoria isolada e bateu criptograficamente com o pack. O inventário current-version fecha **7 spell registrations** e **11 `alshanex_familiars:ritual_recipe` identities**, totalizando **18 objetos mágicos semânticos `COUNTED_EXACT`**. Sound/Melodic continua pertencendo a Tunes n' Tomes e não é recontado.
+
+Esse fechamento é de catálogo/identidade. Runtime QA, valores numéricos e qualquer adapter Black Arcana↔Alshanex permanecem fail-closed até contrato provider-native seguro.
+
+'''
+          text = replace_once(text, checkpoint_marker, current_section + checkpoint_marker, 'current providers Phase2BD section')
+          write(path, text)
+
+          # Source provenance index.
+          path = 'SOURCES.md'
+          text = read(path)
+          somake_prefix = '| [Somake Spells `1.0.8-fix`](https://www.curseforge.com/minecraft/mc-mods/somake-spells-irons-spells-addon/files/8417850)'
+          lines = text.splitlines()
+          idx = next((i for i, line in enumerate(lines) if line.startswith(somake_prefix)), None)
+          if idx is None:
+              raise AssertionError('SOURCES Somake anchor not found')
+          alshanex_source = f"| [Alshanex's Familiars `4.0.3`](https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/8675568) | exact installed-artifact read-only catalog audit; SHA-1 `{sha1}`; 7 provider-owned spell registrations + 11 custom ritual identities used for current semantic inventory/deduplication | `REFERENCE_ONLY / COMPATIBILITY_TARGET / ARR`; exact binary inspection retained only factual cryptographic identity, archive/resource paths, structured ritual IDs, class/member signatures, filtered spell-ID literals and narrow registry count/branch facts. No implementation bodies, source code, assets, models, sounds or upstream prose are copied/adapted; runtime/API/adapter semantics remain fail-closed where not separately proven |"
+          if not any("Alshanex's Familiars `4.0.3`" in line for line in lines):
+              lines.insert(idx + 1, alshanex_source)
+          write(path, '\n'.join(lines) + '\n')
+
+          # Third-party notice row.
+          path = 'THIRD_PARTY_NOTICES.md'
+          text = read(path)
+          somake_prefix = '| Somake Spells |'
+          lines = text.splitlines()
+          idx = next((i for i, line in enumerate(lines) if line.startswith(somake_prefix)), None)
+          if idx is None:
+              raise AssertionError('THIRD_PARTY Somake anchor not found')
+          alshanex_notice = f"| Alshanex's Familiars | installed `4.0.3`; JAR `{jar}`; CurseForge File ID `8675568`; physical/audit SHA-1 `{sha1}` | `REFERENCE_ONLY / COMPATIBILITY_TARGET` exact-artifact factual audit closing 7 current provider spells and 11 custom ritual identities for catalog/deduplication | project is **All Rights Reserved**. Binary inspection was restricted to hash identity, factual archive/resource identifiers, structured ritual type/result IDs, class/member signatures, filtered spell-ID literals and a narrow registry static-initializer count/branch check. No implementation body/source reconstruction, assets, models, sounds or upstream prose are copied/adapted; any stronger derivation remains `PERMISSION_REQUIRED`/`REVIEW_REQUIRED`, and runtime/API integration remains fail-closed |"
+          if not any(line.startswith("| Alshanex's Familiars |") for line in lines):
+              lines.insert(idx + 1, alshanex_notice)
+          write(path, '\n'.join(lines) + '\n')
+
+          # Sanity gates before committing.
+          semantic = read('wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md')
+          coverage = read('wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md')
+          queue = read('wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md')
+          assert '**815 semantic magic objects' in semantic
+          assert '| **Strict total** |  | **815** |' in semantic
+          assert '4.0.3 | 18 | `COUNTED_EXACT`' in semantic
+          assert '54/100 = 54%' in coverage
+          assert '54/100 = 54%' in queue
+          assert len(list((ROOT / 'wiki/modpack-catalog/providers/alshanex-familiars/spells').glob('*.md'))) == 7
+          assert len(list((ROOT / 'wiki/modpack-catalog/providers/alshanex-familiars/rituals').glob('*.md'))) == 11
+          print('Phase 2BD catalog closure edits generated successfully.')
+          PY
+
+      - name: Commit catalog closure
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet && git diff --cached --quiet; then
+            echo 'No changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add SOURCES.md THIRD_PARTY_NOTICES.md wiki/modpack-catalog
+          git commit -m 'docs: close Alshanex 4.0.3 exact magic catalog'
+          git push origin "HEAD:${HEAD_REF}"
