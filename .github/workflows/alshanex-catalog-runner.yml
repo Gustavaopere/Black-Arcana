@@ -36,9 +36,14 @@ jobs:
           queue_text = queue.read_text(encoding='utf-8')
           old_anchor = '- main canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`'
           expected_anchor = '- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`'
-          count = queue_text.count(old_anchor)
-          assert count == 1, f'queue pre-normalization anchor: expected exactly one occurrence, found {count}'
-          queue.write_text(queue_text.replace(old_anchor, expected_anchor, 1), encoding='utf-8')
+          old_count = queue_text.count(old_anchor)
+          expected_count = queue_text.count(expected_anchor)
+          assert (old_count, expected_count) in {(1, 0), (0, 1)}, (
+              'queue anchor state: expected exactly one old or normalized occurrence, '
+              f'found old={old_count}, normalized={expected_count}'
+          )
+          if old_count == 1:
+              queue.write_text(queue_text.replace(old_anchor, expected_anchor, 1), encoding='utf-8')
 
           path = Path('.github/workflows/alshanex-catalog-closure.yml')
           text = path.read_text(encoding='utf-8')
