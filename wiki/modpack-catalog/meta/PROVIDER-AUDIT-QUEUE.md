@@ -8,14 +8,14 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica após Phase 2BD / PR #186: `95ec538ff1c34766450393522ce3affe1039d0dd`; post-merge Black Arcana CI #2465 GREEN;
+- base auditada para Phase 2BE: `main@c5a46a622351b6d9157b4620ca5386889c7bd5f3`; Phase 2BD final-evidence reconciliation CI #2467 GREEN; fechamento Cataclysm proposto por PR #189;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução estrita fecha agora **815 objetos mágicos semânticos**. Esse valor ainda é um mínimo contado, não um denominador final e não uma porcentagem global.
+A reconstrução Phase 2BE fecha **874 objetos mágicos semânticos** após aplicar o inventário exato Cataclysm 1.1.13. Esse valor ainda é um mínimo contado, não um denominador final e não uma porcentagem global.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -27,7 +27,8 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - delta semântico GTBC SpellLib: **+0**;
 - delta semântico Gaze 1.1.7.1: **+0**;
 - delta semântico Alshanex 4.0.3: **+18**;
-- mínimo estrito global: **815**;
+- delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
+- mínimo estrito global: **874**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -41,9 +42,27 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
 - Phase 2BD / PR #186: HEAD auditado `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` passou Black Arcana CI #2464;
 - PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
-- cobertura canônica de componentes após Phase 2BD: **54/100 = 54%**.
+- cobertura-alvo após promoção Phase 2BE: **55/100 = 55%**; componente #55 permanece candidato no PR #189 até merge e validação pós-merge.
 
-O valor 54/100 nunca substitui a métrica semântica de magias.
+O valor 55/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BE — Cataclysm: Spellbooks 1.1.13 — componente #55 candidato
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `cataclysm_spellbooks` | `cataclysm_spellbooks-1.1.13-1.21.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT HASH-MATCHED ARTIFACT AUDIT / 59 REGISTERED SPELL IDENTITIES / 10 TRANSLATION-ONLY ROOT KEYS EXCLUDED / +59 SEMANTIC MAGICS / #55 CANDIDATE |
+
+### Evidence boundary
+
+- physical SHA-1 `4af8348cc77bbff2ab7057c1fac26a5ab0a5b6a2`;
+- CurseForge project/file `1099461 / 8792628`;
+- isolated non-merge PR #188 primary run/artifact `34656614109 / 10285687158`;
+- constructor-ID disambiguation run/artifact `34656814496 / 10285756485`;
+- exact registry: 59 `Supplier<AbstractSpell>` fields, 59 `registerSpell` calls, 59 class instantiations, 0 conditional branches;
+- exact group distribution: 7 Abyssal, 4 Ender, 1 Evocation, 5 Holy, 11 Fire, 5 Ice, 4 Nature, 22 Technomancy;
+- ten extra root localization keys are unregistered and excluded;
+- publisher generic/current 65-spell scale is not substituted for physical 1.1.13;
+- no upstream implementation/assets copied or adapted; balance/acquisition/runtime/API seams remain fail-closed where not separately proven.
 
 ## Phase 2BD — Alshanex's Familiars 4.0.3 — componente #54
 
@@ -158,6 +177,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
+| 55 | 2BE / #189 | `cataclysm_spellbooks` | 59/59 exact 1.1.13 spell inventory closure; candidato até merge/latest-main + CI pós-merge |
 | 54 | 2BD / #186 | `alshanex_familiars` | CANÔNICO em `main@95ec538f...`; HEAD auditado CI #2464 GREEN; CI pós-merge #2465 GREEN |
 | 53 | 2AY / #175 | `gtbcs_spell_lib` | CANÔNICO em `main@9a4e1cd...`; CI pós-merge #2421 GREEN |
 | 52 | 2AX / #166 | `familiarslib` | CANÔNICO em `main@4238275...`; CI pós-merge #2337 GREEN |
@@ -171,7 +191,6 @@ Phase 2AY e a reconciliação Gaze/PR #180 estão encerradas. A próxima auditor
 
 Prioridades ainda abertas:
 
-- `cataclysm_spellbooks` 1.1.13 — publisher atual informa 65 spells, mas registry exato atual permanece aberto; requer artefato/source atual inspecionável;
 - `somakespells` 1.0.8-fix — publisher informa `over 50 spells`, sem registry atual completo; requer fonte/artefato atual ou nova evidência publisher granular;
 - `leylines` 1.0.3 — nove nomes públicos são apenas lower bound; requer artefato/source atual inspecionável;
 - Goety 3.1.4 — exact JAR/source equivalence, Focus reachability/dedup e ritual identities permanecem abertas;

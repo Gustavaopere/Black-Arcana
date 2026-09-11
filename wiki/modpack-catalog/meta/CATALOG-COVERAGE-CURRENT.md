@@ -4,9 +4,11 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot it now closes a **strict counted minimum of 815 semantic magic objects** from provider records that meet the ledger's inclusion rule. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Against the physical 595-entry snapshot it now closes a **strict counted minimum of 874 semantic magic objects** from provider records that meet the ledger's inclusion rule. This is not a final denominator and no percentage is declared: conditional registrations, current publisher lower bounds and providers with open exact inventories remain outside the strict sum.
 
-The latest semantic promotion is **Alshanex's Familiars +18**. Exact hash-matched 4.0.3 artifact evidence closes seven provider-owned spell registrations and eleven packaged custom `alshanex_familiars:ritual_recipe` identities. Sound/Melodic content remains counted only under Tunes n' Tomes, while familiar AI/passives and external Iron's spell casts remain excluded. See [`../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md`](../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md).
+The latest semantic promotion proposed by Phase 2BE is **Cataclysm: Spellbooks +59**. Exact hash-matched 1.1.13 artifact evidence closes 59 unconditional provider spell registrations; ten additional root localization identities are not registered in the installed artifact and remain excluded. The generic/current 65-spell publisher scale is not substituted for the physical 1.1.13 registry. See [`../providers/cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md`](../providers/cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md).
+
+The preceding semantic promotion is **Alshanex's Familiars +18**. Exact hash-matched 4.0.3 artifact evidence closes seven provider-owned spell registrations and eleven packaged custom `alshanex_familiars:ritual_recipe` identities. Sound/Melodic content remains counted only under Tunes n' Tomes, while familiar AI/passives and external Iron's spell casts remain excluded. See [`../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md`](../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md).
 
 The preceding semantic correction is **Werewolves +1**. Exact source pin `TeamLapen/Werewolves@b72635b3e014e406b25bb79adb9d340f7443660b` proves that `LEAP` is an `ActionSkill`, that `SURVIVAL31` grants it, that the node is connected into the generated normal `werewolf_level` tree, and that the provider has a dedicated server-handled Leap input path. Hidden-selector presentation therefore does not make Leap unreachable. Werewolves contributes **8** counted semantic actions rather than 7; `hide_name` remains excluded as presentation-only and the separate `no_leap_cooldown` refinement remains an open modifier-acquisition question rather than a separate semantic action. See [`SEMANTIC-MAGIC-DELTA-WEREWOLVES-LEAP.md`](./SEMANTIC-MAGIC-DELTA-WEREWOLVES-LEAP.md).
 
@@ -14,22 +16,23 @@ Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publish
 
 Therefore:
 
+- semantic numerator delta from Cataclysm: Spellbooks 1.1.13 exact closure: **+59**;
 - semantic numerator delta from Alshanex's Familiars 4.0.3 exact closure: **+18**;
 - semantic numerator delta from the preceding Werewolves correction: **+1**;
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
-- strict reconstructible semantic minimum: **815**;
+- strict reconstructible semantic minimum: **874**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
 The preceding semantic-only promotion was **Malum +26**: whole-interval path history across the observed `1.8.2` source window plus stable endpoint blobs close 26 base-Malum `SpiritRiteType` identities. Release-bounded Codex evidence separately proves that the two special identities, `undirected_rite` and `unchained_rite`, are player-facing rather than sentinel/proxy slots: `TotemMagicEntries.setupEntries(ArcanaProgressionScreen)` adds each as a distinct progression entry backed by its corresponding `RiteHolder`, `SpiritRiteTextPage`, and `SpiritRiteRecipePage`, while every observed `CodexLangDatagen.java` snapshot in the 1.8.2 interval preserves dedicated entries for both. The same release-bounded audit also records 37 active `GeasEffectType` identities and 9 `SpiritArcanaType` resource identities, but those are excluded from the current semantic-action metric by definition. Exact installed-JAR/source equivalence and runtime/API/recipe mechanics remain separate gates. The preceding semantic-only promotion was **Hexalia +25**: 19 player-facing Nature's Ritual identities plus 6 Celestial Infusion identities release-bounded across the observed 1.3.5 metadata / 1.3.6 filename-source boundary. Neither semantic promotion changes the internal provider-component closure metric below.
 
-The current Goety reconciliation remains an **evidence-only +0 delta**: the installed `goety-3.1.4.jar` is physical authority, while public `Vivideru/Goety-3` checkpoints for 3.1.0 and 3.1.1 expose a stable `ModItems.java` blob containing 123 active Focus item registrations. The prior official-Wiki inventory of 110 named base Focuses is retained as a documentary subset rather than a complete current registry. Exact 3.1.4 JAR↔source equivalence, player-facing reachability, semantic deduplication and runtime/API seams remain open, so none of the additional registry identities enter the strict **815** minimum at this checkpoint. The authoritative Goety capability interpretation is recorded in [`CAPABILITY-MATRIX-DELTA-GOETY.md`](./CAPABILITY-MATRIX-DELTA-GOETY.md).
+The current Goety reconciliation remains an **evidence-only +0 delta**: the installed `goety-3.1.4.jar` is physical authority, while public `Vivideru/Goety-3` checkpoints for 3.1.0 and 3.1.1 expose a stable `ModItems.java` blob containing 123 active Focus item registrations. The prior official-Wiki inventory of 110 named base Focuses is retained as a documentary subset rather than a complete current registry. Exact 3.1.4 JAR↔source equivalence, player-facing reachability, semantic deduplication and runtime/API seams remain open, so none of the additional registry identities enter the strict **874** minimum at this checkpoint. The authoritative Goety capability interpretation is recorded in [`CAPABILITY-MATRIX-DELTA-GOETY.md`](./CAPABILITY-MATRIX-DELTA-GOETY.md).
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after Phase 2BD: 54/100 = 54%.**
+**Phase 2BE promotion target: 55/100 = 55%. Component #55 remains candidate on PR #189 until merge, latest-main reconciliation and exact post-merge validation.**
 
 Phase 2BD / PR #186 was audited at exact HEAD `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0`, which passed Black Arcana CI **#2464**. It was squash-merged to `main` as `95ec538ff1c34766450393522ce3affe1039d0dd`; that exact merge SHA passed post-merge Black Arcana CI **#2465**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
 
@@ -69,9 +72,26 @@ GTBC's SpellLib and FamiliarsLib were already members of those 100 component uni
 | 51 | Phase 2AW / PR #161 | `apotheoticcreation` | canonical; historical immediate post-merge GameTest failure superseded by later full current-main GREEN validation |
 | 52 | Phase 2AX / PR #166 | `familiarslib` | canonical at `main@4238275d2086a00c6f31960114733d74b8cdb1d8`; post-merge CI #2337 GREEN |
 | 53 | Phase 2AY / PR #175 | `gtbcs_spell_lib` | canonical at `main@9a4e1cd6a462a278083ab946b5ed054864c3315e`; post-merge CI #2421 GREEN |
+| 55 | Phase 2BE / PR #189 | `cataclysm_spellbooks` | exact 1.1.13 59-spell identity closure; candidate until merge/latest-main reconciliation and post-merge validation |
 | 54 | Phase 2BD / PR #186 | `alshanex_familiars` | canonical at `main@95ec538ff1c34766450393522ce3affe1039d0dd`; audited HEAD `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` CI #2464 GREEN; post-merge CI #2465 GREEN |
 
 Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
+
+## Phase 2BE — Cataclysm: Spellbooks 1.1.13 component #55 candidate
+
+Phase 2BE closes the physically installed spell identity inventory to exact artifact evidence:
+
+- exact JAR `cataclysm_spellbooks-1.1.13-1.21.jar` / SHA-1 `4af8348cc77bbff2ab7057c1fac26a5ab0a5b6a2`;
+- isolated non-merge PR #188 materialized exact File ID `8792628` and hash-matched the physical artifact;
+- 59 `Supplier<AbstractSpell>` fields, 59 `registerSpell(...)` calls, 59 spell-class instantiations and 0 conditional branches in the exact registry initializer;
+- exact group distribution: 7 Abyssal + 4 Ender + 1 Evocation + 5 Holy + 11 Fire + 5 Ice + 4 Nature + 22 Technomancy = **59**;
+- ten additional root localization keys have no current registered spell identity and remain excluded;
+- semantic delta: **+59**, yielding strict counted minimum **874** and Iron ecosystem subtotal **527**;
+- the generic/current publisher scale of 65 spells is not substituted for the installed 1.1.13 registry;
+- numerical mechanics, acquisition, runtime QA and future integration seams remain separate/fail-closed;
+- clean-room audit retained only factual identity/registry/resource evidence and copied no upstream implementation or assets.
+
+See [`PHASE2BE-CATACLYSM-SPELLBOOKS-1.1.13-EXACT-CHECKPOINT.md`](./PHASE2BE-CATACLYSM-SPELLBOOKS-1.1.13-EXACT-CHECKPOINT.md).
 
 ## Phase 2BD — Alshanex's Familiars 4.0.3 component #54
 
@@ -134,7 +154,6 @@ Examples remain:
 
 - `leylines` — current total inventory not verified;
 - `somakespells` — current granular spell inventory remains incomplete;
-- `cataclysm_spellbooks` — installed 1.1.13 remains ahead of the exact public source baseline already audited;
 - `gaze` — exact current registry/source-JAR closure remains pending.
 
 These partials are also reasons the global semantic spell/magic denominator remains open. Their current lower-bound/open evidence is tracked explicitly in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md) rather than being silently added to the strict semantic count.
