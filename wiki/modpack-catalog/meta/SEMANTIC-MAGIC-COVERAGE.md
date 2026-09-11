@@ -23,6 +23,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - physical modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 - reconstruction base: `main@4f3dab1a4801393873f9d4b7857782fcf6298e56`
 - base post-merge validation: Black Arcana CI **#2349**, attempt 2 GREEN on the exact base SHA
+- latest provider-component canonicalization base: `main@9a4e1cd6a462a278083ab946b5ed054864c3315e`, with post-merge Black Arcana CI **#2421** GREEN
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -43,7 +44,7 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 ## Strict reconstructible counted minimum
 
-**796 semantic magic objects are currently reconstructible from canonical provider records.**
+**797 semantic magic objects are currently reconstructible from canonical provider records.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -52,10 +53,10 @@ Arithmetic cross-check by provider family:
 - Ars ecosystem: **199**;
 - Iron's ecosystem and spell-content addons: **450**;
 - Eidolon: Repraised: **42**;
-- Vampirism/Bloodlines/Werewolves supernatural action layer: **54**;
+- Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
 - Hexalia ritual/infusion layer: **25**;
 - Malum Spirit Rite layer: **26**;
-- total: `199 + 450 + 42 + 54 + 25 + 26 = 796`.
+- total: `199 + 450 + 42 + 55 + 25 + 26 = 797`.
 
 ### Counted ledger
 
@@ -88,10 +89,14 @@ Arithmetic cross-check by provider family:
 | [Eidolon: Repraised](../providers/eidolon-repraised/README.md) | 0.5.0.2 | 42 | `COUNTED_SOURCE_PINNED` | 18 normal/player-facing chants + 24 official ritual recipes; `undead_lure` empty cast and `basic_incense` dummy excluded; chant conversions are not extra spells |
 | [Vampirism](../providers/vampirism/README.md) | 1.10.13 | 19 | `COUNTED_SOURCE_PINNED` | 14 Vampire + 3 Hunter + 2 shared Lord registered player actions; counted as provider-native discrete supernatural actions, not Iron's spells |
 | [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike, whose survival reachability is unproven and is therefore conditional |
-| [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 7 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear; Leap is conditional and Hide Name is presentation-only |
+| [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **796** |  |  |
+| **Strict total** |  | **797** |  |  |
+
+### Werewolves 2.0.3.3 Leap correction
+
+The previous ledger left `werewolves:leap` conditional because the action is hidden from the generic selector and its enabling path had not yet been reconstructed. Exact source at `TeamLapen/Werewolves@b72635b3e014e406b25bb79adb9d340f7443660b` closes that path: `ModSkills.LEAP` is an `ActionSkill` bound to `ModActions.LEAP`; node `SURVIVAL31` grants that skill; `SkillTreeProvider` connects `SURVIVAL31` into the normal `werewolf_level` tree; and the server handles the dedicated Leap input by delegating to the provider-owned action handler. Therefore hidden-selector presentation does not make Leap unreachable. The separate `no_leap_cooldown` refinement remains reachability-unproven and is not a separate semantic action. See [`SEMANTIC-MAGIC-DELTA-WEREWOLVES-LEAP.md`](./SEMANTIC-MAGIC-DELTA-WEREWOLVES-LEAP.md).
 
 ### Hexalia release-boundary reconciliation
 
@@ -135,7 +140,6 @@ This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence
 |---|---:|---|---|
 | Asterism Arcanum | 1 | `CONDITIONAL` | `astral_gateway` is registered but documented creative-only/unfinished |
 | Bloodlines | 1 | `CONDITIONAL` | `gravebound_crit_action` / Sorcerous Strike is registered, but survival-tree reachability is unproven |
-| Werewolves | 1 | `CONDITIONAL` | `leap` is registered but hidden from the normal selector and current reachability through its enabling path remains unproven |
 | Not Enough Glyphs | 39 | `CONDITIONAL` | current-pack source produces 40 `registerSpell` calls; `momentum` is source-disabled, leaving 39 source-enabled before user/provider config; exact active pack config remains to be reconciled |
 
 The four real Ars Elemental primitives referenced by Not Enough Glyphs are not NEG-owned registrations and are already counted under Ars Elemental. Historical fallback namespaces do not create a second owner when the real provider is present.
@@ -148,6 +152,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [Ars Elemancy](../providers/ars-elemancy/README.md) — equipment specialization, empty glyph registration;
 - [Ars Polymorphia](../providers/ars-polymorphia/README.md) — compatibility/progression only;
 - [FamiliarsLib](../providers/familiarslib/README.md) — familiar framework; historical Sound content removed from the 1.7 line;
+- [GTBC's SpellLib](../providers/gtbcs-spelllib/README.md) — shared spell/addon library infrastructure; publisher surface establishes no standalone gameplay/spell catalog in 2.2.0;
 - [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
 - [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — resource/behavior overlay over Iron's + Vampirism, no own spell set;
 - [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
@@ -158,7 +163,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 796** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 797** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -176,9 +181,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **796 is not “796 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 796 by the 100 provider-component denominator. `52/100` and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 796 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **797 is not “797 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 797 by the 100 provider-component denominator. `53/100` and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 797 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
@@ -194,6 +199,6 @@ To converge on a final denominator efficiently, prioritize:
 4. exact Gaze 1.1.7.1 rites/Geas inventory;
 5. complete Alshanex's Familiars 4.0.3 spell/ritual inventory after the Sound→Tunes ownership migration;
 6. Goety 3.1.4 exact JAR/source reconciliation, Focus semantic reachability/deduplication and discrete ritual-identity inventory;
-7. current-pack config/reachability closure for conditional action/glyph rows.
+7. current-pack config/reachability closure for remaining conditional action/glyph rows.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
