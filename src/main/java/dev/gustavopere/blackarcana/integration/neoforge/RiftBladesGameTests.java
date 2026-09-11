@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.integration.neoforge;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -93,7 +94,14 @@ public final class RiftBladesGameTests {
         ArcanaDecision strikeDecision = decision(result);
         helper.assertTrue(strikeDecision.allowed(),
             "a blocked optional landing must not cancel an otherwise legal marked strike; code="
-                + strikeDecision.code());
+                + strikeDecision.code()
+                + ", runtimePresent=" + ArcanaServerRuntimeManager.get(server).isPresent()
+                + ", casterLookupSame=" + (helper.getLevel().getEntity(caster.getUUID()) == caster)
+                + ", targetLookupSame=" + (helper.getLevel().getEntity(target.getUUID()) == target)
+                + ", casterAlive=" + caster.isAlive()
+                + ", targetAlive=" + target.isAlive()
+                + ", allied=" + caster.isAlliedTo(target)
+                + ", targetInvulnerable=" + target.isInvulnerable());
         helper.assertTrue(damageDealt(result) > 0.0D && target.getHealth() < healthBefore,
             "damage settlement must remain independent from optional displacement");
         helper.assertTrue(!gapClosed(result), "blocked destination must fail closed for displacement");

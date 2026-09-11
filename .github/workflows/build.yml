@@ -64,9 +64,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p runs/gameTestServer
-          printf 'eula=true\n' > runs/gameTestServer/eula.txt
-          ./gradlew --no-daemon runGameTestServer
+          for attempt in $(seq 1 8); do
+            echo "::group::Foundation GameTest diagnostic repetition ${attempt}/8"
+            rm -rf runs/gameTestServer
+            mkdir -p runs/gameTestServer
+            printf 'eula=true\n' > runs/gameTestServer/eula.txt
+            ./gradlew --no-daemon runGameTestServer
+            echo "::endgroup::"
+          done
 
       - name: Dedicated-server smoke test
         shell: bash
