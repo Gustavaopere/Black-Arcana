@@ -30,7 +30,7 @@ jobs:
           fi
           python3 - <<'PY'
           from pathlib import Path
-          import os, textwrap
+          import os
 
           path = Path('.github/workflows/alshanex-catalog-closure.yml')
           text = path.read_text(encoding='utf-8')
@@ -38,7 +38,9 @@ jobs:
           end_marker = "\n          PY\n\n      - name: Commit catalog closure"
           start = text.index(start_marker) + len(start_marker)
           end = text.index(end_marker, start)
-          source = textwrap.dedent(text[start:end])
+          raw = text[start:end]
+          prefix = '          '
+          source = '\n'.join(line[len(prefix):] if line.startswith(prefix) else line for line in raw.split('\n'))
           os.environ['PR_NUMBER'] = '186'
           exec(compile(source, str(path) + ':embedded-phase2bd', 'exec'), {'__name__': '__main__'})
           PY
