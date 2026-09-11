@@ -150,6 +150,50 @@ jobs:
               f.write(f'mapped_class_count={len(rows)}\n')
           PY
 
+      - name: Confirm static spell registrations with filtered bytecode facts
+        shell: bash
+        run: |
+          set -euo pipefail
+          javap -classpath /tmp/provider.jar -c -p net.alshanex.alshanex_familiars.registry.PetSpellRegistry > /tmp/petspell-javap.txt
+          python3 - <<'PY'
+          import re
+
+          targets = {
+              'SUMMON_SHADOW', 'ICE_AGE', 'ICE_CHAMBER', 'MEGIDO',
+              'HIKEN', 'MAYHEM', 'FAMILIAR_SWAP'
+          }
+          text = open('/tmp/petspell-javap.txt', encoding='utf-8').read()
+          static = text.split('static {};', 1)[1] if 'static {};' in text else ''
+          assignments = []
+          register_calls = 0
+          branches = 0
+          for line in static.splitlines():
+              if 'Method registerSpell:' in line:
+                  register_calls += 1
+              if re.search(r'\b(if[a-z_]*|goto|tableswitch|lookupswitch)\b', line):
+                  branches += 1
+              match = re.search(r'Field ([A-Z_]+):', line)
+              if match and match.group(1) in targets:
+                  assignments.append(match.group(1))
+          unique = sorted(set(assignments))
+          print('EXACT STATIC REGISTRATION FACTS — filtered PetSpellRegistry <clinit>')
+          print('This is a narrow factual disassembly check; no spell implementation body is copied or retained.')
+          print('assigned_spell_fields=' + ','.join(unique))
+          print(f'assigned_spell_field_count={len(unique)}')
+          print(f'registerSpell_call_count={register_calls}')
+          print(f'conditional_branch_count_in_static_initializer={branches}')
+          assert set(unique) == targets, (unique, targets)
+          assert register_calls == 7, register_calls
+          assert branches == 0, branches
+          with open('audit/static-registration-facts.txt', 'w', encoding='utf-8') as f:
+              f.write('EXACT STATIC REGISTRATION FACTS — filtered PetSpellRegistry <clinit>\n')
+              f.write('Narrow factual disassembly check; no spell implementation body is copied or retained.\n')
+              f.write('assigned_spell_fields=' + ','.join(unique) + '\n')
+              f.write(f'assigned_spell_field_count={len(unique)}\n')
+              f.write(f'registerSpell_call_count={register_calls}\n')
+              f.write(f'conditional_branch_count_in_static_initializer={branches}\n')
+          PY
+
       - name: Publish text-only audit report
         uses: actions/upload-artifact@v7
         with:
