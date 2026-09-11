@@ -1,0 +1,47 @@
+name: Phase 2BE Candidate Canonical Wording Polish
+
+on:
+  push:
+    branches:
+      - docs/cataclysm-spellbooks-1.1.13-exact-catalog-closure
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply candidate/canonical wording polish
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q 'Recent canonical closures and current promotion candidate' wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md; then
+            echo 'Phase 2BE wording polish already applied.'
+            exit 0
+          fi
+          python3 .github/scripts/phase2be_candidate_polish.py
+
+      - name: Commit polished durable docs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md \
+            wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md \
+            wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md \
+            wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md
+          if git diff --cached --quiet; then
+            echo 'No wording changes to commit.'
+            exit 0
+          fi
+          git commit -m 'docs: distinguish Phase 2BE candidate from canonical baseline'
+          git push origin HEAD:docs/cataclysm-spellbooks-1.1.13-exact-catalog-closure
