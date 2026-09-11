@@ -1,0 +1,117 @@
+name: Phase 2BD Final Evidence Reconciliation
+
+on:
+  push:
+    branches:
+      - docs/phase2bd-final-evidence
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Record exact Phase 2BD merge evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          MERGE = '95ec538ff1c34766450393522ce3affe1039d0dd'
+          HEAD = 'acfcff0fca09b3c2f7b4fcf082618a970e1d19c0'
+
+          def reconcile(path, old, new, label):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              old_count = text.count(old)
+              new_count = text.count(new)
+              assert (old_count, new_count) in {(1, 0), (0, 1)}, (
+                  f'{label}: expected exactly one old or reconciled occurrence; '
+                  f'old={old_count}, new={new_count}'
+              )
+              if old_count == 1:
+                  p.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          catalog = 'wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md'
+          reconcile(
+              catalog,
+              '**Canonical provider-component coverage after Phase 2BD: 54/100 = 54%.**',
+              '**Canonical provider-component coverage after Phase 2BD: 54/100 = 54%.**\n\nPhase 2BD / PR #186 was audited at exact HEAD `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0`, which passed Black Arcana CI **#2464**. It was squash-merged to `main` as `95ec538ff1c34766450393522ce3affe1039d0dd`; that exact merge SHA passed post-merge Black Arcana CI **#2465**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.',
+              'catalog Phase 2BD CI evidence',
+          )
+          reconcile(
+              catalog,
+              '| 54 | Phase 2BD / PR #186 | `alshanex_familiars` | exact 4.0.3 identity inventory closure; merge/post-merge SHA+CI recorded by final reconciliation |',
+              '| 54 | Phase 2BD / PR #186 | `alshanex_familiars` | canonical at `main@95ec538ff1c34766450393522ce3affe1039d0dd`; audited HEAD `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` CI #2464 GREEN; post-merge CI #2465 GREEN |',
+              'catalog component 54 final row',
+          )
+
+          queue = 'wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md'
+          reconcile(
+              queue,
+              '- base auditada para Phase 2BD: `main@dbdc952bdf528866ea4959876d1c493f4ecdb31c`; fechamento Alshanex será promovido por PR #186;',
+              '- `main` canônica após Phase 2BD / PR #186: `95ec538ff1c34766450393522ce3affe1039d0dd`; post-merge Black Arcana CI #2465 GREEN;',
+              'queue canonical main anchor',
+          )
+          reconcile(
+              queue,
+              '- a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;\n- cobertura canônica de componentes após Phase 2BD: **54/100 = 54%**.',
+              '- a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;\n- Phase 2BD / PR #186: HEAD auditado `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` passou Black Arcana CI #2464;\n- PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;\n- cobertura canônica de componentes após Phase 2BD: **54/100 = 54%**.',
+              'queue Phase 2BD merge evidence',
+          )
+          reconcile(
+              queue,
+              '| 54 | 2BD / #186 | `alshanex_familiars` | exact 4.0.3 spell+ritual inventory closure; final merge SHA/CI recorded after promotion |',
+              '| 54 | 2BD / #186 | `alshanex_familiars` | CANÔNICO em `main@95ec538f...`; HEAD auditado CI #2464 GREEN; CI pós-merge #2465 GREEN |',
+              'queue component 54 final row',
+          )
+
+          checkpoint = 'wiki/modpack-catalog/meta/PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md'
+          reconcile(
+              checkpoint,
+              '- closure PR: `#186`',
+              '- closure PR: `#186`\n- audited closure HEAD: `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` — Black Arcana CI **#2464 GREEN**\n- canonical merge: `main@95ec538ff1c34766450393522ce3affe1039d0dd` — post-merge Black Arcana CI **#2465 GREEN**',
+              'checkpoint synchronization evidence',
+          )
+          reconcile(
+              checkpoint,
+              '- provider component: candidate **#54** on this PR, becoming canonical only after merge/latest-main reconciliation and post-merge validation;',
+              '- provider component: **#54 canonical**, promoted by PR #186 after latest-main reconciliation and exact post-merge validation;',
+              'checkpoint component canonicalization',
+          )
+
+          semantic = 'wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md'
+          reconcile(
+              semantic,
+              '- latest provider-component canonicalization base: `main@9a4e1cd6a462a278083ab946b5ed054864c3315e`, with post-merge Black Arcana CI **#2421** GREEN',
+              '- latest provider-component canonicalization base: `main@95ec538ff1c34766450393522ce3affe1039d0dd`, with post-merge Black Arcana CI **#2465** GREEN',
+              'semantic latest canonicalization anchor',
+          )
+
+          print('Phase 2BD final evidence reconciliation complete.')
+          PY
+
+      - name: Commit final evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo 'Final evidence already recorded.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md \
+                  wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md \
+                  wiki/modpack-catalog/meta/PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md \
+                  wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md
+          git commit -m 'docs: record Phase 2BD final merge evidence'
+          git push origin HEAD:docs/phase2bd-final-evidence
