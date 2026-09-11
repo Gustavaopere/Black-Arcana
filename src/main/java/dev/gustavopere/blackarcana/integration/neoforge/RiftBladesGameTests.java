@@ -22,7 +22,7 @@ public final class RiftBladesGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 80)
     public static void markedStrikeDealsBoundedDamageAndUsesSafeLandingCandidate(GameTestHelper helper) {
         var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
-        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(7, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(5, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
 
         // The embedded GameTest harness may expose a newly spawned entity object before the
@@ -81,7 +81,7 @@ public final class RiftBladesGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 80)
     public static void blockedLandingSkipsGapCloseWithoutRollingBackDamage(GameTestHelper helper) {
         var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
-        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(7, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(5, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
 
         // The runtime resolves both endpoints through ServerLevel.getEntity(UUID). Give the GameTest
