@@ -8,7 +8,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica após Phase 2AY: `9a4e1cd6a462a278083ab946b5ed054864c3315e`
+- `main` canônica após a reconciliação Gaze / PR #180: `03054438d1f126f48cb0b11b84c5d6589d677666`
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
@@ -17,12 +17,15 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 
 A reconstrução estrita fecha agora **797 objetos mágicos semânticos**. Esse valor ainda é um mínimo contado, não um denominador final e não uma porcentagem global.
 
-A última correção é **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
+A última correção de contagem continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
 GTBC's SpellLib 2.2.0 adiciona **0 magias semânticas independentes**. É infraestrutura de biblioteca/API compartilhada; atributos e helpers reutilizáveis não são identidades de spell próprias.
 
+A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publisher e artefato físico fecham identidade/escala, mas o registry granular atual e a reachability por objeto permanecem abertos.
+
 - delta semântico Werewolves: **+1**;
 - delta semântico GTBC SpellLib: **+0**;
+- delta semântico Gaze 1.1.7.1: **+0**;
 - mínimo estrito global: **797**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
@@ -31,10 +34,31 @@ GTBC's SpellLib 2.2.0 adiciona **0 magias semânticas independentes**. É infrae
 
 - Phase 2AY / PR #175 foi mergeada como `9a4e1cd6a462a278083ab946b5ed054864c3315e`;
 - HEAD auditado `2260c46261ac9ab99d839f307fd7b4519d38eef2` passou Black Arcana CI #2420;
-- o merge SHA exato passou Black Arcana CI #2421 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
+- o merge SHA exato de Phase 2AY passou Black Arcana CI #2421 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
+- Gaze / PR #180 foi mergeada como `03054438d1f126f48cb0b11b84c5d6589d677666`;
+- o merge SHA exato da reconciliação Gaze passou Black Arcana CI #2434 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
+- a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
 - cobertura canônica de componentes atual: **53/100 = 53%**.
 
 O valor 53/100 nunca substitui a métrica semântica de magias.
+
+## Reconciliação Gaze 1.1.7.1 — PR #180 — parcial, sem incremento de cobertura
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `gaze` | `gaze-1.1.7.1.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT MODRINTH VERSION / ARR / PUBLIC SCALE + NAMED 1.1.7 LINEAGE / COMPLETE CURRENT REGISTRY OPEN / +0 STRICT SEMANTIC DELTA / POST-MERGE CI GREEN |
+
+### Evidence boundary
+
+- physical SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`;
+- CurseForge project/file `1273454 / 7261638`;
+- Modrinth project/version `NlvaJ5WE / od4ltbRo`;
+- current publisher scale: 2 Geas, a set of Rites, 6 weapons, 8 runes, 5 Curios and Spirit-Channel pouch;
+- 1.1.7 lineage names current-line Geas/Rites/runes/items, while 1.1.7.1 publishes only a narrow patch delta;
+- no complete 1.1.7.1 registry, object-level reachability table or stable addon API was proven;
+- no code/assets/text copied or adapted; unsupported internals remain fail-closed.
+
+Gaze therefore leaves the global denominator open, but should not be selected again merely to repeat the same publisher evidence. Reopen it only when new exact/current evidence can materially close registry, reachability, acquisition or runtime seams.
 
 ## Phase 2AY — GTBC's SpellLib 2.2.0 — canonical #53
 
@@ -103,7 +127,7 @@ The Modrinth 1.7 changelog explicitly says Sound-school content was removed and 
 
 ### Black Arcana / Stage 07.07 boundary
 
-No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot be admitted merely because it is a familiar, tameable, spellcasting pet or nearby entity.
+No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot be admitted merely porque it is a familiar, tameable, spellcasting pet or nearby entity.
 
 Provider-specific ownership integration remains **fail-closed** until a current exact-version seam is proven and deliberately adapted. The catalog evidence identifies provider-owned familiar state, but source↔physical exactness and a stable ownership contract are not closed strongly enough to promote a runtime adapter.
 
@@ -123,15 +147,20 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 ## Próxima seleção
 
-A Phase 2AY está encerrada e não bloqueia a próxima auditoria. A reconstrução da métrica semântica deve priorizar providers que ainda impedem um denominador completo:
+Phase 2AY e a reconciliação Gaze/PR #180 estão encerradas. A próxima auditoria só deve abrir quando houver evidência nova capaz de reduzir um blocker, não para repetir publisher prose já catalogada.
 
-- `cataclysm_spellbooks` 1.1.13 — publisher atual informa 65 spells, mas registry exato atual permanece aberto;
-- `somakespells` 1.0.8-fix — publisher informa `over 50 spells`, sem registry atual completo;
-- `leylines` 1.0.3 — nove nomes públicos são apenas lower bound;
-- `gaze` 1.1.7.1 — Rites/Geas atuais ainda não têm inventário granular completo;
-- Alshanex's Familiars 4.0.3 — Sound mudou para Tunes; spell/ritual inventory atual precisa ser fechado sem reaproveitar histórico obsoleto;
+Prioridades ainda abertas:
+
+- `cataclysm_spellbooks` 1.1.13 — publisher atual informa 65 spells, mas registry exato atual permanece aberto; requer artefato/source atual inspecionável;
+- `somakespells` 1.0.8-fix — publisher informa `over 50 spells`, sem registry atual completo; requer fonte/artefato atual ou nova evidência publisher granular;
+- `leylines` 1.0.3 — nove nomes públicos são apenas lower bound; requer artefato/source atual inspecionável;
+- Alshanex's Familiars 4.0.3 — Sound migrou para Tunes; spell/ritual inventory atual ainda precisa ser fechado sem reaproveitar histórico obsoleto;
 - Goety 3.1.4 — exact JAR/source equivalence, Focus reachability/dedup e ritual identities permanecem abertas;
-- Not Enough Glyphs — 39 registrations source-enabled continuam condicionais até reconciliação da config efetiva do pack.
+- Not Enough Glyphs 4.6.1 — 39 registrations source-enabled continuam condicionais até reconciliação da config efetiva do pack.
+
+Gaze 1.1.7.1 continua com denominador granular aberto, mas fica **PARKED** até surgir evidência exata/current nova para registry, reachability, acquisition ou runtime. O checkpoint já mergeado não deve ser refeito.
+
+Se nenhum desses inputs novos estiver disponível, o estado correto é manter os blockers fail-closed em vez de fabricar fechamento ou avançar Phase 3.
 
 ## Regras
 
