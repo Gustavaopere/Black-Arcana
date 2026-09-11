@@ -11,6 +11,8 @@ Close the provider's current spell/ritual identity inventory against the exact i
 - NeoForge: `21.1.248`
 - modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 - closure PR: `#186`
+- audited closure HEAD: `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` — Black Arcana CI **#2464 GREEN**
+- canonical merge: `main@95ec538ff1c34766450393522ce3affe1039d0dd` — post-merge Black Arcana CI **#2465 GREEN**
 
 ## Exact artifact evidence
 
@@ -28,7 +30,7 @@ Close the provider's current spell/ritual identity inventory against the exact i
 - 11 exact packaged `alshanex_familiars:ritual_recipe` identities;
 - semantic delta: **+18**;
 - strict semantic minimum: **797 → 815**;
-- provider component: candidate **#54** on this PR, becoming canonical only after merge/latest-main reconciliation and post-merge validation;
+- provider component: **#54 canonical**, promoted by PR #186 after latest-main reconciliation and exact post-merge validation;
 - Sound/Melodic migration remains owned by Tunes n' Tomes and adds **0 duplicate Alshanex identities**.
 
 ## Remaining non-catalog gates

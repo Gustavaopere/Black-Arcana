@@ -8,7 +8,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- base auditada para Phase 2BD: `main@dbdc952bdf528866ea4959876d1c493f4ecdb31c`; fechamento Alshanex será promovido por PR #186;
+- `main` canônica após Phase 2BD / PR #186: `95ec538ff1c34766450393522ce3affe1039d0dd`; post-merge Black Arcana CI #2465 GREEN;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
@@ -39,6 +39,8 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - Gaze / PR #180 foi mergeada como `03054438d1f126f48cb0b11b84c5d6589d677666`;
 - o merge SHA exato da reconciliação Gaze passou Black Arcana CI #2434 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
 - a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
+- Phase 2BD / PR #186: HEAD auditado `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` passou Black Arcana CI #2464;
+- PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
 - cobertura canônica de componentes após Phase 2BD: **54/100 = 54%**.
 
 O valor 54/100 nunca substitui a métrica semântica de magias.
@@ -156,7 +158,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
-| 54 | 2BD / #186 | `alshanex_familiars` | exact 4.0.3 spell+ritual inventory closure; final merge SHA/CI recorded after promotion |
+| 54 | 2BD / #186 | `alshanex_familiars` | CANÔNICO em `main@95ec538f...`; HEAD auditado CI #2464 GREEN; CI pós-merge #2465 GREEN |
 | 53 | 2AY / #175 | `gtbcs_spell_lib` | CANÔNICO em `main@9a4e1cd...`; CI pós-merge #2421 GREEN |
 | 52 | 2AX / #166 | `familiarslib` | CANÔNICO em `main@4238275...`; CI pós-merge #2337 GREEN |
 | 51 | 2AW / #161 | `apotheoticcreation` | CANÔNICO; ver nota histórica de GameTest no coverage/checkpoint |

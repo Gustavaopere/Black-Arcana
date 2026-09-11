@@ -23,7 +23,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - physical modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 - reconstruction base: `main@4f3dab1a4801393873f9d4b7857782fcf6298e56`
 - base post-merge validation: Black Arcana CI **#2349**, attempt 2 GREEN on the exact base SHA
-- latest provider-component canonicalization base: `main@9a4e1cd6a462a278083ab946b5ed054864c3315e`, with post-merge Black Arcana CI **#2421** GREEN
+- latest provider-component canonicalization base: `main@95ec538ff1c34766450393522ce3affe1039d0dd`, with post-merge Black Arcana CI **#2465** GREEN
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
