@@ -16,6 +16,7 @@ import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
 import dev.gustavopere.blackarcana.content.noetic.NullificationRegistry;
 import dev.gustavopere.blackarcana.content.noetic.PactSanctuarySpec;
 import dev.gustavopere.blackarcana.network.NoeticViewTransitionTracker;
+import dev.gustavopere.blackarcana.network.neoforge.AstralProjectionNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.NoeticViewNetworkBridge;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -186,6 +187,7 @@ public final class MinecraftNoeticRuntime {
                                 projection.projectionId(),
                                 caster.serverLevel().dimension(),
                                 avatar.getId()));
+                AstralProjectionNetworkBridge.sendBegin(caster, projection.projectionId(), avatar.getId());
                 yield AstralProjectionStart.started(projection);
             }
             case CASTER_ALREADY_PROJECTED -> AstralProjectionStart.denied(
@@ -252,11 +254,16 @@ public final class MinecraftNoeticRuntime {
         Objects.requireNonNull(casterId, "casterId");
         Objects.requireNonNull(projectionId, "projectionId");
         ServerState state = STATES.get(server);
-        if (state == null || !state.astral.requestReturn(casterId, projectionId)) {
+        if (state == null) return false;
+        AstralSeveranceRuntime.ActiveProjection projection = state.astral.projection(casterId).orElse(null);
+        if (projection == null || !projection.projectionId().equals(projectionId)) {
             return false;
         }
-        removeAstralAvatar(server, state, casterId);
-        return true;
+        return closeAstralProjection(
+                server,
+                state,
+                casterId,
+                AstralSeveranceRuntime.CloseReason.EXPLICIT_RETURN);
     }
 
     public static ArcanaDecision startStillness(
@@ -514,6 +521,11 @@ public final class MinecraftNoeticRuntime {
         }
         for (UUID casterId : new ArrayList<>(state.astralAvatars.keySet())) {
             if (state.astral.projection(casterId).isEmpty()) {
+                AstralAvatarRef ref = state.astralAvatars.get(casterId);
+                ServerPlayer caster = server.getPlayerList().getPlayer(casterId);
+                if (caster != null && ref != null) {
+                    AstralProjectionNetworkBridge.sendEnd(caster, ref.projectionId(), ref.entityId());
+                }
                 removeAstralAvatar(server, state, casterId);
             }
         }
@@ -558,7 +570,15 @@ public final class MinecraftNoeticRuntime {
             UUID casterId,
             AstralSeveranceRuntime.CloseReason reason
     ) {
+        AstralSeveranceRuntime.ActiveProjection active = state.astral.projection(casterId).orElse(null);
+        AstralAvatarRef ref = state.astralAvatars.get(casterId);
         boolean closed = state.astral.close(casterId, reason);
+        if (closed && active != null && ref != null && active.projectionId().equals(ref.projectionId())) {
+            ServerPlayer caster = server.getPlayerList().getPlayer(casterId);
+            if (caster != null) {
+                AstralProjectionNetworkBridge.sendEnd(caster, ref.projectionId(), ref.entityId());
+            }
+        }
         if (closed || state.astral.projection(casterId).isEmpty()) {
             removeAstralAvatar(server, state, casterId);
         }
@@ -582,10 +602,16 @@ public final class MinecraftNoeticRuntime {
         ServerState state = STATES.remove(server);
         if (state == null) return;
         state.pendingDeaths.clear();
+        for (AstralSeveranceRuntime.ActiveProjection projection : state.astral.activeProjections()) {
+            closeAstralProjection(
+                    server,
+                    state,
+                    projection.casterId(),
+                    AstralSeveranceRuntime.CloseReason.SERVER_STOP);
+        }
         for (UUID casterId : new ArrayList<>(state.astralAvatars.keySet())) {
             removeAstralAvatar(server, state, casterId);
         }
-        state.astral.clearForServerStop();
         state.observation.clearForServerStop();
         state.gaze.clearForServerStop(server);
         state.sanctuary.clearForServerStop(server);

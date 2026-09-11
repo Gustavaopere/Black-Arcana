@@ -26,6 +26,7 @@ import dev.gustavopere.blackarcana.integration.neoforge.MinecraftVeilstepReflexR
 import dev.gustavopere.blackarcana.integration.neoforge.OptionalModEntrypoints;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
+import dev.gustavopere.blackarcana.network.neoforge.AstralProjectionNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.HazardPreflightSyncService;
 import dev.gustavopere.blackarcana.network.neoforge.HazardResistanceForecastNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.HazardResistanceForecastService;
@@ -45,6 +46,7 @@ public final class BlackArcanaMod {
         OptionalModEntrypoints.install(modEventBus);
         BlackArcanaNoeticEntities.register(modEventBus);
         modEventBus.addListener(ArcanaNetworkBridge::register);
+        modEventBus.addListener(AstralProjectionNetworkBridge::register);
         modEventBus.addListener(HazardResistanceForecastNetworkBridge::register);
         modEventBus.addListener(LoadoutNetworkBridge::register);
         modEventBus.addListener(NoeticViewNetworkBridge::register);
@@ -53,6 +55,12 @@ public final class BlackArcanaMod {
         ArcanaNetworkBridge.installClientCooldownHandler(ClientArcanaSyncState::acceptCooldowns);
         ArcanaNetworkBridge.installClientPresentationHandler(ClientArcanaSyncState::acceptPresentation);
         ArcanaNetworkBridge.installClientHazardPreflightHandler(ClientArcanaSyncState::acceptHazardPreflight);
+        AstralProjectionNetworkBridge.installServerMoveHandler((player, intent) ->
+                MinecraftNoeticRuntime.moveAstralProjection(
+                        player.serverLevel().getServer(), player.getUUID(), intent));
+        AstralProjectionNetworkBridge.installServerReturnHandler((player, projectionId) ->
+                MinecraftNoeticRuntime.requestAstralReturn(
+                        player.serverLevel().getServer(), player.getUUID(), projectionId));
         HazardResistanceForecastNetworkBridge.installServerHandler(HazardResistanceForecastService::handle);
         HazardResistanceForecastNetworkBridge.installClientHandler(ClientArcanaSyncState::acceptHazardResistanceForecast);
         LoadoutNetworkBridge.installServerHandler(ArcanaServerRuntimeManager::handleLoadoutUpdate);
