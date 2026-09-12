@@ -122,7 +122,7 @@ Evidence: non-merge PR #194; primary `34666436710 / 10289437099`; reachability `
 - 61 unconditional registrations; three require `mowziesmobs`; three require `iss_magicfromtheeast`; both mod IDs are in the physical pack, so all 67 registry identities are current for this provider set;
 - `enableSpellLockSystem` is COMMON at `somakespells/general/common.toml`, code-default `false`; actual deployed value is not available in authoritative materials;
 - complete per-object survival acquisition/reachability, T.O Aqua runtime ownership and supported adapter/API seams remain open/fail-closed;
-- ARR clean-room: no implementation/source reconstruction/assets/text are copied ou adaptados.
+- ARR clean-room: no implementation/source reconstruction/assets/text are copied or adapted.
 
 This closes the old `over 50 / registry unknown` blocker but does not satisfy the ledger's player-reachability gate. Somake is not component #56 and contributes +0 until the effective config and survival path are closed strongly enough.
 
@@ -142,7 +142,7 @@ This closes the old `over 50 / registry unknown` blocker but does not satisfy th
 - exact group distribution: 7 Abyssal, 4 Ender, 1 Evocation, 5 Holy, 11 Fire, 5 Ice, 4 Nature, 22 Technomancy;
 - ten extra root localization keys are unregistered and excluded;
 - publisher generic/current 65-spell scale is not substituted for physical 1.1.13;
-- no upstream implementation/assets copied ou adaptados; balance/acquisition/runtime/API seams remain fail-closed where not separately proven.
+- no upstream implementation/assets copied or adapted; balance/acquisition/runtime/API seams remain fail-closed where not separately proven.
 
 ## Phase 2BD — Alshanex's Familiars 4.0.3 — componente #54
 
@@ -158,7 +158,7 @@ This closes the old `over 50 / registry unknown` blocker but does not satisfy th
 - exact spell inventory: 7 unconditional provider registry assignments/calls mapped to current IDs;
 - exact ritual inventory: 11 packaged resources of custom type `alshanex_familiars:ritual_recipe`;
 - Sound/Melodic ownership stays with Tunes n' Tomes; borrowed Iron's casts/familiar AI do not create duplicate semantic objects;
-- no upstream implementation/assets copied ou adaptados; runtime/API/ownership adapter seams remain fail-closed.
+- no upstream implementation/assets copied or adapted; runtime/API/ownership adapter seams remain fail-closed.
 
 ## Phase 2BJ — Gaze 1.1.7.1 — exact artifact, semantic +1, component still open
 
@@ -176,7 +176,7 @@ This closes the old `over 50 / registry unknown` blocker but does not satisfy th
 - exact registry/progression evidence: 26 player-facing Gaze Spirit Rites, 2 Geas effect types, 8 rune items, 1 Gaze-owned Iron's spell (Soulward Shield);
 - physical `irons_spellbooks` 3.16.3 satisfies the optional provider gate for Soulward Shield;
 - exact COMMON `disableGazeRites` gate suppresses the rite registry when true; deployed value unavailable, so the 26 Rites remain conditional;
-- ARR clean-room: no implementation bodies/assets/text copied ou adaptados.
+- ARR clean-room: no implementation bodies/assets/text copied or adapted.
 
 Gaze therefore contributes **+1** to the strict semantic numerator, producing **1250**, but remains an open provider component and does not create component #58. The next actionable provider with materially new exact evidence should be pursued before repeating config-blocked Gaze/NEG work.
 
@@ -193,11 +193,11 @@ Gaze therefore contributes **+1** to the strict semantic numerator, producing **
 - publisher defines SpellLib as shared library/API infrastructure with no standalone gameplay of its own;
 - 2.2.0 publisher delta adds Healing Received, Damage Taken and Summon Health attributes;
 - reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon surfaces are infrastructure, not proof of provider-owned spell identities;
-- no JAR decompilation ou copied implementation/assets; unsupported internal signatures remain fail-closed.
+- no JAR decompilation or copied implementation/assets; unsupported internal signatures remain fail-closed.
 
 ### Authority boundary
 
-GTBC's SpellLib owns only its library facilities. Concrete spell identities and cast settlement remain owned by the consuming spell providers/Iron's substrate as applicable. Black Arcana does not create a second spell registry, mana ledger ou cast settlement because a library exposes reusable machinery.
+GTBC's SpellLib owns only its library facilities. Concrete spell identities and cast settlement remain owned by the consuming spell providers/Iron's substrate as applicable. Black Arcana does not create a second spell registry, mana ledger or cast settlement because a library exposes reusable machinery.
 
 ## Semantic correction — Werewolves Leap
 
@@ -253,7 +253,7 @@ Provider-specific ownership integration remains **fail-closed** until a current 
 
 ### License / clean-room
 
-FamiliarsLib license evidence conflicts across source/publisher surfaces. No reuse conclusion is inferred. GTBC's SpellLib is likewise treated conservatively for factual publisher/physical evidence. Read-only factual audit only; no code/assets/text copied ou adaptados.
+FamiliarsLib license evidence conflicts across source/publisher surfaces. No reuse conclusion is inferred. GTBC's SpellLib is likewise treated conservatively for factual publisher/physical evidence. Read-only factual audit only; no code/assets/text copied or adapted.
 
 ## Immediate predecessors
 
