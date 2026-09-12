@@ -42,6 +42,12 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
 
+## Phase 2BK exact zero closure — Ignis Soulfires: Spellbooks 1.1.0
+
+Exact hash-matched artifact evidence closes Ignis Soulfires: Spellbooks 1.1.0 as `BRIDGE_COMPAT + GEAR_LOOT_SUPPORT` with **0 independent semantic magic objects**. The artifact contains 11 provider classes; its own registry surfaces are one armor-material registry and one five-item equipment registry. Across every provider class, structural inspection finds 0 hits for `AbstractSpell`, `registerSpell`, `SpellRegistry`, `Ritual`, `Rite` or `Ability`; packaged provider data contains equipment tags/recipes rather than a spell/ritual/action registry.
+
+Isolated NON-MERGE PR #203 audited exact HEAD `ed807b77345cde1803767d804e26ea972c41d964`; run `34688273425` was GREEN and published text-only artifact `10296406134` with digest `sha256:5e96a319aea648aadf2c70bdf9b870a26a9503068307befc8a9972bb7b1cd52e`. The ARR JAR itself was not redistributed. Phase 2BK therefore classifies the provider `ZERO_BRIDGE_INFRA`, contributes **+0**, and leaves the strict semantic minimum at **1250**. The provider component itself is now closed, moving the separate technical component metric to **58/100**.
+
 ## Phase 2BJ semantic promotion — Gaze 1.1.7.1 exact artifact
 
 Exact hash-matched Gaze 1.1.7.1 evidence closes one current Gaze-owned Iron's standalone spell identity, **Soulward Shield**, whose optional `irons_spellbooks` provider gate is satisfied by the physical pack. The same exact artifact closes 26 player-facing Gaze Spirit Rite identities, but their registration is suppressed when the resolved COMMON config `disableGazeRites=true`; the deployed value is unavailable, so those 26 remain `CONDITIONAL`. Two Gaze `GeasEffectType` identities and eight rune items remain excluded by the existing metric definition.
@@ -215,7 +221,7 @@ These rows are deliberately **not additive to 1249** until their exact/current i
 |---|---|---|---|
 | [Somake Spells](../providers/somake-spells/README.md) 1.0.8-fix | exact hash-matched artifact closes **67 current spell registrations** under the physical optional-provider set; 61 unconditional + 3 `mowziesmobs`-gated + 3 `iss_magicfromtheeast`-gated, with both gates physically satisfied | `CONDITIONAL / EXACT REGISTRY CLOSED / +0` | deployed `somakespells/general/common.toml` is unavailable and complete object-level survival acquisition/reachability remains unclosed; code default `enableSpellLockSystem=false` is not substituted for the actual pack config |
 | [Gaze](../providers/gaze/README.md) 1.1.7.1 rites | exact hash-matched artifact closes **26 player-facing Spirit Rite identities** | `CONDITIONAL / EXACT REGISTRY CLOSED / +0 RITES` | exact provider control flow suppresses the rite surfaces when resolved COMMON config `disableGazeRites=true`; deployed pack value is unavailable, so source default `false` is not substituted |
-| [Ignis Soulfires: Spellbooks](../providers/ignis-soulfires-spellbooks/README.md) 1.1.0 | exact installed artifact and exact official CurseForge release are pinned (`project 1572171`, file `8620663`); publisher explicitly describes a Souled Ignitium Wizard Armor compatibility scope, while exact source/registry remains unavailable | `OPEN` | no safe 1.1.0 semantic registry inventory; publisher armor scope does not prove absence of spell/ritual registrations |
+| [Ignis Soulfires: Spellbooks](../providers/ignis-soulfires-spellbooks/README.md) 1.1.0 | exact hash-matched artifact closes 11 provider classes, one armor-material registry and exactly five equipment items; no spell/ritual/action registry exists | `ZERO_BRIDGE_INFRA / EXACT ARTIFACT CLOSED / +0` | gear/items/passive equipment behavior are excluded by metric definition; exact artifact proves zero independent semantic magic objects |
 | [Goety Cataclysm](../providers/goety-cataclysm/README.md) 1.21.1-1.8.2 | exact installed release; public semantic surface proves addon spells/abilities exist | `OPEN` | complete Focus/spell/ritual inventory unavailable for current build |
 | [Goety Iron](../providers/goety-iron/README.md) 3.1 | exact installed release; servant/focus/ritual bridge publicly established | `OPEN / BRIDGE-BOUNDED` | public servant list is not a spell inventory; focus/ritual registry totals are unverified |
 
@@ -235,9 +241,8 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 To converge on a final denominator efficiently, prioritize:
 
-1. exact Ignis Soulfires: Spellbooks 1.1.0 semantic registry inventory;
-2. Goety Iron 3.1 and Goety Cataclysm 1.21.1-1.8.2 exact semantic inventories without duplicating base-Goety ownership;
-3. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.1 and Gaze 1.1.7.1 Rites;
-4. remaining open provider inventories that can materially reduce the denominator blocker.
+1. Goety Iron 3.1 and Goety Cataclysm 1.21.1-1.8.2 exact semantic inventories without duplicating base-Goety ownership;
+2. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.1 and Gaze 1.1.7.1 Rites;
+3. remaining open provider inventories that can materially reduce the denominator blocker.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.

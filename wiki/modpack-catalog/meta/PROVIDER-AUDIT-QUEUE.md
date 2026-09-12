@@ -8,14 +8,14 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica após Phase 2BI / PR #200: `21d63c58a2ad6cd19f4f68131bb39e4b39bdd1c2`; o exact-SHA post-merge CI #2528 ficou GREEN, incluindo canonical QA-JAR publication;
+- base canônica considerada para Phase 2BK: `main@fa14b75bf08482031e4fabbc779d30d295e22c5e`; esse SHA contém Phase 2BJ / PR #202 e passou exact-SHA post-merge CI #2531, incluindo canonical QA-JAR publication;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica candidata da Phase 2BJ fecha **1250 objetos mágicos semânticos** após a promoção exata de Soulward Shield/Gaze. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BJ fecha **1250 objetos mágicos semânticos**. Phase 2BK fecha Ignis Soulfires: Spellbooks em **+0** por evidência exata, portanto o mínimo continua **1250**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -25,13 +25,14 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 
 - delta semântico Werewolves: **+1**;
 - delta semântico GTBC SpellLib: **+0**;
+- delta semântico Ignis Soulfires: Spellbooks 1.1.0 Phase 2BK: **+0** (`ZERO_BRIDGE_INFRA` exact-artifact);
 - delta semântico Gaze 1.1.7.1 Phase 2BJ: **+1**;
 - delta semântico Alshanex 4.0.3: **+18**;
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
 - delta semântico Somake 1.0.8-fix Phase 2BF: **+0** (`67 exact registry`, reachability/config efetivo ainda `CONDITIONAL`);
 - delta semântico Leyline Spellbooks 1.0.3 Phase 2BG: **+14** (`14 exact unconditional registry identities`);
 - delta semântico Goety 3.1.4 Phase 2BH: **+361** (`123 active Focus + 238 available distinct non-Focus rituals`);
-- mínimo estrito global candidato após Phase 2BJ: **1250**;
+- mínimo estrito global após Phase 2BK: **1250**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -45,9 +46,17 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
 - Phase 2BD / PR #186: HEAD auditado `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` passou Black Arcana CI #2464;
 - PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
-- cobertura canônica de componentes após Phase 2BH: **57/100 = 57%**; componente #57 fechado pelo PR #198 com CI #2523 no HEAD limpo e CI #2524 no merge SHA exato.
+- cobertura de componentes após o fechamento Phase 2BK: **58/100 = 58%**; `ignissoulfires_spellbooks` é componente #58 por exact-artifact closure, sem delta semântico.
 
-O valor 57/100 nunca substitui a métrica semântica de magias.
+O valor 58/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BK — Ignis Soulfires: Spellbooks 1.1.0 — componente #58 / semantic +0
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `ignissoulfires_spellbooks` | `ignissoulfires_spellbooks-1.1.0.jar` | EXACT HASH-MATCHED ARTIFACT / BRIDGE_COMPAT + GEAR_LOOT_SUPPORT / 11 PROVIDER CLASSES / ARMOR MATERIAL + 5 ITEMS / NO SPELL-RITUAL-ACTION REGISTRY / ZERO_BRIDGE_INFRA / +0 SEMANTIC / COMPONENT #58 |
+
+Evidence: physical/audit SHA-1 `dcde77db35b6de3562b4e6de0025746eaf68f119`; CurseForge project/file `1572171 / 8620663`; NON-MERGE PR #203; audit HEAD `ed807b77345cde1803767d804e26ea972c41d964`; run `34688273425` GREEN; text-only artifact `10296406134`, digest `sha256:5e96a319aea648aadf2c70bdf9b870a26a9503068307befc8a9972bb7b1cd52e`. ARR JAR not redistributed. Runtime gear values/ABI and any Black Arcana adapter remain fail-closed.
 
 ## Phase 2BH — Goety 3.1.4 — componente #57 canônico
 

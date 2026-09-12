@@ -4,7 +4,9 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BJ raises the **strict counted minimum to 1250 semantic magic objects** from provider records that meet the ledger's inclusion rule. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BK keeps the **strict counted minimum at 1250 semantic magic objects** while closing Ignis Soulfires: Spellbooks 1.1.0 as an exact zero-semantic bridge/gear provider. The global denominator is still incomplete and no semantic percentage is declared.
+
+Phase 2BK has a semantic delta of **0**: exact hash-matched Ignis Soulfires: Spellbooks 1.1.0 contains only its armor-material/item bridge surfaces and no provider-owned spell, ritual, rite or equivalent action registry. This closes provider component **#58** without changing the semantic numerator. See [`../providers/ignis-soulfires-spellbooks/EXACT-1.1.0-ARTIFACT-AUDIT.md`](../providers/ignis-soulfires-spellbooks/EXACT-1.1.0-ARTIFACT-AUDIT.md).
 
 The latest semantic promotion is **Gaze +1**. Exact hash-matched 1.1.7.1 artifact evidence closes one Gaze-owned Iron's standalone spell, Soulward Shield, with the optional Iron's provider gate satisfied by the physical pack. The same artifact closes 26 player-facing Spirit Rite identities, but they remain `CONDITIONAL` because the deployed COMMON `disableGazeRites` value is unavailable; two Geas effect types and eight rune items are metric-excluded. See [`../providers/gaze/EXACT-1.1.7.1-ARTIFACT-AUDIT.md`](../providers/gaze/EXACT-1.1.7.1-ARTIFACT-AUDIT.md).
 
@@ -22,6 +24,7 @@ Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publish
 
 Therefore:
 
+- semantic numerator/denominator delta attributable to Ignis Soulfires: Spellbooks 1.1.0: **+0**;
 - semantic numerator delta from Gaze 1.1.7.1 exact closure: **+1**;
 - semantic numerator delta from Goety 3.1.4 exact closure: **+361**;
 - semantic numerator delta from Leyline Spellbooks 1.0.3 exact closure: **+14**;
@@ -38,6 +41,12 @@ The preceding semantic-only promotion was **Malum +26**: whole-interval path his
 Phase 2BH is canonical for Goety 3.1.4 from exact hash-matched artifact evidence: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical values are **1249 / 57 of 100**. Runtime/API/balance gates remain separate.
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
+
+## Phase 2BK — Ignis Soulfires: Spellbooks 1.1.0 component #58, exact zero closure
+
+Exact hash-matched artifact evidence closes the provider as `BRIDGE_COMPAT + GEAR_LOOT_SUPPORT`: 11 provider classes, one armor-material registry, one five-item equipment registry, and no provider-owned spell/ritual/action registry. Clean-room structural inspection finds 0 `AbstractSpell`, `registerSpell`, `SpellRegistry`, `Ritual`, `Rite` and `Ability` class hits. Semantic disposition is `ZERO_BRIDGE_INFRA` with **+0**; the strict semantic minimum remains **1250**.
+
+Isolated NON-MERGE PR #203 exact HEAD `ed807b77345cde1803767d804e26ea972c41d964` passed run `34688273425`; text-only evidence artifact `10296406134` has digest `sha256:5e96a319aea648aadf2c70bdf9b870a26a9503068307befc8a9972bb7b1cd52e`. The provider was already an open unit in the reconciled 100-component denominator, so exact closure moves the technical metric to **58/100**. Runtime numerical gear behavior and any future adapter remain separate fail-closed gates.
 
 ## Phase 2BJ — Gaze 1.1.7.1 semantic-only exact promotion
 
@@ -57,7 +66,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after Phase 2BH: 57/100 = 57%.**
+**Canonical provider-component coverage after Phase 2BK: 58/100 = 58%.**
 
 Phase 2BF exact-artifact reconciliation closes Somake 1.0.8-fix registry identity at 67 current registrations under the physical optional-provider set, but the provider remains `CONDITIONAL` because the deployed COMMON spell-lock config and complete survival acquisition/reachability are not authoritative. Phase 2BF therefore changes neither metric: **874** strict semantic objects and **55/100** closed provider components.
 
@@ -107,6 +116,7 @@ GTBC's SpellLib and FamiliarsLib were already members of those 100 component uni
 | 55 | Phase 2BE / PR #189 | `cataclysm_spellbooks` | canonical at `main@cce7f51794e4e65b0d97511eb55f710afc6e02f0`; audited HEAD `e787699d25b283b8040cd179f605143e8ee396de` CI #2483 GREEN; post-merge CI #2484 attempt 2 GREEN |
 | 56 | Phase 2BG / PR #195 | `leylines` | canonical at `main@88f042f68429ff920314a7ec3a6923369edc93fd`; audited HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` CI #2503 GREEN; post-merge CI #2504 GREEN |
 | 57 | Phase 2BH / PR #198 | `goety` | canonical at `main@4fcc40aaf8149b5511dbd882a5616ee5240cd640`; audited HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` CI #2523 GREEN; post-merge CI #2524 GREEN; QA artifact `10291461067` |
+| 58 | Phase 2BK | `ignissoulfires_spellbooks` | exact hash-matched 1.1.0 gear/bridge closure; `ZERO_BRIDGE_INFRA`; semantic +0; evidence PR #203 / run `34688273425` |
 
 Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
 
