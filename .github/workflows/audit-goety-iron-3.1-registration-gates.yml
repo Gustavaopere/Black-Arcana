@@ -1,0 +1,75 @@
+name: Audit Goety Iron 3.1 registration gates
+
+on:
+  push:
+    branches:
+      - audit/goety-iron-3.1-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Materialize exact artifact and verify hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar="$RUNNER_TEMP/GoetyIron-1.21.1-NeoForge-3.1.jar"
+          curl --fail --location --silent --show-error --retry 2 'https://www.curseforge.com/api/v1/mods/1367643/files/8662179/download' -o "$jar"
+          test "$(sha1sum "$jar" | awk '{print $1}')" = 'c8529867e798661ed01fb2948abda23735888fc6'
+      - name: Derive registration/config gate facts without retaining bytecode bodies
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar="$RUNNER_TEMP/GoetyIron-1.21.1-NeoForge-3.1.jar"
+          mkdir -p audit-out
+          javap -classpath "$jar" -p -s com.k1sak1.goetyiron.item.ModItems > "$RUNNER_TEMP/items.sig"
+          javap -classpath "$jar" -c -p com.k1sak1.goetyiron.item.ModItems > "$RUNNER_TEMP/items.code"
+          javap -classpath "$jar" -p -s com.k1sak1.goetyiron.Config > "$RUNNER_TEMP/config.sig"
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          sig = Path(__import__('os').environ['RUNNER_TEMP'] + '/items.sig').read_text(errors='replace')
+          code = Path(__import__('os').environ['RUNNER_TEMP'] + '/items.code').read_text(errors='replace')
+          cfg = Path(__import__('os').environ['RUNNER_TEMP'] + '/config.sig').read_text(errors='replace')
+          focus_fields = re.findall(r'public static final .*?DeferredHolder<[^;]+>\s+([A-Z0-9_]+_FOCUS);', sig)
+          m = re.search(r'(?ms)^\s*static \{\};\s*\n\s*Code:\s*\n(.*?)(?=^\s*})', code)
+          clinit = m.group(1) if m else ''
+          branch_re = re.compile(r'\b(if(?:eq|ne|lt|ge|gt|le|null|nonnull|_icmp\w+|_acmp\w+)|tableswitch|lookupswitch)\b')
+          branches = branch_re.findall(clinit)
+          register_calls = len(re.findall(r'DeferredRegister(?:\$Items)?\.register', clinit))
+          config_refs = len(re.findall(r'com/k1sak1/goetyiron/Config', clinit))
+          config_fields = []
+          for line in cfg.splitlines():
+              mm = re.search(r'public static(?: final)? .*?\s+([A-Za-z0-9_]+);$', line.strip())
+              if mm: config_fields.append(mm.group(1))
+          gate_names = sorted(x for x in config_fields if re.search(r'enable|disable|enabled|disabled|focus.*(?:on|off)|spell.*(?:on|off)', x, re.I))
+          out = [
+              'physical_sha1=c8529867e798661ed01fb2948abda23735888fc6',
+              f'focus_holder_count={len(focus_fields)}',
+              'focus_holder_fields=' + ','.join(sorted(focus_fields)),
+              f'static_initializer_branch_count={len(branches)}',
+              f'static_initializer_deferred_register_calls={register_calls}',
+              f'static_initializer_config_reference_count={config_refs}',
+              f'config_declared_field_count={len(config_fields)}',
+              f'config_enable_disable_like_field_count={len(gate_names)}',
+              'config_enable_disable_like_fields=' + (','.join(gate_names) if gate_names else '<none>'),
+          ]
+          Path('audit-out/registration-gates.txt').write_text('\n'.join(out)+'\n')
+          PY
+          cat audit-out/registration-gates.txt
+      - name: Publish text-only gate facts
+        uses: actions/upload-artifact@v4
+        with:
+          name: goety-iron-3.1-registration-gate-evidence
+          path: audit-out
+          retention-days: 7
+          if-no-files-found: error
