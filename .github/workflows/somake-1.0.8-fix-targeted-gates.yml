@@ -1,0 +1,66 @@
+name: Somake 1.0.8-fix Targeted Gates Audit
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-somake-1.0.8-fix
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Inspect exact optional and spell-lock gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_SHA1='b0ad94c1504709662bee2d08700375ccecbb5ec7'
+          URL='https://www.cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8417850/somake-spells-irons-spells-addon-1461634-8417850.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 180 "$URL" -o somake.jar
+          ACTUAL_SHA1="$(sha1sum somake.jar | awk '{print $1}')"
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+          mkdir -p audit
+          {
+            echo 'Somake 1.0.8-fix targeted gates audit'
+            echo "expected_sha1=$EXPECTED_SHA1"
+            echo "actual_sha1=$ACTUAL_SHA1"
+            echo
+            echo '== MagicFromTheEastCompat signature+bytecode =='
+            javap -classpath somake.jar -p -c com.somake.somakespells.compat.MagicFromTheEastCompat 2>/dev/null || true
+            echo
+            echo '== Config signature+bytecode =='
+            javap -classpath somake.jar -p -c com.somake.somakespells.config.Config 2>/dev/null || true
+            echo
+            echo '== MagicBlockHandler signature+bytecode =='
+            javap -classpath somake.jar -p -c com.somake.somakespells.event.MagicBlockHandler 2>/dev/null || true
+            echo
+            echo '== SpellCommand signature+bytecode =='
+            javap -classpath somake.jar -p -c com.somake.somakespells.command.SpellCommand 2>/dev/null || true
+            echo
+            echo '== PlayerSpellMastery signature+bytecode =='
+            javap -classpath somake.jar -p -c com.somake.somakespells.capabilities.PlayerSpellMastery 2>/dev/null || true
+            echo
+            echo '== main mod config registration facts =='
+            javap -classpath somake.jar -p -c com.somake.somakespells.SomakeSpells 2>/dev/null \
+              | grep -E 'registerConfig|ModConfig|Config|COMMON|SERVER|CLIENT|somake|invoke|Field' || true
+            echo
+            echo '== exact metadata dependency lines =='
+            unzip -p somake.jar META-INF/neoforge.mods.toml 2>/dev/null \
+              | grep -Ei 'modId|versionRange|mandatory|type|iss_magicfromtheeast|mowziesmobs|irons_spellbooks|cataclysm|attributeslib|apothic' || true
+          } > audit/targeted-gates.txt
+          cat audit/targeted-gates.txt
+      - name: Upload targeted text evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-1.0.8-fix-targeted-gates
+          path: audit/targeted-gates.txt
+          if-no-files-found: error
+          retention-days: 30
