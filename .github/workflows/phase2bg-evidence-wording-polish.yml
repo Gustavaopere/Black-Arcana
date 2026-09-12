@@ -1,0 +1,63 @@
+name: Phase 2BG evidence wording polish
+
+on:
+  push:
+    branches:
+      - docs/leylines-1.0.3-exact-catalog-closure
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tighten Leylines eligibility wording
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          replacements={
+          'wiki/modpack-catalog/providers/leyline-spellbooks/README.md':[
+            ("14 CURRENT REGISTERED SPELL IDENTITIES / GENERIC IRON'S SURVIVAL SCROLL ELIGIBILITY CLOSED / RUNTIME/API QA FAIL-CLOSED","14 CURRENT REGISTERED SPELL IDENTITIES / NO PROVIDER-SPECIFIC SPELL LOCK OBSERVED / HOST RUNTIME/API QA FAIL-CLOSED"),
+            ("The exact provider artifact also closes enough active/survival eligibility for candidate `COUNTED_EXACT` treatment: the Ley school uses Iron's seven-argument `SchoolType` contract (`requiresLearning=false`, `allowLooting=true` on exact Iron's 3.16.3 source), the 14 spell classes do not override `allowLooting()`/`isEnabled()`, Iron's default spell config is enabled, and Iron's generic survival scroll path can select enabled loot-eligible addon spells without a school filter. Leylines additionally injects a dedicated `charge_leyline` scroll.","The exact provider artifact exposes no Leylines-specific spell lock or conditional registration gate. Exact Iron's 3.16.3 source corroborates ordinary host eligibility: the Ley school uses the seven-argument `SchoolType` contract (`requiresLearning=false`, `allowLooting=true`), the 14 spell classes do not override `allowLooting()`/`isEnabled()`, and the generic scroll path can select enabled loot-eligible addon spells without a school filter. Leylines additionally injects a dedicated `charge_leyline` scroll. Deployed generic Iron's per-spell config and full-pack runtime behavior remain separate QA rather than being inferred here."),
+            ("exact Ley-school/default eligibility facts plus Iron's 3.16.3 generic scroll-selection contract.","exact Ley-school/default facts plus Iron's 3.16.3 generic scroll-selection contract, with deployed generic host config still a separate runtime-QA boundary.")],
+          'wiki/modpack-catalog/providers/leyline-spellbooks/EXACT-1.0.3-ARTIFACT-AUDIT.md':[
+            ("This is sufficient for the semantic ledger's current-player-eligibility gate for all fourteen registered spells. It does **not** prove every numerical mechanic, drop probability in the assembled pack, or a Black Arcana integration hook.","This establishes that there is no provider-specific lock comparable to Somake and corroborates the ordinary Iron's host path. Under the ledger's existing `COUNTED_EXACT` precedent for unconditional Iron's-addon registries, that removes the Leylines-specific blocker to semantic counting. It does **not** substitute code defaults for an unmaterialized deployed generic Iron's per-spell config, nor prove every numerical mechanic, assembled-pack drop probability or Black Arcana integration hook."),
+            ("For Phase 2BG, the exact installed spell inventory is eligible for candidate `COUNTED_EXACT` promotion: **+14 semantic magic objects**.","For Phase 2BG, the exact installed unconditional spell inventory is eligible for candidate `COUNTED_EXACT` promotion under the same registry-level precedent used by other exact Iron's-addon closures: **+14 semantic magic objects**.")],
+          'wiki/modpack-catalog/providers/leyline-spellbooks/EXACT-1.0.3-SPELL-INVENTORY.md':[
+            ("Exact Ley-school/default evidence plus the exact Iron's 3.16.3 generic scroll path closes current active/survival eligibility strongly enough for candidate `COUNTED_EXACT` treatment under the canonical semantic ledger.","Exact Ley-school/default evidence shows no provider-specific lock, while the exact Iron's 3.16.3 generic scroll path corroborates ordinary host reachability. Candidate `COUNTED_EXACT` treatment is therefore based on the exact unconditional registry under the ledger's existing Iron's-addon precedent; deployed generic host config remains separate runtime QA.")],
+          'wiki/modpack-catalog/meta/PHASE2BG-LEYLINES-1.0.3-EXACT-CHECKPOINT.md':[
+            ("Active/survival eligibility is materially stronger than registry membership alone:","Provider-specific eligibility evidence is materially stronger than registry membership alone:"),
+            ("No provider-specific spell-lock/config eligibility gate analogous to Somake was established. The six observed `LeylinesConfig` values govern spell behavior rather than registration/learning eligibility.","No provider-specific spell-lock/config eligibility gate analogous to Somake was established. The six observed `LeylinesConfig` values govern spell behavior rather than registration/learning eligibility. Deployed generic Iron's per-spell config remains a separate runtime-QA boundary and is not inferred from defaults."),
+            ("The exact JAR closes **14 unconditional `AbstractSpell` registrations** under one provider `DeferredRegister<AbstractSpell>`.","The exact JAR closes **14 unconditional `AbstractSpell` registrations** under one provider `DeferredRegister<AbstractSpell>`; this exact registry is the semantic-count authority for the candidate, while generic host runtime config remains separately testable.")],
+          'wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md':[
+            ("Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spell identities** plus current active/survival eligibility through the exact Ley-school defaults and Iron's 3.16.3 generic scroll path.","Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spell identities**. No Leylines-specific spell lock or conditional registration gate is present, and exact Iron's 3.16.3 school/default/scroll evidence corroborates ordinary host reachability; deployed generic host config remains separate runtime QA rather than a reason to reinterpret the exact registry.")],
+          'wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md':[
+            ("Exact hash-matched Leylines 1.0.3 evidence closes 14 unconditional registered spells and their current host eligibility.","Exact hash-matched Leylines 1.0.3 evidence closes 14 unconditional registered spells and removes the provider-specific eligibility blocker; exact Iron's host defaults/scroll behavior corroborate normal reachability while deployed generic host config remains separate runtime QA.")],
+          'wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md':[
+            ("Exact Ley-school/default evidence plus the exact Iron's 3.16.3 generic scroll-selection path closes current active/survival eligibility strongly enough for candidate `COUNTED_EXACT` treatment.","Exact Ley-school/default evidence finds no provider-specific spell lock, and the exact Iron's 3.16.3 generic scroll-selection path corroborates ordinary host reachability. Candidate `COUNTED_EXACT` treatment is based on the exact unconditional registry; deployed generic host config remains separate runtime QA.")],
+          'wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md':[
+            ("CURRENT HOST ELIGIBILITY CLOSED / +14 CANDIDATE SEMANTIC DELTA","NO PROVIDER-SPECIFIC SPELL LOCK OBSERVED / GENERIC HOST CONFIG QA SEPARATE / +14 CANDIDATE SEMANTIC DELTA")]
+          }
+          for path,repls in replacements.items():
+              p=Path(path); s=p.read_text(encoding='utf-8')
+              for old,new in repls:
+                  n=s.count(old); assert n==1, f'{path}: {old[:60]} count={n}'
+                  s=s.replace(old,new,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+          git diff --check
+          git status --short
+      - name: Commit wording correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add wiki/modpack-catalog
+          git commit -m 'docs: tighten Leylines registry and host-config evidence boundary'
+          git push
