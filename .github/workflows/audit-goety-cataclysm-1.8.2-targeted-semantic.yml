@@ -1,0 +1,36 @@
+name: Audit Goety Cataclysm 1.8.2 targeted semantics
+
+on:
+  push:
+    branches:
+      - audit/goety-cataclysm-1.21.1-1.8.2-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Materialize exact artifact and verify hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="$RUNNER_TEMP/goety_cataclysm-1.21.1-1.8.2.jar"
+          curl --fail --location --silent --show-error --retry 2 'https://www.curseforge.com/api/v1/mods/1224214/files/8518940/download' -o "$target"
+          test "$(sha1sum "$target" | awk '{print $1}')" = '4e3052a082200371b36e1a88fdce05e294d82757'
+      - name: Extract targeted ritual outcomes and conditions
+        env:
+          JAR_PATH: ${{ runner.temp }}/goety_cataclysm-1.21.1-1.8.2.jar
+          RECIPE_ROOT: data/goety_cataclysm/recipe
+          AUDIT_OUT: audit-targeted
+        run: python .github/goety_addon_targeted_semantic.py
+      - name: Publish text-only targeted evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: goety-cataclysm-1.8.2-targeted-semantic-evidence
+          path: audit-targeted
+          retention-days: 7
+          if-no-files-found: error

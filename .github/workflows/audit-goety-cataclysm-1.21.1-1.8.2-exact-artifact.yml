@@ -1,0 +1,82 @@
+name: Audit Goety Cataclysm 1.21.1-1.8.2 exact artifact
+
+on:
+  push:
+    branches:
+      - audit/goety-cataclysm-1.21.1-1.8.2-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Materialize exact publisher artifact and verify physical hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit-out
+          target="$RUNNER_TEMP/goety_cataclysm-1.21.1-1.8.2.jar"
+          urls=(
+            'https://www.curseforge.com/api/v1/mods/1224214/files/8518940/download'
+            'https://edge.forgecdn.net/files/8518/940/goety_cataclysm-1.21.1-1.8.2.jar'
+            'https://mediafilez.forgecdn.net/files/8518/940/goety_cataclysm-1.21.1-1.8.2.jar'
+          )
+          ok=0
+          for url in "${urls[@]}"; do
+            rm -f "$target"
+            if curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 120 "$url" -o "$target"; then
+              got="$(sha1sum "$target" | awk '{print $1}')"
+              if [ "$got" = '4e3052a082200371b36e1a88fdce05e294d82757' ]; then
+                printf 'publisher_url=%s\n' "$url" > audit-out/identity.txt
+                ok=1
+                break
+              fi
+            fi
+          done
+          test "$ok" -eq 1
+          printf 'filename=goety_cataclysm-1.21.1-1.8.2.jar\n' >> audit-out/identity.txt
+          printf 'curseforge_project=1224214\ncurseforge_file=8518940\n' >> audit-out/identity.txt
+          printf 'physical_sha1=4e3052a082200371b36e1a88fdce05e294d82757\n' >> audit-out/identity.txt
+          printf 'audit_sha1=%s\n' "$(sha1sum "$target" | awk '{print $1}')" >> audit-out/identity.txt
+          printf 'audit_sha256=%s\n' "$(sha256sum "$target" | awk '{print $1}')" >> audit-out/identity.txt
+          printf 'size_bytes=%s\n' "$(stat -c '%s' "$target")" >> audit-out/identity.txt
+          unzip -t "$target" >/dev/null
+
+      - name: Extract structural semantic evidence
+        shell: bash
+        env:
+          JAR_PATH: ${{ runner.temp }}/goety_cataclysm-1.21.1-1.8.2.jar
+          PROVIDER_NS: goety_cataclysm
+          AUDIT_OUT: audit-out
+        run: |
+          set -euo pipefail
+          python .github/goety_addon_exact_audit.py
+          mkdir -p audit-out/javap
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            safe="${cls//./_}"
+            javap -classpath "$JAR_PATH" -p -s "$cls" > "audit-out/javap/$safe.txt" 2>/dev/null || true
+          done < audit-out/relevant-class-paths.txt
+          grep -R -n -E 'Focus|Ritual|Spell|Summon|Ability|DeferredRegister|RegistryObject|DeferredHolder' audit-out/javap > audit-out/javap-semantic-signatures.txt || true
+
+      - name: Publish text-only clean-room evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: goety-cataclysm-1.21.1-1.8.2-exact-artifact-evidence
+          path: audit-out
+          retention-days: 7
+          if-no-files-found: error
