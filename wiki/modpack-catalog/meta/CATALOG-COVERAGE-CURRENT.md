@@ -4,9 +4,11 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BH canonically closes a **strict counted minimum of 1249 semantic magic objects** from provider records that meet the ledger's inclusion rule. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BJ raises the **strict counted minimum to 1250 semantic magic objects** from provider records that meet the ledger's inclusion rule. The global denominator is still incomplete and no semantic percentage is declared.
 
-The latest semantic promotion is **Goety +361**. Exact hash-matched 3.1.4 artifact evidence closes 123 active/acquirable Focus actions and 238 available distinct non-Focus ritual actions after semantic deduplication and physical-provider condition filtering. Runtime/API/balance and provider-owned settlement remain separate fail-closed gates. See [`../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md`](../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md).
+The latest semantic promotion is **Gaze +1**. Exact hash-matched 1.1.7.1 artifact evidence closes one Gaze-owned Iron's standalone spell, Soulward Shield, with the optional Iron's provider gate satisfied by the physical pack. The same artifact closes 26 player-facing Spirit Rite identities, but they remain `CONDITIONAL` because the deployed COMMON `disableGazeRites` value is unavailable; two Geas effect types and eight rune items are metric-excluded. See [`../providers/gaze/EXACT-1.1.7.1-ARTIFACT-AUDIT.md`](../providers/gaze/EXACT-1.1.7.1-ARTIFACT-AUDIT.md).
+
+The preceding semantic promotion is **Goety +361**. Exact hash-matched 3.1.4 artifact evidence closes 123 active/acquirable Focus actions and 238 available distinct non-Focus ritual actions after semantic deduplication and physical-provider condition filtering. Runtime/API/balance and provider-owned settlement remain separate fail-closed gates. See [`../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md`](../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md).
 
 The preceding semantic promotion is **Leyline Spellbooks +14**. Exact hash-matched 1.0.3 artifact evidence closes 14 unconditional provider spell registrations; no Leylines-specific spell lock or conditional registration gate is present, while generic Iron's host config remains separate runtime QA. See [`../providers/leyline-spellbooks/EXACT-1.0.3-ARTIFACT-AUDIT.md`](../providers/leyline-spellbooks/EXACT-1.0.3-ARTIFACT-AUDIT.md).
 
@@ -20,13 +22,14 @@ Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publish
 
 Therefore:
 
+- semantic numerator delta from Gaze 1.1.7.1 exact closure: **+1**;
 - semantic numerator delta from Goety 3.1.4 exact closure: **+361**;
 - semantic numerator delta from Leyline Spellbooks 1.0.3 exact closure: **+14**;
 - semantic numerator delta from Cataclysm: Spellbooks 1.1.13 exact closure: **+59**;
 - semantic numerator delta from Alshanex's Familiars 4.0.3 exact closure: **+18**;
 - semantic numerator delta from the preceding Werewolves correction: **+1**;
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
-- strict reconstructible semantic minimum: **1249**;
+- strict reconstructible semantic minimum: **1250**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
@@ -35,6 +38,12 @@ The preceding semantic-only promotion was **Malum +26**: whole-interval path his
 Phase 2BH is canonical for Goety 3.1.4 from exact hash-matched artifact evidence: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical values are **1249 / 57 of 100**. Runtime/API/balance gates remain separate.
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
+
+## Phase 2BJ — Gaze 1.1.7.1 semantic-only exact promotion
+
+Exact hash-matched artifact evidence closes **+1** current semantic object: Gaze-owned Iron's spell Soulward Shield, with the physical Iron's provider gate satisfied. Gaze's 26 exact player-facing Spirit Rites remain configuration-conditional because the deployed COMMON `disableGazeRites` value is unavailable; the two Geas effect types and eight rune items remain excluded by metric definition. Isolated NON-MERGE PR #201 final audit HEAD `2f4ff6536663b1c629a6a5ea92416765bea17b1e` passed evidence run `34676660467` and published artifact `10292013626` (`sha256:fb69f353b672f7c8ec7b470c454d24d1c3110cb996a250076a16d2b053f23f71`).
+
+Phase 2BJ changes the strict semantic minimum to **1250** but does **not** close another provider component; the internal component metric stays **57/100**. Runtime/config/balance and any Black Arcana adapter remain fail-closed.
 
 ## Phase 2BH — Goety 3.1.4 component #57, canonical
 

@@ -8,30 +8,30 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica após Phase 2BH durable / PR #198: `4fcc40aaf8149b5511dbd882a5616ee5240cd640`; HEAD limpo `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passou CI #2523 e o exact-SHA post-merge CI #2524 ficou GREEN, incluindo canonical QA-JAR publication;
+- `main` canônica após Phase 2BI / PR #200: `21d63c58a2ad6cd19f4f68131bb39e4b39bdd1c2`; o exact-SHA post-merge CI #2528 ficou GREEN, incluindo canonical QA-JAR publication;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BH fecha **1249 objetos mágicos semânticos** com a promoção exata de Goety 3.1.4. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica candidata da Phase 2BJ fecha **1250 objetos mágicos semânticos** após a promoção exata de Soulward Shield/Gaze. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
 GTBC's SpellLib 2.2.0 adiciona **0 magias semânticas independentes**. É infraestrutura de biblioteca/API compartilhada; atributos e helpers reutilizáveis não são identidades de spell próprias.
 
-A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publisher e artefato físico fecham identidade/escala, mas o registry granular atual e a reachability por objeto permanecem abertos.
+A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaze 1.1.7.1 agora está hash-matched. Soulward Shield adiciona **+1**; os 26 Spirit Rites exatos permanecem `CONDITIONAL` por falta do valor COMMON implantado de `disableGazeRites`; 2 Geas e 8 runes são metric-excluded.
 
 - delta semântico Werewolves: **+1**;
 - delta semântico GTBC SpellLib: **+0**;
-- delta semântico Gaze 1.1.7.1: **+0**;
+- delta semântico Gaze 1.1.7.1 Phase 2BJ: **+1**;
 - delta semântico Alshanex 4.0.3: **+18**;
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
 - delta semântico Somake 1.0.8-fix Phase 2BF: **+0** (`67 exact registry`, reachability/config efetivo ainda `CONDITIONAL`);
 - delta semântico Leyline Spellbooks 1.0.3 Phase 2BG: **+14** (`14 exact unconditional registry identities`);
 - delta semântico Goety 3.1.4 Phase 2BH: **+361** (`123 active Focus + 238 available distinct non-Focus rituals`);
-- mínimo estrito global canônico: **1249**;
+- mínimo estrito global candidato após Phase 2BJ: **1250**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -115,23 +115,25 @@ This closes the old `over 50 / registry unknown` blocker but does not satisfy th
 - Sound/Melodic ownership stays with Tunes n' Tomes; borrowed Iron's casts/familiar AI do not create duplicate semantic objects;
 - no upstream implementation/assets copied or adapted; runtime/API/ownership adapter seams remain fail-closed.
 
-## Reconciliação Gaze 1.1.7.1 — PR #180 — parcial, sem incremento de cobertura
+## Phase 2BJ — Gaze 1.1.7.1 — exact artifact, semantic +1, component still open
 
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
-| `gaze` | `gaze-1.1.7.1.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT MODRINTH VERSION / ARR / PUBLIC SCALE + NAMED 1.1.7 LINEAGE / COMPLETE CURRENT REGISTRY OPEN / +0 STRICT SEMANTIC DELTA / POST-MERGE CI GREEN |
+| `gaze` | `gaze-1.1.7.1.jar` | EXACT HASH-MATCHED ARTIFACT / 1 GAZE-OWNED IRON'S SPELL COUNTED / 26 PLAYER-FACING SPIRIT RITES CONFIG-CONDITIONAL / 2 GEAS + 8 RUNES METRIC-EXCLUDED / +1 SEMANTIC / 57/100 UNCHANGED |
 
 ### Evidence boundary
 
-- physical SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`;
+- physical/audit SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`;
 - CurseForge project/file `1273454 / 7261638`;
 - Modrinth project/version `NlvaJ5WE / od4ltbRo`;
-- current publisher scale: 2 Geas, a set of Rites, 6 weapons, 8 runes, 5 Curios and Spirit-Channel pouch;
-- 1.1.7 lineage names current-line Geas/Rites/runes/items, while 1.1.7.1 publishes only a narrow patch delta;
-- no complete 1.1.7.1 registry, object-level reachability table or stable addon API was proven;
-- no code/assets/text copied or adapted; unsupported internals remain fail-closed.
+- isolated NON-MERGE PR #201, exact audit HEAD `2f4ff6536663b1c629a6a5ea92416765bea17b1e`;
+- final evidence run `34676660467`, artifact `10292013626`, digest `sha256:fb69f353b672f7c8ec7b470c454d24d1c3110cb996a250076a16d2b053f23f71`;
+- exact registry/progression evidence: 26 player-facing Gaze Spirit Rites, 2 Geas effect types, 8 rune items, 1 Gaze-owned Iron's spell (Soulward Shield);
+- physical `irons_spellbooks` 3.16.3 satisfies the optional provider gate for Soulward Shield;
+- exact COMMON `disableGazeRites` gate suppresses the rite registry when true; deployed value unavailable, so the 26 Rites remain conditional;
+- ARR clean-room: no implementation bodies/assets/text copied or adapted.
 
-Gaze therefore leaves the global denominator open, but should not be selected again merely to repeat the same publisher evidence. Reopen it only when new exact/current evidence can materially close registry, reachability, acquisition or runtime seams.
+Gaze therefore contributes **+1** to the strict semantic numerator, producing **1250**, but remains an open provider component and does not create component #58. The next actionable provider with materially new exact evidence should be pursued before repeating config-blocked Gaze/NEG work.
 
 ## Phase 2AY — GTBC's SpellLib 2.2.0 — canonical #53
 

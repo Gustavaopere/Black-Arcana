@@ -42,6 +42,12 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
 
+## Phase 2BJ semantic promotion — Gaze 1.1.7.1 exact artifact
+
+Exact hash-matched Gaze 1.1.7.1 evidence closes one current Gaze-owned Iron's standalone spell identity, **Soulward Shield**, whose optional `irons_spellbooks` provider gate is satisfied by the physical pack. The same exact artifact closes 26 player-facing Gaze Spirit Rite identities, but their registration is suppressed when the resolved COMMON config `disableGazeRites=true`; the deployed value is unavailable, so those 26 remain `CONDITIONAL`. Two Gaze `GeasEffectType` identities and eight rune items remain excluded by the existing metric definition.
+
+Isolated NON-MERGE PR #201 audited exact HEAD `2f4ff6536663b1c629a6a5ea92416765bea17b1e`; final evidence run `34676660467` was GREEN and published artifact `10292013626` with digest `sha256:fb69f353b672f7c8ec7b470c454d24d1c3110cb996a250076a16d2b053f23f71`. Phase 2BJ therefore contributes **+1 `COUNTED_EXACT`**, moves the Iron's ecosystem subtotal to **542**, and moves the strict reconstructible minimum to **1250**. Gaze remains an open provider component, so component coverage stays **57/100**. Runtime/config/balance and provider-owned settlement remain separate fail-closed gates.
+
 ## Phase 2BH canonical — Goety 3.1.4
 
 Exact hash-matched 3.1.4 evidence closes **123 active Focus actions + 238 available distinct non-Focus ritual actions = +361**. Durable PR #198 clean HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed Black Arcana CI **#2523** / run `34672038273`; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI **#2524** / run `34672222798`, including canonical QA-JAR publication. Goety is therefore `COUNTED_EXACT` with **361**, the strict minimum is **1249**, and component **#57 / 57 of 100** is canonical. Runtime/API/balance QA remains separate.
@@ -54,20 +60,20 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1249 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BH.**
+**1250 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BJ.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
 - Ars ecosystem: **199**;
-- Iron's ecosystem and spell-content addons: **541**;
+- Iron's ecosystem and spell-content addons: **542**;
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
 - Hexalia ritual/infusion layer: **25**;
 - Malum Spirit Rite layer: **26**;
 - Goety Focus + ritual layer: **361**;
-- total: `199 + 541 + 42 + 55 + 25 + 26 + 361 = 1249`.
+- total: `199 + 542 + 42 + 55 + 25 + 26 + 361 = 1250`.
 
 ### Counted ledger
 
@@ -100,6 +106,7 @@ Arithmetic cross-check by provider family:
 | [Alshanex's Familiars](../providers/alshanex-familiars/README.md) | 4.0.3 | 18 | `COUNTED_EXACT` | exact hash-matched JAR closes 7 provider-owned spell registrations + 11 packaged `alshanex_familiars:ritual_recipe` identities; migrated Sound/Tunes content and external familiar casts are excluded |
 | [Cataclysm: Spellbooks](../providers/cataclysm-spellbooks/README.md) | 1.1.13 | 59 | `COUNTED_EXACT` | exact hash-matched JAR closes 59 unconditional `AbstractSpell` registrations; 10 additional root localization keys are unregistered in 1.1.13 and excluded |
 | [Leyline Spellbooks](../providers/leyline-spellbooks/README.md) | 1.0.3 | 14 | `COUNTED_EXACT` | exact hash-matched JAR closes 14 unconditional `AbstractSpell` registrations; no provider-specific spell lock/conditional registration gate is present; generic Iron's host config remains separate runtime QA |
+| [Gaze](../providers/gaze/README.md) | 1.1.7.1 | 1 | `COUNTED_EXACT` | exact hash-matched artifact closes one Gaze-owned Iron's `AbstractSpell`, Soulward Shield; physical Iron's satisfies the provider gate; 26 Spirit Rites remain config-conditional and 2 Geas + 8 rune items are metric-excluded |
 | [Goety](../providers/goety/README.md) | 3.1.4 | 361 | `COUNTED_EXACT` | exact hash-matched JAR closes 123 active/acquirable Focus actions + 238 available distinct non-Focus ritual actions after semantic deduplication and physical-provider condition filtering; runtime/API/balance QA remains separate |
 | [Eidolon: Repraised](../providers/eidolon-repraised/README.md) | 0.5.0.2 | 42 | `COUNTED_SOURCE_PINNED` | 18 normal/player-facing chants + 24 official ritual recipes; `undead_lure` empty cast and `basic_incense` dummy excluded; chant conversions are not extra spells |
 | [Vampirism](../providers/vampirism/README.md) | 1.10.13 | 19 | `COUNTED_SOURCE_PINNED` | 14 Vampire + 3 Hunter + 2 shared Lord registered player actions; counted as provider-native discrete supernatural actions, not Iron's spells |
@@ -107,7 +114,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1249** |  |  |
+| **Strict total** |  | **1250** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -207,7 +214,7 @@ These rows are deliberately **not additive to 1249** until their exact/current i
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
 | [Somake Spells](../providers/somake-spells/README.md) 1.0.8-fix | exact hash-matched artifact closes **67 current spell registrations** under the physical optional-provider set; 61 unconditional + 3 `mowziesmobs`-gated + 3 `iss_magicfromtheeast`-gated, with both gates physically satisfied | `CONDITIONAL / EXACT REGISTRY CLOSED / +0` | deployed `somakespells/general/common.toml` is unavailable and complete object-level survival acquisition/reachability remains unclosed; code default `enableSpellLockSystem=false` is not substituted for the actual pack config |
-| [Gaze](../providers/gaze/README.md) 1.1.7.1 | publisher states **2 Geas** plus a new set of Rites | `LOWER_BOUND / OPEN` | rite registry and complete IDs/names are not published; exact source/JAR extraction pending |
+| [Gaze](../providers/gaze/README.md) 1.1.7.1 rites | exact hash-matched artifact closes **26 player-facing Spirit Rite identities** | `CONDITIONAL / EXACT REGISTRY CLOSED / +0 RITES` | exact provider control flow suppresses the rite surfaces when resolved COMMON config `disableGazeRites=true`; deployed pack value is unavailable, so source default `false` is not substituted |
 | [Ignis Soulfires: Spellbooks](../providers/ignis-soulfires-spellbooks/README.md) 1.1.0 | exact installed artifact and exact official CurseForge release are pinned (`project 1572171`, file `8620663`); publisher explicitly describes a Souled Ignitium Wizard Armor compatibility scope, while exact source/registry remains unavailable | `OPEN` | no safe 1.1.0 semantic registry inventory; publisher armor scope does not prove absence of spell/ritual registrations |
 | [Goety Cataclysm](../providers/goety-cataclysm/README.md) 1.21.1-1.8.2 | exact installed release; public semantic surface proves addon spells/abilities exist | `OPEN` | complete Focus/spell/ritual inventory unavailable for current build |
 | [Goety Iron](../providers/goety-iron/README.md) 3.1 | exact installed release; servant/focus/ritual bridge publicly established | `OPEN / BRIDGE-BOUNDED` | public servant list is not a spell inventory; focus/ritual registry totals are unverified |
@@ -228,10 +235,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 To converge on a final denominator efficiently, prioritize:
 
-1. obtain the deployed Not Enough Glyphs/Ars `SERVER` config set (`not_enough_glyphs/<glyph>.toml`, including any world `serverconfig` overrides) and reconcile `[general].enabled` for the 39 candidates; source/default-only evidence is insufficient;
-2. exact Gaze 1.1.7.1 rites/Geas inventory only when materially new exact evidence becomes available;
-3. exact Ignis Soulfires: Spellbooks 1.1.0 semantic registry inventory;
-4. Goety Iron 3.1 and Goety Cataclysm 1.21.1-1.8.2 exact semantic inventories without duplicating base-Goety ownership;
-5. remaining open provider inventories that can materially reduce the denominator blocker.
+1. exact Ignis Soulfires: Spellbooks 1.1.0 semantic registry inventory;
+2. Goety Iron 3.1 and Goety Cataclysm 1.21.1-1.8.2 exact semantic inventories without duplicating base-Goety ownership;
+3. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.1 and Gaze 1.1.7.1 Rites;
+4. remaining open provider inventories that can materially reduce the denominator blocker.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
