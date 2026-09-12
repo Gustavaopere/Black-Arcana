@@ -266,7 +266,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 | 57 | 2BH / #198 | `goety` | CANÔNICO em `main@4fcc40aa...`; +361 semânticos; CI pós-merge #2524 GREEN |
 | 56 | 2BG / #195 | `leylines` | CANÔNICO em `main@88f042f...`; +14 semânticos; CI pós-merge #2504 GREEN |
 | 55 | 2BE / #189 | `cataclysm_spellbooks` | CANÔNICO em `main@cce7f517...`; HEAD auditado CI #2483 GREEN; CI pós-merge #2484 attempt 2 GREEN |
-| 54 | 2BD / #186 | `alshanex_familiars` | CANÔNICO em `main@95ec538f...`; HEAD auditado CI #2464 GREEN; CI pós-merge #2465 GREEN |
+| 54 | 2BD / #186 | `alshanex_familiars` | CANÔNICO em `main@95ec538f...`; HEAD auditado CI #2464 GREEN; CI pós-merge CI #2465 GREEN |
 | 53 | 2AY / #175 | `gtbcs_spell_lib` | CANÔNICO em `main@9a4e1cd...`; CI pós-merge #2421 GREEN |
 | 52 | 2AX / #166 | `familiarslib` | CANÔNICO em `main@4238275...`; CI pós-merge #2337 GREEN |
 | 51 | 2AW / #161 | `apotheoticcreation` | CANÔNICO; ver nota histórica de GameTest no coverage/checkpoint |
