@@ -1,0 +1,48 @@
+name: Phase 2BG queue polish
+
+on:
+  push:
+    branches:
+      - docs/leylines-1.0.3-exact-catalog-closure
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Correct stale queue authority and completed priorities
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md')
+          s=p.read_text(encoding='utf-8')
+          old="- `main` canônica após Phase 2BF / PR #192: `cc4cfc1d740f7714188e25a3586d8b43bb5eb969`; HEAD limpo auditado `85b15aec9faf395cef5460d06a17be58ccd16af8` CI #2490 GREEN; post-merge CI #2491 GREEN no merge SHA exato, incluindo canonical QA-JAR publication;"
+          new="- `main` canônica após Phase 2BF final evidence / PR #193: `91fe79e8479f7c82a7e922f64d4806a3e7abafe1`; durable PR #192 HEAD `85b15aec9faf395cef5460d06a17be58ccd16af8` passou CI #2490 e merge `cc4cfc1d740f7714188e25a3586d8b43bb5eb969` passou CI #2491; final-evidence PR #193 foi mergeado como `91fe79e8479f7c82a7e922f64d4806a3e7abafe1` e o exact-SHA post-merge CI #2493 ficou GREEN;"
+          assert s.count(old)==1, f'authority anchor count={s.count(old)}'
+          s=s.replace(old,new,1)
+          oldp="Phase 2AY e a reconciliação Gaze/PR #180 estão encerradas. A próxima auditoria só deve abrir quando houver evidência nova capaz de reduzir um blocker, não para repetir publisher prose já catalogada."
+          newp="Phase 2BF / Somake está encerrada e documentada; Phase 2BG / Leylines está em promotion candidate neste branch. A próxima seleção após o fechamento Phase 2BG deve escolher apenas um blocker ainda aberto com evidência nova capaz de reduzir incerteza, não repetir publisher prose já catalogada."
+          assert s.count(oldp)==1, f'next-selection anchor count={s.count(oldp)}'
+          s=s.replace(oldp,newp,1)
+          stale="- `somakespells` 1.0.8-fix — publisher informa `over 50 spells`, sem registry atual completo; requer fonte/artefato atual ou nova evidência publisher granular;\n"
+          assert s.count(stale)==1, f'stale Somake priority count={s.count(stale)}'
+          s=s.replace(stale,'',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+          git diff --check
+          git status --short
+      - name: Commit queue correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md
+          git commit -m 'docs: reconcile Phase 2BF queue state before Leylines promotion'
+          git push
