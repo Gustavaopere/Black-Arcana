@@ -2,7 +2,7 @@
 
 ## Status
 
-`PHASE 2BH CANDIDATE / EXACT 3.1.4 ARTIFACT IDENTITY + SEMANTIC INVENTORY CLOSED / RUNTIME API QA PENDING`
+`PHASE 2BH CANONICAL / EXACT 3.1.4 ARTIFACT IDENTITY + SEMANTIC INVENTORY CLOSED / RUNTIME API QA PENDING`
 
 ## Installed authority
 
@@ -23,9 +23,9 @@
 
 The current physical modlist is authoritative for installed JAR/runtime identity. CurseForge independently confirms the public 3.1.4 release identity.
 
-## Phase 2BH exact-artifact closure candidate
+## Phase 2BH exact-artifact closure — canonical
 
-Exact PR #197 evidence supersedes source-only uncertainty for catalog identity: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Candidate totals are **1249 semantic objects / 57 of 100 components** from canonical baseline 888 / 56. These values remain candidate until durable merge + exact post-merge CI. See `EXACT-3.1.4-ARTIFACT-AUDIT.md` and `EXACT-3.1.4-SEMANTIC-INVENTORY.md`. Runtime/API/balance and provider-owned Soul Energy/research/servant/Lichdom settlement remain fail-closed.
+Exact PR #197 evidence supersedes source-only uncertainty for catalog identity: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical totals are now **1249 semantic objects / 57 of 100 components**. See `EXACT-3.1.4-ARTIFACT-AUDIT.md` and `EXACT-3.1.4-SEMANTIC-INVENTORY.md`. Runtime/API/balance and provider-owned Soul Energy/research/servant/Lichdom settlement remain fail-closed.
 
 ## Source/provenance reconciliation
 
@@ -224,4 +224,4 @@ Goety Iron `3.1` and Goety Cataclysm `1.21.1-1.8.2` are separate installed provi
 
 ## Semantic denominator and Phase 3 gate
 
-Canonical baseline entering Phase 2BH is **888 / 56 of 100**. The exact 3.1.4 artifact proposes Goety as `COUNTED_EXACT` with **361**, producing candidate **1249 / 57 of 100**. Canonical promotion still requires durable merge and exact post-merge CI. Runtime integration remains fail-closed until provider boundaries are separately proven.
+Phase 2BH canonically counts Goety as `COUNTED_EXACT` with **361** semantic objects, yielding strict minimum **1249 / 57 of 100** after durable PR #198 and exact post-merge CI #2524. Runtime integration remains fail-closed until provider boundaries are separately proven.

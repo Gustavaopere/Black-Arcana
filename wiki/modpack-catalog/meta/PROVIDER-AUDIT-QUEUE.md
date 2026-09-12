@@ -8,14 +8,14 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica após Phase 2BG durable / PR #195: `88f042f68429ff920314a7ec3a6923369edc93fd`; HEAD limpo `a9d7b55044230bbb011f7233ffd75d9a8321489b` passou CI #2503 e o exact-SHA post-merge CI #2504 ficou GREEN, incluindo canonical QA-JAR publication;
+- `main` canônica após Phase 2BH durable / PR #198: `4fcc40aaf8149b5511dbd882a5616ee5240cd640`; HEAD limpo `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passou CI #2523 e o exact-SHA post-merge CI #2524 ficou GREEN, incluindo canonical QA-JAR publication;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BG fecha **888 objetos mágicos semânticos** com a promoção exata de Leyline Spellbooks 1.0.3. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BH fecha **1249 objetos mágicos semânticos** com a promoção exata de Goety 3.1.4. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -30,7 +30,8 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
 - delta semântico Somake 1.0.8-fix Phase 2BF: **+0** (`67 exact registry`, reachability/config efetivo ainda `CONDITIONAL`);
 - delta semântico Leyline Spellbooks 1.0.3 Phase 2BG: **+14** (`14 exact unconditional registry identities`);
-- mínimo estrito global canônico: **888**;
+- delta semântico Goety 3.1.4 Phase 2BH: **+361** (`123 active Focus + 238 available distinct non-Focus rituals`);
+- mínimo estrito global canônico: **1249**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -44,13 +45,13 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
 - Phase 2BD / PR #186: HEAD auditado `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` passou Black Arcana CI #2464;
 - PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
-- cobertura canônica de componentes após Phase 2BG: **56/100 = 56%**; componente #56 fechado pelo PR #195 com CI #2503 no HEAD limpo e CI #2504 no merge SHA exato.
+- cobertura canônica de componentes após Phase 2BH: **57/100 = 57%**; componente #57 fechado pelo PR #198 com CI #2523 no HEAD limpo e CI #2524 no merge SHA exato.
 
-O valor 56/100 nunca substitui a métrica semântica de magias.
+O valor 57/100 nunca substitui a métrica semântica de magias.
 
-## Phase 2BH — Goety 3.1.4 — candidate component #57
+## Phase 2BH — Goety 3.1.4 — componente #57 canônico
 
-Exact evidence PR #197 closes **123 Focus + 238 non-Focus rituals = +361 candidate semantic objects**. Accepted run/artifact pairs: `34670150370/10290083272`, `34670458172/10290222369`, `34670556329/10290527131`, `34670758163/10289884505`. Canonical baseline remains **888 / 56/100**; candidate **1249 / 57/100**.
+Exact evidence PR #197 closes **123 Focus + 238 non-Focus rituals = +361 semantic objects**. Accepted run/artifact pairs: `34670150370/10290083272`, `34670458172/10290222369`, `34670556329/10290527131`, `34670758163/10289884505`. Durable PR #198 clean HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524. Canonical QA artifact: `10291461067`, SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical totals are **1249 / 57/100**.
 
 ## Phase 2BG — Leyline Spellbooks 1.0.3 — componente #56 canônico
 
