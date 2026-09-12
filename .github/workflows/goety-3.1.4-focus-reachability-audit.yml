@@ -48,9 +48,10 @@ jobs:
           javap -classpath goety.jar -p -c com.Polarice3.Goety.common.items.ModItems > audit/moditems-bytecode.txt
 
           python3 - <<'PY'
-          import json, re, zipfile
+          import json, re, zipfile, hashlib
           from pathlib import Path, PurePosixPath
 
+          EXPECTED = 'a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
           jar = zipfile.ZipFile('goety.jar')
           names = set(jar.namelist())
           bc = Path('audit/moditems-bytecode.txt').read_text(errors='replace')
@@ -103,10 +104,11 @@ jobs:
               elif ('Spell' in s or 'spell' in s.lower()) and s.endswith(';'):
                   compact_sig.append(s)
 
+          actual = hashlib.sha1(Path('goety.jar').read_bytes()).hexdigest()
           out = Path('audit/report.txt')
           with out.open('w', encoding='utf-8') as f:
               f.write('Goety 3.1.4 targeted Focus reachability audit\n')
-              f.write(f'expected_sha1={EXPECTED_SHA1}\nactual_sha1={__import__("hashlib").sha1(Path("goety.jar").read_bytes()).hexdigest()}\n')
+              f.write(f'expected_sha1={EXPECTED}\nactual_sha1={actual}\n')
               f.write(f'all_focus_suffix_ids={len(ids)}\n')
               f.write(f'active_focus_ids_excluding_empty={len(active)}\n')
               f.write(f'same_named_focus_recipe_count={len(same_named)}\n')
