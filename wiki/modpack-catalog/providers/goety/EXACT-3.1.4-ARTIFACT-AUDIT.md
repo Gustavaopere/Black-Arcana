@@ -1,6 +1,6 @@
 # Goety 3.1.4 — exact-artifact audit
 
-Status: `PHASE 2BH CANDIDATE / EXACT HASH-MATCHED ARTIFACT / CATALOG IDENTITY CLOSED / RUNTIME API QA SEPARATE`
+Status: `PHASE 2BH CANONICAL / EXACT HASH-MATCHED ARTIFACT / CATALOG IDENTITY CLOSED / RUNTIME API QA SEPARATE`
 
 ## Authority
 
@@ -18,8 +18,9 @@ Accepted run/artifact pairs: `34670150370/10290083272`, `34670458172/10290222369
 - 123/123 active Focuses have same-named base acquisition recipes; 80 ritual + 43 shaped; zero conditions and zero mismatched results.
 - 342 exact Goety ritual recipe resources; 83 Focus-acquisition; 259 non-Focus.
 - 259 non-Focus resources → 255 semantic signatures after four duplicate groups → **238 available distinct non-Focus ritual actions** after physical-provider condition filtering.
-- Phase 2BH candidate Goety subtotal: **361**.
-- canonical baseline entering this durable PR: **888 / 56 of 100**; candidate: **1249 / 57 of 100**, component #57.
+- Phase 2BH canonical Goety subtotal: **361**.
+- canonical strict minimum after Phase 2BH: **1249 / 57 of 100**, component #57.
+- durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` (`sha256:4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`).
 
 See [`EXACT-3.1.4-SEMANTIC-INVENTORY.md`](EXACT-3.1.4-SEMANTIC-INVENTORY.md).
 

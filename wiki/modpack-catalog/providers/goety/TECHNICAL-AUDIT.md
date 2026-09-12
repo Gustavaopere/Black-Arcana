@@ -1,6 +1,6 @@
 # Goety 3.1.4 — Technical audit
 
-Status: `PHASE 2BH CANDIDATE / EXACT 3.1.4 ARTIFACT REGISTRY + SEMANTIC INVENTORY CLOSED / RUNTIME/API QA PENDING`
+Status: `PHASE 2BH CANONICAL / EXACT 3.1.4 ARTIFACT REGISTRY + SEMANTIC INVENTORY CLOSED / RUNTIME/API QA PENDING`
 
 ## Exact installed identity
 
@@ -21,9 +21,9 @@ The exact public release is CurseForge file `8689429`, released `2026-08-20` on 
 
 That release identity is strong enough to pin **which distributed artifact/version the catalog targets**. It is not source-to-binary equivalence evidence, and the CurseForge license declaration must not be generalized over a source tree whose own license file defines mixed scopes.
 
-## Phase 2BH exact-artifact closure candidate
+## Phase 2BH exact-artifact closure — canonical
 
-Exact hash-matched artifact evidence closes **123 active Focus actions + 238 available distinct non-Focus rituals = 361** for catalog identity. This does not claim source-to-binary equivalence and does not authorize inference of numerical mechanics, Soul Energy settlement, servant/research/Lichdom hooks or stable APIs.
+Exact hash-matched artifact evidence closes **123 active Focus actions + 238 available distinct non-Focus rituals = 361** for catalog identity. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` (`sha256:4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`). This does not claim source-to-binary equivalence and does not authorize inference of numerical mechanics, Soul Energy settlement, servant/research/Lichdom hooks or stable APIs.
 
 ## Public 1.21.1 source line
 
@@ -103,7 +103,7 @@ It does **not** prove:
 - a stable 3.1.4 integration API/event boundary;
 - exact ritual identity totals from the 13 documented ritual categories.
 
-Phase 2BH proposes Goety as `COUNTED_EXACT` for **361** semantic objects. Canonical baseline is **888**; candidate strict minimum is **1249** pending durable merge + exact post-merge CI.
+Phase 2BH canonically counts Goety as `COUNTED_EXACT` for **361** semantic objects. The strict semantic minimum is now **1249** after durable merge + exact post-merge CI.
 
 ## License and clean-room provenance
 
@@ -146,8 +146,8 @@ Because exact 3.1.4 source is not pinned here, Black Arcana must not invent or c
 | 13 public ritual families/types | PUBLIC DOCUMENTATION INVENTORY; NOT DISCRETE RITUAL COUNT |
 | 10 public research lines | PUBLIC DOCUMENTATION INVENTORY |
 | exact 3.1.4 Focus registry | EXACT ARTIFACT: 124 `_focus` identities, 123 active after proxy exclusion |
-| exact 3.1.4 semantic Focus inventory | CANDIDATE `COUNTED_EXACT`: 123 active/acquirable Focus actions |
-| exact 3.1.4 ritual identity inventory | EXACT ARTIFACT: 342 resources; candidate 238 available distinct non-Focus semantic rituals |
+| exact 3.1.4 semantic Focus inventory | `COUNTED_EXACT`: 123 active/acquirable Focus actions |
+| exact 3.1.4 ritual identity inventory | `COUNTED_EXACT`: 342 resources audited; 238 available distinct non-Focus semantic rituals after deduplication/condition filtering |
 | exact 3.1.4 per-Focus costs/cooldowns/damage/range | UNVERIFIED except separately documented cases |
 | exact 3.1.4 stable integration API | UNVERIFIED |
 | exact modpack runtime behavior | UNVERIFIED |
@@ -217,4 +217,4 @@ It is **not** sufficient to authorize exact integration code against unverified 
 
 Canonical provider state after this reconciliation:
 
-`OPEN CURRENT REGISTRY / EXACT 3.1.4 JAR-SOURCE RECONCILIATION PENDING`.
+`COUNTED_EXACT CATALOG IDENTITY / RUNTIME API QA PENDING`.
