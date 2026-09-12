@@ -1,6 +1,6 @@
 # Gaze 1.1.7.1 — publisher evidence ledger
 
-Status: `EXACT PHYSICAL IDENTITY / EXACT CURSEFORGE FILE / EXACT MODRINTH VERSION / ARR / BINARY NOT MATERIALIZED / REGISTRY OPEN`
+Status: `EXACT PHYSICAL IDENTITY / EXACT CURSEFORGE FILE / EXACT MODRINTH VERSION / EXACT HASH-MATCHED BINARY MATERIALIZED / ARR / STRUCTURAL REGISTRY AUDIT CLOSED`
 
 ## Physical pack authority
 
@@ -11,7 +11,7 @@ Status: `EXACT PHYSICAL IDENTITY / EXACT CURSEFORGE FILE / EXACT MODRINTH VERSIO
 - CurseForge package fingerprint: `2912704145`
 - pack platform: Minecraft `1.21.1`, NeoForge `21.1.248`
 
-These values come from the current physical modlist and are authoritative for what is installed.
+These values come from the current physical modlist and remain authoritative for what is installed.
 
 ## CurseForge exact release
 
@@ -49,29 +49,9 @@ The Modrinth version page provides no changelog for 1.1.7.1.
 
 CurseForge File ID `7250833`, published `2025-11-22`, explicitly updates Gaze for Malum 1.8 and provides the richest publisher-controlled current-line semantic delta available in the audited public surfaces.
 
-Named additions/changes include:
+Named additions/changes include Spirit-Channel pouch, Domain of Swords Geas, Enchantment Workbench, Seidhr, Spirit Saber, Veil's Edge, Splintered World, Replica Dharmachakra, WorldAnchor/Eir runes, multiple corrupted Rites, Aqua Rite, Pact of Encroaching Malice, Meditation Ring, Mage Ethics Ring, Charge Necklace and Astral Splinter. It also states that Rites moved to deferred registration and that the runes were renamed to a Norse theme.
 
-- Spirit-Channel pouch;
-- Domain of Swords Geas;
-- Enchantment Workbench;
-- Seidhr;
-- Spirit Saber;
-- Veil's Edge;
-- Splintered World;
-- Replica Dharmachakra;
-- WorldAnchor rune;
-- Eir rune;
-- Corrupted Greater Wicked Rite;
-- Corrupted Greater Sacred Rite;
-- Aqua Rite;
-- Corrupted Wicked Rite;
-- Pact of Encroaching Malice;
-- Meditation Ring;
-- Mage Ethics Ring;
-- Charge Necklace;
-- Astral Splinter.
-
-It also states that Rites moved to deferred registration and that the runes were renamed to a Norse theme. This release does not publish a complete registry table.
+These publisher facts remain lineage/context. Exact current registry claims are now sourced from the hash-matched 1.1.7.1 artifact rather than extrapolated from this changelog.
 
 ## Current project-scale statements
 
@@ -85,26 +65,45 @@ The current publisher project description advertises:
 - Spirit-Channel pouch;
 - a new progression screen.
 
-These statements prove scale, not exact registry composition.
+Phase 2BJ's exact-artifact audit independently resolves the relevant registry/count surfaces; these publisher scale statements are retained as provenance, not substituted for binary evidence.
 
-## Artifact-inspection boundary
+## Exact artifact materialization
 
-The Modrinth version page exposed a direct CDN link for the exact 1.1.7.1 Java archive. The permitted audit tooling rejected/failed materialization of the binary, so this checkpoint did not inspect JAR resources or bytecode.
+The old materialization blocker is superseded. Isolated NON-MERGE PR #201 materialized the direct Modrinth artifact for version `od4ltbRo` and hard-failed unless its SHA-1 equaled the physical pack SHA-1.
 
-Consequences:
+Final evidence:
 
-- no publisher SHA-1 equivalence claim is made;
-- no registry IDs are inferred from class/resource names;
-- no decompilation claim is made;
-- public changelog names are not silently upgraded to a complete 1.1.7.1 registry.
+- audit HEAD: `2f4ff6536663b1c629a6a5ea92416765bea17b1e`;
+- workflow run: `34676660467` — GREEN;
+- evidence artifact: `10292013626`;
+- digest: `sha256:fb69f353b672f7c8ec7b470c454d24d1c3110cb996a250076a16d2b053f23f71`.
 
-If a future permitted workflow materializes the exact binary, factual metadata/resource inspection may be used for interoperability under the project's clean-room rules. It still would not authorize copying implementation or assets.
+The resulting exact audit closes, for catalog purposes:
+
+- 26 distinct Gaze Spirit Rite identities, all referenced by provider progression;
+- 2 Gaze Geas effect-type identities;
+- 8 progression-visible rune items;
+- 1 Gaze-owned Iron's spell registration, Soulward Shield;
+- the `disableGazeRites` COMMON-config registration gate;
+- the optional `irons_spellbooks` provider gate for Gaze's Iron's compatibility registration.
+
+See [`EXACT-1.1.7.1-ARTIFACT-AUDIT.md`](EXACT-1.1.7.1-ARTIFACT-AUDIT.md) for the canonical semantic disposition.
 
 ## Semantic disposition
 
-The evidence is strong enough to improve provider provenance and establish several named current-line identities. It is not strong enough to close Gaze's contribution to the strict semantic denominator.
+Publisher evidence by itself previously supported only `+0`. Exact artifact evidence now safely promotes only one current semantic object:
 
-Disposition for this checkpoint: **+0** strict semantic objects; complete Gaze registry remains open/fail-closed.
+- Soulward Shield: **+1 `COUNTED_EXACT`** because the physical pack satisfies the Iron's provider gate;
+- 26 Rites: remain **`CONDITIONAL`** because the deployed COMMON value for `disableGazeRites` is unavailable;
+- 2 Geas types and 8 rune items: excluded by the existing semantic-action metric definition.
+
+Current strict semantic minimum after Phase 2BJ: **1250**. Gaze remains an open provider component; internal component coverage remains **57/100**.
+
+## Clean-room / license boundary
+
+Gaze is **All Rights Reserved** on current CurseForge and Modrinth surfaces. Exact binary materialization is used only for factual compatibility/catalog evidence and does not authorize source reconstruction or reuse.
+
+No implementation bodies, recipe ingredient lists, numerical balance values, localization prose, source reconstruction, assets, models or sounds are copied/adapted. Any stronger derivation remains prohibited unless separate applicable permission/license evidence is established.
 
 ## URLs
 
