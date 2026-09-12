@@ -1,125 +1,59 @@
-# Goety Iron 3.1 — catálogo público release-bounded
+# Goety Iron 3.1 — exact-artifact semantic closure
 
-## Estado
+## Estado canônico do catálogo
 
-- JAR instalado: `GoetyIron-1.21.1-NeoForge-3.1.jar`
-- Mod ID runtime: `goetyiron`
-- Versão runtime: `3.1`
+- JAR físico: `GoetyIron-1.21.1-NeoForge-3.1.jar`
+- Mod ID: `goetyiron`
+- versão: `3.1`
 - Minecraft: `1.21.1`
-- Loader: NeoForge
-- CurseForge Project ID: `1367643`
-- CurseForge File ID: `8662179`
-- Modrinth Project ID: `tZpynDu5`
-- Modrinth Version ID: `YZXNIxvk`
-- SHA-1 do artefato instalado: `c8529867e798661ed01fb2948abda23735888fc6`
-- SHA-1 do arquivo 3.1 publicado no Modrinth: `c8529867e798661ed01fb2948abda23735888fc6`
-- CurseForge package fingerprint da instância: `482454312`
-- Publicação exata: **confirmada** — release NeoForge 1.21.1 de 2026-08-16
-- Licença publicada: **DIVERGENTE** — CurseForge declara `MIT License`; Modrinth declara `All Rights Reserved`
-- Repositório-fonte público exato: **NÃO LOCALIZADO**; Modrinth publica `source_url=null`
-- Estado: `EXACT-ARTIFACT-HASH-MATCH / CROSS-LOADER RELEASE LINE AUDITED / PUBLIC SERVANT SURFACE AUDITED / SOURCE INTERNALS UNVERIFIED / FAIL-CLOSED`
+- loader: NeoForge
+- CurseForge project/file: `1367643 / 8662179`
+- SHA-1 físico e auditado: `c8529867e798661ed01fb2948abda23735888fc6`
+- licença publicada: **DIVERGENTE** — CurseForge declara MIT; Modrinth declara All Rights Reserved; Black Arcana mantém a postura clean-room mais restritiva
+- classificação: `BRIDGE_COMPAT + SPELL/RITUAL CONTENT`
+- estado semântico: `COUNTED_EXACT`
+- contribuição semântica: **14**
+- componente técnico: **#59** após Phase 2BL
 
-O hash Modrinth da release 3.1 é idêntico ao hash da modlist física. Portanto a identidade do artefato publicado e instalado está fechada em nível SHA-1. Isso não equivale a source pin nem a inventário interno.
+A Phase 2BL substitui o antigo limite publisher-only por evidência do JAR exato hash-matched. O artefato não é redistribuído; os artifacts de evidência preservam somente hashes, metadata, signatures/registry identities, resource paths, conditions e resumos de outcome.
 
-Enquanto a divergência de licença entre plataformas não for reconciliada por uma superfície upstream mais autoritativa, Black Arcana aplica a postura clean-room mais restritiva e não presume que o projeto inteiro é reutilizável sob MIT.
+## Inventário semântico exato
 
-## Função do provider
+O provider registra exatamente **2 Focuses próprios**:
 
-Goety Iron integra **Iron's Spells 'n Spellbooks** ao sistema de **servants do Goety**. Sua página oficial descreve criaturas do Iron's convertidas/adaptadas para servants comandáveis e confirma dois caminhos de obtenção em alto nível:
+- `FIERY_FOCUS`
+- `TARNISHED_FOCUS`
 
-- summon por Focus;
-- transformação/summon por ritual.
+Ambos são superfícies `MagicFocus` do Goety ligadas a spells de summon próprios do addon. Nenhuma dessas identidades está entre os 123 Focuses ativos já contados no Goety 3.1.4 base.
 
-Também confirma que Spellcaster Servants podem aprender spells adicionais e ser fortalecidos com upgrade orbs.
+O JAR empacota **14 recipes `goety:ritual`**. Dois são apenas caminhos de aquisição dos dois Focuses e não são recontados. Os **12 rituais não-Focus** restantes têm outcomes distintos e nenhuma condition de mod carregado. O conjunto inclui conversões/summons de servants e três outcomes de item/estado (`goetyiron:hemolytic_ring`, `irons_spellbooks:rotten_spell_book` e conversão para `goety:heretic_servant`), sem duplicar os 238 outcomes distintos do inventário Goety-base canônico.
 
-A bridge não constitui uma terceira plataforma de magia: Goety continua autoridade de servant ownership/lifecycle e Iron's continua autoridade da identidade de spellcasting/atributos que o addon reutiliza.
+Portanto: **2 Focus + 12 rituais não-Focus = 14 objetos mágicos semânticos `COUNTED_EXACT`.**
 
-## Servants explicitamente nomeados por superfícies atuais do publisher
+## Gate de registration/config
 
-As superfícies atuais divergem na redação:
+O passe estrutural do initializer prova:
 
-- CurseForge nomeia oito servants na descrição do projeto;
-- Modrinth nomeia os mesmos oito **mais First Flamebearer Servant**;
-- o changelog publisher-controlled de 3.0.0/2.1.0 também cita explicitamente **First Flamebearer Servant**, confirmando que esse nome pertence à linha 1.21.1 atual e não é apenas texto isolado da página Modrinth.
+- Focus holders: `2`;
+- branches no static initializer do registry: `0`;
+- chamadas `DeferredRegister.register` observadas no initializer: `22`;
+- referências a config no initializer: `0`;
+- campos config enable/disable-like: `0`.
 
-O conjunto nominal público diretamente sustentado é, portanto, **pelo menos nove servants**:
+Logo os dois Focuses não dependem de um gate provider-specific de registration/config. Configs de atributos, balance e replacement behavior continuam runtime/balance QA, não identidade semântica.
 
-1. First Flamebearer Servant
-2. Pyromancer Servant
-3. Cryomancer Servant
-4. Cleric Servant
-5. Archevoker Servant
-6. Necromancer Servant
-7. Ancient Knight Servant
-8. Dead King Servant
-9. Alchemist Servant
+## Authority e deduplicação
 
-Ver [SERVANT-CATALOG.md](SERVANT-CATALOG.md).
+- Goety continua authority de Soul Energy, Focus framework e servant ownership/lifecycle.
+- Iron's continua authority de seus spells, entidades e atributos-base.
+- Goety Iron é authority apenas das adaptações, Focuses, rituais e servants que ele próprio registra.
+- Black Arcana não cria segundo Soul ledger, segundo servant state, segundo cast pipeline nem double-processing.
 
-Esse conjunto é uma **lista pública nominal**, não prova de que o registry da build contém exatamente nove entidades. A release 3.1 também documenta replacements de Polar Bears e Vexes por versões servant, o que demonstra superfícies adicionais sem autorizar uma contagem total de registries.
+## Evidência
 
-## Release synchronization — Forge 1.20.1 ↔ NeoForge 1.21.1
+- NON-MERGE PR #205, HEAD `1feb07a7b9c721a0851e374ebe27c8dc748191fc`;
+- structural run `34704435612`, artifact `10301537361`, digest `sha256:c39d4aff68878e34aa3a88e5bd07bf12b6b6616030b5ba20789bdff1e4fd7445`;
+- targeted semantic run `34704813857`, artifact `10301716793`, digest `sha256:ec1e35546743ccd9e39763e664fd236336d84278ef74036b0c70b50eba73b7ff`;
+- registration/config run `34705555893`, artifact `10301284496`, digest `sha256:28ce5ae85692e82c23b3bae8bc5a7ef29c90006ac220cd86067c55fe9b854973`.
 
-A linha pública possui uma ponte de provenance relevante, detalhada em [RELEASE-SYNC-EVIDENCE.md](RELEASE-SYNC-EVIDENCE.md):
-
-- `3.0.0` NeoForge 1.21.1 e `2.1.0` Forge 1.20.1 têm changelogs do publisher que declaram explicitamente que o conteúdo das duas branches era idêntico naquele checkpoint;
-- `3.1` NeoForge e `2.2` Forge foram publicados em 2026-08-16 com changelogs bilíngues idênticos e o mesmo delta funcional;
-- isso prova uma linha de releases sincronizada, mas **não** autoriza promover source/internals 1.20.1 para autoridade exata 3.1 sem reconciliação por objeto.
-
-## Delta público exato da release 3.1
-
-Os changelogs oficiais de `3.1` e `2.2` registram o mesmo conjunto de mudanças:
-
-- correção de configurações que não produziam efeito;
-- correção para Improved Ominous Fire Orbs destruídos por aliados;
-- correções de compatibilidade com alguns mods;
-- configuração de atributos de spell para cada servant;
-- Tincture of Forgetfulness capaz de resetar o Void Vault do Goety;
-- summoned Polar Bears podem ser substituídos por Polar Bear Servants, configurável;
-- summoned Vexes podem ser substituídos por Vex Servants, configurável.
-
-Esses itens são tratados como **surface behavior público**, não como prova de classes, hooks ou signatures internas.
-
-## Limites do catálogo
-
-Sem source/API exatos publicamente localizados ou inventário factual do JAR 3.1, permanecem não verificados:
-
-- registry IDs;
-- nomes e quantidade de Focuses próprios;
-- ritual recipes e conditions;
-- lista completa de servants/entities;
-- spell-learning storage e mutation API;
-- upgrade-orb internals;
-- atributos exatos/config schema;
-- replacement hook de Polar Bear/Vex;
-- causalidade e settlement dos spells executados pelos servants;
-- interoperability real com a versão instalada de Iron's e Goety além da presença/load.
-
-O Modrinth publica o URL CDN e o hash exatos do arquivo 3.1, mas a ferramenta de download desta auditoria não conseguiu materializar o binário para inspeção factual. Esse limite operacional não é preenchido por extrapolação.
-
-## Authority / deduplicação
-
-- Goety é authority de servant ownership, lifecycle, Focus/ritual framework e Soul Energy.
-- Iron's Spells é authority de seus spells/escolas/atributos e casting semantics nativos.
-- Goety Iron é authority apenas da camada que transforma/conecta essas entidades e atributos.
-- Black Arcana não cria segunda Soul Energy, segundo servant state, segundo mana ledger ou segundo spellcast settlement.
-
-## Estado semântico
-
-O novo evidence checkpoint fecha melhor identidade, provenance e sincronização de releases, mas não individualiza as ações mágicas da build 3.1. Portanto Goety Iron permanece **+0** no strict semantic minimum neste checkpoint; o mínimo global permanece **797**.
-
-## Documentos
-
-- [Catálogo público de servants e mechanics](SERVANT-CATALOG.md)
-- [Auditoria técnica/provenance](TECHNICAL-AUDIT.md)
-- [Evidência de sincronização das releases](RELEASE-SYNC-EVIDENCE.md)
-- [Regras de integração](INTEGRATION-RULES.md)
-
-## Fontes públicas
-
-- CurseForge project: `https://www.curseforge.com/minecraft/mc-mods/goety-iron`
-- CurseForge 3.1 file: `https://www.curseforge.com/minecraft/mc-mods/goety-iron/files/8662179`
-- CurseForge 2.2 file: `https://www.curseforge.com/minecraft/mc-mods/goety-iron/files/8662199`
-- Modrinth project: `https://modrinth.com/mod/goetyiron`
-- Modrinth project API: `https://api.modrinth.com/v2/project/tZpynDu5`
-- Modrinth versions API: `https://api.modrinth.com/v2/project/tZpynDu5/version`
+Runtime servant lifecycle, spell settlement, cross-addon compatibility, generated config behavior e qualquer adapter Black Arcana permanecem fail-closed até QA/contrato provider-native específico.
