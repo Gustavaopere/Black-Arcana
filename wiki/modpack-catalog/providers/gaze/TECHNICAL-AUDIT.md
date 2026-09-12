@@ -2,56 +2,83 @@
 
 ## Evidence level
 
-**RELEASE-PINNED / PUBLIC-SURFACE AUDITED / BYTECODE PENDING**.
+**EXACT HASH-MATCHED ARTIFACT / STRUCTURAL REGISTRY AUDIT CLOSED / DEPLOYED CONFIG + RUNTIME QA PENDING**.
 
-A identidade do artefato está fechada pelo CurseForge (`gaze-1.1.7.1.jar`, file `7261638`) e pela release Modrinth 1.1.7.1. O conteúdo técnico granular não está fechado porque não há source público localizado e o JAR ainda não foi extraído.
+O artefato físico `gaze-1.1.7.1.jar` / SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041` foi materializado a partir da versão Modrinth exata `od4ltbRo` em auditoria isolada. O workflow falha se o SHA-1 baixado não for idêntico ao da modlist física.
+
+Evidência final:
+
+- NON-MERGE PR #201;
+- audit HEAD `2f4ff6536663b1c629a6a5ea92416765bea17b1e`;
+- workflow run `34676660467` — GREEN;
+- artifact `10292013626`;
+- digest `sha256:fb69f353b672f7c8ec7b470c454d24d1c3110cb996a250076a16d2b053f23f71`.
+
+Gaze é ARR. A inspeção foi clean-room e reteve apenas fatos estruturais necessários para catálogo/interoperabilidade: identidade criptográfica, registries, tipos/membros, resource paths e gates de controle estreitos. Nenhum corpo de implementação, asset, texto upstream, recipe ingredient list ou valor de balance foi copiado.
 
 ## Relação com Malum
 
-Malum 1.8 alterou Spirit Types e Spirit Rites para Deferred Registries; o changelog do próprio Malum alerta que addons como Gaze precisam acompanhar essa mudança. Gaze 1.1.7 declara permanecer em Malum 1.8 e atualiza seus Rites para deferred registry.
+Malum continua authority de Spirit Rite/Geas substrates, spirit resources e settlement. O artefato exato de Gaze registra/expõe addon identities sobre essa infraestrutura.
 
-**Authority:** Malum/Gaze são authority de spirit type, rite registry, soul/spirit resource, rite activation, rune/item effects e progression. Black Arcana não deve manter estado paralelo.
+O registry exato fecha **26 `RiteHolder<SpiritRiteType>` distintos**. O progression setup do próprio provider referencia os 26 e usa páginas de Spirit Rite do Malum, provando que são identities player-facing/intencionais e não slots técnicos vazios.
 
-## Public release delta 1.1.7 → 1.1.7.1
+O artefato também fecha **2 `GeasEffectType`** provider-owned:
 
-A 1.1.7.1 é um hotfix/release posterior para Malum 1.8. O changelog público cita:
+- `pact_of_encroaching`;
+- `domain_of_swords`.
 
-- fixes de Anima Bestiary;
-- Fafnir bonus com Malignant armor;
-- movimentação de book entries.
+Pela definição canônica da métrica semântica, Geas effect types continuam excluídos assim como os 37 base-Malum `GeasEffectType`: são effect/status-like types, não standalone spell/rite actions.
 
-O file page não anuncia novo registry mágico entre 1.1.7 e 1.1.7.1, mas isso **não prova** que o bytecode é idêntico.
+## Gate de config dos Rites
 
-## Public 1.1.7 mechanics observados
+`com.strawberry.gaze.Config` registra `DISABLE_GAZE_RITES` / `disableGazeRites` como boolean de config **COMMON**. O default observado no artefato é `false`, mas default de código não é autoridade do valor efetivamente implantado.
 
-- Domain of Swords como novo Geas;
-- Spirit-Channel pouch;
-- projectiles de Seidhr alterados;
-- Spirit Saber forms com abilities atualizadas;
-- Veil's Edge com mechanic ao matar players e Umbral drops;
-- Splintered World com balance/targeting/splinter uptime;
-- Rites migrados a deferred registry e vários efeitos reworked;
-- Meditation Ring, Mage Ethics Ring e Charge Necklace receberam buffs;
-- compat Iron's descrita como pequena/trial run.
+O control flow exato do construtor principal mostra que, quando o valor resolvido é `true`, Gaze pula o bloco que registra/inicializa `GazeRiteRegistry.RITES`, `GazeSpiritRiteEffectTypes.EFFECTS` e `GazeRiteRegistry.init`.
 
-## Deduplicação
+O projeto/anexos atuais não contêm o COMMON config implantado com o valor efetivo. Consequência: os 26 Rites ficam **CONDITIONAL** e não entram no mínimo estrito nesta fase.
 
-- não reinterpretar Geas como Iron's spell;
-- não duplicar Malum Spirit Rites com um segundo ritual state machine;
-- não duplicar Umbral/spirit drop settlement;
-- não conceder soul/spirit resources por inferência visual;
-- qualquer bridge Iron's↔Gaze deve esperar hook/bytecode exato; a própria release chama a compat de experimental/pequena.
+## Runes
+
+O progression setup fecha oito rune items provider-owned. Eles têm identidade/progressão, mas continuam fora da métrica semântica porque são item/equipment/passive identities, não actions/spells/rites independentes.
+
+## Compat Iron's
+
+O artefato exato contém um `SpellRegistry` de compat com exatamente um `Supplier<AbstractSpell>`: `SOULWARD_SHIELD`.
+
+`IronsCompat.init` testa `ModList.isLoaded("irons_spellbooks")`; com o provider presente, registra `SpellRegistry` e as demais superfícies de compat. O pack físico satisfaz esse gate:
+
+- `irons_spellbooks-1.21.1-3.16.3.jar`;
+- mod id `irons_spellbooks`;
+- SHA-1 `017fd8140c477f9ae602cf95594f1c23bef1d6e3`.
+
+Logo Soulward Shield é uma identidade de spell Gaze-owned registrada no conjunto físico atual e contribui **+1 `COUNTED_EXACT`**. Iron's continua authority do cast framework/settlement; Gaze não se torna owner do runtime Iron's.
+
+## Deduplicação e authority
+
+- não reinterpretar os dois Geas como Iron's spells;
+- não duplicar os 26 Spirit Rites com uma segunda ritual state machine;
+- não contar os oito runes como spells/rites;
+- não duplicar spirit/Umbral/resource settlement;
+- Soulward Shield é contado uma vez sob Gaze como identidade provider-owned; seu cast/settlement continua no host Iron's;
+- qualquer bridge Black Arcana↔Gaze deve aguardar seam provider-native exato e preservar causalidade/deduplicação.
+
+## Disposição semântica Phase 2BJ
+
+- Soulward Shield: **+1 `COUNTED_EXACT`**;
+- 26 Spirit Rites: **`CONDITIONAL`** por config efetivo ausente;
+- 2 Geas types: **`EXCLUDED`** pela definição da métrica;
+- 8 rune items: **`EXCLUDED`** pela definição da métrica.
+
+Mínimo estrito corrente: **1250**. Provider-component closure: **57/100**, sem incremento porque o componente Gaze continua aberto enquanto os 26 Rites dependem do config implantado.
 
 ## QA pendente
 
-- registry IDs e contagem exata de Rites;
-- os dois Geas e seus IDs/condições completos;
-- 8 Runes e modifiers finais;
-- 6 weapons e mechanics finais;
-- 5 Curios e slots/effects;
-- spirit costs/recipes/rite inputs/outputs;
-- server authority, idempotência e persistence;
-- PvP/loot/farming de Umbrals;
-- compatibilidade real com Malum 1.8.2 do pack e Iron's 3.16.3.
+- valor efetivo implantado de `disableGazeRites`;
+- inputs/outputs/custos e resource mutation dos Rites;
+- comportamento/settlement numérico dos Geas;
+- mechanics/balance do Soulward Shield;
+- server authority/idempotência/persistence em runtime completo;
+- compatibilidade real com Malum `1.8.2`, Lodestone `1.8.2` e Iron's `3.16.3` no modpack;
+- API/hook provider-native seguro para qualquer adapter futuro.
 
-Até o JAR/source existir, todos esses campos permanecem **NÃO VERIFICADO**.
+Registry identity/count e gates estruturais acima estão fechados; runtime mechanics que não foram explicitamente provados continuam **NÃO VERIFICADOS / fail-closed**.
