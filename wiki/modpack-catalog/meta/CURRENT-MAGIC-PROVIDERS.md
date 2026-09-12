@@ -142,7 +142,7 @@ A cobertura source-level não converte o addon em authority de Black Arcana nem 
 
 O artefato físico permanece `goety-3.1.4.jar` / runtime `3.1.4`. A linha pública `Vivideru/Goety-3` foi auditada nos checkpoints 3.1.0 e 3.1.1: `ModItems.java` mantém o mesmo blob e contém **123 registros ativos de itens Focus** no intervalo observado. A lista oficial da Wiki com 110 nomes continua válida como subconjunto documental, não como registry completo atual.
 
-Esse avanço é **evidence-only +0**: não existe pin público exato de source 3.1.4 estabelecido, e registry membership não fecha sozinho reachability, deduplicação semântica, custos, hooks ou runtime. Por isso Goety continua com delta próprio +0; após aplicar o fechamento exato Phase 2BE de Cataclysm: Spellbooks 1.1.13, o mínimo semântico estrito global canônico é **888**, e Goety permanece authority de Soul Energy, Focus casting, servants, rituals e progression. O estado canônico detalhado está nos overlays de queue/capability e em `providers/goety/`.
+Esse avanço é **evidence-only +0**: não existe pin público exato de source 3.1.4 estabelecido, e registry membership não fecha sozinho reachability, deduplicação semântica, custos, hooks ou runtime. Por isso Goety continua com delta próprio +0; após aplicar os fechamentos exatos Phase 2BE de Cataclysm: Spellbooks 1.1.13 e Phase 2BG de Leyline Spellbooks 1.0.3, o mínimo semântico estrito global canônico é **888**, e Goety permanece authority de Soul Energy, Focus casting, servants, rituals e progression. O estado canônico detalhado está nos overlays de queue/capability e em `providers/goety/`.
 
 ## Regra de completude
 
