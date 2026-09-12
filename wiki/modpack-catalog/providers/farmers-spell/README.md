@@ -1,6 +1,6 @@
 # Farmer's Spell 'n Spellbooks 1.0.5.1
 
-Status: `EXACT SOURCE-PINNED 1.0.5.1 CATALOG / 6 REGISTERED SPELL IDENTITIES / HOST-NATIVE SCROLL-FORGE REACHABILITY / CURRENT-HOST RUNTIME QA FAIL-CLOSED`
+Status: `EXACT SOURCE-PINNED 1.0.5.1 CATALOG / 6 REGISTERED SPELL IDENTITIES / HOST-NATIVE SCROLL-FORGE REACHABILITY / COMPONENT #63 / CURRENT-HOST RUNTIME QA FAIL-CLOSED`
 
 ## Installed authority
 
@@ -75,9 +75,9 @@ Dependency ranges or version-label equality are not a runtime PASS.
 
 ## Semantic disposition
 
-Phase 2BO candidate semantic delta: **+6 `COUNTED_SOURCE_PINNED`**.
+Phase 2BO contributes **+6 `COUNTED_SOURCE_PINNED`** semantic spell identities.
 
-The Gluttony school is taxonomy/support for the six actions and is not counted as a seventh object under the current semantic metric. The canonical project total remains **1316 / 62 of 100** until this evidence tranche is merged and the shared ledgers are reconciled; candidate post-promotion state is **1322 / 63 of 100**.
+The Gluttony school is taxonomy/support for the six actions and is not counted as a seventh object under the current semantic metric. After the Phase 2BO shared-ledger reconciliation, the current catalog state is **1322 strict semantic objects / 63 of 100 provider components**. These catalog values do not certify current-host runtime compatibility.
 
 ## Clean-room boundary
 
