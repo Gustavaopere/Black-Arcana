@@ -12,7 +12,7 @@ Status: `EXACT SOURCE-PINNED MIXED SPELL/CONTENT PROVIDER / 6 SEMANTIC SPELLS / 
 | Magical cooking / food / gear | provider registers cooking blocks, foods, equipment, effects and support content in addition to spells | classify as `MIXED`; only discrete semantic spell/action identities enter the current semantic numerator unless separately qualified by the metric |
 | Required mixins | 4 common + 3 client required mixins, Java 21 compatibility, default require 1 | loader/dependency ranges are not runtime PASS; current-host mixin application remains a separate fail-closed QA gate |
 | Provider network surface | `NetworkHandler.registerPackets()` is empty; no provider-owned payload registration is observed at the exact source pin | no second gameplay network authority is established by this source audit |
-| Current build/runtime drift | source uses NeoForge `21.1.238` and GeckoLib `4.9.2`; physical pack uses NeoForge `21.1.248` and GeckoLib `4.7.6` | current client/dedicated-server behavior cannot be inferred from metadata ranges |
+| Current build/runtime drift | source uses NeoForge `21.1.238` and Farmer's Delight `1.3.2`; physical pack uses NeoForge `21.1.248` and Farmer's Delight `1.3.4`; GeckoLib is `4.9.2` on both source build and physical pack | current client/dedicated-server behavior cannot be inferred from metadata ranges or version-label agreement alone |
 
 ## Authority boundary
 
@@ -22,4 +22,4 @@ Black Arcana retains authority only over Black Arcana casting, hazards, Corrupti
 
 ## Runtime-risk disposition
 
-The exact source version matches the physical provider version string and closes registry identity. That does not establish assembled-pack runtime compatibility. Seven required mixins, NeoForge build drift and GeckoLib build/runtime drift keep client boot, dedicated-server boot, mixin application and representative spell execution fail-closed until directly tested on the current physical pack.
+The exact source version matches the physical provider version string and closes registry identity. That does not establish assembled-pack runtime compatibility. Seven required mixins, NeoForge build drift and Farmer's Delight build/runtime drift keep client boot, dedicated-server boot, mixin application and representative spell execution fail-closed until directly tested on the current physical pack. Physical Iron's and the public source line used for the narrow SchoolType/Scroll Forge contract both identify 3.16.3, but no binary/source hash equivalence is inferred.
