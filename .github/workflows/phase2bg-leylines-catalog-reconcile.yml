@@ -1,0 +1,153 @@
+name: Phase 2BG Leylines catalog reconciliation
+
+on:
+  push:
+    branches:
+      - docs/leylines-1.0.3-exact-catalog-closure
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reconcile exact Leylines evidence into catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def read(p): return Path(p).read_text(encoding='utf-8')
+          def write(p,s): Path(p).write_text(s, encoding='utf-8')
+          def replace_once(text, old, new, label):
+              n=text.count(old)
+              assert n==1, f'{label}: expected 1 anchor, found {n}'
+              return text.replace(old,new,1)
+          def insert_once(text, anchor, addition, label):
+              n=text.count(anchor)
+              assert n==1, f'{label}: expected 1 anchor, found {n}'
+              return text.replace(anchor, addition+anchor,1)
+
+          # Provider README: replace obsolete exactness ceiling entirely.
+          p='wiki/modpack-catalog/providers/leyline-spellbooks/README.md'
+          s=read(p)
+          s=replace_once(s,
+              'Status: `EXACT INSTALLED ARTIFACT IDENTITY / 9 PUBLIC SIGNATURE NAMES / COMPLETE REGISTRY UNKNOWN / FAIL-CLOSED`',
+              'Status: `EXACT HASH-MATCHED 1.0.3 ARTIFACT / 14 CURRENT REGISTERED SPELL IDENTITIES / GENERIC IRON\'S SURVIVAL SCROLL ELIGIBILITY CLOSED / RUNTIME/API QA FAIL-CLOSED`',
+              'README status')
+          start=s.index('## Current exactness ceiling')
+          s=s[:start]+'''## Phase 2BG exact-artifact closure\n\nThe previous nine-name publisher list is now historical lower-bound evidence, not the current inventory ceiling. Isolated non-merge PR #194 materialized CurseForge File ID `8565076`, required SHA-1 equality with the physical pack, and closed the installed registry at **14 unconditional provider spell identities**.\n\nExact IDs and registry fields/classes are recorded in [EXACT-1.0.3-SPELL-INVENTORY.md](EXACT-1.0.3-SPELL-INVENTORY.md); audit methodology and clean-room boundaries are recorded in [EXACT-1.0.3-ARTIFACT-AUDIT.md](EXACT-1.0.3-ARTIFACT-AUDIT.md).\n\nThe exact provider artifact also closes enough active/survival eligibility for candidate `COUNTED_EXACT` treatment: the Ley school uses Iron's seven-argument `SchoolType` contract (`requiresLearning=false`, `allowLooting=true` on exact Iron's 3.16.3 source), the 14 spell classes do not override `allowLooting()`/`isEnabled()`, Iron's default spell config is enabled, and Iron's generic survival scroll path can select enabled loot-eligible addon spells without a school filter. Leylines additionally injects a dedicated `charge_leyline` scroll.\n\nThe Phase 2BG candidate semantic delta is **+14**. Canonical totals remain 874 semantic objects / 55 of 100 components until the durable PR merges and exact post-merge CI is green.\n\n## Current exactness ceiling\n\nVerified from the exact installed artifact:\n\n- exact JAR/mod id/runtime/hash and CurseForge project/file;\n- one `DeferredRegister<AbstractSpell>` with 14 unconditional spell registrations;\n- exact 14 spell IDs/classes and `leylines:ley` school identity;\n- exact provider progression resource IDs for Ley Crystal, Leyline Codex and Ley Staff;\n- codex/staff recipes and advancement chain identities;\n- exact dedicated `charge_leyline` scroll injection;\n- exact Ley-school/default eligibility facts plus Iron's 3.16.3 generic scroll-selection contract.\n\nStill fail-closed / separate from this catalog closure:\n\n- assembled-pack final numerical config values and balance QA;\n- exact final loot probabilities after all modifiers/datapacks;\n- pillar/rift persistence structures, networking schema and multiplayer ownership internals;\n- a stable supported Black Arcana adapter/API seam;\n- full-modpack runtime acceptance.\n\nLeyline remains authority for its school, spells, progression, portal/anchor state and pillar/rift lifecycle. Black Arcana must not duplicate those systems.\n'''
+          write(p,s)
+
+          # Technical audit: retire old binary-unavailable claims with exact audit state.
+          p='wiki/modpack-catalog/providers/leyline-spellbooks/TECHNICAL-AUDIT.md'
+          s=read(p)
+          a=s.index('## Binary retrieval status')
+          b=s.index('## Public spell inventory ceiling')
+          s=s[:a]+'''## Exact binary audit status\n\nThe previous environment-specific binary-retrieval blocker is closed by isolated non-merge PR #194. CurseForge File ID `8565076` was materialized through Curse Maven and hard-gated against physical SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` before every inspection pass.\n\nEvidence runs/artifacts:\n\n- primary exact-artifact audit: `34666436710 / 10289437099`;\n- targeted reachability audit: `34666652534 / 10289292617`;\n- school/loot-gate audit: `34667641655 / 10289184487`.\n\nOnly factual identities, resource paths, member signatures, narrow registry/default-control facts and structured acquisition/progression references were retained. The provider binary itself is not committed or redistributed.\n\n'''+s[b:]
+          s=replace_once(s,
+              '## Public spell inventory ceiling\n\nThe publisher names nine `Signature Spells`:',
+              '## Exact spell inventory supersedes the public lower bound\n\nThe publisher names nine `Signature Spells`, but the exact installed registry closes fourteen current identities. The historic publisher list is:',
+              'technical public ceiling')
+          a=s.index('## Fields blocked pending exact-artifact inspection')
+          b=s.index('## Publisher-confirmed 1.0.3 rift rules')
+          s=s[:a]+'''## Fields still outside the exact identity closure\n\nRegistry identity and current active/survival eligibility are now closed strongly enough for the semantic ledger. The following remain separate evidence gates unless an exact source/config/runtime observation states otherwise:\n\n- assembled-pack numerical spell balance/config values;\n- final loot probabilities after complete datapack/modifier composition;\n- exact charge accounting internals;\n- pillar/rift persistence/network implementation and multiplayer ownership;\n- stable public API/hooks suitable for a Black Arcana adapter;\n- complete-modpack runtime QA.\n\n'''+s[b:]
+          s=s.replace('`EXACT INSTALLED IDENTITY / PUBLIC SEMANTIC SURFACE ADVANCED / 9 SIGNATURE NAMES LOWER BOUND / COMPLETE REGISTRY UNKNOWN / BINARY + API QA PENDING / FAIL-CLOSED`',
+                      '`EXACT HASH-MATCHED 1.0.3 ARTIFACT / 14 CURRENT SPELL IDENTITIES / CURRENT ELIGIBILITY CLOSED / RUNTIME + API QA FAIL-CLOSED`')
+          write(p,s)
+
+          # Progression: replace obsolete no-resources block.
+          p='wiki/modpack-catalog/providers/leyline-spellbooks/PROGRESSION.md'
+          s=read(p)
+          a=s.index('## O que não está provado')
+          b=s.index('## Regra para Black Arcana')
+          s=s[:a]+'''## Evidência exata 1.0.3\n\nO JAR físico agora fecha os IDs e recursos de progressão principais:\n\n- `leylines:ley_crystal`;\n- `leylines:leyline_codex`;\n- `leylines:ley_staff`;\n- recipes provider-owned do Codex e Staff usando Ley Crystal;\n- advancements para obter crystal/codex/staff, carregar pilar e concluir rift;\n- o Codex como container de spells no substrato do Iron's;\n- reward path do encounter referenciando o Leyline Codex;\n- injeção dedicada de scroll `leylines:charge_leyline` em loot tables do Iron's.\n\nContinuam não provados por este fechamento: probabilidades finais no pack montado, tuning/economia, detalhes internos de persistence/network do rift/pilar e um seam API estável para integração Black Arcana.\n\n'''+s[b:]
+          write(p,s)
+
+          # Semantic ledger: add candidate section and remove obsolete LOWER_BOUND row.
+          p='wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md'
+          s=read(p)
+          anchor='## Strict reconstructible counted minimum\n'
+          addition='''## Phase 2BG candidate — Leyline Spellbooks 1.0.3\n\nThe canonical baseline entering this PR remains **874**. Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spell identities** plus current active/survival eligibility through the exact Ley-school defaults and Iron's 3.16.3 generic scroll path. Phase 2BG therefore proposes Leylines as `COUNTED_EXACT` with **+14**, producing candidate Iron-ecosystem subtotal **541** and candidate strict minimum **888** (`199 + 541 + 42 + 55 + 25 + 26`).\n\nThese candidate values do not become canonical until the durable PR merges and exact post-merge CI is green. The global denominator remains incomplete, so no semantic percentage is declared.\n\n'''
+          s=insert_once(s,anchor,addition,'semantic candidate')
+          old='| [Leyline Spellbooks](../providers/leyline-spellbooks/README.md) 1.0.3 | **9** publisher-named signature spells followed by “and more” | `LOWER_BOUND` | nine is explicitly not a complete registry count |\n'
+          s=replace_once(s,old,'','semantic Leyline lower bound row')
+          write(p,s)
+
+          # Coverage: candidate component #56 while preserving canonical baseline.
+          p='wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md'
+          s=read(p)
+          anchor='## Internal provider-component closure metric\n'
+          addition='''## Phase 2BG promotion candidate — Leyline Spellbooks 1.0.3\n\nThe canonical baseline entering Phase 2BG remains **874 semantic objects / 55/100 components**. Exact hash-matched Leylines 1.0.3 evidence closes 14 unconditional registered spells and their current host eligibility. The durable Phase 2BG branch therefore proposes **+14 semantic objects**, Iron subtotal **541**, strict minimum **888**, and Leylines as candidate component **#56 / 56/100**.\n\nThis is a promotion candidate only until exact clean-HEAD CI, latest-main reconciliation, merge and exact post-merge CI succeed. Numerical balance, complete-modpack runtime QA and any Black Arcana adapter/API seam remain separate fail-closed gates.\n\n'''
+          s=insert_once(s,anchor,addition,'coverage candidate')
+          write(p,s)
+
+          # Current providers: add explicit candidate checkpoint.
+          p='wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md'
+          s=read(p)
+          anchor='## Checkpoint Somake Spells — Phase 2BF\n'
+          addition='''## Checkpoint Leyline Spellbooks — Phase 2BG candidate\n\nThe exact physical `leylines-1.0.3.jar` / SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` was materialized from CurseForge File ID `8565076` and hash-matched. Its current provider registry contains **14 unconditional `AbstractSpell` identities**, superseding the public nine-name lower bound.\n\nExact Ley-school/default evidence plus the exact Iron's 3.16.3 generic scroll-selection path closes current active/survival eligibility strongly enough for candidate `COUNTED_EXACT` treatment. Phase 2BG therefore proposes **874 -> 888** semantic objects and candidate component **#56 / 56/100**. Until merge plus exact post-merge CI, the canonical values remain 874 and 55/100.\n\nRuntime numerical tuning, final loot probabilities, pillar/rift persistence/network internals and any Black Arcana adapter remain separate fail-closed gates.\n\n'''
+          s=insert_once(s,anchor,addition,'current providers candidate')
+          write(p,s)
+
+          # Queue: candidate section + remove Leylines from open priorities.
+          p='wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md'
+          s=read(p)
+          anchor='## Phase 2BF — Somake Spells 1.0.8-fix — exact registry, sem novo componente\n'
+          addition='''## Phase 2BG — Leyline Spellbooks 1.0.3 — promotion candidate\n\n| Mod ID | Artefato físico | Estado |\n|---|---|---|\n| `leylines` | `leylines-1.0.3.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT HASH-MATCHED ARTIFACT AUDIT / 14 UNCONDITIONAL REGISTERED SPELL IDENTITIES / CURRENT HOST ELIGIBILITY CLOSED / +14 CANDIDATE SEMANTIC DELTA / CANDIDATE #56 |\n\nEvidence: non-merge PR #194; primary `34666436710 / 10289437099`; reachability `34666652534 / 10289292617`; school/loot gate `34667641655 / 10289184487`; exact Iron's 3.16.3 host source `e4056af90302d37eb1739f5ff05020b020e6e252`. Canonical totals remain 874 / 55/100 until durable merge and post-merge CI. Candidate totals are 888 / 56/100.\n\n'''
+          s=insert_once(s,anchor,addition,'queue candidate')
+          lines=s.splitlines(True)
+          removed=[ln for ln in lines if '`leylines` 1.0.3' in ln and 'nove nomes' in ln]
+          if not removed:
+              removed=[ln for ln in lines if '`leylines` 1.0.3' in ln and ('lower bound' in ln.lower() or 'nove' in ln.lower())]
+          assert len(removed)==1, f'queue priority Leylines expected 1, got {len(removed)}'
+          s=''.join(ln for ln in lines if ln not in removed)
+          write(p,s)
+
+          # SOURCES row.
+          p='SOURCES.md'; s=read(p)
+          old_start='| [Leyline Spellbooks `1.0.3`](https://www.curseforge.com/minecraft/mc-mods/leylines-irons-spells-n-spellbooks-addon/files/8565076) |'
+          rows=s.splitlines()
+          idx=[i for i,r in enumerate(rows) if r.startswith(old_start)]
+          assert len(idx)==1, f'SOURCES Leylines row count={len(idx)}'
+          rows[idx[0]]="| [Leyline Spellbooks `1.0.3`](https://www.curseforge.com/minecraft/mc-mods/leylines-irons-spells-n-spellbooks-addon/files/8565076) | exact hash-matched installed-artifact audit closing 14 current provider spell registrations, Ley-school identity, progression resource IDs and host eligibility; physical/audit SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` | `REFERENCE_ONLY / COMPATIBILITY_TARGET / ARR`; isolated binary inspection retained only cryptographic identity, metadata/resource/registry IDs, member signatures, narrow registry/default-control facts and structured acquisition/progression references. Exact Iron's 3.16.3 source is used only to establish the documented host scroll/default contract. No Leylines implementation body/source reconstruction/assets/models/sounds/upstream prose are copied/adapted; numerical runtime QA, persistence/network internals and adapter/API seams remain fail-closed |"
+          write(p,'\n'.join(rows)+'\n')
+
+          # THIRD_PARTY_NOTICES row.
+          p='THIRD_PARTY_NOTICES.md'; s=read(p)
+          rows=s.splitlines()
+          idx=[i for i,r in enumerate(rows) if r.startswith('| Leyline Spellbooks |')]
+          assert len(idx)==1, f'notices Leylines row count={len(idx)}'
+          rows[idx[0]]="| Leyline Spellbooks | installed `1.0.3`; JAR `leylines-1.0.3.jar`; CurseForge File ID `8565076`; physical/audit SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` | `REFERENCE_ONLY / COMPATIBILITY_TARGET` exact-artifact factual audit closing 14 current spell identities plus bounded progression/resource and Iron's-host eligibility evidence | project is **All Rights Reserved**. Binary inspection is restricted to hash/metadata/resource/registry IDs, class/member signatures, narrow registry/default-control facts and structured acquisition/progression references; no implementation body/source reconstruction/assets/models/sounds/upstream prose are copied/adapted. Exact numerical runtime behavior, persistence/network internals and provider-specific adapter/API contracts remain `REVIEW_REQUIRED`/fail-closed |"
+          write(p,'\n'.join(rows)+'\n')
+
+          # Assertions: no obsolete binary-unavailable/current-registry-unknown claims in provider docs.
+          for p in ['wiki/modpack-catalog/providers/leyline-spellbooks/README.md','wiki/modpack-catalog/providers/leyline-spellbooks/TECHNICAL-AUDIT.md']:
+              t=read(p)
+              assert 'COMPLETE REGISTRY UNKNOWN' not in t
+              assert 'inspectable binary bytes: `NOT OBTAINED`' not in t
+          assert 'candidate strict minimum **888**' in read('wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md')
+          assert 'candidate component **#56 / 56/100**' in read('wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md')
+          PY
+
+          git diff --check
+          git status --short
+      - name: Commit reconciled documentation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add SOURCES.md THIRD_PARTY_NOTICES.md wiki/modpack-catalog
+          if git diff --cached --quiet; then
+            echo 'No reconciliation changes to commit.'
+            exit 0
+          fi
+          git commit -m 'docs: reconcile Leylines 1.0.3 exact catalog evidence'
+          git push
