@@ -32,7 +32,7 @@ The previous chat-only working tally is not an authority and is not used as an i
 
 ## Phase 2BG promotion candidate — Leyline Spellbooks 1.0.3
 
-The canonical baseline entering Phase 2BG remains **874 semantic objects / 55/100 components**. Exact hash-matched Leylines 1.0.3 evidence closes 14 unconditional registered spells and their current host eligibility. The durable Phase 2BG branch therefore proposes **+14 semantic objects**, Iron subtotal **541**, strict minimum **888**, and Leylines as candidate component **#56 / 56/100**.
+The canonical baseline entering Phase 2BG remains **874 semantic objects / 55/100 components**. Exact hash-matched Leylines 1.0.3 evidence closes 14 unconditional registered spells and removes the provider-specific eligibility blocker; exact Iron's host defaults/scroll behavior corroborate normal reachability while deployed generic host config remains separate runtime QA. The durable Phase 2BG branch therefore proposes **+14 semantic objects**, Iron subtotal **541**, strict minimum **888**, and Leylines as candidate component **#56 / 56/100**.
 
 This is a promotion candidate only until exact clean-HEAD CI, latest-main reconciliation, merge and exact post-merge CI succeed. Numerical balance, complete-modpack runtime QA and any Black Arcana adapter/API seam remain separate fail-closed gates.
 

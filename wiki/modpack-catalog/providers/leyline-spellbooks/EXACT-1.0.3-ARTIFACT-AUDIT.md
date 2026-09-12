@@ -44,7 +44,7 @@ The exact artifact also closes the provider-specific gates that prevented the pr
 - exact Iron's survival loot tables, including catacombs wall loot, use `randomize_spell` without a school/spell filter;
 - Leylines additionally appends a dedicated level-1 `leylines:charge_leyline` scroll to several Iron's chest/entity loot tables.
 
-This is sufficient for the semantic ledger's current-player-eligibility gate for all fourteen registered spells. It does **not** prove every numerical mechanic, drop probability in the assembled pack, or a Black Arcana integration hook.
+This establishes that there is no provider-specific lock comparable to Somake and corroborates the ordinary Iron's host path. Under the ledger's existing `COUNTED_EXACT` precedent for unconditional Iron's-addon registries, that removes the Leylines-specific blocker to semantic counting. It does **not** substitute code defaults for an unmaterialized deployed generic Iron's per-spell config, nor prove every numerical mechanic, assembled-pack drop probability or Black Arcana integration hook.
 
 ## Exact progression/resource facts
 
@@ -77,4 +77,4 @@ Leyline Spellbooks is All Rights Reserved. The isolated binary audit retained on
 
 ## Disposition
 
-For Phase 2BG, the exact installed spell inventory is eligible for candidate `COUNTED_EXACT` promotion: **+14 semantic magic objects**. The canonical repository baseline remains 874 semantic objects / 55 of 100 provider components until the durable PR is merged and exact post-merge CI is green.
+For Phase 2BG, the exact installed unconditional spell inventory is eligible for candidate `COUNTED_EXACT` promotion under the same registry-level precedent used by other exact Iron's-addon closures: **+14 semantic magic objects**. The canonical repository baseline remains 874 semantic objects / 55 of 100 provider components until the durable PR is merged and exact post-merge CI is green.

@@ -100,7 +100,7 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 
 The exact physical `leylines-1.0.3.jar` / SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` was materialized from CurseForge File ID `8565076` and hash-matched. Its current provider registry contains **14 unconditional `AbstractSpell` identities**, superseding the public nine-name lower bound.
 
-Exact Ley-school/default evidence plus the exact Iron's 3.16.3 generic scroll-selection path closes current active/survival eligibility strongly enough for candidate `COUNTED_EXACT` treatment. Phase 2BG therefore proposes **874 -> 888** semantic objects and candidate component **#56 / 56/100**. Until merge plus exact post-merge CI, the canonical values remain 874 and 55/100.
+Exact Ley-school/default evidence finds no provider-specific spell lock, and the exact Iron's 3.16.3 generic scroll-selection path corroborates ordinary host reachability. Candidate `COUNTED_EXACT` treatment is based on the exact unconditional registry; deployed generic host config remains separate runtime QA. Phase 2BG therefore proposes **874 -> 888** semantic objects and candidate component **#56 / 56/100**. Until merge plus exact post-merge CI, the canonical values remain 874 and 55/100.
 
 Runtime numerical tuning, final loot probabilities, pillar/rift persistence/network internals and any Black Arcana adapter remain separate fail-closed gates.
 

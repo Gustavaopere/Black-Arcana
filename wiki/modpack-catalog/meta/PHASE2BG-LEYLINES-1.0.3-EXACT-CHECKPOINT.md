@@ -27,11 +27,11 @@ Temporary non-merge evidence PR #194 produced three independent hash-gated text 
 
 ## Closure result
 
-The exact JAR closes **14 unconditional `AbstractSpell` registrations** under one provider `DeferredRegister<AbstractSpell>`. Exact resource IDs are recorded in [`../providers/leyline-spellbooks/EXACT-1.0.3-SPELL-INVENTORY.md`](../providers/leyline-spellbooks/EXACT-1.0.3-SPELL-INVENTORY.md).
+The exact JAR closes **14 unconditional `AbstractSpell` registrations** under one provider `DeferredRegister<AbstractSpell>`; this exact registry is the semantic-count authority for the candidate, while generic host runtime config remains separately testable. Exact resource IDs are recorded in [`../providers/leyline-spellbooks/EXACT-1.0.3-SPELL-INVENTORY.md`](../providers/leyline-spellbooks/EXACT-1.0.3-SPELL-INVENTORY.md).
 
 The former nine-name publisher list is superseded as the registry ceiling; it remains useful historical publisher evidence only.
 
-Active/survival eligibility is materially stronger than registry membership alone:
+Provider-specific eligibility evidence is materially stronger than registry membership alone:
 
 - exact Leylines spell classes do not override Iron's `allowLooting()` or `isEnabled()`;
 - exact Ley school construction uses Iron's seven-argument `SchoolType` constructor;
@@ -40,7 +40,7 @@ Active/survival eligibility is materially stronger than registry membership alon
 - exact Iron's survival loot includes unfiltered randomized scrolls;
 - Leylines also adds a dedicated `charge_leyline` scroll injection.
 
-No provider-specific spell-lock/config eligibility gate analogous to Somake was established. The six observed `LeylinesConfig` values govern spell behavior rather than registration/learning eligibility.
+No provider-specific spell-lock/config eligibility gate analogous to Somake was established. The six observed `LeylinesConfig` values govern spell behavior rather than registration/learning eligibility. Deployed generic Iron's per-spell config remains a separate runtime-QA boundary and is not inferred from defaults.
 
 ## Candidate semantic/component delta
 

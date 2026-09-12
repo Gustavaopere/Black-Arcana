@@ -1,6 +1,6 @@
 # Leyline Spellbooks 1.0.3
 
-Status: `EXACT HASH-MATCHED 1.0.3 ARTIFACT / 14 CURRENT REGISTERED SPELL IDENTITIES / GENERIC IRON'S SURVIVAL SCROLL ELIGIBILITY CLOSED / RUNTIME/API QA FAIL-CLOSED`
+Status: `EXACT HASH-MATCHED 1.0.3 ARTIFACT / 14 CURRENT REGISTERED SPELL IDENTITIES / NO PROVIDER-SPECIFIC SPELL LOCK OBSERVED / HOST RUNTIME/API QA FAIL-CLOSED`
 
 ## Installed authority
 
@@ -105,7 +105,7 @@ The previous nine-name publisher list is now historical lower-bound evidence, no
 
 Exact IDs and registry fields/classes are recorded in [EXACT-1.0.3-SPELL-INVENTORY.md](EXACT-1.0.3-SPELL-INVENTORY.md); audit methodology and clean-room boundaries are recorded in [EXACT-1.0.3-ARTIFACT-AUDIT.md](EXACT-1.0.3-ARTIFACT-AUDIT.md).
 
-The exact provider artifact also closes enough active/survival eligibility for candidate `COUNTED_EXACT` treatment: the Ley school uses Iron's seven-argument `SchoolType` contract (`requiresLearning=false`, `allowLooting=true` on exact Iron's 3.16.3 source), the 14 spell classes do not override `allowLooting()`/`isEnabled()`, Iron's default spell config is enabled, and Iron's generic survival scroll path can select enabled loot-eligible addon spells without a school filter. Leylines additionally injects a dedicated `charge_leyline` scroll.
+The exact provider artifact exposes no Leylines-specific spell lock or conditional registration gate. Exact Iron's 3.16.3 source corroborates ordinary host eligibility: the Ley school uses the seven-argument `SchoolType` contract (`requiresLearning=false`, `allowLooting=true`), the 14 spell classes do not override `allowLooting()`/`isEnabled()`, and the generic scroll path can select enabled loot-eligible addon spells without a school filter. Leylines additionally injects a dedicated `charge_leyline` scroll. Deployed generic Iron's per-spell config and full-pack runtime behavior remain separate QA rather than being inferred here.
 
 The Phase 2BG candidate semantic delta is **+14**. Canonical totals remain 874 semantic objects / 55 of 100 components until the durable PR merges and exact post-merge CI is green.
 
@@ -119,7 +119,7 @@ Verified from the exact installed artifact:
 - exact provider progression resource IDs for Ley Crystal, Leyline Codex and Ley Staff;
 - codex/staff recipes and advancement chain identities;
 - exact dedicated `charge_leyline` scroll injection;
-- exact Ley-school/default eligibility facts plus Iron's 3.16.3 generic scroll-selection contract.
+- exact Ley-school/default facts plus Iron's 3.16.3 generic scroll-selection contract, with deployed generic host config still a separate runtime-QA boundary.
 
 Still fail-closed / separate from this catalog closure:
 

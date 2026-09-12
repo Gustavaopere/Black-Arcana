@@ -44,7 +44,7 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 ## Phase 2BG candidate — Leyline Spellbooks 1.0.3
 
-The canonical baseline entering this PR remains **874**. Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spell identities** plus current active/survival eligibility through the exact Ley-school defaults and Iron's 3.16.3 generic scroll path. Phase 2BG therefore proposes Leylines as `COUNTED_EXACT` with **+14**, producing candidate Iron-ecosystem subtotal **541** and candidate strict minimum **888** (`199 + 541 + 42 + 55 + 25 + 26`).
+The canonical baseline entering this PR remains **874**. Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spell identities**. No Leylines-specific spell lock or conditional registration gate is present, and exact Iron's 3.16.3 school/default/scroll evidence corroborates ordinary host reachability; deployed generic host config remains separate runtime QA rather than a reason to reinterpret the exact registry. Phase 2BG therefore proposes Leylines as `COUNTED_EXACT` with **+14**, producing candidate Iron-ecosystem subtotal **541** and candidate strict minimum **888** (`199 + 541 + 42 + 55 + 25 + 26`).
 
 These candidate values do not become canonical until the durable PR merges and exact post-merge CI is green. The global denominator remains incomplete, so no semantic percentage is declared.
 

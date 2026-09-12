@@ -29,6 +29,6 @@ The earlier public names Beam, Ley Blast and Eclipse correspond exactly to `leyl
 
 ## Semantic disposition
 
-All fourteen are provider-owned standalone Iron's spells, registered unconditionally in the installed JAR. Exact Ley-school/default evidence plus the exact Iron's 3.16.3 generic scroll path closes current active/survival eligibility strongly enough for candidate `COUNTED_EXACT` treatment under the canonical semantic ledger.
+All fourteen are provider-owned standalone Iron's spells, registered unconditionally in the installed JAR. Exact Ley-school/default evidence shows no provider-specific lock, while the exact Iron's 3.16.3 generic scroll path corroborates ordinary host reachability. Candidate `COUNTED_EXACT` treatment is therefore based on the exact unconditional registry under the ledger's existing Iron's-addon precedent; deployed generic host config remains separate runtime QA.
 
 Numerical balance, assembled-pack drop frequencies and provider-specific runtime/API integration remain separate evidence gates and are not inferred from this inventory.
