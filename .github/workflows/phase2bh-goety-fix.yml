@@ -27,7 +27,7 @@ jobs:
           gh run download 34670458172 -n goety-3.1.4-focus-reachability-audit -D /tmp/goety/f
           gh run download 34670556329 -n goety-3.1.4-ritual-identity-audit -D /tmp/goety/r
           gh run download 34670758163 -n goety-3.1.4-ritual-semantic-dedup-audit -D /tmp/goety/s
-      - name: Extract and execute reconciliation script
+      - name: Extract, correct, and execute reconciliation script
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -39,7 +39,11 @@ jobs:
           lines=[]
           for line in s[a:b].splitlines():
               lines.append(line[10:] if line.startswith('          ') else line)
-          Path('/tmp/reconcile.py').write_text('\n'.join(lines)+'\n')
+          script='\n'.join(lines)+'\n'
+          wrong='a0770e180e4b1b87d8fa9c8356e9dbf34d82a7'
+          correct='a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          script=script.replace(wrong,correct)
+          Path('/tmp/reconcile.py').write_text(script)
           PY
           python /tmp/reconcile.py
       - name: Commit durable candidate and remove temporary workflows
