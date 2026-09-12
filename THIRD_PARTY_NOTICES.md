@@ -101,3 +101,11 @@ Before a public release, scan source and binary resources to confirm:
 A release must fail closed when actual copied/adapted material has `REVIEW_REQUIRED`, `PERMISSION_REQUIRED` or unknown rights. Normal platform, build, test, dependency/API and compatibility support may continue without granting Black Arcana any rights to external source/assets.
 
 The built JAR must carry the root `LICENSE` and this `THIRD_PARTY_NOTICES.md` file.
+
+
+## Phase 2BL exact-artifact audit notices — 2026-09-12
+
+| Project | Physical artifact | License posture | Audit use |
+|---|---|---|---|
+| Goety Iron | `GoetyIron-1.21.1-NeoForge-3.1.jar` / SHA-1 `c8529867e798661ed01fb2948abda23735888fc6` | Publisher surfaces conflict: CurseForge MIT, Modrinth ARR; Black Arcana applies the stricter clean-room posture | factual hash/metadata/registry/resource/condition/outcome inspection only; no JAR/assets/source implementation redistributed |
+| Goety Cataclysm | `goety_cataclysm-1.21.1-1.8.2.jar` / SHA-1 `4e3052a082200371b36e1a88fdce05e294d82757` | All Rights Reserved | factual hash/metadata/registry/resource/condition/outcome inspection only; no JAR/assets/source implementation redistributed |

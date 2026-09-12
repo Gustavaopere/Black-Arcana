@@ -6,7 +6,7 @@
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BK fecha `ignissoulfires_spellbooks` como componente **#58**, portanto **58 estão canônicos**. Esse 58/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, portanto **60 estão canônicos**. Esse 60/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
 A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui.
 
@@ -137,6 +137,12 @@ Esse fechamento é de catálogo/identidade. Runtime QA, valores numéricos e qua
 - runtime QA integral do pack ainda pendente.
 
 A cobertura source-level não converte o addon em authority de Black Arcana nem em provider de Mastery do RPG Skill Tree.
+
+## Checkpoint Goety addons — Phase 2BL exact semantic closure
+
+Goety Iron 3.1 e Goety Cataclysm 1.21.1-1.8.2 foram materializados em audits clean-room hash-matched, separados do Goety base 3.1.4. Goety Iron fecha **2 Focus + 12 rituais não-Focus = +14**; Goety Cataclysm fecha **28 Focus + 24 rituais não-Focus = +52**. Recipes de aquisição de Focus são caminhos de obtenção e não segunda identidade semântica. Os registries de Focus não têm branch/config gate de registration observado.
+
+O delta conjunto é **+66**, levando o mínimo estrito a **1316**. Como ambos já eram providers abertos no denominador reconciliado, tornam-se componentes **#59 e #60 / 60/100**. Evidência isolada: PR #205 (Goety Iron) e PR #206 (Goety Cataclysm), ambas NON-MERGE. Runtime servant/cast settlement, balance e adapters continuam fail-closed.
 
 ## Checkpoint Ignis Soulfires: Spellbooks — Phase 2BK exact zero closure
 

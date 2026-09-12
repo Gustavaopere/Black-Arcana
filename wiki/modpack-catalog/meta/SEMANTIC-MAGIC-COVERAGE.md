@@ -42,6 +42,12 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
 
+## Phase 2BL — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2
+
+Exact hash-matched artifact evidence closes both remaining Goety addon rows without duplicating base-Goety ownership. Goety Iron contributes **2 Focus + 12 distinct non-Focus rituals = +14**. Goety Cataclysm contributes **28 Focus + 24 distinct non-Focus rituals = +52**. Focus-acquisition recipes are deduplicated against the Focus identities themselves. Targeted scans find no mod-loaded conditions on the counted non-Focus rituals, while registry initializers have zero conditional branches and zero config references; no enable/disable-like registration gate was found.
+
+Evidence is isolated in NON-MERGE PRs #205 and #206. Phase 2BL therefore adds **+66 `COUNTED_EXACT`**, moving the strict reconstructible minimum from **1250 to 1316** and, separately, closing provider components **#59 and #60**. Runtime/balance/servant-lifecycle QA remains separate and fail-closed.
+
 ## Phase 2BK exact zero closure — Ignis Soulfires: Spellbooks 1.1.0
 
 Exact hash-matched artifact evidence closes Ignis Soulfires: Spellbooks 1.1.0 as `BRIDGE_COMPAT + GEAR_LOOT_SUPPORT` with **0 independent semantic magic objects**. The artifact contains 11 provider classes; its own registry surfaces are one armor-material registry and one five-item equipment registry. Across every provider class, structural inspection finds 0 hits for `AbstractSpell`, `registerSpell`, `SpellRegistry`, `Ritual`, `Rite` or `Ability`; packaged provider data contains equipment tags/recipes rather than a spell/ritual/action registry.
@@ -66,7 +72,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1250 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BJ.**
+**1316 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BL.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -78,8 +84,10 @@ Arithmetic cross-check by provider family:
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
 - Hexalia ritual/infusion layer: **25**;
 - Malum Spirit Rite layer: **26**;
-- Goety Focus + ritual layer: **361**;
-- total: `199 + 542 + 42 + 55 + 25 + 26 + 361 = 1250`.
+- Goety base Focus + ritual layer: **361**;
+- Goety Iron Focus + ritual layer: **14**;
+- Goety Cataclysm Focus + ritual layer: **52**;
+- total: `199 + 542 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1316`.
 
 ### Counted ledger
 
@@ -114,13 +122,15 @@ Arithmetic cross-check by provider family:
 | [Leyline Spellbooks](../providers/leyline-spellbooks/README.md) | 1.0.3 | 14 | `COUNTED_EXACT` | exact hash-matched JAR closes 14 unconditional `AbstractSpell` registrations; no provider-specific spell lock/conditional registration gate is present; generic Iron's host config remains separate runtime QA |
 | [Gaze](../providers/gaze/README.md) | 1.1.7.1 | 1 | `COUNTED_EXACT` | exact hash-matched artifact closes one Gaze-owned Iron's `AbstractSpell`, Soulward Shield; physical Iron's satisfies the provider gate; 26 Spirit Rites remain config-conditional and 2 Geas + 8 rune items are metric-excluded |
 | [Goety](../providers/goety/README.md) | 3.1.4 | 361 | `COUNTED_EXACT` | exact hash-matched JAR closes 123 active/acquirable Focus actions + 238 available distinct non-Focus ritual actions after semantic deduplication and physical-provider condition filtering; runtime/API/balance QA remains separate |
+| [Goety Iron](../providers/goety-iron/README.md) | 3.1 | 14 | `COUNTED_EXACT` | exact hash-matched JAR closes 2 unconditional addon-owned Focus identities + 12 distinct non-Focus rituals; 2 Focus-acquisition rituals deduplicated; no base-Goety semantic duplicates |
+| [Goety Cataclysm](../providers/goety-cataclysm/README.md) | 1.21.1-1.8.2 | 52 | `COUNTED_EXACT` | exact hash-matched JAR closes 28 unconditional addon-owned Focus identities + 24 distinct non-Focus rituals; 24 Focus-acquisition rituals deduplicated; no base-Goety semantic duplicates |
 | [Eidolon: Repraised](../providers/eidolon-repraised/README.md) | 0.5.0.2 | 42 | `COUNTED_SOURCE_PINNED` | 18 normal/player-facing chants + 24 official ritual recipes; `undead_lure` empty cast and `basic_incense` dummy excluded; chant conversions are not extra spells |
 | [Vampirism](../providers/vampirism/README.md) | 1.10.13 | 19 | `COUNTED_SOURCE_PINNED` | 14 Vampire + 3 Hunter + 2 shared Lord registered player actions; counted as provider-native discrete supernatural actions, not Iron's spells |
 | [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike; exact source registers its action/skill/node/config but omits the node from the configured Gravebound tree and from all rank-default grants, so it is not normally survival-reachable in this build |
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1250** |  |  |
+| **Strict total** |  | **1316** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -128,7 +138,7 @@ Exact installed-line source at `TheDrOfDoctoring/bloodlines@c8fd517d204d09dfcb9a
 
 The same exact source closes the missing reachability question: the generated configured Gravebound tree does not include `gravebound_sorcerous_strike`, and `HunterBloodlinesConfig.graveboundDefaults` grants only the four Gravebound rank nodes by default. Repository-wide inspection finds no provider-native alternate grant dedicated to Sorcerous Strike; generic Bloodline task/command surfaces add perk points rather than directly granting this skill. `SkillHandlerMixin` only adds Bloodlines-specific cost/rank/default checks around Vampirism skill enabling and does not create a second acquisition path.
 
-Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**; after later provider closures, the global strict total is **1249**.
+Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**; after Phase 2BL, the global strict total is **1316**.
 
 ### Werewolves 2.0.3.3 Leap correction
 
@@ -215,23 +225,21 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 1249** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 1316** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
 | [Somake Spells](../providers/somake-spells/README.md) 1.0.8-fix | exact hash-matched artifact closes **67 current spell registrations** under the physical optional-provider set; 61 unconditional + 3 `mowziesmobs`-gated + 3 `iss_magicfromtheeast`-gated, with both gates physically satisfied | `CONDITIONAL / EXACT REGISTRY CLOSED / +0` | deployed `somakespells/general/common.toml` is unavailable and complete object-level survival acquisition/reachability remains unclosed; code default `enableSpellLockSystem=false` is not substituted for the actual pack config |
 | [Gaze](../providers/gaze/README.md) 1.1.7.1 rites | exact hash-matched artifact closes **26 player-facing Spirit Rite identities** | `CONDITIONAL / EXACT REGISTRY CLOSED / +0 RITES` | exact provider control flow suppresses the rite surfaces when resolved COMMON config `disableGazeRites=true`; deployed pack value is unavailable, so source default `false` is not substituted |
 | [Ignis Soulfires: Spellbooks](../providers/ignis-soulfires-spellbooks/README.md) 1.1.0 | exact hash-matched artifact closes 11 provider classes, one armor-material registry and exactly five equipment items; no spell/ritual/action registry exists | `ZERO_BRIDGE_INFRA / EXACT ARTIFACT CLOSED / +0` | gear/items/passive equipment behavior are excluded by metric definition; exact artifact proves zero independent semantic magic objects |
-| [Goety Cataclysm](../providers/goety-cataclysm/README.md) 1.21.1-1.8.2 | exact installed release; public semantic surface proves addon spells/abilities exist | `OPEN` | complete Focus/spell/ritual inventory unavailable for current build |
-| [Goety Iron](../providers/goety-iron/README.md) 3.1 | exact installed release; servant/focus/ritual bridge publicly established | `OPEN / BRIDGE-BOUNDED` | public servant list is not a spell inventory; focus/ritual registry totals are unverified |
 
 Other provider directories that have not yet been normalized into a semantic-object row also remain outside the denominator. Absence from the strict table is never interpreted as zero without an explicit zero disposition.
 
 ## Important interpretation rules
 
-1. **1249 is not “1249 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1249 by the 100 provider-component denominator. The current component target is `57/100`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1249 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1316 is not “1316 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1316 by the 100 provider-component denominator. The current component target is `60/100`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1316 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
@@ -241,8 +249,8 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 To converge on a final denominator efficiently, prioritize:
 
-1. Goety Iron 3.1 and Goety Cataclysm 1.21.1-1.8.2 exact semantic inventories without duplicating base-Goety ownership;
-2. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.1 and Gaze 1.1.7.1 Rites;
+1. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.1 and Gaze 1.1.7.1 Rites;
+2. close Somake 1.0.8-fix survival reachability/config if authoritative deployed evidence becomes available;
 3. remaining open provider inventories that can materially reduce the denominator blocker.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.

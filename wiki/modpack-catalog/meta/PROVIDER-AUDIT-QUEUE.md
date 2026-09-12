@@ -8,14 +8,14 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- base canônica considerada para Phase 2BK: `main@fa14b75bf08482031e4fabbc779d30d295e22c5e`; esse SHA contém Phase 2BJ / PR #202 e passou exact-SHA post-merge CI #2531, incluindo canonical QA-JAR publication;
+- base canônica considerada para Phase 2BL: `main@4041316e2261d6ca46bbc4c1b6e717ddabb44047`; esse SHA contém Phase 2BK / PR #204 e passou exact-SHA post-merge CI #2534 / run `34703943824`, incluindo canonical QA-JAR publication;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BJ fecha **1250 objetos mágicos semânticos**. Phase 2BK fecha Ignis Soulfires: Spellbooks em **+0** por evidência exata, portanto o mínimo continua **1250**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -32,7 +32,9 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - delta semântico Somake 1.0.8-fix Phase 2BF: **+0** (`67 exact registry`, reachability/config efetivo ainda `CONDITIONAL`);
 - delta semântico Leyline Spellbooks 1.0.3 Phase 2BG: **+14** (`14 exact unconditional registry identities`);
 - delta semântico Goety 3.1.4 Phase 2BH: **+361** (`123 active Focus + 238 available distinct non-Focus rituals`);
-- mínimo estrito global após Phase 2BK: **1250**;
+- delta semântico Goety Iron 3.1 Phase 2BL: **+14** (`2 Focus + 12 distinct non-Focus rituals`);
+- delta semântico Goety Cataclysm 1.21.1-1.8.2 Phase 2BL: **+52** (`28 Focus + 24 distinct non-Focus rituals`);
+- mínimo estrito global após Phase 2BL: **1316**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -46,9 +48,18 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
 - Phase 2BD / PR #186: HEAD auditado `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` passou Black Arcana CI #2464;
 - PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
-- cobertura de componentes após o fechamento Phase 2BK: **58/100 = 58%**; `ignissoulfires_spellbooks` é componente #58 por exact-artifact closure, sem delta semântico.
+- cobertura de componentes após o fechamento Phase 2BL: **60/100 = 60%**; `goetyiron` é componente #59 e `goety_cataclysm` é componente #60 por exact-artifact semantic closure.
 
-O valor 58/100 nunca substitui a métrica semântica de magias.
+O valor 60/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BL — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2 — componentes #59/#60 / semantic +66
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `goetyiron` | `GoetyIron-1.21.1-NeoForge-3.1.jar` | EXACT HASH-MATCHED / 2 FOCUS + 12 DISTINCT NON-FOCUS RITUALS / UNCONDITIONAL REGISTRATION GATE / +14 / COMPONENT #59 |
+| `goety_cataclysm` | `goety_cataclysm-1.21.1-1.8.2.jar` | EXACT HASH-MATCHED / 28 FOCUS + 24 DISTINCT NON-FOCUS RITUALS / UNCONDITIONAL REGISTRATION GATE / +52 / COMPONENT #60 |
+
+Evidence: NON-MERGE PR #205 (Iron) and #206 (Cataclysm). Both audits hard-gate exact physical SHA-1, deduplicate Focus acquisition recipes and compare semantic ownership against base Goety 3.1.4. Runtime mechanics and adapters remain fail-closed.
 
 ## Phase 2BK — Ignis Soulfires: Spellbooks 1.1.0 — componente #58 / semantic +0
 

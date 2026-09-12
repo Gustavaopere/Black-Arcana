@@ -4,11 +4,11 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BK keeps the **strict counted minimum at 1250 semantic magic objects** while closing Ignis Soulfires: Spellbooks 1.1.0 as an exact zero-semantic bridge/gear provider. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. The global denominator is still incomplete and no semantic percentage is declared.
 
 Phase 2BK has a semantic delta of **0**: exact hash-matched Ignis Soulfires: Spellbooks 1.1.0 contains only its armor-material/item bridge surfaces and no provider-owned spell, ritual, rite or equivalent action registry. This closes provider component **#58** without changing the semantic numerator. See [`../providers/ignis-soulfires-spellbooks/EXACT-1.1.0-ARTIFACT-AUDIT.md`](../providers/ignis-soulfires-spellbooks/EXACT-1.1.0-ARTIFACT-AUDIT.md).
 
-The latest semantic promotion is **Gaze +1**. Exact hash-matched 1.1.7.1 artifact evidence closes one Gaze-owned Iron's standalone spell, Soulward Shield, with the optional Iron's provider gate satisfied by the physical pack. The same artifact closes 26 player-facing Spirit Rite identities, but they remain `CONDITIONAL` because the deployed COMMON `disableGazeRites` value is unavailable; two Geas effect types and eight rune items are metric-excluded. See [`../providers/gaze/EXACT-1.1.7.1-ARTIFACT-AUDIT.md`](../providers/gaze/EXACT-1.1.7.1-ARTIFACT-AUDIT.md).
+The latest semantic promotion before Phase 2BL was **Gaze +1**. Exact hash-matched 1.1.7.1 artifact evidence closes one Gaze-owned Iron's standalone spell, Soulward Shield, with the optional Iron's provider gate satisfied by the physical pack. The same artifact closes 26 player-facing Spirit Rite identities, but they remain `CONDITIONAL` because the deployed COMMON `disableGazeRites` value is unavailable; two Geas effect types and eight rune items are metric-excluded. See [`../providers/gaze/EXACT-1.1.7.1-ARTIFACT-AUDIT.md`](../providers/gaze/EXACT-1.1.7.1-ARTIFACT-AUDIT.md).
 
 The preceding semantic promotion is **Goety +361**. Exact hash-matched 3.1.4 artifact evidence closes 123 active/acquirable Focus actions and 238 available distinct non-Focus ritual actions after semantic deduplication and physical-provider condition filtering. Runtime/API/balance and provider-owned settlement remain separate fail-closed gates. See [`../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md`](../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md).
 
@@ -32,7 +32,9 @@ Therefore:
 - semantic numerator delta from Alshanex's Familiars 4.0.3 exact closure: **+18**;
 - semantic numerator delta from the preceding Werewolves correction: **+1**;
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
-- strict reconstructible semantic minimum: **1250**;
+- semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
+- semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
+- strict reconstructible semantic minimum: **1316**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
@@ -41,6 +43,12 @@ The preceding semantic-only promotion was **Malum +26**: whole-interval path his
 Phase 2BH is canonical for Goety 3.1.4 from exact hash-matched artifact evidence: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical values are **1249 / 57 of 100**. Runtime/API/balance gates remain separate.
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
+
+## Phase 2BL — Goety addon exact closures, components #59 and #60
+
+Exact hash-matched evidence closes **Goety Iron +14** (2 Focus + 12 non-Focus rituals) and **Goety Cataclysm +52** (28 Focus + 24 non-Focus rituals). Acquisition recipes are deduplicated against Focus identities; counted non-Focus rituals have distinct outcomes and no mod-loaded conditions. Narrow registry-gate scans find zero initializer branches and zero config references for Focus registration in both providers.
+
+Phase 2BL therefore moves the strict semantic minimum to **1316** and the separate provider-component metric to **60/100**. NON-MERGE evidence PRs are #205 and #206. Runtime/balance/servant lifecycle and any Black Arcana adapter remain separate fail-closed gates.
 
 ## Phase 2BK — Ignis Soulfires: Spellbooks 1.1.0 component #58, exact zero closure
 
@@ -66,7 +74,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after Phase 2BK: 58/100 = 58%.**
+**Canonical provider-component coverage after Phase 2BL: 60/100 = 60%.**
 
 Phase 2BF exact-artifact reconciliation closes Somake 1.0.8-fix registry identity at 67 current registrations under the physical optional-provider set, but the provider remains `CONDITIONAL` because the deployed COMMON spell-lock config and complete survival acquisition/reachability are not authoritative. Phase 2BF therefore changes neither metric: **874** strict semantic objects and **55/100** closed provider components.
 

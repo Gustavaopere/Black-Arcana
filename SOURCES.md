@@ -50,3 +50,11 @@ Those documents specify what Black Arcana may independently implement. They are 
 ## Final audit rule
 
 Entries marked as a platform/build/test relationship are intentionally not treated as source-derivation grants. Stage 09 must reconcile the exact distributed/runtime/build artifacts with their applicable licenses/notices and record any redistribution obligation that actually applies to the Black Arcana release artifact.
+
+
+## Phase 2BL — Goety addon exact-artifact evidence (2026-09-12)
+
+- **Goety Iron 3.1** — physical `GoetyIron-1.21.1-NeoForge-3.1.jar`, mod id `goetyiron`, SHA-1 `c8529867e798661ed01fb2948abda23735888fc6`, CurseForge `1367643 / 8662179`. NON-MERGE PR #205; structural `34704435612 / 10301537361`, targeted semantics `34704813857 / 10301716793`, registration gate `34705555893 / 10301284496`. License surfaces conflict (CurseForge MIT vs Modrinth ARR); strict clean-room posture retained.
+- **Goety Cataclysm 1.21.1-1.8.2** — physical `goety_cataclysm-1.21.1-1.8.2.jar`, mod id `goety_cataclysm`, SHA-1 `4e3052a082200371b36e1a88fdce05e294d82757`, CurseForge `1224214 / 8518940`. NON-MERGE PR #206; structural `34704449593 / 10301367858`, targeted semantics `34704823100 / 10301168646`, registration gate `34705567753 / 10301603762`. ARR; older public 1.20 source is not exact 1.21.1 authority.
+
+The upstream JARs are not redistributed. Evidence retained by Black Arcana is factual clean-room metadata/registry/resource/condition/outcome material only.
