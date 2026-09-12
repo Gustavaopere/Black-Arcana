@@ -107,7 +107,7 @@ Exact IDs and registry fields/classes are recorded in [EXACT-1.0.3-SPELL-INVENTO
 
 The exact provider artifact exposes no Leylines-specific spell lock or conditional registration gate. Exact Iron's 3.16.3 source corroborates ordinary host eligibility: the Ley school uses the seven-argument `SchoolType` contract (`requiresLearning=false`, `allowLooting=true`), the 14 spell classes do not override `allowLooting()`/`isEnabled()`, and the generic scroll path can select enabled loot-eligible addon spells without a school filter. Leylines additionally injects a dedicated `charge_leyline` scroll. Deployed generic Iron's per-spell config and full-pack runtime behavior remain separate QA rather than being inferred here.
 
-The Phase 2BG candidate semantic delta is **+14**. Canonical totals remain 874 semantic objects / 55 of 100 components until the durable PR merges and exact post-merge CI is green.
+The Phase 2BG semantic delta is canonically **+14**. Durable PR #195 HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed CI #2503; squash merge `88f042f68429ff920314a7ec3a6923369edc93fd` passed exact-SHA post-merge CI #2504. Canonical totals are **888 semantic objects / 56 of 100 components**.
 
 ## Current exactness ceiling
 
