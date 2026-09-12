@@ -105,3 +105,11 @@ Phase 3 remains blocked by the canonical deduplication rule.
 - [`DELEGATION-AND-DISABLED.md`](DELEGATION-AND-DISABLED.md)
 - [`EVIDENCE-AND-PROVENANCE.md`](EVIDENCE-AND-PROVENANCE.md)
 - [`glyphs/`](glyphs/)
+
+## Phase 2BI — exact config authority (semantic delta +0)
+
+The remaining 39-glyph semantic blocker is now narrowed to the deployed Ars/NeoForge server-config values rather than an unknown Not Enough Glyphs-specific switch. Exact Ars Nouveau 5.13.1 source at `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` shows that `GlyphRegistry.registerSpell(...)` builds each `AbstractSpellPart` config and registers it as `ModConfig.Type.SERVER` using `<namespace>/<path>.toml`. For NEG-owned IDs the concrete filename family is therefore `not_enough_glyphs/<glyph>.toml`.
+
+`AbstractSpellPart.buildConfig(...)` defines `[general].enabled` with source default `true`, and `isEnabled()` reads that config value. `momentum` remains a separate provider override that returns disabled in NEG source. NeoForge 1.21.1 SERVER configs are server-authoritative/synchronized and may be overridden per world under `world/serverconfig`; consequently the source default is not accepted as the deployed pack state.
+
+No authoritative deployed NEG glyph-config TOMLs are present in the current project attachments/repository evidence. Phase 2BI therefore changes **neither** metric: strict semantic minimum remains **1249**, and provider-component closure remains **57/100**. A future promotion may count only those of the 39 candidates whose effective deployed `[general].enabled` state is proven true. Runtime/balance/protection QA remains separate.

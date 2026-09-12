@@ -178,7 +178,7 @@ This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence
 | Provider | Quantity | State | Reason |
 |---|---:|---|---|
 | Asterism Arcanum | 1 | `CONDITIONAL` | `astral_gateway` is registered but documented creative-only/unfinished |
-| Not Enough Glyphs | 39 | `CONDITIONAL` | current-pack source produces 40 `registerSpell` calls; `momentum` is source-disabled, leaving 39 source-enabled before user/provider config; exact active pack config remains to be reconciled |
+| Not Enough Glyphs | 39 | `CONDITIONAL / CONFIG AUTHORITY CLOSED / +0` | current-pack source produces 40 `registerSpell` calls; `momentum` is source-disabled, leaving 39 candidates. Ars Nouveau 5.13.1 registers each spell part as a `SERVER` config at `not_enough_glyphs/<glyph>.toml`; inherited `[general].enabled` defaults true, but the deployed server/world override set is unavailable, so source defaults are not promoted to active-pack facts |
 
 The four real Ars Elemental primitives referenced by Not Enough Glyphs are not NEG-owned registrations and are already counted under Ars Elemental. Historical fallback namespaces do not create a second owner when the real provider is present.
 
@@ -228,7 +228,7 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 To converge on a final denominator efficiently, prioritize:
 
-1. current-pack config closure for Not Enough Glyphs 4.6.1 and other remaining conditional glyph/action rows;
+1. obtain the deployed Not Enough Glyphs/Ars `SERVER` config set (`not_enough_glyphs/<glyph>.toml`, including any world `serverconfig` overrides) and reconcile `[general].enabled` for the 39 candidates; source/default-only evidence is insufficient;
 2. exact Gaze 1.1.7.1 rites/Geas inventory only when materially new exact evidence becomes available;
 3. exact Ignis Soulfires: Spellbooks 1.1.0 semantic registry inventory;
 4. Goety Iron 3.1 and Goety Cataclysm 1.21.1-1.8.2 exact semantic inventories without duplicating base-Goety ownership;
