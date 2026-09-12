@@ -18,6 +18,8 @@
 
 PR #191 is an evidence-only draft/non-merge audit branch. The exact artifact was repeatedly materialized and hash-checked before factual inspection. Key runs: `34659320633`, `34664093646`, and targeted gate run `34664411845` at HEAD `397e09e4bfd65f66b82b1b82151915a91c15148d`.
 
+Durable reconciliation was audited on PR #192 at exact clean HEAD `85b15aec9faf395cef5460d06a17be58ccd16af8`; Black Arcana CI **#2490** (`34664717042`) was GREEN with unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest and dedicated-server smoke. PR #192 was squash-merged as `cc4cfc1d740f7714188e25a3586d8b43bb5eb969`; Black Arcana CI **#2491** (`34664871048`) was GREEN on that exact `main` SHA, including canonical QA-JAR publication.
+
 ## What Phase 2BF closes
 
 The installed binary closes the old Phase 2AI registry blocker:
