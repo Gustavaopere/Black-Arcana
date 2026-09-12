@@ -4,7 +4,9 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, and Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, so the strict minimum remains **1316**. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, and Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**. The current strict minimum is therefore **1322**. The global denominator is still incomplete and no semantic percentage is declared.
+
+Phase 2BO has a semantic delta of **+6 `COUNTED_SOURCE_PINNED`**: physical `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar` / SHA-1 `f77355e029af39bbaba3854e10cc087a608351ff` is reconciled with exact public source pin `GLDYM/Farmers-Spell-n-Spellbook@b7cbb40316a9ccbbc2ce2b56b3023647261ce569`, which closes exactly six unconditional Gluttony `AbstractSpell` registrations. Provider Gluttony focus data plus the Iron's 3.16.3 Scroll Forge contract close a host-native catalog acquisition route; generic random scroll loot is not claimed because the school sets `allowLooting=false`. This closes provider component **#63** while keeping current-host runtime compatibility fail-closed. See [`../providers/farmers-spell/README.md`](../providers/farmers-spell/README.md) and [`PHASE2BO-FARMERS-SPELL-CHECKPOINT.md`](./PHASE2BO-FARMERS-SPELL-CHECKPOINT.md).
 
 Phase 2BN has a semantic delta of **0**: exact official source pin `baileyholl/ars-sable@1fd83f3a998e3a41b5a21d0d6529140a0b0a55ba` closes the provider's role as a narrow Ars Nouveau ↔ Sable spatial/sublevel compatibility layer. The exact source has 24 common + 5 client required mixins, protocol registrar version `2`, zero provider-owned payload registrations, and no provider-owned spell/glyph/ritual/school/resource/action registry. This closes provider component **#62** while keeping current-host runtime compatibility fail-closed. See [`../providers/ars-sable/README.md`](../providers/ars-sable/README.md) and [`PHASE2BN-ARS-SABLE-CHECKPOINT.md`](./PHASE2BN-ARS-SABLE-CHECKPOINT.md).
 
@@ -28,6 +30,7 @@ Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publish
 
 Therefore:
 
+- semantic numerator delta from Farmer's Spell 'n Spellbooks 1.0.5.1 source-pinned closure: **+6**;
 - semantic numerator/denominator delta attributable to Ars Sable 1.1.2: **+0**;
 - semantic numerator/denominator delta attributable to Ars Polymorphia 1.0.3: **+0**;
 - semantic numerator/denominator delta attributable to Ignis Soulfires: Spellbooks 1.1.0: **+0**;
@@ -40,7 +43,7 @@ Therefore:
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
 - semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
 - semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
-- strict reconstructible semantic minimum: **1316**;
+- strict reconstructible semantic minimum: **1322**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
@@ -50,15 +53,25 @@ Phase 2BH is canonical for Goety 3.1.4 from exact hash-matched artifact evidence
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
 
+## Phase 2BO — Farmer's Spell 'n Spellbooks 1.0.5.1 component #63, source-pinned spell closure
+
+Physical `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar` / SHA-1 `f77355e029af39bbaba3854e10cc087a608351ff` is reconciled with exact public source `GLDYM/Farmers-Spell-n-Spellbook@b7cbb40316a9ccbbc2ce2b56b3023647261ce569`. The source-pinned registry closes exactly six unconditional Gluttony spells: `goodberry`, `phantom_loot`, `seal_coat`, `bad_apple`, `chaos_slash`, `preserve_circle`. The Gluttony school is support taxonomy rather than a seventh semantic action.
+
+Provider data supplies the Gluttony focus route and the Iron's 3.16.3 source-line Scroll Forge contract corroborates host-native catalog reachability; generic random scroll loot is deliberately excluded because the school sets `allowLooting=false`. The six spells are therefore `COUNTED_SOURCE_PINNED`, not `COUNTED_EXACT`.
+
+PR #214 corrected HEAD `d3a92c31d7ac5b38183224ef28c6737e721fc758` passed Black Arcana CI #2564 / run `34723967662`; squash merge `34a5fd495da744800b32b051e38c6473c6f5ea15` passed exact-SHA post-merge CI #2565 / run `34724351805` and published artifact `10307207453` (`sha256:50b94c3efc207dfd143a10367cf234473ede7dbbc1f36b9acdd3d3ca1ccc67fa`). Phase 2BO raises the Iron ecosystem subtotal from **542 to 548**, the strict minimum from **1316 to 1322**, and closes provider component **#63 / 63 of 100**.
+
+Runtime compatibility remains fail-closed: source build targets NeoForge `21.1.238` and Farmer's Delight `1.3.2`, while the physical pack uses NeoForge `21.1.248` and Farmer's Delight `1.3.4`; all seven provider mixins are required. GeckoLib is `4.9.2` on both source build and physical pack by version label, which is not itself a runtime PASS. No provider-owned payload registrations are observed at the exact source pin.
+
 ## Phase 2BN — Ars Sable 1.1.2 component #62, source-pinned zero closure
 
-Exact official source `baileyholl/ars-sable@1fd83f3a998e3a41b5a21d0d6529140a0b0a55ba` matches the installed provider version 1.1.2 and closes its technical role as a compatibility/spatial layer between Ars Nouveau and Sable. The exact source exposes 24 common + 5 client required mixins, protocol registrar version `2`, zero provider-owned payload registrations, and no provider-owned spell/glyph/ritual/school/resource/action registry. The semantic delta is therefore **+0** and the strict minimum remains **1316**.
+Exact official source `baileyholl/ars-sable@1fd83f3a998e3a41b5a21d0d6529140a0b0a55ba` matches the installed provider version 1.1.2 and closes its technical role as a compatibility/spatial layer between Ars Nouveau and Sable. The exact source exposes 24 common + 5 client required mixins, protocol registrar version `2`, zero provider-owned payload registrations, and no provider-owned spell/glyph/ritual/school/resource/action registry. The semantic delta is therefore **+0** and the strict minimum remains **1316** at that historical checkpoint.
 
 PR #212 exact HEAD `c4facc0286da...` passed Black Arcana CI #2553 / run `34720437808`; squash merge `c1c422b5ec72fe4308104f04282732d6c2f2bbc1` passed exact-SHA post-merge CI #2554 / run `34720646567` and published canonical QA artifact `10306246238` (`sha256:a63f42f6746cc62e435e6a1c541daaed973b0b56d3dcc566cbc7cf4e9fa57e96`). Provider component **#62** is therefore closed. Runtime compatibility remains fail-closed because exact source was built against Sable `1.2.2` while the physical pack uses Sable `2.0.5`, and against Ars Nouveau `5.11.7.1354` while the physical pack uses `5.13.1`; all 29 mixins are required. Exact source metadata declares `LGPLv3` while the root `LICENSE` contains The Unlicense, so no reuse/license conclusion is inferred beyond read-only clean-room factual inspection.
 
 ## Phase 2BM — Ars Polymorphia 1.0.3 component #61, source-pinned zero closure
 
-Exact official source `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f` matches the installed provider version 1.0.3 and closes its technical role as a recipe-conflict bridge for Ars Storage/Crafting Lecterns. The exact source exposes five required mixin/accessor bindings, protocol version `1`, and one provider-owned play-to-server unit payload, while establishing no provider-owned spell/glyph/ritual/school/resource/action registry. The semantic delta is therefore **+0** and the strict minimum remains **1316**.
+Exact official source `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f` matches the installed provider version 1.0.3 and closes its technical role as a recipe-conflict bridge for Ars Storage/Crafting Lecterns. The exact source exposes five required mixin/accessor bindings, protocol version `1`, and one provider-owned play-to-server unit payload, while establishing no provider-owned spell/glyph/ritual/school/resource/action registry. The semantic delta is therefore **+0** and the strict minimum remains **1316** at that historical checkpoint.
 
 PR #210 exact HEAD `1b8d5d5761569f8ef1f3a32b7ece84cfb6ce6df6` passed Black Arcana CI #2543; squash merge `f2cdfe7b79d500540c281d70a76e8b6e3a77d311` passed exact-SHA post-merge CI #2544 / run `34713268914` and published canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`). Provider component **#61** is therefore closed. Runtime compatibility remains fail-closed because exact source requires mod id `polymorph` while the physical pack exposes `polymorph_plus`, source was built against Ars Nouveau `5.4.2.938` while the pack uses `5.13.1`, and source metadata declares `minecraft_version=1.21.1` together with range `[1.21,1.21.1)`.
 
@@ -82,19 +95,19 @@ Phase 2BJ changes the strict semantic minimum to **1250** but does **not** close
 
 ## Phase 2BH — Goety 3.1.4 component #57, canonical
 
-Exact 3.1.4 artifact identity closes **+361** and component #57. Durable PR #198 clean HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed Black Arcana CI #2523 / run `34672038273`; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 / run `34672222798` and published the canonical QA JAR. See `PHASE2BH-GOETY-3.1.4-EXACT-CHECKPOINT.md` and `../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md`. Canonical totals are **1249 / 57/100**.
+Exact 3.1.4 artifact identity closes **+361** and component #57. Durable PR #198 clean HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed Black Arcana CI #2523 / run `34672038273`; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 / run `34672222798` and published the canonical QA JAR. See `PHASE2BH-GOETY-3.1.4-EXACT-CHECKPOINT.md` and `../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md`. Canonical totals are **1249 / 57/100** at that historical checkpoint.
 
 ## Phase 2BG — Leyline Spellbooks 1.0.3 component #56, canonical
 
-Exact hash-matched Leylines 1.0.3 evidence closes 14 unconditional registered spells and removes the provider-specific eligibility blocker; exact Iron's host defaults/scroll behavior corroborate normal reachability while deployed generic host config remains separate runtime QA. Leylines is now **+14 semantic objects**, the Iron subtotal is **541**, the strict minimum is **888**, and provider component **#56 / 56/100** is canonical.
+Exact hash-matched Leylines 1.0.3 evidence closes 14 unconditional registered spells and removes the provider-specific eligibility blocker; exact Iron's host defaults/scroll behavior corroborate normal reachability while deployed generic host config remains separate runtime QA. Leylines is now **+14 semantic objects**, the Iron subtotal is **541**, the strict minimum is **888**, and provider component **#56 / 56/100** is canonical at that checkpoint.
 
 Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Black Arcana CI **#2503** / run `34668329229`. Squash merge `88f042f68429ff920314a7ec3a6923369edc93fd` passed exact-SHA post-merge CI **#2504** / run `34668535721`, including canonical QA-JAR publication. Numerical balance, complete-modpack runtime QA and any Black Arcana adapter/API seam remain separate fail-closed gates.
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after Phase 2BN: 62/100 = 62%.**
+**Canonical provider-component coverage after Phase 2BO: 63/100 = 63%.**
 
-Phase 2BF exact-artifact reconciliation closes Somake 1.0.8-fix registry identity at 67 current registrations under the physical optional-provider set, but the provider remains `CONDITIONAL` because the deployed COMMON spell-lock config and complete survival acquisition/reachability are not authoritative. Phase 2BF therefore changes neither metric: **874** strict semantic objects and **55/100** closed provider components.
+Phase 2BF exact-artifact reconciliation closes Somake 1.0.8-fix registry identity at 67 current registrations under the physical optional-provider set, but the provider remains `CONDITIONAL` because the deployed COMMON spell-lock config and complete survival acquisition/reachability are not authoritative. Phase 2BF therefore changes neither metric: **874** strict semantic objects and **55/100** closed provider components at that historical checkpoint.
 
 Phase 2BF / PR #192 was audited at exact clean HEAD `85b15aec9faf395cef5460d06a17be58ccd16af8`, which passed Black Arcana CI **#2490**. It was squash-merged as `cc4cfc1d740f7714188e25a3586d8b43bb5eb969`; that exact merge SHA passed post-merge Black Arcana CI **#2491**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest, dedicated-server smoke and canonical QA-JAR publication.
 
@@ -125,7 +138,7 @@ The internal operational denominator remains **100 magic/cross-domain component 
 - 2 current candidates added beyond the historical baseline: `soul_fire_d`, `reliquified_lenders_cataclysm_new_relics_fix`;
 - therefore `103 - 5 + 2 = 100`.
 
-GTBC's SpellLib and FamiliarsLib were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
+GTBC's SpellLib, FamiliarsLib and Farmer's Spell were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
 
 ## Canonical recent closure sequence
 
@@ -147,6 +160,7 @@ GTBC's SpellLib and FamiliarsLib were already members of those 100 component uni
 | 60 | Phase 2BL / PR #207 | `goety_cataclysm` | canonical; exact-artifact semantic +52 closure |
 | 61 | Phase 2BM / PR #210 | `ars_polymorphia` | canonical at `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`; source-pinned `ZERO_SEMANTIC_BRIDGE`; semantic +0; post-merge CI #2544 GREEN |
 | 62 | Phase 2BN / PR #212 | `ars_sable` | canonical at `main@c1c422b5ec72fe4308104f04282732d6c2f2bbc1`; source-pinned zero-semantic spatial/compat bridge; post-merge CI #2554 GREEN; runtime host QA fail-closed |
+| 63 | Phase 2BO / PR #214 | `farmers_spell` | source-pinned +6 semantic closure; evidence merge `main@34a5fd495da744800b32b051e38c6473c6f5ea15`; post-merge CI #2565 GREEN; runtime host QA fail-closed |
 
 Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
 
