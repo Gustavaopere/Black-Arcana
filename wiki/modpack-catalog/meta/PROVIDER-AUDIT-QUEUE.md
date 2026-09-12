@@ -259,7 +259,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
-| 61 | 2BM / #210 | `ars_polymorphia` | CANÔNICO em `main@f2cdfe7b...`; `ZERO_SEMANTIC_BRIDGE`; +0 semântico; exact-source 1.0.3; HEAD CI #2543 GREEN; exact-SHA post-merge CI #2544 / run `34713268914` GREEN; current-host runtime QA fail-closed |
+| 61 | 2BM / #210 | `ars_polymorphia` | CANÔNICO em `main@f2cdfe7b...`; `ZERO_SEMANTIC_BRIDGE`; +0 semântico; exact-source; post-merge CI #2544 GREEN; runtime host QA fail-closed |
 | 60 | 2BL / #207 | `goety_cataclysm` | CANÔNICO; +52 semânticos; exact-artifact; fechamento durável em `main@d41fe957...`; validação final preservada por `main@43e343df...` / CI #2540 GREEN |
 | 59 | 2BL / #207 | `goetyiron` | CANÔNICO; +14 semânticos; exact-artifact; fechamento durável em `main@d41fe957...`; validação final preservada por `main@43e343df...` / CI #2540 GREEN |
 | 58 | 2BK / #204 | `ignissoulfires_spellbooks` | CANÔNICO; `ZERO_BRIDGE_INFRA`; +0 semântico; exact-SHA post-merge CI #2534 GREEN |
