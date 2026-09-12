@@ -1,0 +1,173 @@
+name: Goety 3.1.4 Exact Artifact Audit
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-goety-3.1.4
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download and inspect exact artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_SHA1='a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          URL='https://www.cursemaven.com/curse/maven/goety-586095/8689429/goety-586095-8689429.jar'
+          SOURCE_URL='https://raw.githubusercontent.com/Vivideru/Goety-3/6c41a04f2d712097c4461f969a6bb8ee277149ef/src/main/java/com/Polarice3/Goety/common/items/ModItems.java'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 "$URL" -o goety.jar
+          ACTUAL_SHA1="$(sha1sum goety.jar | awk '{print $1}')"
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+          curl --fail --location --retry 4 --retry-delay 2 --connect-timeout 30 --max-time 120 "$SOURCE_URL" -o ModItems-3.1.1.java
+
+          mkdir -p audit
+          MOD_ITEMS_PATH="$(jar tf goety.jar | grep -E '(^|/)ModItems\.class$' | grep 'com/Polarice3/Goety/common/items/ModItems.class' | head -n1 || true)"
+          test -n "$MOD_ITEMS_PATH"
+          MOD_ITEMS_CLASS="${MOD_ITEMS_PATH%.class}"
+          MOD_ITEMS_CLASS="${MOD_ITEMS_CLASS//\//.}"
+
+          javap -classpath goety.jar -p "$MOD_ITEMS_CLASS" > audit/moditems-signature.txt
+          javap -classpath goety.jar -p -c "$MOD_ITEMS_CLASS" > audit/moditems-bytecode.txt
+
+          python3 - <<'PY'
+          import json, re, zipfile
+          from collections import Counter
+          from pathlib import Path
+
+          EXPECTED = 'a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          jar = zipfile.ZipFile('goety.jar')
+          names = sorted(jar.namelist())
+          sig = Path('audit/moditems-signature.txt').read_text(errors='replace')
+          bc = Path('audit/moditems-bytecode.txt').read_text(errors='replace')
+          source = Path('ModItems-3.1.1.java').read_text(errors='replace')
+
+          # Exact JAR field names and registration string constants only; no method bodies retained.
+          focus_fields = sorted(set(re.findall(r'\b([A-Z0-9_]+_FOCUS)\s*;', sig)))
+          jar_focus_ids = sorted(set(re.findall(r'// String ([a-z0-9_]+_focus)\s*$', bc, re.M)))
+
+          # Current-line source comparison retains only registration identity strings.
+          src_focus_ids = sorted(set(re.findall(r'"([a-z0-9_]+_focus)"', source)))
+          only_jar = sorted(set(jar_focus_ids) - set(src_focus_ids))
+          only_src = sorted(set(src_focus_ids) - set(jar_focus_ids))
+
+          focus_recipe_paths = [p for p in names if p.startswith('data/goety/recipe/') and '/focus/' in p and p.endswith('.json')]
+          ritual_like = []
+          custom_type_counts = Counter()
+          custom_paths_by_type = {}
+
+          for p in names:
+              if not (p.startswith('data/goety/recipe/') and p.endswith('.json')):
+                  continue
+              try:
+                  obj = json.loads(jar.read(p).decode('utf-8'))
+              except Exception:
+                  continue
+              typ = obj.get('type') if isinstance(obj, dict) else None
+              if isinstance(typ, str) and typ.startswith('goety:'):
+                  custom_type_counts[typ] += 1
+                  custom_paths_by_type.setdefault(typ, []).append(p)
+              low = p.lower()
+              if 'ritual' in low or (isinstance(typ, str) and 'ritual' in typ.lower()):
+                  ritual_like.append((p, typ or '<none>'))
+
+          lang_focus_keys = []
+          for p in names:
+              if not p.endswith('/lang/en_us.json'):
+                  continue
+              try:
+                  obj = json.loads(jar.read(p).decode('utf-8'))
+              except Exception:
+                  continue
+              if isinstance(obj, dict):
+                  lang_focus_keys.extend(k for k in obj if 'focus' in k.lower() and (k.startswith('item.goety.') or k.startswith('focus.goety.')))
+          lang_focus_keys = sorted(set(lang_focus_keys))
+
+          metadata = ''
+          for candidate in ('META-INF/neoforge.mods.toml', 'META-INF/mods.toml'):
+              if candidate in names:
+                  metadata = jar.read(candidate).decode('utf-8', errors='replace')
+                  break
+          meta_lines = []
+          for line in metadata.splitlines():
+              s = line.strip()
+              if re.match(r'^(modId|version|displayName|license)\s*=', s):
+                  meta_lines.append(s)
+
+          out = Path('audit/report.txt')
+          with out.open('w', encoding='utf-8') as f:
+              f.write('Goety 3.1.4 exact-artifact clean-room identity audit\n')
+              f.write(f'expected_sha1={EXPECTED}\n')
+              import hashlib
+              actual = hashlib.sha1(Path('goety.jar').read_bytes()).hexdigest()
+              f.write(f'actual_sha1={actual}\n')
+              f.write('curseforge_project=586095\ncurseforge_file=8689429\n')
+              f.write('source_comparison=Vivideru/Goety-3@6c41a04f2d712097c4461f969a6bb8ee277149ef (3.1.1 current-line baseline only)\n')
+              f.write('\n== exact metadata facts ==\n')
+              for line in meta_lines:
+                  f.write(line + '\n')
+              f.write(f'moditems_class={"com.Polarice3.Goety.common.items.ModItems"}\n')
+
+              f.write('\n== exact Focus registry identity facts ==\n')
+              f.write(f'focus_field_count={len(focus_fields)}\n')
+              f.write(f'jar_focus_string_id_count={len(jar_focus_ids)}\n')
+              f.write(f'source_3_1_1_focus_string_id_count={len(src_focus_ids)}\n')
+              f.write(f'jar_only_vs_source_count={len(only_jar)}\n')
+              for x in only_jar:
+                  f.write(f'jar_only={x}\n')
+              f.write(f'source_only_vs_jar_count={len(only_src)}\n')
+              for x in only_src:
+                  f.write(f'source_only={x}\n')
+              f.write('focus_fields:\n')
+              for x in focus_fields:
+                  f.write(f'  {x}\n')
+              f.write('jar_focus_ids:\n')
+              for x in jar_focus_ids:
+                  f.write(f'  goety:{x}\n')
+
+              f.write('\n== exact packaged Focus acquisition paths ==\n')
+              f.write(f'focus_recipe_path_count={len(focus_recipe_paths)}\n')
+              for p in focus_recipe_paths:
+                  f.write(p + '\n')
+
+              f.write('\n== exact custom recipe type summary ==\n')
+              for typ, count in sorted(custom_type_counts.items()):
+                  f.write(f'{typ}={count}\n')
+
+              f.write('\n== exact ritual-like packaged recipe identities ==\n')
+              f.write(f'ritual_like_recipe_count={len(ritual_like)}\n')
+              for p, typ in ritual_like:
+                  f.write(f'{p} | type={typ}\n')
+
+              f.write('\n== exact Focus localization identity count ==\n')
+              f.write(f'focus_localization_key_count={len(lang_focus_keys)}\n')
+              for k in lang_focus_keys:
+                  f.write(k + '\n')
+
+              f.write('\nBOUNDARY: report retains cryptographic identity, metadata, registry/acquisition resource identities, field names and set-level source comparison only. No effect/cast method bodies, assets, prose text, models, sounds or implementation reconstruction are retained.\n')
+          PY
+
+          cat audit/report.txt
+
+      - name: Upload text-only audit evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: goety-3.1.4-exact-artifact-audit
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,135 @@
+name: Goety 3.1.4 Ritual Identity Audit
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-goety-3.1.4
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Audit exact ritual identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_SHA1='a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          URL='https://www.cursemaven.com/curse/maven/goety-586095/8689429/goety-586095-8689429.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 "$URL" -o goety.jar
+          ACTUAL_SHA1="$(sha1sum goety.jar | awk '{print $1}')"
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+          mkdir -p audit
+
+          python3 - <<'PY'
+          import hashlib, json, re, zipfile
+          from collections import Counter, defaultdict
+          from pathlib import Path, PurePosixPath
+
+          EXPECTED='a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          z=zipfile.ZipFile('goety.jar')
+          rows=[]
+
+          def classify(rel):
+              if rel.startswith('focus/'):
+                  return 'FOCUS_ACQUISITION'
+              if rel.startswith('enchant/'):
+                  return 'ENCHANT_RITUAL'
+              if rel.startswith('locate/'):
+                  return 'LOCATE_RITUAL'
+              if rel.startswith('thrall/'):
+                  return 'THRALL_SUMMON_RITUAL'
+              stem=PurePosixPath(rel).stem
+              if stem.startswith('convert_'):
+                  return 'CONVERSION_RITUAL'
+              if stem.startswith('summon_'):
+                  return 'SUMMON_RITUAL'
+              return 'OTHER_RITUAL'
+
+          def condition_mods(v):
+              out=set()
+              if isinstance(v, dict):
+                  typ=v.get('type')
+                  if isinstance(typ,str) and 'mod_loaded' in typ:
+                      for k in ('modid','mod_id','mod'):
+                          if isinstance(v.get(k),str): out.add(v[k])
+                  for vv in v.values(): out |= condition_mods(vv)
+              elif isinstance(v,list):
+                  for vv in v: out |= condition_mods(vv)
+              return out
+
+          def scalar_refs(v, parent=''):
+              out=set()
+              if isinstance(v, dict):
+                  for k,vv in v.items():
+                      kl=k.lower()
+                      if kl in {'result','output','target','entity','entity_type','entitytype','enchantment','structure'}:
+                          if isinstance(vv,str): out.add(f'{kl}={vv}')
+                          elif isinstance(vv,dict):
+                              for kk in ('id','item','type','entity','entity_type','enchantment','structure'):
+                                  if isinstance(vv.get(kk),str): out.add(f'{kl}.{kk}={vv[kk]}')
+                      out |= scalar_refs(vv, kl)
+              elif isinstance(v,list):
+                  for vv in v: out |= scalar_refs(vv,parent)
+              return out
+
+          for p in sorted(z.namelist()):
+              if not (p.startswith('data/goety/recipe/') and p.endswith('.json')):
+                  continue
+              try:
+                  obj=json.loads(z.read(p).decode('utf-8-sig'))
+              except Exception:
+                  continue
+              if not isinstance(obj,dict) or obj.get('type')!='goety:ritual':
+                  continue
+              rel=p[len('data/goety/recipe/'):]
+              craft_type=obj.get('craftType') or obj.get('craft_type') or '<none>'
+              mods=sorted(condition_mods(obj))
+              refs=sorted(scalar_refs(obj))
+              rows.append((rel,classify(rel),str(craft_type),mods,refs,sorted(obj.keys())))
+
+          by_class=Counter(r[1] for r in rows)
+          by_craft=Counter(r[2] for r in rows)
+          conditioned=[r for r in rows if r[3]]
+          unconditioned=[r for r in rows if not r[3]]
+          exact_focus=[r for r in rows if r[1]=='FOCUS_ACQUISITION']
+          non_focus=[r for r in rows if r[1]!='FOCUS_ACQUISITION']
+
+          out=Path('audit/report.txt')
+          with out.open('w',encoding='utf-8') as f:
+              actual=hashlib.sha1(Path('goety.jar').read_bytes()).hexdigest()
+              f.write('Goety 3.1.4 exact ritual identity audit\n')
+              f.write(f'expected_sha1={EXPECTED}\nactual_sha1={actual}\n')
+              f.write(f'ritual_recipe_count={len(rows)}\n')
+              f.write(f'focus_acquisition_ritual_count={len(exact_focus)}\n')
+              f.write(f'non_focus_ritual_recipe_count={len(non_focus)}\n')
+              f.write(f'conditioned_ritual_recipe_count={len(conditioned)}\n')
+              f.write(f'unconditioned_ritual_recipe_count={len(unconditioned)}\n')
+              f.write('\n== path semantic classes ==\n')
+              for k,v in sorted(by_class.items()): f.write(f'{k}={v}\n')
+              f.write('\n== craftType values ==\n')
+              for k,v in sorted(by_craft.items()): f.write(f'{k}={v}\n')
+              f.write('\n== conditioned ritual paths ==\n')
+              for rel,cls,ct,mods,refs,keys in conditioned:
+                  f.write(f'{rel}|class={cls}|craftType={ct}|mods={";".join(mods)}|outcome_refs={";".join(refs) or "<none-extracted>"}\n')
+              f.write('\n== non-Focus ritual identities ==\n')
+              for rel,cls,ct,mods,refs,keys in non_focus:
+                  f.write(f'{rel}|class={cls}|craftType={ct}|mods={";".join(mods) or "<none>"}|outcome_refs={";".join(refs) or "<none-extracted>"}|keys={";".join(keys)}\n')
+              f.write('\nBOUNDARY: exact recipe identity/type/category/condition/outcome-reference facts only. Focus acquisition rituals are separated to avoid automatically double-counting a Focus action and its physical acquisition recipe. Ingredient lists, costs, effect implementations, prose text and assets are not retained.\n')
+          PY
+
+          cat audit/report.txt
+
+      - name: Upload text-only audit evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: goety-3.1.4-ritual-identity-audit
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
