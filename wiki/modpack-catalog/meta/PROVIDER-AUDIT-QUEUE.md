@@ -243,6 +243,9 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 | 54 | 2BD / #186 | `alshanex_familiars` | CANÔNICO em `main@95ec538f...`; HEAD auditado CI #2464 GREEN; CI pós-merge #2465 GREEN |
 | 53 | 2AY / #175 | `gtbcs_spell_lib` | CANÔNICO em `main@9a4e1cd...`; CI pós-merge #2421 GREEN |
 | 52 | 2AX / #166 | `familiarslib` | CANÔNICO em `main@4238275...`; CI pós-merge #2337 GREEN |
+| 51 | 2AW / #161 | `apotheoticcreation` | CANÔNICO; ver nota histórica de GameTest no coverage/checkpoint |
+| 50 | 2AV / #160 | `apotheosis` | CANÔNICO |
+| 49 | 2AU / #158 | `apothic_enchanting` | CANÔNICO |
 
 ## Próxima seleção
 
