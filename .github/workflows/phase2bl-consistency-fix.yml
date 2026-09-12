@@ -1,0 +1,48 @@
+name: Phase 2BL consistency fix
+
+on:
+  push:
+    branches:
+      - docs/magic-catalog-phase2bl-goety-addons-exact
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: docs/magic-catalog-phase2bl-goety-addons-exact
+          fetch-depth: 0
+      - name: Fix current-state wording
+        shell: bash
+        run: |
+          set -euo pipefail
+          f=wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md
+          sed -i 's/## Phase 2BL canonical candidate —/## Phase 2BL —/' "$f"
+          sed -i 's/after later provider closures, the global strict total is \*\*1249\*\*\./after Phase 2BL, the global strict total is **1316**./' "$f"
+          sed -i 's/2\. Do not divide 1249 by/2. Do not divide 1316 by/' "$f"
+          sed -i 's/3\. Do not add public lower bounds to 1249/3. Do not add public lower bounds to 1316/' "$f"
+          c=wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md
+          sed -i 's/The latest semantic promotion is \*\*Gaze +1\*\*\./The latest semantic promotion before Phase 2BL was **Gaze +1**./' "$c"
+          sed -i 's/COMPONENT #59 CANDIDATE UNTIL MERGE/COMPONENT #59/' wiki/modpack-catalog/providers/goety-iron/EXACT-3.1-ARTIFACT-AUDIT.md
+          sed -i 's/COMPONENT #60 CANDIDATE UNTIL MERGE/COMPONENT #60/' wiki/modpack-catalog/providers/goety-cataclysm/EXACT-1.21.1-1.8.2-ARTIFACT-AUDIT.md
+          grep -F 'Do not divide 1316 by' "$f"
+          grep -F 'Do not add public lower bounds to 1316' "$f"
+          grep -F 'after Phase 2BL, the global strict total is **1316**.' "$f"
+          git diff --check
+      - name: Commit and self-clean
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add wiki/modpack-catalog
+          git commit -m 'docs: fix Phase 2BL current-state wording'
+          rm -f .github/workflows/phase2bl-consistency-fix.yml
+          git add -A .github
+          git commit -m 'ci: remove Phase 2BL consistency harness'
+          git push origin HEAD:docs/magic-catalog-phase2bl-goety-addons-exact
