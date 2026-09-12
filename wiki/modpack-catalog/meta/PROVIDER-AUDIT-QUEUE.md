@@ -48,6 +48,10 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 
 O valor 56/100 nunca substitui a métrica semântica de magias.
 
+## Phase 2BH — Goety 3.1.4 — candidate component #57
+
+Exact evidence PR #197 closes **123 Focus + 238 non-Focus rituals = +361 candidate semantic objects**. Accepted run/artifact pairs: `34670150370/10290083272`, `34670458172/10290222369`, `34670556329/10290527131`, `34670758163/10289884505`. Canonical baseline remains **888 / 56/100**; candidate **1249 / 57/100**.
+
 ## Phase 2BG — Leyline Spellbooks 1.0.3 — componente #56 canônico
 
 | Mod ID | Artefato físico | Estado |

@@ -1,6 +1,6 @@
 # Goety 3.1.4 — Technical audit
 
-Status: `OPEN CURRENT REGISTRY / EXACT 3.1.4 JAR-SOURCE RECONCILIATION PENDING / RUNTIME/API QA PENDING`
+Status: `PHASE 2BH CANDIDATE / EXACT 3.1.4 ARTIFACT REGISTRY + SEMANTIC INVENTORY CLOSED / RUNTIME/API QA PENDING`
 
 ## Exact installed identity
 
@@ -20,6 +20,10 @@ The current pack snapshot contains **595 top-level entries including NeoForge**,
 The exact public release is CurseForge file `8689429`, released `2026-08-20` on the Release channel. The public project/release surface declares MIT.
 
 That release identity is strong enough to pin **which distributed artifact/version the catalog targets**. It is not source-to-binary equivalence evidence, and the CurseForge license declaration must not be generalized over a source tree whose own license file defines mixed scopes.
+
+## Phase 2BH exact-artifact closure candidate
+
+Exact hash-matched artifact evidence closes **123 active Focus actions + 238 available distinct non-Focus rituals = 361** for catalog identity. This does not claim source-to-binary equivalence and does not authorize inference of numerical mechanics, Soul Energy settlement, servant/research/Lichdom hooks or stable APIs.
 
 ## Public 1.21.1 source line
 
@@ -99,7 +103,7 @@ It does **not** prove:
 - a stable 3.1.4 integration API/event boundary;
 - exact ritual identity totals from the 13 documented ritual categories.
 
-Therefore the global semantic total remains **797** and Goety remains non-additive at this checkpoint.
+Phase 2BH proposes Goety as `COUNTED_EXACT` for **361** semantic objects. Canonical baseline is **888**; candidate strict minimum is **1249** pending durable merge + exact post-merge CI.
 
 ## License and clean-room provenance
 
@@ -141,9 +145,9 @@ Because exact 3.1.4 source is not pinned here, Black Arcana must not invent or c
 | 12 public Wands/Staffs | PUBLIC DOCUMENTATION INVENTORY |
 | 13 public ritual families/types | PUBLIC DOCUMENTATION INVENTORY; NOT DISCRETE RITUAL COUNT |
 | 10 public research lines | PUBLIC DOCUMENTATION INVENTORY |
-| exact 3.1.4 Focus registry | UNVERIFIED |
-| exact 3.1.4 semantic Focus inventory | UNVERIFIED |
-| exact 3.1.4 ritual identity inventory | UNVERIFIED |
+| exact 3.1.4 Focus registry | EXACT ARTIFACT: 124 `_focus` identities, 123 active after proxy exclusion |
+| exact 3.1.4 semantic Focus inventory | CANDIDATE `COUNTED_EXACT`: 123 active/acquirable Focus actions |
+| exact 3.1.4 ritual identity inventory | EXACT ARTIFACT: 342 resources; candidate 238 available distinct non-Focus semantic rituals |
 | exact 3.1.4 per-Focus costs/cooldowns/damage/range | UNVERIFIED except separately documented cases |
 | exact 3.1.4 stable integration API | UNVERIFIED |
 | exact modpack runtime behavior | UNVERIFIED |

@@ -1,10 +1,14 @@
 # Goety 3.1.4 — Rituals and progression
 
-Status: `OFFICIAL PUBLIC-DOCUMENTATION SURFACE CATALOGED / EXACT 3.1.4 RUNTIME SETTLEMENT AND REACHABILITY PENDING`
+Status: `PHASE 2BH CANDIDATE / EXACT 3.1.4 RITUAL IDENTITY + CURRENT-PACK AVAILABILITY CLOSED / RUNTIME SETTLEMENT/API QA PENDING`
 
 ## Scope
 
 This document records Goety's publicly documented progression/resource/ritual surface as a **provider authority map**. It is not a byte-for-byte reconstruction of the installed `goety-3.1.4.jar`.
+
+## Exact 3.1.4 ritual closure candidate
+
+Exact artifact evidence closes 342 ritual resources: 83 Focus acquisition (not recounted), 259 non-Focus → 255 semantic signatures after four duplicate groups → **238 available distinct non-Focus ritual actions** after current-pack condition filtering. Phase 2BH proposes **+238**. Identity/availability is closed; Soul Energy, sacrifices, research, cancellation/restart, servant ownership and completion hooks remain provider-owned/fail-closed.
 
 ## Soul Energy authority
 
@@ -139,7 +143,7 @@ These are direct constraints on any future Black Arcana sympathetic/identity mag
 
 The following remain open for the installed 3.1.4 environment:
 
-1. confirm the exact Focus/ritual/research registries packaged in `goety-3.1.4.jar` without violating clean-room constraints;
+1. exact Focus and ritual identity inventories are closed by Phase 2BH; research/runtime semantics remain separate where needed;
 2. validate Soul Energy acquisition/storage/spending paths used by any planned integration;
 3. validate servant owner identity, persistence and lifecycle boundaries;
 4. validate Summon Down stacking/cost/effect behavior in the exact modpack;

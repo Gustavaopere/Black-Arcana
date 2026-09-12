@@ -2,7 +2,7 @@
 
 ## Status
 
-`OPEN CURRENT REGISTRY / EXACT 3.1.4 JAR-SOURCE RECONCILIATION PENDING / RUNTIME QA PENDING`
+`PHASE 2BH CANDIDATE / EXACT 3.1.4 ARTIFACT IDENTITY + SEMANTIC INVENTORY CLOSED / RUNTIME API QA PENDING`
 
 ## Installed authority
 
@@ -21,7 +21,11 @@
 - role: `SOUL ENERGY / FOCUS SPELLCASTING / NECROMANCY / SERVANT / RITUAL PROVIDER`
 - addons installed separately: Goety Iron `3.1`; Goety Cataclysm `1.21.1-1.8.2`.
 
-The current physical modlist is authoritative for installed JAR/runtime identity. CurseForge independently confirms the public 3.1.4 release identity. Neither surface proves source-to-binary equivalence.
+The current physical modlist is authoritative for installed JAR/runtime identity. CurseForge independently confirms the public 3.1.4 release identity.
+
+## Phase 2BH exact-artifact closure candidate
+
+Exact PR #197 evidence supersedes source-only uncertainty for catalog identity: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Candidate totals are **1249 semantic objects / 57 of 100 components** from canonical baseline 888 / 56. These values remain candidate until durable merge + exact post-merge CI. See `EXACT-3.1.4-ARTIFACT-AUDIT.md` and `EXACT-3.1.4-SEMANTIC-INVENTORY.md`. Runtime/API/balance and provider-owned Soul Energy/research/servant/Lichdom settlement remain fail-closed.
 
 ## Source/provenance reconciliation
 
@@ -220,8 +224,4 @@ Goety Iron `3.1` and Goety Cataclysm `1.21.1-1.8.2` are separate installed provi
 
 ## Semantic denominator and Phase 3 gate
 
-The strict reconstructible semantic total remains **797**. Goety contributes **+0 at this reconciliation checkpoint** because the exact installed 3.1.4 registry/acquisition surface is not reconciled and object-level semantic deduplication remains open. Public 3.1.1 source now proves stronger spell-bearing Focus construction and broad provider-native acquisition evidence, but it is not exact 3.1.4 authority.
-
-Goety-related Black Arcana implementation remains `BLOCKED` until the relevant installed 3.1.4 behavior and addon surfaces are reconciled sufficiently to prove a real semantic gap and any required provider boundary.
-
-Do not promote this provider to `SOURCE-PINNED 3.1.4`, `JAR 123/123`, or a counted semantic state without new exact/current evidence.
+Canonical baseline entering Phase 2BH is **888 / 56 of 100**. The exact 3.1.4 artifact proposes Goety as `COUNTED_EXACT` with **361**, producing candidate **1249 / 57 of 100**. Canonical promotion still requires durable merge and exact post-merge CI. Runtime integration remains fail-closed until provider boundaries are separately proven.
