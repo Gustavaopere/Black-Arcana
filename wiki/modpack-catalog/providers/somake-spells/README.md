@@ -1,6 +1,6 @@
 # Somake Spells 1.0.8-fix
 
-Status: `EXACT-ARTIFACT+RELEASE PINNED / OFFICIAL 1.0.x RELEASE SURFACE AUDITED / COMPLETE CURRENT REGISTRY UNVERIFIED / PHASE 2AI CLOSURE BLOCKED / FAIL-CLOSED`
+Status: `EXACT HASH-MATCHED 1.0.8-FIX ARTIFACT / 67 CURRENT REGISTRY IDENTITIES CLOSED UNDER PHYSICAL OPTIONAL SET / SURVIVAL REACHABILITY + EFFECTIVE COMMON CONFIG UNVERIFIED / CONDITIONAL +0 / FAIL-CLOSED`
 
 ## Installed identity
 
@@ -21,13 +21,15 @@ Status: `EXACT-ARTIFACT+RELEASE PINNED / OFFICIAL 1.0.x RELEASE SURFACE AUDITED 
 
 Physical modlist evidence is authoritative for installed filename/mod id/runtime/hash. Publisher release metadata confirms the exact 1.0.8-fix line.
 
-## Phase 2AI closure audit
+## Phase 2BF exact-artifact reconciliation
 
-Phase 2AI re-audited the already-merged Phase 2O material under the stricter current coverage rule. The official 1.0.x release line and exact 1.0.8-fix delta are cataloged as far as currently accessible publisher evidence allows, but no publisher-controlled exact source revision, complete 1.0.8-fix registry table, or equivalent exact current spell inventory was located.
+Phase 2AI correctly stopped at the publisher evidence ceiling. Phase 2BF supersedes only that technical ceiling by materializing the exact CurseForge/Curse Maven File ID `8417850` and requiring SHA-1 equality with the physical modlist: `b0ad94c1504709662bee2d08700375ccecbb5ec7`.
 
-The publisher's `over 50 spells` statement remains a scale statement rather than a registry count. Changelog names are partial release evidence and are not promoted into a fabricated complete current inventory.
+Clean-room inspection closes the current spell registry at **67 provider registrations**: 67 `DeferredHolder<AbstractSpell, ...>` fields, 67 unique `DeferredRegister.register(String, Supplier)` spell IDs and 67 standalone provider `*Spell` classes. Six registrations are optional-provider gated: three by `ModList.isLoaded("mowziesmobs")` and three by `MagicFromTheEastCompat.isLoaded()`, whose exact implementation tests `ModList.isLoaded("iss_magicfromtheeast")`. Both mod IDs are physically present, so all **67/67 registry identities are active under the current physical optional-provider set**.
 
-Result: `somakespells` remains **partial and contributes zero additional coverage points**. Phase 2AI records the evidence ceiling and fail-closed boundary; it does not claim catalog closure. See [`../../meta/PHASE2AI-SOMAKE-1.0.8-FIX-CHECKPOINT.md`](../../meta/PHASE2AI-SOMAKE-1.0.8-FIX-CHECKPOINT.md).
+That closes registry identity, not semantic reachability. Somake registers `enableSpellLockSystem` as a `COMMON` config in `somakespells/general/common.toml`; its code default is `false`, and `PlayerSpellMastery.getUnlockedLevel()` returns `100` while disabled. When enabled, the provider's `/somake` command surface is permission-level 2 and the pre-cast path can reject unlearned spell levels. The deployed pack's actual COMMON config value is not present in the repository or supplied project files, and complete object-level survival acquisition/reachability is not yet proven. Under the canonical ledger rule, the 67 identities therefore remain `CONDITIONAL` and contribute **+0** to the strict semantic sum.
+
+See [`EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md`](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) and [`../../meta/PHASE2BF-SOMAKE-1.0.8-FIX-EXACT-CHECKPOINT.md`](../../meta/PHASE2BF-SOMAKE-1.0.8-FIX-EXACT-CHECKPOINT.md).
 
 ## Current public scope
 
@@ -49,6 +51,7 @@ This proves those charge surfaces in the installed release line, but does not pu
 - [PUBLIC-CHANGELOG-AUDIT.md](PUBLIC-CHANGELOG-AUDIT.md) — release-by-release 1.0.x evidence;
 - [PROGRESSION-EQUIPMENT.md](PROGRESSION-EQUIPMENT.md) — books, Grimoires, Upgrade Forge, ritual path and equipment;
 - [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md) — exact artifact/provenance/dependency/QA boundary;
+- [EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) — hash-matched registry/gate/config facts from the installed binary;
 - [INTEGRATION-RULES.md](INTEGRATION-RULES.md) — Black Arcana authority and fail-closed rules.
 
 School directories already present in this provider tree remain organizational placeholders until exact current membership can be proven. Historical changelog school labels do not justify manufacturing a complete school-first registry.
@@ -84,7 +87,7 @@ Not located in the physical modlist:
 
 - Better Combat.
 
-Presence satisfies a compatibility precondition only; it is not evidence that every optional integration path is runtime-active. Because Magic From the East is physically present, the publisher-described **Symmetry integration path is eligible**; exact active spells/IDs still require runtime/config evidence.
+Presence alone is not generally enough to prove an optional integration path. For the six conditionally registered Somake spells, however, the exact 1.0.8-fix bytecode closes the predicates themselves: `mowziesmobs` gates Blessed/Guardian/Cursed Connection and `iss_magicfromtheeast` gates Mirror Strike/Spirit Empowerment/Symmetry Empowerment. Both predicates are true under the current physical modlist, so those six registrations join the 61 unconditional registrations for 67/67 current registry identities. Runtime behavior, acquisition and config-dependent usability remain separate.
 
 ## Aqua / T.O Magic coexistence
 
@@ -98,13 +101,7 @@ Until runtime/API evidence resolves it, Black Arcana must not select one provide
 
 ## Publicly named current-line spell evidence
 
-1.0.8 directly adds/references Ritual Flame, Custodia Caeli, Bloody Legacy, Fragmented Requiem, The Rose's Secret, Jingle Bell, Chain Connection (moved to Aqua), Fire Orbs (rework) and Ignis Shield (rework).
-
-1.0.7 publicly introduced Guardian/Blessed/Cursed Connection, Bloodmark, Water Control and Firestorm Vortex. Those older names remain separately marked `CURRENT REGISTRY UNVERIFIED` unless 1.0.8 re-confirms them.
-
-1.0.6 explicitly removed Tsunami and renamed Tidal Grasp/Dash to Ceraunus Grasp/Dash.
-
-See the dedicated inventory for exact evidence posture. None of these names imply registry IDs or values.
+The publisher changelog files remain provenance for names and release semantics, but they no longer define the registry ceiling. The exact 1.0.8-fix artifact now supplies the complete 67-ID registry inventory in `EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md`. Historical naming contradictions remain useful for editorial provenance and must not be substituted for current bytecode-backed IDs, school mechanics or numerical values.
 
 ## Authority / deduplication
 
@@ -116,12 +113,14 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 
 ## Evidence ceiling
 
-- installed identity/hash — `HIGH`, physical modlist;
+- installed identity/hash — `HIGH`, physical modlist + exact artifact hash match;
 - exact File ID/release/fix semantics — `HIGH`, publisher;
-- 50+ scale / Aqua / equipment / compatibility — `HIGH` at public feature level;
-- changelog names/semantics — `HIGH` for the release in which they are stated;
-- exact current complete spell list — `UNVERIFIED`;
-- registry IDs/classes/values/config defaults/acquisition/API/hooks/networking/persistence — `UNVERIFIED / FAIL-CLOSED`;
+- exact current spell registry — `HIGH`, 67/67 IDs closed from the hash-matched artifact under the physical optional-provider set;
+- exact optional registry predicates — `HIGH`, `mowziesmobs` and `iss_magicfromtheeast`, both physically satisfied;
+- `enableSpellLockSystem` code default/path — `HIGH`, default `false`, `COMMON`, `somakespells/general/common.toml`;
+- deployed value of that COMMON config — `UNVERIFIED`;
+- complete object-level survival acquisition/reachability — `UNVERIFIED / CONDITIONAL`;
+- values/formulas/stable integration API/hooks/networking/persistence — `UNVERIFIED / FAIL-CLOSED` except for narrow facts explicitly recorded by the artifact audit;
 - Somake↔T.O Aqua authority on the current dual-installed stack — `RUNTIME QA REQUIRED`.
 
-No source code or bytecode implementation details are treated as reusable material.
+The ARR artifact was inspected only to retain factual hash/metadata, resource/registry identities, class/member signatures and narrow control-flow/config predicates needed for catalog interoperability. No implementation body, source reconstruction, asset, model, sound or upstream prose is copied/adapted or treated as reusable material.
