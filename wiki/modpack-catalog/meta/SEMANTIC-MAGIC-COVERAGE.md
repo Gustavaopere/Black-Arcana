@@ -26,6 +26,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - Phase 2BE canonicalized at `main@cce7f51794e4e65b0d97511eb55f710afc6e02f0`: PR #189 exact HEAD `e787699d25b283b8040cd179f605143e8ee396de` passed Black Arcana CI **#2483**; the merge SHA passed Black Arcana CI **#2484 attempt 2** GREEN after attempt 1 ended on an external `code.redspace.io` read timeout before compilation/tests
 - Phase 2BM component closure is validated at `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`: PR #210 exact HEAD `1b8d5d5761569f8ef1f3a32b7ece84cfb6ce6df6` passed Black Arcana CI **#2543**; the merge SHA passed exact-SHA post-merge CI **#2544** / run `34713268914` and published canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`)
 - Phase 2BN component closure is validated at `main@c1c422b5ec72fe4308104f04282732d6c2f2bbc1`: PR #212 exact HEAD `c4facc0286dab0b522bf2b09c5812ffdd935bd5d` passed Black Arcana CI **#2553** / run `34720437808`; the merge SHA passed exact-SHA post-merge CI **#2554** / run `34720646567` and published canonical QA artifact `10306246238` (`sha256:a63f42f6746cc62e435e6a1c541daaed973b0b56d3dcc566cbc7cf4e9fa57e96`)
+- Phase 2BO evidence is validated at `main@34a5fd495da744800b32b051e38c6473c6f5ea15`: PR #214 exact corrected HEAD `d3a92c31d7ac5b38183224ef28c6737e721fc758` passed Black Arcana CI **#2564** / run `34723967662`; the merge SHA passed exact-SHA post-merge CI **#2565** / run `34724351805` and published canonical QA artifact `10307207453` (`sha256:50b94c3efc207dfd143a10367cf234473ede7dbbc1f36b9acdd3d3ca1ccc67fa`)
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -44,17 +45,25 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
 
+## Phase 2BO — Farmer's Spell 'n Spellbooks 1.0.5.1 source-pinned spell closure
+
+The physical provider `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar` / SHA-1 `f77355e029af39bbaba3854e10cc087a608351ff` is reconciled with exact public source `GLDYM/Farmers-Spell-n-Spellbook@b7cbb40316a9ccbbc2ce2b56b3023647261ce569`, whose signed version-bump commit closes the `1.0.5.1-1.21.1` source line. The source registry contains exactly six unconditional provider-owned Iron's `AbstractSpell` identities under the Gluttony school: `goodberry`, `phantom_loot`, `seal_coat`, `bad_apple`, `chaos_slash` and `preserve_circle`.
+
+The Gluttony school itself is taxonomy rather than a seventh semantic action. Generic random Iron's scroll loot is not used as reachability proof because the school sets `allowLooting=false`; provider data instead supplies a Gluttony focus (`#minecraft:foods` plus `farmers_spell:foodgeist_seasoning`), and the Iron's 3.16.3 source-line Scroll Forge contract supplies the host-native focus-to-school/spell route. No provider override of `allowCrafting`, `isEnabled` or `canBeCraftedBy` was found for the six spell classes. This closes catalog-level reachability while leaving assembled-pack runtime QA separate.
+
+Phase 2BO therefore contributes **+6 `COUNTED_SOURCE_PINNED`** semantic magic objects. The Iron's ecosystem subtotal becomes **548**, and the strict reconstructible minimum becomes **1322**. Provider component **#63 / 63 of 100** is promoted separately by the shared catalog reconciliation. Runtime compatibility remains fail-closed: source build NeoForge `21.1.238` and Farmer's Delight `1.3.2` differ from physical NeoForge `21.1.248` and Farmer's Delight `1.3.4`; all seven provider mixins are required. GeckoLib is `4.9.2` on both source build and physical pack by version label, which is not itself a runtime PASS.
+
 ## Phase 2BN — Ars Sable 1.1.2 source-pinned zero-semantic spatial bridge
 
 Exact official source `baileyholl/ars-sable@1fd83f3a998e3a41b5a21d0d6529140a0b0a55ba` matches the physically installed provider version `1.1.2` and closes the provider's technical role as Ars Nouveau ↔ Sable spatial/sublevel compatibility infrastructure. The exact source establishes 24 common + 5 client required mixins, protocol registrar version `2`, zero provider-owned payload registrations, and no provider-owned spell, glyph, ritual, school, mana/resource or equivalent independent magical-action registry.
 
-Phase 2BN therefore contributes **+0 semantic magic objects** and leaves the strict reconstructible minimum at **1316**, while separately closing provider component **#62 / 62 of 100**. This is a source-pinned technical/catalog closure, not a runtime compatibility PASS: exact source was built against Sable `1.2.2` while the physical pack uses `2.0.5`, and against Ars Nouveau `5.11.7.1354` while the pack uses `5.13.1`; all 29 mixins are required. The source metadata/root license surfaces also conflict (`LGPLv3` metadata vs The Unlicense root file), so clean-room factual inspection does not infer reuse rights.
+Phase 2BN therefore contributes **+0 semantic magic objects** and leaves the strict reconstructible minimum at **1316** at that historical checkpoint, while separately closing provider component **#62 / 62 of 100**. This is a source-pinned technical/catalog closure, not a runtime compatibility PASS: exact source was built against Sable `1.2.2` while the physical pack uses `2.0.5`, and against Ars Nouveau `5.11.7.1354` while the pack uses `5.13.1`; all 29 mixins are required. The source metadata/root license surfaces also conflict (`LGPLv3` metadata vs The Unlicense root file), so clean-room factual inspection does not infer reuse rights.
 
 ## Phase 2BM — Ars Polymorphia 1.0.3 source-pinned zero-semantic bridge
 
 Exact official source `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f` matches the physically installed provider version `1.0.3` and closes the provider's technical role as an Ars Storage/Crafting Lectern ↔ Polymorph recipe-conflict bridge. The exact source establishes five required mixin/accessor bindings, protocol version `1`, one provider-owned play-to-server unit payload, and no provider-owned spell, glyph, ritual, school, mana/resource or equivalent independent magical-action registry.
 
-Phase 2BM therefore contributes **+0 semantic magic objects** and leaves the strict reconstructible minimum at **1316**, while separately closing provider component **#61 / 61 of 100**. This is a source-pinned technical/catalog closure, not a runtime compatibility PASS: exact source requires mod id `polymorph` while the physical pack exposes `polymorph_plus` `1.3.1+1.21.1`; source was built against Ars Nouveau `5.4.2.938` while the pack uses `5.13.1`; and source metadata declares `minecraft_version=1.21.1` together with `minecraft_version_range=[1.21,1.21.1)`. Current-host runtime behavior remains fail-closed.
+Phase 2BM therefore contributes **+0 semantic magic objects** and leaves the strict reconstructible minimum at **1316** at the later post-2BL baseline, while separately closing provider component **#61 / 61 of 100**. This is a source-pinned technical/catalog closure, not a runtime compatibility PASS: exact source requires mod id `polymorph` while the physical pack exposes `polymorph_plus` `1.3.1+1.21.1`; source was built against Ars Nouveau `5.4.2.938` while the pack uses `5.13.1`; and source metadata declares `minecraft_version=1.21.1` together with `minecraft_version_range=[1.21,1.21.1)`. Current-host runtime behavior remains fail-closed.
 
 ## Phase 2BL — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2
 
@@ -86,14 +95,14 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1316 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BN.**
+**1322 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BO.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
 - Ars ecosystem: **199**;
-- Iron's ecosystem and spell-content addons: **542**;
+- Iron's ecosystem and spell-content addons: **548**;
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
 - Hexalia ritual/infusion layer: **25**;
@@ -101,7 +110,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `199 + 542 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1316`.
+- total: `199 + 548 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1322`.
 
 ### Counted ledger
 
@@ -122,6 +131,7 @@ Arithmetic cross-check by provider family:
 | [Deeper & Darker Spellbooks](../providers/deeper-and-darker-spellbooks/README.md) | 1.3.3 Version B | 4 | `COUNTED_RELEASE_BOUNDED` | 4 current provider spell identities |
 | [Discerning The Eldritch](../providers/discerning-the-eldritch/README.md) | 1.4.4 | 22 | `COUNTED_SOURCE_PINNED` | 22/22 registered spells, including its ritual-school spell registrations once |
 | [Dreamless Spells](../providers/dreamless-spells/README.md) | 1.1.9 | 4 | `COUNTED_SOURCE_PINNED` | 4 current registered spells |
+| [Farmer's Spell 'n Spellbooks](../providers/farmers-spell/README.md) | 1.0.5.1-1.21.1 | 6 | `COUNTED_SOURCE_PINNED` | exact 1.0.5.1 source pin closes six unconditional Gluttony spell registrations; provider/host-native Scroll Forge focus route closes catalog reachability while current-host runtime QA remains separate |
 | [Fire's Ender Expansion](../providers/fires-ender-expansion/README.md) | 2.4.1 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 active spells |
 | [IronSable](../providers/ironsable/README.md) | 1.2.0 | 7 | `COUNTED_RELEASE_BOUNDED` | 7 provider-owned new spells; 10 physicalized existing Iron's spells add zero identities |
 | [ISS: Magic From The East](../providers/iss-magic-from-the-east/README.md) | 1.1.5 | 22 | `COUNTED_SOURCE_PINNED` | 11 Symmetry + 11 Spirit spells |
@@ -144,7 +154,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1316** |  |  |
+| **Strict total** |  | **1322** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -152,7 +162,7 @@ Exact installed-line source at `TheDrOfDoctoring/bloodlines@c8fd517d204d09dfcb9a
 
 The same exact source closes the missing reachability question: the generated configured Gravebound tree does not include `gravebound_sorcerous_strike`, and `HunterBloodlinesConfig.graveboundDefaults` grants only the four Gravebound rank nodes by default. Repository-wide inspection finds no provider-native alternate grant dedicated to Sorcerous Strike; generic Bloodline task/command surfaces add perk points rather than directly granting this skill. `SkillHandlerMixin` only adds Bloodlines-specific cost/rank/default checks around Vampirism skill enabling and does not create a second acquisition path.
 
-Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**; after Phase 2BL, the global strict total is **1316**.
+Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**; after Phase 2BL, the global strict total was **1316**.
 
 ### Werewolves 2.0.3.3 Leap correction
 
@@ -240,7 +250,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 1316** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 1322** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -251,9 +261,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1316 is not “1316 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1316 by the 100 provider-component denominator. The current component target is `62/100`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1316 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1322 is not “1322 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1322 by the 100 provider-component denominator. The current component target is `63/100`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1322 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
