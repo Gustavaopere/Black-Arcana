@@ -117,7 +117,7 @@ This closes the old `over 50 / registry unknown` blocker but does not satisfy th
 - exact group distribution: 7 Abyssal, 4 Ender, 1 Evocation, 5 Holy, 11 Fire, 5 Ice, 4 Nature, 22 Technomancy;
 - ten extra root localization keys are unregistered and excluded;
 - publisher generic/current 65-spell scale is not substituted for physical 1.1.13;
-- no upstream implementation/assets copied ou adapted; balance/acquisition/runtime/API seams remain fail-closed where not separately proven.
+- no upstream implementation/assets copied or adapted; balance/acquisition/runtime/API seams remain fail-closed where not separately proven.
 
 ## Phase 2BD — Alshanex's Familiars 4.0.3 — componente #54
 
@@ -167,7 +167,7 @@ Gaze therefore contributes **+1** to the strict semantic numerator, producing **
 - CurseForge project/file `1194714 / 8824651`;
 - publisher defines SpellLib as shared library/API infrastructure with no standalone gameplay of its own;
 - 2.2.0 publisher delta adds Healing Received, Damage Taken and Summon Health attributes;
-- reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon surfaces são infrastructure, not proof of provider-owned spell identities;
+- reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon surfaces are infrastructure, not proof of provider-owned spell identities;
 - no JAR decompilation or copied implementation/assets; unsupported internal signatures remain fail-closed.
 
 ### Authority boundary
