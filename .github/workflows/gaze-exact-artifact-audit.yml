@@ -1,0 +1,57 @@
+name: Gaze 1.1.7.1 exact artifact evidence
+
+on:
+  push:
+    branches:
+      - audit/gaze-1.1.7.1-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Materialize exact Modrinth artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 4 --retry-all-errors \
+            'https://cdn.modrinth.com/data/NlvaJ5WE/versions/od4ltbRo/gaze-1.1.7.1.jar' \
+            --output /tmp/gaze-1.1.7.1.jar
+          sha1sum /tmp/gaze-1.1.7.1.jar
+          test "$(sha1sum /tmp/gaze-1.1.7.1.jar | awk '{print $1}')" = 'a8cb3190bde157f78160ce65c202ce2d47fb2041'
+
+      - name: Clean-room structural audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/gaze_exact_artifact_audit.py /tmp/gaze-1.1.7.1.jar /tmp/gaze-audit
+          echo '--- summary ---'
+          cat /tmp/gaze-audit/summary.json
+          echo '--- relevant entries ---'
+          cat /tmp/gaze-audit/relevant-entries.txt
+          echo '--- selected classes ---'
+          cat /tmp/gaze-audit/selected-classes.txt
+          echo '--- structural constants ---'
+          cat /tmp/gaze-audit/class-constant-evidence.txt
+          echo '--- signatures ---'
+          cat /tmp/gaze-audit/javap-signatures.txt
+
+      - name: Upload factual audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaze-1.1.7.1-exact-artifact-evidence
+          path: /tmp/gaze-audit
+          if-no-files-found: error
+          retention-days: 7
