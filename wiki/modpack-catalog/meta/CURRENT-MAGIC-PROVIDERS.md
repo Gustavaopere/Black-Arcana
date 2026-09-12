@@ -6,9 +6,9 @@
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, portanto **60 estão canônicos**. Esse 60/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, e Phase 2BM fecha `ars_polymorphia` como componente **#61**. Portanto **61 estão canônicos**. Esse 61/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Ars Polymorphia acrescenta **+0** objetos semânticos independentes, então o mínimo estrito permanece **1316**.
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
@@ -95,6 +95,12 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 - Alshanex's Familiars é consumidor/conteúdo concreto; Phase 2BD fecha a linha 4.0.3 em **7 spells próprios + 11 rituais próprios = 18 objetos semânticos**, usando o JAR exato hash-matched; runtime QA e seam de ownership continuam separados;
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes 'n Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
+
+## Checkpoint Ars Polymorphia — Phase 2BM canonical
+
+O artefato físico `ars_polymorphia-1.0.3.jar` / SHA-1 `8cce819e83f6360ab9aa8b44ac841511172a6a79` foi reconciliado com o source oficial exato `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f`. A função fechada é de bridge de resolução de conflitos de receita entre Ars Storage/Crafting Lectern e o contrato Polymorph; o provider não estabelece spell, glyph, ritual, school, mana/resource ou ação mágica independente. O delta semântico é **+0** e o mínimo estrito permanece **1316**.
+
+Phase 2BM fecha `ars_polymorphia` como componente **#61 / 61/100** após PR #210 e validação exact-SHA pós-merge CI #2544 / run `34713268914`. Isso é fechamento técnico/source-pinned de catálogo, não um PASS de compatibilidade runtime. A source exige mod id `polymorph`, enquanto o pack físico expõe `polymorph_plus` `1.3.1+1.21.1`; a source foi construída contra Ars Nouveau `5.4.2.938`, enquanto o pack usa `5.13.1`; e a própria metadata source declara `minecraft_version=1.21.1` junto de `minecraft_version_range=[1.21,1.21.1)`. Esses pontos continuam fail-closed até evidência direta do host atual.
 
 ## Checkpoint Leyline Spellbooks — Phase 2BG canonical
 
