@@ -8,14 +8,14 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- estado canônico pós-Phase 2BL: `main@43e343dfdfe1119820f05888ebbf79debc3db8da`; esse SHA incorpora o fechamento durável de Phase 2BL e a estabilização de fixture da PR #208, e passou exact-SHA post-merge CI #2540 / run `34709290589`, incluindo 104/104 Foundation GameTests, dedicated-server smoke e canonical QA artifact `10302279485` (`sha256:3398896435975751fec35357fde1e83b76dfa1463cb1e2771756834aec0bdae0`);
+- estado canônico pós-Phase 2BM: `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`; esse SHA incorpora o fechamento source-pinned de Ars Polymorphia 1.0.3 da PR #210 e passou exact-SHA post-merge CI #2544 / run `34713268914`, incluindo unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke e canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`);
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, então o mínimo permanece **1316**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -26,6 +26,7 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - delta semântico Werewolves: **+1**;
 - delta semântico GTBC SpellLib: **+0**;
 - delta semântico Ignis Soulfires: Spellbooks 1.1.0 Phase 2BK: **+0** (`ZERO_BRIDGE_INFRA` exact-artifact);
+- delta semântico Ars Polymorphia 1.0.3 Phase 2BM: **+0** (`ZERO_SEMANTIC_BRIDGE`; exact source-pinned; current-host runtime QA fail-closed);
 - delta semântico Gaze 1.1.7.1 Phase 2BJ: **+1**;
 - delta semântico Alshanex 4.0.3: **+18**;
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
@@ -34,7 +35,7 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - delta semântico Goety 3.1.4 Phase 2BH: **+361** (`123 active Focus + 238 available distinct non-Focus rituals`);
 - delta semântico Goety Iron 3.1 Phase 2BL: **+14** (`2 Focus + 12 distinct non-Focus rituals`);
 - delta semântico Goety Cataclysm 1.21.1-1.8.2 Phase 2BL: **+52** (`28 Focus + 24 distinct non-Focus rituals`);
-- mínimo estrito global após Phase 2BL: **1316**;
+- mínimo estrito global após Phase 2BM: **1316**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -48,9 +49,33 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
 - Phase 2BD / PR #186: HEAD auditado `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` passou Black Arcana CI #2464;
 - PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
-- cobertura de componentes após o fechamento Phase 2BL: **60/100 = 60%**; `goetyiron` é componente #59 e `goety_cataclysm` é componente #60 por exact-artifact semantic closure.
+- Phase 2BM / PR #210: HEAD auditado `1b8d5d5761569f8ef1f3a32b7ece84cfb6ce6df6` passou Black Arcana CI #2543; squash merge `f2cdfe7b79d500540c281d70a76e8b6e3a77d311` passou exact-SHA post-merge CI #2544 / run `34713268914` com canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`);
+- cobertura de componentes após o fechamento Phase 2BM: **61/100 = 61%**; `ars_polymorphia` é componente #61 por fechamento técnico source-pinned de bridge zero-semântica, sem promover compatibilidade runtime com o host físico atual.
 
-O valor 60/100 nunca substitui a métrica semântica de magias.
+O valor 61/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BM — Ars Polymorphia 1.0.3 — componente #61 / semantic +0
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `ars_polymorphia` | `ars_polymorphia-1.0.3.jar` | EXACT PHYSICAL IDENTITY / EXACT OFFICIAL SOURCE PIN `e09b6c9...` / 5 REQUIRED MIXIN-ACCESSOR BINDINGS / PROTOCOL 1 + 1 PROVIDER SERVERBOUND UNIT PAYLOAD / NO SPELL-GLYPH-RITUAL-SCHOOL-RESOURCE-ACTION REGISTRY / `ZERO_SEMANTIC_BRIDGE` / +0 / COMPONENT #61 / CURRENT-HOST RUNTIME QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- physical SHA-1 `8cce819e83f6360ab9aa8b44ac841511172a6a79`; physical CurseForge hash `3576413974`;
+- exact official source `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f`, signed commit `ver: 1.0.3`;
+- exact source role is Ars Storage/Crafting Lectern ↔ Polymorph recipe-conflict adaptation, not a standalone spell system;
+- mixin footprint: four common bindings plus one client binding, all under required mixin config / Java 21;
+- provider network surface: registrar protocol `1` and one provider-owned play-to-server unit payload, `ars_polymorphia:reset_crafting_result`;
+- server settlement re-resolves a valid recipe through the provider stack against the current Ars crafting matrix rather than accepting an arbitrary client output/recipe identity;
+- no provider-owned spell, glyph, ritual, school, mana/resource or independent magical action registry is established by the exact source tree;
+- exact source metadata requires dependency mod id `polymorph`, while the physical pack exposes `polymorph_plus` `1.3.1+1.21.1`; no alias/API equivalence is assumed;
+- exact source built against Ars Nouveau `5.4.2.938`, while physical Ars is `5.13.1`; five required direct mixin targets keep ABI/mixin compatibility as runtime QA;
+- exact source declares `minecraft_version=1.21.1` but `minecraft_version_range=[1.21,1.21.1)`; the inconsistency is recorded without silently correcting binary intent;
+- client/full-pack behavior, multiplayer isolation, reload/reconnect persistence and installed-host interop remain fail-closed;
+- clean-room: no upstream implementation body/assets/localization text are copied or adapted.
+
+Phase 2BM therefore promotes only the provider-component catalog closure. It does **not** add semantic magic, create a Black Arcana recipe resolver or certify the physical host combination as runtime-compatible.
 
 ## Phase 2BL — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2 — componentes #59/#60 / semantic +66
 
@@ -97,7 +122,7 @@ Evidence: non-merge PR #194; primary `34666436710 / 10289437099`; reachability `
 - 61 unconditional registrations; three require `mowziesmobs`; three require `iss_magicfromtheeast`; both mod IDs are in the physical pack, so all 67 registry identities are current for this provider set;
 - `enableSpellLockSystem` is COMMON at `somakespells/general/common.toml`, code-default `false`; actual deployed value is not available in authoritative materials;
 - complete per-object survival acquisition/reachability, T.O Aqua runtime ownership and supported adapter/API seams remain open/fail-closed;
-- ARR clean-room: no implementation/source reconstruction/assets/text are copied or adapted.
+- ARR clean-room: no implementation/source reconstruction/assets/text are copied ou adaptados.
 
 This closes the old `over 50 / registry unknown` blocker but does not satisfy the ledger's player-reachability gate. Somake is not component #56 and contributes +0 until the effective config and survival path are closed strongly enough.
 
@@ -117,7 +142,7 @@ This closes the old `over 50 / registry unknown` blocker but does not satisfy th
 - exact group distribution: 7 Abyssal, 4 Ender, 1 Evocation, 5 Holy, 11 Fire, 5 Ice, 4 Nature, 22 Technomancy;
 - ten extra root localization keys are unregistered and excluded;
 - publisher generic/current 65-spell scale is not substituted for physical 1.1.13;
-- no upstream implementation/assets copied or adapted; balance/acquisition/runtime/API seams remain fail-closed where not separately proven.
+- no upstream implementation/assets copied ou adaptados; balance/acquisition/runtime/API seams remain fail-closed where not separately proven.
 
 ## Phase 2BD — Alshanex's Familiars 4.0.3 — componente #54
 
@@ -133,7 +158,7 @@ This closes the old `over 50 / registry unknown` blocker but does not satisfy th
 - exact spell inventory: 7 unconditional provider registry assignments/calls mapped to current IDs;
 - exact ritual inventory: 11 packaged resources of custom type `alshanex_familiars:ritual_recipe`;
 - Sound/Melodic ownership stays with Tunes n' Tomes; borrowed Iron's casts/familiar AI do not create duplicate semantic objects;
-- no upstream implementation/assets copied or adapted; runtime/API/ownership adapter seams remain fail-closed.
+- no upstream implementation/assets copied ou adaptados; runtime/API/ownership adapter seams remain fail-closed.
 
 ## Phase 2BJ — Gaze 1.1.7.1 — exact artifact, semantic +1, component still open
 
@@ -151,7 +176,7 @@ This closes the old `over 50 / registry unknown` blocker but does not satisfy th
 - exact registry/progression evidence: 26 player-facing Gaze Spirit Rites, 2 Geas effect types, 8 rune items, 1 Gaze-owned Iron's spell (Soulward Shield);
 - physical `irons_spellbooks` 3.16.3 satisfies the optional provider gate for Soulward Shield;
 - exact COMMON `disableGazeRites` gate suppresses the rite registry when true; deployed value unavailable, so the 26 Rites remain conditional;
-- ARR clean-room: no implementation bodies/assets/text copied or adapted.
+- ARR clean-room: no implementation bodies/assets/text copied ou adaptados.
 
 Gaze therefore contributes **+1** to the strict semantic numerator, producing **1250**, but remains an open provider component and does not create component #58. The next actionable provider with materially new exact evidence should be pursued before repeating config-blocked Gaze/NEG work.
 
@@ -168,11 +193,11 @@ Gaze therefore contributes **+1** to the strict semantic numerator, producing **
 - publisher defines SpellLib as shared library/API infrastructure with no standalone gameplay of its own;
 - 2.2.0 publisher delta adds Healing Received, Damage Taken and Summon Health attributes;
 - reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon surfaces are infrastructure, not proof of provider-owned spell identities;
-- no JAR decompilation or copied implementation/assets; unsupported internal signatures remain fail-closed.
+- no JAR decompilation ou copied implementation/assets; unsupported internal signatures remain fail-closed.
 
 ### Authority boundary
 
-GTBC's SpellLib owns only its library facilities. Concrete spell identities and cast settlement remain owned by the consuming spell providers/Iron's substrate as applicable. Black Arcana does not create a second spell registry, mana ledger or cast settlement because a library exposes reusable machinery.
+GTBC's SpellLib owns only its library facilities. Concrete spell identities and cast settlement remain owned by the consuming spell providers/Iron's substrate as applicable. Black Arcana does not create a second spell registry, mana ledger ou cast settlement because a library exposes reusable machinery.
 
 ## Semantic correction — Werewolves Leap
 
@@ -228,12 +253,13 @@ Provider-specific ownership integration remains **fail-closed** until a current 
 
 ### License / clean-room
 
-FamiliarsLib license evidence conflicts across source/publisher surfaces. No reuse conclusion is inferred. GTBC's SpellLib is likewise treated conservatively for factual publisher/physical evidence. Read-only factual audit only; no code/assets/text copied or adapted.
+FamiliarsLib license evidence conflicts across source/publisher surfaces. No reuse conclusion is inferred. GTBC's SpellLib is likewise treated conservatively for factual publisher/physical evidence. Read-only factual audit only; no code/assets/text copied ou adaptados.
 
 ## Immediate predecessors
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
+| 61 | 2BM / #210 | `ars_polymorphia` | CANÔNICO em `main@f2cdfe7b...`; `ZERO_SEMANTIC_BRIDGE`; +0 semântico; exact-source 1.0.3; HEAD CI #2543 GREEN; exact-SHA post-merge CI #2544 / run `34713268914` GREEN; current-host runtime QA fail-closed |
 | 60 | 2BL / #207 | `goety_cataclysm` | CANÔNICO; +52 semânticos; exact-artifact; fechamento durável em `main@d41fe957...`; validação final preservada por `main@43e343df...` / CI #2540 GREEN |
 | 59 | 2BL / #207 | `goetyiron` | CANÔNICO; +14 semânticos; exact-artifact; fechamento durável em `main@d41fe957...`; validação final preservada por `main@43e343df...` / CI #2540 GREEN |
 | 58 | 2BK / #204 | `ignissoulfires_spellbooks` | CANÔNICO; `ZERO_BRIDGE_INFRA`; +0 semântico; exact-SHA post-merge CI #2534 GREEN |
@@ -249,7 +275,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 ## Próxima seleção
 
-Phase 2BF / Somake, Phase 2BG / Leylines, Phase 2BH / Goety e Phase 2BL / Goety addons já foram reconciliadas no nível de evidência descrito acima. Não reiniciar esses fechamentos a partir de branches antigas.
+Phase 2BF / Somake, Phase 2BG / Leylines, Phase 2BH / Goety, Phase 2BL / Goety addons e Phase 2BM / Ars Polymorphia já foram reconciliadas no nível de evidência descrito acima. Não reiniciar esses fechamentos a partir de branches antigas.
 
 Blockers atualmente **PARKED até existir input novo**:
 
@@ -259,7 +285,7 @@ Blockers atualmente **PARKED até existir input novo**:
 
 A próxima seleção deve escolher **outro componente ainda aberto** para o qual exista evidência current/exact capaz de reduzir incerteza de inventário ou de classificação. Defaults de provider, publisher prose ou branches preparatórias não substituem estado implantado. Se um candidato só puder avançar com navegação/material externo indisponível, registrar a pendência e passar ao próximo blocker seguro em vez de fabricar fechamento.
 
-Os estados canônicos permanecem **1316 objetos semânticos mínimos / 60 de 100 componentes** até uma nova promoção sustentada por evidência.
+Os estados canônicos passam a **1316 objetos semânticos mínimos / 61 de 100 componentes** após a promoção sustentada de Ars Polymorphia.
 
 ## Regras
 
