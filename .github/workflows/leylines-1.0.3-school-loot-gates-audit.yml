@@ -1,0 +1,61 @@
+name: Leylines 1.0.3 School Loot Gates Audit
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-leylines-1.0.3
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Inspect exact Ley school and spell loot gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_SHA1='dfa6908731f432905caaaa1e53b4aedeaa26ed59'
+          URL='https://www.cursemaven.com/curse/maven/leylines-irons-spells-n-spellbooks-addon-1636676/8565076/leylines-irons-spells-n-spellbooks-addon-1636676-8565076.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 180 "$URL" -o leylines.jar
+          ACTUAL_SHA1="$(sha1sum leylines.jar | awk '{print $1}')"
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+          mkdir -p audit
+          {
+            echo 'Leylines 1.0.3 school/loot gates audit'
+            echo "expected_sha1=$EXPECTED_SHA1"
+            echo "actual_sha1=$ACTUAL_SHA1"
+            echo
+            echo '== LeySchoolRegistry signature =='
+            javap -classpath leylines.jar -p dev.semeth.leylines.registry.LeySchoolRegistry || true
+            echo
+            echo '== LeySchoolRegistry bytecode =='
+            javap -classpath leylines.jar -p -c dev.semeth.leylines.registry.LeySchoolRegistry || true
+            echo
+            echo '== spell method signatures relevant to loot/enablement =='
+            for cls in $(jar tf leylines.jar | grep '^dev/semeth/leylines/spell/[^/$]*Spell.class$' | sed 's#/#.#g; s#\.class$##' | sort); do
+              echo "--- $cls ---"
+              javap -classpath leylines.jar -p "$cls" | grep -E 'allowLooting|isEnabled|getDefaultConfig|setDeprecated|setAllowCrafting|getSpellResource' || true
+            done
+            echo
+            echo '== spell bytecode calls relevant to enablement/crafting =='
+            for cls in $(jar tf leylines.jar | grep '^dev/semeth/leylines/spell/[^/$]*Spell.class$' | sed 's#/#.#g; s#\.class$##' | sort); do
+              echo "--- $cls ---"
+              javap -classpath leylines.jar -p -c "$cls" | grep -E 'setDeprecated|setAllowCrafting|allowLooting|isEnabled|DefaultConfig|LeySchoolRegistry|ResourceLocation' || true
+            done
+          } > audit/school-loot-gates.txt
+          cat audit/school-loot-gates.txt
+      - name: Upload text-only audit evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: leylines-1.0.3-school-loot-gates-audit
+          path: audit/school-loot-gates.txt
+          if-no-files-found: error
+          retention-days: 30
