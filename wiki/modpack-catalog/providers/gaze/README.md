@@ -1,8 +1,8 @@
-# Gaze 1.1.7.1 — publisher-bounded partial catalog
+# Gaze 1.1.7.1 — exact-artifact partial semantic closure
 
 ## Status
 
-`EXACT PHYSICAL 1.1.7.1 / EXACT CURSEFORGE FILE 7261638 / EXACT MODRINTH VERSION od4ltbRo / ARR / PUBLIC 2-GEAS + RITES SCALE / 1.1.7 NAMED DELTA AUDITED / COMPLETE REGISTRY OPEN / +0 STRICT SEMANTIC DELTA / FAIL-CLOSED`
+`EXACT PHYSICAL 1.1.7.1 / EXACT HASH-MATCHED MODRINTH ARTIFACT / ARR / 1 COUNTED IRON'S SPELL / 26 CONFIG-CONDITIONAL SPIRIT RITES / 2 GEAS + 8 RUNES METRIC-EXCLUDED / COMPONENT OPEN / RUNTIME FAIL-CLOSED`
 
 ## Installed authority
 
@@ -14,141 +14,102 @@
 - physical SHA-1: `a8cb3190bde157f78160ce65c202ce2d47fb2041`
 - CurseForge project / exact file: `1273454 / 7261638`
 - Modrinth project / exact version: `NlvaJ5WE / od4ltbRo`
-- publisher license: **All Rights Reserved** on both current CurseForge and Modrinth surfaces
-- Modrinth required content for 1.1.7.1: Malum `1.8.2`, Lodestone `1.8.2`
-- Modrinth optional content: Iron's Spells 'n Spellbooks
+- publisher license: **All Rights Reserved**
+- Modrinth required content: Malum `1.8.2`, Lodestone `1.8.2`
+- optional provider: Iron's Spells 'n Spellbooks; physically present in this pack as `1.21.1-3.16.3`
 
-The physical modlist is authority for the installed hash and runtime identity. Publisher surfaces independently close the current release identity, platform and dependency line. This checkpoint does **not** claim an independent publisher-hash match because the exact Modrinth binary could not be materialized by the permitted tooling during this audit.
-
-See [`PUBLISHER-EVIDENCE.md`](PUBLISHER-EVIDENCE.md).
+The physical modlist remains authority for installed identity. Phase 2BJ additionally materialized Modrinth version `od4ltbRo` in an isolated audit and required SHA-1 equality with the physical JAR before structural inspection. The exact-artifact audit is recorded in [`EXACT-1.1.7.1-ARTIFACT-AUDIT.md`](EXACT-1.1.7.1-ARTIFACT-AUDIT.md); publisher history remains in [`PUBLISHER-EVIDENCE.md`](PUBLISHER-EVIDENCE.md).
 
 ## Classification and authority
 
-Gaze extends **Malum**. It is a provider of progression, Geas, Spirit Rites, runes, equipment and soul/spirit-adjacent mechanics; it is not an Iron's spell registry merely because optional Iron's compatibility exists.
+Gaze extends **Malum** and optionally integrates with **Iron's Spells 'n Spellbooks**. Authority remains split:
 
-Authority remains split as follows:
-
-- Malum owns its base Spirit Arcana, Spirit Rite/Geas substrates and spirit-resource semantics;
-- Gaze owns only the addon-specific identities and behavior it actually registers;
-- Iron's owns its spellcasting substrate and spell identities when optional compatibility delegates to it;
+- Malum owns Spirit Rite/Geas substrate semantics and spirit-resource settlement;
+- Gaze owns only its addon-specific identities and behavior;
+- Iron's owns its spell framework, casting and host settlement;
 - Black Arcana owns its own casting, spell domains, rituals, hazards, Corruption, Strain, Arcane Danger, costs, cooldowns, targeting and world-safety runtime.
 
 No Gaze surface authorizes a second spirit ledger, second Malum rite execution path or duplicate Iron's cast settlement inside Black Arcana.
 
-## Current publisher scale
+## Exact current semantic surfaces
 
-The current project description advertises:
+### Spirit Rites
 
-- one progression screen;
-- **2 new Geas**;
-- a new set of **Rites**;
-- **6 weapons**;
-- **8 runes**;
-- **5 Curios**;
-- a Spirit-Channel pouch.
+The exact 1.1.7.1 artifact contains **26 distinct Gaze `RiteHolder<SpiritRiteType>` identities**. The provider progression setup references all 26 and uses Malum Spirit Rite codex page types, establishing them as intended player-facing rite identities rather than spare technical slots.
 
-These are publisher-owned scale statements. They are not a complete registry table and do not establish exact registry IDs, costs, acquisition or server-side causal seams.
+They are metric-relevant rites, but the exact artifact also proves a provider configuration gate: Gaze's COMMON boolean `disableGazeRites` suppresses registration/initialization of the rite surfaces when its resolved value is true. The source/default value is false, but no authoritative deployed Gaze COMMON config is present in the project evidence. The default is therefore not substituted for current-pack state.
 
-## Version-bounded 1.1.7 lineage evidence
+Result: **26 Rites remain `CONDITIONAL`** until the effective deployed `disableGazeRites` value is obtained.
 
-The publisher changelog for the immediately preceding `1.1.7` release, which explicitly moved the addon to Malum 1.8, names several addon capabilities and systems:
+### Geas
 
-### Geas / progression
+The exact artifact exposes two Gaze `GeasEffectType` identities:
 
-- `Domain of Swords` — explicitly introduced as a new Geas;
-- `Pact of Encroaching Malice` — explicitly named in a bug fix, but its exact registry category is not promoted beyond the publisher wording;
-- Malice-related Geas balance changes;
-- Bestiary and progression/book changes.
+- `pact_of_encroaching`;
+- `domain_of_swords`.
 
-### Rites named by publisher
+The current semantic-action metric already excludes base-Malum Geas effect types because effect/status-type identities are not discrete spell/rite actions. Gaze follows the same rule. These two add **0** to the numerator.
 
-- Corrupted Greater Wicked — changed to activate spawners;
-- Corrupted Greater Sacred — expanded to some modded cakes;
-- Aqua Rite — behavior reworked;
-- Corrupted Wicked Rite — reworked.
+### Runes
 
-The same changelog says Rites were moved to deferred registration and broadly tweaked. It does **not** publish the full rite registry, so the four named entries are evidence of specific identities, not proof that the registry contains exactly four rites.
+The exact artifact/progression surface closes eight Gaze rune items. They are item/equipment/passive identities, not standalone spells, glyphs, rites or equivalent action-registry identities under the current metric. They add **0**.
 
-### Runes named by publisher
+### Iron's compatibility spell
 
-- Fafnir;
-- WorldAnchor;
-- Eir;
-- an unnamed damage-mitigation rune.
+The exact artifact contains one Gaze-owned `Supplier<AbstractSpell>`: **Soulward Shield**. Gaze's `IronsCompat.init` registers its spell registry only when `irons_spellbooks` is loaded. That gate is satisfied in the physical pack:
 
-The current project page advertises eight runes in total. The remaining current names cannot be manufactured from the published count.
+- JAR: `irons_spellbooks-1.21.1-3.16.3.jar`;
+- mod id: `irons_spellbooks`;
+- SHA-1: `017fd8140c477f9ae602cf95594f1c23bef1d6e3`.
 
-### Capability-bearing items named by publisher
+No Gaze-specific disable gate was observed for this spell registration. Generic Iron's host runtime/config remains separate QA, consistent with other exact Iron's spell-content providers.
 
-- Seidhr;
-- Spirit Saber;
-- Veil's Edge;
-- Splintered World;
-- Replica Dharmachakra;
-- Meditation Ring;
-- Mage Ethics Ring;
-- Charge Necklace;
-- Spirit-Channel pouch;
-- Enchantment Workbench.
-
-The changelog also mentions Astral Splinter and several configuration/Umbral interactions. Item type, registry ID and complete acquisition contract stay unverified unless independently published.
-
-## Exact 1.1.7.1 delta
-
-The exact installed release `1.1.7.1` declares that it remains on Malum 1.8 and publishes a narrow delta:
-
-- book entries moved;
-- Fafnir gains a bonus when wearing a full Malignant armour set;
-- Anima Bestiary empty/jitter issues fixed;
-- an additional language file.
-
-This exact patch does not publish a replacement registry or a full 1.1.7.1 capability inventory. Therefore the 1.1.7 named lineage remains useful current-line evidence, but absence of a removal notice is **not** treated as exact proof for every prior object.
+Result: **Soulward Shield contributes +1 `COUNTED_EXACT` semantic object**.
 
 ## Semantic accounting
 
-This checkpoint does **not** add Gaze objects to the strict semantic minimum.
+Phase 2BJ disposition:
 
-Reason: current publisher evidence establishes provider scale and multiple named magical identities, but it does not close the complete current registry, player-facing reachability/acquisition for each object, or a version-bounded mapping from every named 1.1.7 object to the installed 1.1.7.1 artifact.
+- Soulward Shield: **+1 `COUNTED_EXACT`**;
+- 26 Spirit Rites: **`CONDITIONAL`** on deployed COMMON config evidence;
+- 2 Geas types: **`EXCLUDED`** by metric definition;
+- 8 rune items: **`EXCLUDED`** by metric definition.
 
-Accordingly:
+The strict reconstructible semantic minimum therefore moves from **1249 to 1250**. Gaze does **not** close another provider component because the 26 rite identities remain configuration-conditional, so provider-component closure stays **57/100**. The global semantic denominator remains incomplete and no final magic-coverage percentage is declared.
 
-- current strict semantic delta from this checkpoint: **+0**;
-- existing global strict minimum remains unchanged;
-- no denominator percentage is inferred from the advertised `2 Geas / Rites / 8 runes` scale.
+## Publisher lineage retained for context
+
+The immediately preceding 1.1.7 changelog names Domain of Swords, Pact of Encroaching Malice and multiple Rite/rune/item changes while moving Rites to deferred registration. The 1.1.7.1 publisher delta is narrow: book-entry movement, Fafnir/Malignant-set behavior, Anima Bestiary fixes and localization. These publisher statements remain useful lineage evidence, but exact registry/accounting claims now come from the hash-matched 1.1.7.1 artifact rather than from extrapolation across changelogs.
 
 ## Runtime / integration boundary
 
-No Gaze-specific Black Arcana runtime adapter is approved by this catalog checkpoint.
+No Gaze-specific Black Arcana runtime adapter is approved by this catalog checkpoint. Still fail-closed:
 
-The current publisher surface proves only dependency/compatibility relationships, not a stable addon API for:
-
+- deployed `disableGazeRites` COMMON-config value;
+- rite costs/inputs/outputs and resource mutation;
 - Geas activation/settlement;
-- Rite execution/settlement;
-- spirit/resource mutation;
-- item-proc attribution;
-- optional Iron's compatibility causality.
+- numerical mechanics/balance;
+- complete-modpack runtime behavior;
+- any stable provider-native API/hook required for a future adapter.
 
-Any future integration must verify the exact-version provider-native seam and preserve one causal owner. Without that seam, fail closed.
+A future integration must preserve Malum/Gaze/Iron's causal ownership and avoid double processing.
 
 ## Clean-room boundary
 
-Gaze is published as **All Rights Reserved**. No source repository matching the installed release was located on the publisher surfaces audited here. No code, bytecode, assets, models, sounds or text are copied/adapted into Black Arcana.
+Gaze is **All Rights Reserved**. Phase 2BJ performed factual exact-binary inspection only after cryptographic identity matched the physical pack. Retained evidence is limited to hashes, metadata, registry/member/type relationships, resource identities/paths and targeted control-flow gate facts required for compatibility/cataloging.
 
-The Modrinth download endpoint exposed the exact artifact URL, but the permitted environment did not materialize the Java archive for factual resource inspection. That tooling limitation is recorded rather than replaced with guessed registry data.
+No implementation bodies, recipe ingredient lists, numerical balance data, localization prose, source reconstruction, assets, models or sounds are copied or adapted. Exact-artifact inspection is not a derivation grant.
 
-## Open gates
+## Remaining gates
 
-1. obtain a complete version-bounded 1.1.7.1 registry inventory through publisher-controlled data or legally permissible factual artifact inspection;
-2. individualize the two current Geas and complete Rite/Runes inventories with exact IDs and player-facing reachability;
-3. verify acquisition, resource/cost and causal settlement surfaces;
-4. validate Gaze `1.1.7.1` + Malum `1.8.2` + Lodestone `1.8.2` in the actual pack runtime;
-5. verify any optional Iron's integration against installed Iron's `3.16.3` before designing an adapter.
+1. obtain the effective deployed Gaze COMMON config and reconcile `disableGazeRites`;
+2. if Rites are enabled, promote only the proven-enabled 26 rite identities and then reassess whether the Gaze component can close;
+3. validate Gaze `1.1.7.1` + Malum `1.8.2` + Lodestone `1.8.2` + Iron's `3.16.3` in the actual pack runtime;
+4. verify provider-native API/hook boundaries before any Black Arcana integration work.
 
 ## Sources
 
-- physical modlist: current Black Arcana `modlist.txt`, 595 top-level entries, NeoForge `21.1.248`
-- CurseForge project: `https://www.curseforge.com/minecraft/mc-mods/gaze-a-malum-addon`
-- exact CurseForge 1.1.7.1 file: `https://www.curseforge.com/minecraft/mc-mods/gaze-a-malum-addon/files/7261638`
-- CurseForge 1.1.7 lineage release: `https://www.curseforge.com/minecraft/mc-mods/gaze-a-malum-addon/files/7250833`
-- Modrinth project: `https://modrinth.com/mod/gaze-a-malum-addon`
-- exact Modrinth version: `https://modrinth.com/mod/gaze-a-malum-addon/version/1.1.7.1`
+- current physical `modlist.txt`, 595 top-level entries, NeoForge `21.1.248`
+- CurseForge exact file `7261638`
+- Modrinth exact version `NlvaJ5WE / od4ltbRo`
+- isolated NON-MERGE evidence PR #201, audit HEAD `2f4ff6536663b1c629a6a5ea92416765bea17b1e`, run `34676660467`, artifact `10292013626`
