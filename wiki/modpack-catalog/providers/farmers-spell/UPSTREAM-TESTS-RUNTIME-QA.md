@@ -15,8 +15,9 @@ The following remain direct runtime QA rather than catalog facts:
 - client boot with the current full provider set;
 - dedicated-server boot;
 - successful application of all seven required mixins;
-- current Iron's `3.16.3.6` interoperability;
-- current GeckoLib `4.7.6` behavior despite source build dependency `4.9.2`;
+- current Iron's `3.16.3` interoperability;
+- current Farmer's Delight `1.3.4` behavior versus source build dependency `1.3.2`;
+- current GeckoLib `4.9.2` behavior despite source/physical version-label agreement;
 - Foodgeist spawn/reward lifecycle in the assembled pack;
 - Gluttony focus recognition in the physical Scroll Forge;
 - representative acquisition and execution of all six spells;
@@ -26,6 +27,6 @@ The following remain direct runtime QA rather than catalog facts:
 
 ## Fail-closed rule
 
-The exact registry/source audit is sufficient for catalog identity and semantic counting after normal Black Arcana evidence promotion. It is not sufficient to certify the assembled provider runtime.
+The exact source-pinned registry audit is sufficient for catalog identity and semantic counting after normal Black Arcana evidence promotion. It is not sufficient to certify the assembled provider runtime.
 
 If current-host behavior contradicts the source-line assumptions or mixin/API bindings fail, Black Arcana must disable/withhold the affected optional integration rather than fabricate provider state, duplicate a spell effect or create a replacement resource/casting pipeline.
