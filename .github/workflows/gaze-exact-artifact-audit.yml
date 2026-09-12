@@ -48,6 +48,12 @@ jobs:
           echo '--- signatures ---'
           cat /tmp/gaze-audit/javap-signatures.txt
 
+      - name: Targeted registration and progression references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/gaze_targeted_reachability.py /tmp/gaze-1.1.7.1.jar /tmp/gaze-audit/targeted-reachability.json
+
       - name: Upload factual audit evidence
         uses: actions/upload-artifact@v4
         with:
