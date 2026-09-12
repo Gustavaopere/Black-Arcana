@@ -29,9 +29,13 @@ Therefore:
 
 The preceding semantic-only promotion was **Malum +26**: whole-interval path history across the observed `1.8.2` source window plus stable endpoint blobs close 26 base-Malum `SpiritRiteType` identities. Release-bounded Codex evidence separately proves that the two special identities, `undirected_rite` and `unchained_rite`, are player-facing rather than sentinel/proxy slots: `TotemMagicEntries.setupEntries(ArcanaProgressionScreen)` adds each as a distinct progression entry backed by its corresponding `RiteHolder`, `SpiritRiteTextPage`, and `SpiritRiteRecipePage`, while every observed `CodexLangDatagen.java` snapshot in the 1.8.2 interval preserves dedicated entries for both. The same release-bounded audit also records 37 active `GeasEffectType` identities and 9 `SpiritArcanaType` resource identities, but those are excluded from the current semantic-action metric by definition. Exact installed-JAR/source equivalence and runtime/API/recipe mechanics remain separate gates. The preceding semantic-only promotion was **Hexalia +25**: 19 player-facing Nature's Ritual identities plus 6 Celestial Infusion identities release-bounded across the observed 1.3.5 metadata / 1.3.6 filename-source boundary. Neither semantic promotion changes the internal provider-component closure metric below.
 
-The current Goety reconciliation remains an **evidence-only +0 delta**: the installed `goety-3.1.4.jar` is physical authority, while public `Vivideru/Goety-3` checkpoints for 3.1.0 and 3.1.1 expose a stable `ModItems.java` blob containing 123 active Focus item registrations. The prior official-Wiki inventory of 110 named base Focuses is retained as a documentary subset rather than a complete current registry. Exact 3.1.4 JAR↔source equivalence, player-facing reachability, semantic deduplication and runtime/API seams remain open, so none of the additional registry identities enter the strict **888** minimum at this checkpoint. The authoritative Goety capability interpretation is recorded in [`CAPABILITY-MATRIX-DELTA-GOETY.md`](./CAPABILITY-MATRIX-DELTA-GOETY.md).
+Phase 2BH now has a **durable promotion candidate** for Goety 3.1.4 from exact hash-matched artifact evidence: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Canonical values remain **888 / 56 of 100** until durable merge + exact post-merge CI; candidate values are **1249 / 57 of 100**. Runtime/API/balance gates remain separate.
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
+
+## Phase 2BH promotion candidate — Goety 3.1.4
+
+Exact 3.1.4 artifact identity closes candidate **+361** and candidate component #57. See `PHASE2BH-GOETY-3.1.4-EXACT-CHECKPOINT.md` and `../providers/goety/EXACT-3.1.4-ARTIFACT-AUDIT.md`. Canonical baseline remains 888 / 56/100 pending promotion.
 
 ## Phase 2BG — Leyline Spellbooks 1.0.3 component #56, canonical
 

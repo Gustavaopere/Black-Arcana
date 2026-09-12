@@ -138,11 +138,9 @@ Esse fechamento é de catálogo/identidade. Runtime QA, valores numéricos e qua
 
 A cobertura source-level não converte o addon em authority de Black Arcana nem em provider de Mastery do RPG Skill Tree.
 
-## Checkpoint Goety — reconciliação de evidência 3.1.x
+## Checkpoint Goety — Phase 2BH exact candidate
 
-O artefato físico permanece `goety-3.1.4.jar` / runtime `3.1.4`. A linha pública `Vivideru/Goety-3` foi auditada nos checkpoints 3.1.0 e 3.1.1: `ModItems.java` mantém o mesmo blob e contém **123 registros ativos de itens Focus** no intervalo observado. A lista oficial da Wiki com 110 nomes continua válida como subconjunto documental, não como registry completo atual.
-
-Esse avanço é **evidence-only +0**: não existe pin público exato de source 3.1.4 estabelecido, e registry membership não fecha sozinho reachability, deduplicação semântica, custos, hooks ou runtime. Por isso Goety continua com delta próprio +0; após aplicar os fechamentos exatos Phase 2BE de Cataclysm: Spellbooks 1.1.13 e Phase 2BG de Leyline Spellbooks 1.0.3, o mínimo semântico estrito global canônico é **888**, e Goety permanece authority de Soul Energy, Focus casting, servants, rituals e progression. O estado canônico detalhado está nos overlays de queue/capability e em `providers/goety/`.
+Exact `goety-3.1.4.jar` evidence closes **123 active Focus actions + 238 available distinct non-Focus ritual actions = +361**. Candidate totals: **1249 semantic objects / 57 of 100 components**; canonical values remain 888 / 56 until durable merge + exact post-merge CI. Runtime/API/provider settlement remains fail-closed.
 
 ## Regra de completude
 

@@ -1,0 +1,411 @@
+# Goety 3.1.4 — exact semantic inventory
+
+Status: `PHASE 2BH CANDIDATE / EXACT HASH-MATCHED ARTIFACT / 361 SEMANTIC OBJECTS`
+
+This file preserves only factual identity data needed to reconstruct the Phase 2BH semantic count. It does **not** preserve recipe ingredients, numerical balance, implementation bodies, localization prose, assets, models or sounds.
+
+## Physical authority
+
+- JAR: `goety-3.1.4.jar`
+- mod id/runtime: `goety` / `3.1.4`
+- SHA-1: `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7`
+- CurseForge: project `586095`, file `8689429`
+- physical modlist: 595 top-level entries; SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+
+## Exact Focus actions — 123
+
+The exact artifact exposes 124 `_focus` identities/fields. `empty_focus` is the non-action/proxy slot and is excluded. Every one of the remaining **123** active Focus identities has a same-named base acquisition recipe in the exact artifact; 80 are `goety:ritual` and 43 are shaped crafting. None of those 123 base recipes has a mod-loaded condition, and none resolves to a mismatched Focus result.
+
+- `arrow_rain_focus`
+- `banish_focus`
+- `barricade_focus`
+- `biomine_focus`
+- `biting_focus`
+- `blackguard_focus`
+- `blasting_focus`
+- `blazing_focus`
+- `blink_focus`
+- `blizzard_focus`
+- `blossoming_focus`
+- `bolting_focus`
+- `bombardment_focus`
+- `bouncy_bubble_focus`
+- `bulwark_focus`
+- `burrowing_focus`
+- `call_focus`
+- `carrion_focus`
+- `charge_focus`
+- `chilling_focus`
+- `command_focus`
+- `corruption_focus`
+- `crafting_focus`
+- `cushion_focus`
+- `cyclone_focus`
+- `discharge_focus`
+- `earth_punch_focus`
+- `electrocute_focus`
+- `end_walk_focus`
+- `ender_chest_focus`
+- `entangling_focus`
+- `eruption_focus`
+- `feast_focus`
+- `fire_blast_focus`
+- `fire_breath_focus`
+- `fireball_focus`
+- `flame_strike_focus`
+- `flying_focus`
+- `frost_breath_focus`
+- `frost_nova_focus`
+- `frostborn_focus`
+- `ghastly_focus`
+- `ghost_fire_focus`
+- `glow_light_focus`
+- `grapple_focus`
+- `guardian_focus`
+- `hail_focus`
+- `hogging_focus`
+- `hunting_focus`
+- `ice_spike_focus`
+- `ice_storm_focus`
+- `iceology_focus`
+- `ignite_focus`
+- `illuminate_focus`
+- `illusion_focus`
+- `iron_hide_focus`
+- `killing_focus`
+- `launch_focus`
+- `lavaball_focus`
+- `leaping_focus`
+- `leeching_focus`
+- `lightning_focus`
+- `magic_bolt_focus`
+- `magma_bomb_focus`
+- `mauling_focus`
+- `meteor_shower_focus`
+- `ministrous_focus`
+- `monsoon_focus`
+- `order_focus`
+- `osseous_focus`
+- `overgrowth_focus`
+- `phantasm_focus`
+- `poison_dart_focus`
+- `prisma_beam_focus`
+- `pulverize_focus`
+- `quaking_focus`
+- `razor_wind_focus`
+- `reaping_focus`
+- `recall_focus`
+- `rotation_focus`
+- `rotting_focus`
+- `rupture_focus`
+- `scatter_focus`
+- `sensing_focus`
+- `shocking_focus`
+- `shockwave_focus`
+- `shredding_focus`
+- `skull_focus`
+- `slimy_focus`
+- `smack_stone_focus`
+- `snaring_focus`
+- `sonic_boom_focus`
+- `soul_bolt_focus`
+- `soul_heal_focus`
+- `soul_light_focus`
+- `spooky_focus`
+- `sprightly_focus`
+- `steaming_focus`
+- `stellar_focus`
+- `surging_focus`
+- `swarm_focus`
+- `sword_focus`
+- `teeth_focus`
+- `telekinesis_focus`
+- `thunderbolt_focus`
+- `thunderstorm_focus`
+- `tidal_focus`
+- `trembling_focus`
+- `trident_storm_focus`
+- `troop_focus`
+- `tunnel_focus`
+- `updraft_focus`
+- `vanguard_focus`
+- `vexing_focus`
+- `void_flash_focus`
+- `watching_focus`
+- `water_jet_focus`
+- `water_whip_focus`
+- `weakening_focus`
+- `whirlwind_focus`
+- `whispering_focus`
+- `wind_blast_focus`
+- `wither_skull_focus`
+
+## Exact non-Focus ritual actions — 238
+
+The exact artifact contains **342** `goety:ritual` recipe resources. **83** are Focus-acquisition resources and are excluded because the resulting Focus action is already counted. The remaining **259** non-Focus resources collapse to **255** semantic signatures after four alternate-recipe duplicate groups are deduplicated: `ominous_saddle`, `terminus_scroll`, `thrash_glove`, and `summon_apostle`.
+
+Under the physical provider set, sixteen Cyclic enchantment rituals and one VanillaTweaks ritual are unavailable and excluded. The resulting current-pack inventory is **238 distinct available non-Focus ritual actions**.
+
+Class distribution: `{'OTHER_RITUAL': 123, 'CONVERSION_RITUAL': 23, 'ENCHANT_RITUAL': 37, 'LOCATE_RITUAL': 19, 'SUMMON_RITUAL': 2, 'THRALL_SUMMON_RITUAL': 34}`.
+
+Craft-type distribution: `{'deep': 9, 'geoturgy': 15, 'animation': 3, 'forge': 47, 'end': 7, 'expert_nether': 13, 'necroturgy': 36, 'overgrown': 11, 'adept_nether': 8, 'magic': 48, 'storm': 8, 'frost': 4, 'sky': 9, 'divination': 19, 'sabbath': 1}`.
+
+### Counted ritual identities
+
+- `abyss_crown.json` → `RITUAL_RESULT:goety:abyss_crown` (`OTHER_RITUAL`, `deep`)
+- `abyss_robe.json` → `RITUAL_RESULT:goety:abyss_robe` (`OTHER_RITUAL`, `deep`)
+- `abyss_staff.json` → `RITUAL_RESULT:goety:abyss_staff` (`OTHER_RITUAL`, `deep`)
+- `alarming_charm.json` → `RITUAL_RESULT:goety:alarming_charm` (`OTHER_RITUAL`, `geoturgy`)
+- `animation_core.json` → `RITUAL_RESULT:goety:animation_core` (`OTHER_RITUAL`, `animation`)
+- `animator.json` → `RITUAL_RESULT:goety:animator` (`OTHER_RITUAL`, `forge`)
+- `arca.json` → `RITUAL_RESULT:goety:arca` (`OTHER_RITUAL`, `forge`)
+- `black_beast_cursed_armor.json` → `RITUAL_RESULT:goety:black_beast_cursed_armor` (`OTHER_RITUAL`, `forge`)
+- `black_beast_dark_armor.json` → `RITUAL_RESULT:goety:black_beast_dark_armor` (`OTHER_RITUAL`, `forge`)
+- `black_crystal.json` → `RITUAL_RESULT:goety:black_crystal` (`OTHER_RITUAL`, `forge`)
+- `black_iron/black_iron_boots.json` → `RITUAL_RESULT:goety:black_iron_boots` (`OTHER_RITUAL`, `forge`)
+- `black_iron/black_iron_chestplate.json` → `RITUAL_RESULT:goety:black_iron_chestplate` (`OTHER_RITUAL`, `forge`)
+- `black_iron/black_iron_helmet.json` → `RITUAL_RESULT:goety:black_iron_helmet` (`OTHER_RITUAL`, `forge`)
+- `black_iron/black_iron_leggings.json` → `RITUAL_RESULT:goety:black_iron_leggings` (`OTHER_RITUAL`, `forge`)
+- `blade_of_ender.json` → `RITUAL_RESULT:goety:blade_of_ender` (`OTHER_RITUAL`, `end`)
+- `blazing_cage.json` → `RITUAL_RESULT:goety:blazing_cage` (`OTHER_RITUAL`, `expert_nether`)
+- `bonehead_hammer.json` → `RITUAL_RESULT:goety:bonehead_hammer` (`OTHER_RITUAL`, `necroturgy`)
+- `budding_amethyst.json` → `RITUAL_RESULT:minecraft:budding_amethyst` (`OTHER_RITUAL`, `geoturgy`)
+- `bygone_scroll.json` → `RITUAL_RESULT:goety:bygone_scroll` (`OTHER_RITUAL`, `expert_nether`)
+- `convert_black_wolf_to_black_beast.json` → `CONVERT:?->goety:black_beast` (`CONVERSION_RITUAL`, `overgrown`)
+- `convert_blazes_to_wildfire.json` → `CONVERT:?->goety:wildfire` (`CONVERSION_RITUAL`, `expert_nether`)
+- `convert_cow_to_mooshroom.json` → `CONVERT:?->minecraft:mooshroom` (`CONVERSION_RITUAL`, `overgrown`)
+- `convert_drowned_to_drowned_necromancer.json` → `CONVERT:?->goety:drowned_necromancer_servant` (`CONVERSION_RITUAL`, `deep`)
+- `convert_guardian_to_elder_guardian.json` → `CONVERT:?->goety:elder_guardian_servant` (`CONVERSION_RITUAL`, `deep`)
+- `convert_hoglin_to_hoglin_servant.json` → `CONVERT:?->goety:hoglin_servant` (`CONVERSION_RITUAL`, `adept_nether`)
+- `convert_mossy_skeleton_to_mossy_necromancer.json` → `CONVERT:?->goety:mossy_necromancer_servant` (`CONVERSION_RITUAL`, `necroturgy`)
+- `convert_pig_to_hoglin.json` → `CONVERT:?->minecraft:hoglin` (`CONVERSION_RITUAL`, `adept_nether`)
+- `convert_pillager_to_trampler.json` → `CONVERT:?->goety:trampler_servant` (`CONVERSION_RITUAL`, `magic`)
+- `convert_polar_bear_to_polar_bear_servant.json` → `CONVERT:?->goety:polar_bear_servant` (`CONVERSION_RITUAL`, `overgrown`)
+- `convert_skeleton_horse.json` → `CONVERT:?->minecraft:skeleton_horse` (`CONVERSION_RITUAL`, `necroturgy`)
+- `convert_skeleton_to_necromancer.json` → `CONVERT:?->goety:necromancer_servant` (`CONVERSION_RITUAL`, `necroturgy`)
+- `convert_spider_to_brood_mother.json` → `CONVERT:?->goety:brood_mother_servant` (`CONVERSION_RITUAL`, `overgrown`)
+- `convert_stray_to_cairn_necromancer.json` → `CONVERT:?->goety:cairn_necromancer_servant` (`CONVERSION_RITUAL`, `necroturgy`)
+- `convert_trader_to_reprobate.json` → `CONVERT:?->goety:reprobate_servant` (`CONVERSION_RITUAL`, `storm`)
+- `convert_villager_to_neollager.json` → `CONVERT:?->goety:neollager` (`CONVERSION_RITUAL`, `magic`)
+- `convert_villager_to_ravaged.json` → `CONVERT:?->goety:ravaged` (`CONVERSION_RITUAL`, `magic`)
+- `convert_villager_to_warlock.json` → `CONVERT:?->goety:warlock_servant` (`CONVERSION_RITUAL`, `adept_nether`)
+- `convert_villager_to_witch.json` → `CONVERT:?->goety:witch_servant` (`CONVERSION_RITUAL`, `storm`)
+- `convert_wither_skeleton_to_wither_necromancer.json` → `CONVERT:?->goety:wither_necromancer_servant` (`CONVERSION_RITUAL`, `expert_nether`)
+- `convert_wolf_to_ripper.json` → `CONVERT:?->goety:ripper_servant` (`CONVERSION_RITUAL`, `magic`)
+- `convert_zombify_horse.json` → `CONVERT:?->minecraft:zombie_horse` (`CONVERSION_RITUAL`, `necroturgy`)
+- `convert_zombify_ravager.json` → `CONVERT:?->goety:zombie_ravager` (`CONVERSION_RITUAL`, `necroturgy`)
+- `cursed_metal_wolf_armor.json` → `RITUAL_RESULT:goety:cursed_metal_wolf_armor` (`OTHER_RITUAL`, `forge`)
+- `dark/dark_boots.json` → `RITUAL_RESULT:goety:dark_boots` (`OTHER_RITUAL`, `forge`)
+- `dark/dark_chestplate.json` → `RITUAL_RESULT:goety:dark_chestplate` (`OTHER_RITUAL`, `forge`)
+- `dark/dark_helmet.json` → `RITUAL_RESULT:goety:dark_helmet` (`OTHER_RITUAL`, `forge`)
+- `dark/dark_leggings.json` → `RITUAL_RESULT:goety:dark_leggings` (`OTHER_RITUAL`, `forge`)
+- `dark/dark_metal_scythe.json` → `RITUAL_RESULT:goety:dark_metal_scythe` (`OTHER_RITUAL`, `forge`)
+- `dark_scythe.json` → `RITUAL_RESULT:goety:dark_scythe` (`OTHER_RITUAL`, `forge`)
+- `dark_wolf_armor.json` → `RITUAL_RESULT:goety:dark_wolf_armor` (`OTHER_RITUAL`, `forge`)
+- `death_scythe.json` → `RITUAL_RESULT:goety:death_scythe` (`OTHER_RITUAL`, `necroturgy`)
+- `diamond_ravager_armor.json` → `RITUAL_RESULT:goety:diamond_ravager_armor` (`OTHER_RITUAL`, `forge`)
+- `diamond_trampler_armor.json` → `RITUAL_RESULT:goety:diamond_trampler_armor` (`OTHER_RITUAL`, `forge`)
+- `eerie_pickaxe.json` → `RITUAL_RESULT:goety:eerie_pickaxe` (`OTHER_RITUAL`, `forge`)
+- `enchant/aqua_affinity.json` → `ENCHANT:minecraft:aqua_affinity` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/bane_of_arthropods.json` → `ENCHANT:minecraft:bane_of_arthropods` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/binding_curse.json` → `ENCHANT:minecraft:binding_curse` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/blast_protection.json` → `ENCHANT:minecraft:blast_protection` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/channeling.json` → `ENCHANT:minecraft:channeling` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/depth_strider.json` → `ENCHANT:minecraft:depth_strider` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/efficiency.json` → `ENCHANT:minecraft:efficiency` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/feather_falling.json` → `ENCHANT:minecraft:feather_falling` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/fire_aspect.json` → `ENCHANT:minecraft:fire_aspect` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/fire_protection.json` → `ENCHANT:minecraft:fire_protection` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/flame.json` → `ENCHANT:minecraft:flame` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/fortune.json` → `ENCHANT:minecraft:fortune` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/impaling.json` → `ENCHANT:minecraft:impaling` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/infinity.json` → `ENCHANT:minecraft:infinity` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/knockback.json` → `ENCHANT:minecraft:knockback` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/looting.json` → `ENCHANT:minecraft:looting` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/loyalty.json` → `ENCHANT:minecraft:loyalty` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/luck_of_the_sea.json` → `ENCHANT:minecraft:luck_of_the_sea` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/lure.json` → `ENCHANT:minecraft:lure` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/mending.json` → `ENCHANT:minecraft:mending` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/multishot.json` → `ENCHANT:minecraft:multishot` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/piercing.json` → `ENCHANT:minecraft:piercing` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/power.json` → `ENCHANT:minecraft:power` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/projectile_protection.json` → `ENCHANT:minecraft:projectile_protection` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/protection.json` → `ENCHANT:minecraft:protection` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/punch.json` → `ENCHANT:minecraft:punch` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/quick_charge.json` → `ENCHANT:minecraft:quick_charge` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/respiration.json` → `ENCHANT:minecraft:respiration` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/riptide.json` → `ENCHANT:minecraft:riptide` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/royalty.json` → `ENCHANT:goety:royalty` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/sharpness.json` → `ENCHANT:minecraft:sharpness` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/silk_touch.json` → `ENCHANT:minecraft:silk_touch` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/smite.json` → `ENCHANT:minecraft:smite` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/sweeping_edge.json` → `ENCHANT:minecraft:sweeping_edge` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/thorns.json` → `ENCHANT:minecraft:thorns` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/unbreaking.json` → `ENCHANT:minecraft:unbreaking` (`ENCHANT_RITUAL`, `magic`)
+- `enchant/vanishing_curse.json` → `ENCHANT:minecraft:vanishing_curse` (`ENCHANT_RITUAL`, `magic`)
+- `esoteric_tesseract.json` → `RITUAL_RESULT:goety:esoteric_tesseract` (`OTHER_RITUAL`, `forge`)
+- `feline_amulet.json` → `RITUAL_RESULT:goety:feline_amulet` (`OTHER_RITUAL`, `geoturgy`)
+- `forbidden_piece.json` → `RITUAL_RESULT:goety:forbidden_piece` (`OTHER_RITUAL`, `necroturgy`)
+- `frost_crown.json` → `RITUAL_RESULT:goety:frost_crown` (`OTHER_RITUAL`, `frost`)
+- `frost_robe.json` → `RITUAL_RESULT:goety:frost_robe` (`OTHER_RITUAL`, `frost`)
+- `frost_staff.json` → `RITUAL_RESULT:goety:frost_staff` (`OTHER_RITUAL`, `frost`)
+- `geo_staff.json` → `RITUAL_RESULT:goety:geo_staff` (`OTHER_RITUAL`, `geoturgy`)
+- `gold_ravager_armor.json` → `RITUAL_RESULT:goety:gold_ravager_armor` (`OTHER_RITUAL`, `forge`)
+- `gold_trampler_armor.json` → `RITUAL_RESULT:goety:gold_trampler_armor` (`OTHER_RITUAL`, `forge`)
+- `grand_robe.json` → `RITUAL_RESULT:goety:grand_robe` (`OTHER_RITUAL`, `magic`)
+- `grand_turban.json` → `RITUAL_RESULT:goety:grand_turban` (`OTHER_RITUAL`, `magic`)
+- `grave_glove.json` → `RITUAL_RESULT:goety:grave_glove` (`OTHER_RITUAL`, `necroturgy`)
+- `graverobber_shovel.json` → `RITUAL_RESULT:goety:graverobber_shovel` (`OTHER_RITUAL`, `forge`)
+- `great_hammer.json` → `RITUAL_RESULT:goety:great_hammer` (`OTHER_RITUAL`, `forge`)
+- `grim_infuser.json` → `RITUAL_RESULT:goety:grim_infuser` (`OTHER_RITUAL`, `forge`)
+- `haunted/haunted_armor_stand.json` → `RITUAL_RESULT:goety:haunted_armor_stand` (`OTHER_RITUAL`, `necroturgy`)
+- `haunted/haunted_broom.json` → `RITUAL_RESULT:goety:haunted_broom` (`OTHER_RITUAL`, `sky`)
+- `haunted/haunted_jug.json` → `RITUAL_RESULT:goety:haunted_jug` (`OTHER_RITUAL`, `animation`)
+- `haunted/haunted_mirror.json` → `RITUAL_RESULT:goety:haunted_mirror` (`OTHER_RITUAL`, `necroturgy`)
+- `heart_of_the_night.json` → `RITUAL_RESULT:goety:heart_of_the_night` (`OTHER_RITUAL`, `necroturgy`)
+- `hook_bell.json` → `RITUAL_RESULT:goety:hook_bell` (`OTHER_RITUAL`, `forge`)
+- `hunger_core.json` → `RITUAL_RESULT:goety:hunger_core` (`OTHER_RITUAL`, `animation`)
+- `hungry_dagger.json` → `RITUAL_RESULT:goety:hungry_dagger` (`OTHER_RITUAL`, `forge`)
+- `hunters_bow.json` → `RITUAL_RESULT:goety:hunters_bow` (`OTHER_RITUAL`, `forge`)
+- `infernal_tome.json` → `RITUAL_RESULT:goety:infernal_tome` (`OTHER_RITUAL`, `adept_nether`)
+- `iron_ravager_armor.json` → `RITUAL_RESULT:goety:iron_ravager_armor` (`OTHER_RITUAL`, `forge`)
+- `iron_trampler_armor.json` → `RITUAL_RESULT:goety:iron_trampler_armor` (`OTHER_RITUAL`, `forge`)
+- `locate/ancient_city.json` → `LOCATE:ancient_city` (`LOCATE_RITUAL`, `divination`)
+- `locate/blighted_shack.json` → `LOCATE:blighted_shack` (`LOCATE_RITUAL`, `divination`)
+- `locate/crypt.json` → `LOCATE:crypt` (`LOCATE_RITUAL`, `divination`)
+- `locate/dark_manor.json` → `LOCATE:dark_manor` (`LOCATE_RITUAL`, `divination`)
+- `locate/desert_pyramid.json` → `LOCATE:desert_pyramid` (`LOCATE_RITUAL`, `divination`)
+- `locate/end/end_city.json` → `LOCATE:end_city` (`LOCATE_RITUAL`, `divination`)
+- `locate/end/final_terminal.json` → `LOCATE:final_terminal` (`LOCATE_RITUAL`, `divination`)
+- `locate/graveyard.json` → `LOCATE:graveyard` (`LOCATE_RITUAL`, `divination`)
+- `locate/jungle_temple.json` → `LOCATE:jungle_temple` (`LOCATE_RITUAL`, `divination`)
+- `locate/nether/bastion_remnant.json` → `LOCATE:bastion_remnant` (`LOCATE_RITUAL`, `divination`)
+- `locate/nether/fortress.json` → `LOCATE:fortress` (`LOCATE_RITUAL`, `divination`)
+- `locate/ominous_blacksmith.json` → `LOCATE:ominous_blacksmith` (`LOCATE_RITUAL`, `divination`)
+- `locate/pillager_outpost.json` → `LOCATE:pillager_outpost` (`LOCATE_RITUAL`, `divination`)
+- `locate/ruined_monastery.json` → `LOCATE:ruined_monastery` (`LOCATE_RITUAL`, `divination`)
+- `locate/sorcerous_keep.json` → `LOCATE:sorcerous_keep` (`LOCATE_RITUAL`, `divination`)
+- `locate/spider_den.json` → `LOCATE:spider_den` (`LOCATE_RITUAL`, `divination`)
+- `locate/stronghold.json` → `LOCATE:stronghold` (`LOCATE_RITUAL`, `divination`)
+- `locate/wind_shrine.json` → `LOCATE:wind_shrine` (`LOCATE_RITUAL`, `divination`)
+- `locate/woodland_mansion.json` → `LOCATE:woodland_mansion` (`LOCATE_RITUAL`, `divination`)
+- `mystic_core.json` → `RITUAL_RESULT:goety:mystic_core` (`OTHER_RITUAL`, `magic`)
+- `nameless_cape.json` → `RITUAL_RESULT:goety:nameless_cape` (`OTHER_RITUAL`, `necroturgy`)
+- `nameless_crown.json` → `RITUAL_RESULT:goety:nameless_crown` (`OTHER_RITUAL`, `necroturgy`)
+- `nameless_staff.json` → `RITUAL_RESULT:goety:nameless_staff` (`OTHER_RITUAL`, `necroturgy`)
+- `necro_brazier.json` → `RITUAL_RESULT:goety:necro_brazier` (`OTHER_RITUAL`, `forge`)
+- `necro_cape.json` → `RITUAL_RESULT:goety:necro_cape` (`OTHER_RITUAL`, `necroturgy`)
+- `necro_crown.json` → `RITUAL_RESULT:goety:necro_crown` (`OTHER_RITUAL`, `necroturgy`)
+- `necro_staff.json` → `RITUAL_RESULT:goety:necro_staff` (`OTHER_RITUAL`, `necroturgy`)
+- `nether_crown.json` → `RITUAL_RESULT:goety:nether_crown` (`OTHER_RITUAL`, `expert_nether`)
+- `nether_robe.json` → `RITUAL_RESULT:goety:nether_robe` (`OTHER_RITUAL`, `expert_nether`)
+- `nether_staff.json` → `RITUAL_RESULT:goety:nether_staff` (`OTHER_RITUAL`, `expert_nether`)
+- `netherite_ravager_armor.json` → `RITUAL_RESULT:goety:netherite_ravager_armor` (`OTHER_RITUAL`, `forge`)
+- `netherite_trampler_armor.json` → `RITUAL_RESULT:goety:netherite_trampler_armor` (`OTHER_RITUAL`, `forge`)
+- `ominous_charm.json` → `RITUAL_RESULT:goety:ominous_charm` (`OTHER_RITUAL`, `geoturgy`)
+- `ominous_idol.json` → `RITUAL_RESULT:goety:ominous_idol` (`OTHER_RITUAL`, `forge`)
+- `ominous_pyre.json` → `RITUAL_RESULT:goety:ominous_pyre` (`OTHER_RITUAL`, `forge`)
+- `ominous_saddle.json` → `RITUAL_RESULT:goety:ominous_saddle` (`OTHER_RITUAL`, `forge`)
+- `ominous_staff.json` → `RITUAL_RESULT:goety:ominous_staff` (`OTHER_RITUAL`, `magic`)
+- `pendant_of_hunger.json` → `RITUAL_RESULT:goety:pendant_of_hunger` (`OTHER_RITUAL`, `geoturgy`)
+- `philosophers_mace.json` → `RITUAL_RESULT:goety:philosophers_mace` (`OTHER_RITUAL`, `expert_nether`)
+- `philosophers_stone.json` → `RITUAL_RESULT:goety:philosophers_stone` (`OTHER_RITUAL`, `magic`)
+- `rampaging_axe.json` → `RITUAL_RESULT:goety:rampaging_axe` (`OTHER_RITUAL`, `forge`)
+- `reinforced_redstone_block.json` → `RITUAL_RESULT:goety:reinforced_redstone_block` (`OTHER_RITUAL`, `forge`)
+- `resonance_crystal.json` → `RITUAL_RESULT:goety:resonance_crystal` (`OTHER_RITUAL`, `sky`)
+- `ring_of_force.json` → `RITUAL_RESULT:goety:ring_of_force` (`OTHER_RITUAL`, `magic`)
+- `ring_of_the_dragon.json` → `RITUAL_RESULT:goety:ring_of_the_dragon` (`OTHER_RITUAL`, `geoturgy`)
+- `ring_of_the_forge.json` → `RITUAL_RESULT:goety:ring_of_the_forge` (`OTHER_RITUAL`, `geoturgy`)
+- `ring_of_thirst.json` → `RITUAL_RESULT:goety:ring_of_thirst` (`OTHER_RITUAL`, `geoturgy`)
+- `ring_of_want.json` → `RITUAL_RESULT:goety:ring_of_want` (`OTHER_RITUAL`, `geoturgy`)
+- `sculk_grower.json` → `RITUAL_RESULT:goety:sculk_grower` (`OTHER_RITUAL`, `forge`)
+- `sea_amulet.json` → `RITUAL_RESULT:goety:sea_amulet` (`OTHER_RITUAL`, `deep`)
+- `shade/shade_gravestone.json` → `RITUAL_RESULT:goety:shade_gravestone` (`OTHER_RITUAL`, `necroturgy`)
+- `shade/shade_ossuary.json` → `RITUAL_RESULT:goety:shade_ossuary` (`OTHER_RITUAL`, `necroturgy`)
+- `shriek_obelisk.json` → `RITUAL_RESULT:goety:shriek_obelisk` (`OTHER_RITUAL`, `forge`)
+- `soul_absorber.json` → `RITUAL_RESULT:goety:soul_absorber` (`OTHER_RITUAL`, `forge`)
+- `soul_mender.json` → `RITUAL_RESULT:goety:soul_mender` (`OTHER_RITUAL`, `forge`)
+- `spiteful_belt.json` → `RITUAL_RESULT:goety:spiteful_belt` (`OTHER_RITUAL`, `geoturgy`)
+- `star_amulet.json` → `RITUAL_RESULT:goety:star_amulet` (`OTHER_RITUAL`, `geoturgy`)
+- `storm_crown.json` → `RITUAL_RESULT:goety:storm_crown` (`OTHER_RITUAL`, `storm`)
+- `storm_robe.json` → `RITUAL_RESULT:goety:storm_robe` (`OTHER_RITUAL`, `storm`)
+- `storm_staff.json` → `RITUAL_RESULT:goety:storm_staff` (`OTHER_RITUAL`, `storm`)
+- `summon_apostle.json` → `SUMMON:goety:summon_apostle` (`SUMMON_RITUAL`, `sabbath`)
+- `summon_storm.json` → `SUMMON:goety:storm_util` (`SUMMON_RITUAL`, `sky`)
+- `targeting_monocle.json` → `RITUAL_RESULT:goety:targeting_monocle` (`OTHER_RITUAL`, `geoturgy`)
+- `teleport_ritual.json` → `RITUAL_PATH:teleport_ritual.json` (`OTHER_RITUAL`, `magic`)
+- `terminus_scroll.json` → `RITUAL_RESULT:goety:terminus_scroll` (`OTHER_RITUAL`, `forge`)
+- `thrall/summon_bear_servant_thrall.json` → `SUMMON:goety:bear_servant` (`THRALL_SUMMON_RITUAL`, `overgrown`)
+- `thrall/summon_black_wolf_thrall.json` → `SUMMON:goety:black_wolf` (`THRALL_SUMMON_RITUAL`, `overgrown`)
+- `thrall/summon_blackguard_thrall.json` → `SUMMON:goety:blackguard_servant` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_blastling_thrall.json` → `SUMMON:goety:blastling_servant` (`THRALL_SUMMON_RITUAL`, `end`)
+- `thrall/summon_blaze_servant_thrall.json` → `SUMMON:goety:blaze_servant` (`THRALL_SUMMON_RITUAL`, `expert_nether`)
+- `thrall/summon_bound_cryologer.json` → `SUMMON:goety:bound_cryologer` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_bound_evoker.json` → `SUMMON:goety:bound_evoker` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_bound_geomancer.json` → `SUMMON:goety:bound_geomancer` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_bound_iceologer.json` → `SUMMON:goety:bound_iceologer` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_bound_storm_caster.json` → `SUMMON:goety:bound_storm_caster` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_bound_wind_caller.json` → `SUMMON:goety:bound_wind_caller` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_carrion_fly_thrall.json` → `SUMMON:goety:carrion_fly` (`THRALL_SUMMON_RITUAL`, `overgrown`)
+- `thrall/summon_ghast_servant_thrall.json` → `SUMMON:goety:ghast_servant` (`THRALL_SUMMON_RITUAL`, `adept_nether`)
+- `thrall/summon_gnasher_thrall.json` → `SUMMON:goety:gnasher` (`THRALL_SUMMON_RITUAL`, `deep`)
+- `thrall/summon_guardian_servant_thrall.json` → `SUMMON:goety:guardian_servant` (`THRALL_SUMMON_RITUAL`, `deep`)
+- `thrall/summon_hellhound_thrall.json` → `SUMMON:goety:hellhound` (`THRALL_SUMMON_RITUAL`, `adept_nether`)
+- `thrall/summon_hoglin_servant_thrall.json` → `SUMMON:goety:hoglin_servant` (`THRALL_SUMMON_RITUAL`, `adept_nether`)
+- `thrall/summon_ministrosity_thrall.json` → `SUMMON:goety:stone_ministrosity` (`THRALL_SUMMON_RITUAL`, `geoturgy`)
+- `thrall/summon_phantom_servant_thrall.json` → `SUMMON:goety:phantom_servant` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_reaper_thrall.json` → `SUMMON:goety:reaper_servant` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_redstone_ministrosity_thrall.json` → `SUMMON:goety:redstone_ministrosity` (`THRALL_SUMMON_RITUAL`, `geoturgy`)
+- `thrall/summon_skeleton_thrall.json` → `SUMMON:goety:skeleton_servant` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_skeleton_wolf_thrall.json` → `SUMMON:goety:skeleton_wolf` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_snapper_thrall.json` → `SUMMON:goety:snapper` (`THRALL_SUMMON_RITUAL`, `deep`)
+- `thrall/summon_snareling_thrall.json` → `SUMMON:goety:snareling_servant` (`THRALL_SUMMON_RITUAL`, `end`)
+- `thrall/summon_sprite_thrall.json` → `SUMMON:goety:sprite` (`THRALL_SUMMON_RITUAL`, `storm`)
+- `thrall/summon_stormhound_thrall.json` → `SUMMON:goety:stormhound` (`THRALL_SUMMON_RITUAL`, `storm`)
+- `thrall/summon_twilight_goat_thrall.json` → `SUMMON:goety:twilight_goat` (`THRALL_SUMMON_RITUAL`, `sky`)
+- `thrall/summon_vanguard_thrall.json` → `SUMMON:goety:vanguard_servant` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_watchling_thrall.json` → `SUMMON:goety:watchling_servant` (`THRALL_SUMMON_RITUAL`, `end`)
+- `thrall/summon_winter_wolf_thrall.json` → `SUMMON:goety:winter_wolf` (`THRALL_SUMMON_RITUAL`, `frost`)
+- `thrall/summon_wither_skeleton_thrall.json` → `SUMMON:goety:wither_skeleton_servant` (`THRALL_SUMMON_RITUAL`, `expert_nether`)
+- `thrall/summon_wraith_thrall.json` → `SUMMON:goety:wraith_servant` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrall/summon_zombie_thrall.json` → `SUMMON:goety:zombie_servant` (`THRALL_SUMMON_RITUAL`, `necroturgy`)
+- `thrash_glove.json` → `RITUAL_RESULT:goety:thrash_glove` (`OTHER_RITUAL`, `forge`)
+- `undeath_potion.json` → `RITUAL_RESULT:goety:undeath_potion` (`OTHER_RITUAL`, `necroturgy`)
+- `unholy_fabric.json` → `RITUAL_RESULT:goety:unholy_fabric` (`OTHER_RITUAL`, `expert_nether`)
+- `unholy_hat.json` → `RITUAL_RESULT:goety:unholy_hat` (`OTHER_RITUAL`, `expert_nether`)
+- `unholy_robe.json` → `RITUAL_RESULT:goety:unholy_robe` (`OTHER_RITUAL`, `expert_nether`)
+- `void_crown.json` → `RITUAL_RESULT:goety:void_crown` (`OTHER_RITUAL`, `end`)
+- `void_robe.json` → `RITUAL_RESULT:goety:void_robe` (`OTHER_RITUAL`, `end`)
+- `void_staff.json` → `RITUAL_RESULT:goety:void_staff` (`OTHER_RITUAL`, `end`)
+- `warg_cursed_armor.json` → `RITUAL_RESULT:goety:warg_cursed_armor` (`OTHER_RITUAL`, `forge`)
+- `warg_dark_armor.json` → `RITUAL_RESULT:goety:warg_dark_armor` (`OTHER_RITUAL`, `forge`)
+- `warlock_robe.json` → `RITUAL_RESULT:goety:warlock_robe` (`OTHER_RITUAL`, `adept_nether`)
+- `wayfarers_belt.json` → `RITUAL_RESULT:goety:wayfarers_belt` (`OTHER_RITUAL`, `sky`)
+- `wild_crown.json` → `RITUAL_RESULT:goety:wild_crown` (`OTHER_RITUAL`, `overgrown`)
+- `wild_robe.json` → `RITUAL_RESULT:goety:wild_robe` (`OTHER_RITUAL`, `overgrown`)
+- `wild_staff.json` → `RITUAL_RESULT:goety:wild_staff` (`OTHER_RITUAL`, `overgrown`)
+- `wind_core.json` → `RITUAL_RESULT:goety:wind_core` (`OTHER_RITUAL`, `sky`)
+- `wind_crown.json` → `RITUAL_RESULT:goety:wind_crown` (`OTHER_RITUAL`, `sky`)
+- `wind_robe.json` → `RITUAL_RESULT:goety:wind_robe` (`OTHER_RITUAL`, `sky`)
+- `wind_staff.json` → `RITUAL_RESULT:goety:wind_staff` (`OTHER_RITUAL`, `sky`)
+- `witch_robe.json` → `RITUAL_RESULT:goety:witch_robe` (`OTHER_RITUAL`, `storm`)
+- `wolf_totem.json` → `RITUAL_RESULT:goety:wolf_totem` (`OTHER_RITUAL`, `overgrown`)
+
+## Semantic arithmetic
+
+- active Focus actions: **123**
+- available distinct non-Focus rituals: **238**
+- Goety candidate subtotal: `123 + 238 = 361`
+- canonical baseline entering Phase 2BH: **888**
+- candidate strict minimum after promotion: `888 + 361 = 1249`
+
+These values remain **candidate** until the durable PR is merged and exact post-merge CI evidence is recorded. Runtime balance, Soul Energy settlement, research gates, servant lifecycle, Lichdom, supported adapter/API seams and complete modpack runtime QA remain separate fail-closed gates.
+
+## Evidence
+
+- `34670150370 / 10290083272` — exact identity/Focus registry
+- `34670458172 / 10290222369` — Focus reachability/acquisition
+- `34670556329 / 10290527131` — ritual identity inventory
+- `34670758163 / 10289884505` — ritual semantic deduplication
+
+Discarded harness-failure runs `34670348040` and `34670400350` are not evidence.

@@ -1,6 +1,6 @@
 # Goety 3.1.4 — Focus catalog
 
-Status: `PUBLIC 1.21.1 SOURCE REGISTRY 123 ACTIVE FOCUS ITEMS / LEGACY WIKI SUBSET 110 NAMES / EXACT 3.1.4 JAR-SOURCE RECONCILIATION PENDING`
+Status: `PHASE 2BH CANDIDATE / EXACT 3.1.4 JAR 123 ACTIVE FOCUS ACTIONS / LEGACY WIKI SUBSET 110 NAMES / RUNTIME NUMERICS QA PENDING`
 
 ## Evidence boundary
 
@@ -18,6 +18,10 @@ Installed authority remains:
 - NeoForge 1.21.1.
 
 The public source checkpoints are not exact 3.1.4 source authority. Exact 3.1.4 registry equivalence, per-Focus reachability, costs, cooldowns, damage, duration, range and settlement hooks remain `UNVERIFIED FOR EXACT 3.1.4` unless separately evidenced.
+
+## Exact 3.1.4 closure candidate
+
+Exact artifact evidence closes **123 active/acquirable Focus actions**; `empty_focus` is excluded as proxy. All 123 have same-named base acquisition recipes (80 ritual + 43 shaped), with no mod-loaded condition. Phase 2BH therefore proposes **+123 Focus actions**. See `EXACT-3.1.4-SEMANTIC-INVENTORY.md`.
 
 ## Source registry checkpoint
 
@@ -253,16 +257,7 @@ Goety Focuses are provider-owned spell/casting units used through compatible Wan
 
 ## Semantic-count rule
 
-The source registry is stronger evidence than the stale 110-name Wiki list for the observed public source line. Direct `MagicFocus(new ...Spell())` construction and provider-native Focus recipes also prove that a broad subset is genuine casting/acquisition content rather than a purely editorial inventory. The evidence still does not satisfy the strict semantic inclusion rule for installed 3.1.4.
-
-Reasons:
-
-- exact source-to-installed-JAR equivalence is not established;
-- the public source recipe surface has not yet been reconciled against all 123 registrations or the exact 3.1.4 artifact;
-- object-level deduplication against aliases/proxies/other provider surfaces has not been closed for the 13 newly exposed identities;
-- Goety ritual **types** are categories and are not blindly counted as ritual identities.
-
-Therefore this reconciliation adds **0** to the strict semantic total. The global reconstructible minimum remains **797**.
+Phase 2BH exact-artifact evidence satisfies strict inclusion for **123 active player-acquirable provider Focus actions** as candidate `COUNTED_EXACT`. `empty_focus` and alternate acquisition recipes add zero identities. Numerical mechanics and stable integration APIs remain separate fail-closed gates.
 
 ## Semantic overlap constraints
 

@@ -42,6 +42,10 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
 
+## Phase 2BH candidate — Goety 3.1.4
+
+Canonical baseline entering this PR remains **888 semantic magic objects / 56 of 100 provider components**. Exact hash-matched 3.1.4 evidence closes **123 active Focus actions + 238 available distinct non-Focus ritual actions = +361**. Phase 2BH proposes candidate strict minimum **1249** and candidate component **#57 / 57 of 100**. These values do not become canonical until durable merge + exact post-merge CI. Runtime/API/balance QA remains separate.
+
 ## Phase 2BG canonical — Leyline Spellbooks 1.0.3
 
 Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spell identities**. No Leylines-specific spell lock or conditional registration gate is present, and exact Iron's 3.16.3 school/default/scroll evidence corroborates ordinary host reachability; deployed generic host config remains separate runtime QA rather than a reason to reinterpret the exact registry. Leylines is therefore `COUNTED_EXACT` with **+14**.
@@ -200,7 +204,6 @@ These rows are deliberately **not additive to 888** until their exact/current in
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
-| [Goety](../providers/goety/README.md) 3.1.4 | public 1.21.1 source line registers **123 active Focus items** in `ModItems.java`, stable at audited 3.1.0/3.1.1 checkpoints; the legacy Wiki 110-name list omits 13 of those registry identities | `OPEN CURRENT REGISTRY / EXACT 3.1.4 JAR-SOURCE RECONCILIATION PENDING` | exact installed 3.1.4 registry equivalence, player-facing semantic reachability/object-level deduplication and discrete ritual identities remain pending; item registration alone is not blindly counted as one semantic action |
 | [Somake Spells](../providers/somake-spells/README.md) 1.0.8-fix | exact hash-matched artifact closes **67 current spell registrations** under the physical optional-provider set; 61 unconditional + 3 `mowziesmobs`-gated + 3 `iss_magicfromtheeast`-gated, with both gates physically satisfied | `CONDITIONAL / EXACT REGISTRY CLOSED / +0` | deployed `somakespells/general/common.toml` is unavailable and complete object-level survival acquisition/reachability remains unclosed; code default `enableSpellLockSystem=false` is not substituted for the actual pack config |
 | [Gaze](../providers/gaze/README.md) 1.1.7.1 | publisher states **2 Geas** plus a new set of Rites | `LOWER_BOUND / OPEN` | rite registry and complete IDs/names are not published; exact source/JAR extraction pending |
 | [Ignis Soulfires: Spellbooks](../providers/ignis-soulfires-spellbooks/README.md) 1.1.0 | exact installed artifact and exact official CurseForge release are pinned (`project 1572171`, file `8620663`); publisher explicitly describes a Souled Ignitium Wizard Armor compatibility scope, while exact source/registry remains unavailable | `OPEN` | no safe 1.1.0 semantic registry inventory; publisher armor scope does not prove absence of spell/ritual registrations |
