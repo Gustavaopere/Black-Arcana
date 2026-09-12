@@ -1,0 +1,140 @@
+name: Goety 3.1.4 Focus Reachability Audit
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-goety-3.1.4
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Verify exact Focus action and acquisition surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_SHA1='a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          URL='https://www.cursemaven.com/curse/maven/goety-586095/8689429/goety-586095-8689429.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 "$URL" -o goety.jar
+          ACTUAL_SHA1="$(sha1sum goety.jar | awk '{print $1}')"
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          for cls in \
+            com.Polarice3.Goety.common.items.ItemBase \
+            com.Polarice3.Goety.common.items.magic.MagicFocus \
+            com.Polarice3.Goety.common.items.magic.CommandFocus \
+            com.Polarice3.Goety.common.items.magic.OrderFocus \
+            com.Polarice3.Goety.common.items.magic.CallFocus \
+            com.Polarice3.Goety.common.items.magic.TroopFocus \
+            com.Polarice3.Goety.common.items.magic.RecallFocus; do
+            echo "--- $cls ---" >> audit/signatures.txt
+            javap -classpath goety.jar -p "$cls" >> audit/signatures.txt 2>&1 || true
+          done
+
+          javap -classpath goety.jar -p -c com.Polarice3.Goety.common.items.ModItems > audit/moditems-bytecode.txt
+
+          python3 - <<'PY'
+          import json, re, zipfile
+          from pathlib import Path, PurePosixPath
+
+          jar = zipfile.ZipFile('goety.jar')
+          names = set(jar.namelist())
+          bc = Path('audit/moditems-bytecode.txt').read_text(errors='replace')
+          signatures = Path('audit/signatures.txt').read_text(errors='replace')
+
+          ids = sorted(set(re.findall(r'// String ([a-z0-9_]+_focus)\s*$', bc, re.M)))
+          active = [x for x in ids if x != 'empty_focus']
+          exact_recipe_paths = {PurePosixPath(p).stem: p for p in names if p.startswith('data/goety/recipe/focus/') and p.endswith('.json')}
+          same_named = sorted(x for x in active if x in exact_recipe_paths)
+          missing = sorted(set(active) - set(same_named))
+          extra = sorted(set(exact_recipe_paths) - set(ids))
+
+          recipe_rows = []
+          conditioned = []
+          mismatched_result = []
+          type_counts = {}
+          for focus_id in same_named:
+              p = exact_recipe_paths[focus_id]
+              obj = json.loads(jar.read(p).decode('utf-8'))
+              typ = obj.get('type', '<none>') if isinstance(obj, dict) else '<none>'
+              type_counts[typ] = type_counts.get(typ, 0) + 1
+
+              def walk(v, key=''):
+                  if isinstance(v, dict):
+                      for k, vv in v.items():
+                          yield from walk(vv, k)
+                  elif isinstance(v, list):
+                      for vv in v:
+                          yield from walk(vv, key)
+                  elif isinstance(v, str):
+                      yield key, v
+
+              pairs = list(walk(obj))
+              condition_refs = sorted(set(v for k, v in pairs if 'condition' in k.lower() or 'mod_loaded' in v.lower()))
+              if condition_refs:
+                  conditioned.append((focus_id, condition_refs))
+
+              result_refs = sorted(set(v for k, v in pairs if k.lower() in ('result','id','item') and v.startswith('goety:') and v.endswith('_focus')))
+              if result_refs and f'goety:{focus_id}' not in result_refs:
+                  mismatched_result.append((focus_id, result_refs))
+              recipe_rows.append((focus_id, typ, result_refs, condition_refs))
+
+          # Exact current type signatures only: class declarations/constructors/method signatures, no bytecode bodies.
+          compact_sig = []
+          for line in signatures.splitlines():
+              s=line.strip()
+              if s.startswith('public class ') or s.startswith('public abstract class ') or s.startswith('public interface ') or s.startswith('class '):
+                  compact_sig.append(s)
+              elif re.search(r'\b(MagicFocus|CommandFocus|OrderFocus|CallFocus|TroopFocus|RecallFocus|ItemBase)\(', s):
+                  compact_sig.append(s)
+              elif ('Spell' in s or 'spell' in s.lower()) and s.endswith(';'):
+                  compact_sig.append(s)
+
+          out = Path('audit/report.txt')
+          with out.open('w', encoding='utf-8') as f:
+              f.write('Goety 3.1.4 targeted Focus reachability audit\n')
+              f.write(f'expected_sha1={EXPECTED_SHA1}\nactual_sha1={__import__("hashlib").sha1(Path("goety.jar").read_bytes()).hexdigest()}\n')
+              f.write(f'all_focus_suffix_ids={len(ids)}\n')
+              f.write(f'active_focus_ids_excluding_empty={len(active)}\n')
+              f.write(f'same_named_focus_recipe_count={len(same_named)}\n')
+              f.write(f'missing_same_named_recipe_count={len(missing)}\n')
+              for x in missing: f.write(f'missing_recipe={x}\n')
+              f.write(f'extra_recipe_variant_count={len(extra)}\n')
+              for x in extra: f.write(f'extra_recipe_variant={x}\n')
+              f.write(f'conditioned_same_named_recipe_count={len(conditioned)}\n')
+              for x, refs in conditioned: f.write(f'conditioned_recipe={x}|refs={";".join(refs)}\n')
+              f.write(f'mismatched_focus_result_count={len(mismatched_result)}\n')
+              for x, refs in mismatched_result: f.write(f'mismatched_result={x}|refs={";".join(refs)}\n')
+              f.write('\n== same-named recipe type counts ==\n')
+              for typ, count in sorted(type_counts.items()): f.write(f'{typ}={count}\n')
+              f.write('\n== exact current Focus/item type signatures ==\n')
+              for line in compact_sig: f.write(line+'\n')
+              f.write('\n== per-Focus acquisition classification ==\n')
+              for focus_id, typ, results, conds in recipe_rows:
+                  f.write(f'{focus_id}|type={typ}|result_refs={";".join(results) or "<not-extracted>"}|condition_refs={";".join(conds) or "<none>"}\n')
+              f.write('\nBOUNDARY: exact identity/reachability facts only. No recipe ingredient lists, effect/cast bytecode, balance values, prose localization text, assets, models or sounds retained.\n')
+          PY
+
+          cat audit/report.txt
+
+      - name: Upload text-only audit evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: goety-3.1.4-focus-reachability-audit
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
