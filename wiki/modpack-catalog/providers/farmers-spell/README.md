@@ -4,12 +4,12 @@ Status: `EXACT SOURCE-PINNED 1.0.5.1 CATALOG / 6 REGISTERED SPELL IDENTITIES / H
 
 ## Installed authority
 
-- Current JAR: `Farmer's Spell 'n Spellbooks-1.0.5.1-1.21.1.jar`
+- Current JAR: `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar`
 - Mod id: `farmers_spell`
 - Runtime version: `1.0.5.1-1.21.1`
 - Minecraft / loader: `1.21.1` / NeoForge
-- Physical SHA-1: `f77355e042172e7af3a2bcebbf5d0f87eacb6501`
-- Physical SHA-256: `a7b9d42d7e4b04ed98778f770ee3a7ecbcf4bd7a73bd3a800838be2af6ae4b87`
+- Physical SHA-1: `f77355e029af39bbaba3854e10cc087a608351ff`
+- Physical CurseForge hash: `810347191`
 - License: `All Rights Reserved`
 - Provider class: `MIXED`
 - Required providers: Iron's Spells 'n Spellbooks, Farmer's Delight and GeckoLib
@@ -65,19 +65,20 @@ A future Black Arcana integration must use a verified provider/host-native bound
 Catalog/source identity is closed, but current-host runtime compatibility is not.
 
 - source build: NeoForge `21.1.238`; physical pack: `21.1.248`;
-- source build: GeckoLib `4.9.2`; physical pack: `4.7.6`;
+- source build: Farmer's Delight `1.3.2`; physical pack: `1.3.4`;
+- source build and physical pack: GeckoLib `4.9.2`;
 - provider has seven required mixins, including three client/render mixins;
-- physical Iron's package is `3.16.3.6`; the public host source used for Scroll Forge contract interpretation is the 3.16.3 source line, not a claimed cryptographic `.6` source match;
+- physical Iron's is `3.16.3`, matching the public source line used for narrow SchoolType/Scroll Forge interpretation by version label; no cryptographic source/binary equivalence is claimed;
 - client boot, dedicated-server boot, mixin application, provider progression and representative execution of all six spells remain direct QA work.
 
-Dependency ranges being satisfied are not a runtime PASS.
+Dependency ranges or version-label equality are not a runtime PASS.
 
 ## Semantic disposition
 
-Phase 2BO candidate semantic delta: **+6**.
+Phase 2BO candidate semantic delta: **+6 `COUNTED_SOURCE_PINNED`**.
 
 The Gluttony school is taxonomy/support for the six actions and is not counted as a seventh object under the current semantic metric. The canonical project total remains **1316 / 62 of 100** until this evidence tranche is merged and the shared ledgers are reconciled; candidate post-promotion state is **1322 / 63 of 100**.
 
 ## Clean-room boundary
 
-The upstream is All Rights Reserved. Black Arcana retains only factual identities, hashes, registry/count/type relationships, narrow acquisition relationships and interoperability risk facts. No upstream implementation bodies, assets, localization prose, models, sounds or creative text are copied or adapted.
+The upstream is All Rights Reserved. Black Arcana retains only factual identities, physical SHA-1/CurseForge hash, registry/count/type relationships, narrow acquisition relationships and interoperability risk facts. No upstream implementation bodies, assets, localization prose, models, sounds or creative text are copied or adapted.
