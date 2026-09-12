@@ -1,0 +1,132 @@
+name: Audit Ignis Soulfires Spellbooks 1.1.0 exact artifact
+
+on:
+  push:
+    branches:
+      - audit/ignis-soulfires-spellbooks-1.1.0-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Materialize exact publisher artifact and verify physical hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit-out
+          target="$RUNNER_TEMP/ignissoulfires_spellbooks-1.1.0.jar"
+          urls=(
+            'https://www.curseforge.com/api/v1/mods/1572171/files/8620663/download'
+            'https://edge.forgecdn.net/files/8620/663/ignissoulfires_spellbooks-1.1.0.jar'
+            'https://mediafilez.forgecdn.net/files/8620/663/ignissoulfires_spellbooks-1.1.0.jar'
+          )
+          ok=0
+          for url in "${urls[@]}"; do
+            rm -f "$target"
+            if curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 120 "$url" -o "$target"; then
+              got="$(sha1sum "$target" | awk '{print $1}')"
+              if [ "$got" = 'dcde77db35b6de3562b4e6de0025746eaf68f119' ]; then
+                printf 'publisher_url=%s\n' "$url" > audit-out/identity.txt
+                ok=1
+                break
+              fi
+            fi
+          done
+          test "$ok" -eq 1
+          printf 'filename=ignissoulfires_spellbooks-1.1.0.jar\n' >> audit-out/identity.txt
+          printf 'physical_sha1=dcde77db35b6de3562b4e6de0025746eaf68f119\n' >> audit-out/identity.txt
+          printf 'audit_sha1=%s\n' "$(sha1sum "$target" | awk '{print $1}')" >> audit-out/identity.txt
+          printf 'audit_sha256=%s\n' "$(sha256sum "$target" | awk '{print $1}')" >> audit-out/identity.txt
+          printf 'size_bytes=%s\n' "$(stat -c '%s' "$target")" >> audit-out/identity.txt
+          unzip -t "$target" >/dev/null
+
+      - name: Extract factual archive and registry evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar="$RUNNER_TEMP/ignissoulfires_spellbooks-1.1.0.jar"
+          mkdir -p audit-out/javap
+          jar tf "$jar" | LC_ALL=C sort > audit-out/archive-paths.txt
+
+          python - <<'PY'
+          from pathlib import Path
+          import re, zipfile
+
+          jar = Path(__import__('os').environ['RUNNER_TEMP']) / 'ignissoulfires_spellbooks-1.1.0.jar'
+          out = Path('audit-out')
+          with zipfile.ZipFile(jar) as z:
+              names = sorted(z.namelist())
+              classes = [n for n in names if n.endswith('.class') and not n.startswith('META-INF/versions/')]
+              own = [n for n in classes if 'ignis' in n.lower() or 'spellbook' in n.lower()]
+              semantic_paths = [n for n in names if any(k in n.lower() for k in ('spell','ritual','rite','ability','power'))]
+              data_paths = [n for n in names if n.startswith('data/')]
+              assets = [n for n in names if n.startswith('assets/')]
+              metadata = []
+              for n in ('META-INF/neoforge.mods.toml','META-INF/mods.toml','META-INF/MANIFEST.MF'):
+                  if n in names:
+                      text = z.read(n).decode('utf-8','replace')
+                      # retain metadata text only; no binary/assets
+                      metadata.append(f'--- {n} ---\n{text}\n')
+              (out/'metadata.txt').write_text('\n'.join(metadata), encoding='utf-8')
+              (out/'class-paths.txt').write_text('\n'.join(classes)+'\n', encoding='utf-8')
+              (out/'semantic-name-paths.txt').write_text('\n'.join(semantic_paths)+'\n', encoding='utf-8')
+              (out/'data-paths.txt').write_text('\n'.join(data_paths)+'\n', encoding='utf-8')
+              summary = [
+                  f'class_count={len(classes)}',
+                  f'own_candidate_class_count={len(own)}',
+                  f'semantic_name_path_count={len(semantic_paths)}',
+                  f'data_path_count={len(data_paths)}',
+                  f'asset_path_count={len(assets)}',
+              ]
+              # Constant-pool factual indicators only. Do not retain implementation bodies.
+              indicators = {
+                  'AbstractSpell': b'AbstractSpell',
+                  'registerSpell': b'registerSpell',
+                  'SpellRegistry': b'SpellRegistry',
+                  'DeferredRegister': b'DeferredRegister',
+                  'Ritual': b'Ritual',
+                  'Rite': b'Rite',
+                  'Ability': b'Ability',
+              }
+              hits = {k: [] for k in indicators}
+              for n in classes:
+                  raw = z.read(n)
+                  for k, needle in indicators.items():
+                      if needle in raw:
+                          hits[k].append(n)
+              for k in indicators:
+                  summary.append(f'{k}_class_hits={len(hits[k])}')
+                  (out/f'indicator-{k}.txt').write_text('\n'.join(hits[k])+'\n', encoding='utf-8')
+              (out/'summary.txt').write_text('\n'.join(summary)+'\n', encoding='utf-8')
+          PY
+
+          # javap signatures only (no -c / no implementation bodies)
+          while IFS= read -r path; do
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            safe="${cls//./_}"
+            javap -classpath "$jar" -p -s "$cls" > "audit-out/javap/$safe.txt" 2>/dev/null || true
+          done < audit-out/class-paths.txt
+
+          grep -R -n -E 'extends .*AbstractSpell|AbstractSpell|registerSpell|SpellRegistry|DeferredRegister|Ritual|Rite|Ability' audit-out/javap > audit-out/javap-semantic-hits.txt || true
+
+      - name: Publish text-only clean-room evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ignis-soulfires-spellbooks-1.1.0-exact-artifact-evidence
+          path: audit-out
+          retention-days: 7
+          if-no-files-found: error
