@@ -96,6 +96,12 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes 'n Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
 
+## Checkpoint Somake Spells — Phase 2BF
+
+The exact physical `somakespells-1.0.8-1.21.1-fix.jar` / SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7` was materialized from File ID `8417850` and hash-matched. The provider owns **67 exact current spell registrations** under the present optional-provider set: 61 unconditional, three gated by physical `mowziesmobs`, and three gated by physical `iss_magicfromtheeast`.
+
+This does **not** add to the strict semantic numerator. Somake's `enableSpellLockSystem` is a `COMMON` config at `somakespells/general/common.toml`, code-default `false`; the deployed config is not available in authoritative project material, and full per-object survival acquisition/reachability is not closed. The canonical totals therefore remain **874 semantic objects** and **55/100 structural components**. Runtime mechanics, Aqua/T.O coexistence and any Black Arcana adapter remain fail-closed.
+
 ## Checkpoint Cataclysm: Spellbooks — Phase 2BE
 
 O artefato físico `cataclysm_spellbooks-1.1.13-1.21.jar` / SHA-1 `4af8348cc77bbff2ab7057c1fac26a5ab0a5b6a2` foi materializado pelo File ID exato `8792628` em auditoria isolada e bateu criptograficamente com a modlist. O registry exato fecha **59 `AbstractSpell` registrations `COUNTED_EXACT`**. Por implementation package group: 7 Abyssal, 4 Ender, 1 Evocation, 5 Holy, 11 Fire, 5 Ice, 4 Nature e 22 Technomancy; essa distribuição de packages não é promovida automaticamente a uma tabela de escolas/runtime mechanics.

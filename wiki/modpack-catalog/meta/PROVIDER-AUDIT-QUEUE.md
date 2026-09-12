@@ -8,7 +8,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica após Phase 2BE / PR #189: `cce7f51794e4e65b0d97511eb55f710afc6e02f0`; HEAD auditado `e787699d25b283b8040cd179f605143e8ee396de` CI #2483 GREEN; post-merge CI #2484 attempt 2 GREEN após attempt 1 falhar somente por timeout externo no download da API do Iron's;
+- `main` canônica de referência para Phase 2BF: `41e96385c7ef5903b2595a4b027c9e2d053f09d6`; Phase 2BE foi fechada por PR #189/#190, com HEAD de catálogo `e787699d25b283b8040cd179f605143e8ee396de` CI #2483 GREEN, merge de catálogo `cce7f51794e4e65b0d97511eb55f710afc6e02f0` CI #2484 attempt 2 GREEN, e reconciliação final `main@41e96385c7ef5903b2595a4b027c9e2d053f09d6` CI #2486 GREEN;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
@@ -28,6 +28,7 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - delta semântico Gaze 1.1.7.1: **+0**;
 - delta semântico Alshanex 4.0.3: **+18**;
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
+- delta semântico Somake 1.0.8-fix Phase 2BF: **+0** (`67 exact registry`, reachability/config efetivo ainda `CONDITIONAL`);
 - mínimo estrito global canônico: **874**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
@@ -45,6 +46,25 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - cobertura canônica de componentes após Phase 2BE: **55/100 = 55%**; componente #55 fechado pelo PR #189 com CI pré/pós-merge verde no SHA exato.
 
 O valor 55/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BF — Somake Spells 1.0.8-fix — exact registry, sem novo componente
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `somakespells` | `somakespells-1.0.8-1.21.1-fix.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT HASH-MATCHED ARTIFACT AUDIT / 67 CURRENT REGISTERED SPELL IDENTITIES UNDER PHYSICAL OPTIONAL SET / EFFECTIVE COMMON CONFIG + SURVIVAL REACHABILITY CONDITIONAL / +0 STRICT SEMANTIC DELTA / 55/100 UNCHANGED |
+
+### Evidence boundary
+
+- physical/audit SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`;
+- CurseForge project/file `1461634 / 8417850`;
+- isolated non-merge evidence PR #191; initial exact-registry run `34659320633`, reachability run `34664093646`, targeted gate run `34664411845`;
+- exact registry: 67 typed fields, 67 unique registration IDs, 67 provider `*Spell` classes;
+- 61 unconditional registrations; three require `mowziesmobs`; three require `iss_magicfromtheeast`; both mod IDs are in the physical pack, so all 67 registry identities are current for this provider set;
+- `enableSpellLockSystem` is COMMON at `somakespells/general/common.toml`, code-default `false`; actual deployed value is not available in authoritative materials;
+- complete per-object survival acquisition/reachability, T.O Aqua runtime ownership and supported adapter/API seams remain open/fail-closed;
+- ARR clean-room: no implementation/source reconstruction/assets/text are copied or adapted.
+
+This closes the old `over 50 / registry unknown` blocker but does not satisfy the ledger's player-reachability gate. Somake is not component #56 and contributes +0 until the effective config and survival path are closed strongly enough.
 
 ## Phase 2BE — Cataclysm: Spellbooks 1.1.13 — componente #55 canônico
 

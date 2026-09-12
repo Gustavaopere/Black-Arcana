@@ -23,18 +23,36 @@ O changelog do File ID 8417850 é estreito: corrige as Elemental Charges de **Sy
 
 Não há base para tratar o fix como novo registry snapshot publicado. Ele é a continuidade da release 1.0.8 base (File ID 8399369), cuja documentação fornece ritual/progression/spell changes.
 
+## Phase 2BF exact-artifact facts
+
+The exact File ID `8417850` was materialized from Curse Maven and required to match the physical SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`. Read-only clean-room inspection establishes:
+
+- `ModSpells` owns a `DeferredRegister<AbstractSpell>`;
+- 67 typed `DeferredHolder<AbstractSpell, ...>` fields;
+- 67 unique spell `register(String, Supplier)` calls / IDs;
+- 67 standalone provider `*Spell` classes;
+- 61 registrations are unconditional;
+- `blessed_connection`, `guardian_connection`, `cursed_connection` are gated by `ModList.isLoaded("mowziesmobs")`;
+- `mirror_strike`, `spirit_empowerment`, `symmetry_empowerment` are gated by `MagicFromTheEastCompat.isLoaded()`, which exactly calls `ModList.isLoaded("iss_magicfromtheeast")`;
+- both optional mod IDs are present in the current physical pack, therefore 67/67 registry identities are active for this provider set.
+
+The same exact artifact registers `Config.SPEC` as `ModConfig.Type.COMMON` at `somakespells/general/common.toml`. `enableSpellLockSystem` has code default `false`; when disabled, `PlayerSpellMastery.getUnlockedLevel()` returns `100`. If enabled, Somake's pre-cast path can cancel spell levels above provider mastery, and `/somake` command registration is gated by the same config with command permission level 2. The actual deployed COMMON config file/value is not available in the repository or supplied project files.
+
+Therefore exact registry membership is closed, while current survival usability/acquisition remains `CONDITIONAL` and is not promoted into the strict semantic numerator.
+
 ## Source / clean-room
 
 Nenhum repositório-fonte público controlado pelo publisher e pinável à build 1.0.8-fix foi localizado nas buscas executadas.
 
-Por ser `All Rights Reserved`:
+Por ser `All Rights Reserved`, a inspeção binária é estritamente clean-room e factual:
 
-- nenhum bytecode é decompilado para copiar implementação;
-- nenhuma classe/método/signature é inferida;
-- nenhuma textura/modelo/som/texto é reutilizado;
-- changelogs e descrição pública são usados somente como fatos comportamentais/editoriais para catálogo e deduplicação.
+- o artefato exato foi hash-matched antes da inspeção;
+- são retidos somente metadata/hash, paths/IDs de recursos e registry, signatures de classe/membro e fatos estreitos de control-flow/config necessários para interoperabilidade e catálogo;
+- nenhuma implementação é copiada, reconstruída ou adaptada;
+- nenhuma textura/modelo/som/texto upstream é reutilizado;
+- changelogs/descrição pública continuam sendo evidência editorial/comportamental, não licença de derivação.
 
-Uma eventual inspeção técnica do JAR para interoperabilidade exigiria o artefato exato e continuaria não autorizando cópia da implementação.
+A inspeção técnica do JAR não autoriza cópia da implementação e não cria um contrato de API que o provider não publique.
 
 ## Runtime stack relevante no pack atual
 
@@ -46,7 +64,7 @@ Uma eventual inspeção técnica do JAR para interoperabilidade exigiria o artef
 
 ### Optional/public compatibility
 
-- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente; o publisher 1.0.8 o marca como opcional e diz que, quando presente, seus spells continuam disponíveis para Symmetry; registry/config activation exata permanece runtime-QA pending;
+- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente; o gate exato `MagicFromTheEastCompat.isLoaded()` testa esse mod id e ativa os três registros ISS-gated no pack atual; runtime mechanics/config continuam separados;
 - Born in Chaos `1.7.6` — presente;
 - GTBC's Geomancy Plus `1.1.0-1.21.1` — presente;
 - Tunes 'n Tomes `1.1.0-HOTFIX` — presente;
@@ -81,28 +99,21 @@ A página genérica `relations/dependencies` ainda apresenta classificações qu
 
 Para a linha 1.0.8, o catálogo usa a evidência mais específica/recente: current description + exact release changelog. A página de relações genérica não é usada para reintroduzir obrigatoriedade removida.
 
-## Public inventory ceiling
+## Exact registry / remaining runtime ceiling
 
-Publisher current page:
+The old publisher-only `over 50 new spells` ceiling is superseded for registry identity by the exact artifact: **67 current registrations** under the physical optional-provider set. The publisher text remains useful for release semantics but not for registry totals.
 
-- `over 50 new spells`;
-- Lightning / Fire / Aqua / Symmetry como famílias principais;
-- `1 Blood` e `1 Ender` na descrição geral;
-- uma `charge` por elemento, com integrações para outros elementos/addons.
+The exact artifact audit still does not close:
 
-Esse texto não permite reconstruir:
-
-- count exato;
-- registry IDs;
-- current school assignment de todos os spells;
-- min/max level / rarity;
-- mana/cooldown/cast type;
+- deployed `somakespells/general/common.toml` values;
+- complete object-level survival acquisition/reachability;
+- authoritative current school/runtime semantics for every identity;
+- complete min/max level / rarity / mana / cooldown / cast-type tables;
 - formulas de damage/heal;
-- acquisition tables;
-- item/block/entity/effect registries;
-- config defaults completos;
-- networking/persistence;
-- supported API/hooks.
+- complete item/block/entity/effect inventories;
+- stable supported integration API/hooks;
+- networking/persistence contracts;
+- Somake↔T.O Aqua runtime ownership on the dual-installed stack.
 
 ## Current contradiction requiring runtime QA
 
@@ -125,4 +136,4 @@ Antes de qualquer adapter Somake-specific:
 
 ## Estado
 
-`EXACT ARTIFACT PINNED / PUBLISHER RELEASE-LINE SURFACE ADVANCED / COMPLETE REGISTRY+API UNKNOWN / T.O AQUA COEXISTENCE QA-BLOCKED / ARR CLEAN-ROOM / FAIL-CLOSED`.
+`EXACT HASH-MATCHED ARTIFACT / 67 CURRENT REGISTRY IDENTITIES CLOSED / EFFECTIVE COMMON CONFIG + SURVIVAL REACHABILITY UNVERIFIED / SEMANTIC CONDITIONAL +0 / T.O AQUA COEXISTENCE QA-BLOCKED / ARR CLEAN-ROOM / FAIL-CLOSED`.

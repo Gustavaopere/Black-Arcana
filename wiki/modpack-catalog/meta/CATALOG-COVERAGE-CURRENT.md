@@ -34,6 +34,8 @@ The previous chat-only working tally is not an authority and is not used as an i
 
 **Canonical provider-component coverage after Phase 2BE: 55/100 = 55%.**
 
+Phase 2BF exact-artifact reconciliation closes Somake 1.0.8-fix registry identity at 67 current registrations under the physical optional-provider set, but the provider remains `CONDITIONAL` because the deployed COMMON spell-lock config and complete survival acquisition/reachability are not authoritative. Phase 2BF therefore changes neither metric: **874** strict semantic objects and **55/100** closed provider components.
+
 Phase 2BE / PR #189 was audited at exact HEAD `e787699d25b283b8040cd179f605143e8ee396de`, which passed Black Arcana CI **#2483**. It was squash-merged to `main` as `cce7f51794e4e65b0d97511eb55f710afc6e02f0`. Black Arcana CI **#2484 attempt 1** ended before compilation/tests on a transient external read timeout fetching Iron's API from `code.redspace.io`; rerunning the same job on the unchanged merge SHA produced **#2484 attempt 2 GREEN**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
 
 Phase 2BD / PR #186 was audited at exact HEAD `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0`, which passed Black Arcana CI **#2464**. It was squash-merged to `main` as `95ec538ff1c34766450393522ce3affe1039d0dd`; that exact merge SHA passed post-merge Black Arcana CI **#2465**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
