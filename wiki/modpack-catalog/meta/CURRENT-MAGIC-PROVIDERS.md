@@ -96,6 +96,14 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes 'n Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
 
+## Checkpoint Leyline Spellbooks — Phase 2BG candidate
+
+The exact physical `leylines-1.0.3.jar` / SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` was materialized from CurseForge File ID `8565076` and hash-matched. Its current provider registry contains **14 unconditional `AbstractSpell` identities**, superseding the public nine-name lower bound.
+
+Exact Ley-school/default evidence plus the exact Iron's 3.16.3 generic scroll-selection path closes current active/survival eligibility strongly enough for candidate `COUNTED_EXACT` treatment. Phase 2BG therefore proposes **874 -> 888** semantic objects and candidate component **#56 / 56/100**. Until merge plus exact post-merge CI, the canonical values remain 874 and 55/100.
+
+Runtime numerical tuning, final loot probabilities, pillar/rift persistence/network internals and any Black Arcana adapter remain separate fail-closed gates.
+
 ## Checkpoint Somake Spells — Phase 2BF
 
 The exact physical `somakespells-1.0.8-1.21.1-fix.jar` / SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7` was materialized from File ID `8417850` and hash-matched. The provider owns **67 exact current spell registrations** under the present optional-provider set: 61 unconditional, three gated by physical `mowziesmobs`, and three gated by physical `iss_magicfromtheeast`.

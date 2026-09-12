@@ -47,6 +47,14 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 
 O valor 55/100 nunca substitui a métrica semântica de magias.
 
+## Phase 2BG — Leyline Spellbooks 1.0.3 — promotion candidate
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `leylines` | `leylines-1.0.3.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT HASH-MATCHED ARTIFACT AUDIT / 14 UNCONDITIONAL REGISTERED SPELL IDENTITIES / CURRENT HOST ELIGIBILITY CLOSED / +14 CANDIDATE SEMANTIC DELTA / CANDIDATE #56 |
+
+Evidence: non-merge PR #194; primary `34666436710 / 10289437099`; reachability `34666652534 / 10289292617`; school/loot gate `34667641655 / 10289184487`; exact Iron's 3.16.3 host source `e4056af90302d37eb1739f5ff05020b020e6e252`. Canonical totals remain 874 / 55/100 until durable merge and post-merge CI. Candidate totals are 888 / 56/100.
+
 ## Phase 2BF — Somake Spells 1.0.8-fix — exact registry, sem novo componente
 
 | Mod ID | Artefato físico | Estado |
@@ -213,7 +221,6 @@ Phase 2AY e a reconciliação Gaze/PR #180 estão encerradas. A próxima auditor
 Prioridades ainda abertas:
 
 - `somakespells` 1.0.8-fix — publisher informa `over 50 spells`, sem registry atual completo; requer fonte/artefato atual ou nova evidência publisher granular;
-- `leylines` 1.0.3 — nove nomes públicos são apenas lower bound; requer artefato/source atual inspecionável;
 - Goety 3.1.4 — exact JAR/source equivalence, Focus reachability/dedup e ritual identities permanecem abertas;
 - Not Enough Glyphs 4.6.1 — 39 registrations source-enabled continuam condicionais até reconciliação da config efetiva do pack.
 
