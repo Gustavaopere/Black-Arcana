@@ -4,7 +4,9 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, so the strict minimum remains **1316**. The global denominator is still incomplete and no semantic percentage is declared.
+
+Phase 2BM has a semantic delta of **0**: exact official source pin `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f` closes the provider's role as an Ars Storage/Crafting Lectern ↔ Polymorph recipe-conflict bridge, without a provider-owned spell, glyph, ritual, school, mana/resource or equivalent magical-action registry. This closes provider component **#61** while keeping current-host runtime compatibility fail-closed. See [`../providers/ars-polymorphia/README.md`](../providers/ars-polymorphia/README.md) and [`PHASE2BM-ARS-POLYMORPHIA-CHECKPOINT.md`](./PHASE2BM-ARS-POLYMORPHIA-CHECKPOINT.md).
 
 Phase 2BK has a semantic delta of **0**: exact hash-matched Ignis Soulfires: Spellbooks 1.1.0 contains only its armor-material/item bridge surfaces and no provider-owned spell, ritual, rite or equivalent action registry. This closes provider component **#58** without changing the semantic numerator. See [`../providers/ignis-soulfires-spellbooks/EXACT-1.1.0-ARTIFACT-AUDIT.md`](../providers/ignis-soulfires-spellbooks/EXACT-1.1.0-ARTIFACT-AUDIT.md).
 
@@ -24,6 +26,7 @@ Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publish
 
 Therefore:
 
+- semantic numerator/denominator delta attributable to Ars Polymorphia 1.0.3: **+0**;
 - semantic numerator/denominator delta attributable to Ignis Soulfires: Spellbooks 1.1.0: **+0**;
 - semantic numerator delta from Gaze 1.1.7.1 exact closure: **+1**;
 - semantic numerator delta from Goety 3.1.4 exact closure: **+361**;
@@ -43,6 +46,12 @@ The preceding semantic-only promotion was **Malum +26**: whole-interval path his
 Phase 2BH is canonical for Goety 3.1.4 from exact hash-matched artifact evidence: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical values are **1249 / 57 of 100**. Runtime/API/balance gates remain separate.
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
+
+## Phase 2BM — Ars Polymorphia 1.0.3 component #61, source-pinned zero closure
+
+Exact official source `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f` matches the installed provider version 1.0.3 and closes its technical role as a recipe-conflict bridge for Ars Storage/Crafting Lecterns. The exact source exposes five required mixin/accessor bindings, protocol version `1`, and one provider-owned play-to-server unit payload, while establishing no provider-owned spell/glyph/ritual/school/resource/action registry. The semantic delta is therefore **+0** and the strict minimum remains **1316**.
+
+PR #210 exact HEAD `1b8d5d5761569f8ef1f3a32b7ece84cfb6ce6df6` passed Black Arcana CI #2543; squash merge `f2cdfe7b79d500540c281d70a76e8b6e3a77d311` passed exact-SHA post-merge CI #2544 / run `34713268914` and published canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`). Provider component **#61** is therefore closed. Runtime compatibility remains fail-closed because exact source requires mod id `polymorph` while the physical pack exposes `polymorph_plus`, source was built against Ars Nouveau `5.4.2.938` while the pack uses `5.13.1`, and source metadata declares `minecraft_version=1.21.1` together with range `[1.21,1.21.1)`.
 
 ## Phase 2BL — Goety addon exact closures, components #59 and #60
 
@@ -74,7 +83,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after Phase 2BL: 60/100 = 60%.**
+**Canonical provider-component coverage after Phase 2BM: 61/100 = 61%.**
 
 Phase 2BF exact-artifact reconciliation closes Somake 1.0.8-fix registry identity at 67 current registrations under the physical optional-provider set, but the provider remains `CONDITIONAL` because the deployed COMMON spell-lock config and complete survival acquisition/reachability are not authoritative. Phase 2BF therefore changes neither metric: **874** strict semantic objects and **55/100** closed provider components.
 
@@ -125,6 +134,9 @@ GTBC's SpellLib and FamiliarsLib were already members of those 100 component uni
 | 56 | Phase 2BG / PR #195 | `leylines` | canonical at `main@88f042f68429ff920314a7ec3a6923369edc93fd`; audited HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` CI #2503 GREEN; post-merge CI #2504 GREEN |
 | 57 | Phase 2BH / PR #198 | `goety` | canonical at `main@4fcc40aaf8149b5511dbd882a5616ee5240cd640`; audited HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` CI #2523 GREEN; post-merge CI #2524 GREEN; QA artifact `10291461067` |
 | 58 | Phase 2BK | `ignissoulfires_spellbooks` | exact hash-matched 1.1.0 gear/bridge closure; `ZERO_BRIDGE_INFRA`; semantic +0; evidence PR #203 / run `34688273425` |
+| 59 | Phase 2BL / PR #207 | `goetyiron` | canonical; exact-artifact semantic +14 closure |
+| 60 | Phase 2BL / PR #207 | `goety_cataclysm` | canonical; exact-artifact semantic +52 closure |
+| 61 | Phase 2BM / PR #210 | `ars_polymorphia` | canonical at `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`; source-pinned `ZERO_SEMANTIC_BRIDGE`; semantic +0; post-merge CI #2544 GREEN |
 
 Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
 
@@ -203,11 +215,11 @@ Stage 07.07 Borrowed Sight must not accept FamiliarsLib entities by thematic inf
 
 Examples remain:
 
-- `leylines` — current total inventory not verified;
-- `somakespells` — current granular spell inventory remains incomplete;
-- `gaze` — exact current registry/source-JAR closure remains pending.
+- `not_enough_glyphs` — 39 source-enabled glyph registrations remain config-conditional because deployed SERVER overrides are unavailable;
+- `somakespells` — exact registry identity is closed, but deployed spell-lock config and complete survival reachability remain conditional;
+- `gaze` — exact registry identity is closed, but 26 Spirit Rites remain conditional on the unavailable deployed COMMON `disableGazeRites` value.
 
-These partials are also reasons the global semantic spell/magic denominator remains open. Their current lower-bound/open evidence is tracked explicitly in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md) rather than being silently added to the strict semantic count.
+These partials are also reasons the global semantic spell/magic denominator remains open. Their current conditional/open evidence is tracked explicitly in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md) rather than being silently added to the strict semantic count.
 
 ## Update rule
 

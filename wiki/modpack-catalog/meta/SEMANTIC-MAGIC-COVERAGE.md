@@ -24,6 +24,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - reconstruction base: `main@4f3dab1a4801393873f9d4b7857782fcf6298e56`
 - base post-merge validation: Black Arcana CI **#2349**, attempt 2 GREEN on the exact base SHA
 - Phase 2BE canonicalized at `main@cce7f51794e4e65b0d97511eb55f710afc6e02f0`: PR #189 exact HEAD `e787699d25b283b8040cd179f605143e8ee396de` passed Black Arcana CI **#2483**; the merge SHA passed Black Arcana CI **#2484 attempt 2** GREEN after attempt 1 ended on an external `code.redspace.io` read timeout before compilation/tests
+- Phase 2BM component closure is validated at `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`: PR #210 exact HEAD `1b8d5d5761569f8ef1f3a32b7ece84cfb6ce6df6` passed Black Arcana CI **#2543**; the merge SHA passed exact-SHA post-merge CI **#2544** / run `34713268914` and published canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`)
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -41,6 +42,12 @@ The historical chat-only tally is not an authority and is not used as an input t
 | `EXCLUDED` | a registry/content entry exists but fails this metric by definition | zero |
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
+
+## Phase 2BM — Ars Polymorphia 1.0.3 source-pinned zero-semantic bridge
+
+Exact official source `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f` matches the physically installed provider version `1.0.3` and closes the provider's technical role as an Ars Storage/Crafting Lectern ↔ Polymorph recipe-conflict bridge. The exact source establishes five required mixin/accessor bindings, protocol version `1`, one provider-owned play-to-server unit payload, and no provider-owned spell, glyph, ritual, school, mana/resource or equivalent independent magical-action registry.
+
+Phase 2BM therefore contributes **+0 semantic magic objects** and leaves the strict reconstructible minimum at **1316**, while separately closing provider component **#61 / 61 of 100**. This is a source-pinned technical/catalog closure, not a runtime compatibility PASS: exact source requires mod id `polymorph` while the physical pack exposes `polymorph_plus` `1.3.1+1.21.1`; source was built against Ars Nouveau `5.4.2.938` while the pack uses `5.13.1`; and source metadata declares `minecraft_version=1.21.1` together with `minecraft_version_range=[1.21,1.21.1)`. Current-host runtime behavior remains fail-closed.
 
 ## Phase 2BL — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2
 
@@ -72,7 +79,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1316 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BL.**
+**1316 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BM.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -211,7 +218,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 - [Ars Creo](../providers/ars-creo/README.md) — Create/Ars bridge, no own glyph registry;
 - [Ars Elemancy](../providers/ars-elemancy/README.md) — equipment specialization, empty glyph registration;
-- [Ars Polymorphia](../providers/ars-polymorphia/README.md) — compatibility/progression only;
+- [Ars Polymorphia](../providers/ars-polymorphia/README.md) — Phase 2BM source-pinned recipe-conflict bridge; `ZERO_SEMANTIC_BRIDGE`, +0; current-host runtime compatibility remains fail-closed;
 - [FamiliarsLib](../providers/familiarslib/README.md) — familiar framework; historical Sound content removed from the 1.7 line;
 - [GTBC's SpellLib](../providers/gtbcs-spelllib/README.md) — shared spell/addon library infrastructure; publisher surface establishes no standalone gameplay/spell catalog in 2.2.0;
 - [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
@@ -231,14 +238,13 @@ These rows are deliberately **not additive to 1316** until their exact/current i
 |---|---|---|---|
 | [Somake Spells](../providers/somake-spells/README.md) 1.0.8-fix | exact hash-matched artifact closes **67 current spell registrations** under the physical optional-provider set; 61 unconditional + 3 `mowziesmobs`-gated + 3 `iss_magicfromtheeast`-gated, with both gates physically satisfied | `CONDITIONAL / EXACT REGISTRY CLOSED / +0` | deployed `somakespells/general/common.toml` is unavailable and complete object-level survival acquisition/reachability remains unclosed; code default `enableSpellLockSystem=false` is not substituted for the actual pack config |
 | [Gaze](../providers/gaze/README.md) 1.1.7.1 rites | exact hash-matched artifact closes **26 player-facing Spirit Rite identities** | `CONDITIONAL / EXACT REGISTRY CLOSED / +0 RITES` | exact provider control flow suppresses the rite surfaces when resolved COMMON config `disableGazeRites=true`; deployed pack value is unavailable, so source default `false` is not substituted |
-| [Ignis Soulfires: Spellbooks](../providers/ignis-soulfires-spellbooks/README.md) 1.1.0 | exact hash-matched artifact closes 11 provider classes, one armor-material registry and exactly five equipment items; no spell/ritual/action registry exists | `ZERO_BRIDGE_INFRA / EXACT ARTIFACT CLOSED / +0` | gear/items/passive equipment behavior are excluded by metric definition; exact artifact proves zero independent semantic magic objects |
 
 Other provider directories that have not yet been normalized into a semantic-object row also remain outside the denominator. Absence from the strict table is never interpreted as zero without an explicit zero disposition.
 
 ## Important interpretation rules
 
 1. **1316 is not “1316 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1316 by the 100 provider-component denominator. The current component target is `60/100`; provider-component coverage and semantic-magic coverage answer different questions.
+2. Do not divide 1316 by the 100 provider-component denominator. The current component target is `61/100`; provider-component coverage and semantic-magic coverage answer different questions.
 3. Do not add public lower bounds to 1316 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
