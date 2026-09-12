@@ -49,6 +49,16 @@ jobs:
             echo
             echo '== standalone Spell classes =='
             jar tf somake.jar | grep '\.class$' | grep -E '/[^/$]*Spell\.class$' | sort || true
+            echo
+            echo '== acquisition/reachability candidate classes =='
+            jar tf somake.jar | grep '\.class$' \
+              | grep -Ei '(loot|scroll|spellbook|spell_book|grimoire|upgrade|forge|trade|village|config|recipe|datagen|data_gen|event|creative|itemregistr|moditems|commonsetup)' \
+              | sort || true
+            echo
+            echo '== acquisition/reachability data paths =='
+            jar tf somake.jar \
+              | grep -Ei '^data/somakespells/(loot|recipes|recipe|tags|advancement|advancements|irons_spellbooks|neoforge|minecraft)/|loot_table|global_loot|spellbook|grimoire|scroll' \
+              | sort || true
           } > audit/report.txt
 
           python3 - <<'PY'
@@ -75,6 +85,22 @@ jobs:
               f.write('\n== exact namespace data spell paths ==\n')
               for path in sorted(p for p in names if p.startswith('data/somakespells/') and ('spell' in p.lower())):
                   f.write(path + '\n')
+
+              f.write('\n== structured acquisition JSON facts ==\n')
+              for path in sorted(p for p in names if p.startswith('data/somakespells/') and p.endswith('.json')):
+                  lower = path.lower()
+                  if not any(token in lower for token in ('loot', 'recipe', 'advancement', 'tag', 'spellbook', 'grimoire', 'scroll')):
+                      continue
+                  try:
+                      data = json.loads(jar.read(path).decode('utf-8'))
+                  except Exception:
+                      continue
+                  text = json.dumps(data, sort_keys=True, separators=(',', ':'))
+                  refs = sorted(set(part for part in text.replace('"', ' ').replace(',', ' ').replace('{', ' ').replace('}', ' ').split()
+                                    if 'somakespells:' in part or 'irons_spellbooks:' in part))
+                  f.write(f'{path}\n')
+                  for ref in refs[:80]:
+                      f.write(f'  ref={ref}\n')
           PY
 
           mapfile -t REGISTRY_CLASSES < <(jar tf somake.jar | grep '\.class$' | grep -Ei '(spell.*registr|registr.*spell|modspells|spellregistry|spellregistries)' | sed 's#/#.#g; s#\.class$##' | sort -u || true)
@@ -95,6 +121,35 @@ jobs:
             done
           } >> audit/report.txt
 
+          {
+            echo
+            echo '== ModSpells exact optional-gate facts =='
+            javap -classpath somake.jar -p -c com.somake.somakespells.registries.ModSpells 2>/dev/null \
+              | grep -E 'ModList|isLoaded|MOWZIE_LOADED|ISS_LOADED|mowziesmobs|iss_magicfromtheeast|blessed_connection|guardian_connection|cursed_connection|mirror_strike|spirit_empowerment|symmetry_empowerment|if(eq|ne)|goto|getstatic|putstatic' \
+              || true
+          } >> audit/report.txt
+
+          mapfile -t ACQ_CLASSES < <(jar tf somake.jar | grep '\.class$' \
+            | grep -Ei '(loot|scroll|spellbook|spell_book|grimoire|upgrade|forge|trade|village|config|recipe|datagen|data_gen|event|creative|itemregistr|moditems|commonsetup)' \
+            | sed 's#/#.#g; s#\.class$##' | sort -u || true)
+          {
+            echo
+            echo '== acquisition/reachability candidate signatures =='
+            for cls in "${ACQ_CLASSES[@]}"; do
+              echo "--- $cls ---"
+              javap -classpath somake.jar -p "$cls" 2>/dev/null || true
+            done
+            echo
+            echo '== acquisition/reachability filtered bytecode facts =='
+            for cls in "${ACQ_CLASSES[@]}"; do
+              echo "--- $cls ---"
+              javap -classpath somake.jar -p -c "$cls" 2>/dev/null \
+                | grep -E 'ModSpells|SPELLS|SpellData|SpellContainer|Scroll|scroll|Spellbook|spellbook|Grimoire|grimoire|Loot|loot|Trade|trade|Recipe|recipe|Creative|creative|ResourceLocation|// String |getstatic|putstatic|invoke(static|virtual|interface|special)|if(eq|ne|null|nonnull)|goto' \
+                || true
+            done
+            echo "acquisition_candidate_class_count=${#ACQ_CLASSES[@]}"
+          } >> audit/report.txt
+
           mapfile -t SPELL_CLASSES < <(jar tf somake.jar | grep '\.class$' | grep -E '/[^/$]*Spell\.class$' | sed 's#/#.#g; s#\.class$##' | sort -u || true)
           {
             echo
@@ -102,7 +157,7 @@ jobs:
             for cls in "${SPELL_CLASSES[@]}"; do
               echo "--- $cls ---"
               javap -classpath somake.jar -p -c "$cls" 2>/dev/null \
-                | grep -E '<init>|// String [a-z0-9_./:-]+$|AbstractSpell\."<init>"|AbstractSpell\.<init>' \
+                | grep -E '<init>|// String [a-z0-9_./:-]+$|AbstractSpell\."<init>"|AbstractSpell\.<init>|DefaultConfig|SpellRarity|SchoolRegistry' \
                 || true
             done
             echo
