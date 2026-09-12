@@ -1,0 +1,76 @@
+name: Audit Goety Cataclysm 1.8.2 registration gates
+
+on:
+  push:
+    branches:
+      - audit/goety-cataclysm-1.21.1-1.8.2-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Materialize exact artifact and verify hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar="$RUNNER_TEMP/goety_cataclysm-1.21.1-1.8.2.jar"
+          curl --fail --location --silent --show-error --retry 2 'https://www.curseforge.com/api/v1/mods/1224214/files/8518940/download' -o "$jar"
+          test "$(sha1sum "$jar" | awk '{print $1}')" = '4e3052a082200371b36e1a88fdce05e294d82757'
+      - name: Derive registration/config gate facts without retaining bytecode bodies
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar="$RUNNER_TEMP/goety_cataclysm-1.21.1-1.8.2.jar"
+          mkdir -p audit-out
+          javap -classpath "$jar" -p -s com.Polarice3.goety_cataclysm.common.items.GCItems > "$RUNNER_TEMP/items.sig"
+          javap -classpath "$jar" -c -p com.Polarice3.goety_cataclysm.common.items.GCItems > "$RUNNER_TEMP/items.code"
+          javap -classpath "$jar" -p -s com.Polarice3.goety_cataclysm.config.GCSpellConfig > "$RUNNER_TEMP/config.sig"
+          python - <<'PY'
+          from pathlib import Path
+          import os, re
+          tmp = Path(os.environ['RUNNER_TEMP'])
+          sig = (tmp/'items.sig').read_text(errors='replace')
+          code = (tmp/'items.code').read_text(errors='replace')
+          cfg = (tmp/'config.sig').read_text(errors='replace')
+          focus_fields = re.findall(r'public static final .*?DeferredHolder<[^;]+>\s+([A-Z0-9_]+_FOCUS);', sig)
+          m = re.search(r'(?ms)^\s*static \{\};\s*\n\s*Code:\s*\n(.*?)(?=^\s*})', code)
+          clinit = m.group(1) if m else ''
+          branch_re = re.compile(r'\b(if(?:eq|ne|lt|ge|gt|le|null|nonnull|_icmp\w+|_acmp\w+)|tableswitch|lookupswitch)\b')
+          branches = branch_re.findall(clinit)
+          register_calls = len(re.findall(r'DeferredRegister(?:\$Items)?\.register', clinit))
+          config_refs = len(re.findall(r'com/Polarice3/goety_cataclysm/config/GCSpellConfig', clinit))
+          config_fields = []
+          for line in cfg.splitlines():
+              mm = re.search(r'public static(?: final)? .*?\s+([A-Za-z0-9_]+);$', line.strip())
+              if mm: config_fields.append(mm.group(1))
+          gate_names = sorted(x for x in config_fields if re.search(r'enable|disable|enabled|disabled|focus.*(?:on|off)|spell.*(?:on|off)', x, re.I))
+          out = [
+              'physical_sha1=4e3052a082200371b36e1a88fdce05e294d82757',
+              f'focus_holder_count={len(focus_fields)}',
+              'focus_holder_fields=' + ','.join(sorted(focus_fields)),
+              f'static_initializer_branch_count={len(branches)}',
+              f'static_initializer_deferred_register_calls={register_calls}',
+              f'static_initializer_config_reference_count={config_refs}',
+              f'config_declared_field_count={len(config_fields)}',
+              f'config_enable_disable_like_field_count={len(gate_names)}',
+              'config_enable_disable_like_fields=' + (','.join(gate_names) if gate_names else '<none>'),
+          ]
+          Path('audit-out/registration-gates.txt').write_text('\n'.join(out)+'\n')
+          PY
+          cat audit-out/registration-gates.txt
+      - name: Publish text-only gate facts
+        uses: actions/upload-artifact@v4
+        with:
+          name: goety-cataclysm-1.8.2-registration-gate-evidence
+          path: audit-out
+          retention-days: 7
+          if-no-files-found: error
