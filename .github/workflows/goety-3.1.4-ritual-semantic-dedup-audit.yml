@@ -1,0 +1,156 @@
+name: Goety 3.1.4 Ritual Semantic Dedup Audit
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-goety-3.1.4
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Audit exact ritual semantic signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_SHA1='a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          URL='https://www.cursemaven.com/curse/maven/goety-586095/8689429/goety-586095-8689429.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 "$URL" -o goety.jar
+          ACTUAL_SHA1="$(sha1sum goety.jar | awk '{print $1}')"
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+          mkdir -p audit
+
+          python3 - <<'PY'
+          import hashlib, json, zipfile
+          from collections import Counter, defaultdict
+          from pathlib import Path, PurePosixPath
+
+          EXPECTED='a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          z=zipfile.ZipFile('goety.jar')
+
+          def relpath(p): return p[len('data/goety/recipe/'):]
+          def val(obj,*keys):
+              for k in keys:
+                  v=obj.get(k)
+                  if isinstance(v,str): return v
+                  if isinstance(v,dict):
+                      for kk in ('id','item','type','entity','entity_type','enchantment','structure'):
+                          if isinstance(v.get(kk),str): return v[kk]
+              return None
+
+          def cond_summary(v):
+              rows=[]
+              if isinstance(v,dict):
+                  typ=v.get('type')
+                  if isinstance(typ,str):
+                      row={'type':typ}
+                      for k in ('modid','mod_id','mod','tag','item'):
+                          if isinstance(v.get(k),str): row[k]=v[k]
+                      rows.append(row)
+                  for vv in v.values(): rows.extend(cond_summary(vv))
+              elif isinstance(v,list):
+                  for vv in v: rows.extend(cond_summary(vv))
+              return rows
+
+          def cond_str(obj):
+              conds=[]
+              for k,v in obj.items():
+                  if 'condition' in k.lower(): conds.extend(cond_summary(v))
+              uniq=[]
+              seen=set()
+              for r in conds:
+                  s=','.join(f'{k}={r[k]}' for k in sorted(r))
+                  if s and s not in seen: seen.add(s); uniq.append(s)
+              return ';'.join(uniq) or '<none>'
+
+          def classify(rel):
+              if rel.startswith('focus/'): return 'FOCUS_ACQUISITION'
+              if rel.startswith('enchant/'): return 'ENCHANT_RITUAL'
+              if rel.startswith('locate/'): return 'LOCATE_RITUAL'
+              if rel.startswith('thrall/'): return 'THRALL_SUMMON_RITUAL'
+              stem=PurePosixPath(rel).stem
+              if stem.startswith('convert_'): return 'CONVERSION_RITUAL'
+              if stem.startswith('summon_'): return 'SUMMON_RITUAL'
+              return 'OTHER_RITUAL'
+
+          def signature(rel,obj,cls):
+              result=val(obj,'result','output')
+              enchant=val(obj,'enchantment')
+              locate=val(obj,'structure_to_locate','structure')
+              summon=val(obj,'entity_to_summon')
+              conv_from=val(obj,'entity_to_convert')
+              conv_to=val(obj,'entity_to_convert_into')
+              if cls=='FOCUS_ACQUISITION': return f'FOCUS_ACQUIRE:{result or PurePosixPath(rel).stem}'
+              if cls=='ENCHANT_RITUAL': return f'ENCHANT:{enchant or PurePosixPath(rel).stem}'
+              if cls=='LOCATE_RITUAL': return f'LOCATE:{locate or PurePosixPath(rel).stem}'
+              if cls in ('SUMMON_RITUAL','THRALL_SUMMON_RITUAL'): return f'SUMMON:{summon or PurePosixPath(rel).stem}'
+              if cls=='CONVERSION_RITUAL': return f'CONVERT:{conv_from or "?"}->{conv_to or PurePosixPath(rel).stem}'
+              if result and result!='goety:jei_dummy/none': return f'RITUAL_RESULT:{result}'
+              return f'RITUAL_PATH:{rel}'
+
+          rows=[]
+          for p in sorted(z.namelist()):
+              if not (p.startswith('data/goety/recipe/') and p.endswith('.json')): continue
+              try: obj=json.loads(z.read(p).decode('utf-8-sig'))
+              except Exception: continue
+              if not isinstance(obj,dict) or obj.get('type')!='goety:ritual': continue
+              rel=relpath(p); cls=classify(rel); sig=signature(rel,obj,cls)
+              rows.append({
+                  'rel':rel,'class':cls,'sig':sig,'conditions':cond_str(obj),
+                  'craft':str(obj.get('craftType') or obj.get('craft_type') or '<none>'),
+                  'result':val(obj,'result','output') or '<none>',
+                  'enchant':val(obj,'enchantment') or '<none>',
+                  'locate':val(obj,'structure_to_locate','structure') or '<none>',
+                  'summon':val(obj,'entity_to_summon') or '<none>',
+                  'from':val(obj,'entity_to_convert') or '<none>',
+                  'to':val(obj,'entity_to_convert_into') or '<none>',
+              })
+
+          nonfocus=[r for r in rows if r['class']!='FOCUS_ACQUISITION']
+          bysig=defaultdict(list)
+          for r in nonfocus: bysig[r['sig']].append(r)
+          dup={k:v for k,v in bysig.items() if len(v)>1}
+          unique=len(bysig)
+          cond=Counter()
+          for r in rows:
+              if r['conditions']!='<none>': cond[r['conditions']]+=1
+
+          out=Path('audit/report.txt')
+          with out.open('w',encoding='utf-8') as f:
+              actual=hashlib.sha1(Path('goety.jar').read_bytes()).hexdigest()
+              f.write('Goety 3.1.4 ritual semantic dedup audit\n')
+              f.write(f'expected_sha1={EXPECTED}\nactual_sha1={actual}\n')
+              f.write(f'ritual_recipe_count={len(rows)}\n')
+              f.write(f'focus_acquisition_recipe_count={len(rows)-len(nonfocus)}\n')
+              f.write(f'non_focus_recipe_count={len(nonfocus)}\n')
+              f.write(f'unique_non_focus_semantic_signature_count={unique}\n')
+              f.write(f'duplicate_non_focus_signature_group_count={len(dup)}\n')
+              f.write(f'duplicate_non_focus_recipe_excess={sum(len(v)-1 for v in dup.values())}\n')
+              f.write('\n== duplicate semantic signature groups ==\n')
+              for sig,rs in sorted(dup.items()):
+                  f.write(f'{sig}|count={len(rs)}\n')
+                  for r in rs: f.write(f'  {r["rel"]}|conditions={r["conditions"]}|craftType={r["craft"]}\n')
+              f.write('\n== condition skeleton frequencies ==\n')
+              for c,n in sorted(cond.items()): f.write(f'{n}|{c}\n')
+              f.write('\n== all non-Focus semantic signatures ==\n')
+              for r in nonfocus:
+                  f.write(f'{r["rel"]}|class={r["class"]}|signature={r["sig"]}|conditions={r["conditions"]}|craftType={r["craft"]}|result={r["result"]}|enchantment={r["enchant"]}|structure={r["locate"]}|summon={r["summon"]}|from={r["from"]}|to={r["to"]}\n')
+              f.write('\nBOUNDARY: identity/target/condition metadata only. No ingredients, costs, effect bodies, prose localization, assets, models or sounds retained. Semantic signatures are audit keys for deduplication, not claims of runtime balance or Black Arcana integration.\n')
+          PY
+
+          cat audit/report.txt
+
+      - name: Upload text-only audit evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: goety-3.1.4-ritual-semantic-dedup-audit
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
