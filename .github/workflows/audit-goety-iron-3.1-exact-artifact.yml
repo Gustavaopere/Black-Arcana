@@ -1,0 +1,82 @@
+name: Audit Goety Iron 3.1 exact artifact
+
+on:
+  push:
+    branches:
+      - audit/goety-iron-3.1-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Materialize exact publisher artifact and verify physical hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit-out
+          target="$RUNNER_TEMP/GoetyIron-1.21.1-NeoForge-3.1.jar"
+          urls=(
+            'https://www.curseforge.com/api/v1/mods/1367643/files/8662179/download'
+            'https://edge.forgecdn.net/files/8662/179/GoetyIron-1.21.1-NeoForge-3.1.jar'
+            'https://mediafilez.forgecdn.net/files/8662/179/GoetyIron-1.21.1-NeoForge-3.1.jar'
+          )
+          ok=0
+          for url in "${urls[@]}"; do
+            rm -f "$target"
+            if curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 120 "$url" -o "$target"; then
+              got="$(sha1sum "$target" | awk '{print $1}')"
+              if [ "$got" = 'c8529867e798661ed01fb2948abda23735888fc6' ]; then
+                printf 'publisher_url=%s\n' "$url" > audit-out/identity.txt
+                ok=1
+                break
+              fi
+            fi
+          done
+          test "$ok" -eq 1
+          printf 'filename=GoetyIron-1.21.1-NeoForge-3.1.jar\n' >> audit-out/identity.txt
+          printf 'curseforge_project=1367643\ncurseforge_file=8662179\n' >> audit-out/identity.txt
+          printf 'physical_sha1=c8529867e798661ed01fb2948abda23735888fc6\n' >> audit-out/identity.txt
+          printf 'audit_sha1=%s\n' "$(sha1sum "$target" | awk '{print $1}')" >> audit-out/identity.txt
+          printf 'audit_sha256=%s\n' "$(sha256sum "$target" | awk '{print $1}')" >> audit-out/identity.txt
+          printf 'size_bytes=%s\n' "$(stat -c '%s' "$target")" >> audit-out/identity.txt
+          unzip -t "$target" >/dev/null
+
+      - name: Extract structural semantic evidence
+        shell: bash
+        env:
+          JAR_PATH: ${{ runner.temp }}/GoetyIron-1.21.1-NeoForge-3.1.jar
+          PROVIDER_NS: goetyiron
+          AUDIT_OUT: audit-out
+        run: |
+          set -euo pipefail
+          python .github/goety_addon_exact_audit.py
+          mkdir -p audit-out/javap
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            safe="${cls//./_}"
+            javap -classpath "$JAR_PATH" -p -s "$cls" > "audit-out/javap/$safe.txt" 2>/dev/null || true
+          done < audit-out/relevant-class-paths.txt
+          grep -R -n -E 'Focus|Ritual|Spell|Summon|Ability|DeferredRegister|RegistryObject|DeferredHolder' audit-out/javap > audit-out/javap-semantic-signatures.txt || true
+
+      - name: Publish text-only clean-room evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: goety-iron-3.1-exact-artifact-evidence
+          path: audit-out
+          retention-days: 7
+          if-no-files-found: error
