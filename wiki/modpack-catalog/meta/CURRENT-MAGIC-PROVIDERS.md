@@ -6,9 +6,9 @@
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, e Phase 2BM fecha `ars_polymorphia` como componente **#61**. Portanto **61 estão canônicos**. Esse 61/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, Phase 2BM fecha `ars_polymorphia` como componente **#61**, e Phase 2BN fecha `ars_sable` como componente **#62**. Portanto **62 estão canônicos**. Esse 62/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Ars Polymorphia acrescenta **+0** objetos semânticos independentes, então o mínimo estrito permanece **1316**.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Ars Polymorphia e Ars Sable acrescentam **+0** objetos semânticos independentes, então o mínimo estrito permanece **1316**.
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
@@ -93,8 +93,14 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 
 - FamiliarsLib foi fechado na Phase 2AX como `LIBRARY_INFRA`/framework de familiar, com **0** novas magias semânticas independentes;
 - Alshanex's Familiars é consumidor/conteúdo concreto; Phase 2BD fecha a linha 4.0.3 em **7 spells próprios + 11 rituais próprios = 18 objetos semânticos**, usando o JAR exato hash-matched; runtime QA e seam de ownership continuam separados;
-- documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes 'n Tomes;
+- documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes n' Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
+
+## Checkpoint Ars Sable — Phase 2BN canonical
+
+O artefato físico `ars_sable-1.21.1-1.1.2.jar` / SHA-1 `df43ad58fb9ca3b7acf7f62dc97ed75fd6da3da8` foi reconciliado com o source oficial exato `baileyholl/ars-sable@1fd83f3a998e3a41b5a21d0d6529140a0b0a55ba`. A função fechada é de bridge/infra espacial entre Ars Nouveau e Sable: tracking/sublevel, warp/portal, storage, Source Jar, Planarium, Mob Jar, entidades/pathfinding e câmera/render entram por mixins/adapters; o provider não estabelece spell, glyph, ritual, school, mana/resource ou ação mágica independente. O delta semântico é **+0** e o mínimo estrito permanece **1316**.
+
+Phase 2BN fecha `ars_sable` como componente **#62 / 62/100** após PR #212 e validação exact-SHA pós-merge CI #2554 / run `34720646567`, com canonical QA artifact `10306246238` (`sha256:a63f42f6746cc62e435e6a1c541daaed973b0b56d3dcc566cbc7cf4e9fa57e96`). Isso é fechamento técnico/source-pinned de catálogo, não um PASS de compatibilidade runtime. A source foi construída contra Sable `1.2.2` e Ars Nouveau `5.11.7.1354`, enquanto o pack físico usa Sable `2.0.5` e Ars Nouveau `5.13.1`; todos os 24 common + 5 client mixins são required. O registrar de rede usa protocolo `2` e registra zero payloads próprios. A metadata declara `LGPLv3`, enquanto o `LICENSE` raiz contém The Unlicense; nenhum direito de reuso é inferido dessa divergência.
 
 ## Checkpoint Ars Polymorphia — Phase 2BM canonical
 
