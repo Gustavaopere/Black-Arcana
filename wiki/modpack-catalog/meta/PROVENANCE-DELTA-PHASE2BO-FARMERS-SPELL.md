@@ -4,13 +4,13 @@ Status: `EXACT PUBLIC SOURCE PIN / PHYSICAL HASH AUTHORITY RETAINED / ALL RIGHTS
 
 ## Physical authority
 
-- JAR: `Farmer's Spell 'n Spellbooks-1.0.5.1-1.21.1.jar`
+- JAR: `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar`
 - mod id/version: `farmers_spell` / `1.0.5.1-1.21.1`
-- SHA-1: `f77355e042172e7af3a2bcebbf5d0f87eacb6501`
-- SHA-256: `a7b9d42d7e4b04ed98778f770ee3a7ecbcf4bd7a73bd3a800838be2af6ae4b87`
+- SHA-1: `f77355e029af39bbaba3854e10cc087a608351ff`
+- CurseForge hash: `810347191`
 - physical snapshot: current 595-entry modlist, SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 
-The physical artifact remains authority for what is installed. This tranche does not claim a reproducible source build or a source-produced JAR hash match.
+The physical artifact remains authority for what is installed. This tranche does not claim a reproducible source build, SHA-256 not present in the physical modlist, or a source-produced JAR hash match.
 
 ## Exact public source checkpoint
 
@@ -33,8 +33,10 @@ No implementation bodies, recipes as creative ingredient lists, localization pro
 
 ## External host source used narrowly
 
-The public Iron's Spells 'n Spellbooks 3.16.3 source line is used only to interpret the seven-argument `SchoolType` booleans and Scroll Forge focus-to-school/spell-selection contract. The physical pack contains `3.16.3.6`; no cryptographic source match for the `.6` packaging suffix is claimed by this tranche.
+The public Iron's Spells 'n Spellbooks 3.16.3 source line is used only to interpret the seven-argument `SchoolType` booleans and Scroll Forge focus-to-school/spell-selection contract. The physical pack also contains Iron's 3.16.3 by version label, but no cryptographic source/binary equivalence is claimed by this tranche.
+
+The Farmer's Spell source build declares Farmer's Delight `1.3.2` and GeckoLib `4.9.2`; the physical snapshot contains Farmer's Delight `1.3.4` and GeckoLib `4.9.2`. These are compatibility facts, not runtime PASS evidence.
 
 ## Result
 
-Phase 2BO supports a candidate semantic delta of **+6** exact provider spell identities while preserving current assembled-pack runtime QA as a separate fail-closed gate.
+Phase 2BO supports a candidate semantic delta of **+6 `COUNTED_SOURCE_PINNED`** provider spell identities while preserving current assembled-pack runtime QA as a separate fail-closed gate.
