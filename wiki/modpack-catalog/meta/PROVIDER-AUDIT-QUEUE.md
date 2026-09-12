@@ -8,7 +8,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- base canônica considerada para Phase 2BL: `main@4041316e2261d6ca46bbc4c1b6e717ddabb44047`; esse SHA contém Phase 2BK / PR #204 e passou exact-SHA post-merge CI #2534 / run `34703943824`, incluindo canonical QA-JAR publication;
+- estado canônico pós-Phase 2BL: `main@43e343dfdfe1119820f05888ebbf79debc3db8da`; esse SHA incorpora o fechamento durável de Phase 2BL e a estabilização de fixture da PR #208, e passou exact-SHA post-merge CI #2540 / run `34709290589`, incluindo 104/104 Foundation GameTests, dedicated-server smoke e canonical QA artifact `10302279485` (`sha256:3398896435975751fec35357fde1e83b76dfa1463cb1e2771756834aec0bdae0`);
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
@@ -222,7 +222,7 @@ The Modrinth 1.7 changelog explicitly says Sound-school content was removed and 
 
 ### Black Arcana / Stage 07.07 boundary
 
-No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot be admitted merely because it is a familiar, tameable, spellcasting pet or nearby entity.
+No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot be admitted merely porque it is a familiar, tameable, spellcasting pet or nearby entity.
 
 Provider-specific ownership integration remains **fail-closed** until a current exact-version seam is proven and deliberately adapted. The catalog evidence identifies provider-owned familiar state, but source↔physical exactness and a stable ownership contract are not closed strongly enough to promote a runtime adapter.
 
@@ -234,26 +234,29 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
+| 60 | 2BL / #207 | `goety_cataclysm` | CANÔNICO; +52 semânticos; exact-artifact; fechamento durável em `main@d41fe957...`; validação final preservada por `main@43e343df...` / CI #2540 GREEN |
+| 59 | 2BL / #207 | `goetyiron` | CANÔNICO; +14 semânticos; exact-artifact; fechamento durável em `main@d41fe957...`; validação final preservada por `main@43e343df...` / CI #2540 GREEN |
+| 58 | 2BK / #204 | `ignissoulfires_spellbooks` | CANÔNICO; `ZERO_BRIDGE_INFRA`; +0 semântico; exact-SHA post-merge CI #2534 GREEN |
+| 57 | 2BH / #198 | `goety` | CANÔNICO em `main@4fcc40aa...`; +361 semânticos; CI pós-merge #2524 GREEN |
+| 56 | 2BG / #195 | `leylines` | CANÔNICO em `main@88f042f...`; +14 semânticos; CI pós-merge #2504 GREEN |
 | 55 | 2BE / #189 | `cataclysm_spellbooks` | CANÔNICO em `main@cce7f517...`; HEAD auditado CI #2483 GREEN; CI pós-merge #2484 attempt 2 GREEN |
 | 54 | 2BD / #186 | `alshanex_familiars` | CANÔNICO em `main@95ec538f...`; HEAD auditado CI #2464 GREEN; CI pós-merge #2465 GREEN |
 | 53 | 2AY / #175 | `gtbcs_spell_lib` | CANÔNICO em `main@9a4e1cd...`; CI pós-merge #2421 GREEN |
 | 52 | 2AX / #166 | `familiarslib` | CANÔNICO em `main@4238275...`; CI pós-merge #2337 GREEN |
-| 51 | 2AW / #161 | `apotheoticcreation` | CANÔNICO; ver nota histórica de GameTest no coverage/checkpoint |
-| 50 | 2AV / #160 | `apotheosis` | CANÔNICO |
-| 49 | 2AU / #158 | `apothic_enchanting` | CANÔNICO |
 
 ## Próxima seleção
 
-Phase 2BF / Somake e Phase 2BG / Leylines estão encerradas e documentadas. A próxima seleção deve escolher apenas um blocker ainda aberto com evidência nova capaz de reduzir incerteza, não repetir publisher prose já catalogada.
+Phase 2BF / Somake, Phase 2BG / Leylines, Phase 2BH / Goety e Phase 2BL / Goety addons já foram reconciliadas no nível de evidência descrito acima. Não reiniciar esses fechamentos a partir de branches antigas.
 
-Prioridades ainda abertas:
+Blockers atualmente **PARKED até existir input novo**:
 
-- Goety 3.1.4 — exact JAR/source equivalence, Focus reachability/dedup e ritual identities permanecem abertas;
-- Not Enough Glyphs 4.6.1 — 39 registrations source-enabled continuam condicionais até reconciliação da config efetiva do pack.
+- Not Enough Glyphs 4.6.1 — 39 registrations source-enabled permanecem `CONDITIONAL`; cada glyph usa config `SERVER` `not_enough_glyphs/<glyph>.toml` / `[general].enabled`, e nenhum conjunto implantado de world/server overrides está presente no repositório ou nos materiais físicos atualmente disponíveis;
+- Gaze 1.1.7.1 — o registry exato e Soulward Shield já estão fechados; os 26 Spirit Rites permanecem `CONDITIONAL` somente porque o valor COMMON implantado de `disableGazeRites` não está disponível;
+- Somake Spells 1.0.8-fix — o registry exato de 67 identidades está fechado, mas config efetiva de `enableSpellLockSystem` e survival acquisition/reachability completa continuam sem autoridade suficiente.
 
-Gaze 1.1.7.1 continua com denominador granular aberto, mas fica **PARKED** até surgir evidência exata/current nova para registry, reachability, acquisition ou runtime. O checkpoint já mergeado não deve ser refeito.
+A próxima seleção deve escolher **outro componente ainda aberto** para o qual exista evidência current/exact capaz de reduzir incerteza de inventário ou de classificação. Defaults de provider, publisher prose ou branches preparatórias não substituem estado implantado. Se um candidato só puder avançar com navegação/material externo indisponível, registrar a pendência e passar ao próximo blocker seguro em vez de fabricar fechamento.
 
-Se nenhum desses inputs novos estiver disponível, o estado correto é manter os blockers fail-closed em vez de fabricar fechamento ou avançar Phase 3.
+Os estados canônicos permanecem **1316 objetos semânticos mínimos / 60 de 100 componentes** até uma nova promoção sustentada por evidência.
 
 ## Regras
 
