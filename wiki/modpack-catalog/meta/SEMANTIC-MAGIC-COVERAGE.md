@@ -42,7 +42,7 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
 
-## Phase 2BL canonical candidate — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2
+## Phase 2BL — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2
 
 Exact hash-matched artifact evidence closes both remaining Goety addon rows without duplicating base-Goety ownership. Goety Iron contributes **2 Focus + 12 distinct non-Focus rituals = +14**. Goety Cataclysm contributes **28 Focus + 24 distinct non-Focus rituals = +52**. Focus-acquisition recipes are deduplicated against the Focus identities themselves. Targeted scans find no mod-loaded conditions on the counted non-Focus rituals, while registry initializers have zero conditional branches and zero config references; no enable/disable-like registration gate was found.
 
@@ -138,7 +138,7 @@ Exact installed-line source at `TheDrOfDoctoring/bloodlines@c8fd517d204d09dfcb9a
 
 The same exact source closes the missing reachability question: the generated configured Gravebound tree does not include `gravebound_sorcerous_strike`, and `HunterBloodlinesConfig.graveboundDefaults` grants only the four Gravebound rank nodes by default. Repository-wide inspection finds no provider-native alternate grant dedicated to Sorcerous Strike; generic Bloodline task/command surfaces add perk points rather than directly granting this skill. `SkillHandlerMixin` only adds Bloodlines-specific cost/rank/default checks around Vampirism skill enabling and does not create a second acquisition path.
 
-Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**; after later provider closures, the global strict total is **1249**.
+Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**; after Phase 2BL, the global strict total is **1316**.
 
 ### Werewolves 2.0.3.3 Leap correction
 
@@ -238,8 +238,8 @@ Other provider directories that have not yet been normalized into a semantic-obj
 ## Important interpretation rules
 
 1. **1316 is not “1316 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1249 by the 100 provider-component denominator. The current component target is `60/100`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1249 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+2. Do not divide 1316 by the 100 provider-component denominator. The current component target is `60/100`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1316 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.

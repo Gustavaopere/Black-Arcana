@@ -1,6 +1,6 @@
 # Goety Iron 3.1 — exact artifact audit
 
-Status: `EXACT HASH-MATCHED / COUNTED_EXACT / COMPONENT #59 CANDIDATE UNTIL MERGE`
+Status: `EXACT HASH-MATCHED / COUNTED_EXACT / COMPONENT #59`
 
 Physical SHA-1 and publisher artifact SHA-1 are identical: `c8529867e798661ed01fb2948abda23735888fc6` (CurseForge `1367643 / 8662179`).
 

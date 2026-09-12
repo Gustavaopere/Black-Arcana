@@ -1,6 +1,6 @@
 # Goety Cataclysm 1.21.1-1.8.2 — exact artifact audit
 
-Status: `EXACT HASH-MATCHED / COUNTED_EXACT / COMPONENT #60 CANDIDATE UNTIL MERGE`
+Status: `EXACT HASH-MATCHED / COUNTED_EXACT / COMPONENT #60`
 
 Physical SHA-1 and publisher artifact SHA-1 are identical: `4e3052a082200371b36e1a88fdce05e294d82757` (CurseForge `1224214 / 8518940`).
 
