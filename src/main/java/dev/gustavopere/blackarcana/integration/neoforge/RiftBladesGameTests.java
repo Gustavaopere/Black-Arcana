@@ -20,88 +20,116 @@ public final class RiftBladesGameTests {
     private RiftBladesGameTests() { }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 80)
-    public static void markedStrikeDealsBoundedDamageAndUsesSafeLandingCandidate(GameTestHelper helper) throws Exception {
-        var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
-        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(7, 2, 1));
+    public static void markedStrikeDealsBoundedDamageAndUsesSafeLandingCandidate(GameTestHelper helper) {
+        var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(4, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
-        float healthBefore = target.getHealth();
-        double distanceBefore = caster.distanceToSqr(target);
 
-        double landingX = target.getX() - 2.0D;
-        double landingY = target.getY();
-        double landingZ = target.getZ();
-        BlockPos landingPos = BlockPos.containing(landingX, landingY, landingZ);
-        helper.getLevel().setBlockAndUpdate(landingPos, Blocks.AIR.defaultBlockState());
-        helper.getLevel().setBlockAndUpdate(landingPos.above(), Blocks.AIR.defaultBlockState());
-        var landingBox = caster.getBoundingBox().move(
-            landingX - caster.getX(),
-            landingY - caster.getY(),
-            landingZ - caster.getZ());
-        helper.assertTrue(helper.getLevel().noBlockCollision(caster, landingBox),
-            "Rift Blades safe-landing fixture must be collision-free before settlement");
+        // The embedded GameTest harness may expose a newly spawned entity object before the
+        // ServerLevel UUID index used by the production runtime sees it. Settle one server tick so
+        // this test measures Rift Blades admission/settlement rather than fixture registration order.
+        helper.runAtTickTime(1L, () -> {
+            helper.assertTrue(helper.getLevel().getEntity(caster.getUUID()) == caster,
+                "caster fixture must be visible through the server-level UUID index before Rift Blades lookup");
+            helper.assertTrue(helper.getLevel().getEntity(target.getUUID()) == target,
+                "target fixture must be visible through the server-level UUID index before Rift Blades lookup");
 
-        Object result = resolveMarkedStrike(
-            server,
-            caster.getUUID(),
-            target.getUUID(),
-            3.0D,
-            landingX,
-            landingY,
-            landingZ,
-            8.0D);
+            float healthBefore = target.getHealth();
+            double distanceBefore = caster.distanceToSqr(target);
+            double landingX = target.getX() - 2.0D;
+            double landingY = target.getY();
+            double landingZ = target.getZ();
+            BlockPos landingPos = BlockPos.containing(landingX, landingY, landingZ);
+            helper.getLevel().setBlockAndUpdate(landingPos, Blocks.AIR.defaultBlockState());
+            helper.getLevel().setBlockAndUpdate(landingPos.above(), Blocks.AIR.defaultBlockState());
+            var landingBox = caster.getBoundingBox().move(
+                landingX - caster.getX(),
+                landingY - caster.getY(),
+                landingZ - caster.getZ());
+            helper.assertTrue(helper.getLevel().noBlockCollision(caster, landingBox),
+                "Rift Blades safe-landing fixture must be collision-free before settlement");
 
-        ArcanaDecision decision = decision(result);
-        double dealt = damageDealt(result);
-        helper.assertTrue(decision.allowed(), "eligible marked strike must be admitted");
-        helper.assertTrue(dealt > 0.0D && dealt <= 3.0D,
-            "Rift Blades must report only real bounded health loss");
-        helper.assertTrue(target.getHealth() < healthBefore,
-            "eligible marked strike must damage the resolved target");
-        helper.assertTrue(gapClosed(result),
-            "safe loaded landing candidate must allow optional gap-close; code=" + gapCloseCode(result));
-        helper.assertTrue(caster.distanceToSqr(target) < distanceBefore,
-            "successful gap-close must move the caster closer to the marked target");
-        helper.succeed();
+            try {
+                Object result = resolveMarkedStrike(
+                    server,
+                    caster.getUUID(),
+                    target.getUUID(),
+                    3.0D,
+                    landingX,
+                    landingY,
+                    landingZ,
+                    8.0D);
+
+                ArcanaDecision decision = decision(result);
+                double dealt = damageDealt(result);
+                helper.assertTrue(decision.allowed(), "eligible marked strike must be admitted");
+                helper.assertTrue(dealt > 0.0D && dealt <= 3.0D,
+                    "Rift Blades must report only real bounded health loss");
+                helper.assertTrue(target.getHealth() < healthBefore,
+                    "eligible marked strike must damage the resolved target");
+                helper.assertTrue(gapClosed(result),
+                    "safe loaded landing candidate must allow optional gap-close; code=" + gapCloseCode(result));
+                helper.assertTrue(caster.distanceToSqr(target) < distanceBefore,
+                    "successful gap-close must move the caster closer to the marked target");
+                helper.succeed();
+            } catch (Exception reflectionFailure) {
+                helper.fail("Rift Blades marked-strike fixture invocation failed: " + reflectionFailure);
+            }
+        });
     }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 80)
-    public static void blockedLandingSkipsGapCloseWithoutRollingBackDamage(GameTestHelper helper) throws Exception {
-        var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(2, 2, 1));
-        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(7, 2, 1));
+    public static void blockedLandingSkipsGapCloseWithoutRollingBackDamage(GameTestHelper helper) {
+        var caster = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 1));
+        var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(4, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
-        float healthBefore = target.getHealth();
-        double casterXBefore = caster.getX();
-        double casterYBefore = caster.getY();
-        double casterZBefore = caster.getZ();
-        double landingX = target.getX() - 2.0D;
-        double landingY = target.getY();
-        double landingZ = target.getZ();
-        BlockPos blocked = BlockPos.containing(landingX, landingY, landingZ);
-        helper.getLevel().setBlockAndUpdate(blocked, Blocks.STONE.defaultBlockState());
-        helper.getLevel().setBlockAndUpdate(blocked.above(), Blocks.STONE.defaultBlockState());
 
-        Object result = resolveMarkedStrike(
-            server,
-            caster.getUUID(),
-            target.getUUID(),
-            3.0D,
-            landingX,
-            landingY,
-            landingZ,
-            8.0D);
+        // The runtime resolves both endpoints through ServerLevel.getEntity(UUID). Give the GameTest
+        // fixture one tick to enter that index before exercising damage plus optional displacement.
+        helper.runAtTickTime(1L, () -> {
+            helper.assertTrue(helper.getLevel().getEntity(caster.getUUID()) == caster,
+                "caster fixture must be visible through the server-level UUID index before Rift Blades lookup");
+            helper.assertTrue(helper.getLevel().getEntity(target.getUUID()) == target,
+                "target fixture must be visible through the server-level UUID index before Rift Blades lookup");
 
-        helper.assertTrue(decision(result).allowed(),
-            "a blocked optional landing must not cancel an otherwise legal marked strike");
-        helper.assertTrue(damageDealt(result) > 0.0D && target.getHealth() < healthBefore,
-            "damage settlement must remain independent from optional displacement");
-        helper.assertTrue(!gapClosed(result), "blocked destination must fail closed for displacement");
-        helper.assertTrue(!gapCloseCode(result).isBlank(),
-            "blocked displacement must expose a stable diagnostic reason");
-        helper.assertTrue(Math.abs(caster.getX() - casterXBefore) < 0.01D
-                && Math.abs(caster.getY() - casterYBefore) < 0.01D
-                && Math.abs(caster.getZ() - casterZBefore) < 0.01D,
-            "blocked gap-close must leave caster position unchanged");
-        helper.succeed();
+            float healthBefore = target.getHealth();
+            double casterXBefore = caster.getX();
+            double casterYBefore = caster.getY();
+            double casterZBefore = caster.getZ();
+            double landingX = target.getX() - 2.0D;
+            double landingY = target.getY();
+            double landingZ = target.getZ();
+            BlockPos blocked = BlockPos.containing(landingX, landingY, landingZ);
+            helper.getLevel().setBlockAndUpdate(blocked, Blocks.STONE.defaultBlockState());
+            helper.getLevel().setBlockAndUpdate(blocked.above(), Blocks.STONE.defaultBlockState());
+
+            try {
+                Object result = resolveMarkedStrike(
+                    server,
+                    caster.getUUID(),
+                    target.getUUID(),
+                    3.0D,
+                    landingX,
+                    landingY,
+                    landingZ,
+                    8.0D);
+
+                helper.assertTrue(decision(result).allowed(),
+                    "a blocked optional landing must not cancel an otherwise legal marked strike");
+                helper.assertTrue(damageDealt(result) > 0.0D && target.getHealth() < healthBefore,
+                    "damage settlement must remain independent from optional displacement");
+                helper.assertTrue(!gapClosed(result), "blocked destination must fail closed for displacement");
+                helper.assertTrue(!gapCloseCode(result).isBlank(),
+                    "blocked displacement must expose a stable diagnostic reason");
+                helper.assertTrue(Math.abs(caster.getX() - casterXBefore) < 0.01D
+                        && Math.abs(caster.getY() - casterYBefore) < 0.01D
+                        && Math.abs(caster.getZ() - casterZBefore) < 0.01D,
+                    "blocked gap-close must leave caster position unchanged");
+                helper.succeed();
+            } catch (Exception reflectionFailure) {
+                helper.fail("Rift Blades blocked-landing fixture invocation failed: " + reflectionFailure);
+            }
+        });
     }
 
     private static Object resolveMarkedStrike(
