@@ -8,12 +8,12 @@ Provider school: `farmers_spell:gluttony`
 
 | Registry id | Display name in provider locale | Cast profile observed from provider class/config | Catalog disposition |
 |---|---|---|---|
-| `farmers_spell:goodberry` | Goodberry | server-side item conjuration; instant/minion cast profile | `COUNTED_EXACT` |
-| `farmers_spell:phantom_loot` | Ubiquitous | channelled provider/Foodgeist interaction surface | `COUNTED_EXACT` |
-| `farmers_spell:seal_coat` | Grease Coating | long-duration provider status/defensive food interaction surface | `COUNTED_EXACT` |
-| `farmers_spell:bad_apple` | Rotten Apple | instant provider projectile surface | `COUNTED_EXACT` |
-| `farmers_spell:chaos_slash` | Chaotic Pastry Slash | instant provider slash/projectile attack surface | `COUNTED_EXACT` |
-| `farmers_spell:preserve_circle` | Brining Ritual | long-cast provider area-effect/entity surface | `COUNTED_EXACT` |
+| `farmers_spell:goodberry` | Goodberry | server-side item conjuration; instant/minion cast profile | `COUNTED_SOURCE_PINNED` |
+| `farmers_spell:phantom_loot` | Ubiquitous | channelled provider/Foodgeist interaction surface | `COUNTED_SOURCE_PINNED` |
+| `farmers_spell:seal_coat` | Grease Coating | long-duration provider status/defensive food interaction surface | `COUNTED_SOURCE_PINNED` |
+| `farmers_spell:bad_apple` | Rotten Apple | instant provider projectile surface | `COUNTED_SOURCE_PINNED` |
+| `farmers_spell:chaos_slash` | Chaotic Pastry Slash | instant provider slash/projectile attack surface | `COUNTED_SOURCE_PINNED` |
+| `farmers_spell:preserve_circle` | Brining Ritual | long-cast provider area-effect/entity surface | `COUNTED_SOURCE_PINNED` |
 
 ## Registration closure
 
@@ -37,6 +37,6 @@ No Farmer's Spell override of those three gates was found for the six registered
 
 ## Counting result
 
-Exact semantic delta candidate: **+6**.
+Source-pinned semantic delta candidate: **+6**.
 
 No cooking recipe, food, gear item, status effect, school identity, projectile/entity implementation or acquisition recipe is double-counted as an additional spell merely because it supports one of the six actions.
