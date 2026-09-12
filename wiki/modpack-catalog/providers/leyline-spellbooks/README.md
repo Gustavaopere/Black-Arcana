@@ -1,6 +1,6 @@
 # Leyline Spellbooks 1.0.3
 
-Status: `EXACT INSTALLED ARTIFACT IDENTITY / 9 PUBLIC SIGNATURE NAMES / COMPLETE REGISTRY UNKNOWN / FAIL-CLOSED`
+Status: `EXACT HASH-MATCHED 1.0.3 ARTIFACT / 14 CURRENT REGISTERED SPELL IDENTITIES / NO PROVIDER-SPECIFIC SPELL LOCK OBSERVED / HOST RUNTIME/API QA FAIL-CLOSED`
 
 ## Installed authority
 
@@ -99,32 +99,34 @@ Leyline Rifts are provider-owned bounded wave encounters. Black Arcana domains a
 
 Time, portals and spatial control are not sufficient evidence that Leyline is an Order provider. Order candidates still require their own law/seal/constraint identity and semantic deduplication.
 
+## Phase 2BG exact-artifact closure
+
+The previous nine-name publisher list is now historical lower-bound evidence, not the current inventory ceiling. Isolated non-merge PR #194 materialized CurseForge File ID `8565076`, required SHA-1 equality with the physical pack, and closed the installed registry at **14 unconditional provider spell identities**.
+
+Exact IDs and registry fields/classes are recorded in [EXACT-1.0.3-SPELL-INVENTORY.md](EXACT-1.0.3-SPELL-INVENTORY.md); audit methodology and clean-room boundaries are recorded in [EXACT-1.0.3-ARTIFACT-AUDIT.md](EXACT-1.0.3-ARTIFACT-AUDIT.md).
+
+The exact provider artifact exposes no Leylines-specific spell lock or conditional registration gate. Exact Iron's 3.16.3 source corroborates ordinary host eligibility: the Ley school uses the seven-argument `SchoolType` contract (`requiresLearning=false`, `allowLooting=true`), the 14 spell classes do not override `allowLooting()`/`isEnabled()`, and the generic scroll path can select enabled loot-eligible addon spells without a school filter. Leylines additionally injects a dedicated `charge_leyline` scroll. Deployed generic Iron's per-spell config and full-pack runtime behavior remain separate QA rather than being inferred here.
+
+The Phase 2BG candidate semantic delta is **+14**. Canonical totals remain 874 semantic objects / 55 of 100 components until the durable PR merges and exact post-merge CI is green.
+
 ## Current exactness ceiling
 
-Verified:
+Verified from the exact installed artifact:
 
-- exact installed JAR name/mod id/runtime;
-- physical modlist SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59`, independently corroborated against CurseForge File ID `8565076`;
-- exact CurseForge project/file/release identity;
-- ARR license;
-- provider school/world-loop description;
-- nine public signature names and six individually described semantics;
-- public 1.0.3 rift rules.
+- exact JAR/mod id/runtime/hash and CurseForge project/file;
+- one `DeferredRegister<AbstractSpell>` with 14 unconditional spell registrations;
+- exact 14 spell IDs/classes and `leylines:ley` school identity;
+- exact provider progression resource IDs for Ley Crystal, Leyline Codex and Ley Staff;
+- codex/staff recipes and advancement chain identities;
+- exact dedicated `charge_leyline` scroll injection;
+- exact Ley-school/default facts plus Iron's 3.16.3 generic scroll-selection contract, with deployed generic host config still a separate runtime-QA boundary.
 
-Not verified:
+Still fail-closed / separate from this catalog closure:
 
-- total spell count;
-- spell registry IDs/classes;
-- levels/rarities/mana/cooldowns/cast times/ranges/damage formulas;
-- exact charge implementation;
-- item/block/entity/effect/attribute registry inventories;
-- recipes/loot probabilities;
-- persistence/network/API hooks;
-- multiplayer ownership semantics;
-- exact supported integration seam beyond normal Iron's addon dependency.
+- assembled-pack final numerical config values and balance QA;
+- exact final loot probabilities after all modifiers/datapacks;
+- pillar/rift persistence structures, networking schema and multiplayer ownership internals;
+- a stable supported Black Arcana adapter/API seam;
+- full-modpack runtime acceptance.
 
-No public source repository for the exact 1.0.3 build was located. The official CurseForge download flow was reached, but the permitted browser/runtime did not expose inspectable JAR bytes. No Java bytecode was decompiled.
-
-**PENDÊNCIA — REQUER ARTEFATO EXATO INSPECIONÁVEL / NAVEGAÇÃO EXTERNA CAPAZ DE ENTREGAR O BINÁRIO**
-
-Until that gate is resolved, this provider remains `FAIL-CLOSED` for internal/API claims and must not be marked `9/9 COMPLETE` or registry-complete.
+Leyline remains authority for its school, spells, progression, portal/anchor state and pillar/rift lifecycle. Black Arcana must not duplicate those systems.

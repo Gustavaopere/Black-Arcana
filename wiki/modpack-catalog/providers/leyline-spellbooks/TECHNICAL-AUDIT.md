@@ -25,23 +25,21 @@ Consequences:
 - internal registries/classes/API/hooks cannot be inferred from names or from another Iron's addon;
 - ARR prevents treating binary/source inspection as permission to copy implementation or assets.
 
-## Binary retrieval status
+## Exact binary audit status
 
-The official CurseForge file page and manual download flow were reached and confirm File ID 8565076. The file page publishes the Curse Maven coordinate. The browser exposed only the download countdown page rather than the binary redirect, and the local shell environment had no external DNS resolution for Curse Maven/ForgeCDN.
+The previous environment-specific binary-retrieval blocker is closed by isolated non-merge PR #194. CurseForge File ID `8565076` was materialized through Curse Maven and hard-gated against physical SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` before every inspection pass.
 
-Therefore, during this checkpoint:
+Evidence runs/artifacts:
 
-- exact JAR identity: `VERIFIED`;
-- inspectable binary bytes: `NOT OBTAINED`;
-- hash recomputation in this environment: `NOT PERFORMED`;
-- bytecode/resource extraction: `NOT PERFORMED`;
-- decompilation: `NOT PERFORMED`.
+- primary exact-artifact audit: `34666436710 / 10289437099`;
+- targeted reachability audit: `34666652534 / 10289292617`;
+- school/loot-gate audit: `34667641655 / 10289184487`.
 
-This is an environment/evidence limit, not evidence that the binary is unavailable publicly.
+Only factual identities, resource paths, member signatures, narrow registry/default-control facts and structured acquisition/progression references were retained. The provider binary itself is not committed or redistributed.
 
-## Public spell inventory ceiling
+## Exact spell inventory supersedes the public lower bound
 
-The publisher names nine `Signature Spells`:
+The publisher names nine `Signature Spells`, but the exact installed registry closes fourteen current identities. The historic publisher list is:
 
 1. Blink Step
 2. Rift Gate
@@ -57,21 +55,16 @@ The same publisher text says `and more`, so these nine names are a lower bound, 
 
 Six receive explicit individual semantic descriptions. Beam, Ley Blast and Eclipse are named together under a general charge/power sentence; no individual mechanic is attributable to any one of those three from that text alone.
 
-## Fields blocked pending exact-artifact inspection
+## Fields still outside the exact identity closure
 
-For every Leyline spell unless a publisher source explicitly states otherwise:
+Registry identity and current active/survival eligibility are now closed strongly enough for the semantic ledger. The following remain separate evidence gates unless an exact source/config/runtime observation states otherwise:
 
-- registry ID/class: `UNVERIFIED`
-- actual registered school per spell: `UNVERIFIED`
-- rarity/levels: `UNVERIFIED`
-- mana/cooldown/cast time/recast: `UNVERIFIED`
-- damage/healing/power formulas: `UNVERIFIED`
-- range/area/duration: `UNVERIFIED`
-- exact targeting/PvP/boss rules: `UNVERIFIED`
-- charge storage/generation/spend: `UNVERIFIED`
-- particles/sounds/animations: `UNVERIFIED`
-- item/scroll/codex acquisition: `UNVERIFIED`
-- networking/persistence/API hooks: `UNVERIFIED`
+- assembled-pack numerical spell balance/config values;
+- final loot probabilities after complete datapack/modifier composition;
+- exact charge accounting internals;
+- pillar/rift persistence/network implementation and multiplayer ownership;
+- stable public API/hooks suitable for a Black Arcana adapter;
+- complete-modpack runtime QA.
 
 ## Publisher-confirmed 1.0.3 rift rules
 
@@ -107,4 +100,4 @@ Phase 2N consolidates them into `providers/leyline-spellbooks/` and removes the 
 
 ## State
 
-`EXACT INSTALLED IDENTITY / PUBLIC SEMANTIC SURFACE ADVANCED / 9 SIGNATURE NAMES LOWER BOUND / COMPLETE REGISTRY UNKNOWN / BINARY + API QA PENDING / FAIL-CLOSED`
+`EXACT HASH-MATCHED 1.0.3 ARTIFACT / 14 CURRENT SPELL IDENTITIES / CURRENT ELIGIBILITY CLOSED / RUNTIME + API QA FAIL-CLOSED`

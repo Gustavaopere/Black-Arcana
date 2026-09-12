@@ -8,7 +8,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica após Phase 2BF / PR #192: `cc4cfc1d740f7714188e25a3586d8b43bb5eb969`; HEAD limpo auditado `85b15aec9faf395cef5460d06a17be58ccd16af8` CI #2490 GREEN; post-merge CI #2491 GREEN no merge SHA exato, incluindo canonical QA-JAR publication;
+- `main` canônica após Phase 2BF final evidence / PR #193: `91fe79e8479f7c82a7e922f64d4806a3e7abafe1`; durable PR #192 HEAD `85b15aec9faf395cef5460d06a17be58ccd16af8` passou CI #2490 e merge `cc4cfc1d740f7714188e25a3586d8b43bb5eb969` passou CI #2491; final-evidence PR #193 foi mergeado como `91fe79e8479f7c82a7e922f64d4806a3e7abafe1` e o exact-SHA post-merge CI #2493 ficou GREEN;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
@@ -46,6 +46,14 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - cobertura canônica de componentes após Phase 2BE: **55/100 = 55%**; componente #55 fechado pelo PR #189 com CI pré/pós-merge verde no SHA exato.
 
 O valor 55/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BG — Leyline Spellbooks 1.0.3 — promotion candidate
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `leylines` | `leylines-1.0.3.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT HASH-MATCHED ARTIFACT AUDIT / 14 UNCONDITIONAL REGISTERED SPELL IDENTITIES / NO PROVIDER-SPECIFIC SPELL LOCK OBSERVED / GENERIC HOST CONFIG QA SEPARATE / +14 CANDIDATE SEMANTIC DELTA / CANDIDATE #56 |
+
+Evidence: non-merge PR #194; primary `34666436710 / 10289437099`; reachability `34666652534 / 10289292617`; school/loot gate `34667641655 / 10289184487`; exact Iron's 3.16.3 host source `e4056af90302d37eb1739f5ff05020b020e6e252`. Canonical totals remain 874 / 55/100 until durable merge and post-merge CI. Candidate totals are 888 / 56/100.
 
 ## Phase 2BF — Somake Spells 1.0.8-fix — exact registry, sem novo componente
 
@@ -208,12 +216,10 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 ## Próxima seleção
 
-Phase 2AY e a reconciliação Gaze/PR #180 estão encerradas. A próxima auditoria só deve abrir quando houver evidência nova capaz de reduzir um blocker, não para repetir publisher prose já catalogada.
+Phase 2BF / Somake está encerrada e documentada; Phase 2BG / Leylines está em promotion candidate neste branch. A próxima seleção após o fechamento Phase 2BG deve escolher apenas um blocker ainda aberto com evidência nova capaz de reduzir incerteza, não repetir publisher prose já catalogada.
 
 Prioridades ainda abertas:
 
-- `somakespells` 1.0.8-fix — publisher informa `over 50 spells`, sem registry atual completo; requer fonte/artefato atual ou nova evidência publisher granular;
-- `leylines` 1.0.3 — nove nomes públicos são apenas lower bound; requer artefato/source atual inspecionável;
 - Goety 3.1.4 — exact JAR/source equivalence, Focus reachability/dedup e ritual identities permanecem abertas;
 - Not Enough Glyphs 4.6.1 — 39 registrations source-enabled continuam condicionais até reconciliação da config efetiva do pack.
 
