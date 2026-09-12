@@ -8,14 +8,14 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica após Phase 2BF final evidence / PR #193: `91fe79e8479f7c82a7e922f64d4806a3e7abafe1`; durable PR #192 HEAD `85b15aec9faf395cef5460d06a17be58ccd16af8` passou CI #2490 e merge `cc4cfc1d740f7714188e25a3586d8b43bb5eb969` passou CI #2491; final-evidence PR #193 foi mergeado como `91fe79e8479f7c82a7e922f64d4806a3e7abafe1` e o exact-SHA post-merge CI #2493 ficou GREEN;
+- `main` canônica após Phase 2BG durable / PR #195: `88f042f68429ff920314a7ec3a6923369edc93fd`; HEAD limpo `a9d7b55044230bbb011f7233ffd75d9a8321489b` passou CI #2503 e o exact-SHA post-merge CI #2504 ficou GREEN, incluindo canonical QA-JAR publication;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BE fecha **874 objetos mágicos semânticos** com o inventário exato Cataclysm 1.1.13. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BG fecha **888 objetos mágicos semânticos** com a promoção exata de Leyline Spellbooks 1.0.3. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -29,7 +29,8 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - delta semântico Alshanex 4.0.3: **+18**;
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
 - delta semântico Somake 1.0.8-fix Phase 2BF: **+0** (`67 exact registry`, reachability/config efetivo ainda `CONDITIONAL`);
-- mínimo estrito global canônico: **874**;
+- delta semântico Leyline Spellbooks 1.0.3 Phase 2BG: **+14** (`14 exact unconditional registry identities`);
+- mínimo estrito global canônico: **888**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -43,17 +44,17 @@ A reconciliação Gaze 1.1.7.1 também adiciona **+0** ao mínimo estrito: publi
 - a reconciliação Gaze permanece parcial e **não** cria novo componente canônico fechado;
 - Phase 2BD / PR #186: HEAD auditado `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` passou Black Arcana CI #2464;
 - PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
-- cobertura canônica de componentes após Phase 2BE: **55/100 = 55%**; componente #55 fechado pelo PR #189 com CI pré/pós-merge verde no SHA exato.
+- cobertura canônica de componentes após Phase 2BG: **56/100 = 56%**; componente #56 fechado pelo PR #195 com CI #2503 no HEAD limpo e CI #2504 no merge SHA exato.
 
-O valor 55/100 nunca substitui a métrica semântica de magias.
+O valor 56/100 nunca substitui a métrica semântica de magias.
 
-## Phase 2BG — Leyline Spellbooks 1.0.3 — promotion candidate
+## Phase 2BG — Leyline Spellbooks 1.0.3 — componente #56 canônico
 
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
-| `leylines` | `leylines-1.0.3.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT HASH-MATCHED ARTIFACT AUDIT / 14 UNCONDITIONAL REGISTERED SPELL IDENTITIES / NO PROVIDER-SPECIFIC SPELL LOCK OBSERVED / GENERIC HOST CONFIG QA SEPARATE / +14 CANDIDATE SEMANTIC DELTA / CANDIDATE #56 |
+| `leylines` | `leylines-1.0.3.jar` | EXACT PHYSICAL / EXACT CURSEFORGE FILE / EXACT HASH-MATCHED ARTIFACT AUDIT / 14 UNCONDITIONAL REGISTERED SPELL IDENTITIES / NO PROVIDER-SPECIFIC SPELL LOCK OBSERVED / GENERIC HOST CONFIG QA SEPARATE / +14 SEMANTIC MAGICS / #56 CANONICAL / POST-MERGE CI #2504 GREEN |
 
-Evidence: non-merge PR #194; primary `34666436710 / 10289437099`; reachability `34666652534 / 10289292617`; school/loot gate `34667641655 / 10289184487`; exact Iron's 3.16.3 host source `e4056af90302d37eb1739f5ff05020b020e6e252`. Canonical totals remain 874 / 55/100 until durable merge and post-merge CI. Candidate totals are 888 / 56/100.
+Evidence: non-merge PR #194; primary `34666436710 / 10289437099`; reachability `34666652534 / 10289292617`; school/loot gate `34667641655 / 10289184487`; exact Iron's 3.16.3 host source `e4056af90302d37eb1739f5ff05020b020e6e252`; durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` / CI #2503 GREEN; squash merge `88f042f68429ff920314a7ec3a6923369edc93fd` / post-merge CI #2504 GREEN. Canonical totals are **888 / 56/100**.
 
 ## Phase 2BF — Somake Spells 1.0.8-fix — exact registry, sem novo componente
 
@@ -216,7 +217,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 ## Próxima seleção
 
-Phase 2BF / Somake está encerrada e documentada; Phase 2BG / Leylines está em promotion candidate neste branch. A próxima seleção após o fechamento Phase 2BG deve escolher apenas um blocker ainda aberto com evidência nova capaz de reduzir incerteza, não repetir publisher prose já catalogada.
+Phase 2BF / Somake e Phase 2BG / Leylines estão encerradas e documentadas. A próxima seleção deve escolher apenas um blocker ainda aberto com evidência nova capaz de reduzir incerteza, não repetir publisher prose já catalogada.
 
 Prioridades ainda abertas:
 

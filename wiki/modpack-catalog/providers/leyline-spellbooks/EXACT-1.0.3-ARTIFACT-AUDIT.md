@@ -77,4 +77,4 @@ Leyline Spellbooks is All Rights Reserved. The isolated binary audit retained on
 
 ## Disposition
 
-For Phase 2BG, the exact installed unconditional spell inventory is eligible for candidate `COUNTED_EXACT` promotion under the same registry-level precedent used by other exact Iron's-addon closures: **+14 semantic magic objects**. The canonical repository baseline remains 874 semantic objects / 55 of 100 provider components until the durable PR is merged and exact post-merge CI is green.
+For Phase 2BG, the exact installed unconditional spell inventory is canonically `COUNTED_EXACT` under the same registry-level precedent used by other exact Iron's-addon closures: **+14 semantic magic objects**. Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed CI #2503; squash merge `88f042f68429ff920314a7ec3a6923369edc93fd` passed exact-SHA post-merge CI #2504. The canonical repository totals are now **888 semantic objects / 56 of 100 provider components**.

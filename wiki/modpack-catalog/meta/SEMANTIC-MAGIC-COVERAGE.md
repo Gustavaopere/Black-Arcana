@@ -42,27 +42,27 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
 
-## Phase 2BG candidate — Leyline Spellbooks 1.0.3
+## Phase 2BG canonical — Leyline Spellbooks 1.0.3
 
-The canonical baseline entering this PR remains **874**. Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spell identities**. No Leylines-specific spell lock or conditional registration gate is present, and exact Iron's 3.16.3 school/default/scroll evidence corroborates ordinary host reachability; deployed generic host config remains separate runtime QA rather than a reason to reinterpret the exact registry. Phase 2BG therefore proposes Leylines as `COUNTED_EXACT` with **+14**, producing candidate Iron-ecosystem subtotal **541** and candidate strict minimum **888** (`199 + 541 + 42 + 55 + 25 + 26`).
+Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spell identities**. No Leylines-specific spell lock or conditional registration gate is present, and exact Iron's 3.16.3 school/default/scroll evidence corroborates ordinary host reachability; deployed generic host config remains separate runtime QA rather than a reason to reinterpret the exact registry. Leylines is therefore `COUNTED_EXACT` with **+14**.
 
-These candidate values do not become canonical until the durable PR merges and exact post-merge CI is green. The global denominator remains incomplete, so no semantic percentage is declared.
+Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Black Arcana CI **#2503** / run `34668329229`. It was squash-merged as `88f042f68429ff920314a7ec3a6923369edc93fd`; that exact merge SHA passed Black Arcana CI **#2504** / run `34668535721`, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest, dedicated-server smoke and canonical QA-JAR publication. The canonical Iron-ecosystem subtotal is now **541** and the strict semantic minimum is **888** (`199 + 541 + 42 + 55 + 25 + 26`). The global denominator remains incomplete, so no semantic percentage is declared.
 
 ## Strict reconstructible counted minimum
 
-**874 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BE.**
+**888 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BG.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
 - Ars ecosystem: **199**;
-- Iron's ecosystem and spell-content addons: **527**;
+- Iron's ecosystem and spell-content addons: **541**;
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
 - Hexalia ritual/infusion layer: **25**;
 - Malum Spirit Rite layer: **26**;
-- total: `199 + 527 + 42 + 55 + 25 + 26 = 874`.
+- total: `199 + 541 + 42 + 55 + 25 + 26 = 888`.
 
 ### Counted ledger
 
@@ -94,13 +94,14 @@ Arithmetic cross-check by provider family:
 | [Tunes n' Tomes](../providers/tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | `COUNTED_RELEASE_BOUNDED` | current publisher Melodic roster enumerates 16 spells; migrated Sound ownership is not duplicated under Alshanex/FamiliarsLib |
 | [Alshanex's Familiars](../providers/alshanex-familiars/README.md) | 4.0.3 | 18 | `COUNTED_EXACT` | exact hash-matched JAR closes 7 provider-owned spell registrations + 11 packaged `alshanex_familiars:ritual_recipe` identities; migrated Sound/Tunes content and external familiar casts are excluded |
 | [Cataclysm: Spellbooks](../providers/cataclysm-spellbooks/README.md) | 1.1.13 | 59 | `COUNTED_EXACT` | exact hash-matched JAR closes 59 unconditional `AbstractSpell` registrations; 10 additional root localization keys are unregistered in 1.1.13 and excluded |
+| [Leyline Spellbooks](../providers/leyline-spellbooks/README.md) | 1.0.3 | 14 | `COUNTED_EXACT` | exact hash-matched JAR closes 14 unconditional `AbstractSpell` registrations; no provider-specific spell lock/conditional registration gate is present; generic Iron's host config remains separate runtime QA |
 | [Eidolon: Repraised](../providers/eidolon-repraised/README.md) | 0.5.0.2 | 42 | `COUNTED_SOURCE_PINNED` | 18 normal/player-facing chants + 24 official ritual recipes; `undead_lure` empty cast and `basic_incense` dummy excluded; chant conversions are not extra spells |
 | [Vampirism](../providers/vampirism/README.md) | 1.10.13 | 19 | `COUNTED_SOURCE_PINNED` | 14 Vampire + 3 Hunter + 2 shared Lord registered player actions; counted as provider-native discrete supernatural actions, not Iron's spells |
 | [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike; exact source registers its action/skill/node/config but omits the node from the configured Gravebound tree and from all rank-default grants, so it is not normally survival-reachable in this build |
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **874** |  |  |
+| **Strict total** |  | **888** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -108,7 +109,7 @@ Exact installed-line source at `TheDrOfDoctoring/bloodlines@c8fd517d204d09dfcb9a
 
 The same exact source closes the missing reachability question: the generated configured Gravebound tree does not include `gravebound_sorcerous_strike`, and `HunterBloodlinesConfig.graveboundDefaults` grants only the four Gravebound rank nodes by default. Repository-wide inspection finds no provider-native alternate grant dedicated to Sorcerous Strike; generic Bloodline task/command surfaces add perk points rather than directly granting this skill. `SkillHandlerMixin` only adds Bloodlines-specific cost/rank/default checks around Vampirism skill enabling and does not create a second acquisition path.
 
-Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**; after later provider closures, the global strict total is **874**.
+Therefore Sorcerous Strike is classified `EXCLUDED` for the current semantic denominator as a registered/generated but not normally survival-reachable action in the exact 3.0.9 provider build. This statement does not claim that an operator command or externally modified datapack could never force-enable it; those are outside normal current-provider survival reachability. Bloodlines remains **28 counted actions**; after later provider closures, the global strict total is **888**.
 
 ### Werewolves 2.0.3.3 Leap correction
 
@@ -195,7 +196,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 874** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 888** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -210,9 +211,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **874 is not “874 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 874 by the 100 provider-component denominator. The Phase 2BE component target is `55/100`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 874 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **888 is not “888 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 888 by the 100 provider-component denominator. The current component target is `56/100`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 888 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
@@ -222,10 +223,10 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 To converge on a final denominator efficiently, prioritize:
 
-1. exact current inventory for `somakespells` 1.0.8-fix;
-2. exact current inventory for `leylines` 1.0.3;
-3. exact Gaze 1.1.7.1 rites/Geas inventory when materially new exact evidence becomes available;
-4. Goety 3.1.4 exact JAR/source reconciliation, Focus semantic reachability/deduplication and discrete ritual-identity inventory;
-5. current-pack config closure for the remaining conditional glyph/action rows.
+1. Goety 3.1.4 exact JAR/source reconciliation, Focus semantic reachability/deduplication and discrete ritual-identity inventory;
+2. current-pack config closure for Not Enough Glyphs 4.6.1 and other remaining conditional glyph/action rows;
+3. exact Gaze 1.1.7.1 rites/Geas inventory only when materially new exact evidence becomes available;
+4. exact Ignis Soulfires: Spellbooks 1.1.0 semantic registry inventory;
+5. remaining open provider inventories that can materially reduce the denominator blocker.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.

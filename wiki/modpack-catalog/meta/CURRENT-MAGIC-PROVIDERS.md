@@ -6,7 +6,7 @@
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo foi reconciliado para **100 componentes mágicos/cross-domain**, dos quais **55 estão canônicos** após Phase 2BE / PR #189. Esse 55/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo foi reconciliado para **100 componentes mágicos/cross-domain**, dos quais **56 estão canônicos** após Phase 2BG / PR #195. Esse 56/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
 A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui.
 
@@ -96,11 +96,11 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes 'n Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
 
-## Checkpoint Leyline Spellbooks — Phase 2BG candidate
+## Checkpoint Leyline Spellbooks — Phase 2BG canonical
 
 The exact physical `leylines-1.0.3.jar` / SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` was materialized from CurseForge File ID `8565076` and hash-matched. Its current provider registry contains **14 unconditional `AbstractSpell` identities**, superseding the public nine-name lower bound.
 
-Exact Ley-school/default evidence finds no provider-specific spell lock, and the exact Iron's 3.16.3 generic scroll-selection path corroborates ordinary host reachability. Candidate `COUNTED_EXACT` treatment is based on the exact unconditional registry; deployed generic host config remains separate runtime QA. Phase 2BG therefore proposes **874 -> 888** semantic objects and candidate component **#56 / 56/100**. Until merge plus exact post-merge CI, the canonical values remain 874 and 55/100.
+Exact Ley-school/default evidence finds no provider-specific spell lock, and the exact Iron's 3.16.3 generic scroll-selection path corroborates ordinary host reachability. `COUNTED_EXACT` treatment is based on the exact unconditional registry; deployed generic host config remains separate runtime QA. Durable PR #195 HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed CI #2503, squash merge `88f042f68429ff920314a7ec3a6923369edc93fd` passed exact-SHA post-merge CI #2504, and the canonical totals are now **888 semantic objects / 56/100 components**.
 
 Runtime numerical tuning, final loot probabilities, pillar/rift persistence/network internals and any Black Arcana adapter remain separate fail-closed gates.
 
@@ -108,7 +108,7 @@ Runtime numerical tuning, final loot probabilities, pillar/rift persistence/netw
 
 The exact physical `somakespells-1.0.8-1.21.1-fix.jar` / SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7` was materialized from File ID `8417850` and hash-matched. The provider owns **67 exact current spell registrations** under the present optional-provider set: 61 unconditional, three gated by physical `mowziesmobs`, and three gated by physical `iss_magicfromtheeast`.
 
-This does **not** add to the strict semantic numerator. Somake's `enableSpellLockSystem` is a `COMMON` config at `somakespells/general/common.toml`, code-default `false`; the deployed config is not available in authoritative project material, and full per-object survival acquisition/reachability is not closed. The canonical totals therefore remain **874 semantic objects** and **55/100 structural components**. Runtime mechanics, Aqua/T.O coexistence and any Black Arcana adapter remain fail-closed.
+This does **not** add to the strict semantic numerator. Somake's `enableSpellLockSystem` is a `COMMON` config at `somakespells/general/common.toml`, code-default `false`; the deployed config is not available in authoritative project material, and full per-object survival acquisition/reachability is not closed. At the Phase 2BF closure, the totals remained **874 semantic objects** and **55/100 structural components**; Phase 2BG later supersedes those current totals with 888 / 56/100. Runtime mechanics, Aqua/T.O coexistence and any Black Arcana adapter remain fail-closed.
 
 ## Checkpoint Cataclysm: Spellbooks — Phase 2BE
 
@@ -142,7 +142,7 @@ A cobertura source-level não converte o addon em authority de Black Arcana nem 
 
 O artefato físico permanece `goety-3.1.4.jar` / runtime `3.1.4`. A linha pública `Vivideru/Goety-3` foi auditada nos checkpoints 3.1.0 e 3.1.1: `ModItems.java` mantém o mesmo blob e contém **123 registros ativos de itens Focus** no intervalo observado. A lista oficial da Wiki com 110 nomes continua válida como subconjunto documental, não como registry completo atual.
 
-Esse avanço é **evidence-only +0**: não existe pin público exato de source 3.1.4 estabelecido, e registry membership não fecha sozinho reachability, deduplicação semântica, custos, hooks ou runtime. Por isso Goety continua com delta próprio +0; após aplicar o fechamento exato Phase 2BE de Cataclysm: Spellbooks 1.1.13, o mínimo semântico estrito global canônico é **874**, e Goety permanece authority de Soul Energy, Focus casting, servants, rituals e progression. O estado canônico detalhado está nos overlays de queue/capability e em `providers/goety/`.
+Esse avanço é **evidence-only +0**: não existe pin público exato de source 3.1.4 estabelecido, e registry membership não fecha sozinho reachability, deduplicação semântica, custos, hooks ou runtime. Por isso Goety continua com delta próprio +0; após aplicar os fechamentos exatos Phase 2BE de Cataclysm: Spellbooks 1.1.13 e Phase 2BG de Leyline Spellbooks 1.0.3, o mínimo semântico estrito global canônico é **888**, e Goety permanece authority de Soul Energy, Focus casting, servants, rituals e progression. O estado canônico detalhado está nos overlays de queue/capability e em `providers/goety/`.
 
 ## Regra de completude
 

@@ -8,7 +8,7 @@
 - canonical semantic minimum entering Phase 2BG: **874**;
 - canonical provider-component closure entering Phase 2BG: **55/100 = 55%**.
 
-These baseline values remain canonical until the durable Phase 2BG PR is merged and exact post-merge CI is green.
+These were the canonical baseline values entering Phase 2BG; the promotion evidence below supersedes them.
 
 ## Exact provider evidence
 
@@ -42,17 +42,17 @@ Provider-specific eligibility evidence is materially stronger than registry memb
 
 No provider-specific spell-lock/config eligibility gate analogous to Somake was established. The six observed `LeylinesConfig` values govern spell behavior rather than registration/learning eligibility. Deployed generic Iron's per-spell config remains a separate runtime-QA boundary and is not inferred from defaults.
 
-## Candidate semantic/component delta
+## Canonical semantic/component delta
 
-On this branch only, Phase 2BG proposes:
+Phase 2BG is canonical with:
 
 - Leyline Spellbooks semantic delta: **+14**;
-- Iron's ecosystem subtotal: **527 -> 541**;
-- strict reconstructible semantic minimum: **874 -> 888**;
-- provider-component closure: **55/100 -> 56/100**;
+- Iron's ecosystem subtotal: **541**;
+- strict reconstructible semantic minimum: **888**;
+- provider-component closure: **56/100 = 56%**;
 - component #56: Leyline Spellbooks 1.0.3.
 
-Arithmetic candidate: `199 + 541 + 42 + 55 + 25 + 26 = 888`.
+Arithmetic: `199 + 541 + 42 + 55 + 25 + 26 = 888`.
 
 The global semantic denominator remains incomplete, so no semantic percentage is declared.
 
@@ -68,15 +68,13 @@ This catalog closure does not claim:
 
 Leyline owns its spell/school/progression/portal/anchor/rift state. Iron's owns the host casting/mana/scroll substrate. Black Arcana must not duplicate either authority and retains its own canonical server-authoritative casting, Arcane Danger, Corruption, Strain, rituals, hazards and `WorldEffectPolicy`.
 
-## Promotion gate
+## Promotion evidence — satisfied
 
-Candidate values become canonical only after:
+- durable PR #195 clean HEAD: `a9d7b55044230bbb011f7233ffd75d9a8321489b`;
+- pre-merge Black Arcana CI: **#2503**, run `34668329229`, GREEN on that exact HEAD;
+- latest `main` was rechecked immediately before merge and remained `91fe79e8479f7c82a7e922f64d4806a3e7abafe1`;
+- squash merge SHA: `88f042f68429ff920314a7ec3a6923369edc93fd`;
+- exact-SHA post-merge Black Arcana CI: **#2504**, run `34668535721`, GREEN including canonical QA-JAR publication;
+- canonical QA artifact: `black-arcana-88f042f68429ff920314a7ec3a6923369edc93fd`, artifact `10289970506`, SHA-256 `22172f2f6f739a29472b994102fde1fd7a5093a98e670eb9b3607221dc0e7e92`.
 
-1. durable Phase 2BG diff contains no temporary audit/generation workflows or provider binaries;
-2. Black Arcana CI is GREEN on the exact clean PR HEAD;
-3. latest `main` is reconciled immediately before merge;
-4. the PR merges with the validated expected HEAD;
-5. Black Arcana CI is GREEN on the exact merge SHA, including main-only QA artifact publication;
-6. final evidence is recorded without inventing CI/merge identifiers.
-
-PR #194 remains evidence-only and must be closed without merge after durable/final evidence is canonical.
+PR #194 remains evidence-only and must be closed without merge after this final-evidence reconciliation is merged and exact-SHA post-merge CI is green.
