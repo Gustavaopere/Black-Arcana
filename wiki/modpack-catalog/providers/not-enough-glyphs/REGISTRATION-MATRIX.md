@@ -70,3 +70,15 @@ Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at
 Because `ars_elemental` is installed, NEG adds these provider objects only to its internal documentation/listing surface: Arc Projectile, Homing Projectile, Propagate Arc and Propagate Homing. Their runtime registration authority remains Ars Elemental.
 
 Because `ars_controle` is installed, `FilterRandom` is not registered by NEG. Runtime authority remains Ars Controle.
+
+## Phase 2BI config gate
+
+The matrix's 39 `source-enabled` rows are **not yet active-pack counted rows**. Exact Ars Nouveau 5.13.1 source proves the controlling config contract:
+
+- `GlyphRegistry.registerSpell(part)` calls `part.buildConfig(...)`;
+- the resulting spec is registered as `ModConfig.Type.SERVER`;
+- the explicit filename is `<namespace>/<path>.toml`, yielding `not_enough_glyphs/<glyph>.toml` for NEG IDs;
+- base `AbstractSpellPart` defines `[general].enabled = true` as a source default and `isEnabled()` reads that value;
+- NEG `momentum` remains explicitly disabled by its own override.
+
+Because NeoForge SERVER configs can be overridden per world and the deployed server/world config set is not available in authoritative project material, the 39 rows stay `CONDITIONAL`. Source defaults are not substituted for deployed state. Semantic delta: **+0**; strict total: **1249**.
