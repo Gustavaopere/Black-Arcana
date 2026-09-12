@@ -25,6 +25,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - base post-merge validation: Black Arcana CI **#2349**, attempt 2 GREEN on the exact base SHA
 - Phase 2BE canonicalized at `main@cce7f51794e4e65b0d97511eb55f710afc6e02f0`: PR #189 exact HEAD `e787699d25b283b8040cd179f605143e8ee396de` passed Black Arcana CI **#2483**; the merge SHA passed Black Arcana CI **#2484 attempt 2** GREEN after attempt 1 ended on an external `code.redspace.io` read timeout before compilation/tests
 - Phase 2BM component closure is validated at `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`: PR #210 exact HEAD `1b8d5d5761569f8ef1f3a32b7ece84cfb6ce6df6` passed Black Arcana CI **#2543**; the merge SHA passed exact-SHA post-merge CI **#2544** / run `34713268914` and published canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`)
+- Phase 2BN component closure is validated at `main@c1c422b5ec72fe4308104f04282732d6c2f2bbc1`: PR #212 exact HEAD `c4facc0286dab0b522bf2b09c5812ffdd935bd5d` passed Black Arcana CI **#2553** / run `34720437808`; the merge SHA passed exact-SHA post-merge CI **#2554** / run `34720646567` and published canonical QA artifact `10306246238` (`sha256:a63f42f6746cc62e435e6a1c541daaed973b0b56d3dcc566cbc7cf4e9fa57e96`)
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -42,6 +43,12 @@ The historical chat-only tally is not an authority and is not used as an input t
 | `EXCLUDED` | a registry/content entry exists but fails this metric by definition | zero |
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
+
+## Phase 2BN — Ars Sable 1.1.2 source-pinned zero-semantic spatial bridge
+
+Exact official source `baileyholl/ars-sable@1fd83f3a998e3a41b5a21d0d6529140a0b0a55ba` matches the physically installed provider version `1.1.2` and closes the provider's technical role as Ars Nouveau ↔ Sable spatial/sublevel compatibility infrastructure. The exact source establishes 24 common + 5 client required mixins, protocol registrar version `2`, zero provider-owned payload registrations, and no provider-owned spell, glyph, ritual, school, mana/resource or equivalent independent magical-action registry.
+
+Phase 2BN therefore contributes **+0 semantic magic objects** and leaves the strict reconstructible minimum at **1316**, while separately closing provider component **#62 / 62 of 100**. This is a source-pinned technical/catalog closure, not a runtime compatibility PASS: exact source was built against Sable `1.2.2` while the physical pack uses `2.0.5`, and against Ars Nouveau `5.11.7.1354` while the pack uses `5.13.1`; all 29 mixins are required. The source metadata/root license surfaces also conflict (`LGPLv3` metadata vs The Unlicense root file), so clean-room factual inspection does not infer reuse rights.
 
 ## Phase 2BM — Ars Polymorphia 1.0.3 source-pinned zero-semantic bridge
 
@@ -79,7 +86,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1316 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BM.**
+**1316 semantic magic objects are currently reconstructible from canonical provider records after Phase 2BN.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -219,6 +226,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [Ars Creo](../providers/ars-creo/README.md) — Create/Ars bridge, no own glyph registry;
 - [Ars Elemancy](../providers/ars-elemancy/README.md) — equipment specialization, empty glyph registration;
 - [Ars Polymorphia](../providers/ars-polymorphia/README.md) — Phase 2BM source-pinned recipe-conflict bridge; `ZERO_SEMANTIC_BRIDGE`, +0; current-host runtime compatibility remains fail-closed;
+- [Ars Sable](../providers/ars-sable/README.md) — Phase 2BN source-pinned spatial/sublevel compatibility bridge; `ZERO_SEMANTIC_BRIDGE`, +0; current-host Sable/Ars mixin compatibility remains fail-closed;
 - [FamiliarsLib](../providers/familiarslib/README.md) — familiar framework; historical Sound content removed from the 1.7 line;
 - [GTBC's SpellLib](../providers/gtbcs-spelllib/README.md) — shared spell/addon library infrastructure; publisher surface establishes no standalone gameplay/spell catalog in 2.2.0;
 - [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
@@ -244,7 +252,7 @@ Other provider directories that have not yet been normalized into a semantic-obj
 ## Important interpretation rules
 
 1. **1316 is not “1316 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1316 by the 100 provider-component denominator. The current component target is `61/100`; provider-component coverage and semantic-magic coverage answer different questions.
+2. Do not divide 1316 by the 100 provider-component denominator. The current component target is `62/100`; provider-component coverage and semantic-magic coverage answer different questions.
 3. Do not add public lower bounds to 1316 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
