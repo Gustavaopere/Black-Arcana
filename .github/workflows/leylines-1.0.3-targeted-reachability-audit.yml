@@ -1,0 +1,144 @@
+name: Leylines 1.0.3 Targeted Reachability Audit
+
+on:
+  push:
+    branches:
+      - docs/provider-artifact-audit-leylines-1.0.3
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Inspect exact registry and reachability surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED_SHA1='dfa6908731f432905caaaa1e53b4aedeaa26ed59'
+          URL='https://www.cursemaven.com/curse/maven/leylines-irons-spells-n-spellbooks-addon-1636676/8565076/leylines-irons-spells-n-spellbooks-addon-1636676-8565076.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 180 "$URL" -o leylines.jar
+          ACTUAL_SHA1="$(sha1sum leylines.jar | awk '{print $1}')"
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+          mkdir -p audit
+
+          {
+            echo 'Leylines 1.0.3 targeted reachability audit'
+            echo "expected_sha1=$EXPECTED_SHA1"
+            echo "actual_sha1=$ACTUAL_SHA1"
+            echo
+            echo '== exact registry static initializer branch facts =='
+            javap -classpath leylines.jar -p -c dev.semeth.leylines.registry.LeySpellRegistry 2>/dev/null \
+              | awk '/static \{\};/{flag=1} flag{print}' \
+              | grep -E 'new[[:space:]]|putstatic|register:|if(eq|ne|lt|le|gt|ge|null|nonnull)|goto|tableswitch|lookupswitch' \
+              || true
+            echo
+            echo '== registry/item/encounter class paths =='
+            jar tf leylines.jar | grep '\.class$' \
+              | grep -Ei '/(registry|item|encounter|loot|reward)/|Codex|Staff' \
+              | sort || true
+            echo
+            echo '== data/resources mentioning progression/loot/reward/codex/staff =='
+            jar tf leylines.jar \
+              | grep -Ei '^data/leylines/.*(loot|reward|encounter|rift|codex|staff|scroll|recipe|advancement).*\.json$' \
+              | sort || true
+          } > audit/targeted.txt
+
+          python3 - <<'PY'
+          import json, re, zipfile
+          from pathlib import Path
+
+          ids = [
+              'charge_leyline','blink_step','beam','tether_gaze','ley_veil','leyline_discharge',
+              'ley_blast','ley_eclipse','ley_resonance','rift_gate','chrono_tether','fissure',
+              'temporal_stutter','anchor_recall'
+          ]
+          z = zipfile.ZipFile('leylines.jar')
+          out = Path('audit/targeted.txt')
+          text_ext = ('.json','.toml','.mcmeta','.txt','.properties','.cfg','.lang')
+          with out.open('a', encoding='utf-8') as f:
+              f.write('\n== exact ID occurrences in non-class resources ==\n')
+              for sid in ids:
+                  needle = f'leylines:{sid}'
+                  hits=[]
+                  for name in z.namelist():
+                      if not name.lower().endswith(text_ext):
+                          continue
+                      try:
+                          text=z.read(name).decode('utf-8','ignore')
+                      except Exception:
+                          continue
+                      if needle in text or sid in text:
+                          hits.append(name)
+                  f.write(f'{needle} | resource_hits={len(hits)}\n')
+                  for h in sorted(hits):
+                      f.write(f'  {h}\n')
+
+              f.write('\n== JSON objects with direct spell IDs ==\n')
+              for name in sorted(n for n in z.namelist() if n.startswith('data/leylines/') and n.endswith('.json')):
+                  try:
+                      text=z.read(name).decode('utf-8')
+                  except Exception:
+                      continue
+                  found=[f'leylines:{sid}' for sid in ids if f'leylines:{sid}' in text]
+                  if found:
+                      f.write(f'{name} | {",".join(found)}\n')
+          PY
+
+          mapfile -t CLASSES < <(jar tf leylines.jar | grep '\.class$' | sed 's#/#.#g; s#\.class$##' | sort -u)
+          : > audit/relevant-classes.txt
+          for cls in "${CLASSES[@]}"; do
+            OUT="$(javap -classpath leylines.jar -p -c "$cls" 2>/dev/null || true)"
+            if printf '%s\n' "$OUT" | grep -qE 'LeySpellRegistry|SpellContainer|SpellData|Spellbook|SpellBook|Scroll|scroll|Codex|codex|LeyStaff|ley_staff|reward|Reward|loot|Loot|SpellRarity|SchoolFocus|school_focus'; then
+              echo "$cls" >> audit/relevant-classes.txt
+            fi
+          done
+          sort -u -o audit/relevant-classes.txt audit/relevant-classes.txt
+
+          {
+            echo
+            echo '== classes referencing spell/progression/acquisition surfaces =='
+            cat audit/relevant-classes.txt
+            echo
+            echo '== filtered bytecode for relevant classes =='
+            while IFS= read -r cls; do
+              echo "--- $cls ---"
+              javap -classpath leylines.jar -p -c "$cls" 2>/dev/null \
+                | grep -E 'LeySpellRegistry|SpellContainer|SpellData|Spellbook|SpellBook|Scroll|scroll|Codex|codex|LeyStaff|ley_staff|reward|Reward|loot|Loot|SpellRarity|SchoolFocus|school_focus|ResourceLocation|// String |getstatic|putstatic|invoke(static|virtual|interface|special)|if(eq|ne|null|nonnull)|goto' \
+                || true
+            done < audit/relevant-classes.txt
+          } >> audit/targeted.txt
+
+          {
+            echo
+            echo '== likely item registries signatures + filtered bytecode =='
+            mapfile -t ITEM_REGS < <(jar tf leylines.jar | grep '\.class$' \
+              | grep -Ei 'registry/.*(Item|Items)|ModItems|ItemRegistry' \
+              | sed 's#/#.#g; s#\.class$##' | sort -u || true)
+            for cls in "${ITEM_REGS[@]}"; do
+              echo "--- $cls ---"
+              javap -classpath leylines.jar -p "$cls" 2>/dev/null || true
+              javap -classpath leylines.jar -p -c "$cls" 2>/dev/null \
+                | grep -E 'DeferredRegister|DeferredHolder|register|Spellbook|Codex|Staff|Scroll|ResourceLocation|// String |putstatic|new[[:space:]]' \
+                || true
+            done
+            echo "item_registry_candidate_count=${#ITEM_REGS[@]}"
+          } >> audit/targeted.txt
+
+          cat audit/targeted.txt
+
+      - name: Upload text-only targeted evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: leylines-1.0.3-targeted-reachability-audit
+          path: audit/targeted.txt
+          if-no-files-found: error
+          retention-days: 30
