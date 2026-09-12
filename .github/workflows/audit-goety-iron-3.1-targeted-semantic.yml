@@ -1,0 +1,36 @@
+name: Audit Goety Iron 3.1 targeted semantics
+
+on:
+  push:
+    branches:
+      - audit/goety-iron-3.1-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Materialize exact artifact and verify hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="$RUNNER_TEMP/GoetyIron-1.21.1-NeoForge-3.1.jar"
+          curl --fail --location --silent --show-error --retry 2 'https://www.curseforge.com/api/v1/mods/1367643/files/8662179/download' -o "$target"
+          test "$(sha1sum "$target" | awk '{print $1}')" = 'c8529867e798661ed01fb2948abda23735888fc6'
+      - name: Extract targeted ritual outcomes and conditions
+        env:
+          JAR_PATH: ${{ runner.temp }}/GoetyIron-1.21.1-NeoForge-3.1.jar
+          RECIPE_ROOT: data/goetyiron/recipe
+          AUDIT_OUT: audit-targeted
+        run: python .github/goety_addon_targeted_semantic.py
+      - name: Publish text-only targeted evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: goety-iron-3.1-targeted-semantic-evidence
+          path: audit-targeted
+          retention-days: 7
+          if-no-files-found: error
