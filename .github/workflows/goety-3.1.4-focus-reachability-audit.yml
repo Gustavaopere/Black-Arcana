@@ -69,7 +69,7 @@ jobs:
           type_counts = {}
           for focus_id in same_named:
               p = exact_recipe_paths[focus_id]
-              obj = json.loads(jar.read(p).decode('utf-8'))
+              obj = json.loads(jar.read(p).decode('utf-8-sig'))
               typ = obj.get('type', '<none>') if isinstance(obj, dict) else '<none>'
               type_counts[typ] = type_counts.get(typ, 0) + 1
 
@@ -93,7 +93,6 @@ jobs:
                   mismatched_result.append((focus_id, result_refs))
               recipe_rows.append((focus_id, typ, result_refs, condition_refs))
 
-          # Exact current type signatures only: class declarations/constructors/method signatures, no bytecode bodies.
           compact_sig = []
           for line in signatures.splitlines():
               s=line.strip()
