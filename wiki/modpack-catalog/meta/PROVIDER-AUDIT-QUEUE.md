@@ -8,7 +8,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- `main` canônica de referência para Phase 2BF: `41e96385c7ef5903b2595a4b027c9e2d053f09d6`; Phase 2BE foi fechada por PR #189/#190, com HEAD de catálogo `e787699d25b283b8040cd179f605143e8ee396de` CI #2483 GREEN, merge de catálogo `cce7f51794e4e65b0d97511eb55f710afc6e02f0` CI #2484 attempt 2 GREEN, e reconciliação final `main@41e96385c7ef5903b2595a4b027c9e2d053f09d6` CI #2486 GREEN;
+- `main` canônica após Phase 2BF / PR #192: `cc4cfc1d740f7714188e25a3586d8b43bb5eb969`; HEAD limpo auditado `85b15aec9faf395cef5460d06a17be58ccd16af8` CI #2490 GREEN; post-merge CI #2491 GREEN no merge SHA exato, incluindo canonical QA-JAR publication;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
@@ -58,6 +58,7 @@ O valor 55/100 nunca substitui a métrica semântica de magias.
 - physical/audit SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`;
 - CurseForge project/file `1461634 / 8417850`;
 - isolated non-merge evidence PR #191; initial exact-registry run `34659320633`, reachability run `34664093646`, targeted gate run `34664411845`;
+- durable PR #192: clean HEAD `85b15aec9faf395cef5460d06a17be58ccd16af8` / CI #2490 GREEN; squash merge `cc4cfc1d740f7714188e25a3586d8b43bb5eb969` / post-merge CI #2491 GREEN;
 - exact registry: 67 typed fields, 67 unique registration IDs, 67 provider `*Spell` classes;
 - 61 unconditional registrations; three require `mowziesmobs`; three require `iss_magicfromtheeast`; both mod IDs are in the physical pack, so all 67 registry identities are current for this provider set;
 - `enableSpellLockSystem` is COMMON at `somakespells/general/common.toml`, code-default `false`; actual deployed value is not available in authoritative materials;
