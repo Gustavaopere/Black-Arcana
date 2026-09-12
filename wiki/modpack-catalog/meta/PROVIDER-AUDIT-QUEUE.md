@@ -8,14 +8,14 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - NeoForge `21.1.248`
 - modlist física: **595 entradas top-level**
 - SHA-1 da modlist: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- estado canônico pós-Phase 2BN: `main@c1c422b5ec72fe4308104f04282732d6c2f2bbc1`; esse SHA incorpora o fechamento source-pinned de Ars Sable 1.1.2 da PR #212 e passou exact-SHA post-merge CI #2554 / run `34720646567`, incluindo unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke e canonical QA artifact `10306246238` (`sha256:a63f42f6746cc62e435e6a1c541daaed973b0b56d3dcc566cbc7cf4e9fa57e96`);
+- estado de evidência pós-Phase 2BO: `main@34a5fd495da744800b32b051e38c6473c6f5ea15`; esse SHA incorpora o fechamento source-pinned de Farmer's Spell 1.0.5.1 da PR #214 e passou exact-SHA post-merge CI #2565 / run `34724351805`, incluindo unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke e canonical QA artifact `10307207453` (`sha256:50b94c3efc207dfd143a10367cf234473ede7dbbc1f36b9acdd3d3ca1ccc67fa`);
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, e Phase 2BN fecha Ars Sable 1.1.2 como bridge/infra espacial Ars Nouveau ↔ Sable com **+0**. O mínimo permanece **1316**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, Phase 2BN fecha Ars Sable 1.1.2 como bridge/infra espacial Ars Nouveau ↔ Sable com **+0**, e Phase 2BO fecha Farmer's Spell 'n Spellbooks 1.0.5.1 com **+6 `COUNTED_SOURCE_PINNED`**. O mínimo corrente passa a **1322**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -28,6 +28,7 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - delta semântico Ignis Soulfires: Spellbooks 1.1.0 Phase 2BK: **+0** (`ZERO_BRIDGE_INFRA` exact-artifact);
 - delta semântico Ars Polymorphia 1.0.3 Phase 2BM: **+0** (`ZERO_SEMANTIC_BRIDGE`; exact source-pinned; current-host runtime QA fail-closed);
 - delta semântico Ars Sable 1.1.2 Phase 2BN: **+0** (`ZERO_SEMANTIC_BRIDGE`; exact source-pinned; spatial/compat infrastructure; current-host runtime QA fail-closed);
+- delta semântico Farmer's Spell 1.0.5.1 Phase 2BO: **+6** (`COUNTED_SOURCE_PINNED`; seis Gluttony spells; Scroll Forge focus route fechada em nível de catálogo; current-host runtime QA fail-closed);
 - delta semântico Gaze 1.1.7.1 Phase 2BJ: **+1**;
 - delta semântico Alshanex 4.0.3: **+18**;
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
@@ -36,7 +37,7 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - delta semântico Goety 3.1.4 Phase 2BH: **+361** (`123 active Focus + 238 available distinct non-Focus rituals`);
 - delta semântico Goety Iron 3.1 Phase 2BL: **+14** (`2 Focus + 12 distinct non-Focus rituals`);
 - delta semântico Goety Cataclysm 1.21.1-1.8.2 Phase 2BL: **+52** (`28 Focus + 24 distinct non-Focus rituals`);
-- mínimo estrito global após Phase 2BN: **1316**;
+- mínimo estrito global após Phase 2BO: **1322**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -52,9 +53,35 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - PR #186 foi squash-mergeada como `95ec538ff1c34766450393522ce3affe1039d0dd`; o merge SHA exato passou Black Arcana CI #2465 com unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke e publicação do canonical QA JAR;
 - Phase 2BM / PR #210: HEAD auditado `1b8d5d5761569f8ef1f3a32b7ece84cfb6ce6df6` passou Black Arcana CI #2543; squash merge `f2cdfe7b79d500540c281d70a76e8b6e3a77d311` passou exact-SHA post-merge CI #2544 / run `34713268914` com canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`);
 - Phase 2BN / PR #212: HEAD auditado `c4facc0286dab0b522bf2b09c5812ffdd935bd5d` passou Black Arcana CI #2553 / run `34720437808`; squash merge `c1c422b5ec72fe4308104f04282732d6c2f2bbc1` passou exact-SHA post-merge CI #2554 / run `34720646567` com canonical QA artifact `10306246238` (`sha256:a63f42f6746cc62e435e6a1c541daaed973b0b56d3dcc566cbc7cf4e9fa57e96`);
-- cobertura de componentes após o fechamento Phase 2BN: **62/100 = 62%**; `ars_sable` é componente #62 por fechamento técnico source-pinned de bridge/infra espacial zero-semântica, sem promover compatibilidade runtime com o host físico atual.
+- Phase 2BO / PR #214: HEAD corrigido `d3a92c31d7ac5b38183224ef28c6737e721fc758` passou Black Arcana CI #2564 / run `34723967662`; squash merge `34a5fd495da744800b32b051e38c6473c6f5ea15` passou exact-SHA post-merge CI #2565 / run `34724351805` com canonical QA artifact `10307207453` (`sha256:50b94c3efc207dfd143a10367cf234473ede7dbbc1f36b9acdd3d3ca1ccc67fa`);
+- cobertura de componentes após a reconciliação Phase 2BO: **63/100 = 63%**; `farmers_spell` é componente #63 por fechamento source-pinned de seis spells, sem promover compatibilidade runtime com o host físico atual.
 
-O valor 62/100 nunca substitui a métrica semântica de magias.
+O valor 63/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BO — Farmer's Spell 'n Spellbooks 1.0.5.1 — componente #63 / semantic +6
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `farmers_spell` | `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar` | EXACT PHYSICAL IDENTITY / EXACT OFFICIAL SOURCE PIN `b7cbb403...` / 6 UNCONDITIONAL GLUTTONY SPELLS / `COUNTED_SOURCE_PINNED` / HOST-NATIVE SCROLL-FORGE FOCUS ROUTE / 4 COMMON + 3 CLIENT REQUIRED MIXINS / 0 PROVIDER PAYLOAD REGISTRATIONS OBSERVED / +6 / COMPONENT #63 / CURRENT-HOST RUNTIME QA FAIL-CLOSED |
+
+### Evidence boundary
+
+- physical SHA-1 `f77355e029af39bbaba3854e10cc087a608351ff`; physical CurseForge hash `810347191`;
+- exact official source `GLDYM/Farmers-Spell-n-Spellbook@b7cbb40316a9ccbbc2ce2b56b3023647261ce569`, signed version-bump commit `1.0.5.0-1.21.1 -> 1.0.5.1-1.21.1`;
+- exact source tree `83f54cd2415b424d1fc209191f6a3f90bd919312`, recursive `truncated=false`;
+- exactly six provider spell identities: `goodberry`, `phantom_loot`, `seal_coat`, `bad_apple`, `chaos_slash`, `preserve_circle`;
+- provider Gluttony school is taxonomy/support and is not counted as a seventh semantic action;
+- school sets `allowLooting=false`, so generic random Iron's scroll loot is not used as reachability proof;
+- provider focus data contains `#minecraft:foods` and `farmers_spell:foodgeist_seasoning`; Iron's 3.16.3 source-line Scroll Forge contract supplies host-native focus-to-school/spell selection;
+- no Farmer's Spell override of `allowCrafting`, `isEnabled` or `canBeCraftedBy` was found for the six spell classes;
+- mixin footprint: 4 common + 3 client required bindings, default require 1;
+- `NetworkHandler.registerPackets()` is empty; zero provider-owned payload registrations were observed at the exact source pin;
+- no `src/test` subtree exists in the exact source tree; configured gameTest run target is not test-PASS evidence;
+- exact source is ARR; clean-room factual inspection only, with no provider implementation/assets/localization copied or adapted;
+- source build uses NeoForge `21.1.238` and Farmer's Delight `1.3.2`, while physical pack uses NeoForge `21.1.248` and Farmer's Delight `1.3.4`; GeckoLib is `4.9.2` on both sides by version label, but that is not runtime proof;
+- client/full-pack boot, seven mixin applications, Foodgeist progression, Scroll Forge acquisition and representative execution of all six spells remain fail-closed runtime QA gates.
+
+Phase 2BO therefore promotes only source-pinned catalog identity/count/reachability and component closure. It does **not** create a Black Arcana Gluttony school, alternate mana/scroll pipeline or runtime compatibility PASS.
 
 ## Phase 2BN — Ars Sable 1.1.2 — componente #62 / semantic +0
 
@@ -248,7 +275,7 @@ See [`SEMANTIC-MAGIC-DELTA-WEREWOLVES-LEAP.md`](./SEMANTIC-MAGIC-DELTA-WEREWOLVE
 ### Evidence boundary
 
 - physical runtime `1.21.1-1.7`, mod id `familiarslib`, SHA-1 `7fa3f3116e35c12456425ae195924ced33fcc2eb`;
-- CurseForge project/file `1316458 / 8059464`, 2026-05-08, release, NeoForge / Minecraft 1.21.1;
+- CurseForge project/file `1316458 / 8059464`, release 2026-05-08, release, NeoForge / Minecraft 1.21.1;
 - official source repository `Alshanex/FamiliarsLib`;
 - strongest release-correlated source commit `56561e7fd474fbd5c5166c1ac96f235faae156ab`, same date and matching familiar-bed bug-fix intent;
 - correlated source tree `9d39b4751b9e52874f66cf2187afab239d00b251`, recursive `truncated=false`;
@@ -284,6 +311,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
+| 63 | 2BO / #214 | `farmers_spell` | EVIDÊNCIA DURÁVEL em `main@34a5fd49...`; +6 `COUNTED_SOURCE_PINNED`; post-merge CI #2565 GREEN; promovido por esta reconciliação; runtime host QA fail-closed |
 | 62 | 2BN / #212 | `ars_sable` | CANÔNICO em `main@c1c422b5...`; `ZERO_SEMANTIC_BRIDGE`; +0 semântico; exact-source; post-merge CI #2554 GREEN; runtime host QA fail-closed |
 | 61 | 2BM / #210 | `ars_polymorphia` | CANÔNICO em `main@f2cdfe7b...`; `ZERO_SEMANTIC_BRIDGE`; +0 semântico; exact-source; post-merge CI #2544 GREEN; runtime host QA fail-closed |
 | 60 | 2BL / #207 | `goety_cataclysm` | CANÔNICO; +52 semânticos; exact-artifact; fechamento durável em `main@d41fe957...`; validação final preservada por `main@43e343df...` / CI #2540 GREEN |
@@ -301,7 +329,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 ## Próxima seleção
 
-Phase 2BF / Somake, Phase 2BG / Leylines, Phase 2BH / Goety, Phase 2BL / Goety addons, Phase 2BM / Ars Polymorphia e Phase 2BN / Ars Sable já foram reconciliadas no nível de evidência descrito acima. Não reiniciar esses fechamentos a partir de branches antigas.
+Phase 2BF / Somake, Phase 2BG / Leylines, Phase 2BH / Goety, Phase 2BL / Goety addons, Phase 2BM / Ars Polymorphia, Phase 2BN / Ars Sable e Phase 2BO / Farmer's Spell já foram reconciliadas no nível de evidência descrito acima. Não reiniciar esses fechamentos a partir de branches antigas.
 
 Blockers atualmente **PARKED até existir input novo**:
 
@@ -311,7 +339,7 @@ Blockers atualmente **PARKED até existir input novo**:
 
 A próxima seleção deve escolher **outro componente ainda aberto** para o qual exista evidência current/exact capaz de reduzir incerteza de inventário ou de classificação. Defaults de provider, publisher prose ou branches preparatórias não substituem estado implantado. Se um candidato só puder avançar com navegação/material externo indisponível, registrar a pendência e passar ao próximo blocker seguro em vez de fabricar fechamento.
 
-Os estados canônicos passam a **1316 objetos semânticos mínimos / 62 de 100 componentes** após a promoção sustentada de Ars Sable.
+Os estados correntes desta reconciliação passam a **1322 objetos semânticos mínimos / 63 de 100 componentes**. A promoção só se torna canônica na `main` após merge desta reconciliação e exact-SHA post-merge CI GREEN.
 
 ## Regras
 

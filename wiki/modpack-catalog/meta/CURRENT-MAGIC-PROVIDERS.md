@@ -6,9 +6,9 @@
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, Phase 2BM fecha `ars_polymorphia` como componente **#61**, e Phase 2BN fecha `ars_sable` como componente **#62**. Portanto **62 estão canônicos**. Esse 62/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, Phase 2BM fecha `ars_polymorphia` como componente **#61**, Phase 2BN fecha `ars_sable` como componente **#62**, e Phase 2BO fecha `farmers_spell` como componente **#63**. Portanto **63 estão canônicos** após esta reconciliação. Esse 63/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Ars Polymorphia e Ars Sable acrescentam **+0** objetos semânticos independentes, então o mínimo estrito permanece **1316**.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Farmer's Spell acrescenta **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1316 para 1322**; Ars Polymorphia e Ars Sable permanecem +0.
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
@@ -96,15 +96,25 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes n' Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
 
+## Checkpoint Farmer's Spell 'n Spellbooks — Phase 2BO canonical
+
+O artefato físico `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar` / SHA-1 `f77355e029af39bbaba3854e10cc087a608351ff` / CurseForge hash `810347191` foi reconciliado com o source oficial exato `GLDYM/Farmers-Spell-n-Spellbook@b7cbb40316a9ccbbc2ce2b56b3023647261ce569`. O provider é `MIXED`: possui uma escola própria Gluttony, exatamente **6** registrations `AbstractSpell` próprias e conteúdo adicional de cozinha mágica/Foodgeist/gear/efeitos. As seis identidades entram como **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito para **1322**.
+
+A rota de aquisição foi fechada em nível de catálogo pelo focus Gluttony (`#minecraft:foods` + `farmers_spell:foodgeist_seasoning`) e pelo contrato Scroll Forge da linha pública Iron's 3.16.3. O provider marca a escola com `allowLooting=false`, então loot aleatório genérico de scroll não é usado como prova. Sete mixins são required (4 common + 3 client), e `NetworkHandler.registerPackets()` registra zero payloads próprios observados no source pin.
+
+PR #214 HEAD corrigido `d3a92c31d7ac5b38183224ef28c6737e721fc758` passou CI #2564 / run `34723967662`; squash merge `main@34a5fd495da744800b32b051e38c6473c6f5ea15` passou exact-SHA post-merge CI #2565 / run `34724351805` e publicou artifact `10307207453` (`sha256:50b94c3efc207dfd143a10367cf234473ede7dbbc1f36b9acdd3d3ca1ccc67fa`). A reconciliação compartilhada promove `farmers_spell` a componente **#63 / 63/100**.
+
+Isso é fechamento de catálogo, não runtime PASS. Source build usa NeoForge `21.1.238` e Farmer's Delight `1.3.2`, enquanto o pack físico usa NeoForge `21.1.248` e Farmer's Delight `1.3.4`; client/server boot, aplicação dos sete mixins, Foodgeist progression, Scroll Forge no host físico e execução representativa dos seis spells continuam fail-closed. GeckoLib é `4.9.2` em source e pack por version label, sem inferir equivalência runtime.
+
 ## Checkpoint Ars Sable — Phase 2BN canonical
 
-O artefato físico `ars_sable-1.21.1-1.1.2.jar` / SHA-1 `df43ad58fb9ca3b7acf7f62dc97ed75fd6da3da8` foi reconciliado com o source oficial exato `baileyholl/ars-sable@1fd83f3a998e3a41b5a21d0d6529140a0b0a55ba`. A função fechada é de bridge/infra espacial entre Ars Nouveau e Sable: tracking/sublevel, warp/portal, storage, Source Jar, Planarium, Mob Jar, entidades/pathfinding e câmera/render entram por mixins/adapters; o provider não estabelece spell, glyph, ritual, school, mana/resource ou ação mágica independente. O delta semântico é **+0** e o mínimo estrito permanece **1316**.
+O artefato físico `ars_sable-1.21.1-1.1.2.jar` / SHA-1 `df43ad58fb9ca3b7acf7f62dc97ed75fd6da3da8` foi reconciliado com o source oficial exato `baileyholl/ars-sable@1fd83f3a998e3a41b5a21d0d6529140a0b0a55ba`. A função fechada é de bridge/infra espacial entre Ars Nouveau e Sable: tracking/sublevel, warp/portal, storage, Source Jar, Planarium, Mob Jar, entidades/pathfinding e câmera/render entram por mixins/adapters; o provider não estabelece spell, glyph, ritual, school, mana/resource ou ação mágica independente. O delta semântico é **+0** e o mínimo estrito permanece **1316** nesse checkpoint histórico.
 
 Phase 2BN fecha `ars_sable` como componente **#62 / 62/100** após PR #212 e validação exact-SHA pós-merge CI #2554 / run `34720646567`, com canonical QA artifact `10306246238` (`sha256:a63f42f6746cc62e435e6a1c541daaed973b0b56d3dcc566cbc7cf4e9fa57e96`). Isso é fechamento técnico/source-pinned de catálogo, não um PASS de compatibilidade runtime. A source foi construída contra Sable `1.2.2` e Ars Nouveau `5.11.7.1354`, enquanto o pack físico usa Sable `2.0.5` e Ars Nouveau `5.13.1`; todos os 24 common + 5 client mixins são required. O registrar de rede usa protocolo `2` e registra zero payloads próprios. A metadata declara `LGPLv3`, enquanto o `LICENSE` raiz contém The Unlicense; nenhum direito de reuso é inferido dessa divergência.
 
 ## Checkpoint Ars Polymorphia — Phase 2BM canonical
 
-O artefato físico `ars_polymorphia-1.0.3.jar` / SHA-1 `8cce819e83f6360ab9aa8b44ac841511172a6a79` foi reconciliado com o source oficial exato `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f`. A função fechada é de bridge de resolução de conflitos de receita entre Ars Storage/Crafting Lectern e o contrato Polymorph; o provider não estabelece spell, glyph, ritual, school, mana/resource ou ação mágica independente. O delta semântico é **+0** e o mínimo estrito permanece **1316**.
+O artefato físico `ars_polymorphia-1.0.3.jar` / SHA-1 `8cce819e83f6360ab9aa8b44ac841511172a6a79` foi reconciliado com o source oficial exato `Vonr/Ars-Polymorphia@e09b6c9ab434ccbb3232ca47b37ca5666becfb6f`. A função fechada é de bridge de resolução de conflitos de receita entre Ars Storage/Crafting Lectern e o contrato Polymorph; o provider não estabelece spell, glyph, ritual, school, mana/resource ou ação mágica independente. O delta semântico é **+0** e o mínimo estrito permanece **1316** nesse checkpoint histórico.
 
 Phase 2BM fecha `ars_polymorphia` como componente **#61 / 61/100** após PR #210 e validação exact-SHA pós-merge CI #2544 / run `34713268914`. Isso é fechamento técnico/source-pinned de catálogo, não um PASS de compatibilidade runtime. A source exige mod id `polymorph`, enquanto o pack físico expõe `polymorph_plus` `1.3.1+1.21.1`; a source foi construída contra Ars Nouveau `5.4.2.938`, enquanto o pack usa `5.13.1`; e a própria metadata source declara `minecraft_version=1.21.1` junto de `minecraft_version_range=[1.21,1.21.1)`. Esses pontos continuam fail-closed até evidência direta do host atual.
 
@@ -112,7 +122,7 @@ Phase 2BM fecha `ars_polymorphia` como componente **#61 / 61/100** após PR #210
 
 The exact physical `leylines-1.0.3.jar` / SHA-1 `dfa6908731f432905caaaa1e53b4aedeaa26ed59` was materialized from CurseForge File ID `8565076` and hash-matched. Its current provider registry contains **14 unconditional `AbstractSpell` identities**, superseding the public nine-name lower bound.
 
-Exact Ley-school/default evidence finds no provider-specific spell lock, and the exact Iron's 3.16.3 generic scroll-selection path corroborates ordinary host reachability. `COUNTED_EXACT` treatment is based on the exact unconditional registry; deployed generic host config remains separate runtime QA. Durable PR #195 HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed CI #2503, squash merge `88f042f68429ff920314a7ec3a6923369edc93fd` passed exact-SHA post-merge CI #2504, and the canonical totals are now **888 semantic objects / 56/100 components**.
+Exact Ley-school/default evidence finds no provider-specific spell lock, and the exact Iron's 3.16.3 generic scroll-selection path corroborates ordinary host reachability. `COUNTED_EXACT` treatment is based on the exact unconditional registry; deployed generic host config remains separate runtime QA. Durable PR #195 HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed CI #2503, squash merge `88f042f68429ff920314a7ec3a6923369edc93fd` passed exact-SHA post-merge CI #2504, and the canonical totals at that checkpoint are **888 semantic objects / 56/100 components**.
 
 Runtime numerical tuning, final loot probabilities, pillar/rift persistence/network internals and any Black Arcana adapter remain separate fail-closed gates.
 
@@ -120,7 +130,7 @@ Runtime numerical tuning, final loot probabilities, pillar/rift persistence/netw
 
 The exact physical `somakespells-1.0.8-1.21.1-fix.jar` / SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7` was materialized from File ID `8417850` and hash-matched. The provider owns **67 exact current spell registrations** under the present optional-provider set: 61 unconditional, three gated by physical `mowziesmobs`, and three gated by physical `iss_magicfromtheeast`.
 
-This does **not** add to the strict semantic numerator. Somake's `enableSpellLockSystem` is a `COMMON` config at `somakespells/general/common.toml`, code-default `false`; the deployed config is not available in authoritative project material, and full per-object survival acquisition/reachability is not closed. At the Phase 2BF closure, the totals remained **874 semantic objects** and **55/100 structural components**; Phase 2BG later supersedes those current totals with 888 / 56/100. Runtime mechanics, Aqua/T.O coexistence and any Black Arcana adapter remain fail-closed.
+This does **not** add to the strict semantic numerator. Somake's `enableSpellLockSystem` is a `COMMON` config at `somakespells/general/common.toml`, code-default `false`; the deployed config is not available in authoritative project material, and full per-object survival acquisition/reachability is not closed. At the Phase 2BF closure, the totals remained **874 semantic objects** and **55/100 structural components**; Phase 2BG later supersedes those checkpoint totals with 888 / 56/100. Runtime mechanics, Aqua/T.O coexistence and any Black Arcana adapter remain fail-closed.
 
 ## Checkpoint Cataclysm: Spellbooks — Phase 2BE
 
@@ -154,23 +164,23 @@ A cobertura source-level não converte o addon em authority de Black Arcana nem 
 
 Goety Iron 3.1 e Goety Cataclysm 1.21.1-1.8.2 foram materializados em audits clean-room hash-matched, separados do Goety base 3.1.4. Goety Iron fecha **2 Focus + 12 rituais não-Focus = +14**; Goety Cataclysm fecha **28 Focus + 24 rituais não-Focus = +52**. Recipes de aquisição de Focus são caminhos de obtenção e não segunda identidade semântica. Os registries de Focus não têm branch/config gate de registration observado.
 
-O delta conjunto é **+66**, levando o mínimo estrito a **1316**. Como ambos já eram providers abertos no denominador reconciliado, tornam-se componentes **#59 e #60 / 60/100**. Evidência isolada: PR #205 (Goety Iron) e PR #206 (Goety Cataclysm), ambas NON-MERGE. Runtime servant/cast settlement, balance e adapters continuam fail-closed.
+O delta conjunto é **+66**, levando o mínimo estrito a **1316** naquele checkpoint. Como ambos já eram providers abertos no denominador reconciliado, tornam-se componentes **#59 e #60 / 60/100**. Evidência isolada: PR #205 (Goety Iron) e PR #206 (Goety Cataclysm), ambas NON-MERGE. Runtime servant/cast settlement, balance e adapters continuam fail-closed.
 
 ## Checkpoint Ignis Soulfires: Spellbooks — Phase 2BK exact zero closure
 
 O artefato físico `ignissoulfires_spellbooks-1.1.0.jar` / SHA-1 `dcde77db35b6de3562b4e6de0025746eaf68f119` foi materializado do File ID CurseForge exato `8620663` e hash-matched em NON-MERGE PR #203. O JAR possui 11 classes próprias; seus registries são um armor material e exatamente cinco equipment items. Não há `AbstractSpell`, `registerSpell`, `SpellRegistry`, `Ritual`, `Rite` ou `Ability` nas classes do provider, nem spell/ritual/action data registry empacotado.
 
-A classificação exata é `BRIDGE_COMPAT + GEAR_LOOT_SUPPORT`; semanticamente é `ZERO_BRIDGE_INFRA`, **+0** objetos. O mínimo estrito permanece **1250**. Como o provider já era uma unidade aberta do denominador técnico de 100 componentes, seu fechamento exato torna-o componente **#58 / 58/100**. Evidência: audit HEAD `ed807b77345cde1803767d804e26ea972c41d964`, run `34688273425`, text-only artifact `10296406134`. Runtime gear/balance e qualquer adapter Black Arcana continuam fail-closed.
+A classificação exata é `BRIDGE_COMPAT + GEAR_LOOT_SUPPORT`; semanticamente é `ZERO_BRIDGE_INFRA`, **+0** objetos. O mínimo estrito permanece **1250** naquele checkpoint. Como o provider já era uma unidade aberta do denominador técnico de 100 componentes, seu fechamento exato torna-o componente **#58 / 58/100**. Evidência: audit HEAD `ed807b77345cde1803767d804e26ea972c41d964`, run `34688273425`, text-only artifact `10296406134`. Runtime gear/balance e qualquer adapter Black Arcana continuam fail-closed.
 
 ## Checkpoint Gaze — Phase 2BJ exact-artifact semantic promotion
 
 O artefato físico `gaze-1.1.7.1.jar` / SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041` foi materializado da versão Modrinth exata `od4ltbRo` e hash-matched em NON-MERGE PR #201. O registry exato fecha 26 Gaze Spirit Rites player-facing, dois Geas effect types, oito rune items e um Gaze-owned Iron's `AbstractSpell` (Soulward Shield). O pack físico contém Iron's 3.16.3, então o provider gate desse spell está satisfeito e Soulward Shield contribui **+1 `COUNTED_EXACT`**.
 
-Os 26 Rites não são promovidos: `disableGazeRites` é COMMON e o control flow exato suprime o registry quando o valor resolvido é true; o valor implantado não está disponível. Geas e runes são excluídos pela definição atual da métrica. O mínimo semântico corrente passa a **1250**, enquanto provider-component closure permanece **57/100**. Evidência: audit HEAD `2f4ff6536663b1c629a6a5ea92416765bea17b1e`, run `34676660467`, artifact `10292013626`. Runtime/API/balance permanece fail-closed.
+Os 26 Rites não são promovidos: `disableGazeRites` é COMMON e o control flow exato suprime o registry quando o valor resolvido é true; o valor implantado não está disponível. Geas e runes são excluídos pela definição atual da métrica. O mínimo semântico naquele checkpoint passa a **1250**, enquanto provider-component closure permanece **57/100**. Evidência: audit HEAD `2f4ff6536663b1c629a6a5ea92416765bea17b1e`, run `34676660467`, artifact `10292013626`. Runtime/API/balance permanece fail-closed.
 
 ## Checkpoint Goety — Phase 2BH canonical
 
-Exact `goety-3.1.4.jar` evidence closes **123 active Focus actions + 238 available distinct non-Focus ritual actions = +361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical totals are **1249 semantic objects / 57 of 100 components**. Runtime/API/provider settlement remains fail-closed.
+Exact `goety-3.1.4.jar` evidence closes **123 active Focus actions + 238 available distinct non-Focus ritual actions = +361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical totals naquele checkpoint são **1249 semantic objects / 57 of 100 components**. Runtime/API/provider settlement remains fail-closed.
 
 ## Regra de completude
 
