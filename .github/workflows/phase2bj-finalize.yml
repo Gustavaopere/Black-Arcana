@@ -1,0 +1,47 @@
+name: Phase 2BJ Gaze exact reconciliation
+
+on:
+  push:
+    branches:
+      - docs/magic-catalog-phase2bj-gaze-exact
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply Phase 2BJ documentation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .github/phase2bj_finalize.py
+
+      - name: Validate diff and postconditions
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          grep -F '**1250 semantic magic objects are currently reconstructible' wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md
+          grep -F '| [Gaze](../providers/gaze/README.md) | 1.1.7.1 | 1 | `COUNTED_EXACT` |' wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md
+          grep -F 'does not create component #58' wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md
+          grep -F 'NON-MERGE PR #201' SOURCES.md
+
+      - name: Commit durable docs and remove temporary harness
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add SOURCES.md THIRD_PARTY_NOTICES.md wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md
+          git commit -m 'docs: reconcile Phase 2BJ Gaze semantic evidence'
+          git rm .github/phase2bj_finalize.py .github/workflows/phase2bj-finalize.yml
+          git commit -m 'ci: remove Phase 2BJ reconciliation harness'
+          git push
