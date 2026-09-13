@@ -3,7 +3,8 @@
 Status: `EXACT SOURCE CATALOG COMPLETE / +10 SEMANTIC SPELLS / COMPONENT PROMOTION PENDING SHARED-QUEUE RECONCILIATION / CURRENT-HOST RUNTIME QA OPEN`
 
 Execution branch: `docs/magic-catalog-phase2bp-aeromancy-r2`
-Base main at reconciled phase start: `2449f4c2d472a9c93d783a701a94933c1f9320f3`
+Initial reconciled base: `2449f4c2d472a9c93d783a701a94933c1f9320f3`
+Latest main merged before final CI: `7bf0e803e2a650bf92bc70f9345d71be68b4f815`
 Physical modlist: 595 entries, SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
 Physical JAR: `aero_additions-1.2.8.jar`
 Physical mod id/version: `aero_additions` / `1.2.8`
