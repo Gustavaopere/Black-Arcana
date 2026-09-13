@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.client;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
+import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.neoforge.NoeticViewNetworkBridge;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -18,6 +19,7 @@ public final class BlackArcanaClient {
         modEventBus.addListener(BlackArcanaHudLayer::register);
         modEventBus.addListener(TargetAimPresentationLayer::register);
         modEventBus.addListener(SpellIconResolver::registerReloadListener);
+        ClientArcanaSyncState.installResultObserver(CastPresentationClientRuntime::acceptResult);
         ClientInputController.register(NeoForge.EVENT_BUS);
         HazardResistanceForecastClientController.register(NeoForge.EVENT_BUS);
         BorrowedSightClientController.register(NeoForge.EVENT_BUS);
