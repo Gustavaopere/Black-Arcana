@@ -36,7 +36,7 @@ This checkpoint closes additional bounded Stage 07.07 runtime gaps. It does **no
 - movement updates resolve only the authenticated caster's loaded representation;
 - destination checks use `getChunkNow`, never chunk acquisition/tickets;
 - accepted logical movement is mirrored to the representation;
-- representation loss fails closed and terminates the server session;
+- representation loss is revalidated every server tick from only the bounded active Astral session set and terminates the session without waiting for a MOVE packet;
 - positive post-mitigation body damage terminates projection;
 - player dimension change terminates it;
 - logout terminates it;
@@ -48,7 +48,7 @@ The generic observed-entity Noetic route remains unable to stand in for Astral S
 
 ## C2S control transport
 
-The branch now contains dedicated C2S `MOVE` and `RETURN` transport.
+The branch contains dedicated C2S `MOVE` and `RETURN` transport.
 
 ### Authority contract
 
@@ -82,11 +82,13 @@ Unit coverage round-trips both MOVE and RETURN codecs back to the validated doma
 
 ### Ingress bounds
 
-MOVE and RETURN use separate `IngressRateLimiter` instances:
+MOVE and RETURN use independent ingress windows:
 
 - at most one MOVE intent per authenticated caster per server tick;
 - at most one RETURN intent per authenticated caster per server tick;
-- bounded tracked-caster capacity reuses `ArcanaServerRuntime.DEFAULT_MAX_TRACKED_CASTERS`.
+- bounded tracked-caster capacity reuses `ArcanaServerRuntime.DEFAULT_MAX_TRACKED_CASTERS`;
+- limiter histories are scoped to the concrete `MinecraftServer`, so an integrated-server restart/world-server replacement cannot inherit a larger tick history and fail valid packets as `clock_regression`;
+- server ingress state uses weak server keys so stopped server instances are not retained solely for transport-abuse accounting.
 
 These are protocol abuse/safety bounds, **not** Stage 08 spell balance values. Separate MOVE/RETURN windows ensure a valid cancellation attempt is not consumed merely because the same caster sent a movement intent in that tick.
 
@@ -123,18 +125,22 @@ Those omissions are intentional fail-closed boundaries, not implicit permission 
 
 ## Test evidence boundary
 
-Existing earlier Astral lifecycle/movement tests continue to cover server-owned identity, movement sequencing, range, loaded-only application, representation wiring and cleanup behavior.
+Existing earlier Astral lifecycle/movement tests cover server-owned identity, movement sequencing, range, loaded-only application, representation wiring and cleanup behavior.
 
 For the C2S tranche, test commit `123c60d08600d2e3dc18442876dbc3ad44df5117` introduced the payload contract before implementation. Its GitHub Actions run did not obtain a runner before later branch pushes superseded it, so it is **not** recorded as executed RED CI evidence.
 
-Subsequent implementation/review commits include:
+A later review found that representation loss was only observed from MOVE handling. Test-only commit `6b36734dee4d1c324714a5147799cd9c7da9d983` added `missingProjectionRepresentationClosesServerSession`, but its workflow also did not receive a runner and was cancelled when the fix was pushed. It is therefore retained as TDD history, **not** claimed as executed RED evidence.
+
+Implementation/review history includes:
 
 - `385f2ab00994474251cdeacb819617e5d5688298` — bounded C2S MOVE/RETURN transport;
 - `774c2e0d22cc62cbb5df20ee4bceae9fcdc19ac5` — Minecraft 1.21.1-compatible stream-codec composition;
 - `30711187c63440e6cfedf947499edc94dc665f55` — MOVE/RETURN codec round-trip coverage;
-- `b8ec5f8915ae64d4f8bcf14e6e68a34b987446c7` — isolated MOVE/RETURN ingress limits and canonical tracked-caster capacity.
+- `b8ec5f8915ae64d4f8bcf14e6e68a34b987446c7` — isolated MOVE/RETURN ingress limits and canonical tracked-caster capacity;
+- `1cf6e16144bf11977dc45fc88cbd4e56edf3bdc4` — bounded tick revalidation so representation loss closes the server session without MOVE input;
+- `bf3945c068d136f55151417dca27325eb9d12cc7` — per-`MinecraftServer` ingress state, preventing cross-server tick-history contamination.
 
-These commits are implementation history only. They are **not** GREEN evidence until the exact reconciled PR HEAD passes the complete Black Arcana CI pipeline. Any documentation commit after them also requires a fresh exact-HEAD gate before merge.
+Exact branch head `76ed71977bff5b0c1b59555f1032b22aecf535a1` previously passed Black Arcana CI `34776232542` through JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke before the final review fixes above. That evidence remains valid for that earlier tree only. The final reconciled PR HEAD after this documentation update must pass the complete pipeline again before merge.
 
 ## Remaining 07.07 gate
 
