@@ -13,6 +13,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
@@ -116,7 +117,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 top + rowsPerPage * rowHeight + 48, 0xE0100C14);
         graphics.drawCenteredString(font, title, width / 2, layout.titleY(), 0xFFF0E4F0);
 
-        Component pointerTooltip = null;
+        List<FormattedCharSequence> pointerTooltip = null;
         int hoveredIndex = -1;
         int start = page * rowsPerPage;
         int end = Math.min(filteredAvailable.size(), start + rowsPerPage);
@@ -158,7 +159,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                     textX, y + textOffsetY, 0xFFFFFFFF, false);
             if (hovered) {
                 hoveredIndex = index;
-                pointerTooltip = hazardTooltip(hazards.get(spell)).orElse(null);
+                pointerTooltip = inspectionTooltip(spell);
             }
         }
         updatePointerModality(mouseX, mouseY, hoveredIndex >= 0);
@@ -176,12 +177,12 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 0xFFD8CCD8);
         super.render(graphics, mouseX, mouseY, partialTick);
 
-        Component tooltip = pointerTooltip;
+        List<FormattedCharSequence> tooltip = pointerTooltip;
         int tooltipX = mouseX;
         int tooltipY = mouseY;
         if (inputModality == KeyboardFocusNavigation.InputModality.KEYBOARD
                 && focusedIndex >= start && focusedIndex < end) {
-            tooltip = hazardTooltip(hazards.get(filteredAvailable.get(focusedIndex))).orElse(null);
+            tooltip = inspectionTooltip(filteredAvailable.get(focusedIndex));
             tooltipX = left + panelWidth;
             tooltipY = top + (focusedIndex - start) * rowHeight + rowHeight / 2;
         }
@@ -396,6 +397,15 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         }
         lastMouseX = mouseX;
         lastMouseY = mouseY;
+    }
+
+    private List<FormattedCharSequence> inspectionTooltip(ArcanaSpellId spell) {
+        SpellPresentationPayload.Entry entry = presentation.get(spell);
+        Component name = entry == null
+                ? Component.literal(spell.path().replace('_', ' '))
+                : Component.translatable(entry.translationKey());
+        Component hazard = hazardTooltip(hazards.get(spell)).orElse(null);
+        return SpellInspectionPresentation.wrappedLines(font, width, spell.canonical(), name, hazard);
     }
 
     private ResourceLocation currentIcon(ArcanaSpellId spell) {
