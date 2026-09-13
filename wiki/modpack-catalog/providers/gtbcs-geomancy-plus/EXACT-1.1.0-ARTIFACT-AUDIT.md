@@ -12,7 +12,7 @@ Publisher release identity:
 - exact release SHA-1 `67e9652799f35f1fbd09968da6f400d0229f5599`;
 - exact release SHA-256 `b645cf8852b3453f2d7ccc10cd4b4f897edcc6f857f912042dc9f4d96c8e8bf7`.
 
-The repository does not currently preserve a separate cryptographic hash for the user's local physical GTBC Geomancy Plus JAR. Therefore this audit is an **exact publisher release artifact** audit aligned to the installed mod-id/version line, not a claim of independently proven local-JAR byte equivalence.
+The repository does not currently preserve a separate cryptographic hash for the user's local physical GTBC Geomancy Plus JAR. Therefore this audit is an **exact publisher release artifact** audit aligned to the installed mod-id/version line, not a claim of independently proven local-JAR byte equivalence. Under the canonical semantic taxonomy, any later promotion is therefore `COUNTED_RELEASE_BOUNDED`, not `COUNTED_EXACT`.
 
 ## Evidence runs
 
@@ -43,6 +43,22 @@ Text-only artifact:
 - digest `sha256:a948b8ce7d71b43538756cb9a3ef26dc8b3bf02d4e4c4ef04ee16fc00a391dab`.
 
 The focused job hard-fails unless it can reconcile exactly twelve registry fields, twelve `registerSpell(...)` calls, zero registry initializer branch opcodes, twelve field-to-concrete-class mappings and twelve exact root spell IDs while proving `EarthshatterSpell` unregistered.
+
+### Geo reachability gate reconciliation
+
+Audit branch HEAD: `7596802cefa164f0cc61c391b1fae09d12115e7d`
+
+Workflow run: `34738729721` — GREEN.
+
+Text-only artifact:
+
+- artifact ID `10312146416`;
+- name `gtbcs-geomancy-plus-1.1.0-reachability-reconciliation`;
+- digest `sha256:2056724a748d103a25fc4069fb0c186ce8bea92a82b78515b03b85959df1596c`.
+
+This job hard-checks all ten registered Geo concrete classes. Each is a direct subclass of Iron's `AbstractSpell`, and none declares provider overrides of `allowCrafting`, `isEnabled` or `canBeCraftedBy`. The resulting provider override count for those host gates is zero.
+
+This proves only inheritance of the Iron's host gate contract; it does not promote generic host config or assembled-pack runtime behavior to PASS.
 
 ## Artifact metadata
 
@@ -127,7 +143,7 @@ Focused registry analysis records:
 
 Therefore the twelve exact provider spell registrations are unconditional at the provider registry path inspected here. Generic host/runtime configuration remains a distinct assembled-pack QA surface.
 
-## School/focus evidence
+## School/focus and Geo reachability evidence
 
 The exact JAR contains one Geo `SchoolType` construction path with zero branch opcodes in the school static initializer.
 
@@ -136,7 +152,9 @@ Packaged focus identifiers:
 - `data/gtbcs_geomancy_plus/tags/item/geo_focus.json` -> `mowziesmobs:bluff_rod`;
 - `data/irons_spellbooks/tags/item/school_focus.json` -> `#gtbcs_geomancy_plus:geo_focus`.
 
-This proves an exact provider-defined Geo focus item path into Iron's generic school-focus tag. It does not prove assembled-pack UI, recipe or networking behavior by itself.
+The dedicated reachability audit separately proves that all ten exact registered Geo classes inherit, rather than override, Iron's `allowCrafting`, `isEnabled` and `canBeCraftedBy` host gates. Combined with the exact focus path and the already-canonical Iron's 3.16.3 Scroll Forge/focus contract used by this catalog, this closes catalog-level Geo reachability under the same evidence standard used for other Iron's addons.
+
+This does not prove the deployed generic host config, UI or networking state; those remain assembled-pack/runtime QA.
 
 ## Holy-spell acquisition evidence
 
@@ -184,15 +202,17 @@ No upstream implementation is copied into Black Arcana. The audit exists only to
 
 ## Result
 
-Phase 2BR exact release-artifact evidence closes **12 provider-owned current spell registrations**:
+Phase 2BR exact publisher-release evidence closes **12 provider-owned current spell registrations** at `COUNTED_RELEASE_BOUNDED` evidence strength:
 
 - **10 Geo**;
 - **2 Holy**;
 - `EarthshatterSpell` excluded as unregistered;
 - non-registry adaptation classes excluded;
-- later/project-wide page content excluded.
+- later/project-wide page content excluded;
+- Geo host-gate inheritance verified across all ten registered Geo classes;
+- Holy acquisition supported by exact Umvuthi loot identifiers and exact release changelog.
 
-Candidate semantic delta: **+12**.
+Candidate semantic delta: **+12 `COUNTED_RELEASE_BOUNDED`**.
 
 Candidate technical component: **#66**.
 
