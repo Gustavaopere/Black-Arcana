@@ -26,6 +26,8 @@ import dev.gustavopere.blackarcana.integration.neoforge.MinecraftVeilstepReflexR
 import dev.gustavopere.blackarcana.integration.neoforge.OptionalModEntrypoints;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
+import dev.gustavopere.blackarcana.network.neoforge.AstralSeveranceNetworkBridge;
+import dev.gustavopere.blackarcana.network.neoforge.AstralSeveranceNetworkService;
 import dev.gustavopere.blackarcana.network.neoforge.HazardPreflightSyncService;
 import dev.gustavopere.blackarcana.network.neoforge.HazardResistanceForecastNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.HazardResistanceForecastService;
@@ -45,6 +47,7 @@ public final class BlackArcanaMod {
         BlackArcanaNoeticEntities.register(modEventBus);
         OptionalModEntrypoints.install(modEventBus);
         modEventBus.addListener(ArcanaNetworkBridge::register);
+        modEventBus.addListener(AstralSeveranceNetworkBridge::register);
         modEventBus.addListener(HazardResistanceForecastNetworkBridge::register);
         modEventBus.addListener(LoadoutNetworkBridge::register);
         modEventBus.addListener(NoeticViewNetworkBridge::register);
@@ -53,6 +56,7 @@ public final class BlackArcanaMod {
         ArcanaNetworkBridge.installClientCooldownHandler(ClientArcanaSyncState::acceptCooldowns);
         ArcanaNetworkBridge.installClientPresentationHandler(ClientArcanaSyncState::acceptPresentation);
         ArcanaNetworkBridge.installClientHazardPreflightHandler(ClientArcanaSyncState::acceptHazardPreflight);
+        AstralSeveranceNetworkBridge.installReturnHandler(AstralSeveranceNetworkService::handleReturn);
         HazardResistanceForecastNetworkBridge.installServerHandler(HazardResistanceForecastService::handle);
         HazardResistanceForecastNetworkBridge.installClientHandler(ClientArcanaSyncState::acceptHazardResistanceForecast);
         LoadoutNetworkBridge.installServerHandler(ArcanaServerRuntimeManager::handleLoadoutUpdate);
