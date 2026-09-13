@@ -36,7 +36,6 @@ jobs:
           set -euo pipefail
           python3 - <<'PY'
           import re, struct, subprocess, zipfile
-          from pathlib import Path
 
           JAR='traveloptics.jar'
           z=zipfile.ZipFile(JAR)
@@ -49,7 +48,6 @@ jobs:
               return subprocess.run(args,text=True,capture_output=True,check=True,timeout=30).stdout
 
           def method_block(out, method_name):
-              # javap emits one signature line followed by Code:. Keep transient body only.
               lines=out.splitlines()
               for i,line in enumerate(lines):
                   if re.search(r'\b'+re.escape(method_name)+r'\s*\(', line):
@@ -69,7 +67,6 @@ jobs:
               out=javap(dot, True)
               b=method_block(out, method)
               if not b: return 'MISSING'
-              # Accept only a single constant boolean return shape; otherwise fail closed.
               ops=[]
               for line in b.splitlines():
                   m=re.match(r'^\s*\d+:\s+([a-z0-9_]+)',line)
@@ -83,9 +80,8 @@ jobs:
           unique_allow=const_bool_return(unique,'allowCrafting')
           weapon_allow=const_bool_return(weapon,'allowCrafting')
           if unique_allow != 'false': raise SystemExit('AbstractUniqueSpell.allowCrafting not constant false: '+unique_allow)
-          if weapon_allow != 'false': raise SystemExit('AbstractWeaponSpell.allowCrafting not constant false: '+weapon_allow)
+          if weapon_allow != 'true': raise SystemExit('AbstractWeaponSpell.allowCrafting not constant true: '+weapon_allow)
 
-          # Parse class constant-pool UTF8 strings without preserving bodies.
           def utf8_strings(data):
               if data[:4] != b'\xca\xfe\xba\xbe': return set()
               off=8; n=struct.unpack_from('>H',data,off)[0]; off+=2; out=set(); i=1
@@ -117,7 +113,6 @@ jobs:
                   if field in us and dot != 'com.gametechbc.traveloptics.init.TOSpells':
                       ref_classes[k].append(dot)
 
-          # Method-name-level references only, for classes that reference target spell fields.
           method_refs={k:[] for k in targets}
           for k,field in targets.items():
               for dot in sorted(ref_classes[k]):
@@ -134,14 +129,12 @@ jobs:
                           buf.append(line)
                   flush(current,'\n'.join(buf))
 
-          # Independent structural check of the third-party registry-risk claim.
           loot_cls='com.gametechbc.traveloptics.loot.TOLootModifiers'
           loot_out=javap(loot_cls, True)
           key_name_count=len(re.findall(r'// String key_loot\b',loot_out))
           universal_name_count=len(re.findall(r'// String universal_loot\b',loot_out))
           key_codec_refs=len(re.findall(r'Field com/gametechbc/traveloptics/loot/KeyLootModifier\.CODEC:',loot_out))
           universal_codec_refs=len(re.findall(r'Field com/gametechbc/traveloptics/loot/UniversalLootModifier\.CODEC:',loot_out))
-          # Exact alpha should expose both registry names but never reference UniversalLootModifier.CODEC from TOLootModifiers.
           if key_name_count < 1 or universal_name_count < 1:
               raise SystemExit(f'loot registry names not both present: key={key_name_count} universal={universal_name_count}')
           if key_codec_refs < 2 or universal_codec_refs != 0:
@@ -153,7 +146,7 @@ jobs:
               f.write('curseforge_file=6342780\nexact_release_sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n')
               f.write(f'AbstractUniqueSpell.allowCrafting={unique_allow}\n')
               f.write(f'AbstractWeaponSpell.allowCrafting={weapon_allow}\n')
-              f.write('\n== noncraftable registered spell field reference classes/methods ==\n')
+              f.write('\n== selected registered spell field reference classes/methods ==\n')
               for k in ('blackout','cursed_blast','gyro_slash'):
                   f.write(f'traveloptics:{k} reference_class_count={len(ref_classes[k])} method_reference_count={len(method_refs[k])}\n')
                   for dot,name in sorted(method_refs[k]): f.write(f'  {dot} :: {name}\n')
@@ -163,7 +156,7 @@ jobs:
               f.write(f'KeyLootModifier.CODEC_reference_count={key_codec_refs}\n')
               f.write(f'UniversalLootModifier.CODEC_reference_count={universal_codec_refs}\n')
               f.write('structural_codec_wiring_state=BOTH_NAMES_PRESENT_KEY_CODEC_REFERENCED_TWICE_UNIVERSAL_CODEC_ABSENT\n')
-              f.write('\nBOUNDARY: exact ARR release inspected read-only. Retained output is limited to constant boolean host-gate results, class/method identity references to three registered spell fields, registry-name counts and codec-field reference counts. No implementation bodies, assets, JSON payload bodies, source reconstruction or binary redistribution are retained. These structural facts do not by themselves claim a reproduced runtime crash or assembled-pack PASS.\n')
+              f.write('\nBOUNDARY: exact ARR release inspected read-only. Retained output is limited to constant boolean host-gate results, class/method identity references to selected registered spell fields, registry-name counts and codec-field reference counts. No implementation bodies, assets, JSON payload bodies, source reconstruction or binary redistribution are retained. These structural facts do not by themselves claim a reproduced runtime crash or assembled-pack PASS.\n')
           PY
           cat audit/runtime-risk-reconciliation.txt
 
