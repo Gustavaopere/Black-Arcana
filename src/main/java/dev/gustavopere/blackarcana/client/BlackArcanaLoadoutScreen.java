@@ -38,6 +38,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     private int focusedIndex = -1;
     private KeyboardFocusNavigation.InputModality inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
     private boolean pointerSeeded;
+    private boolean helpVisible;
     private int lastMouseX;
     private int lastMouseY;
 
@@ -62,6 +63,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
     public static void open() {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.screen == null && minecraft.player != null && minecraft.getConnection() != null) {
+            DiscoverabilityClientRuntime.dismissCore();
             minecraft.setScreen(new BlackArcanaLoadoutScreen());
         }
     }
@@ -177,6 +179,11 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 0xFFD8CCD8);
         super.render(graphics, mouseX, mouseY, partialTick);
 
+        if (helpVisible) {
+            renderHelpOverlay(graphics);
+            return;
+        }
+
         List<FormattedCharSequence> tooltip = pointerTooltip;
         int tooltipX = mouseX;
         int tooltipY = mouseY;
@@ -193,6 +200,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (helpVisible) return true;
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
             LoadoutLayout layout = LoadoutLayout.forViewport(width, height);
             page = layout.clampPage(filteredAvailable.size(), page);
@@ -217,6 +225,21 @@ public final class BlackArcanaLoadoutScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (helpVisible) {
+            if (keyCode == GLFW.GLFW_KEY_ESCAPE
+                    || keyCode == GLFW.GLFW_KEY_H
+                    || keyCode == GLFW.GLFW_KEY_ENTER
+                    || keyCode == GLFW.GLFW_KEY_KP_ENTER) {
+                helpVisible = false;
+            }
+            return true;
+        }
+        if (keyCode == GLFW.GLFW_KEY_H) {
+            inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
+            clearSearchFocus();
+            helpVisible = true;
+            return true;
+        }
         if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER) {
             inputModality = KeyboardFocusNavigation.InputModality.KEYBOARD;
             apply();
@@ -378,6 +401,38 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         focusedIndex = KeyboardFocusNavigation.loadoutFocusAfterPageChange(
                 filteredAvailable.size(), page, destination, layout.rowsPerPage(), focusedIndex);
         page = destination;
+    }
+
+    private void renderHelpOverlay(GuiGraphics graphics) {
+        int margin = Math.min(16, Math.max(4, Math.min(width, height) / 16));
+        int panelWidth = Math.max(1, Math.min(440, width - margin * 2));
+        int panelHeight = Math.max(1, Math.min(220, height - margin * 2));
+        int left = Math.max(0, (width - panelWidth) / 2);
+        int top = Math.max(0, (height - panelHeight) / 2);
+        int right = Math.min(width, left + panelWidth);
+        int bottom = Math.min(height, top + panelHeight);
+        int padding = 8;
+        int textWidth = Math.max(1, panelWidth - padding * 2);
+
+        graphics.fill(left, top, right, bottom, 0xF0120E18);
+        graphics.fill(left, top, right, top + 1, 0xFF9DD9FF);
+        graphics.drawCenteredString(
+                font,
+                Component.translatable("help.black_arcana.editor.title"),
+                width / 2,
+                top + padding,
+                0xFFF0E4F0);
+
+        int y = top + padding + font.lineHeight + 5;
+        int lineHeight = font.lineHeight + 2;
+        for (Component component : DiscoverabilityHelpPresentation.editorLines(
+                DiscoverabilityClientRuntime.currentBindings())) {
+            for (FormattedCharSequence line : font.split(component, textWidth)) {
+                if (y + font.lineHeight > bottom - padding) return;
+                graphics.drawString(font, line, left + padding, y, 0xFFE4D7E8, false);
+                y += lineHeight;
+            }
+        }
     }
 
     private int firstVisibleAcceptedIndex(LoadoutLayout layout) {
