@@ -22,6 +22,7 @@
   "screen.black_arcana.loadout.hint": "%s selected · Enter: apply · Delete: clear · R: reset · Esc: cancel",
   "screen.black_arcana.loadout.slot": "S%s",
   "screen.black_arcana.loadout.slot.quick_eligible": "S%s · QC%s eligible",
+  "screen.black_arcana.inspect.id": "Spell ID: %s",
   "hud.black_arcana.selected": "Selected: %s",
   "hud.black_arcana.denied": "Denied: %s",
   "hud.black_arcana.cast_failed": "Cast failed: %s",
