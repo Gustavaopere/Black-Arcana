@@ -117,7 +117,6 @@ Phase 2BO therefore promotes only source-pinned catalog identity/count/reachabil
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
 | `ars_sable` | `ars_sable-1.21.1-1.1.2.jar` | EXACT PHYSICAL IDENTITY / EXACT OFFICIAL SOURCE PIN `1fd83f3...` / 24 COMMON + 5 CLIENT REQUIRED MIXINS / PROTOCOL 2 + 0 PROVIDER PAYLOAD REGISTRATIONS / NO SPELL-GLYPH-RITUAL-SCHOOL-RESOURCE-ACTION REGISTRY / `ZERO_SEMANTIC_BRIDGE` / +0 / COMPONENT #62 / CURRENT-HOST RUNTIME QA FAIL-CLOSED |
-
 ### Evidence boundary
 
 - physical Ars Sable SHA-1 `df43ad58fb9ca3b7acf7f62dc97ed75fd6da3da8`; physical Sable host SHA-1 `05f666e973d32baaaf405acb9bbed6615b909971`;
@@ -156,7 +155,7 @@ Phase 2BN therefore promotes only the provider-component catalog closure. It doe
 - client/full-pack behavior, multiplayer isolation, reload/reconnect persistence and installed-host interop remain fail-closed;
 - clean-room: no upstream implementation body/assets/localization text are copied or adapted.
 
-Phase 2BM therefore promove apenas o fechamento técnico/source-pinned do componente. Ele **não** adiciona magia semântica, não cria um recipe resolver do Black Arcana e não certifica a combinação física atual como runtime-compatible.
+Phase 2BM therefore promotes only the provider-component catalog closure. It does **not** add semantic magic, create a Black Arcana recipe resolver or certify the physical host combination as runtime-compatible.
 
 ## Phase 2BL — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2 — componentes #59/#60 / semantic +66
 
