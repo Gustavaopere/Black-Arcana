@@ -33,7 +33,7 @@ Exact publisher release inspected:
 - exact release SHA-1 `67e9652799f35f1fbd09968da6f400d0229f5599`;
 - exact release SHA-256 `b645cf8852b3453f2d7ccc10cd4b4f897edcc6f857f912042dc9f4d96c8e8bf7`.
 
-The repo does not preserve a separate hash of the user's local physical JAR, so Phase 2BR does not label this evidence `hash-matched physical`. The release artifact aligns to the installed mod-id/version/filename line and is inspected exactly as published.
+The repo does not preserve a separate hash of the user's local physical JAR, so Phase 2BR does not label this evidence `hash-matched physical`. The release artifact aligns to the installed mod-id/version/filename line and is inspected exactly as published. The canonical semantic evidence state is therefore `COUNTED_RELEASE_BOUNDED`, not `COUNTED_EXACT`.
 
 ## Exact-artifact evidence
 
@@ -50,6 +50,15 @@ Focused registry NON-MERGE reconciliation:
 - run `34737352893` GREEN;
 - artifact `10311950155`;
 - digest `sha256:a948b8ce7d71b43538756cb9a3ef26dc8b3bf02d4e4c4ef04ee16fc00a391dab`.
+
+Geo reachability gate NON-MERGE reconciliation:
+
+- audit HEAD `7596802cefa164f0cc61c391b1fae09d12115e7d`;
+- run `34738729721` GREEN;
+- artifact `10312146416`;
+- digest `sha256:2056724a748d103a25fc4069fb0c186ce8bea92a82b78515b03b85959df1596c`;
+- all ten registered Geo classes are direct Iron's `AbstractSpell` subclasses;
+- none overrides `allowCrafting`, `isEnabled` or `canBeCraftedBy`.
 
 ## Registry closure
 
@@ -97,7 +106,7 @@ Geo focus path:
 
 `mowziesmobs:bluff_rod -> #gtbcs_geomancy_plus:geo_focus -> irons_spellbooks:school_focus`
 
-This closes the exact provider-defined focus identity path for the Geo family under the already-cataloged Iron's focus/Scroll Forge contract.
+The dedicated reachability audit proves the ten registered Geo classes do not replace the Iron's host `allowCrafting`, `isEnabled` or `canBeCraftedBy` gates. Combined with the exact provider-defined focus path and the already-canonical Iron's 3.16.3 focus/Scroll Forge contract, this closes catalog-level reachability for the Geo family under the existing catalog standard. Deployed generic host config and assembled-pack behavior remain runtime QA.
 
 Holy acquisition path:
 
@@ -120,6 +129,7 @@ No authority transfer or duplicate processing path is introduced.
 Not promoted to PASS by this checkpoint:
 
 - exact full-pack Iron's host compatibility;
+- deployed generic host configuration;
 - Geo school UI/runtime settlement;
 - Mowzie-linked entity/projectile behavior;
 - Umvuthi loot execution and rates;
@@ -133,6 +143,6 @@ If and only if this durable evidence is merged and a separate latest-main shared
 
 - strict semantic minimum: `1332 + 12 = 1344`;
 - technical component closure: `65/100 -> 66/100`;
-- provider state: `COUNTED_EXACT_RELEASE / COMPONENT #66`.
+- provider state: `COUNTED_RELEASE_BOUNDED / COMPONENT #66`.
 
 Until then the canonical shared values remain **1332 / 65 of 100**, and this checkpoint records only the evidence candidate.
