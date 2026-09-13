@@ -49,7 +49,7 @@ The exact release artifact contains one provider spell registry class, `GGSpells
 
 The exact localization root-key set independently contains the same twelve spell IDs and no additional root spell ID for the unregistered prototype described below.
 
-Phase 2BR therefore closes a candidate semantic delta of **+12 provider-owned spell identities** under the current metric: ten Geo spells and two Holy spells.
+Phase 2BR therefore closes a semantic delta of **+12 provider-owned spell identities** under the current metric: ten Geo spells and two Holy spells.
 
 ## Explicit exclusions and deduplication
 
