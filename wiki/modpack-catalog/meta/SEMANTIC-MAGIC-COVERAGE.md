@@ -29,6 +29,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - Phase 2BO evidence is validated at `main@34a5fd495da744800b32b051e38c6473c6f5ea15`: PR #214 exact corrected HEAD `d3a92c31d7ac5b38183224ef28c6737e721fc758` passed Black Arcana CI **#2564** / run `34723967662`; the merge SHA passed exact-SHA post-merge CI **#2565** / run `34724351805` and published canonical QA artifact `10307207453` (`sha256:50b94c3efc207dfd143a10367cf234473ede7dbbc1f36b9acdd3d3ca1ccc67fa`)
 - Phase 2BP evidence is validated at `main@84e9635b446b605140ab349fa2edc51f3462d518`: PR #219 exact reconciled HEAD `6e39a01273b77ba8accf85d49647b6ceff840e8a` passed Black Arcana CI **#2577** / run `34730598682`; the evidence merge SHA passed exact-SHA post-merge CI **#2578** / run `34730783233`.
 - Phase 2BQ exact-artifact closure is validated at `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`: NON-MERGE PR #222 audit HEAD `9a3620209e27bb74934c8a9740678b7e59df39c6` passed exact artifact run `34735280002`; durable PR #223 HEAD `0eec58c14e591f6d2c875172bec4e436f8e1d5cb` passed Black Arcana CI **#2618** / run `34735444723`; the exact merge SHA passed post-merge CI **#2622** / run `34735586680` and published canonical QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`).
+- Phase 2BR GTBC's Geomancy Plus closure is validated at `main@4ab4ad990d453938e67f3d2b7cfa878bbe031ef0`: structural audit run `34737230548`, registry reconciliation run `34737352893`, and Geo reachability run `34738729721` are GREEN; durable PR #226 exact merge SHA passed post-merge CI **#2654** / run `34738972649` and published canonical QA artifact `10311522907` (`sha256:c815f684a7a6dec192dd995bb6fbd6784c35faa0b0d21ae39bb9de89b93cec16`).
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -47,6 +48,14 @@ The historical chat-only tally is not an authority and is not used as an input t
 | `EXCLUDED` | a registry/content entry exists but fails this metric by definition | zero |
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
+
+## Phase 2BR — GTBC's Geomancy Plus 1.1.0-1.21.1 release-bounded spell closure
+
+The exact publisher release artifact for file `7041615` closes **12 unconditional provider-owned `GGSpells` registrations**: ten Geo (`chunker`, `dripstone_bolt`, `eroding_boulder`, `fissure`, `geo_conductor`, `petrivise`, `pillar_of_the_resounding_earth`, `seismic_surf`, `tremor_spike`, `tremor_step`) and two Holy (`solar_beam`, `solar_storm`). `EarthshatterSpell` exists in the artifact but is unregistered and excluded; `EarthquakeMixin` and `StormSpellMixin` are non-registry adaptation classes and add zero provider identities.
+
+The repository does not preserve an independent cryptographic hash of the local physical GTBC Geomancy Plus JAR. The exact publisher-release artifact is aligned to the installed mod-id/version line, so the correct evidence state is **`COUNTED_RELEASE_BOUNDED`**, not `COUNTED_EXACT`. Registry reconciliation records 12 fields, 12 `registerSpell(...)` calls, zero initializer branches, zero registry config refs and zero registry mod-gate refs. A separate exact-release audit proves all ten registered Geo classes directly inherit Iron's `AbstractSpell` and do not override `allowCrafting`, `isEnabled` or `canBeCraftedBy`; exact Geo focus data plus the canonical Iron's Scroll Forge contract close catalog-level Geo reachability. Exact Umvuthi loot identifiers and the exact release changelog close catalog-level acquisition for the two Holy spells. Deployed generic host config and full assembled-pack behavior remain separate runtime QA.
+
+Phase 2BR therefore contributes **+12 `COUNTED_RELEASE_BOUNDED`** semantic magic objects. The Iron's ecosystem subtotal becomes **570**, the strict reconstructible minimum becomes **1344**, and provider component **#66 / 66 of 100** is promoted separately by this shared reconciliation. Runtime compatibility, terrain/protection settlement, Mowzie integration, live loot, multiplayer/reload and numerical balance remain fail-closed.
 
 ## Phase 2BQ — Ars Nouveau: Two-Way Portals 2.0.0 exact zero-semantic portal closure
 
@@ -112,14 +121,14 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1332 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BQ shared-ledger reconciliation.**
+**1344 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BR shared-ledger reconciliation.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
 - Ars ecosystem: **199**;
-- Iron's ecosystem and spell-content addons: **558**;
+- Iron's ecosystem and spell-content addons: **570**;
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
 - Hexalia ritual/infusion layer: **25**;
@@ -127,7 +136,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `199 + 558 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1332`.
+- total: `199 + 570 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1344`.
 
 ### Counted ledger
 
@@ -148,6 +157,7 @@ Arithmetic cross-check by provider family:
 | [Deeper & Darker Spellbooks](../providers/deeper-and-darker-spellbooks/README.md) | 1.3.3 Version B | 4 | `COUNTED_RELEASE_BOUNDED` | 4 current provider spell identities |
 | [Discerning The Eldritch](../providers/discerning-the-eldritch/README.md) | 1.4.4 | 22 | `COUNTED_SOURCE_PINNED` | 22/22 registered spells, including its ritual-school spell registrations once |
 | [Dreamless Spells](../providers/dreamless-spells/README.md) | 1.1.9 | 4 | `COUNTED_SOURCE_PINNED` | 4 current registered spells |
+| [GTBC's Geomancy Plus](../providers/gtbcs-geomancy-plus/README.md) | 1.1.0-1.21.1 | 12 | `COUNTED_RELEASE_BOUNDED` | exact publisher file `7041615` closes 12 unconditional provider-owned registrations (10 Geo + 2 Holy); Geo host-gate inheritance + focus/Scroll Forge route and Holy Umvuthi acquisition close catalog reachability; independent local physical-JAR hash is unavailable; assembled-host runtime QA remains separate |
 | [Farmer's Spell 'n Spellbooks](../providers/farmers-spell/README.md) | 1.0.5.1-1.21.1 | 6 | `COUNTED_SOURCE_PINNED` | exact 1.0.5.1 source pin closes six unconditional Gluttony spell registrations; provider/host-native Scroll Forge focus route closes catalog reachability while current-host runtime QA remains separate |
 | [SnackPirate's Aeromancy Additions](../providers/aeromancy-additions/README.md) | 1.2.8 | 10 | `COUNTED_SOURCE_PINNED` | exact 1.2.8 source pin closes ten active unconditional Wind spell registrations; five commented registrations are excluded; Breeze Rod Wind focus + Iron's Scroll Forge contract close catalog reachability while current-host runtime QA remains separate |
 | [Fire's Ender Expansion](../providers/fires-ender-expansion/README.md) | 2.4.1 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 active spells |
@@ -172,7 +182,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1332** |  |  |
+| **Strict total** |  | **1344** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -268,7 +278,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 1332** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 1344** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -279,9 +289,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1332 is not “1332 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1332 by the 100 provider-component denominator. The current component target is `65/100`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1332 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1344 is not “1344 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1344 by the 100 provider-component denominator. The current component target is `66/100`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1344 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.

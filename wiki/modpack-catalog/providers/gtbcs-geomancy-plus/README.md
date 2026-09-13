@@ -1,6 +1,6 @@
 # GTBC's Geomancy Plus — 1.1.0-1.21.1
 
-Status: `EXACT RELEASE ARTIFACT CLOSED / COUNTED_RELEASE_BOUNDED CANDIDATE +12 / COMPONENT #66 CANDIDATE / CURRENT-HOST RUNTIME QA FAIL-CLOSED`
+Status: `COUNTED_RELEASE_BOUNDED / +12 / COMPONENT #66 / CURRENT-HOST RUNTIME QA FAIL-CLOSED`
 
 ## Current physical/release identity
 
@@ -49,7 +49,7 @@ The exact release artifact contains one provider spell registry class, `GGSpells
 
 The exact localization root-key set independently contains the same twelve spell IDs and no additional root spell ID for the unregistered prototype described below.
 
-Phase 2BR therefore closes a candidate semantic delta of **+12 provider-owned spell identities** under the current metric: ten Geo spells and two Holy spells.
+Phase 2BR therefore closes a semantic delta of **+12 provider-owned spell identities** under the current metric: ten Geo spells and two Holy spells.
 
 ## Explicit exclusions and deduplication
 
@@ -130,12 +130,10 @@ Phase 2BR does not promote current-host runtime PASS. Still requiring assembled-
 
 ## Component accounting
 
-This durable provider record proposes GTBC's Geomancy Plus as **component #66** with semantic delta **+12 `COUNTED_RELEASE_BOUNDED`**. It does not by itself alter the canonical shared ledgers.
+Durable Phase 2BR provider evidence is canonical via PR #226, squash-merged as `main@4ab4ad990d453938e67f3d2b7cfa878bbe031ef0`. That exact merge SHA passed Black Arcana CI **#2654** / run `34738972649` and published QA artifact `10311522907` (`sha256:c815f684a7a6dec192dd995bb6fbd6784c35faa0b0d21ae39bb9de89b93cec16`).
 
-Until a separate latest-main shared-ledger reconciliation is reviewed, passes exact-HEAD CI, merges, and passes exact merge-SHA post-merge CI:
+This shared-ledger reconciliation promotes GTBC's Geomancy Plus as **component #66** and adds **+12 `COUNTED_RELEASE_BOUNDED`** semantic objects. The canonical shared values become **1344 semantic magic objects minimum / 66 of 100 technical components** after this reconciliation itself merges and its exact merge SHA passes post-merge CI. The 66/100 component metric is not spell/magic percentage coverage.
 
-- canonical semantic minimum remains **1332**;
-- canonical technical component closure remains **65/100**;
-- this provider remains `COMPONENT #66 CANDIDATE` / `+12 CANDIDATE`.
+Current-host runtime integration remains fail-closed as documented above; semantic/component catalog closure does not promote an adapter or runtime PASS.
 
 See [`EXACT-1.1.0-ARTIFACT-AUDIT.md`](./EXACT-1.1.0-ARTIFACT-AUDIT.md) and the Phase 2BR checkpoint for evidence details.
