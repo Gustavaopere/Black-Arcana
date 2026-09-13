@@ -71,7 +71,10 @@ final class CastPresentationResources {
 
     static void registerReloadListener(RegisterClientReloadListenersEvent event) {
         Objects.requireNonNull(event, "event").registerReloadListener(
-                (ResourceManagerReloadListener) resourceManager -> invalidate());
+                (ResourceManagerReloadListener) resourceManager -> {
+                    invalidate();
+                    CastPresentationEffectsLayer.clear();
+                });
     }
 
     private static ResourceLocation id(String path) {
