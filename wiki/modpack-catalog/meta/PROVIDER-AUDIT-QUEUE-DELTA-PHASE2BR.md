@@ -14,7 +14,10 @@ This file records the exact queue/coverage delta proposed by the GTBC's Geomancy
 - exact release SHA-256 `b645cf8852b3453f2d7ccc10cd4b4f897edcc6f857f912042dc9f4d96c8e8bf7`;
 - physical local-JAR byte hash is not preserved in the current repository, so no `hash-matched physical` claim is made;
 - structural audit run `34737230548` GREEN;
-- focused registry reconciliation run `34737352893` GREEN.
+- focused registry reconciliation run `34737352893` GREEN;
+- Geo reachability-gate reconciliation run `34738729721` GREEN, artifact `10312146416`, digest `sha256:2056724a748d103a25fc4069fb0c186ce8bea92a82b78515b03b85959df1596c`.
+
+Because exact publisher-release bytes are inspected but independently matching local physical-JAR bytes are unavailable, the existing canonical semantic evidence state is **`COUNTED_RELEASE_BOUNDED`**.
 
 ## Semantic delta candidate
 
@@ -39,7 +42,7 @@ Explicit +0 exclusions:
 
 Proposed semantic state after future shared reconciliation:
 
-`COUNTED_EXACT_RELEASE / +12`
+`COUNTED_RELEASE_BOUNDED / +12`
 
 Proposed strict minimum:
 
@@ -65,17 +68,20 @@ Geo:
 
 `mowziesmobs:bluff_rod -> #gtbcs_geomancy_plus:geo_focus -> irons_spellbooks:school_focus`.
 
+The dedicated exact-release reachability audit verifies all ten registered Geo concrete classes are direct Iron's `AbstractSpell` subclasses and that none overrides `allowCrafting`, `isEnabled` or `canBeCraftedBy`. Therefore they inherit the host gates used by the already-canonical Iron's Scroll Forge/focus contract rather than substituting provider-local reachability rules.
+
 Holy:
 
 exact Umvuthi loot identifiers reference both provider Holy spell IDs plus Iron's scroll/randomization identifiers; exact publisher file notes both are obtained by defeating Umvuthi.
 
-This closes catalog-level acquisition/reachability without claiming assembled-pack runtime PASS.
+This closes catalog-level acquisition/reachability without claiming deployed generic host config or assembled-pack runtime PASS.
 
 ## Runtime state
 
 Remain fail-closed:
 
 - full-pack Iron's compatibility;
+- deployed generic host configuration;
 - Geo school/focus runtime UI;
 - Mowzie entity/projectile integration;
 - Umvuthi live loot rates/settlement;
