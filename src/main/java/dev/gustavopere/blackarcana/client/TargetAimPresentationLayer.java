@@ -40,6 +40,11 @@ public final class TargetAimPresentationLayer {
                 minecraft.player.tickCount,
                 ClientUxState.selectionChangedTick(),
                 BlackArcanaClientConfig.SELECTION_DURATION_TICKS.get());
+        boolean showSelectionContext = ContextualFeedbackOrchestration.decide(
+                BlackArcanaClientConfig.FEEDBACK_LEVEL.get(),
+                selectionRecent,
+                false,
+                null).showSelectionContext();
         var loadout = ClientArcanaSyncState.loadoutSnapshot();
         boolean hasSelectedSpell = worldInputAvailable
                 && !loadout.isEmpty()
@@ -48,7 +53,7 @@ public final class TargetAimPresentationLayer {
         if (!TargetAimPresentationSemantics.shouldRender(
                 BlackArcanaClientConfig.CONTEXTUAL_HUD.get(),
                 worldInputAvailable,
-                selectionRecent,
+                showSelectionContext,
                 hasSelectedSpell)) {
             return;
         }
