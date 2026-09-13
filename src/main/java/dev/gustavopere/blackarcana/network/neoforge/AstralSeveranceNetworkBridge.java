@@ -2,7 +2,7 @@ package dev.gustavopere.blackarcana.network.neoforge;
 
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.content.noetic.AstralSeveranceRuntime;
-import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
+import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.AstralMoveIntentPayload;
 import dev.gustavopere.blackarcana.network.AstralReturnIntentPayload;
@@ -19,15 +19,21 @@ import java.util.Objects;
  * Narrow C2S transport for Astral Severance control intent.
  *
  * <p>Caster identity is derived exclusively from {@link IPayloadContext#player()}. The client never supplies
- * caster identity or an authoritative position. The transport rate cap is a protocol abuse bound, not a
- * spell balance value: at most MOVE plus RETURN may be admitted for one caster in one server tick.</p>
+ * caster identity or an authoritative position. The transport caps are protocol abuse bounds, not spell
+ * balance values: one MOVE and one RETURN may be admitted independently for a caster in one server tick.</p>
  */
 public final class AstralSeveranceNetworkBridge {
-    static final int MAX_CONTROL_INTENTS_PER_TICK = 2;
-    private static final IngressRateLimiter INGRESS = new IngressRateLimiter(
-            MAX_CONTROL_INTENTS_PER_TICK,
+    static final int MAX_MOVE_INTENTS_PER_TICK = 1;
+    static final int MAX_RETURN_INTENTS_PER_TICK = 1;
+
+    private static final IngressRateLimiter MOVE_INGRESS = new IngressRateLimiter(
+            MAX_MOVE_INTENTS_PER_TICK,
             1L,
-            NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS);
+            ArcanaServerRuntime.DEFAULT_MAX_TRACKED_CASTERS);
+    private static final IngressRateLimiter RETURN_INGRESS = new IngressRateLimiter(
+            MAX_RETURN_INTENTS_PER_TICK,
+            1L,
+            ArcanaServerRuntime.DEFAULT_MAX_TRACKED_CASTERS);
 
     private static volatile MoveHandler moveHandler = (player, payload) ->
             AstralSeveranceRuntime.ControlResult.INVALID_INTENT;
@@ -65,18 +71,22 @@ public final class AstralSeveranceNetworkBridge {
 
     private static void handleMove(AstralMoveIntentPacket packet, IPayloadContext context) {
         if (!(context.player() instanceof ServerPlayer player)) return;
-        if (!claimIngress(player).allowed()) return;
+        if (!claimMoveIngress(player).allowed()) return;
         moveHandler.handle(player, packet.toDomain());
     }
 
     private static void handleReturn(AstralReturnIntentPacket packet, IPayloadContext context) {
         if (!(context.player() instanceof ServerPlayer player)) return;
-        if (!claimIngress(player).allowed()) return;
+        if (!claimReturnIngress(player).allowed()) return;
         returnHandler.handle(player, packet.toDomain());
     }
 
-    private static ArcanaDecision claimIngress(ServerPlayer player) {
-        return INGRESS.claim(player.getUUID(), player.serverLevel().getGameTime());
+    private static ArcanaDecision claimMoveIngress(ServerPlayer player) {
+        return MOVE_INGRESS.claim(player.getUUID(), player.serverLevel().getGameTime());
+    }
+
+    private static ArcanaDecision claimReturnIngress(ServerPlayer player) {
+        return RETURN_INGRESS.claim(player.getUUID(), player.serverLevel().getGameTime());
     }
 
     @FunctionalInterface
