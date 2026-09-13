@@ -30,6 +30,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - Phase 2BP evidence is validated at `main@84e9635b446b605140ab349fa2edc51f3462d518`: PR #219 exact reconciled HEAD `6e39a01273b77ba8accf85d49647b6ceff840e8a` passed Black Arcana CI **#2577** / run `34730598682`; the evidence merge SHA passed exact-SHA post-merge CI **#2578** / run `34730783233`.
 - Phase 2BQ exact-artifact closure is validated at `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`: NON-MERGE PR #222 audit HEAD `9a3620209e27bb74934c8a9740678b7e59df39c6` passed exact artifact run `34735280002`; durable PR #223 HEAD `0eec58c14e591f6d2c875172bec4e436f8e1d5cb` passed Black Arcana CI **#2618** / run `34735444723`; the exact merge SHA passed post-merge CI **#2622** / run `34735586680` and published canonical QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`).
 - Phase 2BR GTBC's Geomancy Plus closure is validated at `main@4ab4ad990d453938e67f3d2b7cfa878bbe031ef0`: structural audit run `34737230548`, registry reconciliation run `34737352893`, and Geo reachability run `34738729721` are GREEN; durable PR #226 exact merge SHA passed post-merge CI **#2654** / run `34738972649` and published canonical QA artifact `10311522907` (`sha256:c815f684a7a6dec192dd995bb6fbd6784c35faa0b0d21ae39bb9de89b93cec16`).
+- Phase 2BS T.O Magic n' Extras partial catalog is validated at `main@0bd1c04460e63a03b6b484b785247e75f6e44178`: durable PR #228 passed exact-head CI #2679 / run `34741531727`; the merge SHA passed exact-SHA post-merge CI #2682 / run `34741699505` and published canonical QA artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Phase 2BS catalogs 33 exact registered identities but contributes +0 strict and no component closure.
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -48,6 +49,12 @@ The historical chat-only tally is not an authority and is not used as an input t
 | `EXCLUDED` | a registry/content entry exists but fails this metric by definition | zero |
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
+
+## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 partial catalog
+
+Exact publisher file `6342780` closes **33 unique registered `traveloptics:<id>` spell identities**, 33 field→class→ID mappings and zero registry initializer branches. The same exact alpha carries 32 additional root localization spell IDs that are not registered and are excluded. Provider ancestry proves `AbstractUniqueSpell.allowCrafting() = false` and `AbstractWeaponSpell.allowCrafting() = true`; nine of ten Unique registrations have direct structured loot anchors, while `traveloptics:blackout` remains object-level survival-unresolved.
+
+A focused exact-artifact audit also proves a runtime-risk wiring fact: `TOLootModifiers` registers both `key_loot` and `universal_loot`, while `KeyLootModifier.CODEC` is referenced twice and `UniversalLootModifier.CODEC` zero times. Black Arcana does not claim the reported runtime crash is reproduced, but runtime viability remains fail-closed. Consequently all 33 registry identities remain catalog inventory rather than a strict counted promotion: Phase 2BS contributes **+0 strict**, the reconstructible minimum stays **1344**, and technical component closure stays **66/100**.
 
 ## Phase 2BR — GTBC's Geomancy Plus 1.1.0-1.21.1 release-bounded spell closure
 

@@ -10,6 +10,8 @@ O denominador interno corrente do catálogo permanece **100 componentes mágicos
 
 A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Farmer's Spell acrescenta **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1316 para 1322**; Aeromancy Additions acrescenta mais **+10 `COUNTED_SOURCE_PINNED`**, elevando-o para **1332**; Ars Polymorphia, Ars Sable e Ars Nouveau: Two-Way Portals são fechamentos semânticos **+0**; GTBC's Geomancy Plus acrescenta **+12 `COUNTED_RELEASE_BOUNDED`**, elevando o mínimo estrito para **1344**.
 
+Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 e mantém **1344 / 66 de 100**.
+
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
 ## Freshness histórica 2026-09-07
@@ -96,6 +98,12 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 - Alshanex's Familiars é consumidor/conteúdo concreto; Phase 2BD fecha a linha 4.0.3 em **7 spells próprios + 11 rituais próprios = 18 objetos semânticos**, usando o JAR exato hash-matched; runtime QA e seam de ownership continuam separados;
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes n' Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
+
+## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — partial canonical
+
+O exact publisher release file `6342780` fecha **33** registrations `traveloptics:<id>` no `TOSpells`, com 33 field→classe→ID mappings e zero branches no initializer. Outros **32** root localization spell IDs existem no alpha, mas não estão registrados e são excluídos. `AbstractUniqueSpell.allowCrafting=false`; nove dos dez Unique registrados possuem rotas de loot estruturadas, enquanto `traveloptics:blackout` não possui referência estruturada nem referência provider-owned fora do registry encontrada pelo audit.
+
+O audit de risco também prova que `TOLootModifiers` contém os nomes `key_loot` e `universal_loot`, mas referencia `KeyLootModifier.CODEC` duas vezes e `UniversalLootModifier.CODEC` zero vezes. Um patch de terceiro descreve esse mesmo wiring como defeito de startup, porém Black Arcana não declara crash reproduzido. A promoção fica fail-closed até runtime físico autoritativo e reachability de Blackout. Durable PR #228 mergeou em `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; post-merge CI #2682 / run `34741699505` passou e publicou artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Estado: **⚠️ parcial/condicionado / +0 strict / componente aberto**.
 
 ## Checkpoint GTBC's Geomancy Plus — Phase 2BR canonical
 
