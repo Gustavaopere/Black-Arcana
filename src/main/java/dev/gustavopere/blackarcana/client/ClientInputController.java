@@ -8,6 +8,8 @@ import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -20,6 +22,7 @@ public final class ClientInputController {
     private static final ClientLoadoutSelection SELECTION = new ClientLoadoutSelection();
     private static volatile Runnable radialOpener = () -> { };
     private static volatile Runnable loadoutEditorOpener = () -> { };
+    private static ResourceKey<Level> presentationDimension;
 
     private ClientInputController() { }
 
@@ -64,12 +67,25 @@ public final class ClientInputController {
     private static void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.getConnection() == null) {
+            presentationDimension = null;
             ClientArcanaSyncState.clear();
             ClientUxState.clear();
             CastPresentationClientRuntime.clear();
             CastPresentationEffectsLayer.clear();
             return;
         }
+
+        ResourceKey<Level> currentDimension = minecraft.player.level().dimension();
+        boolean dimensionChanged = presentationDimension != null
+                && !presentationDimension.equals(currentDimension);
+        presentationDimension = currentDimension;
+        if (!minecraft.player.isAlive() || dimensionChanged) {
+            CastPresentationClientRuntime.clear();
+            CastPresentationEffectsLayer.clear();
+        } else if (minecraft.screen != null) {
+            CastPresentationEffectsLayer.clear();
+        }
+
         CastPresentationClientRuntime.tick(minecraft.player);
         List<ArcanaSpellId> loadout = ClientArcanaSyncState.loadoutSnapshot();
         SELECTION.reconcile(loadout);
