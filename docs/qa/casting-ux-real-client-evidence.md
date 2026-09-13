@@ -4,7 +4,7 @@
 
 `PREPARED / MANUAL EXECUTION NOT STARTED`
 
-This ledger is the evidence target required by `plans/05-casting-ux/05-final-client-validation-handoff.md` and `docs/qa/casting-ux-real-client-runbook.md`.
+This ledger is the evidence target required by `plans/05-casting-ux/🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-real-client-runbook.md`.
 
 It currently records **campaign preparation only**. No Minecraft client observation has been performed through this ledger, no manual matrix row is PASS/FAIL/BLOCKED from this file, and `docs/qa/casting-ux-manual-matrix.md` remains unchanged.
 
