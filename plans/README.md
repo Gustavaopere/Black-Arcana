@@ -1,90 +1,78 @@
 # Black Arcana — Master Plan
 
-This directory is the canonical memory for the project. Every implementation session must read this file, `STATUS.md`, `DECISIONS.md`, then the README and task files of the active stage before changing code.
+This directory is the canonical planning memory for Black Arcana. Implementation sessions read this file, `STATUS.md`, `DECISIONS.md`, then the README/task files for the active numbered engineering stage.
 
 ## Goal
 
-Rebuild selected dark/forbidden-magic concepts as original Black Arcana mechanics, integrated with Iron's Spells 'n Spellbooks, Ars Nouveau, Eidolon: Repraised, Malum and the project's RPG skill-tree ecosystem. The result must be less overpowered, less destructive, visually cleaner and more modular than the reference experience.
-
-## Non-goals
-
-- Do not clone Mahou Tsukai as a whole.
-- Do not copy or decompile Mahou Tsukai code, assets, models, sounds or implementation details.
-- Do not preserve names strongly tied to Mahou Tsukai or third-party fiction when an original identity can replace them.
-- Do not create another permanent mana bar when an existing resource provider can be used.
-- Do not require a staff for all casting.
-- Do not permit unbounded power growth, permanent mass destruction or infinite resurrection loops by default.
-
-## Completion and validation convention
-
-Implementation progress and final validation are separate facts.
-
-Canonical states for active/downstream stages are:
-
-- `IMPLEMENTATION ACTIVE` — design/code work is still incomplete.
-- `IMPLEMENTED / AUTOMATED GATES GREEN` — intended implementation is present and applicable deterministic automated checks pass; this does not imply real-client or real-modpack validation.
-- `IMPLEMENTED / FINAL VALIDATION DEFERRED` — no known implementation work remains, but one or more acceptance items require the later real-client, real-modpack, representative-performance, migration-fixture, compatibility or exact-release-head campaign.
-- `VALIDATED / COMPLETE` — every stage-local acceptance criterion has direct evidence, applicable tests/CI are green and the implementation is merged to `main`.
-- `RELEASE BLOCKED` — Stage 09 implementation/harness work may be ready, but release-blocking validation remains open.
-
-A task starts as `NN-name.md`. Only after all of that task's acceptance criteria are genuinely verified, applicable tests/CI are green and its implementation is merged into `main` may it be renamed to `✅-NN-name.md`. A merged implementation may therefore remain non-✅ while final evidence is deferred. Planning files are not marked complete merely because they exist.
-
-Missing manual/final-validation evidence never becomes inferred PASS. CI, GameTests, screenshots, fixtures, artifact availability and static inspection do not substitute for a real-client or real-modpack acceptance criterion that explicitly requires direct observation.
+Build an original, server-authoritative forbidden-magic system for Minecraft 1.21.1 / NeoForge / Java 21, integrating safely with the modpack's existing magic/RPG providers without cloning Mahou Tsukai code/assets/presentation.
 
 ## Engineering method
 
-- Minecraft 1.21.1, NeoForge, Java 21.
-- TDD for deterministic behavior: RED → minimal GREEN → refactor.
-- GameTests/integration tests for world, entity, networking and mod-bridge behavior.
-- Server-authoritative casting, costs, cooldowns, progression and destructive effects.
-- No global per-tick scans over loaded chunks/entities.
-- Optional integrations must fail closed/safely when their mod is absent or API contracts change.
-- Data-driven definitions where practical; hard-coded behavior only where execution semantics require it.
-- Every destructive mechanic must pass through the Black Arcana world-effect policy.
-- Every high-power mechanic must have explicit resource, cooldown, progression and safety budgets.
-- Deferring the final integrated/manual campaign does not defer deterministic engineering tests required to implement safely.
+- TDD for deterministic behavior: RED -> minimal GREEN -> refactor.
+- GameTests/integration tests for world, entity, network and provider bridges.
+- Server-authoritative casting, costs, cooldowns, progression, Arcane Danger and destructive effects.
+- No unbounded scans or chunk forcing.
+- Optional integrations are isolated and fail closed/safely.
+- Data-driven definitions are declarative and bounded.
+- Destructive mechanics pass through canonical world-effect policy.
+- High-power mechanics have explicit caps/budgets.
 
-## Branch and promotion policy
+## Completion/validation rule
 
-Planning is canonical on `main`. Implementation branches are created sequentially from the latest `main` after their causal predecessor's runtime contracts are canonical. Inserted Stages `05A` and `07A` intentionally preserve the established Stage 06–09 numbering and branch history.
+Implementation evidence and direct physical validation are separate facts. CI/GameTests do not fabricate a real-client/full-pack PASS. A completed runtime stage may proceed downstream when its required runtime contracts are frozen even if non-blocking presentation polish is deferred.
 
-An unresolved manual/final-validation item blocks validation/release claims, but does not block downstream implementation or merge when all runtime contracts required by that downstream stage are frozen, the downstream change is independently reviewable and its applicable automated gates are green.
+## Runtime implementation sequence
 
-The implementation sequence remains:
+1. `00-foundation`
+2. `01-reference-catalog`
+3. `02-arcana-core`
+4. `03-integration-layer`
+5. `04-world-safety`
+6. `05-casting-ux`
+7. `05a-arcane-danger`
+8. `06-rituals`
+9. `07-spell-domains`
+10. `07a-arcane-polarity-fusion-metamagic`
+11. `08-progression-balance`
+12. `09-hardening-release`
+13. accumulated final validation/release closeout
 
-1. `round-1-foundation`
-2. `feat/01-reference-catalog`
-3. `feat/02-arcana-core`
-4. `feat/03-integration-layer`
-5. `feat/04-world-safety`
-6. `feat/05-casting-ux`
-7. `feat/05a-arcane-danger`
-8. `feat/06-rituals`
-9. `feat/07-spell-domains` (may be split by domain; includes planned 07.08 follow-up)
-10. `feat/07a-arcane-polarity-fusion-metamagic`
-11. `feat/08-progression-balance`
-12. `feat/09-hardening-release`
-13. accumulated final validation and release closeout
+Stages integrate sequentially through current `main`; stale feature ancestry is not merged wholesale.
 
-For Stages 06→09, each stage is integrated through the then-current `main`; stale preparatory ancestry is not merged wholesale merely to preserve history. Preserve reviewed behavior and evidence while reconciling shared runtime/persistence files against current canonical contracts.
+## Visual production is a separate planning lane
 
-Later stages may prepare isolated work in parallel only when required contracts are already frozen. They must not invent upstream contracts. Stage 07A cannot begin implementation until Stage 07 is canonical through 07.08 or an explicit reviewed rescope removes a prerequisite. Stage 09 may reach `RELEASE BLOCKED` with its infrastructure implemented, but public release completion remains impossible until the accumulated final validation campaign is green on the exact release candidate HEAD.
+UI, HUD, textures, iconography, models, animations, VFX/particles/shaders, sound/audio and visual accessibility are planned under [`visual-production/`](visual-production/README.md).
 
-## Architecture order
+That directory is intentionally **not** a numbered runtime stage. It owns Black Arcana-specific presentation requirements while `Gustavaopere/minecraft-mod-factory` owns reusable mod/asset production infrastructure, source-art pipeline rules, validators, templates and tooling.
 
-`00-foundation` establishes build, CI, provenance and domain boundaries. `01-reference-catalog` inventories reference mechanics and converts them into original Black Arcana specifications. `02-arcana-core` builds the server-authoritative execution model. `03-integration-layer` freezes adapters for the existing magic/RPG mods. `04-world-safety` provides destruction/rollback/budget controls consumed by all dangerous content. `05-casting-ux` builds direct casting and contextual UI. Inserted `05A-arcane-danger` defines backlash, resistance, corruption, strain and hazard snapshots before high-power content is canonicalized. `06-rituals` implements occult/grand ritual orchestration against those frozen hazard contracts. `07-spell-domains` delivers the actual magic families. Inserted `07A-arcane-polarity-fusion-metamagic` derives white/black/neutral polarity from source/agency, adds bounded single-transaction spell fusion and metamagic, routes selected reference fantasies to verified provider surfaces, and adds original sigil presentation without importing Mahou systems or assets. `08-progression-balance` then closes progression, mastery and anti-OP tuning over the finalized Stage 07/07A capability set. `09-hardening-release` builds and executes compatibility, persistence, performance and release-provenance closure; execution-dependent rows may remain deferred until the final campaign.
+The numbered engineering plans retain only presentation-adjacent facts required for runtime correctness, such as bounded synchronized presentation data, cosmetic fallback modes, render-safe identities and server/client authority boundaries. Final look/layout/art/audio belongs to visual production.
 
-## Stages
+See [`visual-production/MIGRATION-MAP.md`](visual-production/MIGRATION-MAP.md) for the extraction audit.
+
+## Non-goals
+
+- no full Mahou Tsukai clone;
+- no copied/decompiled Mahou code, assets, models, sounds, animations or protected presentation;
+- no mandatory second mana bar/pool by default;
+- no universal staff requirement;
+- no unbounded power growth or mass permanent destruction by default;
+- no client UI or asset failure becoming gameplay authority.
+
+## Engineering stages
 
 - [00 — Foundation](00-foundation/README.md)
 - [01 — Reference Catalog](01-reference-catalog/README.md)
 - [02 — Arcana Core](02-arcana-core/README.md)
 - [03 — Integration Layer](03-integration-layer/README.md)
 - [04 — World Safety](04-world-safety/README.md)
-- [05 — Casting & UX](05-casting-ux/README.md)
-- [05A — Arcane Danger, Resistance, Corruption & Backlash](05a-arcane-danger/README.md)
+- [05 — Casting Runtime & Client Contracts](05-casting-ux/README.md)
+- [05A — Arcane Danger](05a-arcane-danger/README.md)
 - [06 — Rituals](06-rituals/README.md)
 - [07 — Spell Domains](07-spell-domains/README.md)
 - [07A — Arcane Polarity, Fusion & Metamagic](07a-arcane-polarity-fusion-metamagic/README.md)
 - [08 — Progression & Balance](08-progression-balance/README.md)
 - [09 — Hardening & Release](09-hardening-release/README.md)
+
+## Presentation lane
+
+- [Visual Production](visual-production/README.md)
