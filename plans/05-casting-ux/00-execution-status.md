@@ -15,7 +15,7 @@ The deterministic runtime/client-contract implementation is present. Remaining p
 | 05.03 Contextual Feedback Data | 🟡 | server-authored result/hazard/gate data and stale-state rules implemented | physical stale/correlation/state-authority rows; layout/wording is visual-production |
 | 05.04 Client Config Authority | 🟡 | client-only config/persistence/input semantics implemented | prove client settings cannot affect gameplay; perceptual effect acceptance is visual-production |
 | 05.05 Physical Validation | 🟡 | runtime/input/provider client handoff retained | execute remaining authority/input/integration rows; presentation matrix split to visual-production |
-| 05.06 Modpack Coexistence | 🟡 | provider invocation/one-root/one-settlement authority policy retained | observe required runtime/provider coexistence; overlap/animation/readability is visual-production |
+| 05.06 Modpack Coexistence | 🟡 | Iron's-hosted BA path now hard-disables provider mana/cooldown settlement, retains one-root convergence and optional-provider isolation with regression coverage | observe required runtime/provider coexistence; overlap/animation/readability is visual-production |
 | 05.07 Presentation Data Contracts | ✅ | data-authority audit/gates complete | none inside the audit; new fields remain evidence-gated |
 
 ## Extracted presentation work
