@@ -2,10 +2,11 @@
 
 This folder owns the presentation half of the former mixed Stage 05 planning package.
 
-The numbered Stage 05 folder remains authoritative for input intent, server-owned loadouts, network/data authority, synchronization, stale-state handling and other runtime invariants. This folder owns UI/HUD composition, information architecture, visual semantics, iconography, presentation accessibility, targeting/inspection surfaces, VFX/audio/animation and contextual help.
+The numbered Stage 05 folder remains authoritative for input intent, server-owned loadouts, network/data authority, synchronization, stale-state handling and runtime/provider integration invariants. This folder owns UI/HUD composition, information architecture, visual semantics, iconography, presentation accessibility, targeting/inspection surfaces, VFX/audio/animation, contextual help and real-client presentation acceptance.
 
-## Migrated numbered presentation plans
+## Moved client/presentation plans
 
+- 05.05 — Final Real-Client Validation Handoff
 - 05.08 — Visual Language & State Semantics
 - 05.09 — Keyboard Focus & Navigation
 - 05.10 — Loadout Editor Information Architecture
@@ -22,9 +23,8 @@ The numbered Stage 05 folder remains authoritative for input intent, server-owne
 - `02-radial-wheel-presentation.md`
 - `03-contextual-hud-presentation.md`
 - `04-accessibility-presentation.md`
+- `06-modpack-coexistence-presentation.md`
 
-Those split files are presentation specifications only. They consume Stage 05 runtime contracts and must not introduce gameplay authority.
+Those files consume server-authored/runtime contracts and must not introduce gameplay authority.
 
-## Checkpoints
-
-Historical implementation checkpoints for 05.10–05.16 live under `checkpoints/`. They remain evidence records; moving them here does not change what was implemented or validated.
+Historical implementation checkpoints for 05.10–05.16 remain under `checkpoints/`. Pre-extraction snapshots for mixed plans remain under `_migration-source/` and are audit-only.

@@ -1,94 +1,61 @@
-# 07A.02 — White/Black Identity Surfaces
+# 07A.02 — White/Black Identity Surfaces — Runtime Contract
 
 ## State
 
-`PLANNED / NOT IMPLEMENTED`
+`PLANNED / NOT IMPLEMENTED / PRESENTATION SPLIT`
 
-## Objective
+Concrete Luminal/Umbral art direction, palettes, motifs, extraction links and visual feedback are owned by:
 
-Give Luminal and Umbral magic distinct player-facing progression/presentation without creating new magic engines or replacing canonical Stage 07 mechanics.
+`plans/visual-production/07a-arcane-polarity-fusion-metamagic/02-white-black-identity-presentation.md`
+
+This numbered plan retains semantic identity, progression data and runtime authority only.
 
 ## Umbral Codex
 
-The planned Black Arcana identity for the requested black-magic grimoire role is **Umbral Codex**. `Darkhold` remains user/design shorthand only and must not ship as the Black Arcana identity.
+The planned original Black Arcana identity for the black-magic grimoire role is **Umbral Codex**. `Darkhold` remains design shorthand only and must not ship as the Black Arcana identity.
 
-The Codex may expose:
+The authoritative data surface may expose discovered Umbral techniques, known bargains/contracts, danger/corruption warnings, provenance/lore references, progression requirements and explicit server-derived power-source classification.
 
-- discovered Umbral techniques;
-- known bargains/contracts;
-- danger/corruption warnings;
-- provenance/lore entries;
-- progression requirements;
-- explicit indication of stolen/consensual/self-owned power sourcing.
-
-It does not own mana, cooldown, spell execution, corruption, strain or ritual completion.
-
-Stage 08 decides final unlock progression and whether the Codex is a physical item, UI surface, knowledge state or combination. Any physical item is optional presentation/access, not mandatory cast authority.
+The Codex does not own mana, cooldown, spell execution, Corruption, Strain or ritual completion. Stage 08 determines final unlock progression and whether access is represented by an item, UI/knowledge surface or combination. Any physical item remains access/presentation, not mandatory cast authority.
 
 ## Ankh of Continuance
 
-The planned white-magic resurrection surface is **Ankh of Continuance**.
-
-It is a ritual focus/token over the existing Stage 07.02 resurrection authority. It must not implement a separate death interception, second soul-charge ledger or independent respawn system.
+The planned white-magic resurrection identity is **Ankh of Continuance**. It is a ritual focus/token over the existing Stage 07.02 resurrection authority, not a second death interception, soul-charge ledger or respawn system.
 
 Required composition:
 
-`Ankh ritual/presentation -> canonical Stage 06 ritual completion -> canonical Soul Anchor/Mortal Ledger state -> canonical death settlement`
+`Ankh request -> canonical Stage 06 ritual completion -> canonical Soul Anchor/Mortal Ledger state -> canonical death settlement`
 
 Rules:
 
-- self-anchoring or explicitly consensual anchoring is Luminal-eligible;
-- resurrection remains high-danger/forbidden regardless of Luminal polarity;
+- self or explicitly consensual anchoring is Luminal-eligible;
+- resurrection remains high-danger/forbidden independent of polarity;
 - charges/capacity stay bounded;
-- repeated ritual completion is replay/idempotency protected;
-- offline/dead-target behavior must follow the existing Souls & Death persistence contract;
-- no infinite resurrection loop;
-- no free charge from provider bridge failure.
+- repeated completion is replay/idempotency protected;
+- offline/dead-target behavior follows canonical Souls & Death persistence;
+- no infinite loop or free provider-failure charge.
 
-### Eidolon routing
+## Provider routing
 
-Eidolon: Repraised is the preferred ritual presentation language for occult altar/sigil preparation when the exact installed callback can prove the Black Arcana caster/session identity needed for one authoritative completion.
+Eidolon: Repraised may host ritual presentation only when the exact installed callback proves the Black Arcana caster/session identity required for authoritative completion. Current evidence keeps player-specific Eidolon completion fail-closed when identity cannot be proven; never infer caster from proximity, GUI user or last interactor.
 
-The existing project evidence already keeps player-specific Eidolon completion fail-closed where that identity cannot be proven. 07A must preserve that rule. It may improve the adapter only after exact-version evidence; it may not infer the caster from proximity, GUI user or last interactor.
-
-### Malum routing
-
-Malum spirits may participate only if the exact adapter exposes a real spirit cost/reservation that can satisfy D017. Do not make a Luminal resurrection secretly depend on stealing another living soul unless that is an explicit separate Umbral variant with distinct specification.
+Malum spirits may participate only through an exact provider transaction compatible with D017. A Luminal resurrection cannot secretly depend on stolen soul power unless a separately specified Umbral variant explicitly says so.
 
 ## Life stealing
 
-The requested black-magic life theft maps to the already canonical Blood & Curses capability, principally `Sanguine Harvest`.
-
-07A work is classification/composition, not a duplicate spell:
+Black-magic life theft reuses canonical `Sanguine Harvest`; 07A classification/composition must not wrap it in a duplicate runtime.
 
 - unwilling vitality extraction -> Umbral;
-- gained health/blood/resource cannot exceed bounded proven loss;
+- credited health/blood/resource cannot exceed bounded proven loss;
 - no positive health<->mana/blood feedback loop;
-- target caps and deterministic ordering remain canonical;
-- boss/PvP reductions follow the existing spell specification;
-- Stage 07.08 owns Hematic Reserve/Vampirism transfer semantics when implemented.
+- canonical target caps, boss/PvP policy and deterministic ordering remain authoritative;
+- 07.08 owns Hematic Reserve/Vampirism composition when implemented.
 
-If a future consensual life-transfer rite is desired, specify it separately and prove consent server-side rather than weakening the theft rules.
+A future consensual life-transfer rite requires its own server-proven consent contract rather than weakening theft semantics.
 
-## Presentation differentiation
+## Presentation-data boundary
 
-White and black magic should feel mechanically and visually distinct without making color the authority.
-
-Luminal presentation direction:
-
-- precise geometric symmetry;
-- restrained gold/ivory/blue-white palette where original assets support it;
-- protective/continuity motifs;
-- clear telegraphs for consent/benefit and death-state anchoring.
-
-Umbral presentation direction:
-
-- asymmetric/contractual/binding motifs;
-- dark red/violet/black-gold palette where original assets support it;
-- visible extraction link from source to beneficiary where gameplay readability benefits;
-- explicit consequence feedback for Corruption/Strain.
-
-These are presentation guidelines only. Server polarity remains source/agency-derived.
+Polarity and source/agency classifications are server-derived. Presentation may consume read-only classification, warning, progression and consequence fields but may never choose polarity or mutate unlocks. Concrete visual differentiation is intentionally absent from this numbered plan and lives in visual-production.
 
 ## Tests first
 
@@ -100,12 +67,8 @@ RED tests must prove:
 - Sanguine Harvest is not double-applied by a new Umbral wrapper;
 - vampire blood/thirst routes, once 07.08 exists, are not credited twice;
 - a Luminal Ankh still receives its configured high-danger hazard profile;
-- Codex/UI data cannot mutate server unlocks.
+- Codex/UI data cannot mutate server unlocks or forge server polarity.
 
 ## Acceptance
 
-- original player-facing identity;
-- single resurrection authority;
-- single life-drain authority;
-- provider presentation is optional/fail-closed;
-- no new resource economy introduced by either surface.
+One resurrection authority, one life-drain authority, original Black Arcana semantic identity, optional/fail-closed provider presentation and no new resource economy.

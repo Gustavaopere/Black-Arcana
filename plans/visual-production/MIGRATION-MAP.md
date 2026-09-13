@@ -4,59 +4,60 @@ This ledger records the separation of presentation/asset work from numbered Blac
 
 ## Classification rules
 
-- **MOVED** — document is predominantly UI/HUD/art/presentation and was moved intact.
+- **MOVED** — document is predominantly UI/HUD/art/client-presentation work and moved intact.
 - **SPLIT** — runtime/authority requirements stay in the numbered stage; presentation requirements move here.
-- **RETAINED** — a visual-looking statement is actually a runtime contract (for example, a cosmetic fallback mode or render-safe synchronized identity) and therefore remains in engineering.
-- **AUDITED / NO EXTRACTION** — no concrete texture/UI/model/animation/VFX/audio production specification was found; generic fantasy wording is not treated as an asset plan.
+- **RETAINED** — a visual-looking statement is actually a runtime contract (for example cosmetic fallback mode, synchronized visual identity/key or renderer-safe state) and therefore remains engineering.
+- **AUDITED / NO EXTRACTION** — no concrete texture/UI/model/animation/VFX/audio production specification was found.
 
 ## Stage 05 — Casting & UX
 
-### Moved intact
+### MOVED
 
-- `05.08 — Visual Language & State Semantics` -> `visual-production/05-casting-ux/`.
-- `05.09 — Keyboard Focus & Navigation` -> `visual-production/05-casting-ux/`.
-- `05.10 — Loadout Editor Information Architecture` -> `visual-production/05-casting-ux/`.
-- `05.11 — Contextual Feedback Orchestration` -> `visual-production/05-casting-ux/`.
-- `05.12 — Iconography & Resource Resolution` -> `visual-production/05-casting-ux/`.
-- `05.13 — Targeting & Aim Presentation` -> `visual-production/05-casting-ux/`.
-- `05.14 — Spell Details & Inspection Presentation` -> `visual-production/05-casting-ux/`.
-- `05.15 — Casting VFX / Audio / Animation Presentation` -> `visual-production/05-casting-ux/`.
-- `05.16 — Onboarding / Discoverability / Contextual Help` -> `visual-production/05-casting-ux/`.
-- implementation checkpoints for 05.10–05.16 -> `visual-production/05-casting-ux/checkpoints/`.
+- `05.05 — Final Real-Client Validation Handoff` -> `visual-production/05-casting-ux/`; numbered location is now an engineering-boundary stub.
+- 05.08–05.16 -> `visual-production/05-casting-ux/` intact.
+- implementation checkpoints for 05.10–05.16 -> `visual-production/05-casting-ux/checkpoints/` intact.
 
-### Split
+### SPLIT
 
-- `05.01 — Input & Loadouts`: server-owned loadout/input/session rules stay in Stage 05; editor layout, search/filter, icon and apply-state presentation move to visual production.
-- `05.02 — Radial Wheel`: selection/cast separation and authority rules stay in Stage 05; radial geometry, cards, icons, visual states and presentation QA move to visual production.
-- `05.03 — Contextual HUD & Feedback`: synchronized data/authority/correlation/stale-state contracts stay in Stage 05; HUD layout, hierarchy, wording, anti-clutter and accessibility presentation move to visual production.
-- `05.04 — Accessibility & Client Configuration`: config registration/authority/persistence/input semantics stay in Stage 05; visual accessibility behavior and presentation tuning move to visual production.
-- `05.05 — Final Real-Client Validation Handoff`: runtime/input/coexistence validation remains Stage 05; visual-only acceptance is delegated to the visual-production QA backlog.
-- `05.06 — Modpack Coexistence`: provider/input authority remains Stage 05; observed visual overlap/readability fixes belong to visual production.
-- `05.07 — Presentation Data Contracts`: retained in Stage 05 because it defines whether data is safe/authoritative to render, not how it looks.
+- 05.01 — server-owned loadout/input/session stays runtime; editor/search/icon/apply-state presentation moved.
+- 05.02 — selection/cast separation stays runtime; radial geometry/cards/icons/visual states moved.
+- 05.03 — synchronized data/correlation/stale-state stays runtime; HUD layout/hierarchy/wording moved.
+- 05.04 — config registration/authority/input semantics stays runtime; visual accessibility/tuning moved.
+- 05.06 — Iron's hosted-cast authority, one-root/one-settlement and optional-provider boundaries stay runtime; HUD overlap, key ergonomics, Spell Actionbar/Epic Fight client coexistence and animation/readability QA moved to `06-modpack-coexistence-presentation.md`.
+- 05.07 is **RETAINED** because it defines whether data is authoritative/safe to render, not how it looks.
 
 ## Stage 05A — Arcane Danger
 
-- `05A.11 — HUD, Tooltip & Preflight`: **SPLIT**. Forecast/gate networking, server ownership and stale-state rules remain engineering; HUD/tooltip wording/layout/readability requirements move to `visual-production/05a-arcane-danger/`.
+- 05A.11 — **SPLIT**. Forecast/gate networking, server ownership and stale-state remain engineering; HUD/tooltip wording/layout/readability moved.
 
 ## Stage 06 — Rituals
 
-Existing plans are primarily transaction/provider/runtime contracts. No standalone concrete texture/model/animation/audio production plan was identified in the Stage 06 file set during this audit. Future ritual presentation belongs under `visual-production/06-rituals/`.
+**AUDITED / NO EXTRACTION** for the current runtime plans. `06.05` is primarily provider/transaction/persistence/activation validation despite mentioning provider presentation. Future concrete ritual asset work belongs under `visual-production/06-rituals/`.
 
 ## Stage 07 — Spell Domains
 
-Spell-domain plans often mention a visual plane, cosmetic fallback, telegraph or fantasy identity. Those statements remain engineering when they define gameplay-safe degradation, world-mode behavior or synchronized runtime state.
-
-Concrete asset-production details (textures/models/animations/VFX/audio) are deferred to `visual-production/07-spell-domains/`. The current domain plans are not moved wholesale because they are overwhelmingly authoritative mechanics/safety plans.
-
-Examples retained in engineering:
-
-- Black Pyre's `COSMETIC`/visual plane exists as a runtime degradation mode; the future appearance of that plane belongs to visual production.
-- Astral projection identity/viewpoint/entity lifecycle remains runtime/client-control engineering; the projection's final model/texture/VFX/audio presentation belongs to visual production.
+- 07.01 Blood & Curses — **AUDITED / NO EXTRACTION**; no concrete asset-production spec.
+- 07.02 Souls & Death — **AUDITED / NO EXTRACTION**; provider-presentation references are routing/identity gates, not art specs.
+- 07.03 Projection & Arsenal — **AUDITED / NO EXTRACTION**; presentation/input references are authority boundaries.
+- 07.04 Space & Displacement — **AUDITED / NO EXTRACTION**; host presentation ownership stays a provider boundary.
+- 07.05 Black Flame — **SPLIT/RETAINED**. Runtime keeps the canonical visual plane, `COSMETIC` mode, bounded frontier and degradation semantics. Concrete forbidden soul-fire identity is extracted to `05-black-pyre-presentation.md`.
+- 07.06 Forbidden Domains — **AUDITED / NO EXTRACTION**. Cosmetic field profile is a runtime world-effect classification; no concrete asset spec exists yet.
+- 07.07 Familiars & Divination — **SPLIT/RETAINED**. Noetic/Astral identity, movement, loaded-only safety and termination remain runtime; camera transition/feel/restoration presentation and future astral assets are extracted to `07-noetic-camera-presentation.md`. The spell specification gate remains runtime because it blocks canonical gameplay specification.
+- 07.08 Hematic Reservoirs — **SPLIT**. Controller/structure/transactions/persistence/network data remain runtime; open-basin form, blood-surface rendering, low/high fill, stale-source presentation and future assets move to `08-hematic-reservoir-presentation.md`.
 
 ## Stage 07A — Arcane Polarity, Fusion & Metamagic
 
-- `07A.06 — Sigils & Ritual Presentation`: **SPLIT**. Original visual grammar, glyph/asset rules, animation/palette/telegraph presentation and accessibility move to visual production. Server ritual state, payload safety, material settlement and provider-authority boundaries stay in Stage 07A.
+- 07A.01 — **RETAINED**; server-derived polarity and read-only presentation metadata are runtime data contracts.
+- 07A.02 — **SPLIT**. Umbral Codex/Ankh semantic authority and resurrection/life-drain composition remain runtime; Luminal/Umbral palettes, motifs, extraction links and consequence feedback move to `02-white-black-identity-presentation.md`.
+- 07A.03/04 — **RETAINED**; `visual key`/`presentation key` are server-authored identifiers consumed by presentation, not art specs.
+- 07A.05 — **RETAINED**; provider presentation references and clean-room prohibitions are routing/provenance boundaries.
+- 07A.06 — **SPLIT**. Server ritual state/payload/material/provider authority stays Stage 07A; sigil geometry/palette/animation/telegraph/accessibility moved.
+- 07A.07/08 — **AUDITED / NO EXTRACTION**; provider verification/hardening remain engineering. Sigil presentation events/payload ceilings remain runtime safety tests.
 
 ## Stages 00–04, 08–09
 
-Audited at directory level. Their current plans are foundation/catalog/core/integration/world-safety/progression/release engineering. No standalone presentation production plan is moved from those stages in this extraction.
+Audited at directory level. Current plans are foundation/catalog/core/integration/world-safety/progression/release engineering; no standalone presentation-production plan was moved.
+
+## Audit preservation
+
+Exact pre-extraction blobs for mixed documents are stored under `plans/visual-production/_migration-source/` and are explicitly non-canonical. They exist only to prove no historical requirement was silently discarded during separation.

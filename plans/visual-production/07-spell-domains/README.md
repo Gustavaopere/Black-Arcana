@@ -1,18 +1,13 @@
 # Visual Production — Stage 07 Spell Domains
 
-Stage 07 mechanics remain in `plans/07-spell-domains/`. This folder is reserved for domain-specific texture/model/VFX/particle/shader/animation/audio production requirements.
+Stage 07 mechanics remain in `plans/07-spell-domains/`. This folder owns domain-specific texture/model/VFX/particle/shader/animation/audio, client presentation and perceptual QA requirements.
 
-## Audit result
+## Extracted/current briefs
 
-The current Stage 07 documents are primarily gameplay, safety, provider, world-effect and persistence contracts. Mentions such as “visual plane”, “cosmetic fallback”, “telegraph”, “projection representation” or fantasy identity are retained in engineering when they are required to define runtime degradation or synchronized state.
+- `05-black-pyre-presentation.md` — concrete Black Pyre visual identity and mapping from the canonical visual frontier.
+- `07-noetic-camera-presentation.md` — Borrowed Sight/Astral camera presentation, restoration and deferred astral asset work.
+- `08-hematic-reservoir-presentation.md` — reservoir form, blood-surface rendering and reserve/link UI states.
 
-Do not invent final art from those mentions.
+The runtime still owns facts that merely sound visual when they are required for safe behavior: Black Pyre `COSMETIC`/visual-plane existence, synchronized projection identity, server-authored frontier/state, world-effect degradation, telegraph state identifiers and client-safe presentation keys.
 
-When visual production begins, create separate domain presentation specs here for the actual approved requirements, for example:
-
-- Black Flame appearance/VFX/audio;
-- astral projection model/texture/VFX/audio;
-- forbidden-domain boundary/telegraph presentation;
-- blood/soul/projection/space family iconography and effects.
-
-Every asset must follow the clean-room/provenance boundary and the reusable pipeline rules owned by `minecraft-mod-factory`.
+Do not invent final art from runtime mentions. Every asset must follow clean-room/provenance constraints and reusable production-pipeline rules owned by `minecraft-mod-factory`.
