@@ -402,6 +402,7 @@ public final class MinecraftNoeticRuntime {
         if (state == null) return;
         settlePendingDeaths(server, state);
         expireAstralProjections(server, state);
+        revalidateAstralProjections(server, state);
         state.observation.tick(server);
         syncObservationViews(server, state);
         state.gaze.tick(server);
@@ -530,6 +531,33 @@ public final class MinecraftNoeticRuntime {
                             state,
                             projection.casterId(),
                             AstralSeveranceRuntime.CloseReason.EXPIRED)) {
+                closed++;
+            }
+        }
+        return closed;
+    }
+
+    /**
+     * Revalidates only the bounded active Astral session set. No player/entity/chunk scan is performed:
+     * each session resolves its authenticated caster and exact representation directly, and missing loaded
+     * state fails closed without acquiring chunks or waiting for another MOVE packet.
+     */
+    private static int revalidateAstralProjections(MinecraftServer server, ServerState state) {
+        int closed = 0;
+        for (AstralSeveranceRuntime.ActiveProjection projection : state.astral.activeProjections()) {
+            ServerPlayer caster = server.getPlayerList().getPlayer(projection.casterId());
+            AstralSeveranceRuntime.CloseReason reason = null;
+            if (caster == null) {
+                reason = AstralSeveranceRuntime.CloseReason.AUTHORIZATION_REVOKED;
+            } else if (!caster.isAlive()) {
+                reason = AstralSeveranceRuntime.CloseReason.BODY_DEATH;
+            } else {
+                Entity representation = caster.serverLevel().getEntity(projection.projectionId());
+                if (!(representation instanceof AstralProjectionEntity) || representation.isRemoved()) {
+                    reason = AstralSeveranceRuntime.CloseReason.AUTHORIZATION_REVOKED;
+                }
+            }
+            if (reason != null && closeAstralProjection(server, state, projection.casterId(), reason)) {
                 closed++;
             }
         }
