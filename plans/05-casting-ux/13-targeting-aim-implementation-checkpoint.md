@@ -65,7 +65,10 @@ It renders only when all of the following are true:
 - a physical client player and connection exist;
 - no screen currently owns input;
 - the normal Stage 05 selection window is still recent;
+- the existing 05.11 feedback-level arbitration allows the selection/context channel;
 - a synchronized loadout has a locally selected spell.
+
+The feedback-level gate is intentionally delegated to `ContextualFeedbackOrchestration`. `MINIMAL` therefore suppresses this non-denial aim cue just as it suppresses the rest of the selection/context channel; 05.13 does not maintain a second independent feedback policy.
 
 The cue:
 
@@ -73,7 +76,7 @@ The cue:
 - maps `HitResult.Type.MISS/BLOCK/ENTITY` through the pure semantics helper;
 - renders a bounded neutral line below the screen center;
 - reuses `SELECTION_DURATION_TICKS` rather than introducing permanent target scanning;
-- disappears naturally when the existing selection context expires.
+- disappears naturally when the existing selection context expires or feedback policy suppresses that channel.
 
 No target history, target lock, candidate list or per-frame world enumeration is retained.
 
@@ -167,7 +170,47 @@ The complete branch pipeline passed:
 - Foundation GameTest server;
 - dedicated-server smoke.
 
-The branch correctly skipped canonical QA artifact publication because artifact publication is main-only.
+### RED 3 — review feedback-level regression
+
+PR review identified that the new cue bypassed the existing 05.11 `FeedbackLevel.MINIMAL` selection/context suppression.
+
+Test-only commit:
+
+- `221b67cdbdc70c6d9a7424c5272a1c7761046a95`
+
+Workflow:
+
+- `34733351758`
+
+Observed result:
+
+- 640 tests executed;
+- exactly 1 failure;
+- failure was `localObservationReusesContextualFeedbackSelectionPolicy`;
+- it proved the layer had not yet reused `ContextualFeedbackOrchestration`.
+
+### GREEN 3 — canonical selection-channel feedback arbitration
+
+Fix commit:
+
+- `253078e9e3654a10b3e0b511ac451c13d1b03167`
+
+Workflow:
+
+- `34733467433`
+
+The complete branch pipeline passed:
+
+- JUnit;
+- diff sanity;
+- NeoForge build;
+- built-JAR verification;
+- Foundation GameTest server;
+- dedicated-server smoke.
+
+The fix reuses `ContextualFeedbackOrchestration.Decision.showSelectionContext()` with the configured feedback level instead of duplicating feedback semantics. The corresponding PR review thread was replied to with RED/GREEN evidence and resolved.
+
+Branch/PR workflows correctly skip canonical QA artifact publication because artifact publication is main-only.
 
 ## Validation still required
 
@@ -180,6 +223,8 @@ At minimum, the exact promoted build still requires physical-client checks for:
 - local entity hit;
 - candidate changing or disappearing while the selection window is active;
 - expiry at the configured selection duration;
+- `MINIMAL` feedback suppressing the selection/context aim cue;
+- `STANDARD`/`VERBOSE` coexistence with existing selection/result presentation;
 - screen/radial/loadout suppression;
 - contextual HUD disabled;
 - 854×480, 1920×1080 and 3440×1440 layouts;
