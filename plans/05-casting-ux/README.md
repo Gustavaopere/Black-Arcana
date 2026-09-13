@@ -20,6 +20,8 @@ This directory uses the same visual completion convention as completed earlier s
 
 Evidence-gated optional integrations are not treated as unfinished work when the plan explicitly requires exact API/provider/runtime evidence before implementation.
 
+Historical planning prose and implementation checkpoints may retain a pre-normalization basename in backticks when referring to the artifact name that existed at the time of that evidence. Those occurrences are historical identifiers, not the current canonical path. The links in this README are the authoritative current filenames.
+
 ## Canonical planning map
 
 - [`00-master-plan.md`](00-master-plan.md) — Stage 05 architecture and planning map.
