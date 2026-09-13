@@ -1,11 +1,16 @@
 package dev.gustavopere.blackarcana.client;
 
+import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
+import net.minecraft.util.FormattedCharSequence;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,11 +56,67 @@ class SpellInspectionPresentationContractTest {
     }
 
     @Test
+    void boundedInspectionWrapsLongDisplayNameAndCanonicalIdAgainstLogicalViewport() throws Exception {
+        Class<?> helper = Class.forName("dev.gustavopere.blackarcana.client.SpellInspectionPresentation");
+        Method wrappedLines;
+        try {
+            wrappedLines = helper.getDeclaredMethod(
+                    "wrappedLines",
+                    Font.class,
+                    int.class,
+                    String.class,
+                    Component.class,
+                    Component.class);
+        } catch (NoSuchMethodException missing) {
+            fail("Spell inspection must expose viewport-bounded wrapping before tooltip rendering");
+            return;
+        }
+        wrappedLines.setAccessible(true);
+
+        List<Integer> requestedWidths = new ArrayList<>();
+        List<String> splitInputs = new ArrayList<>();
+        Font deterministicFont = new Font(id -> null, false) {
+            @Override
+            public List<FormattedCharSequence> split(FormattedText text, int maxWidth) {
+                requestedWidths.add(maxWidth);
+                String raw = ((Component) text).getString();
+                splitInputs.add(raw);
+                int charsPerLine = Math.max(1, maxWidth / 6);
+                List<FormattedCharSequence> chunks = new ArrayList<>();
+                for (int start = 0; start < raw.length(); start += charsPerLine) {
+                    int end = Math.min(raw.length(), start + charsPerLine);
+                    chunks.add(FormattedCharSequence.forward(raw.substring(start, end), Style.EMPTY));
+                }
+                return chunks;
+            }
+        };
+
+        int viewportWidth = 120;
+        String canonicalId = "black_arcana:" + "forbidden_projection_".repeat(10);
+        Component displayName = Component.literal("Forbidden Projection ".repeat(12));
+
+        @SuppressWarnings("unchecked")
+        List<FormattedCharSequence> wrapped = (List<FormattedCharSequence>) wrappedLines.invoke(
+                null,
+                deterministicFont,
+                viewportWidth,
+                canonicalId,
+                displayName,
+                null);
+
+        assertEquals(2, requestedWidths.size(), "display name and canonical ID must both be wrapped");
+        assertTrue(requestedWidths.stream().allMatch(width -> width > 0 && width <= viewportWidth - 16));
+        assertTrue(splitInputs.get(0).startsWith("Forbidden Projection"));
+        assertTrue(splitInputs.get(1).contains(canonicalId));
+        assertTrue(wrapped.size() > 2, "long identity lines must split into multiple rendered lines");
+    }
+
+    @Test
     void loadoutUsesOneInspectionTooltipForPointerAndKeyboardFocus() throws Exception {
         String loadout = Files.readString(LOADOUT);
 
-        assertTrue(loadout.contains("SpellInspectionPresentation.lines("));
-        assertTrue(loadout.contains("graphics.renderComponentTooltip("));
+        assertTrue(loadout.contains("SpellInspectionPresentation.wrappedLines("));
+        assertTrue(loadout.contains("graphics.renderTooltip(font, tooltip"));
         assertTrue(loadout.contains("presentation.get(spell)"));
         assertTrue(loadout.contains("hazards.get(spell)"));
         assertFalse(loadout.contains("SpellInspectionNetwork"));
