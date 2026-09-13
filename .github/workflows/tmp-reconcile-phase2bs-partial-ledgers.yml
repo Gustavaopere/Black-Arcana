@@ -22,7 +22,6 @@ jobs:
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          import re
 
           root = Path('.')
 
@@ -32,7 +31,7 @@ jobs:
           def write(path, text):
               (root / path).write_text(text, encoding='utf-8')
 
-          marker = 'Phase 2BS — T.O Magic n\' Extras / Traveloptics 4.4.0.1-1.21.1'
+          marker = "Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1"
 
           # CURRENT-MAGIC-PROVIDERS.md
           p = 'wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md'
@@ -42,6 +41,7 @@ jobs:
               assert s.count(anchor) == 1, 'CURRENT freshness anchor drift'
               para = (
                   "Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 e mantém **1344 / 66 de 100**.\n\n"
+              )
               s = s.replace(anchor, para + anchor)
               h = "## Checkpoint GTBC's Geomancy Plus — Phase 2BR canonical"
               assert s.count(h) == 1, 'CURRENT Phase 2BR header drift'
