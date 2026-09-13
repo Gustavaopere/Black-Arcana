@@ -34,6 +34,7 @@ jobs:
           import re
 
           ROOT = Path('upstream')
+          JAVA = ROOT / 'src/main/java'
           PIN = '5fcaf39cf399609f6c1c87d14f8d4807098c9cce'
           NS = 'hazennstuff'
           report = []
@@ -41,8 +42,58 @@ jobs:
           def emit(s=''):
               report.append(str(s))
 
+          def text(path):
+              return path.read_text(encoding='utf-8')
+
+          def package_name(src):
+              m = re.search(r'^\s*package\s+([\w.]+)\s*;', src, flags=re.M)
+              return m.group(1) if m else ''
+
+          def imports(src):
+              explicit = {}
+              wildcards = []
+              for name in re.findall(r'^\s*import\s+(?!static)([\w.*]+)\s*;', src, flags=re.M):
+                  if name.endswith('.*'):
+                      wildcards.append(name[:-2])
+                  else:
+                      explicit[name.rsplit('.', 1)[-1]] = name
+              return explicit, wildcards
+
+          def fqcn_path(fqcn):
+              p = JAVA / (fqcn.replace('.', '/') + '.java')
+              return p if p.is_file() else None
+
+          def resolve_type(type_name, context_path, context_src):
+              simple = type_name.rsplit('.', 1)[-1]
+              if '.' in type_name:
+                  p = fqcn_path(type_name)
+                  return p, type_name
+              explicit, wildcards = imports(context_src)
+              if simple in explicit:
+                  fqcn = explicit[simple]
+                  return fqcn_path(fqcn), fqcn
+              pkg = package_name(context_src)
+              same = f'{pkg}.{simple}' if pkg else simple
+              p = fqcn_path(same)
+              if p:
+                  return p, same
+              matches = []
+              for wpkg in wildcards:
+                  fqcn = f'{wpkg}.{simple}'
+                  p = fqcn_path(fqcn)
+                  if p:
+                      matches.append((p, fqcn))
+              if len(matches) == 1:
+                  return matches[0]
+              if len(matches) > 1:
+                  raise AssertionError(
+                      f'{simple}: ambiguous wildcard resolution from {context_path.relative_to(ROOT)}: '
+                      + ', '.join(fqcn for _, fqcn in matches)
+                  )
+              return None, explicit.get(simple, simple)
+
           props = {}
-          for raw in (ROOT / 'gradle.properties').read_text(encoding='utf-8').splitlines():
+          for raw in text(ROOT / 'gradle.properties').splitlines():
               line = raw.strip()
               if line and not line.startswith('#') and '=' in line:
                   k, v = line.split('=', 1)
@@ -58,11 +109,8 @@ jobs:
           emit(f'neo_version={props.get("neo_version", props.get("neoforge_version", "<not-declared>"))}')
           emit()
 
-          reg_path = ROOT / 'src/main/java/net/hazen/hazennstuff/Spells/HnSSpellRegistries.java'
-          raw_reg = reg_path.read_text(encoding='utf-8')
-
-          # Strip comments before counting active registrations. The raw file must still
-          # preserve the known commented Reign of Tyros prototype as an excluded identity.
+          reg_path = JAVA / 'net/hazen/hazennstuff/Spells/HnSSpellRegistries.java'
+          raw_reg = text(reg_path)
           no_block = re.sub(r'/\*.*?\*/', '', raw_reg, flags=re.S)
           active_reg = re.sub(r'//.*', '', no_block)
           pat = re.compile(
@@ -73,17 +121,15 @@ jobs:
           assert len({f for f, _ in regs}) == 38
           assert len({c for _, c in regs}) == 38
           assert 'REIGN_OF_TYROS' not in {f for f, _ in regs}
-          assert re.search(r'//\s*public\s+static\s+final\s+Supplier<AbstractSpell>\s+REIGN_OF_TYROS\s*=\s*registerSpell\(new\s+ReignOfTyrosSpell\(\)\);', raw_reg), 'commented Reign of Tyros prototype not found'
+          assert re.search(
+              r'//\s*public\s+static\s+final\s+Supplier<AbstractSpell>\s+REIGN_OF_TYROS\s*=\s*registerSpell\(new\s+ReignOfTyrosSpell\(\)\);',
+              raw_reg,
+          ), 'commented Reign of Tyros prototype not found'
 
           emit('REGISTRY')
           emit(f'active_registration_count={len(regs)}')
           emit('excluded_commented_registration=REIGN_OF_TYROS -> ReignOfTyrosSpell')
           emit()
-
-          java_files = list((ROOT / 'src/main/java').rglob('*.java'))
-          by_name = {}
-          for p in java_files:
-              by_name.setdefault(p.stem, []).append(p)
 
           rl_patterns = [
               re.compile(r'ResourceLocation\.fromNamespaceAndPath\(\s*HazenNStuff\.MOD_ID\s*,\s*"([a-z0-9_./-]+)"\s*\)'),
@@ -92,87 +138,80 @@ jobs:
           ]
 
           mappings = []
-          class_text = {}
           class_path = {}
           unresolved = []
-          ambiguous = []
           for field, cls in regs:
-              candidates = by_name.get(cls, [])
-              assert len(candidates) == 1, f'{cls}: expected one source file, got {len(candidates)}'
-              p = candidates[0]
-              text = p.read_text(encoding='utf-8')
-              class_text[cls] = text
+              p, fqcn = resolve_type(cls, reg_path, raw_reg)
+              assert p is not None, f'{cls}: registry import resolution did not resolve local source ({fqcn})'
+              src = text(p)
               class_path[cls] = p
               ids = []
               for rp in rl_patterns:
-                  ids.extend(rp.findall(text))
-              # Spell classes can contain effect/resource IDs in addition to their own ID.
-              # Prefer IDs bound to an ID/SPELL_ID ResourceLocation declaration or getSpellResource return.
+                  ids.extend(rp.findall(src))
               preferred = []
-              for m in re.finditer(r'(?:ID|SPELL_ID|spellId|spellID)\s*=\s*ResourceLocation\.fromNamespaceAndPath\(\s*(?:HazenNStuff\.MOD_ID|"hazennstuff")\s*,\s*"([a-z0-9_./-]+)"\s*\)', text):
+              for m in re.finditer(
+                  r'(?:ID|SPELL_ID|spellId|spellID)\s*=\s*ResourceLocation\.fromNamespaceAndPath\(\s*(?:HazenNStuff\.MOD_ID|"hazennstuff")\s*,\s*"([a-z0-9_./-]+)"\s*\)',
+                  src,
+              ):
                   preferred.append(m.group(1))
-              for m in re.finditer(r'getSpellResource\s*\([^)]*\)\s*\{.{0,300}?ResourceLocation\.fromNamespaceAndPath\(\s*(?:HazenNStuff\.MOD_ID|"hazennstuff")\s*,\s*"([a-z0-9_./-]+)"\s*\)', text, flags=re.S):
+              for m in re.finditer(
+                  r'getSpellResource\s*\([^)]*\)\s*\{.{0,500}?ResourceLocation\.fromNamespaceAndPath\(\s*(?:HazenNStuff\.MOD_ID|"hazennstuff")\s*,\s*"([a-z0-9_./-]+)"\s*\)',
+                  src,
+                  flags=re.S,
+              ):
                   preferred.append(m.group(1))
               pool = list(dict.fromkeys(preferred or ids))
-              if len(pool) == 1:
-                  spell_id = pool[0]
-              else:
-                  unresolved.append((field, cls, str(p.relative_to(ROOT)), pool))
+              if len(pool) != 1:
+                  unresolved.append((field, cls, fqcn, str(p.relative_to(ROOT)), pool))
                   continue
-              mappings.append((field, cls, spell_id, str(p.relative_to(ROOT))))
+              mappings.append((field, cls, pool[0], fqcn, str(p.relative_to(ROOT))))
 
           if unresolved:
               emit('UNRESOLVED_ID_MAPPINGS')
               for row in unresolved:
                   emit(' | '.join(map(str, row)))
+              Path('hazennstuff-1.4.0.14-source-pin-audit.txt').write_text('\n'.join(report) + '\n', encoding='utf-8')
               raise AssertionError(f'unresolved/ambiguous spell ids for {len(unresolved)} classes')
           assert len(mappings) == 38
           assert len({m[2] for m in mappings}) == 38, 'spell ids are not unique'
 
           emit('FIELD_CLASS_ID_MAP')
-          for field, cls, sid, path in mappings:
-              emit(f'{field} -> {cls} -> {NS}:{sid} | {path}')
+          for field, cls, sid, fqcn, path in mappings:
+              emit(f'{field} -> {fqcn} -> {NS}:{sid} | {path}')
           emit()
-
-          # Provider-owned ancestry and relevant spell-gate declarations.
-          parent_re = re.compile(r'\bclass\s+(\w+)\s+extends\s+([\w.]+)')
-          class_parent = {}
-          for p in java_files:
-              text = p.read_text(encoding='utf-8')
-              for m in parent_re.finditer(text):
-                  class_parent[m.group(1)] = m.group(2).split('.')[-1]
 
           gate_names = ('allowCrafting', 'isEnabled', 'canBeCraftedBy', 'allowLooting')
           gate_rows = []
-          for field, cls, sid, path in mappings:
+          for field, cls, sid, fqcn, path in mappings:
               chain = []
-              seen = set()
-              cur = cls
-              while cur and cur not in seen:
-                  seen.add(cur)
-                  chain.append(cur)
-                  parent = class_parent.get(cur)
-                  if not parent or parent == 'AbstractSpell':
-                      if parent:
-                          chain.append(parent)
-                      break
-                  if parent not in by_name:
-                      chain.append(parent)
-                      break
-                  cur = parent
               declarations = []
-              for owner in chain:
-                  if owner == 'AbstractSpell' or owner not in by_name:
-                      continue
-                  op = by_name[owner][0]
-                  ot = op.read_text(encoding='utf-8')
+              p = class_path[cls]
+              seen_paths = set()
+              while p is not None and p not in seen_paths:
+                  seen_paths.add(p)
+                  src = text(p)
+                  owner = p.stem
+                  chain.append(owner)
                   for g in gate_names:
-                      if re.search(r'\b' + re.escape(g) + r'\s*\(', ot):
+                      if re.search(r'\b' + re.escape(g) + r'\s*\(', src):
                           literal = '?'
-                          mm = re.search(r'\b' + re.escape(g) + r'\s*\([^)]*\)\s*\{.{0,500}?return\s+(true|false)\s*;', ot, flags=re.S)
+                          mm = re.search(
+                              r'\b' + re.escape(g) + r'\s*\([^)]*\)\s*\{.{0,700}?return\s+(true|false)\s*;',
+                              src,
+                              flags=re.S,
+                          )
                           if mm:
                               literal = mm.group(1)
                           declarations.append(f'{owner}.{g}={literal}')
+                  m = re.search(r'\bclass\s+' + re.escape(owner) + r'\s+extends\s+([\w.]+)', src)
+                  if not m:
+                      break
+                  parent_name = m.group(1)
+                  parent_path, parent_fqcn = resolve_type(parent_name, p, src)
+                  if parent_path is None:
+                      chain.append(parent_fqcn)
+                      break
+                  p = parent_path
               gate_rows.append((sid, ' -> '.join(chain), ', '.join(declarations) if declarations else '<provider-no-override>'))
 
           emit('PROVIDER_ANCESTRY_AND_GATES')
@@ -180,8 +219,6 @@ jobs:
               emit(f'{NS}:{sid} | ancestry={chain} | gates={declarations}')
           emit()
 
-          # Registry class itself must not condition registration on branches/config/mod-presence.
-          # The declarative body should contain no control-flow keywords outside register(IEventBus).
           init_surface = active_reg.split('public static void register(IEventBus eventBus)', 1)[0]
           branch_hits = re.findall(r'\b(if|switch|for|while)\s*\(', init_surface)
           assert not branch_hits, f'registry control-flow found: {branch_hits}'
@@ -189,22 +226,22 @@ jobs:
           emit('registry_control_flow_count=0')
           emit()
 
-          # Metadata dependencies from exact source pin.
-          tomls = list((ROOT / 'src/main/resources').rglob('*mods.toml')) + list((ROOT / 'src/main/resources').rglob('neoforge.mods.toml'))
-          tomls = list(dict.fromkeys(tomls))
+          tomls = list(dict.fromkeys(
+              list((ROOT / 'src/main/resources').rglob('*mods.toml'))
+              + list((ROOT / 'src/main/resources').rglob('neoforge.mods.toml'))
+          ))
           emit('METADATA_FILES')
           if not tomls:
               emit('<none>')
           for p in tomls:
               emit(str(p.relative_to(ROOT)))
-              text = p.read_text(encoding='utf-8')
               current = None
-              dep_rows = []
-              for line in text.splitlines():
+              deps = []
+              for line in text(p).splitlines():
                   st = line.strip()
                   if st.startswith('[[dependencies.'):
                       if current:
-                          dep_rows.append(current)
+                          deps.append(current)
                       current = {}
                   elif current is not None and '=' in st and not st.startswith('#'):
                       k, v = st.split('=', 1)
@@ -212,20 +249,19 @@ jobs:
                       if k in {'modId','type','versionRange','ordering','side','reason'}:
                           current[k] = v
               if current:
-                  dep_rows.append(current)
-              for dep in dep_rows:
+                  deps.append(current)
+              for dep in deps:
                   emit('dependency=' + json.dumps(dep, sort_keys=True, ensure_ascii=False))
           emit()
 
-          # Object-level references outside the registry/spell class itself. Structured resources
-          # are separated from Java references so acquisition evidence is not inferred from names alone.
-          all_text_paths = [p for p in ROOT.rglob('*') if p.is_file() and p.suffix.lower() in {'.java','.json','.toml','.mcmeta','.txt'}]
+          all_text_paths = [
+              p for p in ROOT.rglob('*')
+              if p.is_file() and p.suffix.lower() in {'.java','.json','.toml','.mcmeta','.txt'}
+          ]
           structured_suffixes = {'.json','.toml','.mcmeta'}
           emit('OBJECT_REFERENCE_SURFACE')
-          structured_counts = {}
-          external_java_counts = {}
-          for field, cls, sid, path in mappings:
-              needle_variants = {sid, f'{NS}:{sid}'}
+          for field, cls, sid, fqcn, path in mappings:
+              needles = {sid, f'{NS}:{sid}'}
               structured = []
               java_refs = []
               own = class_path[cls]
@@ -233,10 +269,10 @@ jobs:
                   if p == reg_path or p == own:
                       continue
                   try:
-                      txt = p.read_text(encoding='utf-8')
+                      src = text(p)
                   except UnicodeDecodeError:
                       continue
-                  if any(n in txt for n in needle_variants):
+                  if any(n in src for n in needles):
                       rel = str(p.relative_to(ROOT))
                       if p.suffix.lower() in structured_suffixes:
                           structured.append(rel)
@@ -244,8 +280,6 @@ jobs:
                           java_refs.append(rel)
               structured = sorted(set(structured))
               java_refs = sorted(set(java_refs))
-              structured_counts[sid] = structured
-              external_java_counts[sid] = java_refs
               emit(f'{NS}:{sid} | structured={len(structured)} | java={len(java_refs)}')
               for rel in structured:
                   emit(f'  structured_ref={rel}')
@@ -253,25 +287,23 @@ jobs:
                   emit(f'  java_ref={rel}')
           emit()
 
-          # Provider resource surfaces relevant to school/focus/loot/acquisition.
           emit('RELEVANT_RESOURCE_PATHS')
           for p in sorted((ROOT / 'src/main/resources').rglob('*')):
-              if not p.is_file():
-                  continue
-              rel = str(p.relative_to(ROOT))
-              low = rel.lower()
-              if any(k in low for k in ('loot', 'spell', 'school', 'focus', 'recipe', 'trade')):
-                  emit(rel)
+              if p.is_file():
+                  rel = str(p.relative_to(ROOT))
+                  low = rel.lower()
+                  if any(k in low for k in ('loot', 'spell', 'school', 'focus', 'recipe', 'trade')):
+                      emit(rel)
           emit()
 
-          # Provider config references to active fields/classes/ids.
+          java_files = list(JAVA.rglob('*.java'))
           emit('CONFIG_AND_ELIGIBILITY_REFERENCES')
           config_paths = [p for p in java_files if 'config' in p.name.lower() or 'config' in str(p.parent).lower()]
           for p in sorted(config_paths):
-              text = p.read_text(encoding='utf-8')
+              src = text(p)
               hits = []
-              for field, cls, sid, _ in mappings:
-                  if field in text or cls in text or sid in text:
+              for field, cls, sid, fqcn, path in mappings:
+                  if field in src or cls in src or sid in src:
                       hits.append(sid)
               if hits:
                   emit(f'{p.relative_to(ROOT)} | ids={",".join(sorted(set(hits)))}')
@@ -283,8 +315,9 @@ jobs:
           PY
 
       - name: Upload clean-room audit report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: hazennstuff-1.4.0.14-source-pin-audit
           path: hazennstuff-1.4.0.14-source-pin-audit.txt
-          if-no-files-found: error
+          if-no-files-found: ignore
