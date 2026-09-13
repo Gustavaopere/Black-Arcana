@@ -112,7 +112,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1332 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BP shared-ledger reconciliation.**
+**1332 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BQ shared-ledger reconciliation.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -280,7 +280,7 @@ Other provider directories that have not yet been normalized into a semantic-obj
 ## Important interpretation rules
 
 1. **1332 is not “1332 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1332 by the 100 provider-component denominator. The current component target is `64/100`; provider-component coverage and semantic-magic coverage answer different questions.
+2. Do not divide 1332 by the 100 provider-component denominator. The current component target is `65/100`; provider-component coverage and semantic-magic coverage answer different questions.
 3. Do not add public lower bounds to 1332 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
