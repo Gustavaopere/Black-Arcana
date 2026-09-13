@@ -117,6 +117,7 @@ Phase 2BO therefore promotes only source-pinned catalog identity/count/reachabil
 | Mod ID | Artefato físico | Estado |
 |---|---|---|
 | `ars_sable` | `ars_sable-1.21.1-1.1.2.jar` | EXACT PHYSICAL IDENTITY / EXACT OFFICIAL SOURCE PIN `1fd83f3...` / 24 COMMON + 5 CLIENT REQUIRED MIXINS / PROTOCOL 2 + 0 PROVIDER PAYLOAD REGISTRATIONS / NO SPELL-GLYPH-RITUAL-SCHOOL-RESOURCE-ACTION REGISTRY / `ZERO_SEMANTIC_BRIDGE` / +0 / COMPONENT #62 / CURRENT-HOST RUNTIME QA FAIL-CLOSED |
+
 ### Evidence boundary
 
 - physical Ars Sable SHA-1 `df43ad58fb9ca3b7acf7f62dc97ed75fd6da3da8`; physical Sable host SHA-1 `05f666e973d32baaaf405acb9bbed6615b909971`;
