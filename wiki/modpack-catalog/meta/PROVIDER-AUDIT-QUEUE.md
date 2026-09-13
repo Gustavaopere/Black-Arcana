@@ -12,6 +12,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - estado de evidência pós-Phase 2BP: `main@84e9635b446b605140ab349fa2edc51f3462d518`; PR #219 HEAD reconciliado `6e39a01273b77ba8accf85d49647b6ceff840e8a` passou Black Arcana CI #2577 / run `34730598682`, e o evidence merge SHA exato passou post-merge CI #2578 / run `34730783233`; essa tranche fecha Aeromancy Additions 1.2.8 em 10 identidades source-pinned;
 - estado de evidência pós-Phase 2BQ: `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; NON-MERGE PR #222 materializou o JAR exato de Ars Nouveau: Two-Way Portals 2.0.0 e run `34735280002` passou; durable PR #223 HEAD `0eec58c14e591f6d2c875172bec4e436f8e1d5cb` passou CI #2618 / run `34735444723`; o merge SHA exato passou CI #2622 / run `34735586680` e publicou QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`);
 - estado de evidência pós-Phase 2BR: `main@4ab4ad990d453938e67f3d2b7cfa878bbe031ef0`; durable PR #226 fecha GTBC's Geomancy Plus 1.1.0-1.21.1 em 12 identidades `COUNTED_RELEASE_BOUNDED`; o exact merge SHA passou CI #2654 / run `34738972649` e publicou QA artifact `10311522907` (`sha256:c815f684a7a6dec192dd995bb6fbd6784c35faa0b0d21ae39bb9de89b93cec16`);
+- estado de evidência pós-Phase 2BS parcial: `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; PR #228 cataloga 33 identidades `traveloptics` exatas sem promoção strict/component; exact merge SHA passou CI #2682 / run `34741699505` e publicou QA artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`);
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
@@ -66,6 +67,14 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - cobertura de componentes após esta reconciliação compartilhada Phase 2BR: **66/100 = 66%**; `gtbcs_geomancy_plus` é componente #66, sem promover compatibilidade runtime com o host físico atual.
 
 O valor 66/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — partial / +0 / component open
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `traveloptics` | linha física `4.4.0.1-1.21.1`; publisher file exato `6342780` | ⚠️ PARTIAL / 33 EXACT REGISTERED SPELL IDS / 32 RESIDUAL LOCALIZATION IDS EXCLUDED / `BLACKOUT` SURVIVAL REACHABILITY UNRESOLVED / STRUCTURAL `TOLootModifiers` CODEC WIRING RISK / +0 STRICT / COMPONENT OPEN / RUNTIME FAIL-CLOSED |
+
+Audit anchors: exact artifact run `34740821956`, registry run `34740904391`, semantic 33/33 run `34741045570`, corrected runtime-risk run `34741368134`. Durable PR #228 merge `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; post-merge CI #2682 / run `34741699505` GREEN; QA artifact `10311724779`. Phase 2BS does not allocate component #67 and does not change **1344 / 66 of 100**. Keep T.O parked until authoritative runtime viability and `blackout` reachability are resolved.
 
 ## Phase 2BR — GTBC's Geomancy Plus 1.1.0-1.21.1 — componente #66 / semantic +12
 
