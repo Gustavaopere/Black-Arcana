@@ -1,0 +1,22 @@
+{
+  "cast.intent": {
+    "sounds": [
+      { "name": "black_arcana:cast/intent", "stream": false }
+    ]
+  },
+  "cast.success": {
+    "sounds": [
+      { "name": "black_arcana:cast/success", "stream": false }
+    ]
+  },
+  "cast.denied": {
+    "sounds": [
+      { "name": "black_arcana:cast/denied", "stream": false }
+    ]
+  },
+  "cast.failed": {
+    "sounds": [
+      { "name": "black_arcana:cast/failed", "stream": false }
+    ]
+  }
+}
