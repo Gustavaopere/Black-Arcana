@@ -6,9 +6,9 @@
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, Phase 2BM fecha `ars_polymorphia` como componente **#61**, Phase 2BN fecha `ars_sable` como componente **#62**, e Phase 2BO fecha `farmers_spell` como componente **#63**. Portanto **63 estão canônicos** após esta reconciliação. Esse 63/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, Phase 2BM fecha `ars_polymorphia` como componente **#61**, Phase 2BN fecha `ars_sable` como componente **#62**, Phase 2BO fecha `farmers_spell` como componente **#63**, e a reconciliação Phase 2BP promove `aero_additions` como componente **#64**. Portanto **64 estão canônicos** após esta reconciliação. Esse 64/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Farmer's Spell acrescenta **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1316 para 1322**; Ars Polymorphia e Ars Sable permanecem +0.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Farmer's Spell acrescenta **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1316 para 1322**; Aeromancy Additions acrescenta mais **+10 `COUNTED_SOURCE_PINNED`**, elevando-o para **1332**; Ars Polymorphia e Ars Sable permanecem +0.
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
@@ -70,6 +70,7 @@ Cada JAR mágico deve ser classificado antes da extração spell-by-spell:
 - Fire's Ender Expansion;
 - GTBC's Geomancy Plus;
 - Farmer's Spell 'n Spellbooks;
+- SnackPirate's Aeromancy Additions;
 - Apprentice's Codex;
 - demais addons Iron's presentes na modlist.
 
@@ -95,6 +96,18 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 - Alshanex's Familiars é consumidor/conteúdo concreto; Phase 2BD fecha a linha 4.0.3 em **7 spells próprios + 11 rituais próprios = 18 objetos semânticos**, usando o JAR exato hash-matched; runtime QA e seam de ownership continuam separados;
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes n' Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
+
+## Checkpoint SnackPirate's Aeromancy Additions — Phase 2BP canonical
+
+O artefato físico `aero_additions-1.2.8.jar` / SHA-1 `dee32c9fa84d6e39846608f8f77591ea56f` / CurseForge hash `3079423735` foi reconciliado com o source oficial exato `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`, árvore `fcee08e613fbfa030f034268a0240c8693ab7f45` completa. O provider é `MIXED`: possui escola Wind, exatamente **10** registrations `AbstractSpell` ativas e conteúdo adicional de efeitos/entidades/gear/aquisição. As dez identidades entram como **+10 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1322 para 1332**.
+
+As identidades ativas são `wind_charge`, `updraft`, `airstep`, `asphyxiate`, `feather_fall`, `wind_shield`, `airblast`, `wind_blade`, `flush` e `dash`. Tornado, Thunderclap, Summon Breeze, Telelink e Shapeshift não entram: suas linhas `registerSpell(...)` estão comentadas no pin auditado. A escola Wind é taxonomia/suporte e não cria uma décima primeira magia.
+
+A rota de aquisição foi fechada em nível de catálogo pelo focus Wind baseado em `minecraft:breeze_rod` e pelo contrato Scroll Forge da linha pública Iron's 3.16.3. O provider também adiciona suporte de Breeze Rod ao normal vault de Trial Chambers por global loot modifier. Updraft Tome e Wind Sword incorporam spells já contados e não criam novas identidades semânticas.
+
+PR #219 HEAD reconciliado `6e39a01273b77ba8accf85d49647b6ceff840e8a` passou CI #2577 / run `34730598682`; squash evidence merge `main@84e9635b446b605140ab349fa2edc51f3462d518` passou exact-SHA post-merge CI #2578 / run `34730783233`. Esta reconciliação compartilhada promove `aero_additions` a componente **#64 / 64/100**.
+
+Isso é fechamento de catálogo, não runtime PASS. Source 1.2.8 usa NeoForge `21.1.228` e Iron's `1.21.1-3.16.1`, enquanto o pack físico usa NeoForge `21.1.248` e Iron's `3.16.3`. O range declarado do Iron's admite a versão física, mas client/server boot, aplicação dos mixins required, três payload registrations observados, Scroll Forge/config físico, casts representativos, persistence/reload e duplicate-processing continuam fail-closed. Iron's/Aeromancy mantêm autoridade sobre casting, mana, cooldown, efeitos e estado do provider; Black Arcana não cria pipeline duplicado.
 
 ## Checkpoint Farmer's Spell 'n Spellbooks — Phase 2BO canonical
 
