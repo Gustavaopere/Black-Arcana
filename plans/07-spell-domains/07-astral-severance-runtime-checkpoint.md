@@ -4,7 +4,7 @@
 
 `PARTIAL RUNTIME IMPLEMENTATION / SERVER-OWNED PROJECTION + MOVEMENT SUBSTRATE + C2S CONTROL TRANSPORT / NOT END-TO-END`
 
-The current implementation branch is `feat/stage07-astral-severance-control`, reconciled non-destructively with `main@c321063f41c34525cebd5e6936a560253c677442` through merge commit `3123f007a65a8ac03e701d90b8c8b968c8062425`.
+The control tranche is canonical on `main` via PR #235 at merge SHA `29454a7dd604ba0ea0200724d53bd9526b09cb10`, built from the earlier lifecycle merged by PR #138 at `3469b454de2b65d0c15e89e7d689fe760dd30994`.
 
 This checkpoint closes additional bounded Stage 07.07 runtime gaps. It does **not** complete Astral Severance, promote 07.07, freeze Stage 08 balance values, or authorize a parallel cast path.
 
@@ -48,7 +48,7 @@ The generic observed-entity Noetic route remains unable to stand in for Astral S
 
 ## C2S control transport
 
-The branch contains dedicated C2S `MOVE` and `RETURN` transport.
+The canonical runtime contains dedicated C2S `MOVE` and `RETURN` transport.
 
 ### Authority contract
 
@@ -140,7 +140,7 @@ Implementation/review history includes:
 - `1cf6e16144bf11977dc45fc88cbd4e56edf3bdc4` — bounded tick revalidation so representation loss closes the server session without MOVE input;
 - `bf3945c068d136f55151417dca27325eb9d12cc7` — per-`MinecraftServer` ingress state, preventing cross-server tick-history contamination.
 
-Exact branch head `76ed71977bff5b0c1b59555f1032b22aecf535a1` previously passed Black Arcana CI `34776232542` through JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke before the final review fixes above. That evidence remains valid for that earlier tree only. The final reconciled PR HEAD after this documentation update must pass the complete pipeline again before merge.
+Final branch head `8b9fd3ce0bb2347dc672b85db058eeb891d850d9` passed push workflow `34778875762` and PR workflow `34778877787` through JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. PR #235 was then squash-merged at `main@29454a7dd604ba0ea0200724d53bd9526b09cb10`; exact-SHA post-merge workflow `34779849669` passed the complete pipeline and published canonical QA artifact `black-arcana-29454a7dd604ba0ea0200724d53bd9526b09cb10`, artifact ID `10325066285`, SHA-256 `8c5d47037661e2b697196e15ef0ca272dce5e4d496b11aef99edc323b54e69b4`.
 
 ## Remaining 07.07 gate
 

@@ -4,11 +4,11 @@
 
 `IN PROGRESS — SERVER SUBSTRATE + BORROWED SIGHT + ASTRAL LIFECYCLE CANONICAL / ASTRAL CONTROL PARTIAL / SPECIFICATION GATE OPEN`
 
-Planning reconciliation baseline for this tranche: `main@c321063f41c34525cebd5e6936a560253c677442`.
+Current canonical baseline: `main@29454a7dd604ba0ea0200724d53bd9526b09cb10` after PR #235.
 
-PR #72 merged the bounded server-side Noetic/familiar/gaze/sanctuary substrate at `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`. PR #77 merged the bounded server-authored Borrowed Sight BEGIN/END presentation channel and physical-client camera adapter at `4053c060bb7e4c3f57ca06f49295868277a6eb57`. PR #138 merged the dedicated bounded server-owned Astral Severance projection/session lifecycle at `3469b454de2b65d0c15e89e7d689fe760dd30994`.
+PR #72 merged the bounded server-side Noetic/familiar/gaze/sanctuary substrate at `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`. PR #77 merged the bounded server-authored Borrowed Sight BEGIN/END presentation channel and physical-client camera adapter at `4053c060bb7e4c3f57ca06f49295868277a6eb57`. PR #138 merged the dedicated bounded server-owned Astral Severance projection/session lifecycle at `3469b454de2b65d0c15e89e7d689fe760dd30994`. PR #235 merged the bounded Astral projection representation, server-owned logical pose/movement substrate and C2S MOVE/RETURN control transport at `29454a7dd604ba0ea0200724d53bd9526b09cb10`.
 
-The current `feat/stage07-astral-severance-control` tranche extends that Astral lifecycle with a dedicated projection representation, server-owned logical pose/movement substrate and bounded C2S MOVE/RETURN transport. It does **not** promote Stage 07.07 as complete: Astral client camera/input redirection, canonical cast/channel/upkeep wiring, a production MOVE control-limit authority, the complete per-spell specification gate and real-client acceptance remain open. Stage 08 must not consume 07.07 as canonical balance input yet.
+That control tranche does **not** promote Stage 07.07 as complete: Astral client camera/input redirection, canonical cast/channel/upkeep wiring, a production MOVE control-limit authority, the complete per-spell specification gate and real-client acceptance remain open. Stage 08 must not consume 07.07 as canonical balance input yet.
 
 The detailed per-spell completeness matrix is `07-familiars-divination-specification-gate.md`. The implementation checkpoint is `07-astral-severance-runtime-checkpoint.md`.
 
@@ -82,9 +82,9 @@ PR #138 established the dedicated server-owned lifecycle:
 
 The physical player remains the real gameplay body. Projection never becomes inventory/equipment/progression/health/death authority and never silently teleports the physical body.
 
-### 3.2 Current control tranche
+### 3.2 Canonical control tranche
 
-The current branch adds:
+PR #235 adds:
 
 - `AstralProjectionEntity`, a dedicated non-owning server-side world representation using the server-authored projection UUID;
 - server-owned logical `ProjectionPose` distinct from physical-player position;
@@ -458,14 +458,11 @@ Canonical merged substrate evidence remains authoritative for the code it actual
 - artifact `black-arcana-5c818c12bb6f580893e44f31fd0e17b9c1fe5840`, ID `10000268004`, SHA-256 `35c8436ab3cbd2f75e8cc6f7ae5554edb7a330205f5166265f96979b6fa65b16`;
 - Borrowed Sight final GREEN code head: `45f970edd10e20d41315cd1471471fadbef731fd`, CI #2010 / `34186494393`;
 - Borrowed Sight canonical merge: PR #77 / `4053c060bb7e4c3f57ca06f49295868277a6eb57`;
-- Astral lifecycle canonical merge: PR #138 / `3469b454de2b65d0c15e89e7d689fe760dd30994`.
-
-Current control-branch evidence before final reconciliation:
-
-- synchronized implementation ancestry includes `main@c321063f41c34525cebd5e6936a560253c677442` via merge `3123f007a65a8ac03e701d90b8c8b968c8062425`;
-- exact branch head `76ed71977bff5b0c1b59555f1032b22aecf535a1` passed Black Arcana CI run `34776232542` through unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke;
-- main-only canonical artifact publication correctly skipped on the branch run;
-- later review fixes add representation-loss tick revalidation and per-`MinecraftServer` ingress isolation; those changes require a fresh exact-head GREEN pipeline before merge.
+- Astral lifecycle canonical merge: PR #138 / `3469b454de2b65d0c15e89e7d689fe760dd30994`;
+- Astral control final branch head `8b9fd3ce0bb2347dc672b85db058eeb891d850d9` passed push workflow `34778875762` and PR workflow `34778877787`;
+- Astral control canonical merge: PR #235 / `29454a7dd604ba0ea0200724d53bd9526b09cb10`;
+- exact-SHA post-merge workflow `34779849669` passed JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke and canonical QA artifact publication;
+- canonical artifact `black-arcana-29454a7dd604ba0ea0200724d53bd9526b09cb10`, ID `10325066285`, SHA-256 `8c5d47037661e2b697196e15ef0ca272dce5e4d496b11aef99edc323b54e69b4`.
 
 This evidence is not reclassified as real-client acceptance or as proof that the specification gate is closed.
 
