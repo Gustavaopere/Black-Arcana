@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.client;
 
+import net.minecraft.world.phys.HitResult;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
@@ -43,6 +44,11 @@ class TargetAimPresentationContractTest {
         Object block = enumValue(observation, "BLOCK");
         Object entity = enumValue(observation, "ENTITY");
 
+        Method fromHitType = requiredMethod(semantics, "fromHitType", HitResult.Type.class);
+        assertEquals(miss, fromHitType.invoke(null, HitResult.Type.MISS));
+        assertEquals(block, fromHitType.invoke(null, HitResult.Type.BLOCK));
+        assertEquals(entity, fromHitType.invoke(null, HitResult.Type.ENTITY));
+
         Method marker = semantics.getDeclaredMethod("marker", observation);
         marker.setAccessible(true);
         String missMarker = (String) marker.invoke(null, miss);
@@ -78,8 +84,10 @@ class TargetAimPresentationContractTest {
         assertTrue(layer.contains("event.registerAboveAll("));
         assertTrue(layer.contains("Minecraft.getInstance()"));
         assertTrue(layer.contains("minecraft.hitResult"));
-        assertTrue(layer.contains("instanceof EntityHitResult"));
-        assertTrue(layer.contains("instanceof BlockHitResult"));
+        assertTrue(layer.contains("minecraft.hitResult.getType()"));
+        assertTrue(layer.contains("TargetAimPresentationSemantics.fromHitType("));
+        assertFalse(layer.contains("instanceof EntityHitResult"));
+        assertFalse(layer.contains("instanceof BlockHitResult"));
         assertTrue(layer.contains("HudLayout.isRecent("));
         assertTrue(layer.contains("ClientUxState.selectionChangedTick()"));
         assertTrue(layer.contains("BlackArcanaClientConfig.SELECTION_DURATION_TICKS.get()"));
@@ -119,6 +127,16 @@ class TargetAimPresentationContractTest {
         assertTrue(pt.contains("\"hud.black_arcana.aim.local.block\""));
         assertTrue(pt.contains("\"hud.black_arcana.aim.local.entity\""));
         assertTrue(pt.contains("Mira local"));
+    }
+
+    private static Method requiredMethod(Class<?> owner, String name, Class<?>... parameterTypes) {
+        try {
+            Method method = owner.getDeclaredMethod(name, parameterTypes);
+            method.setAccessible(true);
+            return method;
+        } catch (ReflectiveOperationException exception) {
+            return fail(owner.getSimpleName() + "." + name + " is missing or invalid", exception);
+        }
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
