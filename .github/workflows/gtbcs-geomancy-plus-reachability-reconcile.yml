@@ -1,0 +1,81 @@
+name: GTBC Geomancy Plus 1.1.0 Reachability Reconcile NON-MERGE
+
+on:
+  push:
+    branches:
+      - audit/gtbcs-geomancy-plus-1.1.0-exact-artifact
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download exact release
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 \
+            'https://www.cursemaven.com/curse/maven/gtbcs-geomancy-plus-1352485/7041615/gtbcs-geomancy-plus-1352485-7041615.jar' \
+            -o geomancy.jar
+          mkdir -p audit
+          sha1sum geomancy.jar | tee audit/sha1.txt
+          sha256sum geomancy.jar | tee audit/sha256.txt
+      - name: Verify registered Geo spell gate inheritance
+        shell: bash
+        run: |
+          set -euo pipefail
+          classes=(
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.ChunkerSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.DripstoneBoltSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.ErodingBoulderSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.FissureSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.GeoConductorSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.PetriviseSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.PillarOfTheResoundingEarthSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.SeismicSurfSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.TremorSpikeSpell
+            com.gametechbc.gtbcs_geomancy_plus.spells.geo.TremorStepSpell
+          )
+
+          : > audit/reachability.txt
+          echo 'GTBC Geomancy Plus 1.1.0 Geo reachability gate reconciliation — NON-MERGE EVIDENCE ONLY' >> audit/reachability.txt
+          echo 'curseforge_project=1352485' >> audit/reachability.txt
+          echo 'curseforge_file=7041615' >> audit/reachability.txt
+          echo 'geo_registered_class_count=10' >> audit/reachability.txt
+
+          for cls in "${classes[@]}"; do
+            sig="$(javap -classpath geomancy.jar -p "$cls")"
+            header="$(printf '%s\n' "$sig" | grep -m1 '^public class ')"
+            printf '%s\n' "$header" | grep -Fq ' extends io.redspace.ironsspellbooks.api.spells.AbstractSpell '
+
+            for gate in allowCrafting isEnabled canBeCraftedBy; do
+              if printf '%s\n' "$sig" | grep -Eq "[[:space:]]${gate}\\("; then
+                echo "unexpected_override class=$cls method=$gate" >&2
+                exit 1
+              fi
+            done
+
+            echo "class=$cls direct_super=io.redspace.ironsspellbooks.api.spells.AbstractSpell allowCrafting_override=false isEnabled_override=false canBeCraftedBy_override=false" >> audit/reachability.txt
+          done
+
+          echo 'geo_gate_override_count=0' >> audit/reachability.txt
+          echo 'BOUNDARY: this proves only that the ten exact registered Geo classes inherit the Iron\x27s host crafting/enabled/player gates rather than replacing them. Host-side generic config/runtime acceptance remains separate.' >> audit/reachability.txt
+          cat audit/reachability.txt
+      - name: Upload text-only reachability evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: gtbcs-geomancy-plus-1.1.0-reachability-reconciliation
+          path: |
+            audit/reachability.txt
+            audit/sha1.txt
+            audit/sha256.txt
+          if-no-files-found: error
+          retention-days: 30
