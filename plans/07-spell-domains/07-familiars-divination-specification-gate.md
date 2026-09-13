@@ -2,11 +2,11 @@
 
 ## State
 
-`PLANNING / REQUIRED BEFORE 07.07 CANONICAL COMPLETION / NO RUNTIME IMPLEMENTATION`
+`IN PROGRESS / RUNTIME PARTIALLY IMPLEMENTED / REQUIRED BEFORE 07.07 CANONICAL COMPLETION`
 
-Planning baseline: `main@8af81c925a6d6d725e1663de516fc20b393ec207`.
+Canonical runtime evidence already exists for the merged Noetic substrate, Borrowed Sight camera flow and Astral Severance lifecycle. The current Astral control branch adds further bounded runtime/control substrate, but this document remains the canonical completeness gate for the seven-spell family.
 
-This document closes an ambiguity in Stage 07.07: an approved fantasy or a preparatory candidate entry is not automatically a complete spell specification.
+This document closes an ambiguity in Stage 07.07: an approved fantasy, preparatory candidate entry or partial runtime is not automatically a complete spell specification.
 
 `plans/07-spell-domains/README.md` requires every Stage 07 spell specification to state:
 
@@ -26,12 +26,13 @@ This document closes an ambiguity in Stage 07.07: an approved fantasy or a prepa
 
 The current source of Noetic candidate intent is `docs/design/candidate-specifications.md`. That file explicitly marks exact numeric balance as Stage 08 work. Current production code/tests prevail for what is already implemented.
 
-No value may be promoted from a safety ceiling, descriptive candidate phrase or provider theme into a final balance contract without an explicit Stage 08 decision.
+No value may be promoted from a safety ceiling, descriptive candidate phrase, test fixture or provider theme into a final balance contract without an explicit reviewed decision.
 
 ## Classification
 
-- `FROZEN / CURRENT` — production `main` already supplies the relevant authority/behavioral boundary.
-- `PREPARATORY` — the candidate specification states the intended behavior/class, but the final Stage 07/08 contract is not frozen.
+- `FROZEN / CURRENT` — production/runtime code already supplies the relevant authority or behavioral boundary.
+- `FROZEN / CURRENT + PREPARATORY` — a meaningful runtime boundary exists, but remaining final policy/tuning is still preparatory.
+- `PREPARATORY` — intended behavior/class is stated, but the final Stage 07/08 contract is not frozen.
 - `MISSING / BLOCKER` — the required field is not sufficiently specified to serve as canonical Stage 08 input.
 - `N/A BY DESIGN` — the mechanic deliberately has no such behavior, and that absence itself must be preserved.
 
@@ -39,16 +40,16 @@ A spell is not specification-complete while any required field remains `MISSING 
 
 ## Current runtime baseline
 
-The merged Noetic substrate currently recognizes four observation kinds:
+The Noetic substrate recognizes four observation kinds:
 
 - `ASTRAL_SEVERANCE`;
 - `NAMESCRY`;
 - `BORROWED_SIGHT`;
 - `OCCULT_APPRAISAL`.
 
-The merged substrate also contains Gaze of Stillness / Nullifying Gaze runtime and Pact Sanctuary runtime contracts.
+The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary contracts. Borrowed Sight has a server-authored client camera path. Astral Severance now has a dedicated server-owned projection/session lifecycle, a dedicated projection entity, server-owned logical pose/movement substrate and bounded C2S MOVE/RETURN transport.
 
-`NoeticSafetyCeilings` provides absolute implementation safety ceilings, including a generic observation maximum range of 128 blocks and maximum duration of 600 ticks. The class explicitly states Stage 08 may tune below those ceilings. They are **not** the spells' final range/duration values.
+`NoeticSafetyCeilings` provides absolute implementation ceilings, including a generic observation maximum range of 128 blocks and maximum duration of 600 ticks. These are safety caps, not final spell range/duration or movement values.
 
 ## Gate matrix
 
@@ -56,21 +57,21 @@ The merged substrate also contains Gaze of Stillness / Nullifying Gaze runtime a
 
 | Required field | Status | Current supported statement |
 |---|---|---|
-| Fantasy | PREPARATORY | Controllable non-combat astral viewpoint/avatar while the physical body remains server-side and vulnerable. |
-| Host integration | PREPARATORY | Black Arcana core owns the mechanic; Eidolon flavor/integration is only optional intent, not a verified required bridge. |
-| Invocation | PREPARATORY | Candidate design requires a channeled projection. Exact activation/release interaction is not frozen. |
-| Target rules | PREPARATORY | Projection is centered on the caster/body relationship, bounded by loaded-only same-dimension/range authority; canonical avatar identity is still missing. |
+| Fantasy | FROZEN / CURRENT + PREPARATORY | Dedicated non-owning astral representation/viewpoint is tied to the physical caster while the physical body remains authoritative and vulnerable; client camera/input completion remains pending. |
+| Host integration | FROZEN / CURRENT + PREPARATORY | Black Arcana owns projection/session/control authority. Eidolon flavor/integration remains optional intent, not a verified required authority bridge. |
+| Invocation | PREPARATORY | Activation seam exists only downstream of an already-authorized canonical cast transaction. Exact player-facing channel activation/release and upkeep transaction are not yet wired/frozen. |
+| Target rules | FROZEN / CURRENT | Projection identity is server-generated and bound to one physical caster; generic observed-entity Astral admission is rejected; server movement is same-session, range-bounded and loaded-only. |
 | Resource cost | MISSING / BLOCKER | Only the class `channel/resource drain` is stated. Resource authority and amount are not frozen. |
-| Cooldown | MISSING / BLOCKER | No canonical cooldown contract/value is frozen. |
-| Scaling equation | MISSING / BLOCKER | No scaling equation is frozen. Safety ceilings must not be used as a substitute. |
-| Progression gate | PREPARATORY | Candidate tier is T3; final progression/mastery gate remains Stage 08 input. |
-| World-effect mode | PREPARATORY | Default plan is no terrain mutation and no remote world interaction. Exact canonical mode must be frozen before implementation. |
-| Boss/PvP behavior | PREPARATORY | Projection is non-combat by default; body remains vulnerable. No offensive PvP bypass is authorized. |
-| Config surface | MISSING / BLOCKER | No canonical config keys/ranges are frozen. |
-| Tests | PREPARATORY | Range return, body-damage interruption, logout restoration and dimension-change denial are required candidate tests; expanded lifecycle tests are defined in `07-familiars-divination.md`. |
-| Provenance link | MISSING / BLOCKER | Candidate specification exists, but the final per-spell provenance link/ledger entry required for canonical completion is not frozen here. |
+| Cooldown | MISSING / BLOCKER | No canonical cooldown contract/value/group is frozen. |
+| Scaling equation | MISSING / BLOCKER | No final range/duration/movement/resource scaling equation is frozen. Safety ceilings and test fixture values must not substitute for it. |
+| Progression gate | PREPARATORY | Candidate tier is T3; final progression/mastery gate remains Stage 08 input through the RPG Skill Tree boundary only. |
+| World-effect mode | FROZEN / CURRENT + PREPARATORY | Current runtime authorizes no terrain mutation or remote interaction. Projection movement is loaded-only and does not force-load. Any future interaction requires a separate reviewed contract. |
+| Boss/PvP behavior | FROZEN / CURRENT + PREPARATORY | Projection is non-combat/non-owning; physical body remains vulnerable; no offensive attribution or PvP bypass is authorized. Final server/PvP tuning remains open. |
+| Config surface | MISSING / BLOCKER | Hard safety ceilings exist, but canonical gameplay config is missing. In particular, production `ControlLimits` for MOVE (`maxStepBlocks`, `maxLookDeltaDegrees`) are not frozen. |
+| Tests | FROZEN / CURRENT + PREPARATORY | Automated lifecycle, identity, movement, loaded-only, entity wiring, payload validation/round-trip and dedicated-server coverage exist. Canonical cast wiring, client camera/input restoration and real-client coexistence acceptance remain required. |
+| Provenance link | MISSING / BLOCKER | Candidate specification exists, but final per-spell provenance linkage required for canonical completion is not frozen. |
 
-**Completion blocker:** canonical bounded astral avatar/viewpoint lifecycle plus the missing balance/config/provenance fields.
+**Current Astral boundary:** PR #138 canonically merged the dedicated lifecycle. The current `feat/stage07-astral-severance-control` branch adds dedicated projection representation, server movement substrate and C2S MOVE/RETURN transport. RETURN is wired to production runtime. MOVE is intentionally registered/validated/rate-limited but its production gameplay handler remains fail-closed until an explicit reviewed server-side `ControlLimits` authority exists. Client camera/input redirection and canonical cast/channel transaction wiring are still missing.
 
 ### Namescry
 
@@ -81,7 +82,7 @@ The merged substrate also contains Gaze of Stillness / Nullifying Gaze runtime a
 | Invocation | PREPARATORY | Candidate design is a channel using a focus item plus resource; exact invocation surface is not frozen. |
 | Target rules | FROZEN / CURRENT + PREPARATORY | Current policy is loaded-only, same-dimension, in-range, live target and explicit player consent; the candidate additionally requires limited remote data. |
 | Resource cost | MISSING / BLOCKER | `focus item + mana/channel` is only a cost class; provider/resource authority and amount are not frozen. |
-| Cooldown | MISSING / BLOCKER | No canonical cooldown contract/value is frozen. |
+| Cooldown | MISSING / BLOCKER | No canonical cooldown value/group is frozen. |
 | Scaling equation | MISSING / BLOCKER | No scaling equation is frozen. |
 | Progression gate | PREPARATORY | Candidate tier is T3; final gate remains Stage 08 input. |
 | World-effect mode | PREPARATORY | Read-only perception/no force-load is the intended boundary; no terrain mutation is justified. |
@@ -197,14 +198,19 @@ The merged substrate also contains Gaze of Stillness / Nullifying Gaze runtime a
 - exact tests for the final contract;
 - clean-room per-spell provenance linkage.
 
-Astral Severance additionally requires its canonical projection lifecycle to be designed and reviewed before implementation.
+Astral Severance additionally still requires:
+
+- canonical client camera/input redirection and restoration for its dedicated projection identity;
+- canonical player-facing cast/channel/upkeep transaction wiring;
+- an explicit reviewed server-side MOVE control-limit/config authority before the MOVE gameplay handler is installed;
+- completion of remaining real-client/coexistence acceptance under D031.
 
 ## Stage 08 handoff rule
 
 Stage 08 may tune below existing safety ceilings. It must not:
 
 - raise a value above Stage 07 hard safety ceilings without an explicit reviewed architecture/safety change;
-- treat a safety ceiling as the default balance value;
+- treat a safety ceiling or test fixture as the default balance value;
 - select a provider resource without verifying provider authority and transaction support;
 - invent a cooldown group from a spell id;
 - transfer casting, targeting, channel, privacy or projection authority to the client;
