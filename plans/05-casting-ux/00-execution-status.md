@@ -69,7 +69,7 @@ Stage 05 therefore remains:
 - implementation GREEN: workflow `34760715703`;
 - reconciled exact-head GREEN: workflow `34760965231` on `1b71443d2d3a8e7d6b48ab2b606da1218ceaab81`;
 - PR #232 squash merge: `12ed7dab61cb32f7ac254ddc4f4f7e77c08a2f4a`;
-- post-merge main workflow must remain GREEN before this checkpoint is considered technically closed.
+- post-merge `main` workflow `34761284839`: GREEN, including canonical QA JAR publication.
 
 ## Completion rule
 
