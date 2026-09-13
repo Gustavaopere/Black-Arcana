@@ -156,7 +156,7 @@ Phase 2BN therefore promotes only the provider-component catalog closure. It doe
 - client/full-pack behavior, multiplayer isolation, reload/reconnect persistence and installed-host interop remain fail-closed;
 - clean-room: no upstream implementation body/assets/localization text are copied or adapted.
 
-Phase 2BM therefore promotes only the provider-component catalog closure. It does **not** add semantic magic, create a Black Arcana recipe resolver or certify the physical host combination as runtime-compatible.
+Phase 2BM therefore promove apenas o fechamento técnico/source-pinned do componente. Ele **não** adiciona magia semântica, não cria um recipe resolver do Black Arcana e não certifica a combinação física atual como runtime-compatible.
 
 ## Phase 2BL — Goety Iron 3.1 + Goety Cataclysm 1.21.1-1.8.2 — componentes #59/#60 / semantic +66
 
@@ -328,7 +328,7 @@ The Modrinth 1.7 changelog explicitly says Sound-school content was removed and 
 
 ### Black Arcana / Stage 07.07 boundary
 
-No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot ser admitted merely because it is a familiar, tameable, spellcasting pet or nearby entity.
+No automatic FamiliarsLib bridge is created. The BA noetic runtime remains server-authoritative and revalidates through its canonical familiar-ownership boundary. A FamiliarsLib entity cannot be admitted merely because it is a familiar, tameable, spellcasting pet or nearby entity.
 
 Provider-specific ownership integration remains **fail-closed** until a current exact-version seam is proven and deliberately adapted. The catalog evidence identifies provider-owned familiar state, but source↔physical exactness and a stable ownership contract are not closed strongly enough to promote a runtime adapter.
 
