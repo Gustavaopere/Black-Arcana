@@ -4,7 +4,7 @@
 
 `IMPLEMENTED / PHYSICAL VALIDATION PENDING`
 
-The approved deterministic Stage 05.01–05.16 implementation/planning tranches are complete or merged. Stage 05 is **not** yet `VALIDATED / COMPLETE` because the mandatory assembled real-client/full-pack campaign has not been directly executed to completion.
+The approved deterministic Stage 05.01–05.16 implementation/planning tranches are present or merged. Stage 05 is **not** yet `VALIDATED / COMPLETE` because the mandatory assembled real-client/full-pack campaign has not been directly executed to completion.
 
 Automated CI is implementation evidence. It never converts a manual row to PASS.
 
@@ -14,13 +14,13 @@ For the fastest current view, open [`00-execution-status.md`](00-execution-statu
 
 This directory uses the same visual completion convention as completed earlier stages:
 
-- `✅-...` — declared plan/audit scope is fully closed;
+- `✅-...` — declared plan/audit scope is fully closed and has no mandatory unresolved acceptance gate of its own;
 - `🟡-PENDENTE-...` — implementation/planning is present, but a mandatory direct validation gate remains open;
 - unprefixed implementation checkpoints record evidence and are not separate numbered plans.
 
 Evidence-gated optional integrations are not treated as unfinished work when the plan explicitly requires exact API/provider/runtime evidence before implementation.
 
-Historical planning prose and implementation checkpoints may retain a pre-normalization basename in backticks when referring to the artifact name that existed at the time of that evidence. Those occurrences are historical identifiers, not the current canonical path. The links in this README are the authoritative current filenames.
+Historical planning prose and implementation checkpoints may retain a pre-normalization basename in backticks when referring to the artifact name that existed at the time of that evidence. Those occurrences are historical identifiers, not the current canonical path. Active current references must use the canonical filenames below.
 
 ## Canonical planning map
 
@@ -34,8 +34,8 @@ Historical planning prose and implementation checkpoints may retain a pre-normal
 3. [`🟡-PENDENTE-03-contextual-hud.md`](🟡-PENDENTE-03-contextual-hud.md) — contextual HUD/result/hazard/gate presentation. Runtime implemented; physical validation pending.
 4. [`🟡-PENDENTE-04-accessibility-client-config.md`](🟡-PENDENTE-04-accessibility-client-config.md) — client presentation/accessibility preferences. Runtime implemented; physical validation pending.
 5. [`🟡-PENDENTE-05-final-client-validation-handoff.md`](🟡-PENDENTE-05-final-client-validation-handoff.md) — mandatory assembled-client closeout campaign. **This is the principal remaining Stage 05 blocker.**
-6. [`✅-06-modpack-coexistence.md`](✅-06-modpack-coexistence.md) — coexistence/authority contract complete; unsupported integrations remain evidence-gated.
-7. [`✅-07-presentation-data-contracts.md`](✅-07-presentation-data-contracts.md) — presentation-authority/data-contract audit complete.
+6. [`🟡-PENDENTE-06-modpack-coexistence.md`](🟡-PENDENTE-06-modpack-coexistence.md) — coexistence/authority planning is complete, but required current-pack real-client coexistence scenarios remain pending.
+7. [`✅-07-presentation-data-contracts.md`](✅-07-presentation-data-contracts.md) — presentation-authority/data-contract audit complete; future optional fields remain evidence-gated.
 8. [`🟡-PENDENTE-08-visual-language-state-semantics.md`](🟡-PENDENTE-08-visual-language-state-semantics.md) — semantic core implemented; direct client validation pending.
 9. [`🟡-PENDENTE-09-keyboard-focus-navigation.md`](🟡-PENDENTE-09-keyboard-focus-navigation.md) — keyboard navigation implemented; direct client validation pending.
 10. [`🟡-PENDENTE-10-loadout-editor-information-architecture.md`](🟡-PENDENTE-10-loadout-editor-information-architecture.md) — approved editor-hardening tranche implemented; A.7 physical validation pending.
