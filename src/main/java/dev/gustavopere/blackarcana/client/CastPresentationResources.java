@@ -1,6 +1,8 @@
 package dev.gustavopere.blackarcana.client;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -65,6 +67,11 @@ final class CastPresentationResources {
 
     static synchronized int cachedEntryCount() {
         return CACHE.size();
+    }
+
+    static void registerReloadListener(RegisterClientReloadListenersEvent event) {
+        Objects.requireNonNull(event, "event").registerReloadListener(
+                (ResourceManagerReloadListener) resourceManager -> invalidate());
     }
 
     private static ResourceLocation id(String path) {
