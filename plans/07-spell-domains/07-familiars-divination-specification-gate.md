@@ -4,7 +4,7 @@
 
 `IN PROGRESS / RUNTIME PARTIALLY IMPLEMENTED / REQUIRED BEFORE 07.07 CANONICAL COMPLETION`
 
-Canonical runtime evidence already exists for the merged Noetic substrate, Borrowed Sight camera flow and Astral Severance lifecycle. The current Astral control branch adds further bounded runtime/control substrate, but this document remains the canonical completeness gate for the seven-spell family.
+Canonical runtime evidence exists for the merged Noetic substrate, Borrowed Sight camera flow, Astral Severance lifecycle and the bounded Astral representation/control tranche merged by PR #235 at `29454a7dd604ba0ea0200724d53bd9526b09cb10`. This document remains the canonical completeness gate for the seven-spell family.
 
 This document closes an ambiguity in Stage 07.07: an approved fantasy, preparatory candidate entry or partial runtime is not automatically a complete spell specification.
 
@@ -71,7 +71,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Tests | FROZEN / CURRENT + PREPARATORY | Automated lifecycle, identity, movement, loaded-only, entity wiring, payload validation/round-trip and dedicated-server coverage exist. Canonical cast wiring, client camera/input restoration and real-client coexistence acceptance remain required. |
 | Provenance link | MISSING / BLOCKER | Candidate specification exists, but final per-spell provenance linkage required for canonical completion is not frozen. |
 
-**Current Astral boundary:** PR #138 canonically merged the dedicated lifecycle. The current `feat/stage07-astral-severance-control` branch adds dedicated projection representation, server movement substrate and C2S MOVE/RETURN transport. RETURN is wired to production runtime. MOVE is intentionally registered/validated/rate-limited but its production gameplay handler remains fail-closed until an explicit reviewed server-side `ControlLimits` authority exists. Client camera/input redirection and canonical cast/channel transaction wiring are still missing.
+**Current Astral boundary:** PR #138 canonically merged the dedicated lifecycle, and PR #235 canonically merged the dedicated projection representation, server movement substrate and C2S MOVE/RETURN transport at `29454a7dd604ba0ea0200724d53bd9526b09cb10`. RETURN is wired to production runtime. MOVE is intentionally registered/validated/rate-limited but its production gameplay handler remains fail-closed until an explicit reviewed server-side `ControlLimits` authority exists. Final branch head `8b9fd3ce0bb2347dc672b85db058eeb891d850d9` passed push workflow `34778875762` and PR workflow `34778877787`; exact-SHA post-merge workflow `34779849669` passed the complete pipeline and published canonical QA artifact `black-arcana-29454a7dd604ba0ea0200724d53bd9526b09cb10` (artifact `10325066285`, SHA-256 `8c5d47037661e2b697196e15ef0ca272dce5e4d496b11aef99edc323b54e69b4`). Client camera/input redirection and canonical cast/channel transaction wiring are still missing.
 
 ### Namescry
 
