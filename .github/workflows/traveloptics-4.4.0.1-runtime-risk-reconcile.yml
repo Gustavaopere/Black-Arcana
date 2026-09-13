@@ -1,0 +1,179 @@
+name: Traveloptics 4.4.0.1 Runtime Risk Reconciliation NON-MERGE
+
+on:
+  push:
+    branches:
+      - audit/traveloptics-4.4.0.1-exact-artifact
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact release
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          mkdir -p audit
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = '3808493ce45cdfeb6408e85578adecf13df698e8'
+          sha1sum traveloptics.jar > audit/sha1.txt
+          sha256sum traveloptics.jar > audit/sha256.txt
+
+      - name: Verify noncraftable gates, exact references and loot codec wiring
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re, struct, subprocess, zipfile
+          from pathlib import Path
+
+          JAR='traveloptics.jar'
+          z=zipfile.ZipFile(JAR)
+          names=sorted(z.namelist())
+
+          def javap(dot, code=False):
+              args=['javap','-classpath',JAR]
+              if code: args += ['-c']
+              args += ['-p',dot]
+              return subprocess.run(args,text=True,capture_output=True,check=True,timeout=30).stdout
+
+          def method_block(out, method_name):
+              # javap emits one signature line followed by Code:. Keep transient body only.
+              lines=out.splitlines()
+              for i,line in enumerate(lines):
+                  if re.search(r'\b'+re.escape(method_name)+r'\s*\(', line):
+                      j=i+1
+                      while j < len(lines) and lines[j].strip() != 'Code:': j += 1
+                      if j >= len(lines): continue
+                      k=j+1
+                      while k < len(lines):
+                          s=lines[k]
+                          if re.match(r'^\s{2}(?:public|protected|private|static|final|synchronized|native|abstract)\b', s): break
+                          if s.strip()=='}': break
+                          k += 1
+                      return '\n'.join(lines[j+1:k])
+              return ''
+
+          def const_bool_return(dot, method):
+              out=javap(dot, True)
+              b=method_block(out, method)
+              if not b: return 'MISSING'
+              # Accept only a single constant boolean return shape; otherwise fail closed.
+              ops=[]
+              for line in b.splitlines():
+                  m=re.match(r'^\s*\d+:\s+([a-z0-9_]+)',line)
+                  if m: ops.append(m.group(1))
+              if ops == ['iconst_0','ireturn']: return 'false'
+              if ops == ['iconst_1','ireturn']: return 'true'
+              return 'NON_CONSTANT:'+','.join(ops)
+
+          unique='com.gametechbc.traveloptics.api.spells.AbstractUniqueSpell'
+          weapon='com.gametechbc.traveloptics.api.spells.AbstractWeaponSpell'
+          unique_allow=const_bool_return(unique,'allowCrafting')
+          weapon_allow=const_bool_return(weapon,'allowCrafting')
+          if unique_allow != 'false': raise SystemExit('AbstractUniqueSpell.allowCrafting not constant false: '+unique_allow)
+          if weapon_allow != 'false': raise SystemExit('AbstractWeaponSpell.allowCrafting not constant false: '+weapon_allow)
+
+          # Parse class constant-pool UTF8 strings without preserving bodies.
+          def utf8_strings(data):
+              if data[:4] != b'\xca\xfe\xba\xbe': return set()
+              off=8; n=struct.unpack_from('>H',data,off)[0]; off+=2; out=set(); i=1
+              while i<n:
+                  t=data[off]; off+=1
+                  if t==1:
+                      ln=struct.unpack_from('>H',data,off)[0]; off+=2
+                      out.add(data[off:off+ln].decode('utf-8','replace')); off+=ln
+                  elif t in (3,4): off+=4
+                  elif t in (5,6): off+=8; i+=1
+                  elif t in (7,8,16,19,20): off+=2
+                  elif t in (9,10,11,12,17,18): off+=4
+                  elif t==15: off+=3
+                  else: raise ValueError(t)
+                  i+=1
+              return out
+
+          targets={
+              'blackout': 'BLACKOUT_SPELL',
+              'cursed_blast': 'CURSED_BLAST_SPELL',
+              'gyro_slash': 'GYRO_SLASH_SPELL',
+          }
+          ref_classes={k:[] for k in targets}
+          for p in names:
+              if not p.endswith('.class') or p.startswith('META-INF/versions/'): continue
+              us=utf8_strings(z.read(p))
+              dot=p[:-6].replace('/','.')
+              for k,field in targets.items():
+                  if field in us and dot != 'com.gametechbc.traveloptics.init.TOSpells':
+                      ref_classes[k].append(dot)
+
+          # Method-name-level references only, for classes that reference target spell fields.
+          method_refs={k:[] for k in targets}
+          for k,field in targets.items():
+              for dot in sorted(ref_classes[k]):
+                  out=javap(dot, True)
+                  current='<class-initializer>'
+                  buf=[]
+                  def flush(name, body):
+                      if re.search(r'Field com/gametechbc/traveloptics/init/TOSpells\.'+re.escape(field)+r':', body):
+                          method_refs[k].append((dot,name))
+                  for line in out.splitlines():
+                      if re.match(r'^\s{2}(?:public|protected|private|static|final|synchronized|native|abstract)',line) and '(' in line:
+                          flush(current,'\n'.join(buf)); buf=[]; current=line.strip().rstrip(';')
+                      else:
+                          buf.append(line)
+                  flush(current,'\n'.join(buf))
+
+          # Independent structural check of the third-party registry-risk claim.
+          loot_cls='com.gametechbc.traveloptics.loot.TOLootModifiers'
+          loot_out=javap(loot_cls, True)
+          key_name_count=len(re.findall(r'// String key_loot\b',loot_out))
+          universal_name_count=len(re.findall(r'// String universal_loot\b',loot_out))
+          key_codec_refs=len(re.findall(r'Field com/gametechbc/traveloptics/loot/KeyLootModifier\.CODEC:',loot_out))
+          universal_codec_refs=len(re.findall(r'Field com/gametechbc/traveloptics/loot/UniversalLootModifier\.CODEC:',loot_out))
+          # Exact alpha should expose both registry names but never reference UniversalLootModifier.CODEC from TOLootModifiers.
+          if key_name_count < 1 or universal_name_count < 1:
+              raise SystemExit(f'loot registry names not both present: key={key_name_count} universal={universal_name_count}')
+          if key_codec_refs < 2 or universal_codec_refs != 0:
+              raise SystemExit(f'unexpected codec wiring facts: key_codec_refs={key_codec_refs} universal_codec_refs={universal_codec_refs}')
+
+          with open('audit/runtime-risk-reconciliation.txt','w',encoding='utf-8') as f:
+              f.write("T.O Magic n' Extras / Traveloptics 4.4.0.1 runtime-risk reconciliation\n")
+              f.write('NON-MERGE EVIDENCE ONLY\n')
+              f.write('curseforge_file=6342780\nexact_release_sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n')
+              f.write(f'AbstractUniqueSpell.allowCrafting={unique_allow}\n')
+              f.write(f'AbstractWeaponSpell.allowCrafting={weapon_allow}\n')
+              f.write('\n== noncraftable registered spell field reference classes/methods ==\n')
+              for k in ('blackout','cursed_blast','gyro_slash'):
+                  f.write(f'traveloptics:{k} reference_class_count={len(ref_classes[k])} method_reference_count={len(method_refs[k])}\n')
+                  for dot,name in sorted(method_refs[k]): f.write(f'  {dot} :: {name}\n')
+              f.write('\n== TOLootModifiers codec wiring facts ==\n')
+              f.write(f'key_loot_registry_name_reference_count={key_name_count}\n')
+              f.write(f'universal_loot_registry_name_reference_count={universal_name_count}\n')
+              f.write(f'KeyLootModifier.CODEC_reference_count={key_codec_refs}\n')
+              f.write(f'UniversalLootModifier.CODEC_reference_count={universal_codec_refs}\n')
+              f.write('structural_codec_wiring_state=BOTH_NAMES_PRESENT_KEY_CODEC_REFERENCED_TWICE_UNIVERSAL_CODEC_ABSENT\n')
+              f.write('\nBOUNDARY: exact ARR release inspected read-only. Retained output is limited to constant boolean host-gate results, class/method identity references to three registered spell fields, registry-name counts and codec-field reference counts. No implementation bodies, assets, JSON payload bodies, source reconstruction or binary redistribution are retained. These structural facts do not by themselves claim a reproduced runtime crash or assembled-pack PASS.\n')
+          PY
+          cat audit/runtime-risk-reconciliation.txt
+
+      - name: Upload text-only runtime-risk evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-4.4.0.1-runtime-risk-reconciliation
+          path: |
+            audit/runtime-risk-reconciliation.txt
+            audit/sha1.txt
+            audit/sha256.txt
+          if-no-files-found: error
+          retention-days: 30
