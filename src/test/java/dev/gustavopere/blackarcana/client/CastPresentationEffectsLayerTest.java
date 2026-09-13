@@ -44,6 +44,28 @@ class CastPresentationEffectsLayerTest {
     }
 
     @Test
+    void newerAuthoritativeOutcomeReplacesOlderAuthoritativeOutcomeAcrossCasts() {
+        CastPresentationPulseState state = new CastPresentationPulseState(4L, 8L);
+        var denied = directive(
+                CastAudiovisualOrchestration.Kind.RESULT_DENIED,
+                CastPresentationLifecycle.Authority.AUTHORITATIVE_CAST_RESULT,
+                true,
+                true);
+        var success = directive(
+                CastAudiovisualOrchestration.Kind.RESULT_SUCCESS,
+                CastPresentationLifecycle.Authority.AUTHORITATIVE_CAST_RESULT,
+                true,
+                true);
+
+        state.accept(denied, 20L);
+        state.accept(success, 21L);
+
+        assertEquals(CastAudiovisualOrchestration.Kind.RESULT_SUCCESS, state.current(21L).orElseThrow().kind(),
+                "latest authoritative result must replace an older authoritative pulse regardless of severity");
+        assertEquals(29L, state.current(21L).orElseThrow().expiresAtTick());
+    }
+
+    @Test
     void reducedMotionAndReducedFlashesStillRetainAVisibleAuthoritativeOutcomeShape() {
         CastPresentationPulseState state = new CastPresentationPulseState(4L, 8L);
         state.accept(directive(
