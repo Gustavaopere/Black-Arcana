@@ -6,7 +6,7 @@
 
 This file is the canonical planning map for `plans/05-casting-ux/`.
 
-It does **not** claim that every UX enhancement described below already exists. The current deterministic Stage 05 runtime is implemented on `main`; the mandatory manual closeout remains governed by `05-final-client-validation-handoff.md` and `docs/qa/casting-ux-manual-matrix.md`.
+It does **not** claim that every UX enhancement described below already exists. The current deterministic Stage 05 runtime is implemented on `main`; the mandatory manual closeout remains governed by `🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-manual-matrix.md`.
 
 Baseline used to author this plan: `main@cad9b133fc06048f718c6a408a7e9aca2c360364`.
 
@@ -130,7 +130,7 @@ The current radial:
 
 The current contextual HUD is event-driven and may show synchronized selection, cast-result, hazard-resistance and predictable-gate presentation. It does not create an always-visible Black Arcana resource bar.
 
-Current selection identity and latest cast-result state are independently sourced. `CastResultPayload` carries `castId/status/code/detail`, but not spell id or loadout slot. Therefore current selected spell identity must not be treated as proven identity for the latest result when their timing overlaps. `11-contextual-feedback-orchestration.md` is the planning authority for hardening that association.
+Current selection identity and latest cast-result state are independently sourced. `CastResultPayload` carries `castId/status/code/detail`, but not spell id or loadout slot. Therefore current selected spell identity must not be treated as proven identity for the latest result when their timing overlaps. `🟡-PENDENTE-11-contextual-feedback-orchestration.md` is the planning authority for hardening that association.
 
 ### 3.6 Client configuration
 
@@ -154,7 +154,7 @@ Current Stage 05 screens already have partial keyboard support, but not complete
 - radial: `Left`/`Page Up` and `Right`/`Page Down` change pages, while wedge hover/selection remains pointer-driven;
 - loadout editor: Enter applies, Backspace/Delete clears the draft, and Left/Right/Page Up/Page Down change pages, while row focus/toggle remains pointer-driven.
 
-`09-keyboard-focus-navigation.md` is the planning authority for completing keyboard-only focus/navigation without changing those existing semantics silently or creating new gameplay authority.
+`🟡-PENDENTE-09-keyboard-focus-navigation.md` is the planning authority for completing keyboard-only focus/navigation without changing those existing semantics silently or creating new gameplay authority.
 
 ### 3.8 Current spell-icon presentation behavior
 
@@ -168,7 +168,7 @@ The current payload requires `iconId` to be non-blank and within `ArcanaProtocol
 
 Current `BlackArcanaRadialScreen`, `BlackArcanaLoadoutScreen` and `BlackArcanaHudLayer` consume presentation names but do not call `entry.iconId()` or render spell textures. At baseline `48cb9a43...`, `src/main/resources/assets/black_arcana/` contains only `lang/` and no project spell-icon texture tree.
 
-`12-iconography-resource-resolution.md` is the planning authority for introducing safe client-side icon resolution/fallback later without changing spell identity or gameplay authority.
+`🟡-PENDENTE-12-iconography-resource-resolution.md` is the planning authority for introducing safe client-side icon resolution/fallback later without changing spell identity or gameplay authority.
 
 ### 3.9 Current targeting/aim behavior
 
@@ -178,7 +178,7 @@ Current `ArcanaTargetSpec.Kind` values are exactly `SELF`, `ENTITY`, `RAY`, `BLO
 
 `CastResultPayload` contains `castId/status/code/detail` but no resolved target identity. `WorldEffectAdmissionService` plus `ConfigurableWorldEffectPolicy` remain authoritative for actual terrain work. Therefore the client currently has no generic server-authored target-validity/world-mutation-permission contract.
 
-`13-targeting-aim-presentation.md` is the planning authority for future reticle/target/geometry presentation around that boundary.
+`🟡-PENDENTE-13-targeting-aim-presentation.md` is the planning authority for future reticle/target/geometry presentation around that boundary.
 
 ### 3.10 Current spell-details/inspection behavior
 
@@ -188,7 +188,7 @@ The server-side `ArcanaSpellDefinition` additionally contains canonical `ArcanaC
 
 The current loadout editor may show a synchronized hazard/preflight tooltip on pointer hover, while the current radial shows bounded spell-name/hazard context. Neither surface is a generic full spell dossier.
 
-`14-spell-details-inspection-presentation.md` is the planning authority for any future richer tooltip/detail/inspection surface. It requires field-level authority classification, static-vs-dynamic separation and fail-closed omission rather than reconstructing runtime/provider facts from IDs or names.
+`🟡-PENDENTE-14-spell-details-inspection-presentation.md` is the planning authority for any future richer tooltip/detail/inspection surface. It requires field-level authority classification, static-vs-dynamic separation and fail-closed omission rather than reconstructing runtime/provider facts from IDs or names.
 
 ### 3.11 Current casting audiovisual/animation behavior
 
@@ -196,7 +196,7 @@ The current repository does not contain a generic cross-spell Black Arcana parti
 
 Current client preferences already expose particle density, reduced motion and reduced flashes, but those settings do not by themselves prove an implemented audiovisual casting layer. `CastResultPayload` proves bounded result data for a `castId` but does not generically carry resolved impact identity, target geometry, animation id, sound id, VFX id or channel progress.
 
-`15-casting-vfx-audio-animation-presentation.md` is the planning authority for any future cross-spell cast VFX/audio/player-animation/camera/telegraph lifecycle. It requires local-intent versus authoritative-result separation, bounded `castId` correlation, server-owned gameplay telegraphs, provider-host deduplication and fail-safe optional animation/camera adapters.
+`🟡-PENDENTE-15-casting-vfx-audio-animation-presentation.md` is the planning authority for any future cross-spell cast VFX/audio/player-animation/camera/telegraph lifecycle. It requires local-intent versus authoritative-result separation, bounded `castId` correlation, server-owned gameplay telegraphs, provider-host deduplication and fail-safe optional animation/camera adapters.
 
 ### 3.12 Current onboarding/discoverability behavior
 
@@ -206,28 +206,28 @@ Those labels do not constitute a first-use discovery system. The current editor 
 
 Current binding state is a local client fact. Documentation defaults such as `R` and `V` must therefore never be presented as the player's current key after rebinding, and `Unbound` must be treated as a valid presentation state rather than an invented fallback key.
 
-`16-onboarding-discoverability-contextual-help.md` is the planning authority for future first-use guidance, current-binding/unbound presentation, bounded contextual help, dismissal/re-entry, localization/accessibility and tutorial/control coexistence. It keeps help preferences client-only and never treats tutorial completion as casting, progression, Mastery or unlock authority.
+`🟡-PENDENTE-16-onboarding-discoverability-contextual-help.md` is the planning authority for future first-use guidance, current-binding/unbound presentation, bounded contextual help, dismissal/re-entry, localization/accessibility and tutorial/control coexistence. It keeps help preferences client-only and never treats tutorial completion as casting, progression, Mastery or unlock authority.
 
 ## 4. Plan package
 
 Stage 05 is divided into the following canonical planning documents:
 
-1. `01-input-loadouts.md` — input lifecycle, slot semantics, loadout editing, persistence and synchronization;
-2. `02-radial-wheel.md` — radial interaction, paging, visual affordances, selection/cast separation and compact layouts;
-3. `03-contextual-hud.md` — selected-spell, cooldown/gate/hazard/result presentation and anti-clutter rules;
-4. `04-accessibility-client-config.md` — rebindability, presentation preferences, motion/flash/particle policy and optional controller boundary;
-5. `05-final-client-validation-handoff.md` — exact real-client closeout campaign;
-6. `06-modpack-coexistence.md` — coexistence with installed casting/actionbar/combat/keybinding surfaces and exact-version integration gates;
-7. `07-presentation-data-contracts.md` — audited server/client presentation authority, currently synchronized data and the contract gates for cooldown mapping, cost, charges, channels and timers;
-8. `08-visual-language-state-semantics.md` — cross-surface meaning for selection/focus, forecast, authoritative result, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
-9. `09-keyboard-focus-navigation.md` — deterministic keyboard-only focus/navigation for radial and loadout screens while preserving current mouse behavior, server authority and global keybinding boundaries;
-10. `10-loadout-editor-information-architecture.md` — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation limits and the metadata/protocol gates for richer editor feedback;
-11. `11-contextual-feedback-orchestration.md` — bounded arbitration, priority, supersession, correlation and timing across current selection context, advisory forecast and authoritative cast-result channels;
-12. `12-iconography-resource-resolution.md` — synchronized spell-icon resource parsing/resolution, fallback, reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance;
-13. `13-targeting-aim-presentation.md` — authority-safe reticle/aim/target presentation across current server target kinds, advisory target hints, stale-state/result correlation, world-safety boundaries, accessibility, performance and modpack coexistence;
-14. `14-spell-details-inspection-presentation.md` — bounded spell inspection/details, field-level presentation authority, static/dynamic separation, provider/resource/cooldown/target/world/progression boundaries, localization, accessibility, performance and fail-closed behavior;
-15. `15-casting-vfx-audio-animation-presentation.md` — authority-safe casting VFX/audio/player-animation/camera/telegraph lifecycle, `castId` correlation, provider-host deduplication, sensory-accessibility budgets, exact-version optional animation-provider boundaries and real-pack coexistence;
-16. `16-onboarding-discoverability-contextual-help.md` — first-use discoverability, live binding/unbound presentation, bounded contextual help, dismissal/re-entry, localization/accessibility and modpack-safe tutorial coexistence without progression authority.
+1. `🟡-PENDENTE-01-input-loadouts.md` — input lifecycle, slot semantics, loadout editing, persistence and synchronization;
+2. `🟡-PENDENTE-02-radial-wheel.md` — radial interaction, paging, visual affordances, selection/cast separation and compact layouts;
+3. `🟡-PENDENTE-03-contextual-hud.md` — selected-spell, cooldown/gate/hazard/result presentation and anti-clutter rules;
+4. `🟡-PENDENTE-04-accessibility-client-config.md` — rebindability, presentation preferences, motion/flash/particle policy and optional controller boundary;
+5. `🟡-PENDENTE-05-final-client-validation-handoff.md` — exact real-client closeout campaign;
+6. `🟡-PENDENTE-06-modpack-coexistence.md` — coexistence with installed casting/actionbar/combat/keybinding surfaces and exact-version integration gates;
+7. `✅-07-presentation-data-contracts.md` — audited server/client presentation authority, currently synchronized data and the contract gates for cooldown mapping, cost, charges, channels and timers;
+8. `🟡-PENDENTE-08-visual-language-state-semantics.md` — cross-surface meaning for selection/focus, forecast, authoritative result, danger, temporal state, unavailable/fallback presentation, accessibility and clean-room visual identity;
+9. `🟡-PENDENTE-09-keyboard-focus-navigation.md` — deterministic keyboard-only focus/navigation for radial and loadout screens while preserving current mouse behavior, server authority and global keybinding boundaries;
+10. `🟡-PENDENTE-10-loadout-editor-information-architecture.md` — dense ordered slot semantics, reordering, search, icon fallback, draft lifecycle, apply/reconciliation limits and the metadata/protocol gates for richer editor feedback;
+11. `🟡-PENDENTE-11-contextual-feedback-orchestration.md` — bounded arbitration, priority, supersession, correlation and timing across current selection context, advisory forecast and authoritative cast-result channels;
+12. `🟡-PENDENTE-12-iconography-resource-resolution.md` — synchronized spell-icon resource parsing/resolution, fallback, reload/cache lifecycle, namespace boundaries, accessibility and clean-room asset provenance;
+13. `🟡-PENDENTE-13-targeting-aim-presentation.md` — authority-safe reticle/aim/target presentation across current server target kinds, advisory target hints, stale-state/result correlation, world-safety boundaries, accessibility, performance and modpack coexistence;
+14. `🟡-PENDENTE-14-spell-details-inspection-presentation.md` — bounded spell inspection/details, field-level presentation authority, static/dynamic separation, provider/resource/cooldown/target/world/progression boundaries, localization, accessibility, performance and fail-closed behavior;
+15. `🟡-PENDENTE-15-casting-vfx-audio-animation-presentation.md` — authority-safe casting VFX/audio/player-animation/camera/telegraph lifecycle, `castId` correlation, provider-host deduplication, sensory-accessibility budgets, exact-version optional animation-provider boundaries and real-pack coexistence;
+16. `🟡-PENDENTE-16-onboarding-discoverability-contextual-help.md` — first-use discoverability, live binding/unbound presentation, bounded contextual help, dismissal/re-entry, localization/accessibility and modpack-safe tutorial coexistence without progression authority.
 
 This master plan defines how those documents fit together. Detailed implementation or validation work belongs in the corresponding subplan rather than being duplicated here.
 
@@ -237,7 +237,7 @@ This master plan defines how those documents fit together. Detailed implementati
 
 Player opens the loadout editor through a rebindable mapping.
 
-The editor operates on a **draft** only. `10-loadout-editor-information-architecture.md` defines how future slot awareness, reordering, search, icon use, reset and apply reconciliation must preserve the current dense ordered server model. Applying always sends a bounded complete ordered update request to the server; the synchronized server snapshot remains canonical.
+The editor operates on a **draft** only. `🟡-PENDENTE-10-loadout-editor-information-architecture.md` defines how future slot awareness, reordering, search, icon use, reset and apply reconciliation must preserve the current dense ordered server model. Applying always sends a bounded complete ordered update request to the server; the synchronized server snapshot remains canonical.
 
 The loadout editor is also the preferred future surface for rich spell inspection under 05.14 because the player is already in a configuration context. Hover/focus/details interaction remains client-local presentation and must not toggle the draft or cast unless the existing explicit editor action is separately invoked.
 
@@ -272,7 +272,7 @@ Any future audiovisual anticipation under 05.15 is equally non-authoritative: a 
 After intent, the client may present only synchronized or server-authored information:
 
 - selection state;
-- cooldown state where the selected spell can be bound to an authoritative synchronized cooldown group under `07-presentation-data-contracts.md`;
+- cooldown state where the selected spell can be bound to an authoritative synchronized cooldown group under `✅-07-presentation-data-contracts.md`;
 - predictable gate category where supported;
 - danger tier and Arcane Resistance forecast where supported;
 - authoritative cast success/denial feedback;
@@ -280,7 +280,7 @@ After intent, the client may present only synchronized or server-authored inform
 
 The client must never infer a successful cast solely from local preflight.
 
-Selection context, advisory forecast and authoritative cast result are independent channels under `11-contextual-feedback-orchestration.md`. A result may render without spell attribution when the client cannot safely correlate its `castId` to the submitted spell/slot; it must never be labeled with the current selection by inference.
+Selection context, advisory forecast and authoritative cast result are independent channels under `🟡-PENDENTE-11-contextual-feedback-orchestration.md`. A result may render without spell attribution when the client cannot safely correlate its `castId` to the submitted spell/slot; it must never be labeled with the current selection by inference.
 
 Target presentation follows the same anti-misattribution rule under 05.13: if the current aim changes before a result arrives, the result must not be visually attached to the new candidate, and the current `CastResultPayload` does not authorize target attribution by itself.
 
@@ -343,7 +343,7 @@ Optional onboarding/help never displaces authoritative denial, hazard or gamepla
 
 Important state must not depend exclusively on color. Labels, icons, symbols or text should distinguish selected, unavailable, cooldown, danger and denial states even when color perception is limited.
 
-`08-visual-language-state-semantics.md` is the canonical meaning layer for these cross-surface states. It prevents selection from being rendered as readiness, forecast from being rendered as authoritative result, warning from being rendered as hard block and missing art from being rendered as gameplay unavailability.
+`🟡-PENDENTE-08-visual-language-state-semantics.md` is the canonical meaning layer for these cross-surface states. It prevents selection from being rendered as readiness, forecast from being rendered as authoritative result, warning from being rendered as hard block and missing art from being rendered as gameplay unavailability.
 
 Keyboard focus introduced by future 05.09 work must use the `FOCUSED` semantic role from 05.08 and remain distinguishable from pointer hover and selected loadout state.
 
@@ -365,7 +365,7 @@ They may be implemented only through the subplans and only if they preserve the 
 
 `SpellPresentationPayload.Entry` already carries `iconId`, but current loadout/radial/HUD rendering does not consume it.
 
-`12-iconography-resource-resolution.md` is the canonical resource lifecycle/fallback plan for this refinement.
+`🟡-PENDENTE-12-iconography-resource-resolution.md` is the canonical resource lifecycle/fallback plan for this refinement.
 
 Plan:
 
@@ -380,7 +380,7 @@ Plan:
 
 ### 7.2 Improve loadout organization
 
-`10-loadout-editor-information-architecture.md` is the canonical plan for this refinement.
+`🟡-PENDENTE-10-loadout-editor-information-architecture.md` is the canonical plan for this refinement.
 
 Plan:
 
@@ -403,7 +403,7 @@ Planned improvements may add:
 
 - safely resolved icon + short name on normal viewports under 05.12;
 - selected-state emphasis;
-- cooldown/readiness affordance only after the selected spell can be mapped to its canonical server-authored cooldown group as required by `07-presentation-data-contracts.md`;
+- cooldown/readiness affordance only after the selected spell can be mapped to its canonical server-authored cooldown group as required by `✅-07-presentation-data-contracts.md`;
 - static danger affordance where available;
 - page indicator and keyboard/mouse navigation clarity;
 - optional resource/cost summary only if a bounded server-authored presentation contract exists.
@@ -414,7 +414,7 @@ Nested domain/loadout navigation is **not** automatically approved. It should be
 
 The original Stage 05 candidate list included selected spell, short cooldown, provider-specific cost, charge/channel state, denial reason and temporary ritual/domain timers.
 
-Current implementation already covers part of this surface. `07-presentation-data-contracts.md` is the authority/data-availability gate for the remaining items, while `11-contextual-feedback-orchestration.md` governs transient priority, lifetime, supersession and result/selection correlation.
+Current implementation already covers part of this surface. `✅-07-presentation-data-contracts.md` is the authority/data-availability gate for the remaining items, while `🟡-PENDENTE-11-contextual-feedback-orchestration.md` governs transient priority, lifetime, supersession and result/selection correlation.
 
 Future additions must satisfy these rules:
 
@@ -455,7 +455,7 @@ Therefore:
 
 ### 7.7 Unify visual meaning without forcing visual sameness
 
-`08-visual-language-state-semantics.md` adds a cross-surface semantic contract.
+`🟡-PENDENTE-08-visual-language-state-semantics.md` adds a cross-surface semantic contract.
 
 Plan:
 
@@ -469,7 +469,7 @@ Plan:
 
 ### 7.8 Complete keyboard-only screen navigation
 
-`09-keyboard-focus-navigation.md` closes the planning gap between rebindable global casting input and pointer-dependent screen interaction.
+`🟡-PENDENTE-09-keyboard-focus-navigation.md` closes the planning gap between rebindable global casting input and pointer-dependent screen interaction.
 
 Plan:
 
@@ -485,7 +485,7 @@ Plan:
 
 ### 7.9 Targeting and aim presentation
 
-`13-targeting-aim-presentation.md` closes the presentation gap around the already server-authoritative target resolver.
+`🟡-PENDENTE-13-targeting-aim-presentation.md` closes the presentation gap around the already server-authoritative target resolver.
 
 Plan:
 
@@ -503,7 +503,7 @@ Plan:
 
 ### 7.10 Spell details and inspection presentation
 
-`14-spell-details-inspection-presentation.md` closes the gap between the current compact combat UX and the need for richer explanatory spell information.
+`🟡-PENDENTE-14-spell-details-inspection-presentation.md` closes the gap between the current compact combat UX and the need for richer explanatory spell information.
 
 Plan:
 
@@ -521,7 +521,7 @@ Plan:
 
 ### 7.11 Casting VFX, audio and animation presentation
 
-`15-casting-vfx-audio-animation-presentation.md` closes the remaining cross-cutting presentation gap between a server-authoritative cast and its future audiovisual expression.
+`🟡-PENDENTE-15-casting-vfx-audio-animation-presentation.md` closes the remaining cross-cutting presentation gap between a server-authoritative cast and its future audiovisual expression.
 
 Plan:
 
@@ -544,7 +544,7 @@ Plan:
 
 ### 7.12 Onboarding, discoverability and contextual help
 
-`16-onboarding-discoverability-contextual-help.md` closes the usability gap between a functioning Stage 05 runtime and a player actually discovering the configuration/select/cast workflow in a large modpack.
+`🟡-PENDENTE-16-onboarding-discoverability-contextual-help.md` closes the usability gap between a functioning Stage 05 runtime and a player actually discovering the configuration/select/cast workflow in a large modpack.
 
 Plan:
 
@@ -600,7 +600,7 @@ Expected defaults:
 - screen focus/input modality: client-local transient state scoped to the open screen; no server synchronization;
 - current Black Arcana key mapping/bound-or-unbound label: client-local configuration fact;
 - help topic/session/dismissal state: client presentation state only; durable storage, if later approved, remains completely separate from gameplay/progression persistence;
-- cooldown: server-owned synchronized group snapshot; per-spell presentation additionally requires the authoritative spell→group relationship defined by `07-presentation-data-contracts.md`;
+- cooldown: server-owned synchronized group snapshot; per-spell presentation additionally requires the authoritative spell→group relationship defined by `✅-07-presentation-data-contracts.md`;
 - cast result/denial: server-authored event result identified by `castId`;
 - optional pending cast-result correlation: bounded client-local presentation context keyed by emitted `castId`, never gameplay authority;
 - hazard/gate forecast: bounded request/response, stale-response protected and scoped to spell/request/preflight;
@@ -704,16 +704,16 @@ When a planned refinement is approved for implementation:
 2. verify no concurrent PR owns the same Stage 05 surface;
 3. read this master plan and the relevant subplan;
 4. inspect current runtime/tests rather than relying on old branch history;
-5. for new presentation data, classify authority/current synchronization through `07-presentation-data-contracts.md` before changing protocol/UI;
-6. for any cross-surface visual state, classify its semantic family/meaning through `08-visual-language-state-semantics.md` before rendering;
-7. for keyboard/focus changes, preserve current screen-key contracts and use `09-keyboard-focus-navigation.md` to define focus lifecycle/activation before editing input handling;
-8. for loadout-editor changes, preserve dense ordered-list semantics and use `10-loadout-editor-information-architecture.md` before editing draft/order/search/apply behavior;
-9. for contextual-feedback changes, preserve independent selection/advisory/result channels and use `11-contextual-feedback-orchestration.md` before editing result correlation, timing, priority or dedup behavior;
-10. for spell-icon/resource changes, use `12-iconography-resource-resolution.md` before adding resource lookup, cache/reload behavior or bundled icon assets;
-11. for reticle/aim/target-presentation changes, use `13-targeting-aim-presentation.md` before adding target overlays, geometry guides, target-preview synchronization or result/target attribution;
-12. for spell-tooltip/detail/inspection changes, use `14-spell-details-inspection-presentation.md` before exposing new static/dynamic fields, provider facts, descriptions or detail caching;
-13. for casting VFX/audio/player-animation/camera/telegraph work, use `15-casting-vfx-audio-animation-presentation.md` before adding audiovisual resources, result/runtime cue protocols, animation-provider adapters or camera effects;
-14. for onboarding/discoverability/contextual-help work, use `16-onboarding-discoverability-contextual-help.md` before adding first-use prompts, current-binding labels, hint persistence, tutorial-provider adapters or control/help surfaces;
+5. for new presentation data, classify authority/current synchronization through `✅-07-presentation-data-contracts.md` before changing protocol/UI;
+6. for any cross-surface visual state, classify its semantic family/meaning through `🟡-PENDENTE-08-visual-language-state-semantics.md` before rendering;
+7. for keyboard/focus changes, preserve current screen-key contracts and use `🟡-PENDENTE-09-keyboard-focus-navigation.md` to define focus lifecycle/activation before editing input handling;
+8. for loadout-editor changes, preserve dense ordered-list semantics and use `🟡-PENDENTE-10-loadout-editor-information-architecture.md` before editing draft/order/search/apply behavior;
+9. for contextual-feedback changes, preserve independent selection/advisory/result channels and use `🟡-PENDENTE-11-contextual-feedback-orchestration.md` before editing result correlation, timing, priority or dedup behavior;
+10. for spell-icon/resource changes, use `🟡-PENDENTE-12-iconography-resource-resolution.md` before adding resource lookup, cache/reload behavior or bundled icon assets;
+11. for reticle/aim/target-presentation changes, use `🟡-PENDENTE-13-targeting-aim-presentation.md` before adding target overlays, geometry guides, target-preview synchronization or result/target attribution;
+12. for spell-tooltip/detail/inspection changes, use `🟡-PENDENTE-14-spell-details-inspection-presentation.md` before exposing new static/dynamic fields, provider facts, descriptions or detail caching;
+13. for casting VFX/audio/player-animation/camera/telegraph work, use `🟡-PENDENTE-15-casting-vfx-audio-animation-presentation.md` before adding audiovisual resources, result/runtime cue protocols, animation-provider adapters or camera effects;
+14. for onboarding/discoverability/contextual-help work, use `🟡-PENDENTE-16-onboarding-discoverability-contextual-help.md` before adding first-use prompts, current-binding labels, hint persistence, tutorial-provider adapters or control/help surfaces;
 15. add deterministic RED tests for pure/state behavior where applicable;
 16. implement the minimum GREEN change;
 17. add/adjust GameTests only where world/network integration requires them;
@@ -780,7 +780,7 @@ This plan does not authorize:
 
 The installed pack already contains casting and combat UI surfaces that can overlap Stage 05 presentation.
 
-`06-modpack-coexistence.md` is the canonical plan for this layer.
+`🟡-PENDENTE-06-modpack-coexistence.md` is the canonical plan for this layer.
 
 The default strategy is:
 
@@ -800,7 +800,7 @@ Real-pack coexistence findings may become Stage 05 blockers only when they break
 
 ## 16. Presentation data authority rule
 
-`07-presentation-data-contracts.md` is the canonical plan for deciding whether a planned HUD/radial/loadout datum is currently safe to render or requires a new server-authored contract first.
+`✅-07-presentation-data-contracts.md` is the canonical plan for deciding whether a planned HUD/radial/loadout datum is currently safe to render or requires a new server-authored contract first.
 
 Current audited boundary:
 
@@ -820,7 +820,7 @@ Missing optional presentation data does not by itself reopen Stage 05 or convert
 
 ## 17. Visual-language and state-semantics rule
 
-`08-visual-language-state-semantics.md` is the canonical meaning layer **after** Section 16 establishes that a datum is legitimate to present.
+`🟡-PENDENTE-08-visual-language-state-semantics.md` is the canonical meaning layer **after** Section 16 establishes that a datum is legitimate to present.
 
 Current planning rule:
 
@@ -841,7 +841,7 @@ Current planning rule:
 
 ## 18. Keyboard-focus and screen-navigation rule
 
-`09-keyboard-focus-navigation.md` is the canonical planning layer for completing keyboard-only interaction inside Stage 05 screens.
+`🟡-PENDENTE-09-keyboard-focus-navigation.md` is the canonical planning layer for completing keyboard-only interaction inside Stage 05 screens.
 
 Current planning rule:
 
@@ -864,7 +864,7 @@ Current planning rule:
 
 ## 19. Loadout-editor information-architecture rule
 
-`10-loadout-editor-information-architecture.md` is the canonical planning layer for future loadout-editor organization and apply-state hardening.
+`🟡-PENDENTE-10-loadout-editor-information-architecture.md` is the canonical planning layer for future loadout-editor organization and apply-state hardening.
 
 Current planning rule:
 
@@ -888,7 +888,7 @@ Current planning rule:
 
 ## 20. Contextual-feedback orchestration rule
 
-`11-contextual-feedback-orchestration.md` is the canonical planning layer for transient Stage 05 feedback arbitration.
+`🟡-PENDENTE-11-contextual-feedback-orchestration.md` is the canonical planning layer for transient Stage 05 feedback arbitration.
 
 Current planning rule:
 
@@ -909,7 +909,7 @@ Current planning rule:
 
 ## 21. Iconography and resource-resolution rule
 
-`12-iconography-resource-resolution.md` is the canonical planning layer for turning synchronized spell icon metadata into client artwork safely.
+`🟡-PENDENTE-12-iconography-resource-resolution.md` is the canonical planning layer for turning synchronized spell icon metadata into client artwork safely.
 
 Current planning rule:
 
@@ -932,7 +932,7 @@ Current planning rule:
 
 ## 22. Targeting and aim presentation rule
 
-`13-targeting-aim-presentation.md` is the canonical planning layer for reticle, aim candidate, target marker and target-geometry presentation around the current server-owned targeting runtime.
+`🟡-PENDENTE-13-targeting-aim-presentation.md` is the canonical planning layer for reticle, aim candidate, target marker and target-geometry presentation around the current server-owned targeting runtime.
 
 Current planning rule:
 
@@ -955,7 +955,7 @@ Current planning rule:
 
 ## 23. Spell details and inspection presentation rule
 
-`14-spell-details-inspection-presentation.md` is the canonical planning layer for richer tooltip/detail/inspection presentation without turning server/runtime/provider internals into client authority.
+`🟡-PENDENTE-14-spell-details-inspection-presentation.md` is the canonical planning layer for richer tooltip/detail/inspection presentation without turning server/runtime/provider internals into client authority.
 
 Current planning rule:
 
@@ -981,7 +981,7 @@ Current planning rule:
 
 ## 24. Casting VFX, audio and animation presentation rule
 
-`15-casting-vfx-audio-animation-presentation.md` is the canonical planning layer for future cross-spell cast VFX, sound, player animation, camera feedback and gameplay-relevant telegraphs.
+`🟡-PENDENTE-15-casting-vfx-audio-animation-presentation.md` is the canonical planning layer for future cross-spell cast VFX, sound, player animation, camera feedback and gameplay-relevant telegraphs.
 
 Current planning rule:
 
@@ -1008,7 +1008,7 @@ Current planning rule:
 
 ## 25. Onboarding, discoverability and contextual-help rule
 
-`16-onboarding-discoverability-contextual-help.md` is the canonical planning layer for making the existing Stage 05 workflow discoverable without making tutorial state authoritative.
+`🟡-PENDENTE-16-onboarding-discoverability-contextual-help.md` is the canonical planning layer for making the existing Stage 05 workflow discoverable without making tutorial state authoritative.
 
 Current planning rule:
 

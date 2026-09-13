@@ -2,9 +2,9 @@
 
 ## State
 
-`PHASES A–C + AUTHORIZED D BINDING PRESENTATION IMPLEMENTED / AUTOMATED GATES GREEN / PHYSICAL-CLIENT VALIDATION PENDING`
+`PHASES A–C + AUTHORIZED D BINDING PRESENTATION IMPLEMENTED / MERGED / POST-MERGE AUTOMATED GATES GREEN / PHYSICAL-CLIENT VALIDATION PENDING`
 
-This checkpoint records the bounded implementation promoted from `16-onboarding-discoverability-contextual-help.md`. It does not convert direct real-client/full-pack rows to PASS.
+This checkpoint records the bounded implementation promoted from `🟡-PENDENTE-16-onboarding-discoverability-contextual-help.md`. It does not convert direct real-client/full-pack rows to PASS.
 
 ## Implemented scope
 
@@ -55,10 +55,12 @@ No independent key-conflict engine, Controlling API, controller-provider bridge 
 - first RED: `36c709bb93e620e98017c9651aaa370de85bfc21`;
 - pure-model GREEN: `5dd76aff257cb8d51b64057fbb48e55c42730753`, workflow `34758843055` GREEN;
 - client-wiring RED: `9db31ea88d06097b03ec035d6c2b1ad864d700d4`, workflow `34759052907` failed at the expected missing-production contract;
-- production head before this checkpoint: `4ce87a4e4d200e5f5246f34fdf78272657b66d4c`;
-- workflow `34760715703` GREEN through unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke.
+- production head before checkpoint: `4ce87a4e4d200e5f5246f34fdf78272657b66d4c`, workflow `34760715703` GREEN through unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke;
+- latest-main reconciliation: `1b71443d2d3a8e7d6b48ab2b606da1218ceaab81`, behind `main` by zero at the merge gate; workflow `34760965231` GREEN;
+- PR #232 merged by squash as `12ed7dab61cb32f7ac254ddc4f4f7e77c08a2f4a`;
+- post-merge `main` workflow `34761284839` GREEN, including canonical QA JAR publication.
 
-A fresh full pipeline is still required after this documentation checkpoint and after final reconciliation with the latest `main`.
+The deterministic implementation/merge gate for 05.16 is therefore closed.
 
 ## Remaining gate
 

@@ -1,81 +1,76 @@
 # Stage 05 — Casting & UX — Execution Status
 
-This file is the quick execution ledger for `plans/05-casting-ux/`.
+This is the canonical quick-status ledger for `plans/05-casting-ux/`.
 
-It answers two questions without requiring readers to reconstruct history from implementation checkpoints:
+## Status convention
 
-1. what has actually been implemented or completed;
-2. what Black Arcana is working on **right now**.
+- ✅ **COMPLETE** — the declared plan/audit scope is closed and has no mandatory unresolved acceptance gate of its own.
+- 🟡 **PENDENTE** — implementation/planning work is present, but a mandatory direct real-client/full-pack validation gate is still open.
+- 🔵 **IN PROGRESS** — implementation is currently being changed and has not reached the merge/post-merge gate.
+- ⛔ **BLOCKED / EVIDENCE-GATED** — a proposed optional extension is not authorized until exact API/runtime/provider evidence exists.
 
-The detailed subplans remain authoritative for scope and architecture. Production code/tests remain authoritative for runtime behavior. This ledger must be updated whenever a numbered Stage 05 item changes state.
-
-## Legend
-
-- ✅ **COMPLETE FOR DECLARED SCOPE** — the plan/audit deliverable is complete and no additional runtime work is implied by that item itself.
-- 🟡 **IMPLEMENTED / VALIDATION PENDING** — bounded implementation is canonical or automated gates are green, but required direct real-client/full-pack validation remains pending, or the plan intentionally retains deferred evidence-gated work.
-- 🔵 **IN PROGRESS** — this is the item currently being implemented.
-- ⛔ **BLOCKED / DEFERRED BY EVIDENCE** — implementation is not authorized until the stated API/evidence/provider/runtime gate exists.
-
-A green check does **not** mean that the entire Stage 05 physical-client campaign has passed. Overall Stage 05 remains `IMPLEMENTED / FINAL VALIDATION DEFERRED` until the manual matrix is directly executed.
+A plan is never marked ✅ merely because CI is green. Automated CI cannot fabricate a real-client PASS.
 
 ## Current position
 
-> 🔵 **NOW: 05.16 — Onboarding / Discoverability / Contextual Help**
->
-> Branch: `feat/stage05-discoverability`
->
-> Completed inside 05.16 so far:
->
-> - first RED: `36c709bb93e620e98017c9651aaa370de85bfc21` — missing pure discoverability model/layout as expected;
-> - first GREEN: `5dd76aff257cb8d51b64057fbb48e55c42730753` — pure `DiscoverabilityModel` + bounded hint layout; workflow `34758843055` GREEN through unit, diff sanity, NeoForge build, JAR verification, Foundation GameTests and dedicated-server smoke;
-> - second RED: `9db31ea88d06097b03ec035d6c2b1ad864d700d4` — client discoverability wiring contract; workflow `34759052907` failed as the TDD RED for the not-yet-wired runtime/UI.
->
-> **Next implementation step:** close the second RED with the physical-client wiring for current `KeyMapping` bindings, session-local first-use cue, bounded hint presentation and deterministic Help re-entry from the loadout editor. Then run the full GREEN pipeline before moving further.
+All approved deterministic Stage 05.01–05.16 implementation/planning tranches are now present or merged for their declared evidence-gated scope.
+
+The remaining blocking closeout is the assembled real-client/full-pack campaign defined by `🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-manual-matrix.md`, including the required current-pack coexistence scenarios owned by 05.06.
+
+Stage 05 therefore remains:
+
+`IMPLEMENTED / PHYSICAL VALIDATION PENDING`
 
 ## Numbered plan ledger
 
-| Item | Status | What is actually true now | Remaining gate / next action |
+| Item | Status | Canonical state | Remaining mandatory gate |
 |---|---|---|---|
-| **05.01 — Input & Loadouts** | 🟡 | Runtime is implemented: bounded server-owned loadout, rebindable client intent, quick-cast/selected-cast workflow and persistence/synchronization. | Direct rows in the Stage 05 physical-client matrix remain pending. |
-| **05.02 — Radial Wheel** | 🟡 | Runtime is implemented: client-only selection, 8 slots/page, paging, compact geometry and selection/cast separation. | Direct radial/input/readability validation remains pending. |
-| **05.03 — Contextual HUD & Feedback** | 🟡 | Contextual/event-driven HUD runtime exists with server-authored result/hazard/gate presentation. | Direct HUD/readability/full-pack overlap validation remains pending. |
-| **05.04 — Accessibility & Client Config** | 🟡 | Client-only presentation preferences, rebindability and bounded accessibility controls are implemented. | Direct reduced-motion/flash/scale/input validation remains pending. |
-| **05.05 — Final Real-Client Validation Handoff** | 🟡 | Closeout/runbook exists and is the mandatory acceptance procedure. | **Physical assembled-pack campaign has not been executed to completion.** This is the principal reason Stage 05 is not `VALIDATED / COMPLETE`. |
-| **05.06 — Modpack Coexistence** | ✅ | Coexistence planning/authority contract is complete. It intentionally adds no runtime bridge without exact API evidence. | Real-pack coexistence scenarios are exercised by 05.05; only observed failures may promote new compatibility work. |
-| **05.07 — Presentation Data Contracts** | ✅ | Server/client presentation-authority audit and evidence gates are complete. It intentionally adds no runtime. | New cooldown/cost/channel/etc. presentation remains blocked unless a bounded server-authored contract is approved. |
-| **05.08 — Visual Language & State Semantics** | 🟡 | Bounded semantic core is implemented and automated gates are GREEN. | Final direct client visual/accessibility validation remains deferred. |
-| **05.09 — Keyboard Focus & Navigation** | 🟡 | Implementation is merged; post-merge automated gates and QA artifact publication are GREEN. | Real-client keyboard/accessibility/coexistence validation remains deferred. |
-| **05.10 — Loadout Editor Information Architecture** | 🟡 | Phase A.1–A.6 implementation is present with automated gates GREEN: dense reorder/search/draft/editor hardening within existing authority. | A.7 real-client validation is pending; richer rejection/provider metadata remains evidence-gated. |
-| **05.11 — Contextual Feedback Orchestration** | 🟡 | No-protocol Phase A bounded arbitration is implemented. | Real-client validation is deferred; later phases are not promoted unless their gates are satisfied. |
-| **05.12 — Iconography & Resource Resolution** | 🟡 | Bounded Phase A–C resource/icon resolution tranche is implemented with automated gates GREEN. | Final client/resource-pack validation remains pending; provider assets remain provider-owned. |
-| **05.13 — Targeting & Aim Presentation** | 🟡 | Authority-safe bounded local-observation presentation tranche is implemented with automated gates GREEN. | Direct client validation remains pending; authoritative target/world geometry must not be inferred. |
-| **05.14 — Spell Details & Inspection** | 🟡 | Bounded Phase B static inspection is merged and automated/review gates are GREEN. | Real-client tooltip/readability/accessibility validation remains pending; richer runtime/provider facts stay fail-closed. |
-| **05.15 — Casting VFX / Audio / Animation Presentation** | 🟡 | Provider-free A–D + H tranche is merged: cast correlation, bounded audiovisual pulse, original project audio, resource fallback and teardown. Canonical merge `6daec47b915e2caa54b7c5d64582cd5171108bcb`; post-merge workflow `34758313103` GREEN. | Phase G physical/full-pack audiovisual QA is pending. Provider animation/camera and gameplay geometry remain deferred by exact evidence/authority gates. |
-| **05.16 — Onboarding / Discoverability / Contextual Help** | 🔵 | **CURRENT WORK.** Pure model/layout first RED→GREEN is complete. Second client-wiring RED is confirmed. | Implement current-binding/unbound presentation, bounded first-use cue, dismissal/re-entry and editor Help wiring; then full GREEN CI, checkpoint, reconciliation, PR, merge and post-merge CI. |
+| **05.01 — Input & Loadouts** | 🟡 PENDENTE | Runtime implemented: bounded server-owned loadout, rebindable intent, quick/selected cast, persistence and synchronization. | Direct physical-client input/loadout rows. |
+| **05.02 — Radial Wheel** | 🟡 PENDENTE | Runtime implemented: 8 slots/page, paging, bounded geometry, selection/cast separation. | Direct radial/input/readability rows. |
+| **05.03 — Contextual HUD & Feedback** | 🟡 PENDENTE | Contextual server-authored feedback runtime implemented. | Direct HUD/readability/full-pack overlap rows. |
+| **05.04 — Accessibility & Client Config** | 🟡 PENDENTE | Client-only presentation/accessibility preferences implemented. | Direct scale/input/reduced-motion/reduced-flash rows. |
+| **05.05 — Final Real-Client Validation Handoff** | 🟡 PENDENTE | Runbook and evidence procedure are complete. | **Execute the physical assembled-pack campaign.** |
+| **05.06 — Modpack Coexistence** | 🟡 PENDENTE | Coexistence/authority planning is complete and unsupported integrations remain evidence-gated. | Execute required current-pack coexistence rows, including the four Iron-hosted scenarios delegated by 05.05 Task 5A. |
+| **05.07 — Presentation Data Contracts** | ✅ COMPLETE | Presentation-authority audit/evidence gates are complete. | None inside this audit; future fields remain evidence-gated rather than unfinished. |
+| **05.08 — Visual Language & State Semantics** | 🟡 PENDENTE | Bounded semantic core implemented; automated gates green. | Direct visual/accessibility validation. |
+| **05.09 — Keyboard Focus & Navigation** | 🟡 PENDENTE | Merged keyboard navigation with post-merge automation green. | Direct keyboard/accessibility/coexistence validation. |
+| **05.10 — Loadout Editor Information Architecture** | 🟡 PENDENTE | Approved Phase A.1–A.6 implementation present and green. | A.7 real-client validation. Evidence-gated richer metadata is not inferred. |
+| **05.11 — Contextual Feedback Orchestration** | 🟡 PENDENTE | Approved no-protocol Phase A arbitration implemented. | Direct client validation. Later optional phases require their own evidence gate. |
+| **05.12 — Iconography & Resource Resolution** | 🟡 PENDENTE | Approved bounded resource/icon tranche implemented. | Direct client/resource-pack validation. |
+| **05.13 — Targeting & Aim Presentation** | 🟡 PENDENTE | Authority-safe local-observation tranche implemented. | Direct client validation; no client inference of authoritative geometry. |
+| **05.14 — Spell Details & Inspection** | 🟡 PENDENTE | Bounded static inspection tranche merged and green. | Direct tooltip/readability/accessibility validation. |
+| **05.15 — Casting VFX / Audio / Animation Presentation** | 🟡 PENDENTE | Provider-free A–D + H tranche merged; post-merge CI green; original project audio and teardown implemented. | Phase G physical/full-pack audiovisual QA. Provider animation/camera/geometry remain evidence-gated, not silently unfinished. |
+| **05.16 — Onboarding / Discoverability / Contextual Help** | 🟡 PENDENTE | Phases A–C plus authorized current-binding/unbound subset of D implemented and merged. First-use cue, live bindings, editor Help, localization/config and teardown are present. | Physical/full-pack onboarding/help matrix. Optional provider-aware help/conflict integrations remain evidence-gated. |
 
-## Overall Stage 05 status
+## Deterministic implementation checklist
 
-- [x] Deterministic server-authoritative casting workflow implemented.
-- [x] Loadout/radial/HUD/client-config foundations implemented.
-- [x] Presentation-data authority audit complete.
-- [x] Visual semantics implemented.
-- [x] Keyboard focus/navigation implemented.
-- [x] Loadout-editor hardening tranche implemented.
-- [x] Contextual-feedback bounded orchestration implemented.
-- [x] Icon/resource-resolution bounded tranche implemented.
-- [x] Target/aim bounded presentation tranche implemented.
-- [x] Spell-inspection bounded presentation tranche implemented.
-- [x] Casting audiovisual provider-free tranche implemented and merged.
-- [ ] **05.16 onboarding/discoverability implementation complete.** ← **CURRENT**
+- [x] 05.01 deterministic runtime implemented.
+- [x] 05.02 deterministic runtime implemented.
+- [x] 05.03 deterministic runtime implemented.
+- [x] 05.04 deterministic runtime implemented.
+- [x] 05.05 physical closeout procedure defined.
+- [x] 05.06 coexistence planning/authority contract defined; direct current-pack coexistence validation remains open.
+- [x] 05.07 presentation authority audit complete.
+- [x] 05.08 semantic core implemented.
+- [x] 05.09 keyboard navigation implemented.
+- [x] 05.10 approved editor-hardening tranche implemented.
+- [x] 05.11 approved feedback-orchestration tranche implemented.
+- [x] 05.12 approved icon/resource tranche implemented.
+- [x] 05.13 approved targeting-presentation tranche implemented.
+- [x] 05.14 approved inspection tranche implemented.
+- [x] 05.15 approved audiovisual tranche implemented.
+- [x] 05.16 approved discoverability/help tranche implemented.
 - [ ] **Mandatory real-client/full-pack Stage 05 validation campaign complete.**
+
+## 05.16 merge evidence
+
+- model/layout GREEN: workflow `34758843055`;
+- wiring RED: workflow `34759052907`, failed for the expected missing-production contract;
+- implementation GREEN: workflow `34760715703`;
+- reconciled exact-head GREEN: workflow `34760965231` on `1b71443d2d3a8e7d6b48ab2b606da1218ceaab81`;
+- PR #232 squash merge: `12ed7dab61cb32f7ac254ddc4f4f7e77c08a2f4a`;
+- post-merge `main` workflow `34761284839`: GREEN, including canonical QA JAR publication.
 
 ## Completion rule
 
-Stage 05 may be labeled `VALIDATED / COMPLETE` only when:
-
-1. the currently approved numbered implementation work is merged with exact-head and post-merge CI GREEN;
-2. all applicable rows in `docs/qa/casting-ux-manual-matrix.md` are directly observed on the exact assembled build;
-3. legitimate future-only/evidence-blocked rows are explicitly carried/deferred rather than falsely marked PASS;
-4. this ledger and the Stage 05 README/master state are reconciled with the resulting canonical `main` state.
-
-CI is evidence for deterministic implementation. It never fabricates a physical-client PASS.
+Stage 05 becomes `VALIDATED / COMPLETE` only when all applicable rows in `docs/qa/casting-ux-manual-matrix.md` are directly observed on the exact assembled build, any legitimate future/evidence-gated rows are explicitly carried forward, and no blocking physical validation failure remains.
