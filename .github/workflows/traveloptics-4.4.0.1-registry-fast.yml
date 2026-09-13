@@ -1,0 +1,123 @@
+name: Traveloptics 4.4.0.1 Registry Reconciliation NON-MERGE
+
+on:
+  push:
+    branches:
+      - audit/traveloptics-4.4.0.1-exact-artifact
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download exact release
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = '3808493ce45cdfeb6408e85578adecf13df698e8'
+          mkdir -p audit
+          sha1sum traveloptics.jar > audit/sha1.txt
+          sha256sum traveloptics.jar > audit/sha256.txt
+      - name: Reconcile registry and spell identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json,re,struct,subprocess,zipfile
+          from pathlib import Path
+
+          J='traveloptics.jar'; z=zipfile.ZipFile(J); names=sorted(z.namelist())
+          def hdr(data):
+              if data[:4]!=b'\xca\xfe\xba\xbe': return None
+              off=8; n=struct.unpack_from('>H',data,off)[0]; off+=2; cp=[None]*n; i=1
+              while i<n:
+                  t=data[off]; off+=1
+                  if t==1:
+                      ln=struct.unpack_from('>H',data,off)[0]; off+=2; cp[i]=('U',data[off:off+ln].decode('utf-8','replace')); off+=ln
+                  elif t in (3,4): off+=4
+                  elif t in (5,6): off+=8; i+=1
+                  elif t==7: idx=struct.unpack_from('>H',data,off)[0]; off+=2; cp[i]=('C',idx)
+                  elif t==8: off+=2
+                  elif t in (9,10,11,12,17,18): off+=4
+                  elif t==15: off+=3
+                  elif t in (16,19,20): off+=2
+                  else: raise ValueError(t)
+                  i+=1
+              _,ti,si=struct.unpack_from('>HHH',data,off)
+              def cn(x):
+                  if not x or not cp[x] or cp[x][0]!='C': return None
+                  u=cp[cp[x][1]]; return u[1] if u and u[0]=='U' else None
+              us={e[1] for e in cp if e and e[0]=='U'}
+              return cn(ti),cn(si),us
+          cls={}
+          for p in names:
+              if not p.endswith('.class') or p.startswith('META-INF/versions/'): continue
+              try: h=hdr(z.read(p))
+              except Exception: continue
+              if h: cls[h[0]]={'super':h[1],'u':h[2]}
+          providers=sorted(c for c in cls if 'traveloptics' in c.lower())
+          ABSTRACT='io/redspace/ironsspellbooks/api/spells/AbstractSpell'
+          def spell(c):
+              seen=set()
+              while c and c not in seen:
+                  seen.add(c); s=cls.get(c,{}).get('super')
+                  if s==ABSTRACT: return True
+                  if s not in cls: return False
+                  c=s
+              return False
+          spells=sorted(c for c in providers if spell(c))
+          reg=sorted(c for c in providers if any(x in cls[c]['u'] for x in ('registerSpell','SpellRegistry','SpellRegistries')))
+          sig=[]; byte=[]
+          total_calls=0; total_branches=0; fields=[]
+          for c in reg:
+              dot=c.replace('/','.')
+              s=subprocess.run(['javap','-classpath',J,'-p',dot],text=True,capture_output=True,timeout=20).stdout
+              b=subprocess.run(['javap','-classpath',J,'-c','-p',dot],text=True,capture_output=True,timeout=20).stdout
+              sig.append('===== '+dot+' =====\n'+s.strip())
+              for line in s.splitlines():
+                  if ('AbstractSpell' in line or 'Supplier<' in line or 'DeferredHolder<' in line) and ';' in line: fields.append((dot,line.strip()))
+              total_calls += len(re.findall(r'//.*registerSpell|Method .*registerSpell',b))
+              st=re.search(r'static \{\};(.*?)(?:\n\s*(?:public|private|protected|static|final)|\Z)',b,re.S)
+              if st: total_branches += len(re.findall(r'\b(?:if[a-z_]*|goto(?:_w)?|tableswitch|lookupswitch)\b',st.group(1)))
+          Path('audit/registry-signatures.txt').write_text('\n\n'.join(sig),encoding='utf-8')
+          keys=[]
+          for p in names:
+              if p.endswith('/lang/en_us.json'):
+                  try:o=json.loads(z.read(p).decode('utf-8-sig'))
+                  except:continue
+                  if isinstance(o,dict): keys += [k for k in o if k.startswith('spell.traveloptics.') or k.startswith('school.traveloptics.')]
+          keys=sorted(set(keys))
+          meta=next((p for p in ('META-INF/neoforge.mods.toml','META-INF/mods.toml') if p in names),None)
+          mt=z.read(meta).decode('utf-8','replace') if meta else ''
+          ml=[x.strip() for x in mt.splitlines() if re.match(r'^\s*(modId|version|displayName|license|versionRange|mandatory|ordering|side)\s*=',x)]
+          with open('audit/registry-reconciliation.txt','w') as f:
+              f.write("Traveloptics 4.4.0.1 exact registry reconciliation\nNON-MERGE EVIDENCE ONLY\n")
+              f.write('provider_class_count=%d\nspell_subclass_count=%d\nregistry_class_count=%d\nspell_field_signature_count=%d\nregisterSpell_call_count=%d\nstatic_initializer_branch_opcode_count=%d\n' % (len(providers),len(spells),len(reg),len(fields),total_calls,total_branches))
+              f.write('\n== metadata ==\n'+'\n'.join(ml)+'\n')
+              f.write('\n== spell subclasses ==\n'+'\n'.join(c.replace('/','.') for c in spells)+'\n')
+              f.write('\n== registry classes ==\n'+'\n'.join(c.replace('/','.') for c in reg)+'\n')
+              f.write('\n== spell field signatures ==\n'+'\n'.join(c+' :: '+l for c,l in fields)+'\n')
+              f.write('\n== exact localization IDs/keys ==\n'+'\n'.join(keys)+'\n')
+              f.write('\nBOUNDARY: exact ARR release inspected read-only. Retained evidence is hashes, metadata, class/type/signature identities, aggregate branch/call counts and localization keys only; no implementation bodies/assets/prose/binary are retained.\n')
+          PY
+          cat audit/registry-reconciliation.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-4.4.0.1-registry-reconciliation
+          path: |
+            audit/registry-reconciliation.txt
+            audit/registry-signatures.txt
+            audit/sha1.txt
+            audit/sha256.txt
+          if-no-files-found: error
+          retention-days: 30
