@@ -92,6 +92,38 @@ public final class AstralSeveranceMovementGameTests {
         helper.succeed();
     }
 
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 80)
+    public static void missingProjectionRepresentationClosesServerSession(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        var caster = helper.makeMockServerPlayerInLevel();
+        var start = MinecraftNoeticRuntime.activateAuthorizedAstralProjection(
+                server,
+                caster.getUUID(),
+                40,
+                8.0D);
+        helper.assertTrue(start.decision().allowed(),
+                "representation-loss fixture requires an authorized loaded Astral projection");
+        var projection = start.projection().orElseThrow();
+        var entity = caster.serverLevel().getEntity(projection.projectionId());
+        helper.assertTrue(entity instanceof AstralProjectionEntity,
+                "representation-loss fixture requires the server-owned Astral representation");
+
+        entity.discard();
+        helper.runAfterDelay(2L, () -> {
+            try {
+                helper.assertTrue(
+                        MinecraftNoeticRuntime.astralProjection(server, caster.getUUID()).isEmpty(),
+                        "missing Astral representation must terminate the server-owned projection without MOVE input");
+                helper.assertTrue(MinecraftNoeticRuntime.activeStateCount(server) == 0,
+                        "representation-loss cleanup must leave no Stage 07.07 state");
+                helper.succeed();
+            } finally {
+                MinecraftNoeticRuntime.clearEntity(server, caster.getUUID());
+            }
+        });
+    }
+
     private static boolean closeEnough(double left, double right) {
         return Math.abs(left - right) <= 1.0E-6D;
     }
