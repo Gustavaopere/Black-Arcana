@@ -72,6 +72,7 @@ public final class ClientInputController {
             ClientUxState.clear();
             CastPresentationClientRuntime.clear();
             CastPresentationEffectsLayer.clear();
+            DiscoverabilityClientRuntime.clearSession();
             return;
         }
 
