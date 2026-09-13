@@ -61,8 +61,7 @@ final class CastPresentationPulseState {
     private static int priority(CastAudiovisualOrchestration.Kind kind) {
         return switch (kind) {
             case ANTICIPATION -> 1;
-            case RESULT_SUCCESS -> 2;
-            case RESULT_DENIED, RESULT_FAILED -> 3;
+            case RESULT_SUCCESS, RESULT_DENIED, RESULT_FAILED -> 2;
         };
     }
 
