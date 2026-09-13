@@ -2,7 +2,7 @@
 
 ## State
 
-`PHASE B IMPLEMENTED CANDIDATE / AUTOMATED GATES GREEN BEFORE MAIN RECONCILIATION / FINAL CLIENT VALIDATION DEFERRED`
+`PHASE B IMPLEMENTED CANDIDATE / RECONCILED AUTOMATED GATES GREEN / FINAL CLIENT VALIDATION DEFERRED`
 
 This checkpoint records only the bounded Phase B runtime implemented from `plans/05-casting-ux/14-spell-details-inspection-presentation.md`.
 
@@ -17,6 +17,10 @@ Implementation branch:
 Original implementation baseline:
 
 - `main@474a98c0f5deaa592a843d648d3ea393c485f6c4`
+
+Latest reconciled main baseline:
+
+- `main@1d61267a2fdeaa273df2415d37500eded32c93b3`
 
 Before implementation, the current generic spell presentation entry exposed only canonical identity, a translation key and icon identity. Existing hazard/preflight presentation was already synchronized through its own bounded channel. There was no approved generic client contract for configured cost, affordability, cooldown mapping/readiness, target specification, provider/domain classification, progression requirements or server-valid target state.
 
@@ -109,22 +113,35 @@ Workflow:
 
 - `34734637552`
 
-The complete branch pipeline passed:
+The complete branch pipeline passed JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. Canonical QA artifact publication was correctly skipped because this was not `main`.
 
-- JUnit;
-- diff sanity;
-- NeoForge build;
-- built-JAR verification;
-- Foundation GameTest server;
-- dedicated-server smoke.
+### RECONCILED GREEN — current main merged into candidate
 
-Canonical QA artifact publication was correctly skipped because this was not `main`.
+`main` advanced through unrelated provider-catalog documentation to:
 
-## Main reconciliation required
+- `1d61267a2fdeaa273df2415d37500eded32c93b3`
 
-After the GREEN above, `main` advanced from `474a98c0...` to `1d61267a2fdeaa273df2415d37500eded32c93b3` through an unrelated provider-catalog documentation merge. The implementation branch therefore became `ahead 8 / behind 1`.
+The branch merged that exact main without rebase or force-push. Reconciled head:
 
-This checkpoint itself does not claim the pre-reconciliation GREEN as final evidence. The branch must merge the current `main`, rerun the complete pipeline on the reconciled HEAD, then pass PR review/CI and exact-SHA post-merge validation before promotion.
+- `dd05a852a1e04c2e2831cbeadff1810dea9b5346`
+
+Workflow:
+
+- `34734914014`
+
+Result:
+
+- JUnit GREEN;
+- diff sanity GREEN;
+- NeoForge build GREEN;
+- built-JAR verification GREEN;
+- Foundation GameTest server GREEN;
+- dedicated-server smoke GREEN;
+- main-only QA artifact publication correctly skipped.
+
+After reconciliation, compare against `main` reported `behind 0`; the effective diff remained restricted to the six intended Stage 05.14 files.
+
+The final documentation-inclusive HEAD still requires a fresh complete branch/PR pipeline and immediate pre-merge main sync. This reconciled run is not substituted for those later gates.
 
 ## Real-client evidence still required
 
