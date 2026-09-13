@@ -13,9 +13,9 @@ A plan is never marked ✅ merely because CI is green. Automated CI cannot fabri
 
 ## Current position
 
-All approved deterministic Stage 05.01–05.16 implementation/planning tranches are now either merged or complete for their declared evidence-gated scope.
+All approved deterministic Stage 05.01–05.16 implementation/planning tranches are now present or merged for their declared evidence-gated scope.
 
-The remaining blocking closeout is the assembled real-client/full-pack campaign defined by `🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-manual-matrix.md`.
+The remaining blocking closeout is the assembled real-client/full-pack campaign defined by `🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-manual-matrix.md`, including the required current-pack coexistence scenarios owned by 05.06.
 
 Stage 05 therefore remains:
 
@@ -30,7 +30,7 @@ Stage 05 therefore remains:
 | **05.03 — Contextual HUD & Feedback** | 🟡 PENDENTE | Contextual server-authored feedback runtime implemented. | Direct HUD/readability/full-pack overlap rows. |
 | **05.04 — Accessibility & Client Config** | 🟡 PENDENTE | Client-only presentation/accessibility preferences implemented. | Direct scale/input/reduced-motion/reduced-flash rows. |
 | **05.05 — Final Real-Client Validation Handoff** | 🟡 PENDENTE | Runbook and evidence procedure are complete. | **Execute the physical assembled-pack campaign.** |
-| **05.06 — Modpack Coexistence** | ✅ COMPLETE | Coexistence/authority contract is complete. Unsupported integrations remain intentionally absent. | None inside this plan; observed real-pack failures are handled through 05.05. |
+| **05.06 — Modpack Coexistence** | 🟡 PENDENTE | Coexistence/authority planning is complete and unsupported integrations remain evidence-gated. | Execute required current-pack coexistence rows, including the four Iron-hosted scenarios delegated by 05.05 Task 5A. |
 | **05.07 — Presentation Data Contracts** | ✅ COMPLETE | Presentation-authority audit/evidence gates are complete. | None inside this audit; future fields remain evidence-gated rather than unfinished. |
 | **05.08 — Visual Language & State Semantics** | 🟡 PENDENTE | Bounded semantic core implemented; automated gates green. | Direct visual/accessibility validation. |
 | **05.09 — Keyboard Focus & Navigation** | 🟡 PENDENTE | Merged keyboard navigation with post-merge automation green. | Direct keyboard/accessibility/coexistence validation. |
@@ -49,7 +49,7 @@ Stage 05 therefore remains:
 - [x] 05.03 deterministic runtime implemented.
 - [x] 05.04 deterministic runtime implemented.
 - [x] 05.05 physical closeout procedure defined.
-- [x] 05.06 coexistence contract complete.
+- [x] 05.06 coexistence planning/authority contract defined; direct current-pack coexistence validation remains open.
 - [x] 05.07 presentation authority audit complete.
 - [x] 05.08 semantic core implemented.
 - [x] 05.09 keyboard navigation implemented.
