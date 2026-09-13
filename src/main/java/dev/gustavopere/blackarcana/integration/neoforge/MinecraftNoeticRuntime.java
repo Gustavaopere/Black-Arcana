@@ -183,6 +183,76 @@ public final class MinecraftNoeticRuntime {
         return state == null ? Optional.empty() : state.astral.projection(casterId);
     }
 
+    /**
+     * Applies one bounded exact-session control intent to the server-owned Astral viewpoint.
+     * Destination admission is loaded-only: getChunkNow never acquires a chunk or creates a ticket.
+     */
+    public static AstralSeveranceRuntime.ControlResult applyAuthorizedAstralControl(
+            MinecraftServer server,
+            UUID casterId,
+            AstralSeveranceRuntime.ControlIntent intent,
+            AstralSeveranceRuntime.ControlLimits limits
+    ) {
+        Objects.requireNonNull(server, "server");
+        Objects.requireNonNull(casterId, "casterId");
+        Objects.requireNonNull(intent, "intent");
+        Objects.requireNonNull(limits, "limits");
+
+        ServerState state = STATES.get(server);
+        if (state == null) {
+            return AstralSeveranceRuntime.ControlResult.NO_ACTIVE_PROJECTION;
+        }
+        AstralSeveranceRuntime.ActiveProjection active = state.astral.projection(casterId).orElse(null);
+        if (active == null) {
+            return AstralSeveranceRuntime.ControlResult.NO_ACTIVE_PROJECTION;
+        }
+
+        ServerPlayer caster = server.getPlayerList().getPlayer(casterId);
+        if (caster == null || !caster.isAlive()) {
+            closeAstralProjection(
+                    server,
+                    state,
+                    casterId,
+                    caster == null
+                            ? AstralSeveranceRuntime.CloseReason.AUTHORIZATION_REVOKED
+                            : AstralSeveranceRuntime.CloseReason.BODY_DEATH);
+            return AstralSeveranceRuntime.ControlResult.NO_ACTIVE_PROJECTION;
+        }
+
+        Entity loadedRepresentation = caster.serverLevel().getEntity(active.projectionId());
+        if (!(loadedRepresentation instanceof AstralProjectionEntity projectionEntity)) {
+            closeAstralProjection(
+                    server,
+                    state,
+                    casterId,
+                    AstralSeveranceRuntime.CloseReason.AUTHORIZATION_REVOKED);
+            return AstralSeveranceRuntime.ControlResult.NO_ACTIVE_PROJECTION;
+        }
+
+        AstralSeveranceRuntime.ControlResult result = state.astral.applyControl(
+                casterId,
+                intent,
+                limits,
+                candidate -> {
+                    net.minecraft.core.BlockPos blockPos = net.minecraft.core.BlockPos.containing(
+                            candidate.x(), candidate.y(), candidate.z());
+                    return caster.serverLevel().getChunkSource().getChunkNow(
+                            blockPos.getX() >> 4,
+                            blockPos.getZ() >> 4) != null;
+                });
+        if (result != AstralSeveranceRuntime.ControlResult.APPLIED) {
+            return result;
+        }
+
+        AstralSeveranceRuntime.ActiveProjection moved = state.astral.projection(casterId).orElse(null);
+        if (moved == null) {
+            projectionEntity.discard();
+            return AstralSeveranceRuntime.ControlResult.NO_ACTIVE_PROJECTION;
+        }
+        applyAstralPose(projectionEntity, moved.pose());
+        return AstralSeveranceRuntime.ControlResult.APPLIED;
+    }
+
     /** Exact-session explicit return. Wrong, stale or replayed projection identities are ignored. */
     public static boolean requestAstralReturn(MinecraftServer server, UUID casterId, UUID projectionId) {
         Objects.requireNonNull(server, "server");
