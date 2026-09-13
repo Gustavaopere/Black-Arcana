@@ -24,7 +24,7 @@ Canonical states for active/downstream stages are:
 - `IMPLEMENTATION ACTIVE` — design/code work is still incomplete.
 - `IMPLEMENTED / AUTOMATED GATES GREEN` — intended implementation is present and applicable deterministic automated checks pass; this does not imply real-client or real-modpack validation.
 - `IMPLEMENTED / FINAL VALIDATION DEFERRED` — no known implementation work remains, but one or more acceptance items require the later real-client, real-modpack, representative-performance, migration-fixture, compatibility or exact-release-head campaign.
-- `VALIDATED / COMPLETE` — every stage-local acceptance criterion has direct evidence, applicable CI/tests are green and the implementation is merged to `main`.
+- `VALIDATED / COMPLETE` — every stage-local acceptance criterion has direct evidence, applicable tests/CI are green and the implementation is merged to `main`.
 - `RELEASE BLOCKED` — Stage 09 implementation/harness work may be ready, but release-blocking validation remains open.
 
 A task starts as `NN-name.md`. Only after all of that task's acceptance criteria are genuinely verified, applicable tests/CI are green and its implementation is merged into `main` may it be renamed to `✅-NN-name.md`. A merged implementation may therefore remain non-✅ while final evidence is deferred. Planning files are not marked complete merely because they exist.
@@ -46,7 +46,7 @@ Missing manual/final-validation evidence never becomes inferred PASS. CI, GameTe
 
 ## Branch and promotion policy
 
-Planning is canonical on `main`. Implementation branches are created sequentially from the latest `main` after their causal predecessor's runtime contracts are canonical. Inserted Stage `05A` intentionally preserves the established Stage 06–09 numbering and branch history.
+Planning is canonical on `main`. Implementation branches are created sequentially from the latest `main` after their causal predecessor's runtime contracts are canonical. Inserted Stages `05A` and `07A` intentionally preserve the established Stage 06–09 numbering and branch history.
 
 An unresolved manual/final-validation item blocks validation/release claims, but does not block downstream implementation or merge when all runtime contracts required by that downstream stage are frozen, the downstream change is independently reviewable and its applicable automated gates are green.
 
@@ -60,18 +60,19 @@ The implementation sequence remains:
 6. `feat/05-casting-ux`
 7. `feat/05a-arcane-danger`
 8. `feat/06-rituals`
-9. `feat/07-spell-domains` (may be split by domain)
-10. `feat/08-progression-balance`
-11. `feat/09-hardening-release`
-12. accumulated final validation and release closeout
+9. `feat/07-spell-domains` (may be split by domain; includes planned 07.08 follow-up)
+10. `feat/07a-arcane-polarity-fusion-metamagic`
+11. `feat/08-progression-balance`
+12. `feat/09-hardening-release`
+13. accumulated final validation and release closeout
 
 For Stages 06→09, each stage is integrated through the then-current `main`; stale preparatory ancestry is not merged wholesale merely to preserve history. Preserve reviewed behavior and evidence while reconciling shared runtime/persistence files against current canonical contracts.
 
-Later stages may prepare isolated work in parallel only when required contracts are already frozen. They must not invent upstream contracts. Stage 09 may reach `RELEASE BLOCKED` with its infrastructure implemented, but public release completion remains impossible until the accumulated final validation campaign is green on the exact release candidate HEAD.
+Later stages may prepare isolated work in parallel only when required contracts are already frozen. They must not invent upstream contracts. Stage 07A cannot begin implementation until Stage 07 is canonical through 07.08 or an explicit reviewed rescope removes a prerequisite. Stage 09 may reach `RELEASE BLOCKED` with its infrastructure implemented, but public release completion remains impossible until the accumulated final validation campaign is green on the exact release candidate HEAD.
 
 ## Architecture order
 
-`00-foundation` establishes build, CI, provenance and domain boundaries. `01-reference-catalog` inventories reference mechanics and converts them into original Black Arcana specifications. `02-arcana-core` builds the server-authoritative execution model. `03-integration-layer` freezes adapters for the existing magic/RPG mods. `04-world-safety` provides destruction/rollback/budget controls consumed by all dangerous content. `05-casting-ux` builds direct casting and contextual UI. Inserted `05A-arcane-danger` defines backlash, resistance, corruption, strain and hazard snapshots before high-power content is canonicalized. `06-rituals` implements occult/grand ritual orchestration against those frozen hazard contracts. `07-spell-domains` delivers the actual magic families. `08-progression-balance` closes progression, mastery and anti-OP tuning. `09-hardening-release` builds and executes compatibility, persistence, performance and release-provenance closure; execution-dependent rows may remain deferred until the final campaign.
+`00-foundation` establishes build, CI, provenance and domain boundaries. `01-reference-catalog` inventories reference mechanics and converts them into original Black Arcana specifications. `02-arcana-core` builds the server-authoritative execution model. `03-integration-layer` freezes adapters for the existing magic/RPG mods. `04-world-safety` provides destruction/rollback/budget controls consumed by all dangerous content. `05-casting-ux` builds direct casting and contextual UI. Inserted `05A-arcane-danger` defines backlash, resistance, corruption, strain and hazard snapshots before high-power content is canonicalized. `06-rituals` implements occult/grand ritual orchestration against those frozen hazard contracts. `07-spell-domains` delivers the actual magic families. Inserted `07A-arcane-polarity-fusion-metamagic` derives white/black/neutral polarity from source/agency, adds bounded single-transaction spell fusion and metamagic, routes selected reference fantasies to verified provider surfaces, and adds original sigil presentation without importing Mahou systems or assets. `08-progression-balance` then closes progression, mastery and anti-OP tuning over the finalized Stage 07/07A capability set. `09-hardening-release` builds and executes compatibility, persistence, performance and release-provenance closure; execution-dependent rows may remain deferred until the final campaign.
 
 ## Stages
 
@@ -84,5 +85,6 @@ Later stages may prepare isolated work in parallel only when required contracts 
 - [05A — Arcane Danger, Resistance, Corruption & Backlash](05a-arcane-danger/README.md)
 - [06 — Rituals](06-rituals/README.md)
 - [07 — Spell Domains](07-spell-domains/README.md)
+- [07A — Arcane Polarity, Fusion & Metamagic](07a-arcane-polarity-fusion-metamagic/README.md)
 - [08 — Progression & Balance](08-progression-balance/README.md)
 - [09 — Hardening & Release](09-hardening-release/README.md)
