@@ -96,6 +96,23 @@ class TargetAimPresentationContractTest {
     }
 
     @Test
+    void localObservationReusesContextualFeedbackSelectionPolicy() throws Exception {
+        String layer = Files.readString(LAYER);
+        ContextualFeedbackOrchestration.Decision minimal = ContextualFeedbackOrchestration.decide(
+                BlackArcanaClientConfig.FeedbackLevel.MINIMAL,
+                true,
+                false,
+                null);
+
+        assertFalse(minimal.showSelectionContext(),
+                "MINIMAL feedback must suppress selection/context presentation");
+        assertTrue(layer.contains("ContextualFeedbackOrchestration.decide("),
+                "aim cue must reuse the canonical selection-channel feedback arbitration");
+        assertTrue(layer.contains("BlackArcanaClientConfig.FEEDBACK_LEVEL.get()"));
+        assertTrue(layer.contains(".showSelectionContext()"));
+    }
+
+    @Test
     void localObservationNeverCreatesTargetGameplayOrServerTruth() throws Exception {
         assertTrue(Files.exists(LAYER), "05.13 local-observation GUI layer is missing");
         String layer = Files.readString(LAYER);
