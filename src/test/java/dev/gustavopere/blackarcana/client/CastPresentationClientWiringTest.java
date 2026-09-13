@@ -54,6 +54,22 @@ class CastPresentationClientWiringTest {
                 "physical-client ticks must drive stale-entry eviction");
     }
 
+    @Test
+    void deathDimensionAndScreenTransitionsTearDownTemporaryPresentationState() throws Exception {
+        String source = Files.readString(INPUT);
+
+        assertTrue(source.contains("ResourceKey<Level> presentationDimension"),
+                "physical client must retain only the last observed dimension for teardown detection");
+        assertTrue(source.contains("!minecraft.player.isAlive()"),
+                "player death must explicitly clear temporary cast presentation state");
+        assertTrue(source.contains("!presentationDimension.equals(currentDimension)"),
+                "dimension transitions must explicitly clear temporary cast presentation state");
+        assertTrue(source.contains("minecraft.screen != null"),
+                "screen transitions must suppress/clear the transient visual pulse where relevant");
+        assertTrue(source.contains("CastPresentationEffectsLayer.clear();"),
+                "teardown paths must clear transient audiovisual pulse state");
+    }
+
     private static Path repositoryRoot() {
         String workspace = System.getenv("GITHUB_WORKSPACE");
         if (workspace != null && !workspace.isBlank()) return Path.of(workspace);
