@@ -4,7 +4,7 @@
 
 `PHASE A A.1–A.6 IMPLEMENTED / AUTOMATED GATES GREEN / A.7 REAL-CLIENT VALIDATION PENDING`
 
-This checkpoint records implementation evidence for the contract defined by [`10-loadout-editor-information-architecture.md`](10-loadout-editor-information-architecture.md). It does not change the overall Stage 05 state: `IMPLEMENTED / FINAL VALIDATION DEFERRED` remains authoritative until the required physical real-client campaign is directly executed.
+This checkpoint records implementation evidence for the contract defined by [`🟡-PENDENTE-10-loadout-editor-information-architecture.md`](🟡-PENDENTE-10-loadout-editor-information-architecture.md). It does not change the overall Stage 05 state: `IMPLEMENTED / FINAL VALIDATION DEFERRED` remains authoritative until the required physical real-client campaign is directly executed.
 
 The original 05.10 document remains the planning/architecture contract. This file records what has actually been promoted into runtime on `feat/stage05-loadout-reorder`.
 
