@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.network.neoforge;
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.network.AstralReturnIntentPayload;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -14,8 +15,7 @@ import java.util.UUID;
 /** Wire-only C2S representation of an exact-session Astral Severance return intent. */
 public record AstralReturnIntentPacket(
         int protocolVersion,
-        long projectionMostSignificantBits,
-        long projectionLeastSignificantBits,
+        UUID projectionId,
         long sequence
 ) implements CustomPacketPayload {
     public static final Type<AstralReturnIntentPacket> TYPE = new Type<>(
@@ -23,32 +23,25 @@ public record AstralReturnIntentPacket(
 
     public static final StreamCodec<ByteBuf, AstralReturnIntentPacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, AstralReturnIntentPacket::protocolVersion,
-            ByteBufCodecs.LONG, AstralReturnIntentPacket::projectionMostSignificantBits,
-            ByteBufCodecs.LONG, AstralReturnIntentPacket::projectionLeastSignificantBits,
-            ByteBufCodecs.LONG, AstralReturnIntentPacket::sequence,
+            UUIDUtil.STREAM_CODEC, AstralReturnIntentPacket::projectionId,
+            ByteBufCodecs.VAR_LONG, AstralReturnIntentPacket::sequence,
             AstralReturnIntentPacket::new);
 
     public AstralReturnIntentPacket {
-        new AstralReturnIntentPayload(
-                protocolVersion,
-                new UUID(projectionMostSignificantBits, projectionLeastSignificantBits),
-                sequence);
+        Objects.requireNonNull(projectionId, "projectionId");
+        new AstralReturnIntentPayload(protocolVersion, projectionId, sequence);
     }
 
     public static AstralReturnIntentPacket from(AstralReturnIntentPayload payload) {
         Objects.requireNonNull(payload, "payload");
         return new AstralReturnIntentPacket(
                 payload.protocolVersion(),
-                payload.projectionId().getMostSignificantBits(),
-                payload.projectionId().getLeastSignificantBits(),
+                payload.projectionId(),
                 payload.sequence());
     }
 
     public AstralReturnIntentPayload toDomain() {
-        return new AstralReturnIntentPayload(
-                protocolVersion,
-                new UUID(projectionMostSignificantBits, projectionLeastSignificantBits),
-                sequence);
+        return new AstralReturnIntentPayload(protocolVersion, projectionId, sequence);
     }
 
     @Override
