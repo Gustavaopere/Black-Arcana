@@ -1,0 +1,288 @@
+name: Traveloptics 4.4.0.1 Semantic Reconciliation NON-MERGE
+
+on:
+  push:
+    branches:
+      - audit/traveloptics-4.4.0.1-exact-artifact
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact release
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          mkdir -p audit
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = '3808493ce45cdfeb6408e85578adecf13df698e8'
+          sha1sum traveloptics.jar > audit/sha1.txt
+          sha256sum traveloptics.jar > audit/sha256.txt
+
+      - name: Reconcile 33 spell mappings, IDs, host gates and resource references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, re, struct, subprocess, zipfile
+          from collections import defaultdict
+          from pathlib import Path
+
+          JAR='traveloptics.jar'
+          z=zipfile.ZipFile(JAR)
+          names=sorted(z.namelist())
+          ABSTRACT='io/redspace/ironsspellbooks/api/spells/AbstractSpell'
+          PROVIDER='com/gametechbc/traveloptics/'
+          REG='com.gametechbc.traveloptics.init.TOSpells'
+
+          def class_header(data):
+              if data[:4] != b'\xca\xfe\xba\xbe': return None
+              off=8
+              n=struct.unpack_from('>H',data,off)[0]; off+=2
+              cp=[None]*n; i=1
+              while i<n:
+                  t=data[off]; off+=1
+                  if t==1:
+                      ln=struct.unpack_from('>H',data,off)[0]; off+=2
+                      cp[i]=('U',data[off:off+ln].decode('utf-8','replace')); off+=ln
+                  elif t in (3,4): off+=4
+                  elif t in (5,6): off+=8; i+=1
+                  elif t==7:
+                      idx=struct.unpack_from('>H',data,off)[0]; off+=2; cp[i]=('C',idx)
+                  elif t==8: off+=2
+                  elif t in (9,10,11,12,17,18): off+=4
+                  elif t==15: off+=3
+                  elif t in (16,19,20): off+=2
+                  else: raise ValueError(t)
+                  i+=1
+              _,ti,si=struct.unpack_from('>HHH',data,off)
+              def cn(x):
+                  if not x or not cp[x] or cp[x][0]!='C': return None
+                  u=cp[cp[x][1]]
+                  return u[1] if u and u[0]=='U' else None
+              utf8={e[1] for e in cp if e and e[0]=='U'}
+              return cn(ti),cn(si),utf8
+
+          classes={}
+          for p in names:
+              if not p.endswith('.class') or p.startswith('META-INF/versions/'): continue
+              try:h=class_header(z.read(p))
+              except Exception:continue
+              if h: classes[h[0]]={'super':h[1],'utf8':h[2]}
+
+          def is_spell(c):
+              seen=set(); cur=c
+              while cur and cur not in seen:
+                  seen.add(cur); sup=classes.get(cur,{}).get('super')
+                  if sup==ABSTRACT:return True
+                  if sup not in classes:return False
+                  cur=sup
+              return False
+
+          provider_spells=sorted(c for c in classes if c.startswith(PROVIDER) and is_spell(c))
+          concrete=[c for c in provider_spells if not c.startswith(PROVIDER+'api/spells/Abstract')]
+
+          sig=subprocess.run(['javap','-classpath',JAR,'-p',REG],text=True,capture_output=True,check=True,timeout=30).stdout
+          byte=subprocess.run(['javap','-classpath',JAR,'-c','-p',REG],text=True,capture_output=True,check=True,timeout=30).stdout
+          fields=re.findall(r'public static final java\.util\.function\.Supplier<io\.redspace\.ironsspellbooks\.api\.spells\.AbstractSpell> ([A-Z0-9_]+);',sig)
+          if len(fields)!=33 or len(set(fields))!=33:
+              raise SystemExit(f'expected 33 unique spell fields, got {len(fields)}/{len(set(fields))}')
+
+          static=re.search(r'static \{\};\s+Code:(.*)\Z',byte,re.S)
+          if not static: raise SystemExit('static initializer not found')
+          sb=static.group(1)
+          register_calls=len(re.findall(r'// Method registerSpell:',sb))
+          branch_ops=len(re.findall(r'\b(?:if[a-z_]*|goto(?:_w)?|tableswitch|lookupswitch)\b',sb))
+          if register_calls!=33: raise SystemExit(f'expected 33 registerSpell calls, got {register_calls}')
+          if branch_ops!=0: raise SystemExit(f'expected 0 registry branches, got {branch_ops}')
+
+          fieldset=set(fields)
+          mapping=[]; last_spell_class=None
+          for line in sb.splitlines():
+              m=re.search(r'\bnew\s+#\d+\s+// class ([\w/$]+)',line)
+              if m and m.group(1) in concrete:
+                  last_spell_class=m.group(1)
+              m=re.search(r'\bputstatic\s+#\d+\s+// Field ([A-Z0-9_]+):',line)
+              if m and m.group(1) in fieldset:
+                  if not last_spell_class: raise SystemExit(f'no spell class before field {m.group(1)}')
+                  mapping.append((m.group(1),last_spell_class))
+                  last_spell_class=None
+          if len(mapping)!=33 or len({f for f,_ in mapping})!=33 or len({c for _,c in mapping})!=33:
+              raise SystemExit(f'bad field-class mapping: rows={len(mapping)} fields={len({f for f,_ in mapping})} classes={len({c for _,c in mapping})}')
+
+          root_ids=set()
+          for p in names:
+              if p.endswith('/lang/en_us.json'):
+                  try:o=json.loads(z.read(p).decode('utf-8-sig'))
+                  except Exception:continue
+                  if isinstance(o,dict):
+                      for k in o:
+                          m=re.fullmatch(r'spell\.traveloptics\.([a-z0-9_]+)',k)
+                          if m: root_ids.add(m.group(1))
+
+          class_to_id={}; ambiguous={}
+          for _,c in mapping:
+              candidates=sorted(classes[c]['utf8'] & root_ids)
+              if len(candidates)==1:
+                  class_to_id[c]=candidates[0]
+              else:
+                  # Constructor-only bytecode fallback. Retain only candidate root ids, never bodies.
+                  dot=c.replace('/','.')
+                  out=subprocess.run(['javap','-classpath',JAR,'-c','-p',dot],text=True,capture_output=True,check=True,timeout=30).stdout
+                  ctor_name=dot.rsplit('.',1)[-1]
+                  ctor_blocks=[]
+                  pat=re.compile(r'(?:public|protected|private)\s+'+re.escape(dot)+r'\([^;]*?\);\s+Code:(.*?)(?=\n\s*(?:public|protected|private|static|final)|\Z)',re.S)
+                  ctor_blocks=pat.findall(out)
+                  strings=set()
+                  for b in ctor_blocks:
+                      strings.update(re.findall(r'// String ([a-z0-9_]+)',b))
+                  cc=sorted(strings & root_ids)
+                  if len(cc)==1: class_to_id[c]=cc[0]
+                  else: ambiguous[c]=(candidates,cc)
+          if ambiguous:
+              raise SystemExit('ambiguous class->id mappings: '+repr(ambiguous))
+          if len(class_to_id)!=33 or len(set(class_to_id.values()))!=33:
+              raise SystemExit(f'expected 33 unique class ids, got {len(class_to_id)}/{len(set(class_to_id.values()))}')
+
+          rows=[(f,c,class_to_id[c]) for f,c in mapping]
+          registered_ids={i for _,_,i in rows}
+
+          # Verify host gate overrides across each registered class's provider-owned ancestry.
+          gate_names=('allowCrafting','isEnabled','canBeCraftedBy')
+          sig_cache={}
+          def signature(c):
+              if c not in sig_cache:
+                  sig_cache[c]=subprocess.run(['javap','-classpath',JAR,'-p',c.replace('/','.')],text=True,capture_output=True,check=True,timeout=30).stdout
+              return sig_cache[c]
+          ancestry_overrides=defaultdict(list)
+          per_spell_overrides={}
+          for _,c,i in rows:
+              cur=c; chain=[]; seen=set()
+              while cur and cur not in seen and cur.startswith(PROVIDER):
+                  seen.add(cur); chain.append(cur); cur=classes.get(cur,{}).get('super')
+              found=[]
+              for a in chain:
+                  s=signature(a)
+                  for g in gate_names:
+                      for line in s.splitlines():
+                          if re.search(r'\b'+re.escape(g)+r'\s*\(',line):
+                              found.append((a,g,line.strip()))
+                              ancestry_overrides[a].append(g)
+              per_spell_overrides[i]=found
+
+          # Exact SpellsConfig field names/types, without values or implementation.
+          config_class='com.gametechbc.traveloptics.config.SpellsConfig'
+          csig=subprocess.run(['javap','-classpath',JAR,'-p',config_class],text=True,capture_output=True,check=True,timeout=30).stdout
+          config_fields=[]
+          for line in csig.splitlines():
+              if 'ModConfigSpec$' in line and ';' in line:
+                  config_fields.append(line.strip())
+
+          # Structured JSON identifier references only; no JSON bodies retained.
+          def walk(v):
+              if isinstance(v,str): yield v
+              elif isinstance(v,list):
+                  for x in v: yield from walk(x)
+              elif isinstance(v,dict):
+                  for x in v.values(): yield from walk(x)
+          resource_refs=defaultdict(set)
+          namespaced_refs=defaultdict(set)
+          for p in names:
+              if not p.startswith('data/') or not p.endswith('.json'): continue
+              try:o=json.loads(z.read(p).decode('utf-8-sig'))
+              except Exception:continue
+              vals=set(walk(o))
+              for v in vals:
+                  if re.fullmatch(r'[a-z0-9_.-]+:[a-z0-9_./-]+',v) or re.fullmatch(r'#[a-z0-9_.-]+:[a-z0-9_./-]+',v):
+                      if v.startswith('traveloptics:') or v.startswith('#traveloptics:') or v.startswith('irons_spellbooks:') or v.startswith('#irons_spellbooks:') or v.startswith('cataclysm:') or v.startswith('#cataclysm:'):
+                          namespaced_refs[p].add(v)
+                  if v.startswith('traveloptics:') and v.split(':',1)[1] in registered_ids:
+                      resource_refs[v.split(':',1)[1]].add(p)
+
+          focus_paths=sorted(p for p in names if p.startswith('data/') and p.endswith('.json') and 'focus' in p.lower())
+          loot_paths=sorted(p for p in names if p.startswith('data/') and p.endswith('.json') and '/loot' in p)
+          recipe_paths=sorted(p for p in names if p.startswith('data/') and p.endswith('.json') and '/recipe' in p)
+          residual_ids=sorted(root_ids-registered_ids)
+          missing_root=sorted(registered_ids-root_ids)
+          if missing_root: raise SystemExit('registered ids missing root localization keys: '+repr(missing_root))
+
+          # Mixin config factual identities only.
+          mixin=[]
+          for p in names:
+              if p.endswith('mixins.json'):
+                  try:o=json.loads(z.read(p).decode('utf-8-sig'))
+                  except Exception:continue
+                  if isinstance(o,dict):
+                      mixin.append((p,bool(o.get('required')),o.get('plugin'),tuple(o.get('mixins',[]) or []),tuple(o.get('client',[]) or [])))
+
+          with open('audit/semantic-reconciliation.txt','w',encoding='utf-8') as f:
+              f.write("T.O Magic n' Extras / Traveloptics 4.4.0.1 semantic reconciliation\n")
+              f.write('NON-MERGE EVIDENCE ONLY\n')
+              f.write('curseforge_project=1046916\ncurseforge_file=6342780\n')
+              f.write('exact_release_sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n')
+              f.write(f'provider_spell_descendant_count={len(provider_spells)}\n')
+              f.write(f'provider_concrete_spell_class_count={len(concrete)}\n')
+              f.write(f'registered_spell_field_count={len(fields)}\nregisterSpell_call_count={register_calls}\nregistry_static_branch_opcode_count={branch_ops}\n')
+              f.write(f'field_class_id_mapping_count={len(rows)}\nunique_registered_spell_id_count={len(registered_ids)}\n')
+              f.write(f'root_localization_spell_id_count={len(root_ids)}\ntranslation_only_or_residual_root_id_count={len(residual_ids)}\n')
+              f.write(f'registered_id_missing_root_localization_count={len(missing_root)}\n')
+              f.write('\n== exact field -> class -> registry id ==\n')
+              for field,c,i in rows: f.write(f'{field} -> {c.replace("/",".")} -> traveloptics:{i}\n')
+              f.write('\n== provider-owned host gate overrides by registered spell ==\n')
+              f.write(f'registered_spells_with_provider_gate_override_count={sum(bool(v) for v in per_spell_overrides.values())}\n')
+              for i in sorted(per_spell_overrides):
+                  vals=per_spell_overrides[i]
+                  if not vals: f.write(f'traveloptics:{i} -> INHERITS_IRONS_HOST_GATES\n')
+                  else:
+                      for a,g,line in vals: f.write(f'traveloptics:{i} -> {a.replace("/",".")} :: {g}\n')
+              f.write('\n== provider gate-declaring ancestry classes ==\n')
+              for a in sorted(ancestry_overrides): f.write(f'{a.replace("/",".")} -> {",".join(sorted(set(ancestry_overrides[a])))}\n')
+              f.write('\n== SpellsConfig field signatures ==\n')
+              f.write(f'config_field_count={len(config_fields)}\n')
+              for x in config_fields: f.write(x+'\n')
+              f.write('\n== registered spell IDs referenced by structured data ==\n')
+              f.write(f'registered_spell_ids_with_structured_resource_reference_count={sum(bool(resource_refs[i]) for i in registered_ids)}\n')
+              for i in sorted(registered_ids):
+                  refs=sorted(resource_refs[i])
+                  f.write(f'traveloptics:{i} -> '+(' ; '.join(refs) if refs else '<none>')+'\n')
+              f.write('\n== focus/loot/recipe resource path counts ==\n')
+              f.write(f'focus_path_count={len(focus_paths)}\n')
+              for p in focus_paths: f.write(p+'\n')
+              f.write(f'loot_json_count={len(loot_paths)}\nrecipe_json_count={len(recipe_paths)}\n')
+              f.write('\n== selected structured namespaced identifiers by path ==\n')
+              for p in sorted(namespaced_refs):
+                  if '/loot' in p or 'focus' in p.lower() or '/recipe' in p:
+                      f.write(p+' -> '+' ; '.join(sorted(namespaced_refs[p]))+'\n')
+              f.write('\n== root localization IDs absent from exact registry ==\n')
+              for i in residual_ids: f.write('traveloptics:'+i+'\n')
+              f.write('\n== mixin config identities ==\n')
+              f.write(f'mixin_config_count={len(mixin)}\n')
+              for p,req,plugin,mx,cl in mixin:
+                  f.write(f'{p} required={str(req).lower()} plugin={plugin or "<none>"} common_count={len(mx)} client_count={len(cl)}\n')
+                  for x in mx: f.write(f'  common:{x}\n')
+                  for x in cl: f.write(f'  client:{x}\n')
+              f.write('\nBOUNDARY: exact ARR release inspected read-only. Retained evidence is limited to hashes, registry field/class/ID identities, method-name-level host-gate declarations, config field signatures, structured identifier/path references, aggregate counts and mixin class identities. No method bodies, JSON payload bodies, assets, localization prose, source reconstruction or binary redistribution are retained. Independent local physical-JAR byte equality and assembled-pack runtime PASS are not asserted.\n')
+          PY
+          cat audit/semantic-reconciliation.txt
+
+      - name: Upload text-only semantic evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-4.4.0.1-semantic-reconciliation
+          path: |
+            audit/semantic-reconciliation.txt
+            audit/sha1.txt
+            audit/sha256.txt
+          if-no-files-found: error
+          retention-days: 30
