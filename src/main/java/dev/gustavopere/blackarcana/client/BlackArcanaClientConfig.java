@@ -13,6 +13,10 @@ public final class BlackArcanaClientConfig {
             .comment("Show Black Arcana contextual cast feedback. No permanent resource bar is rendered.")
             .translation("config.black_arcana.contextual_hud")
             .define("contextualHud", true);
+    public static final ModConfigSpec.BooleanValue DISCOVERABILITY_HINTS = BUILDER
+            .comment("Show bounded first-use Black Arcana control hints. This is presentation only.")
+            .translation("config.black_arcana.discoverability_hints")
+            .define("discoverabilityHints", true);
     public static final ModConfigSpec.DoubleValue HUD_SCALE = BUILDER
             .comment("Scale of contextual Black Arcana HUD elements.")
             .translation("config.black_arcana.hud_scale")
