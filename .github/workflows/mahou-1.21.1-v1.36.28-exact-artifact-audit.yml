@@ -1,0 +1,200 @@
+name: Mahou 1.21.1 v1.36.28 Exact Artifact Audit
+
+on:
+  push:
+    branches:
+      - audit/mahou-1.21.1-v1.36.28-exact-artifact
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download and inspect exact Mahou artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          PROJECT='342543'
+          FILE='8860405'
+          URL="https://www.cursemaven.com/curse/maven/mahou-tsukai-${PROJECT}/${FILE}/mahou-tsukai-${PROJECT}-${FILE}.jar"
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 "$URL" -o mahou.jar
+          mkdir -p audit extracted
+          sha1sum mahou.jar | tee audit/sha1.txt
+          sha256sum mahou.jar | tee audit/sha256.txt
+          jar tf mahou.jar > audit/jar-list.txt
+
+          python3 - <<'PY'
+          import hashlib, json, re, zipfile
+          from collections import Counter
+          from pathlib import Path
+
+          JAR = Path('mahou.jar')
+          z = zipfile.ZipFile(JAR)
+          names = sorted(z.namelist())
+
+          # Keep the audit clean-room: factual identifiers/signatures/resource paths only.
+          metadata = ''
+          metadata_path = None
+          for candidate in ('META-INF/neoforge.mods.toml', 'META-INF/mods.toml'):
+              if candidate in names:
+                  metadata_path = candidate
+                  metadata = z.read(candidate).decode('utf-8', errors='replace')
+                  break
+          meta_lines = []
+          for line in metadata.splitlines():
+              s = line.strip()
+              if re.match(r'^(modId|version|displayName|license)\s*=', s):
+                  meta_lines.append(s)
+
+          # Exact class/resource identities that are likely to encode supernatural actions.
+          semantic_terms = re.compile(
+              r'(spell|magic|mahou|circle|boundary|displace|project|exchange|mystic|familiar|ritual|rite|'
+              r'gandr|ripper|caliburn|morgan|clarent|replica|fallen|authority|heaven|retribution|'
+              r'william|rlyeh|reality|treasury|staff|rule|power|soul|death|blackflame|black_flame|'
+              r'scry|clair|binding|garden|strengthen|ascension)', re.I)
+          class_candidates = [p for p in names if p.endswith('.class') and semantic_terms.search(p)]
+          resource_candidates = [p for p in names if not p.endswith('.class') and semantic_terms.search(p)]
+
+          # Language *keys* are registry/display identity evidence. Values are intentionally not retained.
+          lang_keys = []
+          for p in names:
+              if p.endswith('/lang/en_us.json'):
+                  try:
+                      obj = json.loads(z.read(p).decode('utf-8-sig'))
+                  except Exception:
+                      continue
+                  if isinstance(obj, dict):
+                      for k in obj.keys():
+                          if k.startswith(('item.mahoutsukai.', 'block.mahoutsukai.', 'entity.mahoutsukai.',
+                                           'effect.mahoutsukai.', 'gui.mahoutsukai.', 'message.mahoutsukai.',
+                                           'advancements.mahoutsukai.', 'mahoutsukai.')):
+                              lang_keys.append(k)
+          lang_keys = sorted(set(lang_keys))
+
+          # Narrow semantic-key candidates from identifiers only.
+          semantic_key_terms = re.compile(
+              r'(alarm|enclosure|tangible|gravity|drain|ascension|protective|projectile|ordered|equivalent|mental|scry|'
+              r'strength|projection|crimson|weapon|reality|power|treasury|damage|rho|explosive|spatial|borrowed|heaven|'
+              r'binding|clairvoy|black.?flame|death|reversion|fay|insight|familiar|shared|garden|chronal|durability|'
+              r'catalyst|alchemical|contract|immunity|retribution|gandr|ripper|caliburn|morgan|clarent|replica|'
+              r'fallen|rule.?breaker|william|rlyeh)', re.I)
+          semantic_lang_keys = [k for k in lang_keys if semantic_key_terms.search(k)]
+
+          # Recipe/resource identity only: paths and serializer types, never ingredients/payload bodies.
+          recipe_paths = [p for p in names if p.startswith('data/') and '/recipe' in p and p.endswith('.json')]
+          recipe_types = Counter()
+          semantic_recipe_paths = []
+          for p in recipe_paths:
+              try:
+                  obj = json.loads(z.read(p).decode('utf-8-sig'))
+              except Exception:
+                  continue
+              typ = obj.get('type') if isinstance(obj, dict) else None
+              if isinstance(typ, str):
+                  recipe_types[typ] += 1
+              if semantic_terms.search(p):
+                  semantic_recipe_paths.append((p, typ or '<none>'))
+
+          # Assets/data namespaces, useful for proving whether dedicated spell/ritual registries exist.
+          top_prefixes = Counter()
+          for p in names:
+              parts = p.split('/')
+              if len(parts) >= 3 and parts[0] in ('assets', 'data'):
+                  top_prefixes['/'.join(parts[:3])] += 1
+
+          report = Path('audit/report.txt')
+          with report.open('w', encoding='utf-8') as f:
+              f.write('Mahou Tsukai 1.21.1 v1.36.28 exact-artifact clean-room structural audit\n')
+              f.write('curseforge_project=342543\n')
+              f.write('curseforge_file=8860405\n')
+              f.write('curse_maven_coordinate=curse.maven:mahou-tsukai-342543:8860405\n')
+              f.write(f'sha1={hashlib.sha1(JAR.read_bytes()).hexdigest()}\n')
+              f.write(f'sha256={hashlib.sha256(JAR.read_bytes()).hexdigest()}\n')
+              f.write(f'jar_entry_count={len(names)}\n')
+              f.write(f'class_count={sum(1 for p in names if p.endswith(".class"))}\n')
+              f.write(f'metadata_path={metadata_path or "<none>"}\n')
+              f.write('\n== metadata facts ==\n')
+              for line in meta_lines:
+                  f.write(line + '\n')
+
+              f.write('\n== exact semantic-class path candidates ==\n')
+              f.write(f'count={len(class_candidates)}\n')
+              for p in class_candidates:
+                  f.write(p + '\n')
+
+              f.write('\n== exact semantic resource path candidates ==\n')
+              f.write(f'count={len(resource_candidates)}\n')
+              for p in resource_candidates:
+                  f.write(p + '\n')
+
+              f.write('\n== exact semantic localization-key candidates (keys only; no prose values) ==\n')
+              f.write(f'all_mahou_lang_key_count={len(lang_keys)}\n')
+              f.write(f'semantic_candidate_count={len(semantic_lang_keys)}\n')
+              for k in semantic_lang_keys:
+                  f.write(k + '\n')
+
+              f.write('\n== exact recipe serializer summary ==\n')
+              f.write(f'recipe_json_count={len(recipe_paths)}\n')
+              for typ, count in sorted(recipe_types.items()):
+                  f.write(f'{typ}={count}\n')
+
+              f.write('\n== exact semantic recipe/resource identities ==\n')
+              f.write(f'count={len(semantic_recipe_paths)}\n')
+              for p, typ in semantic_recipe_paths:
+                  f.write(f'{p} | type={typ}\n')
+
+              f.write('\n== exact assets/data prefix counts ==\n')
+              for prefix, count in sorted(top_prefixes.items()):
+                  f.write(f'{prefix}={count}\n')
+
+              f.write('\nBOUNDARY: evidence retains cryptographic identity, metadata facts, class/resource paths, localization keys, serializer names and counts only. No implementation bodies, recipe ingredients, localization prose, textures, models, animations, sounds, source reconstruction or binary redistribution are retained.\n')
+          PY
+
+          # Signature-only inspection of semantic candidate classes. No bytecode bodies retained.
+          python3 - <<'PY'
+          import re, zipfile
+          from pathlib import Path
+          z=zipfile.ZipFile('mahou.jar')
+          terms=re.compile(r'(spell|magic|mahou|circle|boundary|displace|project|exchange|mystic|familiar|ritual|rite|gandr|ripper|caliburn|morgan|clarent|replica|fallen|authority|heaven|retribution|william|rlyeh|reality|treasury|staff|rule|soul|death)', re.I)
+          classes=[]
+          for p in sorted(z.namelist()):
+              if p.endswith('.class') and terms.search(p) and '$' not in p:
+                  classes.append(p[:-6].replace('/','.'))
+          Path('audit/class-list.txt').write_text('\n'.join(classes)+'\n', encoding='utf-8')
+          PY
+          : > audit/signatures.txt
+          while IFS= read -r cls; do
+            [ -n "$cls" ] || continue
+            echo "===== $cls =====" >> audit/signatures.txt
+            javap -classpath mahou.jar -p "$cls" 2>/dev/null >> audit/signatures.txt || true
+          done < audit/class-list.txt
+
+          cat audit/report.txt
+          echo '== signature class count =='
+          grep -c '^===== ' audit/signatures.txt || true
+
+      - name: Upload text-only audit evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: mahou-1.21.1-v1.36.28-exact-artifact-audit
+          path: |
+            audit/report.txt
+            audit/signatures.txt
+            audit/class-list.txt
+            audit/sha1.txt
+            audit/sha256.txt
+          if-no-files-found: error
+          retention-days: 30
