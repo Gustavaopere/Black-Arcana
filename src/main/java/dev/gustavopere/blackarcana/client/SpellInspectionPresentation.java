@@ -1,6 +1,8 @@
 package dev.gustavopere.blackarcana.client;
 
+import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +15,8 @@ import java.util.Objects;
  * admission state.
  */
 final class SpellInspectionPresentation {
+    private static final int TOOLTIP_HORIZONTAL_RESERVE = 24;
+
     private SpellInspectionPresentation() {
     }
 
@@ -26,5 +30,19 @@ final class SpellInspectionPresentation {
         return hazardLine == null
                 ? List.of(displayName, id)
                 : List.of(displayName, id, hazardLine);
+    }
+
+    static List<FormattedCharSequence> wrappedLines(
+            Font font,
+            int viewportWidth,
+            String canonicalSpellId,
+            Component displayName,
+            Component hazardLine
+    ) {
+        Objects.requireNonNull(font, "font");
+        int maxTextWidth = Math.max(1, viewportWidth - TOOLTIP_HORIZONTAL_RESERVE);
+        return lines(canonicalSpellId, displayName, hazardLine).stream()
+                .flatMap(line -> font.split(line, maxTextWidth).stream())
+                .toList();
     }
 }
