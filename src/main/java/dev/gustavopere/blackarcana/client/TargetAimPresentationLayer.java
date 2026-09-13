@@ -7,8 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 
 /**
@@ -72,12 +71,9 @@ public final class TargetAimPresentationLayer {
     }
 
     private static TargetAimPresentationSemantics.Observation observation(Minecraft minecraft) {
-        if (minecraft.hitResult instanceof EntityHitResult) {
-            return TargetAimPresentationSemantics.Observation.ENTITY;
-        }
-        if (minecraft.hitResult instanceof BlockHitResult) {
-            return TargetAimPresentationSemantics.Observation.BLOCK;
-        }
-        return TargetAimPresentationSemantics.Observation.MISS;
+        HitResult.Type type = minecraft.hitResult == null
+                ? HitResult.Type.MISS
+                : minecraft.hitResult.getType();
+        return TargetAimPresentationSemantics.fromHitType(type);
     }
 }
