@@ -1,0 +1,174 @@
+name: Audit Ars Two-Way Portals 2.0.0 exact artifact
+
+on:
+  push:
+    branches:
+      - audit/ars-two-way-portals-2.0.0-exact-artifact
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Materialize exact publisher artifact and verify physical hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit-out
+          target="$RUNNER_TEMP/ars_two_way_portals-2.0.0.jar"
+          urls=(
+            'https://www.curseforge.com/api/v1/mods/1599062/files/8515817/download'
+            'https://edge.forgecdn.net/files/8515/817/ars_two_way_portals-2.0.0.jar'
+            'https://mediafilez.forgecdn.net/files/8515/817/ars_two_way_portals-2.0.0.jar'
+          )
+          ok=0
+          for url in "${urls[@]}"; do
+            rm -f "$target"
+            if curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 120 "$url" -o "$target"; then
+              got="$(sha1sum "$target" | awk '{print $1}')"
+              if [ "$got" = '233846fc30667893c5f36a719da576d5eed43f5c' ]; then
+                printf 'publisher_url=%s\n' "$url" > audit-out/identity.txt
+                ok=1
+                break
+              fi
+            fi
+          done
+          test "$ok" -eq 1
+          printf 'filename=ars_two_way_portals-2.0.0.jar\n' >> audit-out/identity.txt
+          printf 'curseforge_project=1599062\n' >> audit-out/identity.txt
+          printf 'curseforge_file=8515817\n' >> audit-out/identity.txt
+          printf 'physical_sha1=233846fc30667893c5f36a719da576d5eed43f5c\n' >> audit-out/identity.txt
+          printf 'audit_sha1=%s\n' "$(sha1sum "$target" | awk '{print $1}')" >> audit-out/identity.txt
+          printf 'audit_sha256=%s\n' "$(sha256sum "$target" | awk '{print $1}')" >> audit-out/identity.txt
+          printf 'size_bytes=%s\n' "$(stat -c '%s' "$target")" >> audit-out/identity.txt
+          unzip -t "$target" >/dev/null
+
+      - name: Extract factual archive and registry evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar="$RUNNER_TEMP/ars_two_way_portals-2.0.0.jar"
+          mkdir -p audit-out/javap
+          jar tf "$jar" | LC_ALL=C sort > audit-out/archive-paths.txt
+
+          python - <<'PY'
+          from pathlib import Path
+          import os, zipfile
+
+          jar = Path(os.environ['RUNNER_TEMP']) / 'ars_two_way_portals-2.0.0.jar'
+          out = Path('audit-out')
+          with zipfile.ZipFile(jar) as z:
+              names = sorted(z.namelist())
+              classes = [n for n in names if n.endswith('.class') and not n.startswith('META-INF/versions/')]
+              data_paths = [n for n in names if n.startswith('data/')]
+              asset_paths = [n for n in names if n.startswith('assets/')]
+              mixin_jsons = [n for n in names if n.endswith('.mixins.json') or n.endswith('mixins.json')]
+              metadata = []
+              for n in ('META-INF/neoforge.mods.toml', 'META-INF/mods.toml', 'META-INF/MANIFEST.MF'):
+                  if n in names:
+                      metadata.append(f'--- {n} ---\n' + z.read(n).decode('utf-8', 'replace') + '\n')
+              (out/'metadata.txt').write_text('\n'.join(metadata), encoding='utf-8')
+              (out/'class-paths.txt').write_text('\n'.join(classes) + '\n', encoding='utf-8')
+              (out/'data-paths.txt').write_text('\n'.join(data_paths) + '\n', encoding='utf-8')
+              (out/'mixin-configs.txt').write_text('\n'.join(mixin_jsons) + '\n', encoding='utf-8')
+              mixin_text = []
+              for n in mixin_jsons:
+                  mixin_text.append(f'--- {n} ---\n' + z.read(n).decode('utf-8', 'replace') + '\n')
+              (out/'mixin-config-content.txt').write_text('\n'.join(mixin_text), encoding='utf-8')
+
+              indicators = {
+                  'AbstractSpell': b'AbstractSpell',
+                  'AbstractGlyph': b'AbstractGlyph',
+                  'SpellRegistry': b'SpellRegistry',
+                  'registerSpell': b'registerSpell',
+                  'Ritual': b'Ritual',
+                  'Rite': b'Rite',
+                  'Ability': b'Ability',
+                  'DeferredRegister': b'DeferredRegister',
+                  'PortalTile': b'PortalTile',
+                  'PortalBlock': b'PortalBlock',
+                  'StableWarpScroll': b'StableWarpScroll',
+                  'immersive_portals': b'immersive_portals',
+                  'immersive_portals_core': b'immersive_portals_core',
+              }
+              hits = {k: [] for k in indicators}
+              for n in classes:
+                  raw = z.read(n)
+                  for key, needle in indicators.items():
+                      if needle in raw:
+                          hits[key].append(n)
+              summary = [
+                  f'class_count={len(classes)}',
+                  f'data_path_count={len(data_paths)}',
+                  f'asset_path_count={len(asset_paths)}',
+                  f'mixin_config_count={len(mixin_jsons)}',
+              ]
+              for key in indicators:
+                  summary.append(f'{key}_class_hits={len(hits[key])}')
+                  (out/f'indicator-{key}.txt').write_text('\n'.join(hits[key]) + '\n', encoding='utf-8')
+              (out/'summary.txt').write_text('\n'.join(summary) + '\n', encoding='utf-8')
+          PY
+
+          while IFS= read -r path; do
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            safe="${cls//./_}"
+            javap -classpath "$jar" -p -s "$cls" > "audit-out/javap/$safe.txt" 2>/dev/null || true
+          done < audit-out/class-paths.txt
+
+          grep -R -n -E 'AbstractSpell|AbstractGlyph|SpellRegistry|registerSpell|DeferredRegister|PortalTile|PortalBlock|WarpScroll|Ritual|Rite|Ability' audit-out/javap > audit-out/javap-target-hits.txt || true
+
+      - name: Summarize provider-owned registries and resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('audit-out/javap')
+          texts = {p.name: p.read_text(encoding='utf-8', errors='replace') for p in root.glob('*.txt')}
+          holder_lines = []
+          registry_lines = []
+          for name, text in sorted(texts.items()):
+              for line in text.splitlines():
+                  s = line.strip()
+                  if 'DeferredHolder' in s or 'RegistryObject' in s:
+                      holder_lines.append(f'{name}: {s}')
+                  if 'DeferredRegister' in s:
+                      registry_lines.append(f'{name}: {s}')
+          Path('audit-out/deferred-holder-signatures.txt').write_text('\n'.join(holder_lines) + ('\n' if holder_lines else ''), encoding='utf-8')
+          Path('audit-out/deferred-register-signatures.txt').write_text('\n'.join(registry_lines) + ('\n' if registry_lines else ''), encoding='utf-8')
+
+          paths = Path('audit-out/archive-paths.txt').read_text(encoding='utf-8').splitlines()
+          semantic = [p for p in paths if re.search(r'(^|/)(spell|spells|glyph|glyphs|ritual|rituals|rite|rites|ability|abilities)(/|$)', p, re.I)]
+          recipes = [p for p in paths if p.startswith('data/') and '/recipe' in p.lower() and p.endswith('.json')]
+          tags = [p for p in paths if p.startswith('data/') and '/tags/' in p.lower()]
+          Path('audit-out/semantic-resource-paths.txt').write_text('\n'.join(semantic) + ('\n' if semantic else ''), encoding='utf-8')
+          Path('audit-out/recipe-resource-paths.txt').write_text('\n'.join(recipes) + ('\n' if recipes else ''), encoding='utf-8')
+          Path('audit-out/tag-resource-paths.txt').write_text('\n'.join(tags) + ('\n' if tags else ''), encoding='utf-8')
+          with Path('audit-out/resource-summary.txt').open('w', encoding='utf-8') as f:
+              f.write(f'semantic_resource_path_count={len(semantic)}\n')
+              f.write(f'recipe_resource_path_count={len(recipes)}\n')
+              f.write(f'tag_resource_path_count={len(tags)}\n')
+          PY
+
+      - name: Publish text-only clean-room evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ars-two-way-portals-2.0.0-exact-artifact-evidence
+          path: audit-out
+          retention-days: 7
+          if-no-files-found: error
