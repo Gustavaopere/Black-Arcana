@@ -20,9 +20,7 @@ final class SpellInspectionPresentation {
         Objects.requireNonNull(canonicalSpellId, "canonicalSpellId");
         Objects.requireNonNull(displayName, "displayName");
 
-        Component id = Component.translatable("screen.black_arcana.inspect.id")
-                .append(": ")
-                .append(Component.literal(canonicalSpellId));
+        Component id = Component.translatable("screen.black_arcana.inspect.id", canonicalSpellId);
         return hazardLine == null
                 ? List.of(displayName, id)
                 : List.of(displayName, id, hazardLine);
