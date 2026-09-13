@@ -13,6 +13,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
@@ -116,7 +117,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 top + rowsPerPage * rowHeight + 48, 0xE0100C14);
         graphics.drawCenteredString(font, title, width / 2, layout.titleY(), 0xFFF0E4F0);
 
-        List<Component> pointerTooltip = null;
+        List<FormattedCharSequence> pointerTooltip = null;
         int hoveredIndex = -1;
         int start = page * rowsPerPage;
         int end = Math.min(filteredAvailable.size(), start + rowsPerPage);
@@ -176,7 +177,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
                 0xFFD8CCD8);
         super.render(graphics, mouseX, mouseY, partialTick);
 
-        List<Component> tooltip = pointerTooltip;
+        List<FormattedCharSequence> tooltip = pointerTooltip;
         int tooltipX = mouseX;
         int tooltipY = mouseY;
         if (inputModality == KeyboardFocusNavigation.InputModality.KEYBOARD
@@ -186,7 +187,7 @@ public final class BlackArcanaLoadoutScreen extends Screen {
             tooltipY = top + (focusedIndex - start) * rowHeight + rowHeight / 2;
         }
         if (tooltip != null) {
-            graphics.renderComponentTooltip(font, tooltip, tooltipX, tooltipY);
+            graphics.renderTooltip(font, tooltip, tooltipX, tooltipY);
         }
     }
 
@@ -398,13 +399,13 @@ public final class BlackArcanaLoadoutScreen extends Screen {
         lastMouseY = mouseY;
     }
 
-    private List<Component> inspectionTooltip(ArcanaSpellId spell) {
+    private List<FormattedCharSequence> inspectionTooltip(ArcanaSpellId spell) {
         SpellPresentationPayload.Entry entry = presentation.get(spell);
         Component name = entry == null
                 ? Component.literal(spell.path().replace('_', ' '))
                 : Component.translatable(entry.translationKey());
         Component hazard = hazardTooltip(hazards.get(spell)).orElse(null);
-        return SpellInspectionPresentation.lines(spell.canonical(), name, hazard);
+        return SpellInspectionPresentation.wrappedLines(font, width, spell.canonical(), name, hazard);
     }
 
     private ResourceLocation currentIcon(ArcanaSpellId spell) {
