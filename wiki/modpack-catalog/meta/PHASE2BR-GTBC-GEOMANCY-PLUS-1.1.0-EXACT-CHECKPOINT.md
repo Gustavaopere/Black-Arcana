@@ -12,7 +12,11 @@ Durable documentation branch was created from:
 
 `main@6397b4b40778cb7867331342c0ce1a22617fc688`
 
-At branch creation, the separate Stage 05 spell-inspection workstream remained concurrent. Phase 2BR does not modify its files or runtime scope.
+The branch was then reconciled with concurrent Stage 05.14 work after `main` advanced to:
+
+`main@12589c7168163ddd737a0534d6287ce102f97359`
+
+Phase 2BR does not modify the Stage 05.14 files or runtime scope.
 
 ## Provider identity
 
