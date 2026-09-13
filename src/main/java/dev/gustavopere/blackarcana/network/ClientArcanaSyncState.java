@@ -29,6 +29,7 @@ public final class ClientArcanaSyncState {
     private static HazardResistanceForecastPayload hazardResistanceForecast;
     private static List<ArcanaSpellId> loadout = List.of();
     private static volatile BiConsumer<Player, CastResultPayload> resultObserver = (player, payload) -> { };
+    private static volatile BiConsumer<Player, List<ArcanaSpellId>> loadoutObserver = (player, acceptedLoadout) -> { };
 
     private ClientArcanaSyncState() { }
 
@@ -38,6 +39,14 @@ public final class ClientArcanaSyncState {
      */
     public static void installResultObserver(BiConsumer<Player, CastResultPayload> observer) {
         resultObserver = Objects.requireNonNull(observer, "observer");
+    }
+
+    /**
+     * Installs a common-safe observer for accepted loadout presentation. The observer receives an
+     * immutable copy only after this cache has accepted the server-authored snapshot.
+     */
+    public static void installLoadoutObserver(BiConsumer<Player, List<ArcanaSpellId>> observer) {
+        loadoutObserver = Objects.requireNonNull(observer, "observer");
     }
 
     public static void acceptResult(Player player, CastResultPayload payload) {
@@ -107,9 +116,14 @@ public final class ClientArcanaSyncState {
         hazardResistanceForecast = payload;
     }
 
-    public static synchronized void acceptLoadout(Player player, LoadoutSnapshotPayload payload) {
-        ensurePlayer(player);
-        loadout = List.copyOf(Objects.requireNonNull(payload, "payload").parsedSpellIds());
+    public static void acceptLoadout(Player player, LoadoutSnapshotPayload payload) {
+        List<ArcanaSpellId> acceptedLoadout;
+        synchronized (ClientArcanaSyncState.class) {
+            ensurePlayer(player);
+            acceptedLoadout = List.copyOf(Objects.requireNonNull(payload, "payload").parsedSpellIds());
+            loadout = acceptedLoadout;
+        }
+        loadoutObserver.accept(player, acceptedLoadout);
     }
 
     public static synchronized Optional<CastResultPayload> lastResult() {
