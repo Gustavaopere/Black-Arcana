@@ -59,6 +59,18 @@ For Iron's-owned spells, Iron's remains authoritative for its native resource/co
 
 These checks protect the deterministic authority contract. They do not replace physical validation with the assembled client/modpack.
 
+## Canonical implementation evidence
+
+The hosted-authority hardening is canonical through PR #237, `fix: harden Iron's hosted casting authority`:
+
+- final PR head: `4f33d8f87506e9fda63349591cd7a90dc4b0b125`;
+- exact-head PR workflow `34788175905`: unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke all GREEN;
+- squash merge: `main@7c6d1e420a098e0163ccd27688a5558f9e699b29`;
+- exact post-merge workflow `34788362522`: full pipeline GREEN, including QA artifact publication;
+- canonical QA artifact: `black-arcana-7c6d1e420a098e0163ccd27688a5558f9e699b29`, artifact ID `10326459668`, SHA-256 `e9a2300a91a9aa7b19372901c59f24e19928d1ef7526ccaf414c880189c48081`.
+
+This evidence closes the deterministic implementation tranche only. It does not convert any physical client/provider coexistence row into PASS.
+
 ## External invocation surfaces
 
 Any new external item/action/UI invocation surface must prove an exact-version supported boundary before code is added. The integration must:
