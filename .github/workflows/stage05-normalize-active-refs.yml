@@ -1,0 +1,70 @@
+name: Stage 05 active reference normalization
+
+on:
+  push:
+    branches:
+      - docs/stage05-status-normalization
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: docs/stage05-status-normalization
+          fetch-depth: 0
+
+      - name: Replace current Stage 05 plan basenames
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              '01-input-loadouts.md': '🟡-PENDENTE-01-input-loadouts.md',
+              '02-radial-wheel.md': '🟡-PENDENTE-02-radial-wheel.md',
+              '03-contextual-hud.md': '🟡-PENDENTE-03-contextual-hud.md',
+              '04-accessibility-client-config.md': '🟡-PENDENTE-04-accessibility-client-config.md',
+              '05-final-client-validation-handoff.md': '🟡-PENDENTE-05-final-client-validation-handoff.md',
+              '06-modpack-coexistence.md': '🟡-PENDENTE-06-modpack-coexistence.md',
+              '07-presentation-data-contracts.md': '✅-07-presentation-data-contracts.md',
+              '08-visual-language-state-semantics.md': '🟡-PENDENTE-08-visual-language-state-semantics.md',
+              '09-keyboard-focus-navigation.md': '🟡-PENDENTE-09-keyboard-focus-navigation.md',
+              '10-loadout-editor-information-architecture.md': '🟡-PENDENTE-10-loadout-editor-information-architecture.md',
+              '11-contextual-feedback-orchestration.md': '🟡-PENDENTE-11-contextual-feedback-orchestration.md',
+              '12-iconography-resource-resolution.md': '🟡-PENDENTE-12-iconography-resource-resolution.md',
+              '13-targeting-aim-presentation.md': '🟡-PENDENTE-13-targeting-aim-presentation.md',
+              '14-spell-details-inspection-presentation.md': '🟡-PENDENTE-14-spell-details-inspection-presentation.md',
+              '15-casting-vfx-audio-animation-presentation.md': '🟡-PENDENTE-15-casting-vfx-audio-animation-presentation.md',
+              '16-onboarding-discoverability-contextual-help.md': '🟡-PENDENTE-16-onboarding-discoverability-contextual-help.md',
+          }
+
+          for filename in [
+              'plans/05-casting-ux/00-master-plan.md',
+              'docs/qa/casting-ux-real-client-evidence.md',
+          ]:
+              path = Path(filename)
+              text = path.read_text(encoding='utf-8')
+              updated = text
+              for old, new in replacements.items():
+                  updated = updated.replace(old, new)
+              if updated != text:
+                  path.write_text(updated, encoding='utf-8')
+          PY
+
+      - name: Commit normalized references
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plans/05-casting-ux/00-master-plan.md docs/qa/casting-ux-real-client-evidence.md
+          git commit -m "docs: repair active Stage 05 plan references"
+          git push origin HEAD:docs/stage05-status-normalization
