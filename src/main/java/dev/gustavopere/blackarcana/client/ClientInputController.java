@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.client;
 
+import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.ArcanaTargetReference;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
@@ -13,7 +14,6 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 /** Physical-client input adapter. It emits intent only; all gameplay validation remains server-side. */
 public final class ClientInputController {
@@ -50,9 +50,11 @@ public final class ClientInputController {
         if (minecraft.hitResult instanceof EntityHitResult entityHit) {
             targetHint = new ArcanaTargetReference.EntityRef(entityHit.getEntity().getUUID()).canonical();
         }
+        ArcanaCastId castId = ArcanaCastId.random();
+        CastPresentationClientRuntime.recordLocalIntent(castId, spell, minecraft.player.tickCount);
         ArcanaNetworkBridge.sendCastIntent(new CastIntentPayload(
                 ArcanaProtocol.VERSION,
-                UUID.randomUUID().toString(),
+                castId.canonical(),
                 spell.canonical(),
                 slot,
                 targetHint));
@@ -64,8 +66,10 @@ public final class ClientInputController {
         if (minecraft.player == null || minecraft.getConnection() == null) {
             ClientArcanaSyncState.clear();
             ClientUxState.clear();
+            CastPresentationClientRuntime.clear();
             return;
         }
+        CastPresentationClientRuntime.tick(minecraft.player);
         List<ArcanaSpellId> loadout = ClientArcanaSyncState.loadoutSnapshot();
         SELECTION.reconcile(loadout);
 
