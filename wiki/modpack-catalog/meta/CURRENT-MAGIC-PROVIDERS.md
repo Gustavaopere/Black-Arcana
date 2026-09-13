@@ -6,9 +6,9 @@
 
 A autoridade de presença/JAR/runtime é a modlist física atual do pack, com **595 entradas top-level**, Minecraft 1.21.1 e NeoForge `21.1.248`. O snapshot físico reconciliado possui SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 
-O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, Phase 2BM fecha `ars_polymorphia` como componente **#61**, Phase 2BN fecha `ars_sable` como componente **#62**, Phase 2BO fecha `farmers_spell` como componente **#63**, e a reconciliação Phase 2BP promove `aero_additions` como componente **#64**. Portanto **64 estão canônicos** após esta reconciliação. Esse 64/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
+O denominador interno corrente do catálogo permanece **100 componentes mágicos/cross-domain**; Phase 2BL fecha `goetyiron` como componente **#59** e `goety_cataclysm` como componente **#60**, Phase 2BM fecha `ars_polymorphia` como componente **#61**, Phase 2BN fecha `ars_sable` como componente **#62**, Phase 2BO fecha `farmers_spell` como componente **#63**, Phase 2BP promove `aero_additions` como componente **#64**, e esta reconciliação Phase 2BQ promove `ars_two_way_portals` como componente **#65** após o fechamento exact-artifact da PR #223. Portanto **65 estão canônicos** após esta reconciliação. Esse 65/100 é uma métrica técnica de fechamento de componentes e **não** é a porcentagem de spells/magias.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Farmer's Spell acrescenta **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1316 para 1322**; Aeromancy Additions acrescenta mais **+10 `COUNTED_SOURCE_PINNED`**, elevando-o para **1332**; Ars Polymorphia e Ars Sable permanecem +0.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Farmer's Spell acrescenta **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1316 para 1322**; Aeromancy Additions acrescenta mais **+10 `COUNTED_SOURCE_PINNED`**, elevando-o para **1332**; Ars Polymorphia, Ars Sable e Ars Nouveau: Two-Way Portals são fechamentos semânticos **+0**, portanto o mínimo estrito permanece **1332**.
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
@@ -96,6 +96,12 @@ A modlist física atual inclui, entre outros, `familiarslib-1.21.1-1.7.1.jar` e 
 - Alshanex's Familiars é consumidor/conteúdo concreto; Phase 2BD fecha a linha 4.0.3 em **7 spells próprios + 11 rituais próprios = 18 objetos semânticos**, usando o JAR exato hash-matched; runtime QA e seam de ownership continuam separados;
 - documentação histórica que associa Sound School a Alshanex não deve prevalecer sobre a release 4.0, que moveu esse conteúdo para Tunes n' Tomes;
 - familiar ownership para Borrowed Sight continua exigindo seam provider-native verificável e revalidação server-side.
+
+## Checkpoint Ars Nouveau: Two-Way Portals — Phase 2BQ canonical
+
+O artefato físico `ars_two_way_portals-2.0.0.jar` / SHA-1 `233846fc30667893c5f36a719da576d5eed43f5c` foi materializado do CurseForge file exato `8515817` em NON-MERGE PR #222 e hash-matched contra a autoridade física. O audit exato fecha **25 classes**, **2 provider items**, **3 recipes**, **7 mixins common required** e dependências exatas NeoForge/Ars/`immersive_portals_core`; não há `AbstractSpell`, `AbstractGlyph`, `SpellRegistry`, `registerSpell`, Ritual, Rite ou Ability nas superfícies estruturais auditadas, nem resources semânticos desses tipos. A classificação é `ZERO_SEMANTIC_PORTAL_INFRA` / `BRIDGE_COMPAT`, com **+0** objetos semânticos.
+
+PR #223 foi squash-mergeada como `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; o exact merge SHA passou Black Arcana CI #2622 / run `34735586680`, incluindo unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke e QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`). Esta reconciliação compartilhada promove `ars_two_way_portals` a componente **#65 / 65/100** sem alterar o mínimo semântico de **1332**. Runtime de portal, configs efetivas, mixin application e interop assembled-host permanecem fail-closed.
 
 ## Checkpoint SnackPirate's Aeromancy Additions — Phase 2BP canonical
 

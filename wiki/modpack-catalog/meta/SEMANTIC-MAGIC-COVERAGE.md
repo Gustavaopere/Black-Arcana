@@ -27,7 +27,8 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - Phase 2BM component closure is validated at `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`: PR #210 exact HEAD `1b8d5d5761569f8ef1f3a32b7ece84cfb6ce6df6` passed Black Arcana CI **#2543**; the merge SHA passed exact-SHA post-merge CI **#2544** / run `34713268914` and published canonical QA artifact `10303624842` (`sha256:f4ff7ce2fac582f435f037f3a8dd29469df25d8889b895b0c168c2b0d6da0719`)
 - Phase 2BN component closure is validated at `main@c1c422b5ec72fe4308104f04282732d6c2f2bbc1`: PR #212 exact HEAD `c4facc0286dab0b522bf2b09c5812ffdd935bd5d` passed Black Arcana CI **#2553** / run `34720437808`; the merge SHA passed exact-SHA post-merge CI **#2554** / run `34720646567` and published canonical QA artifact `10306246238` (`sha256:a63f42f6746cc62e435e6a1c541daaed973b0b56d3dcc566cbc7cf4e9fa57e96`)
 - Phase 2BO evidence is validated at `main@34a5fd495da744800b32b051e38c6473c6f5ea15`: PR #214 exact corrected HEAD `d3a92c31d7ac5b38183224ef28c6737e721fc758` passed Black Arcana CI **#2564** / run `34723967662`; the merge SHA passed exact-SHA post-merge CI **#2565** / run `34724351805` and published canonical QA artifact `10307207453` (`sha256:50b94c3efc207dfd143a10367cf234473ede7dbbc1f36b9acdd3d3ca1ccc67fa`)
-- Phase 2BP evidence is validated at `main@84e9635b446b605140ab349fa2edc51f3462d518`: PR #219 exact reconciled HEAD `6e39a01273b77ba8accf85d49647b6ceff840e8a` passed Black Arcana CI **#2577** / run `34730598682`; the evidence merge SHA passed exact-SHA post-merge CI **#2578** / run `34730783233`. The shared-ledger promotion remains a separate reconciliation until merged.
+- Phase 2BP evidence is validated at `main@84e9635b446b605140ab349fa2edc51f3462d518`: PR #219 exact reconciled HEAD `6e39a01273b77ba8accf85d49647b6ceff840e8a` passed Black Arcana CI **#2577** / run `34730598682`; the evidence merge SHA passed exact-SHA post-merge CI **#2578** / run `34730783233`.
+- Phase 2BQ exact-artifact closure is validated at `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`: NON-MERGE PR #222 audit HEAD `9a3620209e27bb74934c8a9740678b7e59df39c6` passed exact artifact run `34735280002`; durable PR #223 HEAD `0eec58c14e591f6d2c875172bec4e436f8e1d5cb` passed Black Arcana CI **#2618** / run `34735444723`; the exact merge SHA passed post-merge CI **#2622** / run `34735586680` and published canonical QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`).
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -42,9 +43,16 @@ The historical chat-only tally is not an authority and is not used as an input t
 | `LOWER_BOUND` | current evidence proves at least this many objects, but not the complete current inventory | no |
 | `OPEN` | no safe current semantic count can yet be declared | no |
 | `ZERO_BRIDGE_INFRA` | audited provider adds no independent object under this metric | zero |
+| `ZERO_SEMANTIC_PORTAL_INFRA` | exact portal/compat provider adds no independent spell/glyph/ritual/rite/action identity under this metric | zero |
 | `EXCLUDED` | a registry/content entry exists but fails this metric by definition | zero |
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
+
+## Phase 2BQ — Ars Nouveau: Two-Way Portals 2.0.0 exact zero-semantic portal closure
+
+Exact hash-matched artifact evidence closes physical `ars_two_way_portals-2.0.0.jar` / SHA-1 `233846fc30667893c5f36a719da576d5eed43f5c` as portal/compat infrastructure rather than an independent spell provider. NON-MERGE PR #222 materialized exact CurseForge file `8515817`; the exact JAR contains 25 provider classes, two provider item members, three recipe resources and seven required common mixins. Structural inspection found zero hits for `AbstractSpell`, `AbstractGlyph`, `SpellRegistry`, `registerSpell`, Ritual, Rite or Ability, and zero semantic spell/glyph/ritual/rite/ability resource paths.
+
+Phase 2BQ therefore contributes **+0 semantic magic objects** as `ZERO_SEMANTIC_PORTAL_INFRA` and leaves the strict reconstructible minimum at **1332**, while this shared reconciliation separately closes provider component **#65 / 65 of 100**. Exact metadata declares required NeoForge `[21.1.243,)`, Ars Nouveau `[5.12.1,6.0.0)`, and optional `immersive_portals_core [6.0.7,7.0.0)`; declared-range satisfaction is not an assembled-runtime PASS. Portal lifecycle, effective config, mixin application, persistence, optional Immersive behavior, frame/Weave mutation and multiplayer/protection behavior remain fail-closed.
 
 ## Phase 2BP — SnackPirate's Aeromancy Additions 1.2.8 source-pinned spell closure
 
@@ -104,7 +112,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1332 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BP shared-ledger reconciliation.**
+**1332 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BQ shared-ledger reconciliation.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -272,7 +280,7 @@ Other provider directories that have not yet been normalized into a semantic-obj
 ## Important interpretation rules
 
 1. **1332 is not “1332 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1332 by the 100 provider-component denominator. The current component target is `64/100`; provider-component coverage and semantic-magic coverage answer different questions.
+2. Do not divide 1332 by the 100 provider-component denominator. The current component target is `65/100`; provider-component coverage and semantic-magic coverage answer different questions.
 3. Do not add public lower bounds to 1332 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
