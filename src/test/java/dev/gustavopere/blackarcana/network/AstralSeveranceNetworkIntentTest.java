@@ -1,6 +1,10 @@
 package dev.gustavopere.blackarcana.network;
 
 import dev.gustavopere.blackarcana.content.noetic.AstralSeveranceRuntime;
+import dev.gustavopere.blackarcana.network.neoforge.AstralMoveIntentPacket;
+import dev.gustavopere.blackarcana.network.neoforge.AstralReturnIntentPacket;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -72,6 +76,44 @@ class AstralSeveranceNetworkIntentTest {
         assertFalse(componentNames(AstralReturnIntentPayload.class).contains("casterId"));
         assertThrows(IllegalArgumentException.class, () -> new AstralReturnIntentPayload(
                 ArcanaProtocol.VERSION, projectionId, 0L));
+    }
+
+    @Test
+    void wireCodecsRoundTripOnlyValidatedDomainIntent() {
+        UUID projectionId = UUID.randomUUID();
+        AstralMoveIntentPayload move = new AstralMoveIntentPayload(
+                ArcanaProtocol.VERSION,
+                projectionId,
+                42L,
+                -1.0D,
+                0.5D,
+                0.25D,
+                15.0F,
+                -12.5F);
+        AstralReturnIntentPayload returned = new AstralReturnIntentPayload(
+                ArcanaProtocol.VERSION,
+                projectionId,
+                43L);
+
+        ByteBuf moveBuffer = Unpooled.buffer();
+        try {
+            AstralMoveIntentPacket.STREAM_CODEC.encode(moveBuffer, AstralMoveIntentPacket.from(move));
+            AstralMoveIntentPacket decoded = AstralMoveIntentPacket.STREAM_CODEC.decode(moveBuffer);
+            assertEquals(move, decoded.toDomain());
+            assertEquals(0, moveBuffer.readableBytes());
+        } finally {
+            moveBuffer.release();
+        }
+
+        ByteBuf returnBuffer = Unpooled.buffer();
+        try {
+            AstralReturnIntentPacket.STREAM_CODEC.encode(returnBuffer, AstralReturnIntentPacket.from(returned));
+            AstralReturnIntentPacket decoded = AstralReturnIntentPacket.STREAM_CODEC.decode(returnBuffer);
+            assertEquals(returned, decoded.toDomain());
+            assertEquals(0, returnBuffer.readableBytes());
+        } finally {
+            returnBuffer.release();
+        }
     }
 
     private static Set<String> componentNames(Class<?> recordType) {
