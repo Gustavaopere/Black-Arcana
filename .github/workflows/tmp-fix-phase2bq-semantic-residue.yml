@@ -1,0 +1,61 @@
+name: Temporary Phase 2BQ semantic residue fix
+
+on:
+  push:
+    branches:
+      - docs/reconcile-provider-ledgers-phase2bq
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout reconciliation branch
+        uses: actions/checkout@v4
+        with:
+          ref: docs/reconcile-provider-ledgers-phase2bq
+          fetch-depth: 0
+
+      - name: Fix exact residual current-state references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md')
+          text = p.read_text(encoding='utf-8')
+          reps = [
+              (
+                  '**1332 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BP shared-ledger reconciliation.**',
+                  '**1332 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BQ shared-ledger reconciliation.**'
+              ),
+              (
+                  'The current component target is `64/100`;',
+                  'The current component target is `65/100`;'
+              ),
+          ]
+          for old, new in reps:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected exactly one match, got {count}: {old!r}')
+              text = text.replace(old, new, 1)
+          p.write_text(text, encoding='utf-8')
+          PY
+          git diff --check
+          git diff --name-only
+          test "$(git diff --name-only | tr '\n' ' ')" = "wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md "
+
+      - name: Self-remove and commit exact fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Gustavaopere'
+          git config user.email 'gustavaopere@gmail.com'
+          git rm .github/workflows/tmp-fix-phase2bq-semantic-residue.yml
+          git add -A
+          test "$(git diff --cached --name-only | grep -v '^.github/workflows/tmp-fix-phase2bq-semantic-residue.yml$' | tr '\n' ' ')" = "wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md "
+          git diff --cached --check
+          git commit -m 'docs: fix remaining Phase 2BQ current-state references'
+          git push origin HEAD:docs/reconcile-provider-ledgers-phase2bq
