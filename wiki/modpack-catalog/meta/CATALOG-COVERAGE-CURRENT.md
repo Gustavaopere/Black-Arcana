@@ -4,7 +4,9 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**. The current strict minimum is therefore **1332**. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**. The current strict minimum therefore remains **1332**. The global denominator is still incomplete and no semantic percentage is declared.
+
+Phase 2BQ has a semantic delta of **0**: exact hash-matched `ars_two_way_portals-2.0.0.jar` contains portal/compat infrastructure, two provider items, three recipes and seven required mixins, but no independent spell/glyph/ritual/rite/ability registry or semantic resource surface. It is classified `ZERO_SEMANTIC_PORTAL_INFRA`; the strict semantic minimum stays **1332** while this shared reconciliation closes provider component **#65**. Runtime portal lifecycle, effective config, mixin application and assembled-host Immersive behavior remain fail-closed. See [`../providers/ars-two-way-portals/README.md`](../providers/ars-two-way-portals/README.md), [`../providers/ars-two-way-portals/EXACT-2.0.0-ARTIFACT-AUDIT.md`](../providers/ars-two-way-portals/EXACT-2.0.0-ARTIFACT-AUDIT.md) and [`PHASE2BQ-ARS-TWO-WAY-PORTALS-2.0.0-EXACT-CHECKPOINT.md`](./PHASE2BQ-ARS-TWO-WAY-PORTALS-2.0.0-EXACT-CHECKPOINT.md).
 
 Phase 2BP has a semantic delta of **+10 `COUNTED_SOURCE_PINNED`**: physical `aero_additions-1.2.8.jar` / SHA-1 `dee32c9fa84d6e39846608f8f77591ea56f` is reconciled with exact public source pin `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`, which closes exactly ten active unconditional Wind `AbstractSpell` registrations. Five commented-out registrations are excluded. Provider Wind focus data plus the Iron's 3.16.3 Scroll Forge contract close a host-native Breeze Rod catalog acquisition route; provider loot modifiers also add Breeze Rod support to Trial Chamber normal-vault rewards. This closes provider component **#64** while keeping assembled-pack runtime compatibility fail-closed. See [`../providers/aeromancy-additions/README.md`](../providers/aeromancy-additions/README.md) and [`PHASE2BP-AEROMANCY-CHECKPOINT.md`](./PHASE2BP-AEROMANCY-CHECKPOINT.md).
 
@@ -32,6 +34,7 @@ Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publish
 
 Therefore:
 
+- semantic numerator/denominator delta attributable to Ars Nouveau: Two-Way Portals 2.0.0 exact closure: **+0**;
 - semantic numerator delta from SnackPirate's Aeromancy Additions 1.2.8 source-pinned closure: **+10**;
 - semantic numerator delta from Farmer's Spell 'n Spellbooks 1.0.5.1 source-pinned closure: **+6**;
 - semantic numerator/denominator delta attributable to Ars Sable 1.1.2: **+0**;
@@ -118,7 +121,9 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after the Phase 2BP shared-ledger reconciliation: 64/100 = 64%.**
+**Canonical provider-component coverage after the Phase 2BQ shared-ledger reconciliation: 65/100 = 65%.**
+
+Phase 2BQ / PR #223 was squash-merged as `bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; that exact merge SHA passed post-merge Black Arcana CI **#2622** / run `34735586680`, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`). The provider contributes semantic **+0** and closes technical component **#65** only.
 
 Phase 2BF exact-artifact reconciliation closes Somake 1.0.8-fix registry identity at 67 current registrations under the physical optional-provider set, but the provider remains `CONDITIONAL` because the deployed COMMON spell-lock config and complete survival acquisition/reachability are not authoritative. Phase 2BF therefore changes neither metric: **874** strict semantic objects and **55/100** closed provider components at that historical checkpoint.
 
@@ -151,7 +156,7 @@ The internal operational denominator remains **100 magic/cross-domain component 
 - 2 current candidates added beyond the historical baseline: `soul_fire_d`, `reliquified_lenders_cataclysm_new_relics_fix`;
 - therefore `103 - 5 + 2 = 100`.
 
-GTBC's SpellLib, FamiliarsLib, Farmer's Spell and Aeromancy Additions were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
+GTBC's SpellLib, FamiliarsLib, Farmer's Spell, Aeromancy Additions and Ars Nouveau: Two-Way Portals were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
 
 ## Canonical recent closure sequence
 
@@ -175,6 +180,7 @@ GTBC's SpellLib, FamiliarsLib, Farmer's Spell and Aeromancy Additions were alrea
 | 62 | Phase 2BN / PR #212 | `ars_sable` | canonical at `main@c1c422b5ec72fe4308104f04282732d6c2f2bbc1`; source-pinned zero-semantic spatial/compat bridge; post-merge CI #2554 GREEN; runtime host QA fail-closed |
 | 63 | Phase 2BO / PR #214 | `farmers_spell` | source-pinned +6 semantic closure; evidence merge `main@34a5fd495da744800b32b051e38c6473c6f5ea15`; post-merge CI #2565 GREEN; runtime host QA fail-closed |
 | 64 | Phase 2BP / PR #219 | `aero_additions` | source-pinned +10 semantic closure; evidence merge `main@84e9635b446b605140ab349fa2edc51f3462d518`; post-merge CI #2578 GREEN; runtime host QA fail-closed; promoted by the separate shared-ledger reconciliation |
+| 65 | Phase 2BQ / PR #223 | `ars_two_way_portals` | exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA`; semantic +0; durable merge `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; post-merge CI #2622 GREEN; QA artifact `10310957237`; runtime host QA fail-closed; promoted by this shared-ledger reconciliation |
 
 Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
 
