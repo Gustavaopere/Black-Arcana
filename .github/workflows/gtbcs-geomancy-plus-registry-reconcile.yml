@@ -1,0 +1,191 @@
+name: GTBC Geomancy Plus 1.1.0 Registry Reconcile NON-MERGE
+
+on:
+  push:
+    branches:
+      - audit/gtbcs-geomancy-plus-1.1.0-exact-artifact
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download exact release
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 4 --retry-delay 3 --max-time 300 \
+            'https://www.cursemaven.com/curse/maven/gtbcs-geomancy-plus-1352485/7041615/gtbcs-geomancy-plus-1352485-7041615.jar' \
+            -o geomancy.jar
+          mkdir -p evidence
+          sha1sum geomancy.jar > evidence/sha1.txt
+          sha256sum geomancy.jar > evidence/sha256.txt
+      - name: Reconcile exact registry identities and reachability identifiers
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, re, subprocess, zipfile
+          from pathlib import Path
+
+          jar='geomancy.jar'
+          z=zipfile.ZipFile(jar)
+          names=set(z.namelist())
+
+          def javap(*args):
+              return subprocess.run(['javap','-classpath',jar,*args], text=True, capture_output=True, timeout=30, check=False).stdout
+
+          gg='com.gametechbc.gtbcs_geomancy_plus.init.GGSpells'
+          sig=javap('-p',gg)
+          code=javap('-c','-p',gg)
+
+          fields=re.findall(r'public static final java\.util\.function\.Supplier<io\.redspace\.ironsspellbooks\.api\.spells\.AbstractSpell>\s+([A-Z0-9_]+);', sig)
+          register_calls=len(re.findall(r'//.*(?:Method )?.*registerSpell', code))
+          branch_ops=len(re.findall(r'\b(?:if[a-z_]*|goto(?:_w)?|tableswitch|lookupswitch)\b', re.search(r'static \{\};(.*)', code, re.S).group(1) if 'static {};' in code else ''))
+
+          mapping=[]
+          last_new=None
+          pending=None
+          for line in code.splitlines():
+              m=re.search(r'// class (com/gametechbc/gtbcs_geomancy_plus/spells/[\w/$]+)', line)
+              if m and re.search(r'\bnew\b', line):
+                  last_new=m.group(1).replace('/','.')
+              if 'registerSpell' in line and 'invokestatic' in line:
+                  pending=last_new
+              m=re.search(r'// Field ([A-Z0-9_]+):Ljava/util/function/Supplier;', line)
+              if m and pending:
+                  mapping.append((m.group(1), pending))
+                  pending=None
+
+          # Exact localization root IDs are factual identifiers only, not prose.
+          loc_ids=set()
+          for p in names:
+              if p.endswith('/lang/en_us.json'):
+                  try: obj=json.loads(z.read(p).decode('utf-8-sig'))
+                  except Exception: continue
+                  if isinstance(obj,dict):
+                      for k in obj:
+                          m=re.fullmatch(r'spell\.gtbcs_geomancy_plus\.([a-z0-9_]+)', k)
+                          if m: loc_ids.add(m.group(1))
+
+          spell_rows=[]
+          for field, cls in mapping:
+              out=javap('-c','-p',cls)
+              ctor=re.search(r'public '+re.escape(cls)+r'\(\);(.*?)(?=\n\s*(?:public|private|protected|static)|\Z)', out, re.S)
+              strings=[]
+              if ctor:
+                  strings=re.findall(r'// String ([^\r\n]+)', ctor.group(1))
+              matches=sorted(set(s for s in strings if s in loc_ids))
+              spell_id=matches[0] if len(matches)==1 else None
+              spell_rows.append((field,cls,spell_id,matches,strings))
+
+          mapped_classes={c for _,c,_,_,_ in spell_rows}
+          earth='com.gametechbc.gtbcs_geomancy_plus.spells.geo.EarthshatterSpell'
+          earth_registered=earth in mapped_classes
+
+          # Mixin config/class declarations only.
+          mixin_paths=sorted(p for p in names if p.endswith('.mixins.json') or p.endswith('mixins.json'))
+          mixin_classes=[]
+          for p in mixin_paths:
+              try: obj=json.loads(z.read(p).decode('utf-8-sig'))
+              except Exception: continue
+              pkg=obj.get('package','') if isinstance(obj,dict) else ''
+              if isinstance(obj,dict):
+                  for key in ('mixins','client','server'):
+                      vals=obj.get(key,[])
+                      if isinstance(vals,list):
+                          for v in vals:
+                              if isinstance(v,str): mixin_classes.append((p,f'{pkg}.{v}' if pkg else v))
+
+          # GGSchools: retain constructor descriptor and simple constants around construction, not disassembly.
+          schools='com.gametechbc.gtbcs_geomancy_plus.api.init.GGSchools'
+          school_code=javap('-c','-p',schools)
+          school_ctor_desc=[]
+          for line in school_code.splitlines():
+              if 'SchoolType."<init>"' in line:
+                  school_ctor_desc.append(line.split('//')[-1].strip())
+          school_branches=len(re.findall(r'\b(?:if[a-z_]*|goto(?:_w)?|tableswitch|lookupswitch)\b', re.search(r'static \{\};(.*)', school_code, re.S).group(1) if 'static {};' in school_code else ''))
+
+          # Resource identifiers only from focus/loot JSON; no payload/prose retained.
+          focus=[]; loot_refs=[]
+          for p in sorted(names):
+              if not p.endswith('.json') or not p.startswith('data/'): continue
+              if not (('focus' in p) or ('loot' in p)): continue
+              try: obj=json.loads(z.read(p).decode('utf-8-sig'))
+              except Exception: continue
+              raw=json.dumps(obj,sort_keys=True)
+              ids=sorted(set(re.findall(r'(?<![A-Za-z0-9_.-])#?[a-z0-9_.-]+:[a-z0-9_./-]+', raw)))
+              if 'focus' in p:
+                  focus.append((p,ids))
+              if 'loot' in p:
+                  relevant=[x for x in ids if x.startswith(('gtbcs_geomancy_plus:','irons_spellbooks:','mowziesmobs:')) or x.startswith(('#gtbcs_geomancy_plus:','#irons_spellbooks:','#mowziesmobs:'))]
+                  if relevant: loot_refs.append((p,relevant))
+
+          # Config/gate references in registry exact bytecode only.
+          registry_config_refs=sorted(set(re.findall(r'(?:ForgeConfigSpec|ModConfig|BooleanValue|ConfigValue)[A-Za-z0-9_/$;.<>:-]*', code)))
+          registry_mod_gate_refs=sorted(set(re.findall(r'(?:ModList|isLoaded)[A-Za-z0-9_/$;.<>:-]*', code)))
+
+          with open('evidence/registry-reconciliation.txt','w',encoding='utf-8') as f:
+              f.write('GTBC Geomancy Plus 1.1.0 exact registry reconciliation — NON-MERGE EVIDENCE ONLY\n')
+              f.write('curseforge_project=1352485\ncurseforge_file=7041615\n')
+              f.write(f'abstract_spell_supplier_field_count={len(fields)}\n')
+              for x in fields: f.write(f'field={x}\n')
+              f.write(f'registerSpell_call_count={register_calls}\n')
+              f.write(f'static_initializer_branch_opcode_count={branch_ops}\n')
+              f.write(f'field_to_concrete_class_mapping_count={len(mapping)}\n')
+              f.write(f'localization_root_spell_id_count={len(loc_ids)}\n')
+              f.write('localization_root_spell_ids='+','.join(sorted(loc_ids))+'\n')
+              f.write('\n== registry mapping ==\n')
+              for field,cls,sid,matches,strings in spell_rows:
+                  f.write(f'{field} -> {cls} -> spell_id={sid or "UNRESOLVED"}; localization_matches={",".join(matches) or "<none>"}\n')
+              f.write(f'earthshatter_registered={str(earth_registered).lower()}\n')
+              f.write('\n== mixin declarations ==\n')
+              f.write(f'mixin_config_count={len(mixin_paths)}\n')
+              f.write(f'mixin_class_count={len(mixin_classes)}\n')
+              for p,c in mixin_classes: f.write(f'{p} -> {c}\n')
+              f.write('\n== school structural facts ==\n')
+              f.write(f'school_static_initializer_branch_opcode_count={school_branches}\n')
+              f.write(f'school_constructor_call_count={len(school_ctor_desc)}\n')
+              for d in school_ctor_desc: f.write(d+'\n')
+              f.write('\n== exact registry config/gate refs ==\n')
+              f.write(f'registry_config_ref_count={len(registry_config_refs)}\n')
+              for x in registry_config_refs: f.write(x+'\n')
+              f.write(f'registry_mod_gate_ref_count={len(registry_mod_gate_refs)}\n')
+              for x in registry_mod_gate_refs: f.write(x+'\n')
+              f.write('\n== focus identifier facts ==\n')
+              for p,ids in focus:
+                  f.write(f'{p} -> {",".join(ids)}\n')
+              f.write('\n== loot identifier facts ==\n')
+              for p,ids in loot_refs:
+                  f.write(f'{p} -> {",".join(ids)}\n')
+              f.write('\nBOUNDARY: retained evidence contains only exact registry field/class/ID relationships, aggregate branch/gate facts, mixin class declarations, constructor descriptor, and structured resource identifiers. No method bodies, JSON payload structure beyond identifiers, localization prose, assets, recipes, or binary are retained.\n')
+
+          # Strong invariants: do not silently accept a partial mapping.
+          if len(fields) != 12: raise SystemExit(f'expected 12 AbstractSpell supplier fields, got {len(fields)}')
+          if register_calls != 12: raise SystemExit(f'expected 12 registerSpell calls, got {register_calls}')
+          if branch_ops != 0: raise SystemExit(f'expected unconditional static registry, branch ops={branch_ops}')
+          if len(mapping) != 12: raise SystemExit(f'expected 12 field/class mappings, got {len(mapping)}')
+          if len(loc_ids) != 12: raise SystemExit(f'expected 12 root localization spell IDs, got {len(loc_ids)}')
+          unresolved=[r for r in spell_rows if not r[2]]
+          if unresolved: raise SystemExit('unresolved spell IDs: '+repr([(x[0],x[1],x[3],x[4]) for x in unresolved]))
+          if earth_registered: raise SystemExit('EarthshatterSpell unexpectedly registered')
+          PY
+          cat evidence/registry-reconciliation.txt
+      - name: Upload text-only registry evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: gtbcs-geomancy-plus-1.1.0-registry-reconciliation
+          path: |
+            evidence/registry-reconciliation.txt
+            evidence/sha1.txt
+            evidence/sha256.txt
+          if-no-files-found: error
+          retention-days: 30
