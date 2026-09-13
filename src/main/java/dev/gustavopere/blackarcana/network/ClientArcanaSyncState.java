@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalLong;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 /**
  * Minimal client-view cache for network-confirmed Black Arcana state.
@@ -27,13 +28,26 @@ public final class ClientArcanaSyncState {
     private static Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazardPreflight = Map.of();
     private static HazardResistanceForecastPayload hazardResistanceForecast;
     private static List<ArcanaSpellId> loadout = List.of();
+    private static volatile BiConsumer<Player, CastResultPayload> resultObserver = (player, payload) -> { };
 
     private ClientArcanaSyncState() { }
 
-    public static synchronized void acceptResult(Player player, CastResultPayload payload) {
-        ensurePlayer(player);
-        lastResult = Objects.requireNonNull(payload, "payload");
-        lastResultTick = player.tickCount;
+    /**
+     * Installs a common-safe observer for physical-client presentation. The observer receives only
+     * the already validated authoritative result after this cache has accepted it.
+     */
+    public static void installResultObserver(BiConsumer<Player, CastResultPayload> observer) {
+        resultObserver = Objects.requireNonNull(observer, "observer");
+    }
+
+    public static void acceptResult(Player player, CastResultPayload payload) {
+        Objects.requireNonNull(payload, "payload");
+        synchronized (ClientArcanaSyncState.class) {
+            ensurePlayer(player);
+            lastResult = payload;
+            lastResultTick = player.tickCount;
+        }
+        resultObserver.accept(player, payload);
     }
 
     public static synchronized void acceptCooldowns(Player player, CooldownSnapshotPayload payload) {
