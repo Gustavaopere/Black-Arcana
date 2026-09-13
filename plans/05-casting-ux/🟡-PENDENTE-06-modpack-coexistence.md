@@ -2,7 +2,7 @@
 
 ## State
 
-`PLANNING / RUNTIME-INTEGRATION BOUNDARY / VISUAL COEXISTENCE MOVED`
+`IMPLEMENTED / PHYSICAL PROVIDER COEXISTENCE VALIDATION PENDING / VISUAL COEXISTENCE MOVED`
 
 Concrete HUD overlap, readability, keybinding discoverability and combat-animation/client-presentation work is specified in:
 
@@ -30,17 +30,34 @@ External providers retain authority for their own spells, resources, cooldowns, 
 
 ## Existing Iron's-hosted Black Arcana path
 
-Current canonical code already contains a supported Iron's-hosted probe:
+The supported Iron's-hosted probe uses the following boundary:
 
 - `IronsSpellRegistryBridge` registers `black_arcana:irons_integration_probe` through the supported Iron's spell registry;
 - `IronsArcanaProbeSpell.onCast` dispatches the host invocation into the Black Arcana hosted-cast dispatcher;
 - Iron's owns the supported presentation/invocation host surface;
 - Black Arcana owns validation, canonical transactional cost settlement and Black Arcana cooldown;
-- `IronsHostedSpellEvents` neutralizes Iron's native mana deduction for Black Arcana-hosted spell IDs so one Black Arcana transaction is not charged twice.
+- `IronsArcanaProbeSpell.getManaCost` returns zero so Iron's pre-cast mana admission cannot become a second resource authority;
+- `IronsArcanaProbeSpell.getSpellCooldown` returns zero so Iron's post-cast cooldown cannot become a second cooldown authority;
+- `IronsHostedSpellEvents` still neutralizes Iron's native mana deduction at highest and lowest event priority as defense in depth for Black Arcana-hosted spell IDs;
+- the real probe cost remains `IronsIntegrationIds.PROBE_MANA_COST` and is settled through the Black Arcana `IronsManaCostProvider` transaction;
+- the real probe cooldown remains the Black Arcana `IronsSyntheticContent.COOLDOWN_TICKS` policy.
 
 The invariant is one physical/provider invocation -> one Black Arcana root cast -> one canonical Black Arcana cost/cooldown settlement. A compatibility change that reintroduces provider-native settlement in parallel is invalid.
 
 For Iron's-owned spells, Iron's remains authoritative for its native resource/cooldown semantics unless a separately verified adapter says otherwise.
+
+## Deterministic coexistence coverage
+
+`IronsHostedSpellAuthorityContractTest` locks the non-subjective integration boundary by checking that:
+
+- the hosted probe exposes zero provider-native mana and cooldown settlement;
+- one probe invocation contains exactly one hosted dispatcher call;
+- the hosted dispatcher contains exactly one authoritative `ArcanaServerRuntimeManager.handleCastIntent` convergence point and one generated root `ArcanaCastId`;
+- the high/low `SpellOnCastEvent` mana neutralizers remain installed as defense in depth;
+- the Black Arcana cooldown policy remains explicit for the hosted probe;
+- the common optional-mod entrypoint references Iron's adapters by class name rather than hard-importing provider adapter classes.
+
+These checks protect the deterministic authority contract. They do not replace physical validation with the assembled client/modpack.
 
 ## External invocation surfaces
 
@@ -76,5 +93,7 @@ Engineering acceptance for this plan is limited to invariants that can be proven
 - GUI focus cannot become a hidden direct-cast bypass;
 - no unverified Epic Fight, Spell Actionbar, Controlling or controller API becomes a hard dependency;
 - dedicated-server classloading remains safe.
+
+The deterministic hosted-Iron's authority path is implemented and regression-covered. The plan remains pending until the required provider/input coexistence rows are observed in the assembled runtime.
 
 HUD overlap, readability, battle-mode presentation, animation compatibility, key conflict ergonomics and recommended client layout belong to the linked visual-production plan.
