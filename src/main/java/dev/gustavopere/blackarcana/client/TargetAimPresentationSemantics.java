@@ -1,5 +1,7 @@
 package dev.gustavopere.blackarcana.client;
 
+import net.minecraft.world.phys.HitResult;
+
 /**
  * Pure presentation semantics for Stage 05.13 local aim observation.
  *
@@ -15,6 +17,15 @@ final class TargetAimPresentationSemantics {
     }
 
     private TargetAimPresentationSemantics() {
+    }
+
+    static Observation fromHitType(HitResult.Type type) {
+        if (type == null) return Observation.MISS;
+        return switch (type) {
+            case MISS -> Observation.MISS;
+            case BLOCK -> Observation.BLOCK;
+            case ENTITY -> Observation.ENTITY;
+        };
     }
 
     static boolean shouldRender(
