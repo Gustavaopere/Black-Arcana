@@ -22,7 +22,7 @@
   "screen.black_arcana.loadout.hint": "%s selecionados · Enter: aplicar · Delete: limpar · R: restaurar · Esc: cancelar",
   "screen.black_arcana.loadout.slot": "S%s",
   "screen.black_arcana.loadout.slot.quick_eligible": "S%s · QC%s elegível",
-  "screen.black_arcana.inspect.id": "ID do feitiço: %s",
+  "screen.black_arcana.inspect.id": "ID do feitiço",
   "hud.black_arcana.selected": "Selecionado: %s",
   "hud.black_arcana.denied": "Negado: %s",
   "hud.black_arcana.cast_failed": "Conjuração falhou: %s",
