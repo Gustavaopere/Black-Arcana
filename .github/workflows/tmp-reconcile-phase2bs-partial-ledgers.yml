@@ -24,24 +24,17 @@ jobs:
           from pathlib import Path
 
           root = Path('.')
-
-          def read(path):
-              return (root / path).read_text(encoding='utf-8')
-
-          def write(path, text):
-              (root / path).write_text(text, encoding='utf-8')
+          def read(path): return (root / path).read_text(encoding='utf-8')
+          def write(path, text): (root / path).write_text(text, encoding='utf-8')
 
           marker = "Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1"
 
-          # CURRENT-MAGIC-PROVIDERS.md
           p = 'wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md'
           s = read(p)
           if marker not in s:
               anchor = 'Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.\n'
               assert s.count(anchor) == 1, 'CURRENT freshness anchor drift'
-              para = (
-                  "Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 e mantém **1344 / 66 de 100**.\n\n"
-              )
+              para = "Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 e mantém **1344 / 66 de 100**.\n\n"
               s = s.replace(anchor, para + anchor)
               h = "## Checkpoint GTBC's Geomancy Plus — Phase 2BR canonical"
               assert s.count(h) == 1, 'CURRENT Phase 2BR header drift'
@@ -53,15 +46,13 @@ jobs:
               s = s.replace(h, block + h)
               write(p, s)
 
-          # SEMANTIC-MAGIC-COVERAGE.md
           p = 'wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md'
           s = read(p)
           if marker not in s:
               lines = s.splitlines(True)
               idxs = [i for i,l in enumerate(lines) if l.startswith("- Phase 2BR GTBC's Geomancy Plus closure is validated at")]
-              assert len(idxs) == 1, 'SEMANTIC Phase 2BR authority anchor drift'
-              i = idxs[0]
-              lines.insert(i+1, "- Phase 2BS T.O Magic n' Extras partial catalog is validated at `main@0bd1c04460e63a03b6b484b785247e75f6e44178`: durable PR #228 passed exact-head CI #2679 / run `34741531727`; the merge SHA passed exact-SHA post-merge CI #2682 / run `34741699505` and published canonical QA artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Phase 2BS catalogs 33 exact registered identities but contributes +0 strict and no component closure.\n")
+              assert len(idxs) == 1, 'SEMANTIC authority anchor drift'
+              lines.insert(idxs[0]+1, "- Phase 2BS T.O Magic n' Extras partial catalog is validated at `main@0bd1c04460e63a03b6b484b785247e75f6e44178`: durable PR #228 passed exact-head CI #2679 / run `34741531727`; the merge SHA passed exact-SHA post-merge CI #2682 / run `34741699505` and published canonical QA artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Phase 2BS catalogs 33 exact registered identities but contributes +0 strict and no component closure.\n")
               s = ''.join(lines)
               h = "## Phase 2BR — GTBC's Geomancy Plus 1.1.0-1.21.1 release-bounded spell closure"
               assert s.count(h) == 1, 'SEMANTIC Phase 2BR header drift'
@@ -71,42 +62,25 @@ jobs:
                   "A focused exact-artifact audit also proves a runtime-risk wiring fact: `TOLootModifiers` registers both `key_loot` and `universal_loot`, while `KeyLootModifier.CODEC` is referenced twice and `UniversalLootModifier.CODEC` zero times. Black Arcana does not claim the reported runtime crash is reproduced, but runtime viability remains fail-closed. Consequently all 33 registry identities remain catalog inventory rather than a strict counted promotion: Phase 2BS contributes **+0 strict**, the reconstructible minimum stays **1344**, and technical component closure stays **66/100**.\n\n"
               )
               s = s.replace(h, block + h)
-              b = "- semantic numerator delta from GTBC's Geomancy Plus 1.1.0-1.21.1 release-bounded closure: **+12**;"
-              assert s.count(b) == 1, 'SEMANTIC delta anchor drift'
-              s = s.replace(b, "- semantic numerator delta from T.O Magic n' Extras 4.4.0.1 Phase 2BS partial catalog: **+0 strict** (`33 exact registry identities`; Blackout reachability + runtime viability unresolved);\n" + b)
               write(p, s)
 
-          # CATALOG-COVERAGE-CURRENT.md
           p = 'wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md'
           s = read(p)
           if marker not in s:
               h = 'Phase 2BR has a semantic delta of **+12 `COUNTED_RELEASE_BOUNDED`**:'
               assert s.count(h) == 1, 'CATALOG Phase 2BR paragraph drift'
-              para = (
-                  "Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — is a **partial catalog with +0 strict semantic delta and +0 component delta**. Exact publisher file `6342780` closes 33 registered spell identities and excludes 32 residual localization-only roots. `traveloptics:blackout` remains reachability-unresolved under `AbstractUniqueSpell.allowCrafting=false`, and exact `TOLootModifiers` wiring references `KeyLootModifier.CODEC` twice while `UniversalLootModifier.CODEC` is absent from that registration path. Runtime crash is not claimed reproduced. Phase 2BS therefore leaves the strict minimum at **1344** and technical closure at **66/100**. See [`../providers/traveloptics/README.md`](../providers/traveloptics/README.md), [`../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md`](../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md) and [`PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md`](./PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md).\n\n"
-              )
+              para = "Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — is a **partial catalog with +0 strict semantic delta and +0 component delta**. Exact publisher file `6342780` closes 33 registered spell identities and excludes 32 residual localization-only roots. `traveloptics:blackout` remains reachability-unresolved under `AbstractUniqueSpell.allowCrafting=false`, and exact `TOLootModifiers` wiring references `KeyLootModifier.CODEC` twice while `UniversalLootModifier.CODEC` is absent from that registration path. Runtime crash is not claimed reproduced. Phase 2BS therefore leaves the strict minimum at **1344** and technical closure at **66/100**. See [`../providers/traveloptics/README.md`](../providers/traveloptics/README.md), [`../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md`](../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md) and [`PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md`](./PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md).\n\n"
               s = s.replace(h, para + h)
-              b = "- semantic numerator delta from GTBC's Geomancy Plus 1.1.0-1.21.1 release-bounded closure: **+12**;"
-              if b in s:
-                  assert s.count(b) == 1, 'CATALOG delta anchor duplicated'
-                  s = s.replace(b, "- semantic numerator delta from T.O Magic n' Extras 4.4.0.1 partial catalog: **+0 strict**; component delta **+0**;\n" + b)
               write(p, s)
 
-          # PROVIDER-AUDIT-QUEUE.md
           p = 'wiki/modpack-catalog/meta/PROVIDER-AUDIT-QUEUE.md'
           s = read(p)
           if marker not in s:
               lines = s.splitlines(True)
               idxs = [i for i,l in enumerate(lines) if l.startswith('- estado de evidência pós-Phase 2BR:')]
-              assert len(idxs) == 1, 'QUEUE Phase 2BR authority anchor drift'
-              i = idxs[0]
-              lines.insert(i+1, "- estado de evidência pós-Phase 2BS parcial: `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; PR #228 cataloga 33 identidades `traveloptics` exatas sem promoção strict/component; exact merge SHA passou CI #2682 / run `34741699505` e publicou QA artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`);\n")
+              assert len(idxs) == 1, 'QUEUE authority anchor drift'
+              lines.insert(idxs[0]+1, "- estado de evidência pós-Phase 2BS parcial: `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; PR #228 cataloga 33 identidades `traveloptics` exatas sem promoção strict/component; exact merge SHA passou CI #2682 / run `34741699505` e publicou QA artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`);\n")
               s = ''.join(lines)
-              b = "- delta semântico GTBC's Geomancy Plus 1.1.0-1.21.1 Phase 2BR: **+12**"
-              idx = s.find(b)
-              assert idx >= 0, 'QUEUE semantic delta anchor drift'
-              line_start = s.rfind('\n',0,idx)+1
-              s = s[:line_start] + "- delta semântico T.O Magic n' Extras 4.4.0.1 Phase 2BS: **+0 strict** (`33 exact registry identities`; `blackout` reachability + runtime viability conditional; componente aberto);\n" + s[line_start:]
               h = "## Phase 2BR — GTBC's Geomancy Plus 1.1.0-1.21.1 — componente #66 / semantic +12"
               assert s.count(h) == 1, 'QUEUE Phase 2BR header drift'
               block = (
@@ -118,7 +92,6 @@ jobs:
               )
               s = s.replace(h, block + h)
               write(p, s)
-
           PY
 
           git diff --check
