@@ -18,8 +18,11 @@ public final class BlackArcanaClient {
         modEventBus.addListener(BlackArcanaKeyMappings::register);
         modEventBus.addListener(BlackArcanaHudLayer::register);
         modEventBus.addListener(TargetAimPresentationLayer::register);
+        modEventBus.addListener(CastPresentationEffectsLayer::register);
         modEventBus.addListener(SpellIconResolver::registerReloadListener);
+        modEventBus.addListener(CastPresentationResources::registerReloadListener);
         ClientArcanaSyncState.installResultObserver(CastPresentationClientRuntime::acceptResult);
+        CastPresentationClientRuntime.installSink(CastPresentationEffectsLayer::accept);
         ClientInputController.register(NeoForge.EVENT_BUS);
         HazardResistanceForecastClientController.register(NeoForge.EVENT_BUS);
         BorrowedSightClientController.register(NeoForge.EVENT_BUS);
