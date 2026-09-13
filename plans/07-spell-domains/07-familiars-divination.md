@@ -2,19 +2,17 @@
 
 ## State
 
-`IN PROGRESS — SERVER SUBSTRATE MERGED / BORROWED SIGHT CODE PATH IMPLEMENTED / ASTRAL SEVERANCE + SPECIFICATION GATE PENDING`
+`IN PROGRESS — SERVER SUBSTRATE + BORROWED SIGHT + ASTRAL LIFECYCLE CANONICAL / ASTRAL CONTROL PARTIAL / SPECIFICATION GATE OPEN`
 
-Planning reconciliation baseline: `main@8af81c925a6d6d725e1663de516fc20b393ec207`.
+PR #72 merged the bounded server-side Noetic/familiar/gaze/sanctuary substrate at `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`. PR #77 merged the bounded server-authored Borrowed Sight BEGIN/END presentation channel and physical-client camera adapter at `4053c060bb7e4c3f57ca06f49295868277a6eb57`. PR #138 merged the dedicated bounded server-owned Astral Severance projection/session lifecycle at `3469b454de2b65d0c15e89e7d689fe760dd30994`.
 
-PR #72 merged the bounded server-side Noetic/familiar/gaze/sanctuary substrate at `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`. PR #77 merged the bounded server-authored Borrowed Sight BEGIN/END presentation channel and physical-client camera adapter at `4053c060bb7e4c3f57ca06f49295868277a6eb57` on top of that canonical substrate.
+The current `feat/stage07-astral-severance-control` tranche extends that Astral lifecycle with a dedicated projection representation, server-owned logical pose/movement substrate and bounded C2S MOVE/RETURN transport. It does **not** promote Stage 07.07 as complete: Astral client camera/input redirection, canonical cast/channel/upkeep wiring, a production MOVE control-limit authority, the complete per-spell specification gate and real-client acceptance remain open. Stage 08 must not consume 07.07 as canonical balance input yet.
 
-This does **not** promote Stage 07.07 as a completed domain. Astral Severance still lacks its canonical astral avatar/viewpoint implementation, the complete per-spell specification gate remains open, and real-client Borrowed Sight acceptance has not been executed. Stage 08 must therefore not treat 07.07 as canonical balance input yet.
-
-The detailed per-spell completeness matrix is `07-familiars-divination-specification-gate.md`.
+The detailed completeness matrix is `07-familiars-divination-specification-gate.md`. The implementation checkpoint is `07-astral-severance-runtime-checkpoint.md`.
 
 ## 1. Implemented server substrate
 
-The merged runtime provides:
+The canonical runtime provides:
 
 - bounded Noetic observation sessions;
 - loaded-only same-dimension target resolution with no force-loading;
@@ -28,143 +26,146 @@ The merged runtime provides:
 
 These are reusable prerequisites, not proof that every approved spell is invocable end-to-end.
 
-`NoeticSafetyCeilings` defines absolute implementation ceilings. In particular, the generic observation layer currently caps maximum range at 128 blocks and maximum duration at 600 ticks, and the class explicitly states Stage 08 may tune below these values. They are **not** final Astral Severance, Namescry, Borrowed Sight or Occult Appraisal balance values.
+`NoeticSafetyCeilings` defines absolute implementation ceilings. In particular, generic observation maximum range is 128 blocks and maximum duration is 600 ticks. Those values are safety caps, not final Astral Severance, Namescry, Borrowed Sight or Occult Appraisal balance defaults.
 
 ## 2. Borrowed Sight — production code path implemented
 
 Canonical design requires channeling the viewpoint of an owned familiar or explicitly consenting bonded target, with range/channel cost and return on interruption/unload.
 
-PR #77 preserves the existing server-owned admission/ownership/session authority and adds only presentation derived from those canonical sessions:
+PR #77 preserves the existing server-owned admission/ownership/session authority and adds presentation derived from those canonical sessions:
 
-- `NoeticObservationRuntime.activeSessions()` exposes immutable bounded value snapshots for projection; it does not create a second session authority;
-- `NoeticViewSyncPlanner` projects only `BORROWED_SIGHT`; `ASTRAL_SEVERANCE`, `NAMESCRY` and `OCCULT_APPRAISAL` cannot enter this camera channel;
-- `NoeticViewTransitionTracker` is bounded by the canonical active-session ceiling and emits idempotent BEGIN/END transitions only when desired presentation changes;
-- `MinecraftNoeticRuntime` resolves only the transition viewer and that viewer's already-loaded `ServerLevel` target by UUID, without global-player iteration or chunk forcing;
-- `MinecraftNoeticObservationRuntime.tick()` revalidates the same canonical `NoeticObservationPolicy` used at admission for every bounded active session before presentation sync; target unload keeps the existing `TARGET_UNAVAILABLE` lifecycle reason, while loss of range/dimension/ownership/privacy authorization closes the server-owned session as `AUTHORIZATION_REVOKED`;
-- `NoeticViewNetworkBridge` registers a play-to-client payload and sends only to the authoritative viewer when the channel is present;
-- `BorrowedSightClientController`, loaded only from the `Dist.CLIENT` entrypoint, resolves only the server-authored runtime entity id from the already-loaded client level, moves only the physical camera, and restores it to the local player's body on END or target loss;
-- the client adapter creates no client-to-server gameplay packet path and cannot choose target, admission, duration, ownership or privacy state.
+- `NoeticObservationRuntime.activeSessions()` exposes immutable bounded value snapshots; it does not create a second session authority;
+- `NoeticViewSyncPlanner` projects only `BORROWED_SIGHT`; `ASTRAL_SEVERANCE`, `NAMESCRY` and `OCCULT_APPRAISAL` cannot enter that camera channel;
+- `NoeticViewTransitionTracker` emits bounded idempotent BEGIN/END transitions;
+- active sessions continuously revalidate the canonical observation policy;
+- target unload or authorization loss closes server-owned state rather than creating client authority;
+- `NoeticViewNetworkBridge` sends only server-authored presentation to the authoritative viewer;
+- `BorrowedSightClientController` moves only the local physical camera and restores it on END/target loss;
+- the client cannot choose target, admission, duration, ownership or privacy state.
 
-NeoForge 1.21–1.21.1 documentation confirms payload handlers registered without `PayloadRegistrar#executesOn(HandlerThread.NETWORK)` execute on the main thread by default. PR #77 does not switch handler thread.
+Automated evidence proves compilation, deterministic server/domain contracts and dedicated-server safety. It does **not** prove actual camera feel, rendering compatibility, input behavior or restoration in the user's full physical-client modpack. Those remain direct real-client validation work under D031.
 
-### 2.1 Borrowed Sight evidence boundary
+## 3. Astral Severance — partial runtime/control implementation
 
-TDD for the continuous-authorization regression was executed after PR #77 had been reconciled with `main@f9c3854bc7e5b2f1bd051434080f13ae3c7d5e5d` through synchronization PR #95:
+Canonical candidate design requires a controllable non-combat viewpoint/avatar while the physical body remains vulnerable, with hard range, timeout/interruption return, no unauthorized projection interaction and safe restoration.
 
-- RED head `5eec2e7818dae68c75fcccc7e80600e7c43a290d`, Black Arcana CI #2005 / `34185866007`: **571 tests, exactly one failure**, `activeObservationTickRevalidatesCanonicalAuthorizationPolicy()`, proving active-session policy revalidation was absent;
-- GREEN code head `45f970edd10e20d41315cd1471471fadbef731fd`, Black Arcana CI #2010 / `34186494393`: GREEN in JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke;
-- canonical runtime merge: PR #77 / `4053c060bb7e4c3f57ca06f49295868277a6eb57`.
+### 3.1 Canonical lifecycle already merged
 
-Earlier Borrowed Sight transport/client checkpoints remain useful TDD history, including `d221408400ecec4a4430df510823cfc6efc4be41` / CI #1994, but they are not the final evidence after the authorization fix and merge.
+PR #138 established the dedicated server-owned lifecycle:
 
-Automated evidence proves compilation, deterministic server/domain contracts and dedicated-server safety for the implemented code path. It does **not** prove actual first-person camera feel, rendering compatibility, input behavior or restoration in the user's full physical-client modpack. Those remain direct real-client validation work under D031.
+- one bounded server-generated projection identity per physical caster;
+- generic observed-entity `ASTRAL_SEVERANCE` admission fails closed;
+- hard duration/range/global active-session ceilings;
+- exact-id return and fail-closed foreign/stale identity handling;
+- positive post-mitigation body damage termination;
+- dimension-change termination;
+- logout cleanup;
+- Soul Anchor-compatible final-death settlement;
+- expiry and server-stop cleanup;
+- Astral state included in aggregate 07.07 cleanup/accounting.
 
-## 3. Astral Severance — NOT IMPLEMENTED end-to-end
+The physical player remains the real gameplay body. Projection never becomes inventory/equipment/progression/health/death authority and never silently teleports the physical body.
 
-Canonical candidate design requires a controllable non-combat viewpoint/avatar while the physical body remains vulnerable, with hard range, timeout/interruption return, no unauthorized projection interaction, and logout/death restoration.
+### 3.2 Current control tranche
 
-The current server observation API accepts an already-loaded `LivingEntity` target and owns session/snapshot state only. Borrowed Sight's camera channel deliberately refuses `ASTRAL_SEVERANCE`. Reusing an arbitrary observed entity as the astral body would violate the required identity, authority and interaction model.
+The current branch adds:
 
-A future Astral Severance implementation must therefore define and implement a canonical bounded astral viewpoint/avatar lifecycle before any client camera/input path is enabled for that observation kind. Until then it remains fail-closed.
+- `AstralProjectionEntity`, a dedicated non-owning server-side world representation using the server-authored projection UUID;
+- server-owned logical `ProjectionPose` distinct from physical-player position;
+- exact-session `ControlIntent` with positive monotonic sequence numbers;
+- finite strafe/vertical/forward axes bounded to `[-1, 1]`;
+- finite yaw/pitch deltas;
+- server-selected `ControlLimits` that clamp step distance and look delta;
+- range validation against the server-owned origin;
+- loaded-only destination admission using `getChunkNow` rather than chunk acquisition/tickets;
+- accepted logical pose mirrored to the projection representation only;
+- representation loss failing closed and terminating the session;
+- dedicated C2S `AstralMoveIntentPayload` / `AstralReturnIntentPayload` and NeoForge packets;
+- caster identity derived exclusively from `IPayloadContext.player()`;
+- no caster UUID or authoritative world coordinates in client payloads;
+- separate one-per-tick MOVE and RETURN ingress limiters with bounded tracked-caster capacity;
+- production RETURN wiring requiring an exact active projection and a sequence newer than the last processed MOVE sequence;
+- Minecraft/NeoForge 1.21.1-compatible stream codecs plus codec round-trip tests.
 
-## 4. Astral Severance lifecycle plan
+### 3.3 Deliberate fail-closed MOVE boundary
 
-Everything in this section is `PLANNED / NOT IMPLEMENTED` unless explicitly identified as an existing reused contract.
+MOVE transport is registered, decoded, validated and rate-limited, but production `BlackArcanaMod` deliberately does not install a MOVE gameplay handler yet.
+
+`MinecraftNoeticRuntime.applyAuthorizedAstralControl(...)` requires server-selected `AstralSeveranceRuntime.ControlLimits`. The current specification/config authority does not freeze production values or a source for `maxStepBlocks` and `maxLookDeltaDegrees`. Test fixture numbers and `NoeticSafetyCeilings` must not become accidental Stage 08 balance defaults.
+
+Therefore the correct current behavior is fail-closed MOVE execution until a reviewed canonical server-side control-limit/config authority exists. RETURN can be wired now because it does not require inventing a missing balance value.
+
+## 4. Astral Severance authority and remaining implementation plan
 
 ### 4.1 Authority model
 
-Black Arcana server runtime must own:
+Black Arcana server runtime owns:
 
-- whether the projection can start;
-- the projection/session identity;
-- the authoritative physical-body identity;
-- the authoritative astral viewpoint/avatar identity if a distinct runtime representation is used;
+- whether a projection may start;
+- projection/session identity;
+- physical-body identity;
+- astral representation identity and logical pose;
 - allowed dimension and loaded-region boundary;
-- range and duration admission;
-- interruption and termination causes;
-- whether any requested movement is accepted;
-- restoration/cleanup;
-- resource/cooldown settlement through the canonical casting/channel pipeline.
+- range/duration admission;
+- movement acceptance;
+- interruption/termination;
+- cleanup/restoration authority;
+- eventual resource/cooldown settlement through the canonical cast/channel pipeline.
 
-The client may own only presentation and bounded intent for an already-authorized projection. It must never be able to declare itself projected, choose an arbitrary astral position, extend duration, bypass range, suppress interruption or select another entity as its astral body.
+The client may own only presentation and bounded intent for an already-authorized projection. It must never declare itself projected, choose an authoritative position, extend duration, bypass range, suppress interruption, select another entity as its astral body or settle gameplay resources.
 
-### 4.2 Conceptual lifecycle states
+### 4.2 Lifecycle states
 
-The implementation may use different names, but the design must preserve these conceptual transitions:
+The conceptual lifecycle remains:
 
-1. **inactive** — no astral projection exists;
-2. **admission pending/validated** — the normal canonical cast/channel pipeline validates identity, progression, resource, cooldown, hazard and projection preconditions;
+1. **inactive** — no projection exists;
+2. **admission pending/validated** — canonical cast/channel pipeline validates identity, progression, resource, cooldown, hazard and projection preconditions;
 3. **projected** — server owns one bounded projection tied to one physical body;
-4. **terminating** — a terminal condition has been accepted and further projection intent is rejected;
-5. **restored/closed** — camera/input presentation returns to the body and all ephemeral projection state is gone.
+4. **terminating** — terminal condition accepted; further control is rejected;
+5. **restored/closed** — client presentation returns to the body and ephemeral projection state is gone.
 
-This is a planning state model, not a claim that a production enum/class already exists.
-
-Exactly one active Astral Severance projection per viewer/caster should be permitted unless a later reviewed design proves a safe reason for more. Repeated activation must not create stacked viewpoints, duplicate avatars, extra resource settlement or replayable session handles.
+One active Astral Severance projection per caster is the current bounded invariant.
 
 ### 4.3 Physical body contract
 
-The physical player entity remains the real gameplay body throughout projection.
-
-Planned invariants:
-
 - health, death, effects, hazards, inventory, equipment, progression and world ownership remain attached to the physical body;
 - projection does not make the body invulnerable, untargetable, unloaded or replaced;
-- body damage is an interruption condition per the approved candidate specification;
-- body death terminates the projection before/with normal death settlement and cannot be hidden by camera state;
-- Soul Anchor or other canonical death-prevention semantics remain owned by their existing pipeline; Astral Severance must not create a parallel death path;
-- ordinary server/player position authority remains the body position; an astral viewpoint is not a silent teleport of the physical body.
+- body damage interrupts projection;
+- final death terminates projection without bypassing Soul Anchor/death-prevention authority;
+- ordinary player position remains the body position.
 
 ### 4.4 Astral identity contract
 
-The astral representation must have its own bounded, server-authored identity if implementation requires a runtime avatar/entity/anchor.
+`AstralProjectionEntity` supplies a dedicated server-authored representation rather than borrowing identity from an arbitrary observed entity.
 
-It must **not** be implemented by borrowing identity from an arbitrary observed `LivingEntity`.
-
-Default planning rule:
-
-- astral representation is non-combat and non-owning;
-- it grants no inventory, equipment, container, loot, damage-credit, projectile, proc, pickup or entity-ownership identity;
-- it cannot be persisted as an ordinary player clone;
-- it cannot become a second caster or second root-cast authority;
-- it cannot receive hidden target data beyond an explicitly approved perception contract.
-
-The concrete representation type is intentionally not invented in this plan. Runtime implementation must choose a NeoForge/Minecraft-safe representation after code/API review and test it directly.
+The representation is non-owning and must not gain inventory, equipment, container, loot, damage-credit, projectile, proc, pickup, root-cast or persistence authority. It cannot become a second player/caster clone.
 
 ### 4.5 Movement and input contract
 
-Astral control may require a future client→server movement-intent seam, but that seam does not exist merely because Borrowed Sight has a camera payload.
+The implemented C2S seam carries bounded movement/look intent only. Server rules remain:
 
-If introduced later:
+- exact projection/session identity required;
+- authenticated caster comes from connection context;
+- monotonic sequence rejects stale/replayed/out-of-order intent;
+- axes and look deltas are numerically bounded before domain application;
+- server computes candidate pose;
+- hard range and loaded-only destination checks are server-owned;
+- no movement packet force-loads a chunk;
+- client prediction cannot become gameplay authority;
+- physical-player movement must not accidentally move the body when Astral input redirection is later enabled;
+- explicit RETURN remains independently available under its own ingress cap.
 
-- client sends bounded movement/look **intent**, never authoritative coordinates or settlement;
-- server validates the projection/session identity before applying intent;
-- server clamps movement to the approved movement model and hard range from the physical body/approved origin;
-- wrong-session, stale, replayed, out-of-order or post-termination intents fail closed;
-- the implementation must rate-limit/bound input and avoid per-intent world scans;
-- no movement intent may force-load a chunk;
-- no client prediction may become server gameplay authority;
-- physical-player movement/input must not be accidentally applied to the body while the projection is intended to control only the astral viewpoint, except for explicit cancellation/return controls.
-
-Exact packet shape, sequence field and movement rate are intentionally not frozen here because no implementation/API evidence has yet justified them.
+The remaining unresolved item is the production source/value contract for `ControlLimits`, not the packet authority model.
 
 ### 4.6 Loaded-only spatial boundary
 
-Astral Severance inherits the existing Noetic principle of bounded loaded-only observation.
-
-Planned rules:
-
 - same-dimension by default;
 - never create chunk tickets or force-load destination/adjacent chunks;
-- entering an unavailable/unloaded region terminates or refuses the movement rather than loading it;
-- range is server-calculated against the canonical physical-body/approved-origin position;
-- existing `NoeticSafetyCeilings.MAX_RANGE_BLOCKS` is an absolute ceiling, not the final spell range;
-- existing `MAX_DURATION_TICKS` is an absolute ceiling, not the final spell duration;
-- Stage 08 may tune below those ceilings only after the rest of the specification gate is closed.
+- unavailable/unloaded destinations are refused rather than loaded;
+- range is server-calculated from the canonical server-owned origin;
+- `NoeticSafetyCeilings.MAX_RANGE_BLOCKS` and `MAX_DURATION_TICKS` remain absolute implementation ceilings, not final balance values.
 
 ### 4.7 Interaction boundary
-
-Astral Severance is non-combat by default.
 
 Without a separate approved contract, projection must not:
 
@@ -176,171 +177,120 @@ Without a separate approved contract, projection must not:
 - pick up/drop/move items;
 - interact with block entities;
 - mount/possess entities;
-- bypass doors, protection, claims or server permissions to perform a remote action;
+- bypass protection/claims/server permissions;
 - expose arbitrary inventory, capability, attachment, NBT or hidden-player state.
 
-If a future design wants any projection interaction, that capability must be specified independently with target/protection/privacy/WorldEffectPolicy authority and must still terminate in canonical server pipelines. It is not implicitly authorized by this plan.
+Any future projection interaction must be specified independently and terminate in canonical server safety/protection pipelines.
 
 ### 4.8 Privacy and player policy
 
-Astral camera freedom must not become a generic player-surveillance bypass.
-
-Planned rules:
-
-- projection does not weaken `NoeticObservationPolicy` for explicit player-targeted observation;
-- any remote player metadata still requires the appropriate observation/privacy contract;
-- server-hidden or provider-hidden player state remains hidden;
-- the projection cannot use unloaded-chunk traversal to locate players;
-- PvP servers may restrict/disable or tune the projection through the eventual bounded config surface, but exact defaults are Stage 08 work.
+Astral camera freedom must not become a generic surveillance bypass. Existing Noetic privacy rules remain authoritative for explicit player-targeted data. Projection cannot use unloaded traversal to locate players, expose provider-hidden state or grant arbitrary remote metadata.
 
 ### 4.9 Termination triggers
 
-The authoritative server projection must terminate safely on at least:
+Server projection must terminate safely on at least:
 
-- explicit cancel/return;
+- explicit RETURN/cancel;
 - channel end where applicable;
-- hard duration expiry;
-- hard range violation;
-- body damage, per candidate specification;
-- body death/final death settlement;
+- duration expiry;
+- body damage;
+- body death/final-death settlement;
 - logout/disconnect;
 - server stop;
 - dimension change;
-- projection representation loss/unload if one exists;
-- required chunk becoming unavailable;
+- projection representation loss;
 - authorization/session invalidation;
-- invalid/stale/replayed session state;
-- provider/resource/channel failure where the eventual cost contract requires continued upkeep.
+- eventual provider/resource/channel failure where upkeep requires it.
 
-The exact close-reason enum is implementation work; the required behavioral causes above are the plan contract.
+Rejected movement outside hard range/unavailable loaded space currently fails closed at movement admission; final gameplay policy may choose refusal versus terminal return only through an explicit reviewed contract.
 
 ### 4.10 Restoration and recovery
 
-The safest planned recovery rule is **fail closed to the physical body**.
+Fail closed to the physical body:
 
-Unless a later persistence design explicitly proves safe resumability:
-
-- active astral projection is ephemeral and must not resume automatically after logout/reconnect or server restart;
-- the server does not restore a stale remote projection position as player location;
-- the client camera/input adapter returns to the physical body when an authoritative END/close is received or when its server-authored projection representation disappears;
-- reconnect/session reset clears stale projection presentation before accepting a new BEGIN;
-- server restart cleanup leaves the physical body's ordinary persisted state authoritative;
-- no duplicate astral representation may survive cleanup.
-
-This section defines the planned recovery contract; it does not claim that Astral Severance persistence code exists today.
+- projection is ephemeral and does not automatically resume after logout/reconnect/restart;
+- server never restores remote projection position as player position;
+- future client camera/input adapter must restore to the physical body on authoritative close or representation loss;
+- reconnect/session reset must clear stale client projection presentation before accepting a new projection;
+- no duplicate representation may survive cleanup.
 
 ### 4.11 Resource, cooldown and progression boundary
 
-No exact Astral Severance cost/cooldown/scaling value is frozen in Stage 07.
+No exact Astral Severance resource cost, cooldown, scaling or final progression values are frozen here.
 
-Current supported design says only:
+Current supported classes only:
 
 - cost class: channel/resource drain;
 - progression class: T3;
-- hard implementation safety ceilings exist above final balance values.
+- hard safety ceilings above final balance values.
 
-Before implementation/promotion:
+Before promotion:
 
-- resource authority must be explicitly selected without creating a second mana system;
-- if an external provider owns the resource, exact provider transaction/query support must be verified;
+- resource authority must be selected without creating a second mana system;
+- external resource transaction support must be verified if used;
 - cooldown identity/group must be explicit and server-owned;
 - scaling equation or explicit `NO SCALING` decision must be written;
-- final RPG Skill Tree gate must use a real contract and must not transfer projection runtime authority to RPG Skill Tree;
-- eventual client presentation follows Stage 05 `07-presentation-data-contracts.md`, not client recomputation.
-
-These remain specification blockers, not permission for Stage 07 to invent Stage 08 numbers.
+- final RPG Skill Tree gate must use the real progression boundary without transferring runtime authority;
+- MOVE `ControlLimits` must come from a reviewed bounded server authority, not safety ceilings/test fixtures.
 
 ### 4.12 WorldEffectPolicy relationship
 
-The default Astral Severance plan performs no terrain mutation, so it should not manufacture a world-mutation path merely to satisfy an abstraction.
-
-If future approved projection interaction mutates world state, it must use the canonical Stage 04 `WorldEffectPolicy`/protection/budget path applicable to that operation. Camera/viewpoint motion itself is not permission for block mutation.
+Current Astral Severance performs no terrain mutation and does not manufacture a world-mutation path. Any future approved world interaction must use the canonical Stage 04 protection/budget authority applicable to that operation.
 
 ### 4.13 Performance budgets
 
-Astral Severance must remain bounded by construction:
+Astral Severance remains bounded by construction:
 
 - no global entity/player/chunk scans;
 - no force-loading;
 - no per-tick full-state network snapshots;
-- movement/input handling bounded to active authorized projections;
-- lifecycle lookup indexed by server-owned session/viewer identity;
-- interaction remains disabled by default, avoiding remote raycast/action spam;
-- camera BEGIN/END remains event/lifecycle driven;
-- any required server position update is bounded and rate-controlled rather than broadcast as an unbounded stream;
+- movement handling indexed by authenticated caster/exact active projection;
+- ingress is bounded per caster/tick and tracked-caster capacity is bounded;
+- interaction remains disabled by default;
 - cleanup is proportional to bounded active projection state.
 
-No numeric networking rate is frozen without implementation evidence.
+## 5. Astral Severance test plan and current evidence
 
-## 5. Astral Severance test plan
+### 5.1 Pure/state coverage
 
-### 5.1 Pure/state tests
+Implemented deterministic coverage includes server-owned identity, duplicate/invalid lifecycle behavior, monotonic control sequences, wrong-session/stale/replay rejection, range/loaded-only movement and cleanup. Remaining canonical cast/upkeep/config behavior must receive exact tests when those contracts are frozen.
 
-Required deterministic coverage should include:
+### 5.2 Server/runtime coverage
 
-- inactive → admitted → projected → terminating → closed transition legality;
-- duplicate activation denied/idempotent;
-- stale/replayed session intent rejected;
-- post-close movement/input ignored;
-- range and duration safety-ceiling enforcement;
-- exact-once cleanup semantics;
-- no arbitrary observed-entity identity accepted as the astral body;
-- restoration target remains the physical body.
+Current runtime/GameTests cover dedicated representation materialization, server-owned movement application and preservation of the physical player body. Existing lifecycle coverage includes damage, logout/dimension/death/server-stop behavior from the merged lifecycle tranche.
 
-### 5.2 Server/runtime tests
+Still required before end-to-end completion:
 
-Required tests should include:
+- canonical cast/channel admission invokes projection lifecycle exactly once;
+- finalized range/control-limit gameplay policy tests;
+- no remote interaction exploit path;
+- client camera/input restoration and body/projection input separation;
+- provider/resource failure behavior once a resource authority exists.
 
-- activation still passes through the canonical cast/channel admission path;
-- body damage terminates projection;
-- death terminates projection without bypassing Soul Anchor/final-death authority;
-- logout terminates and cleans projection;
-- dimension change terminates/fails closed;
-- server stop cleans all active projections within the global bound;
-- unloaded/unknown spatial state never force-loads;
-- crossing hard range terminates/refuses movement;
-- no interaction path can attack/cast/use/break/place/open/pick up from the projection by default;
-- wrong player/session cannot control another projection;
-- no duplicate root-cast/damage/proc attribution exists;
-- provider absence/failure remains fail-closed where a future resource/gate adapter is optional.
+### 5.3 Network/client coverage
 
-### 5.3 Network/client tests
+Implemented network tests cover:
 
-If a movement/view payload is later implemented:
+- payload field shape containing no caster UUID or authoritative coordinates;
+- protocol/sequence/finite-axis validation;
+- 1.21.1-compatible MOVE/RETURN codec round trips with no trailing bytes;
+- dedicated-server classloading safety through the full CI smoke gate.
 
-- malformed/bounded codec cases;
-- stale and wrong-session rejection;
-- server wins over client position/prediction;
-- END restores camera/control idempotently;
-- target/avatar loss restores camera safely;
-- reconnect clears stale client projection state;
-- physical-client-only classes remain absent from dedicated-server classloading.
+Still required:
+
+- physical client input capture/redirection;
+- server correction versus any client prediction;
+- camera BEGIN/END restoration;
+- representation-loss restoration;
+- reconnect stale-client-state cleanup.
 
 ### 5.4 Real-client acceptance
 
-Astral Severance cannot be declared client-validated from automated CI alone.
-
-The final campaign must directly observe, on an exact QA build in the real modpack:
-
-- start transition and visual clarity;
-- camera/control feel;
-- body vulnerability during projection;
-- body-damage interruption;
-- range/timeout return;
-- logout/reconnect restoration;
-- death/Soul Anchor interaction;
-- F1/GUI behavior;
-- first-person/camera mod coexistence;
-- Epic Fight/combat-camera coexistence where applicable;
-- no stuck camera after failure/END;
-- no remote interaction exploit;
-- no visible duplicate player/avatar state inconsistent with the chosen implementation.
-
-Until that evidence exists, client acceptance remains deferred under D031.
+Astral Severance cannot be declared client-validated from automated CI alone. Final QA must directly observe start/return, camera/control feel, body vulnerability, damage interruption, range/timeout behavior, logout/reconnect restoration, death/Soul Anchor interaction, GUI/F1 behavior, camera-mod/Epic Fight coexistence, no stuck camera and no remote interaction exploit. Until observed, client acceptance remains deferred under D031.
 
 ## 6. Other 07.07 spells — specification status
 
-The current approved/preparatory family contains:
+The family contains:
 
 - Astral Severance;
 - Namescry;
@@ -350,68 +300,70 @@ The current approved/preparatory family contains:
 - Borrowed Sight;
 - Pact Sanctuary.
 
-The canonical completeness audit is `07-familiars-divination-specification-gate.md`.
-
-Key conclusion: current runtime implementation does not remove the need to specify missing balance/authority fields. In particular, exact resource cost, cooldown semantics, scaling equation, final progression gate, config surface and per-spell provenance are not frozen across the family.
+The canonical completeness audit is `07-familiars-divination-specification-gate.md`. Runtime progress does not remove missing resource cost, cooldown semantics, scaling equations, final progression gates, config surfaces or provenance across the family.
 
 ## 7. Familiar-provider boundary
 
-Familiar ownership remains provider-native first.
-
-Current rules:
+Familiar ownership remains provider-native first:
 
 - ownership must be proven by an explicit bounded provider/adapter;
-- `OWNED`, `NOT_OWNED` and `UNSUPPORTED` remain distinct outcomes;
+- `OWNED`, `NOT_OWNED` and `UNSUPPORTED` remain distinct;
 - unknown/provider-error state fails closed;
 - physical mod presence or thematic similarity does not establish ownership;
-- the verified Ars familiar adapter does not automatically authorize Alshanex's Familiars, Ars Elemental familiars or any other companion system;
-- each additional provider requires exact-version/API/source verification before its entities can satisfy Black Arcana ownership gates;
+- verified Ars familiar ownership does not automatically authorize other companion systems;
+- each additional provider requires exact-version/API/source verification;
 - RPG Skill Tree may gate progression/mastery through a real contract but does not own familiar identity or Noetic runtime.
 
 ## 8. Specification gate
 
-`plans/07-spell-domains/README.md` requires every spell to define fantasy, host integration, invocation, target rules, resource cost, cooldown, scaling equation, progression gate, world-effect mode, boss/PvP behavior, config surface, tests and provenance.
-
-The candidate entries in `docs/design/candidate-specifications.md` intentionally do not freeze exact numeric balance. They are preparatory design input, not Stage 08-ready specifications.
+Every spell must define fantasy, host integration, invocation, target rules, resource cost, cooldown, scaling equation, progression gate, world-effect mode, boss/PvP behavior, config surface, tests and provenance.
 
 Therefore:
 
-- no safety ceiling becomes a balance default;
+- no safety ceiling or test fixture becomes a balance default;
 - no qualitative `mana/channel`, `upkeep`, `cooldown` or `range` phrase becomes an invented number;
-- no provider resource/host is assumed without a verified transaction/presentation seam;
+- no provider resource/host is assumed without verified authority/transaction support;
 - every spell needs an explicit scaling equation or explicit `NO SCALING` decision;
 - every cooldown needs canonical identity/group semantics if present;
-- progression must be frozen through the actual RPG Skill Tree contract only when that boundary is real;
-- provenance must be linked per final spell/specification;
+- progression must be frozen through the actual RPG Skill Tree boundary;
+- provenance must be linked per final spell;
 - final config surfaces must be bounded and validated.
 
-Until `07-familiars-divination-specification-gate.md` is closed and Astral Severance mechanics are implemented/reviewed, 07.07 remains `IN PROGRESS` and Stage 08 remains blocked from consuming this domain as canonical balance input.
+Until `07-familiars-divination-specification-gate.md` closes and Astral Severance reaches its canonical cast/client control path, 07.07 remains `IN PROGRESS` and Stage 08 remains blocked from consuming it as balance input.
 
-## 9. Existing automated evidence — merged server substrate
+## 9. Automated evidence
 
-- final PR #72 runtime head: `673aff57e15ec29a6fc0d6a94f0034726b99a4c1`;
-- Black Arcana CI #1562 / `34069825298`: GREEN;
-- 103/103 Foundation GameTests and dedicated-server smoke;
-- runtime merge: `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`;
-- exact-SHA post-merge CI #1563 / `34070253755`: GREEN;
-- artifact `black-arcana-5c818c12bb6f580893e44f31fd0e17b9c1fe5840`, ID `10000268004`, SHA-256 `35c8436ab3cbd2f75e8cc6f7ae5554edb7a330205f5166265f96979b6fa65b16`;
-- Borrowed Sight final GREEN code head: `45f970edd10e20d41315cd1471471fadbef731fd`, CI #2010 / `34186494393`;
-- Borrowed Sight canonical merge: PR #77 / `4053c060bb7e4c3f57ca06f49295868277a6eb57`.
+Canonical merged substrate evidence:
 
-This evidence remains authoritative for the code it actually exercises; it is not reclassified as real-client acceptance or as proof that the specification gate is closed.
+- PR #72 runtime head `673aff57e15ec29a6fc0d6a94f0034726b99a4c1`, CI `34069825298`, 103/103 Foundation GameTests + dedicated-server smoke;
+- PR #72 merge `5c818c12bb6f580893e44f31fd0e17b9c1fe5840`, post-merge CI `34070253755`;
+- Borrowed Sight final GREEN head `45f970edd10e20d41315cd1471471fadbef731fd`, CI `34186494393`;
+- Borrowed Sight canonical merge PR #77 / `4053c060bb7e4c3f57ca06f49295868277a6eb57`;
+- Astral lifecycle canonical merge PR #138 / `3469b454de2b65d0c15e89e7d689fe760dd30994`.
+
+Current control branch evidence before final documentation reconciliation:
+
+- synchronized implementation ancestry includes `main@c321063f41c34525cebd5e6936a560253c677442` via merge `3123f007a65a8ac03e701d90b8c8b968c8062425`;
+- exact branch head `76ed71977bff5b0c1b59555f1032b22aecf535a1` passed Black Arcana CI run `34776232542` through unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke;
+- main-only canonical artifact publication correctly skipped on the branch run.
+
+Documentation commits after `76ed719...` require a fresh exact-head CI before merge. Automated evidence is not reclassified as real-client acceptance or as proof that the seven-spell specification gate is closed.
 
 ## 10. 07.07 completion rule
 
 07.07 may become canonical only when all of the following are true:
 
 - existing Noetic/familiar/gaze/sanctuary substrate remains intact;
-- Borrowed Sight production path remains server-authoritative and real-client acceptance is correctly recorded/deferred under D031;
-- Astral Severance has a reviewed bounded server-authoritative avatar/viewpoint lifecycle and implemented canonical path;
-- Astral Severance does not create client-authoritative movement, duplicate caster identity, force-loading or remote interaction bypass;
-- all seven candidate spells satisfy the per-spell specification gate;
-- exact provider bridges used by any final spell are verified against the installed version/API/source;
+- Borrowed Sight remains server-authoritative and real-client acceptance is correctly recorded/deferred under D031;
+- Astral Severance lifecycle/representation/control remains server-authoritative;
+- client camera/input is implemented without client-authoritative movement or duplicate caster identity;
+- production MOVE uses a reviewed bounded server-side control-limit authority;
+- Astral activation/upkeep terminates in the canonical cast/channel transaction rather than a parallel route;
+- remote interaction remains prohibited unless separately approved through canonical safety/protection authority;
+- all seven spells satisfy the per-spell specification gate;
+- provider bridges used by final spells are verified against installed versions/APIs;
 - required automated tests are green on the reconciled exact HEAD;
-- any mandatory real-client rows are directly observed or explicitly deferred only where D031 permits;
-- `plans/STATUS.md` and this directory README match the real `main` state.
+- mandatory real-client rows are directly observed or explicitly deferred only where D031 permits;
+- `plans/STATUS.md` and this directory README match real `main` state.
 
-Creating this plan does not itself satisfy those gates and does not promote Stage 07 or Stage 08.
+This plan records the current boundary; it does not itself promote Stage 07 or Stage 08.
