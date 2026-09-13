@@ -7,13 +7,17 @@ import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.AstralMoveIntentPayload;
 import dev.gustavopere.blackarcana.network.AstralReturnIntentPayload;
 import dev.gustavopere.blackarcana.network.IngressRateLimiter;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
+import java.util.WeakHashMap;
 
 /**
  * Narrow C2S transport for Astral Severance control intent.
@@ -26,14 +30,14 @@ public final class AstralSeveranceNetworkBridge {
     static final int MAX_MOVE_INTENTS_PER_TICK = 1;
     static final int MAX_RETURN_INTENTS_PER_TICK = 1;
 
-    private static final IngressRateLimiter MOVE_INGRESS = new IngressRateLimiter(
-            MAX_MOVE_INTENTS_PER_TICK,
-            1L,
-            ArcanaServerRuntime.DEFAULT_MAX_TRACKED_CASTERS);
-    private static final IngressRateLimiter RETURN_INGRESS = new IngressRateLimiter(
-            MAX_RETURN_INTENTS_PER_TICK,
-            1L,
-            ArcanaServerRuntime.DEFAULT_MAX_TRACKED_CASTERS);
+    /**
+     * Network bridge lifetime is JVM-wide while server ticks are world/server-local. Keep limiter histories
+     * scoped to the concrete MinecraftServer so an integrated-server restart or another server instance cannot
+     * inherit a larger prior tick and fail every request as clock regression. Weak keys avoid retaining a
+     * stopped server solely for transport abuse accounting.
+     */
+    private static final Map<MinecraftServer, ServerIngress> INGRESS_BY_SERVER =
+            Collections.synchronizedMap(new WeakHashMap<>());
 
     private static volatile MoveHandler moveHandler = (player, payload) ->
             AstralSeveranceRuntime.ControlResult.INVALID_INTENT;
@@ -82,11 +86,32 @@ public final class AstralSeveranceNetworkBridge {
     }
 
     private static ArcanaDecision claimMoveIngress(ServerPlayer player) {
-        return MOVE_INGRESS.claim(player.getUUID(), player.serverLevel().getGameTime());
+        return ingressFor(player).move().claim(player.getUUID(), player.serverLevel().getGameTime());
     }
 
     private static ArcanaDecision claimReturnIngress(ServerPlayer player) {
-        return RETURN_INGRESS.claim(player.getUUID(), player.serverLevel().getGameTime());
+        return ingressFor(player).returns().claim(player.getUUID(), player.serverLevel().getGameTime());
+    }
+
+    private static ServerIngress ingressFor(ServerPlayer player) {
+        MinecraftServer server = player.serverLevel().getServer();
+        synchronized (INGRESS_BY_SERVER) {
+            return INGRESS_BY_SERVER.computeIfAbsent(server, ignored -> ServerIngress.create());
+        }
+    }
+
+    private record ServerIngress(IngressRateLimiter move, IngressRateLimiter returns) {
+        private static ServerIngress create() {
+            return new ServerIngress(
+                    new IngressRateLimiter(
+                            MAX_MOVE_INTENTS_PER_TICK,
+                            1L,
+                            ArcanaServerRuntime.DEFAULT_MAX_TRACKED_CASTERS),
+                    new IngressRateLimiter(
+                            MAX_RETURN_INTENTS_PER_TICK,
+                            1L,
+                            ArcanaServerRuntime.DEFAULT_MAX_TRACKED_CASTERS));
+        }
     }
 
     @FunctionalInterface
