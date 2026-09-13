@@ -4,7 +4,9 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, and Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**. The current strict minimum is therefore **1322**. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**. The current strict minimum is therefore **1332**. The global denominator is still incomplete and no semantic percentage is declared.
+
+Phase 2BP has a semantic delta of **+10 `COUNTED_SOURCE_PINNED`**: physical `aero_additions-1.2.8.jar` / SHA-1 `dee32c9fa84d6e39846608f8f77591ea56f` is reconciled with exact public source pin `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`, which closes exactly ten active unconditional Wind `AbstractSpell` registrations. Five commented-out registrations are excluded. Provider Wind focus data plus the Iron's 3.16.3 Scroll Forge contract close a host-native Breeze Rod catalog acquisition route; provider loot modifiers also add Breeze Rod support to Trial Chamber normal-vault rewards. This closes provider component **#64** while keeping assembled-pack runtime compatibility fail-closed. See [`../providers/aeromancy-additions/README.md`](../providers/aeromancy-additions/README.md) and [`PHASE2BP-AEROMANCY-CHECKPOINT.md`](./PHASE2BP-AEROMANCY-CHECKPOINT.md).
 
 Phase 2BO has a semantic delta of **+6 `COUNTED_SOURCE_PINNED`**: physical `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar` / SHA-1 `f77355e029af39bbaba3854e10cc087a608351ff` is reconciled with exact public source pin `GLDYM/Farmers-Spell-n-Spellbook@b7cbb40316a9ccbbc2ce2b56b3023647261ce569`, which closes exactly six unconditional Gluttony `AbstractSpell` registrations. Provider Gluttony focus data plus the Iron's 3.16.3 Scroll Forge contract close a host-native catalog acquisition route; generic random scroll loot is not claimed because the school sets `allowLooting=false`. This closes provider component **#63** while keeping current-host runtime compatibility fail-closed. See [`../providers/farmers-spell/README.md`](../providers/farmers-spell/README.md) and [`PHASE2BO-FARMERS-SPELL-CHECKPOINT.md`](./PHASE2BO-FARMERS-SPELL-CHECKPOINT.md).
 
@@ -30,6 +32,7 @@ Phase 2AY itself has a semantic delta of **0**: GTBC's SpellLib 2.2.0 is publish
 
 Therefore:
 
+- semantic numerator delta from SnackPirate's Aeromancy Additions 1.2.8 source-pinned closure: **+10**;
 - semantic numerator delta from Farmer's Spell 'n Spellbooks 1.0.5.1 source-pinned closure: **+6**;
 - semantic numerator/denominator delta attributable to Ars Sable 1.1.2: **+0**;
 - semantic numerator/denominator delta attributable to Ars Polymorphia 1.0.3: **+0**;
@@ -43,7 +46,7 @@ Therefore:
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
 - semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
 - semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
-- strict reconstructible semantic minimum: **1322**;
+- strict reconstructible semantic minimum: **1332**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
@@ -52,6 +55,16 @@ The preceding semantic-only promotion was **Malum +26**: whole-interval path his
 Phase 2BH is canonical for Goety 3.1.4 from exact hash-matched artifact evidence: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical values are **1249 / 57 of 100**. Runtime/API/balance gates remain separate.
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
+
+## Phase 2BP — SnackPirate's Aeromancy Additions 1.2.8 component #64, source-pinned spell closure
+
+Physical `aero_additions-1.2.8.jar` / SHA-1 `dee32c9fa84d6e39846608f8f77591ea56f` is reconciled with exact public source `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`. The source-pinned registry closes exactly ten active unconditional Wind spells: `wind_charge`, `updraft`, `airstep`, `asphyxiate`, `feather_fall`, `wind_shield`, `airblast`, `wind_blade`, `flush`, `dash`. Tornado, Thunderclap, Summon Breeze, Telelink and Shapeshift remain excluded because their registration lines are commented out at the audited pin. The Wind school is support taxonomy rather than an eleventh semantic action.
+
+Provider data supplies the Breeze Rod Wind focus route and the Iron's 3.16.3 source-line Scroll Forge contract corroborates host-native catalog reachability. Provider global loot modifiers additionally append Breeze Rod support to the normal Trial Chamber vault reward table. Updraft Tome and Wind Sword embed already-counted provider spells and do not add semantics. The ten spells are therefore `COUNTED_SOURCE_PINNED`, not `COUNTED_EXACT`.
+
+PR #219 exact reconciled HEAD `6e39a01273b77ba8accf85d49647b6ceff840e8a` passed Black Arcana CI #2577 / run `34730598682`; squash evidence merge `84e9635b446b605140ab349fa2edc51f3462d518` passed exact-SHA post-merge CI #2578 / run `34730783233`. Phase 2BP raises the Iron ecosystem subtotal from **548 to 558**, the strict minimum from **1322 to 1332**, and this separate shared-ledger reconciliation promotes provider component **#64 / 64 of 100**.
+
+No assembled-pack runtime compatibility PASS is claimed. Source 1.2.8 targets NeoForge `21.1.228` and Iron's `1.21.1-3.16.1`, while the physical pack uses NeoForge `21.1.248` and Iron's `3.16.3`; the declared Iron's range accepts the physical version, but required mixin application, provider payload behavior, physical Scroll Forge/config behavior, representative casts, persistence/reload and duplicate-processing checks remain direct runtime QA gates.
 
 ## Phase 2BO — Farmer's Spell 'n Spellbooks 1.0.5.1 component #63, source-pinned spell closure
 
@@ -105,7 +118,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after Phase 2BO: 63/100 = 63%.**
+**Canonical provider-component coverage after the Phase 2BP shared-ledger reconciliation: 64/100 = 64%.**
 
 Phase 2BF exact-artifact reconciliation closes Somake 1.0.8-fix registry identity at 67 current registrations under the physical optional-provider set, but the provider remains `CONDITIONAL` because the deployed COMMON spell-lock config and complete survival acquisition/reachability are not authoritative. Phase 2BF therefore changes neither metric: **874** strict semantic objects and **55/100** closed provider components at that historical checkpoint.
 
@@ -138,7 +151,7 @@ The internal operational denominator remains **100 magic/cross-domain component 
 - 2 current candidates added beyond the historical baseline: `soul_fire_d`, `reliquified_lenders_cataclysm_new_relics_fix`;
 - therefore `103 - 5 + 2 = 100`.
 
-GTBC's SpellLib, FamiliarsLib and Farmer's Spell were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
+GTBC's SpellLib, FamiliarsLib, Farmer's Spell and Aeromancy Additions were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
 
 ## Canonical recent closure sequence
 
@@ -161,6 +174,7 @@ GTBC's SpellLib, FamiliarsLib and Farmer's Spell were already members of those 1
 | 61 | Phase 2BM / PR #210 | `ars_polymorphia` | canonical at `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`; source-pinned `ZERO_SEMANTIC_BRIDGE`; semantic +0; post-merge CI #2544 GREEN |
 | 62 | Phase 2BN / PR #212 | `ars_sable` | canonical at `main@c1c422b5ec72fe4308104f04282732d6c2f2bbc1`; source-pinned zero-semantic spatial/compat bridge; post-merge CI #2554 GREEN; runtime host QA fail-closed |
 | 63 | Phase 2BO / PR #214 | `farmers_spell` | source-pinned +6 semantic closure; evidence merge `main@34a5fd495da744800b32b051e38c6473c6f5ea15`; post-merge CI #2565 GREEN; runtime host QA fail-closed |
+| 64 | Phase 2BP / PR #219 | `aero_additions` | source-pinned +10 semantic closure; evidence merge `main@84e9635b446b605140ab349fa2edc51f3462d518`; post-merge CI #2578 GREEN; runtime host QA fail-closed; promoted by the separate shared-ledger reconciliation |
 
 Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
 
