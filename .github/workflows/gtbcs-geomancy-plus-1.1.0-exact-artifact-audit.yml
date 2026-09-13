@@ -1,0 +1,263 @@
+name: GTBC Geomancy Plus 1.1.0 Exact Artifact Audit NON-MERGE
+
+on:
+  push:
+    branches:
+      - audit/gtbcs-geomancy-plus-1.1.0-exact-artifact
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout audit branch
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact release artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          PROJECT='1352485'
+          FILE='7041615'
+          URL="https://www.cursemaven.com/curse/maven/gtbcs-geomancy-plus-${PROJECT}/${FILE}/gtbcs-geomancy-plus-${PROJECT}-${FILE}.jar"
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 "$URL" -o geomancy.jar
+          mkdir -p audit work/classes
+          sha1sum geomancy.jar | tee audit/sha1.txt
+          sha256sum geomancy.jar | tee audit/sha256.txt
+          jar tf geomancy.jar > work/jar-list.txt
+
+      - name: Derive clean-room structural evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, re, struct, subprocess, zipfile
+          from collections import Counter, defaultdict
+          from pathlib import Path
+
+          JAR = Path('geomancy.jar')
+          z = zipfile.ZipFile(JAR)
+          names = sorted(z.namelist())
+
+          def parse_class_header(data):
+              if data[:4] != b'\xca\xfe\xba\xbe':
+                  return None
+              off = 8
+              cp_count = struct.unpack_from('>H', data, off)[0]; off += 2
+              cp = [None] * cp_count
+              i = 1
+              while i < cp_count:
+                  tag = data[off]; off += 1
+                  if tag == 1:
+                      ln = struct.unpack_from('>H', data, off)[0]; off += 2
+                      cp[i] = ('Utf8', data[off:off+ln].decode('utf-8', 'replace')); off += ln
+                  elif tag in (3,4):
+                      off += 4
+                  elif tag in (5,6):
+                      off += 8; i += 1
+                  elif tag == 7:
+                      idx = struct.unpack_from('>H', data, off)[0]; off += 2; cp[i] = ('Class', idx)
+                  elif tag == 8:
+                      off += 2
+                  elif tag in (9,10,11,12,17,18):
+                      off += 4
+                  elif tag == 15:
+                      off += 3
+                  elif tag in (16,19,20):
+                      off += 2
+                  else:
+                      raise ValueError(f'unknown cp tag {tag}')
+                  i += 1
+              access, this_idx, super_idx = struct.unpack_from('>HHH', data, off)
+              def cname(idx):
+                  if not idx: return None
+                  e = cp[idx]
+                  if not e or e[0] != 'Class': return None
+                  u = cp[e[1]]
+                  return u[1] if u and u[0] == 'Utf8' else None
+              utf8 = sorted({e[1] for e in cp if e and e[0] == 'Utf8'})
+              return cname(this_idx), cname(super_idx), utf8
+
+          classes = {}
+          for p in names:
+              if not p.endswith('.class') or p.startswith('META-INF/versions/'):
+                  continue
+              try:
+                  h = parse_class_header(z.read(p))
+              except Exception:
+                  continue
+              if h:
+                  classes[h[0]] = {'super': h[1], 'utf8': h[2], 'path': p}
+
+          memo = {}
+          ABSTRACT = 'io/redspace/ironsspellbooks/api/spells/AbstractSpell'
+          def is_spell(c):
+              if c in memo: return memo[c]
+              seen = set()
+              cur = c
+              while cur and cur not in seen:
+                  seen.add(cur)
+                  sup = classes.get(cur, {}).get('super')
+                  if sup == ABSTRACT:
+                      memo[c] = True; return True
+                  if sup not in classes:
+                      break
+                  cur = sup
+              memo[c] = False; return False
+
+          spell_classes = sorted(c for c in classes if is_spell(c))
+          direct_spell_classes = sorted(c for c in classes if classes[c]['super'] == ABSTRACT)
+
+          registry_indicator = re.compile(r'(SpellRegistry|registerSpell|DeferredRegister|RegistryObject|DeferredHolder)', re.I)
+          registry_classes = sorted(c for c,d in classes.items() if any(registry_indicator.search(s) for s in d['utf8']))
+          config_indicator = re.compile(r'(ForgeConfigSpec|ModConfig|BooleanValue|ConfigValue|enable|enabled|disable)', re.I)
+          config_classes = sorted(c for c,d in classes.items() if any(config_indicator.search(s) for s in d['utf8']))
+          mod_gate_indicator = re.compile(r'(ModList|isLoaded|mowzie|irons_spellbooks|iss_magicfromtheeast)', re.I)
+          mod_gate_classes = sorted(c for c,d in classes.items() if any(mod_gate_indicator.search(s) for s in d['utf8']))
+
+          # Preserve signatures only. Bytecode bodies are queried transiently below and are not written to artifacts.
+          sig_classes = sorted(set(spell_classes + registry_classes + config_classes + mod_gate_classes))
+          sig_out = []
+          for c in sig_classes:
+              dot = c.replace('/','.')
+              try:
+                  out = subprocess.run(['javap','-classpath',str(JAR),'-p',dot], text=True, capture_output=True, timeout=20).stdout
+              except Exception:
+                  out = ''
+              if out.strip():
+                  sig_out.append(f'===== {dot} =====\n{out.strip()}\n')
+          Path('audit/signatures.txt').write_text('\n'.join(sig_out), encoding='utf-8')
+
+          # Transient bytecode analysis: retain only aggregate call/branch/config/gate facts, not disassembly.
+          byte_facts = []
+          register_calls = 0
+          static_branch_ops = 0
+          new_spell_refs = Counter()
+          config_refs = set()
+          mod_gate_refs = set()
+          for c in registry_classes:
+              dot = c.replace('/','.')
+              try:
+                  out = subprocess.run(['javap','-classpath',str(JAR),'-c','-p',dot], text=True, capture_output=True, timeout=20).stdout
+              except Exception:
+                  continue
+              rc = len(re.findall(r'//.*registerSpell|Method .*registerSpell', out))
+              register_calls += rc
+              static = re.search(r'static \{\};(.*?)(?:\n\s*(?:public|private|protected|static|final)|\Z)', out, re.S)
+              if static:
+                  b = static.group(1)
+                  static_branch_ops += len(re.findall(r'\b(?:if[a-z_]*|goto(?:_w)?|tableswitch|lookupswitch)\b', b))
+                  for m in re.finditer(r'// class ([\w/$]+)', b):
+                      ref = m.group(1)
+                      if ref in spell_classes:
+                          new_spell_refs[ref] += 1
+              for line in out.splitlines():
+                  if re.search(r'ForgeConfigSpec|ModConfig|BooleanValue|ConfigValue', line):
+                      config_refs.add(line.split('//')[-1].strip()[:180])
+                  if re.search(r'ModList|isLoaded|mowzie|iss_magicfromtheeast', line, re.I):
+                      mod_gate_refs.add(line.split('//')[-1].strip()[:180])
+
+          # Packaged resource identity only.
+          lang_keys = []
+          for p in names:
+              if p.endswith('/lang/en_us.json'):
+                  try: obj = json.loads(z.read(p).decode('utf-8-sig'))
+                  except Exception: continue
+                  if isinstance(obj, dict):
+                      lang_keys.extend(k for k in obj if re.search(r'(spell|school|geo|geomancy)', k, re.I))
+          lang_keys = sorted(set(lang_keys))
+
+          spell_data_paths = [p for p in names if p.startswith('data/') and re.search(r'/(spells?|spell_data|spell_part|schools?)/', p, re.I)]
+          focus_tag_paths = [p for p in names if p.startswith('data/') and p.endswith('.json') and re.search(r'(school_focus|focus)', p, re.I)]
+          loot_paths = [p for p in names if p.startswith('data/') and p.endswith('.json') and '/loot' in p]
+          recipe_paths = [p for p in names if p.startswith('data/') and p.endswith('.json') and '/recipe' in p]
+
+          focus_values = []
+          for p in focus_tag_paths:
+              try: obj = json.loads(z.read(p).decode('utf-8-sig'))
+              except Exception: continue
+              if isinstance(obj, dict):
+                  vals = obj.get('values')
+                  if isinstance(vals, list):
+                      for v in vals:
+                          if isinstance(v, str): focus_values.append((p,v))
+                          elif isinstance(v, dict) and isinstance(v.get('id'), str): focus_values.append((p,v['id']))
+
+          # Metadata facts, dependency ranges only.
+          metadata_path = next((p for p in ('META-INF/neoforge.mods.toml','META-INF/mods.toml') if p in names), None)
+          metadata = z.read(metadata_path).decode('utf-8','replace') if metadata_path else ''
+          meta_lines = []
+          for line in metadata.splitlines():
+              s=line.strip()
+              if re.match(r'^(modId|version|displayName|license|type|versionRange|mandatory)\s*=', s):
+                  meta_lines.append(s)
+
+          report = Path('audit/report.txt')
+          with report.open('w', encoding='utf-8') as f:
+              f.write('GTBC Geomancy Plus 1.1.0-1.21.1 exact CurseForge artifact clean-room structural audit\n')
+              f.write('NON-MERGE EVIDENCE ONLY\n')
+              f.write('curseforge_project=1352485\ncurseforge_file=7041615\n')
+              f.write('curse_maven=curse.maven:gtbcs-geomancy-plus-1352485:7041615\n')
+              f.write(f'jar_entry_count={len(names)}\nclass_count={len(classes)}\nmetadata_path={metadata_path or "<none>"}\n')
+              f.write('\n== metadata/dependency facts ==\n')
+              for x in meta_lines: f.write(x+'\n')
+              f.write('\n== exact AbstractSpell subclass inventory ==\n')
+              f.write(f'spell_subclass_count={len(spell_classes)}\n')
+              f.write(f'direct_abstract_spell_subclass_count={len(direct_spell_classes)}\n')
+              for c in spell_classes: f.write(c.replace('/','.')+'\n')
+              f.write('\n== registry structural facts ==\n')
+              f.write(f'registry_indicator_class_count={len(registry_classes)}\n')
+              for c in registry_classes: f.write(c.replace('/','.')+'\n')
+              f.write(f'transient_registerSpell_call_count={register_calls}\n')
+              f.write(f'transient_static_initializer_branch_opcode_count={static_branch_ops}\n')
+              f.write(f'transient_unique_new_spell_class_refs={len(new_spell_refs)}\n')
+              for c,n in sorted(new_spell_refs.items()): f.write(f'{c.replace("/",".")}={n}\n')
+              f.write('\n== provider config/gate indicators ==\n')
+              f.write(f'config_indicator_class_count={len(config_classes)}\n')
+              for c in config_classes: f.write(c.replace('/','.')+'\n')
+              f.write(f'mod_gate_indicator_class_count={len(mod_gate_classes)}\n')
+              for c in mod_gate_classes: f.write(c.replace('/','.')+'\n')
+              f.write(f'transient_config_reference_count={len(config_refs)}\n')
+              for r in sorted(config_refs): f.write(r+'\n')
+              f.write(f'transient_mod_gate_reference_count={len(mod_gate_refs)}\n')
+              for r in sorted(mod_gate_refs): f.write(r+'\n')
+              f.write('\n== semantic localization keys (keys only) ==\n')
+              f.write(f'count={len(lang_keys)}\n')
+              for k in lang_keys: f.write(k+'\n')
+              f.write('\n== semantic/reachability resource paths ==\n')
+              f.write(f'spell_data_path_count={len(spell_data_paths)}\n')
+              for p in spell_data_paths: f.write(p+'\n')
+              f.write(f'focus_tag_path_count={len(focus_tag_paths)}\n')
+              for p in focus_tag_paths: f.write(p+'\n')
+              f.write(f'focus_value_count={len(focus_values)}\n')
+              for p,v in focus_values: f.write(f'{p} -> {v}\n')
+              f.write(f'loot_json_count={len(loot_paths)}\n')
+              for p in loot_paths: f.write(p+'\n')
+              f.write(f'recipe_json_count={len(recipe_paths)}\n')
+              for p in recipe_paths: f.write(p+'\n')
+              f.write('\nBOUNDARY: exact CurseForge release artifact inspected read-only. Retained output is limited to hashes, metadata/dependency declarations, class/type/signature identities, derived aggregate bytecode facts, localization keys and structured resource identifiers/paths. No method bodies, recipe payloads, localization prose, assets, source reconstruction or binary redistribution are retained. This report does not assert source-to-binary reproducibility or assembled-pack runtime PASS.\n')
+          PY
+
+          echo '== report =='
+          cat audit/report.txt
+
+      - name: Upload text-only audit evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: gtbcs-geomancy-plus-1.1.0-exact-artifact-audit
+          path: |
+            audit/report.txt
+            audit/signatures.txt
+            audit/sha1.txt
+            audit/sha256.txt
+          if-no-files-found: error
+          retention-days: 30
