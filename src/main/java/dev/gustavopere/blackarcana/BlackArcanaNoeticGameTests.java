@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana;
 
+import dev.gustavopere.blackarcana.content.noetic.AstralProjectionEntity;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipProvider;
 import dev.gustavopere.blackarcana.content.noetic.NoeticObservationKind;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
@@ -88,12 +89,29 @@ public final class BlackArcanaNoeticGameTests {
                         "projection caster identity must remain the physical player");
                 helper.assertTrue(projection.physicalBodyId().equals(caster.getUUID()),
                         "projection must never replace the physical body identity");
+
+                var projectionEntity = caster.serverLevel().getEntity(projection.projectionId());
+                helper.assertTrue(projectionEntity instanceof AstralProjectionEntity,
+                        "authorized Astral activation must materialize exactly its server-owned projection entity");
+                if (projectionEntity instanceof AstralProjectionEntity) {
+                    helper.assertTrue(closeEnough(projection.pose().x(), caster.getX())
+                                    && closeEnough(projection.pose().y(), caster.getEyeY())
+                                    && closeEnough(projection.pose().z(), caster.getZ()),
+                            "logical Astral origin must begin at the loaded physical body's eye position");
+                    helper.assertTrue(closeEnough(projectionEntity.getX(), projection.pose().x())
+                                    && closeEnough(projectionEntity.getY(), projection.pose().y())
+                                    && closeEnough(projectionEntity.getZ(), projection.pose().z()),
+                            "projection entity must mirror the server-owned logical pose at activation");
+                }
+
                 helper.assertTrue(!MinecraftNoeticRuntime.requestAstralReturn(
                                 server, caster.getUUID(), UUID.randomUUID()),
                         "foreign/stale projection identity must not terminate the active session");
                 helper.assertTrue(MinecraftNoeticRuntime.requestAstralReturn(
                                 server, caster.getUUID(), projection.projectionId()),
                         "exact server-authored projection identity must permit explicit return");
+                helper.assertTrue(caster.serverLevel().getEntity(projection.projectionId()) == null,
+                        "exact explicit return must discard the projection representation immediately");
                 helper.assertTrue(!MinecraftNoeticRuntime.requestAstralReturn(
                                 server, caster.getUUID(), projection.projectionId()),
                         "replayed explicit return must be an idempotent no-op");
@@ -189,5 +207,9 @@ public final class BlackArcanaNoeticGameTests {
         helper.assertTrue(MinecraftNoeticRuntime.activeStateCount(server) == 0,
                 "denied foreign familiar observation must leave no active Noetic state");
         helper.succeed();
+    }
+
+    private static boolean closeEnough(double left, double right) {
+        return Math.abs(left - right) <= 1.0E-6D;
     }
 }

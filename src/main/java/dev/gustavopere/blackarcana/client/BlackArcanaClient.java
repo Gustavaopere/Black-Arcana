@@ -22,6 +22,7 @@ public final class BlackArcanaClient {
         modEventBus.addListener(DiscoverabilityHintLayer::register);
         modEventBus.addListener(SpellIconResolver::registerReloadListener);
         modEventBus.addListener(CastPresentationResources::registerReloadListener);
+        modEventBus.addListener(AstralProjectionClientRegistration::register);
         ClientArcanaSyncState.installResultObserver(CastPresentationClientRuntime::acceptResult);
         ClientArcanaSyncState.installLoadoutObserver(DiscoverabilityClientRuntime::acceptLoadout);
         CastPresentationClientRuntime.installSink(CastPresentationEffectsLayer::accept);
