@@ -96,7 +96,7 @@ These statements describe provider behavior and acquisition surfaces. They do no
 
 ## Component accounting
 
-Durable PR #223 was squash-merged as `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; its exact merge SHA passed Black Arcana CI #2622 / run `34735586680` and published canonical QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`). This shared-ledger reconciliation promotes `ars_two_way_portals` to technical provider component **#65 / 65 of 100** while leaving the strict semantic minimum at **1332**.
+Durable evidence PR #223 was squash-merged as `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; its exact merge SHA passed Black Arcana CI #2622 / run `34735586680` and published canonical QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`). This shared-ledger reconciliation promotes `ars_two_way_portals` to technical provider component **#65 / 65 of 100** while leaving the strict semantic minimum at **1332**.
 
 The promotion becomes canonical only after this reconciliation itself is merged to `main` and its exact merge SHA passes the project post-merge CI gate. Runtime portal compatibility remains a separate fail-closed concern.
 
