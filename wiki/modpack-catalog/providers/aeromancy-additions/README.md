@@ -1,6 +1,6 @@
 # SnackPirate's Aeromancy Additions 1.2.8 — provider dossier
 
-Status: `EXACT SOURCE CATALOG COMPLETE / 10 REGISTERED SPELL IDENTITIES / CURRENT-HOST RUNTIME QA OPEN`
+Status: `COUNTED_SOURCE_PINNED / 10 REGISTERED SPELL IDENTITIES / COMPONENT #64 / CURRENT-HOST RUNTIME QA OPEN`
 
 Physical authority: current 595-entry modlist (`SHA-1 7aaece7acbfb07ba4d0c66029042f36c50d046f0`)
 Physical JAR: `aero_additions-1.2.8.jar`
@@ -53,9 +53,11 @@ The physical pack uses NeoForge 21.1.248, Iron's 3.16.3 and embeds ExpandAbility
 
 ## Semantic disposition
 
-Candidate semantic delta after normal evidence promotion: **+10 `COUNTED_SOURCE_PINNED`**.
+Aeromancy contributes **+10 `COUNTED_SOURCE_PINNED`** semantic magic objects. The shared-ledger reconciliation promotes the strict minimum from **1322 to 1332** and closes provider component **#64 / 64 of 100**.
 
-Current shared ledgers remain unchanged in this evidence tranche: **1322 strict semantic objects / 63 of 100 technical components**. Candidate post-reconciliation state is **1332 / 64 of 100**.
+This is a catalog/source-pinned promotion only. No assembled-pack runtime PASS is claimed: current-pack client/server boot, required mixins, payload behavior, physical Scroll Forge/config behavior and representative casts remain direct QA gates.
+
+The promotion becomes canonical only after this reconciliation is merged to `main` and the exact merge SHA passes the project post-merge CI gate.
 
 ## Clean-room boundary
 

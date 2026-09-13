@@ -77,7 +77,7 @@ Dependency ranges or version-label equality are not a runtime PASS.
 
 Phase 2BO contributes **+6 `COUNTED_SOURCE_PINNED`** semantic spell identities.
 
-The Gluttony school is taxonomy/support for the six actions and is not counted as a seventh object under the current semantic metric. After the Phase 2BO shared-ledger reconciliation, the current catalog state is **1322 strict semantic objects / 63 of 100 provider components**. These catalog values do not certify current-host runtime compatibility.
+The Gluttony school is taxonomy/support for the six actions and is not counted as a seventh object under the current semantic metric. At the Phase 2BO checkpoint, the shared-ledger state was **1322 strict semantic objects / 63 of 100 provider components**. That pair is a historical Phase 2BO snapshot, not a live aggregate; current aggregate totals are maintained in the shared semantic/component ledgers. These catalog values do not certify current-host runtime compatibility.
 
 ## Clean-room boundary
 
