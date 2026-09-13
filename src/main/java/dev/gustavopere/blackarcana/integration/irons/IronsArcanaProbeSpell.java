@@ -54,6 +54,25 @@ public final class IronsArcanaProbeSpell extends AbstractSpell {
         return CastType.INSTANT;
     }
 
+    /**
+     * Iron's performs its native mana admission before invoking {@link #onCast}.
+     * Hosted Black Arcana spells therefore expose zero provider mana cost and
+     * let the authoritative Black Arcana CostProvider settle the real cost.
+     */
+    @Override
+    public int getManaCost(int level) {
+        return 0;
+    }
+
+    /**
+     * Iron's applies provider cooldown after {@link #onCast}. Black Arcana owns
+     * the hosted spell cooldown, so the provider-facing cooldown is always zero.
+     */
+    @Override
+    public int getSpellCooldown() {
+        return 0;
+    }
+
     @Override
     public boolean requiresLearning() {
         return false;
