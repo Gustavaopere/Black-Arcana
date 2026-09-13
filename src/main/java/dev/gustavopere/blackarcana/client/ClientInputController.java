@@ -67,6 +67,7 @@ public final class ClientInputController {
             ClientArcanaSyncState.clear();
             ClientUxState.clear();
             CastPresentationClientRuntime.clear();
+            CastPresentationEffectsLayer.clear();
             return;
         }
         CastPresentationClientRuntime.tick(minecraft.player);
