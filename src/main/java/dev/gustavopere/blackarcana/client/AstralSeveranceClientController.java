@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public final class AstralSeveranceClientController {
     private static final AstralViewClientState STATE = new AstralViewClientState();
-    private static boolean cameraOwned;
+    private static Entity ownedCameraEntity;
 
     private AstralSeveranceClientController() { }
 
@@ -42,7 +42,7 @@ public final class AstralSeveranceClientController {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.level == null) {
             STATE.clear();
-            cameraOwned = false;
+            ownedCameraEntity = null;
             return;
         }
 
@@ -63,14 +63,16 @@ public final class AstralSeveranceClientController {
         if (minecraft.getCameraEntity() != target) {
             minecraft.setCameraEntity(target);
         }
-        cameraOwned = true;
+        ownedCameraEntity = target;
     }
 
     private static void restorePhysicalBody(Minecraft minecraft) {
-        if (!cameraOwned || minecraft.player == null) {
+        if (ownedCameraEntity == null || minecraft.player == null) {
             return;
         }
-        minecraft.setCameraEntity(minecraft.player);
-        cameraOwned = false;
+        if (minecraft.getCameraEntity() == ownedCameraEntity) {
+            minecraft.setCameraEntity(minecraft.player);
+        }
+        ownedCameraEntity = null;
     }
 }
