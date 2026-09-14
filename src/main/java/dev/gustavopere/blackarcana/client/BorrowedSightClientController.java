@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 public final class BorrowedSightClientController {
     private static volatile int targetEntityId = -1;
-    private static boolean cameraOwned;
+    private static Entity ownedCameraEntity;
 
     private BorrowedSightClientController() { }
 
@@ -49,7 +49,7 @@ public final class BorrowedSightClientController {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.level == null) {
             targetEntityId = -1;
-            cameraOwned = false;
+            ownedCameraEntity = null;
             return;
         }
 
@@ -59,8 +59,7 @@ public final class BorrowedSightClientController {
             return;
         }
 
-        int targetEntityId = desiredTarget;
-        Entity target = minecraft.level.getEntity(targetEntityId);
+        Entity target = minecraft.level.getEntity(desiredTarget);
         if (target == null || target.isRemoved()) {
             BorrowedSightClientController.targetEntityId = -1;
             restorePhysicalBody(minecraft);
@@ -70,14 +69,16 @@ public final class BorrowedSightClientController {
         if (minecraft.getCameraEntity() != target) {
             minecraft.setCameraEntity(target);
         }
-        cameraOwned = true;
+        ownedCameraEntity = target;
     }
 
     private static void restorePhysicalBody(Minecraft minecraft) {
-        if (!cameraOwned || minecraft.player == null) {
+        if (ownedCameraEntity == null || minecraft.player == null) {
             return;
         }
-        minecraft.setCameraEntity(minecraft.player);
-        cameraOwned = false;
+        if (minecraft.getCameraEntity() == ownedCameraEntity) {
+            minecraft.setCameraEntity(minecraft.player);
+        }
+        ownedCameraEntity = null;
     }
 }
