@@ -13,6 +13,8 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.BoundedReplayGuard;
 import dev.gustavopere.blackarcana.core.cast.CompositeCastRequestValidator;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
+import dev.gustavopere.blackarcana.network.CastIntentPayload;
+import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.ChannelBeginIntentPayload;
 import dev.gustavopere.blackarcana.network.ChannelCancelIntentPayload;
 import dev.gustavopere.blackarcana.network.ChannelReleaseIntentPayload;
@@ -54,6 +56,31 @@ class ArcanaServerRuntimeChannelAuthorityTest {
     }
 
     @Test
+    void registeredChannelSpellRejectsImmediateIngressAfterClaimingSharedBudget() {
+        ArcanaServerRuntime runtime = runtime(1);
+        assertTrue(runtime.channelSpecs().register(SPELL.id(), new ArcanaChannelSpec(5L, 40L)));
+
+        ArcanaCastId immediateCast = ArcanaCastId.random();
+        CastResultPayload immediate = runtime.handle(context(100L), new CastIntentPayload(
+                ArcanaProtocol.VERSION,
+                immediateCast.canonical(),
+                SPELL.id().canonical(),
+                0,
+                ""));
+        assertEquals(ArcanaCastResult.Status.DENIED_CHANNEL.name(), immediate.status(),
+                "server authority must reject immediate-cast bypass for a registered channel spell");
+        assertEquals("channel_requires_begin", immediate.code());
+
+        ArcanaDecision beginAfterBypassAttempt = runtime.beginChannel(context(100L), new ChannelBeginIntentPayload(
+                ArcanaProtocol.VERSION,
+                ArcanaCastId.random().canonical(),
+                SPELL.id().canonical(),
+                0));
+        assertEquals("rate_limited", beginAfterBypassAttempt.code(),
+                "the rejected immediate bypass attempt must still consume the shared ingress budget");
+    }
+
+    @Test
     void physicalReleaseIsTerminalEvenWhenMinimumChannelWasNotReached() {
         ArcanaServerRuntime runtime = runtime();
         assertTrue(runtime.channelSpecs().register(SPELL.id(), new ArcanaChannelSpec(5L, 40L)));
@@ -86,7 +113,11 @@ class ArcanaServerRuntimeChannelAuthorityTest {
     }
 
     private static ArcanaServerRuntime runtime() {
-        ArcanaServerRuntime runtime = new ArcanaServerRuntime(12, 32, 32);
+        return runtime(12);
+    }
+
+    private static ArcanaServerRuntime runtime(int maxCastIntentsPerSecond) {
+        ArcanaServerRuntime runtime = new ArcanaServerRuntime(maxCastIntentsPerSecond, 32, 32);
         runtime.spells().replaceAll(List.of(SPELL));
         runtime.loadouts().setLoadout(CASTER, List.of(SPELL.id()));
         ArcanaServices.CostProvider cost = new ArcanaServices.CostProvider() {
