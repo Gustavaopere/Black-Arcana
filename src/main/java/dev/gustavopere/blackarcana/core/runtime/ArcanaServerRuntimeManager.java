@@ -62,6 +62,8 @@ public final class ArcanaServerRuntimeManager {
         gameBus.addListener(ArcanaServerRuntimeManager::onServerStopping);
         gameBus.addListener(ArcanaServerRuntimeManager::onServerStopped);
         gameBus.addListener(ArcanaServerRuntimeManager::onPlayerLoggedIn);
+        gameBus.addListener(ArcanaServerRuntimeManager::onPlayerLoggedOut);
+        gameBus.addListener(ArcanaServerRuntimeManager::onPlayerChangedDimension);
     }
 
     public static void addInitializer(Consumer<ArcanaServerRuntime> initializer) {
@@ -200,11 +202,32 @@ public final class ArcanaServerRuntimeManager {
         ChannelNetworkBridge.sendCapability(player, ChannelCapabilityPayload.from(runtime.channelSpecs().snapshot()));
     }
 
+    private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        cancelPlayerChannels(player);
+    }
+
+    private static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        cancelPlayerChannels(player);
+    }
+
+    private static void cancelPlayerChannels(ServerPlayer player) {
+        MinecraftServer server = player.serverLevel().getServer();
+        ArcanaServerRuntime runtime = RUNTIMES.get(server);
+        if (runtime != null) runtime.channels().cancelCaster(player.getUUID());
+    }
+
     private static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
         long now = server.overworld().getGameTime();
         ArcanaServerRuntime runtime = RUNTIMES.get(server);
-        if (runtime != null) runtime.tick(now);
+        if (runtime != null) {
+            for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+                if (!player.isAlive()) runtime.channels().cancelCaster(player.getUUID());
+            }
+            runtime.tick(now);
+        }
         if (now % PERSIST_INTERVAL_TICKS == 0L) persist(server, now);
     }
 
