@@ -28,6 +28,8 @@ The current source of Noetic candidate intent is `docs/design/candidate-specific
 
 The canonical clean-room per-spell traceability map is [`docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md). It links each of the seven candidates to the existing external-reference ledger, observable-only catalog, Stage 01 disposition, Black Arcana-owned candidate specification and host-authority boundary without promoting provider theme or reference implementation details into runtime authority.
 
+The canonical Stage 01 [`classification-matrix.md`](../../docs/reference/classification-matrix.md) freezes `World = OFF` for all seven Stage 07.07 targets: Astral Severance, Namescry, Gaze of Stillness, Nullifying Gaze, Occult Appraisal, Borrowed Sight and Pact Sanctuary. For this family, `OFF` means the spell owns no terrain/block mutation mode and gains no implicit force-load or remote world-interaction authority. Read-only perception, camera presentation and bounded temporary entity-state/AI effects do not convert that classification into a terrain-mutation mode. Any future world mutation or projection interaction requires a separate reviewed contract through the canonical Stage 04 world-safety authority.
+
 No value may be promoted from a safety ceiling, descriptive candidate phrase, test fixture or provider theme into a final balance contract without an explicit reviewed decision.
 
 ## Classification
@@ -67,7 +69,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Cooldown | MISSING / BLOCKER | No canonical cooldown contract/value/group is frozen. |
 | Scaling equation | MISSING / BLOCKER | No final range/duration/movement/resource scaling equation is frozen. Safety ceilings and test fixture values must not substitute for it. |
 | Progression gate | PREPARATORY | Candidate tier is T3; final progression/mastery gate remains Stage 08 input through the RPG Skill Tree boundary only. |
-| World-effect mode | FROZEN / CURRENT + PREPARATORY | Current runtime authorizes no terrain mutation or remote interaction. Projection movement is loaded-only and does not force-load. Any future interaction requires a separate reviewed contract. |
+| World-effect mode | FROZEN / CURRENT | Stage 01 freezes `World = OFF`. Current runtime authorizes no terrain/block mutation or remote interaction, projection movement is loaded-only and no chunk is force-loaded. Any future interaction or mutation requires a separate reviewed Stage 04-backed contract. |
 | Boss/PvP behavior | FROZEN / CURRENT + PREPARATORY | Projection is non-combat/non-owning; physical body remains vulnerable; no offensive attribution or PvP bypass is authorized. Final server/PvP tuning remains open. |
 | Config surface | FROZEN / CURRENT + PREPARATORY | PR #242 freezes the strict server-owned schema/reload authority for `black_arcana:astral_severance` `ControlLimits`, with absent config explicitly fail-closed and hard Noetic ceilings used only as upper validation bounds. No production `maxStepBlocks` / `maxLookDeltaDegrees` profile or default is bundled or frozen; final tuning remains Stage 08 input. |
 | Tests | FROZEN / CURRENT + PREPARATORY | Automated lifecycle, identity, movement, loaded-only, entity wiring, payload validation/round-trip, camera presentation/restoration, strict config-authority parsing/reload and dedicated-server coverage exist. Canonical cast/channel wiring, movement/look input redirect and real-client coexistence acceptance remain required. |
@@ -87,7 +89,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Cooldown | MISSING / BLOCKER | No canonical cooldown value/group is frozen. |
 | Scaling equation | MISSING / BLOCKER | No scaling equation is frozen. |
 | Progression gate | PREPARATORY | Candidate tier is T3; final gate remains Stage 08 input. |
-| World-effect mode | PREPARATORY | Read-only perception/no force-load is the intended boundary; no terrain mutation is justified. |
+| World-effect mode | FROZEN / CURRENT | Stage 01 freezes `World = OFF`. Namescry is read-only perception of an already-loaded authorized target; it owns no terrain/block mutation, force-loading or remote action authority. |
 | Boss/PvP behavior | PREPARATORY | Player observation requires explicit server-authorized consent/privacy policy; additional PvP/server-policy details remain to freeze. |
 | Config surface | MISSING / BLOCKER | No canonical config surface is frozen. |
 | Tests | PREPARATORY | Unloaded/cross-dimension denial, privacy, interruption and bounded data/range tests are required. |
@@ -105,7 +107,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Cooldown | MISSING / BLOCKER | Post-channel cooldown is intended, but no canonical value/group is frozen. |
 | Scaling equation | MISSING / BLOCKER | No final CC/scaling curve is frozen. |
 | Progression gate | PREPARATORY | Candidate tier is T2; final gate remains Stage 08 input. |
-| World-effect mode | N/A BY DESIGN / PREPARATORY | Entity-control effect only; no terrain mutation is authorized by the candidate. |
+| World-effect mode | FROZEN / CURRENT | Stage 01 freezes `World = OFF`. Gaze of Stillness is a bounded entity-control effect only; it owns no terrain/block mutation or world-state mutation path. |
 | Boss/PvP behavior | PREPARATORY | Diminishing returns and boss/player duration multipliers are required; exact multipliers remain Stage 08 work. |
 | Config surface | MISSING / BLOCKER | Safety ceilings exist, but final tunable config surface is not frozen. |
 | Tests | PREPARATORY | Facing/LOS, escape, reapplication immunity and boss/PvP policy tests are required. |
@@ -123,7 +125,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Cooldown | MISSING / BLOCKER | Cooldown is intended but no canonical value/group is frozen. |
 | Scaling equation | MISSING / BLOCKER | No final nullification count/duration/scaling equation is frozen. |
 | Progression gate | PREPARATORY | Candidate tier is T3; final gate remains Stage 08 input. |
-| World-effect mode | N/A BY DESIGN / PREPARATORY | Effect/state interaction only; no terrain mutation is authorized. |
+| World-effect mode | FROZEN / CURRENT | Stage 01 freezes `World = OFF`. Nullifying Gaze is restricted to explicitly registered effect/state adapters; it owns no terrain/block mutation path and cannot use this classification to bypass protected provider/world invariants. |
 | Boss/PvP behavior | PREPARATORY | Protected effects and boss resistance are required; exact policy remains to freeze. |
 | Config surface | MISSING / BLOCKER | Safety ceilings/allowlist bounds are not themselves a complete balance config surface. |
 | Tests | PREPARATORY | Approved effect removed, protected/unknown effect untouched and boss-policy tests are required. |
@@ -141,7 +143,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Cooldown | MISSING / BLOCKER | No canonical cooldown contract/value is frozen. |
 | Scaling equation | MISSING / BLOCKER | No scaling equation or metadata-unlock curve is frozen. |
 | Progression gate | PREPARATORY | Candidate tier is T2; final gate remains Stage 08 input. |
-| World-effect mode | N/A BY DESIGN | Read-only presentation; no terrain mutation or arbitrary capability mutation is authorized. |
+| World-effect mode | FROZEN / CURRENT | Stage 01 freezes `World = OFF`. Occult Appraisal is read-only whitelisted presentation and owns no terrain/block mutation, arbitrary capability mutation or hidden-state write path. |
 | Boss/PvP behavior | PREPARATORY | Privacy restrictions apply; player/container exposure must remain explicitly authorized. Exact PvP surface remains to freeze. |
 | Config surface | MISSING / BLOCKER | No canonical metadata/config surface is frozen beyond current hard safety bounds/whitelist behavior. |
 | Tests | PREPARATORY | Metadata whitelist, player/container restrictions and no-hidden-NBT-leak tests are required. |
@@ -159,7 +161,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Cooldown | MISSING / BLOCKER | No canonical cooldown value/group is frozen for Stage 08. |
 | Scaling equation | MISSING / BLOCKER | No final range/duration/resource scaling equation is frozen. |
 | Progression gate | PREPARATORY | Candidate tier is T2; final gate remains Stage 08 input. |
-| World-effect mode | N/A BY DESIGN / FROZEN | Current production path changes camera presentation only and does not authorize terrain/world interaction. |
+| World-effect mode | FROZEN / CURRENT | Stage 01 freezes `World = OFF`. Current production path changes camera presentation only and does not authorize terrain/block mutation, force-loading or remote world interaction. |
 | Boss/PvP behavior | FROZEN / CURRENT + PREPARATORY | Arbitrary hostile-player observation is denied; player observation requires explicit server-authorized consent. Additional balance policy remains to freeze. |
 | Config surface | MISSING / BLOCKER | Current safety ceilings are not the final spell config surface. |
 | Tests | FROZEN / CURRENT + PREPARATORY | Automated server/client transport contracts exist; real-client camera feel/restoration is still deferred, and candidate ownership/unload/logout cases remain acceptance requirements. |
@@ -179,7 +181,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Cooldown | MISSING / BLOCKER | No canonical cooldown contract/value is frozen. |
 | Scaling equation | MISSING / BLOCKER | No final radius/upkeep/member scaling equation is frozen. Existing safety ceilings are not balance values. |
 | Progression gate | PREPARATORY | Candidate tier is T3; final gate remains Stage 08 input. |
-| World-effect mode | N/A BY DESIGN / PREPARATORY | Temporary entity-AI/targeting influence only; no permanent faction or terrain mutation is authorized. |
+| World-effect mode | FROZEN / CURRENT | Stage 01 freezes `World = OFF`. Pact Sanctuary is a bounded temporary entity-AI/targeting influence only; it owns no terrain/block mutation or permanent faction mutation path. |
 | Boss/PvP behavior | PREPARATORY | Boss/event exclusions are required; players are not generic hostile mobs and no PvP sanctuary bypass is implied. |
 | Config surface | MISSING / BLOCKER | Hard safety bounds exist, but canonical gameplay config/tuning is not frozen. |
 | Tests | FROZEN / CURRENT + PREPARATORY | Runtime has bounded sanctuary contracts; candidate acceptance requires ordinary-mob suppression, boss exclusion, familiar-unload cleanup and tick-budget instrumentation. |
@@ -194,12 +196,13 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 - cooldown identity/group semantics where a cooldown exists;
 - a defined scaling equation or explicit `NO SCALING` decision;
 - final progression gate contract with RPG Skill Tree only through a real boundary;
-- explicit world-effect classification, including `NONE/READ_ONLY` where appropriate;
 - explicit boss/PvP policy;
 - bounded config surface and validation ranges;
 - exact tests for the final contract.
 
 The clean-room per-spell provenance linkage is now frozen by [`docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md). This closes traceability only and does not promote any remaining balance/runtime field.
+
+The seven-spell world-effect classification is now frozen to `OFF` by [`docs/reference/classification-matrix.md`](../../docs/reference/classification-matrix.md). This closes only the required world-effect-mode field: it does not authorize projection interaction, force-loading, terrain/block mutation or any provider/world mutation outside a separately reviewed Stage 04-backed contract.
 
 Astral Severance additionally still requires:
 
@@ -217,6 +220,7 @@ Stage 08 may tune below existing safety ceilings. It must not:
 - select a provider resource without verifying provider authority and transaction support;
 - invent a cooldown group from a spell id;
 - transfer casting, targeting, channel, privacy or projection authority to the client;
-- use provider theme/similarity as evidence of an integration contract.
+- use provider theme/similarity as evidence of an integration contract;
+- reinterpret `World = OFF` as permission for terrain mutation, force-loading or remote world interaction.
 
 Until this gate is closed, Stage 07.07 remains `IN PROGRESS`, and Stage 08 remains blocked from using the Noetic family as canonical balance input yet.
