@@ -6,9 +6,11 @@ import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.AstralMoveIntentPayload;
 import dev.gustavopere.blackarcana.network.AstralReturnIntentPayload;
+import dev.gustavopere.blackarcana.network.AstralViewPayload;
 import dev.gustavopere.blackarcana.network.IngressRateLimiter;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -20,11 +22,11 @@ import java.util.Objects;
 import java.util.WeakHashMap;
 
 /**
- * Narrow C2S transport for Astral Severance control intent.
+ * Narrow Astral Severance transport.
  *
- * <p>Caster identity is derived exclusively from {@link IPayloadContext#player()}. The client never supplies
- * caster identity or an authoritative position. The transport caps are protocol abuse bounds, not spell
- * balance values: one MOVE and one RETURN may be admitted independently for a caster in one server tick.</p>
+ * <p>Caster identity for C2S control is derived exclusively from {@link IPayloadContext#player()}. The client
+ * never supplies caster identity or an authoritative position. S2C view instructions are presentation-only
+ * and carry the exact server-authored projection UUID plus its transient loaded entity id.</p>
  */
 public final class AstralSeveranceNetworkBridge {
     static final int MAX_MOVE_INTENTS_PER_TICK = 1;
@@ -42,6 +44,7 @@ public final class AstralSeveranceNetworkBridge {
     private static volatile MoveHandler moveHandler = (player, payload) ->
             AstralSeveranceRuntime.ControlResult.INVALID_INTENT;
     private static volatile ReturnHandler returnHandler = (player, payload) -> false;
+    private static volatile ViewHandler viewHandler = (player, payload) -> { };
 
     private AstralSeveranceNetworkBridge() { }
 
@@ -55,6 +58,10 @@ public final class AstralSeveranceNetworkBridge {
                 AstralReturnIntentPacket.TYPE,
                 AstralReturnIntentPacket.STREAM_CODEC,
                 AstralSeveranceNetworkBridge::handleReturn);
+        registrar.playToClient(
+                AstralViewPacket.TYPE,
+                AstralViewPacket.STREAM_CODEC,
+                AstralSeveranceNetworkBridge::handleView);
     }
 
     public static void installMoveHandler(MoveHandler handler) {
@@ -65,12 +72,28 @@ public final class AstralSeveranceNetworkBridge {
         returnHandler = Objects.requireNonNull(handler, "handler");
     }
 
+    public static void installViewHandler(ViewHandler handler) {
+        viewHandler = Objects.requireNonNull(handler, "handler");
+    }
+
     public static void sendMove(AstralMoveIntentPayload payload) {
         PacketDistributor.sendToServer(AstralMoveIntentPacket.from(Objects.requireNonNull(payload, "payload")));
     }
 
     public static void sendReturn(AstralReturnIntentPayload payload) {
         PacketDistributor.sendToServer(AstralReturnIntentPacket.from(Objects.requireNonNull(payload, "payload")));
+    }
+
+    public static boolean sendView(ServerPlayer player, AstralViewPayload payload) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(payload, "payload");
+        if (!player.connection.hasChannel(AstralViewPacket.TYPE)) return false;
+        PacketDistributor.sendToPlayer(player, AstralViewPacket.from(payload));
+        return true;
+    }
+
+    public static void dispatchViewClientbound(Player player, AstralViewPayload payload) {
+        viewHandler.handle(player, Objects.requireNonNull(payload, "payload"));
     }
 
     private static void handleMove(AstralMoveIntentPacket packet, IPayloadContext context) {
@@ -83,6 +106,10 @@ public final class AstralSeveranceNetworkBridge {
         if (!(context.player() instanceof ServerPlayer player)) return;
         if (!claimReturnIngress(player).allowed()) return;
         returnHandler.handle(player, packet.toDomain());
+    }
+
+    private static void handleView(AstralViewPacket packet, IPayloadContext context) {
+        dispatchViewClientbound(context.player(), packet.toDomain());
     }
 
     private static ArcanaDecision claimMoveIngress(ServerPlayer player) {
@@ -122,5 +149,10 @@ public final class AstralSeveranceNetworkBridge {
     @FunctionalInterface
     public interface ReturnHandler {
         boolean handle(ServerPlayer player, AstralReturnIntentPayload payload);
+    }
+
+    @FunctionalInterface
+    public interface ViewHandler {
+        void handle(Player player, AstralViewPayload payload);
     }
 }
