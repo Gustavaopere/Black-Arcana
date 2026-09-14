@@ -14,6 +14,7 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.cast.ArcanaCastIngressService;
 import dev.gustavopere.blackarcana.core.cast.ArcanaChannelCastCoordinator;
 import dev.gustavopere.blackarcana.core.cast.ArcanaChannelManager;
+import dev.gustavopere.blackarcana.core.cast.ArcanaChannelSpecRegistry;
 import dev.gustavopere.blackarcana.core.cast.LoadoutRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ArcanaCooldownPolicyRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
@@ -55,6 +56,7 @@ import dev.gustavopere.blackarcana.core.world.WorldEffectProfileRegistry;
 import dev.gustavopere.blackarcana.core.world.WorldMutationProtectionAdapterRegistry;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
+import dev.gustavopere.blackarcana.network.ChannelBeginIntentPayload;
 import dev.gustavopere.blackarcana.network.IngressRateLimiter;
 
 import java.util.HashSet;
@@ -72,6 +74,7 @@ public final class ArcanaServerRuntime {
     public static final int DEFAULT_MAX_TRACKED_HAZARD_PLAYERS = 16_384;
     public static final int DEFAULT_MAX_EMERGENCY_RESOURCES = 65_536;
     public static final int DEFAULT_MAX_CHANNEL_SESSIONS = 4096;
+    public static final int DEFAULT_MAX_CHANNEL_SPECS = 512;
     public static final int DEFAULT_MAX_SCHEDULED_EFFECTS = 2048;
     public static final int DEFAULT_EFFECT_WORK_BUDGET_PER_TICK = 128;
     public static final int DEFAULT_MAX_TRACKED_WORLD_CASTS = 4096;
@@ -132,6 +135,7 @@ public final class ArcanaServerRuntime {
     private final Map<ArcanaSpellId, ArcanaCastEngine> engines = new ConcurrentHashMap<>();
     private final ArcanaCastIngressService ingress;
     private final ArcanaChannelManager channels;
+    private final ArcanaChannelSpecRegistry channelSpecs = new ArcanaChannelSpecRegistry(DEFAULT_MAX_CHANNEL_SPECS);
     private final ArcanaChannelCastCoordinator channelCasts;
     private final BoundedWorkScheduler effectScheduler;
     private volatile CastHazardGate hazardGate = CastHazardGate.noop();
@@ -183,6 +187,17 @@ public final class ArcanaServerRuntime {
     public CastResultPayload handle(ArcanaCastContext context, CastIntentPayload intent) { return ingress.handle(context, intent); }
     public ArcanaDecision beginChannel(ArcanaCastContext context, CastIntentPayload intent, ArcanaChannelSpec spec) {
         return channelCasts.begin(context, intent, spec);
+    }
+    public ArcanaDecision beginChannel(ArcanaCastContext context, ChannelBeginIntentPayload intent) {
+        Objects.requireNonNull(context, "context");
+        Objects.requireNonNull(intent, "intent");
+        ArcanaChannelSpec spec = channelSpecs.resolve(intent.parsedSpellId()).orElse(null);
+        if (spec == null) {
+            return ArcanaDecision.deny(
+                "channel_not_configured",
+                "spell has no explicit server-owned channel specification");
+        }
+        return channelCasts.begin(context, intent.toCastIntent(), spec);
     }
     public ArcanaCastResult releaseChannel(ArcanaCastContext context, ArcanaCastId castId, String targetHint) {
         return channelCasts.release(context, castId, targetHint);
@@ -277,6 +292,7 @@ public final class ArcanaServerRuntime {
     public PersistentCooldownService cooldowns() { return cooldowns; }
     public ChargePoolCooldownService charges() { return charges; }
     public ArcanaChannelManager channels() { return channels; }
+    public ArcanaChannelSpecRegistry channelSpecs() { return channelSpecs; }
     public BoundedWorkScheduler effectScheduler() { return effectScheduler; }
     public ArcanaIntegrationRegistry integrations() { return integrations; }
     public ArcaneResistanceProviderRegistry arcaneResistanceProviders() { return arcaneResistanceProviders; }
