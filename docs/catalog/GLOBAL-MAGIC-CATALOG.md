@@ -16,7 +16,7 @@ Este arquivo é o índice operacional global de catalogação do projeto. Ele n�
 
 ## Snapshot de autoridade usado
 
-- Black Arcana: `main@446434c9a5bbcd35a6be74883f589b2ae1b868ee`.
+- Black Arcana: `main@9d51be49fb44203f4a9e33160b1168de3d385fba`.
 - RPG Skill Tree sibling: `main@9e88db8f6b37c1bfbbd331f6684504a76e4aef40`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado de integração.
 - O Black Arcana mantém `docs/reference/runtime-host-baseline.md`, derivado do `modlist agora atual.txt` fornecido em 2026-08-26, para o baseline de Iron's, Ars Nouveau, Eidolon e Malum.
@@ -35,13 +35,13 @@ Fonte principal: `docs/reference/runtime-host-baseline.md`, `docs/reference/host
 
 ## 2. Mods/addons mágicos ou spellbook identificados no inventário versionado do sibling
 
-Os itens abaixo foram promovidos para este índice porque o inventário versionado os coloca diretamente nos ecossistemas Ars ou Iron's/spellbook e o próprio nome/título fornece evidência explícita de spell/magic **ou** de extensão direta do sistema mágico. Isso não prova o conjunto de spells interno; portanto nenhum recebe ✅ sem catálogo próprio.
+Os itens abaixo foram promovidos para este índice porque o inventário versionado os coloca diretamente nos ecossistemas Ars ou Iron's/spellbook e o próprio nome/título fornece evidência explícita de spell/magic **ou** de extensão direta do sistema mágico. Isso não prova o conjunto de spells interno. Uma linha só recebe ✅ depois de possuir catálogo próprio com escopo fechado e evidência da versão auditada.
 
 ### 2.1 Evidência explícita de spells/spellbooks/magic no título
 
-| Mod | Mod ID | Versão do snapshot | Estado do catálogo | Próximo requisito |
+| Mod | Mod ID | Versão do snapshot | Estado do catálogo | Próximo requisito / cobertura |
 | --- | --- | --- | --- | --- |
-| Ars 'n' Spells | `ars_n_spells` | `3.0.2` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
+| Ars 'n' Spells | `ars_n_spells` | `3.0.2` | ✅ Catalogado | `ARS-N-SPELLS-3.0.2.md`: 8 registros-proxy `AbstractSpell` sem efeito próprio + 5 rituais; spells dinâmicos de Ars/Iron's transportados pelo bridge não são recontados como conteúdo do addon. |
 | Cataclysm: Spellbooks | `cataclysm_spellbooks` | `1.1.12-1.21` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
 | Deeper and Darker: Spellbooks | `darkermagic` | `1.3.3-1.21.1` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
 | Farmer's Spell 'n Spellbooks | `farmers_spell` | `1.0.4.0-1.21.1` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
@@ -109,7 +109,8 @@ Este resumo conta **linhas de mods no índice versionado**, não quantidade de s
 
 - ✅ Catálogo integral de spells/mecânicas do mod de referência: **1** (`Mahou Tsukai`, referência clean-room; presença atual não afirmada).
 - ⚠️ Hosts instalados com cobertura parcial de capacidade/API, mas sem inventário integral de spells: **4** (Iron's, Ars Nouveau, Eidolon, Malum).
-- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **10**.
+- ✅ Addons com catálogo próprio fechado no snapshot versionado: **1** (`Ars 'n' Spells` 3.0.2; 8 proxies sem efeito próprio + 5 rituais).
+- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **9**.
 - ⚠️ Addons de título explicitamente mágico cujo tipo exato de conteúdo ainda precisa ser confirmado: **2** (`magic_schools`, `specs_irons_spellbooks`).
 - ⚠️ Extensões de ecossistema que exigem confirmação spell-level antes de catalogação integral: **14**.
 - ✅ Contratos próprios Black Arcana: **32** candidatos catalogados.
