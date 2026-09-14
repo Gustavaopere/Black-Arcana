@@ -93,6 +93,12 @@ final class AstralControlIntentSequencer {
         return Optional.of(payload);
     }
 
+    void disarm(UUID projectionId) {
+        Objects.requireNonNull(projectionId, "projectionId");
+        switchProjection(projectionId);
+        clearPendingLook();
+    }
+
     void clear() {
         projectionId = null;
         sequence = 0L;
