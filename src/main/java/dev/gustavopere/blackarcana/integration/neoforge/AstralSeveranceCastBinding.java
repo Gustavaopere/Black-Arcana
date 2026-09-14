@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.api.ArcanaTargetReference;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 
@@ -76,7 +77,8 @@ public final class AstralSeveranceCastBinding {
             checkedAuthorities.replayGuard(),
             checkedAuthorities.progressionGate(),
             checkedRuntime.cooldowns(),
-            request -> ArcanaServices.TargetResolution.resolved(request.context().casterId().toString()),
+            request -> ArcanaServices.TargetResolution.resolved(
+                new ArcanaTargetReference.EntityRef(request.context().casterId()).canonical()),
             checkedAuthorities.resourceAuthority(),
             checkedRuntime.worldEffectPolicy(),
             (request, target) -> applyProjection(checkedProfile, checkedActivator, request),
