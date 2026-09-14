@@ -13,7 +13,7 @@ Official GitHub release `1.21.1-0.0.9`:
 - asset SHA-256 reported by GitHub: `8997f71035f29e4d2fe9e37dd76ca5f4b574906d1aed0914df6c119111570fed`;
 - asset size: 97181 bytes.
 
-The installed filename matches that official asset. No independent current physical-pack digest is preserved in the sibling repository, so byte-for-byte physical equivalence is not asserted.
+The installed filename matches that official asset. No independent current physical-pack digest is preserved in the sibling repository, so byte-for-byte physical equivalence is not asserted. Provenance for the semantic conclusion is therefore **exact-release source-pinned**, consistent with the existing provider README and technical audit.
 
 ## Exact source tree
 
@@ -65,9 +65,9 @@ NeoForge `AbstractSpellMixin` targets Iron's `io.redspace.ironsspellbooks.api.sp
 
 The exact 0.0.9 release source establishes a compatibility/runtime-policy addon, not an independent spell catalog.
 
-Classification:
+Evidence/provenance: **exact-release `SOURCE-PINNED`**.
 
-`BRIDGE_COMPAT / ZERO_SEMANTIC_RELEASE_BOUNDED`
+Semantic state: **`ZERO_BRIDGE_INFRA`**.
 
 Semantic delta: **+0**.
 
