@@ -39,8 +39,27 @@ public final class AstralSeveranceClientController {
         STATE.accept(payload);
     }
 
+    /**
+     * Returns armed control only while this controller still owns the exact Astral camera representation.
+     * A server MOVE_ARM received before vanilla entity spawn stays dormant instead of suppressing the body
+     * while the player is still looking through another camera. Likewise, external camera ownership, removal
+     * or identity replacement immediately makes input redirection fail closed until reconciliation succeeds.
+     */
     static Optional<AstralViewClientState.Desired> movementControl() {
-        return STATE.movementControl();
+        AstralViewClientState.Desired control = STATE.movementControl().orElse(null);
+        if (control == null) {
+            return Optional.empty();
+        }
+
+        Minecraft minecraft = Minecraft.getInstance();
+        if (ownedCameraEntity == null
+                || minecraft.getCameraEntity() != ownedCameraEntity
+                || ownedCameraEntity.isRemoved()
+                || ownedCameraEntity.getId() != control.entityId()
+                || !ownedCameraEntity.getUUID().equals(control.projectionId())) {
+            return Optional.empty();
+        }
+        return Optional.of(control);
     }
 
     private static void onClientTick(ClientTickEvent.Post event) {
