@@ -16,7 +16,7 @@ Este arquivo é o índice operacional global de catalogação do projeto. Ele n�
 
 ## Snapshot de autoridade usado
 
-- Black Arcana: `main@3db86a8c5bd03a4e69680782cd1101aa6b7319e1`.
+- Black Arcana: `main@f2211fca8a32ae271f2363f3dc510f84e596d394`.
 - RPG Skill Tree sibling: `main@9e88db8f6b37c1bfbbd331f6684504a76e4aef40`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado de integração.
 - O Black Arcana mantém `docs/reference/runtime-host-baseline.md`, derivado do `modlist agora atual.txt` fornecido em 2026-08-26, para o baseline de Iron's, Ars Nouveau, Eidolon e Malum.
@@ -52,7 +52,7 @@ Os itens abaixo foram promovidos para este índice porque o inventário versiona
 | Iron's Spells Magic Schools | `magic_schools` | `1.0` | ⚠️ Parcial/condicionado | Determinar se adiciona spells, escolas apenas, ou ambos; catalogar o que for mágico. |
 | Paladin Spells | `paladin_spells` | `1.21.1-1.1.1` | ✅ Catalogado | `PALADIN-SPELLS-1.1.1.md`: 5/5 spells registrados, todos em Holy. O catálogo preserva duas limitações observadas da release: Bulwark usa modifier amount `0.0`; Sworn Protector grava seu estado de cast apenas no lado cliente, portanto eficácia server-side não é afirmada sem runtime físico. |
 | Specs: Iron's Spells 'n Spellbooks Addon | `specs_irons_spellbooks` | `1.6.4` | ⚠️ Parcial/condicionado | O título prova vínculo ao sistema; confirmar se adiciona spells antes de inventário spell-level. |
-| Wind's Spellbooks | `wind_spellbooks` | `1.0.5` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
+| Wind's Spellbooks | `wind_spellbooks` | `1.0.5` | ✅ Catalogado | `WIND-SPELLBOOKS-1.0.5.md`: 7/7 spell IDs observados em registry-derived dump alinhado ao JAR/CurseForge file exato 1.0.5, todos sob a escola `wind_spellbooks:wind`; sem source/decompilação, fórmulas e semântica interna não são afirmadas. |
 
 ### 2.2 Extensões mágicas de ecossistema cujo conteúdo spell-level ainda precisa ser provado
 
@@ -109,8 +109,8 @@ Este resumo conta **linhas de mods no índice versionado**, não quantidade de s
 
 - ✅ Catálogo integral de spells/mecânicas do mod de referência: **1** (`Mahou Tsukai`, referência clean-room; presença atual não afirmada).
 - ⚠️ Hosts instalados com cobertura parcial de capacidade/API, mas sem inventário integral de spells: **4** (Iron's, Ars Nouveau, Eidolon, Malum).
-- ✅ Addons com catálogo próprio fechado no snapshot versionado: **3** (`Ars 'n' Spells` 3.0.2: 8 proxies sem efeito próprio + 5 rituais; `Farmer's Spell 'n Spellbooks` 1.0.4.0: 6/6 spells runtime registrados; `Paladin Spells` 1.1.1: 5/5 spells registrados, com limitações runtime observadas documentadas separadamente).
-- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **7**.
+- ✅ Addons com catálogo próprio fechado no snapshot versionado: **4** (`Ars 'n' Spells` 3.0.2: 8 proxies sem efeito próprio + 5 rituais; `Farmer's Spell 'n Spellbooks` 1.0.4.0: 6/6 spells runtime registrados; `Paladin Spells` 1.1.1: 5/5 spells registrados, com limitações runtime observadas documentadas separadamente; `Wind's Spellbooks` 1.0.5: 7/7 spell IDs fechados em inventário observável de registry).
+- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **6**.
 - ⚠️ Addons de título explicitamente mágico cujo tipo exato de conteúdo ainda precisa ser confirmado: **2** (`magic_schools`, `specs_irons_spellbooks`).
 - ⚠️ Extensões de ecossistema que exigem confirmação spell-level antes de catalogação integral: **14**.
 - ✅ Contratos próprios Black Arcana: **32** candidatos catalogados.
