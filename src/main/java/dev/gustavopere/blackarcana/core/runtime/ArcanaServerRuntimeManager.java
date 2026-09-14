@@ -12,10 +12,16 @@ import dev.gustavopere.blackarcana.integration.neoforge.NeoForgeIntegrationBoots
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
+import dev.gustavopere.blackarcana.network.ChannelBeginIntentPayload;
+import dev.gustavopere.blackarcana.network.ChannelBeginResultPayload;
+import dev.gustavopere.blackarcana.network.ChannelCancelIntentPayload;
+import dev.gustavopere.blackarcana.network.ChannelCapabilityPayload;
+import dev.gustavopere.blackarcana.network.ChannelReleaseIntentPayload;
 import dev.gustavopere.blackarcana.network.CooldownSnapshotPayload;
 import dev.gustavopere.blackarcana.network.LoadoutSnapshotPayload;
 import dev.gustavopere.blackarcana.network.LoadoutUpdatePayload;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
+import dev.gustavopere.blackarcana.network.neoforge.ChannelNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.LoadoutNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.ServerPlayerArcanaContext;
 import dev.gustavopere.blackarcana.persistence.BlackArcanaSavedData;
@@ -102,6 +108,51 @@ public final class ArcanaServerRuntimeManager {
         return result;
     }
 
+    public static ChannelBeginResultPayload handleChannelBegin(
+            ServerPlayer player,
+            ChannelBeginIntentPayload intent
+    ) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(intent, "intent");
+        MinecraftServer server = player.serverLevel().getServer();
+        ArcanaServerRuntime runtime = RUNTIMES.get(server);
+        ArcanaDecision decision = runtime == null
+                ? ArcanaDecision.deny("server_runtime_unavailable", "Black Arcana server runtime is not active")
+                : runtime.beginChannel(ServerPlayerArcanaContext.from(player), intent);
+        return ChannelBeginResultPayload.from(intent.parsedCastId(), decision);
+    }
+
+    public static CastResultPayload handleChannelRelease(
+            ServerPlayer player,
+            ChannelReleaseIntentPayload intent
+    ) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(intent, "intent");
+        MinecraftServer server = player.serverLevel().getServer();
+        ArcanaServerRuntime runtime = RUNTIMES.get(server);
+        if (runtime == null) {
+            return CastResultPayload.from(intent.parsedCastId(), ArcanaCastResult.denied(
+                    ArcanaCastResult.Status.DENIED_CHANNEL,
+                    ArcanaDecision.deny("server_runtime_unavailable", "Black Arcana server runtime is not active")));
+        }
+        ArcanaCastResult release = runtime.releaseChannel(ServerPlayerArcanaContext.from(player), intent);
+        CastResultPayload result = CastResultPayload.from(intent.parsedCastId(), release);
+        if (release.status() == ArcanaCastResult.Status.SUCCESS) {
+            ArcanaNetworkBridge.sendCooldownSnapshot(player, cooldownSnapshot(runtime, player, server.overworld().getGameTime()));
+        }
+        return result;
+    }
+
+    public static boolean handleChannelCancel(
+            ServerPlayer player,
+            ChannelCancelIntentPayload intent
+    ) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(intent, "intent");
+        ArcanaServerRuntime runtime = RUNTIMES.get(player.serverLevel().getServer());
+        return runtime != null && runtime.cancelChannel(ServerPlayerArcanaContext.from(player), intent);
+    }
+
     public static LoadoutSnapshotPayload handleLoadoutUpdate(ServerPlayer player, LoadoutUpdatePayload update) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(update, "update");
@@ -155,6 +206,7 @@ public final class ArcanaServerRuntimeManager {
         ArcanaNetworkBridge.sendSpellPresentation(player, runtime.spellData().presentationPayload());
         ArcanaNetworkBridge.sendCooldownSnapshot(player, cooldownSnapshot(runtime, player, server.overworld().getGameTime()));
         LoadoutNetworkBridge.sendSnapshot(player, loadoutSnapshot(runtime, player));
+        ChannelNetworkBridge.sendCapability(player, ChannelCapabilityPayload.from(runtime.channelSpecs().snapshot()));
     }
 
     private static void onServerTick(ServerTickEvent.Post event) {
