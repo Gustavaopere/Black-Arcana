@@ -105,6 +105,11 @@ public final class ClientArcanaSyncState {
         hazardResistanceForecast = null;
     }
 
+    public static synchronized void acceptChannelCapabilities(Player player, ChannelCapabilityPayload payload) {
+        ensurePlayer(player);
+        replaceChannelCapabilities(payload);
+    }
+
     static synchronized void replaceChannelCapabilities(ChannelCapabilityPayload payload) {
         Objects.requireNonNull(payload, "payload");
         Map<ArcanaSpellId, ArcanaChannelSpec> next = new LinkedHashMap<>();
