@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.client;
 
 import dev.gustavopere.blackarcana.BlackArcanaMod;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
+import dev.gustavopere.blackarcana.network.neoforge.AstralSeveranceNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.NoeticViewNetworkBridge;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -29,7 +30,9 @@ public final class BlackArcanaClient {
         ClientInputController.register(NeoForge.EVENT_BUS);
         HazardResistanceForecastClientController.register(NeoForge.EVENT_BUS);
         BorrowedSightClientController.register(NeoForge.EVENT_BUS);
+        AstralSeveranceClientController.register(NeoForge.EVENT_BUS);
         NoeticViewNetworkBridge.installClientHandler(BorrowedSightClientController::accept);
+        AstralSeveranceNetworkBridge.installViewHandler(AstralSeveranceClientController::accept);
         ClientInputController.installRadialOpener(BlackArcanaRadialScreen::open);
         ClientInputController.installLoadoutEditorOpener(BlackArcanaLoadoutScreen::open);
     }
