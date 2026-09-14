@@ -63,6 +63,31 @@ class AstralControlIntentSequencerTest {
     }
 
     @Test
+    void disarmPreservesSameProjectionSequenceAndDropsPendingLook() {
+        AstralControlIntentSequencer sequencer = new AstralControlIntentSequencer();
+        UUID projection = UUID.randomUUID();
+
+        AstralMoveIntentPayload first = sequencer
+                .capture(projection, 1.0D, 0.0D, 0.0D)
+                .orElseThrow();
+        sequencer.captureLook(projection, 12.0D, -7.0D, 0.5D, false);
+
+        sequencer.disarm(projection);
+
+        AstralMoveIntentPayload second = sequencer
+                .capture(projection, 0.0D, 0.0D, 1.0D)
+                .orElseThrow();
+
+        assertEquals(1L, first.sequence());
+        assertEquals(2L, second.sequence(),
+                "temporary disarm must preserve the exact projection sequence domain");
+        assertEquals(0.0F, second.yawDeltaDegrees(),
+                "pending look captured before disarm must not replay after re-arm");
+        assertEquals(0.0F, second.pitchDeltaDegrees(),
+                "pending look captured before disarm must not replay after re-arm");
+    }
+
+    @Test
     void neutralBodySensitivityProducesExactlyZeroVanillaTurnFactor() {
         double neutral = AstralControlIntentSequencer.PHYSICAL_BODY_NEUTRAL_SENSITIVITY;
         double vanillaBase = neutral * 0.6F + 0.2F;
