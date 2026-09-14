@@ -114,6 +114,9 @@ public final class ThresholdGateGameTests {
             "first transfer in the throughput window must succeed");
         helper.assertTrue(samePosition(first, firstDestination.x, firstDestination.y, firstDestination.z),
             "successful throughput fixture transfer must land at the absolute paired endpoint");
+        // The first movement has already been asserted. Remove that fixture entity before
+        // probing the limiter so destination collision cannot mask throughput admission.
+        first.discard();
 
         UUID playerGate = UUID.randomUUID();
         helper.assertTrue(registerPair(
@@ -134,11 +137,11 @@ public final class ThresholdGateGameTests {
         double secondX = second.getX();
         double secondY = second.getY();
         double secondZ = second.getZ();
-        // Let the entity-section collision index settle after firstTransfer, but keep the
-        // captured logical nowTick so both limiter acquisitions remain in the same window.
+        // Give removal bookkeeping one server tick to settle, but keep the captured
+        // logical nowTick so both limiter acquisitions remain in the same window.
         helper.runAfterDelay(1L, () -> {
             try {
-                Object overflow = transfer(server, gateId, owner.getUUID(), 1, second.getUUID(), nowTick, true);
+                Object overflow = transfer(server, gateId, owner.getUUID(), 0, second.getUUID(), nowTick, true);
                 ArcanaDecision overflowDecision = decision(overflow);
                 helper.assertTrue(!overflowDecision.allowed()
                         && "threshold_gate_throughput".equals(overflowDecision.code()),
