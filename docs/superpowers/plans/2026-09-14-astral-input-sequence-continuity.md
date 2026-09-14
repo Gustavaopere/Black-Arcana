@@ -6,7 +6,7 @@
 
 **Architecture:** Keep the existing server-owned `AstralSeveranceRuntime.lastProcessedControlSequence` contract unchanged. Add a client-only `disarm(UUID)` operation that preserves the current projection identity and sequence while discarding transient pending look input, then make `AstralSeveranceInputController` distinguish “movement temporarily unavailable for an otherwise desired projection” from “no Astral projection presentation exists”. No server reset, protocol field, production MOVE enablement, or cast/channel change is introduced.
 
-**Tech Stack:** Java 21, Minecraft 1.21.1, NeoForge 21.1.x from the physical project baseline, JUnit 5, Gradle, GitHub Actions.
+**Tech Stack:** Java 21, Minecraft 1.21.1, the repository-pinned NeoForge toolchain, JUnit 5, Gradle, GitHub Actions.
 
 **Spec:** `docs/superpowers/specs/2026-09-14-astral-input-sequence-continuity-design.md`
 
@@ -103,7 +103,7 @@ git commit -m "test(stage07): preserve Astral sequence across disarm"
 git push origin feat/stage07-astral-input-redirect
 ```
 
-Record the exact commit SHA and the resulting `Black Arcana CI` run. The run is expected to fail at Unit tests/compile on the missing `disarm(UUID)` production method; do not claim later skipped jobs as executed.
+Record the exact commit SHA and resulting `Black Arcana CI` run in the execution notes. The run is expected to fail at Unit tests/compile on the missing `disarm(UUID)` production method; later skipped jobs are not executed evidence.
 
 - [ ] **Step 4: Implement the minimal sequencer operation**
 
@@ -209,7 +209,7 @@ git commit -m "test(stage07): bind Astral sequence lifetime to projection"
 git push origin feat/stage07-astral-input-redirect
 ```
 
-Record the exact commit SHA and its failing `Black Arcana CI` run. Confirm the failure is the intended new wiring assertion, not a regression from Task 1.
+Record the exact commit SHA and failing `Black Arcana CI` run in the execution notes. Confirm the failure is the intended new wiring assertion, not a regression from Task 1.
 
 - [ ] **Step 4: Expose the existing desired projection identity read-only**
 
@@ -353,7 +353,7 @@ Wait for both relevant `Black Arcana CI` executions on the exact final head (`pu
 
 - [ ] **Step 4: Review the final diff for scope**
 
-Expected gameplay/code changes relative to `main` are limited to the existing PR #248 client-input/presentation files plus the sequence-continuity edits from Tasks 1–2. The following server/cast files must remain unchanged by the fix:
+Expected gameplay/code changes relative to `main` are limited to the existing PR #248 client-input/presentation files plus the sequence-continuity edits from Tasks 1–2. These server/cast files must remain unchanged by the fix:
 
 ```text
 src/main/java/dev/gustavopere/blackarcana/api/ArcanaCastEngine.java
@@ -362,7 +362,7 @@ src/main/java/dev/gustavopere/blackarcana/integration/neoforge/AstralSeveranceCa
 src/main/java/dev/gustavopere/blackarcana/content/noetic/AstralSeveranceRuntime.java
 ```
 
-The branch may additionally contain only these planning artifacts from the approved design process:
+The branch may additionally contain only these approved process artifacts:
 
 ```text
 docs/superpowers/specs/2026-09-14-astral-input-sequence-continuity-design.md
@@ -371,25 +371,13 @@ docs/superpowers/plans/2026-09-14-astral-input-sequence-continuity.md
 
 - [ ] **Step 5: Resolve the existing P2 only after code and CI prove the fix**
 
-Reply in review thread `PRRT_kwDOUGeLhc6iGQly` with the concrete behavior and evidence: temporary disarm now preserves the same projection's sequence and clears only pending look; full `END`/desired-state absence still calls `clear()`; cite the RED and GREEN commit/workflow identifiers from Tasks 1–3.
+Reply in review thread `PRRT_kwDOUGeLhc6iGQly` with the concrete behavior and recorded evidence: temporary disarm preserves the same projection sequence and clears only pending look; full `END`/desired-state absence still calls `clear()`; include the exact RED/GREEN commit SHAs and workflow run IDs recorded during Tasks 1–3.
 
 Then resolve the thread. Do not resolve it before exact-head tests prove the correction.
 
-- [ ] **Step 6: Update PR #248 body with current ancestry and TDD evidence**
+- [ ] **Step 6: Update PR #248 body with recorded execution evidence**
 
-Keep the existing summary/scope, and add:
-
-```text
-Sequence-continuity hardening:
-- branch reconciled with canonical main containing PR #247 cast/channel binding
-- RED: <exact test-only commit/run from Task 1>
-- GREEN: <exact sequencer implementation commit/run>
-- wiring RED: <exact test-only commit/run from Task 2>
-- final GREEN: <exact reconciled head and push/PR workflow runs>
-- P2 sequence-reset review thread resolved after exact-head validation
-```
-
-Replace the angle-bracket evidence with the actual identifiers produced during execution; do not guess them.
+Keep the existing summary/scope. Add a `Sequence-continuity hardening` subsection containing five factual bullets: the canonical `main` SHA used for reconciliation; Task 1 RED commit SHA and workflow run ID; Task 1 GREEN commit SHA and successful validation run ID; Task 2 wiring RED commit SHA and workflow run ID; final reconciled GREEN head SHA plus its push/PR workflow run IDs and P2 resolution state. Copy every identifier from the execution record produced by earlier steps; do not infer or fabricate an identifier.
 
 ---
 
@@ -417,7 +405,7 @@ all review threads resolved
 required push/PR CI on exact head = success
 ```
 
-If `main` advanced, stop the merge, merge latest `main` into the branch, and rerun the exact-head validation. Old CI no longer counts.
+If `main` advanced, stop the merge, merge latest `main` into the branch, and rerun exact-head validation. Old CI no longer counts.
 
 - [ ] **Step 2: Merge PR #248 with head protection**
 
@@ -427,7 +415,7 @@ Expected: GitHub reports `merged=true` and returns a merge commit SHA.
 
 - [ ] **Step 3: Confirm canonical main immediately after merge**
 
-Fetch the `main` branch and confirm its SHA is the PR merge commit (unless a concurrent merge advanced `main`, in which case confirm the PR merge commit is an ancestor and record the newer canonical SHA separately).
+Fetch the `main` branch and confirm its SHA is the PR merge commit. If a concurrent merge advanced `main`, confirm the PR merge commit is an ancestor and record the newer canonical SHA separately.
 
 - [ ] **Step 4: Require post-merge CI on the exact PR merge SHA**
 
