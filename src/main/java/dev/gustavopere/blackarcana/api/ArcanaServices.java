@@ -15,6 +15,19 @@ public final class ArcanaServices {
     @FunctionalInterface
     public interface ProgressionGate { ArcanaDecision check(ArcanaCastRequest request); }
 
+    /**
+     * Optional cast-path admission for spells that require a server-owned channel session.
+     * Immediate spells retain their established behavior through {@link #noop()}.
+     */
+    @FunctionalInterface
+    public interface ChannelGate {
+        ArcanaDecision check(ArcanaCastRequest request);
+
+        static ChannelGate noop() {
+            return request -> ArcanaDecision.allow();
+        }
+    }
+
     public interface CooldownService {
         ArcanaDecision check(ArcanaCastRequest request);
         void start(ArcanaCastRequest request);
