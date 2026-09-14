@@ -59,7 +59,8 @@ public final class BorrowedSightClientController {
             return;
         }
 
-        Entity target = minecraft.level.getEntity(desiredTarget);
+        int targetEntityId = desiredTarget;
+        Entity target = minecraft.level.getEntity(targetEntityId);
         if (target == null || target.isRemoved()) {
             BorrowedSightClientController.targetEntityId = -1;
             restorePhysicalBody(minecraft);
