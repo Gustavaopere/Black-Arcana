@@ -213,6 +213,7 @@ public final class ArcanaServerRuntime {
         Objects.requireNonNull(intent, "intent");
         ArcanaDecision ingressDecision = channelIngressLimiter.claim(context.casterId(), context.serverTick());
         if (!ingressDecision.allowed()) {
+            channelCasts.cancel(context, intent.parsedCastId());
             return ArcanaCastResult.denied(ArcanaCastResult.Status.DENIED_INGRESS, ingressDecision);
         }
         ArcanaCastResult result = channelCasts.release(context, intent.parsedCastId(), intent.targetHint());
