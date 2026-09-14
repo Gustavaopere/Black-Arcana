@@ -12,6 +12,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -125,7 +126,11 @@ public final class AstralControlDataReloadListener extends SimpleJsonResourceRel
         if (!value.getAsJsonPrimitive().isNumber()) {
             throw new JsonParseException("required integer '" + key + "' missing/invalid in " + resourceId);
         }
-        return value.getAsInt();
+        try {
+            return new BigDecimal(value.getAsString()).intValueExact();
+        } catch (ArithmeticException | NumberFormatException invalid) {
+            throw new JsonParseException("required integer '" + key + "' missing/invalid in " + resourceId, invalid);
+        }
     }
 
     private static double requiredDouble(JsonObject object, String key, ResourceLocation resourceId) {
