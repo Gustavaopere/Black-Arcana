@@ -114,16 +114,9 @@ public final class ThresholdGateGameTests {
             "first transfer in the throughput window must succeed");
         helper.assertTrue(samePosition(first, firstDestination.x, firstDestination.y, firstDestination.z),
             "successful throughput fixture transfer must land at the absolute paired endpoint");
-
-        double secondX = second.getX();
-        double secondY = second.getY();
-        double secondZ = second.getZ();
-        Object overflow = transfer(server, gateId, owner.getUUID(), 0, second.getUUID(), nowTick, true);
-        helper.assertTrue(!decision(overflow).allowed()
-                && "threshold_gate_throughput".equals(decision(overflow).code()),
-            "second transfer in a saturated window must fail closed");
-        helper.assertTrue(samePosition(second, secondX, secondY, secondZ),
-            "throughput denial must not move another entity");
+        // The first movement has already been asserted. Remove that fixture entity before
+        // probing the limiter so destination collision cannot mask throughput admission.
+        first.discard();
 
         UUID playerGate = UUID.randomUUID();
         helper.assertTrue(registerPair(
@@ -140,7 +133,26 @@ public final class ThresholdGateGameTests {
             "moving a different player through a gate requires explicit host/server consent");
         helper.assertTrue(samePosition(otherPlayer, playerX, playerY, playerZ),
             "consent denial must leave player position unchanged");
-        helper.succeed();
+
+        double secondX = second.getX();
+        double secondY = second.getY();
+        double secondZ = second.getZ();
+        // Give removal bookkeeping one server tick to settle, but keep the captured
+        // logical nowTick so both limiter acquisitions remain in the same window.
+        helper.runAfterDelay(1L, () -> {
+            try {
+                Object overflow = transfer(server, gateId, owner.getUUID(), 0, second.getUUID(), nowTick, true);
+                ArcanaDecision overflowDecision = decision(overflow);
+                helper.assertTrue(!overflowDecision.allowed()
+                        && "threshold_gate_throughput".equals(overflowDecision.code()),
+                    "second transfer in a saturated window must fail closed; actual=" + overflowDecision.code());
+                helper.assertTrue(samePosition(second, secondX, secondY, secondZ),
+                    "throughput denial must not move another entity");
+                helper.succeed();
+            } catch (Exception exception) {
+                throw new IllegalStateException("Threshold Gate throughput fixture failed", exception);
+            }
+        });
     }
 
     private static ArcanaDecision registerPair(
