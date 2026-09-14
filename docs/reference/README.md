@@ -15,3 +15,4 @@ This directory contains clean-room planning material. Reference names may appear
 - `mahou-observable-catalog.md` — behavioral inventory of candidate ideas.
 - `host-capability-map.md` — current overlap/extension map for Iron's, Ars Nouveau, Eidolon: Repraised and Malum.
 - `classification-matrix.md` — Black Arcana disposition and original target design.
+- `../catalog/GLOBAL-MAGIC-CATALOG.md` — operational global tracker for mod/spell catalog coverage; it separates catalog status from runtime implementation status.
