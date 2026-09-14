@@ -411,7 +411,7 @@ The current approved/preparatory family contains:
 
 The canonical completeness audit is `07-familiars-divination-specification-gate.md`.
 
-Key conclusion: current runtime implementation does not remove the need to specify missing balance/authority fields. In particular, exact resource cost, cooldown semantics, scaling equation, final progression gate, config surface and per-spell provenance are not frozen across the family.
+Key conclusion: current runtime implementation and the canonical clean-room provenance map do not remove the need to specify the remaining balance/authority fields. Per-spell clean-room provenance is frozen by [`docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md); exact resource cost, cooldown semantics, scaling equation, final progression gate and config surface remain unfrozen across the family.
 
 ## 7. Familiar-provider boundary
 
@@ -441,7 +441,7 @@ Therefore:
 - every spell needs an explicit scaling equation or explicit `NO SCALING` decision;
 - every cooldown needs canonical identity/group semantics if present;
 - progression must be frozen through the actual RPG Skill Tree contract only when that boundary is real;
-- provenance must be linked per final spell/specification;
+- clean-room per-spell provenance is frozen by [`docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) and must remain intact;
 - final config surfaces must be bounded and validated.
 
 Until `07-familiars-divination-specification-gate.md` is closed and Astral Severance is connected through its canonical cast/channel and client-control path, 07.07 remains `IN PROGRESS` and Stage 08 remains blocked from consuming this domain as canonical balance input.

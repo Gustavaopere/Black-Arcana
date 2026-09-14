@@ -26,6 +26,8 @@ This document closes an ambiguity in Stage 07.07: an approved fantasy, preparato
 
 The current source of Noetic candidate intent is `docs/design/candidate-specifications.md`. That file explicitly marks exact numeric balance as Stage 08 work. Current production code/tests prevail for what is already implemented.
 
+The canonical clean-room per-spell traceability map is [`docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md). It links each of the seven candidates to the existing external-reference ledger, observable-only catalog, Stage 01 disposition, Black Arcana-owned candidate specification and host-authority boundary without promoting provider theme or reference implementation details into runtime authority.
+
 No value may be promoted from a safety ceiling, descriptive candidate phrase, test fixture or provider theme into a final balance contract without an explicit reviewed decision.
 
 ## Classification
@@ -69,7 +71,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Boss/PvP behavior | FROZEN / CURRENT + PREPARATORY | Projection is non-combat/non-owning; physical body remains vulnerable; no offensive attribution or PvP bypass is authorized. Final server/PvP tuning remains open. |
 | Config surface | FROZEN / CURRENT + PREPARATORY | PR #242 freezes the strict server-owned schema/reload authority for `black_arcana:astral_severance` `ControlLimits`, with absent config explicitly fail-closed and hard Noetic ceilings used only as upper validation bounds. No production `maxStepBlocks` / `maxLookDeltaDegrees` profile or default is bundled or frozen; final tuning remains Stage 08 input. |
 | Tests | FROZEN / CURRENT + PREPARATORY | Automated lifecycle, identity, movement, loaded-only, entity wiring, payload validation/round-trip, camera presentation/restoration, strict config-authority parsing/reload and dedicated-server coverage exist. Canonical cast/channel wiring, movement/look input redirect and real-client coexistence acceptance remain required. |
-| Provenance link | MISSING / BLOCKER | Candidate specification exists, but final per-spell provenance linkage required for canonical completion is not frozen. |
+| Provenance link | FROZEN / CURRENT | [`STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) links Astral Severance to the observable `Mental Displacement` fantasy, the `REIMAGINE` decision, the Black Arcana-owned candidate spec and the `CORE + PROBE` host boundary; Mahou code/assets are explicitly excluded. |
 
 **Current Astral boundary:** PR #138 canonically merged the dedicated lifecycle; PR #235 merged the dedicated projection representation, server movement substrate and C2S MOVE/RETURN transport at `29454a7dd604ba0ea0200724d53bd9526b09cb10`; PR #240 merged the server-authored S2C camera presentation at `834c3f7e2c236161e04e21c1e690ca9e0503a39b`; and PR #242 merged the strict fail-closed server-owned control-config authority at `e2ff0421d78f3e29f210403eeb824957b7adb2be`. RETURN is wired to production runtime. The camera path is canonical. MOVE is registered/validated/rate-limited but its production gameplay handler remains fail-closed because PR #242 intentionally bundles no production control profile/default; an explicit reviewed production value contract must exist before MOVE wiring. Final PR #242 head `599e6ba3f3bb679abf2fb982601a8d91b709c885` passed push workflow `34798093347` and PR workflow `34798096283`; exact-SHA post-merge workflow `34798341265` passed the complete pipeline and published canonical QA artifact `black-arcana-e2ff0421d78f3e29f210403eeb824957b7adb2be` (artifact `10330163687`, SHA-256 `a9d5b656b98f945677596dfbfdcbc570f9153a1dd3c37f226c16498a727e80b3`). Movement/look input redirection and canonical cast/channel transaction wiring are still missing.
 
@@ -89,7 +91,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Boss/PvP behavior | PREPARATORY | Player observation requires explicit server-authorized consent/privacy policy; additional PvP/server-policy details remain to freeze. |
 | Config surface | MISSING / BLOCKER | No canonical config surface is frozen. |
 | Tests | PREPARATORY | Unloaded/cross-dimension denial, privacy, interruption and bounded data/range tests are required. |
-| Provenance link | MISSING / BLOCKER | Final per-spell provenance link is not frozen. |
+| Provenance link | FROZEN / CURRENT | [`STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) links Namescry to observable `Scrying`, the `REIMAGINE` decision, the Black Arcana-owned candidate spec and the Black Arcana-owned privacy/target authority; no Mahou implementation details are required. |
 
 ### Gaze of Stillness
 
@@ -107,7 +109,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Boss/PvP behavior | PREPARATORY | Diminishing returns and boss/player duration multipliers are required; exact multipliers remain Stage 08 work. |
 | Config surface | MISSING / BLOCKER | Safety ceilings exist, but final tunable config surface is not frozen. |
 | Tests | PREPARATORY | Facing/LOS, escape, reapplication immunity and boss/PvP policy tests are required. |
-| Provenance link | MISSING / BLOCKER | Final per-spell provenance link is not frozen. |
+| Provenance link | FROZEN / CURRENT | [`STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) links Gaze of Stillness to observable `Binding gaze`, the `REIMAGINE` decision and the Black Arcana-owned reciprocal LOS/facing/CC contract. Iron's remains only a supported invocation surface where separately evidenced. |
 
 ### Nullifying Gaze
 
@@ -125,7 +127,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Boss/PvP behavior | PREPARATORY | Protected effects and boss resistance are required; exact policy remains to freeze. |
 | Config surface | MISSING / BLOCKER | Safety ceilings/allowlist bounds are not themselves a complete balance config surface. |
 | Tests | PREPARATORY | Approved effect removed, protected/unknown effect untouched and boss-policy tests are required. |
-| Provenance link | MISSING / BLOCKER | Final per-spell provenance link is not frozen. |
+| Provenance link | FROZEN / CURRENT | [`STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) links Nullifying Gaze to observable `Reversion`, the `REIMAGINE` decision and the original allowlist/tag/adapter nullification policy; reference-specific invariant bypasses are explicitly rejected. |
 
 ### Occult Appraisal
 
@@ -143,7 +145,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Boss/PvP behavior | PREPARATORY | Privacy restrictions apply; player/container exposure must remain explicitly authorized. Exact PvP surface remains to freeze. |
 | Config surface | MISSING / BLOCKER | No canonical metadata/config surface is frozen beyond current hard safety bounds/whitelist behavior. |
 | Tests | PREPARATORY | Metadata whitelist, player/container restrictions and no-hidden-NBT-leak tests are required. |
-| Provenance link | MISSING / BLOCKER | Final per-spell provenance link is not frozen. |
+| Provenance link | FROZEN / CURRENT | [`STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) links Occult Appraisal to observable `Insight`, the `REIMAGINE` decision and the Black Arcana-owned metadata whitelist/privacy contract; arbitrary capability/NBT exposure is explicitly excluded. |
 
 ### Borrowed Sight
 
@@ -161,7 +163,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Boss/PvP behavior | FROZEN / CURRENT + PREPARATORY | Arbitrary hostile-player observation is denied; player observation requires explicit server-authorized consent. Additional balance policy remains to freeze. |
 | Config surface | MISSING / BLOCKER | Current safety ceilings are not the final spell config surface. |
 | Tests | FROZEN / CURRENT + PREPARATORY | Automated server/client transport contracts exist; real-client camera feel/restoration is still deferred, and candidate ownership/unload/logout cases remain acceptance requirements. |
-| Provenance link | MISSING / BLOCKER | Final per-spell provenance linkage required by Stage 07 is not frozen. |
+| Provenance link | FROZEN / CURRENT | [`STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) links Borrowed Sight to observable `Shared Vision`, the `REIMAGINE` decision and the Black Arcana-owned consent/camera/session contract. Ars familiar identity remains a provider boundary, not borrowed spell logic. |
 
 **Important:** implemented camera transport does not make Borrowed Sight specification-complete for Stage 08.
 
@@ -181,7 +183,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Boss/PvP behavior | PREPARATORY | Boss/event exclusions are required; players are not generic hostile mobs and no PvP sanctuary bypass is implied. |
 | Config surface | MISSING / BLOCKER | Hard safety bounds exist, but canonical gameplay config/tuning is not frozen. |
 | Tests | FROZEN / CURRENT + PREPARATORY | Runtime has bounded sanctuary contracts; candidate acceptance requires ordinary-mob suppression, boss exclusion, familiar-unload cleanup and tick-budget instrumentation. |
-| Provenance link | MISSING / BLOCKER | Final per-spell provenance link is not frozen. |
+| Provenance link | FROZEN / CURRENT | [`STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) links Pact Sanctuary to observable `Familiar's Garden`, the `REIMAGINE` decision and the Black Arcana-owned bounded aura/hostility policy. Ars familiar lifecycle is consumed only through supported provider seams. |
 
 ## Cross-spell blockers before Stage 08
 
@@ -195,8 +197,9 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 - explicit world-effect classification, including `NONE/READ_ONLY` where appropriate;
 - explicit boss/PvP policy;
 - bounded config surface and validation ranges;
-- exact tests for the final contract;
-- clean-room per-spell provenance linkage.
+- exact tests for the final contract.
+
+The clean-room per-spell provenance linkage is now frozen by [`docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md). This closes traceability only and does not promote any remaining balance/runtime field.
 
 Astral Severance additionally still requires:
 
@@ -216,4 +219,4 @@ Stage 08 may tune below existing safety ceilings. It must not:
 - transfer casting, targeting, channel, privacy or projection authority to the client;
 - use provider theme/similarity as evidence of an integration contract.
 
-Until this gate is closed, Stage 07.07 remains `IN PROGRESS`, and Stage 08 remains blocked from using the Noetic family as canonical balance input.
+Until this gate is closed, Stage 07.07 remains `IN PROGRESS`, and Stage 08 remains blocked from using the Noetic family as canonical balance input yet.

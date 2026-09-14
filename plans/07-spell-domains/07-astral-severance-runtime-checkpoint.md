@@ -150,8 +150,9 @@ It also does **not** yet implement:
 - cooldown identity/value;
 - scaling equation;
 - final RPG Skill Tree progression/mastery gate;
-- final production gameplay tuning/profile;
-- per-spell provenance closure.
+- final production gameplay tuning/profile.
+
+Clean-room per-spell provenance linkage is now frozen by [`docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](../../docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md); that closure does not imply any of the runtime/balance items above.
 
 Those omissions are intentional fail-closed boundaries, not implicit permission for later code to invent them.
 
@@ -185,7 +186,7 @@ Astral Severance remains **NOT IMPLEMENTED end-to-end** until at minimum:
 - an explicit reviewed production `ControlLimits` profile/value contract exists and MOVE execution is connected to that server-owned authority without deriving defaults from safety ceilings/test fixtures;
 - client movement/look input capture and redirect is implemented without transferring gameplay authority to the client;
 - activation/channel lifecycle is connected through the canonical Stage 02 cast/channel transaction without introducing a parallel authority path;
-- the complete per-spell specification gate closes the remaining resource/cooldown/scaling/progression/final-tuning/provenance fields;
+- the complete per-spell specification gate closes the remaining resource/cooldown/scaling/progression/final-tuning fields;
 - required automated tests are GREEN on the exact reconciled merge head;
 - real-client acceptance is directly observed where required by D031.
 
@@ -195,4 +196,5 @@ Therefore:
 - Borrowed Sight real-client acceptance remains deferred under D031;
 - automated Astral camera presentation and the server-owned control-config authority are canonical, but no real-client Astral Severance acceptance exists yet;
 - no production MOVE values are implied by the existence of the config schema;
+- clean-room per-spell provenance linkage is canonical and no longer blocks the domain;
 - Stage 08 must not consume 07.07 as canonical balance input yet.
