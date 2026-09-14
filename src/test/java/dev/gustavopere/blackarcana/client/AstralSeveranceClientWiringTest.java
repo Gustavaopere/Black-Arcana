@@ -51,12 +51,29 @@ class AstralSeveranceClientWiringTest {
     }
 
     @Test
+    void movementControlRequiresExactCameraOwnershipNotOnlyServerArmState() throws IOException {
+        String source = Files.readString(CAMERA_CONTROLLER);
+        assertTrue(source.contains("ownedCameraEntity == null"),
+                "MOVE_ARM must remain dormant until this controller has actually claimed a camera entity");
+        assertTrue(source.contains("minecraft.getCameraEntity() != ownedCameraEntity"),
+                "input redirection must stop when another controller owns the current camera");
+        assertTrue(source.contains("ownedCameraEntity.isRemoved()"),
+                "removed projection representations must not keep physical input suppressed");
+        assertTrue(source.contains("ownedCameraEntity.getId() != control.entityId()"),
+                "the claimed camera runtime id must match the exact armed session");
+        assertTrue(source.contains("!ownedCameraEntity.getUUID().equals(control.projectionId())"),
+                "the claimed camera UUID must match the exact armed projection");
+    }
+
+    @Test
     void inputControllerCoalescesMovementAndLookBehindExactServerArming() throws IOException {
         String source = Files.readString(INPUT_CONTROLLER);
         assertTrue(source.contains("MovementInputUpdateEvent"),
                 "movement capture must use the NeoForge logical-client movement-input seam");
         assertTrue(source.contains("CalculatePlayerTurnEvent"),
                 "look capture must use the public NeoForge hook fired inside MouseHandler#turnPlayer");
+        assertTrue(source.contains("EventPriority.LOWEST"),
+                "Astral suppression must run in the final normal event phase to minimize coexistence reintroduction");
         assertTrue(source.contains("AstralSeveranceClientController.movementControl()"),
                 "all control redirection must remain dormant until the exact server-authored Astral session is armed");
         assertTrue(source.contains("minecraft.mouseHandler.getXVelocity()"),
