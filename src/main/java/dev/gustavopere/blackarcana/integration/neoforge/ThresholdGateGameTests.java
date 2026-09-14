@@ -118,10 +118,14 @@ public final class ThresholdGateGameTests {
         double secondX = second.getX();
         double secondY = second.getY();
         double secondZ = second.getZ();
-        Object overflow = transfer(server, gateId, owner.getUUID(), 0, second.getUUID(), nowTick, true);
-        helper.assertTrue(!decision(overflow).allowed()
-                && "threshold_gate_throughput".equals(decision(overflow).code()),
-            "second transfer in a saturated window must fail closed");
+        // Exercise the same per-pair throughput window in the opposite direction so the
+        // first transferred entity cannot make destination-collision policy mask the
+        // limiter result. The first endpoint is vacated by firstTransfer above.
+        Object overflow = transfer(server, gateId, owner.getUUID(), 1, second.getUUID(), nowTick, true);
+        ArcanaDecision overflowDecision = decision(overflow);
+        helper.assertTrue(!overflowDecision.allowed()
+                && "threshold_gate_throughput".equals(overflowDecision.code()),
+            "second transfer in a saturated window must fail closed; actual=" + overflowDecision.code());
         helper.assertTrue(samePosition(second, secondX, secondY, secondZ),
             "throughput denial must not move another entity");
 
