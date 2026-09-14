@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.OptionalInt;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
@@ -22,13 +23,23 @@ final class NoeticViewSyncPlanner {
             List<NoeticObservationRuntime.ActiveSession> sessions,
             BiFunction<UUID, UUID, OptionalInt> loadedEntityIdResolver
     ) {
+        return project(sessions, Set.of(), loadedEntityIdResolver);
+    }
+
+    static Map<UUID, NoeticViewTransitionTracker.Desired> project(
+            List<NoeticObservationRuntime.ActiveSession> sessions,
+            Set<UUID> suppressedViewers,
+            BiFunction<UUID, UUID, OptionalInt> loadedEntityIdResolver
+    ) {
         Objects.requireNonNull(sessions, "sessions");
+        Objects.requireNonNull(suppressedViewers, "suppressedViewers");
         Objects.requireNonNull(loadedEntityIdResolver, "loadedEntityIdResolver");
 
         Map<UUID, NoeticViewTransitionTracker.Desired> desiredByViewer = new LinkedHashMap<>();
         for (NoeticObservationRuntime.ActiveSession session : sessions) {
             Objects.requireNonNull(session, "session");
-            if (session.kind() != NoeticObservationKind.BORROWED_SIGHT) {
+            if (session.kind() != NoeticObservationKind.BORROWED_SIGHT
+                    || suppressedViewers.contains(session.viewerId())) {
                 continue;
             }
 
