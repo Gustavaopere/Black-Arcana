@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.core.runtime;
 import dev.gustavopere.blackarcana.api.ArcanaCastContext;
 import dev.gustavopere.blackarcana.api.ArcanaCastEngine;
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
+import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
 import dev.gustavopere.blackarcana.api.ArcanaCost;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
@@ -13,6 +14,8 @@ import dev.gustavopere.blackarcana.core.cast.BoundedReplayGuard;
 import dev.gustavopere.blackarcana.core.cast.CompositeCastRequestValidator;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.ChannelBeginIntentPayload;
+import dev.gustavopere.blackarcana.network.ChannelCancelIntentPayload;
+import dev.gustavopere.blackarcana.network.ChannelReleaseIntentPayload;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -48,6 +51,38 @@ class ArcanaServerRuntimeChannelAuthorityTest {
         ArcanaDecision accepted = runtime.beginChannel(context(101L), begin);
         assertTrue(accepted.allowed());
         assertEquals(1, runtime.channels().activeSessions());
+    }
+
+    @Test
+    void physicalReleaseIsTerminalEvenWhenMinimumChannelWasNotReached() {
+        ArcanaServerRuntime runtime = runtime();
+        assertTrue(runtime.channelSpecs().register(SPELL.id(), new ArcanaChannelSpec(5L, 40L)));
+        ArcanaCastId first = ArcanaCastId.random();
+        assertTrue(runtime.beginChannel(context(100L), new ChannelBeginIntentPayload(
+                ArcanaProtocol.VERSION,
+                first.canonical(),
+                SPELL.id().canonical(),
+                0)).allowed());
+
+        ArcanaCastResult tooShort = runtime.releaseChannel(context(102L), new ChannelReleaseIntentPayload(
+                ArcanaProtocol.VERSION,
+                first.canonical(),
+                ""));
+        assertEquals(ArcanaCastResult.Status.DENIED_CHANNEL, tooShort.status());
+        assertEquals("channel_too_short", tooShort.code());
+        assertEquals(0, runtime.channels().activeSessions(),
+                "physical key release must not leave a denied channel blocking the caster until timeout");
+
+        ArcanaCastId second = ArcanaCastId.random();
+        assertTrue(runtime.beginChannel(context(103L), new ChannelBeginIntentPayload(
+                ArcanaProtocol.VERSION,
+                second.canonical(),
+                SPELL.id().canonical(),
+                0)).allowed());
+        assertTrue(runtime.cancelChannel(context(104L), new ChannelCancelIntentPayload(
+                ArcanaProtocol.VERSION,
+                second.canonical())));
+        assertEquals(0, runtime.channels().activeSessions());
     }
 
     private static ArcanaServerRuntime runtime() {
