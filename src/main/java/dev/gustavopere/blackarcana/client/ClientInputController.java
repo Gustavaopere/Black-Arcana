@@ -64,6 +64,17 @@ public final class ClientInputController {
         return true;
     }
 
+    private static void sendImmediateCast(Minecraft minecraft, int slot, ArcanaSpellId spell) {
+        ArcanaCastId castId = ArcanaCastId.random();
+        CastPresentationClientRuntime.recordLocalIntent(castId, spell, minecraft.player.tickCount);
+        ArcanaNetworkBridge.sendCastIntent(new CastIntentPayload(
+                ArcanaProtocol.VERSION,
+                castId.canonical(),
+                spell.canonical(),
+                slot,
+                currentTargetHint(minecraft)));
+    }
+
     private static boolean castSlotFromInput(int slot, int inputId) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.getConnection() == null || minecraft.screen != null) return false;
@@ -85,17 +96,6 @@ public final class ClientInputController {
 
         sendImmediateCast(minecraft, slot, spell);
         return true;
-    }
-
-    private static void sendImmediateCast(Minecraft minecraft, int slot, ArcanaSpellId spell) {
-        ArcanaCastId castId = ArcanaCastId.random();
-        CastPresentationClientRuntime.recordLocalIntent(castId, spell, minecraft.player.tickCount);
-        ArcanaNetworkBridge.sendCastIntent(new CastIntentPayload(
-                ArcanaProtocol.VERSION,
-                castId.canonical(),
-                spell.canonical(),
-                slot,
-                currentTargetHint(minecraft)));
     }
 
     private static void processChannelBeginAcknowledgement() {
