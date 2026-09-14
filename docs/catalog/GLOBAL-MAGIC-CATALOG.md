@@ -16,7 +16,7 @@ Este arquivo é o índice operacional global de catalogação do projeto. Ele n�
 
 ## Snapshot de autoridade usado
 
-- Black Arcana: `main@9d51be49fb44203f4a9e33160b1168de3d385fba`.
+- Black Arcana: `main@942431299bdb7afdbe893db2951f5294137cf735`.
 - RPG Skill Tree sibling: `main@9e88db8f6b37c1bfbbd331f6684504a76e4aef40`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado de integração.
 - O Black Arcana mantém `docs/reference/runtime-host-baseline.md`, derivado do `modlist agora atual.txt` fornecido em 2026-08-26, para o baseline de Iron's, Ars Nouveau, Eidolon e Malum.
@@ -44,7 +44,7 @@ Os itens abaixo foram promovidos para este índice porque o inventário versiona
 | Ars 'n' Spells | `ars_n_spells` | `3.0.2` | ✅ Catalogado | `ARS-N-SPELLS-3.0.2.md`: 8 registros-proxy `AbstractSpell` sem efeito próprio + 5 rituais; spells dinâmicos de Ars/Iron's transportados pelo bridge não são recontados como conteúdo do addon. |
 | Cataclysm: Spellbooks | `cataclysm_spellbooks` | `1.1.12-1.21` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
 | Deeper and Darker: Spellbooks | `darkermagic` | `1.3.3-1.21.1` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
-| Farmer's Spell 'n Spellbooks | `farmers_spell` | `1.0.4.0-1.21.1` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
+| Farmer's Spell 'n Spellbooks | `farmers_spell` | `1.0.4.0-1.21.1` | ✅ Catalogado | `FARMERS-SPELL-1.0.4.0.md`: 6/6 registros runtime em `SpellRegistry`, todos na escola `farmers_spell:gluttony`; `BerserkCleaverSpell.java` está totalmente comentado e não é contado como spell runtime. |
 | Ignis Soulfires: Spellbooks | `ignissoulfires_spellbooks` | `1.1.0` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
 | ISS: Magic From The East | `iss_magicfromtheeast` | `1.1.5` | ❌ Não catalogado | Confirmar inventário mágico e catalogar conteúdo observável. |
 | Leyline Spellbooks | `leylines` | `1.0.3` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
@@ -109,8 +109,8 @@ Este resumo conta **linhas de mods no índice versionado**, não quantidade de s
 
 - ✅ Catálogo integral de spells/mecânicas do mod de referência: **1** (`Mahou Tsukai`, referência clean-room; presença atual não afirmada).
 - ⚠️ Hosts instalados com cobertura parcial de capacidade/API, mas sem inventário integral de spells: **4** (Iron's, Ars Nouveau, Eidolon, Malum).
-- ✅ Addons com catálogo próprio fechado no snapshot versionado: **1** (`Ars 'n' Spells` 3.0.2; 8 proxies sem efeito próprio + 5 rituais).
-- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **9**.
+- ✅ Addons com catálogo próprio fechado no snapshot versionado: **2** (`Ars 'n' Spells` 3.0.2: 8 proxies sem efeito próprio + 5 rituais; `Farmer's Spell 'n Spellbooks` 1.0.4.0: 6/6 spells runtime registrados).
+- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **8**.
 - ⚠️ Addons de título explicitamente mágico cujo tipo exato de conteúdo ainda precisa ser confirmado: **2** (`magic_schools`, `specs_irons_spellbooks`).
 - ⚠️ Extensões de ecossistema que exigem confirmação spell-level antes de catalogação integral: **14**.
 - ✅ Contratos próprios Black Arcana: **32** candidatos catalogados.
