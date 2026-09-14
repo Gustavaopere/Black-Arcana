@@ -16,7 +16,7 @@ public record ChannelBeginIntentPacket(
         int protocolVersion,
         String castId,
         String spellId,
-        int sourceSlot
+        int loadoutSlot
 ) implements CustomPacketPayload {
     public static final Type<ChannelBeginIntentPacket> TYPE = new Type<>(
             ResourceLocation.fromNamespaceAndPath(BlackArcanaMod.MOD_ID, "channel_begin_intent"));
@@ -25,11 +25,11 @@ public record ChannelBeginIntentPacket(
             ByteBufCodecs.VAR_INT, ChannelBeginIntentPacket::protocolVersion,
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_CAST_ID_LENGTH), ChannelBeginIntentPacket::castId,
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH), ChannelBeginIntentPacket::spellId,
-            ByteBufCodecs.VAR_INT, ChannelBeginIntentPacket::sourceSlot,
+            ByteBufCodecs.VAR_INT, ChannelBeginIntentPacket::loadoutSlot,
             ChannelBeginIntentPacket::new);
 
     public ChannelBeginIntentPacket {
-        new ChannelBeginIntentPayload(protocolVersion, castId, spellId, sourceSlot);
+        new ChannelBeginIntentPayload(protocolVersion, castId, spellId, loadoutSlot);
     }
 
     public static ChannelBeginIntentPacket from(ChannelBeginIntentPayload payload) {
@@ -38,11 +38,11 @@ public record ChannelBeginIntentPacket(
                 payload.protocolVersion(),
                 payload.castId(),
                 payload.spellId(),
-                payload.sourceSlot());
+                payload.loadoutSlot());
     }
 
     public ChannelBeginIntentPayload toDomain() {
-        return new ChannelBeginIntentPayload(protocolVersion, castId, spellId, sourceSlot);
+        return new ChannelBeginIntentPayload(protocolVersion, castId, spellId, loadoutSlot);
     }
 
     @Override
