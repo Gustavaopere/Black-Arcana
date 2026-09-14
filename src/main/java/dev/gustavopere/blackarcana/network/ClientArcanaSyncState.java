@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.network;
 
+import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import net.minecraft.world.entity.player.Player;
 
@@ -26,6 +27,7 @@ public final class ClientArcanaSyncState {
     private static Map<String, Long> cooldowns = Map.of();
     private static Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation = Map.of();
     private static Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazardPreflight = Map.of();
+    private static Map<ArcanaSpellId, ArcanaChannelSpec> channelCapabilities = Map.of();
     private static HazardResistanceForecastPayload hazardResistanceForecast;
     private static List<ArcanaSpellId> loadout = List.of();
     private static volatile BiConsumer<Player, CastResultPayload> resultObserver = (player, payload) -> { };
@@ -103,6 +105,18 @@ public final class ClientArcanaSyncState {
         hazardResistanceForecast = null;
     }
 
+    static synchronized void replaceChannelCapabilities(ChannelCapabilityPayload payload) {
+        Objects.requireNonNull(payload, "payload");
+        Map<ArcanaSpellId, ArcanaChannelSpec> next = new LinkedHashMap<>();
+        for (ChannelCapabilityPayload.Entry entry : payload.entries()) {
+            ArcanaSpellId id = entry.parsedSpellId();
+            if (next.putIfAbsent(id, entry.spec()) != null) {
+                throw new IllegalArgumentException("duplicate channel capability entry: " + id.canonical());
+            }
+        }
+        channelCapabilities = Map.copyOf(next);
+    }
+
     public static synchronized void acceptHazardResistanceForecast(
         Player player,
         HazardResistanceForecastPayload payload
@@ -146,6 +160,10 @@ public final class ClientArcanaSyncState {
         return hazardPreflight;
     }
 
+    public static synchronized Optional<ArcanaChannelSpec> channelCapability(ArcanaSpellId spellId) {
+        return Optional.ofNullable(channelCapabilities.get(Objects.requireNonNull(spellId, "spellId")));
+    }
+
     public static synchronized Optional<HazardResistanceForecastPayload> hazardResistanceForecast(ArcanaSpellId spellId) {
         Objects.requireNonNull(spellId, "spellId");
         if (hazardResistanceForecast == null || !hazardResistanceForecast.parsedSpellId().equals(spellId)) {
@@ -165,6 +183,7 @@ public final class ClientArcanaSyncState {
         cooldowns = Map.of();
         presentation = Map.of();
         hazardPreflight = Map.of();
+        channelCapabilities = Map.of();
         hazardResistanceForecast = null;
         loadout = List.of();
     }
@@ -178,6 +197,7 @@ public final class ClientArcanaSyncState {
             cooldowns = Map.of();
             presentation = Map.of();
             hazardPreflight = Map.of();
+            channelCapabilities = Map.of();
             hazardResistanceForecast = null;
             loadout = List.of();
         }
