@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.network.AstralMoveIntentPayload;
 import dev.gustavopere.blackarcana.network.neoforge.AstralSeveranceNetworkBridge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.CalculatePlayerTurnEvent;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
@@ -24,8 +25,11 @@ public final class AstralSeveranceInputController {
 
     public static void register(IEventBus gameBus) {
         IEventBus bus = Objects.requireNonNull(gameBus, "gameBus");
-        bus.addListener(AstralSeveranceInputController::onMovementInput);
-        bus.addListener(AstralSeveranceInputController::onCalculatePlayerTurn);
+        // Run after ordinary input/turn modifiers so an armed Astral session remains the final normal-phase
+        // owner of body suppression. Same-priority listeners are still outside Black Arcana's authority, so
+        // direct modpack acceptance remains required by D031.
+        bus.addListener(EventPriority.LOWEST, AstralSeveranceInputController::onMovementInput);
+        bus.addListener(EventPriority.LOWEST, AstralSeveranceInputController::onCalculatePlayerTurn);
     }
 
     private static void onCalculatePlayerTurn(CalculatePlayerTurnEvent event) {
