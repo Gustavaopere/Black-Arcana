@@ -124,6 +124,21 @@ class AstralControlConfigContractTest {
     }
 
     @Test
+    void loaderRejectsFractionalSchemaVersionInsteadOfCoercingIt() {
+        assertThrows(RuntimeException.class, () -> AstralControlDataReloadListener.parseDefinition(
+                ASTRAL_ID,
+                JsonParser.parseString("""
+                        {
+                          "schemaVersion": 1.5,
+                          "id": "black_arcana:astral_severance",
+                          "scope": "SERVER",
+                          "maxStepBlocks": 0.25,
+                          "maxLookDeltaDegrees": 12.0
+                        }
+                        """)));
+    }
+
+    @Test
     void modRegistersServerConfigAuthorityWithoutEnablingMoveGameplay() throws IOException {
         String source = Files.readString(repositoryRoot().resolve(
                 "src/main/java/dev/gustavopere/blackarcana/BlackArcanaMod.java"));
