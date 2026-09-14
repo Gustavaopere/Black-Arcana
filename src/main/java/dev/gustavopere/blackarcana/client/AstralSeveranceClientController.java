@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Physical-client presentation adapter for server-authorized Astral Severance.
@@ -36,6 +37,10 @@ public final class AstralSeveranceClientController {
             return;
         }
         STATE.accept(payload);
+    }
+
+    static Optional<AstralViewClientState.Desired> movementControl() {
+        return STATE.movementControl();
     }
 
     private static void onClientTick(ClientTickEvent.Post event) {
