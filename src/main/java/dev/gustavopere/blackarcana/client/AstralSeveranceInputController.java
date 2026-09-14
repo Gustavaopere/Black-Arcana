@@ -5,25 +5,53 @@ import dev.gustavopere.blackarcana.network.neoforge.AstralSeveranceNetworkBridge
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.CalculatePlayerTurnEvent;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
 
 import java.util.Objects;
 
 /**
- * Physical-client movement redirect for an explicitly server-armed Astral Severance session.
+ * Physical-client movement/look redirect for an explicitly server-armed Astral Severance session.
  *
  * <p>Camera BEGIN alone never activates this controller. Only the exact-session MOVE_ARM state authored by
- * the server permits local movement input to be converted into bounded C2S intent. The client sends axes and
- * sequence only; it never authors caster identity or a world position. Look redirection is intentionally not
- * implemented here because Stage 07.07 still lacks a verified client hook for raw look deltas.</p>
+ * the server permits local movement and look input to be converted into bounded C2S intent. The client sends
+ * axes, relative look deltas and sequence only; it never authors caster identity or a world position.</p>
  */
 public final class AstralSeveranceInputController {
-    private static final AstralMovementIntentSequencer SEQUENCER = new AstralMovementIntentSequencer();
+    private static final AstralControlIntentSequencer SEQUENCER = new AstralControlIntentSequencer();
 
     private AstralSeveranceInputController() { }
 
     public static void register(IEventBus gameBus) {
-        Objects.requireNonNull(gameBus, "gameBus").addListener(AstralSeveranceInputController::onMovementInput);
+        IEventBus bus = Objects.requireNonNull(gameBus, "gameBus");
+        bus.addListener(AstralSeveranceInputController::onMovementInput);
+        bus.addListener(AstralSeveranceInputController::onCalculatePlayerTurn);
+    }
+
+    private static void onCalculatePlayerTurn(CalculatePlayerTurnEvent event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null) {
+            SEQUENCER.clear();
+            return;
+        }
+
+        AstralViewClientState.Desired control = AstralSeveranceClientController.movementControl().orElse(null);
+        if (control == null) {
+            SEQUENCER.clear();
+            return;
+        }
+
+        SEQUENCER.captureLook(
+                control.projectionId(),
+                minecraft.mouseHandler.getXVelocity(),
+                minecraft.mouseHandler.getYVelocity(),
+                event.getMouseSensitivity(),
+                minecraft.options.invertYMouse().get());
+
+        // Prevent the same mouse sample from rotating the authoritative physical body locally. The server
+        // remains authoritative over the Astral projection because only bounded relative intent is sent.
+        event.setMouseSensitivity(AstralControlIntentSequencer.PHYSICAL_BODY_NEUTRAL_SENSITIVITY);
+        event.setCinematicCameraEnabled(false);
     }
 
     private static void onMovementInput(MovementInputUpdateEvent event) {
@@ -34,6 +62,7 @@ public final class AstralSeveranceInputController {
 
         AstralViewClientState.Desired control = AstralSeveranceClientController.movementControl().orElse(null);
         if (control == null) {
+            SEQUENCER.clear();
             return;
         }
 
