@@ -53,6 +53,28 @@ public final class ChannelNetworkBridge {
         capabilityHandler = Objects.requireNonNull(handler, "handler");
     }
 
+    public static ChannelBeginResultPayload dispatchBeginServerbound(
+            ServerPlayer player,
+            ChannelBeginIntentPayload payload
+    ) {
+        return Objects.requireNonNull(
+                beginHandler.handle(player, Objects.requireNonNull(payload, "payload")),
+                "channel begin result");
+    }
+
+    public static CastResultPayload dispatchReleaseServerbound(
+            ServerPlayer player,
+            ChannelReleaseIntentPayload payload
+    ) {
+        return Objects.requireNonNull(
+                releaseHandler.handle(player, Objects.requireNonNull(payload, "payload")),
+                "channel release result");
+    }
+
+    public static boolean dispatchCancelServerbound(ServerPlayer player, ChannelCancelIntentPayload payload) {
+        return cancelHandler.handle(player, Objects.requireNonNull(payload, "payload"));
+    }
+
     public static void dispatchBeginResultClientbound(Player player, ChannelBeginResultPayload payload) {
         beginResultHandler.handle(player, Objects.requireNonNull(payload, "payload"));
     }
