@@ -64,6 +64,7 @@ public final class BlackArcanaMod {
         ChannelNetworkBridge.installReleaseHandler(ArcanaServerRuntimeManager::handleChannelRelease);
         ChannelNetworkBridge.installCancelHandler(ArcanaServerRuntimeManager::handleChannelCancel);
         ChannelNetworkBridge.installCapabilityHandler(ClientArcanaSyncState::acceptChannelCapabilities);
+        ChannelNetworkBridge.installBeginResultHandler(ClientArcanaSyncState::acceptChannelBeginResult);
         HazardResistanceForecastNetworkBridge.installServerHandler(HazardResistanceForecastService::handle);
         HazardResistanceForecastNetworkBridge.installClientHandler(ClientArcanaSyncState::acceptHazardResistanceForecast);
         LoadoutNetworkBridge.installServerHandler(ArcanaServerRuntimeManager::handleLoadoutUpdate);
