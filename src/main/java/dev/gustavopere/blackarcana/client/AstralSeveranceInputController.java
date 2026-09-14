@@ -41,7 +41,7 @@ public final class AstralSeveranceInputController {
 
         AstralViewClientState.Desired control = AstralSeveranceClientController.movementControl().orElse(null);
         if (control == null) {
-            SEQUENCER.clear();
+            suspendOrResetSequencer();
             return;
         }
 
@@ -66,7 +66,7 @@ public final class AstralSeveranceInputController {
 
         AstralViewClientState.Desired control = AstralSeveranceClientController.movementControl().orElse(null);
         if (control == null) {
-            SEQUENCER.clear();
+            suspendOrResetSequencer();
             return;
         }
 
@@ -82,6 +82,16 @@ public final class AstralSeveranceInputController {
         if (payload != null) {
             AstralSeveranceNetworkBridge.sendMove(payload);
         }
+    }
+
+    private static void suspendOrResetSequencer() {
+        AstralViewClientState.Desired desired =
+                AstralSeveranceClientController.desiredProjection().orElse(null);
+        if (desired == null) {
+            SEQUENCER.clear();
+            return;
+        }
+        SEQUENCER.disarm(desired.projectionId());
     }
 
     private static void suppressPhysicalBodyMovement(Input input) {

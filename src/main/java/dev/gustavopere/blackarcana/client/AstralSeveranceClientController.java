@@ -39,6 +39,10 @@ public final class AstralSeveranceClientController {
         STATE.accept(payload);
     }
 
+    static Optional<AstralViewClientState.Desired> desiredProjection() {
+        return STATE.desired();
+    }
+
     /**
      * Returns armed control only while this controller still owns the exact Astral camera representation.
      * A server MOVE_ARM received before vanilla entity spawn stays dormant instead of suppressing the body
