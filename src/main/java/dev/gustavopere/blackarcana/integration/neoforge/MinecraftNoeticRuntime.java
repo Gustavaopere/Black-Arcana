@@ -13,7 +13,9 @@ import dev.gustavopere.blackarcana.content.noetic.NoeticPerceptionSnapshot;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
 import dev.gustavopere.blackarcana.content.noetic.NullificationRegistry;
 import dev.gustavopere.blackarcana.content.noetic.PactSanctuarySpec;
+import dev.gustavopere.blackarcana.network.AstralViewTransitionTracker;
 import dev.gustavopere.blackarcana.network.NoeticViewTransitionTracker;
+import dev.gustavopere.blackarcana.network.neoforge.AstralSeveranceNetworkBridge;
 import dev.gustavopere.blackarcana.network.neoforge.NoeticViewNetworkBridge;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -404,20 +406,51 @@ public final class MinecraftNoeticRuntime {
         expireAstralProjections(server, state);
         revalidateAstralProjections(server, state);
         state.observation.tick(server);
-        syncObservationViews(server, state);
+        syncPresentationViews(server, state);
         state.gaze.tick(server);
         state.sanctuary.tick(server);
     }
 
-    private static void syncObservationViews(MinecraftServer server, ServerState state) {
+    private static void syncPresentationViews(MinecraftServer server, ServerState state) {
+        Set<UUID> suppressedViewers = NoeticCameraConflictPolicy.conflictedViewers(
+                state.observations.activeSessions(),
+                state.astral.activeProjections());
+        syncObservationViews(server, state, suppressedViewers);
+        syncAstralViews(server, state, suppressedViewers);
+    }
+
+    private static void syncObservationViews(
+            MinecraftServer server,
+            ServerState state,
+            Set<UUID> suppressedViewers
+    ) {
         NoeticViewSyncService.dispatch(
                 state.observations,
                 state.viewTransitions,
+                suppressedViewers,
                 (viewerId, targetId) -> loadedBorrowedSightTargetId(server, viewerId, targetId),
                 (viewerId, payload) -> {
                     ServerPlayer viewer = server.getPlayerList().getPlayer(viewerId);
                     if (viewer != null) {
                         NoeticViewNetworkBridge.send(viewer, payload);
+                    }
+                });
+    }
+
+    private static void syncAstralViews(
+            MinecraftServer server,
+            ServerState state,
+            Set<UUID> suppressedViewers
+    ) {
+        AstralViewSyncService.dispatch(
+                state.astral,
+                state.astralViewTransitions,
+                suppressedViewers,
+                (casterId, projectionId) -> loadedAstralProjectionEntityId(server, casterId, projectionId),
+                (viewerId, payload) -> {
+                    ServerPlayer viewer = server.getPlayerList().getPlayer(viewerId);
+                    if (viewer != null) {
+                        AstralSeveranceNetworkBridge.sendView(viewer, payload);
                     }
                 });
     }
@@ -434,6 +467,23 @@ public final class MinecraftNoeticRuntime {
             return OptionalInt.empty();
         }
         return OptionalInt.of(living.getId());
+    }
+
+    private static OptionalInt loadedAstralProjectionEntityId(
+            MinecraftServer server,
+            UUID casterId,
+            UUID projectionId
+    ) {
+        ServerPlayer caster = server.getPlayerList().getPlayer(casterId);
+        if (caster == null) return OptionalInt.empty();
+        Entity target = caster.serverLevel().getEntity(projectionId);
+        if (!(target instanceof AstralProjectionEntity)
+                || target.isRemoved()
+                || !target.getUUID().equals(projectionId)
+                || target.getId() < 0) {
+            return OptionalInt.empty();
+        }
+        return OptionalInt.of(target.getId());
     }
 
     private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
@@ -664,6 +714,8 @@ public final class MinecraftNoeticRuntime {
                 new MinecraftNoeticObservationRuntime(observations, familiarOwnership);
         private final NoeticViewTransitionTracker viewTransitions =
                 new NoeticViewTransitionTracker(NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS);
+        private final AstralViewTransitionTracker astralViewTransitions =
+                new AstralViewTransitionTracker(NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS);
         private final AstralSeveranceRuntime astral =
                 new AstralSeveranceRuntime(NoeticSafetyCeilings.MAX_ACTIVE_SESSIONS);
         private final NullificationRegistry nullifications =

@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.client;
 
-import dev.gustavopere.blackarcana.network.NoeticViewPayload;
+import dev.gustavopere.blackarcana.content.noetic.AstralProjectionEntity;
+import dev.gustavopere.blackarcana.network.AstralViewPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -10,23 +11,23 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import java.util.Objects;
 
 /**
- * Physical-client presentation adapter for server-authorized Borrowed Sight.
+ * Physical-client presentation adapter for server-authorized Astral Severance.
  *
- * <p>This controller never admits observations, chooses targets, extends durations or sends gameplay
- * intent. It only follows the latest clientbound entity id while that entity remains loaded locally,
- * then restores the camera to the player's physical body.</p>
+ * <p>The controller owns only camera presentation. A BEGIN may precede vanilla entity spawn, so the exact
+ * desired projection identity is retained while the physical camera stays on the body until the matching
+ * loaded representation appears or an authoritative END clears the session.</p>
  */
-public final class BorrowedSightClientController {
-    private static volatile int targetEntityId = -1;
+public final class AstralSeveranceClientController {
+    private static final AstralViewClientState STATE = new AstralViewClientState();
     private static Entity ownedCameraEntity;
 
-    private BorrowedSightClientController() { }
+    private AstralSeveranceClientController() { }
 
     public static void register(IEventBus gameBus) {
-        Objects.requireNonNull(gameBus, "gameBus").addListener(BorrowedSightClientController::onClientTick);
+        Objects.requireNonNull(gameBus, "gameBus").addListener(AstralSeveranceClientController::onClientTick);
     }
 
-    public static void accept(Player player, NoeticViewPayload payload) {
+    public static void accept(Player player, AstralViewPayload payload) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(payload, "payload");
 
@@ -34,35 +35,27 @@ public final class BorrowedSightClientController {
         if (minecraft.player == null || player != minecraft.player) {
             return;
         }
-
-        if (payload.action() == NoeticViewPayload.Action.BEGIN) {
-            targetEntityId = payload.targetEntityId();
-            return;
-        }
-
-        if (targetEntityId == payload.targetEntityId()) {
-            targetEntityId = -1;
-        }
+        STATE.accept(payload);
     }
 
     private static void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.level == null) {
-            targetEntityId = -1;
+            STATE.clear();
             ownedCameraEntity = null;
             return;
         }
 
-        int desiredTarget = targetEntityId;
-        if (desiredTarget < 0) {
+        AstralViewClientState.Desired desired = STATE.desired().orElse(null);
+        if (desired == null) {
             restorePhysicalBody(minecraft);
             return;
         }
 
-        int targetEntityId = desiredTarget;
-        Entity target = minecraft.level.getEntity(targetEntityId);
-        if (target == null || target.isRemoved()) {
-            BorrowedSightClientController.targetEntityId = -1;
+        Entity target = minecraft.level.getEntity(desired.entityId());
+        if (!(target instanceof AstralProjectionEntity)
+                || target.isRemoved()
+                || !target.getUUID().equals(desired.projectionId())) {
             restorePhysicalBody(minecraft);
             return;
         }
