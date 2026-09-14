@@ -4,7 +4,7 @@
 
 `IN PROGRESS / RUNTIME PARTIALLY IMPLEMENTED / REQUIRED BEFORE 07.07 CANONICAL COMPLETION`
 
-Canonical runtime evidence exists for the merged Noetic substrate, Borrowed Sight camera flow, Astral Severance lifecycle and the bounded Astral representation/control tranche merged by PR #235 at `29454a7dd604ba0ea0200724d53bd9526b09cb10`. This document remains the canonical completeness gate for the seven-spell family.
+Canonical runtime evidence exists for the merged Noetic substrate, Borrowed Sight camera flow, Astral Severance lifecycle, bounded Astral representation/control transport, server-authored Astral camera presentation and the strict server-owned Astral control-config authority merged by PR #242 at `e2ff0421d78f3e29f210403eeb824957b7adb2be`. This document remains the canonical completeness gate for the seven-spell family.
 
 This document closes an ambiguity in Stage 07.07: an approved fantasy, preparatory candidate entry or partial runtime is not automatically a complete spell specification.
 
@@ -47,7 +47,7 @@ The Noetic substrate recognizes four observation kinds:
 - `BORROWED_SIGHT`;
 - `OCCULT_APPRAISAL`.
 
-The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary contracts. Borrowed Sight has a server-authored client camera path. Astral Severance now has a dedicated server-owned projection/session lifecycle, a dedicated projection entity, server-owned logical pose/movement substrate and bounded C2S MOVE/RETURN transport.
+The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary contracts. Borrowed Sight has a server-authored client camera path. Astral Severance has a dedicated server-owned projection/session lifecycle, a dedicated projection entity, server-owned logical pose/movement substrate, bounded C2S MOVE/RETURN transport, server-authored S2C camera presentation, and a strict optional server-owned `ControlLimits` config authority. No production Astral control profile/default is bundled, so MOVE gameplay remains fail-closed.
 
 `NoeticSafetyCeilings` provides absolute implementation ceilings, including a generic observation maximum range of 128 blocks and maximum duration of 600 ticks. These are safety caps, not final spell range/duration or movement values.
 
@@ -57,7 +57,7 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 
 | Required field | Status | Current supported statement |
 |---|---|---|
-| Fantasy | FROZEN / CURRENT + PREPARATORY | Dedicated non-owning astral representation/viewpoint is tied to the physical caster while the physical body remains authoritative and vulnerable; client camera/input completion remains pending. |
+| Fantasy | FROZEN / CURRENT + PREPARATORY | Dedicated non-owning astral representation/viewpoint is tied to the physical caster while the physical body remains authoritative and vulnerable; server-authored camera presentation is canonical while movement/look input redirection remains pending. |
 | Host integration | FROZEN / CURRENT + PREPARATORY | Black Arcana owns projection/session/control authority. Eidolon flavor/integration remains optional intent, not a verified required authority bridge. |
 | Invocation | PREPARATORY | Activation seam exists only downstream of an already-authorized canonical cast transaction. Exact player-facing channel activation/release and upkeep transaction are not yet wired/frozen. |
 | Target rules | FROZEN / CURRENT | Projection identity is server-generated and bound to one physical caster; generic observed-entity Astral admission is rejected; server movement is same-session, range-bounded and loaded-only. |
@@ -67,11 +67,11 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 | Progression gate | PREPARATORY | Candidate tier is T3; final progression/mastery gate remains Stage 08 input through the RPG Skill Tree boundary only. |
 | World-effect mode | FROZEN / CURRENT + PREPARATORY | Current runtime authorizes no terrain mutation or remote interaction. Projection movement is loaded-only and does not force-load. Any future interaction requires a separate reviewed contract. |
 | Boss/PvP behavior | FROZEN / CURRENT + PREPARATORY | Projection is non-combat/non-owning; physical body remains vulnerable; no offensive attribution or PvP bypass is authorized. Final server/PvP tuning remains open. |
-| Config surface | MISSING / BLOCKER | Hard safety ceilings exist, but canonical gameplay config is missing. In particular, production `ControlLimits` for MOVE (`maxStepBlocks`, `maxLookDeltaDegrees`) are not frozen. |
-| Tests | FROZEN / CURRENT + PREPARATORY | Automated lifecycle, identity, movement, loaded-only, entity wiring, payload validation/round-trip and dedicated-server coverage exist. Canonical cast wiring, client camera/input restoration and real-client coexistence acceptance remain required. |
+| Config surface | FROZEN / CURRENT + PREPARATORY | PR #242 freezes the strict server-owned schema/reload authority for `black_arcana:astral_severance` `ControlLimits`, with absent config explicitly fail-closed and hard Noetic ceilings used only as upper validation bounds. No production `maxStepBlocks` / `maxLookDeltaDegrees` profile or default is bundled or frozen; final tuning remains Stage 08 input. |
+| Tests | FROZEN / CURRENT + PREPARATORY | Automated lifecycle, identity, movement, loaded-only, entity wiring, payload validation/round-trip, camera presentation/restoration, strict config-authority parsing/reload and dedicated-server coverage exist. Canonical cast/channel wiring, movement/look input redirect and real-client coexistence acceptance remain required. |
 | Provenance link | MISSING / BLOCKER | Candidate specification exists, but final per-spell provenance linkage required for canonical completion is not frozen. |
 
-**Current Astral boundary:** PR #138 canonically merged the dedicated lifecycle, and PR #235 canonically merged the dedicated projection representation, server movement substrate and C2S MOVE/RETURN transport at `29454a7dd604ba0ea0200724d53bd9526b09cb10`. RETURN is wired to production runtime. MOVE is intentionally registered/validated/rate-limited but its production gameplay handler remains fail-closed until an explicit reviewed server-side `ControlLimits` authority exists. Final branch head `8b9fd3ce0bb2347dc672b85db058eeb891d850d9` passed push workflow `34778875762` and PR workflow `34778877787`; exact-SHA post-merge workflow `34779849669` passed the complete pipeline and published canonical QA artifact `black-arcana-29454a7dd604ba0ea0200724d53bd9526b09cb10` (artifact `10325066285`, SHA-256 `8c5d47037661e2b697196e15ef0ca272dce5e4d496b11aef99edc323b54e69b4`). Client camera/input redirection and canonical cast/channel transaction wiring are still missing.
+**Current Astral boundary:** PR #138 canonically merged the dedicated lifecycle; PR #235 merged the dedicated projection representation, server movement substrate and C2S MOVE/RETURN transport at `29454a7dd604ba0ea0200724d53bd9526b09cb10`; PR #240 merged the server-authored S2C camera presentation at `834c3f7e2c236161e04e21c1e690ca9e0503a39b`; and PR #242 merged the strict fail-closed server-owned control-config authority at `e2ff0421d78f3e29f210403eeb824957b7adb2be`. RETURN is wired to production runtime. The camera path is canonical. MOVE is registered/validated/rate-limited but its production gameplay handler remains fail-closed because PR #242 intentionally bundles no production control profile/default; an explicit reviewed production value contract must exist before MOVE wiring. Final PR #242 head `599e6ba3f3bb679abf2fb982601a8d91b709c885` passed push workflow `34798093347` and PR workflow `34798096283`; exact-SHA post-merge workflow `34798341265` passed the complete pipeline and published canonical QA artifact `black-arcana-e2ff0421d78f3e29f210403eeb824957b7adb2be` (artifact `10330163687`, SHA-256 `a9d5b656b98f945677596dfbfdcbc570f9153a1dd3c37f226c16498a727e80b3`). Movement/look input redirection and canonical cast/channel transaction wiring are still missing.
 
 ### Namescry
 
@@ -200,9 +200,9 @@ The runtime also contains Gaze of Stillness / Nullifying Gaze and Pact Sanctuary
 
 Astral Severance additionally still requires:
 
-- canonical client camera/input redirection and restoration for its dedicated projection identity;
+- canonical client movement/look input redirection for its dedicated projection identity; the camera presentation/restoration path itself is already canonical;
 - canonical player-facing cast/channel/upkeep transaction wiring;
-- an explicit reviewed server-side MOVE control-limit/config authority before the MOVE gameplay handler is installed;
+- an explicit reviewed production `ControlLimits` profile/value contract before the MOVE gameplay handler is installed; the server-owned config schema/authority itself is already canonical;
 - completion of remaining real-client/coexistence acceptance under D031.
 
 ## Stage 08 handoff rule
