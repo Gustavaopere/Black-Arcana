@@ -26,7 +26,7 @@ class AstralSeveranceClientWiringTest {
         assertTrue(entrypoint.contains("AstralSeveranceClientController.register(NeoForge.EVENT_BUS);"),
                 "physical client must register Astral camera lifecycle restoration");
         assertTrue(entrypoint.contains("AstralSeveranceInputController.register(NeoForge.EVENT_BUS);"),
-                "movement redirection must be registered as a separate client-only controller");
+                "movement/look redirection must be registered as a separate client-only controller");
     }
 
     @Test
@@ -47,18 +47,28 @@ class AstralSeveranceClientWiringTest {
         assertFalse(source.contains("PacketDistributor"),
                 "camera presentation must not create a client-authoritative gameplay path");
         assertFalse(source.contains("sendMove("),
-                "camera presentation must stay separate from movement intent transport");
+                "camera presentation must stay separate from control intent transport");
     }
 
     @Test
-    void movementControllerUsesLogicalClientInputEventAndExactServerArming() throws IOException {
+    void inputControllerCoalescesMovementAndLookBehindExactServerArming() throws IOException {
         String source = Files.readString(INPUT_CONTROLLER);
         assertTrue(source.contains("MovementInputUpdateEvent"),
                 "movement capture must use the NeoForge logical-client movement-input seam");
+        assertTrue(source.contains("CalculatePlayerTurnEvent"),
+                "look capture must use the public NeoForge hook fired inside MouseHandler#turnPlayer");
         assertTrue(source.contains("AstralSeveranceClientController.movementControl()"),
-                "movement must remain dormant until the exact server-authored Astral session is armed");
+                "all control redirection must remain dormant until the exact server-authored Astral session is armed");
+        assertTrue(source.contains("minecraft.mouseHandler.getXVelocity()"),
+                "look redirect must read the NeoForge-exposed raw accumulated mouse X delta before vanilla resets it");
+        assertTrue(source.contains("minecraft.mouseHandler.getYVelocity()"),
+                "look redirect must read the NeoForge-exposed raw accumulated mouse Y delta before vanilla resets it");
+        assertTrue(source.contains("event.setMouseSensitivity(AstralControlIntentSequencer.PHYSICAL_BODY_NEUTRAL_SENSITIVITY)"),
+                "server-armed Astral look must neutralize vanilla physical-body rotation");
+        assertTrue(source.contains("event.setCinematicCameraEnabled(false)"),
+                "neutralized body turn must not retain SmoothDouble state that could rotate the physical body");
         assertTrue(source.contains("AstralSeveranceNetworkBridge.sendMove(payload)"),
-                "the movement controller may send only bounded intent through the existing C2S bridge");
+                "the control controller may send only bounded intent through the existing C2S bridge");
         assertTrue(source.contains("input.leftImpulse = 0.0F"));
         assertTrue(source.contains("input.forwardImpulse = 0.0F"));
         assertTrue(source.contains("input.jumping = false"));
