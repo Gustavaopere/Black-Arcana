@@ -57,6 +57,8 @@ import dev.gustavopere.blackarcana.core.world.WorldMutationProtectionAdapterRegi
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.ChannelBeginIntentPayload;
+import dev.gustavopere.blackarcana.network.ChannelCancelIntentPayload;
+import dev.gustavopere.blackarcana.network.ChannelReleaseIntentPayload;
 import dev.gustavopere.blackarcana.network.IngressRateLimiter;
 
 import java.util.HashSet;
@@ -202,7 +204,22 @@ public final class ArcanaServerRuntime {
     public ArcanaCastResult releaseChannel(ArcanaCastContext context, ArcanaCastId castId, String targetHint) {
         return channelCasts.release(context, castId, targetHint);
     }
+    public ArcanaCastResult releaseChannel(ArcanaCastContext context, ChannelReleaseIntentPayload intent) {
+        Objects.requireNonNull(context, "context");
+        Objects.requireNonNull(intent, "intent");
+        ArcanaCastResult result = channelCasts.release(context, intent.parsedCastId(), intent.targetHint());
+        if (result.status() == ArcanaCastResult.Status.DENIED_CHANNEL
+                && "channel_too_short".equals(result.code())) {
+            channelCasts.cancel(context, intent.parsedCastId());
+        }
+        return result;
+    }
     public boolean cancelChannel(ArcanaCastContext context, ArcanaCastId castId) { return channelCasts.cancel(context, castId); }
+    public boolean cancelChannel(ArcanaCastContext context, ChannelCancelIntentPayload intent) {
+        Objects.requireNonNull(context, "context");
+        Objects.requireNonNull(intent, "intent");
+        return channelCasts.cancel(context, intent.parsedCastId());
+    }
 
     /**
      * Returns the selected spell engine's non-mutating gate projection. Missing engines are
