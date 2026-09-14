@@ -99,6 +99,11 @@ public final class ArcanaChannelManager {
         return true;
     }
 
+    /** Trusted server lifecycle cancellation does not require a client-authored cast id. */
+    public synchronized boolean cancelCaster(UUID casterId) {
+        return sessions.remove(Objects.requireNonNull(casterId, "casterId")) != null;
+    }
+
     public synchronized int pruneExpired(long serverTick) {
         if (serverTick < 0L) throw new IllegalArgumentException("serverTick cannot be negative");
         int before = sessions.size();

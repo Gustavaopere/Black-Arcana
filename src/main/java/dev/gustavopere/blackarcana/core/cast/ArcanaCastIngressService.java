@@ -14,6 +14,7 @@ import dev.gustavopere.blackarcana.network.IngressRateLimiter;
 
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Pure server-side ingress between a validated wire intent and a spell engine.
@@ -23,6 +24,7 @@ import java.util.function.Function;
 public final class ArcanaCastIngressService {
     private final ArcanaSpellRegistry spellRegistry;
     private final IngressRateLimiter rateLimiter;
+    private final Predicate<ArcanaSpellId> channelOnlyRoute;
     private final Function<ArcanaSpellId, ArcanaCastEngine> engineResolver;
 
     public ArcanaCastIngressService(
@@ -30,8 +32,18 @@ public final class ArcanaCastIngressService {
             IngressRateLimiter rateLimiter,
             Function<ArcanaSpellId, ArcanaCastEngine> engineResolver
     ) {
+        this(spellRegistry, rateLimiter, spellId -> false, engineResolver);
+    }
+
+    public ArcanaCastIngressService(
+            ArcanaSpellRegistry spellRegistry,
+            IngressRateLimiter rateLimiter,
+            Predicate<ArcanaSpellId> channelOnlyRoute,
+            Function<ArcanaSpellId, ArcanaCastEngine> engineResolver
+    ) {
         this.spellRegistry = Objects.requireNonNull(spellRegistry, "spellRegistry");
         this.rateLimiter = Objects.requireNonNull(rateLimiter, "rateLimiter");
+        this.channelOnlyRoute = Objects.requireNonNull(channelOnlyRoute, "channelOnlyRoute");
         this.engineResolver = Objects.requireNonNull(engineResolver, "engineResolver");
     }
 
@@ -50,6 +62,14 @@ public final class ArcanaCastIngressService {
             return result(intent, ArcanaCastResult.denied(
                     ArcanaCastResult.Status.DENIED_IDENTITY,
                     ArcanaDecision.deny("unknown_spell", "spell is not registered on the server")));
+        }
+
+        if (channelOnlyRoute.test(spellId)) {
+            return result(intent, ArcanaCastResult.denied(
+                    ArcanaCastResult.Status.DENIED_CHANNEL,
+                    ArcanaDecision.deny(
+                            "channel_requires_begin",
+                            "spell requires the server-authoritative channel invocation route")));
         }
 
         ArcanaCastEngine engine = engineResolver.apply(spellId);
