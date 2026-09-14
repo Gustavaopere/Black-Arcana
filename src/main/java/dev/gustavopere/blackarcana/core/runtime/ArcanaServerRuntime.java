@@ -169,7 +169,11 @@ public final class ArcanaServerRuntime {
         int effectWorkBudgetPerTick
     ) {
         IngressRateLimiter limiter = new IngressRateLimiter(maxCastIntentsPerSecond, 20L, maxTrackedCasters);
-        this.ingress = new ArcanaCastIngressService(spells, limiter, engines::get);
+        this.ingress = new ArcanaCastIngressService(
+            spells,
+            limiter,
+            spellId -> channelSpecs.resolve(spellId).isPresent(),
+            engines::get);
         this.channelIngressLimiter = limiter;
         this.channels = new ArcanaChannelManager(maxChannelSessions);
         this.channelCasts = new ArcanaChannelCastCoordinator(spells, loadouts, channels, engines::get);
