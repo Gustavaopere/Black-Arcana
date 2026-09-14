@@ -5,6 +5,7 @@ import dev.gustavopere.blackarcana.config.ArcaneDangerDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcaneEquipmentDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcaneEquipmentSetBonusDataReloadListener;
 import dev.gustavopere.blackarcana.config.ArcanaSpellDataReloadListener;
+import dev.gustavopere.blackarcana.config.AstralControlDataReloadListener;
 import dev.gustavopere.blackarcana.content.noetic.BlackArcanaNoeticEntities;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntimeManager;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftAnchorRecallRuntime;
@@ -84,6 +85,7 @@ public final class BlackArcanaMod {
         ArcaneDangerDataReloadListener.register(NeoForge.EVENT_BUS);
         ArcaneEquipmentDataReloadListener.register(NeoForge.EVENT_BUS);
         ArcaneEquipmentSetBonusDataReloadListener.register(NeoForge.EVENT_BUS);
+        AstralControlDataReloadListener.register(NeoForge.EVENT_BUS);
         LOGGER.info("Black Arcana foundation loaded");
     }
 }
