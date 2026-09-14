@@ -6,6 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -118,5 +121,23 @@ class AstralControlConfigContractTest {
                           "defaultMovement": true
                         }
                         """)));
+    }
+
+    @Test
+    void modRegistersServerConfigAuthorityWithoutEnablingMoveGameplay() throws IOException {
+        String source = Files.readString(repositoryRoot().resolve(
+                "src/main/java/dev/gustavopere/blackarcana/BlackArcanaMod.java"));
+
+        assertTrue(source.contains("AstralControlDataReloadListener.register(NeoForge.EVENT_BUS);"));
+        assertFalse(source.contains("AstralSeveranceNetworkBridge.installMoveHandler("),
+                "config authority must not silently enable MOVE gameplay before approved production values exist");
+    }
+
+    private static Path repositoryRoot() {
+        String workspace = System.getenv("GITHUB_WORKSPACE");
+        if (workspace != null && !workspace.isBlank()) {
+            return Path.of(workspace);
+        }
+        return Path.of("").toAbsolutePath();
     }
 }
