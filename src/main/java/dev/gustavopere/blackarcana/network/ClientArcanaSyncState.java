@@ -23,6 +23,7 @@ import java.util.function.BiConsumer;
 public final class ClientArcanaSyncState {
     private static UUID playerId;
     private static CastResultPayload lastResult;
+    private static ChannelBeginResultPayload lastChannelBeginResult;
     private static long lastResultTick = Long.MIN_VALUE;
     private static Map<String, Long> cooldowns = Map.of();
     private static Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation = Map.of();
@@ -59,6 +60,15 @@ public final class ClientArcanaSyncState {
             lastResultTick = player.tickCount;
         }
         resultObserver.accept(player, payload);
+    }
+
+    public static synchronized void acceptChannelBeginResult(Player player, ChannelBeginResultPayload payload) {
+        ensurePlayer(player);
+        replaceChannelBeginResult(payload);
+    }
+
+    static synchronized void replaceChannelBeginResult(ChannelBeginResultPayload payload) {
+        lastChannelBeginResult = Objects.requireNonNull(payload, "payload");
     }
 
     public static synchronized void acceptCooldowns(Player player, CooldownSnapshotPayload payload) {
@@ -149,6 +159,10 @@ public final class ClientArcanaSyncState {
         return Optional.ofNullable(lastResult);
     }
 
+    public static synchronized Optional<ChannelBeginResultPayload> lastChannelBeginResult() {
+        return Optional.ofNullable(lastChannelBeginResult);
+    }
+
     public static synchronized OptionalLong lastResultTick() {
         return lastResultTick == Long.MIN_VALUE ? OptionalLong.empty() : OptionalLong.of(lastResultTick);
     }
@@ -184,6 +198,7 @@ public final class ClientArcanaSyncState {
     public static synchronized void clear() {
         playerId = null;
         lastResult = null;
+        lastChannelBeginResult = null;
         lastResultTick = Long.MIN_VALUE;
         cooldowns = Map.of();
         presentation = Map.of();
@@ -198,6 +213,7 @@ public final class ClientArcanaSyncState {
         UUID incoming = player.getUUID();
         if (playerId != null && !playerId.equals(incoming)) {
             lastResult = null;
+            lastChannelBeginResult = null;
             lastResultTick = Long.MIN_VALUE;
             cooldowns = Map.of();
             presentation = Map.of();
