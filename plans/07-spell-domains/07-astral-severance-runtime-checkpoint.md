@@ -2,9 +2,9 @@
 
 ## State
 
-`PARTIAL RUNTIME IMPLEMENTATION / SERVER-OWNED PROJECTION + MOVEMENT SUBSTRATE + C2S CONTROL TRANSPORT + S2C CAMERA PRESENTATION / NOT END-TO-END`
+`PARTIAL RUNTIME IMPLEMENTATION / SERVER-OWNED PROJECTION + MOVEMENT SUBSTRATE + C2S CONTROL TRANSPORT + S2C CAMERA PRESENTATION + SERVER CONTROL-CONFIG AUTHORITY / NOT END-TO-END`
 
-The control tranche is canonical on `main` via PR #235 at merge SHA `29454a7dd604ba0ea0200724d53bd9526b09cb10`, built from the earlier lifecycle merged by PR #138 at `3469b454de2b65d0c15e89e7d689fe760dd30994`. The server-authored Astral camera-presentation tranche is canonical via PR #240 at merge SHA `834c3f7e2c236161e04e21c1e690ca9e0503a39b`.
+The control tranche is canonical on `main` via PR #235 at merge SHA `29454a7dd604ba0ea0200724d53bd9526b09cb10`, built from the earlier lifecycle merged by PR #138 at `3469b454de2b65d0c15e89e7d689fe760dd30994`. The server-authored Astral camera-presentation tranche is canonical via PR #240 at merge SHA `834c3f7e2c236161e04e21c1e690ca9e0503a39b`. The fail-closed server-owned Astral control-config authority is canonical via PR #242 at merge SHA `e2ff0421d78f3e29f210403eeb824957b7adb2be`.
 
 This checkpoint closes additional bounded Stage 07.07 runtime gaps. It does **not** complete Astral Severance, promote 07.07, freeze Stage 08 balance values, or authorize a parallel cast path.
 
@@ -94,7 +94,7 @@ These are protocol abuse/safety bounds, **not** Stage 08 spell balance values. S
 
 ## S2C camera presentation
 
-The canonical runtime now contains a bounded, server-authored Astral camera presentation path. It does not add gameplay authority to the client.
+The canonical runtime contains a bounded, server-authored Astral camera presentation path. It does not add gameplay authority to the client.
 
 - `AstralViewPayload` / `AstralViewPacket` carry only protocol version, `BEGIN`/`END`, the exact server-authored projection UUID and the transient loaded entity id.
 - `AstralViewTransitionTracker` is bounded by the existing Noetic active-session ceiling and emits no duplicate transition for unchanged state.
@@ -109,13 +109,29 @@ The canonical runtime now contains a bounded, server-authored Astral camera pres
 
 This tranche does **not** capture movement/look input, call `sendMove`, settle gameplay, or make the client authoritative for projection pose.
 
+## Server-owned control-config authority
+
+PR #242 adds the explicit server-owned authority surface required to carry future production `ControlLimits` without turning safety ceilings or test fixtures into accidental balance defaults.
+
+- `AstralControlDataDefinition` defines schema version `1`, exact id `black_arcana:astral_severance`, `ConfigScope.SERVER`, `maxStepBlocks` and `maxLookDeltaDegrees`.
+- Only `ConfigScope.SERVER` is accepted as gameplay authority.
+- Configured values must be finite and positive; `maxStepBlocks` is bounded by the existing hard Noetic range ceiling and `maxLookDeltaDegrees` by `(0, 180]`.
+- These bounds are validation ceilings only. They do **not** supply default gameplay values.
+- `AstralControlConfigAuthority` publishes an `Optional<ControlLimits>` atomically and is `Optional.empty()` when no profile is present.
+- `AstralControlDataReloadListener` accepts at most one strict profile from `data/<namespace>/black_arcana/astral_control/*.json`, rejects unknown fields, foreign ids, non-server scopes, malformed/out-of-bounds values and duplicate profiles before publication, and clears authority on an empty reload.
+- `schemaVersion` is parsed as an exact integer; fractional or overflowing values fail closed instead of being coerced.
+- `BlackArcanaMod` registers the reload listener.
+- No production profile is bundled by this tranche. Therefore the canonical default state remains **no authorized MOVE limits**.
+
+This authority surface closes the missing-config-mechanism gap only. It does not choose Stage 08 tuning and does not install the production MOVE handler.
+
 ## Deliberate fail-closed boundary: MOVE execution policy
 
-The C2S MOVE packet is registered, decoded, validated and rate-limited, and the bridge exposes a server handler seam. Production `BlackArcanaMod` does **not** install a MOVE gameplay handler yet.
+The C2S MOVE packet is registered, decoded, validated and rate-limited, and the bridge exposes a server handler seam. Production `BlackArcanaMod` still does **not** install a MOVE gameplay handler.
 
-This is intentional. `MinecraftNoeticRuntime.applyAuthorizedAstralControl(...)` requires server-selected `AstralSeveranceRuntime.ControlLimits`, but the current canonical config/specification does not freeze a production `maxStepBlocks` or `maxLookDeltaDegrees` authority/value. Existing test fixture values must not become accidental gameplay defaults, and `NoeticSafetyCeilings` are absolute implementation ceilings rather than balance defaults.
+A reviewed server-owned config authority now exists, but no production `black_arcana:astral_severance` profile/value pair is bundled or approved by this Stage 07 tranche. Existing safety ceilings and test fixture values must not become accidental gameplay defaults.
 
-Therefore MOVE remains fail-closed at the transport-to-gameplay seam until a reviewed canonical server-side control-limit/config authority exists. RETURN can be connected now because it does not require inventing missing balance values.
+Therefore MOVE remains fail-closed at the transport-to-gameplay seam until an explicit reviewed production profile/value contract exists and a subsequent implementation tranche connects the handler to those server-owned limits. RETURN remains connected because it does not require inventing missing balance values.
 
 ## Authority and non-goals
 
@@ -123,8 +139,8 @@ This checkpoint does not add a second casting route. It does not choose or settl
 
 It also does **not** yet implement:
 
-- client input capture/redirect from the physical body to the projection;
-- a production MOVE gameplay policy with frozen server-side control limits;
+- client movement/look input capture/redirect from the physical body to the projection;
+- a production MOVE gameplay policy with reviewed production control-limit values;
 - projection interaction with blocks, containers, items or entities;
 - casting or combat from the astral position;
 - chunk tickets or force-loading;
@@ -134,7 +150,7 @@ It also does **not** yet implement:
 - cooldown identity/value;
 - scaling equation;
 - final RPG Skill Tree progression/mastery gate;
-- final bounded gameplay config surface;
+- final production gameplay tuning/profile;
 - per-spell provenance closure.
 
 Those omissions are intentional fail-closed boundaries, not implicit permission for later code to invent them.
@@ -160,14 +176,16 @@ Final control branch head `8b9fd3ce0bb2347dc672b85db058eeb891d850d9` passed push
 
 For the S2C camera tranche, test-only head `f01dcc0db5c3e5cd48fe3dca396c5336a0f830ec` produced executed RED evidence in workflow `34793604024`: `compileTestJava` failed because `AstralViewPayload` and `AstralViewTransitionTracker` did not yet exist. The implemented branch head `9080f01763a13696471965c40142671215c02cec` passed push workflow `34794636221`, and PR #240 workflow `34796582786` passed JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke against the then-current `main`. PR #240 merged at `main@834c3f7e2c236161e04e21c1e690ca9e0503a39b`; exact-SHA post-merge workflow `34796772128` passed the complete pipeline and published canonical QA artifact `black-arcana-834c3f7e2c236161e04e21c1e690ca9e0503a39b`, artifact ID `10330321029`, SHA-256 `45cd7777f67fd8ccba127a1091a7cd9f43226f65c9172642d9c507c75b4e11a5`.
 
+For the server control-config authority tranche, test-only head `bc2076e58d5de770e3f00ad1809032ff7a5208ba` produced executed RED evidence in workflow `34797537134`: `compileTestJava` failed only because the Astral config-authority contracts did not yet exist. Final head `599e6ba3f3bb679abf2fb982601a8d91b709c885` passed push workflow `34798093347` and PR workflow `34798096283` through JUnit, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. Review hardening on that head rejects fractional/overflowing schema versions through exact integer parsing. PR #242 merged at `main@e2ff0421d78f3e29f210403eeb824957b7adb2be`; exact-SHA post-merge workflow `34798341265` passed the complete pipeline and published canonical QA artifact `black-arcana-e2ff0421d78f3e29f210403eeb824957b7adb2be`, artifact ID `10330163687`, SHA-256 `a9d5b656b98f945677596dfbfdcbc570f9153a1dd3c37f226c16498a727e80b3`.
+
 ## Remaining 07.07 gate
 
 Astral Severance remains **NOT IMPLEMENTED end-to-end** until at minimum:
 
-- a reviewed canonical server-side control-limit/config authority exists and MOVE execution is connected without inventing Stage 08 values;
+- an explicit reviewed production `ControlLimits` profile/value contract exists and MOVE execution is connected to that server-owned authority without deriving defaults from safety ceilings/test fixtures;
 - client movement/look input capture and redirect is implemented without transferring gameplay authority to the client;
 - activation/channel lifecycle is connected through the canonical Stage 02 cast/channel transaction without introducing a parallel authority path;
-- the complete per-spell specification gate closes the remaining resource/cooldown/scaling/progression/config/provenance fields;
+- the complete per-spell specification gate closes the remaining resource/cooldown/scaling/progression/final-tuning/provenance fields;
 - required automated tests are GREEN on the exact reconciled merge head;
 - real-client acceptance is directly observed where required by D031.
 
@@ -175,5 +193,6 @@ Therefore:
 
 - Stage 07.07 remains `IN PROGRESS`;
 - Borrowed Sight real-client acceptance remains deferred under D031;
-- automated Astral camera presentation is canonical, but no real-client Astral Severance acceptance exists yet;
+- automated Astral camera presentation and the server-owned control-config authority are canonical, but no real-client Astral Severance acceptance exists yet;
+- no production MOVE values are implied by the existence of the config schema;
 - Stage 08 must not consume 07.07 as canonical balance input yet.
