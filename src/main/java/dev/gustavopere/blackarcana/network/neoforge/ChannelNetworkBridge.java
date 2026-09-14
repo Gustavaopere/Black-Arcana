@@ -9,6 +9,7 @@ import dev.gustavopere.blackarcana.network.ChannelCapabilityPayload;
 import dev.gustavopere.blackarcana.network.ChannelReleaseIntentPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -79,6 +80,26 @@ public final class ChannelNetworkBridge {
 
     public static void installCapabilityHandler(CapabilityHandler handler) {
         capabilityHandler = Objects.requireNonNull(handler, "handler");
+    }
+
+    public static void requestBegin(ChannelBeginIntentPayload payload) {
+        PacketDistributor.sendToServer(ChannelBeginIntentPacket.from(Objects.requireNonNull(payload, "payload")));
+    }
+
+    public static void requestRelease(ChannelReleaseIntentPayload payload) {
+        PacketDistributor.sendToServer(ChannelReleaseIntentPacket.from(Objects.requireNonNull(payload, "payload")));
+    }
+
+    public static void requestCancel(ChannelCancelIntentPayload payload) {
+        PacketDistributor.sendToServer(ChannelCancelIntentPacket.from(Objects.requireNonNull(payload, "payload")));
+    }
+
+    public static boolean sendCapability(ServerPlayer player, ChannelCapabilityPayload payload) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(payload, "payload");
+        if (!player.connection.hasChannel(ChannelCapabilityPacket.TYPE)) return false;
+        PacketDistributor.sendToPlayer(player, ChannelCapabilityPacket.from(payload));
+        return true;
     }
 
     public static ChannelBeginResultPayload dispatchBeginServerbound(
