@@ -11,6 +11,7 @@ import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.api.ArcanaTargetReference;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -98,13 +100,14 @@ class AstralSeveranceCastBindingTest {
         FakeResourceAuthority resource = new FakeResourceAuthority(profile.definition().cost().resourceId());
         AtomicBoolean progressionAllowed = new AtomicBoolean(false);
         AtomicInteger activations = new AtomicInteger();
+        AtomicReference<String> observedTarget = new AtomicReference<>();
         AstralSeveranceCastBinding.Authorities authorities = new AstralSeveranceCastBinding.Authorities(
             resource,
             request -> progressionAllowed.get()
                 ? ArcanaDecision.allow()
                 : ArcanaDecision.deny("progression", "blocked"),
             request -> ArcanaDecision.allow(),
-            ArcanaServices.CastSuccessObserver.noop());
+            (request, target, effectResult) -> observedTarget.set(target.targetId()));
         ArcanaCastEngine engine = AstralSeveranceCastBinding.buildEngine(
             runtime,
             profile,
@@ -133,6 +136,7 @@ class AstralSeveranceCastBindingTest {
         assertEquals(1, resource.reserveCalls.get());
         assertEquals(1, resource.commitCalls.get());
         assertEquals(0, resource.refundCalls.get());
+        assertEquals(new ArcanaTargetReference.EntityRef(casterId).canonical(), observedTarget.get());
     }
 
     @Test
