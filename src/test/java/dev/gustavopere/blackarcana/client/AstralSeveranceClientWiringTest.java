@@ -12,22 +12,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class AstralSeveranceClientWiringTest {
     private static final Path CLIENT_ENTRYPOINT = repositoryRoot()
             .resolve("src/main/java/dev/gustavopere/blackarcana/client/BlackArcanaClient.java");
-    private static final Path CONTROLLER = repositoryRoot()
+    private static final Path CAMERA_CONTROLLER = repositoryRoot()
             .resolve("src/main/java/dev/gustavopere/blackarcana/client/AstralSeveranceClientController.java");
+    private static final Path INPUT_CONTROLLER = repositoryRoot()
+            .resolve("src/main/java/dev/gustavopere/blackarcana/client/AstralSeveranceInputController.java");
 
     @Test
-    void physicalClientInstallsServerAuthoredAstralCameraHandler() throws IOException {
+    void physicalClientInstallsServerAuthoredAstralCameraAndInputHandlers() throws IOException {
         String entrypoint = Files.readString(CLIENT_ENTRYPOINT);
         assertTrue(entrypoint.contains(
                         "AstralSeveranceNetworkBridge.installViewHandler(AstralSeveranceClientController::accept);"),
                 "physical client must install the Astral clientbound presentation handler");
         assertTrue(entrypoint.contains("AstralSeveranceClientController.register(NeoForge.EVENT_BUS);"),
                 "physical client must register Astral camera lifecycle restoration");
+        assertTrue(entrypoint.contains("AstralSeveranceInputController.register(NeoForge.EVENT_BUS);"),
+                "movement/look redirection must be registered as a separate client-only controller");
     }
 
     @Test
-    void controllerUsesOnlyExactLoadedProjectionAndRestoresPhysicalBody() throws IOException {
-        String source = Files.readString(CONTROLLER);
+    void cameraControllerUsesOnlyExactLoadedProjectionAndRestoresPhysicalBody() throws IOException {
+        String source = Files.readString(CAMERA_CONTROLLER);
         assertTrue(source.contains("ClientTickEvent.Post"),
                 "Astral camera ownership must be reconciled on the physical client tick");
         assertTrue(source.contains("minecraft.level.getEntity(desired.entityId())"),
@@ -43,7 +47,69 @@ class AstralSeveranceClientWiringTest {
         assertFalse(source.contains("PacketDistributor"),
                 "camera presentation must not create a client-authoritative gameplay path");
         assertFalse(source.contains("sendMove("),
-                "camera presentation must not activate Astral MOVE gameplay");
+                "camera presentation must stay separate from control intent transport");
+    }
+
+    @Test
+    void movementControlRequiresExactCameraOwnershipNotOnlyServerArmState() throws IOException {
+        String source = Files.readString(CAMERA_CONTROLLER);
+        assertTrue(source.contains("ownedCameraEntity == null"),
+                "MOVE_ARM must remain dormant until this controller has actually claimed a camera entity");
+        assertTrue(source.contains("minecraft.getCameraEntity() != ownedCameraEntity"),
+                "input redirection must stop when another controller owns the current camera");
+        assertTrue(source.contains("ownedCameraEntity.isRemoved()"),
+                "removed projection representations must not keep physical input suppressed");
+        assertTrue(source.contains("ownedCameraEntity.getId() != control.entityId()"),
+                "the claimed camera runtime id must match the exact armed session");
+        assertTrue(source.contains("!ownedCameraEntity.getUUID().equals(control.projectionId())"),
+                "the claimed camera UUID must match the exact armed projection");
+    }
+
+    @Test
+    void inputControllerCoalescesMovementAndLookBehindExactServerArming() throws IOException {
+        String source = Files.readString(INPUT_CONTROLLER);
+        assertTrue(source.contains("MovementInputUpdateEvent"),
+                "movement capture must use the NeoForge logical-client movement-input seam");
+        assertTrue(source.contains("CalculatePlayerTurnEvent"),
+                "look capture must use the public NeoForge hook fired inside MouseHandler#turnPlayer");
+        assertTrue(source.contains("EventPriority.LOWEST"),
+                "Astral suppression must run in the final normal event phase to minimize coexistence reintroduction");
+        assertTrue(source.contains("AstralSeveranceClientController.movementControl()"),
+                "all control redirection must remain dormant until the exact server-authored Astral session is armed");
+        assertTrue(source.contains("minecraft.mouseHandler.getXVelocity()"),
+                "look redirect must read the NeoForge-exposed raw accumulated mouse X delta before vanilla resets it");
+        assertTrue(source.contains("minecraft.mouseHandler.getYVelocity()"),
+                "look redirect must read the NeoForge-exposed raw accumulated mouse Y delta before vanilla resets it");
+        assertTrue(source.contains("event.setMouseSensitivity(AstralControlIntentSequencer.PHYSICAL_BODY_NEUTRAL_SENSITIVITY)"),
+                "server-armed Astral look must neutralize vanilla physical-body rotation");
+        assertTrue(source.contains("event.setCinematicCameraEnabled(false)"),
+                "neutralized body turn must not retain SmoothDouble state that could rotate the physical body");
+        assertTrue(source.contains("AstralSeveranceNetworkBridge.sendMove(payload)"),
+                "the control controller may send only bounded intent through the existing C2S bridge");
+        assertTrue(source.contains("input.leftImpulse = 0.0F"));
+        assertTrue(source.contains("input.forwardImpulse = 0.0F"));
+        assertTrue(source.contains("input.jumping = false"));
+        assertTrue(source.contains("input.shiftKeyDown = false"));
+        assertFalse(source.contains("setPos("),
+                "client input redirection must never author an Astral world position");
+        assertFalse(source.contains("moveTo("),
+                "client input redirection must never author an Astral world position");
+    }
+
+    @Test
+    void temporaryMoveDisarmPreservesSequenceUntilProjectionPresentationEnds() throws IOException {
+        String cameraSource = Files.readString(CAMERA_CONTROLLER);
+        String inputSource = Files.readString(INPUT_CONTROLLER);
+
+        assertTrue(cameraSource.contains(
+                        "static Optional<AstralViewClientState.Desired> desiredProjection()"),
+                "input sequencing must be able to distinguish desired presentation from MOVE arm state");
+        assertTrue(cameraSource.contains("return STATE.desired();"),
+                "desired projection identity must come from the existing server-authored presentation state");
+        assertTrue(inputSource.contains("AstralSeveranceClientController.desiredProjection()"),
+                "temporary MOVE disarm must inspect whether the exact projection presentation still exists");
+        assertTrue(inputSource.contains("SEQUENCER.disarm(desired.projectionId())"),
+                "temporary MOVE disarm must preserve the exact projection sequence domain");
     }
 
     private static Path repositoryRoot() {

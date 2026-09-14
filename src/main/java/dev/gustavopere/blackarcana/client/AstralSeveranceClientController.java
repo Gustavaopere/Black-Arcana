@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Physical-client presentation adapter for server-authorized Astral Severance.
@@ -36,6 +37,33 @@ public final class AstralSeveranceClientController {
             return;
         }
         STATE.accept(payload);
+    }
+
+    static Optional<AstralViewClientState.Desired> desiredProjection() {
+        return STATE.desired();
+    }
+
+    /**
+     * Returns armed control only while this controller still owns the exact Astral camera representation.
+     * A server MOVE_ARM received before vanilla entity spawn stays dormant instead of suppressing the body
+     * while the player is still looking through another camera. Likewise, external camera ownership, removal
+     * or identity replacement immediately makes input redirection fail closed until reconciliation succeeds.
+     */
+    static Optional<AstralViewClientState.Desired> movementControl() {
+        AstralViewClientState.Desired control = STATE.movementControl().orElse(null);
+        if (control == null) {
+            return Optional.empty();
+        }
+
+        Minecraft minecraft = Minecraft.getInstance();
+        if (ownedCameraEntity == null
+                || minecraft.getCameraEntity() != ownedCameraEntity
+                || ownedCameraEntity.isRemoved()
+                || ownedCameraEntity.getId() != control.entityId()
+                || !ownedCameraEntity.getUUID().equals(control.projectionId())) {
+            return Optional.empty();
+        }
+        return Optional.of(control);
     }
 
     private static void onClientTick(ClientTickEvent.Post event) {
