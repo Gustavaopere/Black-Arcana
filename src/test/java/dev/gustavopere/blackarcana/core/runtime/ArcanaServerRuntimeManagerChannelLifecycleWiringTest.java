@@ -26,8 +26,8 @@ class ArcanaServerRuntimeManagerChannelLifecycleWiringTest {
                 "private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event)"));
         assertTrue(normalized.contains(
                 "private static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event)"));
-        assertTrue(normalized.contains("runtime.cancelChannelsForCaster(player.getUUID())"),
-                "lifecycle handlers must cancel by trusted server identity rather than a client-authored cast id");
+        assertTrue(normalized.contains("runtime.channels().cancelCaster(player.getUUID())"),
+                "lifecycle handlers must cancel canonical runtime-owned state by trusted server identity");
         assertTrue(normalized.contains("if (!player.isAlive())"),
                 "server tick must settle actual dead-player channel interruption after resurrection listeners finish");
     }
