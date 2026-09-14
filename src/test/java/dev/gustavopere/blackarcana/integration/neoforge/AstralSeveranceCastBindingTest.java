@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.integration.neoforge;
 
 import dev.gustavopere.blackarcana.api.ArcanaCastContext;
 import dev.gustavopere.blackarcana.api.ArcanaCastEngine;
+import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
@@ -89,6 +90,38 @@ class AstralSeveranceCastBindingTest {
     }
 
     @Test
+    void immediateIngressCannotBypassConfiguredChannelMinimum() {
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        AstralSeveranceCastBinding.Profile profile = profile();
+        runtime.spells().replaceAll(java.util.List.of(profile.definition()));
+        runtime.cooldownPolicies().replaceAll(
+            java.util.Map.of(AstralSeveranceCastBinding.SPELL_ID, profile.cooldown()),
+            java.util.Map.of());
+
+        FakeResourceAuthority resource = new FakeResourceAuthority(profile.definition().cost().resourceId());
+        AtomicInteger activations = new AtomicInteger();
+        ArcanaCastEngine engine = AstralSeveranceCastBinding.buildEngine(
+            runtime,
+            profile,
+            new AstralSeveranceCastBinding.Authorities(
+                resource,
+                request -> ArcanaDecision.allow(),
+                request -> ArcanaDecision.allow(),
+                ArcanaServices.CastSuccessObserver.noop()),
+            (casterId, durationTicks, maxRangeBlocks) -> {
+                activations.incrementAndGet();
+                return ArcanaDecision.allow();
+            });
+
+        ArcanaCastResult result = engine.execute(request(profile, UUID.randomUUID(), 90L, 0L));
+
+        assertEquals(ArcanaCastResult.Status.DENIED_CHANNEL, result.status());
+        assertEquals("channel_too_short", result.code());
+        assertEquals(0, activations.get());
+        assertEquals(0, resource.reserveCalls.get());
+    }
+
+    @Test
     void engineRunsProjectionOnlyAfterCanonicalGatesAndCommitsResourceOnSuccess() {
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
         AstralSeveranceCastBinding.Profile profile = profile();
@@ -120,17 +153,15 @@ class AstralSeveranceCastBindingTest {
             });
 
         UUID casterId = UUID.randomUUID();
-        ArcanaCastRequest denied = new ArcanaCastRequest(
-            profile.definition(), new ArcanaCastContext(casterId, 100L, "minecraft:overworld"));
-        ArcanaCastResult deniedResult = engine.execute(denied);
+        ArcanaCastResult deniedResult = engine.execute(request(
+            profile, casterId, 100L, profile.channelSpec().minimumTicks()));
         assertEquals(ArcanaCastResult.Status.DENIED_PROGRESSION, deniedResult.status());
         assertEquals(0, activations.get());
         assertEquals(0, resource.reserveCalls.get());
 
         progressionAllowed.set(true);
-        ArcanaCastRequest accepted = new ArcanaCastRequest(
-            profile.definition(), new ArcanaCastContext(casterId, 101L, "minecraft:overworld"));
-        ArcanaCastResult acceptedResult = engine.execute(accepted);
+        ArcanaCastResult acceptedResult = engine.execute(request(
+            profile, casterId, 101L, profile.channelSpec().minimumTicks()));
         assertEquals(ArcanaCastResult.Status.SUCCESS, acceptedResult.status());
         assertEquals(1, activations.get());
         assertEquals(1, resource.reserveCalls.get());
@@ -160,16 +191,29 @@ class AstralSeveranceCastBindingTest {
             (casterId, durationTicks, maxRangeBlocks) -> ArcanaDecision.deny("astral_viewer_active", "active"));
 
         UUID casterId = UUID.randomUUID();
-        ArcanaCastRequest request = new ArcanaCastRequest(
-            profile.definition(), new ArcanaCastContext(casterId, 200L, "minecraft:overworld"));
+        ArcanaCastRequest request = request(profile, casterId, 200L, profile.channelSpec().minimumTicks());
         ArcanaCastResult result = engine.execute(request);
 
         assertEquals(ArcanaCastResult.Status.EFFECT_FAILED, result.status());
         assertEquals(0, resource.commitCalls.get());
         assertEquals(1, resource.refundCalls.get());
-        ArcanaCastRequest retry = new ArcanaCastRequest(
-            profile.definition(), new ArcanaCastContext(casterId, 200L, "minecraft:overworld"));
+        ArcanaCastRequest retry = request(profile, casterId, 200L, profile.channelSpec().minimumTicks());
         assertTrue(runtime.cooldowns().check(retry).allowed(), "failed activation must not start cooldown");
+    }
+
+    private static ArcanaCastRequest request(
+        AstralSeveranceCastBinding.Profile profile,
+        UUID casterId,
+        long serverTick,
+        long channelTicks
+    ) {
+        return new ArcanaCastRequest(
+            ArcanaCastId.random(),
+            profile.definition(),
+            new ArcanaCastContext(casterId, serverTick, "minecraft:overworld"),
+            0,
+            "",
+            channelTicks);
     }
 
     private static AstralSeveranceCastBinding.Profile profile() {
