@@ -21,3 +21,7 @@ Black Arcana is implemented from Black Arcana-owned specifications, public API d
 Before implementation derived from an external reference, add a row to `REFERENCE_LEDGER.md` containing: date accessed, source URL/project, reference type, what was learned, what Black Arcana specification resulted, whether source code/assets were consulted, and applicable license/notice notes.
 
 A Stage 07 spell must be implementable from the Black Arcana specification and this ledger without requiring Mahou Tsukai code or assets.
+
+## Stage 07 spell provenance maps
+
+- [`STAGE-07-07-NOETIC-SPELL-PROVENANCE.md`](./STAGE-07-07-NOETIC-SPELL-PROVENANCE.md) — canonical clean-room linkage for the seven Familiars & Divination / Noetic candidates. This map closes traceability only; balance, invocation and runtime acceptance remain governed by the Stage 07.07 specification gate.
