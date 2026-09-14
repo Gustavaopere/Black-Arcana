@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.network.neoforge;
 
+import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastResultPayload;
 import dev.gustavopere.blackarcana.network.ChannelBeginIntentPayload;
 import dev.gustavopere.blackarcana.network.ChannelBeginResultPayload;
@@ -8,6 +9,9 @@ import dev.gustavopere.blackarcana.network.ChannelCapabilityPayload;
 import dev.gustavopere.blackarcana.network.ChannelReleaseIntentPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 import java.util.Objects;
 
@@ -32,6 +36,30 @@ public final class ChannelNetworkBridge {
     private static volatile CapabilityHandler capabilityHandler = (player, payload) -> { };
 
     private ChannelNetworkBridge() { }
+
+    public static void register(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(Integer.toString(ArcanaProtocol.VERSION));
+        registrar.playToServer(
+                ChannelBeginIntentPacket.TYPE,
+                ChannelBeginIntentPacket.STREAM_CODEC,
+                ChannelNetworkBridge::handleBegin);
+        registrar.playToServer(
+                ChannelReleaseIntentPacket.TYPE,
+                ChannelReleaseIntentPacket.STREAM_CODEC,
+                ChannelNetworkBridge::handleRelease);
+        registrar.playToServer(
+                ChannelCancelIntentPacket.TYPE,
+                ChannelCancelIntentPacket.STREAM_CODEC,
+                ChannelNetworkBridge::handleCancel);
+        registrar.playToClient(
+                ChannelBeginResultPacket.TYPE,
+                ChannelBeginResultPacket.STREAM_CODEC,
+                ChannelNetworkBridge::handleBeginResult);
+        registrar.playToClient(
+                ChannelCapabilityPacket.TYPE,
+                ChannelCapabilityPacket.STREAM_CODEC,
+                ChannelNetworkBridge::handleCapability);
+    }
 
     public static void installBeginHandler(BeginHandler handler) {
         beginHandler = Objects.requireNonNull(handler, "handler");
@@ -81,6 +109,29 @@ public final class ChannelNetworkBridge {
 
     public static void dispatchCapabilityClientbound(Player player, ChannelCapabilityPayload payload) {
         capabilityHandler.handle(player, Objects.requireNonNull(payload, "payload"));
+    }
+
+    private static void handleBegin(ChannelBeginIntentPacket packet, IPayloadContext context) {
+        if (!(context.player() instanceof ServerPlayer player)) return;
+        context.reply(ChannelBeginResultPacket.from(dispatchBeginServerbound(player, packet.toDomain())));
+    }
+
+    private static void handleRelease(ChannelReleaseIntentPacket packet, IPayloadContext context) {
+        if (!(context.player() instanceof ServerPlayer player)) return;
+        context.reply(CastResultPacket.from(dispatchReleaseServerbound(player, packet.toDomain())));
+    }
+
+    private static void handleCancel(ChannelCancelIntentPacket packet, IPayloadContext context) {
+        if (!(context.player() instanceof ServerPlayer player)) return;
+        dispatchCancelServerbound(player, packet.toDomain());
+    }
+
+    private static void handleBeginResult(ChannelBeginResultPacket packet, IPayloadContext context) {
+        dispatchBeginResultClientbound(context.player(), packet.toDomain());
+    }
+
+    private static void handleCapability(ChannelCapabilityPacket packet, IPayloadContext context) {
+        dispatchCapabilityClientbound(context.player(), packet.toDomain());
     }
 
     @FunctionalInterface
