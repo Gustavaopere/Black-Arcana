@@ -211,11 +211,6 @@ public final class ArcanaServerRuntime {
     public ArcanaCastResult releaseChannel(ArcanaCastContext context, ChannelReleaseIntentPayload intent) {
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(intent, "intent");
-        ArcanaDecision ingressDecision = channelIngressLimiter.claim(context.casterId(), context.serverTick());
-        if (!ingressDecision.allowed()) {
-            channelCasts.cancel(context, intent.parsedCastId());
-            return ArcanaCastResult.denied(ArcanaCastResult.Status.DENIED_INGRESS, ingressDecision);
-        }
         ArcanaCastResult result = channelCasts.release(context, intent.parsedCastId(), intent.targetHint());
         if (result.status() == ArcanaCastResult.Status.DENIED_CHANNEL
                 && "channel_too_short".equals(result.code())) {
@@ -227,8 +222,6 @@ public final class ArcanaServerRuntime {
     public boolean cancelChannel(ArcanaCastContext context, ChannelCancelIntentPayload intent) {
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(intent, "intent");
-        ArcanaDecision ingressDecision = channelIngressLimiter.claim(context.casterId(), context.serverTick());
-        if (!ingressDecision.allowed()) return false;
         return channelCasts.cancel(context, intent.parsedCastId());
     }
 
