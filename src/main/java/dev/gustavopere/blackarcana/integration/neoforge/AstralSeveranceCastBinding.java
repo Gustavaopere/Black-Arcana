@@ -83,7 +83,14 @@ public final class AstralSeveranceCastBinding {
             checkedRuntime.worldEffectPolicy(),
             (request, target) -> applyProjection(checkedProfile, checkedActivator, request),
             checkedAuthorities.successObserver()
-        );
+        ).withChannelGate(request -> checkChannelMinimum(checkedProfile.channelSpec(), request));
+    }
+
+    private static ArcanaDecision checkChannelMinimum(ArcanaChannelSpec channelSpec, ArcanaCastRequest request) {
+        if (request.channelTicks() < channelSpec.minimumTicks()) {
+            return ArcanaDecision.deny("channel_too_short", "channel has not reached minimum duration");
+        }
+        return ArcanaDecision.allow();
     }
 
     private static ArcanaServices.EffectResult applyProjection(

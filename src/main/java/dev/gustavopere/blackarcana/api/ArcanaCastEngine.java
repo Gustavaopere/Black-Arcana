@@ -5,6 +5,7 @@ import dev.gustavopere.blackarcana.api.ArcanaServices.ArcanaEffect;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CastHazardGate;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CastRequestValidator;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CastSuccessObserver;
+import dev.gustavopere.blackarcana.api.ArcanaServices.ChannelGate;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CooldownService;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostProvider;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostReservation;
@@ -28,6 +29,7 @@ public final class ArcanaCastEngine {
     private final WorldEffectPolicy worldPolicy;
     private final ArcanaEffect effect;
     private final CastSuccessObserver successObserver;
+    private final ChannelGate channelGate;
     private final CastHazardGate hazardGate;
 
     public ArcanaCastEngine(
@@ -50,6 +52,7 @@ public final class ArcanaCastEngine {
             worldPolicy,
             effect,
             CastSuccessObserver.noop(),
+            ChannelGate.noop(),
             CastHazardGate.noop());
     }
 
@@ -74,6 +77,7 @@ public final class ArcanaCastEngine {
             worldPolicy,
             effect,
             successObserver,
+            ChannelGate.noop(),
             CastHazardGate.noop());
     }
 
@@ -89,6 +93,33 @@ public final class ArcanaCastEngine {
             CastSuccessObserver successObserver,
             CastHazardGate hazardGate
     ) {
+        this(
+            identity,
+            replayGuard,
+            progression,
+            cooldowns,
+            targets,
+            costs,
+            worldPolicy,
+            effect,
+            successObserver,
+            ChannelGate.noop(),
+            hazardGate);
+    }
+
+    private ArcanaCastEngine(
+            CastRequestValidator identity,
+            ReplayGuard replayGuard,
+            ProgressionGate progression,
+            CooldownService cooldowns,
+            TargetSelector targets,
+            CostProvider costs,
+            WorldEffectPolicy worldPolicy,
+            ArcanaEffect effect,
+            CastSuccessObserver successObserver,
+            ChannelGate channelGate,
+            CastHazardGate hazardGate
+    ) {
         this.identity = Objects.requireNonNull(identity);
         this.replayGuard = Objects.requireNonNull(replayGuard);
         this.progression = Objects.requireNonNull(progression);
@@ -98,12 +129,13 @@ public final class ArcanaCastEngine {
         this.worldPolicy = Objects.requireNonNull(worldPolicy);
         this.effect = Objects.requireNonNull(effect);
         this.successObserver = Objects.requireNonNull(successObserver);
+        this.channelGate = Objects.requireNonNull(channelGate);
         this.hazardGate = Objects.requireNonNull(hazardGate);
     }
 
     /**
      * Rebinds only the Stage 05A hazard gate while preserving every established
-     * Stage 02 collaborator and observer. The original engine remains immutable.
+     * Stage 02 collaborator, channel admission and observer. The original engine remains immutable.
      */
     public ArcanaCastEngine withHazardGate(CastHazardGate replacement) {
         return new ArcanaCastEngine(
@@ -116,13 +148,33 @@ public final class ArcanaCastEngine {
             worldPolicy,
             effect,
             successObserver,
+            channelGate,
             Objects.requireNonNull(replacement, "replacement"));
+    }
+
+    /**
+     * Rebinds only server-owned channel admission while preserving the canonical cast pipeline.
+     * Immediate spells retain their established behavior unless a binding installs an explicit gate.
+     */
+    public ArcanaCastEngine withChannelGate(ChannelGate replacement) {
+        return new ArcanaCastEngine(
+            identity,
+            replayGuard,
+            progression,
+            cooldowns,
+            targets,
+            costs,
+            worldPolicy,
+            effect,
+            successObserver,
+            Objects.requireNonNull(replacement, "replacement"),
+            hazardGate);
     }
 
     /**
      * Evaluates only established query-only gates for selected-spell presentation.
      *
-     * <p>This method deliberately skips replay admission, target resolution, world
+     * <p>This method deliberately skips channel/replay admission, target resolution, world
      * authorization and hazard preparation. It never reserves resources, starts a
      * cooldown or executes the spell. A CLEAR result is therefore informational,
      * not a guarantee that a later cast will succeed.</p>
@@ -158,6 +210,9 @@ public final class ArcanaCastEngine {
 
         ArcanaDecision decision = identity.check(request);
         if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_IDENTITY, decision);
+
+        decision = channelGate.check(request);
+        if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_CHANNEL, decision);
 
         decision = replayGuard.claim(request);
         if (!decision.allowed()) return ArcanaCastResult.denied(Status.DENIED_REPLAY, decision);
