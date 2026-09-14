@@ -96,6 +96,22 @@ class AstralSeveranceClientWiringTest {
                 "client input redirection must never author an Astral world position");
     }
 
+    @Test
+    void temporaryMoveDisarmPreservesSequenceUntilProjectionPresentationEnds() throws IOException {
+        String cameraSource = Files.readString(CAMERA_CONTROLLER);
+        String inputSource = Files.readString(INPUT_CONTROLLER);
+
+        assertTrue(cameraSource.contains(
+                        "static Optional<AstralViewClientState.Desired> desiredProjection()"),
+                "input sequencing must be able to distinguish desired presentation from MOVE arm state");
+        assertTrue(cameraSource.contains("return STATE.desired();"),
+                "desired projection identity must come from the existing server-authored presentation state");
+        assertTrue(inputSource.contains("AstralSeveranceClientController.desiredProjection()"),
+                "temporary MOVE disarm must inspect whether the exact projection presentation still exists");
+        assertTrue(inputSource.contains("SEQUENCER.disarm(desired.projectionId())"),
+                "temporary MOVE disarm must preserve the exact projection sequence domain");
+    }
+
     private static Path repositoryRoot() {
         String workspace = System.getenv("GITHUB_WORKSPACE");
         if (workspace != null && !workspace.isBlank()) {
