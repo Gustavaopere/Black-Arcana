@@ -16,7 +16,7 @@ Este arquivo é o índice operacional global de catalogação do projeto. Ele n�
 
 ## Snapshot de autoridade usado
 
-- Black Arcana: `main@f2211fca8a32ae271f2363f3dc510f84e596d394`.
+- Black Arcana: `main@8f3ead27f31322492063c65d11841ac61584254f`.
 - RPG Skill Tree sibling: `main@9e88db8f6b37c1bfbbd331f6684504a76e4aef40`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado de integração.
 - O Black Arcana mantém `docs/reference/runtime-host-baseline.md`, derivado do `modlist agora atual.txt` fornecido em 2026-08-26, para o baseline de Iron's, Ars Nouveau, Eidolon e Malum.
@@ -46,7 +46,7 @@ Os itens abaixo foram promovidos para este índice porque o inventário versiona
 | Deeper and Darker: Spellbooks | `darkermagic` | `1.3.3-1.21.1` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
 | Farmer's Spell 'n Spellbooks | `farmers_spell` | `1.0.4.0-1.21.1` | ✅ Catalogado | `FARMERS-SPELL-1.0.4.0.md`: 6/6 registros runtime em `SpellRegistry`, todos na escola `farmers_spell:gluttony`; `BerserkCleaverSpell.java` está totalmente comentado e não é contado como spell runtime. |
 | Ignis Soulfires: Spellbooks | `ignissoulfires_spellbooks` | `1.1.0` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
-| ISS: Magic From The East | `iss_magicfromtheeast` | `1.1.5` | ❌ Não catalogado | Confirmar inventário mágico e catalogar conteúdo observável. |
+| ISS: Magic From The East | `iss_magicfromtheeast` | `1.1.5` | ✅ Catalogado | `ISS-MAGIC-FROM-THE-EAST-1.1.5.md`: 22/22 spells ativos no registry da release (`11 Symmetry + 11 Spirit`); três escolas próprias estão registradas, com `Dune` em 0 spells ativos. `Launch` e `Qigong Controlling` estão comentados e não entram no runtime. |
 | Leyline Spellbooks | `leylines` | `1.0.3` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
 | Monsters & Spellbooks | `monsterspellbooks` | `0.0.14` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência; `mod_version=0.0.14` persiste por múltiplos commits upstream, então o source exato do JAR do snapshot ainda precisa ser alinhado antes de usar contagens. |
 | Iron's Spells Magic Schools | `magic_schools` | `1.0` | ⚠️ Parcial/condicionado | Determinar se adiciona spells, escolas apenas, ou ambos; catalogar o que for mágico. |
@@ -109,8 +109,8 @@ Este resumo conta **linhas de mods no índice versionado**, não quantidade de s
 
 - ✅ Catálogo integral de spells/mecânicas do mod de referência: **1** (`Mahou Tsukai`, referência clean-room; presença atual não afirmada).
 - ⚠️ Hosts instalados com cobertura parcial de capacidade/API, mas sem inventário integral de spells: **4** (Iron's, Ars Nouveau, Eidolon, Malum).
-- ✅ Addons com catálogo próprio fechado no snapshot versionado: **4** (`Ars 'n' Spells` 3.0.2: 8 proxies sem efeito próprio + 5 rituais; `Farmer's Spell 'n Spellbooks` 1.0.4.0: 6/6 spells runtime registrados; `Paladin Spells` 1.1.1: 5/5 spells registrados, com limitações runtime observadas documentadas separadamente; `Wind's Spellbooks` 1.0.5: 7/7 spell IDs fechados em inventário observável de registry).
-- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **6**.
+- ✅ Addons com catálogo próprio fechado no snapshot versionado: **5** (`Ars 'n' Spells` 3.0.2: 8 proxies sem efeito próprio + 5 rituais; `Farmer's Spell 'n Spellbooks` 1.0.4.0: 6/6 spells runtime registrados; `Paladin Spells` 1.1.1: 5/5 spells registrados, com limitações runtime observadas documentadas separadamente; `Wind's Spellbooks` 1.0.5: 7/7 spell IDs fechados em inventário observável de registry; `ISS: Magic From The East` 1.1.5: 22/22 spells ativos, distribuídos em 11 Symmetry + 11 Spirit, com Dune registrada sem spell ativo).
+- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **5**.
 - ⚠️ Addons de título explicitamente mágico cujo tipo exato de conteúdo ainda precisa ser confirmado: **2** (`magic_schools`, `specs_irons_spellbooks`).
 - ⚠️ Extensões de ecossistema que exigem confirmação spell-level antes de catalogação integral: **14**.
 - ✅ Contratos próprios Black Arcana: **32** candidatos catalogados.
