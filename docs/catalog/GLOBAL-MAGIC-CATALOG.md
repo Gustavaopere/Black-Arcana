@@ -49,7 +49,7 @@ Os itens abaixo foram promovidos para este índice porque o inventário versiona
 | ISS: Magic From The East | `iss_magicfromtheeast` | `1.1.5` | ❌ Não catalogado | Confirmar inventário mágico e catalogar conteúdo observável. |
 | Leyline Spellbooks | `leylines` | `1.0.3` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
 | Monsters & Spellbooks | `monsterspellbooks` | `0.0.14` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
-| Iron's Spells Magic Schools | `magic_schools` | `1.0` | ❌ Não catalogado | Determinar se adiciona spells, escolas apenas, ou ambos; catalogar o que for mágico. |
+| Iron's Spells Magic Schools | `magic_schools` | `1.0` | ⚠️ Parcial/condicionado | Determinar se adiciona spells, escolas apenas, ou ambos; catalogar o que for mágico. |
 | Paladin Spells | `paladin_spells` | `1.21.1-1.1.1` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
 | Specs: Iron's Spells 'n Spellbooks Addon | `specs_irons_spellbooks` | `1.6.4` | ⚠️ Parcial/condicionado | O título prova vínculo ao sistema; confirmar se adiciona spells antes de inventário spell-level. |
 | Wind's Spellbooks | `wind_spellbooks` | `1.0.5` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
@@ -109,7 +109,8 @@ Este resumo conta **linhas de mods no índice versionado**, não quantidade de s
 
 - ✅ Catálogo integral de spells/mecânicas do mod de referência: **1** (`Mahou Tsukai`, referência clean-room; presença atual não afirmada).
 - ⚠️ Hosts instalados com cobertura parcial de capacidade/API, mas sem inventário integral de spells: **4** (Iron's, Ars Nouveau, Eidolon, Malum).
-- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **10** claramente não catalogados; `magic_schools` e `specs_irons_spellbooks` permanecem condicionados quanto ao tipo exato de conteúdo.
+- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **10**.
+- ⚠️ Addons de título explicitamente mágico cujo tipo exato de conteúdo ainda precisa ser confirmado: **2** (`magic_schools`, `specs_irons_spellbooks`).
 - ⚠️ Extensões de ecossistema que exigem confirmação spell-level antes de catalogação integral: **14**.
 - ✅ Contratos próprios Black Arcana: **32** candidatos catalogados.
 - ✅ Noetic Stage 07.07: **7/7** spells com proveniência individual catalogada.
