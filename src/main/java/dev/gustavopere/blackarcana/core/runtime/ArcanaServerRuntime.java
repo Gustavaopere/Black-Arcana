@@ -136,6 +136,7 @@ public final class ArcanaServerRuntime {
         new EntityInteractionAdmissionService(entityInteractionPolicy, protectionAdapters);
     private final Map<ArcanaSpellId, ArcanaCastEngine> engines = new ConcurrentHashMap<>();
     private final ArcanaCastIngressService ingress;
+    private final IngressRateLimiter channelIngressLimiter;
     private final ArcanaChannelManager channels;
     private final ArcanaChannelSpecRegistry channelSpecs = new ArcanaChannelSpecRegistry(DEFAULT_MAX_CHANNEL_SPECS);
     private final ArcanaChannelCastCoordinator channelCasts;
@@ -169,6 +170,7 @@ public final class ArcanaServerRuntime {
     ) {
         IngressRateLimiter limiter = new IngressRateLimiter(maxCastIntentsPerSecond, 20L, maxTrackedCasters);
         this.ingress = new ArcanaCastIngressService(spells, limiter, engines::get);
+        this.channelIngressLimiter = limiter;
         this.channels = new ArcanaChannelManager(maxChannelSessions);
         this.channelCasts = new ArcanaChannelCastCoordinator(spells, loadouts, channels, engines::get);
         this.effectScheduler = new BoundedWorkScheduler(
@@ -193,6 +195,8 @@ public final class ArcanaServerRuntime {
     public ArcanaDecision beginChannel(ArcanaCastContext context, ChannelBeginIntentPayload intent) {
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(intent, "intent");
+        ArcanaDecision ingressDecision = channelIngressLimiter.claim(context.casterId(), context.serverTick());
+        if (!ingressDecision.allowed()) return ingressDecision;
         ArcanaChannelSpec spec = channelSpecs.resolve(intent.parsedSpellId()).orElse(null);
         if (spec == null) {
             return ArcanaDecision.deny(
@@ -207,6 +211,10 @@ public final class ArcanaServerRuntime {
     public ArcanaCastResult releaseChannel(ArcanaCastContext context, ChannelReleaseIntentPayload intent) {
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(intent, "intent");
+        ArcanaDecision ingressDecision = channelIngressLimiter.claim(context.casterId(), context.serverTick());
+        if (!ingressDecision.allowed()) {
+            return ArcanaCastResult.denied(ArcanaCastResult.Status.DENIED_INGRESS, ingressDecision);
+        }
         ArcanaCastResult result = channelCasts.release(context, intent.parsedCastId(), intent.targetHint());
         if (result.status() == ArcanaCastResult.Status.DENIED_CHANNEL
                 && "channel_too_short".equals(result.code())) {
@@ -218,6 +226,8 @@ public final class ArcanaServerRuntime {
     public boolean cancelChannel(ArcanaCastContext context, ChannelCancelIntentPayload intent) {
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(intent, "intent");
+        ArcanaDecision ingressDecision = channelIngressLimiter.claim(context.casterId(), context.serverTick());
+        if (!ingressDecision.allowed()) return false;
         return channelCasts.cancel(context, intent.parsedCastId());
     }
 
@@ -277,7 +287,6 @@ public final class ArcanaServerRuntime {
     public void removeEngine(ArcanaSpellId spellId) { engines.remove(Objects.requireNonNull(spellId, "spellId")); }
     public void configureWorldEffects(WorldEffectPolicyConfig config) { worldEffectPolicy.updateConfig(Objects.requireNonNull(config, "config")); }
     public void setRuntimeGroupMigrations(RuntimeGroupMigrations migrations) { this.groupMigrations = Objects.requireNonNull(migrations, "migrations"); }
-
     public MigrationResult migrateRestoredPersistentState() {
         return new MigrationResult(cooldowns.migrateGroups(groupMigrations), charges.migrateGroups(groupMigrations));
     }
