@@ -108,10 +108,7 @@ public final class ArcanaServerRuntimeManager {
         return result;
     }
 
-    public static ChannelBeginResultPayload handleChannelBegin(
-            ServerPlayer player,
-            ChannelBeginIntentPayload intent
-    ) {
+    public static ChannelBeginResultPayload handleChannelBegin(ServerPlayer player, ChannelBeginIntentPayload intent) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(intent, "intent");
         MinecraftServer server = player.serverLevel().getServer();
@@ -122,10 +119,7 @@ public final class ArcanaServerRuntimeManager {
         return ChannelBeginResultPayload.from(intent.parsedCastId(), decision);
     }
 
-    public static CastResultPayload handleChannelRelease(
-            ServerPlayer player,
-            ChannelReleaseIntentPayload intent
-    ) {
+    public static CastResultPayload handleChannelRelease(ServerPlayer player, ChannelReleaseIntentPayload intent) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(intent, "intent");
         MinecraftServer server = player.serverLevel().getServer();
@@ -143,10 +137,7 @@ public final class ArcanaServerRuntimeManager {
         return result;
     }
 
-    public static boolean handleChannelCancel(
-            ServerPlayer player,
-            ChannelCancelIntentPayload intent
-    ) {
+    public static boolean handleChannelCancel(ServerPlayer player, ChannelCancelIntentPayload intent) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(intent, "intent");
         ArcanaServerRuntime runtime = RUNTIMES.get(player.serverLevel().getServer());
