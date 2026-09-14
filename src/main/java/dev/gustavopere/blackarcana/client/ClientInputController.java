@@ -151,6 +151,7 @@ public final class ClientInputController {
                 && !presentationDimension.equals(currentDimension);
         presentationDimension = currentDimension;
         if (!minecraft.player.isAlive() || dimensionChanged) {
+            CHANNELS.cancel();
             CastPresentationClientRuntime.clear();
             CastPresentationEffectsLayer.clear();
         } else if (minecraft.screen != null) {
