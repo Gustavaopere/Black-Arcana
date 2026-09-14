@@ -31,6 +31,7 @@ public final class BlackArcanaClient {
         HazardResistanceForecastClientController.register(NeoForge.EVENT_BUS);
         BorrowedSightClientController.register(NeoForge.EVENT_BUS);
         AstralSeveranceClientController.register(NeoForge.EVENT_BUS);
+        AstralSeveranceInputController.register(NeoForge.EVENT_BUS);
         NoeticViewNetworkBridge.installClientHandler(BorrowedSightClientController::accept);
         AstralSeveranceNetworkBridge.installViewHandler(AstralSeveranceClientController::accept);
         ClientInputController.installRadialOpener(BlackArcanaRadialScreen::open);
