@@ -33,9 +33,9 @@ Mahou Tsukai remains a design/behavior reference only. No Stage 07.07 implementa
 
 The provider names in the table are not additional design references for spell behavior. They are possible integration surfaces governed by the existing provenance ledger and Stage 03/07 integration evidence.
 
-- Iron's: use only the documented/public API and exact-version integration contracts already verified by Black Arcana; provider-native mana/cooldown must not become a second authority for Black Arcana-hosted transactions.
-- Ars Nouveau: familiar ownership/lifecycle may be consumed only through supported provider boundaries already verified for the exact integration path; unsupported provider state remains fail-closed.
-- Eidolon: thematic/ritual presentation remains optional unless a supported exact-version integration seam is separately proven; Black Arcana mechanics must continue to function without undocumented Eidolon internals.
+- Iron's: use only documented/public API surfaces and exact-version contracts independently verified by Black Arcana for the **specific operation being integrated**. Verification of one operation does not authorize another; unverified operations remain fail-closed. Provider-native mana/cooldown must not become a second authority for Black Arcana-hosted transactions.
+- Ars Nouveau: familiar ownership/lifecycle may be consumed only through supported provider boundaries independently verified for the **specific integration path**. Verification is operation-scoped; unsupported or unverified provider state remains fail-closed.
+- Eidolon: thematic/ritual presentation remains optional unless a supported exact-version integration seam is separately proven for the required operation; Black Arcana mechanics must continue to function without undocumented Eidolon internals.
 
 Theme, naming similarity or the existence of a similar provider mechanic is never sufficient evidence for an integration contract.
 
