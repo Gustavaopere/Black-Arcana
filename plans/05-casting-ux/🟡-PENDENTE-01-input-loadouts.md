@@ -38,7 +38,7 @@ If presentation work adds drag/reorder or explicit slot editing, the client stil
 
 ## Session/stale-state contract
 
-On disconnect, synchronized client state and contextual client session state are cleared. Reconnect waits for fresh server snapshots before treating any loadout/selection/result as current.
+On disconnect, synchronized client state and contextual client session state are cleared. `ClientInputController` reconciles its local `ClientLoadoutSelection` against an empty snapshot in the same disconnect tick before returning, so the selected slot cannot survive as stale contextual state. Reconnect waits for fresh server snapshots before treating any loadout/selection/result as current.
 
 After datapack/provider changes, unavailable spells are rejected by the server and old quick-slot identity cannot remain castable.
 
@@ -52,9 +52,9 @@ After datapack/provider changes, unavailable spells are rejected by the server a
 
 ## Automated coverage
 
-Canonical focused coverage includes `ClientInputAuthorityWiringTest`, `ClientInputChannelGuiFocusWiringTest`, `ClientLoadoutSelectionTest`, `LoadoutDraftTest`, `LoadoutRegistryTest`, `ArcanaServerRuntimeManagerLoadoutWiringTest` and `BlackArcanaSavedDataLoadoutTest` plus the normal build/JAR/GameTest/dedicated-server pipeline.
+Canonical focused coverage includes `ClientInputAuthorityWiringTest`, `ClientInputChannelGuiFocusWiringTest`, `ClientInputDisconnectSelectionWiringTest`, `ClientLoadoutSelectionTest`, `LoadoutDraftTest`, `LoadoutRegistryTest`, `ArcanaServerRuntimeManagerLoadoutWiringTest` and `BlackArcanaSavedDataLoadoutTest` plus the normal build/JAR/GameTest/dedicated-server pipeline.
 
-`ClientInputAuthorityWiringTest` pins ordinary rebindable `KeyMapping` registration/defaults and the fail-closed GUI-focus guards on radial, editor, selected-cast and quick-cast paths. `ClientInputChannelGuiFocusWiringTest` pins that GUI focus cancels an already-active channel through the canonical cancel transport before channel-release processing. These are deterministic supporting evidence only; they do not replace the required real-client observation below.
+`ClientInputAuthorityWiringTest` pins ordinary rebindable `KeyMapping` registration/defaults and the fail-closed GUI-focus guards on radial, editor, selected-cast and quick-cast paths. `ClientInputChannelGuiFocusWiringTest` pins that GUI focus cancels an already-active channel through the canonical cancel transport before channel-release processing. `ClientInputDisconnectSelectionWiringTest` pins that disconnect clears the local selection in the same client tick before the controller returns. `BlackArcanaSavedDataLoadoutTest` includes explicit coverage that a persisted loadout above the canonical 16-slot bound is discarded per caster rather than truncated, while a valid neighboring caster remains intact. These are deterministic supporting evidence only; they do not replace the required real-client observation below.
 
 The historical hardening checkpoint `30b111fc2a50f8fa3efb4bbf9b8cac1ad4c1f053` passed workflow `34150180682` after explicit RED cycles for execution-engine validation, duplicate direct writes, duplicate restore and persisted duplicate isolation.
 
