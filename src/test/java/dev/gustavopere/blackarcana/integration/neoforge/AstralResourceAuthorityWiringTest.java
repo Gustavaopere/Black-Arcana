@@ -1,6 +1,5 @@
 package dev.gustavopere.blackarcana.integration.neoforge;
 
-import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices;
 import dev.gustavopere.blackarcana.core.cost.ResourceCostProvider;
@@ -12,11 +11,12 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AstralResourceAuthorityWiringTest {
@@ -37,27 +37,16 @@ class AstralResourceAuthorityWiringTest {
     }
 
     @Test
-    void astralAuthoritiesAcceptGenericNamedResourceProvider() {
-        ResourceCostProvider provider = new ResourceCostProvider() {
-            @Override public String resourceId() { return "black_arcana:test_resource"; }
-            @Override public ArcanaDecision check(ArcanaCastRequest request) { return ArcanaDecision.allow(); }
-            @Override public ArcanaServices.CostReservation reserve(ArcanaCastRequest request) {
-                return new ArcanaServices.CostReservation() {
-                    @Override public ArcanaDecision decision() { return ArcanaDecision.allow(); }
-                    @Override public void commit() { }
-                    @Override public void refund() { }
-                };
-            }
-        };
-
+    void astralAuthoritiesCannotInjectResourceProviderOutsideRuntimeRegistry() {
         AstralSeveranceCastBinding.Authorities authorities = new AstralSeveranceCastBinding.Authorities(
-            provider,
             request -> ArcanaDecision.allow(),
             request -> ArcanaDecision.allow(),
             ArcanaServices.CastSuccessObserver.noop());
 
-        assertNotNull(authorities.resourceAuthority());
-        assertEquals("black_arcana:test_resource", authorities.resourceAuthority().resourceId());
+        assertEquals(3, AstralSeveranceCastBinding.Authorities.class.getRecordComponents().length);
+        assertFalse(Arrays.stream(AstralSeveranceCastBinding.Authorities.class.getRecordComponents())
+            .anyMatch(component -> component.getName().equals("resourceAuthority")));
+        assertTrue(authorities.progressionGate().check(null).allowed());
     }
 
     @Test
