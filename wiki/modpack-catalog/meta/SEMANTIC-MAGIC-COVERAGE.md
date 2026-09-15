@@ -31,6 +31,7 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 - Phase 2BQ exact-artifact closure is validated at `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`: NON-MERGE PR #222 audit HEAD `9a3620209e27bb74934c8a9740678b7e59df39c6` passed exact artifact run `34735280002`; durable PR #223 HEAD `0eec58c14e591f6d2c875172bec4e436f8e1d5cb` passed Black Arcana CI **#2618** / run `34735444723`; the exact merge SHA passed post-merge CI **#2622** / run `34735586680` and published canonical QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`).
 - Phase 2BR GTBC's Geomancy Plus closure is validated at `main@4ab4ad990d453938e67f3d2b7cfa878bbe031ef0`: structural audit run `34737230548`, registry reconciliation run `34737352893`, and Geo reachability run `34738729721` are GREEN; durable PR #226 exact merge SHA passed post-merge CI **#2654** / run `34738972649` and published canonical QA artifact `10311522907` (`sha256:c815f684a7a6dec192dd995bb6fbd6784c35faa0b0d21ae39bb9de89b93cec16`).
 - Phase 2BS T.O Magic n' Extras partial catalog is validated at `main@0bd1c04460e63a03b6b484b785247e75f6e44178`: durable PR #228 passed exact-head CI #2679 / run `34741531727`; the merge SHA passed exact-SHA post-merge CI #2682 / run `34741699505` and published canonical QA artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Phase 2BS catalogs 33 exact registered identities but contributes +0 strict and no component closure.
+- Phase 2BT Vampire Spells Addon source-pinned zero closure is validated at `main@1c5091807a8773d378c34ffac2e737b5f08b545c`: durable PR #239 closes release/source `0.0.9` as `ZERO_BRIDGE_INFRA`, and exact-SHA post-merge Black Arcana CI run `34795795283` completed GREEN. Phase 2BT contributes +0 strict; the separate shared-ledger reconciliation promotes technical component #67.
 
 The historical chat-only tally is not an authority and is not used as an input to any sum below.
 
@@ -50,11 +51,17 @@ The historical chat-only tally is not an authority and is not used as an input t
 
 `COUNTED_*` is a semantic-inventory confidence state. It is **not** a claim that runtime QA, compatibility QA or every numerical mechanic has passed.
 
+## Phase 2BT — Vampire Spells Addon 0.0.9 source-pinned zero-semantic closure
+
+Official release `1.21.1-0.0.9` and exact source target `xsharov/VampireSpellsAddon@2d36e94e67611a316b7311b11e4574b499025580` close the provider as a compatibility/runtime-policy overlay rather than an independent spell provider. `SpellIds` references Iron's-owned spell/school identities under namespace `irons_spellbooks`; the audited registration path installs Iron's/Vampirism integration listeners and does not register a provider-owned spell, school, ritual or equivalent discrete magical action.
+
+Phase 2BT is therefore `ZERO_BRIDGE_INFRA` and contributes **+0 semantic magic objects**. The strict reconstructible minimum remains **1344**. PR #239 merged the durable audit as `main@1c5091807a8773d378c34ffac2e737b5f08b545c`, whose exact post-merge Black Arcana CI run `34795795283` is GREEN. The shared reconciliation promotes only the separate technical provider-component metric to **#67 / 67 of 100**. Physical-JAR byte equality, reflective bridge resolution, mixin/event ordering, effective serverconfig and live resource/damage/cooldown settlement remain runtime QA and are not inferred from this catalog closure.
+
 ## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 partial catalog
 
 Exact publisher file `6342780` closes **33 unique registered `traveloptics:<id>` spell identities**, 33 field→class→ID mappings and zero registry initializer branches. The same exact alpha carries 32 additional root localization spell IDs that are not registered and are excluded. Provider ancestry proves `AbstractUniqueSpell.allowCrafting() = false` and `AbstractWeaponSpell.allowCrafting() = true`; nine of ten Unique registrations have direct structured loot anchors, while `traveloptics:blackout` remains object-level survival-unresolved.
 
-A focused exact-artifact audit also proves a runtime-risk wiring fact: `TOLootModifiers` registers both `key_loot` and `universal_loot`, while `KeyLootModifier.CODEC` is referenced twice and `UniversalLootModifier.CODEC` zero times. Black Arcana does not claim the reported runtime crash is reproduced, but runtime viability remains fail-closed. Consequently all 33 registry identities remain catalog inventory rather than a strict counted promotion: Phase 2BS contributes **+0 strict**, the reconstructible minimum stays **1344**, and technical component closure stays **66/100**.
+A focused exact-artifact audit also proves a runtime-risk wiring fact: `TOLootModifiers` registers both `key_loot` and `universal_loot`, while `KeyLootModifier.CODEC` is referenced twice and `UniversalLootModifier.CODEC` zero times. Black Arcana does not claim the reported runtime crash is reproduced, but runtime viability remains fail-closed. Consequently all 33 registry identities remain catalog inventory rather than a strict counted promotion: Phase 2BS contributes **+0 strict**, the reconstructible minimum stays **1344**, and technical component closure stays **66/100 at that checkpoint**.
 
 ## Phase 2BR — GTBC's Geomancy Plus 1.1.0-1.21.1 release-bounded spell closure
 
@@ -128,7 +135,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Strict reconstructible counted minimum
 
-**1344 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BR shared-ledger reconciliation.**
+**1344 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BT shared-ledger reconciliation.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -275,7 +282,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [FamiliarsLib](../providers/familiarslib/README.md) — familiar framework; historical Sound content removed from the 1.7 line;
 - [GTBC's SpellLib](../providers/gtbcs-spelllib/README.md) — shared spell/addon library infrastructure; publisher surface establishes no standalone gameplay/spell catalog in 2.2.0;
 - [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
-- [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — resource/behavior overlay over Iron's + Vampirism, no own spell set;
+- [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — Phase 2BT exact-release source-pinned `ZERO_BRIDGE_INFRA`; +0; modifies Iron's/Vampirism behavior without minting a provider-owned spell/action identity; runtime bridge QA remains fail-closed;
 - [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
 - Bloodlines `gravebound_crit_action` / Sorcerous Strike — registered implementation, but exact 3.0.9 configured tree and rank defaults provide no normal survival acquisition path;
 - IronSable's ten physicalized base Iron's spells — already owned/countable under Iron's;
@@ -297,7 +304,7 @@ Other provider directories that have not yet been normalized into a semantic-obj
 ## Important interpretation rules
 
 1. **1344 is not “1344 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1344 by the 100 provider-component denominator. The current component target is `66/100`; provider-component coverage and semantic-magic coverage answer different questions.
+2. Do not divide 1344 by the 100 provider-component denominator. The current component target is `67/100`; provider-component coverage and semantic-magic coverage answer different questions.
 3. Do not add public lower bounds to 1344 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
