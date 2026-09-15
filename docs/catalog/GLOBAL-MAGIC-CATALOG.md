@@ -21,7 +21,7 @@ O objetivo deste índice é responder duas perguntas sem misturá-las:
 
 ## Snapshot de autoridade
 
-- Black Arcana: `main@6338aa4137ee5bc347c2c53f5aed215d940d1f5d`.
+- Black Arcana: `main@4779618604f9454e7d1479a4287af54740846c52`.
 - RPG Skill Tree sibling: `main@3bbd7f381df64eff8463e20068c67d76d51463fe`.
 - Snapshot físico canônico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
@@ -86,6 +86,7 @@ Zero é um resultado de catálogo válido quando a auditoria fecha que o mod ape
 | Ars Polymorphia | `1.0.3` | ✅ `ZERO_SEMANTIC_BRIDGE` | Compat de recipe conflict; 0 spell/glyph/ritual/action registry próprio. |
 | Ars Sable | `1.1.2` | ✅ `ZERO_SEMANTIC_BRIDGE` | Infraestrutura espacial/compat; 0 spell/glyph/ritual/action registry próprio. |
 | Ars Nouveau: Two-Way Portals | `2.0.0` | ✅ `ZERO_SEMANTIC_PORTAL_INFRA` | Artefato exato; 0 spell/glyph/ritual/rite/ability independente. |
+| Vampire Spells Addon | `0.0.9` | ✅ `ZERO_BRIDGE_INFRA` | Source-pinned Iron's↔Vampirism behavior/policy overlay; 0 provider-owned spell/school/ritual/action registry; runtime bridge QA separado. |
 
 ## 3. Providers mágicos atuais ainda condicionais no ledger
 
@@ -140,8 +141,8 @@ As métricas têm denominadores diferentes:
 
 - ✅ **Ledger semântico strict-counted:** **40 providers / 1344 objetos mágicos reconstruíveis**.
 - ⚠️ **Denominador semântico global:** ainda incompleto; portanto **nenhuma porcentagem final de spells/magia é declarada**.
-- ✅ **Cobertura técnica de componentes:** **66/100 = 66%** no ledger `CATALOG-COVERAGE-CURRENT.md`. Esse percentual mede componentes técnicos, não spells.
-- ✅ **Zero-semantic/infra explicitamente auditados nesta reconciliação:** 6 providers listados acima; zero não significa ausência de auditoria.
+- ✅ **Cobertura técnica de componentes:** **67/100 = 67%** no ledger `CATALOG-COVERAGE-CURRENT.md`. Esse percentual mede componentes técnicos, não spells.
+- ✅ **Zero-semantic/infra explicitamente auditados nesta reconciliação:** 7 providers listados acima; zero não significa ausência de auditoria.
 - ⚠️ **Current-ledger conditionals destacados:** Traveloptics, 26 Gaze Spirit Rites e Asterism `astral_gateway`.
 - ⚠️ **Legacy sibling candidates sem presença física atual afirmada:** `magic_schools`, `specs_irons_spellbooks`, `irons_apothic`, `create_wizardry`.
 - ✅ **Mahou Tsukai clean-room:** 53/53 linhas observáveis classificadas; presença física atual não afirmada.
