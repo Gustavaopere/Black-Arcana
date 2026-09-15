@@ -19,25 +19,31 @@ Build an original, server-authoritative forbidden-magic system for Minecraft 1.2
 
 ## Completion/validation rule
 
-Implementation evidence and direct physical validation are separate facts. CI/GameTests do not fabricate a real-client/full-pack PASS. A completed runtime stage may proceed downstream when its required runtime contracts are frozen even if non-blocking presentation polish is deferred.
+Implementation evidence and direct physical validation are separate facts. CI/GameTests never fabricate a real-client, real-modpack, provider-native or manual PASS.
+
+For numbered-stage progression, D034 is authoritative and supersedes D031. The active stage is the earliest incomplete stage. A stage may advance only after every requirement defined by its plans is complete, including required implementation, integration, automated tests, manual/physical validation, real-client or real-modpack observation, provider-native acceptance, persistence/lifecycle/multiplayer/world-safety checks and acceptance criteria where applicable.
+
+Statuses such as `IMPLEMENTED`, `FINAL VALIDATION DEFERRED`, `PHYSICAL VALIDATION PENDING`, `PARTIAL` or `CANONICAL RUNTIME` do not authorize promotion. A plan file receives the `✅-` prefix only after its own full completion contract is proven. Existing downstream code remains reusable historical implementation, but it does not override the stage gate and must not become the current work target while an earlier stage is incomplete.
 
 ## Runtime implementation sequence
+
+Completed historical stages:
 
 1. `00-foundation`
 2. `01-reference-catalog`
 3. `02-arcana-core`
 4. `03-integration-layer`
 5. `04-world-safety`
-6. `05-casting-ux`
-7. `05a-arcane-danger`
-8. `06-rituals`
-9. `07-spell-domains`
-10. `07a-arcane-polarity-fusion-metamagic`
-11. `08-progression-balance`
-12. `09-hardening-release`
-13. accumulated final validation/release closeout
 
-Stages integrate sequentially through current `main`; stale feature ancestry is not merged wholesale.
+Strict current promotion order:
+
+`05-casting-ux -> 05a-arcane-danger -> 06-rituals -> 07-spell-domains -> 07a-arcane-polarity-fusion-metamagic -> 08-progression-balance -> 09-hardening-release`
+
+For each numbered stage use:
+
+`AUDIT -> IDENTIFY GAPS -> IMPLEMENT -> TEST -> VALIDATE -> MARK ✅ -> AUDIT AGAIN -> ONLY THEN ADVANCE`
+
+Stages integrate through current `main`; stale feature ancestry is not merged wholesale. Later stages are not a place to defer functional or validation work required by an earlier stage.
 
 ## Visual production is a separate planning lane
 
@@ -45,7 +51,7 @@ UI, HUD, textures, iconography, models, animations, VFX/particles/shaders, sound
 
 That directory is intentionally **not** a numbered runtime stage. It owns Black Arcana-specific presentation requirements while `Gustavaopere/minecraft-mod-factory` owns reusable mod/asset production infrastructure, source-art pipeline rules, validators, templates and tooling.
 
-The numbered engineering plans retain only presentation-adjacent facts required for runtime correctness, such as bounded synchronized presentation data, cosmetic fallback modes, render-safe identities and server/client authority boundaries. Final look/layout/art/audio belongs to visual production.
+The numbered engineering plans retain only presentation-adjacent facts required for runtime correctness, such as bounded synchronized presentation data, cosmetic fallback modes, render-safe identities and server/client authority boundaries. Final look/layout/art/audio belongs to visual production unless a numbered plan explicitly makes a presentation/physical observation an acceptance requirement; in that case the required evidence still blocks that numbered plan under D034.
 
 See [`visual-production/MIGRATION-MAP.md`](visual-production/MIGRATION-MAP.md) for the extraction audit.
 
