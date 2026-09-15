@@ -65,6 +65,16 @@ class AstralInvocationConfigContractTest {
     }
 
     @Test
+    void nonNamespacedResourceIdIsRejectedBeforePublication() {
+        AstralInvocationDataDefinition invalid = withResourceId(fixtureDefinition(), "mana");
+
+        assertFalse(invalid.validate().isEmpty());
+        assertThrows(IllegalArgumentException.class,
+                () -> AstralInvocationConfigAuthority.reload(List.of(invalid)));
+        assertTrue(AstralInvocationConfigAuthority.current().isEmpty());
+    }
+
+    @Test
     void hardCeilingsBoundProjectionButNeverSupplyItsValues() {
         AstralInvocationDataDefinition excessiveDuration = withProjection(
                 fixtureDefinition(), NoeticSafetyCeilings.MAX_DURATION_TICKS + 1, 12.5D);
@@ -200,6 +210,18 @@ class AstralInvocationConfigContractTest {
         return new AstralInvocationDataDefinition(
                 source.schemaVersion(), id, source.scope(),
                 source.resourceId(), source.resourceAmount(), source.resourceUnit(),
+                source.cooldownGroup(), source.cooldownDurationTicks(), source.cooldownPersistent(),
+                source.channelMinimumTicks(), source.channelMaximumTicks(),
+                source.projectionDurationTicks(), source.maxRangeBlocks());
+    }
+
+    private static AstralInvocationDataDefinition withResourceId(
+            AstralInvocationDataDefinition source,
+            String resourceId
+    ) {
+        return new AstralInvocationDataDefinition(
+                source.schemaVersion(), source.id(), source.scope(),
+                resourceId, source.resourceAmount(), source.resourceUnit(),
                 source.cooldownGroup(), source.cooldownDurationTicks(), source.cooldownPersistent(),
                 source.channelMinimumTicks(), source.channelMaximumTicks(),
                 source.projectionDurationTicks(), source.maxRangeBlocks());
