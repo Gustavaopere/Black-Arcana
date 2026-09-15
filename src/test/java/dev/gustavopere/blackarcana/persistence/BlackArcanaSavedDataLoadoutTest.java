@@ -87,6 +87,33 @@ class BlackArcanaSavedDataLoadoutTest {
         assertEquals(List.of(), restored.getLoadout(malformedCaster));
     }
 
+    @Test
+    void oversizedPersistedLoadoutIsDiscardedWithoutCorruptingValidNeighbor() {
+        UUID validCaster = UUID.fromString("55555555-5555-5555-5555-555555555555");
+        UUID oversizedCaster = UUID.fromString("66666666-6666-6666-6666-666666666666");
+        ArcanaSpellId validSpell = ArcanaSpellId.parse("black_arcana:valid_neighbor");
+        String[] oversized = IntStream.rangeClosed(0, ArcanaCastRequest.MAX_LOADOUT_SLOTS)
+                .mapToObj(index -> "black_arcana:oversized_" + index)
+                .toArray(String[]::new);
+
+        CompoundTag root = new CompoundTag();
+        root.putInt("schema", 1);
+        ListTag persistedLoadouts = new ListTag();
+        persistedLoadouts.add(loadout(validCaster, validSpell.canonical()));
+        persistedLoadouts.add(loadout(oversizedCaster, oversized));
+        root.put("loadouts", persistedLoadouts);
+
+        BlackArcanaSavedData loaded = BlackArcanaSavedData.load(root, null);
+        LoadoutRegistry restored = new LoadoutRegistry();
+        var cooldowns = new PersistentCooldownService(request -> null);
+        var charges = new ChargePoolCooldownService(request -> null);
+
+        assertDoesNotThrow(() -> loaded.restore(cooldowns, charges, restored, 0L));
+        assertEquals(List.of(validSpell), restored.getLoadout(validCaster));
+        assertTrue(restored.getLoadout(oversizedCaster).isEmpty(),
+                "persisted loadout above the canonical bound must fail closed instead of truncating");
+    }
+
     private static CompoundTag loadout(UUID caster, String... spellIds) {
         CompoundTag tag = new CompoundTag();
         tag.putUUID("caster", caster);
