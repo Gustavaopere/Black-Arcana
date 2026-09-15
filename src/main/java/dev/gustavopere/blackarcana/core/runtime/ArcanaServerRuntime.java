@@ -175,6 +175,7 @@ public final class ArcanaServerRuntime {
         IngressRateLimiter limiter = new IngressRateLimiter(maxCastIntentsPerSecond, 20L, maxTrackedCasters);
         this.ingress = new ArcanaCastIngressService(
             spells,
+            loadouts,
             limiter,
             spellId -> channelSpecs.resolve(spellId).isPresent(),
             engines::get);
