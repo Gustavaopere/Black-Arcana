@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.network;
 
+import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import net.minecraft.world.entity.player.Player;
 
@@ -22,10 +23,12 @@ import java.util.function.BiConsumer;
 public final class ClientArcanaSyncState {
     private static UUID playerId;
     private static CastResultPayload lastResult;
+    private static ChannelBeginResultPayload lastChannelBeginResult;
     private static long lastResultTick = Long.MIN_VALUE;
     private static Map<String, Long> cooldowns = Map.of();
     private static Map<ArcanaSpellId, SpellPresentationPayload.Entry> presentation = Map.of();
     private static Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazardPreflight = Map.of();
+    private static Map<ArcanaSpellId, ArcanaChannelSpec> channelCapabilities = Map.of();
     private static HazardResistanceForecastPayload hazardResistanceForecast;
     private static List<ArcanaSpellId> loadout = List.of();
     private static volatile BiConsumer<Player, CastResultPayload> resultObserver = (player, payload) -> { };
@@ -57,6 +60,15 @@ public final class ClientArcanaSyncState {
             lastResultTick = player.tickCount;
         }
         resultObserver.accept(player, payload);
+    }
+
+    public static synchronized void acceptChannelBeginResult(Player player, ChannelBeginResultPayload payload) {
+        ensurePlayer(player);
+        replaceChannelBeginResult(payload);
+    }
+
+    static synchronized void replaceChannelBeginResult(ChannelBeginResultPayload payload) {
+        lastChannelBeginResult = Objects.requireNonNull(payload, "payload");
     }
 
     public static synchronized void acceptCooldowns(Player player, CooldownSnapshotPayload payload) {
@@ -103,6 +115,23 @@ public final class ClientArcanaSyncState {
         hazardResistanceForecast = null;
     }
 
+    public static synchronized void acceptChannelCapabilities(Player player, ChannelCapabilityPayload payload) {
+        ensurePlayer(player);
+        replaceChannelCapabilities(payload);
+    }
+
+    static synchronized void replaceChannelCapabilities(ChannelCapabilityPayload payload) {
+        Objects.requireNonNull(payload, "payload");
+        Map<ArcanaSpellId, ArcanaChannelSpec> next = new LinkedHashMap<>();
+        for (ChannelCapabilityPayload.Entry entry : payload.entries()) {
+            ArcanaSpellId id = entry.parsedSpellId();
+            if (next.putIfAbsent(id, entry.spec()) != null) {
+                throw new IllegalArgumentException("duplicate channel capability entry: " + id.canonical());
+            }
+        }
+        channelCapabilities = Map.copyOf(next);
+    }
+
     public static synchronized void acceptHazardResistanceForecast(
         Player player,
         HazardResistanceForecastPayload payload
@@ -130,6 +159,10 @@ public final class ClientArcanaSyncState {
         return Optional.ofNullable(lastResult);
     }
 
+    public static synchronized Optional<ChannelBeginResultPayload> lastChannelBeginResult() {
+        return Optional.ofNullable(lastChannelBeginResult);
+    }
+
     public static synchronized OptionalLong lastResultTick() {
         return lastResultTick == Long.MIN_VALUE ? OptionalLong.empty() : OptionalLong.of(lastResultTick);
     }
@@ -144,6 +177,10 @@ public final class ClientArcanaSyncState {
 
     public static synchronized Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazardPreflightSnapshot() {
         return hazardPreflight;
+    }
+
+    public static synchronized Optional<ArcanaChannelSpec> channelCapability(ArcanaSpellId spellId) {
+        return Optional.ofNullable(channelCapabilities.get(Objects.requireNonNull(spellId, "spellId")));
     }
 
     public static synchronized Optional<HazardResistanceForecastPayload> hazardResistanceForecast(ArcanaSpellId spellId) {
@@ -161,10 +198,12 @@ public final class ClientArcanaSyncState {
     public static synchronized void clear() {
         playerId = null;
         lastResult = null;
+        lastChannelBeginResult = null;
         lastResultTick = Long.MIN_VALUE;
         cooldowns = Map.of();
         presentation = Map.of();
         hazardPreflight = Map.of();
+        channelCapabilities = Map.of();
         hazardResistanceForecast = null;
         loadout = List.of();
     }
@@ -174,10 +213,12 @@ public final class ClientArcanaSyncState {
         UUID incoming = player.getUUID();
         if (playerId != null && !playerId.equals(incoming)) {
             lastResult = null;
+            lastChannelBeginResult = null;
             lastResultTick = Long.MIN_VALUE;
             cooldowns = Map.of();
             presentation = Map.of();
             hazardPreflight = Map.of();
+            channelCapabilities = Map.of();
             hazardResistanceForecast = null;
             loadout = List.of();
         }
