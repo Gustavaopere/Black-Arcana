@@ -61,6 +61,7 @@ class ArcanaServerRuntimeHazardGateTest {
     private static ArcanaServerRuntime runtimeWithSpell() {
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
         runtime.spells().replaceAll(List.of(spell()));
+        runtime.loadouts().setLoadout(CASTER, List.of(SPELL_ID));
         return runtime;
     }
 
