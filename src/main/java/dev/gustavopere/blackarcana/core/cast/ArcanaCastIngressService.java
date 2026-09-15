@@ -23,25 +23,29 @@ import java.util.function.Predicate;
  */
 public final class ArcanaCastIngressService {
     private final ArcanaSpellRegistry spellRegistry;
+    private final LoadoutRegistry loadoutRegistry;
     private final IngressRateLimiter rateLimiter;
     private final Predicate<ArcanaSpellId> channelOnlyRoute;
     private final Function<ArcanaSpellId, ArcanaCastEngine> engineResolver;
 
     public ArcanaCastIngressService(
             ArcanaSpellRegistry spellRegistry,
+            LoadoutRegistry loadoutRegistry,
             IngressRateLimiter rateLimiter,
             Function<ArcanaSpellId, ArcanaCastEngine> engineResolver
     ) {
-        this(spellRegistry, rateLimiter, spellId -> false, engineResolver);
+        this(spellRegistry, loadoutRegistry, rateLimiter, spellId -> false, engineResolver);
     }
 
     public ArcanaCastIngressService(
             ArcanaSpellRegistry spellRegistry,
+            LoadoutRegistry loadoutRegistry,
             IngressRateLimiter rateLimiter,
             Predicate<ArcanaSpellId> channelOnlyRoute,
             Function<ArcanaSpellId, ArcanaCastEngine> engineResolver
     ) {
         this.spellRegistry = Objects.requireNonNull(spellRegistry, "spellRegistry");
+        this.loadoutRegistry = Objects.requireNonNull(loadoutRegistry, "loadoutRegistry");
         this.rateLimiter = Objects.requireNonNull(rateLimiter, "rateLimiter");
         this.channelOnlyRoute = Objects.requireNonNull(channelOnlyRoute, "channelOnlyRoute");
         this.engineResolver = Objects.requireNonNull(engineResolver, "engineResolver");
@@ -81,6 +85,14 @@ public final class ArcanaCastIngressService {
 
         ArcanaCastRequest request = new ArcanaCastRequest(
                 intent.parsedCastId(), definition, context, intent.loadoutSlot(), intent.targetHint());
+        ArcanaDecision identity = spellRegistry.check(request);
+        if (!identity.allowed()) {
+            return result(intent, ArcanaCastResult.denied(ArcanaCastResult.Status.DENIED_IDENTITY, identity));
+        }
+        identity = loadoutRegistry.check(request);
+        if (!identity.allowed()) {
+            return result(intent, ArcanaCastResult.denied(ArcanaCastResult.Status.DENIED_IDENTITY, identity));
+        }
         return result(intent, engine.execute(request));
     }
 
