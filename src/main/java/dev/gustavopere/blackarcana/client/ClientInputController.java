@@ -139,6 +139,7 @@ public final class ClientInputController {
         if (minecraft.player == null || minecraft.getConnection() == null) {
             presentationDimension = null;
             CHANNELS.cancel();
+            SELECTION.reconcile(List.of());
             ClientArcanaSyncState.clear();
             ClientUxState.clear();
             CastPresentationClientRuntime.clear();
