@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
 import dev.gustavopere.blackarcana.api.ArcanaCooldownSpec;
 import dev.gustavopere.blackarcana.api.ArcanaCost;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
+import dev.gustavopere.blackarcana.core.cost.ResourceCostProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,11 @@ public record AstralInvocationDataDefinition(
         }
         if (scope != ConfigScope.SERVER || !scope.isGameplayAuthority()) {
             errors.add("Astral invocation config must use SERVER gameplay authority");
+        }
+        try {
+            ResourceCostProvider.requireResourceId(resourceId);
+        } catch (IllegalArgumentException invalid) {
+            errors.add("invalid resource id: " + invalid.getMessage());
         }
         try {
             new ArcanaCost(resourceId, resourceAmount, resourceUnit);
