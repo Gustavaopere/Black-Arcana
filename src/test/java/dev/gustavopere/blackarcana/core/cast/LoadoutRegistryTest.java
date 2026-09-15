@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -45,6 +46,20 @@ class LoadoutRegistryTest {
         var mismatch = registry.check(request(alpha, 1));
         assertFalse(mismatch.allowed());
         assertEquals("loadout_spell_mismatch", mismatch.code());
+    }
+
+    @Test
+    void serverAuthorityAcceptsTheFinalCanonicalSlot() {
+        LoadoutRegistry registry = new LoadoutRegistry();
+        List<ArcanaSpellId> fullLoadout = IntStream.range(0, ArcanaCastRequest.MAX_LOADOUT_SLOTS)
+                .mapToObj(index -> spell("slot_" + index).id())
+                .toList();
+        registry.setLoadout(CASTER, fullLoadout);
+        int lastSlot = ArcanaCastRequest.MAX_LOADOUT_SLOTS - 1;
+        ArcanaSpellDefinition last = spell("slot_" + lastSlot);
+
+        assertTrue(registry.check(request(last, lastSlot)).allowed());
+        assertEquals(last.id(), registry.getLoadout(CASTER).get(lastSlot));
     }
 
     @Test

@@ -1,9 +1,11 @@
 package dev.gustavopere.blackarcana.client;
 
+import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -20,6 +22,19 @@ class ClientLoadoutSelectionTest {
         assertEquals(B, selection.selected(List.of(A, B)).orElseThrow());
         assertFalse(selection.select(2, List.of(A, B)));
         assertEquals(1, selection.selectedSlot());
+    }
+
+    @Test
+    void selectedCastCanReachLastCanonicalSlotBeyondQuickCastRange() {
+        List<ArcanaSpellId> loadout = IntStream.range(0, ArcanaCastRequest.MAX_LOADOUT_SLOTS)
+                .mapToObj(index -> ArcanaSpellId.parse("black_arcana:slot_" + index))
+                .toList();
+        var selection = new ClientLoadoutSelection();
+        int lastSlot = ArcanaCastRequest.MAX_LOADOUT_SLOTS - 1;
+
+        assertTrue(selection.select(lastSlot, loadout));
+        assertEquals(lastSlot, selection.selectedSlot());
+        assertEquals(loadout.get(lastSlot), selection.selected(loadout).orElseThrow());
     }
 
     @Test
