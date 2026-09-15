@@ -32,18 +32,54 @@ class ArcanaServerRuntimeLoadoutAuthorityTest {
         AtomicInteger effects = new AtomicInteger();
         runtime.installEngine(FORGED, permissiveEngine(runtime, effects));
 
-        var result = runtime.handle(
-                new ArcanaCastContext(CASTER, 10L, "minecraft:overworld"),
-                new CastIntentPayload(
-                        ArcanaProtocol.VERSION,
-                        "00000000-0000-0000-0000-000000000051",
-                        FORGED.canonical(),
-                        0,
-                        ""));
+        var result = runtime.handle(context(10L), intent(
+                "00000000-0000-0000-0000-000000000051",
+                FORGED,
+                0));
 
         assertEquals("DENIED_IDENTITY", result.status());
         assertEquals("loadout_spell_mismatch", result.code());
         assertEquals(0, effects.get(), "loadout denial must happen before spell execution");
+    }
+
+    @Test
+    void spellRemovedFromLiveRegistryCannotRemainCastableThroughOldLoadoutIdentity() {
+        ArcanaServerRuntime runtime = new ArcanaServerRuntime(4, 32);
+        runtime.spells().replaceAll(List.of(spell(EQUIPPED)));
+        runtime.loadouts().setLoadout(CASTER, List.of(EQUIPPED));
+
+        AtomicInteger effects = new AtomicInteger();
+        runtime.installEngine(EQUIPPED, permissiveEngine(runtime, effects));
+
+        var beforeRemoval = runtime.handle(context(10L), intent(
+                "00000000-0000-0000-0000-000000000052",
+                EQUIPPED,
+                0));
+        assertEquals("SUCCESS", beforeRemoval.status());
+        assertEquals(1, effects.get());
+
+        runtime.spells().replaceAll(List.of());
+
+        var afterRemoval = runtime.handle(context(31L), intent(
+                "00000000-0000-0000-0000-000000000053",
+                EQUIPPED,
+                0));
+        assertEquals("DENIED_IDENTITY", afterRemoval.status());
+        assertEquals("unknown_spell", afterRemoval.code());
+        assertEquals(1, effects.get(), "removed spell must not reach its still-installed stale engine");
+    }
+
+    private static ArcanaCastContext context(long tick) {
+        return new ArcanaCastContext(CASTER, tick, "minecraft:overworld");
+    }
+
+    private static CastIntentPayload intent(String castId, ArcanaSpellId spellId, int slot) {
+        return new CastIntentPayload(
+                ArcanaProtocol.VERSION,
+                castId,
+                spellId.canonical(),
+                slot,
+                "");
     }
 
     private static ArcanaSpellDefinition spell(ArcanaSpellId id) {
