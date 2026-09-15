@@ -21,7 +21,7 @@ Presentation of the loadout editor is owned by `../visual-production/05-casting-
 - A spell may appear only once. Oversized, duplicate, malformed or unavailable state fails closed.
 - Invalid persisted state is isolated per caster and must not corrupt valid neighboring entries.
 - `ClientInputController` sends cast intent only. Selection or loadout editing cannot bypass progression, cooldown, cost, target, hazard or world-effect gates.
-- GUI focus suppresses direct cast input.
+- GUI focus suppresses direct cast input. If a server-advertised channel is already active when another `Screen` takes focus, the client cancels the exact local channel and sends the bounded `ChannelCancelIntentPayload` before release processing; GUI focus must never convert key release into channel execution.
 - Client selection reconciles against the synchronized server loadout.
 
 ## Input model
@@ -52,9 +52,9 @@ After datapack/provider changes, unavailable spells are rejected by the server a
 
 ## Automated coverage
 
-Canonical focused coverage includes `ClientInputAuthorityWiringTest`, `ClientLoadoutSelectionTest`, `LoadoutDraftTest`, `LoadoutRegistryTest`, `ArcanaServerRuntimeManagerLoadoutWiringTest` and `BlackArcanaSavedDataLoadoutTest` plus the normal build/JAR/GameTest/dedicated-server pipeline.
+Canonical focused coverage includes `ClientInputAuthorityWiringTest`, `ClientInputChannelGuiFocusWiringTest`, `ClientLoadoutSelectionTest`, `LoadoutDraftTest`, `LoadoutRegistryTest`, `ArcanaServerRuntimeManagerLoadoutWiringTest` and `BlackArcanaSavedDataLoadoutTest` plus the normal build/JAR/GameTest/dedicated-server pipeline.
 
-`ClientInputAuthorityWiringTest` pins ordinary rebindable `KeyMapping` registration/defaults and the fail-closed GUI-focus guards on radial, editor, selected-cast and quick-cast paths. This is deterministic supporting evidence only; it does not replace the required real-client observation below.
+`ClientInputAuthorityWiringTest` pins ordinary rebindable `KeyMapping` registration/defaults and the fail-closed GUI-focus guards on radial, editor, selected-cast and quick-cast paths. `ClientInputChannelGuiFocusWiringTest` pins that GUI focus cancels an already-active channel through the canonical cancel transport before channel-release processing. These are deterministic supporting evidence only; they do not replace the required real-client observation below.
 
 The historical hardening checkpoint `30b111fc2a50f8fa3efb4bbf9b8cac1ad4c1f053` passed workflow `34150180682` after explicit RED cycles for execution-engine validation, duplicate direct writes, duplicate restore and persisted duplicate isolation.
 
