@@ -18,10 +18,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AstralSeveranceCastBindingTest {
@@ -46,10 +48,7 @@ class AstralSeveranceCastBindingTest {
         assertFalse(resolution.decision().allowed());
         assertEquals("astral_invocation_not_configured", resolution.decision().code());
         assertTrue(resolution.installed().isEmpty());
-        assertTrue(runtime.spells().resolve(AstralSeveranceCastBinding.SPELL_ID).isEmpty());
-        assertTrue(runtime.channelSpecs().resolve(AstralSeveranceCastBinding.SPELL_ID).isEmpty());
-        assertFalse(runtime.hasInstalledEngine(AstralSeveranceCastBinding.SPELL_ID));
-        assertFalse(runtime.cooldownPolicies().cooldownSnapshot().containsKey(AstralSeveranceCastBinding.SPELL_ID));
+        assertNoAstralRuntimeMutation(runtime);
     }
 
     @Test
@@ -78,6 +77,63 @@ class AstralSeveranceCastBindingTest {
     }
 
     @Test
+    void definitionCostCannotOverrideResolvedInvocationAuthority() {
+        publishInvocation();
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        runtime.resourceCosts().register(new FakeResourceProvider(RESOURCE_ID));
+
+        assertThrows(IllegalArgumentException.class, () -> AstralSeveranceCastBinding.install(
+                runtime,
+                definition(new ArcanaCost(RESOURCE_ID, 4.0D)),
+                allowAuthorities(),
+                (casterId, durationTicks, maxRangeBlocks) -> ArcanaDecision.allow()));
+
+        assertNoAstralRuntimeMutation(runtime);
+    }
+
+    @Test
+    void progressionGatePrecedesResolvedResourceAndSuccessfulReleaseCommitsIt() {
+        AstralInvocationDataDefinition.Invocation invocation = publishInvocation();
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        FakeResourceProvider resource = new FakeResourceProvider(RESOURCE_ID);
+        runtime.resourceCosts().register(resource);
+        ArcanaSpellDefinition definition = definition(invocation.cost());
+        AtomicBoolean progressionAllowed = new AtomicBoolean(false);
+        AtomicInteger activations = new AtomicInteger();
+        AstralSeveranceCastBinding.Authorities authorities = new AstralSeveranceCastBinding.Authorities(
+                request -> progressionAllowed.get()
+                        ? ArcanaDecision.allow()
+                        : ArcanaDecision.deny("astral_progression", "blocked"),
+                request -> ArcanaDecision.allow(),
+                ArcanaServices.CastSuccessObserver.noop());
+        AstralSeveranceCastBinding.install(
+                runtime,
+                definition,
+                authorities,
+                (casterId, durationTicks, maxRangeBlocks) -> {
+                    activations.incrementAndGet();
+                    assertEquals(invocation.projectionDurationTicks(), durationTicks);
+                    assertEquals(invocation.maxRangeBlocks(), maxRangeBlocks);
+                    return ArcanaDecision.allow();
+                });
+
+        UUID casterId = UUID.randomUUID();
+        runtime.loadouts().setLoadout(casterId, List.of(AstralSeveranceCastBinding.SPELL_ID));
+        ArcanaCastResult denied = channelAndRelease(runtime, invocation, casterId, 100L);
+        assertEquals(ArcanaCastResult.Status.DENIED_PROGRESSION, denied.status());
+        assertEquals(0, resource.reserveCalls.get());
+        assertEquals(0, activations.get());
+
+        progressionAllowed.set(true);
+        ArcanaCastResult accepted = channelAndRelease(runtime, invocation, casterId, 110L);
+        assertEquals(ArcanaCastResult.Status.SUCCESS, accepted.status());
+        assertEquals(1, resource.reserveCalls.get());
+        assertEquals(1, resource.commitCalls.get());
+        assertEquals(0, resource.refundCalls.get());
+        assertEquals(1, activations.get());
+    }
+
+    @Test
     void projectionFailureRefundsResolvedProviderAndDoesNotStartCooldown() {
         AstralInvocationDataDefinition.Invocation invocation = publishInvocation();
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
@@ -93,22 +149,8 @@ class AstralSeveranceCastBindingTest {
 
         UUID casterId = UUID.randomUUID();
         runtime.loadouts().setLoadout(casterId, List.of(AstralSeveranceCastBinding.SPELL_ID));
-        ArcanaCastId castId = ArcanaCastId.random();
-        long beginTick = 100L;
-        ArcanaDecision begin = runtime.beginChannel(
-                new ArcanaCastContext(casterId, beginTick, "minecraft:overworld"),
-                new ChannelBeginIntentPayload(
-                        ArcanaProtocol.VERSION,
-                        castId.canonical(),
-                        AstralSeveranceCastBinding.SPELL_ID.canonical(),
-                        0));
-        assertTrue(begin.allowed());
-
-        long releaseTick = beginTick + invocation.channelSpec().minimumTicks();
-        ArcanaCastResult result = runtime.releaseChannel(
-                new ArcanaCastContext(casterId, releaseTick, "minecraft:overworld"),
-                castId,
-                "");
+        long releaseTick = 100L + invocation.channelSpec().minimumTicks();
+        ArcanaCastResult result = channelAndRelease(runtime, invocation, casterId, 100L);
 
         assertEquals(ArcanaCastResult.Status.EFFECT_FAILED, result.status());
         assertEquals(1, resource.reserveCalls.get());
@@ -122,6 +164,30 @@ class AstralSeveranceCastBindingTest {
                 "",
                 invocation.channelSpec().minimumTicks());
         assertTrue(runtime.cooldowns().check(retry).allowed(), "failed activation must not start cooldown");
+    }
+
+    private static ArcanaCastResult channelAndRelease(
+            ArcanaServerRuntime runtime,
+            AstralInvocationDataDefinition.Invocation invocation,
+            UUID casterId,
+            long beginTick
+    ) {
+        ArcanaCastId castId = ArcanaCastId.random();
+        ArcanaDecision begin = runtime.beginChannel(
+                new ArcanaCastContext(casterId, beginTick, "minecraft:overworld"),
+                new ChannelBeginIntentPayload(
+                        ArcanaProtocol.VERSION,
+                        castId.canonical(),
+                        AstralSeveranceCastBinding.SPELL_ID.canonical(),
+                        0));
+        assertTrue(begin.allowed());
+        return runtime.releaseChannel(
+                new ArcanaCastContext(
+                        casterId,
+                        beginTick + invocation.channelSpec().minimumTicks(),
+                        "minecraft:overworld"),
+                castId,
+                "");
     }
 
     private static AstralInvocationDataDefinition.Invocation publishInvocation() {
@@ -157,6 +223,13 @@ class AstralSeveranceCastBindingTest {
                 request -> ArcanaDecision.allow(),
                 request -> ArcanaDecision.allow(),
                 ArcanaServices.CastSuccessObserver.noop());
+    }
+
+    private static void assertNoAstralRuntimeMutation(ArcanaServerRuntime runtime) {
+        assertTrue(runtime.spells().resolve(AstralSeveranceCastBinding.SPELL_ID).isEmpty());
+        assertTrue(runtime.channelSpecs().resolve(AstralSeveranceCastBinding.SPELL_ID).isEmpty());
+        assertFalse(runtime.hasInstalledEngine(AstralSeveranceCastBinding.SPELL_ID));
+        assertFalse(runtime.cooldownPolicies().cooldownSnapshot().containsKey(AstralSeveranceCastBinding.SPELL_ID));
     }
 
     private static final class FakeResourceProvider implements ResourceCostProvider {
