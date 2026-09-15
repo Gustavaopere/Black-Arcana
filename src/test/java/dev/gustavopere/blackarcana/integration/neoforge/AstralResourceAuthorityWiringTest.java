@@ -4,12 +4,15 @@ import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices;
 import dev.gustavopere.blackarcana.core.cost.ResourceCostProvider;
+import dev.gustavopere.blackarcana.integration.ars.ArsManaAccess;
 import dev.gustavopere.blackarcana.integration.ars.ArsManaCostProvider;
+import dev.gustavopere.blackarcana.integration.ars.ArsManaSnapshot;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -19,8 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class AstralResourceAuthorityWiringTest {
     @Test
     void arsManaProviderExposesItsCanonicalResourceIdentity() {
-        ResourceCostProvider provider = new ArsManaCostProvider(casterId ->
-            new dev.gustavopere.blackarcana.integration.ars.ArsManaSnapshot(100.0D, 100.0D));
+        ResourceCostProvider provider = new ArsManaCostProvider(new ArsManaAccess() {
+            @Override public ArsManaSnapshot snapshot(UUID playerId) {
+                return new ArsManaSnapshot(100.0D, 100.0D);
+            }
+
+            @Override public ArcanaDecision adjust(UUID playerId, double delta) {
+                return ArcanaDecision.allow();
+            }
+        });
 
         assertEquals(ArsManaCostProvider.RESOURCE_ID, provider.resourceId());
         assertInstanceOf(ArsManaCostProvider.class, provider);
