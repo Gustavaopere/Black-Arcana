@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.ArcanaTargetReference;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
+import dev.gustavopere.blackarcana.core.cost.ResourceCostProvider;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 
 import java.util.LinkedHashMap;
@@ -116,10 +117,10 @@ public final class AstralSeveranceCastBinding {
         return ArcanaServices.EffectResult.failed(detail);
     }
 
-    private static void validateResourceAuthority(Profile profile, ResourceAuthority resourceAuthority) {
-        ResourceAuthority checked = Objects.requireNonNull(resourceAuthority, "resourceAuthority");
+    private static void validateResourceAuthority(Profile profile, ResourceCostProvider resourceAuthority) {
+        ResourceCostProvider checked = Objects.requireNonNull(resourceAuthority, "resourceAuthority");
         String expected = profile.definition().cost().resourceId();
-        String actual = Objects.requireNonNull(checked.resourceId(), "resourceAuthority.resourceId");
+        String actual = ResourceCostProvider.requireResourceId(checked.resourceId());
         if (!expected.equals(actual)) {
             throw new IllegalArgumentException(
                 "Resource authority mismatch: spell requires " + expected + " but authority owns " + actual);
@@ -159,7 +160,7 @@ public final class AstralSeveranceCastBinding {
     }
 
     public record Authorities(
-        ResourceAuthority resourceAuthority,
+        ResourceCostProvider resourceAuthority,
         ArcanaServices.ProgressionGate progressionGate,
         ArcanaServices.ReplayGuard replayGuard,
         ArcanaServices.CastSuccessObserver successObserver
@@ -179,9 +180,8 @@ public final class AstralSeveranceCastBinding {
         }
     }
 
-    public interface ResourceAuthority extends ArcanaServices.CostProvider {
-        String resourceId();
-    }
+    /** Compatibility alias for existing callers; new integrations should implement ResourceCostProvider directly. */
+    public interface ResourceAuthority extends ResourceCostProvider { }
 
     @FunctionalInterface
     public interface ProjectionActivator {
