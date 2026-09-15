@@ -31,6 +31,19 @@ class LoadoutUpdateServiceTest {
     }
 
     @Test
+    void acceptedEmptyUpdateClearsPriorServerOwnedLoadout() {
+        var loadouts = new LoadoutRegistry();
+        loadouts.setLoadout(CASTER, List.of(FIRST));
+        var service = new LoadoutUpdateService(registry(), loadouts, id -> true);
+
+        var result = service.apply(CASTER, List.of());
+
+        assertTrue(result.decision().allowed());
+        assertTrue(result.loadout().isEmpty());
+        assertTrue(loadouts.getLoadout(CASTER).isEmpty());
+    }
+
+    @Test
     void unknownSpellRejectsWholeUpdateWithoutOverwritingPriorState() {
         var loadouts = new LoadoutRegistry();
         loadouts.setLoadout(CASTER, List.of(FIRST));
