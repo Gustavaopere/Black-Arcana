@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ class IronsSyntheticContentTest {
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
         FakeMana mana = new FakeMana(100.0F, 100.0F);
         IronsSyntheticContent.install(runtime, mana, Optional.empty());
+        runtime.loadouts().setLoadout(CASTER, List.of(IronsIntegrationIds.PROBE_ARCANA_ID));
 
         assertTrue(runtime.spells().resolve(IronsIntegrationIds.PROBE_ARCANA_ID).isPresent());
         assertEquals(1, runtime.installedEngineCount());
