@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.api.ArcanaCastContext;
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
+import dev.gustavopere.blackarcana.api.ArcanaChannelSpec;
 import dev.gustavopere.blackarcana.api.ArcanaCost;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaServices;
@@ -52,6 +53,23 @@ class AstralSeveranceCastBindingTest {
     }
 
     @Test
+    void missingConfiguredResourceProviderFailsClosedWithoutRuntimeMutation() {
+        AstralInvocationDataDefinition.Invocation invocation = publishInvocation();
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+
+        AstralSeveranceCastBinding.Resolution resolution = AstralSeveranceCastBinding.install(
+                runtime,
+                definition(invocation.cost()),
+                allowAuthorities(),
+                (casterId, durationTicks, maxRangeBlocks) -> ArcanaDecision.allow());
+
+        assertFalse(resolution.decision().allowed());
+        assertEquals("astral_resource_provider_missing", resolution.decision().code());
+        assertTrue(resolution.installed().isEmpty());
+        assertNoAstralRuntimeMutation(runtime);
+    }
+
+    @Test
     void resolvedInvocationInstallsExactProviderCooldownChannelAndCanonicalEngine() {
         AstralInvocationDataDefinition.Invocation invocation = publishInvocation();
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
@@ -74,6 +92,28 @@ class AstralSeveranceCastBindingTest {
         assertEquals(invocation.cooldown(), runtime.cooldownPolicies().cooldownSnapshot().get(AstralSeveranceCastBinding.SPELL_ID));
         assertEquals(invocation.channelSpec(), runtime.channelSpecs().resolve(AstralSeveranceCastBinding.SPELL_ID).orElseThrow());
         assertTrue(runtime.hasInstalledEngine(AstralSeveranceCastBinding.SPELL_ID));
+    }
+
+    @Test
+    void channelAuthorityConflictFailsClosedBeforePublishingSpellCooldownOrEngine() {
+        AstralInvocationDataDefinition.Invocation invocation = publishInvocation();
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        runtime.resourceCosts().register(new FakeResourceProvider(RESOURCE_ID));
+        ArcanaChannelSpec existing = new ArcanaChannelSpec(2L, 9L);
+        assertTrue(runtime.channelSpecs().register(AstralSeveranceCastBinding.SPELL_ID, existing));
+
+        AstralSeveranceCastBinding.Resolution resolution = AstralSeveranceCastBinding.install(
+                runtime,
+                definition(invocation.cost()),
+                allowAuthorities(),
+                (casterId, durationTicks, maxRangeBlocks) -> ArcanaDecision.allow());
+
+        assertFalse(resolution.decision().allowed());
+        assertEquals("astral_channel_conflict", resolution.decision().code());
+        assertEquals(existing, runtime.channelSpecs().resolve(AstralSeveranceCastBinding.SPELL_ID).orElseThrow());
+        assertTrue(runtime.spells().resolve(AstralSeveranceCastBinding.SPELL_ID).isEmpty());
+        assertFalse(runtime.hasInstalledEngine(AstralSeveranceCastBinding.SPELL_ID));
+        assertFalse(runtime.cooldownPolicies().cooldownSnapshot().containsKey(AstralSeveranceCastBinding.SPELL_ID));
     }
 
     @Test
