@@ -9,6 +9,7 @@ import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,6 +25,7 @@ class MalumSyntheticContentTest {
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
         FakeSpirits spirits = new FakeSpirits(Map.of(MalumIntegrationIds.PROBE_AFFINITY, 5));
         MalumSyntheticContent.install(runtime, spirits, Optional.empty());
+        runtime.loadouts().setLoadout(CASTER, List.of(MalumIntegrationIds.PROBE_ARCANA_ID));
 
         assertTrue(runtime.spells().resolve(MalumIntegrationIds.PROBE_ARCANA_ID).isPresent());
         assertEquals(1, runtime.installedEngineCount());
