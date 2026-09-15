@@ -13,13 +13,14 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 - estado de evidência pós-Phase 2BQ: `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; NON-MERGE PR #222 materializou o JAR exato de Ars Nouveau: Two-Way Portals 2.0.0 e run `34735280002` passou; durable PR #223 HEAD `0eec58c14e591f6d2c875172bec4e436f8e1d5cb` passou CI #2618 / run `34735444723`; o merge SHA exato passou CI #2622 / run `34735586680` e publicou QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`);
 - estado de evidência pós-Phase 2BR: `main@4ab4ad990d453938e67f3d2b7cfa878bbe031ef0`; durable PR #226 fecha GTBC's Geomancy Plus 1.1.0-1.21.1 em 12 identidades `COUNTED_RELEASE_BOUNDED`; o exact merge SHA passou CI #2654 / run `34738972649` e publicou QA artifact `10311522907` (`sha256:c815f684a7a6dec192dd995bb6fbd6784c35faa0b0d21ae39bb9de89b93cec16`);
 - estado de evidência pós-Phase 2BS parcial: `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; PR #228 cataloga 33 identidades `traveloptics` exatas sem promoção strict/component; exact merge SHA passou CI #2682 / run `34741699505` e publicou QA artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`);
+- estado de evidência Phase 2BT: PR #239 fecha Vampire Spells Addon 0.0.9 como source-pinned `ZERO_BRIDGE_INFRA` e foi mergeada em `main@1c5091807a8773d378c34ffac2e737b5f08b545c`; o exact merge SHA passou Black Arcana CI run `34795795283` completo. Esta reconciliação posterior promove o componente #67 sem alterar o mínimo semântico;
 - jarjar/internal não conta como provider top-level
 
 ## Métricas separadas
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, Phase 2BN fecha Ars Sable 1.1.2 como bridge/infra espacial Ars Nouveau ↔ Sable com **+0**, Phase 2BO fecha Farmer's Spell 'n Spellbooks 1.0.5.1 com **+6 `COUNTED_SOURCE_PINNED`**, Phase 2BP fecha SnackPirate's Aeromancy Additions 1.2.8 com **+10 `COUNTED_SOURCE_PINNED`**, Phase 2BQ fecha Ars Nouveau: Two-Way Portals 2.0.0 como `ZERO_SEMANTIC_PORTAL_INFRA` com **+0**, e Phase 2BR fecha GTBC's Geomancy Plus 1.1.0-1.21.1 com **+12 `COUNTED_RELEASE_BOUNDED`**. O mínimo corrente passa a **1344**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, Phase 2BN fecha Ars Sable 1.1.2 como bridge/infra espacial Ars Nouveau ↔ Sable com **+0**, Phase 2BO fecha Farmer's Spell 'n Spellbooks 1.0.5.1 com **+6 `COUNTED_SOURCE_PINNED`**, Phase 2BP fecha SnackPirate's Aeromancy Additions 1.2.8 com **+10 `COUNTED_SOURCE_PINNED`**, Phase 2BQ fecha Ars Nouveau: Two-Way Portals 2.0.0 como `ZERO_SEMANTIC_PORTAL_INFRA` com **+0**, Phase 2BR fecha GTBC's Geomancy Plus 1.1.0-1.21.1 com **+12 `COUNTED_RELEASE_BOUNDED`**, e Phase 2BT fecha Vampire Spells Addon 0.0.9 como `ZERO_BRIDGE_INFRA` com **+0**. O mínimo corrente permanece **1344**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -36,6 +37,7 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - delta semântico SnackPirate's Aeromancy Additions 1.2.8 Phase 2BP: **+10** (`COUNTED_SOURCE_PINNED`; dez Wind spells ativos; cinco registrations comentadas excluídas; Breeze Rod/Scroll Forge reachability fechada em nível de catálogo; current-host runtime QA fail-closed);
 - delta semântico GTBC's Geomancy Plus 1.1.0-1.21.1 Phase 2BR: **+12** (`COUNTED_RELEASE_BOUNDED`; 10 Geo + 2 Holy; registry exato do publisher; Geo host-gate inheritance + focus reachability; Holy Umvuthi acquisition; current-host runtime QA fail-closed);
 - delta semântico Ars Nouveau: Two-Way Portals 2.0.0 Phase 2BQ: **+0** (`ZERO_SEMANTIC_PORTAL_INFRA`; exact hash-matched artifact; 2 items + 3 recipes + 7 required mixins; zero spell/glyph/ritual/rite/ability surface; current-host runtime QA fail-closed);
+- delta semântico Vampire Spells Addon 0.0.9 Phase 2BT: **+0** (`ZERO_BRIDGE_INFRA`; exact-release source-pinned; Iron's/Vampirism behavior overlay; runtime bridge QA fail-closed);
 - delta semântico Gaze 1.1.7.1 Phase 2BJ: **+1**;
 - delta semântico Alshanex 4.0.3: **+18**;
 - delta semântico Cataclysm: Spellbooks 1.1.13: **+59**;
@@ -44,7 +46,7 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - delta semântico Goety 3.1.4 Phase 2BH: **+361** (`123 active Focus + 238 available distinct non-Focus rituals`);
 - delta semântico Goety Iron 3.1 Phase 2BL: **+14** (`2 Focus + 12 distinct non-Focus rituals`);
 - delta semântico Goety Cataclysm 1.21.1-1.8.2 Phase 2BL: **+52** (`28 Focus + 24 distinct non-Focus rituals`);
-- mínimo estrito global após a reconciliação Phase 2BR: **1344**;
+- mínimo estrito global após a reconciliação Phase 2BT: **1344**;
 - denominador global: ainda incompleto;
 - nenhuma porcentagem final de spells/magias é declarada enquanto inventories atuais permanecem abertas.
 
@@ -64,9 +66,18 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - Phase 2BP / PR #219: HEAD reconciliado `6e39a01273b77ba8accf85d49647b6ceff840e8a` passou Black Arcana CI #2577 / run `34730598682`; squash evidence merge `84e9635b446b605140ab349fa2edc51f3462d518` passou exact-SHA post-merge CI #2578 / run `34730783233`;
 - Phase 2BQ / PR #223: HEAD `0eec58c14e591f6d2c875172bec4e436f8e1d5cb` passou Black Arcana CI #2618 / run `34735444723`; squash merge `bc5428b5855e4d5821d5bd901fb591a62ecf3cbe` passou exact-SHA post-merge CI #2622 / run `34735586680` e publicou QA artifact `10310957237`;
 - Phase 2BR / PR #226: exact publisher-release registry e reachability audits fecham GTBC's Geomancy Plus em +12 `COUNTED_RELEASE_BOUNDED`; squash merge `4ab4ad990d453938e67f3d2b7cfa878bbe031ef0` passou exact-SHA post-merge CI #2654 / run `34738972649` e publicou QA artifact `10311522907`;
-- cobertura de componentes após esta reconciliação compartilhada Phase 2BR: **66/100 = 66%**; `gtbcs_geomancy_plus` é componente #66, sem promover compatibilidade runtime com o host físico atual.
+- Phase 2BT / PR #239: source/release audit fecha Vampire Spells Addon 0.0.9 como `ZERO_BRIDGE_INFRA`; durable merge `1c5091807a8773d378c34ffac2e737b5f08b545c` passou exact-SHA post-merge CI run `34795795283`;
+- cobertura de componentes após esta reconciliação compartilhada Phase 2BT: **67/100 = 67%**; `vampire_spells_addon` é componente #67, sem promover runtime compatibility ou duplicar spell ownership.
 
-O valor 66/100 nunca substitui a métrica semântica de magias.
+O valor 67/100 nunca substitui a métrica semântica de magias.
+
+## Phase 2BT — Vampire Spells Addon 0.0.9 — componente #67 / semantic +0
+
+| Mod ID | Artefato físico | Estado |
+|---|---|---|
+| `vampire_spells_addon` | `vampire_spells_addon-neoforge-1.21.1-0.0.9.jar` | OFFICIAL RELEASE/SOURCE-PINNED / IRON'S+VAMPIRISM BEHAVIOR OVERLAY / NO PROVIDER-OWNED SPELL-SCHOOL-RITUAL-ACTION REGISTRAR / `ZERO_BRIDGE_INFRA` / +0 SEMANTIC / COMPONENT #67 / RUNTIME QA FAIL-CLOSED |
+
+Evidence: official release `1.21.1-0.0.9`, exact source target `xsharov/VampireSpellsAddon@2d36e94e67611a316b7311b11e4574b499025580`, release asset SHA-256 `8997f71035f29e4d2fe9e37dd76ca5f4b574906d1aed0914df6c119111570fed`; durable PR #239 merge `main@1c5091807a8773d378c34ffac2e737b5f08b545c`; exact post-merge Black Arcana CI run `34795795283` GREEN. No independent current physical-pack digest is preserved, so byte-for-byte equivalence is not claimed. Reflective bridge resolution, mixin/event ordering, effective serverconfig and live blood/mana/damage/cooldown behavior remain fail-closed.
 
 ## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — partial / +0 / component open
 
@@ -74,7 +85,7 @@ O valor 66/100 nunca substitui a métrica semântica de magias.
 |---|---|---|
 | `traveloptics` | linha física `4.4.0.1-1.21.1`; publisher file exato `6342780` | ⚠️ PARTIAL / 33 EXACT REGISTERED SPELL IDS / 32 RESIDUAL LOCALIZATION IDS EXCLUDED / `BLACKOUT` SURVIVAL REACHABILITY UNRESOLVED / STRUCTURAL `TOLootModifiers` CODEC WIRING RISK / +0 STRICT / COMPONENT OPEN / RUNTIME FAIL-CLOSED |
 
-Audit anchors: exact artifact run `34740821956`, registry run `34740904391`, semantic 33/33 run `34741045570`, corrected runtime-risk run `34741368134`. Durable PR #228 merge `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; post-merge CI #2682 / run `34741699505` GREEN; QA artifact `10311724779`. Phase 2BS does not allocate component #67 and does not change **1344 / 66 of 100**. Keep T.O parked until authoritative runtime viability and `blackout` reachability are resolved.
+Audit anchors: exact artifact run `34740821956`, registry run `34740904391`, semantic 33/33 run `34741045570`, corrected runtime-risk run `34741368134`. Durable PR #228 merge `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; post-merge CI #2682 / run `34741699505` GREEN; QA artifact `10311724779`. Phase 2BS does not allocate component #67 at that checkpoint and does not change **1344 / 66 of 100**. Keep T.O parked until authoritative runtime viability and `blackout` reachability are resolved.
 
 ## Phase 2BR — GTBC's Geomancy Plus 1.1.0-1.21.1 — componente #66 / semantic +12
 
@@ -371,6 +382,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 | Component | Phase / PR | Provider | Estado |
 |---:|---|---|---|
+| 67 | 2BT / #239 + shared reconciliation | `vampire_spells_addon` | SOURCE-PINNED `ZERO_BRIDGE_INFRA`; +0 semântico; durable merge `main@1c509180...`; exact post-merge CI run `34795795283` GREEN; component #67 promovido por esta reconciliação; runtime bridge QA fail-closed |
 | 66 | 2BR / #226 | `gtbcs_geomancy_plus` | EVIDÊNCIA DURÁVEL em `main@4ab4ad99...`; +12 `COUNTED_RELEASE_BOUNDED`; 10 Geo + 2 Holy; registry/reachability auditados; post-merge CI #2654 GREEN; promovido por esta reconciliação; runtime host QA fail-closed |
 | 65 | 2BQ / #223 | `ars_two_way_portals` | CANÔNICO em `main@bc5428b5...`; `ZERO_SEMANTIC_PORTAL_INFRA`; +0 semântico; exact-artifact; post-merge CI #2622 GREEN; runtime host QA fail-closed |
 | 64 | 2BP / #219 | `aero_additions` | CANÔNICO em `main@84e9635b...`; +10 `COUNTED_SOURCE_PINNED`; evidence post-merge CI #2578 GREEN; runtime host QA fail-closed |
@@ -392,7 +404,7 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 
 ## Próxima seleção
 
-Phase 2BF / Somake, Phase 2BG / Leylines, Phase 2BH / Goety, Phase 2BL / Goety addons, Phase 2BM / Ars Polymorphia, Phase 2BN / Ars Sable, Phase 2BO / Farmer's Spell, Phase 2BP / Aeromancy Additions, Phase 2BQ / Ars Nouveau: Two-Way Portals e Phase 2BR / GTBC's Geomancy Plus já foram reconciliadas no nível de evidência descrito acima. Não reiniciar esses fechamentos a partir de branches antigas.
+Phase 2BF / Somake, Phase 2BG / Leylines, Phase 2BH / Goety, Phase 2BL / Goety addons, Phase 2BM / Ars Polymorphia, Phase 2BN / Ars Sable, Phase 2BO / Farmer's Spell, Phase 2BP / Aeromancy Additions, Phase 2BQ / Ars Nouveau: Two-Way Portals, Phase 2BR / GTBC's Geomancy Plus e Phase 2BT / Vampire Spells Addon já foram reconciliadas no nível de evidência descrito acima. Não reiniciar esses fechamentos a partir de branches antigas.
 
 Blockers atualmente **PARKED até existir input novo**:
 
@@ -402,7 +414,7 @@ Blockers atualmente **PARKED até existir input novo**:
 
 A próxima seleção deve escolher **outro componente ainda aberto** para o qual exista evidência current/exact capaz de reduzir incerteza de inventário ou de classificação. Defaults de provider, publisher prose ou branches preparatórias não substituem estado implantado. Se um candidato só puder avançar com navegação/material externo indisponível, registrar a pendência e passar ao próximo blocker seguro em vez de fabricar fechamento.
 
-Os estados correntes desta reconciliação passam a **1344 objetos semânticos mínimos / 66 de 100 componentes**. A promoção só se torna canônica na `main` após merge desta reconciliação e exact-SHA post-merge CI GREEN.
+Os estados correntes desta reconciliação passam a **1344 objetos semânticos mínimos / 67 de 100 componentes**. A promoção só se torna canônica na `main` após merge desta reconciliação e exact-SHA post-merge CI GREEN.
 
 ## Regras
 
