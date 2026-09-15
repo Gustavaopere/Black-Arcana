@@ -12,7 +12,9 @@ The exact pre-extraction mixed handoff is retained at `plans/visual-production/_
 
 ## Authority rule
 
-Do not redesign casting to make a client row pass. Preserve D005, D006, D019, D020, D023, D024, D029 and D031. A client-side failure may justify a numbered Stage 05 fix only when direct evidence shows an input, network, state-lifecycle, provider or authority regression.
+Do not redesign casting to make a client row pass. Preserve D005, D006, D019, D020, D023, D024, D029 and D034. A client-side failure may justify a numbered Stage 05 fix only when direct evidence shows an input, network, state-lifecycle, provider or authority regression.
+
+D034 makes the physical/runtime-input/provider evidence required by this numbered plan promotion-blocking. The visual-production split does not move these runtime/authority checks out of Stage 05 and does not allow them to be deferred to a later numbered stage.
 
 ## Freeze the exact candidate
 
@@ -87,4 +89,6 @@ Do not mark sibling rows PASS from a single fix. Do not create debug-only produc
 
 ## Completion boundary
 
-This numbered handoff closes when required physical runtime/input/provider rows are directly evidenced or explicitly blocked for a concrete reason. UI/HUD layout, visual accessibility, animation/VFX/audio and perceptual full-pack acceptance have their own visual-production evidence ledger and do not silently change runtime authority.
+This numbered handoff closes when every required physical runtime/input/provider row is directly evidenced with the expected behavior. A row that is `BLOCKED` for a concrete reason remains unresolved and therefore keeps this plan pending under D034 unless the plan itself is explicitly amended to remove or redefine that requirement.
+
+UI/HUD layout, visual accessibility, animation/VFX/audio and perceptual full-pack acceptance have their own visual-production evidence ledger and do not silently change runtime authority.
