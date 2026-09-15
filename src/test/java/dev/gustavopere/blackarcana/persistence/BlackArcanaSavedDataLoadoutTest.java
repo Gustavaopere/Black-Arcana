@@ -16,6 +16,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BlackArcanaSavedDataLoadoutTest {
     @Test
@@ -39,6 +40,26 @@ class BlackArcanaSavedDataLoadoutTest {
 
         assertEquals(ArcanaCastRequest.MAX_LOADOUT_SLOTS, restored.getLoadout(caster).size());
         assertEquals(fullLoadout, restored.getLoadout(caster));
+    }
+
+    @Test
+    void clearedLoadoutSnapshotRemovesStaleAuthorityOnRestore() {
+        UUID caster = UUID.fromString("44444444-4444-4444-4444-444444444444");
+        ArcanaSpellId stale = ArcanaSpellId.parse("black_arcana:stale");
+        LoadoutRegistry source = new LoadoutRegistry();
+        source.setLoadout(caster, List.of());
+        var cooldowns = new PersistentCooldownService(request -> null);
+        var charges = new ChargePoolCooldownService(request -> null);
+
+        BlackArcanaSavedData saved = new BlackArcanaSavedData();
+        saved.capture(cooldowns, charges, source, 0L);
+        BlackArcanaSavedData loaded = BlackArcanaSavedData.load(saved.save(new CompoundTag(), null), null);
+        LoadoutRegistry restored = new LoadoutRegistry();
+        restored.setLoadout(caster, List.of(stale));
+
+        loaded.restore(cooldowns, charges, restored, 0L);
+
+        assertTrue(restored.getLoadout(caster).isEmpty());
     }
 
     @Test
