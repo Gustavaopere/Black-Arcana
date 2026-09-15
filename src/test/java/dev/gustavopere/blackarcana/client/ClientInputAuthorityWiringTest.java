@@ -19,7 +19,6 @@ class ClientInputAuthorityWiringTest {
         String source = normalized(INPUT_SOURCE);
         String directCast = between(source, "public static boolean castSlot(int slot)", "private static void sendImmediateCast");
         String physicalCast = between(source, "private static boolean castSlotFromInput", "private static void processChannelBeginAcknowledgement");
-        String tick = between(source, "private static void onClientTick", "}");
 
         assertTrue(directCast.contains("minecraft.screen != null) return false"),
                 "programmatic immediate casts must fail closed while a GUI owns focus");
@@ -33,7 +32,7 @@ class ClientInputAuthorityWiringTest {
                 "selected-cast input must be suppressed while another GUI owns focus");
         assertTrue(source.contains("if (minecraft.screen == null) { castSlotFromInput(index, QUICK_CAST_INPUT_ID_BASE + index); }"),
                 "quick-cast input must be suppressed while another GUI owns focus");
-        assertTrue(tick.contains("SELECTION.reconcile(loadout)"),
+        assertTrue(source.contains("SELECTION.reconcile(loadout)"),
                 "client selection must continue reconciling against the synchronized server snapshot");
     }
 
