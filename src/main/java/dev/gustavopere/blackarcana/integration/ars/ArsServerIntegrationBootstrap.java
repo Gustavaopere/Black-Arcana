@@ -34,6 +34,8 @@ public final class ArsServerIntegrationBootstrap {
 
         if (!bridge.available()) return;
 
+        runtime.resourceCosts().register(new ArsManaCostProvider(bridge.manaAccess()));
+
         bridge.familiarOwnershipProvider().ifPresent(provider -> {
             boolean registered = MinecraftNoeticRuntime.registerFamiliarOwnershipProvider(server, provider);
             if (!registered) {

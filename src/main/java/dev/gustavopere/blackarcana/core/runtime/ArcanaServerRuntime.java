@@ -20,6 +20,7 @@ import dev.gustavopere.blackarcana.core.cooldown.ArcanaCooldownPolicyRegistry;
 import dev.gustavopere.blackarcana.core.cooldown.ChargePoolCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.PersistentCooldownService;
 import dev.gustavopere.blackarcana.core.cooldown.RuntimeGroupMigrations;
+import dev.gustavopere.blackarcana.core.cost.ResourceCostProviderRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionStateService;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRegistry;
@@ -77,6 +78,7 @@ public final class ArcanaServerRuntime {
     public static final int DEFAULT_MAX_EMERGENCY_RESOURCES = 65_536;
     public static final int DEFAULT_MAX_CHANNEL_SESSIONS = 4096;
     public static final int DEFAULT_MAX_CHANNEL_SPECS = 512;
+    public static final int DEFAULT_MAX_RESOURCE_COST_PROVIDERS = 64;
     public static final int DEFAULT_MAX_SCHEDULED_EFFECTS = 2048;
     public static final int DEFAULT_EFFECT_WORK_BUDGET_PER_TICK = 128;
     public static final int DEFAULT_MAX_TRACKED_WORLD_CASTS = 4096;
@@ -102,6 +104,8 @@ public final class ArcanaServerRuntime {
     private final PersistentCooldownService cooldowns = new PersistentCooldownService(cooldownPolicies::cooldownFor);
     private final ChargePoolCooldownService charges = new ChargePoolCooldownService(cooldownPolicies::requireCharge);
     private final ArcanaIntegrationRegistry integrations = new ArcanaIntegrationRegistry();
+    private final ResourceCostProviderRegistry resourceCosts =
+        new ResourceCostProviderRegistry(DEFAULT_MAX_RESOURCE_COST_PROVIDERS);
     private final ArcaneResistanceProviderRegistry arcaneResistanceProviders =
         ArcaneResistanceProviderRegistry.canonical(ArcaneResistanceProviderRegistry.ABSOLUTE_MAX_PROVIDERS);
     private final CorruptionResistanceProviderRegistry corruptionResistanceProviders =
@@ -319,6 +323,7 @@ public final class ArcanaServerRuntime {
     public ArcanaChannelSpecRegistry channelSpecs() { return channelSpecs; }
     public BoundedWorkScheduler effectScheduler() { return effectScheduler; }
     public ArcanaIntegrationRegistry integrations() { return integrations; }
+    public ResourceCostProviderRegistry resourceCosts() { return resourceCosts; }
     public ArcaneResistanceProviderRegistry arcaneResistanceProviders() { return arcaneResistanceProviders; }
     public CorruptionResistanceProviderRegistry corruptionResistanceProviders() { return corruptionResistanceProviders; }
     public ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles() { return arcaneEquipmentProfiles; }
