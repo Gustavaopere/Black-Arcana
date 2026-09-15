@@ -6,6 +6,7 @@ import dev.gustavopere.blackarcana.api.ArcanaTargetReference;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
 import dev.gustavopere.blackarcana.network.ChannelBeginIntentPayload;
+import dev.gustavopere.blackarcana.network.ChannelCancelIntentPayload;
 import dev.gustavopere.blackarcana.network.ChannelReleaseIntentPayload;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
@@ -155,6 +156,10 @@ public final class ClientInputController {
             CastPresentationClientRuntime.clear();
             CastPresentationEffectsLayer.clear();
         } else if (minecraft.screen != null) {
+            CHANNELS.cancel().ifPresent(castId ->
+                    ChannelNetworkBridge.requestCancel(new ChannelCancelIntentPayload(
+                            ArcanaProtocol.VERSION,
+                            castId.canonical())));
             CastPresentationEffectsLayer.clear();
         }
 
