@@ -1,128 +1,161 @@
 # Black Arcana — Catálogo Global de Magia e Feitiços
 
-Última sincronização: 2026-09-14
+Última sincronização: 2026-09-15
 
-Este arquivo é o índice operacional global de catalogação do projeto. Ele não substitui os catálogos clean-room, mapas de proveniência, especificações ou `plans/STATUS.md`; ele aponta para essas evidências e separa **catalogação** de **implementação**.
+Este arquivo é o índice operacional global de catalogação do projeto. A árvore detalhada canônica é `wiki/modpack-catalog/providers/`; o ledger semântico reconstruível é `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md`; e a cobertura técnica de componentes é `wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md`.
+
+O objetivo deste índice é responder duas perguntas sem misturá-las:
+
+1. quais providers possuem ações mágicas semanticamente contáveis e já possuem inventário atual suficientemente fechado;
+2. quais providers/extensões mágicas foram auditados mas contribuem zero ações independentes, permanecem condicionais ou ainda precisam ser revalidados.
 
 ## Legenda obrigatória
 
-- ✅ **Catalogado** — existe inventário/contrato de catálogo suficientemente fechado para o escopo indicado.
-- ❌ **Não catalogado** — o mod/conteúdo foi identificado, mas não existe inventário de spells/mecânicas mágicas fechado no Black Arcana.
-- 🟡 **Em implementação** — catalogação já existe e a implementação canônica está sendo construída em uma tranche ativa.
-- ⚠️ **Parcial/condicionado** — existe cobertura parcial, de host/API/capacidade, ou a evidência física atual não é suficiente para afirmar catálogo integral.
-- ⛔ **Bloqueado** — catalogação não pode prosseguir sem uma fonte/artefato/contrato obrigatório que está ausente.
+- ✅ **Catalogado** — existe inventário/contrato suficientemente fechado para o escopo indicado; isso inclui fechamento correto em **zero** objetos mágicos próprios.
+- ❌ **Não catalogado** — provider/conteúdo confirmado, mas sem inventário mágico fechado.
+- 🟡 **Em implementação** — catalogação existe e uma implementação canônica está sendo construída em tranche ativa.
+- ⚠️ **Parcial/condicionado** — inventário, configuração, survival reachability, elegibilidade atual ou presença física ainda não fecha o requisito necessário.
+- ⛔ **Bloqueado** — falta fonte/artefato/contrato obrigatório para prosseguir com segurança.
 
-**Regra:** estes marcadores descrevem o estado de **catalogação**, salvo quando uma coluna diz explicitamente `Runtime`. Um spell pode estar ✅ catalogado e ainda estar ⚠️ parcial no runtime.
+**Regra:** estes marcadores descrevem **catalogação**, salvo quando uma coluna diz explicitamente `Runtime`. `COUNTED_*` também é estado de confiança do inventário semântico, não certificado de runtime, ABI, balanceamento ou full-pack QA.
 
-## Snapshot de autoridade usado
+## Snapshot de autoridade
 
-- Black Arcana: `main@8f3ead27f31322492063c65d11841ac61584254f`.
-- RPG Skill Tree sibling: `main@9e88db8f6b37c1bfbbd331f6684504a76e4aef40`.
-- O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado de integração.
-- O Black Arcana mantém `docs/reference/runtime-host-baseline.md`, derivado do `modlist agora atual.txt` fornecido em 2026-08-26, para o baseline de Iron's, Ars Nouveau, Eidolon e Malum.
-- O sibling documenta que o runtime carregado é a autoridade e que `modlist agora atual.txt` é um snapshot externo; o arquivo físico atual não está versionado no Git. Por isso este índice **não declara exaustividade física do pack além da evidência versionada disponível**. Quando a modlist/runtime atual for regenerada e versionada, este arquivo deve ser reconciliado antes de promover novos mods como presentes.
+- Black Arcana: `main@6338aa4137ee5bc347c2c53f5aed215d940d1f5d`.
+- RPG Skill Tree sibling: `main@3bbd7f381df64eff8463e20068c67d76d51463fe`.
+- Snapshot físico canônico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
+- O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
 
-## 1. Hosts mágicos instalados com evidência Black Arcana
+## 1. Ledger semântico global atual — 40 providers / 1344 objetos
 
-| Mod | Mod ID / versão instalada evidenciada | Conteúdo mágico | Estado do catálogo | Evidência / observação |
-| --- | --- | --- | --- | --- |
-| Iron's Spells 'n Spellbooks | `irons_spellbooks` — `1.21.1-3.16.3` | ✅ host explícito de spells | ⚠️ Parcial/condicionado | API/capacidades e integração foram auditadas; **não existe inventário integral de todos os spells do mod** no Black Arcana. |
-| Ars Nouveau | `ars_nouveau` — `1.21.1-5.13.0` | ✅ sistema mágico/spellcraft | ⚠️ Parcial/condicionado | Host/capacidades, Blink/Warp/familiars e limites de integração são catalogados; **não existe inventário integral de glyphs/spells do mod**. |
-| Eidolon: Repraised | versão instalada `1.21.1-0.5.0.2` | ✅ sistema mágico/ritual | ⚠️ Parcial/condicionado | Host/capacidades e seam policy são catalogados; **não existe inventário integral de rituais/spells**. |
-| Malum | versão instalada `1.21.1-1.8.2` | ✅ sistema mágico/espiritual | ⚠️ Parcial/condicionado | Host/capacidades e Spirit Rite/resource boundary são catalogados; **não existe inventário integral de magia/ritos**. |
+Esta tabela reproduz o conjunto **strict-counted** do ledger canônico. O contador inclui uma identidade apenas uma vez sob seu dono semântico: spell standalone, glyph/spell-part primitivo, ritual/rite ou ação sobrenatural equivalente. Escolas, itens, equipamentos, familiars, efeitos/status, recursos, aliases, slots-proxy, composições arbitrárias de Ars e consequências secundárias não geram nova identidade.
 
-Fonte principal: `docs/reference/runtime-host-baseline.md`, `docs/reference/host-capability-map.md` e código/testes canônicos de integração.
+| Provider | Linha física/canônica | Objetos contados | Estado do inventário | Base semântica resumida |
+| --- | --- | ---: | --- | --- |
+| Ars Nouveau | `5.13.1` | 109 | ✅ `COUNTED_SOURCE_PINNED` | 5 Forms + 13 Augments + 67 Effects + 24 rituals; chains arbitrárias excluídas. |
+| Ars Additions | `21.3.0` | 5 | ✅ `COUNTED_SOURCE_PINNED` | 3 glyphs + 2 rituals. |
+| Ars Controle | `1.6.15` | 9 | ✅ `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts. |
+| Ars Technica | `2.7.6` | 11 | ✅ `COUNTED_SOURCE_PINNED` | 11/11 spell parts registrados. |
+| Ars Hex | `5.0.4b` | 1 | ✅ `COUNTED_SOURCE_PINNED` | 1 glyph Malum-backed atual sob o conjunto físico de providers. |
+| Ars Zero | `2.0.2` | 12 | ✅ `COUNTED_RELEASE_BOUNDED` | 12 capacidades únicas atuais; variantes AOE/Amplifier copiadas e desabilitadas excluídas. |
+| Ars Elemental | `0.7.10.1` | 47 | ✅ `COUNTED_SOURCE_PINNED` | 39 production spell parts + 8 rituals. |
+| Ars 'n' Spells | `3.3.2` | 5 | ✅ `COUNTED_SOURCE_PINNED` | 5 rituais; oito `ars_cross_*` são slots-proxy e contribuem zero. |
+| Iron's Spells 'n Spellbooks | `3.16.3` | 110 | ✅ `COUNTED_EXACT` | 110/110 registros ativos; Cloud of Regeneration deprecated excluído. |
+| Apprentice's Codex | `0.9.7.1` | 83 | ✅ `COUNTED_SOURCE_PINNED` | 83-spell registry inventory. |
+| Asterism Arcanum | `1.21.1-0.1.0` | 10 | ✅ `COUNTED_SOURCE_PINNED` | 10 spells survival; `astral_gateway` permanece condicional separadamente. |
+| Backported Spellbooks | físico `0.1.2` / embedded `0.1.0` | 6 | ✅ `COUNTED_RELEASE_BOUNDED` | 6 standalone Iron's spells no teto oficial da release. |
+| Deeper & Darker Spellbooks | `1.3.3` Variant B | 4 | ✅ `COUNTED_RELEASE_BOUNDED` | 4 summon spells atuais: Warden, Shattered, Sculk Centipede e Sculk Snapper. |
+| Discerning The Eldritch | `1.4.4` | 22 | ✅ `COUNTED_SOURCE_PINNED` | 22/22 spells registrados, incluindo ritual-school spells uma vez. |
+| Dreamless Spells | `1.1.9` | 4 | ✅ `COUNTED_SOURCE_PINNED` | 4 spells atuais registrados. |
+| GTBC's Geomancy Plus | `1.1.0-1.21.1` | 12 | ✅ `COUNTED_RELEASE_BOUNDED` | 10 Geo + 2 Holy; acquisition/reachability fechada no nível de catálogo. |
+| Farmer's Spell 'n Spellbooks | `1.0.5.1-1.21.1` | 6 | ✅ `COUNTED_SOURCE_PINNED` | 6 Gluttony spells; focus + Scroll Forge fecham reachability de catálogo. |
+| SnackPirate's Aeromancy Additions | `1.2.8` | 10 | ✅ `COUNTED_SOURCE_PINNED` | 10 Wind spells ativos; 5 registros comentados excluídos. |
+| Fire's Ender Expansion | `2.4.1` | 11 | ✅ `COUNTED_SOURCE_PINNED` | 11/11 spells ativos. |
+| IronSable | `1.2.0` | 7 | ✅ `COUNTED_RELEASE_BOUNDED` | 7 spells próprios; 10 physicalized Iron's spells não duplicam identidades. |
+| ISS: Magic From The East | `1.1.5` | 22 | ✅ `COUNTED_SOURCE_PINNED` | 11 Symmetry + 11 Spirit; Dune sem spell ativo. |
+| Legendary Spellbooks | `0.3.2` | 30 | ✅ `COUNTED_SOURCE_PINNED` | 30 spell identities atuais. |
+| Monsters & Spellbooks | `0.0.16.3` | 98 | ✅ `COUNTED_RELEASE_BOUNDED` | Registry semanticamente estável no intervalo 0.0.16.2/0.0.16.3. |
+| Paladin Spells | `1.1.1` | 5 | ✅ `COUNTED_SOURCE_PINNED` | 5/5 Holy spells; blockers conhecidos permanecem QA de runtime. |
+| Wind's Spellbooks | `1.0.5` | 7 | ✅ `COUNTED_RELEASE_BOUNDED` | 7/7 Wind spells publisher/runtime-observed. |
+| Ypsilon's Fundamentalism | `1.1.7.1` | 15 | ✅ `COUNTED_SOURCE_PINNED` | 15/15 registros ativos; prototypes comentados excluídos. |
+| Tunes n' Tomes | `1.1.0-HOTFIX` | 16 | ✅ `COUNTED_RELEASE_BOUNDED` | 16 Melodic spells atuais; ownership Sound migrado não é duplicado. |
+| Alshanex's Familiars | `4.0.3` | 18 | ✅ `COUNTED_EXACT` | 7 spells + 11 `ritual_recipe`; casts externos/familiar AI não duplicados. |
+| Cataclysm: Spellbooks | `1.1.13` | 59 | ✅ `COUNTED_EXACT` | 59 registros incondicionais; 10 root localization keys sem registro excluídas. |
+| Leyline Spellbooks | `1.0.3` | 14 | ✅ `COUNTED_EXACT` | 14 registros incondicionais; generic Iron's config permanece runtime QA. |
+| Gaze | `1.1.7.1` | 1 | ✅ `COUNTED_EXACT` | Soulward Shield contado; 26 Spirit Rites permanecem condicionais à config efetiva. |
+| Goety | `3.1.4` | 361 | ✅ `COUNTED_EXACT` | 123 Focus + 238 non-Focus rituals após deduplicação/reachability. |
+| Goety Iron | `3.1` | 14 | ✅ `COUNTED_EXACT` | 2 Focus + 12 rituais distintos; acquisition rituals deduplicados. |
+| Goety Cataclysm | `1.21.1-1.8.2` | 52 | ✅ `COUNTED_EXACT` | 28 Focus + 24 rituais distintos; acquisition rituals deduplicados. |
+| Eidolon: Repraised | `0.5.0.2` | 42 | ✅ `COUNTED_SOURCE_PINNED` | 18 chants player-facing + 24 ritual recipes; dummy/empty entries excluídas. |
+| Vampirism | `1.10.13` | 19 | ✅ `COUNTED_SOURCE_PINNED` | 14 Vampire + 3 Hunter + 2 shared Lord actions. |
+| Bloodlines | `3.0.9` | 28 | ✅ `COUNTED_SOURCE_PINNED` | 29 action registrations menos Sorcerous Strike, sem survival reachability normal. |
+| Werewolves | `2.0.3.3` | 8 | ✅ `COUNTED_SOURCE_PINNED` | 3 form actions + Howling + Rage + Sense + Fear + Leap. |
+| Hexalia | físico `1.3.6` / runtime metadata `1.3.5` | 25 | ✅ `COUNTED_RELEASE_BOUNDED` | 19 Nature's Ritual + 6 Celestial Infusion identities. |
+| Malum | `1.8.2` | 26 | ✅ `COUNTED_RELEASE_BOUNDED` | 26 Spirit Rites; 37 Geas effects e 9 spirit types são inventariados, mas excluídos da métrica de ação. |
+| **Total estrito reconstruível** |  | **1344** |  | Denominador semântico global ainda incompleto; nenhuma porcentagem final é declarada. |
 
-## 2. Mods/addons mágicos ou spellbook identificados no inventário versionado do sibling
+## 2. Providers auditados com zero objetos semânticos independentes
 
-Os itens abaixo foram promovidos para este índice porque o inventário versionado os coloca diretamente nos ecossistemas Ars ou Iron's/spellbook e o próprio nome/título fornece evidência explícita de spell/magic **ou** de extensão direta do sistema mágico. Isso não prova o conjunto de spells interno. Uma linha só recebe ✅ depois de possuir catálogo próprio com escopo fechado e evidência da versão auditada.
+Zero é um resultado de catálogo válido quando a auditoria fecha que o mod apenas transporta, adapta, equipa ou integra ações de outro provider.
 
-### 2.1 Evidência explícita de spells/spellbooks/magic no título
-
-| Mod | Mod ID | Versão do snapshot | Estado do catálogo | Próximo requisito / cobertura |
-| --- | --- | --- | --- | --- |
-| Ars 'n' Spells | `ars_n_spells` | `3.0.2` | ✅ Catalogado | `ARS-N-SPELLS-3.0.2.md`: 8 registros-proxy `AbstractSpell` sem efeito próprio + 5 rituais; spells dinâmicos de Ars/Iron's transportados pelo bridge não são recontados como conteúdo do addon. |
-| Cataclysm: Spellbooks | `cataclysm_spellbooks` | `1.1.12-1.21` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
-| Deeper and Darker: Spellbooks | `darkermagic` | `1.3.3-1.21.1` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
-| Farmer's Spell 'n Spellbooks | `farmers_spell` | `1.0.4.0-1.21.1` | ✅ Catalogado | `FARMERS-SPELL-1.0.4.0.md`: 6/6 registros runtime em `SpellRegistry`, todos na escola `farmers_spell:gluttony`; `BerserkCleaverSpell.java` está totalmente comentado e não é contado como spell runtime. |
-| Ignis Soulfires: Spellbooks | `ignissoulfires_spellbooks` | `1.1.0` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
-| ISS: Magic From The East | `iss_magicfromtheeast` | `1.1.5` | ✅ Catalogado | `ISS-MAGIC-FROM-THE-EAST-1.1.5.md`: 22/22 spells ativos no registry da release (`11 Symmetry + 11 Spirit`); três escolas próprias estão registradas, com `Dune` em 0 spells ativos. `Launch` e `Qigong Controlling` estão comentados e não entram no runtime. |
-| Leyline Spellbooks | `leylines` | `1.0.3` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência. |
-| Monsters & Spellbooks | `monsterspellbooks` | `0.0.14` | ❌ Não catalogado | Inventariar spells públicos/observáveis e proveniência; `mod_version=0.0.14` persiste por múltiplos commits upstream, então o source exato do JAR do snapshot ainda precisa ser alinhado antes de usar contagens. |
-| Iron's Spells Magic Schools | `magic_schools` | `1.0` | ⚠️ Parcial/condicionado | Determinar se adiciona spells, escolas apenas, ou ambos; catalogar o que for mágico. |
-| Paladin Spells | `paladin_spells` | `1.21.1-1.1.1` | ✅ Catalogado | `PALADIN-SPELLS-1.1.1.md`: 5/5 spells registrados, todos em Holy. O catálogo preserva duas limitações observadas da release: Bulwark usa modifier amount `0.0`; Sworn Protector grava seu estado de cast apenas no lado cliente, portanto eficácia server-side não é afirmada sem runtime físico. |
-| Specs: Iron's Spells 'n Spellbooks Addon | `specs_irons_spellbooks` | `1.6.4` | ⚠️ Parcial/condicionado | O título prova vínculo ao sistema; confirmar se adiciona spells antes de inventário spell-level. |
-| Wind's Spellbooks | `wind_spellbooks` | `1.0.5` | ✅ Catalogado | `WIND-SPELLBOOKS-1.0.5.md`: 7/7 spell IDs observados em registry-derived dump alinhado ao JAR/CurseForge file exato 1.0.5, todos sob a escola `wind_spellbooks:wind`; sem source/decompilação, fórmulas e semântica interna não são afirmadas. |
-
-### 2.2 Extensões mágicas de ecossistema cujo conteúdo spell-level ainda precisa ser provado
-
-| Mod | Mod ID | Versão do snapshot | Estado do catálogo | Condição |
-| --- | --- | --- | --- | --- |
-| Ars Additions | `ars_additions` | `1.21.1-21.3.0` | ⚠️ Parcial/condicionado | Confirmar quais entradas são spells/glyphs versus suporte/conteúdo não-spell. |
-| Ars Controle | `ars_controle` | `1.21.1-1.6.15` | ⚠️ Parcial/condicionado | Confirmar conteúdo mágico catalogável. |
-| Ars Creo | `ars_creo` | `5.4.0` | ⚠️ Parcial/condicionado | Integração Ars/Create identificada; confirmar spell/glyph inventory. |
-| Ars Elemancy | `ars_elemancy` | `1.18.3` | ⚠️ Parcial/condicionado | Confirmar spell/glyph inventory. |
-| Ars Elemental | `ars_elemental` | `0.7.10.1` | ⚠️ Parcial/condicionado | Confirmar spell/glyph inventory. |
-| Ars Polymorphia | `ars_polymorphia` | `1.0.3` | ⚠️ Parcial/condicionado | Confirmar spell/glyph inventory. |
-| Ars Sable | `ars_sable` | `1.1.2` | ⚠️ Parcial/condicionado | Confirmar spell/glyph inventory. |
-| Ars Technica | `ars_technica` | `2.7.6` | ⚠️ Parcial/condicionado | Integração Ars/Create identificada; confirmar spell/glyph inventory. |
-| Ars Nouveau: Two-Way Portals | `ars_two_way_portals` | `2.0.0` | ⚠️ Parcial/condicionado | Conteúdo mágico identificado; confirmar se há spells/glyphs próprios. |
-| Ars Zero | `ars_zero` | `2.0.2` | ⚠️ Parcial/condicionado | Confirmar spell/glyph inventory. |
-| Alshanex's Familiars Mod | `alshanex_familiars` | `1.21.1_v4.0.3` | ⚠️ Parcial/condicionado | Sistema familiar mágico identificado; confirmar spells próprios versus entidades/suporte. |
-| Iron's Apothic | `irons_apothic` | `2.2.1` | ⚠️ Parcial/condicionado | Confirmar se adiciona spells ou somente integração/itens. |
-| Ironsable | `ironsable` | `1.2.0` | ⚠️ Parcial/condicionado | Confirmar conteúdo spell-level antes de promover para inventário de spells. |
-| Create: Wizardry | `create_wizardry` | `1.21.1-0.5.1-pre1` | ⚠️ Parcial/condicionado | Conteúdo mágico/Create identificado; confirmar spell-level e fonte pública antes de catalogar. |
-
-### 2.3 Entradas de suporte não promovidas como fonte de spells
-
-O mesmo inventário contém `arsdelight`, `reliquified_ars_nouveau`, `efiscompat`, `irons_jewelry`, `irons_spells_dynamic_skilltree` e `reliquified_irons_spells_and_spellbooks`. Eles **não são contados como mods spell-bearing neste índice apenas por associação de ecossistema**. Se evidência pública/runtime mostrar spells próprios, devem ser promovidos por uma atualização evidenciada.
-
-## 3. Referência clean-room externa já catalogada
-
-| Referência | Presença no pack atual | Estado do catálogo | Cobertura |
+| Provider | Versão | Estado | Fechamento |
 | --- | --- | --- | --- |
-| Mahou Tsukai | ⚠️ não afirmada por este snapshot global | ✅ Catalogado | `mahou-observable-catalog.md`: 53 linhas observáveis; 53/53 classificadas em `classification-matrix.md`. Uso apenas como referência pública/observável clean-room, não como provider/runtime obrigatório. |
+| Ignis Soulfires: Spellbooks | `1.1.0` | ✅ `ZERO_BRIDGE_INFRA` | Bridge/gear/loot support; 0 spell/ritual/action registry próprio. |
+| Ars Creo | `5.4.0` | ✅ Catalogado | Bridge Ars↔Create; 0 glyph/spell registry próprio no source pin. |
+| Ars Elemancy | `1.18.3` | ✅ Catalogado | Gear/especialização elemental; `registerGlyphs()` e `registerPerks()` vazios. |
+| Ars Polymorphia | `1.0.3` | ✅ `ZERO_SEMANTIC_BRIDGE` | Compat de recipe conflict; 0 spell/glyph/ritual/action registry próprio. |
+| Ars Sable | `1.1.2` | ✅ `ZERO_SEMANTIC_BRIDGE` | Infraestrutura espacial/compat; 0 spell/glyph/ritual/action registry próprio. |
+| Ars Nouveau: Two-Way Portals | `2.0.0` | ✅ `ZERO_SEMANTIC_PORTAL_INFRA` | Artefato exato; 0 spell/glyph/ritual/rite/ability independente. |
 
-## 4. Black Arcana — catálogo próprio
+## 3. Providers mágicos atuais ainda condicionais no ledger
 
-`docs/design/candidate-specifications.md` contém **32 contratos de candidatos** catalogados no nível de design/implementação-facing: 7 Dominion/wards, 5 Liminal, 7 Noetic, 5 Eidetic Arsenal e 8 Sanguine/Sepulchral/Cinder. Isso é catálogo de contrato, não afirma que todos estejam implementados ou balanceados.
+| Provider | Linha | Estado | Motivo |
+| --- | --- | --- | --- |
+| T.O Magic n' Extras / Traveloptics | `4.4.0.1-1.21.1` | ⚠️ Parcial/condicionado | 33 IDs registrados exatos catalogados, mas `blackout` survival reachability e risco estrutural de loot modifier permanecem abertos; +0 estrito e componente não fechado. |
+| Gaze — Spirit Rites | `1.1.7.1` | ⚠️ Condicionado | 26 rites player-facing existem no artefato, porém `disableGazeRites` pode suprimir o registry e o valor COMMON implantado não está disponível. O spell Soulward Shield já está contado separadamente na tabela estrita. |
+| Asterism Arcanum — `astral_gateway` | `1.21.1-0.1.0` | ⚠️ Condicionado | Provider possui 10 ações survival já contadas; `astral_gateway` permanece fora do strict count até fechar sua condição/reachability. |
+
+## 4. Candidatos herdados do snapshot antigo do sibling — presença atual não afirmada
+
+As entradas abaixo existiam em `docs/MODPACK_SCOPE.md` derivado de `modlist(20260822-201255).txt`, mas **não receberam fechamento canônico específico encontrado na árvore atual** durante esta reconciliação. Elas não entram em denominador atual nem são tratadas como fisicamente presentes sem nova evidência.
+
+| Mod | Mod ID | Última versão no snapshot sibling | Estado |
+| --- | --- | --- | --- |
+| Iron's Spells Magic Schools | `magic_schools` | `1.0` | ⚠️ Revalidar presença física e determinar spells/escolas próprios. |
+| Specs: Iron's Spells 'n Spellbooks Addon | `specs_irons_spellbooks` | `1.6.4` | ⚠️ Revalidar presença física e confirmar spells próprios. |
+| Iron's Apothic | `irons_apothic` | `2.2.1` | ⚠️ Revalidar presença física e conteúdo spell-level. |
+| Create: Wizardry | `create_wizardry` | `1.21.1-0.5.1-pre1` | ⚠️ Revalidar presença física, fonte e conteúdo mágico próprio. |
+
+Entradas de suporte como `arsdelight`, `reliquified_ars_nouveau`, `efiscompat`, `irons_jewelry`, `irons_spells_dynamic_skilltree` e `reliquified_irons_spells_and_spellbooks` também não são promovidas como spell-bearing apenas por associação de ecossistema.
+
+## 5. Referência clean-room externa
+
+| Referência | Presença no pack atual | Estado | Cobertura |
+| --- | --- | --- | --- |
+| Mahou Tsukai | ⚠️ não afirmada neste snapshot | ✅ Catalogado | `mahou-observable-catalog.md`: 53 linhas observáveis; 53/53 classificadas. Referência clean-room, não provider/runtime obrigatório. |
+
+## 6. Black Arcana — catálogo próprio
+
+`docs/design/candidate-specifications.md` contém **32 contratos de candidatos** no nível de design/implementation-facing: 7 Dominion/wards, 5 Liminal, 7 Noetic, 5 Eidetic Arsenal e 8 Sanguine/Sepulchral/Cinder. Catálogo de contrato não implica implementação ou balanceamento final.
 
 Estado global dessa camada: ✅ **Catalogado (32 contratos)**.
 
-### 4.1 Noetic / Stage 07.07 — spells catalogados individualmente
+### 6.1 Noetic / Stage 07.07
 
-O mapa canônico `docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md` fecha a cadeia clean-room individual dos sete candidatos abaixo. Todos estão ✅ **catalogados** em proveniência; o runtime continua separado e Stage 07.07 permanece parcial.
+`docs/provenance/STAGE-07-07-NOETIC-SPELL-PROVENANCE.md` fecha a proveniência individual dos sete candidatos. Todos estão ✅ catalogados; runtime permanece separado e Stage 07.07 continua parcial conforme `plans/STATUS.md`.
 
 | Spell Black Arcana | Catálogo/proveniência | Runtime |
 | --- | --- | --- |
-| Astral Severance | ✅ Catalogado | ⚠️ Parcial — runtime canônico avançou até PR #248; production MOVE profile/values, player-facing cast/channel/upkeep, remote interaction, tuning e D031 ainda não estão todos fechados. |
-| Namescry | ✅ Catalogado | ⚠️ Stage 07.07 parcial; este índice não promove implementação individual além da evidência de `plans/STATUS.md`. |
+| Astral Severance | ✅ Catalogado | ⚠️ Stage 07.07 parcial; `main` possui múltiplas tranches canônicas de Astral, sem promoção de completude individual neste índice. |
+| Namescry | ✅ Catalogado | ⚠️ Stage 07.07 parcial. |
 | Gaze of Stillness | ✅ Catalogado | ⚠️ Stage 07.07 parcial. |
 | Nullifying Gaze | ✅ Catalogado | ⚠️ Stage 07.07 parcial. |
 | Occult Appraisal | ✅ Catalogado | ⚠️ Stage 07.07 parcial. |
-| Borrowed Sight | ✅ Catalogado | ⚠️ Parcial — câmera server-authored é canônica; aceitação real-client D031 permanece pendente. |
+| Borrowed Sight | ✅ Catalogado | ⚠️ Câmera server-authored canônica; aceitação real-client D031 permanece pendente. |
 | Pact Sanctuary | ✅ Catalogado | ⚠️ Stage 07.07 parcial. |
 
-## 5. Resumo de cobertura
+## 7. Resumo de cobertura
 
-Este resumo conta **linhas de mods no índice versionado**, não quantidade de spells internos:
+As métricas têm denominadores diferentes:
 
-- ✅ Catálogo integral de spells/mecânicas do mod de referência: **1** (`Mahou Tsukai`, referência clean-room; presença atual não afirmada).
-- ⚠️ Hosts instalados com cobertura parcial de capacidade/API, mas sem inventário integral de spells: **4** (Iron's, Ars Nouveau, Eidolon, Malum).
-- ✅ Addons com catálogo próprio fechado no snapshot versionado: **5** (`Ars 'n' Spells` 3.0.2: 8 proxies sem efeito próprio + 5 rituais; `Farmer's Spell 'n Spellbooks` 1.0.4.0: 6/6 spells runtime registrados; `Paladin Spells` 1.1.1: 5/5 spells registrados, com limitações runtime observadas documentadas separadamente; `Wind's Spellbooks` 1.0.5: 7/7 spell IDs fechados em inventário observável de registry; `ISS: Magic From The East` 1.1.5: 22/22 spells ativos, distribuídos em 11 Symmetry + 11 Spirit, com Dune registrada sem spell ativo).
-- ❌ Addons com evidência explícita de spell/magic no inventário, ainda sem catálogo próprio: **5**.
-- ⚠️ Addons de título explicitamente mágico cujo tipo exato de conteúdo ainda precisa ser confirmado: **2** (`magic_schools`, `specs_irons_spellbooks`).
-- ⚠️ Extensões de ecossistema que exigem confirmação spell-level antes de catalogação integral: **14**.
-- ✅ Contratos próprios Black Arcana: **32** candidatos catalogados.
-- ✅ Noetic Stage 07.07: **7/7** spells com proveniência individual catalogada.
+- ✅ **Ledger semântico strict-counted:** **40 providers / 1344 objetos mágicos reconstruíveis**.
+- ⚠️ **Denominador semântico global:** ainda incompleto; portanto **nenhuma porcentagem final de spells/magia é declarada**.
+- ✅ **Cobertura técnica de componentes:** **66/100 = 66%** no ledger `CATALOG-COVERAGE-CURRENT.md`. Esse percentual mede componentes técnicos, não spells.
+- ✅ **Zero-semantic/infra explicitamente auditados nesta reconciliação:** 6 providers listados acima; zero não significa ausência de auditoria.
+- ⚠️ **Current-ledger conditionals destacados:** Traveloptics, 26 Gaze Spirit Rites e Asterism `astral_gateway`.
+- ⚠️ **Legacy sibling candidates sem presença física atual afirmada:** `magic_schools`, `specs_irons_spellbooks`, `irons_apothic`, `create_wizardry`.
+- ✅ **Mahou Tsukai clean-room:** 53/53 linhas observáveis classificadas; presença física atual não afirmada.
+- ✅ **Black Arcana próprio:** 32 contratos de candidatos; Noetic 7/7 com proveniência individual.
 
-## 6. Regra de manutenção
+## 8. Regra de manutenção
 
 Ao receber uma modlist/runtime inventory mais recente:
 
 1. registrar SHA/fingerprint e fonte física;
-2. adicionar/remover/driftar mods antes de qualquer trabalho de spell catalog;
-3. não inferir spell-bearing apenas por dependência ou nome de ecossistema;
-4. para cada mod confirmado com spells/magia, criar ou apontar um catálogo observável/proveniência dedicado;
-5. promover `❌`/`⚠️` para `✅` somente quando o inventário definido estiver completo e revisado;
-6. manter `Runtime` separado: catalogação não implica implementação, integração ou balanceamento concluídos.
+2. reconciliar presença, remoção e version drift antes de trabalho spell-level;
+3. não inferir spell-bearing apenas por dependência, título ou associação de ecossistema;
+4. usar `wiki/modpack-catalog/providers/` como árvore canônica detalhada e `wiki/modpack-catalog/meta/` para os denominadores globais;
+5. promover `❌`/`⚠️` para `✅` somente quando o escopo declarado estiver completo e revisado, inclusive quando o resultado correto for zero semantic magic;
+6. manter Runtime separado: catalogação não implica implementação, compatibilidade, integração ou balanceamento concluídos;
+7. quando sibling/versionado e snapshot físico divergirem, a evidência física mais recente vence;
+8. não publicar subtotais de um subconjunto legado como se fossem cobertura global.
