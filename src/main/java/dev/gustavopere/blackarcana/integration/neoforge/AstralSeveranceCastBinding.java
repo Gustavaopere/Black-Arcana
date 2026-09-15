@@ -52,6 +52,9 @@ public final class AstralSeveranceCastBinding {
             new LinkedHashMap<>(runtime.cooldownPolicies().cooldownSnapshot());
         cooldowns.put(SPELL_ID, checkedProfile.cooldown());
 
+        if (!runtime.channelSpecs().register(SPELL_ID, checkedProfile.channelSpec())) {
+            throw new IllegalStateException("Astral Severance channel specification could not be registered");
+        }
         runtime.spells().replaceAll(definitions.values());
         runtime.cooldownPolicies().replaceAll(cooldowns, runtime.cooldownPolicies().chargeSnapshot());
         runtime.installEngine(SPELL_ID, engine);
