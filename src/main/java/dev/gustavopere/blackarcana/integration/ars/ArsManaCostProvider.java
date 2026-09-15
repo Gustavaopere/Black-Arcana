@@ -3,15 +3,15 @@ package dev.gustavopere.blackarcana.integration.ars;
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaCost;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
-import dev.gustavopere.blackarcana.api.ArcanaServices.CostProvider;
 import dev.gustavopere.blackarcana.api.ArcanaServices.CostReservation;
+import dev.gustavopere.blackarcana.core.cost.ResourceCostProvider;
 
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Transactional Black Arcana cost provider backed by Ars Nouveau player mana. */
-public final class ArsManaCostProvider implements CostProvider {
+public final class ArsManaCostProvider implements ResourceCostProvider {
     public static final String RESOURCE_ID = "ars_nouveau:mana";
     private static final double EPSILON = 0.000001D;
 
@@ -19,6 +19,11 @@ public final class ArsManaCostProvider implements CostProvider {
 
     public ArsManaCostProvider(ArsManaAccess access) {
         this.access = Objects.requireNonNull(access, "access");
+    }
+
+    @Override
+    public String resourceId() {
+        return RESOURCE_ID;
     }
 
     @Override
