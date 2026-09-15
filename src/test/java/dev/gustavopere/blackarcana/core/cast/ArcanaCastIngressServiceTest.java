@@ -52,6 +52,7 @@ class ArcanaCastIngressServiceTest {
         ArcanaSpellRegistry registry = new ArcanaSpellRegistry();
         ArcanaCastIngressService ingress = new ArcanaCastIngressService(
                 registry,
+                new LoadoutRegistry(),
                 new IngressRateLimiter(4, 20L, 32),
                 id -> { throw new AssertionError("engine resolution must not run"); });
 
@@ -65,6 +66,8 @@ class ArcanaCastIngressServiceTest {
         ArcanaSpellDefinition definition = spell();
         ArcanaSpellRegistry registry = new ArcanaSpellRegistry();
         registry.replaceAll(List.of(definition));
+        LoadoutRegistry loadouts = new LoadoutRegistry();
+        loadouts.setLoadout(CASTER, List.of(SPELL_ID));
         AtomicReference<ArcanaSpellDefinition> observed = new AtomicReference<>();
 
         ArcanaCastEngine engine = new ArcanaCastEngine(
@@ -94,6 +97,7 @@ class ArcanaCastIngressServiceTest {
 
         ArcanaCastIngressService ingress = new ArcanaCastIngressService(
                 registry,
+                loadouts,
                 new IngressRateLimiter(4, 20L, 32),
                 id -> id.equals(SPELL_ID) ? engine : null);
 
@@ -110,6 +114,7 @@ class ArcanaCastIngressServiceTest {
         AtomicInteger engineResolutions = new AtomicInteger();
         ArcanaCastIngressService ingress = new ArcanaCastIngressService(
                 registry,
+                new LoadoutRegistry(),
                 new IngressRateLimiter(1, 20L, 32),
                 id -> {
                     engineResolutions.incrementAndGet();
