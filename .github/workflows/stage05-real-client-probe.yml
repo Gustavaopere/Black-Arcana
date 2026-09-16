@@ -118,13 +118,15 @@ jobs:
           sleep 3
           scrot build/stage05-real-client-probe/key-binds-screen.png
 
-          # The scrollbar thumb begins around x=792,y=90 in the fixed 854x480 client window.
-          # Drag the thumb itself to the bottom without clicking any key-mapping button.
-          xdotool mousemove --window "$WINDOW_ID" 792 90
-          xdotool mousedown 1
-          xdotool mousemove --window "$WINDOW_ID" 792 390
-          xdotool mouseup 1
+          # Minecraft window is fixed at X=213,Y=120 in this runner. Move to the list body
+          # using absolute display coordinates and inject native wheel-down events.
+          xdotool mousemove 700 360
+          xdotool getmouselocation --shell > build/stage05-real-client-probe/pointer-before-scroll.txt
+          for _ in $(seq 1 120); do
+            xdotool click 5
+          done
           sleep 3
+          xdotool getmouselocation --shell > build/stage05-real-client-probe/pointer-after-scroll.txt
           scrot build/stage05-real-client-probe/key-binds-bottom.png
 
           xdotool key --window "$WINDOW_ID" Escape
@@ -151,7 +153,7 @@ jobs:
             fi
           }
 
-          echo 'Real-client corrected-scrollbar keybind probe captured successfully.'
+          echo 'Real-client absolute-wheel keybind probe captured successfully.'
 
       - name: Upload real-client probe evidence
         if: always()
