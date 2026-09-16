@@ -21,8 +21,8 @@ O objetivo deste índice é responder duas perguntas sem misturá-las:
 
 ## Snapshot de autoridade
 
-- Black Arcana: `main@89bac57945f47e64deb9ac5a0e55d8ce918b58f7`.
-- RPG Skill Tree sibling: `main@70d3a1a372c10c1a470ac565f661ad333de50b0e`.
+- Black Arcana: `main@3b403a3987bf567d648fef69e11d777aa35ca89e`.
+- RPG Skill Tree sibling: `main@35154766e875912671efe60979f4fe67342b4796`.
 - Snapshot físico canônico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
 
