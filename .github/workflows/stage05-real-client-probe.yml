@@ -13,9 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  gui_focus_probe:
+  loadout_16_probe:
     runs-on: ubuntu-24.04
-    timeout-minutes: 18
+    timeout-minutes: 20
     steps:
       - name: Checkout exact candidate branch
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
       - name: Build removable Stage 05 QA companion
         run: ./gradlew --no-daemon stage05QaFixtureJar
 
-      - name: Create real singleplayer world and probe GUI-focus suppression
+      - name: Exercise server-owned 16-slot loadout and radial selection in real client
         shell: bash
         run: |
           set -euo pipefail
@@ -45,7 +45,10 @@ jobs:
           test -n "$FIXTURE_JAR"
           cp "$FIXTURE_JAR" "runs/client/mods/$(basename "$FIXTURE_JAR")"
 
+          # Current 1.21.1 options data version. Editor=G is only local QA input configuration;
+          # loadout state itself still travels through the ordinary editor intent/server snapshot path.
           cat > runs/client/options.txt <<'EOF'
+          version:3955
           fullscreen:false
           guiScale:2
           enableVsync:false
@@ -53,6 +56,17 @@ jobs:
           simulationDistance:5
           maxFps:30
           onboardAccessibility:false
+          key_key.black_arcana.open_radial:key.keyboard.r
+          key_key.black_arcana.cast_selected:key.keyboard.v
+          key_key.black_arcana.edit_loadout:key.keyboard.g
+          key_key.black_arcana.quick_cast_1:key.keyboard.unknown
+          key_key.black_arcana.quick_cast_2:key.keyboard.unknown
+          key_key.black_arcana.quick_cast_3:key.keyboard.unknown
+          key_key.black_arcana.quick_cast_4:key.keyboard.unknown
+          key_key.black_arcana.quick_cast_5:key.keyboard.unknown
+          key_key.black_arcana.quick_cast_6:key.keyboard.unknown
+          key_key.black_arcana.quick_cast_7:key.keyboard.unknown
+          key_key.black_arcana.quick_cast_8:key.keyboard.unknown
           EOF
 
           export DISPLAY=:99
@@ -61,9 +75,9 @@ jobs:
           mkdir -p "$XDG_RUNTIME_DIR"
           chmod 700 "$XDG_RUNTIME_DIR"
 
-          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-gui-focus.log 2>&1 &
+          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-loadout16.log 2>&1 &
           XVFB_PID=$!
-          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-gui-focus.log"
+          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-loadout16.log"
           ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
           GRADLE_PID=$!
 
@@ -89,46 +103,18 @@ jobs:
             sleep 1
           done
           test -n "$WINDOW_ID"
-          echo "$WINDOW_ID" > build/stage05-real-client-probe/gui-focus-window-id.txt
+          echo "$WINDOW_ID" > build/stage05-real-client-probe/loadout16-window-id.txt
 
           sleep 24
           ! grep -Fq 'Failed to load options' "$CLIENT_LOG"
+          grep -Fq 'key_key.black_arcana.edit_loadout:key.keyboard.g' runs/client/options.txt
+          scrot build/stage05-real-client-probe/title-before-loadout16.png
 
-          # Rebind Open Spell Radial R -> B through Minecraft's native Key Binds UI.
-          xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
-          sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
-          sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
-          sleep 2
-          xdotool mousemove 700 360
-          for _ in $(seq 1 120); do xdotool click 5; done
-          sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 580 75 click 1
-          sleep 1
-          xdotool key --window "$WINDOW_ID" b
-          sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 448 click 1
-          sleep 2
-          xdotool key --window "$WINDOW_ID" Escape
-          sleep 1
-          xdotool key --window "$WINDOW_ID" Escape
-          sleep 3
-
-          grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
-          grep -Fq 'key_key.black_arcana.cast_selected:key.keyboard.v' runs/client/options.txt
-          test "$(grep -Ec '^key_key\.black_arcana\.(edit_loadout|quick_cast_[1-8]):key\.keyboard\.unknown$' runs/client/options.txt)" -eq 9
-          scrot build/stage05-real-client-probe/title-before-world-create.png
-
-          # Title -> Singleplayer. With no saves this opens Create New World directly.
+          # Title -> Singleplayer -> Create New World.
           xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
           sleep 6
-          scrot build/stage05-real-client-probe/create-new-world-screen.png
-
-          # Calibrated from the previous real-client capture: Create New World button.
           xdotool mousemove --window "$WINDOW_ID" 268 448 click 1
 
-          # Wait for the integrated server to admit the local player; fail closed on timeout/process exit.
           WORLD_READY=0
           for _ in $(seq 1 180); do
             if [[ -f runs/client/logs/latest.log ]] && grep -Fq 'joined the game' runs/client/logs/latest.log; then
@@ -142,32 +128,132 @@ jobs:
             sleep 1
           done
           test "$WORLD_READY" -eq 1
+          sleep 6
+          scrot build/stage05-real-client-probe/world-before-loadout16.png
+
+          filter_fixture() {
+            xdotool key --window "$WINDOW_ID" Tab
+            sleep 1
+            xdotool type --window "$WINDOW_ID" --delay 15 'black_arcana_stage05_qa'
+            sleep 1
+            xdotool key --window "$WINDOW_ID" Tab
+            sleep 1
+          }
+
+          select_fixture_16() {
+            # Page 1: slots 01-08 in canonical sorted order.
+            for i in $(seq 1 8); do
+              xdotool key --window "$WINDOW_ID" space
+              sleep 0.25
+              if [[ "$i" -lt 8 ]]; then xdotool key --window "$WINDOW_ID" Down; fi
+            done
+            # Preserve row 0 across page change so page 2 begins at slot 09.
+            for _ in $(seq 1 7); do xdotool key --window "$WINDOW_ID" Up; done
+            xdotool key --window "$WINDOW_ID" Page_Down
+            sleep 1
+            for i in $(seq 1 8); do
+              xdotool key --window "$WINDOW_ID" space
+              sleep 0.25
+              if [[ "$i" -lt 8 ]]; then xdotool key --window "$WINDOW_ID" Down; fi
+            done
+          }
+
+          open_filtered_editor() {
+            xdotool key --window "$WINDOW_ID" g
+            sleep 3
+            filter_fixture
+          }
+
+          # Build a 16-slot draft and submit through the ordinary LoadoutUpdatePayload path.
+          open_filtered_editor
+          scrot build/stage05-real-client-probe/loadout-filtered-page1-empty.png
+          select_fixture_16
+          scrot build/stage05-real-client-probe/loadout-draft16-page2.png
+          xdotool key --window "$WINDOW_ID" Return
           sleep 5
-          scrot build/stage05-real-client-probe/world-loaded.png
 
-          # Open inventory; with a Screen focused, Black Arcana must not own B/V input.
-          xdotool key --window "$WINDOW_ID" e
-          sleep 3
-          scrot build/stage05-real-client-probe/inventory-before-black-arcana-input.png
+          # Reopen from the server snapshot and visually capture accepted [x]/slot labels on both pages.
+          open_filtered_editor
+          scrot build/stage05-real-client-probe/loadout-accepted16-page1.png
+          xdotool key --window "$WINDOW_ID" Page_Down
+          sleep 2
+          scrot build/stage05-real-client-probe/loadout-accepted16-page2.png
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
 
-          xdotool key --window "$WINDOW_ID" b
-          sleep 3
-          scrot build/stage05-real-client-probe/inventory-after-radial-b.png
+          # Clear via the real editor intent, then reopen from the server response.
+          open_filtered_editor
+          xdotool key --window "$WINDOW_ID" Delete
+          sleep 1
+          scrot build/stage05-real-client-probe/loadout-clear-draft.png
+          xdotool key --window "$WINDOW_ID" Return
+          sleep 5
+          open_filtered_editor
+          scrot build/stage05-real-client-probe/loadout-cleared-server-snapshot.png
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
 
-          xdotool key --window "$WINDOW_ID" v
-          sleep 3
-          scrot build/stage05-real-client-probe/inventory-after-cast-v.png
+          # Reapply all 16 so radial paging operates over the canonical server-owned loadout.
+          open_filtered_editor
+          select_fixture_16
+          xdotool key --window "$WINDOW_ID" Return
+          sleep 5
+          open_filtered_editor
+          scrot build/stage05-real-client-probe/loadout-reapplied16-page1.png
+          xdotool key --window "$WINDOW_ID" Page_Down
+          sleep 2
+          scrot build/stage05-real-client-probe/loadout-reapplied16-page2.png
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
 
-          cp runs/client/options.txt build/stage05-real-client-probe/options-after-gui-focus-probe.txt
-          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-gui-focus.log
+          capture_current_selection() {
+            local label="$1"
+            xdotool key --window "$WINDOW_ID" r
+            sleep 2
+            scrot "build/stage05-real-client-probe/radial-selected-slot-${label}.png"
+            xdotool key --window "$WINDOW_ID" Escape
+            sleep 1
+          }
+
+          # selectedSlot starts/reconciles at 0. Capture every canonical slot through supported radial selection.
+          capture_current_selection 01
+          for slot in 02 03 04 05 06 07 08; do
+            xdotool key --window "$WINDOW_ID" r
+            sleep 1
+            xdotool key --window "$WINDOW_ID" Tab
+            xdotool key --window "$WINDOW_ID" Return
+            sleep 1
+            capture_current_selection "$slot"
+          done
+
+          # From slot 08 (index 7), PageDown preserves relative row 7 => slot 16; one Tab wraps to slot 09.
+          xdotool key --window "$WINDOW_ID" r
+          sleep 1
+          xdotool key --window "$WINDOW_ID" Page_Down
+          xdotool key --window "$WINDOW_ID" Tab
+          xdotool key --window "$WINDOW_ID" Return
+          sleep 1
+          capture_current_selection 09
+
+          for slot in 10 11 12 13 14 15 16; do
+            xdotool key --window "$WINDOW_ID" r
+            sleep 1
+            xdotool key --window "$WINDOW_ID" Tab
+            xdotool key --window "$WINDOW_ID" Return
+            sleep 1
+            capture_current_selection "$slot"
+          done
+
+          cp runs/client/options.txt build/stage05-real-client-probe/options-after-loadout16.txt
+          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-loadout16.log
           grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
-          echo 'Real-client GUI-focus preflight evidence captured.'
+          echo 'Real-client 16-slot server-owned loadout preflight evidence captured.'
 
-      - name: Upload GUI-focus evidence
+      - name: Upload 16-slot loadout evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: stage05-real-client-gui-focus-${{ github.sha }}
+          name: stage05-real-client-loadout16-${{ github.sha }}
           path: |
             build/stage05-real-client-probe/**
             runs/client/logs/latest.log
