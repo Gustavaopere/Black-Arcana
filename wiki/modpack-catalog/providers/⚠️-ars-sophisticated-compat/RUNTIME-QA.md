@@ -1,48 +1,49 @@
-# Ars Sophisticated Compatibility — runtime QA gate
+# Sophisticated Backpacks: Ars Compat — runtime QA gate
 
-Status: `RUNTIME QA REQUIRED / FAIL-CLOSED`
+Status: `EXACT RELEASE IDENTITY CLOSED / RUNTIME QA REQUIRED / FAIL-CLOSED`
 
 ## Why runtime QA remains open
 
-The installed artifact `arssophisticatedcompat-0.3.0.jar` is not byte-identical to the accessible official NeoForge 1.21.1 publication `arssophisticatedstoragecompat-0.3.0.jar`.
+The physical artifact is `arssophisticatedcompat-0.3.0.jar`, and the catalogue now aligns that identity with official CurseForge File ID `8653384` for **Sophisticated Backpacks: Ars Compat 0.3.0 — NeoForge 1.21.1**. The prior comparison against `arssophisticatedstoragecompat-0.3.0.jar` File ID `8655579` was a comparison against a separate Sophisticated Storage sibling project and is no longer used as evidence of a binary mismatch.
 
-The current physical host stack also includes Sophisticated Core 1.5.1, while the Notion dossier was written against 1.5.0. No exact installed-binary source/API contract has been established.
+Release identity and semantic catalogue scope are therefore closed. Runtime/API internals are not.
 
-Therefore nominal version `0.3.0` and documented product-family behavior are insufficient to certify runtime compatibility.
+The publisher declares Ars Nouveau, Sophisticated Backpacks and Sophisticated Core as required families, but this dossier does not infer exact deployed host versions unless independently established by physical evidence.
 
-## Required physical-binary inspection
+## Required internal/API evidence before a Black Arcana adapter
 
-Before any code-level BA adapter is approved, establish from the installed artifact or exact matching source:
+Before any code-level Black Arcana adapter is approved, establish from an allowed exact boundary:
 
 1. exact metadata/dependency ranges;
-2. registered item/upgrade/resource IDs;
+2. registered item/upgrade/resource IDs relevant to integration;
 3. capability/API entry points;
 4. config values/defaults;
-5. payloads/network direction and server validation;
-6. mixins if any;
+5. payloads/network direction and server validation, if any;
+6. mixins, if any;
 7. lifecycle/tick entry points;
-8. Source storage/conversion/repair semantics;
-9. recipe/acquisition definitions;
-10. physical-artifact license/provenance.
+8. Source storage/conversion/repair settlement semantics;
+9. recipe/acquisition definitions when needed by integration;
+10. persistence and migration semantics.
+
+These are runtime/integration requirements, not blockers for the zero spell/glyph/ritual catalogue result.
 
 ## Required runtime matrix
 
 On the actual modpack stack, validate at minimum:
 
-- place/remove every supported upgrade;
+- install/remove every supported backpack upgrade;
 - Source insert/extract and full-capacity behavior;
-- Stack Upgrade increase/decrease while Source/duration is stored;
-- Source Link conversion under player and automated inventory mutation;
+- Stack Upgrade increase/decrease while Source or potion duration is stored;
+- Sourcelink conversion under player and automated inventory mutation;
 - chunk unload/reload and full server restart;
-- storage break/re-place/move paths supported by provider;
+- backpack lifecycle paths supported by the provider;
 - Potion Jar effect expiration/removal/reconnect without ghost refresh;
 - Enchanter repair with insufficient/exact/excess Source;
-- two concurrent users/automation actors touching the same storage;
-- dedicated-server startup/classloading;
-- interaction with Sophisticated Storage Create Integration where applicable.
+- concurrent users/automation actors touching the same backpack state where supported;
+- dedicated-server startup/classloading.
 
 ## Acceptance rule
 
-Only directly observed or exact-source-backed behavior may move from `UNKNOWN` to `CONFIRMED`.
+Only directly observed or exact-source/API-backed behavior may move from `UNKNOWN` to `CONFIRMED` for integration.
 
-A failed or unavailable provider hook disables the dependent BA feature. It must not trigger a generic fallback that invents Source, repairs, potion duration or storage state.
+A failed or unavailable provider hook disables the dependent Black Arcana feature. It must not trigger a generic fallback that invents Source, repairs, potion duration or backpack state.
