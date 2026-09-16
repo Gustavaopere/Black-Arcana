@@ -43,19 +43,19 @@ class ClientConfigAuthorityContractTest {
     }
 
     @Test
-    void modConfigSpecPreservesValidPreferencesAndRecoversInvalidOrMissingDefaults() {
+    void modConfigSpecPreservesValidPreferencesRecoversDefaultsAndNormalizesBounds() {
         CommentedConfig config = CommentedConfig.inMemory();
         config.set("contextualHud", false);
         config.set("hudScale", 1.5D);
-        config.set("selectionDurationTicks", 120);
+        config.set("selectionDurationTicks", 999);
         config.set("feedbackDurationTicks", -1);
-        config.set("feedbackLevel", "VERBOSE");
+        config.set("feedbackLevel", "NOT_A_LEVEL");
         config.set("radialBehavior", "HOLD");
-        config.set("particleDensity", 2.0D);
+        config.set("particleDensity", -0.25D);
         config.set("reducedMotion", true);
 
         assertFalse(BlackArcanaClientConfig.SPEC.isCorrect(config),
-                "missing and out-of-range values must require NeoForge config correction");
+                "missing, malformed, and out-of-range values must require NeoForge config correction");
 
         BlackArcanaClientConfig.SPEC.correct(config);
 
@@ -69,16 +69,16 @@ class ClientConfigAuthorityContractTest {
                 "valid bounded values must survive correction");
         assertEquals(HudLayout.Anchor.BOTTOM_CENTER, config.get("hudAnchor"),
                 "missing enum values must recover to the registered default");
-        assertEquals(120, ((Number) config.get("selectionDurationTicks")).intValue(),
-                "valid duration values must survive correction");
-        assertEquals(80, ((Number) config.get("feedbackDurationTicks")).intValue(),
-                "invalid duration values must recover to the registered default");
-        assertEquals("VERBOSE", config.get("feedbackLevel"),
-                "valid serialized enum preferences must survive correction");
+        assertEquals(400, ((Number) config.get("selectionDurationTicks")).intValue(),
+                "out-of-range durations above the maximum must clamp to the registered upper bound");
+        assertEquals(0, ((Number) config.get("feedbackDurationTicks")).intValue(),
+                "out-of-range durations below the minimum must clamp to the registered lower bound");
+        assertEquals(BlackArcanaClientConfig.FeedbackLevel.STANDARD, config.get("feedbackLevel"),
+                "malformed enum values must recover to the registered default");
         assertEquals("HOLD", config.get("radialBehavior"),
                 "valid serialized radial behavior must survive correction");
-        assertEquals(1.0D, ((Number) config.get("particleDensity")).doubleValue(), 0.0D,
-                "out-of-range particle density must recover to the registered default");
+        assertEquals(0.0D, ((Number) config.get("particleDensity")).doubleValue(), 0.0D,
+                "out-of-range particle density must clamp to the registered lower bound");
         assertEquals(true, config.get("reducedMotion"),
                 "valid accessibility preferences must survive correction");
         assertEquals(false, config.get("reducedFlashes"),
