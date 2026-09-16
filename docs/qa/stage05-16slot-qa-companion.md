@@ -54,8 +54,17 @@ The companion changes the available spell registry by adding sixteen QA-only ide
 
 Do not silently use evidence collected with `black_arcana_stage05_qa` installed to satisfy unrelated production-only rows. For Blocks A–H and J, use the normal campaign profile unless the row explicitly requires this companion and the evidence records that fact.
 
-After Block I evidence is captured, remove the companion before returning to production-only campaign rows unless the runbook explicitly says otherwise.
+After Block I evidence is captured, restore a production-valid server-owned loadout before removing the companion. Prefer the normal loadout editor/apply path: clear the QA loadout or replace it with identities that remain valid without the companion, reopen the editor, and confirm the synchronized server snapshot reflects that state. This cleanup is itself useful evidence for the Stage 05.01 apply/clear/reconnect authority gate; do not mutate persistence files by hand.
+
+Then disconnect, remove the companion JAR, restart/reconnect through the normal lifecycle and confirm no `black_arcana_stage05_qa:*` identity survives in the synchronized loadout or presentation state. Any stale QA identity that remains authoritative after removal is a real failure to record, not fixture state to ignore.
 
 ## Removal
+
+1. While the companion is still installed, clear or replace the QA-only loadout through the normal server-authoritative editor/apply path.
+2. Reopen the editor and record the authoritative snapshot proving the QA identities are no longer persisted for the caster.
+3. Disconnect cleanly from the world/server.
+4. Remove the `black_arcana_stage05_qa` JAR.
+5. Restart/reconnect using the same production Black Arcana candidate.
+6. Confirm the client receives no companion spell presentation and the server-owned loadout contains no companion identity.
 
 Removing the companion JAR removes the QA mod and its runtime initializer. The companion is not production content and must not be shipped as part of the Black Arcana production artifact or modpack release.
