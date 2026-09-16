@@ -13,4 +13,8 @@ Catálogo survival: **10/10**.
 9. [Star Swarm](star-swarm.md)
 10. [Summon Lunar Moth](summon-lunar-moth.md)
 
-`Astral Gateway` está documentado separadamente em `../NON-SURVIVAL.md`.
+Registro adicional fora do survival:
+
+- [Astral Gateway](astral-gateway.md) — `EXACT REGISTRY / NON-SURVIVAL / REACHABILITY CONDITIONAL`.
+
+O contexto detalhado de conteúdo fora do survival e de `TrailblazeSpell` permanece em [`../NON-SURVIVAL.md`](../NON-SURVIVAL.md).
