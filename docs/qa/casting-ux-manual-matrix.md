@@ -38,6 +38,7 @@ This document deliberately does **not** mark visual/manual rows as passed. They 
 | Radial | `TOGGLE` | Opens/closes predictably; selection never casts by itself | ⬜ PENDING |
 | Radial | `HOLD` | Releasing radial key closes selector without stuck input | ⬜ PENDING |
 | Input | Rebind radial/cast/quick slots | Conflicts are discoverable through vanilla controls and bindings remain usable | ⬜ PENDING |
+| Input persistence | Rebind radial/cast/quick slots, restart the client, then reuse them | Rebound mappings persist across the normal client restart and remain usable; no required Black Arcana action silently falls back to a provider-only input path | ⬜ PENDING |
 | GUI focus | Inventory/chat/other Screen open | Cast inputs do not fire through another GUI | ⬜ PENDING |
 | Loadout | Edit/apply/clear/reopen | Server response remains canonical and draft never bypasses slot/availability checks | ⬜ PENDING |
 | Loadout bound | Legitimate synchronized 16-slot loadout | Every canonical slot `0..15` remains reachable through supported selection/radial paging; paging/selection never exceeds the synchronized server-owned loadout and never forges another spell identity | ⬜ PENDING |
@@ -45,6 +46,7 @@ This document deliberately does **not** mark visual/manual rows as passed. They 
 | Loadout tooltip | Small window / GUI scale 4 / edge rows | Tooltip remains readable/on-screen and does not obscure loadout interaction beyond normal vanilla tooltip behavior | ⬜ PENDING |
 | Session | Disconnect/reconnect same player | Old result/loadout/HUD state does not flash before server snapshots arrive | ⬜ PENDING |
 | Feedback | Authoritative denial | HUD displays actual server denial briefly, then disappears | ⬜ PENDING |
+| Result correlation | Authoritative result arrives while another spell is currently selected | Presentation attributes the result only through the matching emitted `castId` context; it never guesses that the currently selected spell produced an unrelated/unmatched result | ⬜ PENDING |
 | Feedback | Idle player | No permanent Black Arcana resource bar or stale result remains visible | ⬜ PENDING |
 | HUD | All five anchors at 0.5×, 1×, 2× | Panel stays inside viewport and text remains readable with the extra preflight line | ⬜ PENDING |
 | Hazard HUD | Effective Arcane Resistance below minimum / between minimum and recommended / at-or-above recommended | Selected dangerous spell shows server-authored current/minimum/recommended values and factual threshold status: blocked below minimum / below recommended / recommendation met; no wording implies that recommendation eliminates all Backlash risk | ⬜ PENDING |
@@ -58,10 +60,11 @@ This document deliberately does **not** mark visual/manual rows as passed. They 
 | Accessibility | reduced motion / reduced flashes | Flags persist locally; future effects must honor them when such effects exist | ⬜ PENDING |
 | Accessibility | particle density 0 / 0.5 / 1 | Preference persists locally; future Black Arcana particles must consume the multiplier | ⬜ PENDING |
 | Client config | Missing/reset config entries | NeoForge defaults recover safely | ⬜ PENDING |
+| Client authority isolation | Change Black Arcana presentation/config preferences and interact with HUD/radial/forecast surfaces under equivalent server-owned cast conditions | Preferences and presentation may reshape local UX only; they do not alter cost, cooldown, progression, target admission, Arcane Danger/world settlement or mutate underlying hazard/gate/resource state | ⬜ PENDING |
 | F1 / hidden GUI | Toggle vanilla HUD visibility | Black Arcana layer follows expected vanilla HUD behavior | ⬜ PENDING |
 | Provider coexistence | Iron's-hosted `black_arcana:irons_integration_probe` | One provider invocation produces at most one Black Arcana root cast/result; Black Arcana transactional cost and cooldown settle exactly once; Iron's native mana/cooldown are not additionally charged for the hosted transaction | ⬜ PENDING |
 | Provider coexistence | Epic Fight / EFIS present during Black Arcana casting | Client combat/animation state never becomes Black Arcana cast-legality authority; casting remains server-authoritative | ⬜ PENDING |
-| Optional providers | Required optional provider absent/incompatible where reproducible | Only the dependent feature fails closed; no crash, duplicate/free fallback, or unverified hard dependency is introduced | ⬜ PENDING |
+| Optional providers | Required optional provider absent/incompatible where reproducible | Only the dependent feature fails closed; no crash, duplicate/free fallback, or unverified hard dependency is introduced; core Black Arcana keyboard/mouse casting remains usable when the chosen operation does not require that provider | ⬜ PENDING |
 
 ## Closure rule
 
