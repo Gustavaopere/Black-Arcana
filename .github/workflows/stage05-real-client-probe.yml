@@ -119,6 +119,13 @@ jobs:
           sleep 3
           scrot build/stage05-real-client-probe/controls-screen.png
 
+          # Controls -> Key Binds.
+          xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
+          sleep 3
+          scrot build/stage05-real-client-probe/key-binds-screen.png
+
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
           xdotool key --window "$WINDOW_ID" Escape
           sleep 2
           xdotool key --window "$WINDOW_ID" Escape
@@ -137,7 +144,7 @@ jobs:
             fi
           }
 
-          echo 'Real-client controls probe captured successfully.'
+          echo 'Real-client key-bind probe captured successfully.'
 
       - name: Upload real-client probe evidence
         if: always()
