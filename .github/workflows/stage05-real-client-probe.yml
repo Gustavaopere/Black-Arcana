@@ -65,6 +65,10 @@ jobs:
           XVFB_PID=$!
           GRADLE_PID=""
 
+          visible_minecraft_window() {
+            xdotool search --onlyvisible --name 'Minecraft' 2>/dev/null | head -n 1 || true
+          }
+
           stop_client() {
             if [[ -n "${GRADLE_PID:-}" ]]; then
               kill "$GRADLE_PID" 2>/dev/null || true
@@ -74,11 +78,19 @@ jobs:
               wait "$GRADLE_PID" 2>/dev/null || true
             fi
             GRADLE_PID=""
-            sleep 3
+            for _ in $(seq 1 30); do
+              if [[ -z "$(visible_minecraft_window)" ]]; then
+                sleep 2
+                return 0
+              fi
+              sleep 1
+            done
+            echo 'Old Minecraft window remained visible after teardown' >&2
+            return 1
           }
 
           cleanup() {
-            stop_client
+            stop_client || true
             kill "$XVFB_PID" 2>/dev/null || true
             wait "$XVFB_PID" 2>/dev/null || true
           }
@@ -91,7 +103,7 @@ jobs:
             GRADLE_PID=$!
             local window_id=""
             for _ in $(seq 1 240); do
-              window_id="$(xdotool search --onlyvisible --name 'Minecraft' 2>/dev/null | head -n 1 || true)"
+              window_id="$(visible_minecraft_window)"
               if [[ -n "$window_id" ]]; then
                 echo "$window_id"
                 return 0
@@ -107,54 +119,52 @@ jobs:
           }
 
           FIRST_LOG="$PWD/build/stage05-real-client-probe/gradle-client-first.log"
-          WINDOW_ID="$(launch_client "$FIRST_LOG")"
-          test -n "$WINDOW_ID"
-          xdotool windowactivate --sync "$WINDOW_ID"
-          xdotool getwindowgeometry --shell "$WINDOW_ID" > build/stage05-real-client-probe/window-geometry-first.txt
+          FIRST_WINDOW_ID="$(launch_client "$FIRST_LOG")"
+          test -n "$FIRST_WINDOW_ID"
+          echo "$FIRST_WINDOW_ID" > build/stage05-real-client-probe/first-window-id.txt
+          xdotool getwindowgeometry --shell "$FIRST_WINDOW_ID" > build/stage05-real-client-probe/window-geometry-first.txt
           sleep 24
           ! grep -Fq 'Failed to load options' "$FIRST_LOG"
           scrot build/stage05-real-client-probe/main-menu-before-rebind.png
 
           # Main menu -> Options -> Controls -> Key Binds.
-          xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
+          xdotool mousemove --window "$FIRST_WINDOW_ID" 324 416 click 1
           sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
+          xdotool mousemove --window "$FIRST_WINDOW_ID" 584 243 click 1
           sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
+          xdotool mousemove --window "$FIRST_WINDOW_ID" 584 94 click 1
           sleep 2
 
-          # Scroll the native list to the final Black Arcana category.
           xdotool mousemove 700 360
           for _ in $(seq 1 120); do xdotool click 5; done
           sleep 2
           scrot build/stage05-real-client-probe/key-binds-before-rebind.png
 
-          # Open Spell Radial is the top visible Black Arcana row at the list bottom.
-          # Click its native binding button and assign B through the ordinary Controls UI.
-          xdotool mousemove --window "$WINDOW_ID" 580 75 click 1
+          # Rebind Open Spell Radial to B through the ordinary Controls UI.
+          xdotool mousemove --window "$FIRST_WINDOW_ID" 580 75 click 1
           sleep 1
-          xdotool key --window "$WINDOW_ID" b
+          xdotool key --window "$FIRST_WINDOW_ID" b
           sleep 2
           scrot build/stage05-real-client-probe/key-binds-after-rebind.png
 
-          # Commit the screen and return to main menu so Minecraft persists options.txt.
-          xdotool mousemove --window "$WINDOW_ID" 584 448 click 1
+          xdotool mousemove --window "$FIRST_WINDOW_ID" 584 448 click 1
           sleep 2
-          xdotool key --window "$WINDOW_ID" Escape
+          xdotool key --window "$FIRST_WINDOW_ID" Escape
           sleep 1
-          xdotool key --window "$WINDOW_ID" Escape
+          xdotool key --window "$FIRST_WINDOW_ID" Escape
           sleep 2
           cp runs/client/options.txt build/stage05-real-client-probe/options-after-ui-rebind.txt
           grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-after-ui-rebind.txt
           grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
 
           stop_client
+          test -z "$(visible_minecraft_window)"
 
-          # Relaunch without rewriting options.txt. This is the restart-persistence check.
+          # Relaunch without rewriting options.txt. Require a newly visible Minecraft window.
           SECOND_LOG="$PWD/build/stage05-real-client-probe/gradle-client-restart.log"
-          WINDOW_ID="$(launch_client "$SECOND_LOG")"
-          test -n "$WINDOW_ID"
-          xdotool windowactivate --sync "$WINDOW_ID"
+          SECOND_WINDOW_ID="$(launch_client "$SECOND_LOG")"
+          test -n "$SECOND_WINDOW_ID"
+          echo "$SECOND_WINDOW_ID" > build/stage05-real-client-probe/second-window-id.txt
           sleep 24
           ! grep -Fq 'Failed to load options' "$SECOND_LOG"
           scrot build/stage05-real-client-probe/main-menu-after-restart.png
@@ -163,12 +173,11 @@ jobs:
           grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
 
           # Observe the persisted B binding in the native Controls UI after restart.
-          xdotool windowactivate --sync "$WINDOW_ID"
-          xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
+          xdotool mousemove --window "$SECOND_WINDOW_ID" 324 416 click 1
           sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
+          xdotool mousemove --window "$SECOND_WINDOW_ID" 584 243 click 1
           sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
+          xdotool mousemove --window "$SECOND_WINDOW_ID" 584 94 click 1
           sleep 2
           xdotool mousemove 700 360
           for _ in $(seq 1 120); do xdotool click 5; done
