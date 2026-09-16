@@ -102,9 +102,27 @@ For the reload transition:
 6. Confirm an older in-flight/cache result for DANGEROUS 10/30 cannot overwrite the new static preflight or gate/resistance presentation.
 7. Restore the original repository version after the test if more baseline scenarios remain.
 
+## Separate Block I 16-slot companion
+
+The datapack in this directory does **not** manufacture sixteen executable spell identities. Block I uses a separate removable NeoForge companion, `black_arcana_stage05_qa`, documented in `docs/qa/stage05-16slot-qa-companion.md`.
+
+The companion is built and published separately from the canonical production JAR and registers sixteen selection-only identities through the existing server runtime initializer/registry/engine path. It does not bypass `LoadoutUpdateService`, and its spells fail closed if a cast is attempted.
+
+For Block I:
+
+1. Use production `black_arcana` and companion `black_arcana_stage05_qa` artifacts from the same exact successful `main` SHA.
+2. Record both artifact identities/digests and independently checked extracted JAR digests before the first Block I observation.
+3. Enable the companion only for Block I or another row that explicitly declares that profile.
+4. Before removing the companion, clear or replace the QA-only server-owned loadout through the normal editor/apply path and verify the synchronized snapshot.
+5. Disconnect, remove the companion, restart/reconnect, and confirm no companion identity remains authoritative before resuming production-only rows.
+
+The companion is another test fixture, not production content and not PASS evidence by itself.
+
 ## Removal
 
-Delete this fixture from the world's `datapacks/` directory and run `/reload` or restart the world. Do not leave these QA-only profiles enabled in normal gameplay evidence.
+Delete this datapack fixture from the world's `datapacks/` directory and run `/reload` or restart the world. Do not leave these QA-only profiles enabled in normal gameplay evidence.
+
+If the Block I companion was installed, remove it separately according to `docs/qa/stage05-16slot-qa-companion.md`; clearing the datapack does not remove the companion mod or its registered identities.
 
 ## Evidence rule
 
