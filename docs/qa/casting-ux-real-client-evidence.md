@@ -56,6 +56,8 @@ If `origin/main` advances before the first real-client observation, re-read the 
 
 Once the first real-client observation is recorded, the campaign candidate is locked. Do not mix evidence from a later Black Arcana JAR/SHA into that result set. Changing the tested build requires an explicit new/revalidated campaign boundary and repetition of every affected row.
 
+For Block I, the removable `black_arcana_stage05_qa` companion must match that same exact campaign SHA. The companion artifact/JAR is a second identity that must be recorded separately; it does not change the campaign candidate or authorize mixing SHAs.
+
 ---
 
 ## 2. Physical modpack freeze at preparation
@@ -106,23 +108,41 @@ The following fields must be filled from the actual Minecraft client used for ev
 - Java runtime actually used to launch the client: `NOT RECORDED`
 - Black Arcana JAR actually installed: `NOT RECORDED`
 - Artifact/JAR digest independently checked after extraction: `NOT RECORDED`
-- Stage 05 deterministic fixture installed: `NOT RECORDED`
+- Stage 05 deterministic datapack fixture installed: `NOT RECORDED`
+- Block I Stage 05 QA companion artifact name / ID: `NOT SELECTED`
+- Block I Stage 05 QA companion artifact digest: `NOT SELECTED`
+- Block I Stage 05 QA companion JAR actually installed: `NOT RECORDED`
+- Block I companion JAR digest independently checked after extraction: `NOT RECORDED`
 
 Current execution-environment note: the most recent authorized desktop discovery returned **no connected device**, so no real Minecraft client campaign was started from this session. Per the evidence rules below, this does **not** convert untouched matrix rows from `PENDING` to `BLOCKED`.
 
-Do not copy these values from assumptions or from another machine. Record the actual client instance and the actual Black Arcana JAR used for the first observation before assigning any manual result.
+Do not copy these values from assumptions or from another machine. Record the actual client instance and the actual Black Arcana JAR used for the first observation before assigning any manual result. For Block I, also record the matching exact-SHA companion artifact and extracted JAR before exercising the row.
 
 ---
 
 ## 4. Fixture boundary
 
+The Stage 05 campaign has two different removable fixture surfaces and they must not be conflated.
+
+### Deterministic datapack fixture
+
 Where applicable, use the removable deterministic fixture under:
 
 `docs/qa/fixtures/stage05-real-client/`
 
-The fixture may provide deterministic hazard/resistance/gate/reload states described by the canonical runbook. It is test-only data and must not be treated as production gameplay content.
+The datapack fixture may provide deterministic hazard/resistance/gate/reload states described by the canonical runbook. It is test-only data and must not be treated as production gameplay content.
 
-Fixture presence does not create PASS evidence. If a matrix state cannot be produced legitimately with the runtime/fixture, record the concrete limitation according to the runbook rather than adding a debug bypass merely to obtain a result.
+### Block I 16-slot companion mod
+
+Block I may use the removable NeoForge companion mod documented in:
+
+`docs/qa/stage05-16slot-qa-companion.md`
+
+The companion mod ID is `black_arcana_stage05_qa`. It exists only to register sixteen legitimate selection-only Black Arcana spell identities through the existing server-runtime initializer boundary, so a server-owned 16-entry loadout can be exercised physically. It must be built/published separately from the production Black Arcana JAR and use the same exact campaign SHA.
+
+The companion changes the available spell registry. Evidence collected while it is installed must therefore declare that profile explicitly. Do not silently reuse companion-enabled observations to satisfy unrelated production-only rows. Remove it before returning to Blocks A–H or J unless a specific row explicitly declares the companion as part of its test profile.
+
+Fixture or companion presence does not create PASS evidence. If a matrix state cannot be produced legitimately with the approved test profile, record the concrete limitation according to the runbook rather than adding a production debug bypass merely to obtain a result.
 
 ---
 
@@ -149,6 +169,7 @@ Do not infer one configuration from another. A pass at one resolution, GUI scale
 - Client-authority-isolation row: one before/after evidence entry for every gameplay-authority dimension applicable to the exact candidate/test content, plus evidence that passive presentation interaction does not mutate synchronized hazard/gate/resource state.
 - Provider coexistence row: recording or timestamped observation log that proves the provider action/state transition plus the resulting Black Arcana authority outcome; record relevant resource/cooldown state where settlement is under test.
 - Provider-free core-input row: evidence for every required core keyboard/mouse path under the provider-absent/incompatible profile, not one representative action.
+- Block I companion row: exact-SHA production and companion artifact/JAR identities and digests plus a recording or timestamped log proving the sixteen server-owned identities are accepted and every canonical slot `0..15` is reached through the supported client path.
 - Any `FAIL`: exact SHA, relevant client configuration, exact reproduction steps, observed result, expected result and visual/input evidence where applicable.
 
 ---
@@ -290,16 +311,19 @@ Future-only effects must remain subject to the matrix Stage 09 carry rule; prefe
 
 Execution state: `NOT STARTED`
 
+Use the matching exact-SHA `black_arcana_stage05_qa` companion profile defined in `docs/qa/stage05-16slot-qa-companion.md`. Record both production and companion artifacts/JARs and independently checked digests before exercising this block.
+
 Required coverage includes:
 
-- a legitimate server-accepted 16-slot loadout;
-- synchronized state still reflecting that loadout after reopen/reconnect as applicable;
+- physical instance loads the exact-SHA production Black Arcana JAR and matching companion without duplicate-mod/dependency error;
+- sixteen companion identities form a legitimate server-accepted 16-slot loadout;
+- synchronized state still reflects that loadout after reopen/reconnect as applicable;
 - direct physical reachability of every canonical slot `0..15` through supported selection/radial paging;
 - paging/selection staying within the synchronized loadout bound;
 - no forged seventeenth slot or substituted spell identity;
 - selection remaining non-casting.
 
-If current production content/fixture cannot legitimately supply 16 available spells for a server-owned loadout, the row must be attempted and recorded `BLOCKED` with the concrete availability limitation. Do not add a production bypass to manufacture PASS evidence.
+If the matching companion cannot load or cannot legitimately supply the sixteen server-owned identities, the row must be attempted and recorded `FAIL` or `BLOCKED` according to the concrete observed condition. Do not add a production bypass to manufacture PASS evidence. Remove the companion before returning to production-only rows unless another row explicitly declares it as part of its profile.
 
 ### Block J — Current-modpack provider coexistence authority and provider-free core input
 
@@ -335,6 +359,13 @@ Copy this section once for each matrix row actually exercised. Do not pre-fill a
 - Evidence reference: `<screenshot / recording / timestamped log>`
 - Result: `PASS | FAIL | BLOCKED | NOT APPLICABLE / CARRIED TO STAGE 09`
 
+For Block I also include:
+
+- Companion artifact name / ID: `<exact artifact>`
+- Companion artifact digest: `<sha256>`
+- Companion JAR filename: `<exact filename>`
+- Companion JAR digest: `<sha256 independently checked>`
+
 ---
 
 ## 8. Matrix/status update rule
@@ -367,6 +398,7 @@ At the latest preparation/reconciliation checkpoint:
 - latest physical modlist preparation snapshot: recorded;
 - authorized real-client device in the current execution session: none connected;
 - manual client environment: not yet recorded;
+- Block I companion artifact/JAR: not selected or installed because the manual campaign has not started;
 - Blocks A–J: not started;
 - manual matrix changes: additional required rows are present but remain `PENDING` until direct observation;
 - Stage 05 state: `ACTIVE / IMPLEMENTATION PRESENT / REQUIRED PHYSICAL VALIDATION PENDING`;

@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="All Rights Reserved"
+
+[[mods]]
+modId="black_arcana_stage05_qa"
+version="${mod_version}"
+displayName="Black Arcana Stage 05 QA Fixture"
+authors="Gustavaopere"
+description='''Removable Stage 05 physical QA companion. Not production gameplay content.'''
+
+[[dependencies.black_arcana_stage05_qa]]
+modId="black_arcana"
+type="required"
+ordering="AFTER"
+side="BOTH"
+reason="Requires the authoritative Black Arcana runtime"
+
+[[dependencies.black_arcana_stage05_qa]]
+modId="neoforge"
+type="required"
+versionRange="[${neo_version},)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.black_arcana_stage05_qa]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"

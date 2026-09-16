@@ -41,6 +41,13 @@ sourceSets.main.resources {
     exclude('src/generated/**/.cache')
 }
 
+sourceSets {
+    stage05QaFixture {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
 neoForge {
     version = project.neo_version
 
@@ -52,6 +59,11 @@ neoForge {
     // Unit tests directly exercise Minecraft/NeoForge types (SavedData, packet codecs,
     // reload listeners). Make the modding classpath explicit for test compilation.
     addModdingDependenciesTo(sourceSets.test)
+
+    // Stage 05 physical QA content is compiled as an isolated source set. It is not
+    // registered as part of the production Black Arcana mod and cannot enter the
+    // canonical production JAR unless an explicit fixture JAR task packages it.
+    addModdingDependenciesTo(sourceSets.stage05QaFixture)
 
     runs {
         client {
@@ -92,7 +104,12 @@ neoForge {
 configurations {
     runtimeClasspath.extendsFrom localRuntime
     testCompileOnly.extendsFrom compileOnly
+    stage05QaFixtureImplementation.extendsFrom implementation
+    stage05QaFixtureCompileOnly.extendsFrom compileOnly
+    stage05QaFixtureRuntimeOnly.extendsFrom runtimeOnly
 }
+
+sourceSets.test.runtimeClasspath += sourceSets.stage05QaFixture.output
 
 dependencies {
     // Stable addon-facing Iron's API only. The full mod remains an optional runtime dependency.
@@ -118,6 +135,7 @@ dependencies {
 }
 
 test {
+    dependsOn tasks.named('stage05QaFixtureClasses')
     useJUnitPlatform()
     testLogging {
         events 'failed'
@@ -125,6 +143,32 @@ test {
         showExceptions = true
         showCauses = true
         showStackTraces = true
+    }
+}
+
+var stage05QaFixtureProperties = [
+        minecraft_version_range: minecraft_version_range,
+        neo_version             : neo_version,
+        loader_version_range    : loader_version_range,
+        mod_version             : mod_version,
+]
+
+tasks.named('processStage05QaFixtureResources', ProcessResources).configure {
+    inputs.properties stage05QaFixtureProperties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand stage05QaFixtureProperties
+    }
+}
+
+tasks.register('stage05QaFixtureJar', Jar) {
+    dependsOn tasks.named('stage05QaFixtureClasses')
+    archiveBaseName.set('black_arcana_stage05_qa')
+    archiveVersion.set(project.mod_version)
+    from(sourceSets.stage05QaFixture.output)
+    from('LICENSE')
+    from('THIRD_PARTY_NOTICES.md')
+    manifest {
+        attributes('Automatic-Module-Name': 'dev.gustavopere.blackarcana.stage05qa')
     }
 }
 

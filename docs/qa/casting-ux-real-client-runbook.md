@@ -14,6 +14,8 @@ The Stage 05/05A gate is manual by design. Automated CI, GameTests, screenshots 
 
 Use the removable deterministic datapack fixture in `docs/qa/fixtures/stage05-real-client/` when exercising hazard thresholds, the normal/non-normal tooltip controls, Arcane Resistance 0/15/30 states, legitimate Iron cooldown/cost gate states and danger-profile reload/stale-forecast behavior. The fixture does not create PASS evidence by itself and must not be shipped as production gameplay data.
 
+Block I has an additional, separate fixture boundary. Use the removable `black_arcana_stage05_qa` companion described in `docs/qa/stage05-16slot-qa-companion.md` only to establish a legitimate server-owned 16-entry loadout. After this infrastructure is merged, successful `main` CI publishes the matching companion as `black-arcana-stage05-qa-<full commit SHA>`. The production Black Arcana JAR and companion JAR used for Block I must come from the same exact `main` SHA, and both artifact/JAR identities and digests must be recorded. Do not silently use the companion to satisfy unrelated production-only rows; remove it before returning to Blocks A–H or J unless a row explicitly declares it as part of its profile.
+
 ## Result vocabulary
 
 For every matrix row, record exactly one result:
@@ -129,14 +131,17 @@ Do not claim that a preference is gameplay-safe merely because the UI looks unch
 
 ## Block I — Canonical 16-slot loadout reachability
 
-1. Establish a legitimate server-accepted Black Arcana loadout containing all 16 canonical slots. Do not manufacture client-only entries or bypass server availability checks merely to populate the row.
-2. Reopen/reconnect as needed and confirm the synchronized client still reflects the server-owned 16-slot loadout before testing selection.
-3. Using the supported radial paging/selection path, deliberately reach and select every slot `0..15` at least once. Direct quick-cast mappings cover only their supported subset and are not a substitute for proving slots `8..15` reachable.
-4. For each page transition, confirm focus/selection remains within the synchronized loadout and cannot advance to a forged seventeenth slot or substitute another spell identity.
-5. Confirm selection of each slot changes presentation/selected intent only. Do not count a selection as successful if it implicitly casts.
-6. Record one continuous interaction capture when practical, or a timestamped slot-by-slot observation log proving all 16 slots were reached on the exact campaign candidate.
+Use the exact-SHA companion profile defined in `docs/qa/stage05-16slot-qa-companion.md`. Before launching Block I, install both the canonical production `black_arcana` JAR and matching `black_arcana_stage05_qa` companion JAR from the same successful `main` SHA and record both artifact/JAR identities and digests in the evidence ledger. The companion is test-only and must be removed before returning to unrelated production-only rows.
 
-If a legitimate 16-entry server-owned loadout cannot be created with the current production content/fixture, attempt the row and record `BLOCKED` with the concrete availability limitation. Do not add a production bypass solely to make the QA row executable.
+1. Confirm the exact physical instance loads with both `black_arcana` and `black_arcana_stage05_qa` present, with no duplicate-mod or dependency error.
+2. Establish a legitimate server-accepted loadout containing the sixteen companion spell identities. Do not manufacture client-only entries or bypass server availability checks merely to populate the row.
+3. Reopen/reconnect as needed and confirm the synchronized client still reflects the server-owned 16-slot loadout before testing selection.
+4. Using the supported radial paging/selection path, deliberately reach and select every slot `0..15` at least once. Direct quick-cast mappings cover only their supported subset and are not a substitute for proving slots `8..15` reachable.
+5. For each page transition, confirm focus/selection remains within the synchronized loadout and cannot advance to a forged seventeenth slot or substitute another spell identity.
+6. Confirm selection of each slot changes presentation/selected intent only. Do not count a selection as successful if it implicitly casts.
+7. Record one continuous interaction capture when practical, or a timestamped slot-by-slot observation log proving all 16 slots were reached on the exact campaign candidate.
+
+If the matching companion fails to load, its sixteen identities are not server-accepted, or a legitimate 16-entry server-owned loadout still cannot be created, record the attempted row as `FAIL` or `BLOCKED` according to the observed condition and the result vocabulary above. Do not alter production runtime semantics or add a production bypass solely to force PASS.
 
 ## Block J — Current-modpack provider coexistence authority
 
