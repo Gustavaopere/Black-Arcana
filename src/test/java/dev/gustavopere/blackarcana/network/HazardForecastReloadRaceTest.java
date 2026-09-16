@@ -22,24 +22,30 @@ class HazardForecastReloadRaceTest {
     }
 
     @Test
-    void lateForecastFromPreviousPreflightRevisionCannotReappearAfterReload() {
+    void lateForecastFromOutstandingPreviousRevisionRequestCannotReappearAfterReload() {
         HazardPreflightPayload preflight = preflight();
         ClientArcanaSyncState.replaceHazardPreflight(preflight);
 
-        long staleRequestId = nextForecastRequestId();
-        replaceForecast(forecast(staleRequestId));
-        assertEquals(staleRequestId,
+        long acceptedRequestId = nextForecastRequestId();
+        replaceForecast(forecast(acceptedRequestId));
+        assertEquals(acceptedRequestId,
             ClientArcanaSyncState.hazardResistanceForecast(SPELL).orElseThrow().requestId());
+
+        // Allocate another request while the old revision is still current, but deliberately leave
+        // its response outstanding so the reload happens while this request is genuinely in flight.
+        long staleOutstandingRequestId = nextForecastRequestId();
+        assertTrue(staleOutstandingRequestId > acceptedRequestId);
 
         // A datapack/provider reload is a revision boundary even when the resulting static
         // tier and resistance thresholds happen to be byte-for-byte identical.
         ClientArcanaSyncState.replaceHazardPreflight(preflight);
         assertTrue(ClientArcanaSyncState.hazardResistanceForecast(SPELL).isEmpty());
 
-        // This response was already in flight before the reload and must stay invalidated.
-        replaceForecast(forecast(staleRequestId));
+        // The first response for the higher-ID request was issued under the previous revision and
+        // arrives only now. It must not repopulate state after the reload boundary.
+        replaceForecast(forecast(staleOutstandingRequestId));
         assertTrue(ClientArcanaSyncState.hazardResistanceForecast(SPELL).isEmpty(),
-            "a forecast issued before the current preflight revision must not reappear after reload");
+            "an outstanding request allocated before the current preflight revision must stay invalid after reload");
 
         long currentRequestId = nextForecastRequestId();
         replaceForecast(forecast(currentRequestId));
