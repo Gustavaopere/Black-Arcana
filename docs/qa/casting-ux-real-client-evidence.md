@@ -38,11 +38,11 @@ The successful automated workflow proves only that this reference build passed t
 
 The latest exact-SHA `main` build validated during the current Stage 05 reconciliation is:
 
-- `main` SHA: `b382a250dd23d222e4525d99f518bfea756b53ca`;
-- post-merge workflow: `35049468384` — GREEN for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke and canonical artifact publication;
-- canonical artifact: `black-arcana-b382a250dd23d222e4525d99f518bfea756b53ca`;
-- artifact ID: `10428198077`;
-- artifact digest: `sha256:50acf3875992fe3dc4231fe42230e870bf9efcf27fd55aa4a5ecf31e1d5310fa`.
+- `main` SHA: `b942674eb77a99c08c1a59f378e6036cd72f45fa`;
+- post-merge workflow: `35051332466` — GREEN for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke and canonical artifact publication;
+- canonical artifact: `black-arcana-b942674eb77a99c08c1a59f378e6036cd72f45fa`;
+- artifact ID: `10429426144`;
+- artifact digest: `sha256:8f093e40f954cdaf6bb411f17e6d118f03fa6802be4bb8c3a9c37265f5dbb89d`.
 
 This build is **available as the current canonical candidate**, but the manual campaign candidate remains unselected until actual real-client execution starts, as required below. No manual row becomes PASS, FAIL or BLOCKED from this automated evidence.
 
@@ -311,9 +311,9 @@ If a real-client `FAIL` is found, reproduce it on the exact tested SHA, add dete
 At the latest preparation/reconciliation checkpoint:
 
 - historical preparation-reference build: recorded;
-- latest validated `main` build available for a future campaign: `b382a250dd23d222e4525d99f518bfea756b53ca`;
-- exact-SHA automated CI for that build: GREEN (`35049468384`);
-- exact-SHA canonical QA artifact: recorded (`black-arcana-b382a250dd23d222e4525d99f518bfea756b53ca`, ID `10428198077`, SHA-256 `50acf3875992fe3dc4231fe42230e870bf9efcf27fd55aa4a5ecf31e1d5310fa`);
+- latest validated `main` build available for a future campaign: `b942674eb77a99c08c1a59f378e6036cd72f45fa`;
+- exact-SHA automated CI for that build: GREEN (`35051332466`);
+- exact-SHA canonical QA artifact: recorded (`black-arcana-b942674eb77a99c08c1a59f378e6036cd72f45fa`, ID `10429426144`, SHA-256 `8f093e40f954cdaf6bb411f17e6d118f03fa6802be4bb8c3a9c37265f5dbb89d`);
 - manual campaign candidate: `NOT SELECTED`;
 - latest physical modlist preparation snapshot: recorded;
 - authorized real-client device in the current execution session: none connected;
