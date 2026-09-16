@@ -126,7 +126,7 @@ jobs:
           grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-after-ui-rebind.txt
           grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
           grep -Fq 'key_key.black_arcana.cast_selected:key.keyboard.v' runs/client/options.txt
-          test "$(grep -Ec '^key_key\.black_arcana\.(loadout_editor|quick_cast_[1-8]):key\.keyboard\.unknown$' runs/client/options.txt)" -eq 9
+          test "$(grep -Ec '^key_key\.black_arcana\.(edit_loadout|quick_cast_[1-8]):key\.keyboard\.unknown$' runs/client/options.txt)" -eq 9
           grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
 
           echo 'Native UI rebind state captured.'
@@ -240,7 +240,7 @@ jobs:
           grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-after-restart.txt
           grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
           grep -Fq 'key_key.black_arcana.cast_selected:key.keyboard.v' runs/client/options.txt
-          test "$(grep -Ec '^key_key\.black_arcana\.(loadout_editor|quick_cast_[1-8]):key\.keyboard\.unknown$' runs/client/options.txt)" -eq 9
+          test "$(grep -Ec '^key_key\.black_arcana\.(edit_loadout|quick_cast_[1-8]):key\.keyboard\.unknown$' runs/client/options.txt)" -eq 9
 
           # Main menu -> Options -> Controls -> Key Binds and capture visual state.
           xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
