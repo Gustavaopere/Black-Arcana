@@ -95,17 +95,10 @@ jobs:
           mkdir -p runs/server build
           printf 'eula=true\n' > runs/server/eula.txt
           LOG="$PWD/build/server-smoke.log"
-          setsid ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
+          ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
           PID=$!
           cleanup() {
-            kill -TERM -- "-$PID" 2>/dev/null || true
-            for _ in $(seq 1 10); do
-              if ! kill -0 -- "-$PID" 2>/dev/null; then
-                break
-              fi
-              sleep 1
-            done
-            kill -KILL -- "-$PID" 2>/dev/null || true
+            kill "$PID" 2>/dev/null || true
             wait "$PID" 2>/dev/null || true
           }
           trap cleanup EXIT
@@ -118,50 +111,7 @@ jobs:
               echo 'Dedicated-server smoke test: PASS'
               exit 0
             fi
-            if ! kill -0 -- "-$PID" 2>/dev/null; then
-              cat "$LOG"
-              exit 1
-            fi
-            sleep 1
-          done
-          cat "$LOG"
-          exit 1
-
-      - name: Stage 05 QA companion dedicated-server smoke test
-        shell: bash
-        run: |
-          set -euo pipefail
-          FIXTURE_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_stage05_qa-*.jar' | head -n 1)"
-          test -n "$FIXTURE_JAR"
-          mkdir -p runs/server/mods build
-          find runs/server/mods -maxdepth 1 -type f -name 'black_arcana_stage05_qa-*.jar' -delete
-          COPIED_FIXTURE="runs/server/mods/$(basename "$FIXTURE_JAR")"
-          cp "$FIXTURE_JAR" "$COPIED_FIXTURE"
-          printf 'eula=true\n' > runs/server/eula.txt
-          LOG="$PWD/build/stage05-qa-companion-server-smoke.log"
-          setsid ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
-          PID=$!
-          cleanup() {
-            kill -TERM -- "-$PID" 2>/dev/null || true
-            for _ in $(seq 1 10); do
-              if ! kill -0 -- "-$PID" 2>/dev/null; then
-                break
-              fi
-              sleep 1
-            done
-            kill -KILL -- "-$PID" 2>/dev/null || true
-            wait "$PID" 2>/dev/null || true
-            rm -f "$COPIED_FIXTURE"
-          }
-          trap cleanup EXIT
-          for _ in $(seq 1 150); do
-            if grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG" \
-              && grep -Fq 'Black Arcana foundation loaded' "$LOG" \
-              && grep -Fq 'Black Arcana Stage 05 QA fixture installed 16 server-authoritative selection-only spells' "$LOG"; then
-              echo 'Stage 05 QA companion dedicated-server smoke test: PASS'
-              exit 0
-            fi
-            if ! kill -0 -- "-$PID" 2>/dev/null; then
+            if ! kill -0 "$PID" 2>/dev/null; then
               cat "$LOG"
               exit 1
             fi
@@ -187,3 +137,55 @@ jobs:
           path: build/libs/black_arcana_stage05_qa-*.jar
           if-no-files-found: error
           retention-days: 7
+
+  stage05_qa_companion_smoke:
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build Stage 05 QA companion JAR
+        run: ./gradlew --no-daemon stage05QaFixtureJar
+
+      - name: Stage 05 QA companion dedicated-server smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          FIXTURE_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_stage05_qa-*.jar' | head -n 1)"
+          test -n "$FIXTURE_JAR"
+          mkdir -p runs/server/mods build
+          COPIED_FIXTURE="runs/server/mods/$(basename "$FIXTURE_JAR")"
+          cp "$FIXTURE_JAR" "$COPIED_FIXTURE"
+          printf 'eula=true\n' > runs/server/eula.txt
+          LOG="$PWD/build/stage05-qa-companion-server-smoke.log"
+          ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
+          PID=$!
+          cleanup() {
+            kill "$PID" 2>/dev/null || true
+            wait "$PID" 2>/dev/null || true
+            rm -f "$COPIED_FIXTURE"
+          }
+          trap cleanup EXIT
+          for _ in $(seq 1 150); do
+            if grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG" \
+              && grep -Fq 'Black Arcana foundation loaded' "$LOG" \
+              && grep -Fq 'Black Arcana Stage 05 QA fixture installed 16 server-authoritative selection-only spells' "$LOG"; then
+              echo 'Stage 05 QA companion dedicated-server smoke test: PASS'
+              exit 0
+            fi
+            if ! kill -0 "$PID" 2>/dev/null; then
+              cat "$LOG"
+              exit 1
+            fi
+            sleep 1
+          done
+          cat "$LOG"
+          exit 1
