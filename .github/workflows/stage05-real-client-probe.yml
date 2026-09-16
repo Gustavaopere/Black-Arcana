@@ -15,7 +15,7 @@ concurrency:
 jobs:
   real_client_probe:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 18
     steps:
       - name: Checkout exact candidate branch
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
       - name: Build removable Stage 05 QA companion
         run: ./gradlew --no-daemon stage05QaFixtureJar
 
-      - name: Launch real NeoForge client and capture UI screens
+      - name: Rebind Black Arcana radial in real client and verify restart persistence
         shell: bash
         run: |
           set -euo pipefail
@@ -62,98 +62,118 @@ jobs:
 
           Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb.log 2>&1 &
           XVFB_PID=$!
-          sleep 2
+          GRADLE_PID=""
 
-          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client.log"
-          ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
-          GRADLE_PID=$!
+          stop_client() {
+            if [[ -n "${GRADLE_PID:-}" ]]; then
+              kill "$GRADLE_PID" 2>/dev/null || true
+            fi
+            pkill -f 'net.minecraft.client.main.Main' 2>/dev/null || true
+            if [[ -n "${GRADLE_PID:-}" ]]; then
+              wait "$GRADLE_PID" 2>/dev/null || true
+            fi
+            GRADLE_PID=""
+            sleep 3
+          }
 
           cleanup() {
-            kill "$GRADLE_PID" 2>/dev/null || true
-            pkill -f 'net.minecraft.client.main.Main' 2>/dev/null || true
+            stop_client
             kill "$XVFB_PID" 2>/dev/null || true
-            wait "$GRADLE_PID" 2>/dev/null || true
             wait "$XVFB_PID" 2>/dev/null || true
           }
           trap cleanup EXIT
-
-          WINDOW_ID=""
-          for _ in $(seq 1 240); do
-            WINDOW_ID="$(xdotool search --onlyvisible --name 'Minecraft' 2>/dev/null | head -n 1 || true)"
-            if [[ -n "$WINDOW_ID" ]]; then
-              break
-            fi
-            if ! kill -0 "$GRADLE_PID" 2>/dev/null; then
-              cat "$CLIENT_LOG"
-              exit 1
-            fi
-            sleep 1
-          done
-
-          if [[ -z "$WINDOW_ID" ]]; then
-            cat "$CLIENT_LOG"
-            exit 1
-          fi
-
-          xdotool getwindowname "$WINDOW_ID" | tee build/stage05-real-client-probe/window-name.txt
-          xdotool getwindowgeometry --shell "$WINDOW_ID" | tee build/stage05-real-client-probe/window-geometry.txt
-
-          sleep 12
-          scrot build/stage05-real-client-probe/main-menu.png
-
-          xdotool mousemove --window "$WINDOW_ID" 427 348 click 1
-          sleep 3
-          scrot build/stage05-real-client-probe/mods-screen.png
-          xdotool key --window "$WINDOW_ID" Escape
           sleep 2
 
-          xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
-          sleep 3
-          scrot build/stage05-real-client-probe/options-screen.png
-
-          xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
-          sleep 3
-          scrot build/stage05-real-client-probe/controls-screen.png
-          xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
-          sleep 3
-          scrot build/stage05-real-client-probe/key-binds-screen.png
-
-          # Minecraft window is fixed at X=213,Y=120 in this runner. Move to the list body
-          # using absolute display coordinates and inject native wheel-down events.
-          xdotool mousemove 700 360
-          xdotool getmouselocation --shell > build/stage05-real-client-probe/pointer-before-scroll.txt
-          for _ in $(seq 1 120); do
-            xdotool click 5
-          done
-          sleep 3
-          xdotool getmouselocation --shell > build/stage05-real-client-probe/pointer-after-scroll.txt
-          scrot build/stage05-real-client-probe/key-binds-bottom.png
-
-          xdotool key --window "$WINDOW_ID" Escape
-          sleep 2
-          xdotool key --window "$WINDOW_ID" Escape
-          sleep 2
-          xdotool key --window "$WINDOW_ID" Escape
-          sleep 2
-          scrot build/stage05-real-client-probe/main-menu-return.png
-
-          if [[ -f runs/client/options.txt ]]; then
-            cp runs/client/options.txt build/stage05-real-client-probe/options-after-client.txt
-            grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-key-options.txt || true
-          fi
-          if [[ -f runs/client/logs/latest.log ]]; then
-            cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest.log
-          fi
-
-          grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || {
-            if [[ -f runs/client/logs/latest.log ]]; then
-              grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
-            else
-              exit 1
-            fi
+          launch_client() {
+            local log_path="$1"
+            ./gradlew --no-daemon runClient >"$log_path" 2>&1 &
+            GRADLE_PID=$!
+            local window_id=""
+            for _ in $(seq 1 240); do
+              window_id="$(xdotool search --onlyvisible --name 'Minecraft' 2>/dev/null | head -n 1 || true)"
+              if [[ -n "$window_id" ]]; then
+                echo "$window_id"
+                return 0
+              fi
+              if ! kill -0 "$GRADLE_PID" 2>/dev/null; then
+                cat "$log_path"
+                return 1
+              fi
+              sleep 1
+            done
+            cat "$log_path"
+            return 1
           }
 
-          echo 'Real-client absolute-wheel keybind probe captured successfully.'
+          FIRST_LOG="$PWD/build/stage05-real-client-probe/gradle-client-first.log"
+          WINDOW_ID="$(launch_client "$FIRST_LOG")"
+          test -n "$WINDOW_ID"
+          xdotool getwindowgeometry --shell "$WINDOW_ID" > build/stage05-real-client-probe/window-geometry-first.txt
+          sleep 12
+
+          # Main menu -> Options -> Controls -> Key Binds.
+          xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
+          sleep 2
+          xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
+          sleep 2
+          xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
+          sleep 2
+
+          # Scroll the native list to the final Black Arcana category.
+          xdotool mousemove 700 360
+          for _ in $(seq 1 120); do xdotool click 5; done
+          sleep 2
+          scrot build/stage05-real-client-probe/key-binds-before-rebind.png
+
+          # Open Spell Radial is the top visible Black Arcana row at the list bottom.
+          # Click its native binding button and assign B through the ordinary Controls UI.
+          xdotool mousemove --window "$WINDOW_ID" 580 75 click 1
+          sleep 1
+          xdotool key --window "$WINDOW_ID" b
+          sleep 2
+          scrot build/stage05-real-client-probe/key-binds-after-rebind.png
+
+          # Commit the screen and return to main menu so Minecraft persists options.txt.
+          xdotool mousemove --window "$WINDOW_ID" 584 448 click 1
+          sleep 2
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 1
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
+          cp runs/client/options.txt build/stage05-real-client-probe/options-after-ui-rebind.txt
+          grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-after-ui-rebind.txt
+          grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
+
+          stop_client
+
+          # Relaunch without rewriting options.txt. This is the restart-persistence check.
+          SECOND_LOG="$PWD/build/stage05-real-client-probe/gradle-client-restart.log"
+          WINDOW_ID="$(launch_client "$SECOND_LOG")"
+          test -n "$WINDOW_ID"
+          sleep 12
+          scrot build/stage05-real-client-probe/main-menu-after-restart.png
+          cp runs/client/options.txt build/stage05-real-client-probe/options-after-restart.txt
+          grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-after-restart.txt
+          grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
+
+          # Observe the persisted B binding in the native Controls UI after restart.
+          xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
+          sleep 2
+          xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
+          sleep 2
+          xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
+          sleep 2
+          xdotool mousemove 700 360
+          for _ in $(seq 1 120); do xdotool click 5; done
+          sleep 2
+          scrot build/stage05-real-client-probe/key-binds-after-restart.png
+
+          if [[ -f runs/client/logs/latest.log ]]; then
+            cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-after-restart.log
+          fi
+          grep -Fq 'Black Arcana foundation loaded' "$SECOND_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
+
+          echo 'Real-client Black Arcana rebind/restart preflight: PASS'
 
       - name: Upload real-client probe evidence
         if: always()
