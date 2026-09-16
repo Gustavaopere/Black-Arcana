@@ -1,0 +1,130 @@
+name: Stage 05 Real Client Probe
+
+on:
+  push:
+    branches:
+      - qa/stage05-real-client-probe
+
+permissions:
+  contents: read
+
+concurrency:
+  group: stage05-real-client-probe-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  real_client_probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact candidate branch
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install virtual-display capture tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y xvfb xdotool scrot mesa-utils libgl1-mesa-dri
+
+      - name: Build removable Stage 05 QA companion
+        run: ./gradlew --no-daemon stage05QaFixtureJar
+
+      - name: Launch real NeoForge client and capture main menu
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/stage05-real-client-probe runs/client/mods runs/client
+          FIXTURE_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_stage05_qa-*.jar' | head -n 1)"
+          test -n "$FIXTURE_JAR"
+          cp "$FIXTURE_JAR" "runs/client/mods/$(basename "$FIXTURE_JAR")"
+
+          cat > runs/client/options.txt <<'EOF'
+          fullscreen:false
+          guiScale:2
+          enableVsync:false
+          renderDistance:2
+          simulationDistance:2
+          maxFps:30
+          EOF
+
+          export DISPLAY=:99
+          export LIBGL_ALWAYS_SOFTWARE=1
+          export XDG_RUNTIME_DIR="$RUNNER_TEMP/stage05-xdg"
+          mkdir -p "$XDG_RUNTIME_DIR"
+          chmod 700 "$XDG_RUNTIME_DIR"
+
+          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb.log 2>&1 &
+          XVFB_PID=$!
+          sleep 2
+
+          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client.log"
+          ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
+          GRADLE_PID=$!
+
+          cleanup() {
+            kill "$GRADLE_PID" 2>/dev/null || true
+            pkill -f 'net.minecraft.client.main.Main' 2>/dev/null || true
+            kill "$XVFB_PID" 2>/dev/null || true
+            wait "$GRADLE_PID" 2>/dev/null || true
+            wait "$XVFB_PID" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+
+          WINDOW_ID=""
+          for _ in $(seq 1 240); do
+            WINDOW_ID="$(xdotool search --onlyvisible --name 'Minecraft' 2>/dev/null | head -n 1 || true)"
+            if [[ -n "$WINDOW_ID" ]]; then
+              break
+            fi
+            if ! kill -0 "$GRADLE_PID" 2>/dev/null; then
+              cat "$CLIENT_LOG"
+              exit 1
+            fi
+            sleep 1
+          done
+
+          if [[ -z "$WINDOW_ID" ]]; then
+            cat "$CLIENT_LOG"
+            exit 1
+          fi
+
+          xdotool getwindowname "$WINDOW_ID" | tee build/stage05-real-client-probe/window-name.txt
+          xdotool getwindowgeometry --shell "$WINDOW_ID" | tee build/stage05-real-client-probe/window-geometry.txt
+
+          sleep 12
+          for i in 1 2 3; do
+            scrot "build/stage05-real-client-probe/main-menu-${i}.png"
+            sleep 4
+          done
+
+          if [[ -f runs/client/logs/latest.log ]]; then
+            cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest.log
+          fi
+
+          grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || {
+            if [[ -f runs/client/logs/latest.log ]]; then
+              grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
+            else
+              exit 1
+            fi
+          }
+
+          echo 'Real-client main-menu probe captured successfully.'
+
+      - name: Upload real-client probe evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stage05-real-client-probe-${{ github.sha }}
+          path: |
+            build/stage05-real-client-probe/**
+            runs/client/crash-reports/**
+          if-no-files-found: warn
+          retention-days: 3
