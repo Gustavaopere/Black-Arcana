@@ -38,11 +38,17 @@ The successful automated workflow proves only that this reference build passed t
 
 The latest exact-SHA `main` build validated during the current Stage 05 reconciliation is:
 
-- `main` SHA: `b942674eb77a99c08c1a59f378e6036cd72f45fa`;
-- post-merge workflow: `35051332466` — GREEN for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke and canonical artifact publication;
-- canonical artifact: `black-arcana-b942674eb77a99c08c1a59f378e6036cd72f45fa`;
-- artifact ID: `10429426144`;
-- artifact digest: `sha256:8f093e40f954cdaf6bb411f17e6d118f03fa6802be4bb8c3a9c37265f5dbb89d`.
+- `main` SHA: `821f9c669a794ae73992f6196d4775d925dadadc`;
+- post-merge workflow: `35103515696` — GREEN for unit tests, diff sanity, NeoForge build, built-JAR verification, Stage 05 QA companion JAR isolation, Foundation GameTests, production dedicated-server smoke, publication of both exact-SHA artifacts, and the separate `stage05_qa_companion_smoke` job including the companion dedicated-server smoke;
+- canonical artifact: `black-arcana-821f9c669a794ae73992f6196d4775d925dadadc`;
+- canonical artifact ID: `10449696114`;
+- canonical artifact digest: `sha256:be27ede83e065338552eda6d485fb0f1735d8a0aad5aeb754d0a9474edc3914d`;
+- Block I companion artifact: `black-arcana-stage05-qa-821f9c669a794ae73992f6196d4775d925dadadc`;
+- Block I companion artifact ID: `10449895415`;
+- Block I companion artifact digest: `sha256:ef94eb35ee346d49666ca83ef66213ea3095b5e49340f30a0021eb5af6e0ee96`;
+- independent ZIP verification matched both published digests;
+- extracted production JAR: `black_arcana-0.1.0-dev.jar`, `1648687` bytes, SHA-256 `f433fceb837266aea0b06d28dc506f28282c55f525773266f833eb33a78b761b`;
+- extracted Block I companion JAR: `black_arcana_stage05_qa-0.1.0-dev.jar`, `21354` bytes, SHA-256 `611850b68f83feb5bfd87093545ec9a1e80c6555c74d635a8d0f00065112e398`.
 
 This build is **available as the current canonical candidate**, but the manual campaign candidate remains unselected until actual real-client execution starts, as required below. No manual row becomes PASS, FAIL or BLOCKED from this automated evidence.
 
@@ -391,14 +397,16 @@ If a real-client `FAIL` is found, reproduce it on the exact tested SHA, add dete
 At the latest preparation/reconciliation checkpoint:
 
 - historical preparation-reference build: recorded;
-- latest validated `main` build available for a future campaign: `b942674eb77a99c08c1a59f378e6036cd72f45fa`;
-- exact-SHA automated CI for that build: GREEN (`35051332466`);
-- exact-SHA canonical QA artifact: recorded (`black-arcana-b942674eb77a99c08c1a59f378e6036cd72f45fa`, ID `10429426144`, SHA-256 `8f093e40f954cdaf6bb411f17e6d118f03fa6802be4bb8c3a9c37265f5dbb89d`);
+- latest validated `main` build available for a future campaign: `821f9c669a794ae73992f6196d4775d925dadadc`;
+- exact-SHA automated CI for that build: GREEN (`35103515696`), including both `verify` and the separate `stage05_qa_companion_smoke` job;
+- exact-SHA canonical QA artifact: recorded (`black-arcana-821f9c669a794ae73992f6196d4775d925dadadc`, ID `10449696114`, SHA-256 `be27ede83e065338552eda6d485fb0f1735d8a0aad5aeb754d0a9474edc3914d`);
+- exact-SHA Block I companion artifact: recorded (`black-arcana-stage05-qa-821f9c669a794ae73992f6196d4775d925dadadc`, ID `10449895415`, SHA-256 `ef94eb35ee346d49666ca83ef66213ea3095b5e49340f30a0021eb5af6e0ee96`);
+- independent extraction verification: production JAR `black_arcana-0.1.0-dev.jar` SHA-256 `f433fceb837266aea0b06d28dc506f28282c55f525773266f833eb33a78b761b`; companion JAR `black_arcana_stage05_qa-0.1.0-dev.jar` SHA-256 `611850b68f83feb5bfd87093545ec9a1e80c6555c74d635a8d0f00065112e398`;
 - manual campaign candidate: `NOT SELECTED`;
 - latest physical modlist preparation snapshot: recorded;
 - authorized real-client device in the current execution session: none connected;
 - manual client environment: not yet recorded;
-- Block I companion artifact/JAR: not selected or installed because the manual campaign has not started;
+- Block I companion artifact/JAR: available as exact-SHA preflight evidence but not selected or installed because the manual campaign has not started;
 - Blocks A–J: not started;
 - manual matrix changes: additional required rows are present but remain `PENDING` until direct observation;
 - Stage 05 state: `ACTIVE / IMPLEMENTATION PRESENT / REQUIRED PHYSICAL VALIDATION PENDING`;
