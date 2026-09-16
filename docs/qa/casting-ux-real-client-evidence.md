@@ -143,8 +143,12 @@ Do not infer one configuration from another. A pass at one resolution, GUI scale
 
 - Visual/layout row: full-viewport screenshot showing the relevant Black Arcana UI.
 - Interaction/input row: short recording or concise timestamped observation log proving input sequence and result.
+- Input-persistence row: one before/restart/after capture or timestamped log showing the rebind, full client restart and successful reuse of the rebound mapping.
 - Reconnect/reload/stale-state row: before/after evidence or one capture spanning the transition.
+- Cast-result correlation row: positive evidence linking a known emitted cast to its authoritative result through matching observable `castId` values where available, or another unambiguous existing spell-specific correlation surface; generic-only presentation is insufficient for PASS.
+- Client-authority-isolation row: one before/after evidence entry for every gameplay-authority dimension applicable to the exact candidate/test content, plus evidence that passive presentation interaction does not mutate synchronized hazard/gate/resource state.
 - Provider coexistence row: recording or timestamped observation log that proves the provider action/state transition plus the resulting Black Arcana authority outcome; record relevant resource/cooldown state where settlement is under test.
+- Provider-free core-input row: evidence for every required core keyboard/mouse path under the provider-absent/incompatible profile, not one representative action.
 - Any `FAIL`: exact SHA, relevant client configuration, exact reproduction steps, observed result, expected result and visual/input evidence where applicable.
 
 ---
@@ -156,15 +160,15 @@ These blocks mirror `docs/qa/casting-ux-real-client-runbook.md`. Their state her
 | Block | Scope | Execution state |
 |---|---|---|
 | A | Resolution, GUI scale and viewport containment | `NOT STARTED` |
-| B | Radial, cast separation and key bindings | `NOT STARTED` |
+| B | Radial, cast separation, key bindings and restart persistence | `NOT STARTED` |
 | C | Loadout authority and tooltip | `NOT STARTED` |
-| D | HUD lifecycle and authoritative denial | `NOT STARTED` |
+| D | HUD lifecycle, authoritative denial and cast-result correlation | `NOT STARTED` |
 | E | Arcane Resistance forecast | `NOT STARTED` |
 | F | Predictable read-only cast gates | `NOT STARTED` |
 | G | Reconnect, stale state and datapack reload | `NOT STARTED` |
-| H | Accessibility and client configuration | `NOT STARTED` |
+| H | Accessibility, client configuration and authority isolation | `NOT STARTED` |
 | I | Canonical 16-slot loadout reachability | `NOT STARTED` |
-| J | Current-modpack provider coexistence authority | `NOT STARTED` |
+| J | Current-modpack provider coexistence and provider-free core input | `NOT STARTED` |
 
 ### Block A — Resolution, GUI scale and viewport containment
 
@@ -181,7 +185,7 @@ Required coverage includes the real-client combinations allowed by the client fo
 - hazard tooltip;
 - contextual HUD with additional hazard/gate lines.
 
-### Block B — Radial, cast separation and key bindings
+### Block B — Radial, cast separation, key bindings and restart persistence
 
 Execution state: `NOT STARTED`
 
@@ -192,6 +196,7 @@ Required coverage includes:
 - selection never casting by itself;
 - rebound radial/cast/quick-slot mappings;
 - conflict discoverability;
+- full client restart after rebind, followed by successful reuse of the rebound mappings;
 - inventory/chat/other `Screen` suppressing direct cast input.
 
 ### Block C — Loadout authority and tooltip
@@ -207,13 +212,17 @@ Required coverage includes:
 - hover causing no cast and no dynamic forecast request;
 - tooltip edge/small-window/GUI-scale containment.
 
-### Block D — HUD lifecycle and authoritative denial
+### Block D — HUD lifecycle, authoritative denial and cast-result correlation
 
 Execution state: `NOT STARTED`
 
 Required coverage includes:
 
 - actual server-authored denial;
+- positive attribution of a matched result to its known emitted cast context, using matching observable `castId` values where available or another unambiguous existing spell-specific correlation surface;
+- selection changed to a distinguishable spell before the known result, without relabeling that result as the new selection;
+- unmatched/generic result remaining generic when a safe production path exists;
+- if no positive correlation surface is observable, the correlation row remains `BLOCKED` rather than being passed from generic-only behavior;
 - transient HUD lifecycle;
 - no permanent duplicate Black Arcana resource bar;
 - all five HUD anchors at `0.5×`, `1×`, `2×`;
@@ -259,7 +268,7 @@ Required coverage includes:
 - `/reload`;
 - stale forecast not overriding refreshed static preflight.
 
-### Block H — Accessibility and client configuration
+### Block H — Accessibility, client configuration and authority isolation
 
 Execution state: `NOT STARTED`
 
@@ -269,7 +278,11 @@ Required coverage includes:
 - reduced motion;
 - reduced flashes;
 - particle density `0`, `0.5`, `1`;
-- NeoForge client-config default recovery.
+- NeoForge client-config default recovery;
+- explicit applicability inventory for resource cost, cooldown, progression gate, target admission, Arcane Danger settlement and world settlement;
+- equivalent before/after server-owned evidence for every authority dimension applicable to the exact campaign;
+- applicable-but-unexercisable dimensions keeping the row `BLOCKED` rather than being inferred from another dimension;
+- radial/HUD/forecast/gate interaction not mutating synchronized hazard/gate/resource state without a new authoritative gameplay action.
 
 Future-only effects must remain subject to the matrix Stage 09 carry rule; preference persistence alone is not proof that a not-yet-existing effect obeys the preference.
 
@@ -288,7 +301,7 @@ Required coverage includes:
 
 If current production content/fixture cannot legitimately supply 16 available spells for a server-owned loadout, the row must be attempted and recorded `BLOCKED` with the concrete availability limitation. Do not add a production bypass to manufacture PASS evidence.
 
-### Block J — Current-modpack provider coexistence authority
+### Block J — Current-modpack provider coexistence authority and provider-free core input
 
 Execution state: `NOT STARTED`
 
@@ -300,7 +313,9 @@ Required coverage includes, where the assembled runtime legitimately exposes the
 - the one Black Arcana transactional probe cost settling exactly once, without an additional provider-native Iron's mana deduction;
 - the Black Arcana cooldown settling exactly once, without a second provider-native cooldown;
 - Epic Fight/EFIS client combat or animation state not becoming Black Arcana cast-legality authority;
-- optional-provider absence/incompatibility failing only the dependent feature, with no crash, duplicate/free fallback or unrelated Black Arcana authority change.
+- optional-provider absence/incompatibility failing only the dependent feature, with no crash, duplicate/free fallback or unrelated Black Arcana authority change;
+- in the provider-absent/incompatible profile, ordinary keyboard/mouse coverage for open radial, radial selection/close, cast selected and open/edit loadout, plus each quick-cast mapping intentionally bound for the campaign;
+- no core input path silently acquiring a provider/controller dependency for an operation that itself does not require that provider.
 
 A physical provider row is not proven by static source inspection, deterministic authority tests or dedicated-server CI. If the path cannot be reproduced safely on the campaign instance, record `BLOCKED` with the concrete reason rather than inferring PASS.
 
