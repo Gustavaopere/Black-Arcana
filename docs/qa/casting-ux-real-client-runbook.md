@@ -116,6 +116,42 @@ If a category cannot be produced without adding a debug bypass or changing produ
 4. Exercise particle density 0 / 0.5 / 1 and verify the preference persists locally; do not claim effect-level compliance where no Black Arcana particle effect exists yet.
 5. Reset/remove relevant client config entries through the normal supported configuration path and confirm NeoForge defaults recover safely.
 
+## Block I — Canonical 16-slot loadout reachability
+
+1. Establish a legitimate server-accepted Black Arcana loadout containing all 16 canonical slots. Do not manufacture client-only entries or bypass server availability checks merely to populate the row.
+2. Reopen/reconnect as needed and confirm the synchronized client still reflects the server-owned 16-slot loadout before testing selection.
+3. Using the supported radial paging/selection path, deliberately reach and select every slot `0..15` at least once. Direct quick-cast mappings cover only their supported subset and are not a substitute for proving slots `8..15` reachable.
+4. For each page transition, confirm focus/selection remains within the synchronized loadout and cannot advance to a forged seventeenth slot or substitute another spell identity.
+5. Confirm selection of each slot changes presentation/selected intent only. Do not count a selection as successful if it implicitly casts.
+6. Record one continuous interaction capture when practical, or a timestamped slot-by-slot observation log proving all 16 slots were reached on the exact campaign candidate.
+
+If a legitimate 16-entry server-owned loadout cannot be created with the current production content/fixture, attempt the row and record `BLOCKED` with the concrete availability limitation. Do not add a production bypass solely to make the QA row executable.
+
+## Block J — Current-modpack provider coexistence authority
+
+Before this block, re-read the actual physical modlist for the tested instance and record the exact installed versions. The planning baseline includes Iron's Spells 'n Spellbooks `1.21.1-3.16.3`, Spell Actionbar `1.1.4`, Epic Fight `21.17.3.1`, EFIS Compat `3.1.0` and Controlling `19.0.5`; treat those as the tested versions only when the physical instance still matches them.
+
+### Iron's-hosted Black Arcana probe
+
+1. Invoke the supported Iron's-hosted `black_arcana:irons_integration_probe` once through its normal provider host surface.
+2. Capture enough evidence to identify the single physical/provider invocation and the resulting Black Arcana result/context.
+3. Confirm the invocation produces at most one Black Arcana root cast/result; no duplicate Black Arcana effect/result/cooldown settlement may appear from one host action.
+4. Record the relevant Iron's mana state before and after the invocation. Confirm the observed debit corresponds to the one Black Arcana transactional probe cost and that no additional provider-native mana deduction is applied in parallel.
+5. Confirm the Black Arcana cooldown settles once and that no second provider-native cooldown is stacked onto the hosted transaction.
+6. Repeat only as needed to distinguish one-settlement behavior from ordinary later invocations; do not infer one-root semantics from animation count alone.
+
+### Epic Fight / EFIS authority isolation
+
+1. With Epic Fight/EFIS present, establish a reproducible Black Arcana cast whose ordinary server-owned gates are satisfied.
+2. Repeat the same Black Arcana operation while changing only the relevant client combat/animation mode/state where the installed version permits it.
+3. Confirm Epic Fight/EFIS client state does not become Black Arcana cast-legality authority. A cosmetic or animation difference may be recorded separately, but it must not silently allow or deny a cast that the Black Arcana server runtime otherwise treats identically.
+
+### Optional-provider failure boundary
+
+Where a safe reproducible profile exists, start the dependent feature with its optional provider absent or demonstrably incompatible and confirm only that dependent feature fails closed: no client/server crash, no duplicate/free fallback, and no unrelated Black Arcana casting failure.
+
+If provider absence/incompatibility cannot be exercised without destroying the campaign instance or changing production semantics, record that matrix row `BLOCKED` with the concrete reason. Do not infer a physical PASS from dedicated-server CI or static optional-classloading tests.
+
 ## Evidence report template
 
 Create one evidence section per matrix row with:
