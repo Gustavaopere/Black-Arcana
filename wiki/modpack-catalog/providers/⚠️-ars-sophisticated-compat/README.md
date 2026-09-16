@@ -1,67 +1,73 @@
-# Ars Sophisticated Compatibility 0.3.0
+# Sophisticated Backpacks: Ars Compat 0.3.0
 
-Status: `PHYSICAL IDENTITY CONFIRMED / OFFICIAL 0.3.0 FAMILY CATALOGED / EXACT PHYSICAL INTERNALS UNOBSERVED`
+Status: `EXACT PHYSICAL RELEASE ALIGNED TO OFFICIAL FILE 8653384 / ARS NOUVEAU↔SOPHISTICATED BACKPACKS COMPATIBILITY BRIDGE / PUBLISHER SURFACE CLOSED / 0 PROVIDER-OWNED SPELL-GLYPH-RITUAL IDENTITIES PUBLISHED / CATALOG CLOSED / RUNTIME QA FAIL-CLOSED`
 
-## Physical pack authority
+## Installed identity
 
-Latest physical modlist snapshot (2026-09-08, 595 top-level entries) contains:
+Physical pack authority records:
 
 - JAR: `arssophisticatedcompat-0.3.0.jar`;
 - mod id: `arssophisticatedcompat`;
 - runtime version: `0.3.0`;
-- SHA-1: `7cc6c1e1d92d109230f68b6a63dc4bfb13c245a6`;
+- loader/game: NeoForge / Minecraft 1.21.1;
+- physical SHA-1: `7cc6c1e1d92d109230f68b6a63dc4bfb13c245a6`;
 - physical CurseForge fingerprint/hash column: `2725765601`.
 
-A current independent modpack index maps that exact filename/SHA-1 to CurseForge file `8653384`. This file-id mapping is secondary evidence; the physical filename/mod-id/version/SHA-1 above remain the installed authority.
+Independent current modpack indexing maps that exact filename and SHA-1 to CurseForge File ID `8653384`. The official CurseForge file page for project `1653477` independently identifies File ID `8653384` as `arssophisticatedcompat-0.3.0.jar`, release `0.3.0`, NeoForge 1.21.1, uploaded 2026-08-15.
 
-Current relevant host stack:
+This closes the installed release identity at the catalogue/provenance level. It does not claim that Black Arcana independently re-downloaded and byte-compared a fresh publisher copy in this checkpoint.
 
-- Ars Nouveau `5.13.1` — `ars_nouveau-1.21.1-5.13.1.jar`;
-- Sophisticated Core `1.5.1` — `sophisticatedcore-1.21.1-1.5.1.2341.jar`, SHA-1 `9a0ff3064fc1328165bc77fc1409a6adf2d9a8fa`;
-- Sophisticated Storage `1.5.91` — `sophisticatedstorage-1.21.1-1.5.91.2127.jar`, SHA-1 `a256b4d3c1218754a3172253e6bda644551be6a5`.
+## Correction of the previous evidence model
 
-The Notion dossier still says Sophisticated Core 1.5.0; physical modlist authority supersedes that stale dependency value for this checkpoint.
+The earlier catalogue compared the physical JAR against **Sophisticated Storage: Ars Compat** File ID `8655579`, filename `arssophisticatedstoragecompat-0.3.0.jar`, and therefore treated the installed artifact as a different byte artifact.
 
-## Distinct official 0.3.0 publication
+That comparison joined two distinct sibling projects:
 
-The accessible official CurseForge project `Sophisticated Storage: Ars Compat | Sophisticated Storage Ars-Nouveau Compatibility` publishes NeoForge 1.21.1 file:
+- File `8653384` / `arssophisticatedcompat-0.3.0.jar` = **Sophisticated Backpacks: Ars Compat**;
+- File `8655579` / `arssophisticatedstoragecompat-0.3.0.jar` = **Sophisticated Storage: Ars Compat**.
 
-- `arssophisticatedstoragecompat-0.3.0.jar`;
-- CurseForge file `8655579`;
-- version `0.3.0`;
-- uploader `LuminaCherry`;
-- release date 2026-08-15;
-- project license `All Rights Reserved`;
-- environment `Client & Server`.
+The installed provider is the **Backpacks** compat. The Storage compat remains a separate product and is not used as the binary authority for this folder.
 
-Independent indexing reports SHA-1 `1a5b5e262b577a0ffa015060bdfe610c0bc7ba01` for that official file.
+## Exact publisher surface for File 8653384
 
-The official artifact is not byte-identical to the installed physical JAR. Same nominal version does not establish binary equivalence.
+The official 0.3.0 NeoForge 1.21.1 release describes a compatibility addon for Ars Nouveau and Sophisticated Backpacks with these gameplay-facing surfaces:
 
-## Functional-family baseline
+1. **Source Storage Upgrade** — stores Ars Source in a backpack, with capacity scaling through Sophisticated Stack Upgrades;
+2. **Backpack Sourcelink upgrades** — convert eligible backpack contents into Source;
+3. **Potion Jar Upgrade** — stores potion duration and maintains potion effects;
+4. **Enchanter's Upgrade** — repairs enchanted items using stored Source;
+5. Ars Nouveau-themed backpack upgrade templates and recipes.
 
-The official 0.3.0 release documents four upgrade surfaces:
+The project description names Agronomic, Alchemical, Mycelial, Volcanic and Vitalic Sourcelink variants.
 
-1. Source Storage Upgrade;
-2. Storage Source Link Upgrade;
-3. Potion Jar Upgrade;
-4. Enchanter's Upgrade.
+Publisher-declared required families are Ars Nouveau, Sophisticated Backpacks and Sophisticated Core. Exact host versions are not inferred here when the current physical snapshot does not expose them in this provider dossier.
 
-It also documents an Ars-themed upgrade template and inverted storage-edition textures.
+## Semantic catalogue result
 
-These facts describe the official 0.3.0 product family. They do not prove exact registry IDs, classes, formulas, recipes, tick cadence, networking, mixins, config keys or dependency ranges inside the installed `arssophisticatedcompat-0.3.0.jar`.
+The exact release is an **upgrade/compatibility bridge**, not a spell school or casting provider. The publisher surface exposes storage/conversion/potion/repair upgrades and templates; it publishes no provider-owned standalone spell, glyph or ritual identities.
+
+Catalogue consequence:
+
+- standalone spells owned by this provider: **0**;
+- glyph/spell-part identities owned by this provider: **0**;
+- rituals owned by this provider: **0**;
+- semantic magic identities added to the strict spell/action ledger: **0**.
+
+This is a closed zero-semantic catalogue result at the accepted publisher/exact-release evidence level. It does not assert the absence of internal helper registries, item IDs or implementation classes; those belong to runtime/API inspection, not to the spell-identity count.
 
 ## Authority boundary
 
-- Ars Nouveau owns Source and Ars magical semantics.
-- Sophisticated Storage/Core own storage inventory, upgrade lifecycle, stacking, container concurrency and GUI state.
-- Ars Sophisticated Compatibility owns only the bridge between those providers.
-- Black Arcana owns none of those provider balances or storage internals and must not recreate them.
+- Ars Nouveau owns Source identity/economy and Ars magical semantics.
+- Sophisticated Backpacks/Core own backpack inventory, upgrades, stacking, persistence and container lifecycle.
+- this compat owns only the bridge upgrades between those providers.
+- Black Arcana must not mirror Source, duplicate repair/potion settlement, invent a second conversion loop or reinterpret an upgrade transaction as a Black Arcana cast.
 
-No Black Arcana spell, resource, hazard or progression path may infer a second Source balance from this addon.
+## Runtime boundary
 
-## Catalog classification
+Catalog completion does **not** certify runtime compatibility. Exact classes, registries, configuration, networking, lifecycle hooks and full-pack behavior remain fail-closed until supported evidence or runtime QA establishes them.
 
-This is a cross-provider compatibility layer, not a spell school and not a standalone casting system.
+See:
 
-Exact physical-binary integration remains fail-closed until the installed JAR/API is directly inspectable and current-host behavior is validated.
+- [Functional contract](FUNCTIONAL-CONTRACT.md)
+- [Transaction/lifecycle boundaries](TRANSACTION-LIFECYCLE.md)
+- [Runtime QA gate](RUNTIME-QA.md)
