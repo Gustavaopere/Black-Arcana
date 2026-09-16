@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.client;
 
+import com.electronwill.nightconfig.core.CommentedConfig;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -7,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ClientConfigAuthorityContractTest {
@@ -37,6 +40,49 @@ class ClientConfigAuthorityContractTest {
         assertTrue(source.contains("defineInRange(\"particleDensity\", 1.0D, 0.0D, 1.0D)"));
         assertTrue(source.contains("define(\"reducedMotion\", false)"));
         assertTrue(source.contains("define(\"reducedFlashes\", false)"));
+    }
+
+    @Test
+    void modConfigSpecPreservesValidPreferencesAndRecoversInvalidOrMissingDefaults() {
+        CommentedConfig config = CommentedConfig.inMemory();
+        config.set("contextualHud", false);
+        config.set("hudScale", 1.5D);
+        config.set("selectionDurationTicks", 120);
+        config.set("feedbackDurationTicks", -1);
+        config.set("feedbackLevel", "VERBOSE");
+        config.set("radialBehavior", "HOLD");
+        config.set("particleDensity", 2.0D);
+        config.set("reducedMotion", true);
+
+        assertFalse(BlackArcanaClientConfig.SPEC.isCorrect(config),
+                "missing and out-of-range values must require NeoForge config correction");
+
+        BlackArcanaClientConfig.SPEC.correct(config);
+
+        assertTrue(BlackArcanaClientConfig.SPEC.isCorrect(config),
+                "NeoForge config correction must restore the document to the registered spec");
+        assertEquals(false, config.get("contextualHud"),
+                "valid customized client preferences must survive correction");
+        assertEquals(true, config.get("discoverabilityHints"),
+                "missing booleans must recover to the registered default");
+        assertEquals(1.5D, ((Number) config.get("hudScale")).doubleValue(), 0.0D,
+                "valid bounded values must survive correction");
+        assertEquals(HudLayout.Anchor.BOTTOM_CENTER, config.get("hudAnchor"),
+                "missing enum values must recover to the registered default");
+        assertEquals(120, ((Number) config.get("selectionDurationTicks")).intValue(),
+                "valid duration values must survive correction");
+        assertEquals(80, ((Number) config.get("feedbackDurationTicks")).intValue(),
+                "invalid duration values must recover to the registered default");
+        assertEquals("VERBOSE", config.get("feedbackLevel"),
+                "valid serialized enum preferences must survive correction");
+        assertEquals("HOLD", config.get("radialBehavior"),
+                "valid serialized radial behavior must survive correction");
+        assertEquals(1.0D, ((Number) config.get("particleDensity")).doubleValue(), 0.0D,
+                "out-of-range particle density must recover to the registered default");
+        assertEquals(true, config.get("reducedMotion"),
+                "valid accessibility preferences must survive correction");
+        assertEquals(false, config.get("reducedFlashes"),
+                "missing accessibility preferences must recover to the registered default");
     }
 
     @Test
