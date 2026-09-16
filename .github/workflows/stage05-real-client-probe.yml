@@ -36,7 +36,7 @@ jobs:
       - name: Build removable Stage 05 QA companion
         run: ./gradlew --no-daemon stage05QaFixtureJar
 
-      - name: Launch real NeoForge client and capture main menu
+      - name: Launch real NeoForge client and capture UI screens
         shell: bash
         run: |
           set -euo pipefail
@@ -50,7 +50,7 @@ jobs:
           guiScale:2
           enableVsync:false
           renderDistance:2
-          simulationDistance:2
+          simulationDistance:5
           maxFps:30
           EOF
 
@@ -99,10 +99,24 @@ jobs:
           xdotool getwindowgeometry --shell "$WINDOW_ID" | tee build/stage05-real-client-probe/window-geometry.txt
 
           sleep 12
-          for i in 1 2 3; do
-            scrot "build/stage05-real-client-probe/main-menu-${i}.png"
-            sleep 4
-          done
+          scrot build/stage05-real-client-probe/main-menu.png
+
+          # Main-menu Mods button, relative to the fixed 854x480 client window.
+          xdotool mousemove --window "$WINDOW_ID" 427 348 click 1
+          sleep 3
+          scrot build/stage05-real-client-probe/mods-screen.png
+
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
+
+          # Main-menu Options button, relative to the fixed 854x480 client window.
+          xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
+          sleep 3
+          scrot build/stage05-real-client-probe/options-screen.png
+
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
+          scrot build/stage05-real-client-probe/main-menu-return.png
 
           if [[ -f runs/client/logs/latest.log ]]; then
             cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest.log
@@ -116,7 +130,7 @@ jobs:
             fi
           }
 
-          echo 'Real-client main-menu probe captured successfully.'
+          echo 'Real-client UI probe captured successfully.'
 
       - name: Upload real-client probe evidence
         if: always()
