@@ -47,6 +47,8 @@ Do not infer these facts from local timers, ids, particles, world scans or provi
 
 The test-only RED checkpoint `ecfa1709ef1acd51c62d9981b63513d5a15d8118` failed workflow `35043584131` at unit tests before the revision-aware state seam existed. Runtime HEAD `c6e2fa854f776df8d074d24f6da1e7f758b9153c` then passed workflow `35043812423` for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. This is deterministic supporting evidence only and does not satisfy the physical-state acceptance below.
 
+Review follow-up PR #279 strengthened the regression shape so it no longer replays only an already-accepted request ID: it accepts one forecast under revision A, allocates a distinct higher request under revision A without receiving its response, crosses the reload boundary, then delivers that outstanding pre-reload response and requires rejection before proving a post-reload request remains acceptable. Test-only HEAD `12b3ef4bda0c729bbd49b4f3bf7ef2b8b5926173` passed workflow `35046833742` for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. This strengthens deterministic coverage only; it does not promote 05.03 or any manual matrix row.
+
 ## Remaining engineering acceptance
 
 - authoritative denial remains distinguishable from advisory forecast;
