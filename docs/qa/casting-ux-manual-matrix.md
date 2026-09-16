@@ -40,6 +40,7 @@ This document deliberately does **not** mark visual/manual rows as passed. They 
 | Input | Rebind radial/cast/quick slots | Conflicts are discoverable through vanilla controls and bindings remain usable | ⬜ PENDING |
 | GUI focus | Inventory/chat/other Screen open | Cast inputs do not fire through another GUI | ⬜ PENDING |
 | Loadout | Edit/apply/clear/reopen | Server response remains canonical and draft never bypasses slot/availability checks | ⬜ PENDING |
+| Loadout bound | Legitimate synchronized 16-slot loadout | Every canonical slot `0..15` remains reachable through supported selection/radial paging; paging/selection never exceeds the synchronized server-owned loadout and never forges another spell identity | ⬜ PENDING |
 | Loadout tooltip | Hover spells with normal and non-normal hazard metadata | Tooltip shows only synchronized static danger tier/minimum/recommended metadata; it does not issue a cast, request a forecast or imply current resistance | ⬜ PENDING |
 | Loadout tooltip | Small window / GUI scale 4 / edge rows | Tooltip remains readable/on-screen and does not obscure loadout interaction beyond normal vanilla tooltip behavior | ⬜ PENDING |
 | Session | Disconnect/reconnect same player | Old result/loadout/HUD state does not flash before server snapshots arrive | ⬜ PENDING |
@@ -58,6 +59,9 @@ This document deliberately does **not** mark visual/manual rows as passed. They 
 | Accessibility | particle density 0 / 0.5 / 1 | Preference persists locally; future Black Arcana particles must consume the multiplier | ⬜ PENDING |
 | Client config | Missing/reset config entries | NeoForge defaults recover safely | ⬜ PENDING |
 | F1 / hidden GUI | Toggle vanilla HUD visibility | Black Arcana layer follows expected vanilla HUD behavior | ⬜ PENDING |
+| Provider coexistence | Iron's-hosted `black_arcana:irons_integration_probe` | One provider invocation produces at most one Black Arcana root cast/result; Black Arcana transactional cost and cooldown settle exactly once; Iron's native mana/cooldown are not additionally charged for the hosted transaction | ⬜ PENDING |
+| Provider coexistence | Epic Fight / EFIS present during Black Arcana casting | Client combat/animation state never becomes Black Arcana cast-legality authority; casting remains server-authoritative | ⬜ PENDING |
+| Optional providers | Required optional provider absent/incompatible where reproducible | Only the dependent feature fails closed; no crash, duplicate/free fallback, or unverified hard dependency is introduced | ⬜ PENDING |
 
 ## Closure rule
 
