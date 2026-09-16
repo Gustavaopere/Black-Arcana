@@ -118,15 +118,13 @@ jobs:
           sleep 3
           scrot build/stage05-real-client-probe/key-binds-screen.png
 
-          # Give the native list focus, then use keyboard navigation instead of pointer-wheel/drag.
-          xdotool mousemove --window "$WINDOW_ID" 620 250 click 1
-          xdotool key --window "$WINDOW_ID" End
-          sleep 2
-          scrot build/stage05-real-client-probe/key-binds-end-key.png
-          for _ in $(seq 1 24); do
-            xdotool key --window "$WINDOW_ID" Page_Down
-          done
-          sleep 2
+          # The scrollbar thumb begins around x=792,y=90 in the fixed 854x480 client window.
+          # Drag the thumb itself to the bottom without clicking any key-mapping button.
+          xdotool mousemove --window "$WINDOW_ID" 792 90
+          xdotool mousedown 1
+          xdotool mousemove --window "$WINDOW_ID" 792 390
+          xdotool mouseup 1
+          sleep 3
           scrot build/stage05-real-client-probe/key-binds-bottom.png
 
           xdotool key --window "$WINDOW_ID" Escape
@@ -153,7 +151,7 @@ jobs:
             fi
           }
 
-          echo 'Real-client keyboard-navigation keybind probe captured successfully.'
+          echo 'Real-client corrected-scrollbar keybind probe captured successfully.'
 
       - name: Upload real-client probe evidence
         if: always()
