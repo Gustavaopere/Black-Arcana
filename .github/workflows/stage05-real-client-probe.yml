@@ -114,6 +114,13 @@ jobs:
           sleep 3
           scrot build/stage05-real-client-probe/options-screen.png
 
+          # Options -> Controls.
+          xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
+          sleep 3
+          scrot build/stage05-real-client-probe/controls-screen.png
+
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
           xdotool key --window "$WINDOW_ID" Escape
           sleep 2
           scrot build/stage05-real-client-probe/main-menu-return.png
@@ -130,7 +137,7 @@ jobs:
             fi
           }
 
-          echo 'Real-client UI probe captured successfully.'
+          echo 'Real-client controls probe captured successfully.'
 
       - name: Upload real-client probe evidence
         if: always()
