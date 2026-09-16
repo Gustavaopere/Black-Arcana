@@ -128,3 +128,12 @@ jobs:
           path: build/libs/black_arcana-*.jar
           if-no-files-found: error
           retention-days: 7
+
+      - name: Publish Stage 05 QA companion JAR
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v7
+        with:
+          name: black-arcana-stage05-qa-${{ github.sha }}
+          path: build/libs/black_arcana_stage05_qa-*.jar
+          if-no-files-found: error
+          retention-days: 7
