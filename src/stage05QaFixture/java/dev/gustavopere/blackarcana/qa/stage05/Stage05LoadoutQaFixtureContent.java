@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.qa.stage05;
 
+import com.mojang.logging.LogUtils;
 import dev.gustavopere.blackarcana.api.ArcanaCastEngine;
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 import dev.gustavopere.blackarcana.api.ArcanaCost;
@@ -8,6 +9,7 @@ import dev.gustavopere.blackarcana.api.ArcanaServices;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.stream.IntStream;
  * they are selection fixtures, not free gameplay spells.
  */
 public final class Stage05LoadoutQaFixtureContent {
+    private static final Logger LOGGER = LogUtils.getLogger();
     public static final String NAMESPACE = "black_arcana_stage05_qa";
     public static final List<ArcanaSpellId> SPELL_IDS = IntStream.rangeClosed(1, 16)
             .mapToObj(slot -> ArcanaSpellId.parse(NAMESPACE + ":slot_%02d".formatted(slot)))
@@ -47,6 +50,7 @@ public final class Stage05LoadoutQaFixtureContent {
         for (ArcanaSpellId spellId : SPELL_IDS) {
             runtime.installEngine(spellId, selectionOnlyEngine(runtime));
         }
+        LOGGER.info("Black Arcana Stage 05 QA fixture installed {} server-authoritative selection-only spells", SPELL_IDS.size());
     }
 
     private static ArcanaCastEngine selectionOnlyEngine(ArcanaServerRuntime runtime) {
