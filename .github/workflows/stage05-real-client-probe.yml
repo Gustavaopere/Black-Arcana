@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ui_rebind:
+  singleplayer_calibrate:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -36,7 +36,7 @@ jobs:
       - name: Build removable Stage 05 QA companion
         run: ./gradlew --no-daemon stage05QaFixtureJar
 
-      - name: Rebind Black Arcana radial through native Controls UI
+      - name: Rebind through native UI and capture real Singleplayer screen
         shell: bash
         run: |
           set -euo pipefail
@@ -61,9 +61,9 @@ jobs:
           mkdir -p "$XDG_RUNTIME_DIR"
           chmod 700 "$XDG_RUNTIME_DIR"
 
-          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-rebind.log 2>&1 &
+          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-singleplayer.log 2>&1 &
           XVFB_PID=$!
-          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-rebind.log"
+          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-singleplayer.log"
           ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
           GRADLE_PID=$!
 
@@ -89,11 +89,11 @@ jobs:
             sleep 1
           done
           test -n "$WINDOW_ID"
-          echo "$WINDOW_ID" > build/stage05-real-client-probe/rebind-window-id.txt
+          echo "$WINDOW_ID" > build/stage05-real-client-probe/singleplayer-window-id.txt
 
           sleep 24
           ! grep -Fq 'Failed to load options' "$CLIENT_LOG"
-          scrot build/stage05-real-client-probe/main-menu-before-rebind.png
+          scrot build/stage05-real-client-probe/main-menu-before-native-rebind.png
 
           # Main menu -> Options -> Controls -> Key Binds.
           xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
@@ -105,163 +105,43 @@ jobs:
           xdotool mousemove 700 360
           for _ in $(seq 1 120); do xdotool click 5; done
           sleep 2
-          scrot build/stage05-real-client-probe/key-binds-before-rebind.png
 
-          # Rebind Open Spell Radial from R to B through Minecraft's ordinary Key Binds UI.
+          # Rebind Open Spell Radial R -> B through Minecraft's native Key Binds UI.
           xdotool mousemove --window "$WINDOW_ID" 580 75 click 1
           sleep 1
           xdotool key --window "$WINDOW_ID" b
           sleep 2
-          scrot build/stage05-real-client-probe/key-binds-after-rebind.png
+          scrot build/stage05-real-client-probe/key-binds-after-native-rebind.png
 
-          # Done -> return toward main menu so Minecraft persists the mapping.
+          # Done -> back to title screen.
           xdotool mousemove --window "$WINDOW_ID" 584 448 click 1
           sleep 2
           xdotool key --window "$WINDOW_ID" Escape
           sleep 1
           xdotool key --window "$WINDOW_ID" Escape
-          sleep 2
+          sleep 3
 
-          cp runs/client/options.txt build/stage05-real-client-probe/options-after-ui-rebind.txt
-          grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-after-ui-rebind.txt
           grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
           grep -Fq 'key_key.black_arcana.cast_selected:key.keyboard.v' runs/client/options.txt
           test "$(grep -Ec '^key_key\.black_arcana\.(edit_loadout|quick_cast_[1-8]):key\.keyboard\.unknown$' runs/client/options.txt)" -eq 9
+          scrot build/stage05-real-client-probe/title-before-singleplayer.png
+
+          # Title screen -> Singleplayer. Capture the exact next screen before attempting world creation.
+          xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
+          sleep 6
+          scrot build/stage05-real-client-probe/select-world-calibrated.png
+
+          if [[ -f runs/client/logs/latest.log ]]; then
+            cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-singleplayer.log
+          fi
           grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
+          echo 'Real-client Singleplayer calibration captured.'
 
-          echo 'Native UI rebind state captured.'
-
-      - name: Publish persisted rebind state for fresh-runner restart
-        uses: actions/upload-artifact@v7
-        with:
-          name: stage05-rebind-state-${{ github.sha }}
-          path: runs/client/options.txt
-          if-no-files-found: error
-          retention-days: 3
-
-      - name: Upload rebind evidence
+      - name: Upload singleplayer calibration evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: stage05-real-client-rebind-evidence-${{ github.sha }}
-          path: |
-            build/stage05-real-client-probe/**
-            runs/client/logs/latest.log
-            runs/client/crash-reports/**
-          if-no-files-found: warn
-          retention-days: 3
-
-  restart_verify:
-    needs: ui_rebind
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    steps:
-      - name: Checkout exact candidate branch
-        uses: actions/checkout@v4
-
-      - name: Set up Java 21
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '21'
-
-      - name: Install virtual-display capture tools
-        shell: bash
-        run: |
-          set -euo pipefail
-          sudo apt-get update
-          sudo apt-get install -y xvfb xdotool scrot mesa-utils libgl1-mesa-dri
-
-      - name: Build removable Stage 05 QA companion
-        run: ./gradlew --no-daemon stage05QaFixtureJar
-
-      - name: Download persisted state from rebind runner
-        uses: actions/download-artifact@v8
-        with:
-          name: stage05-rebind-state-${{ github.sha }}
-          path: build/imported-rebind-state
-
-      - name: Launch fresh-runner client and verify persisted rebind
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p build/stage05-real-client-probe runs/client/mods runs/client
-          FIXTURE_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_stage05_qa-*.jar' | head -n 1)"
-          test -n "$FIXTURE_JAR"
-          cp "$FIXTURE_JAR" "runs/client/mods/$(basename "$FIXTURE_JAR")"
-          cp build/imported-rebind-state/options.txt runs/client/options.txt
-
-          # The persisted value must already be B before this second client starts.
-          grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
-          grep -Fq 'key_key.black_arcana.cast_selected:key.keyboard.v' runs/client/options.txt
-
-          export DISPLAY=:99
-          export LIBGL_ALWAYS_SOFTWARE=1
-          export XDG_RUNTIME_DIR="$RUNNER_TEMP/stage05-xdg"
-          mkdir -p "$XDG_RUNTIME_DIR"
-          chmod 700 "$XDG_RUNTIME_DIR"
-
-          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-restart.log 2>&1 &
-          XVFB_PID=$!
-          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-restart.log"
-          ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
-          GRADLE_PID=$!
-
-          cleanup() {
-            kill "$GRADLE_PID" 2>/dev/null || true
-            pkill -f 'net.minecraft.client.main.Main' 2>/dev/null || true
-            kill "$XVFB_PID" 2>/dev/null || true
-            wait "$GRADLE_PID" 2>/dev/null || true
-            wait "$XVFB_PID" 2>/dev/null || true
-          }
-          trap cleanup EXIT
-
-          WINDOW_ID=""
-          for _ in $(seq 1 240); do
-            WINDOW_ID="$(xdotool search --onlyvisible --name 'Minecraft' 2>/dev/null | head -n 1 || true)"
-            if [[ -n "$WINDOW_ID" ]]; then
-              break
-            fi
-            if ! kill -0 "$GRADLE_PID" 2>/dev/null; then
-              cat "$CLIENT_LOG"
-              exit 1
-            fi
-            sleep 1
-          done
-          test -n "$WINDOW_ID"
-          echo "$WINDOW_ID" > build/stage05-real-client-probe/restart-window-id.txt
-
-          sleep 24
-          ! grep -Fq 'Failed to load options' "$CLIENT_LOG"
-          scrot build/stage05-real-client-probe/main-menu-after-restart.png
-
-          # Confirm the second Minecraft instance preserved the mapping after startup.
-          cp runs/client/options.txt build/stage05-real-client-probe/options-after-restart.txt
-          grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-after-restart.txt
-          grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
-          grep -Fq 'key_key.black_arcana.cast_selected:key.keyboard.v' runs/client/options.txt
-          test "$(grep -Ec '^key_key\.black_arcana\.(edit_loadout|quick_cast_[1-8]):key\.keyboard\.unknown$' runs/client/options.txt)" -eq 9
-
-          # Main menu -> Options -> Controls -> Key Binds and capture visual state.
-          xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
-          sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
-          sleep 2
-          xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
-          sleep 2
-          xdotool mousemove 700 360
-          for _ in $(seq 1 120); do xdotool click 5; done
-          sleep 2
-          scrot build/stage05-real-client-probe/key-binds-after-restart.png
-
-          grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
-          echo 'Fresh-runner real-client rebind/restart preflight: PASS'
-
-      - name: Upload restart evidence
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: stage05-real-client-restart-evidence-${{ github.sha }}
+          name: stage05-real-client-singleplayer-calibration-${{ github.sha }}
           path: |
             build/stage05-real-client-probe/**
             runs/client/logs/latest.log
