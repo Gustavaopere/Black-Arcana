@@ -114,15 +114,22 @@ jobs:
           sleep 3
           scrot build/stage05-real-client-probe/options-screen.png
 
-          # Options -> Controls.
+          # Options -> Controls -> Key Binds.
           xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
           sleep 3
           scrot build/stage05-real-client-probe/controls-screen.png
-
-          # Controls -> Key Binds.
           xdotool mousemove --window "$WINDOW_ID" 584 94 click 1
           sleep 3
           scrot build/stage05-real-client-probe/key-binds-screen.png
+
+          # Scroll the native key-bind list to its end. Custom mod categories are registered
+          # after vanilla categories and should be observable there if client registration is real.
+          xdotool mousemove --window "$WINDOW_ID" 650 300
+          for _ in $(seq 1 60); do
+            xdotool click 5
+          done
+          sleep 3
+          scrot build/stage05-real-client-probe/key-binds-bottom.png
 
           xdotool key --window "$WINDOW_ID" Escape
           sleep 2
@@ -132,6 +139,10 @@ jobs:
           sleep 2
           scrot build/stage05-real-client-probe/main-menu-return.png
 
+          if [[ -f runs/client/options.txt ]]; then
+            cp runs/client/options.txt build/stage05-real-client-probe/options-after-client.txt
+            grep -i 'black_arcana' runs/client/options.txt > build/stage05-real-client-probe/black-arcana-key-options.txt || true
+          fi
           if [[ -f runs/client/logs/latest.log ]]; then
             cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest.log
           fi
@@ -144,7 +155,7 @@ jobs:
             fi
           }
 
-          echo 'Real-client key-bind probe captured successfully.'
+          echo 'Real-client key-bind/default probe captured successfully.'
 
       - name: Upload real-client probe evidence
         if: always()
