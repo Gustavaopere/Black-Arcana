@@ -6,7 +6,7 @@
 
 This ledger is the evidence target required by `plans/05-casting-ux/🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-real-client-runbook.md`.
 
-It currently records **campaign preparation only**. No Minecraft client observation has been performed through this ledger, no manual matrix row is PASS/FAIL/BLOCKED from this file, and `docs/qa/casting-ux-manual-matrix.md` remains unchanged.
+It currently records **campaign preparation only**. No Minecraft client observation has been performed through this ledger and no manual matrix row is PASS/FAIL/BLOCKED from this file. Preparation/reconciliation may add or refine `PENDING` coverage rows when canonical numbered-plan requirements were not yet represented; observed row results/statuses remain unchanged until direct evidence is recorded.
 
 Automated CI, artifact publication, repository inspection and fixture availability are supporting/preflight evidence only. They do not satisfy any row that requires direct real-client observation.
 
@@ -324,7 +324,7 @@ Copy this section once for each matrix row actually exercised. Do not pre-fill a
 
 ## 8. Matrix/status update rule
 
-`docs/qa/casting-ux-manual-matrix.md` must be updated only from completed entries in this ledger.
+Observed row results/statuses in `docs/qa/casting-ux-manual-matrix.md` must be updated only from completed entries in this ledger. Preparation/reconciliation may add or refine `PENDING` coverage rows needed to represent canonical numbered-plan requirements, but it must not assign `PASS`, `FAIL` or `BLOCKED` without direct evidence.
 
 Do not:
 
