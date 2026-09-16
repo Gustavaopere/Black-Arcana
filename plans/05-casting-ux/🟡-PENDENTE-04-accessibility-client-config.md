@@ -34,11 +34,15 @@ Controlling may aid key discovery but is not a hard dependency.
 
 Cover enum/default/bounds, persistence/default recovery, settings remaining client-only, no gameplay packet/value changes from presentation preferences, radial interaction semantics and safe session teardown.
 
+`ClientConfigAuthorityContractTest` deterministically anchors the current enum/default/bound contract, proves registration through the `Dist.CLIENT` entrypoint as `ModConfig.Type.CLIENT`, and fails if `BlackArcanaClientConfig` leaks into `ClientInputController` or any `network/**` Java source. This is machine-level authority-isolation evidence only; it does not replace normal client-config persistence/recovery or physical input observation.
+
+`RadialToggleInputTest` covers the bounded TOGGLE/HOLD close-decision semantics in production code. `ClientInputAuthorityWiringTest` covers ordinary rebindable mappings and GUI-focus fail-closed wiring. These deterministic tests support, but do not satisfy, the required physical-client acceptance below.
+
 ## Remaining engineering acceptance
 
 - config persists and recovers through normal client lifecycle;
 - toggle/hold input semantics are directly observed;
-- no preference affects gameplay authority;
+- no preference affects gameplay authority in the physical client;
 - core keyboard/mouse actions remain usable without optional providers.
 
 Perceptual contrast, reduced-motion/flash behavior, particle visual density, visual redundancy, localization layout and HUD/tooltip overlap are delegated to visual production.
