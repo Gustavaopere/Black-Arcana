@@ -148,6 +148,32 @@ test {
     }
 }
 
+var stage05QaFixtureProperties = [
+        minecraft_version_range: minecraft_version_range,
+        neo_version             : neo_version,
+        loader_version_range    : loader_version_range,
+        mod_version             : mod_version,
+]
+
+tasks.named('processStage05QaFixtureResources', ProcessResources).configure {
+    inputs.properties stage05QaFixtureProperties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand stage05QaFixtureProperties
+    }
+}
+
+tasks.register('stage05QaFixtureJar', Jar) {
+    dependsOn tasks.named('stage05QaFixtureClasses')
+    archiveBaseName.set('black_arcana_stage05_qa')
+    archiveVersion.set(project.mod_version)
+    from(sourceSets.stage05QaFixture.output)
+    from('LICENSE')
+    from('THIRD_PARTY_NOTICES.md')
+    manifest {
+        attributes('Automatic-Module-Name': 'dev.gustavopere.blackarcana.stage05qa')
+    }
+}
+
 tasks.named('jar', Jar).configure {
     from('LICENSE')
     from('THIRD_PARTY_NOTICES.md')
