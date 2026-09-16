@@ -141,15 +141,9 @@ jobs:
           }
           trap cleanup EXIT
           for _ in $(seq 1 150); do
-            if grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG"; then
-              grep -Fq 'Black Arcana foundation loaded' "$LOG" || {
-                cat "$LOG"
-                exit 1
-              }
-              grep -Fq 'Black Arcana Stage 05 QA fixture installed 16 server-authoritative selection-only spells' "$LOG" || {
-                cat "$LOG"
-                exit 1
-              }
+            if grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG" \
+              && grep -Fq 'Black Arcana foundation loaded' "$LOG" \
+              && grep -Fq 'Black Arcana Stage 05 QA fixture installed 16 server-authoritative selection-only spells' "$LOG"; then
               echo 'Stage 05 QA companion dedicated-server smoke test: PASS'
               exit 0
             fi
