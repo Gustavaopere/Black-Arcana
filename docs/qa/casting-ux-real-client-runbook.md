@@ -27,7 +27,7 @@ Do not infer one configuration from another. A pass at GUI scale 2 does not prov
 
 ## Evidence minimum
 
-For visual-layout rows, capture a screenshot showing the full game viewport and the relevant Black Arcana UI. For interaction rows, use either a short recording or a concise timestamped observation log that proves the input sequence and result. For stale/reconnect rows, capture before/after state or a recording spanning the transition.
+For visual-layout rows, capture a screenshot showing the full game viewport and the relevant Black Arcana UI. For interaction rows, use either a short recording or a concise timestamped observation log that proves the input sequence and result. For stale/reconnect rows, capture before/after state or a recording spanning the transition. For authority-isolation rows, record the relevant server-owned state/outcome before and after the client-only change so a presentation difference cannot be mistaken for a gameplay-state change.
 
 Every FAIL must include: tested SHA, client configuration relevant to the row, exact reproduction sequence, observed result, expected result, and at least one screenshot/recording when the failure is visual or input-related.
 
@@ -47,8 +47,9 @@ Every FAIL must include: tested SHA, client configuration relevant to the row, e
 2. Confirm selection alone never executes the spell.
 3. Exercise radial behavior `HOLD`: hold the radial key, interact as intended, release it and verify the selector closes without stuck input.
 4. Rebind radial, cast and quick-slot keys through the normal controls UI.
-5. Confirm the bindings remain usable and conflicts remain discoverable through the vanilla controls surface.
-6. Open inventory, chat and another `Screen`, then press Black Arcana cast inputs and verify they do not fire through the focused GUI.
+5. Confirm the rebound mappings are usable and conflicts remain discoverable through the vanilla controls surface.
+6. Fully restart the Minecraft client through the normal launcher/instance flow, return to the same test instance, and confirm those rebound mappings persist and remain usable. Record the before/restart/after sequence; a same-session rebind is not sufficient for the persistence row.
+7. Open inventory, chat and another `Screen`, then press Black Arcana cast inputs and verify they do not fire through the focused GUI.
 
 ## Block C — Loadout authority and tooltip
 
@@ -60,13 +61,14 @@ Every FAIL must include: tested SHA, client configuration relevant to the row, e
 6. Confirm hovering does not cast, does not request a dynamic forecast and does not claim current Arcane Resistance.
 7. Repeat the tooltip check near edge rows, at 854×480 and GUI scale 4.
 
-## Block D — HUD lifecycle and authoritative denial
+## Block D — HUD lifecycle, authoritative denial and cast-result correlation
 
 1. Trigger a server-authoritative cast denial and verify the HUD displays the actual denial briefly.
-2. Stop interacting and verify the Black Arcana contextual HUD disappears; no permanent resource bar or stale result remains.
-3. Exercise all five HUD anchors at 0.5×, 1× and 2× HUD scale.
-4. With hazard/gate lines visible, verify every anchor keeps the panel inside the viewport and readable.
-5. Toggle vanilla F1/hidden GUI behavior and record whether the Black Arcana layer follows the expected vanilla HUD visibility behavior.
+2. Where safely reproducible, emit a known cast A, change the selected spell to B before A's authoritative result is presented, and verify any result-specific presentation remains correlated to A's matching emitted `castId` context rather than being relabeled as selected spell B. If an unmatched result has no known local context, presentation must remain generic rather than guess a spell identity.
+3. Stop interacting and verify the Black Arcana contextual HUD disappears; no permanent resource bar or stale result remains.
+4. Exercise all five HUD anchors at 0.5×, 1× and 2× HUD scale.
+5. With hazard/gate lines visible, verify every anchor keeps the panel inside the viewport and readable.
+6. Toggle vanilla F1/hidden GUI behavior and record whether the Black Arcana layer follows the expected vanilla HUD visibility behavior.
 
 ## Block E — Arcane Resistance forecast
 
@@ -108,13 +110,17 @@ If a category cannot be produced without adding a debug bypass or changing produ
 5. Run `/reload` and confirm cached forecast is cleared/replaced and stale tier/threshold data cannot override the new static preflight.
 6. Record the transition in one continuous capture whenever possible.
 
-## Block H — Accessibility and client configuration
+## Block H — Accessibility, client configuration and authority isolation
 
 1. Exercise feedback levels `MINIMAL`, `STANDARD` and `VERBOSE`.
 2. Confirm `MINIMAL` does not leave unused forecast/gate presentation traffic visible and the density of feedback follows the configured level.
 3. Toggle reduced motion and reduced flashes and verify the options persist locally. Future-only effects remain subject to the matrix Stage 09 carry rule.
 4. Exercise particle density 0 / 0.5 / 1 and verify the preference persists locally; do not claim effect-level compliance where no Black Arcana particle effect exists yet.
 5. Reset/remove relevant client config entries through the normal supported configuration path and confirm NeoForge defaults recover safely.
+6. Under one reproducible server-owned cast condition, record the relevant authoritative state/outcome (for example gate category, resource settlement, cooldown and hazard outcome where the fixture/runtime exposes them). Change the Black Arcana presentation/client-only preferences across their supported values, then repeat the equivalent server-owned condition. Confirm the client-only changes affect presentation/input style only and do not alter gameplay authority.
+7. Interact with radial/HUD/forecast/gate presentation without performing a new authoritative gameplay action and verify that those surfaces do not mutate the underlying synchronized hazard, gate or resource state.
+
+Do not claim that a preference is gameplay-safe merely because the UI looks unchanged. The evidence must compare the server-owned state/outcome before and after the client-only change. If a particular authority dimension cannot be exercised legitimately on the campaign instance, record the concrete limitation rather than fabricating coverage.
 
 ## Block I — Canonical 16-slot loadout reachability
 
@@ -149,6 +155,8 @@ Before this block, re-read the actual physical modlist for the tested instance a
 ### Optional-provider failure boundary
 
 Where a safe reproducible profile exists, start the dependent feature with its optional provider absent or demonstrably incompatible and confirm only that dependent feature fails closed: no client/server crash, no duplicate/free fallback, and no unrelated Black Arcana casting failure.
+
+Also exercise at least one core Black Arcana operation that does not require the missing/incompatible provider using ordinary keyboard/mouse input. Confirm the core input path remains usable and does not silently require a provider/controller integration.
 
 If provider absence/incompatibility cannot be exercised without destroying the campaign instance or changing production semantics, record that matrix row `BLOCKED` with the concrete reason. Do not infer a physical PASS from dedicated-server CI or static optional-classloading tests.
 
