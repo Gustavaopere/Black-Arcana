@@ -41,6 +41,15 @@ sourceSets.main.resources {
     exclude('src/generated/**/.cache')
 }
 
+sourceSets {
+    stage05QaFixture {
+        java.srcDir('src/stage05QaFixture/java')
+        resources.srcDir('src/stage05QaFixture/resources')
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
 neoForge {
     version = project.neo_version
 
@@ -52,6 +61,11 @@ neoForge {
     // Unit tests directly exercise Minecraft/NeoForge types (SavedData, packet codecs,
     // reload listeners). Make the modding classpath explicit for test compilation.
     addModdingDependenciesTo(sourceSets.test)
+
+    // Stage 05 physical QA content is compiled as an isolated source set. It is not
+    // registered as part of the production Black Arcana mod and cannot enter the
+    // canonical production JAR unless an explicit fixture JAR task packages it.
+    addModdingDependenciesTo(sourceSets.stage05QaFixture)
 
     runs {
         client {
@@ -92,7 +106,12 @@ neoForge {
 configurations {
     runtimeClasspath.extendsFrom localRuntime
     testCompileOnly.extendsFrom compileOnly
+    stage05QaFixtureImplementation.extendsFrom implementation
+    stage05QaFixtureCompileOnly.extendsFrom compileOnly
+    stage05QaFixtureRuntimeOnly.extendsFrom runtimeOnly
 }
+
+sourceSets.test.runtimeClasspath += sourceSets.stage05QaFixture.output
 
 dependencies {
     // Stable addon-facing Iron's API only. The full mod remains an optional runtime dependency.
@@ -118,6 +137,7 @@ dependencies {
 }
 
 test {
+    dependsOn tasks.named('stage05QaFixtureClasses')
     useJUnitPlatform()
     testLogging {
         events 'failed'
