@@ -30,6 +30,8 @@ public final class ClientArcanaSyncState {
     private static Map<ArcanaSpellId, HazardPreflightPayload.Entry> hazardPreflight = Map.of();
     private static Map<ArcanaSpellId, ArcanaChannelSpec> channelCapabilities = Map.of();
     private static HazardResistanceForecastPayload hazardResistanceForecast;
+    private static long nextHazardResistanceForecastRequestId;
+    private static long minimumHazardResistanceForecastRequestId;
     private static List<ArcanaSpellId> loadout = List.of();
     private static volatile BiConsumer<Player, CastResultPayload> resultObserver = (player, payload) -> { };
     private static volatile BiConsumer<Player, List<ArcanaSpellId>> loadoutObserver = (player, acceptedLoadout) -> { };
@@ -111,7 +113,9 @@ public final class ClientArcanaSyncState {
             }
         }
         hazardPreflight = Map.copyOf(next);
-        // A datapack reload can change thresholds; never display a forecast from the previous revision.
+        // Every accepted preflight is a revision boundary, even when the resulting static values
+        // are identical. Requests allocated before this boundary can no longer repopulate forecast state.
+        minimumHazardResistanceForecastRequestId = nextHazardResistanceForecastRequestId;
         hazardResistanceForecast = null;
     }
 
@@ -132,12 +136,25 @@ public final class ClientArcanaSyncState {
         channelCapabilities = Map.copyOf(next);
     }
 
+    public static synchronized long nextHazardResistanceForecastRequestId() {
+        long requestId = nextHazardResistanceForecastRequestId;
+        nextHazardResistanceForecastRequestId = Math.addExact(nextHazardResistanceForecastRequestId, 1L);
+        return requestId;
+    }
+
     public static synchronized void acceptHazardResistanceForecast(
         Player player,
         HazardResistanceForecastPayload payload
     ) {
         ensurePlayer(player);
+        replaceHazardResistanceForecast(payload);
+    }
+
+    static synchronized void replaceHazardResistanceForecast(HazardResistanceForecastPayload payload) {
         Objects.requireNonNull(payload, "payload");
+        if (payload.requestId() < minimumHazardResistanceForecastRequestId) {
+            return;
+        }
         if (hazardResistanceForecast != null
             && payload.requestId() < hazardResistanceForecast.requestId()) {
             return;
@@ -204,6 +221,7 @@ public final class ClientArcanaSyncState {
         presentation = Map.of();
         hazardPreflight = Map.of();
         channelCapabilities = Map.of();
+        minimumHazardResistanceForecastRequestId = nextHazardResistanceForecastRequestId;
         hazardResistanceForecast = null;
         loadout = List.of();
     }
@@ -219,6 +237,7 @@ public final class ClientArcanaSyncState {
             presentation = Map.of();
             hazardPreflight = Map.of();
             channelCapabilities = Map.of();
+            minimumHazardResistanceForecastRequestId = nextHazardResistanceForecastRequestId;
             hazardResistanceForecast = null;
             loadout = List.of();
         }
