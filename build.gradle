@@ -43,8 +43,6 @@ sourceSets.main.resources {
 
 sourceSets {
     stage05QaFixture {
-        java.srcDir('src/stage05QaFixture/java')
-        resources.srcDir('src/stage05QaFixture/resources')
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
