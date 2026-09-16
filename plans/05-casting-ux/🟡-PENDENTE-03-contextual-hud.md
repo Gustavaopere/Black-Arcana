@@ -41,6 +41,12 @@ Do not infer these facts from local timers, ids, particles, world scans or provi
 - bounded snapshot and any future correlation/dedup cache by count and age;
 - no per-tick full-state synchronization.
 
+## Automated stale-revision hardening
+
+`HazardForecastReloadRaceTest` pins the in-flight reload race where a forecast request is issued under one hazard-profile revision, an identical-looking preflight is accepted as a new revision, and the old response arrives afterward. Client forecast request IDs are allocated by `ClientArcanaSyncState`; each accepted preflight, reconnect clear or player-identity reset advances the minimum valid request boundary, so a pre-revision response cannot repopulate forecast state while a request allocated after the boundary remains acceptable. No gameplay-authority or payload-schema change is required.
+
+The test-only RED checkpoint `ecfa1709ef1acd51c62d9981b63513d5a15d8118` failed workflow `35043584131` at unit tests before the revision-aware state seam existed. Runtime HEAD `c6e2fa854f776df8d074d24f6da1e7f758b9153c` then passed workflow `35043812423` for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. This is deterministic supporting evidence only and does not satisfy the physical-state acceptance below.
+
 ## Remaining engineering acceptance
 
 - authoritative denial remains distinguishable from advisory forecast;
