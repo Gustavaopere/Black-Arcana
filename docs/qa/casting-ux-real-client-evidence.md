@@ -135,7 +135,7 @@ For each matrix row that is actually exercised, record exactly one canonical res
 - `BLOCKED` — the scenario was attempted but could not be exercised; record the concrete blocker;
 - `NOT APPLICABLE / CARRIED TO STAGE 09` — only for a genuinely future-only feature allowed by the matrix closure rule.
 
-Do not use `BLOCKED` merely because an automated agent or repository-only environment cannot launch a graphical client. Until a human/authorized real-client campaign attemptss a row, its existing matrix state remains `PENDING`.
+Do not use `BLOCKED` merely because an automated agent or repository-only environment cannot launch a graphical client. Until a human/authorized real-client campaign attempts a row, its existing matrix state remains `PENDING`.
 
 Do not infer one configuration from another. A pass at one resolution, GUI scale, HUD anchor, feedback level, provider state or client mode does not prove a sibling configuration.
 
