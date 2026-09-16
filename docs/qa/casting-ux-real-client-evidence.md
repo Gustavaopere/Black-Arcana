@@ -2,13 +2,15 @@
 
 ## State
 
-`PREPARED / MANUAL EXECUTION NOT STARTED`
+`PREPARED / MANUAL EXECUTION NOT STARTED / STAGE 05 ACTIVE`
 
-This ledger is the evidence target required by `plans/05-casting-ux/🟡-PENDENTE-🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-real-client-runbook.md`.
+This ledger is the evidence target required by `plans/05-casting-ux/🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-real-client-runbook.md`.
 
 It currently records **campaign preparation only**. No Minecraft client observation has been performed through this ledger, no manual matrix row is PASS/FAIL/BLOCKED from this file, and `docs/qa/casting-ux-manual-matrix.md` remains unchanged.
 
 Automated CI, artifact publication, repository inspection and fixture availability are supporting/preflight evidence only. They do not satisfy any row that requires direct real-client observation.
+
+Under D034, Stage 05 is the active blocking numbered stage. Stage 05A remains blocked from promotion/audit progression until Stage 05 is fully complete. Historical 05A implementation/evidence remains reusable later but does not authorize skipping the Stage 05 client gate.
 
 ---
 
@@ -31,6 +33,18 @@ This build was recorded while the manual campaign infrastructure was being prepa
 - Artifact state at campaign preparation: `AVAILABLE / NOT EXPIRED`
 
 The successful automated workflow proves only that this reference build passed the repository's applicable automated delivery gate. It is **not** evidence that any visual/input/manual acceptance row passes, and it does not require the later manual campaign to use this SHA.
+
+### Latest validated `main` candidate available for a future campaign
+
+The latest exact-SHA `main` build validated during the current Stage 05 reconciliation is:
+
+- `main` SHA: `26be300b7ff04940f83ddccf73e8570cea5ef925`;
+- post-merge workflow: `35037995965` — GREEN for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests, dedicated-server smoke and canonical artifact publication;
+- canonical artifact: `black-arcana-26be300b7ff04940f83ddccf73e8570cea5ef925`;
+- artifact ID: `10423884075`;
+- artifact digest: `sha256:fd5ea0e497ea4add796852a85959bb0978dde633bebd6fac29d4045bca8c1b4c`.
+
+This build is **available as the current canonical candidate**, but the manual campaign candidate remains unselected until actual real-client execution starts, as required below. No manual row becomes PASS, FAIL or BLOCKED from this automated evidence.
 
 ### Manual campaign candidate freeze rule
 
@@ -93,6 +107,8 @@ The following fields must be filled from the actual Minecraft client used for ev
 - Black Arcana JAR actually installed: `NOT RECORDED`
 - Artifact/JAR digest independently checked after extraction: `NOT RECORDED`
 - Stage 05 deterministic fixture installed: `NOT RECORDED`
+
+Current execution-environment note: the most recent authorized desktop discovery returned **no connected device**, so no real Minecraft client campaign was started from this session. Per the evidence rules below, this does **not** convert untouched matrix rows from `PENDING` to `BLOCKED`.
 
 Do not copy these values from assumptions or from another machine. Record the actual client instance and the actual Black Arcana JAR used for the first observation before assigning any manual result.
 
@@ -281,8 +297,9 @@ Do not:
 - batch-convert untouched rows to PASS;
 - infer manual PASS from CI/GameTests/static inspection;
 - infer one GUI scale/resolution/provider state from another;
-- rename Stage 05/05A tasks to `✅` while applicable manual rows lack evidence;
-- promote Stage 05/05A to `VALIDATED / COMPLETE` before the actual client gate is satisfied;
+- rename Stage 05 tasks to `✅` while applicable manual rows lack evidence;
+- promote Stage 05 to `VALIDATED / COMPLETE` before the actual client gate is satisfied;
+- audit/promote Stage 05A while Stage 05 remains incomplete under D034;
 - change Black Arcana gameplay authority to make a visual test easier.
 
 If a real-client `FAIL` is found, reproduce it on the exact tested SHA, add deterministic regression coverage where possible, apply the smallest authority-preserving fix, synchronize with the latest `main`, rerun applicable automated CI and then repeat the failed manual row.
@@ -291,17 +308,19 @@ If a real-client `FAIL` is found, reproduce it on the exact tested SHA, add dete
 
 ## 9. Current evidence conclusion
 
-At preparation time:
+At the latest preparation/reconciliation checkpoint:
 
-- exact preparation-reference build: recorded;
-- preparation-reference automated CI: green;
-- preparation-reference canonical QA artifact: recorded;
+- historical preparation-reference build: recorded;
+- latest validated `main` build available for a future campaign: `26be300b7ff04940f83ddccf73e8570cea5ef925`;
+- exact-SHA automated CI for that build: GREEN (`35037995965`);
+- exact-SHA canonical QA artifact: recorded (`black-arcana-26be300b7ff04940f83ddccf73e8570cea5ef925`, ID `10423884075`, SHA-256 `fd5ea0e497ea4add796852a85959bb0978dde633bebd6fac29d4045bca8c1b4c`);
 - manual campaign candidate: `NOT SELECTED`;
-- latest physical modlist: checked;
+- latest physical modlist preparation snapshot: recorded;
+- authorized real-client device in the current execution session: none connected;
 - manual client environment: not yet recorded;
 - Blocks A–H: not started;
 - manual matrix changes: none;
-- Stage 05 state: `IMPLEMENTED / FINAL VALIDATION DEFERRED`;
-- Stage 05A state: `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
+- Stage 05 state: `ACTIVE / IMPLEMENTATION PRESENT / REQUIRED PHYSICAL VALIDATION PENDING`;
+- Stage 05A state: `BLOCKED BY STAGE 05` under D034.
 
 **This file currently contains zero manual PASS claims.**
