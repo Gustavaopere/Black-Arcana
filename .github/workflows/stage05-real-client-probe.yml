@@ -13,9 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  singleplayer_calibrate:
+  gui_focus_probe:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 18
     steps:
       - name: Checkout exact candidate branch
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
       - name: Build removable Stage 05 QA companion
         run: ./gradlew --no-daemon stage05QaFixtureJar
 
-      - name: Rebind through native UI and capture real Singleplayer screen
+      - name: Create real singleplayer world and probe GUI-focus suppression
         shell: bash
         run: |
           set -euo pipefail
@@ -61,9 +61,9 @@ jobs:
           mkdir -p "$XDG_RUNTIME_DIR"
           chmod 700 "$XDG_RUNTIME_DIR"
 
-          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-singleplayer.log 2>&1 &
+          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-gui-focus.log 2>&1 &
           XVFB_PID=$!
-          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-singleplayer.log"
+          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-gui-focus.log"
           ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
           GRADLE_PID=$!
 
@@ -89,13 +89,12 @@ jobs:
             sleep 1
           done
           test -n "$WINDOW_ID"
-          echo "$WINDOW_ID" > build/stage05-real-client-probe/singleplayer-window-id.txt
+          echo "$WINDOW_ID" > build/stage05-real-client-probe/gui-focus-window-id.txt
 
           sleep 24
           ! grep -Fq 'Failed to load options' "$CLIENT_LOG"
-          scrot build/stage05-real-client-probe/main-menu-before-native-rebind.png
 
-          # Main menu -> Options -> Controls -> Key Binds.
+          # Rebind Open Spell Radial R -> B through Minecraft's native Key Binds UI.
           xdotool mousemove --window "$WINDOW_ID" 324 416 click 1
           sleep 2
           xdotool mousemove --window "$WINDOW_ID" 584 243 click 1
@@ -105,15 +104,10 @@ jobs:
           xdotool mousemove 700 360
           for _ in $(seq 1 120); do xdotool click 5; done
           sleep 2
-
-          # Rebind Open Spell Radial R -> B through Minecraft's native Key Binds UI.
           xdotool mousemove --window "$WINDOW_ID" 580 75 click 1
           sleep 1
           xdotool key --window "$WINDOW_ID" b
           sleep 2
-          scrot build/stage05-real-client-probe/key-binds-after-native-rebind.png
-
-          # Done -> back to title screen.
           xdotool mousemove --window "$WINDOW_ID" 584 448 click 1
           sleep 2
           xdotool key --window "$WINDOW_ID" Escape
@@ -124,24 +118,56 @@ jobs:
           grep -Fq 'key_key.black_arcana.open_radial:key.keyboard.b' runs/client/options.txt
           grep -Fq 'key_key.black_arcana.cast_selected:key.keyboard.v' runs/client/options.txt
           test "$(grep -Ec '^key_key\.black_arcana\.(edit_loadout|quick_cast_[1-8]):key\.keyboard\.unknown$' runs/client/options.txt)" -eq 9
-          scrot build/stage05-real-client-probe/title-before-singleplayer.png
+          scrot build/stage05-real-client-probe/title-before-world-create.png
 
-          # Title screen -> Singleplayer. Capture the exact next screen before attempting world creation.
+          # Title -> Singleplayer. With no saves this opens Create New World directly.
           xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
           sleep 6
-          scrot build/stage05-real-client-probe/select-world-calibrated.png
+          scrot build/stage05-real-client-probe/create-new-world-screen.png
 
-          if [[ -f runs/client/logs/latest.log ]]; then
-            cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-singleplayer.log
-          fi
+          # Calibrated from the previous real-client capture: Create New World button.
+          xdotool mousemove --window "$WINDOW_ID" 268 448 click 1
+
+          # Wait for the integrated server to admit the local player; fail closed on timeout/process exit.
+          WORLD_READY=0
+          for _ in $(seq 1 180); do
+            if [[ -f runs/client/logs/latest.log ]] && grep -Fq 'joined the game' runs/client/logs/latest.log; then
+              WORLD_READY=1
+              break
+            fi
+            if ! kill -0 "$GRADLE_PID" 2>/dev/null; then
+              cat "$CLIENT_LOG"
+              exit 1
+            fi
+            sleep 1
+          done
+          test "$WORLD_READY" -eq 1
+          sleep 5
+          scrot build/stage05-real-client-probe/world-loaded.png
+
+          # Open inventory; with a Screen focused, Black Arcana must not own B/V input.
+          xdotool key --window "$WINDOW_ID" e
+          sleep 3
+          scrot build/stage05-real-client-probe/inventory-before-black-arcana-input.png
+
+          xdotool key --window "$WINDOW_ID" b
+          sleep 3
+          scrot build/stage05-real-client-probe/inventory-after-radial-b.png
+
+          xdotool key --window "$WINDOW_ID" v
+          sleep 3
+          scrot build/stage05-real-client-probe/inventory-after-cast-v.png
+
+          cp runs/client/options.txt build/stage05-real-client-probe/options-after-gui-focus-probe.txt
+          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-gui-focus.log
           grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
-          echo 'Real-client Singleplayer calibration captured.'
+          echo 'Real-client GUI-focus preflight evidence captured.'
 
-      - name: Upload singleplayer calibration evidence
+      - name: Upload GUI-focus evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: stage05-real-client-singleplayer-calibration-${{ github.sha }}
+          name: stage05-real-client-gui-focus-${{ github.sha }}
           path: |
             build/stage05-real-client-probe/**
             runs/client/logs/latest.log
