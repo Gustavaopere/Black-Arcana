@@ -18,7 +18,6 @@ public final class HazardResistanceForecastClientController {
     private static final long REFRESH_INTERVAL_TICKS = 20L;
     private static ArcanaSpellId lastRequestedSpell;
     private static long lastRequestTick = Long.MIN_VALUE;
-    private static long nextRequestId;
 
     private HazardResistanceForecastClientController() { }
 
@@ -54,7 +53,7 @@ public final class HazardResistanceForecastClientController {
         boolean refreshDue = lastRequestTick == Long.MIN_VALUE || now - lastRequestTick >= REFRESH_INTERVAL_TICKS;
         if (!changed && !refreshDue) return;
 
-        long requestId = nextRequestId++;
+        long requestId = ClientArcanaSyncState.nextHazardResistanceForecastRequestId();
         HazardResistanceForecastNetworkBridge.request(new HazardResistanceForecastRequestPayload(
             ArcanaProtocol.VERSION,
             requestId,
@@ -66,6 +65,5 @@ public final class HazardResistanceForecastClientController {
     private static void reset() {
         lastRequestedSpell = null;
         lastRequestTick = Long.MIN_VALUE;
-        nextRequestId = 0L;
     }
 }
