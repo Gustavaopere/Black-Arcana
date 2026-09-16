@@ -6,7 +6,7 @@
 
 This ledger is the evidence target required by `plans/05-casting-ux/🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-real-client-runbook.md`.
 
-It currently records **campaign preparation only**. No Minecraft client observation has been performed through this ledger, no manual matrix row is PASS/FAIL/BLOCKED from this file, and `docs/qa/casting-ux-manual-matrix.md` remains unchanged.
+It currently records **campaign preparation only**. No Minecraft client observation has been performed through this ledger and no manual matrix row is PASS/FAIL/BLOCKED from this file. Preparation/reconciliation may add or refine `PENDING` coverage rows when canonical numbered-plan requirements were not yet represented; observed row results/statuses remain unchanged until direct evidence is recorded.
 
 Automated CI, artifact publication, repository inspection and fixture availability are supporting/preflight evidence only. They do not satisfy any row that requires direct real-client observation.
 
@@ -144,6 +144,7 @@ Do not infer one configuration from another. A pass at one resolution, GUI scale
 - Visual/layout row: full-viewport screenshot showing the relevant Black Arcana UI.
 - Interaction/input row: short recording or concise timestamped observation log proving input sequence and result.
 - Reconnect/reload/stale-state row: before/after evidence or one capture spanning the transition.
+- Provider coexistence row: recording or timestamped observation log that proves the provider action/state transition plus the resulting Black Arcana authority outcome; record relevant resource/cooldown state where settlement is under test.
 - Any `FAIL`: exact SHA, relevant client configuration, exact reproduction steps, observed result, expected result and visual/input evidence where applicable.
 
 ---
@@ -162,6 +163,8 @@ These blocks mirror `docs/qa/casting-ux-real-client-runbook.md`. Their state her
 | F | Predictable read-only cast gates | `NOT STARTED` |
 | G | Reconnect, stale state and datapack reload | `NOT STARTED` |
 | H | Accessibility and client configuration | `NOT STARTED` |
+| I | Canonical 16-slot loadout reachability | `NOT STARTED` |
+| J | Current-modpack provider coexistence authority | `NOT STARTED` |
 
 ### Block A — Resolution, GUI scale and viewport containment
 
@@ -270,6 +273,37 @@ Required coverage includes:
 
 Future-only effects must remain subject to the matrix Stage 09 carry rule; preference persistence alone is not proof that a not-yet-existing effect obeys the preference.
 
+### Block I — Canonical 16-slot loadout reachability
+
+Execution state: `NOT STARTED`
+
+Required coverage includes:
+
+- a legitimate server-accepted 16-slot loadout;
+- synchronized state still reflecting that loadout after reopen/reconnect as applicable;
+- direct physical reachability of every canonical slot `0..15` through supported selection/radial paging;
+- paging/selection staying within the synchronized loadout bound;
+- no forged seventeenth slot or substituted spell identity;
+- selection remaining non-casting.
+
+If current production content/fixture cannot legitimately supply 16 available spells for a server-owned loadout, the row must be attempted and recorded `BLOCKED` with the concrete availability limitation. Do not add a production bypass to manufacture PASS evidence.
+
+### Block J — Current-modpack provider coexistence authority
+
+Execution state: `NOT STARTED`
+
+Before execution, record the actual physical modlist versions used by the campaign rather than assuming the preparation snapshot is unchanged.
+
+Required coverage includes, where the assembled runtime legitimately exposes the path:
+
+- one Iron's-hosted `black_arcana:irons_integration_probe` invocation producing at most one Black Arcana root cast/result;
+- the one Black Arcana transactional probe cost settling exactly once, without an additional provider-native Iron's mana deduction;
+- the Black Arcana cooldown settling exactly once, without a second provider-native cooldown;
+- Epic Fight/EFIS client combat or animation state not becoming Black Arcana cast-legality authority;
+- optional-provider absence/incompatibility failing only the dependent feature, with no crash, duplicate/free fallback or unrelated Black Arcana authority change.
+
+A physical provider row is not proven by static source inspection, deterministic authority tests or dedicated-server CI. If the path cannot be reproduced safely on the campaign instance, record `BLOCKED` with the concrete reason rather than inferring PASS.
+
 ---
 
 ## 7. Per-row evidence entry template
@@ -290,7 +324,7 @@ Copy this section once for each matrix row actually exercised. Do not pre-fill a
 
 ## 8. Matrix/status update rule
 
-`docs/qa/casting-ux-manual-matrix.md` must be updated only from completed entries in this ledger.
+Observed row results/statuses in `docs/qa/casting-ux-manual-matrix.md` must be updated only from completed entries in this ledger. Preparation/reconciliation may add or refine `PENDING` coverage rows needed to represent canonical numbered-plan requirements, but it must not assign `PASS`, `FAIL` or `BLOCKED` without direct evidence.
 
 Do not:
 
@@ -318,8 +352,8 @@ At the latest preparation/reconciliation checkpoint:
 - latest physical modlist preparation snapshot: recorded;
 - authorized real-client device in the current execution session: none connected;
 - manual client environment: not yet recorded;
-- Blocks A–H: not started;
-- manual matrix changes: none;
+- Blocks A–J: not started;
+- manual matrix changes: additional required rows are present but remain `PENDING` until direct observation;
 - Stage 05 state: `ACTIVE / IMPLEMENTATION PRESENT / REQUIRED PHYSICAL VALIDATION PENDING`;
 - Stage 05A state: `BLOCKED BY STAGE 05` under D034.
 
