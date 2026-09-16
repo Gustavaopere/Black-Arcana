@@ -1,79 +1,83 @@
-# Ars Sophisticated Compatibility — functional contract
+# Sophisticated Backpacks: Ars Compat — functional contract
 
-Status: `OFFICIAL 0.3.0 FAMILY CONTRACT / PHYSICAL INTERNALS UNKNOWN`
+Status: `EXACT 0.3.0 PUBLISHER SURFACE / BACKPACK UPGRADE BRIDGE / ZERO STANDALONE SPELL-GLYPH-RITUAL IDENTITIES / RUNTIME INTERNALS FAIL-CLOSED`
 
-The official NeoForge 1.21.1 0.3.0 release documents four gameplay-facing upgrade families. Because the installed JAR is a different byte artifact, this file records only the public functional contract and Black Arcana deduplication boundary.
+The installed `arssophisticatedcompat-0.3.0.jar` is aligned at release identity level with official CurseForge File ID `8653384`, the NeoForge 1.21.1 release of **Sophisticated Backpacks: Ars Compat**. This document records only publisher-visible gameplay contracts and Black Arcana ownership constraints; it does not reconstruct implementation internals.
 
 ## 1. Source Storage Upgrade
 
-Official contract: a Sophisticated Storage block can store Ars Source and its capacity scales with Sophisticated Stack Upgrades.
+Official contract: a Sophisticated Backpack can store Ars Nouveau Source, with capacity scaling through Sophisticated Stack Upgrades.
 
 Boundary:
 
-- Sophisticated Storage owns the storage block and upgrade lifecycle;
+- Sophisticated Backpacks/Core own backpack storage and upgrade lifecycle;
 - Ars Nouveau owns Source identity/economy;
-- the compat layer connects those systems;
-- Black Arcana must query provider-final state rather than reconstructing a presumed capacity formula.
+- the compat connects those systems;
+- Black Arcana must observe provider-final state rather than reconstruct a capacity formula.
 
-No exact capacity value/formula is asserted for the physical JAR.
+No exact capacity number/formula is asserted here.
 
-## 2. Storage Source Link Upgrade
+## 2. Backpack Sourcelink upgrades
 
-Official contract: valid stored items can be converted into Source.
+Official project description names Agronomic, Alchemical, Mycelial, Volcanic and Vitalic Sourcelink upgrades. Their public role is to convert eligible backpack contents into Source.
 
-Required causal invariant for any future BA observer:
+Required causal invariant for any future Black Arcana observer:
 
 `one provider-accepted conversion -> one provider item settlement -> one provider Source credit`
 
-BA must not independently consume the item, credit Source, retry the same provider conversion after reload, or award progression from pre-settlement intent.
+Black Arcana must not independently consume the item, credit Source, retry the provider conversion after reload, or award progression from pre-settlement intent.
 
-No exact eligibility table, conversion yield or cadence is asserted for the physical JAR.
+Exact eligibility tables, yields and cadence remain runtime/API questions.
 
 ## 3. Potion Jar Upgrade
 
-Official contract: potion duration can be stored and effects can be automatically refreshed. The official project description also states potion duration scales with Stack Upgrades.
+Official contract: potion duration can be stored and potion effects can be maintained from that stored duration.
 
 Boundary:
 
 - authoritative effect state remains server gameplay state;
-- storage/upgrade state remains Sophisticated-owned;
-- GUI/timer/tooltips are presentation;
-- BA must not add a second refresh scheduler.
+- backpack/upgrade state remains Sophisticated-owned;
+- GUI/timer/tooltips remain presentation;
+- Black Arcana must not add a second refresh scheduler.
 
-No exact duration schema, interval or refresh algorithm is asserted for the physical JAR.
+Exact duration schema, tick interval and refresh algorithm are not asserted.
 
 ## 4. Enchanter's Upgrade
 
-Official contract: enchanted items can be repaired using Source.
+Official project description states that enchanted items can be repaired using stored Source.
 
 Boundary:
 
-- Source debit must happen once in provider authority;
-- durability repair must happen once in provider authority;
-- BA must not turn observing the operation into a second repair proc;
-- repair bookkeeping is not a BA cast and must not implicitly create Arcane Strain/Corruption/Backlash.
+- Source debit happens once in provider authority;
+- durability repair happens once in provider authority;
+- Black Arcana must not turn observation into a second repair proc;
+- repair bookkeeping is not a Black Arcana cast and must not implicitly create Strain, Corruption or Backlash.
 
-No exact cost, repair amount or cadence is asserted for the physical JAR.
+Exact repair cost/amount/cadence remain unverified.
 
-## Auxiliary content
+## 5. Templates and recipes
 
-Official 0.3.0 also documents:
+The exact release also publishes Ars Nouveau-themed backpack upgrade templates and recipes. These are acquisition/presentation surfaces and do not create new spell, glyph, ritual or Source authorities.
 
-- Ars Nouveau-themed storage upgrade template;
-- inverted storage-edition item textures.
+## Semantic result
 
-These are acquisition/presentation surfaces, not new Source or casting authorities.
+The exact publisher surface defines compatibility upgrades and no standalone casting content:
 
-## Explicitly unconfirmed for installed artifact
+- standalone spells: **0**;
+- glyph/spell parts: **0**;
+- rituals: **0**;
+- strict semantic spell/action contribution: **+0**.
 
-Without exact binary/API inspection, do not assert:
+This result is catalogue closure, not certification of internal registry topology.
 
-- registry/resource IDs;
-- recipes;
+## Explicitly unconfirmed implementation details
+
+Without an allowed exact internal/API boundary, do not assert:
+
+- exact item/upgrade/resource IDs;
 - classes/methods/events;
-- configs;
-- dependency ranges;
+- configs or dependency ranges beyond publisher-declared required families;
 - mixins/payloads;
 - numerical capacity/yield/repair values;
 - update cadence;
-- physical-artifact license.
+- persistence/serialization mechanics.
