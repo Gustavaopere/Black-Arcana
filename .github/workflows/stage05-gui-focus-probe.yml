@@ -1,0 +1,120 @@
+name: Stage 05 GUI Focus Probe
+
+on:
+  push:
+    branches:
+      - qa/stage05-gui-focus-probe
+
+permissions:
+  contents: read
+
+concurrency:
+  group: stage05-gui-focus-probe-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  singleplayer_calibration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact candidate branch
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install virtual-display capture tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y xvfb xdotool scrot mesa-utils libgl1-mesa-dri
+
+      - name: Build removable Stage 05 QA companion
+        run: ./gradlew --no-daemon stage05QaFixtureJar
+
+      - name: Open real-client Singleplayer selector
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/stage05-gui-focus-probe runs/client/mods runs/client
+          FIXTURE_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_stage05_qa-*.jar' | head -n 1)"
+          test -n "$FIXTURE_JAR"
+          cp "$FIXTURE_JAR" "runs/client/mods/$(basename "$FIXTURE_JAR")"
+
+          cat > runs/client/options.txt <<'EOF'
+          fullscreen:false
+          guiScale:2
+          enableVsync:false
+          renderDistance:2
+          simulationDistance:5
+          maxFps:30
+          onboardAccessibility:false
+          EOF
+
+          export DISPLAY=:99
+          export LIBGL_ALWAYS_SOFTWARE=1
+          export XDG_RUNTIME_DIR="$RUNNER_TEMP/stage05-gui-focus-xdg"
+          mkdir -p "$XDG_RUNTIME_DIR"
+          chmod 700 "$XDG_RUNTIME_DIR"
+
+          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-gui-focus-probe/xvfb.log 2>&1 &
+          XVFB_PID=$!
+          CLIENT_LOG="$PWD/build/stage05-gui-focus-probe/gradle-client.log"
+          ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
+          GRADLE_PID=$!
+
+          cleanup() {
+            kill "$GRADLE_PID" 2>/dev/null || true
+            pkill -f 'net.minecraft.client.main.Main' 2>/dev/null || true
+            kill "$XVFB_PID" 2>/dev/null || true
+            wait "$GRADLE_PID" 2>/dev/null || true
+            wait "$XVFB_PID" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+
+          WINDOW_ID=""
+          for _ in $(seq 1 240); do
+            WINDOW_ID="$(xdotool search --onlyvisible --name 'Minecraft' 2>/dev/null | head -n 1 || true)"
+            if [[ -n "$WINDOW_ID" ]]; then
+              break
+            fi
+            if ! kill -0 "$GRADLE_PID" 2>/dev/null; then
+              cat "$CLIENT_LOG"
+              exit 1
+            fi
+            sleep 1
+          done
+          test -n "$WINDOW_ID"
+          echo "$WINDOW_ID" > build/stage05-gui-focus-probe/window-id.txt
+          xdotool getwindowgeometry --shell "$WINDOW_ID" > build/stage05-gui-focus-probe/window-geometry.txt
+
+          sleep 24
+          ! grep -Fq 'Failed to load options' "$CLIENT_LOG"
+          scrot build/stage05-gui-focus-probe/main-menu.png
+
+          # Main menu -> Singleplayer.
+          xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
+          sleep 5
+          scrot build/stage05-gui-focus-probe/select-world.png
+
+          if [[ -f runs/client/logs/latest.log ]]; then
+            cp runs/client/logs/latest.log build/stage05-gui-focus-probe/minecraft-latest.log
+          fi
+          grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
+          echo 'Singleplayer selector calibration captured.'
+
+      - name: Upload calibration evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stage05-gui-focus-calibration-${{ github.sha }}
+          path: |
+            build/stage05-gui-focus-probe/**
+            runs/client/logs/latest.log
+            runs/client/crash-reports/**
+          if-no-files-found: warn
+          retention-days: 3
