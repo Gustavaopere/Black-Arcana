@@ -95,10 +95,17 @@ jobs:
           mkdir -p runs/server build
           printf 'eula=true\n' > runs/server/eula.txt
           LOG="$PWD/build/server-smoke.log"
-          ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
+          setsid ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
           PID=$!
           cleanup() {
-            kill "$PID" 2>/dev/null || true
+            kill -TERM -- "-$PID" 2>/dev/null || true
+            for _ in $(seq 1 10); do
+              if ! kill -0 -- "-$PID" 2>/dev/null; then
+                break
+              fi
+              sleep 1
+            done
+            kill -KILL -- "-$PID" 2>/dev/null || true
             wait "$PID" 2>/dev/null || true
           }
           trap cleanup EXIT
@@ -111,7 +118,7 @@ jobs:
               echo 'Dedicated-server smoke test: PASS'
               exit 0
             fi
-            if ! kill -0 "$PID" 2>/dev/null; then
+            if ! kill -0 -- "-$PID" 2>/dev/null; then
               cat "$LOG"
               exit 1
             fi
@@ -132,10 +139,17 @@ jobs:
           cp "$FIXTURE_JAR" "$COPIED_FIXTURE"
           printf 'eula=true\n' > runs/server/eula.txt
           LOG="$PWD/build/stage05-qa-companion-server-smoke.log"
-          ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
+          setsid ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
           PID=$!
           cleanup() {
-            kill "$PID" 2>/dev/null || true
+            kill -TERM -- "-$PID" 2>/dev/null || true
+            for _ in $(seq 1 10); do
+              if ! kill -0 -- "-$PID" 2>/dev/null; then
+                break
+              fi
+              sleep 1
+            done
+            kill -KILL -- "-$PID" 2>/dev/null || true
             wait "$PID" 2>/dev/null || true
             rm -f "$COPIED_FIXTURE"
           }
@@ -147,7 +161,7 @@ jobs:
               echo 'Stage 05 QA companion dedicated-server smoke test: PASS'
               exit 0
             fi
-            if ! kill -0 "$PID" 2>/dev/null; then
+            if ! kill -0 -- "-$PID" 2>/dev/null; then
               cat "$LOG"
               exit 1
             fi
