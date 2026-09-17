@@ -13,9 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  reconnect_calibration:
+  reconnect_authority_probe:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 24
     steps:
       - name: Checkout exact candidate branch
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
       - name: Build removable Stage 05 QA companion
         run: ./gradlew --no-daemon stage05QaFixtureJar
 
-      - name: Apply server-owned loadout and calibrate save-quit/reconnect UI
+      - name: Exercise apply clear disconnect reconnect authority in real client
         shell: bash
         run: |
           set -euo pipefail
@@ -73,9 +73,9 @@ jobs:
           mkdir -p "$XDG_RUNTIME_DIR"
           chmod 700 "$XDG_RUNTIME_DIR"
 
-          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-reconnect-calibration.log 2>&1 &
+          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-reconnect-authority.log 2>&1 &
           XVFB_PID=$!
-          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-reconnect-calibration.log"
+          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-reconnect-authority.log"
           ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
           GRADLE_PID=$!
 
@@ -99,19 +99,37 @@ jobs:
           sleep 24
           ! grep -Fq 'Failed to load options' "$CLIENT_LOG"
 
-          # Title -> Singleplayer -> Create New World.
-          xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
-          sleep 6
-          xdotool mousemove --window "$WINDOW_ID" 268 448 click 1
+          joined_count() {
+            grep -Fc 'joined the game' runs/client/logs/latest.log 2>/dev/null || true
+          }
 
-          WORLD_READY=0
-          for _ in $(seq 1 180); do
-            if [[ -f runs/client/logs/latest.log ]] && grep -Fq 'joined the game' runs/client/logs/latest.log; then WORLD_READY=1; break; fi
-            if ! kill -0 "$GRADLE_PID" 2>/dev/null; then cat "$CLIENT_LOG"; exit 1; fi
-            sleep 1
-          done
-          test "$WORLD_READY" -eq 1
-          sleep 6
+          stop_count() {
+            grep -Fc 'Stopping server' runs/client/logs/latest.log 2>/dev/null || true
+          }
+
+          wait_join_increment() {
+            local baseline="$1"
+            for _ in $(seq 1 180); do
+              local current
+              current="$(joined_count)"
+              if (( current > baseline )); then return 0; fi
+              if ! kill -0 "$GRADLE_PID" 2>/dev/null; then cat "$CLIENT_LOG"; return 1; fi
+              sleep 1
+            done
+            return 1
+          }
+
+          wait_stop_increment() {
+            local baseline="$1"
+            for _ in $(seq 1 90); do
+              local current
+              current="$(stop_count)"
+              if (( current > baseline )); then return 0; fi
+              if ! kill -0 "$GRADLE_PID" 2>/dev/null; then cat "$CLIENT_LOG"; return 1; fi
+              sleep 1
+            done
+            return 1
+          }
 
           filter_fixture() {
             xdotool key --window "$WINDOW_ID" Tab
@@ -144,50 +162,133 @@ jobs:
             filter_fixture
           }
 
+          enter_existing_world() {
+            xdotool mousemove --window "$WINDOW_ID" 520 255 click 1
+            sleep 1
+            xdotool mousemove --window "$WINDOW_ID" 480 516 click 1
+          }
+
+          save_quit_to_title() {
+            local baseline
+            baseline="$(stop_count)"
+            xdotool key --window "$WINDOW_ID" Escape
+            sleep 3
+            xdotool mousemove --window "$WINDOW_ID" 427 384 click 1
+            wait_stop_increment "$baseline"
+            sleep 6
+          }
+
+          # First admission: create the world.
+          xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
+          sleep 6
+          xdotool mousemove --window "$WINDOW_ID" 268 448 click 1
+          wait_join_increment 0
+          sleep 6
+          scrot build/stage05-real-client-probe/world-first-admission.png
+
+          # Apply all 16 through the ordinary editor intent/server snapshot path.
           open_filtered_editor
           select_fixture_16
           xdotool key --window "$WINDOW_ID" Return
           sleep 5
           open_filtered_editor
-          scrot build/stage05-real-client-probe/loadout-before-disconnect-page1.png
+          scrot build/stage05-real-client-probe/loadout-applied16-before-disconnect-page1.png
           xdotool key --window "$WINDOW_ID" Page_Down
           sleep 2
-          scrot build/stage05-real-client-probe/loadout-before-disconnect-page2.png
+          scrot build/stage05-real-client-probe/loadout-applied16-before-disconnect-page2.png
           xdotool key --window "$WINDOW_ID" Escape
           sleep 2
 
-          # Open Game Menu and capture the exact layout before selecting Save and Quit to Title.
+          # Deliberately leave local selection on slot 16 before disconnect.
+          xdotool key --window "$WINDOW_ID" r
+          sleep 1
+          xdotool key --window "$WINDOW_ID" Page_Down
+          for _ in $(seq 1 7); do xdotool key --window "$WINDOW_ID" Tab; done
+          xdotool key --window "$WINDOW_ID" Return
+          sleep 1
+          xdotool key --window "$WINDOW_ID" r
+          sleep 2
+          scrot build/stage05-real-client-probe/radial-selected16-before-disconnect.png
           xdotool key --window "$WINDOW_ID" Escape
-          sleep 3
-          scrot build/stage05-real-client-probe/pause-menu-before-save-quit.png
+          sleep 1
 
-          # GUI-scale-2 Save and Quit to Title center measured from the calibration capture.
-          xdotool mousemove --window "$WINDOW_ID" 427 384 click 1
+          # Disconnect by stopping the integrated server.
+          save_quit_to_title
+          scrot build/stage05-real-client-probe/title-after-first-disconnect.png
 
-          STOPPED=0
-          for _ in $(seq 1 90); do
-            if [[ -f runs/client/logs/latest.log ]] && grep -Fq 'Stopping server' runs/client/logs/latest.log; then STOPPED=1; break; fi
-            if ! kill -0 "$GRADLE_PID" 2>/dev/null; then cat "$CLIENT_LOG"; exit 1; fi
-            sleep 1
-          done
-          test "$STOPPED" -eq 1
-          sleep 6
-          scrot build/stage05-real-client-probe/title-after-save-quit.png
-
-          # Re-enter Singleplayer only far enough to capture the existing-world selection screen.
+          # First reconnect: same persisted world, new integrated-server lifecycle.
           xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
           sleep 6
-          scrot build/stage05-real-client-probe/world-select-after-save-quit.png
+          scrot build/stage05-real-client-probe/world-select-first-reconnect.png
+          JOIN_BASE="$(joined_count)"
+          enter_existing_world
+          wait_join_increment "$JOIN_BASE"
+          sleep 6
+          scrot build/stage05-real-client-probe/world-after-first-reconnect.png
 
-          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-reconnect-calibration.log
+          # Local slot-16 selection must not be trusted across disconnect; capture reconciled radial state.
+          xdotool key --window "$WINDOW_ID" r
+          sleep 2
+          scrot build/stage05-real-client-probe/radial-after-first-reconnect.png
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 1
+
+          # Server-owned 16-slot state must be restored by the reconnect snapshot.
+          open_filtered_editor
+          scrot build/stage05-real-client-probe/loadout-after-first-reconnect-page1.png
+          xdotool key --window "$WINDOW_ID" Page_Down
+          sleep 2
+          scrot build/stage05-real-client-probe/loadout-after-first-reconnect-page2.png
+
+          # Clear through the ordinary editor intent, then verify the current server snapshot is empty.
+          xdotool key --window "$WINDOW_ID" Delete
+          sleep 1
+          scrot build/stage05-real-client-probe/loadout-clear-draft-after-reconnect.png
+          xdotool key --window "$WINDOW_ID" Return
+          sleep 5
+          open_filtered_editor
+          scrot build/stage05-real-client-probe/loadout-cleared-server-snapshot-before-second-disconnect.png
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
+
+          # Disconnect/reconnect again so stale pre-clear client authority cannot explain the result.
+          save_quit_to_title
+          scrot build/stage05-real-client-probe/title-after-second-disconnect.png
+          xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
+          sleep 6
+          scrot build/stage05-real-client-probe/world-select-second-reconnect.png
+          JOIN_BASE="$(joined_count)"
+          enter_existing_world
+          wait_join_increment "$JOIN_BASE"
+          sleep 6
+          scrot build/stage05-real-client-probe/world-after-second-reconnect.png
+
+          open_filtered_editor
+          scrot build/stage05-real-client-probe/loadout-empty-after-second-reconnect-page1.png
+          xdotool key --window "$WINDOW_ID" Page_Down
+          sleep 2
+          scrot build/stage05-real-client-probe/loadout-empty-after-second-reconnect-page2.png
+          xdotool key --window "$WINDOW_ID" Escape
+          sleep 2
+
+          xdotool key --window "$WINDOW_ID" r
+          sleep 2
+          scrot build/stage05-real-client-probe/radial-after-cleared-second-reconnect.png
+          xdotool key --window "$WINDOW_ID" Escape || true
+
+          cp runs/client/options.txt build/stage05-real-client-probe/options-after-reconnect-authority.txt
+          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-reconnect-authority.log
+
+          test "$(joined_count)" -ge 3
+          test "$(stop_count)" -ge 2
           grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
-          echo 'Reconnect UI calibration captured.'
+          echo 'Real-client reconnect authority preflight evidence captured.'
 
-      - name: Upload reconnect calibration evidence
+      - name: Upload reconnect authority evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: stage05-real-client-reconnect-calibration-${{ github.sha }}
+          name: stage05-real-client-reconnect-authority-${{ github.sha }}
           path: |
             build/stage05-real-client-probe/**
             runs/client/logs/latest.log
