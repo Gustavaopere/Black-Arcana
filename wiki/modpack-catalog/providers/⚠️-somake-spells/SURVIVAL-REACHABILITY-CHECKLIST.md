@@ -1,15 +1,18 @@
 # Somake Spells 1.0.8-fix — Survival Reachability Closure Checklist
 
-Status: `67/67 EXACT_REGISTRY / SURVIVAL REACHABILITY UNVERIFIED`
+Status: `67/67 EXACT_REGISTRY / HOST DEFAULT ENABLED+CRAFTABLE / DEPLOYED CONFIG+FOCUS REACHABILITY UNVERIFIED`
 
 ## Purpose
 
 The exact hash-matched 1.0.8-fix artifact already closes all **67/67 current registry identities** under the physical optional-provider set. This checklist isolates what is still missing before those identities can be promoted from `REACHABILITY_CONDITIONAL`.
 
-Two independent questions must not be collapsed:
+Three layers must not be collapsed:
 
-1. **Global spell-lock behavior** — Somake registers `enableSpellLockSystem` as a COMMON config in `somakespells/general/common.toml`. The audited code default is `false`, but the effective deployed value is `NÃO VERIFICADO` and source defaults are not accepted as deployed state.
-2. **Object-level survival reachability** — every spell needs an authoritative player-reachable acquisition/unlock path in the actual pack. Registry presence alone is insufficient.
+1. **Somake global spell-lock behavior** — Somake registers `enableSpellLockSystem` as a COMMON config in `somakespells/general/common.toml`. The audited code default is `false`, but the effective deployed value is `NÃO VERIFICADO` and source defaults are not accepted as deployed state.
+2. **Iron's host spell-config behavior** — retained exact Somake evidence plus exact Iron's `3.16.3` source now closes the source-default spell-class layer as enabled + craftable, but effective global/per-spell/datapack overrides in the assembled pack remain `NÃO VERIFICADO`.
+3. **Actual focus/player reachability** — every spell still needs a usable school-focus/acquisition surface in the actual pack. Registry presence and source defaults alone are insufficient.
+
+Supporting evidence: [`HOST-DEFAULT-REACHABILITY-AUDIT.md`](HOST-DEFAULT-REACHABILITY-AUDIT.md).
 
 ## Global deployed config gate
 
@@ -19,9 +22,24 @@ Two independent questions must not be collapsed:
 
 When the lock system is disabled, the audited provider path reports effectively unrestricted mastery level for that subsystem. When enabled, Somake's own unlock/mastery path can reject unlearned spell levels. This checklist does not infer which mode the pack is actually using.
 
+## Host-default gate — closed at source/default level only
+
+The retained exact-artifact report from PR #191 contains exactly 67 Somake spell-class sections. Across all 67, the `DefaultConfig` builder uses only `setMinRarity`, `setSchoolResource`, `setMaxLevel` and `setCooldownSeconds`; no retained class section declares a Somake-level `setAllowCrafting` call or `allowCrafting`, `canBeCraftedBy` or `isEnabled` override.
+
+The exact official Iron's `1.21.1-3.16.3` source checkpoint `iron431/Irons-Spells-n-Spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252` establishes:
+
+- `SpellConfigParameter.ENABLED` default `true`;
+- `SpellConfigParameter.ALLOW_CRAFTING` default `true`;
+- `AbstractSpell.allowCrafting()` resolves the effective config through `SpellConfigManager`;
+- Scroll Forge admission requires enabled/craftable spell state plus a focus matching the spell school.
+
+Therefore the 67 Somake classes are **host-default eligible**, not proven deployed-reachable. Iron's data-driven/global/per-world overrides may still change `enabled` or `allow_crafting`, and a usable focus must still exist.
+
+The exact Somake resource inventory also contains 67/67 `spell.somakespells.<id>.guide` localization-key counterparts and registers the Aqua school with focus tag location `somakespells:school_focus/aqua`, with `data/somakespells/tags/item/school_focus/aqua.json` present. The retained evidence does not preserve protected guide prose or the complete deployed focus membership as an acquisition proof, so neither is promoted beyond its evidenced boundary.
+
 ## Registry / reachability matrix
 
-`Registration gate` records only predicates already proved by the exact artifact and physical provider set. `Survival reachability` remains `NÃO VERIFICADO` until an authoritative pack path is demonstrated for the individual spell.
+`Registration gate` records only predicates already proved by the exact artifact and physical provider set. `Survival reachability` remains `NÃO VERIFICADO` until the deployed/common host gates and a usable focus/acquisition path are demonstrated for the actual pack.
 
 | # | Registry ID | Registration gate in current pack | Survival reachability |
 |---:|---|---|---|
@@ -95,18 +113,19 @@ When the lock system is disabled, the audited provider path reports effectively 
 
 ## Evidence required per spell
 
-A row may be promoted only from evidence tied to the actual pack/runtime, for example a provider-defined survival recipe, loot route, progression/unlock surface, book/forge/ritual path, or authoritative runtime observation that establishes normal player reachability.
+A row may be promoted only from evidence tied to the actual pack/runtime. After the host-default audit, the remaining proof can be shared/common where the same deployed setting and focus route governs multiple spells; it does not require re-auditing 67 class bodies.
 
-For each promoted row, record:
+For each promoted row or uniformly proven group, record:
 
-- exact spell registry ID;
-- acquisition or unlock mechanism;
+- exact spell registry ID(s);
+- effective Iron's `enabled` / `allow_crafting` state or authoritative proof no deployed override affects them;
+- usable school-focus/acquisition mechanism in the assembled pack;
 - authoritative source of that mechanism;
 - prerequisite provider/item/structure if applicable;
-- whether `enableSpellLockSystem` changes the path under the deployed config;
+- whether `enableSpellLockSystem` changes use/unlock under the deployed config;
 - pack/world checkpoint used for validation.
 
-Creative-only presence, command-only permission-level-2 unlocks, registry existence, source defaults, or guessed Iron's generic behavior do **not** close a row by themselves.
+Creative-only presence, command-only permission-level-2 unlocks, registry existence, source defaults, the existence of `.guide` keys without their acquisition semantics, or guessed Iron's generic behavior do **not** close a row by themselves.
 
 ## Cross-provider gate notes
 
@@ -115,13 +134,15 @@ The six optional-provider registration gates are already closed for the physical
 - `blessed_connection`, `guardian_connection`, `cursed_connection` — `mowziesmobs` is present;
 - `mirror_strike`, `spirit_empowerment`, `symmetry_empowerment` — `iss_magicfromtheeast` is present.
 
-Those six therefore belong to the current 67/67 registry inventory, but remain survival-conditional exactly like the other 61.
+Those six therefore belong to the current 67/67 registry inventory, but remain survival-conditional exactly like the other 61 until their deployed host/focus/use gates are proven.
 
 ## Acceptance boundary
 
-Until authoritative deployed evidence closes both the relevant global config interpretation and object-level survival reachability:
+Until authoritative deployed evidence closes the relevant Somake lock state, Iron's effective spell-config state and usable school-focus/acquisition path:
 
 - all 67 identities remain `EXACT_REGISTRY / REACHABILITY_CONDITIONAL`;
 - Somake remains `⚠️ Parcial / condicionado`;
 - no strict semantic-count increase is claimed;
 - Black Arcana does not duplicate Somake unlocks, mastery, charges, rituals or Iron's cast settlement.
+
+Once those common gates are proven uniformly for a set of IDs, promote that bounded set without redoing the already-closed 67-class default-config audit.
