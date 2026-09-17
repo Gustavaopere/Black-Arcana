@@ -13,9 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  reconnect_authority_probe:
+  gui_focus_probe:
     runs-on: ubuntu-24.04
-    timeout-minutes: 24
+    timeout-minutes: 20
     steps:
       - name: Checkout exact candidate branch
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
       - name: Build removable Stage 05 QA companion
         run: ./gradlew --no-daemon stage05QaFixtureJar
 
-      - name: Exercise apply clear disconnect reconnect authority in real client
+      - name: Exercise GUI-focus suppression with real-client positive controls
         shell: bash
         run: |
           set -euo pipefail
@@ -73,9 +73,9 @@ jobs:
           mkdir -p "$XDG_RUNTIME_DIR"
           chmod 700 "$XDG_RUNTIME_DIR"
 
-          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-reconnect-authority.log 2>&1 &
+          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-gui-focus.log 2>&1 &
           XVFB_PID=$!
-          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-reconnect-authority.log"
+          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-gui-focus.log"
           ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
           GRADLE_PID=$!
 
@@ -103,10 +103,6 @@ jobs:
             grep -Fc 'joined the game' runs/client/logs/latest.log 2>/dev/null || true
           }
 
-          stop_count() {
-            grep -Fc 'Stopping server' runs/client/logs/latest.log 2>/dev/null || true
-          }
-
           wait_join_increment() {
             local baseline="$1"
             for _ in $(seq 1 180); do
@@ -119,14 +115,17 @@ jobs:
             return 1
           }
 
-          wait_stop_increment() {
+          attempt_count() {
+            grep -Fc 'STAGE05_QA_CAST_ATTEMPT' runs/client/logs/latest.log 2>/dev/null || true
+          }
+
+          wait_attempt_increment() {
             local baseline="$1"
-            for _ in $(seq 1 90); do
+            for _ in $(seq 1 20); do
               local current
-              current="$(stop_count)"
+              current="$(attempt_count)"
               if (( current > baseline )); then return 0; fi
-              if ! kill -0 "$GRADLE_PID" 2>/dev/null; then cat "$CLIENT_LOG"; return 1; fi
-              sleep 1
+              sleep 0.5
             done
             return 1
           }
@@ -162,135 +161,76 @@ jobs:
             filter_fixture
           }
 
-          enter_existing_world() {
-            # These coordinates were calibrated from full-screen Xvfb screenshots,
-            # so they must remain absolute rather than window-relative.
-            xdotool mousemove 520 255 click 1
-            sleep 1
-            xdotool mousemove 480 516 click 1
-          }
-
-          save_quit_to_title() {
-            local baseline
-            baseline="$(stop_count)"
-            xdotool key --window "$WINDOW_ID" Escape
-            sleep 3
-            xdotool mousemove --window "$WINDOW_ID" 427 384 click 1
-            wait_stop_increment "$baseline"
-            sleep 6
-          }
-
-          # First admission: create the world.
+          # Create one legitimate integrated-server world.
           xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
           sleep 6
           xdotool mousemove --window "$WINDOW_ID" 268 448 click 1
           wait_join_increment 0
           sleep 6
-          scrot build/stage05-real-client-probe/world-first-admission.png
+          scrot build/stage05-real-client-probe/world-before-loadout.png
 
-          # Apply all 16 through the ordinary editor intent/server snapshot path.
+          # Populate the canonical server-owned 16-slot loadout through the ordinary editor intent.
           open_filtered_editor
           select_fixture_16
           xdotool key --window "$WINDOW_ID" Return
           sleep 5
           open_filtered_editor
-          scrot build/stage05-real-client-probe/loadout-applied16-before-disconnect-page1.png
+          scrot build/stage05-real-client-probe/loadout16-gui-focus-page1.png
           xdotool key --window "$WINDOW_ID" Page_Down
           sleep 2
-          scrot build/stage05-real-client-probe/loadout-applied16-before-disconnect-page2.png
+          scrot build/stage05-real-client-probe/loadout16-gui-focus-page2.png
           xdotool key --window "$WINDOW_ID" Escape
           sleep 2
 
-          # Deliberately leave local selection on slot 16 before disconnect.
-          xdotool key --window "$WINDOW_ID" r
-          sleep 1
-          xdotool key --window "$WINDOW_ID" Page_Down
-          for _ in $(seq 1 7); do xdotool key --window "$WINDOW_ID" Tab; done
-          xdotool key --window "$WINDOW_ID" Return
-          sleep 1
-          xdotool key --window "$WINDOW_ID" r
+          # Positive cast control: V in gameplay must reach the server-owned fixture engine once.
+          CAST_BASE="$(attempt_count)"
+          xdotool key --window "$WINDOW_ID" v
+          wait_attempt_increment "$CAST_BASE"
+          CAST_AFTER_WORLD="$(attempt_count)"
+          test "$CAST_AFTER_WORLD" -eq $((CAST_BASE + 1))
+          echo "$CAST_BASE $CAST_AFTER_WORLD" > build/stage05-real-client-probe/cast-count-positive-control.txt
           sleep 2
-          scrot build/stage05-real-client-probe/radial-selected16-before-disconnect.png
-          xdotool key --window "$WINDOW_ID" Escape
-          sleep 1
 
-          # Disconnect by stopping the integrated server.
-          save_quit_to_title
-          scrot build/stage05-real-client-probe/title-after-first-disconnect.png
-
-          # First reconnect: same persisted world, new integrated-server lifecycle.
-          xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
-          sleep 6
-          scrot build/stage05-real-client-probe/world-select-first-reconnect.png
-          JOIN_BASE="$(joined_count)"
-          enter_existing_world
-          wait_join_increment "$JOIN_BASE"
-          sleep 6
-          scrot build/stage05-real-client-probe/world-after-first-reconnect.png
-
-          # Local slot-16 selection must not be trusted across disconnect; capture reconciled radial state.
+          # Positive radial control: non-empty synced loadout + no Screen must open the radial.
           xdotool key --window "$WINDOW_ID" r
           sleep 2
-          scrot build/stage05-real-client-probe/radial-after-first-reconnect.png
+          scrot build/stage05-real-client-probe/radial-positive-control.png
           xdotool key --window "$WINDOW_ID" Escape
           sleep 1
 
-          # Server-owned 16-slot state must be restored by the reconnect snapshot.
-          open_filtered_editor
-          scrot build/stage05-real-client-probe/loadout-after-first-reconnect-page1.png
-          xdotool key --window "$WINDOW_ID" Page_Down
+          # Inventory is a native Screen. Black Arcana radial/cast input must not steal focus or emit a cast intent.
+          xdotool key --window "$WINDOW_ID" e
           sleep 2
-          scrot build/stage05-real-client-probe/loadout-after-first-reconnect-page2.png
-
-          # Clear through the ordinary editor intent, then verify the current server snapshot is empty.
-          xdotool key --window "$WINDOW_ID" Delete
+          scrot build/stage05-real-client-probe/inventory-before-black-arcana-input.png
+          CAST_BASE_GUI="$(attempt_count)"
+          xdotool key --window "$WINDOW_ID" r
           sleep 1
-          scrot build/stage05-real-client-probe/loadout-clear-draft-after-reconnect.png
-          xdotool key --window "$WINDOW_ID" Return
-          sleep 5
-          open_filtered_editor
-          scrot build/stage05-real-client-probe/loadout-cleared-server-snapshot-before-second-disconnect.png
+          xdotool key --window "$WINDOW_ID" v
+          sleep 3
+          CAST_AFTER_GUI="$(attempt_count)"
+          test "$CAST_AFTER_GUI" -eq "$CAST_BASE_GUI"
+          echo "$CAST_BASE_GUI $CAST_AFTER_GUI" > build/stage05-real-client-probe/cast-count-with-inventory-open.txt
+          scrot build/stage05-real-client-probe/inventory-after-radial-and-cast-input.png
+
+          # Closing the inventory must restore the same positive radial control.
           xdotool key --window "$WINDOW_ID" Escape
-          sleep 2
-
-          # Disconnect/reconnect again so stale pre-clear client authority cannot explain the result.
-          save_quit_to_title
-          scrot build/stage05-real-client-probe/title-after-second-disconnect.png
-          xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
-          sleep 6
-          scrot build/stage05-real-client-probe/world-select-second-reconnect.png
-          JOIN_BASE="$(joined_count)"
-          enter_existing_world
-          wait_join_increment "$JOIN_BASE"
-          sleep 6
-          scrot build/stage05-real-client-probe/world-after-second-reconnect.png
-
-          open_filtered_editor
-          scrot build/stage05-real-client-probe/loadout-empty-after-second-reconnect-page1.png
-          xdotool key --window "$WINDOW_ID" Page_Down
-          sleep 2
-          scrot build/stage05-real-client-probe/loadout-empty-after-second-reconnect-page2.png
-          xdotool key --window "$WINDOW_ID" Escape
-          sleep 2
-
+          sleep 1
           xdotool key --window "$WINDOW_ID" r
           sleep 2
-          scrot build/stage05-real-client-probe/radial-after-cleared-second-reconnect.png
-          xdotool key --window "$WINDOW_ID" Escape || true
+          scrot build/stage05-real-client-probe/radial-positive-control-after-inventory.png
+          xdotool key --window "$WINDOW_ID" Escape
 
-          cp runs/client/options.txt build/stage05-real-client-probe/options-after-reconnect-authority.txt
-          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-reconnect-authority.log
-
-          test "$(joined_count)" -ge 3
-          test "$(stop_count)" -ge 2
+          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-gui-focus.log
+          cp runs/client/options.txt build/stage05-real-client-probe/options-gui-focus.txt
           grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
-          echo 'Real-client reconnect authority preflight evidence captured.'
+          test "$(attempt_count)" -eq "$CAST_AFTER_WORLD"
+          echo 'Real-client GUI-focus suppression preflight evidence captured.'
 
-      - name: Upload reconnect authority evidence
+      - name: Upload GUI-focus evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: stage05-real-client-reconnect-authority-${{ github.sha }}
+          name: stage05-real-client-gui-focus-${{ github.sha }}
           path: |
             build/stage05-real-client-probe/**
             runs/client/logs/latest.log
