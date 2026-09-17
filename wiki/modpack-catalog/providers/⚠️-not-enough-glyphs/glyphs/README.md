@@ -4,6 +4,8 @@ This directory contains one file for every primitive that NEG calls through `API
 
 Current count: **40 registered**, of which **39 are source-enabled**; Momentum is source-disabled. The four real Ars Elemental primitives added only to NEG's internal listing are documented in `../DELEGATION-AND-DISABLED.md`, not duplicated here.
 
+The remaining deployed-state gate is enumerated in [`../DEPLOYED-CONFIG-CHECKLIST.md`](../DEPLOYED-CONFIG-CHECKLIST.md): 39 source-enabled identities with their exact expected SERVER config paths, all kept `NÃO VERIFICADO` until authoritative pack/world config evidence is available.
+
 ## Canonical functional taxonomy
 
 The first directory level follows the canonical Ars-provider taxonomy used by this wiki:
