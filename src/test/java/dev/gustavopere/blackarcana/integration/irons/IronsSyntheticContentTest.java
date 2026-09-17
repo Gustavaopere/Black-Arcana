@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.integration.irons;
 import dev.gustavopere.blackarcana.api.ArcanaCastContext;
 import dev.gustavopere.blackarcana.api.ArcanaCastResult;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
+import dev.gustavopere.blackarcana.config.SpellDataDefinition;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
@@ -44,6 +45,32 @@ class IronsSyntheticContentTest {
         assertEquals(ArcanaCastResult.Status.DENIED_COOLDOWN.name(), second.status());
         assertEquals(80.0F, mana.current);
         assertEquals(1, mana.adjustments);
+    }
+
+    @Test
+    void syntheticHostedSpellRemainsPresentableAcrossReloadableMetadataReplacement() {
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        FakeMana mana = new FakeMana(100.0F, 100.0F);
+        IronsSyntheticContent.install(runtime, mana, Optional.empty());
+
+        var definition = IronsSyntheticContent.definition();
+        assertEquals(
+            definition.translationKey(),
+            runtime.spellData().resolve(IronsIntegrationIds.PROBE_ARCANA_ID).orElseThrow().translationKey());
+        assertTrue(runtime.spellData().presentationPayload().entries().stream()
+            .anyMatch(entry -> entry.spellId().equals(IronsIntegrationIds.PROBE_ARCANA_ID.canonical())));
+
+        runtime.spellData().replaceAll(List.of(new SpellDataDefinition(
+            SpellDataDefinition.CURRENT_SCHEMA_VERSION,
+            "black_arcana:reload_fixture",
+            "spell.black_arcana.reload_fixture",
+            "black_arcana:textures/gui/spell_icons/reload_fixture.png")));
+
+        assertEquals(
+            definition.translationKey(),
+            runtime.spellData().resolve(IronsIntegrationIds.PROBE_ARCANA_ID).orElseThrow().translationKey());
+        assertTrue(runtime.spellData().presentationPayload().entries().stream()
+            .anyMatch(entry -> entry.spellId().equals(IronsIntegrationIds.PROBE_ARCANA_ID.canonical())));
     }
 
     private static CastIntentPayload intent(String castId) {
