@@ -161,8 +161,8 @@ jobs:
           sleep 3
           scrot build/stage05-real-client-probe/pause-menu-before-save-quit.png
 
-          # Vanilla GUI-scale-2 bottom-center Save and Quit to Title button.
-          xdotool mousemove --window "$WINDOW_ID" 427 328 click 1
+          # GUI-scale-2 Save and Quit to Title center measured from the calibration capture.
+          xdotool mousemove --window "$WINDOW_ID" 427 384 click 1
 
           STOPPED=0
           for _ in $(seq 1 90); do
