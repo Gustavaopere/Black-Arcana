@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.api.ArcanaServices.EffectResult;
 import dev.gustavopere.blackarcana.api.ArcanaServices.TargetResolution;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.config.SpellDataDefinition;
 import dev.gustavopere.blackarcana.core.cast.BoundedReplayGuard;
 import dev.gustavopere.blackarcana.core.cost.PolicyAwareCostProvider;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
@@ -40,6 +41,7 @@ public final class IronsSyntheticContent {
 
         ArcanaSpellDefinition definition = definition();
         installDefinition(runtime, definition);
+        installPresentation(runtime, definition);
         installCooldown(runtime);
 
         CastSuccessObserver mastery = rpg
@@ -87,6 +89,14 @@ public final class IronsSyntheticContent {
         var definitions = new ArrayList<>(runtime.spells().snapshot().values());
         definitions.add(definition);
         runtime.spells().replaceAll(definitions);
+    }
+
+    private static void installPresentation(ArcanaServerRuntime runtime, ArcanaSpellDefinition definition) {
+        runtime.spellData().installSynthetic(new SpellDataDefinition(
+            SpellDataDefinition.CURRENT_SCHEMA_VERSION,
+            definition.id().canonical(),
+            definition.translationKey(),
+            definition.iconId()));
     }
 
     private static void installCooldown(ArcanaServerRuntime runtime) {
