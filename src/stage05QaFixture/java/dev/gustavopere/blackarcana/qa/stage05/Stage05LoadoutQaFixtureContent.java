@@ -48,18 +48,21 @@ public final class Stage05LoadoutQaFixtureContent {
         runtime.spells().replaceAll(definitions);
 
         for (ArcanaSpellId spellId : SPELL_IDS) {
-            runtime.installEngine(spellId, selectionOnlyEngine(runtime));
+            runtime.installEngine(spellId, selectionOnlyEngine(runtime, spellId));
         }
         LOGGER.info("Black Arcana Stage 05 QA fixture installed {} server-authoritative selection-only spells", SPELL_IDS.size());
     }
 
-    private static ArcanaCastEngine selectionOnlyEngine(ArcanaServerRuntime runtime) {
+    private static ArcanaCastEngine selectionOnlyEngine(ArcanaServerRuntime runtime, ArcanaSpellId spellId) {
         return new ArcanaCastEngine(
                 runtime.spells(),
                 request -> ArcanaDecision.allow(),
-                request -> ArcanaDecision.deny(
-                        "stage05_qa_selection_only",
-                        "Stage 05 QA loadout fixture spells are selection-only"),
+                request -> {
+                    LOGGER.info("STAGE05_QA_CAST_ATTEMPT spell={}", spellId.canonical());
+                    return ArcanaDecision.deny(
+                            "stage05_qa_selection_only",
+                            "Stage 05 QA loadout fixture spells are selection-only");
+                },
                 new ArcanaServices.CooldownService() {
                     @Override
                     public ArcanaDecision check(ArcanaCastRequest request) {
