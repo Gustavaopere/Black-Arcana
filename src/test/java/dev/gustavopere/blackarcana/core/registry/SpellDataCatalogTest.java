@@ -43,4 +43,31 @@ class SpellDataCatalogTest {
                 List.of("black_arcana:alpha", "black_arcana:zeta"),
                 catalog.presentationPayload().entries().stream().map(entry -> entry.spellId()).toList());
     }
+
+    @Test
+    void syntheticDefinitionsSurviveDeclarativeReplacement() {
+        SpellDataCatalog catalog = new SpellDataCatalog();
+        SpellDataDefinition synthetic = definition("black_arcana:synthetic", "spell.black_arcana.synthetic");
+        catalog.installSynthetic(synthetic);
+
+        catalog.replaceAll(List.of(definition("black_arcana:declared", "spell.black_arcana.declared")));
+
+        assertEquals(synthetic, catalog.resolve(ArcanaSpellId.parse("black_arcana:synthetic")).orElseThrow());
+        assertEquals(
+                List.of("black_arcana:declared", "black_arcana:synthetic"),
+                catalog.presentationPayload().entries().stream().map(entry -> entry.spellId()).toList());
+    }
+
+    @Test
+    void declarativeReplacementCannotShadowSyntheticDefinition() {
+        SpellDataCatalog catalog = new SpellDataCatalog();
+        SpellDataDefinition synthetic = definition("black_arcana:synthetic", "spell.black_arcana.synthetic");
+        catalog.installSynthetic(synthetic);
+
+        assertThrows(IllegalArgumentException.class, () -> catalog.replaceAll(List.of(
+                definition("black_arcana:synthetic", "spell.black_arcana.shadow"))));
+
+        assertEquals(synthetic, catalog.resolve(ArcanaSpellId.parse("black_arcana:synthetic")).orElseThrow());
+        assertEquals(1, catalog.snapshot().size());
+    }
 }
