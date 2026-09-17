@@ -163,9 +163,11 @@ jobs:
           }
 
           enter_existing_world() {
-            xdotool mousemove --window "$WINDOW_ID" 520 255 click 1
+            # These coordinates were calibrated from full-screen Xvfb screenshots,
+            # so they must remain absolute rather than window-relative.
+            xdotool mousemove 520 255 click 1
             sleep 1
-            xdotool mousemove --window "$WINDOW_ID" 480 516 click 1
+            xdotool mousemove 480 516 click 1
           }
 
           save_quit_to_title() {
