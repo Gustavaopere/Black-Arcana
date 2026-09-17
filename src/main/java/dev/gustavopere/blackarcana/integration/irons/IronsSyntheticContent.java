@@ -40,8 +40,9 @@ public final class IronsSyntheticContent {
         Objects.requireNonNull(rpg, "rpg");
 
         ArcanaSpellDefinition definition = definition();
-        installDefinition(runtime, definition);
+        validateDefinitionSlot(runtime, definition);
         installPresentation(runtime, definition);
+        installDefinition(runtime, definition);
         installCooldown(runtime);
 
         CastSuccessObserver mastery = rpg
@@ -76,6 +77,13 @@ public final class IronsSyntheticContent {
             "black_arcana:textures/gui/spell_icons/irons_integration_probe.png",
             new ArcanaCost(IronsManaCostProvider.RESOURCE_ID, IronsIntegrationIds.PROBE_MANA_COST),
             false);
+    }
+
+    private static void validateDefinitionSlot(ArcanaServerRuntime runtime, ArcanaSpellDefinition definition) {
+        ArcanaSpellDefinition existing = runtime.spells().resolve(definition.id()).orElse(null);
+        if (existing != null && !existing.equals(definition)) {
+            throw new IllegalStateException("Iron's integration spell id already has a different definition");
+        }
     }
 
     private static void installDefinition(ArcanaServerRuntime runtime, ArcanaSpellDefinition definition) {
