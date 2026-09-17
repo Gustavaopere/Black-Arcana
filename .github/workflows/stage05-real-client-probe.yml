@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  gui_focus_probe:
+  radial16_probe:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -36,7 +36,7 @@ jobs:
       - name: Build removable Stage 05 QA companion
         run: ./gradlew --no-daemon stage05QaFixtureJar
 
-      - name: Exercise GUI-focus suppression with real-client positive controls
+      - name: Exercise all sixteen canonical radial selections
         shell: bash
         run: |
           set -euo pipefail
@@ -73,9 +73,9 @@ jobs:
           mkdir -p "$XDG_RUNTIME_DIR"
           chmod 700 "$XDG_RUNTIME_DIR"
 
-          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-gui-focus.log 2>&1 &
+          Xvfb :99 -screen 0 1280x720x24 -nolisten tcp > build/stage05-real-client-probe/xvfb-radial16.log 2>&1 &
           XVFB_PID=$!
-          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-gui-focus.log"
+          CLIENT_LOG="$PWD/build/stage05-real-client-probe/gradle-client-radial16.log"
           ./gradlew --no-daemon runClient >"$CLIENT_LOG" 2>&1 &
           GRADLE_PID=$!
 
@@ -117,6 +117,10 @@ jobs:
 
           attempt_count() {
             grep -Fc 'STAGE05_QA_CAST_ATTEMPT' runs/client/logs/latest.log 2>/dev/null || true
+          }
+
+          last_attempt() {
+            grep 'STAGE05_QA_CAST_ATTEMPT' runs/client/logs/latest.log 2>/dev/null | tail -n 1 || true
           }
 
           wait_attempt_increment() {
@@ -161,76 +165,105 @@ jobs:
             filter_fixture
           }
 
+          capture_selected() {
+            local slot="$1"
+            xdotool key --window "$WINDOW_ID" r
+            sleep 1
+            printf -v filename 'radial-selected-slot-%02d.png' "$slot"
+            scrot "build/stage05-real-client-probe/$filename"
+            xdotool key --window "$WINDOW_ID" Escape
+            sleep 0.5
+          }
+
+          verify_cast_for_slot() {
+            local slot="$1"
+            local before
+            before="$(attempt_count)"
+            xdotool key --window "$WINDOW_ID" v
+            wait_attempt_increment "$before"
+            local after
+            after="$(attempt_count)"
+            test "$after" -eq $((before + 1))
+            printf -v expected 'black_arcana_stage05_qa:slot_%02d' "$slot"
+            last_attempt | grep -Fq "spell=$expected"
+            printf '%02d %s %s\n' "$slot" "$before" "$after" >> build/stage05-real-client-probe/radial16-cast-confirmations.txt
+          }
+
+          select_without_cast() {
+            local slot="$1"
+            local before
+            before="$(attempt_count)"
+            xdotool key --window "$WINDOW_ID" r
+            sleep 0.75
+            if [[ "$slot" -eq 1 ]]; then
+              xdotool key --window "$WINDOW_ID" Return
+            elif [[ "$slot" -eq 9 ]]; then
+              # From selected slot 8: page change preserves relative index 7 -> slot 16;
+              # one Tab wraps to slot 9, the first entry on page two.
+              xdotool key --window "$WINDOW_ID" Page_Down
+              xdotool key --window "$WINDOW_ID" Tab
+              xdotool key --window "$WINDOW_ID" Return
+            else
+              xdotool key --window "$WINDOW_ID" Tab
+              xdotool key --window "$WINDOW_ID" Return
+            fi
+            sleep 0.75
+            test "$(attempt_count)" -eq "$before"
+            capture_selected "$slot"
+            test "$(attempt_count)" -eq "$before"
+            verify_cast_for_slot "$slot"
+          }
+
           # Create one legitimate integrated-server world.
           xdotool mousemove --window "$WINDOW_ID" 427 204 click 1
           sleep 6
           xdotool mousemove --window "$WINDOW_ID" 268 448 click 1
           wait_join_increment 0
           sleep 6
-          scrot build/stage05-real-client-probe/world-before-loadout.png
 
-          # Populate the canonical server-owned 16-slot loadout through the ordinary editor intent.
+          # Populate exactly 16 server-owned slots via the normal editor intent.
           open_filtered_editor
           select_fixture_16
           xdotool key --window "$WINDOW_ID" Return
           sleep 5
           open_filtered_editor
-          scrot build/stage05-real-client-probe/loadout16-gui-focus-page1.png
+          scrot build/stage05-real-client-probe/loadout16-radial-page1.png
           xdotool key --window "$WINDOW_ID" Page_Down
-          sleep 2
-          scrot build/stage05-real-client-probe/loadout16-gui-focus-page2.png
-          xdotool key --window "$WINDOW_ID" Escape
-          sleep 2
-
-          # Positive cast control: V in gameplay must reach the server-owned fixture engine once.
-          CAST_BASE="$(attempt_count)"
-          xdotool key --window "$WINDOW_ID" v
-          wait_attempt_increment "$CAST_BASE"
-          CAST_AFTER_WORLD="$(attempt_count)"
-          test "$CAST_AFTER_WORLD" -eq $((CAST_BASE + 1))
-          echo "$CAST_BASE $CAST_AFTER_WORLD" > build/stage05-real-client-probe/cast-count-positive-control.txt
-          sleep 2
-
-          # Positive radial control: non-empty synced loadout + no Screen must open the radial.
-          xdotool key --window "$WINDOW_ID" r
-          sleep 2
-          scrot build/stage05-real-client-probe/radial-positive-control.png
+          sleep 1
+          scrot build/stage05-real-client-probe/loadout16-radial-page2.png
           xdotool key --window "$WINDOW_ID" Escape
           sleep 1
 
-          # Inventory is a native Screen. Black Arcana radial/cast input must not steal focus or emit a cast intent.
-          xdotool key --window "$WINDOW_ID" e
-          sleep 2
-          scrot build/stage05-real-client-probe/inventory-before-black-arcana-input.png
-          CAST_BASE_GUI="$(attempt_count)"
+          # Every selection operation must be non-casting. The explicit V immediately after it
+          # is the only operation allowed to create one server-side cast-attempt marker.
+          for slot in $(seq 1 16); do
+            select_without_cast "$slot"
+          done
+
+          # PageDown beyond the canonical second page must not expose a third page or change selection.
+          BOUND_BEFORE="$(attempt_count)"
           xdotool key --window "$WINDOW_ID" r
           sleep 1
-          xdotool key --window "$WINDOW_ID" v
-          sleep 3
-          CAST_AFTER_GUI="$(attempt_count)"
-          test "$CAST_AFTER_GUI" -eq "$CAST_BASE_GUI"
-          echo "$CAST_BASE_GUI $CAST_AFTER_GUI" > build/stage05-real-client-probe/cast-count-with-inventory-open.txt
-          scrot build/stage05-real-client-probe/inventory-after-radial-and-cast-input.png
-
-          # Closing the inventory must restore the same positive radial control.
-          xdotool key --window "$WINDOW_ID" Escape
+          xdotool key --window "$WINDOW_ID" Page_Down
           sleep 1
-          xdotool key --window "$WINDOW_ID" r
-          sleep 2
-          scrot build/stage05-real-client-probe/radial-positive-control-after-inventory.png
+          scrot build/stage05-real-client-probe/radial-page-down-beyond-slot16.png
           xdotool key --window "$WINDOW_ID" Escape
+          sleep 0.5
+          test "$(attempt_count)" -eq "$BOUND_BEFORE"
+          verify_cast_for_slot 16
 
-          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-gui-focus.log
-          cp runs/client/options.txt build/stage05-real-client-probe/options-gui-focus.txt
+          test "$(attempt_count)" -eq 17
+          test "$(wc -l < build/stage05-real-client-probe/radial16-cast-confirmations.txt)" -eq 17
+          cp runs/client/logs/latest.log build/stage05-real-client-probe/minecraft-latest-radial16.log
+          cp runs/client/options.txt build/stage05-real-client-probe/options-radial16.txt
           grep -Fq 'Black Arcana foundation loaded' "$CLIENT_LOG" || grep -Fq 'Black Arcana foundation loaded' runs/client/logs/latest.log
-          test "$(attempt_count)" -eq "$CAST_AFTER_WORLD"
-          echo 'Real-client GUI-focus suppression preflight evidence captured.'
+          echo 'Real-client sixteen-slot radial reachability preflight evidence captured.'
 
-      - name: Upload GUI-focus evidence
+      - name: Upload sixteen-slot radial evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: stage05-real-client-gui-focus-${{ github.sha }}
+          name: stage05-real-client-radial16-${{ github.sha }}
           path: |
             build/stage05-real-client-probe/**
             runs/client/logs/latest.log
