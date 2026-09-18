@@ -2,13 +2,15 @@
 
 Date: `2026-09-07`
 
+Closure update: `2026-09-17`
+
 This is a narrow status overlay over `PROVIDER-AUDIT-QUEUE.md`. It prevails for `mobstein` until the next integral regeneration of the 103-provider queue. Existing earlier deltas remain authoritative for their own named rows.
 
 ## Current row
 
 | Mod ID | Installed identity | Current effective audit state |
 |---|---|---|
-| `mobstein` | `mobstein-5.4.4-neoforge-1.21.1.jar` / runtime `5.4.4` | `EXACT INSTALLED ARTIFACT + EXACT PUBLIC RELEASE FILE 8040734 / PUBLISHER FULL GAMEPLAY GUIDE AUDITED / CORPOREAL RESURRECTION + RESURRECTED MOBS + ANATOMY/ORGAN EXTRACTION + SURGERY PERKS + SUBJECT ASSEMBLY + IGOR EXPERIMENTS + SYRINGES + STRUCTURES + MOBSTENIO + WITHERSTEIN CATALOGED / 5.4.4 SABLE COMPAT DECLARED BUT SEMANTICS UNVERIFIED / ARR / NO SOURCE OR BYTECODE DECOMPILATION / REGISTRY IDS+SUPPORTED API+RUNTIME QA PENDING / FAIL-CLOSED` |
+| `mobstein` | `mobstein-5.4.4-neoforge-1.21.1.jar` / runtime `5.4.4` | `✅ CATALOG CLOSED / EXACT INSTALLED ARTIFACT + EXACT PUBLIC RELEASE FILE 8040734 / PUBLISHER FULL GAMEPLAY GUIDE AUDITED / EXACT HASH-MATCHED RESOURCE-ONLY CLEAN-ROOM AUDIT / ZERO INDEPENDENT SEMANTIC MAGIC ACTIONS (+0) / 5.4.4 SABLE COMPAT DECLARED BUT SEMANTICS UNVERIFIED / ARR / NO SOURCE OR BYTECODE DECOMPILATION / SUPPORTED API+RUNTIME QA PENDING SEPARATELY / FAIL-CLOSED` |
 
 ## Evidence
 
@@ -57,6 +59,14 @@ The current publisher guide is sufficient to establish the following provider-ow
 - Current guide describes Frankenstein's `Blacksmithstrength` presentation as granting speed; the catalog preserves publisher behavior rather than inferring Strength from the name/icon.
 - Public qualitative timing/stat descriptions are not promoted to internal constants or API contracts.
 
+## 2026-09-17 semantic closure
+
+Temporary non-merge PR #316 audited exact HEAD `138441e4cd70896378d30287b3283ec07aaed43b`. Dedicated workflow **Mobstein 5.4.4 Clean-room Resource Audit** run `35285950286` completed successfully after requiring the canonical SHA-1 `3672d88f940ddd474a5429d7066b099cd0ce0c29`.
+
+The permitted resource-only inventory exposed no independent Mobstein spell/ritual/rite/ability/action resource family. The only action-like keybind identities surfaced are controls for resurrected creatures/mounts already represented by the publisher-facing entity catalog. Under the global semantic metric, Mobstein therefore contributes **+0** independent semantic magic objects and its catalog scope is closed.
+
+This does not establish supported runtime hooks, API contracts, Sable integration semantics or Black Arcana adapter safety.
+
 ## Authority consequence
 
 Mobstein owns corporeal reconstruction, bodies/organs, its resurrection machines/syringes, reconstructed creature lifecycle, surgery parameters, Igor experiments and its structure/boss progression.
@@ -74,6 +84,4 @@ Any future bridge must preserve provider costs and causal identity and must fail
 
 ## Next provider checkpoint
 
-After Mobstein, the next high-value standalone provider from the still-open exact-inventory group is **Apprentice's Codex `0.9.7.1`**.
-
-It should be revalidated first against the current modlist and exact public release/source evidence. The old queue row `GUIA LIDO / CATÁLOGO GRANULAR PENDENTE` is not enough to infer any spell count, registry ID, cost, cooldown or acquisition rule.
+The historical Apprentice's Codex instruction in the original Phase 2K delta is superseded by later canonical work. Current remaining conditional-provider routing is maintained in `CONDITIONAL-PROVIDER-CLOSURE.md`; do not select the next target from this older Phase 2K checkpoint.

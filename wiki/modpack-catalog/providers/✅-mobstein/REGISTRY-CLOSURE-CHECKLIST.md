@@ -1,14 +1,14 @@
 # Mobstein 5.4.4 — Registry & Semantic Boundary Closure Checklist
 
-Status: `PUBLIC CATALOG MATERIALIZED / PHYSICAL AUTHORITY CORRECTED / MACHINE+STATE BOUNDARY PARTIALLY CLOSED / SYRINGE-ACTION IDENTITY UNVERIFIED / PROVIDER REMAINS CONDITIONAL`
+Status: `✅ CATALOG CLOSED / EXACT 5.4.4 RESOURCE-ONLY AUDIT HASH-MATCHED / ZERO INDEPENDENT SEMANTIC MAGIC ACTIONS / RUNTIME+API QA SEPARATE`
 
 ## Purpose
 
 Mobstein 5.4.4 is already cataloged extensively from publisher-facing material without reverse engineering its All Rights Reserved artifact. The current tree materializes the public surfaces as individual cards, including resurrected families, surgery/stretch workflows, failed experiments, syringes, structures, named entities, workstations/supports, internal perks, anatomy and acquisition/progression surfaces.
 
-The remaining catalog blocker is no longer a generic lack of editorial coverage. The public guide is sufficient to classify several surfaces as machines, items, entities, states/effects or acquisition/progression processes that are excluded by the global semantic-magic metric. What remains unresolved is whether any provider-exposed syringe-triggered behavior or other active surface has a distinct independent Mobstein-owned action identity, and whether such an identity is active/reachable in the assembled pack.
+The catalog blocker is closed for the exact installed 5.4.4 line. Publisher-visible semantics plus a hash-matched resource-only clean-room audit establish no independent provider-owned spell/ritual/rite/ability/action surface within the permitted catalog boundary. The documented syringe behaviors remain item interactions, while the action-like keybinds surfaced by the exact artifact are controls for provider entities/mounts rather than independent semantic magic actions.
 
-Until that mapping exists, Black Arcana must not invent registry IDs, classes, APIs, event hooks, persistence fields or a semantic count from names alone.
+Black Arcana still must not invent registry IDs, classes, APIs, event hooks or persistence fields. Those runtime/integration seams remain a separate fail-closed concern and are not required to keep a semantically closed catalog at `⚠️`.
 
 ## Physical authority already closed
 
@@ -26,6 +26,25 @@ Installed provider line already recorded by the canonical Mobstein dossier and t
 These facts establish provider identity. They do not expose internal registry/API contracts.
 
 This section supersedes the stale physical identifiers that were accidentally introduced in the first version of this checklist. The canonical provider dossier and `TECHNICAL-AUDIT.md` already carried the exact physical authority above.
+
+## Exact clean-room closure evidence — 2026-09-17
+
+Temporary evidence PR #316 was intentionally non-merge. Its exact audit HEAD was `138441e4cd70896378d30287b3283ec07aaed43b`.
+
+The dedicated workflow **Mobstein 5.4.4 Clean-room Resource Audit** run `35285950286` completed successfully against that exact HEAD. The audit materialized CurseForge project/file `1193873 / 8040734`, required SHA-1 `3672d88f940ddd474a5429d7066b099cd0ce0c29`, and retained resource/metadata evidence only.
+
+Permitted exact-artifact findings used for semantic closure:
+
+- `136` JSON resources under `data/mobstein/`;
+- resource families are ordinary provider data such as advancements, jukebox songs, loot tables, painting variants, recipes, structures and worldgen;
+- no provider resource namespace/path family for `spell`, `ritual`, `rite`, `ability`, `action`, `cast` or equivalent independent semantic magic registry was surfaced;
+- `459` localization keys were inventoried without retaining protected localization values;
+- the only action-like keybind identities surfaced were `dolphin_resucited_water_dash`, `horse_gui`, `jump_putrid_horse` and `spiderkeyclimb`;
+- the existing publisher-facing catalog maps those keybinds to resurrected-creature/mount controls, which the global metric excludes as entity/mount behavior rather than independent player magic actions.
+
+The audit did not use `javap`, decompile bytecode, retain proprietary implementation, copy assets, or promote localization names into invented registry contracts.
+
+This closes the finite residual action boundary for the exact 5.4.4 catalog. It does **not** establish supported runtime APIs or Black Arcana integration hooks.
 
 ## Global semantic metric applied here
 
@@ -80,10 +99,10 @@ At minimum, resolve the four publisher-named syringe behaviors:
 
 | Surface | Publicly documented trigger/result | Exact independent action identity |
 |---|---|---|
-| Reviver Syringe | item use revives compatible mobs; also activates Witherstein at its skeleton | `NÃO VERIFICADO` |
-| Lightningbolt Syringe | provider item route enabling compatible resurrection during daytime | `NÃO VERIFICADO` |
-| Mobstenio Blood Syringe | provider item route used to revive Dr. Mobstenio | `NÃO VERIFICADO` |
-| Suspicious Syringe | thrown at Igor during the Station/Table workflow to produce failed experiments | `NÃO VERIFICADO` |
+| Reviver Syringe | item use revives compatible mobs; also activates Witherstein at its skeleton | `EXCLUDED — item interaction; no independent semantic action identity surfaced` |
+| Lightningbolt Syringe | provider item route enabling compatible resurrection during daytime | `EXCLUDED — item interaction; no independent semantic action identity surfaced` |
+| Mobstenio Blood Syringe | provider item route used to revive Dr. Mobstenio | `EXCLUDED — item interaction; no independent semantic action identity surfaced` |
+| Suspicious Syringe | thrown at Igor during the Station/Table workflow to produce failed experiments | `EXCLUDED — item interaction; no independent semantic action identity surfaced` |
 
 For each surface, establish one of:
 
@@ -125,9 +144,9 @@ If Gate 1/2 authoritatively closes all residual candidates as item/progression e
 
 ## Acceptance branches
 
-### A. No independent Mobstein spell/ritual/action identities are proven
+### A. No independent Mobstein spell/ritual/action identities are proven — SATISFIED
 
-If supported evidence establishes that all residual syringe/active surfaces are item/progression effects without a distinct independent action identity under the global metric:
+Exact 5.4.4 hash-matched resource-only evidence plus the publisher-visible semantic classification establishes that the residual syringe/keybind surfaces are item/entity/mount behavior without a distinct independent action identity under the global metric:
 
 - close Mobstein as a fully cataloged provider with zero independent semantic magic/actions for this ledger scope;
 - retain the granular cards as provider mechanics/acquisition documentation;
@@ -150,6 +169,15 @@ Provider status may move to ✅ only when the finite action inventory is closed 
 Keep Mobstein at `⚠️ Parcial / condicionado`.
 
 Do not use reverse engineering, guessed IDs or implementation assumptions to force closure.
+
+## Final disposition
+
+Mobstein `5.4.4` is **✅ Catalogado** for the Black Arcana magic-catalog scope.
+
+- independent semantic magic/action contribution: **+0**;
+- strict reconstructible semantic minimum: unchanged;
+- provider mechanics/cards remain canonical documentation even though they are metric-excluded;
+- runtime/API integration remains fail-closed and may be audited later without reopening the catalog unless the physical provider line changes or new authoritative evidence exposes a distinct action identity.
 
 ## Already closed — do not redo
 
@@ -176,4 +204,4 @@ Catalog completion must not be withheld solely because runtime integration is un
 
 ## Authority boundary
 
-Mobstein remains authority for its entities, resurrection/surgery mechanics, workstations, progression and internal state. Black Arcana may catalog exact public/provider-exposed identities and later observe supported final state through real contracts, but it must not reconstruct Mobstein internals, create a second resurrection/surgery engine or synthesize provider outcomes when no safe hook exists.
+Mobstein remains authority for its entities, resurrection/surgery mechanics, workstations, progression and internal state. Catalog closure does not transfer any of that authority to Black Arcana. Black Arcana may catalog exact public/provider-exposed identities and later observe supported final state through real contracts, but it must not reconstruct Mobstein internals, create a second resurrection/surgery engine or synthesize provider outcomes when no safe hook exists.
