@@ -285,7 +285,7 @@ Stage 07.07 Borrowed Sight must not accept FamiliarsLib entities by thematic inf
 Examples remain:
 
 - `not_enough_glyphs` — 39 source-enabled glyph registrations remain config-conditional because deployed SERVER overrides are unavailable;
-- `somakespells` — the historical exact 1.0.8-fix registry closure is superseded by the current physical 1.0.9 line and must be revalidated before any component promotion; deployed spell-lock/config and complete survival reachability remain open;
+- `somakespells` — exact registry identity is closed, but deployed spell-lock config and complete survival reachability remain conditional;
 - `gaze` — exact registry identity is closed, but 26 Spirit Rites remain conditional on the unavailable deployed COMMON `disableGazeRites` value.
 
 These partials are also reasons the global semantic spell/magic denominator remains open. Their current conditional/open evidence is tracked explicitly in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md) rather than being silently added to the strict semantic count.
