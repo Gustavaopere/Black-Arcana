@@ -4,7 +4,7 @@ Status: `⚠️ CURRENT PHYSICAL LINE CHANGED / 1.0.8-FIX EXACT AUDIT HISTORICAL
 
 ## Authority reset
 
-The current sibling modlist at `Gustavaopere/neoforge-rpg-skilltree@a67136196b8c3a246e462ee5eecf8e39548b3d88` identifies the installed provider as:
+The current sibling modlist at `Gustavaopere/neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149` identifies the installed provider as:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`;
 - mod id: `somakespells`;
