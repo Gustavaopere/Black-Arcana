@@ -13,6 +13,7 @@ This checklist does not promote the provider, does not treat a third-party patch
 Current physical evidence establishes the installed version line and filename:
 
 - observed installed filename: `traveloptics-4.4.0.1-1.21.1.jar`;
+- latest sibling dossier rechecked at `neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149`: `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md` still marks that filename/version as physically installed; the dossier carries no physical cryptographic hash;
 - physical version line: `4.4.0.1-1.21.1`;
 - exact publisher file: CurseForge project/file `1046916 / 6342780`;
 - exact publisher-release SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
@@ -20,14 +21,14 @@ Current physical evidence establishes the installed version line and filename:
 
 The repository does **not** preserve an independent current physical SHA-1 for the installed JAR, so byte equality with File `6342780` remains unproven.
 
-A third-party compatibility project published after the original audit now exposes a patched 1.21.1 artifact (CurseForge project/file `1690333 / 8861368`, filename `traveloptics-4.4.0.1.1-1.21.1-patched.jar`) and states that it changes the `universal_loot` codec wiring. This is a **non-authoritative external candidate only**. Current sibling repository search does not show that patched filename, but absence from indexed repository text is not proof of absence from the physical modpack.
+A third-party compatibility project published after the original audit exposes patched file `1690333 / 8861368`, filename `traveloptics-4.4.0.1.1-1.21.1-patched.jar`. Exact clean-room binary-diff evidence now fingerprints that candidate at SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d` / SHA-256 `05f588202900c691fb70389435c9997d090f81a699f7df7cdebcbec552298cc2`. Compared with original File `6342780`, both JARs contain 1339 entries, with zero additions/removals and exactly one changed entry: `com/gametechbc/traveloptics/loot/TOLootModifiers.class`; zero non-class resources differ. The patch publisher attributes that one-class delta to correcting the `universal_loot` codec wiring. This establishes an exact comparison target, **not** deployment. Current sibling evidence still does not prove which byte sequence is physically installed. See [`PATCH-8861368-BINARY-DIFF.md`](PATCH-8861368-BINARY-DIFF.md).
 
 Required authoritative result:
 
 | Question | Required evidence | Current state |
 |---|---|---|
 | Is the physical JAR byte-identical to original File `6342780`? | SHA-1/SHA-256 from the actual installed JAR | `NÃO VERIFICADO` |
-| Is a patched/replacement JAR physically installed instead? | exact installed filename + hash + provenance | `NÃO VERIFICADO` |
+| Is a patched/replacement JAR physically installed instead? | compare actual installed hash against patch SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d` (or another verified replacement) | `NÃO VERIFICADO` |
 | If another replacement exists, what is it? | exact file identity/hash/provider source | `NÃO VERIFICADO` |
 
 Record exactly one physical disposition: `ORIGINAL_EXACT`, `PATCHED_EXACT`, or `OTHER_VERIFIED`. Do not infer from nominal version strings.
@@ -59,7 +60,7 @@ Required:
 - provenance sufficient to identify what changed;
 - authoritative assembled-pack startup completing registry initialization with that exact artifact.
 
-A third-party project description that says the patch fixes startup is useful external evidence, but it does not prove the user's pack deploys that artifact or that the assembled modpack boots with it.
+The exact patch candidate is now cryptographically fingerprinted and independently proven to differ from the original in only `TOLootModifiers.class`. The patch publisher states that this class delta corrects the universal codec registration. That still does not prove the user's pack deploys SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`, nor that the assembled modpack completes registry initialization with the actual deployed artifact.
 
 Current state: `RUNTIME INITIALIZATION UNVERIFIED / FAIL-CLOSED`.
 
