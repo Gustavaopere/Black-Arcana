@@ -297,7 +297,7 @@ These rows are deliberately **not additive to 1344** until their exact/current i
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
-| [Somake Spells](../providers/somake-spells/README.md) 1.0.8-fix | exact hash-matched artifact closes **67 current spell registrations** under the physical optional-provider set; 61 unconditional + 3 `mowziesmobs`-gated + 3 `iss_magicfromtheeast`-gated, with both gates physically satisfied | `CONDITIONAL / EXACT REGISTRY CLOSED / +0` | deployed `somakespells/general/common.toml` is unavailable and complete object-level survival acquisition/reachability remains unclosed; code default `enableSpellLockSystem=false` is not substituted for the actual pack config |
+| [Somake Spells](../providers/⚠️-somake-spells/README.md) 1.0.9 | current sibling modlist identifies `somakespells-1.0.9-1.21.1.jar`; exact publisher file `8867079` resource-audited at release SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; 83 base spell-localization roots + 83 matching `.guide` keys bound the current resource surface; historical 1.0.8-fix exact registry was 67 IDs | `CONDITIONAL / CURRENT REGISTRY REVALIDATION REQUIRED / +0` | physical-pack byte equality to the audited release is not yet proven; 83 localization roots are not substituted for registry entries; exact 1.0.9 registry/optional predicates, deployed config/host gates and survival acquisition/reachability remain open |
 | [Gaze](../providers/gaze/README.md) 1.1.7.1 rites | exact hash-matched artifact closes **26 player-facing Spirit Rite identities** | `CONDITIONAL / EXACT REGISTRY CLOSED / +0 RITES` | exact provider control flow suppresses the rite surfaces when resolved COMMON config `disableGazeRites=true`; deployed pack value is unavailable, so source default `false` is not substituted |
 
 Other provider directories that have not yet been normalized into a semantic-object row also remain outside the denominator. Absence from the strict table is never interpreted as zero without an explicit zero disposition.
@@ -318,6 +318,6 @@ To converge on a final denominator efficiently, prioritize:
 
 1. another still-open provider/component for which current/exact evidence can materially reduce inventory or classification uncertainty;
 2. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.1 and Gaze 1.1.7.1 Rites when such evidence becomes available;
-3. close Somake 1.0.8-fix survival reachability/config if authoritative deployed evidence becomes available.
+3. reclose Somake 1.0.9 current-line physical equality, registry/optional gates and then survival/config reachability; the historical 1.0.8-fix 67-ID audit must not be promoted as current.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
