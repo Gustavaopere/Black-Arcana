@@ -4,7 +4,7 @@ Status: `⚠️ CURRENT PHYSICAL 1.0.9 / 1.0.8-FIX EXACT AUDIT HISTORICAL / 1.0.
 
 ## Current installed identity — 1.0.9
 
-Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@a67136196b8c3a246e462ee5eecf8e39548b3d88` supersedes the former 1.0.8-fix physical-line claim:
+Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149` supersedes the former 1.0.8-fix physical-line claim:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`
 - Mod id: `somakespells`
