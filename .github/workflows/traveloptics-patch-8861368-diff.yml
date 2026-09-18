@@ -1,0 +1,116 @@
+name: Traveloptics Patch 8861368 Clean-room Binary Diff
+
+on:
+  push:
+    branches:
+      - audit/traveloptics-patch-8861368-diff-2026-09-17
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compare original and patched exact artifacts without decompilation
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ORIGINAL_URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          PATCH_URL='https://www.cursemaven.com/curse/maven/t-o-magic-n-extras-irons-spells-addon-patch-1690333/8861368/t-o-magic-n-extras-irons-spells-addon-patch-1690333-8861368.jar'
+          ORIGINAL_EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$ORIGINAL_URL" -o original.jar
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$PATCH_URL" -o patched.jar
+
+          ORIGINAL_SHA1="$(sha1sum original.jar | awk '{print $1}')"
+          PATCH_SHA1="$(sha1sum patched.jar | awk '{print $1}')"
+          test "$ORIGINAL_SHA1" = "$ORIGINAL_EXPECTED_SHA1"
+
+          mkdir -p audit
+          {
+            echo 'Traveloptics exact original vs patch clean-room binary diff'
+            echo 'original_project_file=1046916/6342780'
+            echo 'patch_project_file=1690333/8861368'
+            echo "original_sha1=$ORIGINAL_SHA1"
+            echo "original_sha256=$(sha256sum original.jar | awk '{print $1}')"
+            echo "patch_sha1=$PATCH_SHA1"
+            echo "patch_sha256=$(sha256sum patched.jar | awk '{print $1}')"
+            echo
+          } > audit/report.txt
+
+          python3 - <<'PY'
+          import hashlib
+          import zipfile
+          from pathlib import Path
+
+          orig = zipfile.ZipFile('original.jar')
+          patch = zipfile.ZipFile('patched.jar')
+          onames = set(orig.namelist())
+          pnames = set(patch.namelist())
+
+          def digest(z, name):
+              return hashlib.sha256(z.read(name)).hexdigest()
+
+          added = sorted(pnames - onames)
+          removed = sorted(onames - pnames)
+          common = sorted(onames & pnames)
+          changed = [n for n in common if digest(orig, n) != digest(patch, n)]
+          changed_classes = [n for n in changed if n.endswith('.class')]
+          changed_nonclasses = [n for n in changed if not n.endswith('.class')]
+
+          out = Path('audit/report.txt')
+          with out.open('a', encoding='utf-8') as f:
+              f.write('== zip entry diff ==\n')
+              f.write(f'original_entry_count={len(onames)}\n')
+              f.write(f'patch_entry_count={len(pnames)}\n')
+              f.write(f'added_entry_count={len(added)}\n')
+              f.write(f'removed_entry_count={len(removed)}\n')
+              f.write(f'changed_common_entry_count={len(changed)}\n')
+              f.write(f'changed_class_count={len(changed_classes)}\n')
+              f.write(f'changed_nonclass_count={len(changed_nonclasses)}\n')
+
+              f.write('\n-- added entries --\n')
+              for n in added: f.write(n + '\n')
+              f.write('\n-- removed entries --\n')
+              for n in removed: f.write(n + '\n')
+              f.write('\n-- changed class entry paths only --\n')
+              for n in changed_classes: f.write(n + '\n')
+              f.write('\n-- changed non-class entry paths only --\n')
+              for n in changed_nonclasses: f.write(n + '\n')
+
+              f.write('\n== patch metadata ==\n')
+              for path in ('META-INF/neoforge.mods.toml','META-INF/mods.toml'):
+                  if path in pnames:
+                      text = patch.read(path).decode('utf-8', errors='replace')
+                      for line in text.splitlines():
+                          s=line.strip()
+                          if s.startswith(('modId','version','displayName','license','mandatory','type','ordering','side','versionRange')):
+                              f.write(s + '\n')
+
+              f.write('\n== original metadata ==\n')
+              for path in ('META-INF/neoforge.mods.toml','META-INF/mods.toml'):
+                  if path in onames:
+                      text = orig.read(path).decode('utf-8', errors='replace')
+                      for line in text.splitlines():
+                          s=line.strip()
+                          if s.startswith(('modId','version','displayName','license','mandatory','type','ordering','side','versionRange')):
+                              f.write(s + '\n')
+
+          # Deliberately no class parsing, javap, constant-pool inspection or decompilation.
+          PY
+
+          cat audit/report.txt
+
+      - name: Upload text-only diff evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-8861368-clean-room-binary-diff
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
