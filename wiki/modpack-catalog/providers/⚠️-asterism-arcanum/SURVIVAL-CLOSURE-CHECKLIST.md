@@ -1,6 +1,6 @@
 # Asterism Arcanum 0.1.0 — Astral Gateway Survival Closure Checklist
 
-Status: `REGISTRY 11 EXACT / 10 SURVIVAL COUNTED / ASTRAL GATEWAY REGISTERED BUT SURVIVAL EXPOSURE UNRESOLVED / PROVIDER REMAINS CONDITIONAL`
+Status: `REGISTRY 11 EXACT / 10 SURVIVAL COUNTED / ASTRAL GATEWAY DEFAULT HOST LOOT-ELIGIBLE / DEPLOYED IRON'S SPELL CONFIG UNVERIFIED / PROVIDER REMAINS CONDITIONAL`
 
 ## Purpose
 
@@ -31,33 +31,52 @@ Known source-backed spell metadata already cataloged separately:
 
 Those values do not resolve survival availability.
 
-## Why static source is insufficient
+## Exact host-default survival path now proven
 
-The exact source pin establishes a mismatch between publisher intent and static acquisition defaults:
+Exact Asterism 0.1.0 source plus exact Iron's 3.16.3 source closes the static host semantics more tightly:
 
-1. `AstralGatewaySpell` is actively registered;
-2. the spell does not override Iron's looting eligibility;
-3. its default config does not explicitly disable crafting;
-4. the Astral school is constructed with Iron's default `allowLooting=true`;
-5. the Astromancer loot table can roll randomized Astral-school scrolls;
-6. Iron's current pack line can therefore expose a static path for Astral Gateway to enter loot/crafting unless deployed config or datapack state removes it.
+1. `AstralGatewaySpell` is actively registered as `asterismarcanum:astral_gateway`;
+2. it is Legendary, but Iron's `RandomizeSpellFunction` does **not** use loot `quality` to filter rarity;
+3. the Astromancer `quality 0.25..0.85` range is applied only after spell selection to calculate spell level;
+4. Legendary spells remain eligible in the weighted selection pool with weight `4`;
+5. Astromancer loot filters by school `asterismarcanum:astral`;
+6. Iron's school-filter path requires only effective `spell.isEnabled()` and `spell.allowLooting()`;
+7. `AstralGatewaySpell` does not override either method;
+8. Asterism constructs the Astral school through the Iron's seven-argument `SchoolType` constructor, whose exact 3.16.3 defaults are `requiresLearning=false` and `allowLooting=true`;
+9. `AstralGatewaySpell` does not explicitly disable `allow_crafting`, whose Iron's host default is `true`.
 
-Therefore neither publisher wording alone nor source defaults alone are sufficient to classify the spell's effective current-pack survival state.
+Therefore the **default provider-native path is positively loot-eligible and craft-eligible**. The remaining uncertainty is not rarity/quality behavior. It is whether the actual assembled pack overrides the spell's effective Iron's config.
+
+See [`IRONS-3.16.3-HOST-LOOT-ELIGIBILITY.md`](IRONS-3.16.3-HOST-LOOT-ELIGIBILITY.md).
+
+Static defaults still cannot substitute for deployed configuration/datapack state.
 
 ## Required authoritative evidence
 
 Close this gate using at least one authoritative current-pack path:
 
-### Gate A — deployed configuration/datapack evidence
+### Gate A — deployed Iron's spell configuration/datapack evidence
 
-Capture the actual deployed Asterism/Iron's spell configuration and relevant datapack state for the current pack/world and determine whether `asterismarcanum:astral_gateway` is:
+Capture the actual deployed Iron's spell configuration and relevant datapack state for the current pack/world.
 
-- disabled;
-- non-craftable;
-- excluded from applicable loot/random-spell selection;
-- or otherwise explicitly prevented from survival acquisition.
+Exact Iron's 3.16.3 config targets are:
 
-Do not infer the deployed value from source defaults.
+- per-spell local file: `/config/irons_spellbooks_spell_config/asterismarcanum/astral_gateway.json`;
+- global fallback file: `/config/irons_spellbooks_spell_config/global_config.json`;
+- datapack override: `/data/asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json`.
+
+Resolve at minimum:
+
+- effective `irons_spellbooks:enabled`;
+- effective `irons_spellbooks:school`;
+- effective `irons_spellbooks:allow_crafting`;
+- any global/datapack value that overrides those fields.
+
+For the Astromancer loot path, no separate per-spell `allow_looting` config exists in exact Iron's 3.16.3: `AbstractSpell.allowLooting()` delegates to the effective school's `allowLooting` flag. The Astral school source default is `true`.
+
+A deployed `enabled=false`, a school override away from `asterismarcanum:astral`, or another authoritative provider/datapack suppression can close the loot path negatively. If no such override exists, the exact host semantics above establish a provider-native default loot path.
+
+Do not infer deployed values from source defaults.
 
 ### Gate B — real-pack acquisition observation
 
