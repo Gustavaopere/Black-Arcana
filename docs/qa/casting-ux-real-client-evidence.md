@@ -2,15 +2,15 @@
 
 ## State
 
-`PREPARED / MANUAL EXECUTION NOT STARTED / STAGE 05 ACTIVE`
+`PREPARED / MANUAL EXECUTION DEFERRED TO STAGE 09 / STAGE 05 ENGINEERING CLOSED`
 
-This ledger is the evidence target required by `plans/05-casting-ux/🟡-PENDENTE-05-final-client-validation-handoff.md` and `docs/qa/casting-ux-real-client-runbook.md`.
+This ledger is the evidence target handed off by `plans/05-casting-ux/✅-05-final-client-validation-handoff.md` to Stage 09 and by `docs/qa/casting-ux-real-client-runbook.md`.
 
 It currently records **campaign preparation only**. No Minecraft client observation has been performed through this ledger and no manual matrix row is PASS/FAIL/BLOCKED from this file. Preparation/reconciliation may add or refine `PENDING` coverage rows when canonical numbered-plan requirements were not yet represented; observed row results/statuses remain unchanged until direct evidence is recorded.
 
 Automated CI, artifact publication, repository inspection and fixture availability are supporting/preflight evidence only. They do not satisfy any row that requires direct real-client observation.
 
-Under D034, Stage 05 is the active blocking numbered stage. Stage 05A remains blocked from promotion/audit progression until Stage 05 is fully complete. Historical 05A implementation/evidence remains reusable later but does not authorize skipping the Stage 05 client gate.
+Under D035, Stage 05 engineering is closed and implementation progression may continue. The real-client rows in this ledger are not waived: they are `PENDING / DEFERRED TO STAGE 09` and remain release-blocking on the exact release candidate.
 
 ---
 
@@ -412,7 +412,7 @@ At the latest preparation/reconciliation checkpoint:
 - Block I companion artifact/JAR: available as exact-SHA preflight evidence but not selected or installed because the manual campaign has not started;
 - Blocks A–J: not started;
 - manual matrix rows: remain `PENDING` until direct observation;
-- Stage 05 state: `ACTIVE / IMPLEMENTATION PRESENT / REQUIRED PHYSICAL VALIDATION PENDING`;
-- Stage 05A state: `BLOCKED BY STAGE 05` under D034.
+- Stage 05 engineering state: `COMPLETE / REAL-CLIENT RELEASE VALIDATION CARRIED TO STAGE 09`;
+- Stage 05A progression state: `UNBLOCKED BY D035`; physical rows remain release-blocking in Stage 09.
 
 **This file currently contains zero manual PASS claims.**
