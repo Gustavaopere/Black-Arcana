@@ -12,6 +12,8 @@ It does **not** replace the provider dossiers, does not change the strict semant
 
 A provider leaves this index only when its own checklist acceptance rule is satisfied by authoritative current-pack evidence and the canonical provider status is updated accordingly.
 
+For a single collection contract covering the actual-pack hashes/config/runtime evidence still required by all five rows, use [`DEPLOYED-EVIDENCE-COLLECTION-RUNBOOK.md`](./DEPLOYED-EVIDENCE-COLLECTION-RUNBOOK.md). The runbook does not relax any provider-specific acceptance rule.
+
 ## Current conditional providers
 
 | Provider | Current catalog closure already achieved | Remaining blocker | Canonical closure checklist |
