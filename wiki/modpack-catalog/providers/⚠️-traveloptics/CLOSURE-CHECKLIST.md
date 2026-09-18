@@ -75,7 +75,19 @@ Unlike the other nine non-craftable Unique spells, the exact artifact audit foun
 
 The publisher's generic 1.21.1 statement that ported spells are obtainable in survival is not object-level evidence for this spell.
 
-Required closure evidence must establish an actual current-pack player path, such as an authoritative provider/host loot route, progression grant, item/scroll source, scripted acquisition or runtime-observed survival mechanism that resolves specifically to `traveloptics:blackout`.
+The current broad project page documents a Dead King → Blackout acquisition loop, and official 1.20.1 File `6010839` introduced `Blackout`, `Call Forth The Dead King` and the `Enraged Dead King` together. That is real publisher evidence for the full project/1.20.1 feature line, but not for the installed deprecated 1.21.1 alpha.
+
+Exact File `6342780` evidence instead shows:
+
+- `call_forth_the_dead_king` is residual localization-only content and absent from the exact 33-spell registry;
+- the exact artifact's 41 loot/loot-modifier JSON resources expose no Enraged Dead King loot route;
+- `blackout` remains registered, but no object-level structured acquisition route is present in the audited artifact.
+
+See [`BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`](BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md).
+
+Therefore the broader Dead King route must not be projected into the installed alpha. This does not prove impossibility; it preserves the requirement for File-6342780-specific or actual-pack evidence.
+
+Required closure evidence must establish an actual current-pack player path, such as an authoritative 1.21.1 provider/host route, progression grant, item/scroll source, scripted acquisition or runtime-observed survival mechanism that resolves specifically to `traveloptics:blackout`.
 
 | Required field | Current state |
 |---|---|
@@ -84,7 +96,7 @@ Required closure evidence must establish an actual current-pack player path, suc
 | prerequisite entity/structure/item/config | `NÃO VERIFICADO` |
 | actual pack/world checkpoint | `NÃO VERIFICADO` |
 
-Creative access, commands, registry presence, translation keys or generic publisher language do not close this gate.
+Creative access, commands, registry presence, translation keys, generic publisher language, or the 1.20.1 Dead King acquisition loop do not close this 1.21.1 gate.
 
 ## Gate 4 — Somake Aqua ↔ T.O Aqua coexistence
 
