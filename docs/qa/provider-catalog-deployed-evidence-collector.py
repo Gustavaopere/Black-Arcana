@@ -27,6 +27,7 @@ TRAVELOPTICS_ORIGINAL_SHA1 = "3808493ce45cdfeb6408e85578adecf13df698e8"
 TRAVELOPTICS_PATCH_SHA1 = "680fa679d8ea2419a79571f455436367222f6f9d"
 SOMAKE_109_RELEASE_SHA1 = "171841ac9f802be9309ecc166c1d972ac6d404c0"
 GAZE_1171_SHA1 = "a8cb3190bde157f78160ce65c202ce2d47fb2041"
+NEG_461_SHA1 = "e5fd04b7c40d6d5a9aea5d6356f3eb628941fca4"
 
 NEG_CONFIGS = [
     ("not_enough_glyphs:plow", "not_enough_glyphs/plow.toml"),
@@ -159,6 +160,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["release_1_0_9_equality"] = entry["sha1"] == SOMAKE_109_RELEASE_SHA1
                 elif provider == "gaze":
                     entry["known_1_1_7_1_equality"] = entry["sha1"] == GAZE_1171_SHA1
+                elif provider == "not_enough_glyphs":
+                    entry["known_4_6_1_equality"] = entry["sha1"] == NEG_461_SHA1
                 entries.append(entry)
         result[provider] = entries
     return result
