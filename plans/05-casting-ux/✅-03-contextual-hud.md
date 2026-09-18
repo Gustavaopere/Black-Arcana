@@ -2,7 +2,7 @@
 
 ## State
 
-`IMPLEMENTED / PHYSICAL STATE VALIDATION PENDING`
+`IMPLEMENTED / DETERMINISTIC ACCEPTANCE COMPLETE / REAL-CLIENT VALIDATION CARRIED TO STAGE 09`
 
 HUD layout, hierarchy, anti-clutter, wording and visual accessibility are owned by `plans/visual-production/05-casting-ux/03-contextual-hud-presentation.md`.
 
@@ -45,14 +45,10 @@ Do not infer these facts from local timers, ids, particles, world scans or provi
 
 `HazardForecastReloadRaceTest` pins the in-flight reload race where a forecast request is issued under one hazard-profile revision, an identical-looking preflight is accepted as a new revision, and the old response arrives afterward. Client forecast request IDs are allocated by `ClientArcanaSyncState`; each accepted preflight, reconnect clear or player-identity reset advances the minimum valid request boundary, so a pre-revision response cannot repopulate forecast state while a request allocated after the boundary remains acceptable. No gameplay-authority or payload-schema change is required.
 
-The test-only RED checkpoint `ecfa1709ef1acd51c62d9981b63513d5a15d8118` failed workflow `35043584131` at unit tests before the revision-aware state seam existed. Runtime HEAD `c6e2fa854f776df8d074d24f6da1e7f758b9153c` then passed workflow `35043812423` for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. This is deterministic supporting evidence only and does not satisfy the physical-state acceptance below.
+The test-only RED checkpoint `ecfa1709ef1acd51c62d9981b63513d5a15d8118` failed workflow `35043584131` at unit tests before the revision-aware state seam existed. Runtime HEAD `c6e2fa854f776df8d074d24f6da1e7f758b9153c` then passed workflow `35043812423` for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. This is deterministic engineering evidence. The corresponding real-client state observation is carried to Stage 09 and is not inferred as PASS.
 
-Review follow-up PR #279 strengthened the regression shape so it no longer replays only an already-accepted request ID: it accepts one forecast under revision A, allocates a distinct higher request under revision A without receiving its response, crosses the reload boundary, then delivers that outstanding pre-reload response and requires rejection before proving a post-reload request remains acceptable. Test-only HEAD `12b3ef4bda0c729bbd49b4f3bf7ef2b8b5926173` passed workflow `35046833742` for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. This strengthens deterministic coverage only; it does not promote 05.03 or any manual matrix row.
+Review follow-up PR #279 strengthened the regression shape so it no longer replays only an already-accepted request ID: it accepts one forecast under revision A, allocates a distinct higher request under revision A without receiving its response, crosses the reload boundary, then delivers that outstanding pre-reload response and requires rejection before proving a post-reload request remains acceptable. Test-only HEAD `12b3ef4bda0c729bbd49b4f3bf7ef2b8b5926173` passed workflow `35046833742` for unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTests and dedicated-server smoke. This strengthens deterministic coverage. It does not convert any manual matrix row to PASS; those rows remain deferred to Stage 09 under D035.
 
-## Remaining engineering acceptance
+## Completion and Stage 09 carry
 
-- authoritative denial remains distinguishable from advisory forecast;
-- stale forecast/reload/reconnect state cannot override current snapshots;
-- cast-result correlation never guesses current selected-spell identity;
-- future presentation data additions pass their server-authored contract gate;
-- dedicated server remains free of client classloading.
+Current server-authored denial/forecast/correlation, stale-state and dedicated-server classloading contracts are deterministically covered and complete for Stage 05 progression. Any future presentation datum remains subject to the 05.07 server-authored contract gate. Direct real-client correlation/reload/reconnect observations remain PENDING and are carried to Stage 09 under D035.

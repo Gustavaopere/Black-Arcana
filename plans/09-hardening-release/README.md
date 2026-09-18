@@ -1,6 +1,6 @@
 # 09 — Hardening & Release
 
-Validate the completed system under real modpack conditions before calling it finished.
+Validate the completed system under real modpack conditions before calling it finished. Under D035 this stage also owns the consolidated manual/physical/real-client/provider-native campaign transferred from earlier implementation stages.
 
 ## Tasks
 
@@ -13,4 +13,4 @@ Validate the completed system under real modpack conditions before calling it fi
 
 ## Exit criteria
 
-CI and selected real-pack smoke profiles are green, persistence upgrades are tested, performance budgets are met, clean-room/provenance state is reproducible, the release JAR carries required notices and no actual third-party derivation remains legally/technically unresolved.
+CI and selected real-pack smoke profiles are green, every release-blocking D035 transferred physical/manual row is directly evidenced on the exact release candidate, persistence upgrades are tested, performance budgets are met, clean-room/provenance state is reproducible, the release JAR carries required notices and no actual third-party derivation remains legally/technically unresolved.

@@ -2,7 +2,7 @@
 
 ## State
 
-`IMPLEMENTED / PHYSICAL PROVIDER COEXISTENCE VALIDATION PENDING / VISUAL COEXISTENCE MOVED`
+`IMPLEMENTED / DETERMINISTIC ACCEPTANCE COMPLETE / PROVIDER-REAL VALIDATION CARRIED TO STAGE 09 / VISUAL COEXISTENCE MOVED`
 
 Concrete HUD overlap, readability, keybinding discoverability and combat-animation/client-presentation work is specified in:
 
@@ -57,7 +57,7 @@ For Iron's-owned spells, Iron's remains authoritative for its native resource/co
 - the Black Arcana cooldown policy remains explicit for the hosted probe;
 - the common optional-mod entrypoint references Iron's adapters by class name rather than hard-importing provider adapter classes.
 
-These checks protect the deterministic authority contract. They do not replace physical validation with the assembled client/modpack.
+These checks complete the deterministic authority contract. Physical validation with the assembled client/modpack remains PENDING release evidence in Stage 09.
 
 ## Canonical implementation evidence
 
@@ -69,7 +69,7 @@ The hosted-authority hardening is canonical through PR #237, `fix: harden Iron's
 - exact post-merge workflow `34788362522`: full pipeline GREEN, including QA artifact publication;
 - canonical QA artifact: `black-arcana-7c6d1e420a098e0163ccd27688a5558f9e699b29`, artifact ID `10326459668`, SHA-256 `e9a2300a91a9aa7b19372901c59f24e19928d1ef7526ccaf414c880189c48081`.
 
-This evidence closes the deterministic implementation tranche only. It does not convert any physical client/provider coexistence row into PASS.
+This evidence closes the deterministic implementation tranche. It does not convert any physical client/provider coexistence row into PASS; those rows are carried to Stage 09.
 
 ## External invocation surfaces
 
@@ -106,6 +106,11 @@ Engineering acceptance for this plan is limited to invariants that can be proven
 - no unverified Epic Fight, Spell Actionbar, Controlling or controller API becomes a hard dependency;
 - dedicated-server classloading remains safe.
 
-The deterministic hosted-Iron's authority path is implemented and regression-covered. The plan remains pending until the required provider/input coexistence rows are observed in the assembled runtime.
+The deterministic hosted-Iron's authority path is implemented and regression-covered. Under D035, this completes the Stage 05 engineering gate. Required provider/input coexistence observations remain `PENDING / DEFERRED TO STAGE 09` and are release-blocking.
 
 HUD overlap, readability, battle-mode presentation, animation compatibility, key conflict ergonomics and recommended client layout belong to the linked visual-production plan.
+
+
+## Completion
+
+05.06 is complete for numbered implementation progression under D035. A Stage 09 provider-real failure reopens this plan for correction.

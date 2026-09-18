@@ -2,7 +2,7 @@
 
 ## State
 
-`IMPLEMENTED / PHYSICAL INPUT VALIDATION PENDING`
+`IMPLEMENTED / DETERMINISTIC ACCEPTANCE COMPLETE / REAL-CLIENT VALIDATION CARRIED TO STAGE 09`
 
 Final radial geometry, cards, icons and visual states are owned by `plans/visual-production/05-casting-ux/02-radial-wheel-presentation.md`.
 
@@ -35,10 +35,11 @@ Any readiness/cooldown/cost/danger fact shown by presentation must come from an 
 
 `RadialLayoutTest`, `RadialToggleInputTest` and `SmallViewportLayoutContractTest` preserve deterministic layout/input invariants. PR #57 hardened the 854×480 / GUI-scale-4 path and workflow `34010968124` was GREEN.
 
-## Remaining engineering acceptance
+## Stage 09 carried physical acceptance
 
-- `TOGGLE` and `HOLD` close semantics observed in a real client;
-- first/second page remain reachable;
-- selection remains distinct from casting;
-- no stuck input after close;
-- no presentation refinement introduces a client admission shortcut.
+The deterministic radial-selection contract is complete. Stage 09 retains direct observation of `TOGGLE`/`HOLD`, both pages, selection-vs-cast separation and stuck-input behavior. Presentation changes must continue to preserve the no-client-admission-shortcut invariant.
+
+
+## Completion
+
+Under D035, 05.02 is complete for numbered implementation progression; the physical rows remain PENDING in Stage 09.

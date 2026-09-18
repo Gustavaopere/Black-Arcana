@@ -2,7 +2,7 @@
 
 ## State
 
-`IMPLEMENTED / PHYSICAL INPUT VALIDATION PENDING`
+`IMPLEMENTED / DETERMINISTIC ACCEPTANCE COMPLETE / REAL-CLIENT VALIDATION CARRIED TO STAGE 09`
 
 ## Goal
 
@@ -55,21 +55,28 @@ After datapack/provider changes, unavailable spells are rejected by the server a
 
 Canonical focused coverage includes `ClientInputAuthorityWiringTest`, `ClientInputChannelGuiFocusWiringTest`, `ClientInputDisconnectSelectionWiringTest`, `ClientLoadoutSelectionTest`, `RadialCanonicalLoadoutReachabilityTest`, `LoadoutDraftTest`, `LoadoutRegistryTest`, `ArcanaServerRuntimeManagerLoadoutWiringTest`, `ArcanaServerRuntimeLoadoutAuthorityTest` and `BlackArcanaSavedDataLoadoutTest` plus the normal build/JAR/GameTest/dedicated-server pipeline.
 
-`ClientInputAuthorityWiringTest` pins ordinary rebindable `KeyMapping` registration/defaults and the fail-closed GUI-focus guards on radial, editor, selected-cast and quick-cast paths. `ClientInputChannelGuiFocusWiringTest` pins that GUI focus cancels an already-active channel through the canonical cancel transport before channel-release processing. `ClientInputDisconnectSelectionWiringTest` pins that disconnect clears the local selection in the same client tick before the controller returns. `ArcanaServerRuntimeLoadoutAuthorityTest` pins that immediate casts cannot forge a different registered/executable spell for a server-owned slot and that a spell removed from the live registry cannot remain executable through stale loadout/engine state. `BlackArcanaSavedDataLoadoutTest` includes explicit coverage that a persisted loadout above the canonical 16-slot bound is discarded per caster rather than truncated, while a valid neighboring caster remains intact. These are deterministic supporting evidence only; they do not replace the required real-client observation below.
+`ClientInputAuthorityWiringTest` pins ordinary rebindable `KeyMapping` registration/defaults and the fail-closed GUI-focus guards on radial, editor, selected-cast and quick-cast paths. `ClientInputChannelGuiFocusWiringTest` pins that GUI focus cancels an already-active channel through the canonical cancel transport before channel-release processing. `ClientInputDisconnectSelectionWiringTest` pins that disconnect clears the local selection in the same client tick before the controller returns. `ArcanaServerRuntimeLoadoutAuthorityTest` pins that immediate casts cannot forge a different registered/executable spell for a server-owned slot and that a spell removed from the live registry cannot remain executable through stale loadout/engine state. `BlackArcanaSavedDataLoadoutTest` includes explicit coverage that a persisted loadout above the canonical 16-slot bound is discarded per caster rather than truncated, while a valid neighboring caster remains intact. These deterministic checks satisfy the Stage 05 engineering gate. The corresponding real-client observations remain release evidence and are carried explicitly to Stage 09 under D035.
 
 `RadialCanonicalLoadoutReachabilityTest` deterministically drives the production radial paging/focus/hit-test helpers and the non-casting radial selector across every canonical slot `0..15` for both keyboard and pointer paths. This proves machine-level reachability of the complete 16-slot bound without changing casting authority; the required real-client/physical observation remains pending.
 
 The historical hardening checkpoint `30b111fc2a50f8fa3efb4bbf9b8cac1ad4c1f053` passed workflow `34150180682` after explicit RED cycles for execution-engine validation, duplicate direct writes, duplicate restore and persisted duplicate isolation.
 
-The immediate-cast loadout-authority hardening is canonical via PR #271 at merge SHA `1d0e221440506005fd4cd16220436f3573c0adec`. RED workflow `35034535110` reproduced the forged-slot bypass. Final branch workflow `35035822174`, PR-head workflow `35036140396` and post-merge workflow `35036436151` passed the applicable automated gates; the post-merge run also published exact-SHA artifact `black-arcana-1d0e221440506005fd4cd16220436f3573c0adec` (artifact ID `10423705741`, SHA-256 `f61d7f3f533e220e1f81e72ee75e98dacd7358367e5def88ce6a6df173a73629`). This closes that deterministic authority gap only and does not satisfy the physical acceptance below.
+The immediate-cast loadout-authority hardening is canonical via PR #271 at merge SHA `1d0e221440506005fd4cd16220436f3573c0adec`. RED workflow `35034535110` reproduced the forged-slot bypass. Final branch workflow `35035822174`, PR-head workflow `35036140396` and post-merge workflow `35036436151` passed the applicable automated gates; the post-merge run also published exact-SHA artifact `black-arcana-1d0e221440506005fd4cd16220436f3573c0adec` (artifact ID `10423705741`, SHA-256 `f61d7f3f533e220e1f81e72ee75e98dacd7358367e5def88ce6a6df173a73629`). This closes that deterministic authority gap. Physical confirmation remains pending release evidence under Stage 09 and is not represented as PASS.
 
-The Block J Iron's-hosted provider preflight is canonical via PR #317 at merge SHA `1944e45c122a24c36101e97efe2195730b5019f0`. RED workflow `35282073048` proved that the provider-hosted probe was absent from the synchronized presentation catalog and therefore could not be placed legitimately into the server-owned loadout. A second RED workflow, `35286696874`, proved that a presentation-ID collision could leave partial hosted runtime state. The final clean feature SHA `762dcc7824c543d932fb3a81645e92a424043395` passed branch workflow `35287227515` and PR workflow `35287405001`; post-merge workflow `35292207167` (#3212) passed unit tests, diff sanity, NeoForge build, built-JAR checks, Foundation GameTest, production dedicated-server smoke, artifact publication, and the separate Stage 05 QA companion dedicated-server smoke. The canonical production artifact is `black-arcana-1944e45c122a24c36101e97efe2195730b5019f0` (artifact ID `10527221605`, SHA-256 `45b754d81597c9f75e00b203347f93c99be94883fe5b2874abfce33ea72a0e43`); the matching Block I companion is `black-arcana-stage05-qa-1944e45c122a24c36101e97efe2195730b5019f0` (artifact ID `10526747373`, SHA-256 `278741a5742f1e7090242dc739329eb362fa33bc8c62689279b49cf04119a5b6`). This closes only the deterministic provider-presentation/loadout/partial-install blockers. Block J provider-real execution and all physical acceptance below remain pending; no manual PASS is created by this checkpoint.
+The Block J Iron's-hosted provider preflight is canonical via PR #317 at merge SHA `1944e45c122a24c36101e97efe2195730b5019f0`. RED workflow `35282073048` proved that the provider-hosted probe was absent from the synchronized presentation catalog and therefore could not be placed legitimately into the server-owned loadout. A second RED workflow, `35286696874`, proved that a presentation-ID collision could leave partial hosted runtime state. The final clean feature SHA `762dcc7824c543d932fb3a81645e92a424043395` passed branch workflow `35287227515` and PR workflow `35287405001`; post-merge workflow `35292207167` (#3212) passed unit tests, diff sanity, NeoForge build, built-JAR checks, Foundation GameTest, production dedicated-server smoke, artifact publication, and the separate Stage 05 QA companion dedicated-server smoke. The canonical production artifact is `black-arcana-1944e45c122a24c36101e97efe2195730b5019f0` (artifact ID `10527221605`, SHA-256 `45b754d81597c9f75e00b203347f93c99be94883fe5b2874abfce33ea72a0e43`); the matching Block I companion is `black-arcana-stage05-qa-1944e45c122a24c36101e97efe2195730b5019f0` (artifact ID `10526747373`, SHA-256 `278741a5742f1e7090242dc739329eb362fa33bc8c62689279b49cf04119a5b6`). This closes the deterministic provider-presentation/loadout/partial-install blockers. Block J provider-real execution remains PENDING and is transferred to the Stage 09 final-validation campaign; no manual PASS is created by this checkpoint.
 
-## Remaining engineering acceptance
+## Stage 09 carried physical acceptance
 
-- rebind behavior and GUI-focus suppression observed in a real client;
-- server-owned apply/clear/reconnect behavior observed without stale authority;
-- 16-slot bound remains reachable through supported selection paths;
-- no provider/controller integration weakens canonical server authority.
+The Stage 05 engineering contract is complete. The following observations are retained as release-blocking Stage 09 rows and remain PENDING until direct real-client evidence exists:
+
+- rebind behavior and GUI-focus suppression in a real client;
+- server-owned apply/clear/reconnect behavior without stale authority;
+- physical reachability of the canonical 16-slot bound through supported selection paths;
+- provider/controller coexistence preserving canonical server authority.
 
 Visual/editor layout, search/filter, icon rendering, apply-state communication and small-viewport presentation are not engineering blockers here; they are tracked under visual production.
+
+
+## Completion
+
+Under D035, 05.01 is complete for numbered implementation progression. No physical/manual row is claimed PASS; all such rows remain owned by the Stage 09 final-validation matrix.
