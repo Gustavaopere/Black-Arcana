@@ -25,7 +25,7 @@ Canonical real-client build delivery: successful `main` CI publishes a 7-day Git
 
 Execution procedure and evidence requirements are in `docs/qa/casting-ux-real-client-runbook.md`.
 
-This document deliberately does **not** mark visual/manual rows as passed. They must be exercised in a real Minecraft client before Stage 05 task files receive ✅.
+This document deliberately does **not** mark visual/manual rows as passed. Under D035 the Stage 05 engineering files may receive ✅ after deterministic completion and explicit handoff, while every row below remains PENDING until the Stage 09 exact-release-candidate campaign exercises it.
 
 ## Manual matrix
 
@@ -68,4 +68,4 @@ This document deliberately does **not** mark visual/manual rows as passed. They 
 
 ## Closure rule
 
-Stage 05 remains active until the applicable manual rows above are exercised. Rows for presentation features that do not yet exist (for example future screen motion or particles) may be carried explicitly into Stage 09 rather than falsely marked passed. Stage 05A.11 automated evidence does not substitute for these real-client checks.
+Under D035, all applicable manual rows above are carried into Stage 09 and remain release-blocking rather than Stage 05 promotion-blocking. No row is marked PASS by this transfer. Rows for presentation features that do not yet exist may likewise remain explicitly deferred. Stage 05A.11 or any other automated evidence does not substitute for these real-client checks.
