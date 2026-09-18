@@ -20,7 +20,7 @@ Project status: **⚠️ partial/conditioned**. Strict semantic promotion is blo
 - publisher license: **All Rights Reserved**
 - required artifact dependencies declared by the exact JAR: Iron's Spells 'n Spellbooks `[1.21.1-3.10.0,)`, L_Ender's Cataclysm `[2.60.,)`, Apothic Attributes `[2.6.1,)`
 
-The physical modlist/version line is authoritative for installed presence. The repository does not preserve an independent current physical SHA-1 for this JAR, so Phase 2BS does **not** claim physical byte equality or `COUNTED_EXACT`. The exact publisher file is used as bounded structural evidence only.
+The physical modlist/version line is authoritative for installed presence. The latest sibling dossier was rechecked at `neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149` (`PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`) and still records `traveloptics-4.4.0.1-1.21.1.jar` as physically installed. That dossier does not preserve an independent physical SHA-1, so Phase 2BS does **not** claim byte equality or `COUNTED_EXACT`. The original exact publisher file and the exact patch candidate remain comparison targets until the installed bytes are fingerprinted.
 
 ## Publisher release boundary
 
