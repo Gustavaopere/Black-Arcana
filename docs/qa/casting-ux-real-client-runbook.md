@@ -10,7 +10,7 @@ Canonical QA artifacts are published from `main` only and retained for 7 days. F
 
 If the artifact for the required SHA has expired or is unavailable, rerun CI for the current exact `main` revision when appropriate or build that exact recorded SHA locally. Do not silently substitute a different revision. Artifact availability proves only build delivery after the automated gate; it is not real-client evidence and does not make any manual matrix row PASS.
 
-The Stage 05/05A gate is manual by design. Automated CI, GameTests, screenshots from tests, code inspection and server smoke tests are supporting evidence only; they do not substitute for the client checks below.
+Under D035, this campaign is a Stage 09 release gate rather than a Stage 05/05A implementation-promotion gate. Automated CI, GameTests, screenshots from tests, code inspection and server smoke tests remain supporting evidence only; they do not substitute for the client checks below.
 
 Use the removable deterministic datapack fixture in `docs/qa/fixtures/stage05-real-client/` when exercising hazard thresholds, the normal/non-normal tooltip controls, Arcane Resistance 0/15/30 states, legitimate Iron cooldown/cost gate states and danger-profile reload/stale-forecast behavior. The fixture does not create PASS evidence by itself and must not be shipped as production gameplay data.
 
@@ -187,9 +187,9 @@ After the full run, update `docs/qa/casting-ux-manual-matrix.md` only from this 
 
 ## Closure sequence
 
-1. Record all real-client evidence.
-2. Fix every real implementation failure and rerun affected rows.
-3. Update the matrix with only observed results.
-4. Reconcile Stage 05 and Stage 05A numbered task status after the matrix gate is actually satisfied.
-5. Run the full automated CI again on the closeout PR.
-6. Only after the client gate and CI are both green may Stage 05/05A be declared complete and Stage 06 promotion be reconsidered.
+1. Execute this campaign in Stage 09 on the exact release candidate.
+2. Record all real-client evidence.
+3. Fix every real implementation failure in its originating plan/stage and rerun affected rows.
+4. Update the matrix with only observed results.
+5. Run the full automated CI again on the repaired exact release candidate when a fix was required.
+6. Release remains blocked until every applicable release-blocking row and CI gate are green. Earlier implementation-stage ✅ markers do not convert these rows to PASS.
