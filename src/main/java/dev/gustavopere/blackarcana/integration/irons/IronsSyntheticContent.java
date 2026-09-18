@@ -10,6 +10,7 @@ import dev.gustavopere.blackarcana.api.ArcanaServices.EffectResult;
 import dev.gustavopere.blackarcana.api.ArcanaServices.TargetResolution;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.config.SpellDataDefinition;
 import dev.gustavopere.blackarcana.core.cast.BoundedReplayGuard;
 import dev.gustavopere.blackarcana.core.cost.PolicyAwareCostProvider;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
@@ -39,6 +40,8 @@ public final class IronsSyntheticContent {
         Objects.requireNonNull(rpg, "rpg");
 
         ArcanaSpellDefinition definition = definition();
+        validateDefinitionSlot(runtime, definition);
+        installPresentation(runtime, definition);
         installDefinition(runtime, definition);
         installCooldown(runtime);
 
@@ -76,6 +79,13 @@ public final class IronsSyntheticContent {
             false);
     }
 
+    private static void validateDefinitionSlot(ArcanaServerRuntime runtime, ArcanaSpellDefinition definition) {
+        ArcanaSpellDefinition existing = runtime.spells().resolve(definition.id()).orElse(null);
+        if (existing != null && !existing.equals(definition)) {
+            throw new IllegalStateException("Iron's integration spell id already has a different definition");
+        }
+    }
+
     private static void installDefinition(ArcanaServerRuntime runtime, ArcanaSpellDefinition definition) {
         ArcanaSpellDefinition existing = runtime.spells().resolve(definition.id()).orElse(null);
         if (existing != null) {
@@ -87,6 +97,14 @@ public final class IronsSyntheticContent {
         var definitions = new ArrayList<>(runtime.spells().snapshot().values());
         definitions.add(definition);
         runtime.spells().replaceAll(definitions);
+    }
+
+    private static void installPresentation(ArcanaServerRuntime runtime, ArcanaSpellDefinition definition) {
+        runtime.spellData().installSynthetic(new SpellDataDefinition(
+            SpellDataDefinition.CURRENT_SCHEMA_VERSION,
+            definition.id().canonical(),
+            definition.translationKey(),
+            definition.iconId()));
     }
 
     private static void installCooldown(ArcanaServerRuntime runtime) {

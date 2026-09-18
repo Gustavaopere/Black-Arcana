@@ -4,6 +4,7 @@ Canonical Stage 05 real-client QA documents:
 
 - `casting-ux-manual-matrix.md` — acceptance matrix and current PENDING/PASS/FAIL/BLOCKED state;
 - `casting-ux-real-client-runbook.md` — real-client execution and evidence procedure;
+- `stage05-block-j-provider-real-profile.md` — mandatory companion profile for Block J provider-real preparation and authority observations; supporting automation never creates physical PASS evidence;
 - `casting-ux-real-client-evidence.md` — exact-SHA campaign/evidence ledger; automated preparation or artifact delivery never creates manual PASS evidence;
 - `fixtures/stage05-real-client/README.md` — removable deterministic Minecraft 1.21.1 datapack fixture for hazard thresholds, normal/non-normal tooltip controls, Arcane Resistance 0/15/30 states, Iron cooldown/cost gate states, and stale-profile reload validation;
 - `stage05a11-resistance-forecast.md` — historical automated implementation/authority evidence for selected-spell resistance and predictable-gate presentation. Under D034, Stage 05A remains blocked from promotion/audit progression until Stage 05 is fully complete.
