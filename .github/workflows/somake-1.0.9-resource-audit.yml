@@ -1,0 +1,123 @@
+name: Somake 1.0.9 Clean-room Resource Audit
+
+on:
+  push:
+    branches:
+      - audit/somake-1.0.9-resource-audit-2026-09-17
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download exact release and retain resource-only evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://www.cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 180 "$URL" -o somake.jar
+          RELEASE_SHA1="$(sha1sum somake.jar | awk '{print $1}')"
+
+          mkdir -p audit
+
+          {
+            echo 'Somake Spells 1.0.9 clean-room resource audit'
+            echo 'project_id=1461634'
+            echo 'file_id=8867079'
+            echo 'filename=somakespells-1.0.9-1.21.1.jar'
+            echo "release_sha1=$RELEASE_SHA1"
+            echo 'physical_pack_sha1=NOT_YET_AVAILABLE_IN_BLACK_ARCANA_AUTHORITY'
+            echo
+            echo '== metadata paths =='
+            jar tf somake.jar | grep -E '(^|/)(neoforge\.mods\.toml|mods\.toml|MANIFEST\.MF)$' | sort || true
+            echo
+            echo '== namespace data resource paths =='
+            jar tf somake.jar | grep '^data/somakespells/' | sort || true
+            echo
+            echo '== namespace asset metadata paths (no binary assets) =='
+            jar tf somake.jar \
+              | grep '^assets/somakespells/' \
+              | grep -Ev '/(textures|models|sounds|particles)/' \
+              | sort || true
+            echo
+            echo '== class count only =='
+            printf 'class_count='
+            jar tf somake.jar | grep -c '\.class$' || true
+          } > audit/report.txt
+
+          python3 - <<'PY'
+          import collections
+          import json
+          import zipfile
+          from pathlib import Path
+
+          jar = zipfile.ZipFile('somake.jar')
+          names = set(jar.namelist())
+          out = Path('audit/report.txt')
+
+          with out.open('a', encoding='utf-8') as f:
+              f.write('\n== mods metadata ==\n')
+              for path in ('META-INF/neoforge.mods.toml','META-INF/mods.toml'):
+                  if path in names:
+                      text = jar.read(path).decode('utf-8', errors='replace')
+                      for line in text.splitlines():
+                          s = line.strip()
+                          if s.startswith(('modId','version','displayName','license','mandatory','type','ordering','side')) or 'modId=' in s:
+                              f.write(s + '\n')
+
+              f.write('\n== localization key inventory (keys only; values omitted) ==\n')
+              lang = 'assets/somakespells/lang/en_us.json'
+              if lang in names:
+                  data = json.loads(jar.read(lang).decode('utf-8'))
+                  keys = sorted(data.keys())
+                  f.write(f'key_count={len(keys)}\n')
+                  buckets = collections.Counter(k.split('.',1)[0] for k in keys)
+                  for bucket, count in sorted(buckets.items()):
+                      f.write(f'prefix_count {bucket}={count}\n')
+
+                  f.write('\n-- spell/root keys (keys only) --\n')
+                  for key in keys:
+                      if key.startswith('spell.somakespells.'):
+                          f.write(key + '\n')
+
+                  f.write('\n-- action/progression/config-like keys (keys only) --\n')
+                  for key in keys:
+                      lower = key.lower()
+                      if any(token in lower for token in ('redsoul','red_soul','crimson','spelllock','mastery','learn','lantern','legendary','drowned','soul')):
+                          f.write(key + '\n')
+              else:
+                  f.write('en_us_missing=true\n')
+
+              f.write('\n== data resource type/path summary ==\n')
+              data_paths = sorted(p for p in names if p.startswith('data/somakespells/') and p.endswith('.json'))
+              f.write(f'json_resource_count={len(data_paths)}\n')
+              top = collections.Counter()
+              for path in data_paths:
+                  rel = path[len('data/somakespells/'):]
+                  top[rel.split('/',1)[0]] += 1
+              for bucket, count in sorted(top.items()):
+                  f.write(f'data_bucket {bucket}={count}\n')
+
+              f.write('\n== spell/focus/progression-like data paths ==\n')
+              for path in data_paths:
+                  lower = path.lower()
+                  if any(token in lower for token in ('spell','school_focus','focus','red_soul','redsoul','crimson','legendary','ritual','recipe')):
+                      f.write(path + '\n')
+          PY
+
+          cat audit/report.txt
+
+      - name: Upload text-only audit evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-1.0.9-clean-room-resource-audit
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
