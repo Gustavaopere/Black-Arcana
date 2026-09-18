@@ -1,10 +1,16 @@
-# Somake Spells 1.0.8-fix — Survival Reachability Closure Checklist
+# Somake Spells 1.0.8-fix — Historical Survival Reachability Checklist
 
-Status: `67/67 EXACT_REGISTRY / HOST DEFAULT ENABLED+CRAFTABLE / DEPLOYED CONFIG+FOCUS REACHABILITY UNVERIFIED`
+Status: `HISTORICAL 1.0.8-FIX CHECKPOINT / SUPERSEDED BY CURRENT PHYSICAL 1.0.9 / DO NOT USE AS CURRENT CLOSURE`
 
 ## Purpose
 
-The exact hash-matched 1.0.8-fix artifact already closes all **67/67 current registry identities** under the physical optional-provider set. This checklist isolates what is still missing before those identities can be promoted from `REACHABILITY_CONDITIONAL`.
+This checklist preserves the historical 1.0.8-fix reachability analysis. It no longer represents the current physical provider line.
+
+The sibling modlist now identifies `somakespells-1.0.9-1.21.1.jar` / runtime `1.0.9` as installed. Therefore the former **67/67** registry, class-default and optional-gate conclusions must not be promoted as current-pack facts until revalidated for 1.0.9.
+
+Use [`CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) for current closure work.
+
+The remainder of this file is retained as historical evidence for 1.0.8-fix only.
 
 Three layers must not be collapsed:
 

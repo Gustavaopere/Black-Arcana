@@ -1,33 +1,37 @@
-# Somake Spells 1.0.8-fix
+# Somake Spells — current physical 1.0.9 / historical exact 1.0.8-fix audit
 
-Status: `EXACT HASH-MATCHED 1.0.8-FIX ARTIFACT / 67 CURRENT REGISTRY IDENTITIES CLOSED UNDER PHYSICAL OPTIONAL SET / SURVIVAL REACHABILITY + EFFECTIVE COMMON CONFIG UNVERIFIED / CONDITIONAL +0 / FAIL-CLOSED`
+Status: `⚠️ CURRENT PHYSICAL 1.0.9 / 1.0.8-FIX EXACT AUDIT HISTORICAL / 1.0.9 REGISTRY+OPTIONAL GATES+REACHABILITY NOT RECLOSED / CONDITIONAL +0 / FAIL-CLOSED`
 
-## Installed identity
+## Current installed identity — 1.0.9
 
-- JAR: `somakespells-1.0.8-1.21.1-fix.jar`
+Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149` supersedes the former 1.0.8-fix physical-line claim:
+
+- JAR: `somakespells-1.0.9-1.21.1.jar`
 - Mod id: `somakespells`
-- Runtime: `1.0.8`
+- Runtime: `1.0.9`
 - Minecraft / loader: `1.21.1` / NeoForge
-- Physical SHA-1: `b0ad94c1504709662bee2d08700375ccecbb5ec7`
+- Physical SHA-1: **not yet captured in current Black Arcana authority material**
 - CurseForge Project ID: `1461634`
-- Exact File ID: `8417850`
-- File date/type: `2026-07-12`, Release
-- Curse Maven: `curse.maven:somake-spells-irons-spells-addon-1461634:8417850`
+- Exact File ID: `8867079`
+- File date/type: `2026-09-12`, Release
+- Curse Maven: `curse.maven:somake-spells-irons-spells-addon-1461634:8867079`
 - Publisher: TeenLe
 - License: `All Rights Reserved`
 - Exact public source revision: **not located**
 - Provider class: `SPELL PROVIDER / CONTENT + PROGRESSION ADDON`
 - Casting substrate: Iron's Spells 'n Spellbooks
 
-Physical modlist evidence is authoritative for installed filename/mod id/runtime/hash. Publisher release metadata confirms the exact 1.0.8-fix line.
+The previous exact physical SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`, File ID `8417850` and 67-registry audit apply to **1.0.8-fix only**. They remain historical checkpoint evidence and must not be presented as the current 1.0.9 registry.
 
-## Phase 2BF exact-artifact reconciliation
+See [`CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md).
+
+## Historical Phase 2BF exact-artifact reconciliation — 1.0.8-fix
 
 Phase 2AI correctly stopped at the publisher evidence ceiling. Phase 2BF supersedes only that technical ceiling by materializing the exact CurseForge/Curse Maven File ID `8417850` and requiring SHA-1 equality with the physical modlist: `b0ad94c1504709662bee2d08700375ccecbb5ec7`.
 
-Clean-room inspection closes the current spell registry at **67 provider registrations**: 67 `DeferredHolder<AbstractSpell, ...>` fields, 67 unique `DeferredRegister.register(String, Supplier)` spell IDs and 67 standalone provider `*Spell` classes. Six registrations are optional-provider gated: three by `ModList.isLoaded("mowziesmobs")` and three by `MagicFromTheEastCompat.isLoaded()`, whose exact implementation tests `ModList.isLoaded("iss_magicfromtheeast")`. Both mod IDs are physically present, so all **67/67 registry identities are active under the current physical optional-provider set**.
+For the historical 1.0.8-fix artifact, clean-room inspection closed that artifact's spell registry at **67 provider registrations**: 67 `DeferredHolder<AbstractSpell, ...>` fields, 67 unique `DeferredRegister.register(String, Supplier)` spell IDs and 67 standalone provider `*Spell` classes. Six registrations are optional-provider gated: three by `ModList.isLoaded("mowziesmobs")` and three by `MagicFromTheEastCompat.isLoaded()`, whose exact implementation tests `ModList.isLoaded("iss_magicfromtheeast")`. At that historical checkpoint, both mod IDs were physically present, so all **67/67 registry identities were active under the then-current optional-provider set**. This statement does not prove the 1.0.9 registry.
 
-That closes registry identity, not semantic reachability. Somake registers `enableSpellLockSystem` as a `COMMON` config in `somakespells/general/common.toml`; its code default is `false`, and `PlayerSpellMastery.getUnlockedLevel()` returns `100` while disabled. When enabled, the provider's `/somake` command surface is permission-level 2 and the pre-cast path can reject unlearned spell levels. The deployed pack's actual COMMON config value is not present in the repository or supplied project files, and complete object-level survival acquisition/reachability is not yet proven. Under the canonical ledger rule, the 67 identities therefore remain `CONDITIONAL` and contribute **+0** to the strict semantic sum.
+That historical audit closed 1.0.8-fix registry identity, not 1.0.9 registry identity and not semantic reachability. Somake registers `enableSpellLockSystem` as a `COMMON` config in `somakespells/general/common.toml`; its code default is `false`, and `PlayerSpellMastery.getUnlockedLevel()` returns `100` while disabled. When enabled, the provider's `/somake` command surface is permission-level 2 and the pre-cast path can reject unlearned spell levels. The deployed pack's actual COMMON config value is not present in the repository or supplied project files, and complete object-level survival acquisition/reachability is not yet proven. Under the canonical ledger rule, the 67 identities therefore remain `CONDITIONAL` and contribute **+0** to the strict semantic sum.
 
 See [`EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md`](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) and [`../../meta/PHASE2BF-SOMAKE-1.0.8-FIX-EXACT-CHECKPOINT.md`](../../meta/PHASE2BF-SOMAKE-1.0.8-FIX-EXACT-CHECKPOINT.md).
 
