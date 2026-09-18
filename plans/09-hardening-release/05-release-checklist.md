@@ -4,6 +4,7 @@ Before release:
 
 - [ ] clean build/test/CI green;
 - [ ] dedicated-server smoke green;
+- [ ] accumulated D035 real-client/real-modpack/provider-native matrix is executed on the exact release candidate with every release-blocking row PASS;
 - [ ] exact dependency/recommended-mod versions documented;
 - [ ] default config reviewed for grief/OP behavior;
 - [ ] migration notes written and upgrade tests green;
