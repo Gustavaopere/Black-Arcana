@@ -1,8 +1,10 @@
 # Somake Spells 1.0.8-fix — Host-default reachability audit
 
-Status: `67/67 EXACT SPELL CLASSES / HOST DEFAULT ENABLED+CRAFTABLE / DEPLOYED OVERRIDES AND FULL SURVIVAL ROUTE UNVERIFIED`
+Status: `HISTORICAL 1.0.8-FIX HOST-DEFAULT AUDIT / SUPERSEDED AS CURRENT AUTHORITY BY PHYSICAL 1.0.9 / DO NOT CARRY FORWARD WITHOUT REVALIDATION`
 
 ## Scope
+
+**Current-authority note:** the physical provider line has advanced to Somake 1.0.9. All 67-class conclusions below remain valid only for 1.0.8-fix until independently revalidated against 1.0.9. Use `CURRENT-1.0.9-REVALIDATION-CHECKLIST.md` for current work.
 
 This audit reuses the exact-artifact evidence already produced for Somake `1.0.8-fix` in the isolated Phase 2BJ/PR #191 work. It does not decompile the All Rights Reserved artifact again and does not promote any spell into the strict semantic ledger.
 
