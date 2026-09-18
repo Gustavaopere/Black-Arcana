@@ -340,10 +340,10 @@ def collect_gaze(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
     return {
-        "disableGazeRites_matches": grep_selected_key(
+        "disableGazeRites_matches": collect_selected_key(
             instance,
             roots,
-            re.compile(r"\bdisableGazeRites\b", re.IGNORECASE),
+            "disableGazeRites",
         )
     }
 
@@ -394,10 +394,10 @@ def collect_somake(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
     return {
-        "enableSpellLockSystem_matches": grep_selected_key(
+        "enableSpellLockSystem_matches": collect_selected_key(
             instance,
             roots,
-            re.compile(r"\benableSpellLockSystem\b", re.IGNORECASE),
+            "enableSpellLockSystem",
         )
     }
 
