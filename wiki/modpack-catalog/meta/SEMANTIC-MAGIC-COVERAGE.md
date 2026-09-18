@@ -305,7 +305,7 @@ Other provider directories that have not yet been normalized into a semantic-obj
 ## Important interpretation rules
 
 1. **1344 is not “1344 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1344 by the 100 provider-component denominator. The current component target is `67/100`; provider-component coverage and semantic-magic coverage answer different questions.
+2. Do not divide 1344 by the 100 provider-component denominator. The current component target is `68/100`; provider-component coverage and semantic-magic coverage answer different questions.
 3. Do not add public lower bounds to 1344 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
