@@ -256,20 +256,83 @@ def iter_text_files(roots: list[Path]):
             yield path
 
 
-def grep_selected_key(instance: Path, roots: list[Path], pattern: re.Pattern[str]) -> list[dict[str, str]]:
-    matches: list[dict[str, str]] = []
+def _find_key_recursive(value: Any, target: str, prefix: tuple[str, ...] = ()) -> list[tuple[str, Any]]:
+    found: list[tuple[str, Any]] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            key_text = str(key)
+            next_prefix = (*prefix, key_text)
+            if key_text.lower() == target.lower():
+                found.append((".".join(next_prefix), child))
+            found.extend(_find_key_recursive(child, target, next_prefix))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            found.extend(_find_key_recursive(child, target, (*prefix, str(index))))
+    return found
+
+
+def collect_selected_key(instance: Path, roots: list[Path], key: str) -> list[dict[str, Any]]:
+    matches: list[dict[str, Any]] = []
+    fallback = re.compile(rf"\\b{re.escape(key)}\\b", re.IGNORECASE)
+
     for path in iter_text_files(roots):
+        suffix = path.suffix.lower()
+
+        if suffix == ".toml":
+            try:
+                with path.open("rb") as handle:
+                    data = tomllib.load(handle)
+                for key_path, value in _find_key_recursive(data, key):
+                    matches.append({
+                        "path": rel(path, instance),
+                        "key_path": key_path,
+                        "value": value,
+                        "parser": "tomllib",
+                    })
+                continue
+            except Exception as exc:
+                matches.append({
+                    "path": rel(path, instance),
+                    "parser": "tomllib",
+                    "error": f"{type(exc).__name__}: {exc}",
+                })
+                continue
+
+        if suffix == ".json":
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+                for key_path, value in _find_key_recursive(data, key):
+                    matches.append({
+                        "path": rel(path, instance),
+                        "key_path": key_path,
+                        "value": value,
+                        "parser": "json",
+                    })
+                continue
+            except Exception as exc:
+                matches.append({
+                    "path": rel(path, instance),
+                    "parser": "json",
+                    "error": f"{type(exc).__name__}: {exc}",
+                })
+                continue
+
         try:
             text = path.read_text(encoding="utf-8", errors="replace")
         except OSError:
             continue
         for lineno, line in enumerate(text.splitlines(), start=1):
-            if pattern.search(line):
+            stripped = line.strip()
+            if not stripped or stripped.startswith(("#", ";", "//")):
+                continue
+            if fallback.search(line):
                 matches.append({
                     "path": rel(path, instance),
-                    "line": str(lineno),
-                    "match": line.strip(),
+                    "line": lineno,
+                    "match": stripped,
+                    "parser": "text-fallback",
                 })
+
     return matches
 
 
