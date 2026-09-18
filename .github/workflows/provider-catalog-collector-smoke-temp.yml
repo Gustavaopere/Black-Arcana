@@ -63,10 +63,14 @@ jobs:
           assert report["asterism_arcanum"]["per_spell_local"]["selected"]["irons_spellbooks:allow_crafting"] is False
 
           gaze = report["gaze"]["disableGazeRites_matches"]
-          assert len(gaze) == 1 and "false" in gaze[0]["match"].lower()
+          assert len(gaze) == 1
+          assert gaze[0]["parser"] == "tomllib"
+          assert gaze[0]["value"] is False
 
           somake = report["somake_spells"]["enableSpellLockSystem_matches"]
-          assert len(somake) == 1 and "true" in somake[0]["match"].lower()
+          assert len(somake) == 1
+          assert somake[0]["parser"] == "tomllib"
+          assert somake[0]["value"] is True
 
           plow = next(row for row in report["not_enough_glyphs"]["rows"] if row["registry_id"] == "not_enough_glyphs:plow")
           assert len(plow["observations"]) == 1
