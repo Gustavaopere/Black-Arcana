@@ -50,6 +50,8 @@ O construtor usado mantém os defaults de Iron's: `requiresLearning=false` e `al
 
 O Astromancer possui loot table nativa que gera um `irons_spellbooks:scroll` com `randomize_spell` e filtro `school: asterismarcanum:astral`, quality 0.25–0.85. Essa é uma fonte concreta de Astral Scrolls.
 
+Uma reauditoria do host exato Iron's `1.21.1-3.16.3` fecha um detalhe importante: `quality` **não filtra raridade** em `RandomizeSpellFunction`; ela define o nível somente após a seleção do spell. O filtro escolar inclui spells efetivamente `enabled` e `allowLooting`; Astral Gateway não sobrescreve esses gates, e a escola Astral usa o construtor default de Iron's com `allowLooting=true`. Portanto Astral Gateway é **default host loot-eligible**; o blocker atual é somente o estado implantado do Iron's spell config/datapack, não uma exclusão por Legendary/quality. Ver [`IRONS-3.16.3-HOST-LOOT-ELIGIBILITY.md`](IRONS-3.16.3-HOST-LOOT-ELIGIBILITY.md).
+
 Os `DefaultConfig` dos 10 spells survival não desabilitam crafting; no Iron's atual, `allowCrafting` default é `true`. Config/datapacks do pack continuam podendo alterar a disponibilidade efetiva.
 
 O Astrolabe é um SpellBook de 12 slots com +200 Max Mana, +20% Astral Spell Power e +5% Mana Regen. A receita usa Clock, Mithril Ingot, Tarnished Crown e Chains.
