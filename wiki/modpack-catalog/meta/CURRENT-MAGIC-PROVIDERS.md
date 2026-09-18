@@ -14,6 +14,16 @@ Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjun
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
+## Provider freshness override — Somake 1.0.9
+
+A autoridade global de 595 top-levels acima permanece o checkpoint histórico reconciliado de 2026-09-11; ela **não** é rebatizada silenciosamente como um snapshot global mais novo.
+
+Há, porém, uma autoridade física provider-specific mais recente no sibling: a modlist atual, verificada em `neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149`, preserva a entrada `somakespells-1.0.9-1.21.1.jar` / mod id `somakespells` / runtime `1.0.9`. Isso supersede apenas a antiga afirmação de que Somake 1.0.8-fix é a linha física corrente.
+
+O audit clean-room resource-only da release exata 1.0.9 (CurseForge file `8867079`) fechou SHA-1 de release `171841ac9f802be9309ecc166c1d972ac6d404c0`, metadata de dependências e superfície de resources/localization. O audit encontra 83 roots `spell.somakespells.<id>` e 83 `.guide` correspondentes, mas **não** converte localization em registry. A igualdade byte-for-byte com o JAR físico, o registry 1.0.9, os predicates de registros opcionais e a reachability/config implantada continuam abertos.
+
+Consequência canônica: Somake continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O checkpoint Phase 2BF de 1.0.8-fix abaixo permanece histórico e não descreve o registry corrente.
+
 ## Freshness histórica 2026-09-07
 
 O checkpoint de 2026-09-07 registrou updates como:
@@ -179,7 +189,7 @@ Runtime numerical tuning, final loot probabilities, pillar/rift persistence/netw
 
 ## Checkpoint Somake Spells — Phase 2BF
 
-The exact physical `somakespells-1.0.8-1.21.1-fix.jar` / SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7` was materialized from File ID `8417850` and hash-matched. The provider owns **67 exact current spell registrations** under the present optional-provider set: 61 unconditional, three gated by physical `mowziesmobs`, and three gated by physical `iss_magicfromtheeast`.
+Historical Phase 2BF evidence materialized `somakespells-1.0.8-1.21.1-fix.jar` / SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7` from File ID `8417850` and hash-matched it. That artifact owns **67 exact spell registrations for 1.0.8-fix** under the optional-provider set at that checkpoint: 61 unconditional, three gated by physical `mowziesmobs`, and three gated by physical `iss_magicfromtheeast`. The current physical provider is 1.0.9, so these 67 registrations are not presented as current.
 
 This does **not** add to the strict semantic numerator. Somake's `enableSpellLockSystem` is a `COMMON` config at `somakespells/general/common.toml`, code-default `false`; the deployed config is not available in authoritative project material, and full per-object survival acquisition/reachability is not closed. At the Phase 2BF closure, the totals remained **874 semantic objects** and **55/100 structural components**; Phase 2BG later supersedes those checkpoint totals with 888 / 56/100. Runtime mechanics, Aqua/T.O coexistence and any Black Arcana adapter remain fail-closed.
 
