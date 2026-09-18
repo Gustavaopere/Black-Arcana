@@ -20,7 +20,7 @@ Project status: **⚠️ partial/conditioned**. Strict semantic promotion is blo
 - publisher license: **All Rights Reserved**
 - required artifact dependencies declared by the exact JAR: Iron's Spells 'n Spellbooks `[1.21.1-3.10.0,)`, L_Ender's Cataclysm `[2.60.,)`, Apothic Attributes `[2.6.1,)`
 
-The physical modlist/version line is authoritative for installed presence. The repository does not preserve an independent current physical SHA-1 for this JAR, so Phase 2BS does **not** claim physical byte equality or `COUNTED_EXACT`. The exact publisher file is used as bounded structural evidence only.
+The physical modlist/version line is authoritative for installed presence. The latest sibling dossier was rechecked at `neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149` (`PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`) and still records `traveloptics-4.4.0.1-1.21.1.jar` as physically installed. That dossier does not preserve an independent physical SHA-1, so Phase 2BS does **not** claim byte equality or `COUNTED_EXACT`. The original exact publisher file and the exact patch candidate remain comparison targets until the installed bytes are fingerprinted.
 
 ## Publisher release boundary
 
@@ -146,7 +146,9 @@ A focused clean-room audit independently inspected `com.gametechbc.traveloptics.
 - `KeyLootModifier.CODEC`: referenced **twice** by the registry setup;
 - `UniversalLootModifier.CODEC`: referenced **zero** times by that setup.
 
-This is an exact structural fact from the publisher JAR. A third-party compatibility patch published later describes the same wiring as a registry-startup defect and changes the universal entry to `UniversalLootModifier.CODEC`, but that external patch is not treated as upstream authority and Phase 2BS does **not** claim to have reproduced its reported crash.
+This is an exact structural fact from the publisher JAR. A third-party compatibility patch published later describes the same wiring as a registry-startup defect and changes the universal entry to `UniversalLootModifier.CODEC`; that external patch is not treated as upstream authority and Phase 2BS does **not** claim to have reproduced its reported crash.
+
+A later clean-room binary-diff checkpoint fingerprints exact patch File `1690333 / 8861368` at SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Original and patch both contain 1339 ZIP entries; the patch adds/removes none and changes exactly one entry, `com/gametechbc/traveloptics/loot/TOLootModifiers.class`, with zero non-class resource changes. This independently proves the patch's binary scope, while the specific codec semantic fix remains attributed to the patch publisher. Physical deployment and assembled-pack startup remain unverified. See [`PATCH-8861368-BINARY-DIFF.md`](PATCH-8861368-BINARY-DIFF.md).
 
 The structural mismatch is nevertheless sufficient to keep current-pack runtime promotion fail-closed until one of these is proven:
 
