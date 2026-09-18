@@ -403,7 +403,7 @@ At the latest preparation/reconciliation checkpoint:
 - exact-SHA automated CI for that build: GREEN (`35292207167`, #3212), including both `verify` and the separate `stage05_qa_companion_smoke` job;
 - exact-SHA canonical QA artifact: recorded (`black-arcana-1944e45c122a24c36101e97efe2195730b5019f0`, ID `10527221605`, GitHub Actions SHA-256 `45b754d81597c9f75e00b203347f93c99be94883fe5b2874abfce33ea72a0e43`);
 - exact-SHA Block I companion artifact: recorded (`black-arcana-stage05-qa-1944e45c122a24c36101e97efe2195730b5019f0`, ID `10526747373`, GitHub Actions SHA-256 `278741a5742f1e7090242dc739329eb362fa33bc8c62689279b49cf04119a5b6`);
-- independent extraction/JAR digest verification: `PASS AS REPOSITORY-ONLY PREFLIGHT` — ZIP digests matched GitHub; production JAR `black_arcana-0.1.0-dev.jar` is `1,650,141` bytes / SHA-256 `27fcf7b61aed0ddb53a1c9718ea52fb0292805ed367a89265e1020d2b039eade`; companion JAR `black_arcana_stage05_qa-0.1.0-dev.jar` is `21,354` bytes / SHA-256 `611850b68f83feb5bfd87093545ec9a1e80c6555c74d635a8d0f00065112e398`;
+- independent extraction/JAR digest verification: `VERIFIED / REPOSITORY-ONLY PREFLIGHT` — ZIP digests matched GitHub; production JAR `black_arcana-0.1.0-dev.jar` is `1,650,141` bytes / SHA-256 `27fcf7b61aed0ddb53a1c9718ea52fb0292805ed367a89265e1020d2b039eade`; companion JAR `black_arcana_stage05_qa-0.1.0-dev.jar` is `21,354` bytes / SHA-256 `611850b68f83feb5bfd87093545ec9a1e80c6555c74d635a8d0f00065112e398`;
 - Block J provider presentation/loadout preflight blocker: corrected and canonical via PR #317; provider-real execution remains `NOT STARTED`;
 - manual campaign candidate: `NOT SELECTED`;
 - latest physical modlist preparation snapshot: recorded;
