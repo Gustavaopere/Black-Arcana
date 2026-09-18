@@ -70,7 +70,8 @@ Special comparisons:
 - Traveloptics is classified against:
   - original SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8`;
   - exact patch candidate SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`;
-- Gaze 1.1.7.1 is compared against exact known artifact SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`.
+- Gaze 1.1.7.1 is compared against exact known artifact SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`;
+- Not Enough Glyphs 4.6.1 is compared against canonical physical SHA-1 `e5fd04b7c40d6d5a9aea5d6356f3eb628941fca4`.
 
 A missing file is not converted into a replacement identity.
 
