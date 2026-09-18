@@ -2,7 +2,7 @@
 
 ## Status
 
-`EXACT INSTALLED ARTIFACT 5.4.4 / EXACT PUBLIC RELEASE FILE 8040734 / PUBLISHER FULL GAMEPLAY GUIDE AUDITED / CORPOREAL RESURRECTION + RESURRECTED CREATURES + SURGERY + SUBJECT ASSEMBLY + IGOR EXPERIMENTS + SYRINGES + STRUCTURES + WITHERSTEIN CATALOGED / SABLE COMPATIBILITY DECLARED BUT SEMANTICS UNVERIFIED / ALL RIGHTS RESERVED / NO SOURCE OR BYTECODE DECOMPILATION / INTERNAL REGISTRIES+API+RUNTIME QA PENDING / FAIL-CLOSED`
+`✅ CATALOGADO / EXACT INSTALLED ARTIFACT 5.4.4 / EXACT PUBLIC RELEASE FILE 8040734 / PUBLISHER FULL GAMEPLAY GUIDE AUDITED / EXACT HASH-MATCHED RESOURCE-ONLY CLEAN-ROOM AUDIT / ZERO INDEPENDENT SEMANTIC MAGIC ACTIONS / SABLE COMPATIBILITY DECLARED BUT SEMANTICS UNVERIFIED / ALL RIGHTS RESERVED / NO SOURCE OR BYTECODE DECOMPILATION / SUPPORTED API+RUNTIME INTEGRATION QA PENDING SEPARATELY / FAIL-CLOSED`
 
 ## Installed identity
 
@@ -17,6 +17,16 @@ Current physical modlist authority:
 - package fingerprint: `3386302902`.
 
 The physical modlist remains authoritative for the artifact actually installed in the pack.
+
+## Catalog closure disposition
+
+For the exact installed 5.4.4 line, Mobstein is **✅ Catalogado** with semantic contribution **+0** under the global magic-action metric.
+
+Temporary non-merge evidence PR #316 / audit HEAD `138441e4cd70896378d30287b3283ec07aaed43b` ran the dedicated resource-only clean-room workflow successfully as run `35285950286`. The exact hash-matched artifact exposed no independent spell/ritual/rite/ability/action resource family. The four action-like keybinds surfaced by the audit map to provider entity/mount controls already documented by the public catalog, not separate player magic identities.
+
+See [Registry & semantic boundary closure](REGISTRY-CLOSURE-CHECKLIST.md).
+
+This catalog closure is not a runtime/API compatibility PASS. Unknown supported hooks, persistence seams, Sable behavior and Black Arcana integration remain fail-closed.
 
 ## Exact public release evidence
 
