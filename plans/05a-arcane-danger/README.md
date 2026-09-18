@@ -96,10 +96,10 @@ Installed-first baseline is Curios NeoForge `9.5.1+1.21.1`. Curios integration i
 
 `05A.12` closes the explicit automated hardening matrix, but it does not by itself validate real-client presentation or physically loaded optional providers. The executable closeout plan is `plans/05a-arcane-danger/13-final-validation-handoff.md`.
 
-That handoff separates automated evidence from real-client and real-provider/modpack acceptance, preserves D028–D031, records Curios as physically present in the current modlist, keeps real RPG Skill Tree provider acceptance blocked until an exact compatible artifact is physically present, and defines the synchronization/CI/post-merge gate required before this Stage can leave `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
+That handoff separates deterministic engineering evidence from real-client and real-provider/modpack acceptance. Under D035, unresolved physical/provider observations are transferred to Stage 09 rather than blocking implementation-stage progression; they remain release-blocking and may never be inferred as PASS.
 
-Creating or merging the handoff document does **not** validate Stage 05A, does not alter `plans/STATUS.md`, and does not convert any Stage 05/05A manual row to PASS.
+Creating or merging the handoff document does **not** by itself complete Stage 05A and does not convert any manual row to PASS. Stage 05A still requires a full audit of its implementation, integrations and deterministic acceptance before its plans may receive ✅ under D035.
 
 ## Exit criteria
 
-The stage is not complete until a real NeoForge 1.21.1 runner proves zero-resistance 1:1 backlash for the canonical linear profile; deterministic bounded resistance/corruption/strain; correct direct/AoE/multi-hit/projectile/DoT attribution; non-recursive backlash; snapshot-safe equipment/Curios/external providers; persistence/recovery; side-effect-free preflight; multiplayer/PvP/death/relog/restart coverage; and dedicated-server smoke without mandatory Curios/RPG/client classloading.
+For implementation progression under D035, the stage closes only after its runtime/integration contracts, persistence/lifecycle/world-safety semantics, deterministic bounded resistance/corruption/strain, causal attribution, non-recursive backlash, snapshot-safe providers, side-effect-free preflight, automated multiplayer/lifecycle coverage and dedicated-server gates are audited and complete. Any observation that still requires a real NeoForge/modpack/provider runner is explicitly transferred to Stage 09 and remains release-blocking.
