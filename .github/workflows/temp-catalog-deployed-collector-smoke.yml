@@ -1,0 +1,99 @@
+name: Temporary catalog deployed collector smoke
+
+on:
+  push:
+    branches:
+      - qa/catalog-deployed-evidence-customization-surfaces-2026-09-18
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile collector
+        run: python -m py_compile docs/qa/provider-catalog-deployed-evidence-collector.py
+
+      - name: Build synthetic deployed surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/instance"
+          mkdir -p "$ROOT/mods"
+          printf 'not-the-real-neg-jar' > "$ROOT/mods/not_enough_glyphs-1.21.1-4.6.1.jar"
+          mkdir -p "$ROOT/kubejs/data/asterismarcanum/irons_spellbooks_spell_config"
+          mkdir -p "$ROOT/kubejs/server_scripts"
+          mkdir -p "$ROOT/config/ftbquests/quests"
+          mkdir -p "$ROOT/saves/catalog-test/datapacks/direct/data/example/loot_table"
+          mkdir -p "$RUNNER_TEMP/zipdata/data/example/loot_table"
+
+          cat > "$ROOT/kubejs/data/asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json" <<'JSON'
+          {
+            "irons_spellbooks:enabled": false,
+            "irons_spellbooks:school": "asterismarcanum:astral",
+            "irons_spellbooks:allow_crafting": false
+          }
+          JSON
+
+          cat > "$ROOT/kubejs/server_scripts/blackout.js" <<'EOF'
+          // SECRET_SCRIPT_TEXT must not be retained
+          const target = "traveloptics:blackout";
+          EOF
+
+          cat > "$ROOT/config/ftbquests/quests/blackout.snbt" <<'EOF'
+          { id: "traveloptics:blackout", note: "SECRET_QUEST_TEXT" }
+          EOF
+
+          cat > "$ROOT/saves/catalog-test/datapacks/direct/data/example/loot_table/blackout.json" <<'EOF'
+          { "name": "traveloptics:blackout", "secret": "SECRET_DATAPACK_TEXT" }
+          EOF
+
+          cat > "$RUNNER_TEMP/zipdata/data/example/loot_table/blackout.json" <<'EOF'
+          { "name": "traveloptics:blackout", "secret": "SECRET_ZIP_TEXT" }
+          EOF
+
+          (cd "$RUNNER_TEMP/zipdata" && zip -qr "$ROOT/saves/catalog-test/datapacks/zipped.zip" data)
+
+      - name: Run collector
+        shell: bash
+        run: |
+          python docs/qa/provider-catalog-deployed-evidence-collector.py             "$RUNNER_TEMP/instance"             --output "$RUNNER_TEMP/report.json"
+          cat "$RUNNER_TEMP/report.json"
+
+      - name: Assert bounded evidence
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          report = json.loads(Path(os.environ["RUNNER_TEMP"], "report.json").read_text())
+          assert report["schema"] == 2
+
+          neg = report["mods"]["not_enough_glyphs"]
+          assert len(neg) == 1
+          assert neg[0]["known_4_6_1_equality"] is False
+
+          overrides = report["asterism_arcanum"]["datapack_overrides"]
+          kube = [x for x in overrides if x.get("source") == "kubejs_data"]
+          assert len(kube) == 1
+          assert kube[0]["selected"]["irons_spellbooks:enabled"] is False
+          assert kube[0]["selected"]["irons_spellbooks:allow_crafting"] is False
+
+          refs = report["traveloptics"]["blackout_reference_matches"]
+          sources = {x["source"] for x in refs}
+          assert "kubejs_server_scripts" in sources
+          assert "ftbquests_config" in sources
+          assert any(s.startswith("world_datapack:") for s in sources)
+          assert any(s.startswith("world_datapack_zip:") for s in sources)
+
+          raw = json.dumps(report)
+          for secret in ("SECRET_SCRIPT_TEXT","SECRET_QUEST_TEXT","SECRET_DATAPACK_TEXT","SECRET_ZIP_TEXT"):
+              assert secret not in raw
+          assert all(set(x) <= {"source", "path", "line", "literal"} for x in refs)
+          assert all(x["literal"] == "traveloptics:blackout" for x in refs)
+          PY
