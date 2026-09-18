@@ -63,13 +63,34 @@ The current sibling modlist confirms these relevant providers are physically ins
 
 Presence alone does **not** prove which 1.0.9 Somake registrations are enabled. The exact 1.0.9 registration predicates still require provider-authoritative evidence.
 
+## Exact 1.0.9 resource-only audit now closed
+
+A temporary non-merge clean-room audit has now materialized exact CurseForge file `8867079`:
+
+- audit HEAD: `ed37ab8ffb0fba23ab68c3810d94fdf0c1da579c`;
+- workflow run: `35298734758`;
+- text artifact: `10529435038`;
+- artifact digest: `sha256:6c21e00982ac5a5c91fb15089dffc6c4b904414cc4b7957346fb71d3a0727955`;
+- exact release SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- physical-pack SHA-1 equality: **not yet proven**.
+
+Resource-only findings:
+
+- 83 base `spell.somakespells.<id>` localization keys plus 83 matching `.guide` keys;
+- 196 JSON resources under `data/somakespells/`;
+- Aqua school-focus tag resource still present;
+- exact dependency metadata declares Legendary Monsters and several other integrations optional;
+- localization delta versus the historical 67-ID 1.0.8-fix registry is +17 candidate roots / -1 historical root (`summon_zombie`), but this remains localization evidence rather than registry proof.
+
+See [`EXACT-1.0.9-RESOURCE-AUDIT.md`](EXACT-1.0.9-RESOURCE-AUDIT.md).
+
 ## Required current-line closure evidence
 
 Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1.0.9 evidence for all of the following:
 
 1. **Physical identity**
-   - installed 1.0.9 JAR fingerprint/hash;
-   - exact equality to the release artifact used for any clean-room audit.
+   - publisher-release SHA-1 is now closed at `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+   - still capture the installed physical 1.0.9 JAR fingerprint/hash and prove equality to that release artifact.
 
 2. **Current registry**
    - exact provider-owned spell/action identity inventory for 1.0.9;
