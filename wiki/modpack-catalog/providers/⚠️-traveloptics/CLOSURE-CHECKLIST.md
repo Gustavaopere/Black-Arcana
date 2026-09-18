@@ -13,6 +13,7 @@ This checklist does not promote the provider, does not treat a third-party patch
 Current physical evidence establishes the installed version line and filename:
 
 - observed installed filename: `traveloptics-4.4.0.1-1.21.1.jar`;
+- latest sibling dossier rechecked at `neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149`: `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md` still marks that filename/version as physically installed; the dossier carries no physical cryptographic hash;
 - physical version line: `4.4.0.1-1.21.1`;
 - exact publisher file: CurseForge project/file `1046916 / 6342780`;
 - exact publisher-release SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
