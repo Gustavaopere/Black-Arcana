@@ -1,10 +1,10 @@
 # 05A.13 — Arcane Danger Final Validation Handoff
 
-> **For agentic workers:** execute this document as a validation/closeout plan. Do not redesign Arcane Danger or add new hazard semantics unless direct evidence exposes a regression that cannot be fixed inside the frozen contracts. Preserve `plans/DECISIONS.md`, especially D006, D007, D008, D009, D028, D029, D030 and D031.
+> **For agentic workers:** under D035, treat this document as the transfer contract for the Stage 09 real-client/real-modpack/provider campaign plus the deterministic Stage 05A closeout checklist. Do not redesign Arcane Danger or add new hazard semantics unless evidence exposes a regression that cannot be fixed inside the frozen contracts. Preserve `plans/DECISIONS.md`, especially D006, D007, D008, D009, D028, D029, D030, D031 and D035.
 
 ## Goal
 
-Close the remaining Stage 05A acceptance surface with reproducible real-client, real-modpack and provider evidence while preserving Black Arcana as the sole authority for Arcane Danger, Backlash, Corruption and Arcane Strain.
+Close Stage 05A engineering through implementation/integration/deterministic acceptance and explicitly transfer every remaining real-client, real-modpack and provider observation to the Stage 09 exact-release-candidate campaign, while preserving Black Arcana as the sole authority for Arcane Danger, Backlash, Corruption and Arcane Strain.
 
 ## Current canonical state
 
@@ -14,7 +14,7 @@ Close the remaining Stage 05A acceptance surface with reproducible real-client, 
 - Java: `21`.
 - Curios in the current physical modlist: `curios-neoforge-9.5.1+1.21.1.jar`, mod id `curios`, version `9.5.1+1.21.1`.
 - The current physical modlist does not expose an identifiable top-level RPG Skill Tree JAR. This blocks real loaded-provider acceptance for the RPG integration; it does **not** mean the Black Arcana integration code or automated contract tests are absent.
-- Stage 05A state remains `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
+- Stage 05A enters active audit after Stage 05 engineering closeout. Its physical/provider campaign is deferred to Stage 09 under D035; engineering completion still requires a fresh audit of every 05A plan and deterministic gate.
 - `05A.12` automated hardening is already closed by explicit tests and full runtime gates. This handoff must not repeat those tests merely to manufacture activity.
 - `05A.11` real-client presentation acceptance shares the Stage 05 manual campaign in `docs/qa/casting-ux-manual-matrix.md` and `docs/qa/casting-ux-real-client-runbook.md`.
 - Deterministic forecast/preflight automated evidence is recorded in `docs/qa/stage05a11-resistance-forecast.md`.
@@ -263,10 +263,11 @@ For each relevant provider, record:
 
 Use these result states:
 
-- `PASS` — the applicable expected behavior was directly observed with the stated exact candidate/provider topology;
+- `PASS` — when Stage 09 executes the physical campaign, the applicable expected behavior was directly observed with the stated exact candidate/provider topology;
 - `FAIL` — the observed behavior contradicts the frozen contract;
 - `BLOCKED` — the scenario cannot be legitimately exercised in the current physical/provider topology;
-- `NOT APPLICABLE / CARRIED TO STAGE 09` — only for presentation/performance acceptance already permitted to move to the accumulated Stage 09 release campaign.
+- `PENDING / DEFERRED TO STAGE 09` — the row remains mandatory release evidence but does not block implementation-stage progression under D035;
+- `NOT APPLICABLE` — only when the scenario genuinely does not apply to the exact release topology.
 
 For each row/scenario record:
 
@@ -297,59 +298,53 @@ If the fix would change hazard identity, resistance channels, D030 coefficient s
 
 ---
 
-## Task 9 — Stage 05A closeout gate
+## Task 9 — Stage 05A engineering closeout and Stage 09 transfer gate
 
-**Deliverable:** Stage 05A state changes only after direct evidence and fresh post-reconciliation CI justify it.
+**Deliverable:** Stage 05A may change to engineering-complete only after its runtime/integration contracts and deterministic acceptance are freshly audited, while all unresolved physical/provider observations are explicitly transferred to Stage 09.
 
 ### Preconditions
 
-- [ ] `05A.12` automated hardening remains green on the final reconciled runtime.
-- [ ] Every applicable real-client 05A.11 row has direct evidence or an explicitly legitimate `BLOCKED`/Stage-09 carry classification.
-- [ ] Core/equipment real-modpack hazard acceptance has no unresolved `FAIL`.
-- [ ] Corruption/Strain persistence/recovery has no unresolved `FAIL`.
-- [ ] Representative Backlash causality/non-recursion acceptance has no unresolved `FAIL`.
-- [ ] Curios real-provider acceptance is recorded when a legitimate contributing Curio is available; otherwise the exact blocker is recorded.
-- [ ] RPG Skill Tree loaded-provider acceptance is either performed against an exact compatible physical artifact or remains explicitly `BLOCKED`; no test double is promoted to real-provider evidence.
-- [ ] No unresolved finding weakens D028–D031 or Stage 04 authority.
+- [ ] Every 05A.01–05A.12 implementation/integration requirement has been audited against current `main`.
+- [ ] `05A.12` automated hardening is green on the final reconciled runtime.
+- [ ] Persistence/lifecycle/multiplayer/world-safety semantics required by 05A plans have deterministic coverage where the repository can prove them automatically.
+- [ ] Curios/RPG/external-provider adapters are exact-contract/fail-closed and dedicated-server classloading safe.
+- [ ] Every remaining real-client, real-modpack, representative lifecycle or loaded-provider observation is explicitly enumerated in the Stage 09 final-validation matrix/evidence handoff as `PENDING / DEFERRED TO STAGE 09`.
+- [ ] No manual/provider row is converted to PASS from automation.
+- [ ] No unresolved deterministic FAIL, known functional defect or missing required integration is deferred under D035.
 
 ### Final synchronization
 
-Immediately before finalizing the closeout PR:
+Immediately before finalizing the engineering closeout PR:
 
 1. fetch the latest `origin/main` and record its SHA;
 2. reconcile `origin/main` into the closeout branch without discarding concurrent work;
 3. review `main..HEAD` semantically;
-4. if reconciliation changes any 05A runtime/client/provider surface used by the campaign, rerun the affected real scenarios on the reconciled exact SHA;
-5. rerun the full canonical CI on the reconciled HEAD;
-6. resolve every review thread;
-7. repeat synchronization if `main` advances again in a relevant area before merge.
+4. rerun the focused and full applicable deterministic gates;
+5. resolve every review thread;
+6. repeat synchronization if `main` advances again in a relevant area before merge.
 
-CI or manual evidence produced before the last relevant synchronization is not final evidence.
-
-### Status files eligible for promotion only after the gate
+### Status files eligible for promotion after the engineering gate
 
 - applicable task files under `plans/05a-arcane-danger/`;
 - `plans/05a-arcane-danger/README.md`;
 - `plans/STATUS.md`;
-- `docs/qa/casting-ux-manual-matrix.md` only for rows directly exercised through the shared Stage 05/05A campaign;
-- `docs/qa/arcane-danger-final-validation-evidence.md` as the evidence ledger.
+- Stage 09 matrix/handoff documents recording the deferred physical/provider rows.
 
-Do not change those states merely because this handoff exists.
+The existing Stage 05/05A manual matrix remains PENDING until Stage 09 executes it.
 
 ### Merge and post-merge proof
 
 The closeout PR may merge only after:
 
-- final relevant manual/provider evidence is reconciled to the HEAD under review;
-- full CI is GREEN on that reconciled HEAD;
+- implementation/integration/deterministic audit is complete;
+- transferred physical/provider rows are explicit and unchanged in meaning;
+- full applicable CI is GREEN on the reconciled HEAD;
 - the final diff preserves server authority, Backlash exclusions and provider boundaries;
 - all review threads are resolved.
 
-After merge:
+After merge, fetch `main`, record the actual merge SHA, and require the canonical post-merge automated gate to finish successfully before claiming Stage 05A engineering complete.
 
-- fetch `main` and record the actual merge SHA;
-- confirm the post-merge workflow runs on that exact SHA;
-- require the canonical post-merge gate, including dedicated-server smoke and main-only QA artifact publication, to finish successfully before claiming Stage 05A validated.
+A later Stage 09 FAIL reopens the originating 05A plan for correction and repetition of the affected final-validation rows.
 
 ---
 
@@ -374,8 +369,8 @@ This handoff does **not** authorize:
 
 ## Closure statement template
 
-Use only after the closeout gate is actually satisfied:
+Use only after the Stage 05A engineering closeout gate is satisfied:
 
-> Stage 05A Arcane Danger was validated on exact candidate `<tested-main-sha>` using the recorded Minecraft 1.21.1 / NeoForge / Java / provider topology in `docs/qa/arcane-danger-final-validation-evidence.md`. Applicable real-client and real-modpack rows are PASS or explicitly classified under the approved blocked/Stage-09 rules; all implementation failures were fixed and rerun. Final reconciled HEAD `<head-sha>` passed the complete automated gate, the closeout PR merged as `<merge-sha>`, and exact-SHA post-merge workflow `<workflow-run>` completed GREEN with canonical QA artifact publication.
+> Stage 05A Arcane Danger engineering was audited on reconciled `main@<sha>`; implementation/integration/deterministic acceptance is complete, full applicable CI is GREEN, and every unresolved real-client/real-modpack/provider observation is explicitly transferred to Stage 09 under D035 as PENDING release evidence. No manual PASS is claimed by this closeout.
 
-Until those values exist as real evidence, Stage 05A remains `IMPLEMENTED / FINAL VALIDATION DEFERRED`.
+Physical validation is declared complete only later by the Stage 09 exact-release-candidate evidence campaign.
