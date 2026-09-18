@@ -53,6 +53,16 @@ The official 1.0.9 release adds a material content/progression delta, including:
 
 Therefore 1.0.8 registry identity and optional-gate conclusions cannot be treated as complete for 1.0.9.
 
+## Current optional-provider presence already confirmed
+
+The current sibling modlist confirms these relevant providers are physically installed:
+
+- Legendary Monsters: `legendary_monsters-2.2.2 MC 1.21.1.jar`, mod id `legendary_monsters`;
+- Born in Chaos: `born_in_chaos_[Neoforge]_1.21.1_1.7.6.jar`, mod id `born_in_chaos_v1`;
+- L_Ender's Cataclysm: `L_Ender's Cataclysm 1.21.1-3.33.jar`, mod id `cataclysm`.
+
+Presence alone does **not** prove which 1.0.9 Somake registrations are enabled. The exact 1.0.9 registration predicates still require provider-authoritative evidence.
+
 ## Required current-line closure evidence
 
 Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1.0.9 evidence for all of the following:
