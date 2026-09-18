@@ -8,6 +8,8 @@ UI/HUD composition, information architecture, visual semantics, iconography, tex
 
 The visual backlog is not part of the numerical runtime implementation sequence unless a specific presentation contract is required for gameplay safety or release acceptance.
 
+Under D035, required physical/real-client/provider-real observations are consolidated in Stage 09 after their originating runtime/integration contracts and deterministic gates are complete. They remain release-blocking PENDING evidence and are never inferred as PASS.
+
 ## Non-negotiable architecture
 
 - The client proposes bounded intent; the server decides cast legality and outcome.
@@ -21,12 +23,12 @@ The visual backlog is not part of the numerical runtime implementation sequence 
 
 ## Canonical engineering plans
 
-1. `🟡-PENDENTE-01-input-loadouts.md` — input/loadout authority, persistence, session behavior and network intent.
-2. `🟡-PENDENTE-02-radial-wheel.md` — radial selection runtime contract; presentation is delegated to visual production.
-3. `🟡-PENDENTE-03-contextual-hud.md` — synchronized feedback/data/correlation contract; HUD composition is delegated to visual production.
-4. `🟡-PENDENTE-04-accessibility-client-config.md` — client-config authority/persistence contract; visual accessibility behavior is delegated to visual production.
-5. `🟡-PENDENTE-05-final-client-validation-handoff.md` — runtime/input/full-pack validation handoff. Visual-only QA is delegated to visual production.
-6. `🟡-PENDENTE-06-modpack-coexistence.md` — authority/input/provider coexistence. Visual overlap/readability fixes are delegated to visual production.
+1. `✅-01-input-loadouts.md` — input/loadout authority, persistence, session behavior and network intent.
+2. `✅-02-radial-wheel.md` — radial selection runtime contract; presentation is delegated to visual production.
+3. `✅-03-contextual-hud.md` — synchronized feedback/data/correlation contract; HUD composition is delegated to visual production.
+4. `✅-04-accessibility-client-config.md` — client-config authority/persistence contract; visual accessibility behavior is delegated to visual production.
+5. `✅-05-final-client-validation-handoff.md` — runtime/input/full-pack validation handoff. Visual-only QA is delegated to visual production.
+6. `✅-06-modpack-coexistence.md` — authority/input/provider coexistence. Visual overlap/readability fixes are delegated to visual production.
 7. `✅-07-presentation-data-contracts.md` — authoritative gate for whether data is safe to render at all.
 
 Former 05.08–05.16 presentation plans and their implementation checkpoints now live under `plans/visual-production/05-casting-ux/`.
