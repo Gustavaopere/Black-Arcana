@@ -1,0 +1,78 @@
+name: Provider Catalog Evidence Collector Smoke TEMP
+
+on:
+  push:
+    branches:
+      - qa/catalog-deployed-evidence-collector-2026-09-18
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile collector
+        run: python -m py_compile docs/qa/provider-catalog-deployed-evidence-collector.py
+
+      - name: Exercise bounded fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/provider-instance"
+          mkdir -p "$ROOT/mods"
+          mkdir -p "$ROOT/config/irons_spellbooks_spell_config/asterismarcanum"
+          mkdir -p "$ROOT/config/gaze"
+          mkdir -p "$ROOT/config/somakespells/general"
+          mkdir -p "$ROOT/saves/test/serverconfig/not_enough_glyphs"
+
+          cat > "$ROOT/config/irons_spellbooks_spell_config/asterismarcanum/astral_gateway.json" <<'JSON'
+          {
+            "irons_spellbooks:enabled": true,
+            "irons_spellbooks:school": "asterismarcanum:astral",
+            "irons_spellbooks:allow_crafting": false
+          }
+          JSON
+
+          cat > "$ROOT/config/gaze/gaze-common.toml" <<'EOF'
+          disableGazeRites = false
+          EOF
+
+          cat > "$ROOT/config/somakespells/general/common.toml" <<'EOF'
+          enableSpellLockSystem = true
+          EOF
+
+          cat > "$ROOT/saves/test/serverconfig/not_enough_glyphs/plow.toml" <<'EOF'
+          [general]
+          enabled = false
+          EOF
+
+          python docs/qa/provider-catalog-deployed-evidence-collector.py "$ROOT" --output "$RUNNER_TEMP/report.json"
+
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          report = json.loads(Path(os.environ["RUNNER_TEMP"]).joinpath("report.json").read_text())
+
+          assert report["asterism_arcanum"]["per_spell_local"]["selected"]["irons_spellbooks:enabled"] is True
+          assert report["asterism_arcanum"]["per_spell_local"]["selected"]["irons_spellbooks:school"] == "asterismarcanum:astral"
+          assert report["asterism_arcanum"]["per_spell_local"]["selected"]["irons_spellbooks:allow_crafting"] is False
+
+          gaze = report["gaze"]["disableGazeRites_matches"]
+          assert len(gaze) == 1 and "false" in gaze[0]["match"].lower()
+
+          somake = report["somake_spells"]["enableSpellLockSystem_matches"]
+          assert len(somake) == 1 and "true" in somake[0]["match"].lower()
+
+          plow = next(row for row in report["not_enough_glyphs"]["rows"] if row["registry_id"] == "not_enough_glyphs:plow")
+          assert len(plow["observations"]) == 1
+          assert plow["observations"][0]["enabled"] is False
+          assert plow["observations"][0]["source"].startswith("world_serverconfig:")
+
+          assert report["not_enough_glyphs"]["expected_candidate_count"] == 39
+          assert report["instance_root_redacted"] is True
+          PY
