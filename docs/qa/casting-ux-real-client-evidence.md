@@ -50,7 +50,7 @@ The latest runtime-affecting exact-SHA `main` build validated during the current
 - Block J provider-real preparation profile: `docs/qa/stage05-block-j-provider-real-profile.md`, merged with the same runtime checkpoint;
 - automated Block J presentation/loadout preflight: GREEN after two explicit RED cycles covering missing provider-conditional presentation metadata and partial hosted runtime installation on presentation-ID collision.
 
-This repository-only session did not independently extract and re-hash the newly published ZIP/JAR artifacts, and no physical client installed them. Independent extracted-JAR verification therefore remains a manual campaign prerequisite rather than a claimed result here.
+The two exact-SHA artifacts were independently downloaded from GitHub Actions in a repository-only verification session. Their ZIP SHA-256 values matched the GitHub-reported digests exactly. Extraction produced only the expected JAR in each archive: production `black_arcana-0.1.0-dev.jar` (`1,650,141` bytes, SHA-256 `27fcf7b61aed0ddb53a1c9718ea52fb0292805ed367a89265e1020d2b039eade`) and companion `black_arcana_stage05_qa-0.1.0-dev.jar` (`21,354` bytes, SHA-256 `611850b68f83feb5bfd87093545ec9a1e80c6555c74d635a8d0f00065112e398`). Descriptor inspection confirmed production `modId="black_arcana"` with Iron's declared optional and companion `modId="black_arcana_stage05_qa"`; the production JAR contains `SpellDataCatalog`, `IronsSyntheticContent` and `NeoForgeIronsManaAccess`, while the companion contains the Stage 05 fixture content and all sixteen slot JSON definitions. No physical client installed these JARs, so this closes artifact identity/extraction preflight only and does not satisfy any manual row.
 
 This build is **available as the current runtime candidate**, but the manual campaign candidate remains unselected until actual real-client execution starts, as required below. No manual row becomes PASS, FAIL or BLOCKED from this automated evidence.
 
@@ -403,7 +403,7 @@ At the latest preparation/reconciliation checkpoint:
 - exact-SHA automated CI for that build: GREEN (`35292207167`, #3212), including both `verify` and the separate `stage05_qa_companion_smoke` job;
 - exact-SHA canonical QA artifact: recorded (`black-arcana-1944e45c122a24c36101e97efe2195730b5019f0`, ID `10527221605`, GitHub Actions SHA-256 `45b754d81597c9f75e00b203347f93c99be94883fe5b2874abfce33ea72a0e43`);
 - exact-SHA Block I companion artifact: recorded (`black-arcana-stage05-qa-1944e45c122a24c36101e97efe2195730b5019f0`, ID `10526747373`, GitHub Actions SHA-256 `278741a5742f1e7090242dc739329eb362fa33bc8c62689279b49cf04119a5b6`);
-- independent extraction/JAR digest verification for the new artifacts: `NOT PERFORMED IN THIS REPOSITORY-ONLY SESSION`;
+- independent extraction/JAR digest verification: `PASS AS REPOSITORY-ONLY PREFLIGHT` — ZIP digests matched GitHub; production JAR `black_arcana-0.1.0-dev.jar` is `1,650,141` bytes / SHA-256 `27fcf7b61aed0ddb53a1c9718ea52fb0292805ed367a89265e1020d2b039eade`; companion JAR `black_arcana_stage05_qa-0.1.0-dev.jar` is `21,354` bytes / SHA-256 `611850b68f83feb5bfd87093545ec9a1e80c6555c74d635a8d0f00065112e398`;
 - Block J provider presentation/loadout preflight blocker: corrected and canonical via PR #317; provider-real execution remains `NOT STARTED`;
 - manual campaign candidate: `NOT SELECTED`;
 - latest physical modlist preparation snapshot: recorded;
