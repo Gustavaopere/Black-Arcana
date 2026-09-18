@@ -36,21 +36,23 @@ The successful automated workflow proves only that this reference build passed t
 
 ### Latest validated `main` candidate available for a future campaign
 
-The latest exact-SHA `main` build validated during the current Stage 05 reconciliation is:
+The latest runtime-affecting exact-SHA `main` build validated during the current Stage 05 reconciliation is:
 
-- `main` SHA: `821f9c669a794ae73992f6196d4775d925dadadc`;
-- post-merge workflow: `35103515696` — GREEN for unit tests, diff sanity, NeoForge build, built-JAR verification, Stage 05 QA companion JAR isolation, Foundation GameTests, production dedicated-server smoke, publication of both exact-SHA artifacts, and the separate `stage05_qa_companion_smoke` job including the companion dedicated-server smoke;
-- canonical artifact: `black-arcana-821f9c669a794ae73992f6196d4775d925dadadc`;
-- canonical artifact ID: `10449696114`;
-- canonical artifact digest: `sha256:be27ede83e065338552eda6d485fb0f1735d8a0aad5aeb754d0a9474edc3914d`;
-- Block I companion artifact: `black-arcana-stage05-qa-821f9c669a794ae73992f6196d4775d925dadadc`;
-- Block I companion artifact ID: `10449895415`;
-- Block I companion artifact digest: `sha256:ef94eb35ee346d49666ca83ef66213ea3095b5e49340f30a0021eb5af6e0ee96`;
-- independent ZIP verification matched both published digests;
-- extracted production JAR: `black_arcana-0.1.0-dev.jar`, `1648687` bytes, SHA-256 `f433fceb837266aea0b06d28dc506f28282c55f525773266f833eb33a78b761b`;
-- extracted Block I companion JAR: `black_arcana_stage05_qa-0.1.0-dev.jar`, `21354` bytes, SHA-256 `611850b68f83feb5bfd87093545ec9a1e80c6555c74d635a8d0f00065112e398`.
+- `main` SHA: `1944e45c122a24c36101e97efe2195730b5019f0`;
+- merge: PR #317, `fix(stage05): make Iron's hosted probe loadout-reachable`;
+- post-merge workflow: `35292207167` (#3212) — GREEN for unit tests, diff sanity, NeoForge build, built-JAR verification, Stage 05 QA companion JAR isolation, Foundation GameTests, production dedicated-server smoke, publication of both exact-SHA artifacts, and the separate `stage05_qa_companion_smoke` job including the companion dedicated-server smoke;
+- canonical artifact: `black-arcana-1944e45c122a24c36101e97efe2195730b5019f0`;
+- canonical artifact ID: `10527221605`;
+- canonical artifact digest reported by GitHub Actions: `sha256:45b754d81597c9f75e00b203347f93c99be94883fe5b2874abfce33ea72a0e43`;
+- Block I companion artifact: `black-arcana-stage05-qa-1944e45c122a24c36101e97efe2195730b5019f0`;
+- Block I companion artifact ID: `10526747373`;
+- Block I companion artifact digest reported by GitHub Actions: `sha256:278741a5742f1e7090242dc739329eb362fa33bc8c62689279b49cf04119a5b6`;
+- Block J provider-real preparation profile: `docs/qa/stage05-block-j-provider-real-profile.md`, merged with the same runtime checkpoint;
+- automated Block J presentation/loadout preflight: GREEN after two explicit RED cycles covering missing provider-conditional presentation metadata and partial hosted runtime installation on presentation-ID collision.
 
-This build is **available as the current canonical candidate**, but the manual campaign candidate remains unselected until actual real-client execution starts, as required below. No manual row becomes PASS, FAIL or BLOCKED from this automated evidence.
+This repository-only session did not independently extract and re-hash the newly published ZIP/JAR artifacts, and no physical client installed them. Independent extracted-JAR verification therefore remains a manual campaign prerequisite rather than a claimed result here.
+
+This build is **available as the current runtime candidate**, but the manual campaign candidate remains unselected until actual real-client execution starts, as required below. No manual row becomes PASS, FAIL or BLOCKED from this automated evidence.
 
 ### Manual campaign candidate freeze rule
 
@@ -397,18 +399,19 @@ If a real-client `FAIL` is found, reproduce it on the exact tested SHA, add dete
 At the latest preparation/reconciliation checkpoint:
 
 - historical preparation-reference build: recorded;
-- latest validated `main` build available for a future campaign: `821f9c669a794ae73992f6196d4775d925dadadc`;
-- exact-SHA automated CI for that build: GREEN (`35103515696`), including both `verify` and the separate `stage05_qa_companion_smoke` job;
-- exact-SHA canonical QA artifact: recorded (`black-arcana-821f9c669a794ae73992f6196d4775d925dadadc`, ID `10449696114`, SHA-256 `be27ede83e065338552eda6d485fb0f1735d8a0aad5aeb754d0a9474edc3914d`);
-- exact-SHA Block I companion artifact: recorded (`black-arcana-stage05-qa-821f9c669a794ae73992f6196d4775d925dadadc`, ID `10449895415`, SHA-256 `ef94eb35ee346d49666ca83ef66213ea3095b5e49340f30a0021eb5af6e0ee96`);
-- independent extraction verification: production JAR `black_arcana-0.1.0-dev.jar` SHA-256 `f433fceb837266aea0b06d28dc506f28282c55f525773266f833eb33a78b761b`; companion JAR `black_arcana_stage05_qa-0.1.0-dev.jar` SHA-256 `611850b68f83feb5bfd87093545ec9a1e80c6555c74d635a8d0f00065112e398`;
+- latest runtime-affecting validated `main` build available for a future campaign: `1944e45c122a24c36101e97efe2195730b5019f0`;
+- exact-SHA automated CI for that build: GREEN (`35292207167`, #3212), including both `verify` and the separate `stage05_qa_companion_smoke` job;
+- exact-SHA canonical QA artifact: recorded (`black-arcana-1944e45c122a24c36101e97efe2195730b5019f0`, ID `10527221605`, GitHub Actions SHA-256 `45b754d81597c9f75e00b203347f93c99be94883fe5b2874abfce33ea72a0e43`);
+- exact-SHA Block I companion artifact: recorded (`black-arcana-stage05-qa-1944e45c122a24c36101e97efe2195730b5019f0`, ID `10526747373`, GitHub Actions SHA-256 `278741a5742f1e7090242dc739329eb362fa33bc8c62689279b49cf04119a5b6`);
+- independent extraction/JAR digest verification for the new artifacts: `NOT PERFORMED IN THIS REPOSITORY-ONLY SESSION`;
+- Block J provider presentation/loadout preflight blocker: corrected and canonical via PR #317; provider-real execution remains `NOT STARTED`;
 - manual campaign candidate: `NOT SELECTED`;
 - latest physical modlist preparation snapshot: recorded;
 - authorized real-client device in the current execution session: none connected;
 - manual client environment: not yet recorded;
 - Block I companion artifact/JAR: available as exact-SHA preflight evidence but not selected or installed because the manual campaign has not started;
 - Blocks A–J: not started;
-- manual matrix changes: additional required rows are present but remain `PENDING` until direct observation;
+- manual matrix rows: remain `PENDING` until direct observation;
 - Stage 05 state: `ACTIVE / IMPLEMENTATION PRESENT / REQUIRED PHYSICAL VALIDATION PENDING`;
 - Stage 05A state: `BLOCKED BY STAGE 05` under D034.
 
