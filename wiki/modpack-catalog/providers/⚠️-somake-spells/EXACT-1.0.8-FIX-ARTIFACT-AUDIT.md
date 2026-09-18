@@ -2,9 +2,9 @@
 
 ## Verdict
 
-`EXACT HASH-MATCHED ARTIFACT / 67 CURRENT REGISTRY IDENTITIES / PHYSICAL OPTIONAL GATES SATISFIED / SEMANTIC REACHABILITY CONDITIONAL / +0 STRICT DELTA / ARR CLEAN-ROOM`
+`HISTORICAL EXACT 1.0.8-FIX ARTIFACT / 67 REGISTRY IDENTITIES FOR THAT ARTIFACT / SUPERSEDED AS CURRENT AUTHORITY BY PHYSICAL 1.0.9 / +0 STRICT DELTA / ARR CLEAN-ROOM`
 
-This audit closes Somake's exact installed spell-registry identity. It intentionally does **not** promote those identities into the strict semantic numerator because current deployed COMMON configuration and complete object-level survival acquisition/reachability are not available as authoritative evidence.
+This audit closes the exact spell-registry identity of the **1.0.8-fix artifact only**. The current sibling modlist now installs Somake 1.0.9, so this file is historical evidence and must not be used as the current provider registry. It intentionally did **not** promote those identities into the strict semantic numerator because deployed COMMON configuration and complete object-level survival acquisition/reachability were not authoritative.
 
 ## Exact physical artifact
 
