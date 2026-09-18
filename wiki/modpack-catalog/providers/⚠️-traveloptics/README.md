@@ -146,7 +146,9 @@ A focused clean-room audit independently inspected `com.gametechbc.traveloptics.
 - `KeyLootModifier.CODEC`: referenced **twice** by the registry setup;
 - `UniversalLootModifier.CODEC`: referenced **zero** times by that setup.
 
-This is an exact structural fact from the publisher JAR. A third-party compatibility patch published later describes the same wiring as a registry-startup defect and changes the universal entry to `UniversalLootModifier.CODEC`, but that external patch is not treated as upstream authority and Phase 2BS does **not** claim to have reproduced its reported crash.
+This is an exact structural fact from the publisher JAR. A third-party compatibility patch published later describes the same wiring as a registry-startup defect and changes the universal entry to `UniversalLootModifier.CODEC`; that external patch is not treated as upstream authority and Phase 2BS does **not** claim to have reproduced its reported crash.
+
+A later clean-room binary-diff checkpoint fingerprints exact patch File `1690333 / 8861368` at SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Original and patch both contain 1339 ZIP entries; the patch adds/removes none and changes exactly one entry, `com/gametechbc/traveloptics/loot/TOLootModifiers.class`, with zero non-class resource changes. This independently proves the patch's binary scope, while the specific codec semantic fix remains attributed to the patch publisher. Physical deployment and assembled-pack startup remain unverified. See [`PATCH-8861368-BINARY-DIFF.md`](PATCH-8861368-BINARY-DIFF.md).
 
 The structural mismatch is nevertheless sufficient to keep current-pack runtime promotion fail-closed until one of these is proven:
 
