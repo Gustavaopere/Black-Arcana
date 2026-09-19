@@ -10,7 +10,7 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 
 - Asterism Arcanum 0.1.0;
 - Gaze 1.1.7.1;
-- Not Enough Glyphs 4.6.1;
+- Not Enough Glyphs 4.6.2;
 - Somake Spells 1.0.9;
 - T.O Magic n' Extras / Traveloptics 4.4.0.1.
 
@@ -66,6 +66,7 @@ For the known current filenames it records:
 Special comparisons:
 
 - Somake 1.0.9 is compared against exact release SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- Not Enough Glyphs 4.6.2 is compared against exact release SHA-1 `32eea2c478a346ee7499f6a0db156241116f73e9`;
 - Traveloptics is classified against:
   - original SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8`;
   - exact patch candidate SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`;
