@@ -2,7 +2,7 @@
 
 > **SUPERSEDED CURRENT AUTHORITY.** This file preserves the exact 1.0.8-fix technical checkpoint. The physical provider line is now 1.0.9; use `CURRENT-1.0.9-REVALIDATION-CHECKLIST.md` and `EXACT-1.0.9-RESOURCE-AUDIT.md` for current-line authority. Any `current` wording below is historical to the 1.0.8-fix audit unless explicitly stated otherwise.
 
-## Artefato instalado
+## Artefato histórico instalado neste checkpoint
 
 - JAR: `somakespells-1.0.8-1.21.1-fix.jar`
 - Mod id: `somakespells`
@@ -40,7 +40,7 @@ The exact File ID `8417850` was materialized from Curse Maven and required to ma
 
 The same exact artifact registers `Config.SPEC` as `ModConfig.Type.COMMON` at `somakespells/general/common.toml`. `enableSpellLockSystem` has code default `false`; when disabled, `PlayerSpellMastery.getUnlockedLevel()` returns `100`. If enabled, Somake's pre-cast path can cancel spell levels above provider mastery, and `/somake` command registration is gated by the same config with command permission level 2. The actual deployed COMMON config file/value is not available in the repository or supplied project files.
 
-Therefore exact registry membership is closed, while current survival usability/acquisition remains `CONDITIONAL` and is not promoted into the strict semantic numerator.
+Therefore exact registry membership is closed for this 1.0.8-fix artifact, while survival usability/acquisition at that historical checkpoint remains `CONDITIONAL` and is not promoted into the strict semantic numerator.
 
 ## Source / clean-room
 
@@ -56,7 +56,7 @@ Por ser `All Rights Reserved`, a inspeção binária é estritamente clean-room 
 
 A inspeção técnica do JAR não autoriza cópia da implementação e não cria um contrato de API que o provider não publique.
 
-## Runtime stack relevante no pack atual
+## Runtime stack relevante no checkpoint físico 1.0.8-fix
 
 ### Base/required publicamente
 
@@ -66,16 +66,16 @@ A inspeção técnica do JAR não autoriza cópia da implementação e não cria
 
 ### Optional/public compatibility
 
-- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente; o gate exato `MagicFromTheEastCompat.isLoaded()` testa esse mod id e ativa os três registros ISS-gated no pack atual; runtime mechanics/config continuam separados;
+- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente naquele checkpoint; o gate exato `MagicFromTheEastCompat.isLoaded()` testa esse mod id e ativava os três registros ISS-gated naquele checkpoint; runtime mechanics/config continuam separados;
 - Born in Chaos `1.7.6` — presente;
 - GTBC's Geomancy Plus `1.1.0-1.21.1` — presente;
 - Tunes 'n Tomes `1.1.0-HOTFIX` — presente;
 - Mowzie's Mobs `1.8.2` — presente; 1.0.7 documentava gate para três Connection spells;
-- Better Combat — não localizado na modlist atual.
+- Better Combat — não localizado na modlist usada por aquele checkpoint.
 
 ### Coexistência com T.O Magic n' Extras
 
-A modlist física também contém:
+A modlist física usada por aquele checkpoint também continha:
 
 - `traveloptics-4.4.0.1-1.21.1.jar`;
 - mod id `traveloptics`;
@@ -84,7 +84,7 @@ A modlist física também contém:
 
 A página oficial atual de T.O Magic classifica essa build 1.21.1 como **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**. Ao mesmo tempo, Somake diz que Aqua foi criado para suprir a ausência de T.O Magic 1.21.1 e que conteúdo Aqua seria migrado se T.O Magic atualizasse oficialmente.
 
-Portanto o pack tem uma coexistência física real, mas isso **não** prova que a build alpha/deprecated de T.O Magic seja o destino de migração mencionado pelo Somake. A compatibilidade/ownership exata Aqua entre esses dois artefatos deve permanecer QA-blocked/fail-closed, não automaticamente transferida.
+Portanto aquele checkpoint tinha uma coexistência física real, mas isso **não** prova que a build alpha/deprecated de T.O Magic seja o destino de migração mencionado pelo Somake. A compatibilidade/ownership exata Aqua entre esses dois artefatos deve permanecer QA-blocked/fail-closed, não automaticamente transferida.
 
 ## CurseForge relation inconsistency
 
@@ -103,13 +103,13 @@ Para a linha 1.0.8, o catálogo usa a evidência mais específica/recente: curre
 
 ## Exact registry / remaining runtime ceiling
 
-The old publisher-only `over 50 new spells` ceiling is superseded for registry identity by the exact artifact: **67 current registrations** under the physical optional-provider set. The publisher text remains useful for release semantics but not for registry totals.
+For the historical 1.0.8-fix checkpoint, the old publisher-only `over 50 new spells` ceiling was superseded for registry identity by the exact artifact: **67 historical registrations** under that checkpoint's optional-provider set. The publisher text remains useful for release semantics but not for registry totals.
 
 The exact artifact audit still does not close:
 
 - deployed `somakespells/general/common.toml` values;
 - complete object-level survival acquisition/reachability;
-- authoritative current school/runtime semantics for every identity;
+- authoritative school/runtime semantics for every historical 1.0.8-fix identity;
 - complete min/max level / rarity / mana / cooldown / cast-type tables;
 - formulas de damage/heal;
 - complete item/block/entity/effect inventories;
@@ -117,9 +117,9 @@ The exact artifact audit still does not close:
 - networking/persistence contracts;
 - Somake↔T.O Aqua runtime ownership on the dual-installed stack.
 
-## Current contradiction requiring runtime QA
+## Historical publication contradiction retained as QA context
 
-A descrição geral atual diz `1 Blood` e `1 Ender`, mas o changelog 1.0.8 nomeia múltiplos spells Blood (por exemplo Fragmented Requiem e The Rose's Secret), e 1.0.7 também nomeia Bloodmark/Cursed Connection. Isso mostra que o resumo `1 Blood / 1 Ender` não pode ser interpretado literalmente como total de registry atual sem contexto.
+A descrição geral atual diz `1 Blood` e `1 Ender`, mas o changelog 1.0.8 nomeia múltiplos spells Blood (por exemplo Fragmented Requiem e The Rose's Secret), e 1.0.7 também nomeia Bloodmark/Cursed Connection. Isso mostra que o resumo `1 Blood / 1 Ender` não pode ser interpretado literalmente como total do registry da linha 1.0.8 sem contexto.
 
 Consequência: **não usar a frase do projeto como count escolar exato**. Ela é descrição de escopo, enquanto changelogs demonstram que o conteúdo evoluiu.
 
