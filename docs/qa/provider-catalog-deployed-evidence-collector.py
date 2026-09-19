@@ -25,6 +25,7 @@ from typing import Any
 TRAVELOPTICS_ORIGINAL_SHA1 = "3808493ce45cdfeb6408e85578adecf13df698e8"
 TRAVELOPTICS_PATCH_SHA1 = "680fa679d8ea2419a79571f455436367222f6f9d"
 SOMAKE_109_RELEASE_SHA1 = "171841ac9f802be9309ecc166c1d972ac6d404c0"
+NEG_462_RELEASE_SHA1 = "32eea2c478a346ee7499f6a0db156241116f73e9"
 GAZE_1171_SHA1 = "a8cb3190bde157f78160ce65c202ce2d47fb2041"
 
 NEG_CONFIGS = [
@@ -72,7 +73,7 @@ NEG_CONFIGS = [
 MOD_PATTERNS = {
     "asterism_arcanum": ["asterismarcanum-1.21.1-0.1.0.jar"],
     "gaze": ["gaze-1.1.7.1.jar"],
-    "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.1.jar"],
+    "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
     "somake_spells": ["somakespells-1.0.9-1.21.1.jar"],
     "traveloptics": [
         "traveloptics-4.4.0.1-1.21.1.jar",
@@ -154,6 +155,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                         entry["classification"] = "OTHER_VERIFIED"
                 elif provider == "somake_spells":
                     entry["release_1_0_9_equality"] = entry["sha1"] == SOMAKE_109_RELEASE_SHA1
+                elif provider == "not_enough_glyphs":
+                    entry["release_4_6_2_equality"] = entry["sha1"] == NEG_462_RELEASE_SHA1
                 elif provider == "gaze":
                     entry["known_1_1_7_1_equality"] = entry["sha1"] == GAZE_1171_SHA1
                 entries.append(entry)
