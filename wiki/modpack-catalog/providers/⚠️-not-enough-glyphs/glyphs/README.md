@@ -1,4 +1,4 @@
-# Not Enough Glyphs 4.6.1 — Primitive Files
+# Not Enough Glyphs 4.6.2 — Primitive Files
 
 This directory contains one file for every primitive that NEG calls through `APIRegistry.registerSpell` under the current physical pack's loaded-mod conditions.
 
