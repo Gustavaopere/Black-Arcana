@@ -140,7 +140,7 @@ The six optional-provider registration gates are already closed for the physical
 - `blessed_connection`, `guardian_connection`, `cursed_connection` — `mowziesmobs` is present;
 - `mirror_strike`, `spirit_empowerment`, `symmetry_empowerment` — `iss_magicfromtheeast` is present.
 
-Those six therefore belong to the current 67/67 registry inventory, but remain survival-conditional exactly like the other 61 until their deployed host/focus/use gates are proven.
+Those six therefore belonged to the historical 1.0.8-fix 67/67 registry inventory under that checkpoint's provider set. They do not establish any current 1.0.9 registration; current registry, host/focus/use gates and reachability remain governed by `CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`.
 
 ## Acceptance boundary
 
