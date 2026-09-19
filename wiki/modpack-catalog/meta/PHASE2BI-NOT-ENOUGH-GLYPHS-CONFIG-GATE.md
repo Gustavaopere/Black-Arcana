@@ -2,6 +2,8 @@
 
 Status: `CONFIG AUTHORITY CLOSED / DEPLOYED VALUES MISSING / SEMANTIC DELTA +0`
 
+> Historical 4.6.1 checkpoint with a current 4.6.2 override. Exact source 4.6.2 keeps the same registration blob and the same Momentum-disable blob, so the config contract and 39-candidate gate below remain current. Physical identity is now `not_enough_glyphs-1.21.1-4.6.2.jar`; see `../providers/⚠️-not-enough-glyphs/SOURCE-4.6.2-DELTA-AUDIT.md`.
+
 Base audited: `main@75558c92150506cce9f9b98b8f1ae29e4c128e62`.
 
 ## Physical/provider anchor
