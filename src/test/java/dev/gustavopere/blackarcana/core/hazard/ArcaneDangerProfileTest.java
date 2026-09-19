@@ -2,8 +2,10 @@ package dev.gustavopere.blackarcana.core.hazard;
 
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerProfile;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,6 +29,54 @@ class ArcaneDangerProfileTest {
             32);
 
         assertTrue(profile.requiresHazardSession());
+    }
+
+    @Test
+    void explicitBelowMinimumPolicyIsPartOfTheImmutableProfile() {
+        ArcaneDangerProfile profile = new ArcaneDangerProfile(
+            ArcaneDangerTier.DANGEROUS,
+            1.0D,
+            0.25D,
+            0.5D,
+            200L,
+            32,
+            25.0D,
+            50.0D,
+            ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK,
+            true);
+
+        assertEquals(ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK, profile.belowMinimumPolicy());
+    }
+
+    @Test
+    void compatibilityConstructorKeepsHistoricalHardDenialDefault() {
+        ArcaneDangerProfile profile = new ArcaneDangerProfile(
+            ArcaneDangerTier.DANGEROUS,
+            1.0D,
+            0.25D,
+            0.5D,
+            200L,
+            32,
+            25.0D,
+            50.0D,
+            true);
+
+        assertEquals(ArcaneInsufficientResistancePolicy.DENY_CAST, profile.belowMinimumPolicy());
+    }
+
+    @Test
+    void normalProfileRejectsMeaninglessAllowWithRiskPolicy() {
+        assertThrows(IllegalArgumentException.class, () -> new ArcaneDangerProfile(
+            ArcaneDangerTier.NORMAL,
+            0.0D,
+            0.0D,
+            0.0D,
+            0L,
+            1,
+            0.0D,
+            0.0D,
+            ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK,
+            false));
     }
 
     @Test

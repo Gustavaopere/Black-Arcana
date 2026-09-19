@@ -38,6 +38,7 @@ public final class CastingUxSemantics {
         NONE,
         DANGER_PRESENT,
         BELOW_MINIMUM,
+        BELOW_MINIMUM_ALLOWED,
         BELOW_RECOMMENDED,
         RECOMMENDATION_MET,
         FORECAST_UNAVAILABLE
@@ -104,6 +105,7 @@ public final class CastingUxSemantics {
         return switch (status) {
             case NORMAL -> HazardState.NONE;
             case BELOW_MINIMUM -> HazardState.BELOW_MINIMUM;
+            case BELOW_MINIMUM_ALLOWED -> HazardState.BELOW_MINIMUM_ALLOWED;
             case BELOW_RECOMMENDED -> HazardState.BELOW_RECOMMENDED;
             case RECOMMENDED -> HazardState.RECOMMENDATION_MET;
             case UNAVAILABLE -> HazardState.FORECAST_UNAVAILABLE;

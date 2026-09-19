@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.config;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 import net.minecraft.resources.ResourceLocation;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,24 @@ class ArcaneDangerDataReloadListenerTest {
         assertEquals(ArcaneDangerTier.DANGEROUS, definition.tier());
         assertEquals(1.0D, definition.backlashMultiplier());
         assertEquals(25.0D, definition.minimumArcaneResistance());
+        assertEquals(ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK, definition.belowMinimumPolicy());
+    }
+
+    @Test
+    void legacyProfileWithoutPolicyDefaultsToHardDenial() {
+        String legacy = validJson().replace(
+            "  \"belowMinimumPolicy\": \"ALLOW_WITH_RISK\",\n",
+            "");
+        var definition = ArcaneDangerDataReloadListener.parseDefinition(ID, JsonParser.parseString(legacy));
+
+        assertEquals(ArcaneInsufficientResistancePolicy.DENY_CAST, definition.belowMinimumPolicy());
+    }
+
+    @Test
+    void rejectsUnknownBelowMinimumPolicy() {
+        String json = validJson().replace("ALLOW_WITH_RISK", "UNKNOWN_POLICY");
+        assertThrows(JsonParseException.class, () ->
+            ArcaneDangerDataReloadListener.parseDefinition(ID, JsonParser.parseString(json)));
     }
 
     @Test
@@ -84,6 +103,7 @@ class ArcaneDangerDataReloadListenerTest {
               "maxDamageInstances": 16,
               "minimumArcaneResistance": 25.0,
               "recommendedArcaneResistance": 50.0,
+              "belowMinimumPolicy": "ALLOW_WITH_RISK",
               "emergencyProtectionAllowed": true
             }
             """;

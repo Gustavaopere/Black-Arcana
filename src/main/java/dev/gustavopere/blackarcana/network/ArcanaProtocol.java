@@ -3,7 +3,7 @@ package dev.gustavopere.blackarcana.network;
 import dev.gustavopere.blackarcana.api.ArcanaCastRequest;
 
 public final class ArcanaProtocol {
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
     public static final int MAX_CAST_ID_LENGTH = 36;
     public static final int MAX_RESOURCE_ID_LENGTH = 192;
     public static final int MAX_LOADOUT_SLOTS = ArcanaCastRequest.MAX_LOADOUT_SLOTS;
@@ -14,6 +14,7 @@ public final class ArcanaProtocol {
     public static final int MAX_TRANSLATION_KEY_LENGTH = 160;
     public static final int MAX_ICON_ID_LENGTH = 192;
     public static final int MAX_DANGER_TIER_LENGTH = 16;
+    public static final int MAX_HAZARD_POLICY_LENGTH = 32;
     public static final int MAX_COOLDOWN_ENTRIES = 128;
     public static final int MAX_PRESENTATION_ENTRIES = 512;
     public static final int MAX_HAZARD_PREFLIGHT_ENTRIES = 4_096;

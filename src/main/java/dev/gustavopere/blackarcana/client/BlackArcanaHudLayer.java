@@ -196,6 +196,7 @@ public final class BlackArcanaHudLayer {
         HazardResistanceForecastPayload forecast
     ) {
         return preflight.parsedTier() == forecast.parsedTier()
+            && preflight.parsedBelowMinimumPolicy() == forecast.parsedBelowMinimumPolicy()
             && Double.compare(preflight.minimumArcaneResistance(), forecast.minimumArcaneResistance()) == 0
             && Double.compare(preflight.recommendedArcaneResistance(), forecast.recommendedArcaneResistance()) == 0;
     }
@@ -213,6 +214,7 @@ public final class BlackArcanaHudLayer {
         }
         Component status = Component.translatable(switch (semantic) {
             case BELOW_MINIMUM -> "hazard.black_arcana.forecast.status.blocked";
+            case BELOW_MINIMUM_ALLOWED -> "hazard.black_arcana.forecast.status.below_minimum_allowed";
             case BELOW_RECOMMENDED -> "hazard.black_arcana.forecast.status.below_recommended";
             case RECOMMENDATION_MET -> "hazard.black_arcana.forecast.status.recommended";
             case NONE -> "hazard.black_arcana.forecast.status.normal";
