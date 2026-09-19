@@ -22,7 +22,7 @@ See [`CURRENT-4.6.2-SOURCE-REVALIDATION.md`](CURRENT-4.6.2-SOURCE-REVALIDATION.m
 
 ## Current-pack registration result
 
-Registration is conditional on loaded providers. In the current physical modlist revalidated at sibling `8211ce36e899cc8f55d24f937b0c7200fb0b3ae1`:
+Registration is conditional on loaded providers. In the current physical modlist revalidated at sibling `cd38efb9c1a888c86addace69876400cf8845908`:
 
 - `ars_elemental` **is installed** → NEG does not register its local Arc/Homing fallbacks; it only references the four real Ars Elemental primitives in its internal `registeredSpells` list and enables four Elemental Binder focus perks.
 - `ars_controle` **is installed** → NEG does not register its local `ars_controle:filter_random` fallback.
