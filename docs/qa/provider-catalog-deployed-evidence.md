@@ -172,6 +172,19 @@ The JSON retains only source category, relative path, line number and the exact 
 
 This closes physical disposition only when the collected file is the actual installed JAR. A Blackout literal match is only a **route candidate**; it must still be inspected against the Traveloptics checklist to prove an actual current-pack survival grant/acquisition mechanism.
 
+## Collector fixture validation — Somake Iron's overrides
+
+The bounded Somake override extraction was validated on a synthetic instance before durable merge:
+
+- temporary NON-MERGE PR: **#339**;
+- exact fixture HEAD: `a1433f0663b2ec3bc965e285dfa0b05232c9cf09`;
+- workflow: **Provider Collector Somake Override Fixture NON-MERGE**;
+- run: `35451515912` — SUCCESS.
+
+The fixture exercises local Iron's spell config, global config, KubeJS override, direct world datapack, ZIP datapack and `enableSpellLockSystem`. It also injects unselected sentinel fields and asserts that those values are absent from the emitted JSON.
+
+This validates **collector behavior only**. It is not evidence of any value in the user's actual modpack.
+
 ## Privacy / minimization
 
 The collector deliberately avoids:
