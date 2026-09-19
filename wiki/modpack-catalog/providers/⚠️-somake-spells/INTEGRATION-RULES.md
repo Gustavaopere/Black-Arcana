@@ -113,7 +113,7 @@ Any Black Arcana immunity/ward candidate must be deduplicated semantically and m
 
 ## Optional integrations
 
-Current pack has:
+Historical provider-stack checkpoint used by this audit had:
 
 - Magic From the East / `iss_magicfromtheeast` `1.1.5`;
 - Born in Chaos `1.7.6`;
@@ -123,11 +123,11 @@ Current pack has:
 
 Better Combat was not located in the physical checkpoint used by this historical audit; current presence must be determined from the latest complete physical modlist when relevant.
 
-Do not hard-depend on an optional provider merely because it is present in this pack snapshot. Somake's own optional gating remains provider authority.
+Do not hard-depend on an optional provider merely because it was present in that historical pack snapshot. Somake's own optional gating remains provider authority.
 
 For **Magic From the East presence**, the 1.0.8 publisher says its spells remain available for Symmetry. The physical precondition was satisfied at the historical checkpoint, but that does not establish 1.0.9 active spell IDs, predicates, configs, hook paths or runtime effects. Do not infer them from JAR presence alone.
 
-For Born in Chaos presence, the publisher says ritual progression can extend to Infernal Fire. Runtime QA must still confirm current config/recipe reachability.
+For Born in Chaos presence, the publisher says ritual progression can extend to Infernal Fire. That provider was present at the historical checkpoint; current 1.0.9 config/recipe reachability still requires revalidation.
 
 ## Performance / safety
 
