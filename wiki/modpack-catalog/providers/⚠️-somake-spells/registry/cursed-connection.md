@@ -10,7 +10,7 @@
 
 ## Registration gate
 
-Exact 1.0.8-fix bytecode gates this registration on `ModList.get().isLoaded("mowziesmobs")`. The physical pack contains Mowzie's Mobs `1.8.2`; the registration gate is satisfied.
+Exact 1.0.8-fix bytecode gates this registration on `ModList.get().isLoaded("mowziesmobs")`. The physical checkpoint used by that audit contained Mowzie's Mobs `1.8.2`, so the gate was satisfied for the historical 1.0.8-fix artifact. This does not establish the 1.0.9 registration.
 
 ## Evidence boundary
 
