@@ -70,7 +70,7 @@ This is strong current-line evidence for the public replacement at the name/reso
 - 17 candidate-added roots versus the historical 1.0.8-fix registry surface;
 - one historical root absent: `summon_zombie`.
 
-The 16 publisher-named spells above are therefore a **named semantic subset** of the larger resource surface, not a substitute for it.
+The 16 publisher-named spells above are a **current public semantic surface** that coexists with the larger 83-root resource surface. This audit does not assert a one-to-one name→root→registry mapping, and neither surface substitutes for a registry inventory.
 
 Do not infer that:
 
