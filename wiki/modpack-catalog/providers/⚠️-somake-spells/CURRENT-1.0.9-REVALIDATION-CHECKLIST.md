@@ -63,6 +63,18 @@ The current sibling modlist confirms these relevant providers are physically ins
 
 Presence alone does **not** prove which 1.0.9 Somake registrations are enabled. The exact 1.0.9 registration predicates still require provider-authoritative evidence.
 
+## Publisher-confirmed Legendary Monsters gate — partial closure only
+
+The official 1.0.9 File `8867079` changelog explicitly states that **Legendary Monsters is optional** and that its Spirit spells, Red Soul content and items are loaded only when Legendary Monsters is installed. The same changelog says optional-mod progression fallbacks/content registration were improved when supported mods are absent.
+
+Official file page:
+
+`https://www.curseforge.com/minecraft/mc-mods/somake-spells-irons-spells-addon/files/8867079`
+
+This closes the **broad provider-presence condition** for the Legendary Monsters content tranche at publisher level. The current pack satisfies that broad condition because `legendary_monsters` is physically present.
+
+It does **not** close the exact 1.0.9 spell registry or map every named/localized Spirit spell to a specific conditional registration. The changelog names a Spirit/Red Soul feature tranche, while the resource-only audit exposes additional localization roots not fully enumerated by the changelog; therefore object-level registry identity and exact predicates remain fail-closed.
+
 ## Exact 1.0.9 resource-only audit now closed
 
 A temporary non-merge clean-room audit has now materialized exact CurseForge file `8867079`:
