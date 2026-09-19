@@ -1,0 +1,38 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="All Rights Reserved"
+
+[[mods]]
+modId="black_arcana_catalog_qa"
+version="${mod_version}"
+displayName="Black Arcana Catalog QA Probe"
+authors="Gustavaopere"
+description='''Removable, read-only runtime evidence probe for provider catalog closure. Not production gameplay content.'''
+
+[[dependencies.black_arcana_catalog_qa]]
+modId="black_arcana"
+type="required"
+ordering="AFTER"
+side="SERVER"
+reason="Requires Black Arcana's exact catalog-audit workspace"
+
+[[dependencies.black_arcana_catalog_qa]]
+modId="irons_spellbooks"
+type="required"
+ordering="AFTER"
+side="SERVER"
+reason="Reads only the public Iron's spell registry/API on the assembled server"
+
+[[dependencies.black_arcana_catalog_qa]]
+modId="neoforge"
+type="required"
+versionRange="[${neo_version},)"
+ordering="NONE"
+side="SERVER"
+
+[[dependencies.black_arcana_catalog_qa]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="SERVER"
