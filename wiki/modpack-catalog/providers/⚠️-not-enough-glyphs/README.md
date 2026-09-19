@@ -8,6 +8,8 @@ Status: `⚠️ CURRENT PHYSICAL 4.6.2 / SOURCE-PINNED REGISTRATION MATRIX REVAL
 - Physical JAR: `not_enough_glyphs-1.21.1-4.6.2.jar`
 - Runtime version: `4.6.2`
 - Physical pack SHA-1: **not yet captured in current Black Arcana authority material**
+- Exact publisher-release SHA-1: `32eea2c478a346ee7499f6a0db156241116f73e9`
+- Exact publisher-release SHA-256: `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12`
 - Previous 4.6.1 SHA-1 `e5fd04b7c40d6d5a9aea5d6356f3eb628941fca4`: **historical only**
 - Source Sauce dependency: `0.0.50.97`
 - Loader/game: NeoForge 1.21.1
