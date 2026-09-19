@@ -172,6 +172,24 @@ The JSON retains only source category, relative path, line number and the exact 
 
 This closes physical disposition only when the collected file is the actual installed JAR. A Blackout literal match is only a **route candidate**; it must still be inspected against the Traveloptics checklist to prove an actual current-pack survival grant/acquisition mechanism.
 
+## Iron's 3.16.3 host contract for collected paths
+
+The bounded paths above are grounded in the exact Iron's source checkpoint already used by the Somake host audit:
+
+`iron431/Irons-Spells-n-Spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`
+
+At that checkpoint, `SpellConfigManager` defines:
+
+- subconfig folder `irons_spellbooks_spell_config`;
+- global file `global_config.json`;
+- local per-spell layout `/config/irons_spellbooks_spell_config/<mod_id>/<spell_id>.json`;
+- datapack layout `/data/<mod_id>/irons_spellbooks_spell_config/<spell_id>.json`;
+- `enabled`, `school` and `allow_crafting` among the registered spell-config parameter types.
+
+The host builds effective config by iterating the actual Iron's spell registry, applying a per-spell JSON only when an entry exists for that registered spell, then applying global values as fallback where the parameter is still at its default. Unknown spell-config files are ignored by the host.
+
+Consequently, the collector reports observed config/override evidence but **does not use the presence or filename of a JSON file as proof that a Somake spell is currently registered**. Registry closure remains a separate provider-authoritative gate.
+
 ## Collector fixture validation — Somake Iron's overrides
 
 The bounded Somake override extraction was validated on a synthetic instance before durable merge:
