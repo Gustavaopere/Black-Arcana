@@ -1,19 +1,27 @@
 # Not Enough Glyphs
 
-Status: `PHASE 2AF — SOURCE-PINNED 4.6.1 / CURRENT-PACK REGISTRATION MATRIX COMPLETE / 40 REGISTERED PRIMITIVES, 39 SOURCE-ENABLED / SPELL BINDER + PERKS + RUNTIME BOUNDARIES AUDITED / FULL-MODPACK QA PENDING`
+Status: `⚠️ CURRENT PHYSICAL 4.6.2 / EXACT SOURCE-SEMVER PIN / REGISTRATION MATRIX PRESERVED BY BYTE-IDENTICAL REGISTRY SOURCE / 40 REGISTERED PRIMITIVES, 39 SOURCE-ENABLED / DEPLOYED SERVER CONFIG UNVERIFIED`
 
 ## Runtime identity
 
 - Mod id: `not_enough_glyphs`
-- Physical JAR: `not_enough_glyphs-1.21.1-4.6.1.jar`
-- Runtime version: `4.6.1`
-- Physical SHA-1: `e5fd04b7c40d6d5a9aea5d6356f3eb628941fca4`
-- Embedded Sauce: `0.0.42.89`
+- Physical JAR: `not_enough_glyphs-1.21.1-4.6.2.jar`
+- Runtime version: `4.6.2`
+- Physical SHA-1: **not yet preserved for the current 4.6.2 pack artifact**
+- Embedded Sauce: source dependency line `0.0.50.97`; exact JarJar payload in the physical 4.6.2 JAR not yet re-inspected
 - Loader/game: NeoForge 1.21.1
 - Phase 2 class: `ARS GLYPH / FALLBACK-COMPAT / CAST-DEVICE / PERK PROVIDER`
-- Exact source-semver pin: `Alexthw46/NotEnoughGlyphs@2f0c7b9fcf802c7e85b4ed4d7ed94123bcee398b`
+- Exact source-semver pin: `Alexthw46/NotEnoughGlyphs@45604dd18d9d2e3e7ca80a2c616b3309f42aca77`
 
-The source commit declares `mod_version=4.6.1`. This is a source-semver pin, not a claim that the public source tree was independently reproduced byte-for-byte into the physical installed JAR.
+The current source commit declares `mod_version=4.6.2`, Minecraft `1.21.1` and Sauce `0.0.50.97`. This is a source-semver pin, not a claim that the public source tree was independently reproduced byte-for-byte into the physical installed JAR. The historical 4.6.1 physical SHA-1 `e5fd04b7c40d6d5a9aea5d6356f3eb628941fca4` remains evidence for that older artifact only.
+
+## Current 4.6.2 source-delta reconciliation
+
+See [`SOURCE-4.6.2-DELTA-AUDIT.md`](SOURCE-4.6.2-DELTA-AUDIT.md).
+
+The exact 4.6.2 source pin is three commits ahead of the historical 4.6.1 pin. The registration source `ArsNouveauRegistry.java` has identical Git blob SHA `28c2007999ec6e534b8c5cd2c90b012c81072cff` at both pins, and `EffectMomentum.java` likewise remains blob `7dd4f7ebe06cbadd282fddb1a6ca603013d2af2a`. Therefore the already-audited **40 registrations / 39 source-enabled candidates** carry forward to 4.6.2 without re-enumeration.
+
+The 4.6.2 source delta is behavioral/dependency-level: filter/rune resolution hotfix, Propagate Underfoot vehicle targeting and Sauce line update. Those require runtime regression QA where relevant, but they do not alter the registration denominator.
 
 ## Current-pack registration result
 
@@ -34,7 +42,7 @@ See [`REGISTRATION-MATRIX.md`](REGISTRATION-MATRIX.md) and [`glyphs/`](glyphs/).
 
 ## Spell Binder correction
 
-The old catalog sentence “stores up to 25 spells” was too coarse. Exact 4.6.1 source exposes two distinct surfaces:
+The old catalog sentence “stores up to 25 spells” was too coarse. The relevant Binder source remains unchanged into exact 4.6.2 and exposes two distinct surfaces:
 
 - item capability/container: **25 storage slots**;
 - Ars caster data: `BinderCasterData(10)` = **10 caster/radial spell slots**;
@@ -46,7 +54,7 @@ See [`SPELL-BINDER-AND-PERKS.md`](SPELL-BINDER-AND-PERKS.md).
 
 ## Provider-owned systems
 
-NEG 4.6.1 additionally registers:
+NEG 4.6.2 additionally registers (same registration source as 4.6.1):
 
 - one Spell Binder item;
 - one `spell_holder` menu;
@@ -112,4 +120,4 @@ The remaining 39-glyph semantic blocker is now narrowed to the deployed Ars/NeoF
 
 `AbstractSpellPart.buildConfig(...)` defines `[general].enabled` with source default `true`, and `isEnabled()` reads that config value. `momentum` remains a separate provider override that returns disabled in NEG source. NeoForge 1.21.1 SERVER configs are server-authoritative/synchronized and may be overridden per world under `world/serverconfig`; consequently the source default is not accepted as the deployed pack state.
 
-No authoritative deployed NEG glyph-config TOMLs are present in the current project attachments/repository evidence. Phase 2BI therefore changes **neither** metric: strict semantic minimum remains **1249**, and provider-component closure remains **57/100**. A future promotion may count only those of the 39 candidates whose effective deployed `[general].enabled` state is proven true. Runtime/balance/protection QA remains separate.
+No authoritative deployed NEG glyph-config TOMLs are present in the current project attachments/repository evidence. The 4.6.2 authority refresh therefore changes **neither** metric: strict semantic minimum remains **1249**, and provider-component closure remains **57/100**. A future promotion may count only those of the 39 candidates whose effective deployed `[general].enabled` state is proven true. Runtime/balance/protection QA remains separate.
