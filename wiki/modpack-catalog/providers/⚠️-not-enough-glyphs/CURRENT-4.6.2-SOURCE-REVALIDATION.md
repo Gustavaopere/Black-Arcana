@@ -4,10 +4,10 @@ Status: `CURRENT PHYSICAL 4.6.2 / EXACT PUBLIC SOURCE-SEMVER PIN / REGISTRY MATR
 
 ## Current physical authority
 
-Latest sibling modlist checked:
+Latest sibling modlist checked (the 2026-09-19 follow-up only reorganizes the certified dossier path; NEG file content is unchanged from the prior checkpoint):
 
 - repository: `Gustavaopere/neoforge-rpg-skilltree`;
-- checkpoint: `8211ce36e899cc8f55d24f937b0c7200fb0b3ae1`;
+- checkpoint: `cd38efb9c1a888c86addace69876400cf8845908`;
 - installed filename: `not_enough_glyphs-1.21.1-4.6.2.jar`;
 - mod id: `not_enough_glyphs`;
 - runtime: `4.6.2`;
@@ -76,7 +76,7 @@ Therefore the 4.6.1 source-level registration matrix is preserved by exact sourc
 
 ## Current loaded-provider conditions
 
-At sibling checkpoint `8211ce36e899cc8f55d24f937b0c7200fb0b3ae1`:
+At sibling checkpoint `cd38efb9c1a888c86addace69876400cf8845908`:
 
 - Ars Elemental remains present;
 - Ars Controle remains present;
