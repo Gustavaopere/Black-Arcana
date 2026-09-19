@@ -1,5 +1,7 @@
 # Somake Spells — regras de integração para Black Arcana
 
+> **CURRENT-LINE AUTHORITY NOTE.** Somake is physically on 1.0.9. Historical 1.0.8-fix integration facts below remain provenance only until revalidated for 1.0.9. Do not carry forward registry IDs, predicates, config behavior or coexistence conclusions by assumption.
+
 ## Authority split
 
 Somake is the provider/owner of its own spell content, Aqua/Symmetry content, Elemental Charges, book/grimoire/Upgrade Forge progression, equipment evolution and Soul Fire/Infernal Fire ritual progression.
@@ -28,13 +30,13 @@ A name in a changelog is not an API contract.
 
 Do not create a Black Arcana `SomakeCharge`, duplicate stack counter or inferred data attachment.
 
-The installed fix explicitly repairs Symmetry/Spirit Charge buffs, proving that Somake owns charge-state semantics in the current line. Exact generation, cap, expiry, buff and synchronization mechanics remain unknown.
+The historical 1.0.8-fix artifact explicitly repaired Symmetry/Spirit Charge buffs, proving Somake ownership of those charge semantics for that line. Current 1.0.9 charge behavior remains provider-owned but detailed contracts require current-line evidence. Exact generation, cap, expiry, buff and synchronization mechanics remain unknown.
 
 Any perk that wishes to react to Somake charges must wait for a real read-only provider boundary. It must not infer charge state from particles, item names, damage type or spell name.
 
 ## Aqua School and T.O Magic coexistence
 
-Current physical stack includes both Somake 1.0.8-fix and the deprecated T.O Magic 1.21.1 alpha (`traveloptics` 4.4.0.1).
+The historical physical checkpoint used by this audit included Somake 1.0.8-fix and the deprecated T.O Magic 1.21.1 alpha (`traveloptics` 4.4.0.1). Somake has since advanced to 1.0.9, so Aqua/T.O coexistence must be revalidated on the current line.
 
 Rules:
 
@@ -119,11 +121,11 @@ Current pack has:
 - Tunes 'n Tomes `1.1.0-HOTFIX`;
 - Mowzie's Mobs `1.8.2`.
 
-Better Combat is not located in the current physical modlist.
+Better Combat was not located in the physical checkpoint used by this historical audit; current presence must be determined from the latest complete physical modlist when relevant.
 
 Do not hard-depend on an optional provider merely because it is present in this pack snapshot. Somake's own optional gating remains provider authority.
 
-For **Magic From the East presence**, the 1.0.8 publisher says its spells remain available for Symmetry. The physical precondition is therefore satisfied in this pack, but exact active spell IDs, configs, hook path and runtime effects remain unverified. Do not infer them from JAR presence alone.
+For **Magic From the East presence**, the 1.0.8 publisher says its spells remain available for Symmetry. The physical precondition was satisfied at the historical checkpoint, but that does not establish 1.0.9 active spell IDs, predicates, configs, hook paths or runtime effects. Do not infer them from JAR presence alone.
 
 For Born in Chaos presence, the publisher says ritual progression can extend to Infernal Fire. Runtime QA must still confirm current config/recipe reachability.
 
