@@ -5,9 +5,10 @@ Read-only Black Arcana provider-catalog evidence collector.
 This script does not modify the Minecraft instance. It emits only:
 - selected mod JAR hashes;
 - selected config keys required by canonical provider checklists;
-- presence of exact datapack override paths.
+- presence of exact datapack override paths;
+- bounded references to exact catalog IDs in deployed customization surfaces.
 
-It intentionally does not dump full config files or unrelated instance data.
+It intentionally does not dump full config files, script bodies, quest text or unrelated instance data.
 """
 
 from __future__ import annotations
@@ -26,6 +27,7 @@ TRAVELOPTICS_ORIGINAL_SHA1 = "3808493ce45cdfeb6408e85578adecf13df698e8"
 TRAVELOPTICS_PATCH_SHA1 = "680fa679d8ea2419a79571f455436367222f6f9d"
 SOMAKE_109_RELEASE_SHA1 = "171841ac9f802be9309ecc166c1d972ac6d404c0"
 GAZE_1171_SHA1 = "a8cb3190bde157f78160ce65c202ce2d47fb2041"
+NEG_462_RELEASE_SHA1 = "32eea2c478a346ee7499f6a0db156241116f73e9"
 
 NEG_CONFIGS = [
     ("not_enough_glyphs:plow", "not_enough_glyphs/plow.toml"),
@@ -72,7 +74,7 @@ NEG_CONFIGS = [
 MOD_PATTERNS = {
     "asterism_arcanum": ["asterismarcanum-1.21.1-0.1.0.jar"],
     "gaze": ["gaze-1.1.7.1.jar"],
-    "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.1.jar"],
+    "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
     "somake_spells": ["somakespells-1.0.9-1.21.1.jar"],
     "traveloptics": [
         "traveloptics-4.4.0.1-1.21.1.jar",
@@ -80,8 +82,10 @@ MOD_PATTERNS = {
     ],
 }
 
-TEXT_EXTENSIONS = {".toml", ".json", ".cfg", ".conf", ".txt"}
-ASTERISM_DATAPACK_PATH = "data/asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json"
+TEXT_EXTENSIONS = {".toml", ".json", ".cfg", ".conf", ".txt", ".js", ".snbt", ".zs"}
+ASTERISM_DATA_RELATIVE = "asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json"
+ASTERISM_DATAPACK_PATH = f"data/{ASTERISM_DATA_RELATIVE}"
+TRAVELOPTICS_BLACKOUT_LITERAL = "traveloptics:blackout"
 
 
 def digest_file(path: Path) -> dict[str, Any]:
@@ -156,6 +160,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["release_1_0_9_equality"] = entry["sha1"] == SOMAKE_109_RELEASE_SHA1
                 elif provider == "gaze":
                     entry["known_1_1_7_1_equality"] = entry["sha1"] == GAZE_1171_SHA1
+                elif provider == "not_enough_glyphs":
+                    entry["release_4_6_2_equality"] = entry["sha1"] == NEG_462_RELEASE_SHA1
                 entries.append(entry)
         result[provider] = entries
     return result
@@ -204,6 +210,14 @@ def collect_asterism(instance: Path, worlds: list[Path]) -> dict[str, Any]:
             "selected": load_json_selected(global_config, selected_keys),
         }
 
+    kubejs_override = instance / "kubejs" / "data" / ASTERISM_DATA_RELATIVE
+    if kubejs_override.is_file():
+        out["datapack_overrides"].append({
+            "source": "kubejs_data",
+            "path": rel(kubejs_override, instance),
+            "selected": load_json_selected(kubejs_override, selected_keys),
+        })
+
     for world in worlds:
         datapacks = world / "datapacks"
         if not datapacks.is_dir():
@@ -212,6 +226,7 @@ def collect_asterism(instance: Path, worlds: list[Path]) -> dict[str, Any]:
             normalized = path.as_posix()
             if normalized.endswith(ASTERISM_DATAPACK_PATH):
                 out["datapack_overrides"].append({
+                    "source": "world_datapack",
                     "path": rel(path, instance),
                     "selected": load_json_selected(path, selected_keys),
                 })
@@ -229,6 +244,7 @@ def collect_asterism(instance: Path, worlds: list[Path]) -> dict[str, Any]:
                             elif short in data:
                                 selected[key] = data[short]
                         out["datapack_overrides"].append({
+                            "source": "world_datapack_zip",
                             "path": f"{rel(archive, instance)}!/{ASTERISM_DATAPACK_PATH}",
                             "selected": selected,
                         })
@@ -254,6 +270,72 @@ def iter_text_files(roots: list[Path]):
                 continue
             seen.add(resolved)
             yield path
+
+
+def collect_exact_literal_references(
+    instance: Path,
+    roots: list[tuple[str, Path]],
+    literal: str,
+) -> list[dict[str, Any]]:
+    """Return path/line evidence for one exact literal without retaining source text."""
+    matches: list[dict[str, Any]] = []
+    seen: set[tuple[str, int, str]] = set()
+
+    for source, root in roots:
+        for path in iter_text_files([root]):
+            try:
+                text = path.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            for lineno, line in enumerate(text.splitlines(), start=1):
+                if literal not in line:
+                    continue
+                key = (rel(path, instance), lineno, source)
+                if key in seen:
+                    continue
+                seen.add(key)
+                matches.append({
+                    "source": source,
+                    "path": key[0],
+                    "line": lineno,
+                    "literal": literal,
+                })
+
+    return matches
+
+
+def collect_zip_literal_references(
+    instance: Path,
+    archives: list[tuple[str, Path]],
+    literal: str,
+) -> list[dict[str, Any]]:
+    """Search text-like ZIP entries for one exact literal without retaining entry contents."""
+    matches: list[dict[str, Any]] = []
+
+    for source, archive in archives:
+        if not archive.is_file():
+            continue
+        try:
+            with zipfile.ZipFile(archive) as zf:
+                for name in sorted(zf.namelist()):
+                    if Path(name).suffix.lower() not in TEXT_EXTENSIONS:
+                        continue
+                    try:
+                        text = zf.read(name).decode("utf-8", errors="replace")
+                    except Exception:
+                        continue
+                    for lineno, line in enumerate(text.splitlines(), start=1):
+                        if literal in line:
+                            matches.append({
+                                "source": source,
+                                "path": f"{rel(archive, instance)}!/{name}",
+                                "line": lineno,
+                                "literal": literal,
+                            })
+        except (OSError, zipfile.BadZipFile):
+            continue
+
+    return matches
 
 
 def _find_key_recursive(value: Any, target: str, prefix: tuple[str, ...] = ()) -> list[tuple[str, Any]]:
@@ -402,6 +484,53 @@ def collect_somake(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     }
 
 
+def collect_traveloptics(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    roots: list[tuple[str, Path]] = [
+        ("kubejs_server_scripts", instance / "kubejs" / "server_scripts"),
+        ("kubejs_data", instance / "kubejs" / "data"),
+        ("ftbquests_config", instance / "config" / "ftbquests"),
+        ("ftbquests_defaultconfigs", instance / "defaultconfigs" / "ftbquests"),
+    ]
+    roots.extend(
+        (f"world_datapack:{rel(world, instance)}", world / "datapacks")
+        for world in worlds
+    )
+
+    archives: list[tuple[str, Path]] = []
+    for world in worlds:
+        datapacks = world / "datapacks"
+        if datapacks.is_dir():
+            archives.extend(
+                (f"world_datapack_zip:{rel(world, instance)}", archive)
+                for archive in sorted(datapacks.glob("*.zip"))
+            )
+
+    direct = collect_exact_literal_references(
+        instance,
+        roots,
+        TRAVELOPTICS_BLACKOUT_LITERAL,
+    )
+    zipped = collect_zip_literal_references(
+        instance,
+        archives,
+        TRAVELOPTICS_BLACKOUT_LITERAL,
+    )
+
+    return {
+        "classification_rule": {
+            TRAVELOPTICS_ORIGINAL_SHA1: "ORIGINAL_EXACT",
+            TRAVELOPTICS_PATCH_SHA1: "PATCHED_EXACT",
+            "other": "OTHER_VERIFIED",
+        },
+        "blackout_reference_matches": direct + zipped,
+        "blackout_reference_note": (
+            "A literal match is candidate deployed-route evidence only. "
+            "It does not by itself prove that the referenced script/quest/datapack grants "
+            "traveloptics:blackout in survival."
+        ),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("instance", type=Path, help="Minecraft/modpack instance root containing mods/ and config/")
@@ -428,7 +557,7 @@ def main() -> int:
     worlds = candidate_worlds(instance, [p.expanduser() for p in args.world])
 
     report = {
-        "schema": 1,
+        "schema": 2,
         "collector": "Black Arcana provider catalog deployed evidence",
         "instance_root_redacted": True,
         "worlds_scanned": [rel(w, instance) for w in worlds],
@@ -437,18 +566,13 @@ def main() -> int:
         "gaze": collect_gaze(instance, worlds),
         "not_enough_glyphs": collect_neg(instance, worlds),
         "somake_spells": collect_somake(instance, worlds),
-        "traveloptics": {
-            "classification_rule": {
-                TRAVELOPTICS_ORIGINAL_SHA1: "ORIGINAL_EXACT",
-                TRAVELOPTICS_PATCH_SHA1: "PATCHED_EXACT",
-                "other": "OTHER_VERIFIED",
-            }
-        },
+        "traveloptics": collect_traveloptics(instance, worlds),
         "notes": [
             "This collector is read-only.",
             "Missing files/keys are observations, not proof that provider defaults are active.",
             "defaultconfigs is template evidence and must not override an observed world/serverconfig value.",
-            "No full config payloads are copied into the report; only selected keys and hashes are emitted.",
+            "No full config/script/quest payloads are copied into the report; only selected keys, hashes, and bounded literal-reference locations are emitted.",
+            "A deployed reference to traveloptics:blackout is evidence input, not automatic proof of a survival acquisition route.",
         ],
     }
 

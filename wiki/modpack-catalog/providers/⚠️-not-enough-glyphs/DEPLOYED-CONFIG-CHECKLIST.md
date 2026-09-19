@@ -1,4 +1,4 @@
-# Not Enough Glyphs 4.6.1 — Deployed SERVER Config Checklist
+# Not Enough Glyphs 4.6.2 — Deployed SERVER Config Checklist
 
 Status: `39 SOURCE-ENABLED REGISTRATIONS / DEPLOYED ENABLED STATE UNVERIFIED`
 
@@ -6,7 +6,7 @@ Status: `39 SOURCE-ENABLED REGISTRATIONS / DEPLOYED ENABLED STATE UNVERIFIED`
 
 This checklist turns the remaining Not Enough Glyphs catalog blocker into a finite evidence request.
 
-Exact current-pack NEG source establishes 40 `APIRegistry.registerSpell` registrations. `not_enough_glyphs:momentum` is source-disabled by provider code, leaving **39 source-enabled candidates** before Ars/NeoForge SERVER config.
+Exact current 4.6.2 source-semver pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77` preserves the same `ArsNouveauRegistry.java` Git blob as 4.6.1, so the current-pack matrix remains 40 NEG registration primitives. `not_enough_glyphs:momentum` also retains the same source blob and explicit disabled override, leaving **39 source-enabled candidates** before Ars/NeoForge SERVER config.
 
 Exact Ars Nouveau 5.13.1 config construction, already audited in this provider dossier, maps a registered spell-part identity `<namespace>:<path>` to SERVER config file `<namespace>/<path>.toml`, where `[general].enabled` controls the base spell-part enabled state. Source default `true` is **not** accepted as deployed pack state because SERVER config may be world-overridden.
 
@@ -78,7 +78,7 @@ These registrations are implemented by NEG in the current pack because `toomanyg
 
 ## Ars Scalaes fallback namespace — 1 source-enabled
 
-NEG registers Resize unconditionally under the historical `ars_scalaes` namespace in the audited 4.6.1 source.
+NEG registers Resize unconditionally under the historical `ars_scalaes` namespace in the audited 4.6.2 source.
 
 | Registry identity | Expected SERVER config path | Effective `[general].enabled` |
 |---|---|---|

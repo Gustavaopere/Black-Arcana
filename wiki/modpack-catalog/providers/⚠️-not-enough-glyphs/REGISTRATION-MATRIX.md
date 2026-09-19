@@ -1,6 +1,6 @@
-# Not Enough Glyphs 4.6.1 — Current-Pack Registration Matrix
+# Not Enough Glyphs 4.6.2 — Current-Pack Registration Matrix
 
-Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at source pin `2f0c7b9fcf802c7e85b4ed4d7ed94123bcee398b`, reconciled with the physical modlist.
+Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at current source pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77`, reconciled with sibling physical modlist checkpoint `cd38efb9c1a888c86addace69876400cf8845908`. The registry file Git blob `28c2007999ec6e534b8c5cd2c90b012c81072cff` is identical to the previously audited 4.6.1 pin, so the object-level matrix below is preserved exactly.
 
 ## Totals
 
@@ -81,4 +81,4 @@ The matrix's 39 `source-enabled` rows are **not yet active-pack counted rows**. 
 - base `AbstractSpellPart` defines `[general].enabled = true` as a source default and `isEnabled()` reads that value;
 - NEG `momentum` remains explicitly disabled by its own override.
 
-Because NeoForge SERVER configs can be overridden per world and the deployed server/world config set is not available in authoritative project material, the 39 rows stay `CONDITIONAL`. Source defaults are not substituted for deployed state. Semantic delta: **+0**; strict total: **1249**.
+Because NeoForge SERVER configs can be overridden per world and the deployed server/world config set is not available in authoritative project material, the 39 rows stay `CONDITIONAL`. Source defaults are not substituted for deployed state. Semantic delta remains **+0**; current strict total remains **1344**.

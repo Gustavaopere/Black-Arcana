@@ -1,8 +1,10 @@
-# Not Enough Glyphs 4.6.1 — Runtime Boundaries and Safety Audit
+# Not Enough Glyphs 4.6.2 — Runtime Boundaries and Safety Audit
 
 ## Server/casting boundary
 
 NEG registers Ars spell parts through `APIRegistry.registerSpell` and uses Ars `SpellCasterRegistry`, `AbstractCaster`, `SpellResolver`, mana/cast context and turret behavior maps. It extends this runtime; it does not define a second independent mana/casting engine.
+
+4.6.2 source delta note: exact compare from the prior 4.6.1 pin changes `AbstractEffectFilter.java` and `PropagateUnderfoot.java` but leaves the registration source unchanged. Official 4.6.2 notes identify a rune/filter resolve hotfix and allow Propagate Underfoot to target the vehicle of the entity being resolved on. Those are provider behavior deltas; they do not alter Black Arcana authority or the 40/39 registration matrix.
 
 Black Arcana integration rule: observe/adapt only through a real causal hook. Never replay the provider primitive or debit Ars resources again.
 

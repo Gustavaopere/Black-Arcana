@@ -10,9 +10,10 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 
 - Asterism Arcanum 0.1.0;
 - Gaze 1.1.7.1;
-- Not Enough Glyphs 4.6.1;
+- Not Enough Glyphs 4.6.2;
 - Somake Spells 1.0.9;
-- T.O Magic n' Extras / Traveloptics 4.4.0.1.
+- T.O Magic n' Extras / Traveloptics 4.4.0.1;
+- bounded deployed customization references relevant to those same closure gates.
 
 It does not alter the instance, generate provider configs, enable content, create datapacks, or infer defaults from absent files.
 
@@ -69,7 +70,8 @@ Special comparisons:
 - Traveloptics is classified against:
   - original SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8`;
   - exact patch candidate SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`;
-- Gaze 1.1.7.1 is compared against exact known artifact SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`.
+- Gaze 1.1.7.1 is compared against exact known artifact SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`;
+- Not Enough Glyphs 4.6.2 is compared against exact publisher-release SHA-1 `32eea2c478a346ee7499f6a0db156241116f73e9`.
 
 A missing file is not converted into a replacement identity.
 
@@ -85,9 +87,10 @@ Targets:
 
 - `config/irons_spellbooks_spell_config/asterismarcanum/astral_gateway.json`;
 - `config/irons_spellbooks_spell_config/global_config.json`;
-- world datapack override `data/asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json`, including direct files and ZIP datapacks.
+- world datapack override `data/asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json`, including direct files and ZIP datapacks;
+- KubeJS datapack override `kubejs/data/asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json`.
 
-Absence is reported as absence. The collector does **not** substitute Iron's defaults.
+Absence is reported as absence. The collector does **not** substitute Iron's defaults and does not claim to enumerate every possible third-party datapack loader.
 
 ### Gaze
 
@@ -141,7 +144,17 @@ Hashes the known original/patched filenames and classifies an observed hash as:
 - `PATCHED_EXACT`;
 - `OTHER_VERIFIED`.
 
-This closes physical disposition only when the collected file is the actual installed JAR. It does not prove successful NeoForge registry initialization or `traveloptics:blackout` survival reachability.
+It also searches only for the exact literal `traveloptics:blackout` in bounded deployed customization surfaces:
+
+- `kubejs/server_scripts/`;
+- `kubejs/data/`;
+- `config/ftbquests/`;
+- `defaultconfigs/ftbquests/`;
+- discovered/explicit world `datapacks/`, including text-like entries inside ZIP datapacks.
+
+The JSON retains only source category, relative path, line number and the exact literal. It does **not** copy script bodies, quest prose or datapack payloads.
+
+This closes physical disposition only when the collected file is the actual installed JAR. A Blackout literal match is only a **route candidate**; it must still be inspected against the Traveloptics checklist to prove an actual current-pack survival grant/acquisition mechanism.
 
 ## Privacy / minimization
 
@@ -150,13 +163,16 @@ The collector deliberately avoids:
 - usernames;
 - absolute instance paths in the JSON;
 - full config dumps;
+- script bodies;
+- quest prose;
+- datapack payload bodies;
 - player data;
 - logs;
 - saves;
 - authentication/secrets;
 - unrelated mod configuration.
 
-Only relative paths, selected values and file hashes are emitted.
+Only relative paths, selected values, file hashes and bounded exact-literal locations are emitted.
 
 Review the JSON before attaching it anywhere.
 
@@ -181,6 +197,6 @@ Do not convert missing files into source-default values unless the actual runtim
 - Gaze: effective `disableGazeRites`;
 - NEG: effective `[general].enabled` for 39 candidates;
 - Somake: physical 1.0.9 equality plus deployed `enableSpellLockSystem`;
-- Traveloptics: original-vs-patched physical disposition.
+- Traveloptics: original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references that may point to a pack-specific acquisition route.
 
-The collector does not solve Somake's exact 1.0.9 registry by itself and does not prove Traveloptics startup/Blackout/Aqua behavior.
+The collector does not solve Somake's exact 1.0.9 registry by itself. It also does not prove Traveloptics startup, Blackout reachability or Aqua behavior merely because a literal reference is found.

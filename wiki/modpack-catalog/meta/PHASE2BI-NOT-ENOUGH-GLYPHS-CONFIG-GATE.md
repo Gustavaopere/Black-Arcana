@@ -1,6 +1,8 @@
-# Phase 2BI — Not Enough Glyphs 4.6.1 config-authority checkpoint
+# Phase 2BI — Not Enough Glyphs 4.6.1 config-authority checkpoint (historical)
 
 Status: `CONFIG AUTHORITY CLOSED / DEPLOYED VALUES MISSING / SEMANTIC DELTA +0`
+
+Current-authority note: the physical provider line is now Not Enough Glyphs 4.6.2. The 4.6.1 physical/JAR fields below are historical. Current source revalidation at `Alexthw46/NotEnoughGlyphs@45604dd18d9d2e3e7ca80a2c616b3309f42aca77` proves the registration and Momentum source blobs are unchanged, so the 40/39 matrix and this SERVER-config gate remain applicable to 4.6.2. See `../providers/⚠️-not-enough-glyphs/CURRENT-4.6.2-SOURCE-REVALIDATION.md`.
 
 Base audited: `main@75558c92150506cce9f9b98b8f1ae29e4c128e62`.
 
