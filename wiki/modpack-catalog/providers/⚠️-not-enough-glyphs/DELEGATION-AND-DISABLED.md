@@ -1,4 +1,4 @@
-# Not Enough Glyphs 4.6.1 — Delegation, Repacking and Disabled Content
+# Not Enough Glyphs 4.6.2 — Delegation, Repacking and Disabled Content
 
 ## Why this file exists
 
