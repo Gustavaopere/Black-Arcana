@@ -7,8 +7,10 @@ Status: `⚠️ CURRENT PHYSICAL 4.6.2 / EXACT SOURCE-SEMVER PIN / REGISTRATION 
 - Mod id: `not_enough_glyphs`
 - Physical JAR: `not_enough_glyphs-1.21.1-4.6.2.jar`
 - Runtime version: `4.6.2`
-- Physical SHA-1: **not yet preserved for the current 4.6.2 pack artifact**
-- Embedded Sauce: source dependency line `0.0.50.97`; exact JarJar payload in the physical 4.6.2 JAR not yet re-inspected
+- Physical pack SHA-1: **not yet preserved for the current 4.6.2 installed artifact**
+- Exact publisher-release File `8880291` SHA-1: `32eea2c478a346ee7499f6a0db156241116f73e9`
+- Exact publisher-release SHA-256: `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12`
+- Embedded Sauce in exact publisher release: `sauce-1.21.1-0.0.50.97.jar` (`artifactVersion=0.0.50.97`); byte equality to the installed physical JAR still requires the installed hash
 - Loader/game: NeoForge 1.21.1
 - Phase 2 class: `ARS GLYPH / FALLBACK-COMPAT / CAST-DEVICE / PERK PROVIDER`
 - Exact source-semver pin: `Alexthw46/NotEnoughGlyphs@45604dd18d9d2e3e7ca80a2c616b3309f42aca77`
@@ -18,6 +20,8 @@ The current source commit declares `mod_version=4.6.2`, Minecraft `1.21.1` and S
 ## Current 4.6.2 source-delta reconciliation
 
 See [`SOURCE-4.6.2-DELTA-AUDIT.md`](SOURCE-4.6.2-DELTA-AUDIT.md).
+
+A dedicated metadata-only clean-room audit of exact File `8880291` also closed the publisher-release hashes and embedded Sauce JarJar identity. Audit HEAD `af964ddba97038fd1a8328eb0af3aea46a6211eb`, run `35445876400`, artifact `10585193946`. This is release evidence, not installed-JAR byte-equality proof.
 
 The exact 4.6.2 source pin is three commits ahead of the historical 4.6.1 pin. The registration source `ArsNouveauRegistry.java` has identical Git blob SHA `28c2007999ec6e534b8c5cd2c90b012c81072cff` at both pins, and `EffectMomentum.java` likewise remains blob `7dd4f7ebe06cbadd282fddb1a6ca603013d2af2a`. Therefore the already-audited **40 registrations / 39 source-enabled candidates** carry forward to 4.6.2 without re-enumeration.
 
