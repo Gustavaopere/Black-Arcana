@@ -1,4 +1,6 @@
-# Not Enough Glyphs 4.6.1 — Spell Binder and Perks
+# Not Enough Glyphs 4.6.2 — Spell Binder and Perks
+
+Current-source note: the official 4.6.1 → 4.6.2 compare does not modify Binder/perk source files. The conclusions below therefore carry forward to 4.6.2; only the separately documented filter/Propagate Underfoot/Sauce delta changed in this release.
 
 ## Binder storage vs caster contract
 
