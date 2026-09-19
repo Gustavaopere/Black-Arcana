@@ -16,6 +16,34 @@ Latest sibling modlist authority checked at `Gustavaopere/neoforge-rpg-skilltree
 
 The sibling dossier contains one stale internal line that still says `Runtime: 4.6.1`; it is contradicted by the dossier's physical JAR/version header and its explicit 4.6.2 re-audit/update section. That stale line is not used as current authority.
 
+## Exact publisher-release resource audit
+
+Temporary non-merge evidence checkpoint:
+
+- audit branch: `audit/not-enough-glyphs-4.6.2-resource-2026-09-19`;
+- exact audit HEAD: `af964ddba97038fd1a8328eb0af3aea46a6211eb`;
+- workflow run: `35445876400` — SUCCESS;
+- audit job: `105904583827`;
+- text artifact: `10585193946`;
+- artifact digest: `sha256:b6cba836cb7902908132159df0886d80c701c23fe0f6066c93dd28100f35dab6`.
+
+Exact CurseForge File `1023517 / 8880291`:
+
+- release SHA-1: `32eea2c478a346ee7499f6a0db156241116f73e9`;
+- release SHA-256: `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12`;
+- internal mod id metadata: `not_enough_glyphs`;
+- metadata license: `LGPL v2.1+`;
+- required Ars Nouveau range: `[1.21.1-5.12,)`;
+- optional Ars Elemental range: `[0.7.9,)`;
+- exact embedded JarJar: `META-INF/jarjar/sauce-1.21.1-0.0.50.97.jar`;
+- JarJar group/artifact: `com.alexthw.sauce:sauce-1.21.1`;
+- JarJar range: `[0.0.50,)`;
+- JarJar artifactVersion: `0.0.50.97`.
+
+The audit also confirms the release JAR contains class paths for `ArsNouveauRegistry` and `EffectMomentum`, but it does not parse their bytecode. Source semantics remain grounded in the exact public 4.6.2 source pin below.
+
+This closes the publisher-release hash and embedded-Sauce identity. It does **not** prove byte equality to the user's installed physical JAR because no current physical-pack SHA-1 has been captured.
+
 ## Exact public source pin
 
 Official source repository:
