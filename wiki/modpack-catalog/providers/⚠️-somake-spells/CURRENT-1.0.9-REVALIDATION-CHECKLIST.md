@@ -71,7 +71,7 @@ Official file page:
 
 `https://www.curseforge.com/minecraft/mc-mods/somake-spells-irons-spells-addon/files/8867079`
 
-This closes the **broad provider-presence condition** for the Legendary Monsters content tranche at publisher level. The current pack satisfies that broad condition because `legendary_monsters` is physically present.
+This closes the **broad provider-presence condition** for the Legendary Monsters content tranche at publisher level. The latest explicit provider-specific physical checkpoint preserved for this pack identifies `legendary_monsters` 2.2.2 as installed, so that broad condition is satisfied at that checkpoint. The sibling's current reorganized certification index is still partial and has not yet reached that physical entry; its omission from that partial index is therefore not treated as evidence of absence.
 
 It does **not** close the exact 1.0.9 spell registry or map every named/localized Spirit spell to a specific conditional registration. The changelog names a Spirit/Red Soul feature tranche, while the resource-only audit exposes additional localization roots not fully enumerated by the changelog; therefore object-level registry identity and exact predicates remain fail-closed.
 
