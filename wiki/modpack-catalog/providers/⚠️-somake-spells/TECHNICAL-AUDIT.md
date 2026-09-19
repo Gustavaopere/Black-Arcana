@@ -1,5 +1,7 @@
 # Somake Spells 1.0.8-fix — auditoria técnica/proveniência
 
+> **SUPERSEDED CURRENT AUTHORITY.** This file preserves the exact 1.0.8-fix technical checkpoint. The physical provider line is now 1.0.9; use `CURRENT-1.0.9-REVALIDATION-CHECKLIST.md` and `EXACT-1.0.9-RESOURCE-AUDIT.md` for current-line authority. Any `current` wording below is historical to the 1.0.8-fix audit unless explicitly stated otherwise.
+
 ## Artefato instalado
 
 - JAR: `somakespells-1.0.8-1.21.1-fix.jar`
@@ -34,7 +36,7 @@ The exact File ID `8417850` was materialized from Curse Maven and required to ma
 - 61 registrations are unconditional;
 - `blessed_connection`, `guardian_connection`, `cursed_connection` are gated by `ModList.isLoaded("mowziesmobs")`;
 - `mirror_strike`, `spirit_empowerment`, `symmetry_empowerment` are gated by `MagicFromTheEastCompat.isLoaded()`, which exactly calls `ModList.isLoaded("iss_magicfromtheeast")`;
-- both optional mod IDs are present in the current physical pack, therefore 67/67 registry identities are active for this provider set.
+- at the historical 1.0.8-fix physical checkpoint, both optional mod IDs were present, so 67/67 registry identities were active for that artifact/provider set. This does not establish the 1.0.9 registry or predicates.
 
 The same exact artifact registers `Config.SPEC` as `ModConfig.Type.COMMON` at `somakespells/general/common.toml`. `enableSpellLockSystem` has code default `false`; when disabled, `PlayerSpellMastery.getUnlockedLevel()` returns `100`. If enabled, Somake's pre-cast path can cancel spell levels above provider mastery, and `/somake` command registration is gated by the same config with command permission level 2. The actual deployed COMMON config file/value is not available in the repository or supplied project files.
 
@@ -136,4 +138,4 @@ Antes de qualquer adapter Somake-specific:
 
 ## Estado
 
-`EXACT HASH-MATCHED ARTIFACT / 67 CURRENT REGISTRY IDENTITIES CLOSED / EFFECTIVE COMMON CONFIG + SURVIVAL REACHABILITY UNVERIFIED / SEMANTIC CONDITIONAL +0 / T.O AQUA COEXISTENCE QA-BLOCKED / ARR CLEAN-ROOM / FAIL-CLOSED`.
+`HISTORICAL 1.0.8-FIX EXACT HASH-MATCHED ARTIFACT / 67 HISTORICAL REGISTRY IDENTITIES CLOSED FOR THAT ARTIFACT / CURRENT 1.0.9 REGISTRY NOT CLOSED / ARR CLEAN-ROOM / FAIL-CLOSED`.
