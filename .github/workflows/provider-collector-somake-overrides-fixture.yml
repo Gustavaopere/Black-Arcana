@@ -1,0 +1,144 @@
+name: Provider Collector Somake Override Fixture NON-MERGE
+
+on:
+  push:
+    branches:
+      - audit/provider-collector-somake-overrides-fixture-2026-09-19
+
+permissions:
+  contents: read
+
+jobs:
+  fixture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build synthetic deployed-evidence fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/provider-fixture"
+          mkdir -p "$ROOT/config/irons_spellbooks_spell_config/somakespells"
+          mkdir -p "$ROOT/config/irons_spellbooks_spell_config"
+          mkdir -p "$ROOT/config/somakespells/general"
+          mkdir -p "$ROOT/kubejs/data/somakespells/irons_spellbooks_spell_config"
+          mkdir -p "$ROOT/world/datapacks/direct/data/somakespells/irons_spellbooks_spell_config"
+          mkdir -p "$ROOT/world/datapacks"
+
+          cat > "$ROOT/config/irons_spellbooks_spell_config/somakespells/local_probe.json" <<'JSON'
+          {
+            "enabled": false,
+            "school": "somakespells:aqua",
+            "allow_crafting": false,
+            "secret_payload": "DO_NOT_COPY_LOCAL"
+          }
+          JSON
+
+          cat > "$ROOT/config/irons_spellbooks_spell_config/global_config.json" <<'JSON'
+          {
+            "enabled": true,
+            "secret_payload": "DO_NOT_COPY_GLOBAL"
+          }
+          JSON
+
+          cat > "$ROOT/config/somakespells/general/common.toml" <<'TOML'
+          enableSpellLockSystem = true
+          unrelatedSecret = "DO_NOT_COPY_TOML"
+          TOML
+
+          cat > "$ROOT/kubejs/data/somakespells/irons_spellbooks_spell_config/kube_probe.json" <<'JSON'
+          {
+            "irons_spellbooks:enabled": true,
+            "irons_spellbooks:allow_crafting": false,
+            "secret_payload": "DO_NOT_COPY_KUBE"
+          }
+          JSON
+
+          cat > "$ROOT/world/datapacks/direct/data/somakespells/irons_spellbooks_spell_config/world_probe.json" <<'JSON'
+          {
+            "school": "somakespells:aqua",
+            "allow_crafting": true,
+            "secret_payload": "DO_NOT_COPY_WORLD"
+          }
+          JSON
+
+          ROOT="$ROOT" python3 - <<'PY'
+          import json
+          import os
+          import zipfile
+          from pathlib import Path
+
+          root = Path(os.environ["ROOT"])
+          archive = root / "world" / "datapacks" / "packed.zip"
+          with zipfile.ZipFile(archive, "w") as zf:
+              zf.writestr(
+                  "data/somakespells/irons_spellbooks_spell_config/zip_probe.json",
+                  json.dumps({
+                      "enabled": False,
+                      "school": "somakespells:aqua",
+                      "secret_payload": "DO_NOT_COPY_ZIP",
+                  }),
+              )
+          PY
+
+      - name: Run collector
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile docs/qa/provider-catalog-deployed-evidence-collector.py
+          python3 docs/qa/provider-catalog-deployed-evidence-collector.py             "$RUNNER_TEMP/provider-fixture"             --output "$RUNNER_TEMP/provider-evidence.json"
+          cat "$RUNNER_TEMP/provider-evidence.json"
+
+      - name: Assert bounded Somake evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          REPORT="$RUNNER_TEMP/provider-evidence.json"
+          REPORT="$REPORT" python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(Path(os.environ["REPORT"]).read_text())
+          somake = report["somake_spells"]
+
+          lock = somake["enableSpellLockSystem_matches"]
+          assert len(lock) == 1, lock
+          assert lock[0]["value"] is True, lock
+
+          irons = somake["irons_spell_config_evidence"]
+          local = irons["local_spell_configs"]
+          assert len(local) == 1, local
+          assert local[0]["path"].endswith("config/irons_spellbooks_spell_config/somakespells/local_probe.json")
+          assert local[0]["selected"] == {
+              "irons_spellbooks:enabled": False,
+              "irons_spellbooks:school": "somakespells:aqua",
+              "irons_spellbooks:allow_crafting": False,
+          }, local
+
+          global_cfg = irons["global_config"]
+          assert global_cfg is not None
+          assert global_cfg["selected"] == {"irons_spellbooks:enabled": True}, global_cfg
+
+          overrides = irons["datapack_overrides"]
+          sources = {row.get("source") for row in overrides}
+          assert {"kubejs_data", "world_datapack", "world_datapack_zip"} <= sources, overrides
+
+          paths = {row.get("path") for row in overrides}
+          assert any(p and p.endswith("kube_probe.json") for p in paths), paths
+          assert any(p and p.endswith("world_probe.json") for p in paths), paths
+          assert any(p and p.endswith("packed.zip!/data/somakespells/irons_spellbooks_spell_config/zip_probe.json") for p in paths), paths
+
+          serialized = json.dumps(report)
+          assert "DO_NOT_COPY_LOCAL" not in serialized
+          assert "DO_NOT_COPY_GLOBAL" not in serialized
+          assert "DO_NOT_COPY_KUBE" not in serialized
+          assert "DO_NOT_COPY_WORLD" not in serialized
+          assert "DO_NOT_COPY_ZIP" not in serialized
+          assert "DO_NOT_COPY_TOML" not in serialized
+
+          print("Somake Iron's override fixture: PASS")
+          PY
