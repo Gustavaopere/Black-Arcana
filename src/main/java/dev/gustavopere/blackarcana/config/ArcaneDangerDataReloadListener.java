@@ -31,15 +31,26 @@ public final class ArcaneDangerDataReloadListener extends SimpleJsonResourceRelo
         "corruptionCoefficient", "strainCoefficient", "damageLeaseTicks", "maxDamageInstances",
         "minimumArcaneResistance", "recommendedArcaneResistance", "emergencyProtectionAllowed");
 
-    public ArcaneDangerDataReloadListener() { super(GSON, DIRECTORY); }
+    private final SpellIdMigrations migrations;
 
-    public static void register(IEventBus gameBus) {
-        Objects.requireNonNull(gameBus, "gameBus");
-        gameBus.addListener(ArcaneDangerDataReloadListener::onAddReloadListeners);
+    public ArcaneDangerDataReloadListener() {
+        this(new SpellIdMigrations(Map.of(), Map.of()));
     }
 
-    private static void onAddReloadListeners(AddReloadListenerEvent event) {
-        event.addListener(new ArcaneDangerDataReloadListener());
+    public ArcaneDangerDataReloadListener(SpellIdMigrations migrations) {
+        super(GSON, DIRECTORY);
+        this.migrations = Objects.requireNonNull(migrations, "migrations");
+    }
+
+    public static void register(IEventBus gameBus) {
+        register(gameBus, new SpellIdMigrations(Map.of(), Map.of()));
+    }
+
+    public static void register(IEventBus gameBus, SpellIdMigrations migrations) {
+        Objects.requireNonNull(gameBus, "gameBus");
+        SpellIdMigrations checked = Objects.requireNonNull(migrations, "migrations");
+        gameBus.addListener((AddReloadListenerEvent event) ->
+            event.addListener(new ArcaneDangerDataReloadListener(checked)));
     }
 
     @Override
@@ -57,7 +68,42 @@ public final class ArcaneDangerDataReloadListener extends SimpleJsonResourceRelo
                     throw new JsonParseException("duplicate danger profile: " + id.canonical());
                 }
             });
-        HazardPreflightSyncService.reload(parsed);
+        HazardPreflightSyncService.reload(migrateDefinitions(parsed, migrations));
+    }
+
+    static Map<ArcanaSpellId, ArcaneDangerDataDefinition> migrateDefinitions(
+        Map<ArcanaSpellId, ArcaneDangerDataDefinition> definitions,
+        SpellIdMigrations migrations
+    ) {
+        Objects.requireNonNull(definitions, "definitions");
+        Objects.requireNonNull(migrations, "migrations");
+        if (definitions.size() > ArcaneDangerProfileRegistry.MAX_PROFILES) {
+            throw new JsonParseException("too many Black Arcana danger profiles: " + definitions.size());
+        }
+
+        LinkedHashMap<ArcanaSpellId, ArcaneDangerDataDefinition> migrated = new LinkedHashMap<>();
+        definitions.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey(Comparator.comparing(ArcanaSpellId::canonical)))
+            .forEach(entry -> {
+                ArcanaSpellId sourceId = Objects.requireNonNull(entry.getKey(), "danger profile id");
+                ArcaneDangerDataDefinition source = Objects.requireNonNull(entry.getValue(), "danger profile definition");
+                ArcanaSpellId targetId = migrations.resolve(sourceId).orElse(null);
+                if (targetId == null) return;
+
+                ArcaneDangerDataDefinition target = sourceId.equals(targetId)
+                    ? source
+                    : source.withId(targetId);
+                var errors = target.validate();
+                if (!errors.isEmpty()) {
+                    throw new JsonParseException(
+                        "invalid migrated danger profile " + targetId.canonical() + ": " + String.join("; ", errors));
+                }
+                if (migrated.putIfAbsent(targetId, target) != null) {
+                    throw new JsonParseException(
+                        "danger profile migration collision at " + targetId.canonical());
+                }
+            });
+        return Map.copyOf(migrated);
     }
 
     static ArcaneDangerDataDefinition parseDefinition(ResourceLocation resourceId, JsonElement element) {
