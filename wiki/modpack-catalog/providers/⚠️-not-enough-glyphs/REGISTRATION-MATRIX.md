@@ -1,6 +1,6 @@
-# Not Enough Glyphs 4.6.1 — Current-Pack Registration Matrix
+# Not Enough Glyphs 4.6.2 — Current-Pack Registration Matrix
 
-Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at source pin `2f0c7b9fcf802c7e85b4ed4d7ed94123bcee398b`, reconciled with the physical modlist.
+Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at exact 4.6.2 source pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77`, reconciled with the current physical modlist. The registration file is Git blob `28c2007999ec6e534b8c5cd2c90b012c81072cff` at both the historical 4.6.1 and current 4.6.2 pins, so the matrix carries forward unchanged.
 
 ## Totals
 
