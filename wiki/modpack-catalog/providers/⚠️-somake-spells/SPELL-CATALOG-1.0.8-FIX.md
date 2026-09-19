@@ -1,8 +1,8 @@
-# Somake Spells 1.0.8-fix — catálogo canônico do registry atual
+# Somake Spells 1.0.8-fix — catálogo histórico do registry daquele artefato
 
 ## Escopo
 
-Este arquivo é o ledger objeto-a-objeto das identidades de spell registradas pelo artefato físico exato `somakespells-1.0.8-1.21.1-fix.jar` (SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`).
+Este arquivo preserva o ledger objeto-a-objeto das identidades de spell registradas pelo artefato físico histórico exato `somakespells-1.0.8-1.21.1-fix.jar` (SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`). A linha física atual é 1.0.9; este arquivo não representa o registry corrente.
 
 O artefato hash-matched fecha **67/67 identidades de registry**. Isso não fecha automaticamente escola, valores, aquisição individual ou reachability em survival. O provider continua `⚠️` porque o valor implantado de `enableSpellLockSystem` e a reachability survival objeto-a-objeto não estão demonstrados pela evidência disponível.
 
@@ -12,9 +12,9 @@ Estado por objeto neste ledger:
 - `REACHABILITY_CONDITIONAL`: ainda não promovida a objeto semanticamente alcançável no denominador estrito;
 - gates opcionais são registrados apenas quando o predicado foi auditado e a dependência física foi confirmada.
 
-## Registry atual
+## Registry histórico 1.0.8-fix
 
-| # | Registry ID | Gate de registro no pack atual | Estado |
+| # | Registry ID | Gate de registro no checkpoint 1.0.8-fix | Estado |
 |---:|---|---|---|
 | 1 | `combustion` | unconditional in audited registry initializer | `EXACT_REGISTRY / REACHABILITY_CONDITIONAL` |
 | 2 | `ritual_flame` | unconditional in audited registry initializer | `EXACT_REGISTRY / REACHABILITY_CONDITIONAL` |
@@ -104,11 +104,11 @@ Os seguintes IDs têm correspondência nominal direta com nomes/semânticas publ
 - `water_control` — Water Control;
 - `firestorm_vortex` — Firestorm Vortex.
 
-A correspondência acima não autoriza preencher automaticamente mana, cooldown, nível, raridade, dano, duração, alcance ou escola atual quando esses campos não estão fechados por evidência da versão exata.
+A correspondência acima não autoriza preencher automaticamente mana, cooldown, nível, raridade, dano, duração, alcance ou escola, nem transportá-los para 1.0.9 sem evidência da versão corrente.
 
 ## Divergências históricas preservadas
 
-O artefato exato 1.0.8-fix contém `tsunami`, `tidal_grasp` e `tidal_dash` como identidades de registry. Changelogs históricos haviam descrito Tsunami como removido e Tidal Grasp/Tidal Dash como renomeados. Para presença no runtime atual, a evidência do artefato exato prevalece; o histórico permanece útil para explicar nomenclatura, mas não pode remover essas identidades do catálogo atual.
+O artefato exato 1.0.8-fix contém `tsunami`, `tidal_grasp` e `tidal_dash` como identidades de registry. Changelogs históricos haviam descrito Tsunami como removido e Tidal Grasp/Tidal Dash como renomeados. Para o checkpoint 1.0.8-fix, a evidência do artefato exato prevalece sobre changelogs históricos. Isso não estabelece presença em 1.0.9; o histórico permanece útil para explicar nomenclatura do artefato antigo.
 
 ## Gates opcionais fechados
 
@@ -117,7 +117,7 @@ Seis registros dependem de providers opcionais, e os predicados exatos foram aud
 - `blessed_connection`, `guardian_connection`, `cursed_connection` exigem `mowziesmobs`;
 - `mirror_strike`, `spirit_empowerment`, `symmetry_empowerment` exigem `iss_magicfromtheeast`.
 
-Ambos os mod IDs estão presentes na modlist física auditada, portanto os seis fazem parte das **67/67 identidades registradas no pack atual**.
+Ambos os mod IDs estavam presentes na modlist física auditada naquele checkpoint, portanto os seis faziam parte das **67/67 identidades registradas para o artefato 1.0.8-fix sob aquele provider set**. Isso não fecha os predicates nem o registry de 1.0.9.
 
 ## O que permanece desconhecido
 
