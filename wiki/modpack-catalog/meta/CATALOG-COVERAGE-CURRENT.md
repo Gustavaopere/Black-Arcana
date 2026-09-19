@@ -286,7 +286,7 @@ Stage 07.07 Borrowed Sight must not accept FamiliarsLib entities by thematic inf
 
 Examples remain:
 
-- `not_enough_glyphs` — 39 source-enabled glyph registrations remain config-conditional because deployed SERVER overrides are unavailable;
+- `not_enough_glyphs` — current physical line is 4.6.2; exact 4.6.2 source preserves the 4.6.1 registration and Momentum blobs byte-for-byte, so the existing 40-registration / 39-source-enabled matrix remains current. Those 39 candidates remain config-conditional because deployed SERVER overrides are unavailable;
 - `somakespells` — current physical line is 1.0.9; the exact 1.0.8-fix 67-ID registry audit is historical only. Exact release/resource evidence for 1.0.9 is bounded, but physical byte equality, current registry, optional registration gates and survival/config reachability remain open;
 - `gaze` — exact registry identity is closed, but 26 Spirit Rites remain conditional on the unavailable deployed COMMON `disableGazeRites` value.
 

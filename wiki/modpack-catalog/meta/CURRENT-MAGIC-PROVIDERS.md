@@ -24,6 +24,16 @@ O audit clean-room resource-only da release exata 1.0.9 (CurseForge file `886707
 
 Consequência canônica: Somake continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O checkpoint Phase 2BF de 1.0.8-fix abaixo permanece histórico e não descreve o registry corrente.
 
+## Provider freshness override — Not Enough Glyphs 4.6.2
+
+A modlist sibling atual, verificada em `neoforge-rpg-skilltree@64ce655d5d42a7ae39fc2c077b93b612ce88afbf`, identifica `not_enough_glyphs-1.21.1-4.6.2.jar` / mod id `not_enough_glyphs` / runtime `4.6.2` como a linha física instalada. Isso supersede apenas a antiga afirmação física 4.6.1; o snapshot global de 595 entradas acima continua sendo checkpoint histórico e não é silenciosamente renomeado.
+
+A release oficial atual é CurseForge project/file `1023517 / 8880291`. O audit exato retido fecha SHA-1 de release `32eea2c478a346ee7499f6a0db156241116f73e9`, SHA-256 `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12` e Sauce JarJar `0.0.50.97`. O hash independente do JAR físico instalado ainda não está preservado, então igualdade byte-for-byte com a release não é inventada.
+
+O source oficial `Alexthw46/NotEnoughGlyphs@45604dd18d9d2e3e7ca80a2c616b3309f42aca77` declara `mod_version=4.6.2`. Comparado ao pin histórico 4.6.1, `ArsNouveauRegistry.java` permanece blob `28c2007999ec6e534b8c5cd2c90b012c81072cff` e `EffectMomentum.java` permanece blob `7dd4f7ebe06cbadd282fddb1a6ca603013d2af2a`, ainda com `isEnabled() = false`. O conjunto físico atual mantém Ars Elemental e Ars Controle presentes, enquanto Too Many Glyphs, Ars Omega e Ars Trinkets permanecem ausentes da modlist. Portanto a matriz corrente continua **40 registrations / 39 source-enabled / Momentum source-disabled**.
+
+Consequência canônica: Not Enough Glyphs continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O blocker não é mais versão/registry; é exclusivamente a ausência dos valores efetivos de SERVER config `[general].enabled` para os 39 candidatos. Os totais canônicos permanecem **1344** objetos semânticos mínimos e **68/100** componentes técnicos.
+
 ## Freshness histórica 2026-09-07
 
 O checkpoint de 2026-09-07 registrou updates como:

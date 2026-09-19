@@ -1,5 +1,7 @@
 # Capability Matrix Delta — Not Enough Glyphs 4.6.1
 
+> Historical inventory checkpoint with current 4.6.2 override. The current physical line is `not_enough_glyphs-1.21.1-4.6.2.jar`. Exact 4.6.2 source pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77` preserves `ArsNouveauRegistry.java` and `EffectMomentum.java` byte-for-byte from the audited 4.6.1 source pin, so this capability inventory remains structurally valid. The 4.6.2 filter/rune hotfix, Propagate Underfoot vehicle targeting and Sauce `0.0.50.97` update are runtime/dependency deltas, not capability-registration additions.
+
 Phase 2AF closes the current-pack source-level capability inventory for NEG. It improves deduplication evidence only; Phase 3 remains blocked.
 
 | Capability family | Current NEG/provider evidence | Authority | Black Arcana disposition |
