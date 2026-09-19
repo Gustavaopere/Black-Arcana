@@ -42,7 +42,7 @@ If a manual/provider failure appears to require weakening one of these contracts
 Read before beginning the campaign:
 
 - `plans/05a-arcane-danger/README.md`
-- `plans/05a-arcane-danger/01-arcane-danger-model.md`
+- `plans/05a-arcane-danger/✅-01-arcane-danger-model.md`
 - `plans/05a-arcane-danger/02-arcane-resistance.md`
 - `plans/05a-arcane-danger/03-corruption-resistance.md`
 - `plans/05a-arcane-danger/04-arcane-strain.md`
