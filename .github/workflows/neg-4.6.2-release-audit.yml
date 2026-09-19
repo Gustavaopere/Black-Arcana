@@ -1,0 +1,80 @@
+name: NEG 4.6.2 Exact Release Audit
+
+on:
+  push:
+    branches:
+      - audit/not-enough-glyphs-4.6.2-release-2026-09-19
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download exact CurseForge release
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://www.cursemaven.com/curse/maven/not-enough-glyphs-1023517/8880291/not-enough-glyphs-1023517-8880291.jar'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 180 "$URL" -o neg.jar
+          mkdir -p audit
+          {
+            echo 'Not Enough Glyphs 4.6.2 exact release audit'
+            echo 'project_id=1023517'
+            echo 'file_id=8880291'
+            echo 'filename=not_enough_glyphs-1.21.1-4.6.2.jar'
+            echo "release_sha1=$(sha1sum neg.jar | awk '{print $1}')"
+            echo "release_sha256=$(sha256sum neg.jar | awk '{print $1}')"
+            echo
+            echo '== metadata paths =='
+            jar tf neg.jar | grep -E '(^|/)(neoforge\.mods\.toml|mods\.toml|jarjar/metadata\.json|MANIFEST\.MF)$' | sort || true
+            echo
+            echo '== top-level embedded jars =='
+            jar tf neg.jar | grep '^META-INF/jarjar/.*\.jar$' | sort || true
+            echo
+            echo '== aggregate counts =='
+            printf 'class_count='
+            jar tf neg.jar | grep -c '\.class$' || true
+            printf 'data_json_count='
+            jar tf neg.jar | grep '^data/' | grep -c '\.json$' || true
+          } > audit/report.txt
+
+          python3 - <<'PY'
+          import json, zipfile
+          from pathlib import Path
+          z=zipfile.ZipFile('neg.jar')
+          names=set(z.namelist())
+          out=Path('audit/report.txt')
+          with out.open('a',encoding='utf-8') as f:
+              f.write('\n== mod metadata ==\n')
+              for path in ('META-INF/neoforge.mods.toml','META-INF/mods.toml'):
+                  if path in names:
+                      txt=z.read(path).decode('utf-8','replace')
+                      for line in txt.splitlines():
+                          s=line.strip()
+                          if s.startswith(('modId','version','displayName','license','type','ordering','side','versionRange')):
+                              f.write(s+'\n')
+              f.write('\n== jarjar metadata summary ==\n')
+              path='META-INF/jarjar/metadata.json'
+              if path in names:
+                  data=json.loads(z.read(path).decode('utf-8'))
+                  for jar in data.get('jars',[]):
+                      ident=jar.get('identifier',{})
+                      ver=jar.get('version',{})
+                      f.write('jarjar '+str(ident.get('group',''))+':'+str(ident.get('artifact',''))+' '+str(ver.get('artifactVersion',''))+'\n')
+          PY
+
+          cat audit/report.txt
+
+      - name: Upload text evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: neg-4.6.2-exact-release-audit
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
