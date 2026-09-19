@@ -24,6 +24,14 @@ O audit clean-room resource-only da release exata 1.0.9 (CurseForge file `886707
 
 Consequência canônica: Somake continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O checkpoint Phase 2BF de 1.0.8-fix abaixo permanece histórico e não descreve o registry corrente.
 
+## Provider freshness override — Not Enough Glyphs 4.6.2
+
+The sibling modlist currently checked at `neoforge-rpg-skilltree@cd38efb9c1a888c86addace69876400cf8845908` identifies `not_enough_glyphs-1.21.1-4.6.2.jar` / mod id `not_enough_glyphs` / version line `4.6.2` as the installed provider. This supersedes only the older 4.6.1 physical-line claim; the global 595-entry snapshot above remains a historical checkpoint and is not silently relabeled.
+
+Exact official source pin `Alexthw46/NotEnoughGlyphs@45604dd18d9d2e3e7ca80a2c616b3309f42aca77` declares `mod_version=4.6.2`, Minecraft 1.21.1 and Sauce `0.0.50.97`. Compared with the historical 4.6.1 pin `2f0c7b9fcf802c7e85b4ed4d7ed94123bcee398b`, the registration source `ArsNouveauRegistry.java` remains identical blob `28c2007999ec6e534b8c5cd2c90b012c81072cff`, and `EffectMomentum.java` remains identical blob `7dd4f7ebe06cbadd282fddb1a6ca603013d2af2a`.
+
+Canonical consequence: the existing **40 registrations / 39 source-enabled candidates / Momentum source-disabled** matrix remains valid for 4.6.2. The provider still stays **⚠️ parcial/condicionado / +0 strict / sem ponto de componente** because the effective deployed Ars SERVER `[general].enabled` values are unavailable. The 4.6.2 filter/rune and Propagate Underfoot changes are runtime regression concerns, not registration-count changes.
+
 ## Freshness histórica 2026-09-07
 
 O checkpoint de 2026-09-07 registrou updates como:
