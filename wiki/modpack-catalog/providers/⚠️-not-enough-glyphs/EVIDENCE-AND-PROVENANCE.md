@@ -2,7 +2,7 @@
 
 ## Physical installed artifact
 
-Current sibling modlist checkpoint `8211ce36e899cc8f55d24f937b0c7200fb0b3ae1` records:
+Current sibling modlist checkpoint `cd38efb9c1a888c86addace69876400cf8845908` records:
 
 - filename: `not_enough_glyphs-1.21.1-4.6.2.jar`;
 - mod id: `not_enough_glyphs`;
