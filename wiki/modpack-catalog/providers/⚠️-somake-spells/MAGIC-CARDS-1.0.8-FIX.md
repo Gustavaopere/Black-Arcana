@@ -1,8 +1,8 @@
-# Somake Spells 1.0.8-fix — fichas canônicas de registry
+# Somake Spells 1.0.8-fix — fichas históricas de registry
 
-Este índice materializa em fichas individuais as **67 identidades de spell** fechadas pela auditoria clean-room do artefato físico exato `somakespells-1.0.8-1.21.1-fix.jar` (SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`).
+Este índice preserva em fichas individuais as **67 identidades de spell** fechadas pela auditoria clean-room do artefato físico histórico `somakespells-1.0.8-1.21.1-fix.jar` (SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`). A linha física atual é 1.0.9; estas fichas não são um registry 1.0.9. Use `CURRENT-1.0.9-REVALIDATION-CHECKLIST.md` para a autoridade corrente.
 
-Todas as 67 identidades estão registradas sob o conjunto físico atual de dependências opcionais, mas permanecem `EXACT_REGISTRY / REACHABILITY_CONDITIONAL`: a aquisição survival objeto-a-objeto e o valor COMMON implantado de `enableSpellLockSystem` não estão provados. O provider continua **⚠️ parcial/condicionado**.
+No checkpoint físico de 1.0.8-fix, todas as 67 identidades estavam registradas sob o conjunto de dependências opcionais daquele snapshot, mas permaneciam `EXACT_REGISTRY / REACHABILITY_CONDITIONAL`: a aquisição survival objeto-a-objeto e o valor COMMON implantado de `enableSpellLockSystem` não estão provados. O provider continua **⚠️ parcial/condicionado**.
 
 A organização abaixo é por **gate de registro**, não por escola. Escola, efeitos e números não são inferidos do nome do registry.
 
@@ -72,7 +72,7 @@ A organização abaixo é por **gate de registro**, não por escola. Escola, efe
 
 ## Gate Mowzie's Mobs — 3
 
-O artefato exato testa `mowziesmobs`; a modlist física contém Mowzie's Mobs `1.8.2`.
+O artefato exato testa `mowziesmobs`; o checkpoint físico usado pela auditoria continha Mowzie's Mobs `1.8.2`.
 
 - [`blessed_connection`](registry/blessed-connection.md)
 - [`guardian_connection`](registry/guardian-connection.md)
@@ -80,7 +80,7 @@ O artefato exato testa `mowziesmobs`; a modlist física contém Mowzie's Mobs `1
 
 ## Gate Magic From the East — 3
 
-O artefato exato testa `iss_magicfromtheeast`; a modlist física contém Magic From the East `1.1.5`.
+O artefato exato testa `iss_magicfromtheeast`; o checkpoint físico usado pela auditoria continha Magic From the East `1.1.5`.
 
 - [`mirror_strike`](registry/mirror-strike.md)
 - [`spirit_empowerment`](registry/spirit-empowerment.md)
@@ -90,12 +90,12 @@ O artefato exato testa `iss_magicfromtheeast`; a modlist física contém Magic F
 
 - 67/67 identidades de registry materializadas em fichas individuais;
 - 61 registros incondicionais no initializer auditado;
-- 3 registros com gate `mowziesmobs`, satisfeito fisicamente;
-- 3 registros com gate `iss_magicfromtheeast`, satisfeito fisicamente;
+- 3 registros com gate `mowziesmobs`, satisfeitos naquele checkpoint;
+- 3 registros com gate `iss_magicfromtheeast`, satisfeitos naquele checkpoint;
 - 67/67 continuam `REACHABILITY_CONDITIONAL`;
 - nenhuma escola, fórmula, custo, cooldown, nível, rarity, targeting ou aquisição foi inventada;
 - contribuição estrita permanece `+0` enquanto reachability/config implantada não forem fechadas.
 
 ## Autoridade
 
-`EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md` e `SPELL-CATALOG-1.0.8-FIX.md` permanecem as fontes técnicas primárias. Estas fichas são uma projeção editorial objeto-a-objeto. Iron's mantém autoridade do host casting/resource settlement; Somake mantém autoridade sobre suas spells e progressão; Black Arcana não duplica esses runtimes.
+`EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md` e `SPELL-CATALOG-1.0.8-FIX.md` permanecem as fontes técnicas primárias **do checkpoint histórico 1.0.8-fix**. Estas fichas são uma projeção editorial objeto-a-objeto. Iron's mantém autoridade do host casting/resource settlement; Somake mantém autoridade sobre suas spells e progressão; Black Arcana não duplica esses runtimes.

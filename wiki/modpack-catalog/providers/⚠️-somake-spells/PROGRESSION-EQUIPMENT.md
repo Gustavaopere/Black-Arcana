@@ -1,5 +1,7 @@
 # Somake Spells — progressão e equipamento públicos
 
+> **HISTORICAL LINE NOTE.** Unless a section explicitly cites 1.0.9, this file preserves progression/equipment evidence from the 1.0.8 lineage and must not be used to infer current 1.0.9 registry, recipes, thresholds or reachability.
+
 ## Authority
 
 Somake owns its own addon-specific tier-book, grimoire, Upgrade Forge, ritual and equipment progression. Black Arcana may recognize provider-native state only through a proven boundary; it must not maintain a parallel Somake progression ledger.
@@ -16,7 +18,7 @@ Publisher changelog 1.0.6 documents:
 
 The release also warns that the books were completely remade, creating migration risk for already-held books/spells.
 
-Exact current 1.0.8-fix book registry IDs, tier names, objective IDs, advancement IDs, recipes and affinity values remain `NÃO VERIFICADO`.
+Exact 1.0.8-fix book registry IDs, tier names, objective IDs, advancement IDs, recipes and affinity values remain `NÃO VERIFICADO`.
 
 ## Grimoires — 1.0.8 lineage
 
@@ -45,7 +47,7 @@ Publisher compatibility rule:
 - Born in Chaos present → progression extends to Infernal Fire;
 - Born in Chaos absent → progression stops at Soul Fire.
 
-The current pack contains Born in Chaos `1.7.6`, so the public eligibility condition for the Infernal branch is satisfied. Runtime completion, recipe ingredients and exact ritual state are not yet validated.
+The historical physical checkpoint used by this 1.0.8 audit contained Born in Chaos `1.7.6`, so the public eligibility condition for the Infernal branch was satisfied at that checkpoint. Current 1.0.9 eligibility, runtime completion, recipe ingredients and exact ritual state still require revalidation.
 
 `Ritual Flame` is directly associated with triggering the new fire-pedestal rituals and evolving elemental blaze variants.
 
@@ -72,7 +74,7 @@ The public text does not provide enough information to equate the Withered Rose 
 
 with evolution through the Upgrade Forge.
 
-`Copper Glove` is explicitly described in 1.0.8 as a simple craftable sword-like item for now; the publisher's planned future progression integration is not current behavior.
+`Copper Glove` is explicitly described in 1.0.8 as a simple craftable sword-like item for that release; the publisher's planned future progression integration was not behavior of that checkpoint.
 
 ## Current project-page equipment families
 
@@ -144,7 +146,7 @@ Again, historical introduction does not prove exact current registry or recipe.
 
 ## Elemental Charges
 
-The current project page says Somake has one `charge` for each element and references addon elements including Sound, Symmetry, Spirit and Geo. The exact installed fix specifically repairs Symmetry and Spirit charge buffs.
+The current project page says Somake has one `charge` for each element and references addon elements including Sound, Symmetry, Spirit and Geo. The historical exact 1.0.8-fix artifact specifically repairs Symmetry and Spirit charge buffs.
 
 Provider authority includes, at minimum, Somake's charge generation/application semantics. Black Arcana must not create a second charge resource or write guessed charge state.
 

@@ -8,7 +8,7 @@ This audit closes the exact spell-registry identity of the **1.0.8-fix artifact 
 
 ## Exact physical artifact
 
-- installed JAR: `somakespells-1.0.8-1.21.1-fix.jar`
+- historical installed JAR at this checkpoint: `somakespells-1.0.8-1.21.1-fix.jar`
 - mod id/runtime: `somakespells` / `1.0.8`
 - CurseForge project/file: `1461634 / 8417850`
 - expected physical SHA-1: `b0ad94c1504709662bee2d08700375ccecbb5ec7`
@@ -48,7 +48,7 @@ The static registry initializer has six optional-provider-gated registrations.
 - `ISS_LOADED = MagicFromTheEastCompat.isLoaded()` gates `mirror_strike`, `spirit_empowerment`, `symmetry_empowerment`.
 - exact `MagicFromTheEastCompat.isLoaded()` calls `ModList.get().isLoaded("iss_magicfromtheeast")`.
 
-The physical modlist contains `mowziesmobs` 1.8.2 and `iss_magicfromtheeast` 1.1.5. Therefore the current physical provider set satisfies both gates and all **67/67** registry identities are active.
+The physical checkpoint used by this 1.0.8-fix audit contained `mowziesmobs` 1.8.2 and `iss_magicfromtheeast` 1.1.5. Therefore both gates were satisfied for that historical artifact/provider set and all **67/67** registry identities were active at that checkpoint. This does not establish the 1.0.9 predicates or registry.
 
 ## Spell-lock / usability gate
 
@@ -67,16 +67,16 @@ The code default is **not** substituted for deployed pack state. No authoritativ
 
 The artifact packages provider-native progression/acquisition surfaces including tier spellbooks, Grimoires, Upgrade Forge recipes/progression, loot modifiers and item/entity loot resources. Multiple provider spellbooks and runtime handlers refer directly to `ModSpells` identities. This proves real provider acquisition infrastructure, but the audit does not yet close an object-by-object survival path for all 67 spells.
 
-Under `SEMANTIC-MAGIC-COVERAGE.md`, a current registry identity whose effective config/survival reachability is not closed remains `CONDITIONAL`. Therefore:
+Under `SEMANTIC-MAGIC-COVERAGE.md`, the historical 1.0.8-fix identities remained `CONDITIONAL` because effective config/survival reachability was not closed. Therefore, for that checkpoint:
 
 - exact registry inventory: **67**;
-- active registry identities under current physical optional set: **67**;
+- active registry identities under the historical physical optional-provider set: **67**;
 - strict semantic contribution in Phase 2BF: **+0**;
 - canonical global strict minimum remains **874**;
 - structural component coverage remains **55/100**.
 
 ## Clean-room boundary
 
-The artifact is All Rights Reserved. Retained evidence is limited to hash/metadata, archive/resource and registry IDs, class/member signatures and narrow gate/config control-flow facts needed to determine current identity/eligibility. No implementation body is copied, reconstructed or adapted; no source, texture, model, sound or upstream prose is incorporated into Black Arcana.
+The artifact is All Rights Reserved. Retained evidence is limited to hash/metadata, archive/resource and registry IDs, class/member signatures and narrow gate/config control-flow facts needed to determine the historical 1.0.8-fix identity/eligibility. No implementation body is copied, reconstructed or adapted; no source, texture, model, sound or upstream prose is incorporated into Black Arcana.
 
 This audit does not create a stable Somake API. Any runtime adapter remains fail-closed until a provider-native boundary is proven. Iron's remains host casting/resource/cooldown authority; Somake remains authority for its own spells, charges and provider-specific progression; Black Arcana must not duplicate those runtimes or transfer them to RPG Skill Tree.

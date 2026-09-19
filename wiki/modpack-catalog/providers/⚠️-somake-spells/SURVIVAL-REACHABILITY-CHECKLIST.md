@@ -45,9 +45,9 @@ The exact Somake resource inventory also contains 67/67 `spell.somakespells.<id>
 
 ## Registry / reachability matrix
 
-`Registration gate` records only predicates already proved by the exact artifact and physical provider set. `Survival reachability` remains `NÃO VERIFICADO` until the deployed/common host gates and a usable focus/acquisition path are demonstrated for the actual pack.
+`Registration gate` records only predicates already proved by the exact 1.0.8-fix artifact and its historical physical provider set. `Survival reachability` remained `NÃO VERIFICADO` because the deployed/common host gates and a usable focus/acquisition path were not demonstrated for that checkpoint.
 
-| # | Registry ID | Registration gate in current pack | Survival reachability |
+| # | Registry ID | Registration gate at historical 1.0.8-fix checkpoint | Survival reachability |
 |---:|---|---|---|
 | 1 | `combustion` | unconditional | `NÃO VERIFICADO` |
 | 2 | `ritual_flame` | unconditional | `NÃO VERIFICADO` |
@@ -83,9 +83,9 @@ The exact Somake resource inventory also contains 67/67 `spell.somakespells.<id>
 | 32 | `permafrost` | unconditional | `NÃO VERIFICADO` |
 | 33 | `blessing` | unconditional | `NÃO VERIFICADO` |
 | 34 | `custodia_caeli` | unconditional | `NÃO VERIFICADO` |
-| 35 | `blessed_connection` | `mowziesmobs` present | `NÃO VERIFICADO` |
-| 36 | `guardian_connection` | `mowziesmobs` present | `NÃO VERIFICADO` |
-| 37 | `cursed_connection` | `mowziesmobs` present | `NÃO VERIFICADO` |
+| 35 | `blessed_connection` | `mowziesmobs` present at checkpoint | `NÃO VERIFICADO` |
+| 36 | `guardian_connection` | `mowziesmobs` present at checkpoint | `NÃO VERIFICADO` |
+| 37 | `cursed_connection` | `mowziesmobs` present at checkpoint | `NÃO VERIFICADO` |
 | 38 | `blood_rush` | unconditional | `NÃO VERIFICADO` |
 | 39 | `blood_cut` | unconditional | `NÃO VERIFICADO` |
 | 40 | `bloody_legacy` | unconditional | `NÃO VERIFICADO` |
@@ -109,13 +109,13 @@ The exact Somake resource inventory also contains 67/67 `spell.somakespells.<id>
 | 58 | `lightning_swarm` | unconditional | `NÃO VERIFICADO` |
 | 59 | `lightning_lash` | unconditional | `NÃO VERIFICADO` |
 | 60 | `halberd_strike` | unconditional | `NÃO VERIFICADO` |
-| 61 | `mirror_strike` | `iss_magicfromtheeast` present | `NÃO VERIFICADO` |
+| 61 | `mirror_strike` | `iss_magicfromtheeast` present at checkpoint | `NÃO VERIFICADO` |
 | 62 | `render_rush` | unconditional | `NÃO VERIFICADO` |
 | 63 | `axe_cleave` | unconditional | `NÃO VERIFICADO` |
 | 64 | `desert_wrath` | unconditional | `NÃO VERIFICADO` |
 | 65 | `soul_grab` | unconditional | `NÃO VERIFICADO` |
-| 66 | `spirit_empowerment` | `iss_magicfromtheeast` present | `NÃO VERIFICADO` |
-| 67 | `symmetry_empowerment` | `iss_magicfromtheeast` present | `NÃO VERIFICADO` |
+| 66 | `spirit_empowerment` | `iss_magicfromtheeast` present at checkpoint | `NÃO VERIFICADO` |
+| 67 | `symmetry_empowerment` | `iss_magicfromtheeast` present at checkpoint | `NÃO VERIFICADO` |
 
 ## Evidence required per spell
 
@@ -135,19 +135,19 @@ Creative-only presence, command-only permission-level-2 unlocks, registry existe
 
 ## Cross-provider gate notes
 
-The six optional-provider registration gates are already closed for the physical pack and must not be confused with survival reachability:
+The six optional-provider registration gates were closed for the historical 1.0.8-fix physical checkpoint and must not be confused with survival reachability:
 
-- `blessed_connection`, `guardian_connection`, `cursed_connection` — `mowziesmobs` is present;
-- `mirror_strike`, `spirit_empowerment`, `symmetry_empowerment` — `iss_magicfromtheeast` is present.
+- `blessed_connection`, `guardian_connection`, `cursed_connection` — `mowziesmobs` was present at that checkpoint;
+- `mirror_strike`, `spirit_empowerment`, `symmetry_empowerment` — `iss_magicfromtheeast` was present at that checkpoint.
 
-Those six therefore belong to the current 67/67 registry inventory, but remain survival-conditional exactly like the other 61 until their deployed host/focus/use gates are proven.
+Those six therefore belonged to the historical 1.0.8-fix 67/67 registry inventory under that checkpoint's provider set. They do not establish any current 1.0.9 registration; current registry, host/focus/use gates and reachability remain governed by `CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`.
 
 ## Acceptance boundary
 
 Until authoritative deployed evidence closes the relevant Somake lock state, Iron's effective spell-config state and usable school-focus/acquisition path:
 
-- all 67 identities remain `EXACT_REGISTRY / REACHABILITY_CONDITIONAL`;
-- Somake remains `⚠️ Parcial / condicionado`;
+- at that checkpoint, all 67 identities remained `EXACT_REGISTRY / REACHABILITY_CONDITIONAL`;
+- the historical 1.0.8-fix semantic contribution remained `⚠️ Parcial / condicionado` / `+0`;
 - no strict semantic-count increase is claimed;
 - Black Arcana does not duplicate Somake unlocks, mastery, charges, rituals or Iron's cast settlement.
 

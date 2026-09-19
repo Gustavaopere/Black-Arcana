@@ -1,10 +1,12 @@
 # Somake Spells — auditoria pública da linha 1.0.x
 
+> **HISTORICAL LINE NOTE.** This changelog audit preserves 1.0.x publication evidence gathered around the 1.0.8-fix checkpoint. Somake 1.0.9 is now the physical provider line. Historical `CURRENT-LINE` labels below must not be read as current 1.0.9 registry claims.
+
 Scope: releases NeoForge 1.21.1 publicadas pelo próprio projeto. Esta auditoria registra somente o que os changelogs afirmam; ausência de uma nota não é prova de permanência, remoção ou implementação interna.
 
 ## 1.0.8-fix — File ID 8417850 — 2026-07-12
 
-Artefato instalado: `somakespells-1.0.8-1.21.1-fix.jar`.
+Historical artifact at this checkpoint: `somakespells-1.0.8-1.21.1-fix.jar`.
 
 Mudança pública:
 
@@ -60,13 +62,13 @@ Conclusões seguras:
 - Born in Chaos deixa de ser obrigatório; se presente, ritual progression alcança Infernal Fire; se ausente, termina em Soul Fire;
 - Better Combat recebe compatibilidade para swords e staffs.
 
-Estado físico do pack atual:
+Estado físico do checkpoint 1.0.8-fix usado por esta auditoria:
 
-- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente; a pré-condição física para o caminho de integração Symmetry descrito pelo publisher está satisfeita;
-- Born in Chaos `1.7.6` — presente;
-- Better Combat — não localizado.
+- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente naquele checkpoint; a pré-condição física para o caminho de integração Symmetry descrito pelo publisher estava satisfeita naquela linha;
+- Born in Chaos `1.7.6` — presente naquele checkpoint;
+- Better Combat — não localizado naquele checkpoint.
 
-Esses fatos permitem determinar apenas o caminho **publicamente esperado/elegível** de compatibilidade. A ativação exata por registry/config/runtime continua pendente e não é inferida da presença do JAR.
+Esses fatos permitiam determinar apenas o caminho **publicamente esperado/elegível** de compatibilidade naquele checkpoint. Eles não estabelecem os predicates, registry ou runtime de 1.0.9.
 
 ## 1.0.7 — File ID 8003379 — 2026-04-28
 
@@ -84,7 +86,7 @@ Spells introduzidos:
 - Water Control — Aqua;
 - Firestorm Vortex — Fire.
 
-O publisher diz que Guardian/Blessed/Cursed Connection exigiam Mowzie's Mobs para disponibilidade em 1.0.7. O pack atual contém Mowzie's Mobs 1.8.2, mas o gate interno exato 1.0.8-fix não foi auditado.
+O publisher diz que Guardian/Blessed/Cursed Connection exigiam Mowzie's Mobs para disponibilidade em 1.0.7. The physical checkpoint used by this audit contained Mowzie's Mobs 1.8.2, but that does not establish the current 1.0.9 predicate or registry.
 
 ## 1.0.6 — File ID 7914098 — 2026-04-12
 
