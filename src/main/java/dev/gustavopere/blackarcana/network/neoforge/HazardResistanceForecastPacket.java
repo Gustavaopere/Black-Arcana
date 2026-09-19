@@ -18,6 +18,7 @@ public record HazardResistanceForecastPacket(
     boolean available,
     String status,
     String dangerTier,
+    String belowMinimumPolicy,
     double effectiveArcaneResistance,
     double minimumArcaneResistance,
     double recommendedArcaneResistance,
@@ -36,6 +37,7 @@ public record HazardResistanceForecastPacket(
             ByteBufCodecs.BOOL.encode(buffer, value.available());
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_STATUS_LENGTH).encode(buffer, value.status());
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_DANGER_TIER_LENGTH).encode(buffer, value.dangerTier());
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_HAZARD_POLICY_LENGTH).encode(buffer, value.belowMinimumPolicy());
             ByteBufCodecs.DOUBLE.encode(buffer, value.effectiveArcaneResistance());
             ByteBufCodecs.DOUBLE.encode(buffer, value.minimumArcaneResistance());
             ByteBufCodecs.DOUBLE.encode(buffer, value.recommendedArcaneResistance());
@@ -49,14 +51,43 @@ public record HazardResistanceForecastPacket(
             ByteBufCodecs.BOOL.decode(buffer),
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_STATUS_LENGTH).decode(buffer),
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_DANGER_TIER_LENGTH).decode(buffer),
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_HAZARD_POLICY_LENGTH).decode(buffer),
             ByteBufCodecs.DOUBLE.decode(buffer),
             ByteBufCodecs.DOUBLE.decode(buffer),
             ByteBufCodecs.DOUBLE.decode(buffer),
             ByteBufCodecs.BOOL.decode(buffer),
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESULT_STATUS_LENGTH).decode(buffer)));
 
+    public HazardResistanceForecastPacket(
+        int protocolVersion,
+        long requestId,
+        String spellId,
+        boolean available,
+        String status,
+        String dangerTier,
+        double effectiveArcaneResistance,
+        double minimumArcaneResistance,
+        double recommendedArcaneResistance,
+        boolean gateForecastAvailable,
+        String gateStatus
+    ) {
+        this(
+            protocolVersion,
+            requestId,
+            spellId,
+            available,
+            status,
+            dangerTier,
+            dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy.DENY_CAST.name(),
+            effectiveArcaneResistance,
+            minimumArcaneResistance,
+            recommendedArcaneResistance,
+            gateForecastAvailable,
+            gateStatus);
+    }
+
     public HazardResistanceForecastPacket {
-        toDomain(protocolVersion, requestId, spellId, available, status, dangerTier,
+        toDomain(protocolVersion, requestId, spellId, available, status, dangerTier, belowMinimumPolicy,
             effectiveArcaneResistance, minimumArcaneResistance, recommendedArcaneResistance,
             gateForecastAvailable, gateStatus);
     }
@@ -65,13 +96,13 @@ public record HazardResistanceForecastPacket(
         Objects.requireNonNull(payload, "payload");
         return new HazardResistanceForecastPacket(
             payload.protocolVersion(), payload.requestId(), payload.spellId(), payload.available(),
-            payload.status(), payload.dangerTier(), payload.effectiveArcaneResistance(),
+            payload.status(), payload.dangerTier(), payload.belowMinimumPolicy(), payload.effectiveArcaneResistance(),
             payload.minimumArcaneResistance(), payload.recommendedArcaneResistance(),
             payload.gateForecastAvailable(), payload.gateStatus());
     }
 
     public HazardResistanceForecastPayload toDomain() {
-        return toDomain(protocolVersion, requestId, spellId, available, status, dangerTier,
+        return toDomain(protocolVersion, requestId, spellId, available, status, dangerTier, belowMinimumPolicy,
             effectiveArcaneResistance, minimumArcaneResistance, recommendedArcaneResistance,
             gateForecastAvailable, gateStatus);
     }
@@ -83,6 +114,7 @@ public record HazardResistanceForecastPacket(
         boolean available,
         String status,
         String dangerTier,
+        String belowMinimumPolicy,
         double effective,
         double minimum,
         double recommended,
@@ -90,8 +122,8 @@ public record HazardResistanceForecastPacket(
         String gateStatus
     ) {
         return new HazardResistanceForecastPayload(
-            version, requestId, spellId, available, status, dangerTier, effective, minimum, recommended,
-            gateForecastAvailable, gateStatus);
+            version, requestId, spellId, available, status, dangerTier, belowMinimumPolicy,
+            effective, minimum, recommended, gateForecastAvailable, gateStatus);
     }
 
     @Override

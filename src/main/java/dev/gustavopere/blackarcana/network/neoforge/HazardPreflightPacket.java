@@ -19,6 +19,7 @@ public record HazardPreflightPacket(int protocolVersion, List<Entry> entries) im
     private static final StreamCodec<ByteBuf, Entry> ENTRY_CODEC = StreamCodec.composite(
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_RESOURCE_ID_LENGTH), Entry::spellId,
             ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_DANGER_TIER_LENGTH), Entry::dangerTier,
+            ByteBufCodecs.stringUtf8(ArcanaProtocol.MAX_HAZARD_POLICY_LENGTH), Entry::belowMinimumPolicy,
             ByteBufCodecs.DOUBLE, Entry::minimumArcaneResistance,
             ByteBufCodecs.DOUBLE, Entry::recommendedArcaneResistance,
             Entry::new);
@@ -42,6 +43,7 @@ public record HazardPreflightPacket(int protocolVersion, List<Entry> entries) im
                         .map(entry -> new Entry(
                                 entry.spellId(),
                                 entry.dangerTier(),
+                                entry.belowMinimumPolicy(),
                                 entry.minimumArcaneResistance(),
                                 entry.recommendedArcaneResistance()))
                         .toList());
@@ -58,6 +60,7 @@ public record HazardPreflightPacket(int protocolVersion, List<Entry> entries) im
                         .map(entry -> new HazardPreflightPayload.Entry(
                                 entry.spellId(),
                                 entry.dangerTier(),
+                                entry.belowMinimumPolicy(),
                                 entry.minimumArcaneResistance(),
                                 entry.recommendedArcaneResistance()))
                         .toList());
@@ -71,12 +74,27 @@ public record HazardPreflightPacket(int protocolVersion, List<Entry> entries) im
     public record Entry(
             String spellId,
             String dangerTier,
+            String belowMinimumPolicy,
             double minimumArcaneResistance,
             double recommendedArcaneResistance
     ) {
+        public Entry(
+            String spellId,
+            String dangerTier,
+            double minimumArcaneResistance,
+            double recommendedArcaneResistance
+        ) {
+            this(
+                spellId,
+                dangerTier,
+                dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy.DENY_CAST.name(),
+                minimumArcaneResistance,
+                recommendedArcaneResistance);
+        }
+
         public Entry {
             new HazardPreflightPayload.Entry(
-                    spellId, dangerTier, minimumArcaneResistance, recommendedArcaneResistance);
+                    spellId, dangerTier, belowMinimumPolicy, minimumArcaneResistance, recommendedArcaneResistance);
         }
     }
 }

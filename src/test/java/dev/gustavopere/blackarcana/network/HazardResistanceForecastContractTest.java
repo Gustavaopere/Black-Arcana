@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.network;
 
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 import dev.gustavopere.blackarcana.network.neoforge.HazardResistanceForecastPacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -19,6 +20,7 @@ class HazardResistanceForecastContractTest {
             true,
             HazardResistanceForecastPayload.Status.BELOW_RECOMMENDED.name(),
             ArcaneDangerTier.DANGEROUS.name(),
+            ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK.name(),
             16.0D,
             12.0D,
             24.0D,
@@ -27,6 +29,7 @@ class HazardResistanceForecastContractTest {
 
         assertEquals(HazardResistanceForecastPayload.Status.BELOW_RECOMMENDED, payload.parsedStatus());
         assertEquals(ArcaneDangerTier.DANGEROUS, payload.parsedTier());
+        assertEquals(ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK, payload.parsedBelowMinimumPolicy());
         assertEquals(HazardResistanceForecastPayload.GateStatus.COOLDOWN, payload.parsedGateStatus());
 
         assertThrows(IllegalArgumentException.class, () -> new HazardResistanceForecastPayload(
@@ -53,20 +56,47 @@ class HazardResistanceForecastContractTest {
             24.0D,
             true,
             HazardResistanceForecastPayload.GateStatus.UNAVAILABLE.name()));
+        assertThrows(IllegalArgumentException.class, () -> new HazardResistanceForecastPayload(
+            ArcanaProtocol.VERSION,
+            7L,
+            payload.spellId(),
+            true,
+            HazardResistanceForecastPayload.Status.BELOW_MINIMUM.name(),
+            payload.dangerTier(),
+            ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK.name(),
+            1.0D,
+            12.0D,
+            24.0D,
+            true,
+            HazardResistanceForecastPayload.GateStatus.CLEAR.name()));
+        assertThrows(IllegalArgumentException.class, () -> new HazardResistanceForecastPayload(
+            ArcanaProtocol.VERSION,
+            8L,
+            payload.spellId(),
+            true,
+            HazardResistanceForecastPayload.Status.BELOW_MINIMUM_ALLOWED.name(),
+            payload.dangerTier(),
+            ArcaneInsufficientResistancePolicy.DENY_CAST.name(),
+            1.0D,
+            12.0D,
+            24.0D,
+            true,
+            HazardResistanceForecastPayload.GateStatus.CLEAR.name()));
         assertThrows(IllegalArgumentException.class, () -> new HazardResistanceForecastRequestPayload(
             ArcanaProtocol.VERSION, -1L, payload.spellId()));
     }
 
     @Test
-    void elevenFieldPacketRoundTripsThroughExplicitStreamCodec() {
+    void policyAwarePacketRoundTripsThroughExplicitStreamCodec() {
         HazardResistanceForecastPacket packet = HazardResistanceForecastPacket.from(
             new HazardResistanceForecastPayload(
                 ArcanaProtocol.VERSION,
                 9L,
                 "black_arcana:forbidden_spell",
                 true,
-                HazardResistanceForecastPayload.Status.BELOW_MINIMUM.name(),
+                HazardResistanceForecastPayload.Status.BELOW_MINIMUM_ALLOWED.name(),
                 ArcaneDangerTier.FORBIDDEN.name(),
+                ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK.name(),
                 8.0D,
                 20.0D,
                 40.0D,
@@ -77,7 +107,8 @@ class HazardResistanceForecastContractTest {
             HazardResistanceForecastPacket.STREAM_CODEC.encode(buffer, packet);
             HazardResistanceForecastPacket decoded = HazardResistanceForecastPacket.STREAM_CODEC.decode(buffer);
             assertEquals(packet, decoded);
-            assertEquals(HazardResistanceForecastPayload.Status.BELOW_MINIMUM, decoded.toDomain().parsedStatus());
+            assertEquals(HazardResistanceForecastPayload.Status.BELOW_MINIMUM_ALLOWED, decoded.toDomain().parsedStatus());
+            assertEquals(ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK, decoded.toDomain().parsedBelowMinimumPolicy());
             assertEquals(HazardResistanceForecastPayload.GateStatus.PROGRESSION, decoded.toDomain().parsedGateStatus());
         } finally {
             buffer.release();

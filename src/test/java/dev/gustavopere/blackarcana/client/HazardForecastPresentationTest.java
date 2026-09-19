@@ -1,6 +1,7 @@
 package dev.gustavopere.blackarcana.client;
 
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.HazardPreflightPayload;
 import dev.gustavopere.blackarcana.network.HazardResistanceForecastPayload;
@@ -24,13 +25,25 @@ class HazardForecastPresentationTest {
             ArcaneDangerTier.UNSTABLE, 12.0D, 24.0D, true);
         HazardResistanceForecastPayload staleThreshold = forecast(
             ArcaneDangerTier.DANGEROUS, 10.0D, 20.0D, true);
+        HazardResistanceForecastPayload stalePolicy = forecast(
+            ArcaneDangerTier.DANGEROUS, 12.0D, 24.0D, true,
+            ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK);
         HazardResistanceForecastPayload rateLimitedNormal = forecast(
             ArcaneDangerTier.NORMAL, 0.0D, 0.0D, false);
 
         assertTrue(BlackArcanaHudLayer.forecastMatchesPreflight(current, matching));
         assertFalse(BlackArcanaHudLayer.forecastMatchesPreflight(current, staleTier));
         assertFalse(BlackArcanaHudLayer.forecastMatchesPreflight(current, staleThreshold));
+        assertFalse(BlackArcanaHudLayer.forecastMatchesPreflight(current, stalePolicy));
         assertFalse(BlackArcanaHudLayer.forecastMatchesPreflight(current, rateLimitedNormal));
+    }
+
+    @Test
+    void allowedBelowMinimumForecastHasDistinctNonBlockingHazardSemantics() {
+        assertEquals(
+            CastingUxSemantics.HazardState.BELOW_MINIMUM_ALLOWED,
+            CastingUxSemantics.hazardForResistance(
+                HazardResistanceForecastPayload.Status.BELOW_MINIMUM_ALLOWED));
     }
 
     @Test
@@ -75,6 +88,16 @@ class HazardForecastPresentationTest {
         double recommended,
         boolean available
     ) {
+        return forecast(tier, minimum, recommended, available, ArcaneInsufficientResistancePolicy.DENY_CAST);
+    }
+
+    private static HazardResistanceForecastPayload forecast(
+        ArcaneDangerTier tier,
+        double minimum,
+        double recommended,
+        boolean available,
+        ArcaneInsufficientResistancePolicy policy
+    ) {
         return new HazardResistanceForecastPayload(
             ArcanaProtocol.VERSION,
             1L,
@@ -84,8 +107,11 @@ class HazardForecastPresentationTest {
                 ? HazardResistanceForecastPayload.Status.RECOMMENDED
                 : HazardResistanceForecastPayload.Status.UNAVAILABLE).name(),
             tier.name(),
+            policy.name(),
             available ? recommended : 0.0D,
             minimum,
-            recommended);
+            recommended,
+            false,
+            HazardResistanceForecastPayload.GateStatus.UNAVAILABLE.name());
     }
 }

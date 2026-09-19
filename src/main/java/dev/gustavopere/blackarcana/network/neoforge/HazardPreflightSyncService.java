@@ -72,6 +72,7 @@ public final class HazardPreflightSyncService {
         return new HazardPreflightPayload.Entry(
                 definition.id(),
                 definition.tier().name(),
+                definition.belowMinimumPolicy().name(),
                 definition.minimumArcaneResistance(),
                 definition.recommendedArcaneResistance());
     }

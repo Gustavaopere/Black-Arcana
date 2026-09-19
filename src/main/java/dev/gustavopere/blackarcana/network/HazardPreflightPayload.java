@@ -2,6 +2,7 @@ package dev.gustavopere.blackarcana.network;
 
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,12 +31,29 @@ public record HazardPreflightPayload(int protocolVersion, List<Entry> entries) {
     public record Entry(
             String spellId,
             String dangerTier,
+            String belowMinimumPolicy,
             double minimumArcaneResistance,
             double recommendedArcaneResistance
     ) {
+        /** Compatibility constructor for payload callers from before the policy became presentational metadata. */
+        public Entry(
+            String spellId,
+            String dangerTier,
+            double minimumArcaneResistance,
+            double recommendedArcaneResistance
+        ) {
+            this(
+                spellId,
+                dangerTier,
+                ArcaneInsufficientResistancePolicy.DENY_CAST.name(),
+                minimumArcaneResistance,
+                recommendedArcaneResistance);
+        }
+
         public Entry {
             Objects.requireNonNull(spellId, "spellId");
             Objects.requireNonNull(dangerTier, "dangerTier");
+            Objects.requireNonNull(belowMinimumPolicy, "belowMinimumPolicy");
             if (spellId.length() > ArcanaProtocol.MAX_RESOURCE_ID_LENGTH) {
                 throw new IllegalArgumentException("spellId exceeds protocol bound");
             }
@@ -43,7 +61,17 @@ public record HazardPreflightPayload(int protocolVersion, List<Entry> entries) {
             if (dangerTier.isBlank() || dangerTier.length() > ArcanaProtocol.MAX_DANGER_TIER_LENGTH) {
                 throw new IllegalArgumentException("dangerTier outside protocol bound");
             }
-            ArcaneDangerTier.valueOf(dangerTier);
+            if (belowMinimumPolicy.isBlank()
+                || belowMinimumPolicy.length() > ArcanaProtocol.MAX_HAZARD_POLICY_LENGTH) {
+                throw new IllegalArgumentException("belowMinimumPolicy outside protocol bound");
+            }
+            ArcaneDangerTier parsedTier = ArcaneDangerTier.valueOf(dangerTier);
+            ArcaneInsufficientResistancePolicy parsedPolicy =
+                ArcaneInsufficientResistancePolicy.valueOf(belowMinimumPolicy);
+            if (parsedTier == ArcaneDangerTier.NORMAL
+                && parsedPolicy != ArcaneInsufficientResistancePolicy.DENY_CAST) {
+                throw new IllegalArgumentException("NORMAL hazard metadata cannot carry allow-with-risk policy");
+            }
             validateResistance("minimumArcaneResistance", minimumArcaneResistance);
             validateResistance("recommendedArcaneResistance", recommendedArcaneResistance);
             if (minimumArcaneResistance > recommendedArcaneResistance) {
@@ -53,6 +81,10 @@ public record HazardPreflightPayload(int protocolVersion, List<Entry> entries) {
 
         public ArcaneDangerTier parsedTier() {
             return ArcaneDangerTier.valueOf(dangerTier);
+        }
+
+        public ArcaneInsufficientResistancePolicy parsedBelowMinimumPolicy() {
+            return ArcaneInsufficientResistancePolicy.valueOf(belowMinimumPolicy);
         }
 
         private static void validateResistance(String name, double value) {
