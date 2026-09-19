@@ -62,13 +62,13 @@ Conclusões seguras:
 - Born in Chaos deixa de ser obrigatório; se presente, ritual progression alcança Infernal Fire; se ausente, termina em Soul Fire;
 - Better Combat recebe compatibilidade para swords e staffs.
 
-Estado físico do pack atual:
+Estado físico do checkpoint 1.0.8-fix usado por esta auditoria:
 
-- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente; a pré-condição física para o caminho de integração Symmetry descrito pelo publisher está satisfeita;
-- Born in Chaos `1.7.6` — presente;
-- Better Combat — não localizado.
+- Magic From the East / `iss_magicfromtheeast` `1.1.5` — presente naquele checkpoint; a pré-condição física para o caminho de integração Symmetry descrito pelo publisher estava satisfeita naquela linha;
+- Born in Chaos `1.7.6` — presente naquele checkpoint;
+- Better Combat — não localizado naquele checkpoint.
 
-Esses fatos permitem determinar apenas o caminho **publicamente esperado/elegível** de compatibilidade. A ativação exata por registry/config/runtime continua pendente e não é inferida da presença do JAR.
+Esses fatos permitiam determinar apenas o caminho **publicamente esperado/elegível** de compatibilidade naquele checkpoint. Eles não estabelecem os predicates, registry ou runtime de 1.0.9.
 
 ## 1.0.7 — File ID 8003379 — 2026-04-28
 
