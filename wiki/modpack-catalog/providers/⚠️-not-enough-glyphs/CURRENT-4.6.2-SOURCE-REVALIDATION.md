@@ -13,6 +13,9 @@ Latest sibling modlist checked:
 - runtime: `4.6.2`;
 - Minecraft / loader: 1.21.1 / NeoForge;
 - official CurseForge project/file: `1023517 / 8880291`;
+- exact publisher-release SHA-1: `32eea2c478a346ee7499f6a0db156241116f73e9`;
+- exact publisher-release SHA-256: `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12`;
+- embedded JarJar: `sauce-1.21.1-0.0.50.97.jar`;
 - release date: 2026-09-14;
 - license: LGPL-3.0.
 
@@ -119,8 +122,25 @@ Therefore:
 - strict semantic delta remains **+0**;
 - no technical component point is awarded.
 
+## Exact 4.6.2 release audit
+
+Temporary evidence PR #334 is intentionally non-merge.
+
+- audit branch: `audit/not-enough-glyphs-4.6.2-release-2026-09-19`;
+- exact audit HEAD: `a7b341505464998c37c1563668cc263e978b7c2c`;
+- workflow run: `35443734628` — SUCCESS;
+- audit artifact: `10585275563`;
+- artifact digest: `sha256:6ceeeaf7805857537bbbf297a9dfe21ba9c363845d6fe7d0ff8ef00ebe1fb314`;
+- release SHA-1: `32eea2c478a346ee7499f6a0db156241116f73e9`;
+- release SHA-256: `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12`;
+- embedded Sauce JarJar path: `META-INF/jarjar/sauce-1.21.1-0.0.50.97.jar`;
+- aggregate class count: `129`;
+- aggregate `data/*.json` count: `61`.
+
+The audit retained only hashes, metadata, embedded-JAR path/metadata and aggregate counts. It did not decompile provider classes.
+
 ## Release-byte boundary
 
 The public 4.6.2 source pin is sufficient to revalidate the registration matrix because the relevant source blobs are exact and unchanged. It is **not** a claim that GitHub source commit `45604dd1...` is byte-for-byte identical to the installed physical JAR.
 
-An exact publisher-release fingerprint may be retained separately when available. Physical-pack byte equality is not required to preserve this source-level matrix, but must not be invented.
+The exact publisher-release fingerprint is now retained. Physical-pack byte equality is still not proven because the current sibling modlist does not expose an independent SHA-1 for the installed 4.6.2 JAR. That equality is not required to preserve the source-level matrix, but it must not be invented.
