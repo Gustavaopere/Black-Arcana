@@ -43,11 +43,11 @@ It also documents a Somake **Aqua School** for 1.21.1, equipment/armor, evolving
 
 `50+` is a publisher scale statement, **not** a verified current registry count. The changelog history itself names more Blood content than the current page's simplified `1 Blood` summary would suggest, so school totals are not inferred from marketing prose.
 
-## Exact installed fix
+## Historical exact 1.0.8-fix
 
-File ID `8417850` is a small fix over 1.0.8. It repairs **Symmetry** and **Spirit Elemental Charges**, which were not applying their buffs.
+File ID `8417850` is the historical 1.0.8-fix artifact. It repairs **Symmetry** and **Spirit Elemental Charges**, which were not applying their buffs.
 
-This proves those charge surfaces in the installed release line, but does not publish their internal IDs, formulas, stack rules, persistence or API.
+This proves those charge surfaces for the 1.0.8-fix artifact only. It does not establish their current 1.0.9 registry state, internal IDs, formulas, stack rules, persistence or API.
 
 ## Catalog files
 
@@ -55,7 +55,9 @@ This proves those charge surfaces in the installed release line, but does not pu
 - [PUBLIC-CHANGELOG-AUDIT.md](PUBLIC-CHANGELOG-AUDIT.md) — release-by-release 1.0.x evidence;
 - [PROGRESSION-EQUIPMENT.md](PROGRESSION-EQUIPMENT.md) — books, Grimoires, Upgrade Forge, ritual path and equipment;
 - [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md) — exact artifact/provenance/dependency/QA boundary;
-- [EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) — hash-matched registry/gate/config facts from the installed binary;
+- [CURRENT-1.0.9-REVALIDATION-CHECKLIST.md](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) — authoritative current-line closure gates for 1.0.9;
+- [EXACT-1.0.9-RESOURCE-AUDIT.md](EXACT-1.0.9-RESOURCE-AUDIT.md) — exact publisher-release hash/metadata/resource evidence for 1.0.9; not physical-pack byte equality or registry proof;
+- [EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) — historical 1.0.8-fix hash-matched registry/gate/config facts;
 - [INTEGRATION-RULES.md](INTEGRATION-RULES.md) — Black Arcana authority and fail-closed rules.
 
 School directories already present in this provider tree remain organizational placeholders until exact current membership can be proven. Historical changelog school labels do not justify manufacturing a complete school-first registry.
@@ -91,7 +93,7 @@ Not located in the physical modlist:
 
 - Better Combat.
 
-Presence alone is not generally enough to prove an optional integration path. For the six conditionally registered Somake spells, however, the exact 1.0.8-fix bytecode closes the predicates themselves: `mowziesmobs` gates Blessed/Guardian/Cursed Connection and `iss_magicfromtheeast` gates Mirror Strike/Spirit Empowerment/Symmetry Empowerment. Both predicates are true under the current physical modlist, so those six registrations join the 61 unconditional registrations for 67/67 current registry identities. Runtime behavior, acquisition and config-dependent usability remain separate.
+Presence alone is not enough to prove a current optional integration path. The historical 1.0.8-fix artifact proved six conditional registrations for that artifact: `mowziesmobs` gated Blessed/Guardian/Cursed Connection and `iss_magicfromtheeast` gated Mirror Strike/Spirit Empowerment/Symmetry Empowerment. Those mod IDs remain present in the current physical pack, but that fact does **not** prove that 1.0.9 retains the same six predicates or the same 61+6 registry partition. Current 1.0.9 optional registration predicates remain open until provider-authoritative evidence closes them.
 
 ## Aqua / T.O Magic coexistence
 
@@ -105,7 +107,7 @@ Until runtime/API evidence resolves it, Black Arcana must not select one provide
 
 ## Publicly named current-line spell evidence
 
-The publisher changelog files remain provenance for names and release semantics, but they no longer define the registry ceiling. The exact 1.0.8-fix artifact now supplies the complete 67-ID registry inventory in `EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md`. Historical naming contradictions remain useful for editorial provenance and must not be substituted for current bytecode-backed IDs, school mechanics or numerical values.
+The publisher changelog files remain provenance for names and release semantics, but they do not define the current registry ceiling. The exact 1.0.8-fix artifact supplies a complete **historical** 67-ID registry inventory in `EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md`; it is not a 1.0.9 registry. The 1.0.9 resource audit bounds a localization surface of 83 base spell roots, but those roots are not registry proof. Historical naming evidence must not be substituted for current registry IDs, school mechanics or numerical values.
 
 ## Authority / deduplication
 
@@ -117,12 +119,13 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 
 ## Evidence ceiling
 
-- installed identity/hash — `HIGH`, physical modlist + exact artifact hash match;
-- exact File ID/release/fix semantics — `HIGH`, publisher;
-- exact current spell registry — `HIGH`, 67/67 IDs closed from the hash-matched artifact under the physical optional-provider set;
-- exact optional registry predicates — `HIGH`, `mowziesmobs` and `iss_magicfromtheeast`, both physically satisfied;
-- `enableSpellLockSystem` code default/path — `HIGH`, default `false`, `COMMON`, `somakespells/general/common.toml`;
-- deployed value of that COMMON config — `UNVERIFIED`;
+- current installed filename/runtime — `HIGH`, sibling modlist identifies `somakespells-1.0.9-1.21.1.jar` / runtime `1.0.9`;
+- exact 1.0.9 publisher release identity/hash — `HIGH`, File `8867079` / SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- current physical-pack byte equality to that release — `UNVERIFIED`, installed JAR SHA-1 not yet captured;
+- exact current 1.0.9 spell registry — `UNVERIFIED`; 83 localization roots are not substituted for registry entries;
+- exact current 1.0.9 optional registry predicates — `UNVERIFIED`; the 1.0.8-fix `mowziesmobs` / `iss_magicfromtheeast` predicates are historical evidence only;
+- `enableSpellLockSystem` path/default — `HISTORICAL 1.0.8-FIX HIGH / CURRENT 1.0.9 REVALIDATION REQUIRED`;
+- deployed value of the relevant current COMMON config — `UNVERIFIED`;
 - complete object-level survival acquisition/reachability — `UNVERIFIED / CONDITIONAL`;
 - values/formulas/stable integration API/hooks/networking/persistence — `UNVERIFIED / FAIL-CLOSED` except for narrow facts explicitly recorded by the artifact audit;
 - Somake↔T.O Aqua authority on the current dual-installed stack — `RUNTIME QA REQUIRED`.
