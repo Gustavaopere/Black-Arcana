@@ -128,13 +128,29 @@ The catalog must resolve precedence from the actual deployed environment. A temp
 
 ### Somake Spells
 
-Searches only for:
+Searches for the provider-level progression key:
 
 `enableSpellLockSystem`
 
 within the same bounded config roots.
 
-The physical Somake JAR is hashed independently. Matching the publisher release hash closes byte equality only; it does not close current 1.0.9 registry/reachability by itself.
+It also collects **bounded Iron's spell-config override evidence for the `somakespells` namespace**. Only these fields are retained when present:
+
+- `irons_spellbooks:enabled`;
+- `irons_spellbooks:school`;
+- `irons_spellbooks:allow_crafting`.
+
+Observed locations are limited to:
+
+- `config/irons_spellbooks_spell_config/somakespells/*.json`;
+- `config/irons_spellbooks_spell_config/global_config.json`;
+- `kubejs/data/somakespells/irons_spellbooks_spell_config/**/*.json`;
+- direct world datapack JSONs under `data/somakespells/irons_spellbooks_spell_config/`;
+- ZIP datapacks under the same namespace/path.
+
+The report retains only relative paths and those selected fields. It does not copy full JSON payloads.
+
+The physical Somake JAR is hashed independently. Matching the publisher release hash closes byte equality only. An observed spell-config file or override is **evidence about a named config surface, not proof that the corresponding spell is registered, enabled in every layer, or survival-reachable**. The collector still does not close the exact 1.0.9 registry by itself.
 
 ### Traveloptics
 
@@ -196,7 +212,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Asterism: deployed Astral Gateway Iron's spell config/datapack;
 - Gaze: effective `disableGazeRites`;
 - NEG: effective `[general].enabled` for 39 candidates;
-- Somake: physical 1.0.9 equality plus deployed `enableSpellLockSystem`;
+- Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact 1.0.9 registry identity still requires separate provider-authoritative evidence;
 - Traveloptics: original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references that may point to a pack-specific acquisition route.
 
 The collector does not solve Somake's exact 1.0.9 registry by itself. It also does not prove Traveloptics startup, Blackout reachability or Aqua behavior merely because a literal reference is found.
