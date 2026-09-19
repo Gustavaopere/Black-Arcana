@@ -2,6 +2,8 @@
 
 This file preserves the exact historical Phase 2AF 4.6.1 evidence. Current authority is 4.6.2 and is documented in [`SOURCE-4.6.2-DELTA-AUDIT.md`](SOURCE-4.6.2-DELTA-AUDIT.md). Do not interpret the 4.6.1 JAR hash or Sauce 0.0.42.89 entry below as the current physical provider identity.
 
+Current exact publisher-release evidence for File `8880291`: SHA-1 `32eea2c478a346ee7499f6a0db156241116f73e9`, SHA-256 `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12`, embedded `sauce-1.21.1-0.0.50.97.jar`. Audit run `35445876400` / artifact `10585193946`. The installed physical 4.6.2 JAR hash remains unavailable, so release-vs-installed byte equality is not claimed.
+
 ## Physical installed artifact
 
 Current physical modlist supplied 2026-09-08:
