@@ -106,9 +106,9 @@ Historical root absent from the 1.0.9 localization surface:
 
 - `summon_zombie`.
 
-The official 1.0.9 changelog independently states that `Summon Zombie` was replaced by `Summon Drowned` and publicly names a large new spell tranche. That corroborates a material content delta.
+The official 1.0.9 changelog independently states that `Summon Zombie` was replaced by `Summon Drowned` and explicitly names **16 spells** in the 1.21.1 File `8867079` **New Spells** section. Those public names/school labels are materialized in [`CURRENT-1.0.9-PUBLIC-NAMED-SPELLS.md`](CURRENT-1.0.9-PUBLIC-NAMED-SPELLS.md) and corroborate a material content delta.
 
-However **localization keys are not registry proof**. The 83 base-key surface must not be promoted to “83 registered spells” until an authoritative current-line registry source exists.
+However **localization keys and publisher display names are not registry proof**. The 83 base-key surface and the 16-name public tranche must not be promoted to a current registry count until an authoritative current-line registry source exists.
 
 ## Red Soul / progression resource evidence
 
