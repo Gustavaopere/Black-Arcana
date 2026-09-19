@@ -267,7 +267,7 @@ This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence
 | Provider | Quantity | State | Reason |
 |---|---:|---|---|
 | Asterism Arcanum | 1 | `CONDITIONAL` | `astral_gateway` is registered but documented creative-only/unfinished |
-| Not Enough Glyphs | 39 | `CONDITIONAL / CONFIG AUTHORITY CLOSED / +0` | current-pack source produces 40 `registerSpell` calls; `momentum` is source-disabled, leaving 39 candidates. Ars Nouveau 5.13.1 registers each spell part as a `SERVER` config at `not_enough_glyphs/<glyph>.toml`; inherited `[general].enabled` defaults true, but the deployed server/world override set is unavailable, so source defaults are not promoted to active-pack facts |
+| Not Enough Glyphs 4.6.2 | 39 | `CONDITIONAL / CONFIG AUTHORITY CLOSED / +0` | current physical line is 4.6.2. Exact source pin `45604dd1…` preserves the same registration blob and `EffectMomentum` blob as the audited 4.6.1 pin, so the 40 registrations / 39 source-enabled candidates remain current. Ars Nouveau 5.13.1 registers each spell part as a `SERVER` config at `not_enough_glyphs/<glyph>.toml`; inherited `[general].enabled` defaults true, but the deployed server/world override set is unavailable, so source defaults are not promoted to active-pack facts |
 
 The four real Ars Elemental primitives referenced by Not Enough Glyphs are not NEG-owned registrations and are already counted under Ars Elemental. Historical fallback namespaces do not create a second owner when the real provider is present.
 
@@ -317,7 +317,7 @@ Other provider directories that have not yet been normalized into a semantic-obj
 To converge on a final denominator efficiently, prioritize:
 
 1. another still-open provider/component for which current/exact evidence can materially reduce inventory or classification uncertainty;
-2. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.1 and Gaze 1.1.7.1 Rites when such evidence becomes available;
+2. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.2 and Gaze 1.1.7.1 Rites when such evidence becomes available;
 3. reclose Somake 1.0.9 current-line physical equality, registry/optional gates and then survival/config reachability; the historical 1.0.8-fix 67-ID audit must not be promoted as current.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
