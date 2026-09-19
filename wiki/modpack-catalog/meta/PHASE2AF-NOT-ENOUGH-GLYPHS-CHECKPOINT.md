@@ -1,5 +1,7 @@
 # Phase 2AF Checkpoint — Not Enough Glyphs 4.6.1
 
+> Historical checkpoint. Current physical/provider authority is Not Enough Glyphs 4.6.2. The exact 4.6.2 registration and Momentum source blobs are unchanged from this 4.6.1 pin; see `../providers/⚠️-not-enough-glyphs/SOURCE-4.6.2-DELTA-AUDIT.md`. The 40/39 matrix carries forward, while the physical JAR/hash and Sauce entries below remain 4.6.1 historical evidence only.
+
 ## Scope
 
 Close the installed Not Enough Glyphs 4.6.1 source-level current-pack primitive/system inventory, including conditional fallback ownership, Binder/perks, runtime boundaries and deduplication impact. Documentation only; no Black Arcana runtime Stage is promoted.
