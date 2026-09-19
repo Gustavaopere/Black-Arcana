@@ -2,6 +2,8 @@
 
 Phase 2AF closes the current-pack source-level capability inventory for NEG. It improves deduplication evidence only; Phase 3 remains blocked.
 
+Current override: physical line is 4.6.2. The official 4.6.1 → 4.6.2 source compare leaves the registration/Binder/perk/delegation inventory intact; only filter/rune behavior, Propagate Underfoot vehicle targeting and Sauce versioning changed. Therefore this capability matrix remains structurally valid for 4.6.2, with those runtime deltas tracked separately.
+
 | Capability family | Current NEG/provider evidence | Authority | Black Arcana disposition |
 |---|---|---|---|
 | Event-triggered stored spells | 7 Sauce-backed contingencies | Sauce + NEG + Ars caster/mana | externally covered; no second generic contingency engine |
