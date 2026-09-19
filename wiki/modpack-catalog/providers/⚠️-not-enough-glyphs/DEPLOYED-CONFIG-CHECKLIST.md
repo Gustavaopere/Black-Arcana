@@ -1,4 +1,4 @@
-# Not Enough Glyphs 4.6.1 — Deployed SERVER Config Checklist
+# Not Enough Glyphs 4.6.2 — Deployed SERVER Config Checklist
 
 Status: `39 SOURCE-ENABLED REGISTRATIONS / DEPLOYED ENABLED STATE UNVERIFIED`
 
@@ -6,7 +6,9 @@ Status: `39 SOURCE-ENABLED REGISTRATIONS / DEPLOYED ENABLED STATE UNVERIFIED`
 
 This checklist turns the remaining Not Enough Glyphs catalog blocker into a finite evidence request.
 
-Exact current-pack NEG source establishes 40 `APIRegistry.registerSpell` registrations. `not_enough_glyphs:momentum` is source-disabled by provider code, leaving **39 source-enabled candidates** before Ars/NeoForge SERVER config.
+Current authority: physical `not_enough_glyphs-1.21.1-4.6.2.jar`, exact source-semver pin `Alexthw46/NotEnoughGlyphs@45604dd18d9d2e3e7ca80a2c616b3309f42aca77`. The 4.6.2 registration and Momentum source blobs are unchanged from 4.6.1; see [`SOURCE-4.6.2-DELTA-AUDIT.md`](SOURCE-4.6.2-DELTA-AUDIT.md).
+
+Exact current-pack NEG 4.6.2 source preserves the same registration blob as 4.6.1 and therefore establishes the same 40 provider registrations. `not_enough_glyphs:momentum` also preserves the same source blob and remains source-disabled, leaving **39 source-enabled candidates** before Ars/NeoForge SERVER config.
 
 Exact Ars Nouveau 5.13.1 config construction, already audited in this provider dossier, maps a registered spell-part identity `<namespace>:<path>` to SERVER config file `<namespace>/<path>.toml`, where `[general].enabled` controls the base spell-part enabled state. Source default `true` is **not** accepted as deployed pack state because SERVER config may be world-overridden.
 
@@ -78,7 +80,7 @@ These registrations are implemented by NEG in the current pack because `toomanyg
 
 ## Ars Scalaes fallback namespace — 1 source-enabled
 
-NEG registers Resize unconditionally under the historical `ars_scalaes` namespace in the audited 4.6.1 source.
+NEG registers Resize unconditionally under the historical `ars_scalaes` namespace in the audited 4.6.2 source; the registration source is unchanged from 4.6.1.
 
 | Registry identity | Expected SERVER config path | Effective `[general].enabled` |
 |---|---|---|
