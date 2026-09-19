@@ -1,4 +1,6 @@
-# Not Enough Glyphs 4.6.1 — Delegation, Repacking and Disabled Content
+# Not Enough Glyphs 4.6.2 — Delegation, Repacking and Disabled Content
+
+Current-source note: the 4.6.2 registration source and `EffectMomentum.java` blobs are identical to the audited 4.6.1 pin. The delegation and explicit Momentum-disable logic below therefore carry forward to 4.6.2. Current sibling material still explicitly confirms Ars Elemental and Ars Controle as installed; no later physical delta involving the fallback providers is documented.
 
 ## Why this file exists
 
