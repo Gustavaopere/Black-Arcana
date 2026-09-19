@@ -472,6 +472,93 @@ def collect_neg(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     }
 
 
+def collect_irons_spell_namespace_overrides(
+    instance: Path,
+    worlds: list[Path],
+    namespace: str,
+) -> dict[str, Any]:
+    """Collect only bounded Iron's spell-config keys for one provider namespace."""
+    selected_keys = [
+        "irons_spellbooks:enabled",
+        "irons_spellbooks:school",
+        "irons_spellbooks:allow_crafting",
+    ]
+    datapack_prefix = f"data/{namespace}/irons_spellbooks_spell_config/"
+
+    out: dict[str, Any] = {
+        "local_spell_configs": [],
+        "global_config": None,
+        "datapack_overrides": [],
+    }
+
+    local_dir = instance / "config" / "irons_spellbooks_spell_config" / namespace
+    if local_dir.is_dir():
+        for config_path in sorted(local_dir.glob("*.json")):
+            out["local_spell_configs"].append({
+                "path": rel(config_path, instance),
+                "selected": load_json_selected(config_path, selected_keys),
+            })
+
+    global_config = instance / "config" / "irons_spellbooks_spell_config" / "global_config.json"
+    if global_config.is_file():
+        out["global_config"] = {
+            "path": rel(global_config, instance),
+            "selected": load_json_selected(global_config, selected_keys),
+        }
+
+    kubejs_dir = instance / "kubejs" / "data" / namespace / "irons_spellbooks_spell_config"
+    if kubejs_dir.is_dir():
+        for config_path in sorted(kubejs_dir.rglob("*.json")):
+            out["datapack_overrides"].append({
+                "source": "kubejs_data",
+                "path": rel(config_path, instance),
+                "selected": load_json_selected(config_path, selected_keys),
+            })
+
+    for world in worlds:
+        datapacks = world / "datapacks"
+        if not datapacks.is_dir():
+            continue
+
+        for config_path in sorted(datapacks.rglob("*.json")):
+            normalized = config_path.as_posix()
+            if f"/{datapack_prefix}" not in normalized:
+                continue
+            out["datapack_overrides"].append({
+                "source": "world_datapack",
+                "path": rel(config_path, instance),
+                "selected": load_json_selected(config_path, selected_keys),
+            })
+
+        for archive in sorted(datapacks.glob("*.zip")):
+            try:
+                with zipfile.ZipFile(archive) as zf:
+                    for name in sorted(zf.namelist()):
+                        if not name.startswith(datapack_prefix) or not name.endswith(".json"):
+                            continue
+                        raw = zf.read(name).decode("utf-8")
+                        data = json.loads(raw)
+                        selected = {}
+                        for key in selected_keys:
+                            short = key.split(":", 1)[-1]
+                            if key in data:
+                                selected[key] = data[key]
+                            elif short in data:
+                                selected[key] = data[short]
+                        out["datapack_overrides"].append({
+                            "source": "world_datapack_zip",
+                            "path": f"{rel(archive, instance)}!/{name}",
+                            "selected": selected,
+                        })
+            except Exception as exc:
+                out["datapack_overrides"].append({
+                    "path": rel(archive, instance),
+                    "error": f"{type(exc).__name__}: {exc}",
+                })
+
+    return out
+
+
 def collect_somake(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
@@ -480,7 +567,12 @@ def collect_somake(instance: Path, worlds: list[Path]) -> dict[str, Any]:
             instance,
             roots,
             "enableSpellLockSystem",
-        )
+        ),
+        "irons_spell_config_evidence": collect_irons_spell_namespace_overrides(
+            instance,
+            worlds,
+            "somakespells",
+        ),
     }
 
 
@@ -573,6 +665,7 @@ def main() -> int:
             "defaultconfigs is template evidence and must not override an observed world/serverconfig value.",
             "No full config/script/quest payloads are copied into the report; only selected keys, hashes, and bounded literal-reference locations are emitted.",
             "A deployed reference to traveloptics:blackout is evidence input, not automatic proof of a survival acquisition route.",
+            "Observed Somake Iron's spell-config files are override evidence only; file presence is not treated as proof of registration or reachability.",
         ],
     }
 
