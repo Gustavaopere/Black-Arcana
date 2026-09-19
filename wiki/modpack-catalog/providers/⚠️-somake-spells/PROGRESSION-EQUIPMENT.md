@@ -47,7 +47,7 @@ Publisher compatibility rule:
 - Born in Chaos present → progression extends to Infernal Fire;
 - Born in Chaos absent → progression stops at Soul Fire.
 
-The current pack contains Born in Chaos `1.7.6`, so the public eligibility condition for the Infernal branch is satisfied. Runtime completion, recipe ingredients and exact ritual state are not yet validated.
+The historical physical checkpoint used by this 1.0.8 audit contained Born in Chaos `1.7.6`, so the public eligibility condition for the Infernal branch was satisfied at that checkpoint. Current 1.0.9 eligibility, runtime completion, recipe ingredients and exact ritual state still require revalidation.
 
 `Ritual Flame` is directly associated with triggering the new fire-pedestal rituals and evolving elemental blaze variants.
 
@@ -74,7 +74,7 @@ The public text does not provide enough information to equate the Withered Rose 
 
 with evolution through the Upgrade Forge.
 
-`Copper Glove` is explicitly described in 1.0.8 as a simple craftable sword-like item for now; the publisher's planned future progression integration is not current behavior.
+`Copper Glove` is explicitly described in 1.0.8 as a simple craftable sword-like item for that release; the publisher's planned future progression integration was not behavior of that checkpoint.
 
 ## Current project-page equipment families
 
