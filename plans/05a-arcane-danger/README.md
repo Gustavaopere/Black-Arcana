@@ -78,7 +78,9 @@ Installed-first baseline is Curios NeoForge `9.5.1+1.21.1`. Curios integration i
 
 ## Stage tasks
 
-1. [Arcane Danger Model](01-arcane-danger-model.md)
+05A.01 is engineering-complete and validated on `main@688ff33b583ac9c9938ad2938e376c1f6ed08f61`; 05A.02 is the next mandatory audit target.
+
+1. [✅ Arcane Danger Model](✅-01-arcane-danger-model.md)
 2. [Arcane Resistance](02-arcane-resistance.md)
 3. [Corruption Resistance](03-corruption-resistance.md)
 4. [Arcane Strain](04-arcane-strain.md)
