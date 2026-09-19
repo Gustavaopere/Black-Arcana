@@ -128,13 +128,29 @@ The catalog must resolve precedence from the actual deployed environment. A temp
 
 ### Somake Spells
 
-Searches only for:
+Searches for the provider-level progression key:
 
 `enableSpellLockSystem`
 
 within the same bounded config roots.
 
-The physical Somake JAR is hashed independently. Matching the publisher release hash closes byte equality only; it does not close current 1.0.9 registry/reachability by itself.
+It also collects **bounded Iron's spell-config override evidence for the `somakespells` namespace**. Only these fields are retained when present:
+
+- `irons_spellbooks:enabled`;
+- `irons_spellbooks:school`;
+- `irons_spellbooks:allow_crafting`.
+
+Observed locations are limited to:
+
+- `config/irons_spellbooks_spell_config/somakespells/*.json`;
+- `config/irons_spellbooks_spell_config/global_config.json`;
+- `kubejs/data/somakespells/irons_spellbooks_spell_config/**/*.json`;
+- direct world datapack JSONs under `data/somakespells/irons_spellbooks_spell_config/`;
+- ZIP datapacks under the same namespace/path.
+
+The report retains only relative paths and those selected fields. It does not copy full JSON payloads.
+
+The physical Somake JAR is hashed independently. Matching the publisher release hash closes byte equality only. An observed spell-config file or override is **evidence about a named config surface, not proof that the corresponding spell is registered, enabled in every layer, or survival-reachable**. The collector still does not close the exact 1.0.9 registry by itself.
 
 ### Traveloptics
 
@@ -155,6 +171,37 @@ It also searches only for the exact literal `traveloptics:blackout` in bounded d
 The JSON retains only source category, relative path, line number and the exact literal. It does **not** copy script bodies, quest prose or datapack payloads.
 
 This closes physical disposition only when the collected file is the actual installed JAR. A Blackout literal match is only a **route candidate**; it must still be inspected against the Traveloptics checklist to prove an actual current-pack survival grant/acquisition mechanism.
+
+## Iron's 3.16.3 host contract for collected paths
+
+The bounded paths above are grounded in the exact Iron's source checkpoint already used by the Somake host audit:
+
+`iron431/Irons-Spells-n-Spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`
+
+At that checkpoint, `SpellConfigManager` defines:
+
+- subconfig folder `irons_spellbooks_spell_config`;
+- global file `global_config.json`;
+- local per-spell layout `/config/irons_spellbooks_spell_config/<mod_id>/<spell_id>.json`;
+- datapack layout `/data/<mod_id>/irons_spellbooks_spell_config/<spell_id>.json`;
+- `enabled`, `school` and `allow_crafting` among the registered spell-config parameter types.
+
+The host builds effective config by iterating the actual Iron's spell registry, applying a per-spell JSON only when an entry exists for that registered spell, then applying global values as fallback where the parameter is still at its default. Unknown spell-config files are ignored by the host.
+
+Consequently, the collector reports observed config/override evidence but **does not use the presence or filename of a JSON file as proof that a Somake spell is currently registered**. Registry closure remains a separate provider-authoritative gate.
+
+## Collector fixture validation — Somake Iron's overrides
+
+The bounded Somake override extraction was validated on a synthetic instance before durable merge:
+
+- temporary NON-MERGE PR: **#339**;
+- exact fixture HEAD: `a1433f0663b2ec3bc965e285dfa0b05232c9cf09`;
+- workflow: **Provider Collector Somake Override Fixture NON-MERGE**;
+- run: `35451515912` — SUCCESS.
+
+The fixture exercises local Iron's spell config, global config, KubeJS override, direct world datapack, ZIP datapack and `enableSpellLockSystem`. It also injects unselected sentinel fields and asserts that those values are absent from the emitted JSON.
+
+This validates **collector behavior only**. It is not evidence of any value in the user's actual modpack.
 
 ## Privacy / minimization
 
@@ -196,7 +243,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Asterism: deployed Astral Gateway Iron's spell config/datapack;
 - Gaze: effective `disableGazeRites`;
 - NEG: effective `[general].enabled` for 39 candidates;
-- Somake: physical 1.0.9 equality plus deployed `enableSpellLockSystem`;
+- Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact 1.0.9 registry identity still requires separate provider-authoritative evidence;
 - Traveloptics: original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references that may point to a pack-specific acquisition route.
 
 The collector does not solve Somake's exact 1.0.9 registry by itself. It also does not prove Traveloptics startup, Blackout reachability or Aqua behavior merely because a literal reference is found.
