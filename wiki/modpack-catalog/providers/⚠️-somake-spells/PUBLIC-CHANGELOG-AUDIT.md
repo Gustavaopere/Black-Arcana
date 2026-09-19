@@ -1,10 +1,12 @@
 # Somake Spells — auditoria pública da linha 1.0.x
 
+> **HISTORICAL LINE NOTE.** This changelog audit preserves 1.0.x publication evidence gathered around the 1.0.8-fix checkpoint. Somake 1.0.9 is now the physical provider line. Historical `CURRENT-LINE` labels below must not be read as current 1.0.9 registry claims.
+
 Scope: releases NeoForge 1.21.1 publicadas pelo próprio projeto. Esta auditoria registra somente o que os changelogs afirmam; ausência de uma nota não é prova de permanência, remoção ou implementação interna.
 
 ## 1.0.8-fix — File ID 8417850 — 2026-07-12
 
-Artefato instalado: `somakespells-1.0.8-1.21.1-fix.jar`.
+Historical artifact at this checkpoint: `somakespells-1.0.8-1.21.1-fix.jar`.
 
 Mudança pública:
 
@@ -84,7 +86,7 @@ Spells introduzidos:
 - Water Control — Aqua;
 - Firestorm Vortex — Fire.
 
-O publisher diz que Guardian/Blessed/Cursed Connection exigiam Mowzie's Mobs para disponibilidade em 1.0.7. O pack atual contém Mowzie's Mobs 1.8.2, mas o gate interno exato 1.0.8-fix não foi auditado.
+O publisher diz que Guardian/Blessed/Cursed Connection exigiam Mowzie's Mobs para disponibilidade em 1.0.7. The physical checkpoint used by this audit contained Mowzie's Mobs 1.8.2, but that does not establish the current 1.0.9 predicate or registry.
 
 ## 1.0.6 — File ID 7914098 — 2026-04-12
 
