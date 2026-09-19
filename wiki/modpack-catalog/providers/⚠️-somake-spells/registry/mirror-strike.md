@@ -10,7 +10,7 @@
 
 ## Registration gate
 
-Exact 1.0.8-fix bytecode gates this registration through `MagicFromTheEastCompat.isLoaded()`, audited as `ModList.get().isLoaded("iss_magicfromtheeast")`. The physical pack contains Magic From the East `1.1.5`; the gate is satisfied.
+Exact 1.0.8-fix bytecode gates this registration through `MagicFromTheEastCompat.isLoaded()`, audited as `ModList.get().isLoaded("iss_magicfromtheeast")`. The physical checkpoint used by that audit contained Magic From the East `1.1.5`, so the gate was satisfied for the historical 1.0.8-fix artifact. This does not establish the 1.0.9 registration.
 
 ## Evidence boundary
 
