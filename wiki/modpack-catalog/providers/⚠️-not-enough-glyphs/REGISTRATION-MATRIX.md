@@ -1,6 +1,6 @@
 # Not Enough Glyphs 4.6.2 — Current-Pack Registration Matrix
 
-Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at current source pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77`, reconciled with sibling physical modlist checkpoint `8211ce36e899cc8f55d24f937b0c7200fb0b3ae1`. The registry file Git blob `28c2007999ec6e534b8c5cd2c90b012c81072cff` is identical to the previously audited 4.6.1 pin, so the object-level matrix below is preserved exactly.
+Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at current source pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77`, reconciled with sibling physical modlist checkpoint `cd38efb9c1a888c86addace69876400cf8845908`. The registry file Git blob `28c2007999ec6e534b8c5cd2c90b012c81072cff` is identical to the previously audited 4.6.1 pin, so the object-level matrix below is preserved exactly.
 
 ## Totals
 
