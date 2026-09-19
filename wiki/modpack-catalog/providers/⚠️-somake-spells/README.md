@@ -75,9 +75,11 @@ Current description:
 
 The 1.0.8 changelog explicitly says Magic From the East and Born in Chaos are **no longer mandatory**, which prevails over stale/generic relation metadata.
 
-### Current physical pack
+### Latest explicit provider-stack physical checkpoint
 
-Present:
+The following presence list is preserved from the latest complete provider-stack physical checkpoint used by this dossier. The sibling's current reorganized certification index is being rebuilt in physical-order batches and is not treated as an absence authority for entries it has not yet reached.
+
+Present at that checkpoint:
 
 - Iron's Spells 'n Spellbooks `1.21.1-3.16.3`;
 - L_Ender's Cataclysm `3.33`;
@@ -89,19 +91,19 @@ Present:
 - Mowzie's Mobs `1.8.2`;
 - T.O Magic n' Extras / `traveloptics` `4.4.0.1-1.21.1`.
 
-Not located in the physical modlist:
+Not located at that checkpoint:
 
 - Better Combat.
 
-Presence alone is not enough to prove a current optional integration path. The historical 1.0.8-fix artifact proved six conditional registrations for that artifact: `mowziesmobs` gated Blessed/Guardian/Cursed Connection and `iss_magicfromtheeast` gated Mirror Strike/Spirit Empowerment/Symmetry Empowerment. Those mod IDs remain present in the current physical pack, but that fact does **not** prove that 1.0.9 retains the same six predicates or the same 61+6 registry partition. Current 1.0.9 optional registration predicates remain open until provider-authoritative evidence closes them.
+Presence alone is not enough to prove a current optional integration path. The historical 1.0.8-fix artifact proved six conditional registrations for that artifact: `mowziesmobs` gated Blessed/Guardian/Cursed Connection and `iss_magicfromtheeast` gated Mirror Strike/Spirit Empowerment/Symmetry Empowerment. Those mod IDs were present at that physical checkpoint, but that fact does **not** prove that 1.0.9 retains the same six predicates or the same 61+6 registry partition. Current 1.0.9 optional registration predicates remain open until provider-authoritative evidence closes them.
 
 ## Aqua / T.O Magic coexistence
 
 Somake states that Aqua was created to cover the absence of Aqua/T.O Magic on 1.21.1 and that its Aqua content would migrate if T.O Magic officially updated.
 
-The current pack does contain `traveloptics-4.4.0.1-1.21.1.jar`, but the T.O Magic publisher currently labels that 1.21.1 build **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**.
+At the same explicit physical checkpoint, the pack contains `traveloptics-4.4.0.1-1.21.1.jar`; the T.O Magic publisher labels that 1.21.1 build **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**.
 
-Therefore Somake Aqua and the T.O Magic alpha are both physically present, but the historical migration statement does **not** prove that authority migrated to this deprecated alpha. Duplicate school/registry/runtime interaction is a live QA blocker.
+Therefore Somake Aqua and the T.O Magic alpha were both physically present at that checkpoint, but the historical migration statement does **not** prove that authority migrated to this deprecated alpha. Duplicate school/registry/runtime interaction is a live QA blocker.
 
 Until runtime/API evidence resolves it, Black Arcana must not select one provider's Aqua identity by assumption or create another Aqua pipeline.
 
