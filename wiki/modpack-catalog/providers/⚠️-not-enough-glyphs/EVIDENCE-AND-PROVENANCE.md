@@ -1,4 +1,6 @@
-# Not Enough Glyphs 4.6.1 — Evidence and Provenance Ledger
+# Not Enough Glyphs 4.6.1 — Historical Evidence and Provenance Ledger
+
+This file preserves the exact historical Phase 2AF 4.6.1 evidence. Current authority is 4.6.2 and is documented in [`SOURCE-4.6.2-DELTA-AUDIT.md`](SOURCE-4.6.2-DELTA-AUDIT.md). Do not interpret the 4.6.1 JAR hash or Sauce 0.0.42.89 entry below as the current physical provider identity.
 
 ## Physical installed artifact
 
