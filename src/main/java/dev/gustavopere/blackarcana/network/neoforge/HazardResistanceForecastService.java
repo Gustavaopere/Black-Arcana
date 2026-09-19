@@ -123,22 +123,33 @@ public final class HazardResistanceForecastService {
         };
     }
 
+    static HazardResistanceForecastPayload.Status statusFor(
+        ArcaneDangerProfile profile,
+        double effective
+    ) {
+        Objects.requireNonNull(profile, "profile");
+        if (!Double.isFinite(effective) || effective < 0.0D) {
+            throw new IllegalArgumentException("effective resistance must be finite and non-negative");
+        }
+        if (!profile.requiresHazardSession()) return HazardResistanceForecastPayload.Status.NORMAL;
+        if (effective < profile.minimumArcaneResistance()) {
+            return profile.belowMinimumPolicy().blocksCast()
+                ? HazardResistanceForecastPayload.Status.BELOW_MINIMUM
+                : HazardResistanceForecastPayload.Status.BELOW_MINIMUM_ALLOWED;
+        }
+        if (effective < profile.recommendedArcaneResistance()) {
+            return HazardResistanceForecastPayload.Status.BELOW_RECOMMENDED;
+        }
+        return HazardResistanceForecastPayload.Status.RECOMMENDED;
+    }
+
     private static HazardResistanceForecastPayload available(
         HazardResistanceForecastRequestPayload request,
         ArcaneDangerProfile profile,
         double effective,
         HazardResistanceForecastPayload.GateStatus gateStatus
     ) {
-        HazardResistanceForecastPayload.Status status;
-        if (!profile.requiresHazardSession()) {
-            status = HazardResistanceForecastPayload.Status.NORMAL;
-        } else if (effective < profile.minimumArcaneResistance()) {
-            status = HazardResistanceForecastPayload.Status.BELOW_MINIMUM;
-        } else if (effective < profile.recommendedArcaneResistance()) {
-            status = HazardResistanceForecastPayload.Status.BELOW_RECOMMENDED;
-        } else {
-            status = HazardResistanceForecastPayload.Status.RECOMMENDED;
-        }
+        HazardResistanceForecastPayload.Status status = statusFor(profile, effective);
         return new HazardResistanceForecastPayload(
             ArcanaProtocol.VERSION,
             request.requestId(),
@@ -146,6 +157,7 @@ public final class HazardResistanceForecastService {
             true,
             status.name(),
             profile.tier().name(),
+            profile.belowMinimumPolicy().name(),
             effective,
             profile.minimumArcaneResistance(),
             profile.recommendedArcaneResistance(),
@@ -164,6 +176,7 @@ public final class HazardResistanceForecastService {
             false,
             HazardResistanceForecastPayload.Status.UNAVAILABLE.name(),
             profile.tier().name(),
+            profile.belowMinimumPolicy().name(),
             0.0D,
             profile.minimumArcaneResistance(),
             profile.recommendedArcaneResistance(),

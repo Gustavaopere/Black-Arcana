@@ -16,6 +16,7 @@ public record ArcaneDangerProfile(
     int maxDamageInstances,
     double minimumArcaneResistance,
     double recommendedArcaneResistance,
+    ArcaneInsufficientResistancePolicy belowMinimumPolicy,
     boolean emergencyProtectionAllowed
 ) {
     public static final double ABSOLUTE_MAX_BACKLASH_MULTIPLIER = 16.0D;
@@ -42,11 +43,38 @@ public record ArcaneDangerProfile(
             maxDamageInstances,
             0.0D,
             0.0D,
+            ArcaneInsufficientResistancePolicy.DENY_CAST,
             false);
+    }
+
+    /** Backward-compatible constructor for schema-v1 callers before explicit below-minimum policy existed. */
+    public ArcaneDangerProfile(
+        ArcaneDangerTier tier,
+        double backlashMultiplier,
+        double corruptionCoefficient,
+        double strainCoefficient,
+        long damageLeaseTicks,
+        int maxDamageInstances,
+        double minimumArcaneResistance,
+        double recommendedArcaneResistance,
+        boolean emergencyProtectionAllowed
+    ) {
+        this(
+            tier,
+            backlashMultiplier,
+            corruptionCoefficient,
+            strainCoefficient,
+            damageLeaseTicks,
+            maxDamageInstances,
+            minimumArcaneResistance,
+            recommendedArcaneResistance,
+            ArcaneInsufficientResistancePolicy.DENY_CAST,
+            emergencyProtectionAllowed);
     }
 
     public ArcaneDangerProfile {
         Objects.requireNonNull(tier, "tier");
+        Objects.requireNonNull(belowMinimumPolicy, "belowMinimumPolicy");
         validateFiniteBounded("backlashMultiplier", backlashMultiplier, ABSOLUTE_MAX_BACKLASH_MULTIPLIER);
         validateFiniteBounded("corruptionCoefficient", corruptionCoefficient, ABSOLUTE_MAX_STATE_COEFFICIENT);
         validateFiniteBounded("strainCoefficient", strainCoefficient, ABSOLUTE_MAX_STATE_COEFFICIENT);
@@ -64,7 +92,7 @@ public record ArcaneDangerProfile(
         if (tier == ArcaneDangerTier.NORMAL) {
             if (backlashMultiplier != 0.0D || corruptionCoefficient != 0.0D || strainCoefficient != 0.0D
                 || damageLeaseTicks != 0L || minimumArcaneResistance != 0.0D || recommendedArcaneResistance != 0.0D
-                || emergencyProtectionAllowed) {
+                || belowMinimumPolicy != ArcaneInsufficientResistancePolicy.DENY_CAST || emergencyProtectionAllowed) {
                 throw new IllegalArgumentException("NORMAL profile cannot carry severe hazard semantics");
             }
         } else if (damageLeaseTicks == 0L) {
@@ -85,6 +113,7 @@ public record ArcaneDangerProfile(
             1,
             0.0D,
             0.0D,
+            ArcaneInsufficientResistancePolicy.DENY_CAST,
             false);
     }
 

@@ -6,6 +6,9 @@ import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.api.ArcanaGatePreflight;
 import dev.gustavopere.blackarcana.api.ArcanaSpellDefinition;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerProfile;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import dev.gustavopere.blackarcana.network.HazardResistanceForecastPayload;
 import org.junit.jupiter.api.Test;
@@ -44,6 +47,29 @@ class HazardResistanceForecastServiceTest {
         ArcanaCastContext context = new ArcanaCastContext(CASTER, 44L, "minecraft:overworld");
 
         assertTrue(HazardResistanceForecastService.previewRequest(runtime, SPELL_ID, context).isEmpty());
+    }
+
+    @Test
+    void belowMinimumStatusReflectsServerOwnedPolicy() {
+        ArcaneDangerProfile denied = new ArcaneDangerProfile(
+            ArcaneDangerTier.DANGEROUS, 1.0D, 0.0D, 0.0D, 100L, 8,
+            20.0D, 40.0D, ArcaneInsufficientResistancePolicy.DENY_CAST, false);
+        ArcaneDangerProfile allowed = new ArcaneDangerProfile(
+            ArcaneDangerTier.DANGEROUS, 1.0D, 0.0D, 0.0D, 100L, 8,
+            20.0D, 40.0D, ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK, false);
+
+        assertEquals(
+            HazardResistanceForecastPayload.Status.BELOW_MINIMUM,
+            HazardResistanceForecastService.statusFor(denied, 10.0D));
+        assertEquals(
+            HazardResistanceForecastPayload.Status.BELOW_MINIMUM_ALLOWED,
+            HazardResistanceForecastService.statusFor(allowed, 10.0D));
+        assertEquals(
+            HazardResistanceForecastPayload.Status.BELOW_RECOMMENDED,
+            HazardResistanceForecastService.statusFor(allowed, 30.0D));
+        assertEquals(
+            HazardResistanceForecastPayload.Status.RECOMMENDED,
+            HazardResistanceForecastService.statusFor(allowed, 40.0D));
     }
 
     @Test

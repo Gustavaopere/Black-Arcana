@@ -12,7 +12,9 @@ import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashPolicy;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerProfile;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardPreflightCode;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceContribution;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceProvider;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceQuery;
@@ -41,6 +43,7 @@ class ArcaneHazardCastGateTest {
 
         assertEquals(25.0D, profile.minimumArcaneResistance());
         assertEquals(50.0D, profile.recommendedArcaneResistance());
+        assertEquals(ArcaneInsufficientResistancePolicy.DENY_CAST, profile.belowMinimumPolicy());
         assertTrue(profile.emergencyProtectionAllowed());
     }
 
@@ -69,8 +72,40 @@ class ArcaneHazardCastGateTest {
         var preparation = gate.preflight(request(), TargetResolution.resolved("target"));
 
         assertFalse(preparation.decision().allowed());
-        assertEquals("hazard_minimum_resistance", preparation.decision().code());
+        assertEquals(ArcaneHazardPreflightCode.MINIMUM_RESISTANCE_REQUIRED.code(), preparation.decision().code());
         assertEquals(0, activations.get());
+    }
+
+    @Test
+    void belowMinimumResistanceCanProceedWhenProfileExplicitlyAllowsRisk() {
+        ArcaneDangerProfileRegistry profiles = profiles(riskTolerantDefinition().toRuntimeProfile());
+        ArcaneResistanceProviderRegistry resistance = ArcaneResistanceProviderRegistry.canonical(4);
+        AtomicInteger activations = new AtomicInteger();
+        ArcaneHazardCastGate gate = new ArcaneHazardCastGate(profiles, resistance, new ArcaneHazardCastGate.HazardSessionActivator() {
+            @Override
+            public ArcaneHazardRuntime.ActivationResult activate(
+                    ArcaneHazardSnapshot snapshot,
+                    ArcaneResistanceSnapshot resistanceSnapshot,
+                    ArcaneBacklashPolicy policy
+            ) {
+                activations.incrementAndGet();
+                assertEquals(0.0D, resistanceSnapshot.effectiveResistance());
+                assertEquals(ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK, snapshot.profile().belowMinimumPolicy());
+                return ArcaneHazardRuntime.ActivationResult.success(true);
+            }
+
+            @Override
+            public boolean close(ArcanaCastId castId) {
+                return true;
+            }
+        });
+
+        var preparation = gate.preflight(request(), TargetResolution.resolved("target"));
+
+        assertTrue(preparation.decision().allowed());
+        assertTrue(preparation.activate().allowed());
+        assertEquals(1, activations.get());
+        preparation.cancel();
     }
 
     @Test
@@ -84,7 +119,7 @@ class ArcaneHazardCastGateTest {
         var preparation = gate.preflight(request(), TargetResolution.resolved("target"));
 
         assertFalse(preparation.decision().allowed());
-        assertEquals("hazard_minimum_resistance", preparation.decision().code());
+        assertEquals(ArcaneHazardPreflightCode.MINIMUM_RESISTANCE_REQUIRED.code(), preparation.decision().code());
         assertEquals(1, releases.get());
     }
 
@@ -275,6 +310,23 @@ class ArcaneHazardCastGateTest {
                 16,
                 25.0D,
                 50.0D,
+                true);
+    }
+
+    private static ArcaneDangerDataDefinition riskTolerantDefinition() {
+        return new ArcaneDangerDataDefinition(
+                1,
+                1,
+                SPELL_ID.canonical(),
+                ArcaneDangerTier.DANGEROUS,
+                1.0D,
+                2.0D,
+                3.0D,
+                100L,
+                16,
+                25.0D,
+                50.0D,
+                ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK,
                 true);
     }
 }

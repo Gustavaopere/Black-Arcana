@@ -46,6 +46,7 @@
   "hazard.black_arcana.forecast": "Danger: %s · Arcane Resistance: current %s, minimum %s, recommended %s · %s",
   "hazard.black_arcana.forecast.unavailable": "Danger: %s · Current Arcane Resistance unavailable · minimum %s, recommended %s",
   "hazard.black_arcana.forecast.status.blocked": "Blocked: resistance below minimum",
+  "hazard.black_arcana.forecast.status.below_minimum_allowed": "Below minimum: cast allowed with hazard risk",
   "hazard.black_arcana.forecast.status.below_recommended": "Below recommended resistance",
   "hazard.black_arcana.forecast.status.recommended": "Resistance recommendation met",
   "hazard.black_arcana.forecast.status.normal": "Normal",
