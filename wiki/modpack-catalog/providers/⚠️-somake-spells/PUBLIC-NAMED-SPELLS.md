@@ -1,8 +1,10 @@
 # Somake Spells — inventário nominal público da linha 1.0.x
 
+> **HISTORICAL LINE NOTE.** This ledger was built for the 1.0.8/1.0.8-fix publication line. The physical provider is now 1.0.9. Labels such as `CURRENT-LINE DIRECT` below mean direct evidence within that historical 1.0.8 line, not current-pack 1.0.9 registry proof. Current closure is controlled by `CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`.
+
 ## Regra de leitura
 
-Este arquivo **não é o registry inventory completo**. O publisher afirma que Somake possui `over 50 new spells`, mas a documentação pública não expõe uma tabela completa e confiável de IDs/valores para o artefato instalado `1.0.8-fix`.
+Este arquivo **não é o registry inventory completo**. O publisher afirma que Somake possui `over 50 new spells`, mas a documentação pública não expõe uma tabela completa e confiável de IDs/valores para o artefato histórico `1.0.8-fix`.
 
 Os nomes abaixo entram somente quando aparecem explicitamente em changelogs oficiais 1.21.1. O estado diferencia:
 
@@ -11,7 +13,7 @@ Os nomes abaixo entram somente quando aparecem explicitamente em changelogs ofic
 - `REMOVED` — publisher registrou remoção explícita;
 - `RENAMED` — nome antigo substituído explicitamente.
 
-## 1.0.8 — nomes diretamente presentes na release base atual
+## 1.0.8 — nomes diretamente presentes na release base histórica
 
 | Nome público | Escola publicada | Semântica pública | Estado |
 |---|---|---|---|
@@ -25,7 +27,7 @@ Os nomes abaixo entram somente quando aparecem explicitamente em changelogs ofic
 | Fire Orbs | Fire por contexto do provider, registry individual não auditado | recebeu novo rework de impacto em 1.0.8 | `CURRENT-LINE DIRECT / VALUES UNVERIFIED` |
 | Ignis Shield | escola não reconfirmada pelo trecho 1.0.8 | refeito como spell ofensivo-defensivo que retaliaria quando o usuário é atingido | `CURRENT-LINE DIRECT / SCHOOL+VALUES UNVERIFIED` |
 
-O fix instalado 1.0.8-fix declara apenas correção das Elemental Charges de Symmetry e Spirit. Ele não publica uma nova lista de spells, então estes nomes pertencem à linha base imediatamente corrigida, mas ainda não constituem prova de registry ID/classe/valor no JAR.
+O fix histórico 1.0.8-fix declara apenas correção das Elemental Charges de Symmetry e Spirit. Ele não publica uma nova lista de spells, então estes nomes pertencem à linha base imediatamente corrigida, mas ainda não constituem prova de registry ID/classe/valor no JAR.
 
 ## 1.0.7 — introduções públicas
 
@@ -39,7 +41,7 @@ O fix instalado 1.0.8-fix declara apenas correção das Elemental Charges de Sym
 | Water Control | Aqua | mantém massa de água suspensa à frente do caster acompanhando a mira durante channel | `INTRODUCED-HISTORICAL / CURRENT REGISTRY UNVERIFIED` |
 | Firestorm Vortex | Fire | vortex no alvo puxa inimigos para dentro e os queima ao longo do tempo | `INTRODUCED-HISTORICAL / CURRENT REGISTRY UNVERIFIED` |
 
-O changelog 1.0.7 dizia que Guardian/Blessed/Cursed Connection exigiam Mowzie's Mobs para ficarem disponíveis. O pack atual contém Mowzie's Mobs 1.8.2, mas a disponibilidade exata 1.0.8-fix não foi reconfirmada em registry/runtime e permanece fail-closed.
+O changelog 1.0.7 dizia que Guardian/Blessed/Cursed Connection exigiam Mowzie's Mobs para ficarem disponíveis. O checkpoint físico usado por esta auditoria continha Mowzie's Mobs 1.8.2, mas isso é evidência histórica da linha 1.0.8-fix e não prova os predicates nem o registry de 1.0.9.
 
 ## 1.0.6 — migrações Aqua explicitamente publicadas
 
