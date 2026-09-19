@@ -9,6 +9,7 @@ Canonical Stage 05 real-client QA documents:
 - `fixtures/stage05-real-client/README.md` — removable deterministic Minecraft 1.21.1 datapack fixture for hazard thresholds, normal/non-normal tooltip controls, Arcane Resistance 0/15/30 states, Iron cooldown/cost gate states, and stale-profile reload validation;
 - `stage05a11-resistance-forecast.md` — historical automated implementation/authority evidence for selected-spell resistance and predictable-gate presentation. Under D035, this historical Stage 05A note no longer blocks implementation progression; manual evidence remains deferred to Stage 09.
 - `provider-catalog-deployed-evidence.md` + `provider-catalog-deployed-evidence-collector.py` — read-only catalog evidence collector for current-pack provider hashes and narrowly selected deployed config keys. It supports conditional-provider closure only; running it never creates Stage 05 PASS evidence or automatic catalog promotion.
+- `provider-catalog-runtime-registry-probe.md` — removable server-side QA companion that observes bounded Iron's spell registry IDs and effective `school` / `enabled` / `allow_crafting` through the exact public 3.16.3 host API on the assembled pack. It is isolated from production and never creates an automatic catalog PASS.
 
 The fixture is supporting infrastructure only. Its presence, its JUnit schema validation and a green CI run do not mark any manual matrix row PASS. Only direct real-client observations recorded under the runbook and evidence ledger may change manual acceptance state.
 

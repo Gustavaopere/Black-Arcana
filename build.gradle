@@ -46,6 +46,10 @@ sourceSets {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
+    catalogQaProbe {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
 }
 
 neoForge {
@@ -64,6 +68,10 @@ neoForge {
     // registered as part of the production Black Arcana mod and cannot enter the
     // canonical production JAR unless an explicit fixture JAR task packages it.
     addModdingDependenciesTo(sourceSets.stage05QaFixture)
+
+    // Provider-catalog runtime evidence is a separate removable QA companion. It
+    // compiles against the same public dependency APIs but never enters production.
+    addModdingDependenciesTo(sourceSets.catalogQaProbe)
 
     runs {
         client {
@@ -107,6 +115,9 @@ configurations {
     stage05QaFixtureImplementation.extendsFrom implementation
     stage05QaFixtureCompileOnly.extendsFrom compileOnly
     stage05QaFixtureRuntimeOnly.extendsFrom runtimeOnly
+    catalogQaProbeImplementation.extendsFrom implementation
+    catalogQaProbeCompileOnly.extendsFrom compileOnly
+    catalogQaProbeRuntimeOnly.extendsFrom runtimeOnly
 }
 
 sourceSets.test.runtimeClasspath += sourceSets.stage05QaFixture.output
@@ -160,6 +171,20 @@ tasks.named('processStage05QaFixtureResources', ProcessResources).configure {
     }
 }
 
+var catalogQaProbeProperties = [
+        minecraft_version_range: minecraft_version_range,
+        neo_version             : neo_version,
+        loader_version_range    : loader_version_range,
+        mod_version             : mod_version,
+]
+
+tasks.named('processCatalogQaProbeResources', ProcessResources).configure {
+    inputs.properties catalogQaProbeProperties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand catalogQaProbeProperties
+    }
+}
+
 tasks.register('stage05QaFixtureJar', Jar) {
     dependsOn tasks.named('stage05QaFixtureClasses')
     archiveBaseName.set('black_arcana_stage05_qa')
@@ -169,6 +194,18 @@ tasks.register('stage05QaFixtureJar', Jar) {
     from('THIRD_PARTY_NOTICES.md')
     manifest {
         attributes('Automatic-Module-Name': 'dev.gustavopere.blackarcana.stage05qa')
+    }
+}
+
+tasks.register('catalogQaProbeJar', Jar) {
+    dependsOn tasks.named('catalogQaProbeClasses')
+    archiveBaseName.set('black_arcana_catalog_qa')
+    archiveVersion.set(project.mod_version)
+    from(sourceSets.catalogQaProbe.output)
+    from('LICENSE')
+    from('THIRD_PARTY_NOTICES.md')
+    manifest {
+        attributes('Automatic-Module-Name': 'dev.gustavopere.blackarcana.catalogqa')
     }
 }
 
