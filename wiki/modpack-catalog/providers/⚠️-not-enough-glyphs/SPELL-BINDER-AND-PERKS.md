@@ -1,4 +1,4 @@
-# Not Enough Glyphs 4.6.1 — Spell Binder and Perks
+# Not Enough Glyphs 4.6.2 — Spell Binder and Perks
 
 ## Binder storage vs caster contract
 
