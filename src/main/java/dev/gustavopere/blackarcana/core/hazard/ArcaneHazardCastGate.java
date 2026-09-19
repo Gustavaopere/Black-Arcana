@@ -9,6 +9,7 @@ import dev.gustavopere.blackarcana.api.ArcanaServices.TargetResolution;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneBacklashPolicy;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerProfile;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneEmergencyProtectionSnapshot;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardPreflightCode;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneHazardSnapshot;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceQuery;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSnapshot;
@@ -115,10 +116,11 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             request.context().serverTick(),
             profile));
 
-        if (resistance.effectiveResistance() < profile.minimumArcaneResistance()) {
+        if (resistance.effectiveResistance() < profile.minimumArcaneResistance()
+            && profile.belowMinimumPolicy().blocksCast()) {
             releaseEmergencyProviderState(request.castId());
             return denied(ArcanaDecision.deny(
-                "hazard_minimum_resistance",
+                ArcaneHazardPreflightCode.MINIMUM_RESISTANCE_REQUIRED.code(),
                 "effective Arcane Resistance is below the server-required minimum"));
         }
 
@@ -128,7 +130,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             if (!hasStateCapacity(casterId, profile)) {
                 releaseEmergencyProviderState(request.castId());
                 return denied(ArcanaDecision.deny(
-                    "hazard_state_capacity",
+                    ArcaneHazardPreflightCode.STATE_CAPACITY.code(),
                     "persistent hazard state capacity is exhausted"));
             }
 
@@ -158,7 +160,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             if (strainPreflight.hardGateActive() || strainPreflight.predictedHardGate()) {
                 releaseEmergencyProviderState(request.castId());
                 return denied(ArcanaDecision.deny(
-                    "hazard_strain_gate",
+                    ArcaneHazardPreflightCode.STRAIN_GATE.code(),
                     "Arcane Strain hard gate denies this cast"));
             }
             stateSettlement = new PreparedStateSettlement(
@@ -205,7 +207,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             UUID casterId = settlement.casterId();
             if (!activeStatefulCasters.add(casterId)) {
                 return ArcanaDecision.deny(
-                    "hazard_state_busy",
+                    ArcaneHazardPreflightCode.STATE_BUSY.code(),
                     "another stateful hazard cast for this caster is still active");
             }
 
@@ -215,7 +217,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                 if (!corruptionReserved) {
                     activeStatefulCasters.remove(casterId);
                     return ArcanaDecision.deny(
-                        "hazard_state_capacity",
+                        ArcaneHazardPreflightCode.STATE_CAPACITY.code(),
                         "persistent corruption state capacity is exhausted");
                 }
             }
@@ -223,7 +225,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                 if (corruptionReserved) corruptionState.releaseReservation(casterId);
                 activeStatefulCasters.remove(casterId);
                 return ArcanaDecision.deny(
-                    "hazard_state_capacity",
+                    ArcaneHazardPreflightCode.STATE_CAPACITY.code(),
                     "persistent strain state capacity is exhausted");
             }
             return ArcanaDecision.allow();
@@ -302,7 +304,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
         public synchronized ArcanaDecision activate() {
             if (committed) return ArcanaDecision.allow();
             if (cancelled) {
-                return ArcanaDecision.deny("hazard_preparation_cancelled", "hazard preparation is already cancelled");
+                return ArcanaDecision.deny(ArcaneHazardPreflightCode.PREPARATION_CANCELLED.code(), "hazard preparation is already cancelled");
             }
             if (activated) return ArcanaDecision.allow();
 

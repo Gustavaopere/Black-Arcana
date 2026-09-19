@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneDangerProfileRegistry;
 import dev.gustavopere.blackarcana.network.neoforge.HazardPreflightSyncService;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +30,8 @@ public final class ArcaneDangerDataReloadListener extends SimpleJsonResourceRelo
     private static final Set<String> ALLOWED_KEYS = Set.of(
         "schemaVersion", "profileVersion", "id", "tier", "backlashMultiplier",
         "corruptionCoefficient", "strainCoefficient", "damageLeaseTicks", "maxDamageInstances",
-        "minimumArcaneResistance", "recommendedArcaneResistance", "emergencyProtectionAllowed");
+        "minimumArcaneResistance", "recommendedArcaneResistance", "belowMinimumPolicy",
+        "emergencyProtectionAllowed");
 
     public ArcaneDangerDataReloadListener() { super(GSON, DIRECTORY); }
 
@@ -82,6 +84,9 @@ public final class ArcaneDangerDataReloadListener extends SimpleJsonResourceRelo
                 requiredInt(object, "maxDamageInstances", resourceId),
                 requiredDouble(object, "minimumArcaneResistance", resourceId),
                 requiredDouble(object, "recommendedArcaneResistance", resourceId),
+                ArcaneInsufficientResistancePolicy.valueOf(
+                    optionalString(object, "belowMinimumPolicy", ArcaneInsufficientResistancePolicy.DENY_CAST.name())
+                        .toUpperCase(java.util.Locale.ROOT)),
                 requiredBoolean(object, "emergencyProtectionAllowed", resourceId));
         } catch (IllegalArgumentException invalid) {
             throw new JsonParseException("invalid danger profile " + resourceId + ": " + invalid.getMessage(), invalid);
@@ -100,6 +105,12 @@ public final class ArcaneDangerDataReloadListener extends SimpleJsonResourceRelo
         return value;
     }
     private static String requiredString(JsonObject o, String k, ResourceLocation id) { return required(o,k,id).getAsString(); }
+    private static String optionalString(JsonObject o, String k, String defaultValue) {
+        JsonElement value = o.get(k);
+        if (value == null) return defaultValue;
+        if (!value.isJsonPrimitive()) throw new JsonParseException("optional field '" + k + "' invalid");
+        return value.getAsString();
+    }
     private static int requiredInt(JsonObject o, String k, ResourceLocation id) { return required(o,k,id).getAsInt(); }
     private static long requiredLong(JsonObject o, String k, ResourceLocation id) { return required(o,k,id).getAsLong(); }
     private static double requiredDouble(JsonObject o, String k, ResourceLocation id) { return required(o,k,id).getAsDouble(); }

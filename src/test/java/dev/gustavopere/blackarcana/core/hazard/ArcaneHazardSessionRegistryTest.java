@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ArcaneHazardSessionRegistryTest {
@@ -75,6 +76,28 @@ class ArcaneHazardSessionRegistryTest {
         assertEquals(1, registry.pruneExpired(110L));
         assertTrue(registry.open(snapshot(second, 110L, 10L, 2)).opened());
         assertEquals(1, registry.size());
+    }
+
+    @Test
+    void activatedSnapshotRemainsImmutableAndCloseReleasesRegistryEntry() {
+        ArcaneHazardSessionRegistry registry = new ArcaneHazardSessionRegistry(2);
+        ArcanaCastId root = ArcanaCastId.parse("99999999-9999-9999-9999-999999999999");
+        ArcaneHazardSnapshot snapshot = snapshot(root, 50L, 20L, 2);
+
+        ArcaneHazardSession session = registry.open(snapshot).session().orElseThrow();
+        assertSame(snapshot, session.snapshot());
+
+        assertEquals(
+            ArcaneHazardSession.ClaimResult.ACCEPTED,
+            session.claim(provenance(root, ArcanaDamageInstanceId.random()), 51L));
+        assertSame(snapshot, session.snapshot());
+        assertEquals(root, session.snapshot().rootCastId());
+
+        assertTrue(registry.close(root));
+        assertTrue(session.closed());
+        assertTrue(registry.find(root).isEmpty());
+        assertEquals(0, registry.size());
+        assertSame(snapshot, session.snapshot());
     }
 
     @Test
