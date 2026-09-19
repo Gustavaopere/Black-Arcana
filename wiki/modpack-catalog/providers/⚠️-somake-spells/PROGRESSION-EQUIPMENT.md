@@ -1,5 +1,7 @@
 # Somake Spells — progressão e equipamento públicos
 
+> **HISTORICAL LINE NOTE.** Unless a section explicitly cites 1.0.9, this file preserves progression/equipment evidence from the 1.0.8 lineage and must not be used to infer current 1.0.9 registry, recipes, thresholds or reachability.
+
 ## Authority
 
 Somake owns its own addon-specific tier-book, grimoire, Upgrade Forge, ritual and equipment progression. Black Arcana may recognize provider-native state only through a proven boundary; it must not maintain a parallel Somake progression ledger.
@@ -16,7 +18,7 @@ Publisher changelog 1.0.6 documents:
 
 The release also warns that the books were completely remade, creating migration risk for already-held books/spells.
 
-Exact current 1.0.8-fix book registry IDs, tier names, objective IDs, advancement IDs, recipes and affinity values remain `NÃO VERIFICADO`.
+Exact 1.0.8-fix book registry IDs, tier names, objective IDs, advancement IDs, recipes and affinity values remain `NÃO VERIFICADO`.
 
 ## Grimoires — 1.0.8 lineage
 
@@ -144,7 +146,7 @@ Again, historical introduction does not prove exact current registry or recipe.
 
 ## Elemental Charges
 
-The current project page says Somake has one `charge` for each element and references addon elements including Sound, Symmetry, Spirit and Geo. The exact installed fix specifically repairs Symmetry and Spirit charge buffs.
+The current project page says Somake has one `charge` for each element and references addon elements including Sound, Symmetry, Spirit and Geo. The historical exact 1.0.8-fix artifact specifically repairs Symmetry and Spirit charge buffs.
 
 Provider authority includes, at minimum, Somake's charge generation/application semantics. Black Arcana must not create a second charge resource or write guessed charge state.
 
