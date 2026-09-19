@@ -53,6 +53,8 @@ The official 1.0.9 release adds a material content/progression delta, including:
 
 Therefore 1.0.8 registry identity and optional-gate conclusions cannot be treated as complete for 1.0.9.
 
+The current 1.21.1 publisher changelog's **16 explicitly named spells** are cataloged in [`CURRENT-1.0.9-PUBLIC-NAMED-SPELLS.md`](CURRENT-1.0.9-PUBLIC-NAMED-SPELLS.md). That file closes naming/school/semantic provenance for those public entries only and deliberately does not convert them into registry IDs.
+
 ## Current optional-provider presence already confirmed
 
 The current sibling modlist confirms these relevant providers are physically installed:

@@ -109,7 +109,9 @@ Until runtime/API evidence resolves it, Black Arcana must not select one provide
 
 ## Publicly named current-line spell evidence
 
-The publisher changelog files remain provenance for names and release semantics, but they do not define the current registry ceiling. The exact 1.0.8-fix artifact supplies a complete **historical** 67-ID registry inventory in `EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md`; it is not a 1.0.9 registry. The 1.0.9 resource audit bounds a localization surface of 83 base spell roots, but those roots are not registry proof. Historical naming evidence must not be substituted for current registry IDs, school mechanics or numerical values.
+The exact 1.0.9 File `8867079` changelog explicitly publishes **16 spell names** in its **New Spells** section: ten Spirit/Evocation, one Holy, one Sound, one Aqua and three Blood. These names and publisher-level semantics are materialized separately in [`CURRENT-1.0.9-PUBLIC-NAMED-SPELLS.md`](CURRENT-1.0.9-PUBLIC-NAMED-SPELLS.md).
+
+That ledger is naming/semantic provenance only. It does **not** establish registry IDs, unconditional registration, host enablement or survival reachability. The exact 1.0.8-fix artifact still supplies only a **historical** 67-ID registry inventory in `EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md`; it is not a 1.0.9 registry. The 1.0.9 resource audit independently bounds a localization surface of 83 base spell roots, but those roots are not registry proof. Historical or publisher naming evidence must not be substituted for current registry IDs, school mechanics or numerical values.
 
 ## Authority / deduplication
 
