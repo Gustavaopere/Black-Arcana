@@ -33,21 +33,12 @@ final class CatalogRuntimeEvidence {
     );
 
     private static final List<String> TARGET_MOD_IDS = List.of(
-        "alshanex_familiars",
         "asterismarcanum",
-        "born_in_chaos_v1",
-        "cataclysm",
-        "familiarslib",
         "gaze",
-        "gtbcs_geomancy_plus",
         "irons_spellbooks",
-        "iss_magicfromtheeast",
-        "legendary_monsters",
-        "mowziesmobs",
         "not_enough_glyphs",
         "somakespells",
-        "traveloptics",
-        "tunes_n_tomes"
+        "traveloptics"
     );
 
     private CatalogRuntimeEvidence() {
