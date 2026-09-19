@@ -59,6 +59,41 @@ public record ArcaneDangerDataDefinition(
             emergencyProtectionAllowed);
     }
 
+    /** Canonical strict JSON representation used by tests, tooling and migration-safe rewrites. */
+    public JsonObject toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("schemaVersion", schemaVersion);
+        object.addProperty("profileVersion", profileVersion);
+        object.addProperty("id", id);
+        object.addProperty("tier", tier.name());
+        object.addProperty("backlashMultiplier", backlashMultiplier);
+        object.addProperty("corruptionCoefficient", corruptionCoefficient);
+        object.addProperty("strainCoefficient", strainCoefficient);
+        object.addProperty("damageLeaseTicks", damageLeaseTicks);
+        object.addProperty("maxDamageInstances", maxDamageInstances);
+        object.addProperty("minimumArcaneResistance", minimumArcaneResistance);
+        object.addProperty("recommendedArcaneResistance", recommendedArcaneResistance);
+        object.addProperty("emergencyProtectionAllowed", emergencyProtectionAllowed);
+        return object;
+    }
+
+    ArcaneDangerDataDefinition withId(ArcanaSpellId migratedId) {
+        Objects.requireNonNull(migratedId, "migratedId");
+        return new ArcaneDangerDataDefinition(
+            schemaVersion,
+            profileVersion,
+            migratedId.canonical(),
+            tier,
+            backlashMultiplier,
+            corruptionCoefficient,
+            strainCoefficient,
+            damageLeaseTicks,
+            maxDamageInstances,
+            minimumArcaneResistance,
+            recommendedArcaneResistance,
+            emergencyProtectionAllowed);
+    }
+
     private static void validateFinite(List<String> errors, double value, String name) {
         if (!Double.isFinite(value) || value < 0.0D || value > ABSOLUTE_MAX_RESISTANCE_HINT) {
             errors.add(name + " outside bounds");
