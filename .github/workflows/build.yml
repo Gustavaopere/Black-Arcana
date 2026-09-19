@@ -60,150 +60,23 @@ jobs:
           jar tf "$JAR" | grep -Fx 'META-INF/neoforge.mods.toml'
           jar tf "$JAR" | grep -Fx 'dev/gustavopere/blackarcana/BlackArcanaMod.class'
 
-      - name: Verify QA companion JAR isolation
+      - name: Verify Stage 05 QA companion JAR isolation
         shell: bash
         run: |
           set -euo pipefail
-          ./gradlew --no-daemon stage05QaFixtureJar catalogQaProbeJar
+          ./gradlew --no-daemon stage05QaFixtureJar
           PROD_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana-*.jar' | head -n 1)"
           FIXTURE_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_stage05_qa-*.jar' | head -n 1)"
-          CATALOG_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_catalog_qa-*.jar' | head -n 1)"
           test -n "$PROD_JAR"
           test -n "$FIXTURE_JAR"
-          test -n "$CATALOG_JAR"
           jar tf "$FIXTURE_JAR" | grep -Fx 'META-INF/neoforge.mods.toml'
           jar tf "$FIXTURE_JAR" | grep -Fx 'pack.mcmeta'
           jar tf "$FIXTURE_JAR" | grep -Fx 'dev/gustavopere/blackarcana/qa/stage05/Stage05QaFixtureMod.class'
-          test "$(jar tf "$FIXTURE_JAR" | grep -Ec '^data/black_arcana_stage05_qa/black_arcana/spells/slot_[0-9]{2}\.json
-      - name: Foundation GameTest server
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p runs/gameTestServer
-          printf 'eula=true\n' > runs/gameTestServer/eula.txt
-          ./gradlew --no-daemon runGameTestServer
-
-      - name: Dedicated-server smoke test
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p runs/server build
-          printf 'eula=true\n' > runs/server/eula.txt
-          LOG="$PWD/build/server-smoke.log"
-          ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
-          PID=$!
-          cleanup() {
-            kill "$PID" 2>/dev/null || true
-            wait "$PID" 2>/dev/null || true
-          }
-          trap cleanup EXIT
-          for _ in $(seq 1 150); do
-            if grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG"; then
-              grep -Fq 'Black Arcana foundation loaded' "$LOG" || {
-                cat "$LOG"
-                exit 1
-              }
-              echo 'Dedicated-server smoke test: PASS'
-              exit 0
-            fi
-            if ! kill -0 "$PID" 2>/dev/null; then
-              cat "$LOG"
-              exit 1
-            fi
-            sleep 1
-          done
-          cat "$LOG"
-          exit 1
-
-      - name: Publish canonical QA JAR
-        if: github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v7
-        with:
-          name: black-arcana-${{ github.sha }}
-          path: build/libs/black_arcana-*.jar
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Publish Stage 05 QA companion JAR
-        if: github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v7
-        with:
-          name: black-arcana-stage05-qa-${{ github.sha }}
-          path: build/libs/black_arcana_stage05_qa-*.jar
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Publish provider catalog QA probe JAR
-        if: github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v7
-        with:
-          name: black-arcana-catalog-qa-${{ github.sha }}
-          path: build/libs/black_arcana_catalog_qa-*.jar
-          if-no-files-found: error
-          retention-days: 7
-
-  stage05_qa_companion_smoke:
-    needs: verify
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Java 21
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '21'
-
-      - name: Build Stage 05 QA companion JAR
-        run: ./gradlew --no-daemon stage05QaFixtureJar
-
-      - name: Stage 05 QA companion dedicated-server smoke test
-        shell: bash
-        run: |
-          set -euo pipefail
-          FIXTURE_JAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_stage05_qa-*.jar' | head -n 1)"
-          test -n "$FIXTURE_JAR"
-          mkdir -p runs/server/mods build
-          COPIED_FIXTURE="runs/server/mods/$(basename "$FIXTURE_JAR")"
-          cp "$FIXTURE_JAR" "$COPIED_FIXTURE"
-          printf 'eula=true\n' > runs/server/eula.txt
-          LOG="$PWD/build/stage05-qa-companion-server-smoke.log"
-          ./gradlew --no-daemon runServer >"$LOG" 2>&1 &
-          PID=$!
-          cleanup() {
-            kill "$PID" 2>/dev/null || true
-            wait "$PID" 2>/dev/null || true
-            rm -f "$COPIED_FIXTURE"
-          }
-          trap cleanup EXIT
-          for _ in $(seq 1 150); do
-            if grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG" \
-              && grep -Fq 'Black Arcana foundation loaded' "$LOG" \
-              && grep -Fq 'Black Arcana Stage 05 QA fixture installed 16 server-authoritative selection-only spells' "$LOG"; then
-              echo 'Stage 05 QA companion dedicated-server smoke test: PASS'
-              exit 0
-            fi
-            if ! kill -0 "$PID" 2>/dev/null; then
-              cat "$LOG"
-              exit 1
-            fi
-            sleep 1
-          done
-          cat "$LOG"
-          exit 1
-)" -eq 16
+          test "$(jar tf "$FIXTURE_JAR" | grep -Ec '^data/black_arcana_stage05_qa/black_arcana/spells/slot_[0-9]{2}\.json$')" -eq 16
           unzip -p "$FIXTURE_JAR" META-INF/neoforge.mods.toml | grep -Fq 'modId="black_arcana_stage05_qa"'
           unzip -p "$FIXTURE_JAR" META-INF/neoforge.mods.toml | grep -Fq 'modId="black_arcana"'
-          jar tf "$CATALOG_JAR" | grep -Fx 'META-INF/neoforge.mods.toml'
-          jar tf "$CATALOG_JAR" | grep -Fx 'pack.mcmeta'
-          jar tf "$CATALOG_JAR" | grep -Fx 'dev/gustavopere/blackarcana/qa/catalog/CatalogQaProbeMod.class'
-          jar tf "$CATALOG_JAR" | grep -Fx 'dev/gustavopere/blackarcana/qa/catalog/CatalogRuntimeEvidence.class'
-          unzip -p "$CATALOG_JAR" META-INF/neoforge.mods.toml | grep -Fq 'modId="black_arcana_catalog_qa"'
-          unzip -p "$CATALOG_JAR" META-INF/neoforge.mods.toml | grep -Fq 'modId="irons_spellbooks"'
-          if jar tf "$PROD_JAR" | grep -Eq 'black_arcana_stage05_qa|Stage05LoadoutQaFixture|Stage05QaFixtureMod|black_arcana_catalog_qa|CatalogQaProbeMod|CatalogRuntimeEvidence'; then
-            echo 'QA-only content leaked into the production JAR'
+          if jar tf "$PROD_JAR" | grep -Eq 'black_arcana_stage05_qa|Stage05LoadoutQaFixture|Stage05QaFixtureMod'; then
+            echo 'Stage 05 QA fixture leaked into the production JAR'
             exit 1
           fi
 
