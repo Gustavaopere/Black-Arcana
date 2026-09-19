@@ -9,6 +9,8 @@ Current sibling modlist checkpoint `8211ce36e899cc8f55d24f937b0c7200fb0b3ae1` re
 - name: `Not Enough Glyphs`;
 - runtime version: `4.6.2`;
 - official CurseForge project/file: `1023517 / 8880291`;
+- exact publisher-release SHA-1: `32eea2c478a346ee7499f6a0db156241116f73e9`;
+- exact publisher-release SHA-256: `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12`;
 - current physical pack SHA-1: **not yet captured in Black Arcana authority material**;
 - previous 4.6.1 SHA-1 `e5fd04b7c40d6d5a9aea5d6356f3eb628941fca4`: historical only;
 - current source dependency on Sauce: `0.0.50.97`;
@@ -22,6 +24,12 @@ Installed optional-provider facts used for conditional registration:
 - Ars Omega: absent;
 - Ars Trinkets: absent;
 - Ars Scalaes: absent.
+
+## Exact publisher-release audit
+
+Temporary evidence PR #334 / audit HEAD `a7b341505464998c37c1563668cc263e978b7c2c` ran workflow `35443734628` successfully and published artifact `10585275563` with digest `sha256:6ceeeaf7805857537bbbf297a9dfe21ba9c363845d6fe7d0ff8ef00ebe1fb314`.
+
+That audit independently fingerprints CurseForge File `8880291` and confirms embedded `sauce-1.21.1-0.0.50.97.jar`. It does **not** prove the installed physical pack JAR is byte-identical because no independent current pack hash is available.
 
 ## Exact public source-semver pin
 
@@ -62,6 +70,7 @@ Phase 2AF inspected, at the exact source pin:
 | Claim | Confidence |
 |---|---|
 | installed filename/version | HIGH — current sibling physical modlist |
+| exact publisher-release hashes / embedded Sauce 0.0.50.97 | HIGH — exact CurseForge File 8880291 audit |
 | source 4.6.2 registration matrix | HIGH — exact source-semver commit plus byte-identical registry blob across 4.6.1→4.6.2 |
 | current-pack conditional registration matrix | HIGH — physical mod presence crossed with exact registration code |
 | exact source tree equals installed binary byte-for-byte | **NOT PROVEN** |
