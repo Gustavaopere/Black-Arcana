@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-09-18
+Last updated: 2026-09-19
 
 ## Authoritative execution rule
 
@@ -19,6 +19,8 @@ Stage 09 is the consolidated exact-release-candidate validation campaign and rem
 ## Current active stage
 
 **Stage 05A — Arcane Danger is the current numbered audit target.**
+
+`05A.01 — Arcane Danger Model` is ✅ engineering-complete on `main@688ff33b583ac9c9938ad2938e376c1f6ed08f61` after PR #345 and canonical post-merge CI run `35466427939`. `05A.02 — Arcane Resistance` is the next mandatory plan; later 05A plans remain blocked by numeric order.
 
 Stage 05 — Casting & UX is `COMPLETE / ENGINEERING CLOSED / REAL-CLIENT RELEASE VALIDATION CARRIED TO STAGE 09`.
 
