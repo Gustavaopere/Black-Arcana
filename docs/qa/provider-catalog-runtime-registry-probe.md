@@ -136,9 +136,9 @@ The artifact exists for QA convenience only and is not part of the production mo
 2. Place the exact Black Arcana build under validation in the instance.
 3. Place `black_arcana_catalog_qa-<version>.jar` in the server `mods/` directory.
 4. Start the dedicated server normally and wait until startup completes.
-5. Extract only lines beginning with `[BLACK_ARCANA_CATALOG_PROBE]`.
-6. Stop the server and remove the QA probe JAR before normal gameplay/release packaging.
-7. Pair the runtime rows with `provider-catalog-deployed-evidence.json` from the read-only filesystem collector.
+5. Run the read-only filesystem collector against the same exact instance. By default it reads `logs/latest.log` and retains only whitelisted fields from the **last complete** `[BLACK_ARCANA_CATALOG_PROBE]` block; use `--probe-log` when the authoritative server log is elsewhere.
+6. Review the resulting `runtime_probe` object in `provider-catalog-deployed-evidence.json`. Raw log lines and unrelated log content are not retained.
+7. Stop the server and remove the QA probe JAR before normal gameplay/release packaging.
 8. Apply each provider's canonical acceptance checklist. Do not promote a provider merely because the probe ran successfully.
 
 ## Evidence meaning
@@ -197,4 +197,4 @@ The probe does not intentionally emit:
 
 Only the bounded provider/mod/registry fields above are emitted.
 
-Review the extracted probe lines before attaching them to a catalog evidence PR.
+Review the collector JSON before attaching it to a catalog evidence PR. If raw probe lines are retained separately for debugging, treat them as transient local evidence; the canonical collector bundle does not need or preserve unrelated server-log content.
