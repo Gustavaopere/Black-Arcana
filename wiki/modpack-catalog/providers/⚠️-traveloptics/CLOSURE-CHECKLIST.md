@@ -74,7 +74,7 @@ For the exact assembled pack it emits only the bounded targets:
 - `traveloptics:universal_loot`;
 - whether both resolved values are distinct object instances.
 
-Canonical runbook: [`docs/qa/provider-catalog-runtime-registry-probe.md`](../../../docs/qa/provider-catalog-runtime-registry-probe.md).
+Canonical runbook: [`docs/qa/provider-catalog-runtime-registry-probe.md`](../../../../docs/qa/provider-catalog-runtime-registry-probe.md).
 
 This does not create a PASS by itself. Gate 2 evidence must still pair the runtime rows with the deployed artifact hash/disposition from Gate 1.
 
@@ -125,7 +125,7 @@ Creative access, commands, registry presence, translation keys, generic publishe
 
 The physical pack contains both:
 
-- Somake Spells 1.0.8-fix;
+- Somake Spells `1.0.9`;
 - T.O Magic n' Extras `4.4.0.1-1.21.1`.
 
 Somake historical publisher text described Aqua as covering T.O's absence on 1.21.1 and discussed future migration if T.O returned. The installed T.O 1.21.1 line is a deprecated partial alpha. Those facts do **not** establish current authority migration or safe deduplication.
