@@ -46,6 +46,15 @@ Default output:
 
 `provider-catalog-deployed-evidence.json`
 
+If `<instance>/logs/latest.log` contains a completed `[BLACK_ARCANA_CATALOG_PROBE]` block, the collector also folds that block into the JSON using a strict field whitelist. To point at a different log without copying it into the instance:
+
+```bash
+python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack-instance" \
+  --probe-log "/path/to/server/logs/latest.log"
+```
+
+Raw log text is never retained in the report.
+
 Custom output:
 
 ```bash
@@ -54,6 +63,34 @@ python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack
 ```
 
 ## What the collector records
+
+### Catalog runtime probe bundle
+
+When a runtime-probe log is available, the collector scans it line-by-line and ignores every line that does not contain the exact prefix:
+
+`[BLACK_ARCANA_CATALOG_PROBE]`
+
+It keeps only the **last complete** `type=begin ... type=end` block. Incomplete/stale trailing blocks are not promoted over an earlier complete run.
+
+The parser accepts only the bounded fields emitted by the QA companion:
+
+- verified target mod IDs and boolean loaded state;
+- target Iron's spell IDs, school, `enabled`, `allow_crafting` and bounded failure status;
+- target namespace registered counts;
+- Traveloptics `key_loot` / `universal_loot` serializer presence;
+- Traveloptics serializer-pair status and distinct-object boolean.
+
+Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows and a count of ignored prefixed rows.
+
+Possible parser states:
+
+- `COMPLETE` — at least one complete probe block was found; the last complete block is retained;
+- `NO_COMPLETE_BLOCK` — prefixed rows exist but no complete begin/end block closed;
+- `NO_PROBE_ROWS` — the selected log exists but contains no probe prefix;
+- `NOT_FOUND` — no selected/default log exists;
+- `READ_ERROR` — the selected log could not be read.
+
+This bundle is still evidence input. A `COMPLETE` block does not promote any provider automatically.
 
 ### Physical JAR fingerprints
 
@@ -214,12 +251,12 @@ The collector deliberately avoids:
 - quest prose;
 - datapack payload bodies;
 - player data;
-- logs;
+- raw log lines, timestamps, thread names and unrelated log content;
 - saves;
 - authentication/secrets;
 - unrelated mod configuration.
 
-Only relative paths, selected values, file hashes and bounded exact-literal locations are emitted.
+Only relative paths, selected values, file hashes, bounded exact-literal locations and whitelisted structured catalog-probe fields are emitted.
 
 Review the JSON before attaching it anywhere.
 
@@ -246,4 +283,4 @@ Do not convert missing files into source-default values unless the actual runtim
 - Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact 1.0.9 registry identity still requires separate provider-authoritative evidence;
 - Traveloptics: original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references that may point to a pack-specific acquisition route.
 
-The collector does not solve Somake's exact 1.0.9 registry by itself. Pair it with [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) when exact assembled-server Iron's registry identity and effective host `school` / `enabled` / `allow_crafting` observations are required. The runtime probe is separate QA evidence and still does not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.
+The collector does not solve Somake's exact 1.0.9 registry by filesystem evidence alone. Run the companion described in [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) on the exact assembled server; the collector can then ingest the resulting bounded probe block from `logs/latest.log` or `--probe-log`. The runtime rows still do not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.
