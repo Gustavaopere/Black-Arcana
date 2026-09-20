@@ -9,6 +9,8 @@ This script does not modify the Minecraft instance. It emits only:
 - bounded references to exact catalog IDs in deployed customization surfaces.
 
 It intentionally does not dump full config files, script bodies, quest text or unrelated instance data.
+When a Black Arcana catalog runtime probe log is available, it retains only
+strictly whitelisted structured fields from the last complete probe block.
 """
 
 from __future__ import annotations
@@ -86,6 +88,226 @@ TEXT_EXTENSIONS = {".toml", ".json", ".cfg", ".conf", ".txt", ".js", ".snbt", ".
 ASTERISM_DATA_RELATIVE = "asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json"
 ASTERISM_DATAPACK_PATH = f"data/{ASTERISM_DATA_RELATIVE}"
 TRAVELOPTICS_BLACKOUT_LITERAL = "traveloptics:blackout"
+
+CATALOG_PROBE_PREFIX = "[BLACK_ARCANA_CATALOG_PROBE]"
+TARGET_PROBE_MOD_IDS = {
+    "asterismarcanum",
+    "gaze",
+    "irons_spellbooks",
+    "not_enough_glyphs",
+    "somakespells",
+    "traveloptics",
+}
+TARGET_PROBE_SPELL_NAMESPACES = {
+    "asterismarcanum",
+    "gaze",
+    "somakespells",
+    "traveloptics",
+}
+TARGET_PROBE_LOOT_IDS = {
+    "traveloptics:key_loot",
+    "traveloptics:universal_loot",
+}
+RESOURCE_LOCATION_RE = re.compile(r"^[a-z0-9_.-]+:[a-z0-9_./-]+$")
+SIMPLE_ERROR_RE = re.compile(r"^[A-Za-z0-9_$]+$")
+
+
+def _probe_bool(value: str | None) -> bool | None:
+    if value == "true":
+        return True
+    if value == "false":
+        return False
+    return None
+
+
+def _probe_nonnegative_int(value: str | None) -> int | None:
+    try:
+        parsed = int(value) if value is not None else None
+    except ValueError:
+        return None
+    if parsed is None or parsed < 0:
+        return None
+    return parsed
+
+
+def _probe_resource_location(value: str | None) -> str | None:
+    if value is None or RESOURCE_LOCATION_RE.fullmatch(value) is None:
+        return None
+    return value
+
+
+def _probe_error(value: str | None) -> str | None:
+    if value is None or SIMPLE_ERROR_RE.fullmatch(value) is None:
+        return None
+    return value
+
+
+def parse_catalog_probe_payload(payload: str) -> dict[str, Any] | None:
+    fields: dict[str, str] = {}
+    for token in payload.strip().split():
+        if "=" not in token:
+            continue
+        key, value = token.split("=", 1)
+        fields[key] = value
+
+    row_type = fields.get("type")
+    if row_type in {"begin", "end"}:
+        schema = _probe_nonnegative_int(fields.get("schema"))
+        if schema is None:
+            return None
+        return {"type": row_type, "schema": schema}
+
+    if row_type == "mod":
+        mod_id = fields.get("id")
+        loaded = _probe_bool(fields.get("loaded"))
+        if mod_id not in TARGET_PROBE_MOD_IDS or loaded is None:
+            return None
+        return {"type": "mod", "id": mod_id, "loaded": loaded}
+
+    if row_type == "spell":
+        registry_id = _probe_resource_location(fields.get("id"))
+        status = fields.get("status")
+        if registry_id is None or registry_id.split(":", 1)[0] not in TARGET_PROBE_SPELL_NAMESPACES:
+            return None
+        if status == "OBSERVED":
+            school = _probe_resource_location(fields.get("school"))
+            enabled = _probe_bool(fields.get("enabled"))
+            allow_crafting = _probe_bool(fields.get("allow_crafting"))
+            if school is None or enabled is None or allow_crafting is None:
+                return None
+            return {
+                "type": "spell",
+                "id": registry_id,
+                "status": status,
+                "school": school,
+                "enabled": enabled,
+                "allow_crafting": allow_crafting,
+            }
+        if status == "REGISTRY_VALUE_UNAVAILABLE":
+            return {"type": "spell", "id": registry_id, "status": status}
+        if status == "HOST_VALUE_UNAVAILABLE":
+            error = _probe_error(fields.get("error"))
+            if error is None:
+                return None
+            return {"type": "spell", "id": registry_id, "status": status, "error": error}
+        return None
+
+    if row_type == "summary":
+        namespace = fields.get("namespace")
+        count = _probe_nonnegative_int(fields.get("registered_count"))
+        if namespace not in TARGET_PROBE_SPELL_NAMESPACES or count is None:
+            return None
+        return {"type": "summary", "namespace": namespace, "registered_count": count}
+
+    if row_type == "loot_modifier_serializer":
+        registry_id = _probe_resource_location(fields.get("id"))
+        status = fields.get("status")
+        if registry_id not in TARGET_PROBE_LOOT_IDS or status not in {"OBSERVED", "NOT_PRESENT"}:
+            return None
+        return {"type": row_type, "id": registry_id, "status": status}
+
+    if row_type == "loot_modifier_pair":
+        if fields.get("namespace") != "traveloptics":
+            return None
+        status = fields.get("status")
+        if status == "OBSERVED":
+            distinct = _probe_bool(fields.get("distinct_codec_instances"))
+            if distinct is None:
+                return None
+            return {
+                "type": row_type,
+                "namespace": "traveloptics",
+                "status": status,
+                "distinct_codec_instances": distinct,
+            }
+        if status == "INCOMPLETE":
+            key_present = _probe_bool(fields.get("key_loot_present"))
+            universal_present = _probe_bool(fields.get("universal_loot_present"))
+            if key_present is None or universal_present is None:
+                return None
+            return {
+                "type": row_type,
+                "namespace": "traveloptics",
+                "status": status,
+                "key_loot_present": key_present,
+                "universal_loot_present": universal_present,
+            }
+        if status == "REGISTRY_VALUE_UNAVAILABLE":
+            error = _probe_error(fields.get("error"))
+            if error is None:
+                return None
+            return {
+                "type": row_type,
+                "namespace": "traveloptics",
+                "status": status,
+                "error": error,
+            }
+        return None
+
+    return None
+
+
+def collect_catalog_runtime_probe(instance: Path, probe_log: Path | None) -> dict[str, Any]:
+    path = probe_log if probe_log is not None else instance / "logs" / "latest.log"
+    path = path.expanduser().resolve()
+
+    out: dict[str, Any] = {
+        "source": rel(path, instance),
+        "status": "NOT_FOUND",
+        "schema": None,
+        "rows": [],
+        "ignored_prefixed_rows": 0,
+    }
+    if not path.is_file():
+        return out
+
+    saw_prefix = False
+    ignored = 0
+    current: dict[str, Any] | None = None
+    last_complete: dict[str, Any] | None = None
+
+    try:
+        with path.open("r", encoding="utf-8", errors="replace") as handle:
+            for line in handle:
+                marker = line.find(CATALOG_PROBE_PREFIX)
+                if marker < 0:
+                    continue
+                saw_prefix = True
+                payload = line[marker + len(CATALOG_PROBE_PREFIX):]
+                row = parse_catalog_probe_payload(payload)
+                if row is None:
+                    ignored += 1
+                    continue
+
+                if row["type"] == "begin":
+                    current = {"schema": row["schema"], "rows": []}
+                    continue
+
+                if current is None:
+                    continue
+
+                if row["type"] == "end":
+                    if row["schema"] == current["schema"]:
+                        last_complete = current
+                    current = None
+                    continue
+
+                current["rows"].append(row)
+    except OSError as exc:
+        out["status"] = "READ_ERROR"
+        out["error"] = type(exc).__name__
+        return out
+
+    out["ignored_prefixed_rows"] = ignored
+    if last_complete is not None:
+        out["status"] = "COMPLETE"
+        out["schema"] = last_complete["schema"]
+        out["rows"] = last_complete["rows"]
+    elif saw_prefix:
+        out["status"] = "NO_COMPLETE_BLOCK"
+    else:
+        out["status"] = "NO_PROBE_ROWS"
+    return out
 
 
 def digest_file(path: Path) -> dict[str, Any]:
@@ -639,6 +861,12 @@ def main() -> int:
         default=Path("provider-catalog-deployed-evidence.json"),
         help="Output JSON path (default: provider-catalog-deployed-evidence.json)",
     )
+    parser.add_argument(
+        "--probe-log",
+        type=Path,
+        default=None,
+        help="Optional explicit catalog runtime probe log. Defaults to <instance>/logs/latest.log when present.",
+    )
     args = parser.parse_args()
 
     instance = args.instance.expanduser().resolve()
@@ -649,11 +877,15 @@ def main() -> int:
     worlds = candidate_worlds(instance, [p.expanduser() for p in args.world])
 
     report = {
-        "schema": 2,
+        "schema": 3,
         "collector": "Black Arcana provider catalog deployed evidence",
         "instance_root_redacted": True,
         "worlds_scanned": [rel(w, instance) for w in worlds],
         "mods": collect_mod_hashes(instance),
+        "runtime_probe": collect_catalog_runtime_probe(
+            instance,
+            args.probe_log.expanduser() if args.probe_log is not None else None,
+        ),
         "asterism_arcanum": collect_asterism(instance, worlds),
         "gaze": collect_gaze(instance, worlds),
         "not_enough_glyphs": collect_neg(instance, worlds),
@@ -663,7 +895,8 @@ def main() -> int:
             "This collector is read-only.",
             "Missing files/keys are observations, not proof that provider defaults are active.",
             "defaultconfigs is template evidence and must not override an observed world/serverconfig value.",
-            "No full config/script/quest payloads are copied into the report; only selected keys, hashes, and bounded literal-reference locations are emitted.",
+            "No full config/script/quest/log payloads are copied into the report; only selected keys, hashes, bounded literal-reference locations, and whitelisted fields from the last complete catalog-probe block are emitted.",
+            "Runtime probe ingestion never retains raw log lines, timestamps, thread names, or unrelated log content.",
             "A deployed reference to traveloptics:blackout is evidence input, not automatic proof of a survival acquisition route.",
             "Observed Somake Iron's spell-config files are override evidence only; file presence is not treated as proof of registration or reachability.",
         ],
