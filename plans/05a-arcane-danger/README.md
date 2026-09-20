@@ -48,7 +48,7 @@ Backlash is derived from confirmed post-mitigation eligible health damage. Multi
 
 ## Snapshot rule
 
-After normal checks/resource reservation succeed but before effects can deal eligible damage, the server snapshots the danger profile, Arcane/Corruption Resistance sources, relevant strain/corruption state and provider facts. Delayed damage uses that committed snapshot; swapping gear or perks afterward cannot retroactively evade that cast's risk.
+During side-effect-free hazard preflight, after ordinary read-only checks but before normal resource reservation, the server freezes the danger profile, Arcane/Corruption Resistance sources, relevant strain/corruption preflight state and provider facts. If reservation succeeds, hazard activation receives and commits those same frozen facts before effects can deal eligible damage. Delayed damage uses that committed snapshot; swapping gear or perks after preflight cannot retroactively evade that root cast's risk.
 
 ## Canonical ordering
 

@@ -35,7 +35,7 @@ Provider queries are read-only and server-side. One failing provider is isolated
 - complete bounded source breakdown;
 - curve/profile version or constants needed for reproducibility.
 
-The snapshot is captured at hazard-session activation and is immutable for that root cast.
+Per D029/D030, the server captures the read-only Arcane Resistance snapshot during side-effect-free hazard preflight before normal resource reservation. If preflight remains allowed and reservation succeeds, hazard-session activation receives that exact immutable snapshot; activation does not re-read providers or equipment for the same root cast.
 
 ## Explicit exclusions
 By default none of these contribute automatically:
