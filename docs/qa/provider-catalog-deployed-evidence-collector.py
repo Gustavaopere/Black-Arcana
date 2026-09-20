@@ -258,12 +258,14 @@ def collect_catalog_runtime_probe(instance: Path, probe_log: Path | None) -> dic
         "schema": None,
         "rows": [],
         "ignored_prefixed_rows": 0,
+        "embedded_prefix_rows_ignored": 0,
     }
     if not path.is_file():
         return out
 
     saw_prefix = False
     ignored = 0
+    embedded_ignored = 0
     current: dict[str, Any] | None = None
     last_complete: dict[str, Any] | None = None
 
@@ -273,6 +275,12 @@ def collect_catalog_runtime_probe(instance: Path, probe_log: Path | None) -> dic
                 marker = line.find(CATALOG_PROBE_PREFIX)
                 if marker < 0:
                     continue
+
+                before_prefix = line[:marker].rstrip()
+                if before_prefix and not before_prefix.endswith("]:"):
+                    embedded_ignored += 1
+                    continue
+
                 saw_prefix = True
                 payload = line[marker + len(CATALOG_PROBE_PREFIX):]
                 row = parse_catalog_probe_payload(payload)
@@ -300,6 +308,7 @@ def collect_catalog_runtime_probe(instance: Path, probe_log: Path | None) -> dic
         return out
 
     out["ignored_prefixed_rows"] = ignored
+    out["embedded_prefix_rows_ignored"] = embedded_ignored
     if last_complete is not None:
         out["schema"] = last_complete["schema"]
         if last_complete["schema"] not in SUPPORTED_CATALOG_PROBE_SCHEMAS:
