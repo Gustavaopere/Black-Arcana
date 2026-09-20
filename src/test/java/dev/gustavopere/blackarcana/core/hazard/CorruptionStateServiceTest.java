@@ -68,11 +68,21 @@ class CorruptionStateServiceTest {
         registry.register(provider(120.0D));
         var resistance = registry.snapshot(query());
 
-        var capped = new CorruptionAcquisitionProfile(
+        var scaled = new CorruptionAcquisitionProfile(
             0.0D,
             2.0D,
             0.0D,
             0.5D,
+            CorruptionAcquisitionProfile.ABSOLUTE_MAX_RESISTANCE_APPLIED);
+        var scaledUpdate = CorruptionStateService.canonical(16)
+            .acquireFromEligibleDamage(PLAYER, 100L, 15.0D, scaled, resistance);
+        assertEquals(15.0D, scaledUpdate.appliedDelta(), 1.0E-9D);
+
+        var capped = new CorruptionAcquisitionProfile(
+            0.0D,
+            2.0D,
+            0.0D,
+            1.0D,
             30.0D);
         var cappedUpdate = CorruptionStateService.canonical(16)
             .acquireFromEligibleDamage(PLAYER, 100L, 15.0D, capped, resistance);
