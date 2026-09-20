@@ -25,6 +25,7 @@ import dev.gustavopere.blackarcana.core.hazard.ArcaneEmergencyProtectionStateSer
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentProfileRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneEquipmentSetBonusRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneResistanceProviderRegistry;
+import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainProfileRegistry;
 import dev.gustavopere.blackarcana.core.hazard.ArcaneStrainStateService;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionResistanceProviderRegistry;
 import dev.gustavopere.blackarcana.core.hazard.CorruptionStateService;
@@ -113,6 +114,7 @@ public final class ArcanaServerRuntime {
     private final ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles = new ArcaneEquipmentProfileRegistry();
     private final ArcaneEquipmentSetBonusRegistry arcaneEquipmentSetBonuses = new ArcaneEquipmentSetBonusRegistry();
     private final CorruptionStateService corruption = CorruptionStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
+    private final ArcaneStrainProfileRegistry strainProfiles = new ArcaneStrainProfileRegistry();
     private final ArcaneStrainStateService strain = ArcaneStrainStateService.canonical(DEFAULT_MAX_TRACKED_HAZARD_PLAYERS);
     private final ArcaneEmergencyProtectionStateService emergencyProtection =
         ArcaneEmergencyProtectionStateService.canonical(DEFAULT_MAX_EMERGENCY_RESOURCES);
@@ -330,6 +332,7 @@ public final class ArcanaServerRuntime {
     public ArcaneEquipmentProfileRegistry arcaneEquipmentProfiles() { return arcaneEquipmentProfiles; }
     public ArcaneEquipmentSetBonusRegistry arcaneEquipmentSetBonuses() { return arcaneEquipmentSetBonuses; }
     public CorruptionStateService corruption() { return corruption; }
+    public ArcaneStrainProfileRegistry strainProfiles() { return strainProfiles; }
     public ArcaneStrainStateService strain() { return strain; }
     public ArcaneEmergencyProtectionStateService emergencyProtection() { return emergencyProtection; }
     public RitualDefinitionRegistry ritualDefinitions() { return ritualDefinitions; }
