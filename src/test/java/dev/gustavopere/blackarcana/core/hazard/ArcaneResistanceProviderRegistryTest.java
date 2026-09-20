@@ -40,6 +40,30 @@ class ArcaneResistanceProviderRegistryTest {
     }
 
     @Test
+    void differentBuildCompositionsCanReachSameEffectiveResistanceWithoutChangingCurveResult() {
+        ArcaneResistanceProviderRegistry equipmentAndRpg = ArcaneResistanceProviderRegistry.canonical(8);
+        equipmentAndRpg.register(provider(
+            "equipment", "robe", ArcaneResistanceSourceCategory.EQUIPMENT, 60.0D));
+        equipmentAndRpg.register(provider(
+            "rpg", "mastery", ArcaneResistanceSourceCategory.RPG, 40.0D));
+
+        ArcaneResistanceProviderRegistry curioEffectAndRitual = ArcaneResistanceProviderRegistry.canonical(8);
+        curioEffectAndRitual.register(provider(
+            "curio", "amulet", ArcaneResistanceSourceCategory.CURIO, 25.0D));
+        curioEffectAndRitual.register(provider(
+            "effect", "ward", ArcaneResistanceSourceCategory.EFFECT, 25.0D));
+        curioEffectAndRitual.register(provider(
+            "ritual", "circle", ArcaneResistanceSourceCategory.RITUAL, 50.0D));
+
+        var first = equipmentAndRpg.snapshot(query());
+        var second = curioEffectAndRitual.snapshot(query());
+
+        assertEquals(100.0D, first.effectiveResistance(), 0.0D);
+        assertEquals(first.effectiveResistance(), second.effectiveResistance(), 0.0D);
+        assertEquals(first.residualBacklashMultiplier(), second.residualBacklashMultiplier(), 0.0D);
+    }
+
+    @Test
     void bucketAndGlobalCapsPreventAbsurdStacking() {
         ArcaneResistanceProviderRegistry registry = ArcaneResistanceProviderRegistry.canonical(8);
         registry.register(provider("armor_a", "robe", ArcaneResistanceSourceCategory.EQUIPMENT, 200.0D));
