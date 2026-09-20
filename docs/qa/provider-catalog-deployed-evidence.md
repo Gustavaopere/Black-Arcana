@@ -80,11 +80,12 @@ The parser accepts only the bounded fields emitted by the QA companion:
 - Traveloptics `key_loot` / `universal_loot` serializer presence;
 - Traveloptics serializer-pair status and distinct-object boolean.
 
-Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows and a count of ignored prefixed rows.
+Only probe schemas `1` and `2` are currently accepted. Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows and a count of ignored prefixed rows.
 
 Possible parser states:
 
-- `COMPLETE` — at least one complete probe block was found; the last complete block is retained;
+- `COMPLETE` — at least one complete **supported** probe block was found; the last complete block is retained;
+- `UNSUPPORTED_SCHEMA` — the last complete block declares a probe schema newer/unknown to this collector; its rows are discarded fail-closed;
 - `NO_COMPLETE_BLOCK` — prefixed rows exist but no complete begin/end block closed;
 - `NO_PROBE_ROWS` — the selected log exists but contains no probe prefix;
 - `NOT_FOUND` — no selected/default log exists;
