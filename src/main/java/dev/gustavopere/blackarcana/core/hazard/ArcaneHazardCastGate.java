@@ -54,6 +54,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
     private final CorruptionResistanceProviderRegistry corruptionResistanceProviders;
     private final CorruptionStateService corruptionState;
     private final ArcaneStrainStateService strainState;
+    private final ArcaneStrainProfileRegistry strainProfiles;
     private final boolean stateSettlementEnabled;
     private final HazardSessionActivator activator;
     private final Object stateReservationLock = new Object();
@@ -70,11 +71,12 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
         this.corruptionResistanceProviders = null;
         this.corruptionState = null;
         this.strainState = null;
+        this.strainProfiles = null;
         this.stateSettlementEnabled = false;
         this.activator = Objects.requireNonNull(activator, "activator");
     }
 
-    /** Canonical server constructor with committed-cast Corruption/Strain settlement enabled. */
+    /** Backwards-compatible server constructor using only the legacy per-cast strain coefficient. */
     public ArcaneHazardCastGate(
         ArcaneDangerProfileRegistry profiles,
         ArcaneResistanceProviderRegistry resistanceProviders,
@@ -84,12 +86,35 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
         int maxStatefulPlayers,
         HazardSessionActivator activator
     ) {
+        this(
+            profiles,
+            resistanceProviders,
+            corruptionResistanceProviders,
+            corruptionState,
+            strainState,
+            new ArcaneStrainProfileRegistry(),
+            maxStatefulPlayers,
+            activator);
+    }
+
+    /** Canonical server constructor with explicit profile-declared Strain effects. */
+    public ArcaneHazardCastGate(
+        ArcaneDangerProfileRegistry profiles,
+        ArcaneResistanceProviderRegistry resistanceProviders,
+        CorruptionResistanceProviderRegistry corruptionResistanceProviders,
+        CorruptionStateService corruptionState,
+        ArcaneStrainStateService strainState,
+        ArcaneStrainProfileRegistry strainProfiles,
+        int maxStatefulPlayers,
+        HazardSessionActivator activator
+    ) {
         this.profiles = Objects.requireNonNull(profiles, "profiles");
         this.resistanceProviders = Objects.requireNonNull(resistanceProviders, "resistanceProviders");
         this.corruptionResistanceProviders = Objects.requireNonNull(
             corruptionResistanceProviders, "corruptionResistanceProviders");
         this.corruptionState = Objects.requireNonNull(corruptionState, "corruptionState");
         this.strainState = Objects.requireNonNull(strainState, "strainState");
+        this.strainProfiles = Objects.requireNonNull(strainProfiles, "strainProfiles");
         if (maxStatefulPlayers <= 0
             || maxStatefulPlayers > Math.min(
                 CorruptionStateService.ABSOLUTE_MAX_TRACKED_PLAYERS,
@@ -124,37 +149,18 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                 "effective Arcane Resistance is below the server-required minimum"));
         }
 
+        ArcaneDangerProfile effectiveProfile = profile;
         PreparedStateSettlement stateSettlement = null;
         if (stateSettlementEnabled) {
             UUID casterId = request.context().casterId();
-            if (!hasStateCapacity(casterId, profile)) {
-                releaseEmergencyProviderState(request.castId());
-                return denied(ArcanaDecision.deny(
-                    ArcaneHazardPreflightCode.STATE_CAPACITY.code(),
-                    "persistent hazard state capacity is exhausted"));
-            }
-
-            CorruptionResistanceSnapshot corruptionResistance = corruptionResistanceProviders.snapshot(
-                new CorruptionResistanceQuery(
-                    request.castId(),
-                    request.spell().id(),
-                    casterId,
-                    request.context().dimensionId(),
-                    request.context().serverTick(),
-                    profile));
-            CorruptionAcquisitionProfile corruptionProfile =
-                CorruptionAcquisitionProfile.committedCastOnly(profile.corruptionCoefficient(), 0.0D);
-            CorruptionStateService.CorruptionPreflight corruptionPreflight = corruptionState.preflightCommittedCast(
-                casterId,
-                request.context().serverTick(),
-                corruptionProfile,
-                corruptionResistance);
-            ArcaneStrainProfile strainProfile = baseCommittedCastStrain(profile.strainCoefficient());
+            ArcaneStrainProfile strainProfile = strainProfiles.resolveOrCommittedCast(
+                request.spell().id(),
+                profile.strainCoefficient());
             ArcaneStrainStateService.StrainPreflight strainPreflight = strainState.preflight(
                 casterId,
                 request.context().serverTick(),
                 strainProfile,
-                1.0D,
+                resistance.residualBacklashMultiplier(),
                 0.0D,
                 0L);
             if (strainPreflight.hardGateActive() || strainPreflight.predictedHardGate()) {
@@ -163,6 +169,30 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                     ArcaneHazardPreflightCode.STRAIN_GATE.code(),
                     "Arcane Strain hard gate denies this cast"));
             }
+
+            effectiveProfile = applyStrainRisk(profile, strainPreflight);
+            CorruptionResistanceSnapshot corruptionResistance = corruptionResistanceProviders.snapshot(
+                new CorruptionResistanceQuery(
+                    request.castId(),
+                    request.spell().id(),
+                    casterId,
+                    request.context().dimensionId(),
+                    request.context().serverTick(),
+                    effectiveProfile));
+            CorruptionAcquisitionProfile corruptionProfile =
+                CorruptionAcquisitionProfile.committedCastOnly(effectiveProfile.corruptionCoefficient(), 0.0D);
+            CorruptionStateService.CorruptionPreflight corruptionPreflight = corruptionState.preflightCommittedCast(
+                casterId,
+                request.context().serverTick(),
+                corruptionProfile,
+                corruptionResistance);
+
+            if (!hasStateCapacity(casterId, corruptionPreflight, strainPreflight)) {
+                releaseEmergencyProviderState(request.castId());
+                return denied(ArcanaDecision.deny(
+                    ArcaneHazardPreflightCode.STATE_CAPACITY.code(),
+                    "persistent hazard state capacity is exhausted"));
+            }
             stateSettlement = new PreparedStateSettlement(
                 casterId,
                 request.context().serverTick(),
@@ -170,7 +200,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
                 strainPreflight);
         }
 
-        ArcaneEmergencyProtectionSnapshot emergencyProtection = profile.emergencyProtectionAllowed()
+        ArcaneEmergencyProtectionSnapshot emergencyProtection = effectiveProfile.emergencyProtectionAllowed()
             ? resistanceProviders.takeEmergencyProtectionSnapshot(
                 request.castId(),
                 request.context().casterId(),
@@ -183,7 +213,7 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             request.context().casterId(),
             request.context().dimensionId(),
             request.context().serverTick(),
-            profile);
+            effectiveProfile);
         return new Prepared(snapshot, resistance, emergencyProtection, stateSettlement);
     }
 
@@ -196,9 +226,47 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
         resistanceProviders.releaseEmergencyProtectionSnapshots(castId);
     }
 
-    private boolean hasStateCapacity(UUID casterId, ArcaneDangerProfile profile) {
-        if (profile.corruptionCoefficient() > 0.0D && !corruptionState.canReserve(casterId)) return false;
-        return profile.strainCoefficient() <= 0.0D || strainState.canReserve(casterId);
+    private boolean hasStateCapacity(
+        UUID casterId,
+        CorruptionStateService.CorruptionPreflight corruptionPreflight,
+        ArcaneStrainStateService.StrainPreflight strainPreflight
+    ) {
+        if (corruptionPreflight.appliedCorruption() > 0.0D && !corruptionState.canReserve(casterId)) return false;
+        return strainPreflight.appliedStrain() <= 0.0D || strainState.canReserve(casterId);
+    }
+
+    private static ArcaneDangerProfile applyStrainRisk(
+        ArcaneDangerProfile profile,
+        ArcaneStrainStateService.StrainPreflight strainPreflight
+    ) {
+        double backlash = boundedMultiply(
+            profile.backlashMultiplier(),
+            strainPreflight.backlashMultiplier(),
+            ArcaneDangerProfile.ABSOLUTE_MAX_BACKLASH_MULTIPLIER);
+        double corruption = boundedMultiply(
+            profile.corruptionCoefficient(),
+            strainPreflight.corruptionMultiplier(),
+            ArcaneDangerProfile.ABSOLUTE_MAX_STATE_COEFFICIENT);
+        if (backlash == profile.backlashMultiplier() && corruption == profile.corruptionCoefficient()) {
+            return profile;
+        }
+        return new ArcaneDangerProfile(
+            profile.tier(),
+            backlash,
+            corruption,
+            profile.strainCoefficient(),
+            profile.damageLeaseTicks(),
+            profile.maxDamageInstances(),
+            profile.minimumArcaneResistance(),
+            profile.recommendedArcaneResistance(),
+            profile.belowMinimumPolicy(),
+            profile.emergencyProtectionAllowed());
+    }
+
+    private static double boundedMultiply(double first, double second, double maximum) {
+        double product = first * second;
+        if (!Double.isFinite(product)) return maximum;
+        return Math.min(maximum, Math.max(0.0D, product));
     }
 
     private ArcanaDecision claimStateReservation(PreparedStateSettlement settlement) {
@@ -239,10 +307,6 @@ public final class ArcaneHazardCastGate implements CastHazardGate {
             if (settlement.needsStrainWrite()) strainState.releaseReservation(settlement.casterId());
             activeStatefulCasters.remove(settlement.casterId());
         }
-    }
-
-    private static ArcaneStrainProfile baseCommittedCastStrain(double units) {
-        return new ArcaneStrainProfile(units, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
     }
 
     private static HazardPreparation denied(ArcanaDecision decision) {
