@@ -1,6 +1,6 @@
 # Black Arcana — Conditional Provider Closure Index
 
-Checkpoint: 2026-09-19
+Checkpoint: 2026-09-20
 
 Status: `5 PROVIDERS ⚠️ / CLOSURE PATHS EXPLICIT / MOBSTEIN CLOSED 2026-09-17 / NO SEMANTIC COUNT PROMOTION`
 
