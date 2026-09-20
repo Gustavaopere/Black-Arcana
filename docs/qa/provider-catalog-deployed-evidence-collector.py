@@ -92,8 +92,8 @@ TRAVELOPTICS_BLACKOUT_LITERAL = "traveloptics:blackout"
 CATALOG_PROBE_PREFIX = "[BLACK_ARCANA_CATALOG_PROBE]"
 CATALOG_PROBE_LOGGER = "dev.gustavopere.blackarcana.qa.catalog.CatalogRuntimeEvidence"
 CATALOG_PROBE_LOG_LINE_RE = re.compile(
-    rf"^\\[[^]\\r\\n]+\\] \\[[^]\\r\\n]+\\] "
-    rf"\\[{re.escape(CATALOG_PROBE_LOGGER)}/[^]\\r\\n]*\\]: "
+    rf"^\[[^\]\r\n]+\] \[[^\]\r\n]+\] "
+    rf"\[{re.escape(CATALOG_PROBE_LOGGER)}/[^\]\r\n]*\]: "
     rf"{re.escape(CATALOG_PROBE_PREFIX)}(?P<payload>.*)$"
 )
 SUPPORTED_CATALOG_PROBE_SCHEMAS = {1, 2}
