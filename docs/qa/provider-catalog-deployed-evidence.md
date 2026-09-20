@@ -70,7 +70,12 @@ When a runtime-probe log is available, the collector scans it line-by-line. It a
 
 `[BLACK_ARCANA_CATALOG_PROBE]`
 
-only when the prefix starts the logger message (the preceding log metadata ends in `]:`) or when a pre-filtered line begins directly with the prefix. Embedded occurrences — for example a player/chat message containing the same text — are rejected and counted without retaining their contents.
+only in one of two forms:
+
+- a pre-filtered line begins directly with the prefix; or
+- a raw FML `latest.log` line has the exact companion logger field `dev.gustavopere.blackarcana.qa.catalog.CatalogRuntimeEvidence` immediately before the message.
+
+Suffix-like text is not sufficient. Embedded occurrences — including chat/player text such as `x]: [BLACK_ARCANA_CATALOG_PROBE] ...` — are rejected and counted without retaining their contents.
 
 It keeps only the **last complete** `type=begin ... type=end` block. Incomplete/stale trailing blocks are not promoted over an earlier complete run.
 
