@@ -64,6 +64,29 @@ The exact patch candidate is now cryptographically fingerprinted and independent
 
 Current state: `RUNTIME INITIALIZATION UNVERIFIED / FAIL-CLOSED`.
 
+### Bounded runtime observation now available
+
+The isolated `black_arcana_catalog_qa` companion can observe the public NeoForge `GLOBAL_LOOT_MODIFIER_SERIALIZERS` registry on `ServerStartedEvent` without loading or reflecting Traveloptics implementation classes.
+
+For the exact assembled pack it emits only the bounded targets:
+
+- `traveloptics:key_loot`;
+- `traveloptics:universal_loot`;
+- whether both resolved values are distinct object instances.
+
+Canonical runbook: [`docs/qa/provider-catalog-runtime-registry-probe.md`](../../../docs/qa/provider-catalog-runtime-registry-probe.md).
+
+This does not create a PASS by itself. Gate 2 evidence must still pair the runtime rows with the deployed artifact hash/disposition from Gate 1.
+
+For an exact patched/replacement artifact, a strong closure packet for this gate is:
+
+1. physical hash classified as `PATCHED_EXACT` or another explicitly verified replacement;
+2. assembled dedicated server reaches `ServerStartedEvent` with that exact artifact;
+3. both serializer IDs emit `status=OBSERVED`;
+4. the pair emits `status=OBSERVED distinct_codec_instances=true`.
+
+For `ORIGINAL_EXACT`, successful startup and observed serializer rows are evidence to retain, but any result that conflicts with the already-audited duplicate-codec structure must be investigated rather than silently reclassified as fixed. The probe does not identify codec classes and does not prove loot-modifier behavior or Blackout acquisition.
+
 ## Gate 3 — `traveloptics:blackout` survival reachability
 
 `traveloptics:blackout` is an exact registered spell identity in the audited publisher artifact and inherits `AbstractUniqueSpell.allowCrafting() = false`.
