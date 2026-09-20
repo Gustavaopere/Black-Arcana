@@ -39,6 +39,20 @@ class ArcaneStrainStateServiceTest {
     }
 
     @Test
+    void relogStyleSessionReplacementWithSamePlayerUuidDoesNotCleanseStrain() {
+        ArcaneStrainStateService service = service(0.0D);
+        UUID player = UUID.randomUUID();
+        service.commitCast(player, 100L, TEN, 1.0D, 0.0D, 0L);
+
+        var beforeRelog = service.snapshot(player, 100L);
+        UUID replacementSessionPlayerId = UUID.fromString(player.toString());
+        var afterRelog = service.snapshot(replacementSessionPlayerId, 100L);
+
+        assertEquals(beforeRelog, afterRelog);
+        assertEquals(10.0D, afterRelog.units(), 1.0E-9D);
+    }
+
+    @Test
     void persistencePreservesStoredLoadAndContinuesLazyRecoveryAfterRestart() {
         ArcaneStrainStateService first = service(0.5D);
         UUID player = UUID.randomUUID();
