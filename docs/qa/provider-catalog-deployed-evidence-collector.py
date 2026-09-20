@@ -90,6 +90,12 @@ ASTERISM_DATAPACK_PATH = f"data/{ASTERISM_DATA_RELATIVE}"
 TRAVELOPTICS_BLACKOUT_LITERAL = "traveloptics:blackout"
 
 CATALOG_PROBE_PREFIX = "[BLACK_ARCANA_CATALOG_PROBE]"
+CATALOG_PROBE_LOGGER = "dev.gustavopere.blackarcana.qa.catalog.CatalogRuntimeEvidence"
+CATALOG_PROBE_LOG_LINE_RE = re.compile(
+    rf"^\\[[^]\\r\\n]+\\] \\[[^]\\r\\n]+\\] "
+    rf"\\[{re.escape(CATALOG_PROBE_LOGGER)}/[^]\\r\\n]*\\]: "
+    rf"{re.escape(CATALOG_PROBE_PREFIX)}(?P<payload>.*)$"
+)
 SUPPORTED_CATALOG_PROBE_SCHEMAS = {1, 2}
 TARGET_PROBE_MOD_IDS = {
     "asterismarcanum",
@@ -272,17 +278,19 @@ def collect_catalog_runtime_probe(instance: Path, probe_log: Path | None) -> dic
     try:
         with path.open("r", encoding="utf-8", errors="replace") as handle:
             for line in handle:
-                marker = line.find(CATALOG_PROBE_PREFIX)
-                if marker < 0:
-                    continue
-
-                before_prefix = line[:marker].rstrip()
-                if before_prefix and not before_prefix.endswith("]:"):
-                    embedded_ignored += 1
+                stripped = line.rstrip("\r\n")
+                if stripped.startswith(CATALOG_PROBE_PREFIX):
+                    payload = stripped[len(CATALOG_PROBE_PREFIX):]
+                elif CATALOG_PROBE_PREFIX in stripped:
+                    logged = CATALOG_PROBE_LOG_LINE_RE.fullmatch(stripped)
+                    if logged is None:
+                        embedded_ignored += 1
+                        continue
+                    payload = logged.group("payload")
+                else:
                     continue
 
                 saw_prefix = True
-                payload = line[marker + len(CATALOG_PROBE_PREFIX):]
                 row = parse_catalog_probe_payload(payload)
                 if row is None:
                     ignored += 1
