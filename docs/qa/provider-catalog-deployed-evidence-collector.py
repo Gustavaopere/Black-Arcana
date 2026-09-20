@@ -90,6 +90,7 @@ ASTERISM_DATAPACK_PATH = f"data/{ASTERISM_DATA_RELATIVE}"
 TRAVELOPTICS_BLACKOUT_LITERAL = "traveloptics:blackout"
 
 CATALOG_PROBE_PREFIX = "[BLACK_ARCANA_CATALOG_PROBE]"
+SUPPORTED_CATALOG_PROBE_SCHEMAS = {1, 2}
 TARGET_PROBE_MOD_IDS = {
     "asterismarcanum",
     "gaze",
@@ -300,8 +301,11 @@ def collect_catalog_runtime_probe(instance: Path, probe_log: Path | None) -> dic
 
     out["ignored_prefixed_rows"] = ignored
     if last_complete is not None:
-        out["status"] = "COMPLETE"
         out["schema"] = last_complete["schema"]
+        if last_complete["schema"] not in SUPPORTED_CATALOG_PROBE_SCHEMAS:
+            out["status"] = "UNSUPPORTED_SCHEMA"
+            return out
+        out["status"] = "COMPLETE"
         out["rows"] = last_complete["rows"]
     elif saw_prefix:
         out["status"] = "NO_COMPLETE_BLOCK"
