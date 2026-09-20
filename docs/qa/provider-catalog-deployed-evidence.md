@@ -66,9 +66,11 @@ python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack
 
 ### Catalog runtime probe bundle
 
-When a runtime-probe log is available, the collector scans it line-by-line and ignores every line that does not contain the exact prefix:
+When a runtime-probe log is available, the collector scans it line-by-line. It accepts the exact prefix:
 
 `[BLACK_ARCANA_CATALOG_PROBE]`
+
+only when the prefix starts the logger message (the preceding log metadata ends in `]:`) or when a pre-filtered line begins directly with the prefix. Embedded occurrences — for example a player/chat message containing the same text — are rejected and counted without retaining their contents.
 
 It keeps only the **last complete** `type=begin ... type=end` block. Incomplete/stale trailing blocks are not promoted over an earlier complete run.
 
@@ -80,7 +82,7 @@ The parser accepts only the bounded fields emitted by the QA companion:
 - Traveloptics `key_loot` / `universal_loot` serializer presence;
 - Traveloptics serializer-pair status and distinct-object boolean.
 
-Only probe schemas `1` and `2` are currently accepted. Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows and a count of ignored prefixed rows.
+Only probe schemas `1` and `2` are currently accepted. Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows, a count of malformed/unrecognized prefixed rows, and a separate count of embedded-prefix rows rejected before parsing.
 
 Possible parser states:
 
@@ -252,7 +254,7 @@ The collector deliberately avoids:
 - quest prose;
 - datapack payload bodies;
 - player data;
-- raw log lines, timestamps, thread names and unrelated log content;
+- raw log lines, timestamps, thread names, chat/player message bodies and unrelated log content;
 - saves;
 - authentication/secrets;
 - unrelated mod configuration.
