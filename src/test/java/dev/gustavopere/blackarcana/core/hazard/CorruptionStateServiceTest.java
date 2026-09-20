@@ -140,6 +140,25 @@ class CorruptionStateServiceTest {
     }
 
     @Test
+    void relogStyleSessionReplacementWithSamePlayerUuidDoesNotCleanseCorruption() {
+        CorruptionStateService service = CorruptionStateService.canonical(16);
+        var resistance = CorruptionResistanceProviderRegistry.canonical(8).snapshot(query());
+        service.acquireFromCommittedCast(
+            PLAYER,
+            100L,
+            CorruptionAcquisitionProfile.committedCastOnly(125.0D, 0.0D),
+            resistance);
+
+        var beforeRelog = service.snapshot(PLAYER);
+        UUID replacementSessionPlayerId = UUID.fromString(PLAYER.toString());
+        var afterRelog = service.snapshot(replacementSessionPlayerId);
+
+        assertEquals(beforeRelog, afterRelog);
+        assertEquals(125.0D, afterRelog.units(), 1.0E-9D);
+        assertEquals(1L, afterRelog.acquisitionEvents());
+    }
+
+    @Test
     void persistenceSnapshotRestoresStateAndMetadata() {
         CorruptionStateService first = CorruptionStateService.canonical(16);
         var resistance = CorruptionResistanceProviderRegistry.canonical(8).snapshot(query());
