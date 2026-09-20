@@ -79,7 +79,7 @@ Installed-first baseline is Curios NeoForge `9.5.1+1.21.1`. Curios integration i
 ## Stage tasks
 
 1. [Arcane Danger Model](✅-01-arcane-danger-model.md)
-2. [Arcane Resistance](02-arcane-resistance.md)
+2. [Arcane Resistance](✅-02-arcane-resistance.md)
 3. [Corruption Resistance](03-corruption-resistance.md)
 4. [Arcane Strain](04-arcane-strain.md)
 5. [Backlash Pipeline](05-backlash-pipeline.md)
