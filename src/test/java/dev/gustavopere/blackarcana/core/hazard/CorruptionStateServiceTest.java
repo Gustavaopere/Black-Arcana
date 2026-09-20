@@ -34,6 +34,72 @@ class CorruptionStateServiceTest {
     }
 
     @Test
+    void resistanceLowersConfiguredAcquisitionMonotonically() {
+        var profile = CorruptionAcquisitionProfile.committedCastOnly(120.0D, 0.0D);
+
+        CorruptionResistanceProviderRegistry mediumRegistry = CorruptionResistanceProviderRegistry.canonical(8);
+        mediumRegistry.register(provider(60.0D));
+        CorruptionResistanceProviderRegistry highRegistry = CorruptionResistanceProviderRegistry.canonical(8);
+        highRegistry.register(provider(180.0D));
+
+        double zero = CorruptionStateService.canonical(16)
+            .acquireFromCommittedCast(
+                PLAYER,
+                100L,
+                profile,
+                CorruptionResistanceProviderRegistry.canonical(8).snapshot(query()))
+            .appliedDelta();
+        double medium = CorruptionStateService.canonical(16)
+            .acquireFromCommittedCast(PLAYER, 100L, profile, mediumRegistry.snapshot(query()))
+            .appliedDelta();
+        double high = CorruptionStateService.canonical(16)
+            .acquireFromCommittedCast(PLAYER, 100L, profile, highRegistry.snapshot(query()))
+            .appliedDelta();
+
+        assertEquals(120.0D, zero, 1.0E-9D);
+        assertEquals(60.0D, medium, 1.0E-9D);
+        assertEquals(30.0D, high, 1.0E-9D);
+        assertTrue(zero > medium && medium > high && high >= 0.0D);
+    }
+
+    @Test
+    void eligibleDamageAcquisitionHonorsProfileScaleCapAndFloor() {
+        CorruptionResistanceProviderRegistry registry = CorruptionResistanceProviderRegistry.canonical(8);
+        registry.register(provider(120.0D));
+        var resistance = registry.snapshot(query());
+
+        var scaled = new CorruptionAcquisitionProfile(
+            0.0D,
+            2.0D,
+            0.0D,
+            0.5D,
+            CorruptionAcquisitionProfile.ABSOLUTE_MAX_RESISTANCE_APPLIED);
+        var scaledUpdate = CorruptionStateService.canonical(16)
+            .acquireFromEligibleDamage(PLAYER, 100L, 15.0D, scaled, resistance);
+        assertEquals(15.0D, scaledUpdate.appliedDelta(), 1.0E-9D);
+
+        var capped = new CorruptionAcquisitionProfile(
+            0.0D,
+            2.0D,
+            0.0D,
+            1.0D,
+            30.0D);
+        var cappedUpdate = CorruptionStateService.canonical(16)
+            .acquireFromEligibleDamage(PLAYER, 100L, 15.0D, capped, resistance);
+        assertEquals(20.0D, cappedUpdate.appliedDelta(), 1.0E-9D);
+
+        var floored = new CorruptionAcquisitionProfile(
+            0.0D,
+            2.0D,
+            0.80D,
+            4.0D,
+            CorruptionAcquisitionProfile.ABSOLUTE_MAX_RESISTANCE_APPLIED);
+        var flooredUpdate = CorruptionStateService.canonical(16)
+            .acquireFromEligibleDamage(PLAYER, 100L, 15.0D, floored, resistance);
+        assertEquals(24.0D, flooredUpdate.appliedDelta(), 1.0E-9D);
+    }
+
+    @Test
     void highResistanceCannotBypassUnavoidableFloor() {
         EnumMap<CorruptionResistanceSourceCategory, Double> caps = new EnumMap<>(CorruptionResistanceSourceCategory.class);
         for (var category : CorruptionResistanceSourceCategory.values()) caps.put(category, 10_000.0D);
@@ -71,6 +137,25 @@ class CorruptionStateServiceTest {
         assertEquals(CorruptionBand.TRACE, recovery.after().band());
         assertEquals(2, recovery.transitions().size());
         assertEquals(5, observed.size());
+    }
+
+    @Test
+    void relogStyleSessionReplacementWithSamePlayerUuidDoesNotCleanseCorruption() {
+        CorruptionStateService service = CorruptionStateService.canonical(16);
+        var resistance = CorruptionResistanceProviderRegistry.canonical(8).snapshot(query());
+        service.acquireFromCommittedCast(
+            PLAYER,
+            100L,
+            CorruptionAcquisitionProfile.committedCastOnly(125.0D, 0.0D),
+            resistance);
+
+        var beforeRelog = service.snapshot(PLAYER);
+        UUID replacementSessionPlayerId = UUID.fromString(PLAYER.toString());
+        var afterRelog = service.snapshot(replacementSessionPlayerId);
+
+        assertEquals(beforeRelog, afterRelog);
+        assertEquals(125.0D, afterRelog.units(), 1.0E-9D);
+        assertEquals(1L, afterRelog.acquisitionEvents());
     }
 
     @Test

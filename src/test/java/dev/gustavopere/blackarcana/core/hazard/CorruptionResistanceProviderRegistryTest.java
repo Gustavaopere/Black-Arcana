@@ -3,6 +3,10 @@ package dev.gustavopere.blackarcana.core.hazard;
 import dev.gustavopere.blackarcana.api.ArcanaCastId;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerProfile;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceContribution;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceProvider;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceQuery;
+import dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSourceCategory;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceContribution;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceProvider;
 import dev.gustavopere.blackarcana.api.hazard.CorruptionResistanceQuery;
@@ -48,21 +52,80 @@ class CorruptionResistanceProviderRegistryTest {
         ArcaneResistanceProviderRegistry arcane = ArcaneResistanceProviderRegistry.canonical(8);
         CorruptionResistanceProviderRegistry corruption = CorruptionResistanceProviderRegistry.canonical(8);
 
-        // Registering nothing in the corruption registry must stay zero regardless of the separate Arcane registry.
-        assertEquals(0, arcane.size());
-        assertEquals(0.0D, corruption.snapshot(query()).effectiveResistance(), 1.0E-9D);
-
-        corruption.register(new CorruptionResistanceProvider() {
-            @Override public String providerId() { return "black_arcana:corruption_only"; }
-            @Override public List<CorruptionResistanceContribution> contributions(CorruptionResistanceQuery query) {
-                return List.of(new CorruptionResistanceContribution(
-                    "black_arcana:test",
-                    CorruptionResistanceSourceCategory.RPG,
-                    75.0D));
+        arcane.register(new ArcaneResistanceProvider() {
+            @Override public String providerId() { return "black_arcana:arcane_only"; }
+            @Override public List<ArcaneResistanceContribution> contributions(ArcaneResistanceQuery query) {
+                return List.of(new ArcaneResistanceContribution(
+                    "black_arcana:arcane_ward",
+                    ArcaneResistanceSourceCategory.EQUIPMENT,
+                    240.0D));
             }
         });
+
+        assertEquals(240.0D, arcane.snapshot(arcaneQuery()).effectiveResistance(), 1.0E-9D);
+        assertEquals(0.0D, corruption.snapshot(query()).effectiveResistance(), 1.0E-9D);
+
+        corruption.register(provider(
+            "black_arcana:corruption_only",
+            "black_arcana:corruption_ward",
+            CorruptionResistanceSourceCategory.RPG,
+            75.0D));
+
         assertEquals(75.0D, corruption.snapshot(query()).effectiveResistance(), 1.0E-9D);
-        assertEquals(0, arcane.size());
+        assertEquals(240.0D, arcane.snapshot(arcaneQuery()).effectiveResistance(), 1.0E-9D);
+    }
+
+    @Test
+    void providerOrderingAndGlobalCapAreDeterministic() {
+        CorruptionResistanceProvider firstProvider = provider(
+            "black_arcana:z_provider",
+            "black_arcana:ritual",
+            CorruptionResistanceSourceCategory.RITUAL,
+            200.0D);
+        CorruptionResistanceProvider secondProvider = provider(
+            "black_arcana:a_provider",
+            "black_arcana:rpg",
+            CorruptionResistanceSourceCategory.RPG,
+            200.0D);
+
+        CorruptionResistanceProviderRegistry first = CorruptionResistanceProviderRegistry.canonical(8);
+        first.register(firstProvider);
+        first.register(secondProvider);
+        CorruptionResistanceProviderRegistry second = CorruptionResistanceProviderRegistry.canonical(8);
+        second.register(secondProvider);
+        second.register(firstProvider);
+
+        var firstSnapshot = first.snapshot(query());
+        var secondSnapshot = second.snapshot(query());
+
+        assertEquals(CorruptionResistanceCurve.CANONICAL_MAX_RESISTANCE, firstSnapshot.effectiveResistance(), 0.0D);
+        assertEquals(firstSnapshot.effectiveResistance(), secondSnapshot.effectiveResistance(), 0.0D);
+        assertEquals(firstSnapshot.baselineResidualMultiplier(), secondSnapshot.baselineResidualMultiplier(), 0.0D);
+        assertEquals(firstSnapshot.contributions(), secondSnapshot.contributions());
+    }
+
+    private static CorruptionResistanceProvider provider(
+        String providerId,
+        String sourceId,
+        CorruptionResistanceSourceCategory category,
+        double amount
+    ) {
+        return new CorruptionResistanceProvider() {
+            @Override public String providerId() { return providerId; }
+            @Override public List<CorruptionResistanceContribution> contributions(CorruptionResistanceQuery query) {
+                return List.of(new CorruptionResistanceContribution(sourceId, category, amount));
+            }
+        };
+    }
+
+    private static ArcaneResistanceQuery arcaneQuery() {
+        return new ArcaneResistanceQuery(
+            ArcanaCastId.random(),
+            ArcanaSpellId.parse("black_arcana:corruption_probe"),
+            PLAYER,
+            "minecraft:overworld",
+            100L,
+            ArcaneDangerProfile.normal());
     }
 
     private static CorruptionResistanceQuery query() {
