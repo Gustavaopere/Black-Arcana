@@ -44,7 +44,7 @@ Read before beginning the campaign:
 - `plans/05a-arcane-danger/README.md`
 - `plans/05a-arcane-danger/✅-01-arcane-danger-model.md`
 - `plans/05a-arcane-danger/✅-02-arcane-resistance.md`
-- `plans/05a-arcane-danger/03-corruption-resistance.md`
+- `plans/05a-arcane-danger/✅-03-corruption-resistance.md`
 - `plans/05a-arcane-danger/04-arcane-strain.md`
 - `plans/05a-arcane-danger/05-backlash-pipeline.md`
 - `plans/05a-arcane-danger/06-equipment.md`
