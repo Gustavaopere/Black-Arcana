@@ -48,6 +48,8 @@ jobs:
             git diff --check "$BASE" HEAD
           fi
 
+      - name: Temporary Cataclysm 1.1.14 registered-class identity audit NON-MERGE
+        run: python3 .github/scripts/tmp_cataclysm_spellbooks_1_1_14_registered_class_audit.py
       - name: NeoForge build
         run: ./gradlew --no-daemon build
 
