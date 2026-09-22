@@ -34,6 +34,18 @@ O source oficial `Alexthw46/NotEnoughGlyphs@45604dd18d9d2e3e7ca80a2c616b3309f42a
 
 Consequência canônica: Not Enough Glyphs continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O blocker não é mais versão/registry; é exclusivamente a ausência dos valores efetivos de SERVER config `[general].enabled` para os 39 candidatos. Os totais canônicos permanecem **1344** objetos semânticos mínimos e **68/100** componentes técnicos.
 
+## Provider freshness override — Cataclysm: Spellbooks 1.1.14
+
+A autoridade física provider-specific mais recente do sibling, verificada em `neoforge-rpg-skilltree@d74216b08bffdac02b43e9d7fbb79541e33a1b45`, identifica `cataclysm_spellbooks-1.1.14-1.21.jar` / mod id `cataclysm_spellbooks` / runtime `1.1.14-1.21` como a linha instalada. Isso supersede somente a antiga afirmação física 1.1.13; o checkpoint Phase 2BE abaixo permanece histórico.
+
+A release exata do publisher, CurseForge project/file `1099461 / 8847070`, foi materializada em auditoria clean-room. Seu SHA-1 é `568d798862a61a374ab1e55dcddf5b2e3326b8b5` e seu SHA-256 é `a5a0dcad537954f488c862b3409831e0d12b4dfdc50bbfade298cb3d05dff2cf`. O controle 1.1.13 foi materializado no mesmo audit e obrigado a bater no SHA-1 físico já canônico `4af8348cc77bbff2ab7057c1fac26a5ab0a5b6a2` antes da comparação.
+
+O `SpellRegistries.class` da release 1.1.14 possui SHA-256 `8c4f8570d832a2a178e2d35244729eacd3208ccb4e9df582a16a01976a4881c7`, exatamente igual ao da 1.1.13. A superfície bounded de classes spell-related permanece **225 → 225**, sem adições/remoções, e os root keys `spell.cataclysm_spellbooks.<id>` permanecem **69 → 69**, também sem delta. Portanto as **59 identidades registradas** já fechadas no registry 1.1.13 carregam exatamente para a release 1.1.14; as mesmas dez chaves translation-only continuam excluídas. O claim editorial do publisher de **65 spells** continua não sendo tratado como registry.
+
+A evidência está registrada no checkpoint NON-MERGE `a9387be4ac93497495e699eda7c32240b9e997a2`, run #3375 / `35786067439`, cujo passo `Temporary Cataclysm Spellbooks 1.1.14 binary delta audit NON-MERGE` passou. O run completo falhou depois em um Foundation GameTest não relacionado, portanto ele vale somente como evidência do audit isolado e não como CI verde de merge.
+
+Como o repositório não preserva um segundo SHA-1 independente do JAR físico 1.1.14, o estado atual das 59 identidades é **`COUNTED_RELEASE_BOUNDED`**, não `COUNTED_EXACT` físico. O provider continua **✅ catalogado**, o mínimo semântico permanece inalterado e nenhum novo ponto de componente é criado por esta revalidação.
+
 ## Freshness histórica 2026-09-07
 
 O checkpoint de 2026-09-07 registrou updates como:
