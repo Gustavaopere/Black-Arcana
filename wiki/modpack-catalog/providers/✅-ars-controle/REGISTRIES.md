@@ -1,6 +1,8 @@
-# Ars Controle 1.6.15 — exact registry surface
+# Ars Controle 1.6.16 — exact registry surface
 
-Source checkpoint: `Vonr/Ars-Controle@ecbb83ba512bc9ca7a025556fb9c62dbd32b6430`.
+Source checkpoint: `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` (`ver: 1.6.16`).
+
+Registry continuity evidence: `ACRegistry.java` is blob-identical to the 1.6.15 checkpoint `ecbb83ba512bc9ca7a025556fb9c62dbd32b6430`; both resolve to Git blob `b38959053740605768a8945ed40c012c6bef5953`. The 1.6.16 release therefore preserves the exact registry surface below.
 
 ## Blocks — 4
 
@@ -29,7 +31,7 @@ Standalone items:
 - `ars_controle:scryers_linkage` -> `ScryersLinkageTile`
 - `ars_controle:scroll_holder` -> `ScrollHolderTile`
 
-There is no registered Temporal Stability Sensor BlockEntityType in the exact `ACRegistry.Tiles` source.
+There is no registered Temporal Stability Sensor BlockEntityType in the exact 1.6.16 `ACRegistry.Tiles` source.
 
 ## Data components — 2
 
@@ -68,4 +70,4 @@ All nine are registered through `GlyphRegistry.registerSpell` in `ACRegistry.Gly
 
 ## Editorial-count reconciliation
 
-The Notion dossier's "31 components" is not a registry count for this release. The exact source tree contains validators, mixins, blocks, routing utilities and integration code in addition to the nine registered spell parts. Phase 2R keeps those internal/runtime surfaces separate from the player-facing glyph registry.
+The Notion dossier's "31 components" is not a registry count for the 1.6.16 release. The exact source tree contains validators, mixins, blocks, routing utilities and integration code in addition to the nine registered spell parts. Phase 2R keeps those internal/runtime surfaces separate from the player-facing glyph registry.

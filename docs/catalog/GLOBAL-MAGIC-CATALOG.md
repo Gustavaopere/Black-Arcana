@@ -21,12 +21,12 @@ O objetivo deste índice é responder duas perguntas sem misturá-las:
 
 ## Snapshot de autoridade
 
-- Black Arcana base desta reconciliação: `main@3936635bd32f316ae57976bd9af7b333baac0a5a`.
-- RPG Skill Tree sibling mais recente consultado: `main@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b`.
+- Black Arcana base desta reconciliação: `main@e391e11675b951150a7b01049d2d908b01d82641`.
+- RPG Skill Tree sibling mais recente consultado: `main@ee08513c9e8992418c508bae485f3a181deb7f9c`.
 - O índice físico sibling atual reconcilia **587 entradas top-level incluindo o modloader**; para Create: Wizardry, a linha certificada atual é **#166**. O antigo snapshot Black Arcana de 595 entradas abaixo permanece histórico até regeneração integral do denominator mágico.
 - Snapshot físico canônico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
-- **Override semântico corrente:** Hazen N Stuff #358 elevou o mínimo estrito canônico para **1382**. Create: Wizardry fecha em **+0**, portanto este trabalho não altera 1382.
+- **Override semântico corrente:** Hazen N Stuff #358 elevou o mínimo estrito canônico para **1382**. Create: Wizardry fecha em **+0**. Ars Controle físico #41 foi revalidado em `1.6.16`; o registry `ACRegistry.java` é blob-idêntico ao `1.6.15`, preservando 9 objetos e delta **+0**. Portanto o mínimo permanece **1382**.
 
 ## 1. Ledger semântico global atual — 41 providers / 1382 objetos
 
@@ -36,7 +36,7 @@ Esta tabela reproduz o conjunto **strict-counted** do ledger canônico. O contad
 | --- | --- | ---: | --- | --- |
 | Ars Nouveau | `5.13.1` | 109 | ✅ `COUNTED_SOURCE_PINNED` | 5 Forms + 13 Augments + 67 Effects + 24 rituals; chains arbitrárias excluídas. |
 | Ars Additions | `21.3.0` | 5 | ✅ `COUNTED_SOURCE_PINNED` | 3 glyphs + 2 rituals. |
-| Ars Controle | `1.6.15` | 9 | ✅ `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts. |
+| Ars Controle | `1.6.16` | 9 | ✅ `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts; registry source idêntico à 1.6.15. |
 | Ars Technica | `2.7.6` | 11 | ✅ `COUNTED_SOURCE_PINNED` | 11/11 spell parts registrados. |
 | Ars Hex | `5.0.4b` | 1 | ✅ `COUNTED_SOURCE_PINNED` | 1 glyph Malum-backed atual sob o conjunto físico de providers. |
 | Ars Zero | `2.0.2` | 12 | ✅ `COUNTED_RELEASE_BOUNDED` | 12 capacidades únicas atuais; variantes AOE/Amplifier copiadas e desabilitadas excluídas. |
@@ -147,6 +147,7 @@ As métricas têm denominadores diferentes:
 - ✅ **Ledger semântico strict-counted:** **41 providers / 1382 objetos mágicos reconstruíveis**.
 - ⚠️ **Denominador semântico global:** ainda incompleto; portanto **nenhuma porcentagem final de spells/magia é declarada**.
 - ⚠️ **Cobertura técnica de componentes:** o antigo `68/100` é apenas checkpoint histórico; a modlist física atual revelou componentes adicionais e o denominador técnico global está `PENDING REBASE`. Nenhum percentual técnico corrente é declarado.
+- ✅ **Ars Controle 1.6.16 revalidado:** 9 spell parts preservados por continuidade exata do registry source; delta semântico +0.
 - ✅ **Zero-semantic/infra explicitamente auditados nesta reconciliação:** 10 providers listados acima; zero não significa ausência de auditoria.
 - ⚠️ **Current-ledger conditionals destacados:** Traveloptics, 26 Gaze Spirit Rites e Asterism `astral_gateway`.
 - ⚠️ **Legacy sibling candidates sem presença física atual afirmada:** `magic_schools`, `specs_irons_spellbooks`, `irons_apothic`.

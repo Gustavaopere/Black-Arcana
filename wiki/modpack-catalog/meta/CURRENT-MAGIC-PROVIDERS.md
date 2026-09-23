@@ -14,6 +14,14 @@ Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjun
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
+## Provider freshness override — Ars Controle 1.6.16
+
+O sibling revalidado em `neoforge-rpg-skilltree@ee08513c9e8992418c508bae485f3a181deb7f9c` confirma a posição física **#41** como `ars_controle-1.21.1-1.6.16.jar`, mod id `ars_controle`, runtime `1.21.1-1.6.16` e SHA-1 físico `795567371450debec83fe634fd0114c295f7da5a`.
+
+O source oficial exato `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` declara `mod_version=1.6.16` e Ars Nouveau `5.13.1.1403`. A comparação contra o checkpoint canônico anterior `ecbb83ba512bc9ca7a025556fb9c62dbd32b6430` (1.6.15) contém seis commits; o único Java de gameplay alterado é `WarpingSpellPrismBlock.java`. O arquivo autoritativo de registro `ACRegistry.java` permanece exatamente no mesmo Git blob `b38959053740605768a8945ed40c012c6bef5953` nos dois checkpoints.
+
+Consequência canônica: **✅ Ars Controle 1.6.16 — 9/9 spell parts source-pinned permanecem catalogados; +0 delta semântico; mínimo estrito continua 1382**. As correções do Warping Spell Prism, mixins, Source settlement, cross-dimension, persistência e comportamento assembled-pack continuam runtime QA fail-closed.
+
 ## Provider freshness override — Hazen N Stuff 1.4.0.14
 
 O sibling revalidado em `neoforge-rpg-skilltree@278b427023136d7c43d85dc188d0eac1ac85ef3a` confirma `hazennstuff-1.4.0.14.jar`, mod id `hazennstuff`, runtime `1.4.0.14` e SHA-1 físico `3be20bacb44c1923348ab6f61b685eec6aacfdcd`.

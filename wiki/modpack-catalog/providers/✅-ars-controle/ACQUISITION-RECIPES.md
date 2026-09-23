@@ -1,8 +1,8 @@
-# Ars Controle 1.6.15 — acquisition and learning
+# Ars Controle 1.6.16 — acquisition and learning
 
 Status: `SOURCE-PINNED DEFAULT RECIPES / EFFECTIVE DATAPACK QA PENDING`
 
-Source checkpoint: `Vonr/Ars-Controle@ecbb83ba512bc9ca7a025556fb9c62dbd32b6430`.
+Source checkpoint: `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` (`ver: 1.6.16`). The exact 1.6.15→1.6.16 compare contains no recipe/datagen or registry change, so the acquisition surface below is unchanged.
 
 This page records the generated default recipe surface. Modpack datapacks/configuration can still alter effective runtime reachability.
 
