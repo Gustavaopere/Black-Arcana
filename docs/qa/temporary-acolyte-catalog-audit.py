@@ -185,15 +185,18 @@ with zipfile.ZipFile(JAR) as z:
     )
 
     text_locations = set()
+    host_reference_files = {}
     for n in names:
         if n.startswith(("assets/acolyte/", "data/acolyte/")) and n.endswith((".json", ".toml", ".txt", ".mcmeta")):
             try:
                 txt = z.read(n).decode("utf-8")
             except Exception:
                 continue
-            text_locations.update(
-                re.findall(r"\b(?:irons_spellbooks|acolyte):[a-z0-9_./-]+\b", txt)
-            )
+            refs = sorted(set(re.findall(r"\b(?:irons_spellbooks|acolyte):[a-z0-9_./-]+\b", txt)))
+            text_locations.update(refs)
+            iron_refs = [x for x in refs if x.startswith("irons_spellbooks:")]
+            if iron_refs:
+                host_reference_files[n] = iron_refs
 
     print("=== STRUCTURAL SUMMARY ===")
     print("TOTAL_CLASSES", len(classes))
@@ -207,4 +210,9 @@ with zipfile.ZipFile(JAR) as z:
     print("IRON_SPELL_METHODREFS", json.dumps(sorted(iron_spell_methodrefs)))
     print("RESOURCE_LOCATION_LITERALS", json.dumps(sorted(resource_literals)))
     print("TEXT_RESOURCE_LOCATIONS", json.dumps(sorted(text_locations)))
+    print("HOST_REFERENCE_FILES", json.dumps(host_reference_files, sort_keys=True))
+    print("SPELL_REGISTRY_FIELDREFS", json.dumps(sorted(
+        row for row in iron_spell_fieldrefs
+        if row[0] and row[0].endswith("/SpellRegistry")
+    )))
     print("SPELL_REGISTRATION_MARKERS", json.dumps(sorted(suspicious_markers)))
