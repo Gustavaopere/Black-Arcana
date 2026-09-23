@@ -141,6 +141,14 @@ The same exact localization exposes 41 root spell keys. `brimstone_hellblast` an
 
 Hazen therefore contributes **+38 `COUNTED_SOURCE_PINNED`** semantic spell identities. Later `1.21.1` branch additions such as `coruscated_discharge` are not projected backward into the pinned 1.4.0.14 release.
 
+## Create: Wizardry 1.21.1-0.5.1-pre1 source-pinned zero-semantic closure
+
+Current sibling physical authority `neoforge-rpg-skilltree@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b` certifies `create_wizardry-1.21.1-0.5.1-pre1.jar` at physical row #166. Official source pin `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declares the same provider version.
+
+The source pin has 75 Java files and 328 resource files, but no provider-owned spell resource namespace and no `registerSpell`, `SpellRegistry`, `DeferredRegister<AbstractSpell>`, `Registries.SPELL`, `SPELLS.register` or `spell.create_wizardry` identity surface. Blaze Caster reads host `SpellData`/`AbstractSpell` and invokes existing Iron's spell casts; Mana Siphon and the provider's two mob effects modify mana/casting conditions. These are automation/resource/policy surfaces, not new provider-owned spell identities.
+
+Create: Wizardry is therefore `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION` and contributes **+0 semantic magic objects**. The strict reconstructible minimum remains **1382** on this base. Source-build byte equality to the installed JAR and all assembled-pack automation/resource settlement remain runtime QA rather than semantic-count gates.
+
 ## Strict reconstructible counted minimum
 
 **1382 semantic magic objects are currently reconstructible from canonical provider records after adding the Hazen N Stuff 1.4.0.14 source-pinned inventory.**
@@ -292,6 +300,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [GTBC's SpellLib](../providers/gtbcs-spelllib/README.md) — shared spell/addon library infrastructure; publisher surface establishes no standalone gameplay/spell catalog in 2.2.0;
 - [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
 - [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — Phase 2BT exact-release source-pinned `ZERO_BRIDGE_INFRA`; +0; modifies Iron's/Vampirism behavior without minting a provider-owned spell/action identity; runtime bridge QA remains fail-closed;
+- [Create: Wizardry](../providers/✅-create-wizardry/README.md) — current physical 1.21.1-0.5.1-pre1 source-pinned `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0; Blaze Caster/Mana Siphon automate or constrain Iron's-owned spell/mana behavior without minting provider-owned spell identities; runtime settlement remains fail-closed;
 - [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
 - [Mobstein](../providers/✅-mobstein/README.md) — exact 5.4.4 physical SHA-1 plus hash-matched resource-only clean-room audit closes the residual boundary as `ZERO_SEMANTIC_ACTIONS`: documented syringes are item interactions and surfaced action-like keybinds are entity/mount controls; **+0** independent semantic magic objects; runtime/API integration remains separately fail-closed;
 - Bloodlines `gravebound_crit_action` / Sorcerous Strike — registered implementation, but exact 3.0.9 configured tree and rank defaults provide no normal survival acquisition path;
