@@ -79,7 +79,7 @@ This closes the version drift at catalog level without adding or removing semant
 
 - Warping Spell Prism can add a 600-tick provider region ticket by default; Black Arcana does not inherit that permission.
 - The 1.6.16 Warping Spell Prism path was updated for Ars Nouveau 5.13.1 compatibility and direct-hit direction handling. Provider Source settlement, cross-dimension recreation and assembled-pack exactly-once behavior remain runtime QA concerns; this revalidation does not infer a PASS.
-- Scryer's Linkage declares `load_time=600`, but its audited 1.6.15 block/tile/capability paths do not demonstrate the matching region-ticket operation.
+- Scryer's Linkage declares `load_time=600`, but its audited 1.6.16 block/tile/capability paths do not demonstrate the matching region-ticket operation.
 - Remote multiple selection iterates a closed block box without an explicit source-visible volume/range cap in the audited path.
 - Portable Brazier Relay suppresses normal brazier ticking and reuses/recontextualizes the original Ars ritual object rather than cloning it.
 
