@@ -2,9 +2,9 @@
 
 ## Evidence boundary
 
-Physical provider: Ars 'n' Spells `3.3.2`.
+Physical provider: Ars 'n' Spells `3.3.4`.
 
-Implementation details here are pinned to the official NeoForge 1.21.1 `3.3.0` source line at `a9930223c96806e5d748ea69d02f9a32cab62de9`. The exact 3.3.1/3.3.2 public deltas are HUD-only; exact 3.3.2 carrier bytecode parity is still `NÃO VERIFICADO`.
+Historical implementation details below remain pinned to the official NeoForge 1.21.1 `3.3.0` source line at `a9930223c96806e5d748ea69d02f9a32cab62de9`. Public NeoForge source reaches exact 3.3.3 at `41fac17065c381104b17fdaab307d89ba21b49ab`, while exact 3.3.4 publisher evidence covers the current carrier-revision/protocol delta. Exact 3.3.4 carrier bytecode parity remains `NÃO VERIFICADO`.
 
 ## Provider role
 
@@ -33,6 +33,12 @@ The source-release baseline records several correctness fixes:
 - carrier-aware billing distinguishes reusable books from consumable scrolls.
 
 These behaviors matter because a second serializer/settler in Black Arcana could reintroduce item loss, duplicate spell entries or double payment even if its UI looked equivalent.
+
+## Current 3.3.3 / 3.3.4 carrier delta
+
+Exact 3.3.3 source/release evidence adds the provider Blank Scroll, direct binding through Iron's Inscription Table, Spell Loom redesign and carrier validation/repair hardening. Exact 3.3.4 publisher evidence expands carrier revisions to every native item component, advances client/server protocol to 7 and restores Blank Scroll drops in Iron's Catacombs armory/Citadel tomes.
+
+These changes remain provider-owned. They do not authorize Black Arcana to serialize, revise, repair or settle Ars 'n' Spells carriers independently.
 
 ## Black Arcana boundary
 
