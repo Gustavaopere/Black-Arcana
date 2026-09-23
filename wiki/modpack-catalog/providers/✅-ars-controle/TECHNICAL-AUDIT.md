@@ -2,7 +2,7 @@
 
 Status: `SOURCE-PINNED STATIC/RUNTIME-PATH AUDIT / INSTALLED-JAR QA PENDING`
 
-Source checkpoint: `Vonr/Ars-Controle@14c5f4770a9ec265491fb9c62dbd32b6430` (`ver: 1.6.16`).
+Source checkpoint: `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` (`ver: 1.6.16`).
 
 ## Registration architecture
 
