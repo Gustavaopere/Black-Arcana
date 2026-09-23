@@ -141,9 +141,19 @@ The same exact localization exposes 41 root spell keys. `brimstone_hellblast` an
 
 Hazen therefore contributes **+38 `COUNTED_SOURCE_PINNED`** semantic spell identities. Later `1.21.1` branch additions such as `coruscated_discharge` are not projected backward into the pinned 1.4.0.14 release.
 
+## Companions! 1.3.4 source-pinned Magic Book closure
+
+The current sibling physical dossier at `neoforge-rpg-skilltree@2fa3914d5976206c84cc5f03eb52ef2b70692f73` certifies physical order **#104**, JAR `companions-neoforge-1.21.1-1.3.4.jar`, mod id `companions`, runtime `1.3.4` and physical SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1`. Exact official source pin `Xylonity/Companions@95c9445e1514648418064ea90b5c373e81375d2f` is the provider-owned version bump to 1.3.4.
+
+The pinned `CompanionsItems` registry contains **nine active `AbstractMagicBook` action identities**: Ice Shard, Ice Tornado, Fire Mark, Heal Ring, Stone Spikes, Brace, Magic Ray, Black Hole and Naginata. These registrations are direct and are not wrapped in provider config/mod-presence gates. The exact Magic Books config section changes numerical behavior and cooldowns, not identity registration.
+
+All nine source-level survival paths are provider-owned and closed: the Overworld/Nether/End Minion coin interactions provide six books, Black Hole and Magic Ray are injected into vanilla chest loot tables, and Naginata has a provider recipe. Soul Mage's three Magic Book slots and nine dedicated AI goals reuse the same provider identities and therefore add **zero duplicate semantic objects**.
+
+Companions! therefore contributes **+9 `COUNTED_SOURCE_PINNED`** semantic magic actions. No other companion attack, projectile, gear item, coin, summon or hostile-mob skill is promoted by inference in this checkpoint. Assembled-pack registry/config/acquisition/cast behavior remains fail-closed runtime QA.
+
 ## Strict reconstructible counted minimum
 
-**1382 semantic magic objects are currently reconstructible from canonical provider records after adding the Hazen N Stuff 1.4.0.14 source-pinned inventory.**
+**1391 semantic magic objects are currently reconstructible from canonical provider records after adding the Hazen N Stuff 1.4.0.14 and Companions! 1.3.4 source-pinned inventories.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -158,7 +168,8 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `199 + 608 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1382`.
+- Companions! Magic Book layer: **9**;
+- total: `199 + 608 + 42 + 55 + 25 + 26 + 361 + 14 + 52 + 9 = 1391`.
 
 ### Counted ledger
 
@@ -183,6 +194,7 @@ Arithmetic cross-check by provider family:
 | [Farmer's Spell 'n Spellbooks](../providers/farmers-spell/README.md) | 1.0.5.1-1.21.1 | 6 | `COUNTED_SOURCE_PINNED` | exact 1.0.5.1 source pin closes six unconditional Gluttony spell registrations; provider/host-native Scroll Forge focus route closes catalog reachability while current-host runtime QA remains separate |
 | [SnackPirate's Aeromancy Additions](../providers/aeromancy-additions/README.md) | 1.2.8 | 10 | `COUNTED_SOURCE_PINNED` | exact 1.2.8 source pin closes ten active unconditional Wind spell registrations; five commented registrations are excluded; Breeze Rod Wind focus + Iron's Scroll Forge contract close catalog reachability while current-host runtime QA remains separate |
 | [Hazen N Stuff](../providers/✅-hazen-n-stuff/README.md) | 1.4.0.14 | 38 | `COUNTED_SOURCE_PINNED` | exact release-correlated source pin closes 38 active spell registrations; `brimstone_hellblast` and `supernova` are unregistered localization roots and `reign_of_tyros` has a commented registration; special craft gates/focus routes are catalog-reconciled while assembled-host runtime QA remains separate |
+| [Companions!](../providers/✅-companions/README.md) | 1.3.4 | 9 | `COUNTED_SOURCE_PINNED` | exact official version-correlated source pin closes nine unconditional Magic Book action identities; six Minion-coin reward routes + two vanilla chest loot injections + Naginata recipe close source-level survival reachability; Soul Mage reuse is deduplicated and assembled-pack runtime QA remains separate |
 | [Fire's Ender Expansion](../providers/fires-ender-expansion/README.md) | 2.4.1 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 active spells |
 | [IronSable](../providers/ironsable/README.md) | 1.2.0 | 7 | `COUNTED_RELEASE_BOUNDED` | 7 provider-owned new spells; 10 physicalized existing Iron's spells add zero identities |
 | [ISS: Magic From The East](../providers/iss-magic-from-the-east/README.md) | 1.1.5 | 22 | `COUNTED_SOURCE_PINNED` | 11 Symmetry + 11 Spirit spells |
@@ -205,7 +217,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1382** |  |  |
+| **Strict total** |  | **1391** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -302,7 +314,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 1382** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 1391** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -313,9 +325,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1382 is not “1382 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1382 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1382 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1391 is not “1391 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1391 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1391 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
