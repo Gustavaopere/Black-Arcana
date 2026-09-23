@@ -26,6 +26,7 @@ O objetivo deste índice é responder duas perguntas sem misturá-las:
 - O índice físico sibling atual reconcilia **587 entradas top-level incluindo o modloader**; para Create: Wizardry, a linha certificada atual é **#166**. O antigo snapshot Black Arcana de 595 entradas abaixo permanece histórico até regeneração integral do denominator mágico.
 - Snapshot físico canônico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
+- **Override semântico corrente:** Hazen N Stuff #358 elevou o mínimo estrito canônico para **1382**. Create: Wizardry fecha em **+0**, portanto este trabalho não altera 1382. Totais históricos de 1344 mantidos em tabelas abaixo devem ser lidos como checkpoints anteriores, não como o mínimo corrente.
 
 ## 1. Ledger semântico global atual — 40 providers / 1344 objetos
 
