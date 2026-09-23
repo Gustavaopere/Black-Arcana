@@ -143,7 +143,7 @@ Hazen therefore contributes **+38 `COUNTED_SOURCE_PINNED`** semantic spell ident
 
 ## Companions! 1.3.4 source-pinned Magic Book closure
 
-The current sibling physical dossier at `neoforge-rpg-skilltree@2fa3914d5976206c84cc5f03eb52ef2b70692f73` certifies physical order **#104**, JAR `companions-neoforge-1.21.1-1.3.4.jar`, mod id `companions`, runtime `1.3.4` and physical SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1`. Exact official source pin `Xylonity/Companions@95c9445e1514648418064ea90b5c373e81375d2f` is the provider-owned version bump to 1.3.4.
+The current sibling physical dossier at `neoforge-rpg-skilltree@39d358ec8de20d647cecbfe4e8c0a0181cc6b12f` certifies physical order **#104**, JAR `companions-neoforge-1.21.1-1.3.4.jar`, mod id `companions`, runtime `1.3.4` and physical SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1`. Exact official source pin `Xylonity/Companions@95c9445e1514648418064ea90b5c373e81375d2f` is the provider-owned version bump to 1.3.4.
 
 The pinned `CompanionsItems` registry contains **nine active `AbstractMagicBook` action identities**: Ice Shard, Ice Tornado, Fire Mark, Heal Ring, Stone Spikes, Brace, Magic Ray, Black Hole and Naginata. These registrations are direct and are not wrapped in provider config/mod-presence gates. The exact Magic Books config section changes numerical behavior and cooldowns, not identity registration.
 
