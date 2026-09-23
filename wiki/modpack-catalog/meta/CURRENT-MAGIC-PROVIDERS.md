@@ -100,7 +100,6 @@ Cada JAR mágico deve ser classificado antes da extração spell-by-spell:
 - Monsters & Spellbooks;
 - T.O Magic n' Extras;
 - Hazen N Stuff;
-- Companions!;
 - ISS: Magic From The East;
 - Asterism Arcanum;
 - Leyline Spellbooks;
@@ -124,6 +123,7 @@ Ars Nouveau e seus addons devem ser catalogados em nível de glyph/form/augment 
 - Goety;
 - Malum;
 - Eidolon: Repraised;
+- Companions! — provider `MIXED`, com camada própria de Magic Books; não herdar assumptions de authority/aquisição do ecossistema Iron's;
 - Hexalia;
 - Toxony;
 - Vampirism/Bloodlines e bridges mágicas;
