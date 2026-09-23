@@ -38,14 +38,12 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
-          import io, json, re, struct, zipfile
-          from collections import defaultdict
+          import json, re, struct, zipfile
 
           JAR='acolyte-1.0.3.jar'
 
           def u1(b, o): return b[o], o+1
           def u2(b, o): return struct.unpack_from('>H', b, o)[0], o+2
-          def u4(b, o): return struct.unpack_from('>I', b, o)[0], o+4
 
           def parse_class(data):
               if data[:4] != b'\xca\xfe\xba\xbe':
@@ -77,7 +75,7 @@ jobs:
                       raise ValueError(f'unknown cp tag {tag}')
                   i+=1
 
-              access,o=u2(data,o)
+              _,o=u2(data,o)
               this_idx,o=u2(data,o)
               super_idx,o=u2(data,o)
 
@@ -110,14 +108,9 @@ jobs:
               classes={}
               for n in names:
                   if n.endswith('.class') and not n.startswith('META-INF/versions/'):
-                      try:
-                          info=parse_class(z.read(n))
-                          classes[info['this']]=info
-                      except Exception as e:
-                          print('PARSE_ERROR',n,type(e).__name__,str(e))
+                      info=parse_class(z.read(n))
+                      classes[info['this']]=info
 
-              own_prefixes=tuple(sorted({c.rsplit('/',1)[0].split('/')[0] for c in classes if c}))
-              # Restrict provider-owned classes by namespace package containing acolyte.
               own={k:v for k,v in classes.items() if k and 'acolyte' in k.lower()}
 
               def super_chain(name):
@@ -142,7 +135,7 @@ jobs:
               iron_registry_fieldrefs=set()
               iron_spell_methodrefs=set()
               literals=set()
-              for name,info in own.items():
+              for info in own.values():
                   for owner,field,desc in info['fieldrefs']:
                       if owner and owner.startswith('io/redspace/ironsspellbooks/') and 'spell' in owner.lower():
                           iron_registry_fieldrefs.add((owner,field,desc))
@@ -156,10 +149,7 @@ jobs:
               lang_keys=[]
               for n in names:
                   if n.startswith('assets/acolyte/lang/') and n.endswith('.json'):
-                      try:
-                          obj=json.loads(z.read(n))
-                      except Exception:
-                          continue
+                      obj=json.loads(z.read(n))
                       lang_keys += [k for k in obj if 'spell' in k.lower()]
 
               spell_resources=sorted([
@@ -177,22 +167,24 @@ jobs:
                           continue
                       text_resource_locations.update(re.findall(r'\b(?:irons_spellbooks|acolyte):[a-z0-9_./-]+\b',txt))
 
+              suspicious_utf8=sorted({
+                  s for info in own.values() for s in info['utf8']
+                  if any(token in s for token in ('SPELL_REGISTRY_KEY','DeferredRegister','registerSpell','AbstractSpell'))
+              })
+
               print('=== STRUCTURAL SUMMARY ===')
               print('TOTAL_CLASSES',len(classes))
               print('PROVIDER_CLASSES',len(own))
               print('SPELL_LIKE_PROVIDER_CLASSES',json.dumps(spell_like_classes))
               print('ABSTRACTSPELL_CHAIN_CLASSES',json.dumps(sorted(abstract_spell_chain)))
-              print('IRON_SPELL_SUPER_CLASSES',json.dumps([(n,c) for n,c in iron_spell_super]))
+              print('IRON_SPELL_SUPER_CLASSES',json.dumps(iron_spell_super))
               print('OWN_SPELL_LANG_KEYS',json.dumps(sorted(set(lang_keys))))
               print('OWN_SPELL_RESOURCE_PATHS',json.dumps(spell_resources))
               print('IRON_SPELL_FIELDREFS',json.dumps(sorted(iron_registry_fieldrefs)))
               print('IRON_SPELL_METHODREFS',json.dumps(sorted(iron_spell_methodrefs)))
               print('RESOURCE_LOCATION_LITERALS',json.dumps(sorted(x for x in literals if x.startswith(('irons_spellbooks:','acolyte:')))))
               print('TEXT_RESOURCE_LOCATIONS',json.dumps(sorted(text_resource_locations)))
-
-              suspicious_utf8=sorted({
-                  s for info in own.values() for s in info['utf8']
-                  if any(token in s for token in ('SPELL_REGISTRY_KEY','DeferredRegister','registerSpell','AbstractSpell'))
-              })
               print('SPELL_REGISTRATION_MARKERS',json.dumps(suspicious_utf8))
           PY
+
+# trigger: second branch push intentionally executes this temporary audit
