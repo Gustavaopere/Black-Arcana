@@ -22,6 +22,14 @@ O source oficial release-correlated `Hazentouvel/Hazen_N_Stuff@5fcaf39cf399609f6
 
 Consequência canônica: **✅ Hazen N Stuff — 38/38 source-pinned spell registrations catalogadas; +38 semantic objects; runtime QA fail-closed**. O mínimo semântico reconstruível passa para **1382**. Como Hazen não estava no denominador técnico histórico de 100 componentes, o denominador técnico global fica explicitamente `PENDING REBASE`.
 
+## Provider freshness override — Create: Wizardry 1.21.1-0.5.1-pre1
+
+O sibling atual em `neoforge-rpg-skilltree@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b` reconcilia Create: Wizardry na posição física **#166** como `create_wizardry-1.21.1-0.5.1-pre1.jar`, mod id `create_wizardry`, runtime `1.21.1-0.5.1-pre1`.
+
+O source oficial version-correlated `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declara a mesma versão. A auditoria estrutural encontra 75 Java files, 328 resources e **zero** superfície provider-owned de spell registry/resource: sem `registerSpell`, `SpellRegistry`, `DeferredRegister<AbstractSpell>`, `Registries.SPELL`, `SPELLS.register` ou namespace `spell.create_wizardry`. Blaze Caster e Mana Siphon consomem `SpellData`/`AbstractSpell` do Iron's e alteram/automatizam o pipeline host; isso não transfere ownership dos spells. A blacklist explícita do Blaze Caster contém 31 host spell path names e também não cria identidades novas.
+
+Consequência canônica: **✅ Create: Wizardry — componente mágico/cross-domain catalogado como `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0 semantic objects; runtime QA fail-closed**. O mínimo estrito permanece **1382** neste `main`. Como o denominador técnico global está em rebase, nenhum novo percentual/fração técnica é publicado.
+
 ## Provider freshness override — Somake 1.0.9
 
 A autoridade global de 595 top-levels acima permanece o checkpoint histórico reconciliado de 2026-09-11; ela **não** é rebatizada silenciosamente como um snapshot global mais novo.
@@ -90,6 +98,7 @@ Cada JAR mágico deve ser classificado antes da extração spell-by-spell:
 - Monsters & Spellbooks;
 - T.O Magic n' Extras;
 - Hazen N Stuff;
+- Create: Wizardry;
 - ISS: Magic From The East;
 - Asterism Arcanum;
 - Leyline Spellbooks;
