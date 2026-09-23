@@ -4,7 +4,7 @@ Status: `COUNTED_SOURCE_PINNED / +9 SEMANTIC MAGIC-BOOK ACTIONS / CATALOG ✅ / 
 
 ## Current physical identity
 
-The current sibling physical dossier at `neoforge-rpg-skilltree@2fa3914d5976206c84cc5f03eb52ef2b70692f73` confirms:
+The current sibling physical dossier at `neoforge-rpg-skilltree@39d358ec8de20d647cecbfe4e8c0a0181cc6b12f` confirms:
 
 - physical order: `#104`;
 - JAR: `companions-neoforge-1.21.1-1.3.4.jar`;
