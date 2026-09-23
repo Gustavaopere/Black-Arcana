@@ -52,7 +52,7 @@ Capability-matrix deltas follow the same narrow-overlay rule:
 
 ## Authority order
 
-1. Current physical modlist evidence is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. The former **595 top-level / NeoForge `21.1.248`** snapshot is now historical. The sibling physical re-audit at `neoforge-rpg-skilltree@2fa3914d5976206c84cc5f03eb52ef2b70692f73` records **587 top-level entries including NeoForge `21.1.250`** in its revalidated provider dossiers. Until the integral magic-provider queue is regenerated, each newly certified dossier is a provider-specific physical override; internal `jarjar` dependencies do not count as top-level providers.
+1. Current physical modlist evidence is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. The former **595 top-level / NeoForge `21.1.248`** snapshot is now historical. The sibling physical re-audit at `neoforge-rpg-skilltree@39d358ec8de20d647cecbfe4e8c0a0181cc6b12f` records **587 top-level entries including NeoForge `21.1.250`** in its revalidated provider dossiers. Until the integral magic-provider queue is regenerated, each newly certified dossier is a provider-specific physical override; internal `jarjar` dependencies do not count as top-level providers.
 2. Current Notion pages and project guides provide ecosystem classification, gameplay context and known compatibility notes.
 3. Official/public documentation, public APIs, changelogs and clean-room observable behavior provide granular spell/glyph/ritual/power facts.
 4. External source code may only inform an implementable specification when the exact license permits that use and the provenance ledger requirement has already been satisfied.
