@@ -1,6 +1,6 @@
 # Black Arcana — Catálogo Global de Magia e Feitiços
 
-Última sincronização: 2026-09-16
+Última sincronização: 2026-09-23
 
 Este arquivo é o índice operacional global de catalogação do projeto. A árvore detalhada canônica é `wiki/modpack-catalog/providers/`; o ledger semântico reconstruível é `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md`; e a cobertura técnica de componentes é `wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md`.
 
@@ -21,8 +21,9 @@ O objetivo deste índice é responder duas perguntas sem misturá-las:
 
 ## Snapshot de autoridade
 
-- Black Arcana: `main@3b403a3987bf567d648fef69e11d777aa35ca89e`.
-- RPG Skill Tree sibling: `main@35154766e875912671efe60979f4fe67342b4796`.
+- Black Arcana base desta reconciliação: `main@3936635bd32f316ae57976bd9af7b333baac0a5a`.
+- RPG Skill Tree sibling mais recente consultado: `main@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b`.
+- O índice físico sibling atual reconcilia **587 entradas top-level incluindo o modloader**; para Create: Wizardry, a linha certificada atual é **#166**. O antigo snapshot Black Arcana de 595 entradas abaixo permanece histórico até regeneração integral do denominator mágico.
 - Snapshot físico canônico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
 
@@ -87,6 +88,7 @@ Zero é um resultado de catálogo válido quando a auditoria fecha que o mod ape
 | Ars Sable | `1.1.2` | ✅ `ZERO_SEMANTIC_BRIDGE` | Infraestrutura espacial/compat; 0 spell/glyph/ritual/action registry próprio. |
 | Ars Nouveau: Two-Way Portals | `2.0.0` | ✅ `ZERO_SEMANTIC_PORTAL_INFRA` | Artefato exato; 0 spell/glyph/ritual/rite/ability independente. |
 | Vampire Spells Addon | `0.0.9` | ✅ `ZERO_BRIDGE_INFRA` | Source-pinned Iron's↔Vampirism behavior/policy overlay; 0 provider-owned spell/school/ritual/action registry; runtime bridge QA separado. |
+| Create: Wizardry | `1.21.1-0.5.1-pre1` | ✅ `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION` | Presença física #166 e source pin exato da versão revalidados; Blaze Caster/Mana Siphon usam spells/mana do Iron's, mas não há provider-owned spell registry/resource. +0 semântico; runtime QA separado. |
 | Ars Sophisticated Compatibility | `0.3.0` | ✅ `ZERO_SEMANTIC_BRIDGE` | Artefato físico/publisher reconciliado como Sophisticated Backpacks↔Ars Nouveau compat; 0 standalone spells, glyphs/spell-parts ou rituals; runtime/API QA permanece separado. |
 | Reliquified L_Ender's Cataclysm — New Relics Fix | `1.0.2` | ✅ `ZERO_SEMANTIC_BRIDGE` | Bridge Relics 0.10→0.12 para cinco relics já pertencentes ao addon original; 0 novas identidades de relic ou spell; runtime QA separado. |
 
@@ -107,7 +109,6 @@ As entradas abaixo existiam em `docs/MODPACK_SCOPE.md` derivado de `modlist(2026
 | Iron's Spells Magic Schools | `magic_schools` | `1.0` | ⚠️ Revalidar presença física e determinar spells/escolas próprios. |
 | Specs: Iron's Spells 'n Spellbooks Addon | `specs_irons_spellbooks` | `1.6.4` | ⚠️ Revalidar presença física e confirmar spells próprios. |
 | Iron's Apothic | `irons_apothic` | `2.2.1` | ⚠️ Revalidar presença física e conteúdo spell-level. |
-| Create: Wizardry | `create_wizardry` | `1.21.1-0.5.1-pre1` | ⚠️ Revalidar presença física, fonte e conteúdo mágico próprio. |
 
 Entradas de suporte como `arsdelight`, `reliquified_ars_nouveau`, `efiscompat`, `irons_jewelry`, `irons_spells_dynamic_skilltree` e `reliquified_irons_spells_and_spellbooks` também não são promovidas como spell-bearing apenas por associação de ecossistema.
 
@@ -146,7 +147,8 @@ As métricas têm denominadores diferentes:
 - ✅ **Cobertura técnica de componentes:** **67/100 = 67%** no ledger `CATALOG-COVERAGE-CURRENT.md`. Esse percentual mede componentes técnicos, não spells.
 - ✅ **Zero-semantic/infra explicitamente auditados nesta reconciliação:** 9 providers listados acima; zero não significa ausência de auditoria.
 - ⚠️ **Current-ledger conditionals destacados:** Traveloptics, 26 Gaze Spirit Rites e Asterism `astral_gateway`.
-- ⚠️ **Legacy sibling candidates sem presença física atual afirmada:** `magic_schools`, `specs_irons_spellbooks`, `irons_apothic`, `create_wizardry`.
+- ⚠️ **Legacy sibling candidates sem presença física atual afirmada:** `magic_schools`, `specs_irons_spellbooks`, `irons_apothic`.
+- ✅ **Create: Wizardry saiu desta lista:** presença física atual #166 e source pin 1.21.1-0.5.1-pre1 estão revalidados; o provider fecha em +0 spells próprios porque automatiza spells do Iron's sem registrar identidades próprias.
 - ✅ **Mahou Tsukai clean-room:** 53/53 linhas observáveis classificadas; presença física atual não afirmada.
 - ✅ **Black Arcana próprio:** 32 contratos de candidatos; Noetic 7/7 com proveniência individual.
 
