@@ -2,9 +2,9 @@
 
 ## Evidence boundary
 
-This page describes the official Ars 'n' Spells NeoForge 1.21.1 **3.3.0 source baseline** at `otectus/ars-n-spells@a9930223c96806e5d748ea69d02f9a32cab62de9`, plus exact 3.3.1/3.3.2 release deltas. The physical pack runs `ars_n_spells-3.3.2.jar`.
+This page keeps the official NeoForge 1.21.1 **3.3.0 source baseline** at `otectus/ars-n-spells@a9930223c96806e5d748ea69d02f9a32cab62de9` for algorithm details not separately re-pinned, while exact public source now reaches 3.3.3 at `41fac17065c381104b17fdaab307d89ba21b49ab`. The physical pack runs `ars_n_spells-3.3.4.jar`; exact 3.3.4 publisher evidence adds payment/cast lifecycle, config/default and protocol/carrier deltas.
 
-Exact 3.3.2 internal routing signatures are not claimed without binary/source parity evidence.
+Exact 3.3.4 internal routing/payment signatures are not claimed without binary/source parity evidence.
 
 ## Five provider-owned modes
 
