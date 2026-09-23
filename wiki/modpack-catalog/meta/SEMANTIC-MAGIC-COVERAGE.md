@@ -133,16 +133,24 @@ Exact hash-matched 1.0.3 artifact evidence closes **14 unconditional Leyline spe
 
 Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Black Arcana CI **#2503** / run `34668329229`. It was squash-merged as `88f042f68429ff920314a7ec3a6923369edc93fd`; that exact merge SHA passed Black Arcana CI **#2504** / run `34668535721`, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest, dedicated-server smoke and canonical QA-JAR publication. The canonical Iron-ecosystem subtotal is now **541** and the strict semantic minimum is **888** (`199 + 541 + 42 + 55 + 25 + 26`). The global denominator remains incomplete, so no semantic percentage is declared.
 
+## Hazen N Stuff 1.4.0.14 source-pinned spell closure
+
+The current sibling physical re-audit certifies `hazennstuff-1.4.0.14.jar` / mod id `hazennstuff` / runtime `1.4.0.14` / physical SHA-1 `3be20bacb44c1923348ab6f61b685eec6aacfdcd`. Exact release-correlated source `Hazentouvel/Hazen_N_Stuff@5fcaf39cf399609f6c1c87d14f8d4807098c9cce` declares the same version and its sole spell registry contains **38 active Iron's `AbstractSpell` registrations**.
+
+The same exact localization exposes 41 root spell keys. `brimstone_hellblast` and `supernova` have no active registry entry; `reign_of_tyros` has a source class/localization root but its `registerSpell(...)` line is commented. Those three are excluded. Three of the 38 active spells inherit provider-specific inventory craft gates with source-pinned provider-owned acquisition paths; the remaining 35 use the host/default craftability path at the provider source level. Custom Cosmic/Radiance/Shadow/Hydro focus routing is catalog-reconciled against HazentouveLib/Ace's Spell Utils, while assembled-pack runtime and deployed host config remain fail-closed.
+
+Hazen therefore contributes **+38 `COUNTED_SOURCE_PINNED`** semantic spell identities. Later `1.21.1` branch additions such as `coruscated_discharge` are not projected backward into the pinned 1.4.0.14 release.
+
 ## Strict reconstructible counted minimum
 
-**1344 semantic magic objects are currently reconstructible from canonical provider records after the Phase 2BT shared-ledger reconciliation.**
+**1382 semantic magic objects are currently reconstructible from canonical provider records after adding the Hazen N Stuff 1.4.0.14 source-pinned inventory.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
 - Ars ecosystem: **199**;
-- Iron's ecosystem and spell-content addons: **570**;
+- Iron's ecosystem and spell-content addons: **608**;
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
 - Hexalia ritual/infusion layer: **25**;
@@ -150,7 +158,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `199 + 570 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1344`.
+- total: `199 + 608 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1382`.
 
 ### Counted ledger
 
@@ -174,6 +182,7 @@ Arithmetic cross-check by provider family:
 | [GTBC's Geomancy Plus](../providers/gtbcs-geomancy-plus/README.md) | 1.1.0-1.21.1 | 12 | `COUNTED_RELEASE_BOUNDED` | exact publisher file `7041615` closes 12 unconditional provider-owned registrations (10 Geo + 2 Holy); Geo host-gate inheritance + focus/Scroll Forge route and Holy Umvuthi acquisition close catalog reachability; independent local physical-JAR hash is unavailable; assembled-host runtime QA remains separate |
 | [Farmer's Spell 'n Spellbooks](../providers/farmers-spell/README.md) | 1.0.5.1-1.21.1 | 6 | `COUNTED_SOURCE_PINNED` | exact 1.0.5.1 source pin closes six unconditional Gluttony spell registrations; provider/host-native Scroll Forge focus route closes catalog reachability while current-host runtime QA remains separate |
 | [SnackPirate's Aeromancy Additions](../providers/aeromancy-additions/README.md) | 1.2.8 | 10 | `COUNTED_SOURCE_PINNED` | exact 1.2.8 source pin closes ten active unconditional Wind spell registrations; five commented registrations are excluded; Breeze Rod Wind focus + Iron's Scroll Forge contract close catalog reachability while current-host runtime QA remains separate |
+| [Hazen N Stuff](../providers/✅-hazen-n-stuff/README.md) | 1.4.0.14 | 38 | `COUNTED_SOURCE_PINNED` | exact release-correlated source pin closes 38 active spell registrations; `brimstone_hellblast` and `supernova` are unregistered localization roots and `reign_of_tyros` has a commented registration; special craft gates/focus routes are catalog-reconciled while assembled-host runtime QA remains separate |
 | [Fire's Ender Expansion](../providers/fires-ender-expansion/README.md) | 2.4.1 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 active spells |
 | [IronSable](../providers/ironsable/README.md) | 1.2.0 | 7 | `COUNTED_RELEASE_BOUNDED` | 7 provider-owned new spells; 10 physicalized existing Iron's spells add zero identities |
 | [ISS: Magic From The East](../providers/iss-magic-from-the-east/README.md) | 1.1.5 | 22 | `COUNTED_SOURCE_PINNED` | 11 Symmetry + 11 Spirit spells |
@@ -196,7 +205,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1344** |  |  |
+| **Strict total** |  | **1382** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -293,7 +302,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 1344** until their exact/current inventory and deduplication state meet the inclusion rule.
+These rows are deliberately **not additive to 1382** until their exact/current inventory and deduplication state meet the inclusion rule.
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -304,9 +313,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1344 is not “1344 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1344 by the 100 provider-component denominator. The current component target is `68/100`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1344 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1382 is not “1382 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1382 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1382 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
