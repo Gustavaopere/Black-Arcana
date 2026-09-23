@@ -33,6 +33,9 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      - name: Temporary Acolyte exact-release catalog audit NON-MERGE
+        run: python docs/qa/temporary-acolyte-catalog-audit.py
+
       - name: Unit tests
         run: ./gradlew --no-daemon test
 
