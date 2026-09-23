@@ -74,7 +74,7 @@ The only provider-side `canBeCraftedBy` specialization affecting registered spel
 | `nights_edge_strike` | Night's Edge or True Night's Edge must be present in inventory | exact release packages a crafting recipe for `hazennstuff:nights_edge` carrying the spell |
 | `scorching_slash` | Raven's Bane must be present in inventory | exact release packages a crafting recipe for `hazennstuff:ravens_bane` carrying the spell |
 
-The other 36 registrations inherit the host/default craftability and enabled-state contract at the inspected provider source level.
+The other 35 registrations inherit the host/default craftability and enabled-state contract at the inspected provider source level.
 
 ## Focus / school reachability
 
