@@ -1,6 +1,6 @@
 # Hazen N Stuff — 1.4.0.14
 
-Status: `COUNTED_SOURCE_PINNED / +39 SEMANTIC SPELLS / CATALOG ✅ / RUNTIME QA FAIL-CLOSED`
+Status: `COUNTED_SOURCE_PINNED / +38 SEMANTIC SPELLS / CATALOG ✅ / RUNTIME QA FAIL-CLOSED`
 
 ## Current physical identity
 
@@ -23,31 +23,32 @@ This establishes a version-correlated **source pin**, not byte-for-byte equivale
 
 ## Exact source-pinned spell registry
 
-The release-pinned `HnSSpellRegistries` owns one Iron's `DeferredRegister<AbstractSpell>` under namespace `hazennstuff` and contains exactly **39 active spell registrations**.
+The release-pinned `HnSSpellRegistries` owns one Iron's `DeferredRegister<AbstractSpell>` under namespace `hazennstuff` and contains exactly **38 active spell registrations**.
 
 Registry-level source inspection records:
 
-- 39 active `Supplier<AbstractSpell>` registrations;
+- 38 active `Supplier<AbstractSpell>` registrations;
 - 0 `if (...)` statements in the registry class;
 - 0 `ModList` references in the registry class;
 - 0 config references in the registry class.
 
-The exact source localization contains 41 root `spell.hazennstuff.<id>` keys. Two are not active registrations in this release and are excluded:
+The exact source localization contains 41 root `spell.hazennstuff.<id>` keys. Three are not active registrations in this release and are excluded:
 
-- `hazennstuff:brimstone_hellblast`;
-- `hazennstuff:supernova`.
+- `hazennstuff:brimstone_hellblast` — localization-only;
+- `hazennstuff:reign_of_tyros` — class/localization present, but its exact release registration line is commented;
+- `hazennstuff:supernova` — localization-only.
 
-The active 39 are cataloged in [SOURCE-1.4.0.14-SPELL-INVENTORY.md](./SOURCE-1.4.0.14-SPELL-INVENTORY.md).
+The active 38 are cataloged in [SOURCE-1.4.0.14-SPELL-INVENTORY.md](./SOURCE-1.4.0.14-SPELL-INVENTORY.md).
 
 ## School/family distribution
 
-The exact release registry groups the 39 active identities as:
+The exact release registry groups the 38 active identities as:
 
 | Family / school surface | Count |
 |---|---:|
 | Ender | 1 |
 | Blood | 2 |
-| Fire | 6 |
+| Fire | 5 |
 | Ice | 2 |
 | Lightning | 3 |
 | Nature | 4 |
@@ -58,7 +59,7 @@ The exact release registry groups the 39 active identities as:
 | Eldritch | 1 |
 | Cosmic | 4 |
 | Hydro | 5 |
-| **Total** | **39** |
+| **Total** | **38** |
 
 The grouping above follows the provider's own release registry organization. It does not rename provider schools or collapse them into Black Arcana domains.
 
@@ -91,7 +92,7 @@ This is sufficient for **catalog-level reachability** under the same Iron's host
 
 The current sibling dossier preserves a 24-spell public-documentation baseline. That is useful publisher coverage but is not the release registry denominator.
 
-The exact 1.4.0.14 source registry proves 39 active registrations. The public page therefore must not be used to truncate the installed-release catalog to 24.
+The exact 1.4.0.14 source registry proves 38 active registrations. The public page therefore must not be used to truncate the installed-release catalog to 24.
 
 Later source on the `1.21.1` branch also differs from the pinned release. For example, later source contains `coruscated_discharge`, while the pinned 1.4.0.14 registry does not register it. Later branch state is not projected backward into the installed release.
 
@@ -99,11 +100,11 @@ Later source on the `1.21.1` branch also differs from the pinned release. For ex
 
 Hazen N Stuff contributes:
 
-- **+39 `COUNTED_SOURCE_PINNED` semantic spell identities**;
-- 2 localization-only spell roots excluded;
+- **+38 `COUNTED_SOURCE_PINNED` semantic spell identities**;
+- 3 non-active localization roots excluded (two localization-only plus one commented registration);
 - no duplicate count for focuses, equipment, projectiles, effects, schools or spell containers.
 
-The previously reconstructed strict semantic minimum of **1344** therefore becomes **1383**.
+The previously reconstructed strict semantic minimum of **1344** therefore becomes **1382**.
 
 Hazen is an additional physically certified magic component discovered after the older 100-component technical denominator was established. It closes the next known provider component, but the old `68/100` ratio must now be treated as historical until the full current sibling modlist is re-based. Do not publish a new technical percentage from the stale denominator.
 
@@ -129,7 +130,7 @@ Still unverified in the exact assembled modpack:
 - dedicated-server boot with Hazen N Stuff 1.4.0.14 + HazentouveLib 1.0.9 + Iron's 3.16.3;
 - actual registry sync and client connection;
 - deployed Iron's generic spell enable/crafting config;
-- cast/cancel/cooldown behavior for all 39 spells;
+- cast/cancel/cooldown behavior for all 38 spells;
 - exactly-once settlement for damage/projectiles/summons/effects;
 - multiplayer caster/owner attribution;
 - reload/restart behavior;
@@ -140,6 +141,6 @@ Those runtime gates do not erase the source-pinned semantic catalog; they preven
 
 ## Result
 
-**✅ Cataloged at source-pinned semantic level: 39/39 active 1.4.0.14 spell registrations.**
+**✅ Cataloged at source-pinned semantic level: 38/38 active 1.4.0.14 spell registrations.**
 
 Runtime/provider integration remains fail-closed until direct assembled-pack evidence exists.

@@ -13,7 +13,7 @@ Exact public source checkpoint:
 
 `Hazentouvel/Hazen_N_Stuff@5fcaf39cf399609f6c1c87d14f8d4807098c9cce`
 
-The source checkpoint declares version 1.4.0.14 and its `HnSSpellRegistries` contains exactly 39 active `registerSpell(new ...)` registrations.
+The source checkpoint declares version 1.4.0.14 and its `HnSSpellRegistries` contains exactly 38 active `registerSpell(new ...)` registrations.
 
 This is a factual source-pinned catalog. No byte-for-byte source-build equivalence to the physical JAR is claimed.
 
@@ -29,41 +29,40 @@ This is a factual source-pinned catalog. No byte-for-byte source-build equivalen
 | 6 | Fire — Iron's | `hazennstuff:cinderous_step` | Cinderous Step | `CinderousStepSpell` | UNCOMMON | 5 | host/default |
 | 7 | Fire — Iron's | `hazennstuff:scorching_slash` | Scorching Slash | `ScorchingSlashSpell` | LEGENDARY | 3 | Raven's Bane inventory gate |
 | 8 | Fire — Iron's | `hazennstuff:fiery_dagger` | Fiery Dagger | `FieryDaggerSpell` | LEGENDARY | 5 | host/default |
-| 9 | Fire — Iron's | `hazennstuff:reign_of_tyros` | Reign of Tyros | `ReignOfTyrosSpell` | LEGENDARY | 5 | host/default |
-| 10 | Ice — Iron's | `hazennstuff:ice_arrow` | Ice Arrow | `IceArrowSpell` | RARE | 10 | host/default |
-| 11 | Ice — Iron's | `hazennstuff:hailstorm` | Hailstorm | `HailstormSpell` | RARE | 10 | host/default |
-| 12 | Lightning — Iron's | `hazennstuff:energy_burst` | Energy Burst | `EnergyBurstSpell` | RARE | 5 | host/default |
-| 13 | Lightning — Iron's | `hazennstuff:ionic_slash` | Ionic Slash | `IonicSlashSpell` | RARE | 5 | host/default |
-| 14 | Lightning — Iron's | `hazennstuff:dazzling_obliteration` | Dazzling Obliteration | `DazzlingObliterationSpell` | EPIC | 5 | host/default |
-| 15 | Nature — Iron's | `hazennstuff:thorn_chakram` | Thorn Chakram | `ThornChakramSpell` | COMMON | 10 | host/default |
-| 16 | Nature — Iron's | `hazennstuff:counterspell_spider_lily` | Spider Lily Counterspell | `CounterspellSpiderLilySpell` | COMMON | 5 | host/default |
-| 17 | Nature — Iron's | `hazennstuff:shard_sword` | Shard Sword | `ShardSwordSpell` | COMMON | 5 | host/default |
-| 18 | Nature — Iron's | `hazennstuff:death_sentence` | Death Sentence | `DeathSentenceSpell` | COMMON | 5 | host/default |
-| 19 | Evocation — Iron's | `hazennstuff:spectral_axe` | Spectral Axe | `SpectralAxeSpell` | RARE | 8 | host/default |
-| 20 | Evocation — Iron's | `hazennstuff:parry` | Parry | `ParrySpell` | COMMON | 1 | host/default |
-| 21 | Holy — Iron's | `hazennstuff:golden_shower` | Golden Shower | `GoldenShowerSpell` | RARE | 5 | Golden Shower Spellbook inventory gate |
-| 22 | Radiance — HazentouveLib | `hazennstuff:syringe_barrage` | Syringe Barrage | `SyringeBarrageSpell` | COMMON | 10 | host/default |
-| 23 | Radiance — HazentouveLib | `hazennstuff:terraprismic_barrage` | Terraprismic Barrage | `TerraprismicBarrageSpell` | RARE | 5 | host/default |
-| 24 | Radiance — HazentouveLib | `hazennstuff:call_forth_terraprisma` | Call Forth Terraprisma | `CallForthTerraprismaSpell` | EPIC | 5 | host/default |
-| 25 | Radiance — HazentouveLib | `hazennstuff:prismatic_shift` | Prismatic Shift | `PrismaticShiftSpell` | UNCOMMON | 3 | host/default |
-| 26 | Shadow — HazentouveLib | `hazennstuff:nights_edge_strike` | Night's Edge Strike | `NightsEdgeStrikeSpell` | COMMON | 5 | Night's Edge / True Night's Edge inventory gate |
-| 27 | Shadow — HazentouveLib | `hazennstuff:umbrashift_barrage` | Umbrashift Barrage | `UmbrashiftBarrageSpell` | RARE | 5 | host/default |
-| 28 | Shadow — HazentouveLib | `hazennstuff:shadow_reaver` | Shadow Reaver | `ShadowReaverSpell` | EPIC | 6 | host/default |
-| 29 | Shadow — HazentouveLib | `hazennstuff:arcane_cards` | Arcane Cards | `ArcaneCardsSpell` | UNCOMMON | 10 | host/default |
-| 30 | Eldritch — Iron's | `hazennstuff:soul_seekers` | Soul Seekers | `SoulSeekersSpell` | LEGENDARY | 5 | host/default |
-| 31 | Cosmic — HazentouveLib | `hazennstuff:shooting_star` | Shooting Star | `ShootingStarSpell` | COMMON | 10 | host/default |
-| 32 | Cosmic — HazentouveLib | `hazennstuff:cosmic_bolt` | Cosmic Bolt | `CosmicBoltSpell` | EPIC | 6 | host/default |
-| 33 | Cosmic — HazentouveLib | `hazennstuff:evercomet_barrage` | Evercomet Barrage | `EvercometBarrageSpell` | RARE | 6 | host/default |
-| 34 | Cosmic — HazentouveLib | `hazennstuff:moonkissed` | Moonkissed | `MoonkissedSpell` | RARE | 3 | host/default |
-| 35 | Hydro — Ace's Spell Utils | `hazennstuff:hydrobullet` | Hydrobullet | `HydrobulletSpell` | UNCOMMON | 10 | host/default |
-| 36 | Hydro — Ace's Spell Utils | `hazennstuff:water_bolt` | Water Bolt | `WaterBoltSpell` | UNCOMMON | 10 | host/default |
-| 37 | Hydro — Ace's Spell Utils | `hazennstuff:razorblade_typhoon` | Razorblade Typhoon | `RazorbladeTyphoonSpell` | UNCOMMON | 10 | host/default |
-| 38 | Hydro — Ace's Spell Utils | `hazennstuff:trident_jetstream` | Trident Jetstream | `TridentJetstreamSpell` | RARE | 10 | host/default |
-| 39 | Hydro — Ace's Spell Utils | `hazennstuff:horn_shell` | Horn Shell | `HornShellSpell` | UNCOMMON | 10 | host/default |
+| 9 | Ice — Iron's | `hazennstuff:ice_arrow` | Ice Arrow | `IceArrowSpell` | RARE | 10 | host/default |
+| 10 | Ice — Iron's | `hazennstuff:hailstorm` | Hailstorm | `HailstormSpell` | RARE | 10 | host/default |
+| 11 | Lightning — Iron's | `hazennstuff:energy_burst` | Energy Burst | `EnergyBurstSpell` | RARE | 5 | host/default |
+| 12 | Lightning — Iron's | `hazennstuff:ionic_slash` | Ionic Slash | `IonicSlashSpell` | RARE | 5 | host/default |
+| 13 | Lightning — Iron's | `hazennstuff:dazzling_obliteration` | Dazzling Obliteration | `DazzlingObliterationSpell` | EPIC | 5 | host/default |
+| 14 | Nature — Iron's | `hazennstuff:thorn_chakram` | Thorn Chakram | `ThornChakramSpell` | COMMON | 10 | host/default |
+| 15 | Nature — Iron's | `hazennstuff:counterspell_spider_lily` | Spider Lily Counterspell | `CounterspellSpiderLilySpell` | COMMON | 5 | host/default |
+| 16 | Nature — Iron's | `hazennstuff:shard_sword` | Shard Sword | `ShardSwordSpell` | COMMON | 5 | host/default |
+| 17 | Nature — Iron's | `hazennstuff:death_sentence` | Death Sentence | `DeathSentenceSpell` | COMMON | 5 | host/default |
+| 18 | Evocation — Iron's | `hazennstuff:spectral_axe` | Spectral Axe | `SpectralAxeSpell` | RARE | 8 | host/default |
+| 19 | Evocation — Iron's | `hazennstuff:parry` | Parry | `ParrySpell` | COMMON | 1 | host/default |
+| 20 | Holy — Iron's | `hazennstuff:golden_shower` | Golden Shower | `GoldenShowerSpell` | RARE | 5 | Golden Shower Spellbook inventory gate |
+| 21 | Radiance — HazentouveLib | `hazennstuff:syringe_barrage` | Syringe Barrage | `SyringeBarrageSpell` | COMMON | 10 | host/default |
+| 22 | Radiance — HazentouveLib | `hazennstuff:terraprismic_barrage` | Terraprismic Barrage | `TerraprismicBarrageSpell` | RARE | 5 | host/default |
+| 23 | Radiance — HazentouveLib | `hazennstuff:call_forth_terraprisma` | Call Forth Terraprisma | `CallForthTerraprismaSpell` | EPIC | 5 | host/default |
+| 24 | Radiance — HazentouveLib | `hazennstuff:prismatic_shift` | Prismatic Shift | `PrismaticShiftSpell` | UNCOMMON | 3 | host/default |
+| 25 | Shadow — HazentouveLib | `hazennstuff:nights_edge_strike` | Night's Edge Strike | `NightsEdgeStrikeSpell` | COMMON | 5 | Night's Edge / True Night's Edge inventory gate |
+| 26 | Shadow — HazentouveLib | `hazennstuff:umbrashift_barrage` | Umbrashift Barrage | `UmbrashiftBarrageSpell` | RARE | 5 | host/default |
+| 27 | Shadow — HazentouveLib | `hazennstuff:shadow_reaver` | Shadow Reaver | `ShadowReaverSpell` | EPIC | 6 | host/default |
+| 28 | Shadow — HazentouveLib | `hazennstuff:arcane_cards` | Arcane Cards | `ArcaneCardsSpell` | UNCOMMON | 10 | host/default |
+| 29 | Eldritch — Iron's | `hazennstuff:soul_seekers` | Soul Seekers | `SoulSeekersSpell` | LEGENDARY | 5 | host/default |
+| 30 | Cosmic — HazentouveLib | `hazennstuff:shooting_star` | Shooting Star | `ShootingStarSpell` | COMMON | 10 | host/default |
+| 31 | Cosmic — HazentouveLib | `hazennstuff:cosmic_bolt` | Cosmic Bolt | `CosmicBoltSpell` | EPIC | 6 | host/default |
+| 32 | Cosmic — HazentouveLib | `hazennstuff:evercomet_barrage` | Evercomet Barrage | `EvercometBarrageSpell` | RARE | 6 | host/default |
+| 33 | Cosmic — HazentouveLib | `hazennstuff:moonkissed` | Moonkissed | `MoonkissedSpell` | RARE | 3 | host/default |
+| 34 | Hydro — Ace's Spell Utils | `hazennstuff:hydrobullet` | Hydrobullet | `HydrobulletSpell` | UNCOMMON | 10 | host/default |
+| 35 | Hydro — Ace's Spell Utils | `hazennstuff:water_bolt` | Water Bolt | `WaterBoltSpell` | UNCOMMON | 10 | host/default |
+| 36 | Hydro — Ace's Spell Utils | `hazennstuff:razorblade_typhoon` | Razorblade Typhoon | `RazorbladeTyphoonSpell` | UNCOMMON | 10 | host/default |
+| 37 | Hydro — Ace's Spell Utils | `hazennstuff:trident_jetstream` | Trident Jetstream | `TridentJetstreamSpell` | RARE | 10 | host/default |
+| 38 | Hydro — Ace's Spell Utils | `hazennstuff:horn_shell` | Horn Shell | `HornShellSpell` | UNCOMMON | 10 | host/default |
 
 ## Registration closure
 
-The exact registry class contains no provider conditional-registration branch, mod-presence gate or config reference. All 39 fields above are active in the source-pinned 1.4.0.14 registry.
+The exact registry class contains no provider conditional-registration branch, mod-presence gate or config reference. All 38 fields above are active in the source-pinned 1.4.0.14 registry.
 
 No registered concrete class declares a direct override of Iron's `allowCrafting`, `isEnabled` or `canBeCraftedBy`.
 
@@ -104,6 +103,12 @@ The exact 1.4.0.14 English localization contains the root spell key, but `HnSSpe
 
 Disposition: `LOCALIZATION_ONLY / +0`.
 
+### `hazennstuff:reign_of_tyros`
+
+The exact 1.4.0.14 English localization contains the root spell key and the source tree contains `ReignOfTyrosSpell`, but `HnSSpellRegistries` has its `registerSpell(...)` line commented out at the exact release pin.
+
+Disposition: `COMMENTED_REGISTRATION / +0`.
+
 ### `hazennstuff:supernova`
 
 The exact 1.4.0.14 English localization contains the root spell key, but `HnSSpellRegistries` has no active registration for it.
@@ -120,8 +125,8 @@ The source is used only to record factual catalog/interoperability facts. Black 
 
 ## Result
 
-- active source-pinned registrations: **39**;
-- localization-only roots excluded: **2**;
+- active source-pinned registrations: **38**;
+- non-active localization roots excluded: **3** (2 localization-only + 1 commented registration);
 - source-level provider conditional registration gates: **0**;
 - special player craft gates with explicit provider acquisition paths: **3**;
-- semantic delta: **+39 `COUNTED_SOURCE_PINNED`**.
+- semantic delta: **+38 `COUNTED_SOURCE_PINNED`**.

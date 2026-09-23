@@ -8,7 +8,7 @@ This is a narrow status overlay over the historical `PROVIDER-AUDIT-QUEUE.md`. I
 
 | Mod ID | Installed identity | Current effective audit state |
 |---|---|---|
-| `hazennstuff` | `hazennstuff-1.4.0.14.jar` / runtime `1.4.0.14` / physical SHA-1 `3be20bacb44c1923348ab6f61b685eec6aacfdcd` | `✅ SOURCE-PINNED SPELL CATALOG COMPLETE / 39 ACTIVE IRON'S SPELL REGISTRATIONS / 2 LOCALIZATION-ONLY ROOTS EXCLUDED / PROVIDER REGISTRY UNCONDITIONAL AT SOURCE PIN / CUSTOM SCHOOL FOCUS ROUTES + 3 SPECIAL CRAFT GATES RECONCILED / ASSEMBLED-PACK RUNTIME QA FAIL-CLOSED` |
+| `hazennstuff` | `hazennstuff-1.4.0.14.jar` / runtime `1.4.0.14` / physical SHA-1 `3be20bacb44c1923348ab6f61b685eec6aacfdcd` | `✅ SOURCE-PINNED SPELL CATALOG COMPLETE / 38 ACTIVE IRON'S SPELL REGISTRATIONS / 3 NON-ACTIVE LOCALIZATION ROOTS EXCLUDED / PROVIDER REGISTRY UNCONDITIONAL AT SOURCE PIN / CUSTOM SCHOOL FOCUS ROUTES + 3 SPECIAL CRAFT GATES RECONCILED / ASSEMBLED-PACK RUNTIME QA FAIL-CLOSED` |
 
 ## Evidence
 
@@ -29,7 +29,7 @@ The source commit is release-correlated to 1.4.0.14 and declares that version in
 
 ## Semantic closure
 
-The exact source-pinned registry contains **39 active `AbstractSpell` registrations**.
+The exact source-pinned registry contains **38 active `AbstractSpell` registrations**.
 
 Distribution:
 
@@ -47,9 +47,9 @@ Distribution:
 - Cosmic 4;
 - Hydro 5.
 
-Localization-only `brimstone_hellblast` and `supernova` are excluded because they are not active release-pinned registry entries.
+`brimstone_hellblast` and `supernova` are localization-only and excluded because they are not active release-pinned registry entries. `reign_of_tyros` is also excluded: its class/localization root exists, but the exact release-pinned `registerSpell(...)` line is commented.
 
-Semantic disposition: **+39 `COUNTED_SOURCE_PINNED`**.
+Semantic disposition: **+38 `COUNTED_SOURCE_PINNED`**.
 
 ## Reachability posture
 
@@ -83,6 +83,6 @@ These remain fail-closed.
 
 ## Global accounting consequence
 
-The strict reconstructible semantic minimum moves from **1344** to **1383**.
+The strict reconstructible semantic minimum moves from **1344** to **1382**.
 
 The historical technical denominator of 100 components predates the sibling's current 22/09 physical re-audit and did not include Hazen N Stuff as a canonical provider row. Hazen therefore closes the next known provider component, but no updated technical fraction is declared until the provider denominator is regenerated from the current physical modlist.
