@@ -1,8 +1,8 @@
-# Ritual Catalog — Ars 'n' Spells 3.3.2
+# Ritual Catalog — Ars 'n' Spells 3.3.4
 
-This index is a semantic catalog for the current provider line. Implementation details are pinned to the official NeoForge 1.21.1 `3.3.0` source baseline; the physical artifact is `3.3.2` and exact 3.3.2 binary registry parity remains unverified.
+This index is the semantic ritual catalog for the current physical 3.3.4 provider line. Exact registration continuity is proven through official NeoForge source 3.3.3 at `41fac17065c381104b17fdaab307d89ba21b49ab`: `RitualRegistryHandler.java` is blob-identical to the 3.3.0 baseline. The current 3.3.4 semantic count is therefore release-bounded; exact 3.3.4 binary registry parity remains unverified.
 
-Under the physical pack condition where Iron's Spellbooks is installed, the baseline registers five ritual identities:
+Under the physical pack condition where Iron's Spellbooks is installed, exact 3.3.3 source registers five ritual identities:
 
 | Registry identity | Type | Current semantic role |
 |---|---|---|
