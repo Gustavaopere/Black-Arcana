@@ -24,7 +24,7 @@ Consequência canônica: **✅ Hazen N Stuff — 38/38 source-pinned spell regis
 
 ## Provider freshness override — Companions! 1.3.4
 
-O sibling revalidado em `neoforge-rpg-skilltree@2fa3914d5976206c84cc5f03eb52ef2b70692f73` confirma a ordem física **#104**, JAR `companions-neoforge-1.21.1-1.3.4.jar`, mod id `companions`, runtime `1.3.4` e SHA-1 físico `23f6e4f27a457a8d016412e495e417c0b36fdcc1`.
+O sibling revalidado em `neoforge-rpg-skilltree@39d358ec8de20d647cecbfe4e8c0a0181cc6b12f` confirma a ordem física **#104**, JAR `companions-neoforge-1.21.1-1.3.4.jar`, mod id `companions`, runtime `1.3.4` e SHA-1 físico `23f6e4f27a457a8d016412e495e417c0b36fdcc1`.
 
 O source oficial version-correlated `Xylonity/Companions@95c9445e1514648418064ea90b5c373e81375d2f` é o commit de bump `1.3.3 -> 1.3.4` e fecha **9 registrations de Magic Books provider-owned**: Ice Shard, Ice Tornado, Fire Mark, Heal Ring, Stone Spikes, Brace, Magic Ray, Black Hole e Naginata. As registrations são diretas e não estão envoltas por gate de config/mod-presence; a seção `Magic Books` da config altera cooldowns, dano/heal/radius/griefing, não a existência das identidades.
 
