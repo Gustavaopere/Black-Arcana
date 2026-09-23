@@ -40,6 +40,7 @@ including the current provider inventory, deduplication policy and audit queue.
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2L.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2L.md) — prevails only for `apprenticecodex`, while preserving its explicit runtime-QA flags;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2M.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2M.md) — prevails only for `cataclysm_spellbooks`, advancing the public/source baseline without pretending that the exact 1.1.13 spell table is resolved.
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-HAZEN-N-STUFF.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-HAZEN-N-STUFF.md) — prevails for `hazennstuff`, closing the exact release-pinned spell inventory while assembled-pack runtime QA remains fail-closed.
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-CREATE-WIZARDRY.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-CREATE-WIZARDRY.md) — prevails for current physical `create_wizardry` 1.21.1-0.5.1-pre1, closing it as source-pinned host-spell automation with zero provider-owned spell identities while assembled-pack runtime QA remains fail-closed.
 
 Capability-matrix deltas follow the same narrow-overlay rule:
 
