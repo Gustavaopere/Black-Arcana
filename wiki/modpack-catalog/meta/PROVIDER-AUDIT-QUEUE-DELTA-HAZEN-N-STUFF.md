@@ -35,7 +35,7 @@ Distribution:
 
 - Ender 1;
 - Blood 2;
-- Fire 6;
+- Fire 5;
 - Ice 2;
 - Lightning 3;
 - Nature 4;
@@ -55,7 +55,7 @@ Semantic disposition: **+38 `COUNTED_SOURCE_PINNED`**.
 
 The provider registry class contains no conditional-registration/config/mod-presence branch at the exact source pin.
 
-Thirty-six registered spells inherit the host/default Iron's craftability/enabled contract at the inspected provider source level.
+Thirty-five registered spells inherit the host/default Iron's craftability/enabled contract at the inspected provider source level.
 
 Three registrations inherit provider-specific `canBeCraftedBy` gates:
 
