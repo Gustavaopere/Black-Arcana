@@ -141,6 +141,14 @@ The same exact localization exposes 41 root spell keys. `brimstone_hellblast` an
 
 Hazen therefore contributes **+38 `COUNTED_SOURCE_PINNED`** semantic spell identities. Later `1.21.1` branch additions such as `coruscated_discharge` are not projected backward into the pinned 1.4.0.14 release.
 
+## Acolyte 1.0.3 release-bounded zero-semantic closure
+
+The current sibling physical re-audit certifies `acolyte-1.0.3.jar` / mod id `acolyte` / runtime `1.0.3`. Exact CurseForge file `8098233` was then inspected under the clean-room catalog boundary. The artifact contains **93 provider classes**, but **0** provider classes inherit Iron's `AbstractSpell`; it also contains **0** provider-owned spell resource paths and **0** provider spell-localization identities.
+
+Acolyte does explicitly consume Iron's magic runtime. The exact artifact names **29 Iron's spell resource IDs** in packaged provider resources and references Blood Step plus Stomp through Iron's `SpellRegistry`, for **31 explicit host spell identities**. It also calls dynamic host-selection surfaces, so those 31 are not asserted to be an exhaustive fixed loadout. They remain Iron's-owned spell identities and are never recounted under Acolyte.
+
+Acolyte is therefore classified `ZERO_SEMANTIC_SPELLCASTER_CONTENT` with **+0** independent semantic objects. The strict reconstructible minimum remains **1382**. Exact installed-byte equality and assembled-pack AI/config/trade/recruitment runtime behavior remain separate fail-closed QA.
+
 ## Strict reconstructible counted minimum
 
 **1382 semantic magic objects are currently reconstructible from canonical provider records after adding the Hazen N Stuff 1.4.0.14 source-pinned inventory.**
@@ -294,6 +302,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — Phase 2BT exact-release source-pinned `ZERO_BRIDGE_INFRA`; +0; modifies Iron's/Vampirism behavior without minting a provider-owned spell/action identity; runtime bridge QA remains fail-closed;
 - [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
 - [Mobstein](../providers/✅-mobstein/README.md) — exact 5.4.4 physical SHA-1 plus hash-matched resource-only clean-room audit closes the residual boundary as `ZERO_SEMANTIC_ACTIONS`: documented syringes are item interactions and surfaced action-like keybinds are entity/mount controls; **+0** independent semantic magic objects; runtime/API integration remains separately fail-closed;
+- [Acolyte](../providers/✅-acolyte/README.md) — exact publisher-release structural audit closes `ZERO_SEMANTIC_SPELLCASTER_CONTENT`: 31 explicit Iron's host-spell references plus dynamic host selection, but no provider `AbstractSpell` subclass/resource/localization identity; **+0** independent semantic magic objects; physical hash equality and assembled-pack runtime remain fail-closed;
 - Bloodlines `gravebound_crit_action` / Sorcerous Strike — registered implementation, but exact 3.0.9 configured tree and rank defaults provide no normal survival acquisition path;
 - IronSable's ten physicalized base Iron's spells — already owned/countable under Iron's;
 - Ars 'n' Spells `ars_cross_*` proxy registry pool — proxies, not eight semantic rituals/spells;
