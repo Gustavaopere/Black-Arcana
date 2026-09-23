@@ -4,9 +4,9 @@ Registry identity at the official NeoForge 1.21.1 source baseline: `ars_n_spells
 
 ## Evidence status
 
-- Physical provider: Ars 'n' Spells `3.3.2`.
-- Implementation evidence: official NeoForge `3.3.0` source pin `a9930223c96806e5d748ea69d02f9a32cab62de9`.
-- Exact 3.3.2 binary registry parity: `NÃO VERIFICADO`.
+- Physical provider: Ars 'n' Spells `3.3.4`.
+- Registration evidence: exact NeoForge `3.3.3` source pin `41fac17065c381104b17fdaab307d89ba21b49ab`; `RitualRegistryHandler.java` is blob-identical to the `3.3.0` baseline `a9930223c96806e5d748ea69d02f9a32cab62de9`. Behavior details below remain pinned to the exact source checkpoint stated by each claim.
+- Exact 3.3.4 binary registry parity: `NÃO VERIFICADO`; current identity continuity is `COUNTED_RELEASE_BOUNDED`.
 
 This ritual is registered by the 3.3.0 NeoForge baseline only when `irons_spellbooks` is loaded. Iron's is physically present in the current pack.
 
