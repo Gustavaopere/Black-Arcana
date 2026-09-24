@@ -46,6 +46,14 @@ O source oficial exato `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc
 
 Consequência canônica: **✅ Iron's Apothic 2.2.2 — bridge mágico/source-pinned catalogado, 48 spell-oriented affix definitions tratadas como triggers/suporte sobre spells externos, 0 provider-owned spell registrations, +0 semantic objects**. O mínimo estrito permanece **1382**. O denominador técnico global continua `PENDING REBASE`; não é publicado novo percentual. Compatibilidade assembled-pack com Iron's 3.16.3, Apotheosis 8.8.0, optional schools, cooldown/target settlement e recursão cross-mod permanecem runtime QA fail-closed.
 
+## Provider freshness override — Dungeon's Delight 1.5.1
+
+O sibling certificado em `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` preserva a linha física **#416** como `neoforge-dungeonsdelight-1.21.1-1.5.1.jar`, mod id `dungeonsdelight`, distribuição `1.5.1`, mantendo explícita a divergência do metadata interno instalado `1.5.0`. Não há digest independente do JAR no dossiê usado, então igualdade binária não é inferida.
+
+O source oficial exato `Yirmiri/Dungeons-Delight@0c2d621ebc7dcce3df5dad0ea485209ef2396f9c` declara `mod_version=1.5.1`. O entrypoint registra itens, blocos, entidades, **12 mob effects**, recipes, features e demais superfícies do addon; datagen registra **2 enchantments**. Busca no source exato não encontra `registerSpell`, `SpellRegistry`, `AbstractSpell`, ritual registry ou ability registry.
+
+Consequência canônica: **✅ Dungeon's Delight 1.5.1 — conteúdo mágico/cross-domain de comida, efeitos, equipamentos e dungeon mechanics catalogado; 0 provider-owned spell/ritual/action registrations; +0 semantic objects**. Os 12 efeitos e 2 enchantments permanecem fora do métrico de ações mágicas. O mínimo estrito permanece **1382** e o denominador técnico continua `PENDING REBASE`. Runtime/config/effect overlap/XP/dispenser/migração permanecem fail-closed.
+
 ## Provider freshness override — Somake 1.0.9
 
 A autoridade global de 595 top-levels acima permanece o checkpoint histórico reconciliado de 2026-09-11; ela **não** é rebatizada silenciosamente como um snapshot global mais novo.
