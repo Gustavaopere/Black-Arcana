@@ -157,14 +157,6 @@ The exact source registers seven custom Apotheosis affix codecs and contains 140
 
 Iron's Apothic is consequently a source-pinned magic bridge/support closure with **+0 independent semantic magic objects**. The strict reconstructible minimum remains **1382**. Installed-JAR byte equality and assembled-pack affix/cooldown/target/proc behavior remain runtime QA, not semantic-count evidence.
 
-## Dungeon's Delight 1.5.1 source-pinned zero-semantic closure
-
-Current sibling authority `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` certifies the 1.5.1 distribution at row #416. Exact official source `Yirmiri/Dungeons-Delight@0c2d621ebc7dcce3df5dad0ea485209ef2396f9c` declares `mod_version=1.5.1`.
-
-The exact source owns 12 mob-effect registrations, two enchantments, monster-food/cooking recipes, items, blocks and entities, but exposes no provider-owned spell, ritual, rite or equivalent ability registry. Those supernatural effects are status/gear/food mechanics rather than independent player magical actions under the current metric.
-
-Dungeon's Delight therefore contributes **+0 semantic magic objects**. The strict reconstructible minimum remains **1382**. Physical byte equality, the installed metadata 1.5.0 divergence and full-pack runtime settlement remain separate QA gates.
-
 ## Strict reconstructible counted minimum
 
 **1382 semantic magic objects are currently reconstructible from canonical provider records after adding the Hazen N Stuff 1.4.0.14 source-pinned inventory.**
