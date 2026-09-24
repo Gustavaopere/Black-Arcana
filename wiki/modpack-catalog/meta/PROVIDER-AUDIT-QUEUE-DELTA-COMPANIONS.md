@@ -14,7 +14,7 @@ This is a narrow status overlay over the historical `PROVIDER-AUDIT-QUEUE.md`. I
 
 Physical authority:
 
-- sibling `neoforge-rpg-skilltree@39d358ec8de20d647cecbfe4e8c0a0181cc6b12f`;
+- sibling `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a`;
 - certified physical dossier `✅-companions v1.3.4.md`;
 - physical order `#104`;
 - current JAR `companions-neoforge-1.21.1-1.3.4.jar`;
