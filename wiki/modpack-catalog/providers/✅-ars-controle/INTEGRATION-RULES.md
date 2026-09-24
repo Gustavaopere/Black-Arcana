@@ -1,4 +1,4 @@
-# Ars Controle 1.6.15 — integration and deduplication rules
+# Ars Controle 1.6.16 — integration and deduplication rules
 
 Status: `SOURCE-PINNED AUTHORITY MAP / NO BLACK ARCANA ADAPTER APPROVED`
 

@@ -6,13 +6,21 @@
 
 O bloco de 595 entradas / NeoForge `21.1.248` abaixo é agora um **checkpoint histórico de 2026-09-11**. A autoridade física provider-specific mais recente está sendo revalidada no sibling em 22/09/2026; para rows já certificadas, o dossiê físico atual prevalece. O denominador global de providers deve ser regenerado quando a rodada física atual terminar.
 
-O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff e Companions!. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff e Companions! fecham componentes adicionais descobertos na reauditoria; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
+O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Farmer's Spell acrescenta **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1316 para 1322**; Aeromancy Additions acrescenta mais **+10 `COUNTED_SOURCE_PINNED`**, elevando-o para **1332**; Ars Polymorphia, Ars Sable, Ars Nouveau: Two-Way Portals, Vampire Spells Addon e Mobstein são fechamentos semânticos **+0**; GTBC's Geomancy Plus acrescenta **+12 `COUNTED_RELEASE_BOUNDED`**, elevando o mínimo estrito para **1344**. Hazen N Stuff 1.4.0.14 acrescenta **+38 `COUNTED_SOURCE_PINNED`**, elevando-o para **1382**; Companions! 1.3.4 acrescenta **+9 `COUNTED_SOURCE_PINNED`** pelas nove ações dos Magic Books, elevando o mínimo estrito corrente para **1391**. Phase 2BT e a reconciliação Mobstein não alteram esse mínimo.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. Farmer's Spell acrescenta **+6 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito de **1316 para 1322**; Aeromancy Additions acrescenta mais **+10 `COUNTED_SOURCE_PINNED`**, elevando-o para **1332**; Ars Polymorphia, Ars Sable, Ars Nouveau: Two-Way Portals, Vampire Spells Addon e Mobstein são fechamentos semânticos **+0**; GTBC's Geomancy Plus acrescenta **+12 `COUNTED_RELEASE_BOUNDED`**, elevando o mínimo estrito para **1344**. Hazen N Stuff 1.4.0.14 acrescenta **+38 `COUNTED_SOURCE_PINNED`**, elevando o mínimo estrito corrente para **1382**. Phase 2BT e a reconciliação Mobstein não alteram esse mínimo.
 
 Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 naquele checkpoint e mantém **1344 / 66 de 100** historicamente. Phase 2BT posteriormente fecha o componente #67 com Vampire Spells Addon sem alterar o total semântico.
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
+
+## Provider freshness override — Ars Controle 1.6.16
+
+O sibling revalidado em `neoforge-rpg-skilltree@ee08513c9e8992418c508bae485f3a181deb7f9c` confirma a posição física **#41** como `ars_controle-1.21.1-1.6.16.jar`, mod id `ars_controle`, runtime `1.21.1-1.6.16` e SHA-1 físico `795567371450debec83fe634fd0114c295f7da5a`.
+
+O source oficial exato `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` declara `mod_version=1.6.16` e Ars Nouveau `5.13.1.1403`. A comparação contra o checkpoint canônico anterior `ecbb83ba512bc9ca7a025556fb9c62dbd32b6430` (1.6.15) contém seis commits; o único Java de gameplay alterado é `WarpingSpellPrismBlock.java`. O arquivo autoritativo de registro `ACRegistry.java` permanece exatamente no mesmo Git blob `b38959053740605768a8945ed40c012c6bef5953` nos dois checkpoints.
+
+Consequência canônica: **✅ Ars Controle 1.6.16 — 9/9 spell parts source-pinned permanecem catalogados; +0 delta semântico; mínimo estrito continua 1382**. As correções do Warping Spell Prism, mixins, Source settlement, cross-dimension, persistência e comportamento assembled-pack continuam runtime QA fail-closed.
 
 ## Provider freshness override — Hazen N Stuff 1.4.0.14
 
@@ -22,15 +30,21 @@ O source oficial release-correlated `Hazentouvel/Hazen_N_Stuff@5fcaf39cf399609f6
 
 Consequência canônica: **✅ Hazen N Stuff — 38/38 source-pinned spell registrations catalogadas; +38 semantic objects; runtime QA fail-closed**. O mínimo semântico reconstruível passa para **1382**. Como Hazen não estava no denominador técnico histórico de 100 componentes, o denominador técnico global fica explicitamente `PENDING REBASE`.
 
-## Provider freshness override — Companions! 1.3.4
+## Provider freshness override — Create: Wizardry 1.21.1-0.5.1-pre1
 
-O sibling revalidado em `neoforge-rpg-skilltree@39d358ec8de20d647cecbfe4e8c0a0181cc6b12f` confirma a ordem física **#104**, JAR `companions-neoforge-1.21.1-1.3.4.jar`, mod id `companions`, runtime `1.3.4` e SHA-1 físico `23f6e4f27a457a8d016412e495e417c0b36fdcc1`.
+O sibling atual em `neoforge-rpg-skilltree@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b` reconcilia Create: Wizardry na posição física **#166** como `create_wizardry-1.21.1-0.5.1-pre1.jar`, mod id `create_wizardry`, runtime `1.21.1-0.5.1-pre1`.
 
-O source oficial version-correlated `Xylonity/Companions@95c9445e1514648418064ea90b5c373e81375d2f` é o commit de bump `1.3.3 -> 1.3.4` e fecha **9 registrations de Magic Books provider-owned**: Ice Shard, Ice Tornado, Fire Mark, Heal Ring, Stone Spikes, Brace, Magic Ray, Black Hole e Naginata. As registrations são diretas e não estão envoltas por gate de config/mod-presence; a seção `Magic Books` da config altera cooldowns, dano/heal/radius/griefing, não a existência das identidades.
+O source oficial version-correlated `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declara a mesma versão. A auditoria estrutural encontra 75 Java files, 328 resources e **zero** superfície provider-owned de spell registry/resource: sem `registerSpell`, `SpellRegistry`, `DeferredRegister<AbstractSpell>`, `Registries.SPELL`, `SPELLS.register` ou namespace `spell.create_wizardry`. Blaze Caster e Mana Siphon consomem `SpellData`/`AbstractSpell` do Iron's e alteram/automatizam o pipeline host; isso não transfere ownership dos spells. A blacklist explícita do Blaze Caster contém 31 host spell path names e também não cria identidades novas.
 
-As nove rotas survival também estão fechadas no mesmo source: seis livros vêm de interações com Minions domesticados das variantes Overworld/Nether/End e suas moedas; Black Hole e Magic Ray entram por provider loot injection em chest tables vanilla; Naginata possui recipe provider-owned. Soul Mage possui três slots que aceitam `AbstractMagicBook` e metas AI para os nove livros, mas isso é reutilização causal das mesmas identidades e não gera +9 adicional.
+Consequência canônica: **✅ Create: Wizardry — componente mágico/cross-domain catalogado como `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0 semantic objects; runtime QA fail-closed**. O mínimo estrito permanece **1382** neste `main`. Como o denominador técnico global está em rebase, nenhum novo percentual/fração técnica é publicado.
 
-Consequência canônica: **✅ Companions! — 9/9 Magic Book action identities catalogadas; +9 semantic objects; runtime QA fail-closed**. O mínimo semântico reconstruível passa de **1382 para 1391**. Como Companions! também não fazia parte do denominador técnico histórico fechado antes da reauditoria, o denominador técnico global continua `PENDING REBASE`.
+## Provider freshness override — Iron's Apothic 2.2.2
+
+O sibling certificado em `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` preserva a linha física **#339** como `irons_apothic-2.2.2.jar`, mod id `irons_apothic`, runtime `2.2.2`. O dossiê físico atual não preserva digest independente do JAR, portanto igualdade binária não é inferida.
+
+O source oficial exato `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declara `mod_version=2.2.2`. Nesse pin, o provider registra **7 codecs próprios de affix** no registry de Apotheosis, possui **140 definições JSON de affix**, das quais **48** ficam explicitamente em superfícies `spell`/`imbued`, e **24 definições de gem**. `SpellTriggerAffix` resolve spells pelo `SpellRegistry` de Iron's e `SpellCastUtil` executa o `AbstractSpell` externo pelo pipeline de casting do host; não há registry próprio de spell do provider no source exato.
+
+Consequência canônica: **✅ Iron's Apothic 2.2.2 — bridge mágico/source-pinned catalogado, 48 spell-oriented affix definitions tratadas como triggers/suporte sobre spells externos, 0 provider-owned spell registrations, +0 semantic objects**. O mínimo estrito permanece **1382**. O denominador técnico global continua `PENDING REBASE`; não é publicado novo percentual. Compatibilidade assembled-pack com Iron's 3.16.3, Apotheosis 8.8.0, optional schools, cooldown/target settlement e recursão cross-mod permanecem runtime QA fail-closed.
 
 ## Provider freshness override — Somake 1.0.9
 
@@ -100,6 +114,7 @@ Cada JAR mágico deve ser classificado antes da extração spell-by-spell:
 - Monsters & Spellbooks;
 - T.O Magic n' Extras;
 - Hazen N Stuff;
+- Create: Wizardry;
 - ISS: Magic From The East;
 - Asterism Arcanum;
 - Leyline Spellbooks;
@@ -123,7 +138,6 @@ Ars Nouveau e seus addons devem ser catalogados em nível de glyph/form/augment 
 - Goety;
 - Malum;
 - Eidolon: Repraised;
-- Companions! — provider `MIXED`, com camada própria de Magic Books; não herdar assumptions de authority/aquisição do ecossistema Iron's;
 - Hexalia;
 - Toxony;
 - Vampirism/Bloodlines e bridges mágicas;
