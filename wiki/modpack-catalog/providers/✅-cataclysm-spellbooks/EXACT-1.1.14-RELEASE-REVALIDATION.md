@@ -6,7 +6,7 @@ Revalidate the current physical Cataclysm: Spellbooks version after the pack adv
 
 ## Current physical authority
 
-The current sibling modlist/dossier at `neoforge-rpg-skilltree@d74216b08bffdac02b43e9d7fbb79541e33a1b45` identifies:
+The current sibling modlist/dossier at `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a` identifies:
 
 - physical JAR filename: `cataclysm_spellbooks-1.1.14-1.21.jar`;
 - mod id: `cataclysm_spellbooks`;
