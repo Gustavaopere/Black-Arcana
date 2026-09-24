@@ -1,6 +1,6 @@
 # Cataclysm: Spellbooks
 
-Status: `✅ CURRENT PHYSICAL VERSION 1.1.14 BETA / EXACT PUBLISHER FILE 8847070 / 59/59 RELEASE-BOUNDED CURRENT SPELL REGISTRATIONS / REGISTRY BYTE-IDENTICAL TO HASH-MATCHED 1.1.13 CONTROL / 10 TRANSLATION-ONLY ROOT KEYS EXCLUDED / PHYSICAL 1.1.14 BYTE-EQUALITY NOT INDEPENDENTLY RECAPTURED / RUNTIME+BALANCE QA SEPARATE`
+Status: `✅ CURRENT PHYSICAL VERSION 1.1.14 BETA / PHYSICAL SHA-1 568d798862a61a374ab1e55dcddf5b2e3326b8b5 = EXACT PUBLISHER FILE 8847070 / 59/59 COUNTED_EXACT CURRENT SPELL REGISTRATIONS / REGISTRY BYTE-IDENTICAL TO HASH-MATCHED 1.1.13 CONTROL / 10 TRANSLATION-ONLY ROOT KEYS EXCLUDED / RUNTIME+BALANCE QA SEPARATE`
 
 ## Current installed identity
 
@@ -13,12 +13,12 @@ Status: `✅ CURRENT PHYSICAL VERSION 1.1.14 BETA / EXACT PUBLISHER FILE 8847070
 - Exact current publisher CurseForge file ID: `8847070`
 - Exact publisher-release SHA-1: `568d798862a61a374ab1e55dcddf5b2e3326b8b5`
 - Exact publisher-release SHA-256: `a5a0dcad537954f488c862b3409831e0d12b4dfdc50bbfade298cb3d05dff2cf`
-- Physical 1.1.14 SHA-1 independently captured in Black Arcana authority material: **no**
+- Physical 1.1.14 SHA-1 preserved by current sibling authority: `568d798862a61a374ab1e55dcddf5b2e3326b8b5` — **matches exact publisher File 8847070**
 - Uploaded: `2026-09-09`
 - Provider class: `SPELL PROVIDER / CONTENT ADDON`
 - Primary dependencies: Iron's Spells 'n Spellbooks + L_Ender's Cataclysm
 
-The current sibling physical authority identifies the installed filename/version as 1.1.14. The exact publisher File `8847070` was independently materialized and fingerprinted, then compared against the previously hash-matched 1.1.13 physical control. Because the repository does not preserve a second independent physical SHA-1 for the installed 1.1.14 JAR, current evidence is `COUNTED_RELEASE_BOUNDED`, not physical-byte `COUNTED_EXACT`. See [`EXACT-1.1.14-RELEASE-REVALIDATION.md`](EXACT-1.1.14-RELEASE-REVALIDATION.md); the older [`EXACT-1.1.13-ARTIFACT-AUDIT.md`](EXACT-1.1.13-ARTIFACT-AUDIT.md) remains the exact hash-matched control.
+The current sibling physical authority identifies the installed filename/version as 1.1.14 and preserves SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5`. Exact publisher File `8847070` was independently materialized with the same SHA-1, then compared against the previously hash-matched 1.1.13 physical control. Installed-pack ↔ publisher-file equality is therefore closed and current spell identity evidence is `COUNTED_EXACT`. See [`EXACT-1.1.14-RELEASE-REVALIDATION.md`](EXACT-1.1.14-RELEASE-REVALIDATION.md); the older [`EXACT-1.1.13-ARTIFACT-AUDIT.md`](EXACT-1.1.13-ARTIFACT-AUDIT.md) remains the exact prior-release control.
 
 ## Exact current spell inventory — 59
 
@@ -65,7 +65,7 @@ The old source result is not extrapolated numerically. The current 59-row table 
 Under [`../../meta/SEMANTIC-MAGIC-COVERAGE.md`](../../meta/SEMANTIC-MAGIC-COVERAGE.md):
 
 - provider-owned standalone spells: **59**;
-- evidence state: `COUNTED_RELEASE_BOUNDED` for current 1.1.14 spell identity/count; physical 1.1.14 byte-equality remains unasserted;
+- evidence state: `COUNTED_EXACT` for current installed 1.1.14 spell identity/count; physical SHA-1 equals the audited exact publisher artifact;
 - translation-only/WIP root keys above: **0**;
 - exact mana/cooldown/rarity/levels/formulas/acquisition: `NÃO VERIFICADO` unless separately cataloged.
 
@@ -117,7 +117,7 @@ Provider spells remain provider-owned; Black Arcana must not intercept and reapp
 3. provider runtime/full-pack QA before compatibility assertions;
 4. any stable provider-native integration seam required by a future adapter.
 
-These gates do not reopen the **59-spell current release-bounded identity inventory**.
+These gates do not reopen the **59-spell exact physical-artifact identity inventory**.
 
 ## Provenance / license posture
 
