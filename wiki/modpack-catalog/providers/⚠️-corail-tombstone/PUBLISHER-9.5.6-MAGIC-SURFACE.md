@@ -87,7 +87,7 @@ The publisher page names 24:
 - `tombstone:bone_shield`
 - `tombstone:aquatic_life`
 - `tombstone:frostbite`
-- `tombstone:earthly_garden` / publisher display "earthly garden"
+- `tombstone:earthly garden` — literal publisher display text; exact registry ID unresolved
 - `tombstone:discretion`
 - `tombstone:mercy`
 - `tombstone:restoration`
@@ -98,7 +98,7 @@ The publisher page names 24:
 - `tombstone:little_world`
 - `tombstone:beyond_the_grave_bond`
 
-The publisher text displays the Earthly Garden identifier with a space; the normalized underscore form above is **not asserted as an exact registry ID without artifact evidence**. Treat that row as display/documentation normalization only.
+The publisher text itself contains a space in that label. This catalog therefore preserves it literally and does **not** infer an underscore-normalized registry ID.
 
 Disposition for all effects: `STATUS_EFFECT / +0 SEMANTIC ACTIONS`.
 
