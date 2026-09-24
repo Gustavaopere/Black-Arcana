@@ -6,7 +6,7 @@ Status: `CURRENT PHYSICAL COMPONENT / EXACT SOURCE-PINNED FOOD + COMBAT-EFFECT M
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9`
+`neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a`
 
 Certified dossier:
 
