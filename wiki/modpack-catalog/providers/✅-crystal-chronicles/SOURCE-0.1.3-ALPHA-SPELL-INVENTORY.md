@@ -6,7 +6,8 @@ Current physical identity:
 
 - physical order #208;
 - `crystal_chronicles-0.1.3-alpha.jar`;
-- runtime `0.1.3-alpha`.
+- runtime `0.1.3-alpha`;
+- physical SHA-1 `afdc32ab27661cd52160280dc4273d70a2d4a3d2`.
 
 Current sibling evidence:
 
@@ -18,7 +19,7 @@ Version-correlated official source pin:
 
 The source pin declares `mod_version=0.1.3-alpha` and is the last inspected repository commit on the 2026-06-30 release date.
 
-No independent installed-JAR SHA is present in the current sibling dossier, so this is `COUNTED_SOURCE_PINNED` rather than `COUNTED_EXACT`.
+The current sibling dossier preserves installed-JAR SHA-1 `afdc32ab27661cd52160280dc4273d70a2d4a3d2`. This remains `COUNTED_SOURCE_PINNED` rather than `COUNTED_EXACT` because no byte-equivalence comparison to a build from the source pin has been established.
 
 ## Active registry inventory
 
