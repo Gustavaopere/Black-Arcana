@@ -9,10 +9,11 @@ Current sibling authority at `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab
 - physical order: **#208**;
 - JAR: `crystal_chronicles-0.1.3-alpha.jar`;
 - runtime version: `0.1.3-alpha`;
+- physical SHA-1: `afdc32ab27661cd52160280dc4273d70a2d4a3d2`;
 - Minecraft: 1.21.1 / NeoForge;
 - required provider stack in the pack: AzureLib 3.1.11, Iron's Spells 'n Spellbooks 3.16.3, Biolith 3.0.14 and Fusion 1.3.15+a.
 
-The sibling dossier does not preserve an independent installed-JAR SHA for this row, so source-build byte equality is not claimed.
+The current sibling dossier preserves physical SHA-1 `afdc32ab27661cd52160280dc4273d70a2d4a3d2`. This fingerprints the installed artifact; source-build byte equality is still not claimed because no source-build digest/equivalence comparison has been established.
 
 ## Source pin
 
@@ -35,7 +36,7 @@ The pinned `gradle.properties` declares:
 - source-side AzureLib 3.1.8;
 - source-side Biolith 3.0.11.
 
-Because the physical pack uses newer provider versions and no physical JAR hash is available here, this catalog is `COUNTED_SOURCE_PINNED`, not `COUNTED_EXACT`.
+Because the physical pack uses newer dependency versions and physical SHA alone does not establish equivalence to a source build, this catalog remains `COUNTED_SOURCE_PINNED`, not `COUNTED_EXACT`.
 
 ## Exact source-pinned spell registry
 
