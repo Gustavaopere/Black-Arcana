@@ -10,7 +10,7 @@ Current physical identity:
 
 Current sibling evidence:
 
-`neoforge-rpg-skilltree@ce51a6f09d96e9b6280a8944075332361ff6e0e1`
+`neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a`
 
 Version-correlated official source pin:
 
