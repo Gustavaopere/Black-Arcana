@@ -38,6 +38,14 @@ O source oficial version-correlated `TTZPlayz/Create-Wizardry@9c4e53aad0ee947718
 
 Consequência canônica: **✅ Create: Wizardry — componente mágico/cross-domain catalogado como `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0 semantic objects; runtime QA fail-closed**. O mínimo estrito permanece **1382** neste `main`. Como o denominador técnico global está em rebase, nenhum novo percentual/fração técnica é publicado.
 
+## Provider freshness override — Iron's Apothic 2.2.2
+
+O sibling certificado em `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` preserva a linha física **#339** como `irons_apothic-2.2.2.jar`, mod id `irons_apothic`, runtime `2.2.2`. O dossiê físico atual não preserva digest independente do JAR, portanto igualdade binária não é inferida.
+
+O source oficial exato `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declara `mod_version=2.2.2`. Nesse pin, o provider registra **7 codecs próprios de affix** no registry de Apotheosis, possui **140 definições JSON de affix**, das quais **48** ficam explicitamente em superfícies `spell`/`imbued`, e **24 definições de gem**. `SpellTriggerAffix` resolve spells pelo `SpellRegistry` de Iron's e `SpellCastUtil` executa o `AbstractSpell` externo pelo pipeline de casting do host; não há registry próprio de spell do provider no source exato.
+
+Consequência canônica: **✅ Iron's Apothic 2.2.2 — bridge mágico/source-pinned catalogado, 48 spell-oriented affix definitions tratadas como triggers/suporte sobre spells externos, 0 provider-owned spell registrations, +0 semantic objects**. O mínimo estrito permanece **1382**. O denominador técnico global continua `PENDING REBASE`; não é publicado novo percentual. Compatibilidade assembled-pack com Iron's 3.16.3, Apotheosis 8.8.0, optional schools, cooldown/target settlement e recursão cross-mod permanecem runtime QA fail-closed.
+
 ## Provider freshness override — Somake 1.0.9
 
 A autoridade global de 595 top-levels acima permanece o checkpoint histórico reconciliado de 2026-09-11; ela **não** é rebatizada silenciosamente como um snapshot global mais novo.
