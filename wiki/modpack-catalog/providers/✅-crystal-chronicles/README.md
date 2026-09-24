@@ -4,7 +4,7 @@ Status: `COUNTED_SOURCE_PINNED / 1 PROVIDER-OWNED SPELL / CATALOG ✅ / ALPHA-WI
 
 ## Current physical identity
 
-Current sibling authority at `neoforge-rpg-skilltree@ce51a6f09d96e9b6280a8944075332361ff6e0e1` preserves the certified Crystal Chronicles dossier:
+Current sibling authority at `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a` preserves the certified Crystal Chronicles dossier:
 
 - physical order: **#208**;
 - JAR: `crystal_chronicles-0.1.3-alpha.jar`;
