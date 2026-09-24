@@ -13,7 +13,7 @@ The current sibling modlist/dossier at `neoforge-rpg-skilltree@49d9910ca0abfb9c0
 - runtime version: `1.1.14-1.21`;
 - Minecraft / loader: 1.21.1 / NeoForge.
 
-The sibling dossier does not provide an independently captured SHA-1 for that physical file. Therefore this revalidation does **not** call the pack artifact hash-matched.
+The current sibling dossier preserves physical SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5` for the installed 1.1.14 JAR. That value is identical to the SHA-1 of exact publisher File `8847070` audited below, so installed-pack ↔ publisher-file byte equality is closed.
 
 ## Exact publisher release
 
@@ -111,9 +111,9 @@ For the current pack version:
 - version/JAR filename: exact physical authority from the sibling modlist;
 - publisher binary: exact File `8847070`, cryptographically fingerprinted;
 - registry identity/count: exact for the publisher 1.1.14 release;
-- physical pack byte equality: **not independently re-established** from a physical SHA source.
+- physical pack byte equality: **closed** — current sibling SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5` exactly matches audited publisher File `8847070`;
 
-Accordingly the current semantic inventory is `COUNTED_RELEASE_BOUNDED`, not `COUNTED_EXACT` physical-byte evidence.
+Accordingly the current semantic inventory is `COUNTED_EXACT` for the installed physical 1.1.14 artifact.
 
 This distinction does not change the semantic count: Cataclysm: Spellbooks remains **59** registered spells in the current-version catalog.
 
