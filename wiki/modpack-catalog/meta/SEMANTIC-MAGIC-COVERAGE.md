@@ -141,13 +141,21 @@ The same exact localization exposes 41 root spell keys. `brimstone_hellblast` an
 
 Hazen therefore contributes **+38 `COUNTED_SOURCE_PINNED`** semantic spell identities. Later `1.21.1` branch additions such as `coruscated_discharge` are not projected backward into the pinned 1.4.0.14 release.
 
-## Acolyte 1.0.3 release-bounded zero-semantic closure
+## Create: Wizardry 1.21.1-0.5.1-pre1 source-pinned zero-semantic closure
 
-The current sibling physical re-audit certifies `acolyte-1.0.3.jar` / mod id `acolyte` / runtime `1.0.3`. Exact CurseForge file `8098233` was then inspected under the clean-room catalog boundary. The artifact contains **93 provider classes**, but **0** provider classes inherit Iron's `AbstractSpell`; it also contains **0** provider-owned spell resource paths and **0** provider spell-localization identities.
+Current sibling physical authority `neoforge-rpg-skilltree@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b` certifies `create_wizardry-1.21.1-0.5.1-pre1.jar` at physical row #166. Official source pin `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declares the same provider version.
 
-Acolyte does explicitly consume Iron's magic runtime. The exact artifact names **29 Iron's spell resource IDs** in packaged provider resources and references Blood Step plus Stomp through Iron's `SpellRegistry`, for **31 explicit host spell identities**. It also calls dynamic host-selection surfaces, so those 31 are not asserted to be an exhaustive fixed loadout. They remain Iron's-owned spell identities and are never recounted under Acolyte.
+The source pin has 75 Java files and 328 resource files, but no provider-owned spell resource namespace and no `registerSpell`, `SpellRegistry`, `DeferredRegister<AbstractSpell>`, `Registries.SPELL`, `SPELLS.register` or `spell.create_wizardry` identity surface. Blaze Caster reads host `SpellData`/`AbstractSpell` and invokes existing Iron's spell casts; Mana Siphon and the provider's two mob effects modify mana/casting conditions. These are automation/resource/policy surfaces, not new provider-owned spell identities.
 
-Acolyte is therefore classified `ZERO_SEMANTIC_SPELLCASTER_CONTENT` with **+0** independent semantic objects. The strict reconstructible minimum remains **1382**. Exact installed-byte equality and assembled-pack AI/config/trade/recruitment runtime behavior remain separate fail-closed QA.
+Create: Wizardry is therefore `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION` and contributes **+0 semantic magic objects**. The strict reconstructible minimum remains **1382** on this base. Source-build byte equality to the installed JAR and all assembled-pack automation/resource settlement remain runtime QA rather than semantic-count gates.
+
+## Iron's Apothic 2.2.2 source-pinned zero-semantic closure
+
+Current sibling authority `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` certifies `irons_apothic-2.2.2.jar` at row #339. Exact official source `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declares the same provider version.
+
+The exact source registers seven custom Apotheosis affix codecs and contains 140 affix JSON definitions, including 48 explicit spell/imbued-spell trigger definitions, plus 24 gem definitions. Those resources consume Iron's `SpellRegistry`, `SchoolRegistry`, `AbstractSpell` and casting state; no independent provider-owned spell registrar is present. The 48 spell-oriented affixes therefore reference, trigger or modify spells owned by Iron's or its addons instead of minting 48 new spell identities.
+
+Iron's Apothic is consequently a source-pinned magic bridge/support closure with **+0 independent semantic magic objects**. The strict reconstructible minimum remains **1382**. Installed-JAR byte equality and assembled-pack affix/cooldown/target/proc behavior remain runtime QA, not semantic-count evidence.
 
 ## Strict reconstructible counted minimum
 
@@ -174,7 +182,7 @@ Arithmetic cross-check by provider family:
 |---|---|---:|---|---|
 | [Ars Nouveau](../providers/ars-nouveau/README.md) | 5.13.1 | 109 | `COUNTED_SOURCE_PINNED` | 5 Forms + 13 Augments + 67 Effects + 24 rituals; arbitrary composed chains excluded |
 | [Ars Additions](../providers/ars-additions/README.md) | 21.3.0 | 5 | `COUNTED_SOURCE_PINNED` | 3 glyphs + 2 rituals |
-| [Ars Controle](../providers/ars-controle/README.md) | 1.6.15 | 9 | `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts |
+| [Ars Controle](../providers/ars-controle/README.md) | 1.6.16 | 9 | `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts; 1.6.15→1.6.16 registry source is blob-identical |
 | [Ars Technica](../providers/ars-technica/README.md) | 2.7.6 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 registered spell parts |
 | [Ars Hex](../providers/ars-hex/README.md) | 5.0.4b | 1 | `COUNTED_SOURCE_PINNED` | one current Malum-backed registered glyph under the physical provider set |
 | [Ars Zero](../providers/ars-zero/README.md) | 2.0.2 | 12 | `COUNTED_RELEASE_BOUNDED` | 12 current unique glyph capabilities; disabled copied AOE/Amplifier variants excluded |
@@ -300,9 +308,9 @@ The following audited providers add **0** independent semantic objects under thi
 - [GTBC's SpellLib](../providers/gtbcs-spelllib/README.md) — shared spell/addon library infrastructure; publisher surface establishes no standalone gameplay/spell catalog in 2.2.0;
 - [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
 - [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — Phase 2BT exact-release source-pinned `ZERO_BRIDGE_INFRA`; +0; modifies Iron's/Vampirism behavior without minting a provider-owned spell/action identity; runtime bridge QA remains fail-closed;
+- [Create: Wizardry](../providers/✅-create-wizardry/README.md) — current physical 1.21.1-0.5.1-pre1 source-pinned `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0; Blaze Caster/Mana Siphon automate or constrain Iron's-owned spell/mana behavior without minting provider-owned spell identities; runtime settlement remains fail-closed;
 - [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
 - [Mobstein](../providers/✅-mobstein/README.md) — exact 5.4.4 physical SHA-1 plus hash-matched resource-only clean-room audit closes the residual boundary as `ZERO_SEMANTIC_ACTIONS`: documented syringes are item interactions and surfaced action-like keybinds are entity/mount controls; **+0** independent semantic magic objects; runtime/API integration remains separately fail-closed;
-- [Acolyte](../providers/✅-acolyte/README.md) — exact publisher-release structural audit closes `ZERO_SEMANTIC_SPELLCASTER_CONTENT`: 31 explicit Iron's host-spell references plus dynamic host selection, but no provider `AbstractSpell` subclass/resource/localization identity; **+0** independent semantic magic objects; physical hash equality and assembled-pack runtime remain fail-closed;
 - Bloodlines `gravebound_crit_action` / Sorcerous Strike — registered implementation, but exact 3.0.9 configured tree and rank defaults provide no normal survival acquisition path;
 - IronSable's ten physicalized base Iron's spells — already owned/countable under Iron's;
 - Ars 'n' Spells `ars_cross_*` proxy registry pool — proxies, not eight semantic rituals/spells;
