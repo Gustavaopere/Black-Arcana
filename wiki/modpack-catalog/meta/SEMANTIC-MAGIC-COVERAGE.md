@@ -149,6 +149,14 @@ The source pin has 75 Java files and 328 resource files, but no provider-owned s
 
 Create: Wizardry is therefore `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION` and contributes **+0 semantic magic objects**. The strict reconstructible minimum remains **1382** on this base. Source-build byte equality to the installed JAR and all assembled-pack automation/resource settlement remain runtime QA rather than semantic-count gates.
 
+## Iron's Apothic 2.2.2 source-pinned zero-semantic closure
+
+Current sibling authority `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` certifies `irons_apothic-2.2.2.jar` at row #339. Exact official source `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declares the same provider version.
+
+The exact source registers seven custom Apotheosis affix codecs and contains 140 affix JSON definitions, including 48 explicit spell/imbued-spell trigger definitions, plus 24 gem definitions. Those resources consume Iron's `SpellRegistry`, `SchoolRegistry`, `AbstractSpell` and casting state; no independent provider-owned spell registrar is present. The 48 spell-oriented affixes therefore reference, trigger or modify spells owned by Iron's or its addons instead of minting 48 new spell identities.
+
+Iron's Apothic is consequently a source-pinned magic bridge/support closure with **+0 independent semantic magic objects**. The strict reconstructible minimum remains **1382**. Installed-JAR byte equality and assembled-pack affix/cooldown/target/proc behavior remain runtime QA, not semantic-count evidence.
+
 ## Strict reconstructible counted minimum
 
 **1382 semantic magic objects are currently reconstructible from canonical provider records after adding the Hazen N Stuff 1.4.0.14 source-pinned inventory.**
