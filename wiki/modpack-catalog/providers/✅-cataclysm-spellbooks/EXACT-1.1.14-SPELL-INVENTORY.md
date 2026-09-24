@@ -1,6 +1,6 @@
 # Cataclysm: Spellbooks 1.1.14 — exact publisher-release registered spell inventory
 
-Status: `59/59 EXACT REGISTERED SPELL IDENTITIES / EXACT PUBLISHER FILE 8847070 / REGISTRY BYTE-IDENTICAL TO HASH-MATCHED 1.1.13 CONTROL / PHYSICAL BYTE-EQUALITY NOT INDEPENDENTLY RECAPTURED / IDENTITY ONLY`
+Status: `59/59 EXACT REGISTERED SPELL IDENTITIES / EXACT PHYSICAL SHA-1 568d798862a61a374ab1e55dcddf5b2e3326b8b5 = EXACT PUBLISHER FILE 8847070 / REGISTRY BYTE-IDENTICAL TO HASH-MATCHED 1.1.13 CONTROL / COUNTED_EXACT / IDENTITY ONLY`
 
 This table carries the exact 59-row registry identity set into publisher release 1.1.14 because File `8847070` contains a `SpellRegistries.class` whose SHA-256 (`8c4f8570d832a2a178e2d35244729eacd3208ccb4e9df582a16a01976a4881c7`) is byte-identical to the hash-matched physical 1.1.13 control. The 225 bounded spell-related class paths and all 69 root spell localization keys are also unchanged. `Group` is the provider implementation package group observed for the registered class; it does not independently redefine spell-school ownership or balance semantics.
 
@@ -82,4 +82,4 @@ They remain `EXCLUDED / TRANSLATION_ONLY` for the 1.1.14 release semantic count 
 
 ## Evidence boundary
 
-This is an identity/catalog table only. Exact current costs, cooldowns, rarity/level ranges, formulas, acquisition and runtime integration hooks are not inferred from class names or from the historical 1.1.11 source line. The current pack filename/version is physically authoritative, but a second physical SHA source for 1.1.14 was not available; the inventory is therefore `COUNTED_RELEASE_BOUNDED` rather than physical-byte `COUNTED_EXACT`.
+This is an identity/catalog table only. Exact current costs, cooldowns, rarity/level ranges, formulas, acquisition and runtime integration hooks are not inferred from class names or from the historical 1.1.11 source line. The current sibling dossier now preserves physical SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5`, exactly matching audited publisher File `8847070`; the registered identity inventory is therefore `COUNTED_EXACT` for the installed 1.1.14 artifact.
