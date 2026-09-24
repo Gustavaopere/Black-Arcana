@@ -8,7 +8,7 @@ This narrow overlay applies to Crystal Chronicles until the shared current-provi
 
 | Mod ID | Installed identity | Current effective audit state |
 |---|---|---|
-| `crystal_chronicles` | physical #208 / `crystal_chronicles-0.1.3-alpha.jar` / runtime `0.1.3-alpha` | ✅ `COUNTED_SOURCE_PINNED / 1 ACTIVE PROVIDER SPELL / PRISMATIC FOCUS ROUTE CATALOGED / +1 STRICT SEMANTIC / RUNTIME QA FAIL-CLOSED` |
+| `crystal_chronicles` | physical #208 / `crystal_chronicles-0.1.3-alpha.jar` / runtime `0.1.3-alpha` / SHA-1 `afdc32ab27661cd52160280dc4273d70a2d4a3d2` | ✅ `COUNTED_SOURCE_PINNED / 1 ACTIVE PROVIDER SPELL / PRISMATIC FOCUS ROUTE CATALOGED / +1 STRICT SEMANTIC / RUNTIME QA FAIL-CLOSED` |
 
 ## Physical evidence
 
@@ -28,7 +28,7 @@ The dossier preserves:
 - required physical host stack including Iron's 3.16.3;
 - Alpha/WIP maturity and portal/dimension risk surface.
 
-No independent physical SHA is preserved for this row.
+Physical SHA-1 is now preserved by the current sibling dossier: `afdc32ab27661cd52160280dc4273d70a2d4a3d2`. This fingerprints the installed JAR but does not prove source-build byte equivalence.
 
 ## Source evidence
 
