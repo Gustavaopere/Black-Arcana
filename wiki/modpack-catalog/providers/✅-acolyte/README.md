@@ -4,7 +4,7 @@ Status: `EXACT PUBLISHER-RELEASE STRUCTURAL AUDIT / ZERO OWN SEMANTIC SPELLS / I
 
 ## Current physical identity
 
-Sibling physical authority at `neoforge-rpg-skilltree@278b427023136d7c43d85dc188d0eac1ac85ef3a` records:
+Sibling physical authority at `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a` records:
 
 - physical order: **#4**;
 - JAR: `acolyte-1.0.3.jar`;
