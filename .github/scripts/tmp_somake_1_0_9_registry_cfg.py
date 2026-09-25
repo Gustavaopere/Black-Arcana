@@ -72,6 +72,12 @@ for op,n in {
 }.items(): FIX[op]=n
 
 COND=set(range(0x99,0xa7))|{0xc6,0xc7}
+BRNAME={
+0x99:"ifeq",0x9a:"ifne",0x9b:"iflt",0x9c:"ifge",0x9d:"ifgt",0x9e:"ifle",
+0x9f:"if_icmpeq",0xa0:"if_icmpne",0xa1:"if_icmplt",0xa2:"if_icmpge",
+0xa3:"if_icmpgt",0xa4:"if_icmple",0xa5:"if_acmpeq",0xa6:"if_acmpne",
+0xc6:"ifnull",0xc7:"ifnonnull"
+}
 RET={0xac,0xad,0xae,0xaf,0xb0,0xb1}
 GOTO={0xa7,0xc8}
 
@@ -158,15 +164,19 @@ def main():
         if not returns: raise RuntimeError("no normal return in clinit")
         if not exit_reachable(succ,start,returns): raise RuntimeError("normal return unreachable before removals")
 
-        last_string=None; regs=[]; isloads=[]; field_events=[]; branch_events=[]
+        last_string=None; regs=[]; isloads=[]; field_events=[]; method_events=[]; string_events=[]; branch_events=[]
         for x in ins:
             op=x["op"]; raw=x["raw"]
             if op==0x12:
                 s=string(raw[1])
-                if s is not None: last_string=s
+                if s is not None:
+                    last_string=s
+                    string_events.append({"off":x["off"],"value":s})
             elif op in (0x13,0x14):
                 s=string(cp_index(raw))
-                if s is not None: last_string=s
+                if s is not None:
+                    last_string=s
+                    string_events.append({"off":x["off"],"value":s})
             elif op in (0xb2,0xb3,0xb4,0xb5):
                 rr=ref(cp_index(raw))
                 if rr: field_events.append({"off":x["off"],"op":op,"owner":rr[0],"name":rr[1],"desc":rr[2]})
@@ -174,6 +184,7 @@ def main():
                 rr=ref(cp_index(raw))
                 if rr:
                     owner,name,desc,_=rr
+                    method_events.append({"off":x["off"],"owner":owner,"name":name,"desc":desc})
                     if owner and "DeferredRegister" in owner and name=="register":
                         regs.append({"off":x["off"],"id":last_string})
                     if owner and owner.endswith("/ModList") and name=="isLoaded":
@@ -186,10 +197,23 @@ def main():
         for r in regs:
             if exit_reachable(succ,start,returns,removed=r["off"]):
                 skipped.append(r)
+        unconditional=[r for r in regs if r not in skipped]
         print(f"SOMAKE_CFG_REGISTER_COUNT={len(regs)}")
         print(f"SOMAKE_CFG_BRANCH_COUNT={len(branch_events)}")
         print(f"SOMAKE_CFG_REGISTER_CALLS_SKIPPABLE_BY_NORMAL_CFG={len(skipped)}")
         for r in skipped: print(f"SOMAKE_CFG_SKIPPABLE_REGISTER={r['off']}|{r['id']}")
+        print(f"SOMAKE_CFG_REGISTER_CALLS_UNCONDITIONAL_NORMAL_CFG={len(unconditional)}")
+        print("SOMAKE_CFG_UNCONDITIONAL_IDS="+",".join(r["id"] for r in unconditional))
+
+        init_events=[]
+        for ev in string_events:
+            if ev["off"]<=45: init_events.append({"kind":"string",**ev})
+        for ev in method_events:
+            if ev["off"]<=45: init_events.append({"kind":"method",**ev})
+        for ev in field_events:
+            if ev["off"]<=45: init_events.append({"kind":"field",**ev})
+        for ev in sorted(init_events,key=lambda x:x["off"]):
+            print("SOMAKE_CFG_INIT_EVENT="+json.dumps(ev,separators=(",",":"),sort_keys=True))
 
         print(f"SOMAKE_CFG_ISLOADED_COUNT={len(isloads)}")
         for ev in isloads:
@@ -221,11 +245,28 @@ def main():
             lo=min(b["off"],b["target"]); hi=max(b["off"],b["target"])
             ids=[r["id"] for r in regs if lo<r["off"]<hi]
             if ids:
-                print("SOMAKE_CFG_BRANCH_REGISTER_INTERVAL="+json.dumps({"branch_off":b["off"],"target":b["target"],"ids":ids},separators=(",",":"),sort_keys=True))
+                guards=[
+                    {"off":fe["off"],"owner":fe["owner"],"name":fe["name"],"desc":fe["desc"]}
+                    for fe in field_events
+                    if fe["op"]==0xb2 and b["off"]-10<=fe["off"]<b["off"]
+                ]
+                print("SOMAKE_CFG_BRANCH_REGISTER_INTERVAL="+json.dumps({
+                    "branch_off":b["off"],"branch_op":BRNAME.get(b["op"],hex(b["op"])),
+                    "target":b["target"],"guard_fields":guards,"ids":ids
+                },separators=(",",":"),sort_keys=True))
 
-        if skipped:
-            raise RuntimeError("one or more DeferredRegister.register calls can be skipped by normal clinit control-flow")
-        print("SOMAKE_1_0_9_ALL_83_REGISTER_CALLS_UNCONDITIONAL_CFG=true")
+        expected_skippable={
+            "sacred_phoenix_blessing","blessed_connection","guardian_connection","cursed_connection",
+            "mirror_strike","procession_of_souls","grave_sigil","soul_bastion","soul_latch",
+            "spiral_of_ruin","soulfall_judgment","soul_reprisal","spectral_rondo","winged_ruin",
+            "crimson_reflection","spirit_empowerment","symmetry_empowerment"
+        }
+        got_skippable={r["id"] for r in skipped}
+        if got_skippable!=expected_skippable:
+            raise RuntimeError(f"conditional registry set drift: expected {sorted(expected_skippable)} got {sorted(got_skippable)}")
+        if len(unconditional)!=66:
+            raise RuntimeError(f"expected 66 unconditional register calls, got {len(unconditional)}")
+        print("SOMAKE_1_0_9_REGISTRY_CFG_CLASSIFIED_66_UNCONDITIONAL_17_CONDITIONAL=true")
 
 if __name__=="__main__":
     try: main()
