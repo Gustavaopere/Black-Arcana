@@ -48,6 +48,9 @@ jobs:
             git diff --check "$BASE" HEAD
           fi
 
+      - name: Temporary Relics 0.12.8 exact binary ability inventory NON-MERGE
+        run: python3 .github/scripts/tmp_relics_0_12_8_audit.py
+
       - name: NeoForge build
         run: ./gradlew --no-daemon build
 

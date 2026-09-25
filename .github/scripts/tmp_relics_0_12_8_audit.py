@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+import hashlib
+import json
+import re
+import sys
+import tempfile
+import urllib.request
+import zipfile
+from collections import Counter
+from pathlib import Path
+
+URL = "https://www.cursemaven.com/curse/maven/relics-mod-445274/8158315/relics-mod-445274-8158315.jar"
+EXPECTED_SHA1 = "1fe7d57ebfa56ebd0aeecfed01075f8b55b94ef7"
+
+def digest(data: bytes, name: str) -> str:
+    h = hashlib.new(name)
+    h.update(data)
+    return h.hexdigest()
+
+def download(target: Path) -> bytes:
+    req = urllib.request.Request(URL, headers={"User-Agent": "Black-Arcana-catalog-audit/1"})
+    with urllib.request.urlopen(req, timeout=90) as response:
+        data = response.read()
+    target.write_bytes(data)
+    print(f"RELICS_SIZE={len(data)}")
+    print(f"RELICS_SHA1={digest(data, 'sha1')}")
+    print(f"RELICS_SHA256={digest(data, 'sha256')}")
+    return data
+
+def main() -> int:
+    with tempfile.TemporaryDirectory(prefix="black-arcana-relics-") as tmp:
+        jar = Path(tmp) / "relics-0.12.8.jar"
+        blob = download(jar)
+        actual = digest(blob, "sha1")
+        if actual != EXPECTED_SHA1:
+            raise RuntimeError(f"physical hash mismatch: expected {EXPECTED_SHA1}, got {actual}")
+        print("RELICS_PHYSICAL_HASH_MATCH=true")
+
+        with zipfile.ZipFile(jar) as zf:
+            names = zf.namelist()
+            classes = sorted(n for n in names if n.endswith(".class") and not n.startswith("META-INF/versions/"))
+            resources = sorted(n for n in names if n.startswith("data/relics/") or n.startswith("assets/relics/"))
+            jarjar = sorted(n for n in names if n.startswith("META-INF/jarjar/") and n.endswith(".jar"))
+
+            metadata_name = "META-INF/neoforge.mods.toml"
+            metadata = zf.read(metadata_name).decode("utf-8", errors="replace") if metadata_name in names else ""
+            dep_ids = sorted(set(re.findall(r'modId\s*=\s*"([^"]+)"', metadata)))
+
+            ability_paths = sorted(n for n in names if re.search(r"(?:^|[/_.-])abilit(?:y|ies)(?:[/_.-]|$)", n, re.I))
+            relic_paths = sorted(n for n in resources if re.search(r"(?:^|[/_.-])relic(?:s)?(?:[/_.-]|$)", n, re.I))
+            ability_classes = sorted(n for n in classes if re.search(r"abilit(?:y|ies)", n, re.I))
+
+            data_buckets = Counter()
+            for n in resources:
+                parts = n.split("/")
+                if n.startswith("data/relics/") and len(parts) >= 3:
+                    data_buckets["data:" + parts[2]] += 1
+                elif n.startswith("assets/relics/") and len(parts) >= 3:
+                    data_buckets["assets:" + parts[2]] += 1
+
+            lang_candidates = []
+            for lang_path in ["assets/relics/lang/en_us.json", "assets/relics/lang/en_gb.json"]:
+                if lang_path in names:
+                    try:
+                        lang = json.loads(zf.read(lang_path))
+                    except Exception:
+                        continue
+                    for key in sorted(lang):
+                        lk = key.lower()
+                        if "ability" in lk or ".relic." in lk or lk.startswith("item.relics."):
+                            lang_candidates.append((lang_path, key))
+
+            class_utf8_candidates = []
+            needles = [b"ability", b"abilities", b"relic", b"synergy", b"cooldown", b"rank", b"experience"]
+            for name in classes:
+                low = zf.read(name).lower()
+                hits = sorted({x.decode("ascii") for x in needles if x in low})
+                if hits and ("ability" in hits or "abilities" in hits):
+                    class_utf8_candidates.append((name, hits))
+
+            print(f"RELICS_CLASS_COUNT={len(classes)}")
+            print(f"RELICS_PROVIDER_RESOURCE_COUNT={len(resources)}")
+            print(f"RELICS_JARJAR_COUNT={len(jarjar)}")
+            print("RELICS_DEPENDENCY_MOD_IDS=" + ",".join(dep_ids))
+
+            for bucket,count in sorted(data_buckets.items()):
+                print(f"RELICS_RESOURCE_BUCKET={bucket}|{count}")
+
+            print(f"RELICS_ABILITY_PATH_COUNT={len(ability_paths)}")
+            for n in ability_paths[:400]:
+                print(f"RELICS_ABILITY_PATH={n}")
+
+            print(f"RELICS_ABILITY_CLASS_COUNT={len(ability_classes)}")
+            for n in ability_classes[:400]:
+                print(f"RELICS_ABILITY_CLASS={n}")
+
+            print(f"RELICS_RELIC_RESOURCE_PATH_COUNT={len(relic_paths)}")
+            for n in relic_paths[:400]:
+                print(f"RELICS_RELIC_RESOURCE_PATH={n}")
+
+            print(f"RELICS_LANG_CANDIDATE_COUNT={len(lang_candidates)}")
+            for lang_path,key in lang_candidates[:800]:
+                print(f"RELICS_LANG_CANDIDATE={lang_path}|{key}")
+
+            print(f"RELICS_ABILITY_CLASS_UTF8_CANDIDATE_COUNT={len(class_utf8_candidates)}")
+            for name,hits in class_utf8_candidates[:400]:
+                print(f"RELICS_ABILITY_CLASS_UTF8_CANDIDATE={name}|{','.join(hits)}")
+
+            if not classes:
+                raise RuntimeError("no classes found")
+            print("RELICS_EXACT_BINARY_INVENTORY_AUDIT=true")
+    return 0
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except Exception as exc:
+        print(f"RELICS_AUDIT_ERROR={type(exc).__name__}: {exc}", file=sys.stderr)
+        raise
