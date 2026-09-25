@@ -2,95 +2,75 @@
 
 Date: `2026-09-24`
 
-This overlay applies to `relics` until the current physical-provider queue is regenerated integrally.
+This overlay applies to `relics` until the global queue is regenerated integrally.
 
 ## Current row
 
 | Mod ID | Installed identity | Effective audit state |
 |---|---|---|
-| `relics` | `relics-1.21.1-0.12.8.jar` / SHA-1 `1fe7d57ebfa56ebd0aeecfed01075f8b55b94ef7` | ⚠️ `PARTIAL / PHYSICAL SHA-PINNED / EXACT PUBLISHER 0.12.8 / 20 CURRENT-DOC BASE RELICS / PROVIDER ABILITY SYSTEM CONFIRMED / FINAL DISCRETE ABILITY CARDINALITY PENDING / RUNTIME QA FAIL-CLOSED` |
+| `relics` | `relics-1.21.1-0.12.8.jar` / SHA-1 `1fe7d57ebfa56ebd0aeecfed01075f8b55b94ef7` | ✅ `CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / 20 RELICS / 39 BASE ABILITIES + 2 DISTINCT SYNERGIES / 41 COUNTED_EXACT POWERS / RUNTIME QA FAIL-CLOSED` |
 
-## Physical evidence
+## Physical authority
 
-Sibling authority:
+Sibling authority rechecked at:
 
-`neoforge-rpg-skilltree@d7c99d23ef1b38fe62c86a362ec521ced8861f96`
+`neoforge-rpg-skilltree@5751321657cea41e77ec7c2be7f191e11c9b68a7`
 
-Certified dossier:
+Physical SHA-1:
 
-`PROJECT-INSTRUCTIONS/modlist/Adventure and RPG + Armor, Tools, and Weapons + Cosmetic + Magic + Ores and Resources/✅-relics v0.12.8.md`
+`1fe7d57ebfa56ebd0aeecfed01075f8b55b94ef7`
 
-Closed physical fields:
+## Exact publisher equality
 
-- JAR;
-- mod id;
-- version;
-- NeoForge 1.21.1;
-- SHA-1;
-- installed integration stack.
+CurseForge project/file:
 
-## Exact publisher evidence
+`445274 / 8158315`
 
-CurseForge:
+Audited exact artifact:
 
-- project `445274`;
-- exact file `8158315`;
-- filename `relics-1.21.1-0.12.8.jar`;
-- Beta;
-- uploaded 2026-05-28;
-- Client & Server.
+- SHA-1 `1fe7d57ebfa56ebd0aeecfed01075f8b55b94ef7`;
+- SHA-256 `db6f436053fe717413389e55390a5f98103ccd91cca5fe469e090bdfaef70717`;
+- bytes `5,007,593`.
 
-0.12.8 explicitly adds Shield of Retaliation plus target configuration, FTB Teams integration and relic-XP statistics.
+Physical/publisher equality: **closed**.
 
-## Current official-doc evidence
+## Exact semantic inventory
 
-Shatterbyte docs:
+NON-MERGE exact-artifact evidence:
 
-`https://www.shatterbyte.com/docs/mods/relics/`
+- 20 base relic item classes;
+- 39 base ability roots;
+- 2 owner-scoped synergy roots;
+- exact final discrete power cardinality: **41**.
 
-The current index says it contains item/ability details for every Relics relic and lists 20 base relics, including Shield of Retaliation.
+Synergy roots:
 
-The current docs therefore establish:
+- `glitchy_mantle|electricity`;
+- `kinetic_belt|electricity`.
 
-- a provider-owned ability runtime;
-- current 20-relic base roster;
-- named abilities with rank/progression state;
-- target/mode/cooldown/buffer mechanics;
-- separate synergy surfaces.
-
-## Closed by current evidence
-
-- exact physical identity + SHA-1;
-- exact publisher 0.12.8 file identity;
-- current 20-relic documented roster;
-- Relics authority over provider ability/progression state;
-- existence of discrete provider ability identities;
-- presence of current 0.12.8 Shield of Retaliation content;
-- target configuration and FTB Teams surfaces belong to the 0.12.8 release.
-
-## Still open
-
-- publisher-file digest comparison against physical SHA;
-- immutable exact-0.12.8 source/resource pin;
-- complete base ability inventory;
-- synergy inventory;
-- exact semantic action cardinality;
-- deployed config;
-- target/team filtering;
-- Curios lifecycle;
-- XP/cooldown/buffer persistence;
-- addon interoperability;
-- dedicated-server/full-pack runtime;
-- Black Arcana adapter.
+They remain distinct because owner scope, class structure and exact hashed presentation values differ.
 
 ## Semantic accounting
 
-Relic item count: **20 current documented base relics**.
+Relics contributes:
 
-This is not the semantic action numerator.
+**+41 `COUNTED_EXACT`**
 
-Provider-owned abilities are confirmed, so `+0` would be false.
+Rank modifiers and modes add zero extra identities.
 
-The exact final discrete ability count is not yet closed, so no positive semantic delta is published.
+The provider-specific checkpoint does not modify the shared global total directly.
 
-`SEMANTIC_DELTA = PENDING`
+## Runtime gates remain fail-closed
+
+- deployed ability/stat/target config;
+- Curios lifecycle;
+- XP/rank persistence;
+- cooldown/buffer persistence;
+- FTB Teams targeting;
+- Sophisticated Backpacks interaction;
+- Reliquified addon coexistence;
+- restart/death/dimension lifecycle;
+- full-pack performance;
+- Black Arcana adapter behavior.
+
+Catalog state: **✅ cataloged**.
