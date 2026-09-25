@@ -13,13 +13,13 @@ This checklist does not promote the provider, does not treat a third-party patch
 Current physical evidence establishes the installed version line and filename:
 
 - observed installed filename: `traveloptics-4.4.0.1-1.21.1.jar`;
-- latest sibling dossier rechecked at `neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149`: `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md` still marks that filename/version as physically installed; the dossier carries no physical cryptographic hash;
+- latest sibling dossier rechecked at `neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0`: `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md` still marks that filename/version as physically installed; the dossier carries no physical cryptographic hash;
 - physical version line: `4.4.0.1-1.21.1`;
 - exact publisher file: CurseForge project/file `1046916 / 6342780`;
 - exact publisher-release SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
 - exact publisher-release SHA-256: `0372b4b8593288726fb0d6e8cdb86202a87677d0c2dafeb96cab50bf057ec298`.
 
-The repository does **not** preserve an independent current physical SHA-1 for the installed JAR, so byte equality with File `6342780` remains unproven.
+Project Library physical modlist checkpoint `modlist(1).txt` dated 2026-09-16 preserves SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` for `traveloptics-4.4.0.1-1.21.1.jar`. It is neither the original publisher SHA-1 nor the known patch SHA-1. Gate 1 therefore advances from unknown hash to a verified third-artifact disposition.
 
 A third-party compatibility project published after the original audit exposes patched file `1690333 / 8861368`, filename `traveloptics-4.4.0.1.1-1.21.1-patched.jar`. Exact clean-room binary-diff evidence now fingerprints that candidate at SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d` / SHA-256 `05f588202900c691fb70389435c9997d090f81a699f7df7cdebcbec552298cc2`. Compared with original File `6342780`, both JARs contain 1339 entries, with zero additions/removals and exactly one changed entry: `com/gametechbc/traveloptics/loot/TOLootModifiers.class`; zero non-class resources differ. The patch publisher attributes that one-class delta to correcting the `universal_loot` codec wiring. This establishes an exact comparison target, **not** deployment. Current sibling evidence still does not prove which byte sequence is physically installed. See [`PATCH-8861368-BINARY-DIFF.md`](PATCH-8861368-BINARY-DIFF.md).
 
@@ -27,11 +27,11 @@ Required authoritative result:
 
 | Question | Required evidence | Current state |
 |---|---|---|
-| Is the physical JAR byte-identical to original File `6342780`? | SHA-1/SHA-256 from the actual installed JAR | `NÃO VERIFICADO` |
-| Is a patched/replacement JAR physically installed instead? | compare actual installed hash against patch SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d` (or another verified replacement) | `NÃO VERIFICADO` |
-| If another replacement exists, what is it? | exact file identity/hash/provider source | `NÃO VERIFICADO` |
+| Is the physical JAR byte-identical to original File `6342780`? | compare physical SHA-1 with `3808493ce45cdfeb6408e85578adecf13df698e8` | `NÃO` — physical is `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` |
+| Is the known patch File `8861368` physically installed? | compare physical SHA-1 with `680fa679d8ea2419a79571f455436367222f6f9d` | `NÃO` |
+| If another replacement exists, what is it? | exact physical hash + provenance/content audit | `PARCIAL` — `OTHER_VERIFIED` hash known; provenance/content delta not yet materialized |
 
-Record exactly one physical disposition: `ORIGINAL_EXACT`, `PATCHED_EXACT`, or `OTHER_VERIFIED`. Do not infer from nominal version strings.
+Physical disposition is now **`OTHER_VERIFIED`**. Do not infer its implementation from the unchanged nominal filename/version. The next gate is to materialize/audit the exact `7b74816e...` bytes or obtain equivalent authoritative provenance.
 
 ## Gate 2 — Loot-modifier registry initialization
 
