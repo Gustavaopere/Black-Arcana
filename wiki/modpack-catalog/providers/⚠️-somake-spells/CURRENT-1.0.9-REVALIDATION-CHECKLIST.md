@@ -1,10 +1,10 @@
 # Somake Spells 1.0.9 — Current Physical Revalidation Checklist
 
-Status: `⚠️ CURRENT PHYSICAL LINE CHANGED / 1.0.8-FIX EXACT AUDIT HISTORICAL / 1.0.9 REGISTRY+REACHABILITY NOT YET RECLOSED`
+Status: `⚠️ CURRENT PHYSICAL 1.0.9 / EXACT PUBLISHER-RELEASE REGISTRY 83 CLOSED / PHYSICAL EQUALITY + DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN`
 
 ## Authority reset
 
-The current sibling modlist at `Gustavaopere/neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149` identifies the installed provider as:
+The current sibling modlist at `Gustavaopere/neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84` identifies the installed provider as:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`;
 - mod id: `somakespells`;
@@ -98,6 +98,35 @@ Resource-only findings:
 
 See [`EXACT-1.0.9-RESOURCE-AUDIT.md`](EXACT-1.0.9-RESOURCE-AUDIT.md).
 
+## Exact 1.0.9 registry structural audit now closed
+
+A second temporary NON-MERGE clean-room checkpoint audited the exact File `8867079` registry structure without retaining implementation bodies.
+
+Evidence:
+
+- refined audit HEAD: `fcd6ce8c59cf5d7a153198fc45eff4761c274ba5`;
+- audit-only run: `36092269302`;
+- audit job: `107936996913`;
+- exact release SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- exact release SHA-256: `1f48dfb93e290b45b628b280d902b2b6471b9d80c2c1b70a4980f14dbe85d48a`.
+
+Closed facts:
+
+- 83 `DeferredHolder` spell fields;
+- 83 `DeferredRegister.register` call sites;
+- 83 unique registry IDs;
+- 83 top-level provider `*Spell` classes;
+- 83 base localization roots and 83 matching `.guide` roots, exactly equal to the registry ID set;
+- exact delta from historical 1.0.8-fix: +17 registrations / -1 `summon_zombie`;
+- zero provider `isEnabled()` overrides across the 83 spell classes;
+- seven provider `allowCrafting()` overrides: three structurally constant-false and four non-constant;
+- current artifact still contains `enableSpellLockSystem` and `somakespells/general/common.toml` symbols;
+- current provider code contains compatibility presence checks for Mowzie's Mobs, Magic From the East, Legendary Monsters, Born in Chaos, Tunes 'n Tomes and Geomancy Plus.
+
+This closes the exact publisher-release **declared registry inventory**. It does not close the active registry subset for the deployed mod composition or generalized ID↔predicate mapping.
+
+See [`EXACT-1.0.9-REGISTRY-AUDIT.md`](EXACT-1.0.9-REGISTRY-AUDIT.md) and [`SPELL-CATALOG-1.0.9.md`](SPELL-CATALOG-1.0.9.md).
+
 ## Required current-line closure evidence
 
 Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1.0.9 evidence for all of the following:
@@ -106,11 +135,11 @@ Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1
    - publisher-release SHA-1 is now closed at `171841ac9f802be9309ecc166c1d972ac6d404c0`;
    - still capture the installed physical 1.0.9 JAR fingerprint/hash and prove equality to that release artifact.
 
-2. **Current registry**
-   - exact provider-owned spell/action identity inventory for 1.0.9;
-   - additions, removals, replacements and optional registrations;
-   - accepted current-pack routes are provider-authoritative registry evidence or deterministic observation from the exact assembled server;
-   - no inference from localization names alone.
+2. **Current registry declaration — CLOSED AT RELEASE LEVEL**
+   - exact File 8867079 declared inventory: **83 unique spell IDs**;
+   - exact delta vs 1.0.8-fix: **+17 / -1 (`summon_zombie`)**;
+   - current spell cards are consolidated in `SPELL-CATALOG-1.0.9.md`;
+   - **still open:** which conditional registrations are active in the assembled pack; runtime observation remains accepted current-pack authority for that outcome.
 
 3. **Optional-provider gates / deployed registration outcome**
    - for any generalized claim about how Somake behaves across different mod compositions, exact predicates must come from permitted provider-authoritative evidence;
@@ -118,9 +147,10 @@ Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1
    - such runtime evidence proves the deployed outcome only and must not be rewritten as a universal predicate rule.
 
 4. **Somake global progression/config**
-   - whether `enableSpellLockSystem` still exists in 1.0.9;
-   - its exact config scope/path/default only if supported by permitted evidence;
-   - effective deployed value from the actual pack when reachability depends on it.
+   - `enableSpellLockSystem` existence in 1.0.9: **CLOSED**;
+   - `somakespells/general/common.toml` path symbol in 1.0.9: **CLOSED**;
+   - exact current default/control-flow semantics: still bounded unless separately proven;
+   - effective deployed value from the actual pack when reachability depends on it: **OPEN**.
 
 5. **Iron's host gates**
    - current per-spell/global/datapack `enabled` / `allow_crafting` behavior for 1.0.9 identities;
