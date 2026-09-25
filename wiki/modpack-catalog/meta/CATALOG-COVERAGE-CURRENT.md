@@ -19,6 +19,14 @@ The current sibling physical index at `neoforge-rpg-skilltree@4767f5c637c02c6d91
 Bounded source inspection closes the semantic ownership question: no provider spell registry/resource surface is present, while Blaze Caster and Mana Siphon consume existing Iron's spell/mana contracts. Create: Wizardry is therefore **✅ cataloged** as `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION` with **+0** independent semantic magic objects. The current strict reconstructible minimum remains **1382** on this base. Runtime automation/resource settlement remains fail-closed. See [Create: Wizardry](../providers/%E2%9C%85-create-wizardry/README.md) and [its source-pinned magic-surface audit](../providers/%E2%9C%85-create-wizardry/SOURCE-1.21.1-0.5.1-PRE1-MAGIC-SURFACE.md).
 
 
+## Current provider override — Iron's Apothic 2.2.2
+
+The current sibling certified row at `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` records `irons_apothic-2.2.2.jar` / mod id `irons_apothic` / runtime `2.2.2` at row #339. Exact official source pin `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declares the same version and closes the provider's magic surface as a bridge over Iron's and Apotheosis/Apothic.
+
+The exact source registers 7 custom affix codecs, contains 140 affix definitions, 48 explicit spell/imbued-spell affix definitions and 24 gem definitions. Spell-trigger codecs resolve external holders from Iron's `SpellRegistry`; no provider-owned spell registry is established. Iron's Apothic is therefore **✅ cataloged** with **+0 independent semantic magic objects**, leaving the strict minimum at **1382**. The current technical denominator remains `PENDING REBASE`, so this closure is not assigned a new `N/100` component fraction. Runtime proc/cooldown/targeting and version-drift QA remain fail-closed.
+
+See [Iron's Apothic](../providers/%E2%9C%85-irons-apothic/README.md), [exact source magic-surface inventory](../providers/%E2%9C%85-irons-apothic/SOURCE-2.2.2-MAGIC-SURFACE.md), and the narrow queue/capability overlays.
+
 Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — is a **partial catalog with +0 strict semantic delta and +0 component delta**. Exact publisher file `6342780` closes 33 registered spell identities and excludes 32 residual localization-only roots. `traveloptics:blackout` remains reachability-unresolved under `AbstractUniqueSpell.allowCrafting=false`, and exact `TOLootModifiers` wiring references `KeyLootModifier.CODEC` twice while `UniversalLootModifier.CODEC` is absent from that registration path. Runtime crash is not claimed reproduced. Phase 2BS therefore leaves the strict minimum at **1344** and technical closure at **66/100 at that checkpoint**. See [`../providers/traveloptics/README.md`](../providers/traveloptics/README.md), [`../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md`](../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md) and [`PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md`](./PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md).
 
 Phase 2BT — Vampire Spells Addon 0.0.9 — has semantic delta **+0** and closes technical component **#67**. Official release `1.21.1-0.0.9` and exact source target `xsharov/VampireSpellsAddon@2d36e94e67611a316b7311b11e4574b499025580` show a compatibility/runtime-policy overlay over Iron's + Vampirism: spell/school identifiers belong to `irons_spellbooks`, integration is installed through bridge/listener surfaces, and no provider-owned spell, school, ritual or equivalent action registrar is established. PR #239 merged the durable audit as `main@1c5091807a8773d378c34ffac2e737b5f08b545c`, and the exact merge SHA passed Black Arcana CI run `34795795283` GREEN. The strict semantic minimum remains **1344** while technical component closure becomes **67/100**. Runtime bridge behavior, effective config and physical byte equality remain separate fail-closed gates. See [`../providers/vampire-spells-addon/RELEASE-SOURCE-0.0.9-AUDIT.md`](../providers/vampire-spells-addon/RELEASE-SOURCE-0.0.9-AUDIT.md).
@@ -152,7 +160,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after the Mobstein 5.4.4 shared reconciliation: 68/100 = 68%.**
+**Historical provider-component checkpoint after the Mobstein 5.4.4 shared reconciliation: 68/100 = 68%. The current denominator is `PENDING REBASE` and this fraction must not be published as current coverage.**
 
 Mobstein 5.4.4 / PR #318 was squash-merged as `73cd692ac0f6aa96ee1a6c422f09d0fcc648c8f4`; exact-SHA post-merge Black Arcana CI **#3217** / run `35293505012` completed GREEN. The provider contributes semantic **+0 `ZERO_SEMANTIC_ACTIONS`** and this shared reconciliation closes technical component **#68**. This is catalog closure, not a runtime/API compatibility PASS.
 
@@ -186,7 +194,7 @@ The complete pre-Phase-2AX coverage text is preserved byte-for-byte in [`CATALOG
 
 ## Current working component denominator
 
-The internal operational denominator remains **100 magic/cross-domain component units** under the established physical reconciliation:
+The historical internal operational denominator was **100 magic/cross-domain component units** under the older physical reconciliation. The current denominator is **`PENDING REBASE`** after the sibling physical re-audit surfaced additional magic/cross-domain components:
 
 - 103 historical candidate IDs;
 - 5 historically listed candidates now absent: `ars_morph`, `morerelics`, `reliquary`, `vestis`, `woodwalkers_spellbooks`;
