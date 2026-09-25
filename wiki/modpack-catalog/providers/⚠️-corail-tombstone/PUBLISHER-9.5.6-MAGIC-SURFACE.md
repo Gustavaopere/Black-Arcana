@@ -4,7 +4,7 @@
 
 Physical authority:
 
-`neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`
+`neoforge-rpg-skilltree@0ff0ea0ba454e00713d7bf7e6d8255532470993b`
 
 Physical artifact identity:
 
@@ -42,7 +42,7 @@ Installed-byte equality remains unasserted because the sibling row has no indepe
 | five magic tablets | exact castable actions, but independent per-item allow config makes current eligibility conditional |
 | Familiar/Guardian/Merchant gemstones | exact castable actions, but per-item allow config makes current eligibility conditional |
 | Gemstone of Prayer | prayer invocation/support; deduplicated against counted prayer identities |
-| Grave Key / Lost Tablet / Magic Scroll / Scroll of Knowledge | exact active/config-gated magic-item surfaces; conditional or support pending semantic closure |
+| Grave Key / Lost Tablet / Magic Scroll / Scroll of Knowledge | exact active/config-gated magic-item surfaces; semantic roles/deduplication closed by the later castable matrix, eligibility still depends on deployed config |
 | Knowledge of Death | progression state; +0 by itself |
 | 13 enchantments | gear identities; +0 |
 | 24 effects | status identities; +0 |
@@ -57,7 +57,7 @@ Strict release-bounded action count:
 
 `SEMANTIC_DELTA = +10 COUNTED_RELEASE_BOUNDED`
 
-Additional magic-item action candidates remain outside the strict sum because the exact release exposes provider-specific `allow_*` configuration and the deployed values are not available.
+Additional magic-item action families remain outside the strict sum because the exact release exposes 12 provider-specific one-to-one `allow_*` gates and the deployed values are not available. Exact semantic deduplication is recorded in `EXACT-9.5.6-CONDITIONAL-CASTABLE-MATRIX.md`.
 
 ## Clean-room boundary
 
@@ -70,7 +70,6 @@ No proprietary implementation body or asset is copied or reconstructed.
 To promote the whole provider from ⚠️ to ✅, obtain:
 
 1. deployed `AllowedMagicItems` values for the exact pack;
-2. exact semantic deduplication for the remaining config-gated castable items;
-3. physical installed-JAR digest if `COUNTED_EXACT` rather than release-bounded evidence is desired.
+2. physical installed-JAR digest if `COUNTED_EXACT` rather than release-bounded evidence is desired.
 
 Runtime/death/grave/XP/multiplayer QA remains independent from semantic catalog closure.

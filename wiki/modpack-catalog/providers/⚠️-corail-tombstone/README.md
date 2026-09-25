@@ -1,12 +1,12 @@
 # Corail Tombstone — 9.5.6
 
-Status: `⚠️ PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_BOUNDED PRAYER-RITE ACTIONS / CONFIG-CONDITIONAL MAGIC-ITEM ACTIONS REMAIN / RUNTIME QA FAIL-CLOSED`
+Status: `⚠️ PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_BOUNDED PRAYER-RITE ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL CASTABLE ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING / RUNTIME QA FAIL-CLOSED`
 
 ## Current physical identity
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`
+`neoforge-rpg-skilltree@0ff0ea0ba454e00713d7bf7e6d8255532470993b`
 
 Certified dossier:
 
@@ -181,7 +181,7 @@ These are **not added to the strict numerator** in this checkpoint.
 
 Gemstone of Prayer is treated as an invocation/support surface for the already-counted prayer family, not a new prayer identity.
 
-Further exact semantic deduplication plus deployed `AllowedMagicItems` state is required before promoting any of these candidates.
+Exact semantic deduplication of these 12 candidates is now closed by the hash-matched 9.5.6 castable-surface audit. Each candidate maps to one action family and one provider `allow_*` eligibility gate; internal modes/effects are not multiplied into extra identities. See `EXACT-9.5.6-CONDITIONAL-CASTABLE-MATRIX.md`. Only the deployed `AllowedMagicItems` values remain before any of these 12 families can enter the strict numerator.
 
 The read-only collection path is now standardized by [`docs/qa/provider-catalog-deployed-evidence.md`](../../../../docs/qa/provider-catalog-deployed-evidence.md): it records only the 12 Tombstone eligibility booleans relevant to these candidates from bounded deployed config roots. No actual pack value has been captured by this repository checkpoint; the provider therefore remains fail-closed.
 
@@ -202,8 +202,8 @@ Black Arcana must not duplicate those runtimes. RPG Skill Tree remains progressi
 ## Still fail-closed
 
 - installed-JAR ↔ publisher-file byte equality;
-- deployed `AllowedMagicItems` state;
-- semantic promotion of config-gated castable magic candidates;
+- deployed `AllowedMagicItems` state for the 12 exact one-to-one action gates;
+- strict promotion of the corresponding enabled conditional action families;
 - exact resource/Soul consumption and exactly-once settlement;
 - prayer/rite persistence and multiplayer authority;
 - Knowledge of Death persistence;
@@ -218,6 +218,6 @@ Black Arcana must not duplicate those runtimes. RPG Skill Tree remains progressi
 
 **⚠️ Partially cataloged, materially advanced.**
 
-The exact publisher 9.5.6 artifact now closes **10 release-bounded semantic prayer/rite actions** and multiple explicit zero-semantic families. Additional magic-item action candidates remain conditional on deployed provider config and semantic deduplication.
+The exact publisher 9.5.6 artifact now closes **10 release-bounded semantic prayer/rite actions** and multiple explicit zero-semantic families. The remaining magic-item surface is exactly deduplicated to **12 config-gated action families**; provider config, not semantic identity ambiguity, is now the catalog blocker.
 
 Provider strict semantic delta: **+10**.

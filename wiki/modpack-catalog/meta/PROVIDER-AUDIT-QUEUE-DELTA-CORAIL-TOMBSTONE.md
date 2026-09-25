@@ -8,13 +8,13 @@ This overlay applies to `tombstone` until the current physical-provider queue is
 
 | Mod ID | Installed identity | Effective audit state |
 |---|---|---|
-| `tombstone` | `tombstone-neoforge-1.21.1-9.5.6.jar` / runtime 9.5.6 | ⚠️ `PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_BOUNDED PRAYER-RITE ACTIONS / CONFIG-CONDITIONAL CASTABLE ITEMS REMAIN / RUNTIME QA FAIL-CLOSED` |
+| `tombstone` | `tombstone-neoforge-1.21.1-9.5.6.jar` / runtime 9.5.6 | ⚠️ `PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_BOUNDED PRAYER-RITE ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL CASTABLE ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING / RUNTIME QA FAIL-CLOSED` |
 
 ## Physical evidence
 
 Sibling authority:
 
-`neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`
+`neoforge-rpg-skilltree@0ff0ea0ba454e00713d7bf7e6d8255532470993b`
 
 The sibling dossier still does not preserve an independent installed-JAR digest.
 
@@ -39,7 +39,8 @@ Exact File `8842741` clean-room audit:
 - no Ritual Flute/rite server/common enable-disable field observed;
 - 11 scroll-buff variants reconciled as MobEffect physicalizations and excluded;
 - readable Forgotten Knowledge scrolls reconciled as progression/lore and excluded by themselves;
-- 13 enchantments and 24 effects remain metric-excluded.
+- 13 enchantments and 24 effects remain metric-excluded;
+- 12 config-gated castable item classes are now semantically deduplicated one-to-one against 12 action families; internal modes/effects are not multiplied.
 
 ## Strict semantic accounting
 
@@ -56,10 +57,8 @@ No shared global minimum is changed in this provider-specific overlay; shared le
 ## Still open
 
 - installed-JAR ↔ publisher-file byte equality;
-- deployed `AllowedMagicItems` state; the read-only collector now has a bounded 12-key capture path, but no actual pack result is present in this checkpoint;
-- five tablet action candidates;
-- Familiar/Guardian/Merchant gemstone action candidates;
-- Grave Key / Lost Tablet / Magic Scroll / Scroll of Knowledge semantic eligibility;
+- deployed `AllowedMagicItems` state; the read-only collector has a bounded 12-key capture path, but no actual pack result is present;
+- strict promotion of the 12 already-deduplicated conditional action families according to those booleans;
 - exact resource/Soul settlement;
 - prayer/rite persistence;
 - death/grave/XP runtime;

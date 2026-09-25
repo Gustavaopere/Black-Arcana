@@ -34,16 +34,24 @@ Not additive:
 
 ## Conditional, not strict-counted
 
-Exact castable/action surfaces with provider-specific `allow_*` config and no deployed value:
+Exact castable/action surfaces are now deduplicated one-to-one against provider `allow_*` gates:
 
-- five magic tablets;
-- Familiar/Guardian/Merchant gemstones;
-- Grave Key;
-- Lost Tablet;
-- Magic Scroll;
-- Scroll of Knowledge.
+1. Tablet of Assistance — player-assistance/join teleport request;
+2. Tablet of Cupidity — randomized location-search/relocation;
+3. Tablet of Guard — Spectral Wolf summon;
+4. Tablet of Home — respawn/home teleport;
+5. Tablet of Recall — bound-location teleport;
+6. Gemstone of Familiar — familiar revival;
+7. Gemstone of Guardian — Grave Guardian summon;
+8. Gemstone of Merchant — merchant/villager trade-level improvement;
+9. Grave Key — grave/tomb-location teleport;
+10. Lost Tablet — one destination-discovery/travel family with `EXPLORATION/VILLAGE/TREASURE` modes;
+11. Magic Scroll — one generic MobEffect-casting wrapper; individual effects remain non-additive;
+12. Scroll of Knowledge — one XP/knowledge storage-recovery/reward family; internal readable-scroll rewards remain non-additive.
 
-These remain outside the strict sum.
+Conditional ceiling: **+12** if all twelve deployed eligibility booleans are enabled.
+
+These remain outside the strict sum because the actual deployed booleans are not present in repository evidence.
 
 ## Evidence state
 
