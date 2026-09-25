@@ -330,6 +330,50 @@ def modspells_bootstrap_detail(data, max_offset=45):
         out.append((off,desc))
     return out
 
+def target_method_detail(zf, class_name, method_name):
+    if class_name not in zf.namelist():
+        return []
+    cp,utf,cls,string,ref,fields,methods,utf8=parse_class(zf.read(class_name))
+    method=next((m for m in methods if m[0]==method_name),None)
+    if not method or method[3] is None:
+        return []
+    names={
+        0x02:"iconst_m1",0x03:"iconst_0",0x04:"iconst_1",0x05:"iconst_2",0x06:"iconst_3",0x07:"iconst_4",0x08:"iconst_5",
+        0x10:"bipush",0x11:"sipush",0x12:"ldc",0x13:"ldc_w",0x14:"ldc2_w",
+        0x15:"iload",0x19:"aload",0x36:"istore",0x3a:"astore",
+        0x57:"pop",0x59:"dup",0x60:"iadd",0x64:"isub",0x7e:"iand",0x80:"ior",
+        0xac:"ireturn",0xb0:"areturn",0xb1:"return",
+        0xb2:"getstatic",0xb3:"putstatic",0xb4:"getfield",0xb5:"putfield",
+        0xb6:"invokevirtual",0xb7:"invokespecial",0xb8:"invokestatic",0xb9:"invokeinterface",
+        0x99:"ifeq",0x9a:"ifne",0x9b:"iflt",0x9c:"ifge",0x9d:"ifgt",0x9e:"ifle",
+        0x9f:"if_icmpeq",0xa0:"if_icmpne",0xa1:"if_icmplt",0xa2:"if_icmpge",0xa3:"if_icmpgt",0xa4:"if_icmple",
+        0xa5:"if_acmpeq",0xa6:"if_acmpne",0xa7:"goto",0xc6:"ifnull",0xc7:"ifnonnull"
+    }
+    out=[]
+    for off,op,raw in instructions(method[3]):
+        desc=names.get(op,f"op_0x{op:02x}")
+        if op==0x12:
+            idx=raw[1]
+            desc += f"|string={string(idx)}|utf8={utf(idx)}"
+        elif op in (0x13,0x14):
+            idx=struct.unpack_from(">H",raw,1)[0]
+            desc += f"|string={string(idx)}|utf8={utf(idx)}"
+        elif op in (0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xb8,0xb9):
+            idx=struct.unpack_from(">H",raw,1)[0]
+            rr=ref(idx)
+            if rr:
+                owner,name,rdesc,tag=rr
+                desc += f"|owner={owner}|name={name}|desc={rdesc}"
+        elif op in set(range(0x99,0xa8))|{0xc6,0xc7}:
+            rel=struct.unpack(">h",raw[1:3])[0]
+            desc += f"|target={off+rel}"
+        elif op==0x10:
+            desc += f"|value={struct.unpack('>b',raw[1:2])[0]}"
+        elif op==0x11:
+            desc += f"|value={struct.unpack('>h',raw[1:3])[0]}"
+        out.append((off,desc))
+    return out
+
 def modlist_isloaded_hits(zf):
     rows=[]
     for name in zf.namelist():
@@ -389,6 +433,10 @@ def inspect(label, blob, expected_sha1):
             print(f"SOMAKE_{label}_BOOTSTRAP_DETAIL_COUNT={len(bootstrap)}")
             for off,event in bootstrap:
                 print(f"SOMAKE_{label}_BOOTSTRAP_DETAIL={off}|{event}")
+            phoenix=target_method_detail(zf,"com/somake/somakespells/config/StartupFeatures.class","isSacredPhoenixBlessingEnabled")
+            print(f"SOMAKE_{label}_PHOENIX_PREDICATE_DETAIL_COUNT={len(phoenix)}")
+            for off,event in phoenix:
+                print(f"SOMAKE_{label}_PHOENIX_PREDICATE_DETAIL={off}|{event}")
             trace=modspells_event_trace(zf.read(MODSPELLS))
             print(f"SOMAKE_{label}_MODSPELLS_TRACE_EVENT_COUNT={len(trace)}")
             for off,event in trace:
