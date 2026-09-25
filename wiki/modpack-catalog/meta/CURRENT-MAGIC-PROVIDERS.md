@@ -16,15 +16,17 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — 24/09/2026
 
-No sibling atual há **46 linhas** cujas pastas de categoria contêm `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), as 46 linhas possuem diretório correspondente no catálogo.
+No sibling atual `neoforge-rpg-skilltree@e3689bbc04ba54be1612a13c242496330e99df06` há **45 linhas** cujas pastas de categoria contêm `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), as 45 linhas possuem diretório correspondente no catálogo.
 
 Estado efetivo desses 46 providers:
 
-- **39 ✅ catalogados**;
-- **7 ⚠️ parciais/condicionados**: Asterism Arcanum, Somake Spells, Apokinetics, Not Enough Glyphs, Gaze, Relics e Corail Tombstone;
+- **40 ✅ catalogados**;
+- **5 ⚠️ parciais/condicionados** dentro da categoria física `Magic`: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Relics e Corail Tombstone;
 - **0 ❌ não catalogados** dentro dessa categoria física;
 - **0 🟡 em implementação** após a integração desta rodada;
 - **0 ⛔ bloqueados** por ausência total de evidência.
+
+**Cross-domain note:** Gaze 1.1.7.1 remains ⚠️ in the global magic-provider catalog because it owns one counted spell and 26 config-conditional rites, but its current sibling dossier now lives under `PROJECT-INSTRUCTIONS/modlist/Addons/`; it is therefore not part of the 45-row physical `Magic` category count.
 
 Fechamentos recentes relevantes:
 
@@ -35,6 +37,7 @@ Fechamentos recentes relevantes:
 - ✅ Fantasy Armor 1.2.4 — passive gear/MobEffect surface; **+0**.
 - ✅ Enchantment Descriptions 21.1.11 — client tooltip presentation; **+0**.
 - ✅ A Good Place 1.2.5 — client placement-animation presentation; **+0**.
+- ✅ Create: Apokinetics 1.0.6 — exact physical/publisher hash match plus exact-binary bounded audit closes the machine-augmentation surface as **+0** spells/glyphs/rituals.
 - ✅ Cataclysm: Spellbooks 1.1.14 — **59/59** current registrations retained; installed SHA-1 equals audited publisher File 8847070; no delta versus the previously counted 59.
 - ⚠️ Corail Tombstone 9.5.6 — magic/prayer/rite/scroll subsystem confirmed; exact discrete action cardinality pending.
 - ⚠️ Relics 0.12.8 — provider-owned ability runtime confirmed; final immutable ability cardinality pending.
