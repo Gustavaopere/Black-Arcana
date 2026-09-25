@@ -48,6 +48,9 @@ jobs:
             git diff --check "$BASE" HEAD
           fi
 
+      - name: Temporary Corail Tombstone 9.5.6 semantic discovery NON-MERGE
+        run: python3 .github/scripts/tmp_corail_tombstone_9_5_6_discovery.py
+
       - name: NeoForge build
         run: ./gradlew --no-daemon build
 
