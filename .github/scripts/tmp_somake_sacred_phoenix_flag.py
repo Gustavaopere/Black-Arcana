@@ -112,6 +112,7 @@ def main():
     print(f"SOMAKE_FLAG_SHA1={got}")
     if got!=SHA1: raise RuntimeError(f"sha mismatch {got}")
     with zipfile.ZipFile(io.BytesIO(blob)) as zf:
+        analyze_startup_features(zf)
         cp,string,ref,methods=parse(zf.read(TARGET))
     code=next(c for n,d,c in methods if n=="<clinit>")
     seq=insns(code)
