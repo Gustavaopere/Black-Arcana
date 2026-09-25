@@ -1,10 +1,10 @@
 # Capability Matrix Delta — Somake Spells 1.0.9
 
-Scope: semantic deduplication based on the current 1.0.9 physical line and exact File `8867079`. The hash-bearing 2026-09-16 physical checkpoint SHA-1 equals the publisher artifact SHA-1, so the **83 declared spell identities are now exact to the physical JAR bytes**. Deployed active subset, full school/mechanical mapping, config and reachability remain conditioned.
+Scope: semantic deduplication based on the current 1.0.9 physical line and exact File `8867079`. The hash-bearing physical checkpoint SHA-1 equals the publisher artifact SHA-1, so the **83 spell identities are exact to the physical JAR bytes**. Exact optional-registration topology plus current provider presence closes the current mod-composition registration outcome at **83/83**. Full school/mechanical mapping, effective config and survival reachability remain conditioned.
 
 | Capability / semantic family | Public Somake evidence | Provider authority | Black Arcana disposition | Evidence ceiling |
 |---|---|---|---|---|
-| Aqua school / water spell family | current publisher declares Somake Aqua school and 50+ spell scale | Somake + Iron's school/cast substrate | `PROVIDER-OCCUPIED`; do not add duplicate generic Aqua school | exact 83-ID release registry known; school membership/reachability still partial; T.O coexistence QA-blocked |
+| Aqua school / water spell family | current publisher declares Somake Aqua school and 50+ spell scale | Somake + Iron's school/cast substrate | `PROVIDER-OCCUPIED`; do not add duplicate generic Aqua school | exact 83-ID release registry known; school membership/reachability still partial; historical T.O coexistence is not a current blocker because Traveloptics is absent from the current sibling |
 | Elemental Charges | current project declares one charge per element; installed fix repairs Symmetry/Spirit charge buffs | Somake state/resource semantics | `DO NOT CREATE SECOND LEDGER`; read only through proven hook | IDs, caps, expiry, buffs, persistence unknown |
 | Symmetry spell family | current publisher names Symmetry as primary family and external-integration surface | Somake | Order candidates must prove law/seal/constraint semantics beyond Symmetry | full Symmetry inventory unknown |
 | Damage-prevention transfer link | Guardian Connetion 1.0.7: protected target, prevented damage redirected to linked caster | Somake spell semantics | `OVERLAP / DOUBLE-PROCESS RISK`; no generic redirect clone | registry identity present in exact 1.0.9 release; event ordering/reachability unknown |
@@ -43,7 +43,7 @@ Somake's Soul Fire/Infernal Fire ritual path directly occupies infernal progress
 
 ### Aqua / elemental
 
-The current pack contains Somake Aqua and deprecated T.O Magic 1.21.1 alpha simultaneously. No new Black Arcana Aqua school should be proposed. Existing provider authority must be resolved in runtime QA before any adapter assumes which registry/school is canonical.
+Historical physical checkpoints contained Somake Aqua and the deprecated T.O Magic 1.21.1 alpha simultaneously. Current sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics dossier/path/mod-id/filename reference, so that dual-installed conflict is not current. Somake still occupies its own Aqua surface; no new Black Arcana Aqua school should be proposed without a distinct forbidden-magic authority contract.
 
 ### Chaos
 
@@ -55,4 +55,4 @@ Guardian/Blessed/Cursed links, The Rose's Secret and Ignis Shield are especially
 
 ## Unknown-content rule
 
-Exact publisher File `8867079` now closes the current 1.0.9 declared registry at **83 spell IDs**. Semantic gap analysis no longer treats the registry cardinality as unknown, but must still avoid inventing school/mechanical semantics for IDs whose behavior is not independently documented or audited, and must keep deployed active-subset/reachability gates fail-closed.
+Exact hash-matched File `8867079` closes **83 spell IDs**, and the exact 67+16 predicate partition plus current provider presence closes the current mod-composition registration outcome at **83/83**. Semantic gap analysis must still avoid inventing school/mechanical semantics for IDs whose behavior is not independently documented or audited, and must keep effective host/provider config and survival reachability fail-closed.
