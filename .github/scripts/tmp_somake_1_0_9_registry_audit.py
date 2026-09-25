@@ -374,6 +374,55 @@ def target_method_detail(zf, class_name, method_name):
         out.append((off,desc))
     return out
 
+def modspells_registration_guards(data):
+    cp,utf,cls,string,ref,fields,methods,utf8=parse_class(data)
+    clinit=next((m for m in methods if m[0]=="<clinit>"),None)
+    if not clinit or clinit[3] is None:
+        return [],[]
+    ins=instructions(clinit[3])
+    registers=[]
+    last_string=None
+    for off,op,raw in ins:
+        if op==0x12:
+            s=string(raw[1])
+            if s is not None: last_string=s
+        elif op in (0x13,0x14):
+            s=string(struct.unpack_from(">H",raw,1)[0])
+            if s is not None: last_string=s
+        elif op in (0xb6,0xb7,0xb8,0xb9):
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if rr:
+                owner,name,desc,tag=rr
+                if owner and "DeferredRegister" in owner and name=="register":
+                    registers.append((off,last_string))
+    guard_ranges=[]
+    for idx,(off,op,raw) in enumerate(ins):
+        if op not in (0x99,0x9a):
+            continue
+        if idx==0:
+            continue
+        poff,pop,praw=ins[idx-1]
+        if pop!=0xb2:
+            continue
+        rr=ref(struct.unpack_from(">H",praw,1)[0])
+        if not rr:
+            continue
+        owner,name,desc,tag=rr
+        if owner!="com/somake/somakespells/registries/ModSpells" or desc!="Z":
+            continue
+        rel=struct.unpack(">h",raw[1:3])[0]
+        target=off+rel
+        if target<=off:
+            continue
+        # IFEQ means false skips guarded registration; IFNE means true skips.
+        required="true" if op==0x99 else "false"
+        guard_ranges.append((off,target,name,required))
+    rows=[]
+    for roff,rid in registers:
+        guards=[f"{name}={required}" for boff,target,name,required in guard_ranges if boff < roff < target]
+        rows.append((rid,guards))
+    return rows,guard_ranges
+
 def modlist_isloaded_hits(zf):
     rows=[]
     for name in zf.namelist():
@@ -445,6 +494,21 @@ def inspect(label, blob, expected_sha1):
             print(f"SOMAKE_{label}_PHOENIX_READ_DETAIL_COUNT={len(phoenix_read)}")
             for off,event in phoenix_read:
                 print(f"SOMAKE_{label}_PHOENIX_READ_DETAIL={off}|{event}")
+            iss_detail=target_method_detail(zf,"com/somake/somakespells/compat/MagicFromTheEastCompat.class","isLoaded")
+            print(f"SOMAKE_{label}_ISS_ISLOADED_DETAIL_COUNT={len(iss_detail)}")
+            for off,event in iss_detail:
+                print(f"SOMAKE_{label}_ISS_ISLOADED_DETAIL={off}|{event}")
+            lm_detail=target_method_detail(zf,"com/somake/somakespells/compat/LegendaryMonstersCompat.class","isLoaded")
+            print(f"SOMAKE_{label}_LM_ISLOADED_DETAIL_COUNT={len(lm_detail)}")
+            for off,event in lm_detail:
+                print(f"SOMAKE_{label}_LM_ISLOADED_DETAIL={off}|{event}")
+            guard_rows,guard_ranges=modspells_registration_guards(zf.read(MODSPELLS))
+            conditional=[(rid,guards) for rid,guards in guard_rows if guards]
+            unconditional=[rid for rid,guards in guard_rows if not guards]
+            print(f"SOMAKE_{label}_CONDITIONAL_REGISTRATION_COUNT={len(conditional)}")
+            print(f"SOMAKE_{label}_UNCONDITIONAL_REGISTRATION_COUNT={len(unconditional)}")
+            for rid,guards in conditional:
+                print(f"SOMAKE_{label}_CONDITIONAL_REGISTRATION={rid}|guards={','.join(guards)}")
             trace=modspells_event_trace(zf.read(MODSPELLS))
             print(f"SOMAKE_{label}_MODSPELLS_TRACE_EVENT_COUNT={len(trace)}")
             for off,event in trace:
