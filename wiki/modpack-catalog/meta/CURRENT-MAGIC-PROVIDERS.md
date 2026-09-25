@@ -4,11 +4,11 @@
 
 `AUDITORIA EM ANDAMENTO — categoria física Magic reconciliada em 24/09/2026 / denominador global PENDING REBASE`
 
-O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade física corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@ed5ab7ee670c1810e6ce5b79c94e91a6341a2f97`, cujos dossiês atuais preservam 587 entradas top-level incluindo NeoForge `21.1.250`. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
+O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade física corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@e3689bbc04ba54be1612a13c242496330e99df06`, cujos dossiês atuais preservam 587 entradas top-level incluindo NeoForge `21.1.250`. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
 
 O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O checkpoint Hazen havia levado o mínimo estrito a **1382**. A rodada atual fecha Acolyte, Dungeon's Delight, Fantasy Armor, Enchantment Descriptions e A Good Place em **+0**, promove Companions em **+9 `COUNTED_SOURCE_PINNED`** e Crystal Chronicles em **+1 `COUNTED_SOURCE_PINNED`**, levando o mínimo estrito corrente a **1392**. Cataclysm: Spellbooks 1.1.14 preserva as mesmas **59** identidades já contadas, agora com evidência física/publisher exata, portanto seu delta nesta rodada é **+0**. Corail Tombstone e Relics continuam fora do numerador enquanto suas cardinalidades discretas finais permanecem pendentes; Somake continua condicionado.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O checkpoint Hazen havia levado o mínimo estrito a **1382**. A rodada atual fecha Acolyte, Dungeon's Delight, Fantasy Armor, Enchantment Descriptions e A Good Place em **+0**, promove Companions em **+9 `COUNTED_SOURCE_PINNED`** e Crystal Chronicles em **+1 `COUNTED_SOURCE_PINNED`**, levando o mínimo estrito corrente a **1392**. Cataclysm: Spellbooks 1.1.14 preserva as mesmas **59** identidades já contadas, agora com evidência física/publisher exata, portanto seu delta nesta rodada é **+0**. Apokinetics 1.0.6 fecha como artifact exato `ZERO_SEMANTIC_MACHINE_AUGMENT`, também **+0**. Corail Tombstone e Relics continuam fora do numerador enquanto suas cardinalidades discretas finais permanecem pendentes; Somake continua condicionado.
 
 Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 naquele checkpoint e mantém **1344 / 66 de 100** historicamente. Phase 2BT posteriormente fecha o componente #67 com Vampire Spells Addon sem alterar o total semântico.
 
@@ -16,15 +16,17 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — 24/09/2026
 
-No sibling atual há **46 linhas** cujas pastas de categoria contêm `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), as 46 linhas possuem diretório correspondente no catálogo.
+No sibling atual há **45 linhas** cujas pastas de categoria contêm literalmente `Magic`. Após normalização de nomes de ownership, as 45 linhas possuem diretório correspondente no catálogo.
 
-Estado efetivo desses 46 providers:
+Estado efetivo desses 45 providers:
 
-- **39 ✅ catalogados**;
-- **7 ⚠️ parciais/condicionados**: Asterism Arcanum, Somake Spells, Apokinetics, Not Enough Glyphs, Gaze, Relics e Corail Tombstone;
+- **40 ✅ catalogados**;
+- **5 ⚠️ parciais/condicionados**: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Relics e Corail Tombstone;
 - **0 ❌ não catalogados** dentro dessa categoria física;
 - **0 🟡 em implementação** após a integração desta rodada;
 - **0 ⛔ bloqueados** por ausência total de evidência.
+
+A queda 46 → 45 é taxonômica, não remoção de provider: o sibling renomeou o dossiê Gaze de `Addons + Magic/` para `Addons/`. **Gaze 1.1.7.1 continua ⚠️ no catálogo global de magia** por suas superfícies de Spirit Rite/Soulward Shield; apenas deixa de participar desta contagem literal por pasta.
 
 Fechamentos recentes relevantes:
 
@@ -35,6 +37,7 @@ Fechamentos recentes relevantes:
 - ✅ Fantasy Armor 1.2.4 — passive gear/MobEffect surface; **+0**.
 - ✅ Enchantment Descriptions 21.1.11 — client tooltip presentation; **+0**.
 - ✅ A Good Place 1.2.5 — client placement-animation presentation; **+0**.
+- ✅ Create: Apokinetics 1.0.6 — exact hash-matched artifact; 12/12 Machine Gem capability types; zero provider-owned spell/glyph/ritual surface; **+0**.
 - ✅ Cataclysm: Spellbooks 1.1.14 — **59/59** current registrations retained; installed SHA-1 equals audited publisher File 8847070; no delta versus the previously counted 59.
 - ⚠️ Corail Tombstone 9.5.6 — magic/prayer/rite/scroll subsystem confirmed; exact discrete action cardinality pending.
 - ⚠️ Relics 0.12.8 — provider-owned ability runtime confirmed; final immutable ability cardinality pending.

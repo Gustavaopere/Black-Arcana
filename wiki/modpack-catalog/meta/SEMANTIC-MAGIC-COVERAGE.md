@@ -159,7 +159,7 @@ Iron's Apothic is consequently a source-pinned magic bridge/support closure with
 
 ## Current 24/09/2026 reconciliation
 
-Current sibling authority `neoforge-rpg-skilltree@ed5ab7ee670c1810e6ce5b79c94e91a6341a2f97` preserves the current physical provider lines used here.
+Current sibling authority `neoforge-rpg-skilltree@e3689bbc04ba54be1612a13c242496330e99df06` preserves the current physical provider lines used here.
 
 Current semantic deltas since the 1382 checkpoint:
 
@@ -170,11 +170,12 @@ Current semantic deltas since the 1382 checkpoint:
 - Fantasy Armor 1.2.4: **+0** — passive gear/MobEffect surface, no spell/ritual/active-action registry.
 - Enchantment Descriptions 21.1.11: **+0** — client presentation only.
 - A Good Place 1.2.5: **+0** — client placement-animation presentation only.
+- Create: Apokinetics 1.0.6: **+0 `COUNTED_EXACT_ZERO`** — exact physical/publisher artifact match; 12 Machine Gem support capabilities; zero provider spell/glyph/ritual surface under bounded clean-room audit.
 - Cataclysm: Spellbooks 1.1.14: **+0 delta** — retains the already counted 59 identities; physical SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5` equals audited publisher File 8847070 and the registry class is byte-identical to the exact 1.1.13 control, so current evidence is `COUNTED_EXACT`.
 - Corail Tombstone 9.5.6 and Relics 0.12.8 remain **⚠️ partial/conditioned** because their final discrete action cardinalities are not yet closed.
 - Somake 1.0.9 remains **CONDITIONAL / +0 strict**; deterministic exact-pack registry observation may close the deployed current-pack registration outcome, but generalized predicates, config and survival reachability remain separate gates.
 
-Therefore the strict reconstructible minimum becomes **1392**. This remains a minimum, not a final denominator or percentage.
+Therefore the strict reconstructible minimum remains **1392** after the exact-zero Apokinetics closure. This remains a minimum, not a final denominator or percentage.
 
 ## Strict reconstructible counted minimum
 
@@ -331,6 +332,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
 - [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — Phase 2BT exact-release source-pinned `ZERO_BRIDGE_INFRA`; +0; modifies Iron's/Vampirism behavior without minting a provider-owned spell/action identity; runtime bridge QA remains fail-closed;
 - [Create: Wizardry](../providers/✅-create-wizardry/README.md) — current physical 1.21.1-0.5.1-pre1 source-pinned `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0; Blaze Caster/Mana Siphon automate or constrain Iron's-owned spell/mana behavior without minting provider-owned spell identities; runtime settlement remains fail-closed;
+- [Create: Apokinetics](../providers/✅-apokinetics/README.md) — exact hash-matched 1.0.6 artifact; `ZERO_SEMANTIC_MACHINE_AUGMENT`; 12/12 Machine Gem capability types are support/augmentation rather than spell/glyph/ritual identities; **+0**; runtime machine/config QA remains fail-closed;
 - [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
 - [Mobstein](../providers/✅-mobstein/README.md) — exact 5.4.4 physical SHA-1 plus hash-matched resource-only clean-room audit closes the residual boundary as `ZERO_SEMANTIC_ACTIONS`: documented syringes are item interactions and surfaced action-like keybinds are entity/mount controls; **+0** independent semantic magic objects; runtime/API integration remains separately fail-closed;
 - [Acolyte](../providers/✅-acolyte/README.md) — exact 1.0.3 release-bounded structural audit finds no provider-owned spell identity; Iron's host spells remain externally owned; **+0**.

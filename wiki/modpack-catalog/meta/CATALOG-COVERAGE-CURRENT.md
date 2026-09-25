@@ -8,7 +8,7 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Current reconciliation — 24/09/2026
 
-Current sibling authority `neoforge-rpg-skilltree@ed5ab7ee670c1810e6ce5b79c94e91a6341a2f97` preserves 587 top-level entries. The 46 physical rows whose category path contains `Magic` all map to catalog provider directories after ownership-name normalization: **39 ✅ cataloged / 7 ⚠️ partial-conditioned**.
+Current sibling authority `neoforge-rpg-skilltree@e3689bbc04ba54be1612a13c242496330e99df06` preserves the current 587-entry physical dossiers. The literal category-path set now contains **45** rows whose path includes `Magic`; all map to catalog provider directories after ownership-name normalization at **40 ✅ cataloged / 5 ⚠️ partial-conditioned**. Gaze was moved by the sibling from `Addons + Magic/` to `Addons/` and remains a ⚠️ magic-relevant provider outside this literal folder count.
 
 Semantic effect of the current reconciliation:
 
@@ -16,6 +16,7 @@ Semantic effect of the current reconciliation:
 - Companions! 1.3.4: **+9 `COUNTED_SOURCE_PINNED`** Magic Book actions.
 - Crystal Chronicles 0.1.3-alpha: **+1 `COUNTED_SOURCE_PINNED`** (`crystal_chronicles:prismatic_portal`).
 - Dungeon's Delight 1.5.1, Fantasy Armor 1.2.4, Enchantment Descriptions 21.1.11 and A Good Place 1.2.5: **+0** each after explicit zero-semantic classification.
+- Create: Apokinetics 1.0.6: **+0 `COUNTED_EXACT_ZERO`** — physical SHA-1 matches publisher File 8790422; exact artifact audit finds zero provider spell/glyph/ritual surfaces while preserving 12/12 Machine Gem capability types as support augmentation.
 - Cataclysm: Spellbooks 1.1.14: retains **59** already-counted spell identities; physical SHA-1 equals audited publisher File 8847070, strengthening evidence to `COUNTED_EXACT` with **+0 current delta**.
 - Corail Tombstone 9.5.6 and Relics 0.12.8: provider magic confirmed but exact final discrete-action cardinality remains pending.
 - Somake 1.0.9 remains conditional and contributes **+0 strict** until its current exact registry/reachability gates close.

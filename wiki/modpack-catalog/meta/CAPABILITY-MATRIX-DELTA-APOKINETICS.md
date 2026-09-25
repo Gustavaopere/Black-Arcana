@@ -1,8 +1,14 @@
 # Capability Matrix Delta — Create: Apokinetics 1.0.6
 
-Status: `CURRENT PHYSICAL MAGIC-RELEVANT SUPPORT COMPONENT / PUBLISHER SURFACE CATALOGED / RUNTIME FAIL-CLOSED`
+Status: `EXACT HASH-MATCHED ARTIFACT / 12 MACHINE GEM CAPABILITIES / ZERO_SEMANTIC_MACHINE_AUGMENT / RUNTIME FAIL-CLOSED`
 
 This delta records only Apokinetics-specific overlap. It does not replace the global capability matrix.
+
+## Exact evidence boundary
+
+Exact physical/publisher artifact equality is closed by SHA-1 `8af4fc7fb17f4d60ead9d0c098d0650d6fdefa68`. Clean-room artifact audit `7871abf34e6443d7944afd5315dd5f196825125f` / CI `36079263855` found zero provider spell/glyph/ritual class paths, zero semantic resource paths, zero bounded spell/glyph/ritual classfile tokens and zero references to known external magic APIs.
+
+Therefore Apokinetics is an exact **machine augmentation/support** provider, not a spell/glyph/ritual provider.
 
 ## Capability overlap
 
@@ -24,18 +30,21 @@ This delta records only Apokinetics-specific overlap. It does not replace the gl
 
 ## Catalog boundary
 
-These capabilities are real and relevant to semantic-gap analysis, but the current evidence does not demonstrate independent player-cast spells, glyphs or rituals.
+The exact provider artifact has no demonstrated spell/glyph/ritual registry surface.
 
 Strict spell-semantic contribution: **+0**.
 
+Canonical classification: `ZERO_SEMANTIC_MACHINE_AUGMENT`.
+
 ## Runtime gates
 
-Any Black Arcana integration touching these surfaces remains fail-closed until:
+Catalog closure does not imply assembled-pack runtime PASS. Still fail-closed:
 
-- exact deployed config is read;
-- enabled gems and machine acceptance are known;
-- anti-dupe behavior is exercised on the pack;
-- ownership and persistence are verified server-side;
-- Create-addon coexistence is tested.
+- exact deployed config;
+- enabled gems and machine acceptance;
+- anti-dupe behavior on pack recipes;
+- ownership and persistence server-side;
+- Create-addon coexistence;
+- multiplayer/dedicated-server provider mechanics.
 
 Similarity of outcome is not sufficient to create a bridge.
