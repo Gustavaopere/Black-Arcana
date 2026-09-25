@@ -14,7 +14,7 @@ This overlay applies to `tombstone` until the current physical-provider queue is
 
 Sibling authority:
 
-`neoforge-rpg-skilltree@a5a862b0eb7adae9fcc1344971f33b22bc30541e`
+`neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`
 
 The sibling dossier still does not preserve an independent installed-JAR digest.
 
