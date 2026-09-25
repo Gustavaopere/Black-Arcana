@@ -1,6 +1,6 @@
 # Corail Tombstone 9.5.6 — exact publisher-artifact action inventory
 
-Status: `EXACT PUBLISHER FILE 8842741 / CLEAN-ROOM STRUCTURAL INVENTORY / 10 COUNTED_RELEASE_BOUNDED ACTIONS / CONFIG-CONDITIONAL ITEM ACTIONS REMAIN`
+Status: `EXACT PUBLISHER FILE 8842741 / CLEAN-ROOM STRUCTURAL INVENTORY / 10 COUNTED_RELEASE_BOUNDED ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING`
 
 ## Evidence boundary
 
@@ -12,7 +12,7 @@ Physical pack identity:
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`
+`neoforge-rpg-skilltree@6657e5bd006d16a244fd4cfe219fc7a15c911714`
 
 The sibling does not preserve an independent physical SHA for this row.
 
@@ -173,9 +173,9 @@ Gemstone of Prayer is not counted separately from the prayer action family.
 - Magic Scroll;
 - Scroll of Knowledge.
 
-Current state: **CONDITIONAL / semantic deduplication still required**.
+A later exact hash-matched castable-surface audit resolves these together with the tablets/gemstones to **12 one-to-one action families**. The semantic ambiguity in this section is superseded by [`EXACT-9.5.6-CONDITIONAL-CASTABLE-MATRIX.md`](EXACT-9.5.6-CONDITIONAL-CASTABLE-MATRIX.md).
 
-These candidates do not enter the strict +10 until deployed config and exact semantic ownership/reachability are reconciled.
+These candidates do not enter the strict +10 until the corresponding deployed `allow_*` values are known.
 
 ## Clean-room boundary
 
@@ -189,7 +189,7 @@ Current exact-release semantic state:
 
 - **10 counted release-bounded actions**;
 - explicit effect/gear/lore exclusions;
-- additional config-sensitive castable actions remain conditional;
+- 12 exact deduplicated config-sensitive castable action families remain conditional on deployed booleans;
 - provider remains **⚠️ partial / conditioned**.
 
 This closes the previous no-positive-cardinality blocker without falsely claiming total provider closure.
