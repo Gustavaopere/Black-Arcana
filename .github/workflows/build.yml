@@ -51,6 +51,9 @@ jobs:
             git diff --check "$BASE" HEAD
           fi
 
+      - name: Temporary Somake 1.0.9 registry predicate map NON-MERGE
+        run: python3 .github/scripts/tmp_somake_1_0_9_predicate_map.py
+
       - name: NeoForge build
         run: ./gradlew --no-daemon build
 
