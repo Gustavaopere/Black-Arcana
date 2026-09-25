@@ -1,16 +1,16 @@
 # Somake Spells — current physical 1.0.9 / historical exact 1.0.8-fix audit
 
-Status: `⚠️ CURRENT PHYSICAL 1.0.9 / EXACT PUBLISHER-RELEASE REGISTRY 83 CLOSED / PHYSICAL BYTE EQUALITY + DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN / CONDITIONAL +0 / FAIL-CLOSED`
+Status: `⚠️ CURRENT PHYSICAL 1.0.9 / PHYSICAL SHA-1 = EXACT PUBLISHER FILE 8867079 / EXACT 83-ID REGISTRY DECLARATION / DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN / CONDITIONAL +0 / FAIL-CLOSED`
 
 ## Current installed identity — 1.0.9
 
-Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84` supersedes the former 1.0.8-fix physical-line claim:
+Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` supersedes the former 1.0.8-fix physical-line claim:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`
 - Mod id: `somakespells`
 - Runtime: `1.0.9`
 - Minecraft / loader: `1.21.1` / NeoForge
-- Physical SHA-1: **not yet captured in current Black Arcana authority material**
+- Physical SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0` — captured by the hash-bearing physical modlist checkpoint dated 2026-09-16 and equal to exact CurseForge File `8867079`
 - CurseForge Project ID: `1461634`
 - Exact File ID: `8867079`
 - File date/type: `2026-09-12`, Release
@@ -23,7 +23,7 @@ Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@e54536
 
 The previous exact physical SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`, File ID `8417850` and 67-registry audit apply to **1.0.8-fix only**. They remain historical checkpoint evidence and must not be presented as the current 1.0.9 registry.
 
-See [`CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md).
+See [`CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) and [`PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md).
 
 ## Historical Phase 2BF exact-artifact reconciliation — 1.0.8-fix
 
@@ -125,7 +125,7 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 
 - current installed filename/runtime — `HIGH`, sibling modlist identifies `somakespells-1.0.9-1.21.1.jar` / runtime `1.0.9`;
 - exact 1.0.9 publisher release identity/hash — `HIGH`, File `8867079` / SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`;
-- current physical-pack byte equality to that release — `UNVERIFIED`, installed JAR SHA-1 not yet captured;
+- current physical-pack byte equality to that release — `HIGH / HASH-MATCHED`: physical SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` equals exact File `8867079`; this closes artifact equality but not the assembled active subset, config or reachability;
 - exact current 1.0.9 publisher-release registry declaration — `HIGH / RELEASE-BOUNDED`: 83 fields + 83 register calls + 83 unique IDs + 83 top-level spell classes; active deployed subset remains unverified;
 - exact current 1.0.9 optional-registration mapping/deployed outcome — `PARTIAL`: current artifact exposes optional-mod checks, but exact ID↔predicate mapping and assembled-pack active subset remain unverified;
 - `enableSpellLockSystem` symbol + `somakespells/general/common.toml` path — `CURRENT 1.0.9 REVALIDATED`; exact default/control-flow and deployed value remain open;

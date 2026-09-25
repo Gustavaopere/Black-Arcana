@@ -2,7 +2,7 @@
 
 ## Status
 
-`EXACT PUBLISHER RELEASE ARTIFACT / PHYSICAL VERSION-LINE MATCH / 33 EXACT REGISTERED SPELL IDENTITIES / 32 RESIDUAL LOCALIZATION SPELL IDS EXCLUDED / UNIQUE-SPELL CRAFTING GATE + LOOT REACHABILITY PARTIAL / TOLootModifiers CODEC WIRING RISK / STRICT +0 / COMPONENT OPEN / RUNTIME FAIL-CLOSED`
+`PHYSICAL OTHER_VERIFIED SHA-1 / NOT PUBLISHER FILE 6342780 / NOT KNOWN PATCH 8861368 / 33-ID PUBLISHER-BASELINE REGISTRY / CURRENT PHYSICAL REGISTRY REAUDIT REQUIRED / UNIQUE-SPELL REACHABILITY + LOOT-CODEC RUNTIME OPEN / STRICT +0 / COMPONENT OPEN`
 
 Project status: **⚠️ partial/conditioned**. Strict semantic promotion is blocked; this checkpoint does **not** create component #67.
 
@@ -20,7 +20,7 @@ Project status: **⚠️ partial/conditioned**. Strict semantic promotion is blo
 - publisher license: **All Rights Reserved**
 - required artifact dependencies declared by the exact JAR: Iron's Spells 'n Spellbooks `[1.21.1-3.10.0,)`, L_Ender's Cataclysm `[2.60.,)`, Apothic Attributes `[2.6.1,)`
 
-The physical modlist/version line is authoritative for installed presence. The latest sibling dossier was rechecked at `neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149` (`PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`) and still records `traveloptics-4.4.0.1-1.21.1.jar` as physically installed. That dossier does not preserve an independent physical SHA-1, so Phase 2BS does **not** claim byte equality or `COUNTED_EXACT`. The original exact publisher file and the exact patch candidate remain comparison targets until the installed bytes are fingerprinted.
+The physical modlist/version line is authoritative for installed presence. The current sibling at `neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` still records `traveloptics-4.4.0.1-1.21.1.jar`. A later hash-bearing Project physical modlist checkpoint dated 2026-09-16 fingerprints that installed filename at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. That value differs from both exact publisher File `6342780` SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8` and known patch File `8861368` SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Physical disposition is therefore `OTHER_VERIFIED`: the installed bytes are a third artifact/repack/replacement whose content delta is not yet materialized. The 33-ID File-6342780 inventory remains an exact publisher baseline, **not** an exact-current-physical registry claim. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
 
 ## Publisher release boundary
 
@@ -163,7 +163,7 @@ Neither proof is currently present in repository evidence.
 
 Phase 2BS disposition:
 
-- 33 exact registered spell identities: **cataloged structurally**;
+- 33 exact registered spell identities in publisher File `6342780`: **cataloged as release baseline**; current physical `OTHER_VERIFIED` bytes require re-audit before those 33 are claimed exact for the installed artifact;
 - 32 residual localization-only IDs: **excluded +0**;
 - `traveloptics:blackout`: survival reachability unresolved under its non-craftable Unique gate;
 - exact publisher artifact: structural `TOLootModifiers` codec-wiring risk unresolved at runtime;
@@ -204,8 +204,8 @@ No method bodies, source reconstruction, localization prose, recipe/loot payload
 
 ## Remaining gates
 
-1. establish authoritative runtime status of exact physical `traveloptics-4.4.0.1-1.21.1.jar`, including whether the structural loot-codec wiring prevents registry initialization;
-2. prove whether the physical pack deploys any compatibility patch/replacement and hash that patch if present;
+1. materialize/audit the `OTHER_VERIFIED` physical artifact SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` and reconcile its registry/`TOLootModifiers` bytes against the known original and patch;
+2. prove assembled-pack registry initialization with that exact physical artifact;
 3. close `traveloptics:blackout` survival reachability with exact object-level evidence;
 4. reconcile Somake Aqua ↔ T.O Aqua coexistence only from actual runtime/provider evidence;
 5. only after those gates may a future checkpoint consider strict semantic promotion or component #67.

@@ -1,6 +1,6 @@
 # Capability Matrix Delta — Somake Spells 1.0.9
 
-Scope: semantic deduplication based on the current 1.0.9 physical version line plus exact publisher-release registry evidence. File `8867079` closes **83 declared spell identities** at release level; deployed active subset, full school/mechanical mapping and reachability remain conditioned.
+Scope: semantic deduplication based on the current 1.0.9 physical line and exact File `8867079`. The hash-bearing 2026-09-16 physical checkpoint SHA-1 equals the publisher artifact SHA-1, so the **83 declared spell identities are now exact to the physical JAR bytes**. Deployed active subset, full school/mechanical mapping, config and reachability remain conditioned.
 
 | Capability / semantic family | Public Somake evidence | Provider authority | Black Arcana disposition | Evidence ceiling |
 |---|---|---|---|---|

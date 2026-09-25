@@ -1,10 +1,10 @@
 # Somake Spells 1.0.9 — Current Physical Revalidation Checklist
 
-Status: `⚠️ CURRENT PHYSICAL 1.0.9 / EXACT PUBLISHER-RELEASE REGISTRY 83 CLOSED / PHYSICAL EQUALITY + DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN`
+Status: `⚠️ CURRENT PHYSICAL 1.0.9 / PHYSICAL=PUBLISHER SHA-1 / EXACT 83-ID REGISTRY DECLARATION / DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN`
 
 ## Authority reset
 
-The current sibling modlist at `Gustavaopere/neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84` identifies the installed provider as:
+The current sibling modlist at `Gustavaopere/neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` identifies the installed provider as:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`;
 - mod id: `somakespells`;
@@ -22,7 +22,7 @@ The exact CurseForge release for this line is:
 - license: All Rights Reserved;
 - Curse Maven coordinate: `curse.maven:somake-spells-irons-spells-addon-1461634:8867079`.
 
-No current Black Arcana evidence checkpoint has yet captured a physical SHA-1 for the installed 1.0.9 artifact. Do not reuse the 1.0.8-fix SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`.
+Project Library physical modlist checkpoint `modlist(1).txt`, captured on 2026-09-16 — the same physical-line date recorded by the sibling dossier — fingerprints `somakespells-1.0.9-1.21.1.jar` at SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. This is exactly the SHA-1 of CurseForge File `8867079`. The historical 1.0.8-fix SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7` remains historical only.
 
 ## Supersession rule
 
@@ -86,7 +86,7 @@ A temporary non-merge clean-room audit has now materialized exact CurseForge fil
 - text artifact: `10529435038`;
 - artifact digest: `sha256:6c21e00982ac5a5c91fb15089dffc6c4b904414cc4b7957346fb71d3a0727955`;
 - exact release SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
-- physical-pack SHA-1 equality: **not yet proven**.
+- physical-pack SHA-1 equality: **CLOSED** — physical checkpoint SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` equals the exact release SHA-1.
 
 Resource-only findings:
 
@@ -131,9 +131,11 @@ See [`EXACT-1.0.9-REGISTRY-AUDIT.md`](EXACT-1.0.9-REGISTRY-AUDIT.md) and [`SPELL
 
 Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1.0.9 evidence for all of the following:
 
-1. **Physical identity**
-   - publisher-release SHA-1 is now closed at `171841ac9f802be9309ecc166c1d972ac6d404c0`;
-   - still capture the installed physical 1.0.9 JAR fingerprint/hash and prove equality to that release artifact.
+1. **Physical identity — CLOSED**
+   - publisher-release SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+   - physical 2026-09-16 pack checkpoint SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+   - physical ↔ publisher equality: **true**.
+   - see [`PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md).
 
 2. **Current registry declaration — CLOSED AT RELEASE LEVEL**
    - exact File 8867079 declared inventory: **83 unique spell IDs**;
