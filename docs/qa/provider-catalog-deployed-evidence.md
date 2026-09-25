@@ -233,7 +233,7 @@ At that checkpoint, `SpellConfigManager` defines:
 
 The host builds effective config by iterating the actual Iron's spell registry, applying a per-spell JSON only when an entry exists for that registered spell, then applying global values as fallback where the parameter is still at its default. Unknown spell-config files are ignored by the host.
 
-Consequently, the collector reports observed config/override evidence but **does not use the presence or filename of a JSON file as proof that a Somake spell is currently registered**. Registry closure remains a separate provider-authoritative gate.
+Consequently, the collector reports observed config/override evidence but **does not use the presence or filename of a JSON file as proof that a Somake spell is currently registered**. Registry closure remains separate from filesystem evidence: the deployed current-pack registration outcome may be closed by deterministic exact assembled-server registry observation, while generalized optional-registration predicates still require permitted provider-authoritative evidence.
 
 ## Collector fixture validation — Somake Iron's overrides
 
@@ -288,7 +288,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Asterism: deployed Astral Gateway Iron's spell config/datapack;
 - Gaze: effective `disableGazeRites`;
 - NEG: effective `[general].enabled` for 39 candidates;
-- Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact 1.0.9 registry identity still requires separate provider-authoritative evidence;
+- Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact **deployed** 1.0.9 registry identity may be paired from deterministic assembled-server registry observation, while generalized registration predicates remain provider-authoritative;
 - Traveloptics: original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references that may point to a pack-specific acquisition route.
 
-The collector does not solve Somake's exact 1.0.9 registry by filesystem evidence alone. Run the companion described in [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) on the exact assembled server; the collector can then ingest the resulting bounded probe block from `logs/latest.log` or `--probe-log`. The runtime rows still do not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.
+The collector does not solve Somake's exact 1.0.9 registry by itself. Pair it with [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) when exact assembled-server Iron's registry identity and effective host `school` / `enabled` / `allow_crafting` observations are required. For the current physical pack, those runtime rows may close the deployed registration outcome when paired with physical identity/mod-presence evidence; they do not establish a universal predicate contract. The runtime probe is separate QA evidence and still does not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.

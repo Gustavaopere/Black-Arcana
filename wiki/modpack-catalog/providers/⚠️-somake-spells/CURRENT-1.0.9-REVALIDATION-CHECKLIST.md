@@ -63,7 +63,7 @@ The current sibling modlist confirms these relevant providers are physically ins
 - Born in Chaos: `born_in_chaos_[Neoforge]_1.21.1_1.7.6.jar`, mod id `born_in_chaos_v1`;
 - L_Ender's Cataclysm: `L_Ender's Cataclysm 1.21.1-3.33.jar`, mod id `cataclysm`.
 
-Presence alone does **not** prove which 1.0.9 Somake registrations are enabled. The exact 1.0.9 registration predicates still require provider-authoritative evidence.
+Presence alone does **not** prove which 1.0.9 Somake registrations are enabled. For a generalized provider contract, exact predicates still require provider-authoritative evidence. For the **current physical pack catalog**, however, deterministic observation of the exact assembled server registry is higher-authority evidence for the registration outcome actually present in that pack and does not require reconstructing proprietary predicate internals.
 
 ## Publisher-confirmed Legendary Monsters gate — partial closure only
 
@@ -109,11 +109,13 @@ Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1
 2. **Current registry**
    - exact provider-owned spell/action identity inventory for 1.0.9;
    - additions, removals, replacements and optional registrations;
+   - accepted current-pack routes are provider-authoritative registry evidence or deterministic observation from the exact assembled server;
    - no inference from localization names alone.
 
-3. **Optional-provider gates**
-   - exact predicates for Legendary Monsters and every other conditional 1.0.9 registration;
-   - physical presence/absence of the referenced mod IDs in the current pack.
+3. **Optional-provider gates / deployed registration outcome**
+   - for any generalized claim about how Somake behaves across different mod compositions, exact predicates must come from permitted provider-authoritative evidence;
+   - for **this current pack catalog**, an exact assembled-pack registry snapshot may close which optional registrations are actually present when paired with current physical mod presence/absence;
+   - such runtime evidence proves the deployed outcome only and must not be rewritten as a universal predicate rule.
 
 4. **Somake global progression/config**
    - whether `enableSpellLockSystem` still exists in 1.0.9;
@@ -123,6 +125,14 @@ Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1
 5. **Iron's host gates**
    - current per-spell/global/datapack `enabled` / `allow_crafting` behavior for 1.0.9 identities;
    - usable school-focus/acquisition paths in the assembled pack.
+
+### Existing runtime probe path
+
+The isolated `black_arcana_catalog_qa` companion now emits the exact observed Iron's spell registry rows for namespace `somakespells`, including effective school, `enabled`, and `allow_crafting`, on `ServerStartedEvent` of the assembled server.
+
+Canonical runbook: [`docs/qa/provider-catalog-runtime-registry-probe.md`](../../../../docs/qa/provider-catalog-runtime-registry-probe.md).
+
+When paired with the filesystem collector and current physical modlist, those rows may satisfy the **current-pack registration outcome** portions of items 2 and 3 above. They do not by themselves establish survival reachability, `enableSpellLockSystem`, generalized optional-registration predicates, or Aqua authority.
 
 6. **Aqua / T.O coexistence**
    - current Somake Aqua authority and focus/acquisition behavior with installed Traveloptics 4.4.0.1;
