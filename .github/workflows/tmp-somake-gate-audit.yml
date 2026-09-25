@@ -1,0 +1,15 @@
+name: Somake 1.0.9 gate map NON-MERGE
+on:
+  push:
+    branches:
+      - audit/somake-1.0.9-gate-map-non-merge-2026-09-25
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact Somake 1.0.9 gate/reachability audit NON-MERGE
+        run: python3 .github/scripts/tmp_somake_1_0_9_gate_map.py
