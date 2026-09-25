@@ -12,7 +12,7 @@ Physical pack identity:
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@a5a862b0eb7adae9fcc1344971f33b22bc30541e`
+`neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`
 
 The sibling does not preserve an independent physical SHA for this row.
 
@@ -80,6 +80,8 @@ Exact `ItemRitualFlute` signatures expose:
 | Silent Bond | `NOTES_SILENT_BOND`; `trySilentBond(...)` | `COUNTED_RELEASE_BOUNDED` |
 
 The exact config scan found no `ritual_flute` enable/disable token and no server/common config token for Coral Chant, Remanence or Silent Bond.
+
+Naming reconciliation: publisher-facing prose has used **Rite of Silent Bound**. The exact 9.5.6 artifact instead exposes `NOTES_SILENT_BOND`, `trySilentBond(...)` and `ReadableScrollType` = **Rite of Silent Bond**. For current release identity/accounting, the exact artifact spelling **Silent Bond** controls.
 
 Current publisher documentation independently states that Ritual Flute can be found as loot to begin some Forgotten Knowledge flows.
 
