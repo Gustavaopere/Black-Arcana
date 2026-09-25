@@ -159,7 +159,7 @@ Iron's Apothic is consequently a source-pinned magic bridge/support closure with
 
 ## Current 24/09/2026 reconciliation
 
-Current sibling authority `neoforge-rpg-skilltree@ed5ab7ee670c1810e6ce5b79c94e91a6341a2f97` preserves the current physical provider lines used here.
+Current sibling authority `neoforge-rpg-skilltree@e3689bbc04ba54be1612a13c242496330e99df06` preserves the current physical provider lines used here.
 
 Current semantic deltas since the 1382 checkpoint:
 
@@ -170,6 +170,7 @@ Current semantic deltas since the 1382 checkpoint:
 - Fantasy Armor 1.2.4: **+0** — passive gear/MobEffect surface, no spell/ritual/active-action registry.
 - Enchantment Descriptions 21.1.11: **+0** — client presentation only.
 - A Good Place 1.2.5: **+0** — client placement-animation presentation only.
+- Create: Apokinetics 1.0.6: **+0** — exact physical/publisher artifact equality plus bounded clean-room exact-binary scan closes zero spell/glyph/ritual surface; Machine Gems remain support/augmentation capabilities.
 - Cataclysm: Spellbooks 1.1.14: **+0 delta** — retains the already counted 59 identities; physical SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5` equals audited publisher File 8847070 and the registry class is byte-identical to the exact 1.1.13 control, so current evidence is `COUNTED_EXACT`.
 - Corail Tombstone 9.5.6 and Relics 0.12.8 remain **⚠️ partial/conditioned** because their final discrete action cardinalities are not yet closed.
 - Somake 1.0.9 remains **CONDITIONAL / +0 strict**; deterministic exact-pack registry observation may close the deployed current-pack registration outcome, but generalized predicates, config and survival reachability remain separate gates.
@@ -338,6 +339,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [Fantasy Armor](../providers/✅-fantasy-armor/README.md) — 1.2.4 source-pinned passive gear/effect magic; **+0**.
 - [Enchantment Descriptions](../providers/✅-enchantment-descriptions/README.md) — 21.1.11 client tooltip/localization presentation; **+0**.
 - [A Good Place](../providers/✅-a-good-place/README.md) — 1.2.5 client placement-animation presentation; **+0**.
+- [Create: Apokinetics](../providers/✅-apokinetics/README.md) — exact hash-matched 1.0.6 machine-augmentation/support closure; bounded binary audit observes no spell/glyph/ritual semantic registry/resource/API surface; **+0**.
 - Bloodlines `gravebound_crit_action` / Sorcerous Strike — registered implementation, but exact 3.0.9 configured tree and rank defaults provide no normal survival acquisition path;
 - IronSable's ten physicalized base Iron's spells — already owned/countable under Iron's;
 - Ars 'n' Spells `ars_cross_*` proxy registry pool — proxies, not eight semantic rituals/spells;
