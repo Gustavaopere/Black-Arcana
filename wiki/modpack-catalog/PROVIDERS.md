@@ -32,7 +32,7 @@ The current modlist snapshot contains 607 top-level entries. This registry recon
 | 24 | SnackPirate's Aeromancy Additions | `aero_additions` | `aero_additions-1.2.8.jar` | `1.2.8` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 25 | Asterism Arcanum | `asterismarcanum` | `asterismarcanum-1.21.1-0.1.0.jar` | `1.21.1-0.1.0` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 26 | Backported Spellbooks | `backportedspellbooks` | `backportedspellbooks-0.1.2.jar` | `0.1.0` | SPELL PROVIDER / CONTENT ADDON | YES |
-| 27 | Cataclysm: Spellbooks | `cataclysm_spellbooks` | `cataclysm_spellbooks-1.1.14-1.21.jar` | `1.1.14-1.21` | SPELL PROVIDER / CONTENT ADDON | YES |
+| 27 | Cataclysm: Spellbooks | `cataclysm_spellbooks` | `cataclysm_spellbooks-1.1.13-1.21.jar` | `1.1.13-1.21` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 28 | Deeper and Darker: Spellbooks | `darkermagic` | `darkermagic-1.3.3-1.21.1-ver.b.jar` | `1.3.3-1.21.1` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 29 | Discerning The Eldritch | `discerning_the_eldritch` | `discerning_the_eldritch-1.4.4-1.21.jar` | `1.4.4-1.21` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 30 | Dreamless Spells | `dreamless_spells` | `dreamless_spells-1.1.9.jar` | `1.1.9` | SPELL PROVIDER / CONTENT ADDON | YES |

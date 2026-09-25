@@ -32,13 +32,16 @@ Global catalog metadata lives under:
 
 including the current provider inventory, deduplication policy and audit queue.
 
-`meta/PROVIDER-AUDIT-QUEUE.md` remains the full 103-provider queue. Narrow status overlays may be used during incremental provider work to avoid destructive whole-table rewrites. Current overlays:
+`meta/PROVIDER-AUDIT-QUEUE.md` remains the historical 103-provider queue from the older physical baseline. The 22/09 sibling re-audit has already surfaced magic-relevant components outside that frozen set, so the queue denominator is **PENDING REBASE**. Narrow status overlays may be used during incremental provider work to avoid destructive whole-table rewrites. Current overlays:
 
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-GOETY-ADDONS.md) — prevails only for `goety_cataclysm` and `goetyiron`;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2J.md) — prevails for base `goety`, `malum`, `hexalia` and `toxony` until integral queue regeneration;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2K.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2K.md) — prevails only for `mobstein` until integral queue regeneration;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2L.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2L.md) — prevails only for `apprenticecodex`, while preserving its explicit runtime-QA flags;
 - [`meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2M.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-PHASE2M.md) — prevails only for `cataclysm_spellbooks`, advancing the public/source baseline without pretending that the exact 1.1.13 spell table is resolved.
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-HAZEN-N-STUFF.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-HAZEN-N-STUFF.md) — prevails for `hazennstuff`, closing the exact release-pinned spell inventory while assembled-pack runtime QA remains fail-closed.
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-CREATE-WIZARDRY.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-CREATE-WIZARDRY.md) — prevails for current physical `create_wizardry` 1.21.1-0.5.1-pre1, closing it as source-pinned host-spell automation with zero provider-owned spell identities while assembled-pack runtime QA remains fail-closed.
+- [`meta/PROVIDER-AUDIT-QUEUE-DELTA-IRONS-APOTHIC.md`](meta/PROVIDER-AUDIT-QUEUE-DELTA-IRONS-APOTHIC.md) — prevails for `irons_apothic` 2.2.2, closing the exact source-pinned affix/gem bridge surface with zero provider-owned spell registrations while assembled-pack runtime QA remains fail-closed.
 
 Capability-matrix deltas follow the same narrow-overlay rule:
 
@@ -47,10 +50,11 @@ Capability-matrix deltas follow the same narrow-overlay rule:
 - [`meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md`](meta/CAPABILITY-MATRIX-DELTA-MOBSTEIN.md) records Mobstein's corporeal-resurrection/anatomy/experiment overlap;
 - [`meta/CAPABILITY-MATRIX-DELTA-APPRENTICE-CODEX.md`](meta/CAPABILITY-MATRIX-DELTA-APPRENTICE-CODEX.md) records Apprentice's Codex overlap, especially with Familiars & Divination, sensing, storage, mobility and provider-owned alternative casting surfaces;
 - [`meta/CAPABILITY-MATRIX-DELTA-CATACLYSM-SPELLBOOKS.md`](meta/CAPABILITY-MATRIX-DELTA-CATACLYSM-SPELLBOOKS.md) records the current provider-level and old-source-baseline overlaps for Abyssal, Technomancy, Sand, Fire/Ignis, Void/gravity, summons and battlefield control while keeping unknown 1.1.13 content fail-closed.
+- [`meta/CAPABILITY-MATRIX-DELTA-IRONS-APOTHIC.md`](meta/CAPABILITY-MATRIX-DELTA-IRONS-APOTHIC.md) records Iron's Apothic school/level/mana/effect/trigger/imbued/loot bridge overlap without reclassifying external Iron's spells as provider-owned identities.
 
 ## Authority order
 
-1. Current physical modlist snapshot is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. The current file reports **595 top-level entries including NeoForge `21.1.248`** and has SHA-1 `7aaece7acbfb07ba4d0c66029042f36c50d046f0`; internal `jarjar` dependencies do not count as top-level providers.
+1. Current physical modlist evidence is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. The former **595 top-level / NeoForge `21.1.248`** snapshot is now historical. The sibling physical re-audit at `neoforge-rpg-skilltree@278b427023136d7c43d85dc188d0eac1ac85ef3a` records **587 top-level entries including NeoForge `21.1.250`** in its revalidated provider dossiers. Until the integral magic-provider queue is regenerated, each newly certified dossier is a provider-specific physical override; internal `jarjar` dependencies do not count as top-level providers.
 2. Current Notion pages and project guides provide ecosystem classification, gameplay context and known compatibility notes.
 3. Official/public documentation, public APIs, changelogs and clean-room observable behavior provide granular spell/glyph/ritual/power facts.
 4. External source code may only inform an implementable specification when the exact license permits that use and the provenance ledger requirement has already been satisfied.
@@ -148,6 +152,8 @@ The granular queue plus explicit overlays remain authoritative for exact per-row
 - Toxony `0.10.7` — exact installed artifact + exact public source-version pin; 5/5 harmful effects, 9/9 Oils, 7/7 Mutagen effect IDs, 11/11 Affinities, threshold selection, major Mutagen mechanics, processing and external compat overlaps audited factually; GPLv3/LGPLv3 provenance conflict, supported-API and runtime gates remain fail-closed;
 - Mobstein `5.4.4` — exact installed artifact + exact CurseForge File ID 8040734 and publisher current guide/release lineage; corporeal resurrection, ten resurrected creature families, anatomy/organ extraction, Surgery Stretch + four internal modifiers, Subject Assembly, Igor + seven failed experiments, syringe family, three structures, Dr. Mobstenio and three-stage Witherstein cataloged; ARR means no source/bytecode decompilation, internal registries/API and exact Sable 2.0.5 seam remain fail-closed;
 - Apprentice's Codex `0.9.7.1` — exact installed artifact + exact source pin `305ea6a...`; **83/83** spell registry IDs across nine Iron's schools have source-pinned pages, with exact **167/167 item IDs**, **20/20 block IDs**, static/dynamic effect and provider-attribute inventories, 25-slot School Affinity, acquisition surfaces and optional-compat inventory cataloged. Full 612-mod runtime/config QA remains explicit rather than inferred;
+- Hazen N Stuff `1.4.0.14` — current physical JAR/SHA-1 certified by the sibling 22/09 re-audit; exact release-correlated source pin `5fcaf39c...` closes 38 active Iron's spell registrations; `brimstone_hellblast` and `supernova` are localization-only while `reign_of_tyros` has a commented registration and is excluded; custom focus/special craft gates reconciled, runtime QA still fail-closed;
+- Iron's Apothic `2.2.2` — current sibling row #339 plus exact official source pin `c5d5012...`; 7 custom affix codecs, 140 affix definitions, 48 explicit spell/imbued-spell affix definitions and 24 gems cataloged; the bridge consumes Iron's `SpellRegistry` rather than owning an independent spell registry, so semantic delta is +0 and assembled-pack runtime QA remains fail-closed;
 - Cataclysm: Spellbooks `1.1.13-1.21` — exact installed Beta identity + CurseForge File ID `8792628` + current publisher 65-spell scale pinned. The official source still declares `1.1.11-1.21`; that public snapshot is separately normalized to **34 concrete registrations** plus Abyssal/Technomancy/Sand schools for baseline deduplication only. Exact current 65 spell ids/values and new-boss registry remain pending an inspectable 1.1.13 artifact or matching source.
 
 Source-pinned means the source catalog is tied to an exact revision. Release/artifact-pinned is weaker and is stated separately. Neither state means runtime validation unless that gate is separately recorded.
