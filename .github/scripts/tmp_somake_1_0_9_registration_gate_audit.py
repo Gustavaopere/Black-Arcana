@@ -240,6 +240,76 @@ def gate_map_modspells(data):
         gates.append((mod,source,off,"ifeq" if bop==0x99 else "ifne",target,fall_ids))
     return gates,register_events,call_events
 
+def cached_registration_gate_map(data):
+    cp,utf,cls,string,ref,fields,methods,utf8=parse_class(data)
+    clinit=next((m for m in methods if m[0]=="<clinit>"),None)
+    if not clinit or clinit[3] is None:
+        raise RuntimeError("ModSpells <clinit> code not found")
+    ins=instructions(clinit[3])
+    helper_to_mod={
+        "com/somake/somakespells/compat/BornInChaosCompat":"born_in_chaos_v1",
+        "com/somake/somakespells/compat/LegendaryMonstersCompat":"legendary_monsters",
+        "com/somake/somakespells/compat/MagicFromTheEastCompat":"iss_magicfromtheeast",
+        "com/somake/somakespells/compat/TunesCompat":"tunes_n_tomes",
+    }
+    register_events=[]
+    assignments=[]
+    last_string=None
+    pending_gate=None
+    for idx,(off,op,raw) in enumerate(ins):
+        if op==0x12:
+            v=string(raw[1])
+            if v is not None: last_string=v
+        elif op in (0x13,0x14):
+            v=string(struct.unpack_from(">H",raw,1)[0])
+            if v is not None: last_string=v
+        elif op in (0xb6,0xb7,0xb8,0xb9):
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if rr:
+                owner,name,desc,tag=rr
+                if owner and "DeferredRegister" in owner and name=="register":
+                    register_events.append((off,last_string))
+                mod=None; source=None
+                if owner and owner.endswith("/ModList") and name=="isLoaded":
+                    mod=last_string; source="ModList.isLoaded"
+                elif name=="isLoaded" and owner in helper_to_mod:
+                    mod=helper_to_mod[owner]; source=owner.split("/")[-1]+".isLoaded"
+                if mod:
+                    pending_gate=(idx,mod,source,off)
+        elif op==0xb3 and pending_gate:
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if rr:
+                owner,name,desc,tag=rr
+                if owner=="com/somake/somakespells/registries/ModSpells" and desc=="Z" and idx-pending_gate[0] <= 4:
+                    assignments.append((pending_gate[1],pending_gate[2],name,pending_gate[3],off))
+                    pending_gate=None
+
+    rows=[]
+    for mod,source,field,call_off,put_off in assignments:
+        for idx,(off,op,raw) in enumerate(ins):
+            if op!=0xb2:
+                continue
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if not rr:
+                continue
+            owner,name,desc,tag=rr
+            if owner!="com/somake/somakespells/registries/ModSpells" or name!=field or desc!="Z":
+                continue
+            branch=None
+            for j in range(idx+1,min(idx+5,len(ins))):
+                boff,bop,braw=ins[j]
+                if bop in (0x99,0x9a):
+                    branch=(boff,bop,braw)
+                    break
+            if not branch:
+                rows.append((mod,source,field,off,None,None,[]))
+                continue
+            boff,bop,braw=branch
+            target=boff+signed_short(braw)
+            fall_ids=[rid for roff,rid in register_events if boff < roff < target]
+            rows.append((mod,source,field,off,"ifeq" if bop==0x99 else "ifne",target,fall_ids))
+    return assignments,rows
+
 def config_boolean_definitions(data):
     cp,utf,cls,string,ref,fields,methods,utf8=parse_class(data)
     rows=[]
@@ -371,6 +441,13 @@ def inspect(label, blob, expected_sha1):
         print(f"SOMAKE_{label}_ISENABLED_OVERRIDE_COUNT={len(enabled)}")
         for n,a,e,aval,eval_ in enabled:
             print(f"SOMAKE_{label}_ISENABLED_OVERRIDE={n}|constant_return={eval_}")
+        assignments,cached_rows=cached_registration_gate_map(zf.read(MODSPELLS))
+        print(f"SOMAKE_{label}_CACHED_GATE_ASSIGNMENT_COUNT={len(assignments)}")
+        for mod,source,field,call_off,put_off in assignments:
+            print(f"SOMAKE_{label}_CACHED_GATE_ASSIGNMENT={mod}|source={source}|field={field}|call_offset={call_off}|putstatic_offset={put_off}")
+        print(f"SOMAKE_{label}_CACHED_GATE_USE_COUNT={len(cached_rows)}")
+        for mod,source,field,get_off,branchop,targetoff,ids_in_fallthrough in cached_rows:
+            print(f"SOMAKE_{label}_CACHED_GATE_USE={mod}|source={source}|field={field}|getstatic_offset={get_off}|branch={branchop}|target={targetoff}|fallthrough_ids={','.join(x or '<none>' for x in ids_in_fallthrough)}")
         gates,register_events,call_events=gate_map_modspells(zf.read(MODSPELLS))
         print(f"SOMAKE_{label}_REGISTRATION_GATE_COUNT={len(gates)}")
         for mod,source,off,branchop,targetoff,ids_in_fallthrough in gates:
