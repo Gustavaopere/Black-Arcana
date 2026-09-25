@@ -112,41 +112,123 @@ def analyze_modspells(zf):
  cp,utf,cls,string,ref,fields,methods=parse_class(zf.read(MODSPELLS))
  code=method_code(methods,"<clinit>")
  if code is None: raise RuntimeError("no ModSpells clinit")
- seq=insns(code); last_string=None; events=[]; gate_calls=[]
+ seq=insns(code)
+
+ # Decode only the narrow instruction facts needed for gate->state->branch mapping.
+ last_string=None
+ decoded=[]
+ gate_labels={}
  for off,op,raw in seq:
+  info={"off":off,"op":op,"kind":"OTHER","value":None}
   if op==0x12:
    s=string(raw[1])
    if s is not None: last_string=s
+   info={"off":off,"op":op,"kind":"LDC","value":s}
   elif op in (0x13,0x14):
    s=string(struct.unpack_from(">H",raw,1)[0])
    if s is not None: last_string=s
-  if op in BRANCH:
-   events.append(("BRANCH",off,op,branch_target(off,op,raw),None))
-  if op in (0xb6,0xb7,0xb8,0xb9):
+   info={"off":off,"op":op,"kind":"LDC","value":s}
+  elif op in (0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xb8,0xb9):
    rr=ref(struct.unpack_from(">H",raw,1)[0])
    if rr:
     owner,name,desc,tag=rr
-    if owner and "DeferredRegister" in owner and name=="register":
-     events.append(("REGISTER",off,op,None,last_string))
-    if name=="isLoaded" and owner and (owner.endswith("/ModList") or "/compat/" in owner):
-     label=(f"mod:{last_string}" if owner.endswith("/ModList") else f"helper:{owner.rsplit('/',1)[-1]}")
-     gate_calls.append((off,label,owner,name))
-     events.append(("GATE",off,op,None,label))
- regs=[e for e in events if e[0]=="REGISTER"]
+    if op==0xb2: info={"off":off,"op":op,"kind":"GETSTATIC","value":(owner,name,desc)}
+    elif op==0xb3: info={"off":off,"op":op,"kind":"PUTSTATIC","value":(owner,name,desc)}
+    elif op==0xb4: info={"off":off,"op":op,"kind":"GETFIELD","value":(owner,name,desc)}
+    elif op==0xb5: info={"off":off,"op":op,"kind":"PUTFIELD","value":(owner,name,desc)}
+    else:
+     info={"off":off,"op":op,"kind":"INVOKE","value":(owner,name,desc)}
+     if name=="isLoaded" and owner:
+      label=(f"mod:{last_string}" if owner.endswith("/ModList") else (f"helper:{owner.rsplit('/',1)[-1]}" if "/compat/" in owner else None))
+      if label: gate_labels[off]=label
+  elif op in BRANCH:
+   info={"off":off,"op":op,"kind":"BRANCH","value":branch_target(off,op,raw)}
+  elif 0x3b <= op <= 0x4e:
+   # fixed astore/istore/lstore/fstore/dstore forms; exact local type is unnecessary here
+   info={"off":off,"op":op,"kind":"STORE_LOCAL","value":op}
+  elif op in (0x36,0x37,0x38,0x39,0x3a):
+   info={"off":off,"op":op,"kind":"STORE_LOCAL","value":raw[1]}
+  elif 0x1a <= op <= 0x35:
+   info={"off":off,"op":op,"kind":"LOAD_LOCAL","value":op}
+  elif op in (0x15,0x16,0x17,0x18,0x19):
+   info={"off":off,"op":op,"kind":"LOAD_LOCAL","value":raw[1]}
+  decoded.append(info)
+
+ # Registry call list and offsets.
+ regs=[]
+ last_string=None
+ for d in decoded:
+  if d["kind"]=="LDC" and d["value"] is not None: last_string=d["value"]
+  if d["kind"]=="INVOKE":
+   owner,name,desc=d["value"]
+   if owner and "DeferredRegister" in owner and name=="register":
+    regs.append((d["off"],last_string))
+
  print(f"SOMAKE_GATE_AUDIT_REGISTER_COUNT={len(regs)}")
- print(f"SOMAKE_GATE_AUDIT_GATE_CALL_COUNT={len(gate_calls)}")
- for off,label,owner,name in gate_calls:
-  after=[e for e in events if e[0]=="BRANCH" and e[1]>off]
-  if not after:
-   print(f"SOMAKE_GATE_UNMAPPED={label}|no_following_branch"); continue
-  br=after[0]; target=br[3]
-  ids=[e[4] for e in regs if e[1]>br[1] and ((target>br[1] and e[1]<target) or (target<br[1] and e[1]>target))]
-  print(f"SOMAKE_GATE_MAP={label}|branch_opcode=0x{br[2]:02x}|branch_off={br[1]}|target={target}|register_ids={','.join(x for x in ids if x)}")
- for e in events:
-  if e[0] in ("GATE","REGISTER","BRANCH") and (e[0]!="BRANCH" or any(abs(e[1]-g[0])<32 for g in gate_calls)):
-   if e[0]=="REGISTER": print(f"SOMAKE_CONTROL_EVENT=REGISTER|{e[1]}|{e[4]}")
-   elif e[0]=="GATE": print(f"SOMAKE_CONTROL_EVENT=GATE|{e[1]}|{e[4]}")
-   else: print(f"SOMAKE_CONTROL_EVENT=BRANCH|{e[1]}|0x{e[2]:02x}|target={e[3]}")
+ print(f"SOMAKE_GATE_AUDIT_GATE_CALL_COUNT={len(gate_labels)}")
+
+ # Map gate calls to immediate stored state (static field or local) when structurally adjacent.
+ gate_state={}
+ for idx,d in enumerate(decoded):
+  if d["off"] not in gate_labels: continue
+  label=gate_labels[d["off"]]
+  nxt=decoded[idx+1:idx+4]
+  mapped=None
+  for x in nxt:
+   if x["kind"]=="PUTSTATIC":
+    mapped=("STATIC",x["value"][0],x["value"][1])
+    break
+   if x["kind"]=="STORE_LOCAL":
+    mapped=("LOCAL",str(x["value"]),"")
+    break
+   # stop at unrelated invoke or branch rather than over-associate
+   if x["kind"] in ("INVOKE","BRANCH"): break
+  gate_state[label]=mapped
+  print(f"SOMAKE_GATE_STATE={label}|state={mapped if mapped else 'DIRECT_OR_UNMAPPED'}")
+
+ # Determine branch predicates by a short backwards slice over state reads/direct gate calls.
+ branch_rows=[]
+ for idx,d in enumerate(decoded):
+  if d["kind"]!="BRANCH": continue
+  target=d["value"]
+  label=None; source=None
+  window=decoded[max(0,idx-5):idx]
+  for x in reversed(window):
+   if x["off"] in gate_labels:
+    label=gate_labels[x["off"]]; source=f"direct_gate@{x['off']}"; break
+   if x["kind"]=="GETSTATIC":
+    owner,name,desc=x["value"]
+    for gl,st in gate_state.items():
+     if st and st[0]=="STATIC" and st[1]==owner and st[2]==name:
+      label=gl; source=f"static:{owner}.{name}"; break
+    if label: break
+   if x["kind"]=="LOAD_LOCAL":
+    for gl,st in gate_state.items():
+     if st and st[0]=="LOCAL" and str(st[1])==str(x["value"]):
+      label=gl; source=f"local:{x['value']}"; break
+    if label: break
+
+  # Count registrations in the forward branch body only; do not infer polarity as enabled/disabled.
+  ids=[]
+  if target>d["off"]:
+   ids=[rid for roff,rid in regs if roff>d["off"] and roff<target and rid]
+  if label or ids:
+   branch_rows.append((d["off"],d["op"],target,label,source,ids))
+
+ print(f"SOMAKE_GATE_BRANCH_ROW_COUNT={len(branch_rows)}")
+ for off,op,target,label,source,ids in branch_rows:
+  print(f"SOMAKE_GATE_BRANCH=off={off}|opcode=0x{op:02x}|target={target}|gate={label or 'UNRESOLVED'}|source={source or 'UNRESOLVED'}|register_ids={','.join(ids)}")
+
+ # Provider compat-helper references present in ModSpells, independent of branch mapping.
+ helper_refs=set()
+ for d in decoded:
+  if d["kind"]=="INVOKE":
+   owner,name,desc=d["value"]
+   if owner and "/compat/" in owner:
+    helper_refs.add((owner,name))
+ print(f"SOMAKE_MODSPELLS_COMPAT_HELPER_REF_COUNT={len(helper_refs)}")
+ for owner,name in sorted(helper_refs):
+  print(f"SOMAKE_MODSPELLS_COMPAT_HELPER_REF={owner}.{name}")
 
 def analyze_allow(zf,spell_id,path):
  cp,utf,cls,string,ref,fields,methods=parse_class(zf.read(path))
