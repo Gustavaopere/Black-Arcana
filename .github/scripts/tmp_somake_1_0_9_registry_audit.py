@@ -188,6 +188,17 @@ def download(url):
     req=urllib.request.Request(url,headers={"User-Agent":"Black-Arcana-clean-room-audit/1"})
     with urllib.request.urlopen(req,timeout=120) as resp: return resp.read()
 
+def constant_boolean_return(code):
+    if code is None:
+        return None
+    ins=instructions(code)
+    ops=[op for _,op,_ in ins if op not in (0x00,)]
+    if ops==[0x03,0xac]:
+        return False
+    if ops==[0x04,0xac]:
+        return True
+    return None
+
 def spell_class_signatures(zf):
     rows=[]
     for name in zf.namelist():
@@ -197,9 +208,45 @@ def spell_class_signatures(zf):
             _,_,_,_,_,fields,methods,utf8=parse_class(zf.read(name))
         except Exception:
             continue
-        method_names={m[0] for m in methods}
-        rows.append((name, "allowCrafting" in method_names, "isEnabled" in method_names))
+        by_name={m[0]:m for m in methods}
+        allow=by_name.get("allowCrafting")
+        enabled=by_name.get("isEnabled")
+        rows.append((
+            name,
+            allow is not None,
+            isEnabledPresent := (enabled is not None),
+            constant_boolean_return(allow[3]) if allow else None,
+            constant_boolean_return(enabled[3]) if enabled else None
+        ))
     return sorted(rows)
+
+def modlist_isloaded_hits(zf):
+    rows=[]
+    for name in zf.namelist():
+        if not name.startswith("com/somake/somakespells/") or not name.endswith(".class"):
+            continue
+        try:
+            cp,utf,cls,string,ref,fields,methods,utf8=parse_class(zf.read(name))
+        except Exception:
+            continue
+        for mname,mdesc,macc,code in methods:
+            if code is None:
+                continue
+            last_string=None
+            for off,op,raw in instructions(code):
+                if op==0x12:
+                    s=string(raw[1])
+                    if s is not None: last_string=s
+                elif op in (0x13,0x14):
+                    s=string(struct.unpack_from(">H",raw,1)[0])
+                    if s is not None: last_string=s
+                elif op in (0xb6,0xb7,0xb8,0xb9):
+                    rr=ref(struct.unpack_from(">H",raw,1)[0])
+                    if rr:
+                        owner,rname,rdesc,tag=rr
+                        if owner and owner.endswith("/ModList") and rname=="isLoaded":
+                            rows.append((name,mname,last_string))
+    return sorted(set(rows))
 
 def string_class_hits(zf, token):
     b=token.encode("utf-8")
@@ -225,13 +272,19 @@ def inspect(label, blob, expected_sha1):
         print(f"SOMAKE_{label}_ISLOADED_CALL_ARGS=" + ",".join(x or "<none>" for x in a["isloaded_args"]))
         print(f"SOMAKE_{label}_REGISTRY_IDS=" + ",".join(ids))
         sigs=spell_class_signatures(zf)
-        allow=[n for n,a,e in sigs if a]
-        enabled=[n for n,a,e in sigs if e]
+        allow=[row for row in sigs if row[1]]
+        enabled=[row for row in sigs if row[2]]
         print(f"SOMAKE_{label}_TOPLEVEL_SPELL_CLASS_COUNT={len(sigs)}")
         print(f"SOMAKE_{label}_ALLOWCRAFTING_OVERRIDE_COUNT={len(allow)}")
-        for n in allow: print(f"SOMAKE_{label}_ALLOWCRAFTING_OVERRIDE={n}")
+        for n,a,e,aval,eval_ in allow:
+            print(f"SOMAKE_{label}_ALLOWCRAFTING_OVERRIDE={n}|constant_return={aval}")
         print(f"SOMAKE_{label}_ISENABLED_OVERRIDE_COUNT={len(enabled)}")
-        for n in enabled: print(f"SOMAKE_{label}_ISENABLED_OVERRIDE={n}")
+        for n,a,e,aval,eval_ in enabled:
+            print(f"SOMAKE_{label}_ISENABLED_OVERRIDE={n}|constant_return={eval_}")
+        mlhits=modlist_isloaded_hits(zf)
+        print(f"SOMAKE_{label}_PROVIDER_MODLIST_ISLOADED_HIT_COUNT={len(mlhits)}")
+        for cname,mname,arg in mlhits:
+            print(f"SOMAKE_{label}_PROVIDER_MODLIST_ISLOADED_HIT={cname}|{mname}|{arg}")
         lock_hits=string_class_hits(zf,"enableSpellLockSystem")
         common_hits=string_class_hits(zf,"somakespells/general/common.toml")
         print(f"SOMAKE_{label}_SPELL_LOCK_TOKEN_CLASS_COUNT={len(lock_hits)}")
