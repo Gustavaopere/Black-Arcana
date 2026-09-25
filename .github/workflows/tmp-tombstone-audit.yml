@@ -24,3 +24,5 @@ jobs:
         run: python3 .github/scripts/tmp_corail_tombstone_9_5_6_itemmap.py
       - name: Map Tombstone prayer and rite identities
         run: python3 .github/scripts/tmp_corail_tombstone_9_5_6_actionmap.py
+      - name: Audit Tombstone prayer rite reachability
+        run: python3 .github/scripts/tmp_corail_tombstone_9_5_6_reachability.py
