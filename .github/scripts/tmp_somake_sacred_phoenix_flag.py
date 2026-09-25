@@ -87,10 +87,10 @@ def insns(code):
 def analyze_startup_features(zf):
     target="com/somake/somakespells/config/StartupFeatures.class"
     cp,string,ref,methods=parse(zf.read(target))
-    code=next(c for n,d,c in methods if n=="isSacredPhoenixBlessingEnabled")
-    seq=insns(code)
+
+    getter=next(c for n,d,c in methods if n=="isSacredPhoenixBlessingEnabled")
     print("SOMAKE_STARTUP_METHOD=isSacredPhoenixBlessingEnabled")
-    for off,op,raw in seq:
+    for off,op,raw in insns(getter):
         value=None; kind=f"OP_{op:02x}"
         if op==0x12:
             value=string(raw[1]); kind="LDC"
@@ -102,7 +102,31 @@ def analyze_startup_features(zf):
                 value=rr[:3]
                 kind={0xb2:"GETSTATIC",0xb3:"PUTSTATIC",0xb4:"GETFIELD",0xb5:"PUTFIELD",0xb6:"INVOKEVIRTUAL",0xb7:"INVOKESPECIAL",0xb8:"INVOKESTATIC",0xb9:"INVOKEINTERFACE"}[op]
         if kind in {"LDC","GETSTATIC","PUTSTATIC","GETFIELD","PUTFIELD","INVOKEVIRTUAL","INVOKESPECIAL","INVOKESTATIC","INVOKEINTERFACE"}:
-            print(f"SOMAKE_STARTUP_CONTEXT={off}|{kind}|{value}")
+            print(f"SOMAKE_STARTUP_GETTER_CONTEXT={off}|{kind}|{value}")
+
+    clinit=next((c for n,d,c in methods if n=="<clinit>"),None)
+    if clinit is None:
+        raise RuntimeError("StartupFeatures <clinit> not found")
+    decoded=[]
+    for off,op,raw in insns(clinit):
+        value=None; kind=f"OP_{op:02x}"
+        if op==0x12:
+            value=string(raw[1]); kind="LDC"
+        elif op in (0x13,0x14):
+            value=string(struct.unpack_from(">H",raw,1)[0]); kind="LDC"
+        elif op in (0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xb8,0xb9):
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if rr:
+                value=rr[:3]
+                kind={0xb2:"GETSTATIC",0xb3:"PUTSTATIC",0xb4:"GETFIELD",0xb5:"PUTFIELD",0xb6:"INVOKEVIRTUAL",0xb7:"INVOKESPECIAL",0xb8:"INVOKESTATIC",0xb9:"INVOKEINTERFACE"}[op]
+        decoded.append((off,kind,value))
+    idx=next((i for i,x in enumerate(decoded) if x[1]=="PUTSTATIC" and x[2] and x[2][1]=="SACRED_PHOENIX_BLESSING_ENABLED"),None)
+    if idx is None:
+        raise RuntimeError("StartupFeatures flag assignment not found")
+    print(f"SOMAKE_STARTUP_ASSIGN_OFF={decoded[idx][0]}")
+    for off,kind,value in decoded[max(0,idx-24):idx+2]:
+        if kind in {"LDC","GETSTATIC","PUTSTATIC","GETFIELD","PUTFIELD","INVOKEVIRTUAL","INVOKESPECIAL","INVOKESTATIC","INVOKEINTERFACE"}:
+            print(f"SOMAKE_STARTUP_CLINIT_CONTEXT={off}|{kind}|{value}")
     print("SOMAKE_STARTUP_AUDIT_COMPLETE=true")
 
 def main():
