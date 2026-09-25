@@ -51,6 +51,9 @@ jobs:
             git diff --check "$BASE" HEAD
           fi
 
+      - name: Temporary Tombstone 9.5.6 castable semantic audit NON-MERGE
+        run: python3 .github/scripts/tmp_tombstone_9_5_6_castable_semantics.py
+
       - name: NeoForge build
         run: ./gradlew --no-daemon build
 
