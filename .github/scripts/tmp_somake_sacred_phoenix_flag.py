@@ -83,6 +83,28 @@ def insns(code):
         out.append((s,op,code[s:p]))
     return out
 
+
+def analyze_startup_features(zf):
+    target="com/somake/somakespells/config/StartupFeatures.class"
+    cp,string,ref,methods=parse(zf.read(target))
+    code=next(c for n,d,c in methods if n=="isSacredPhoenixBlessingEnabled")
+    seq=insns(code)
+    print("SOMAKE_STARTUP_METHOD=isSacredPhoenixBlessingEnabled")
+    for off,op,raw in seq:
+        value=None; kind=f"OP_{op:02x}"
+        if op==0x12:
+            value=string(raw[1]); kind="LDC"
+        elif op in (0x13,0x14):
+            value=string(struct.unpack_from(">H",raw,1)[0]); kind="LDC"
+        elif op in (0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xb8,0xb9):
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if rr:
+                value=rr[:3]
+                kind={0xb2:"GETSTATIC",0xb3:"PUTSTATIC",0xb4:"GETFIELD",0xb5:"PUTFIELD",0xb6:"INVOKEVIRTUAL",0xb7:"INVOKESPECIAL",0xb8:"INVOKESTATIC",0xb9:"INVOKEINTERFACE"}[op]
+        if kind in {"LDC","GETSTATIC","PUTSTATIC","GETFIELD","PUTFIELD","INVOKEVIRTUAL","INVOKESPECIAL","INVOKESTATIC","INVOKEINTERFACE"}:
+            print(f"SOMAKE_STARTUP_CONTEXT={off}|{kind}|{value}")
+    print("SOMAKE_STARTUP_AUDIT_COMPLETE=true")
+
 def main():
     req=urllib.request.Request(URL,headers={"User-Agent":"Black-Arcana-clean-room-audit/1"})
     with urllib.request.urlopen(req,timeout=120) as resp: blob=resp.read()
