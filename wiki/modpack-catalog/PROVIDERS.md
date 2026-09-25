@@ -2,7 +2,7 @@
 
 Status: `PHASE 2 — INVENTORY BASELINE ESTABLISHED`
 
-This registry began from an older 607-entry snapshot and preserves stable row numbers for provenance. Current presence is now reconciled against sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589`, which contains **588 current modlist dossier Markdown files**. Retired rows are omitted rather than renumbering later historical row identifiers.
+This registry began from an older 607-entry snapshot and preserves stable row numbers for provenance. Current presence is now reconciled against sibling `neoforge-rpg-skilltree@5ad350730a16e786f91396336c16c7b193feb7ac`, which contains **588 current modlist dossier Markdown files**. Retired rows are omitted rather than renumbering later historical row identifiers.
 
 | # | Current mod | Mod id | Current JAR | Runtime version | Phase 2 class | Granular capability catalog |
 |---:|---|---|---|---|---|---|
@@ -126,7 +126,7 @@ The current modlist supersedes older guide text. Confirmed examples include:
 - Apothic Enchanting `1.6.2`;
 - Create: Enchantment Industry `2.5.3b`.
 
-Historical row **#42** was T.O Magic n' Extras / `traveloptics`. It was present in earlier physical snapshots, but sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics dossier/path/mod-id/filename reference. Row #42 is therefore retired from the **current** registry while historical Phase 2BS evidence remains preserved.
+Historical row **#42** was T.O Magic n' Extras / `traveloptics`. It was present in earlier physical snapshots, but sibling `neoforge-rpg-skilltree@5ad350730a16e786f91396336c16c7b193feb7ac` contains no Traveloptics dossier/path/mod-id/filename reference. Row #42 is therefore retired from the **current** registry while historical Phase 2BS evidence remains preserved.
 
 ## Registry caveat
 
