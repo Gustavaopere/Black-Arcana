@@ -4,7 +4,7 @@
 
 Physical authority:
 
-`neoforge-rpg-skilltree@0ff0ea0ba454e00713d7bf7e6d8255532470993b`
+`neoforge-rpg-skilltree@6657e5bd006d16a244fd4cfe219fc7a15c911714`
 
 Physical artifact identity:
 
