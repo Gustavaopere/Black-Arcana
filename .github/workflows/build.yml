@@ -51,6 +51,9 @@ jobs:
             git diff --check "$BASE" HEAD
           fi
 
+      - name: Temporary Somake 1.0.9 unconditional registry CFG audit NON-MERGE
+        run: python3 .github/scripts/tmp_somake_1_0_9_registry_cfg.py
+
       - name: NeoForge build
         run: ./gradlew --no-daemon build
 
