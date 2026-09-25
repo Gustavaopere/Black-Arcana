@@ -8,7 +8,7 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Current reconciliation — 24/09/2026
 
-Current sibling authority `neoforge-rpg-skilltree@e3689bbc04ba54be1612a13c242496330e99df06` preserves 587 top-level entries. The current category layout contains **45 physical rows whose category path contains `Magic`**; all map to catalog provider directories after ownership-name normalization: **40 ✅ cataloged / 5 ⚠️ partial-conditioned**. Gaze remains a global ⚠️ magic provider but is currently categorized under `Addons/`, so it is outside this physical-category subtotal.
+Current sibling authority `neoforge-rpg-skilltree@dd83e06b25d9a4ab70d5f1bf0702d8375b388242` preserves the current 587-entry physical dossier set. The current category layout contains **45 physical rows whose category path contains `Magic`**; all map to catalog provider directories after ownership-name normalization: **41 ✅ cataloged / 4 ⚠️ partial-conditioned**. Gaze remains a global ⚠️ magic provider categorized under `Addons/`, and Traveloptics remains a separate global partial outside this physical-category subtotal.
 
 Semantic effect of the current reconciliation:
 
@@ -17,11 +17,12 @@ Semantic effect of the current reconciliation:
 - Crystal Chronicles 0.1.3-alpha: **+1 `COUNTED_SOURCE_PINNED`** (`crystal_chronicles:prismatic_portal`).
 - Dungeon's Delight 1.5.1, Fantasy Armor 1.2.4, Enchantment Descriptions 21.1.11 and A Good Place 1.2.5: **+0** each after explicit zero-semantic classification.
 - Create: Apokinetics 1.0.6: **+0** — exact physical SHA equals audited publisher File 8790422; exact-binary bounded scan closes zero spell/glyph/ritual surface while runtime/economy QA remains fail-closed.
+- Relics 0.12.8: **+41 `COUNTED_EXACT`** — exact physical SHA equals audited publisher File 8158315; exact artifact inventory closes 39 base abilities + 2 distinct owner-scoped synergies; rank/mode variants add zero identities.
 - Cataclysm: Spellbooks 1.1.14: retains **59** already-counted spell identities; physical SHA-1 equals audited publisher File 8847070, strengthening evidence to `COUNTED_EXACT` with **+0 current delta**.
-- Corail Tombstone 9.5.6 and Relics 0.12.8: provider magic confirmed but exact final discrete-action cardinality remains pending.
+- Corail Tombstone 9.5.6 remains partial: provider magic is confirmed but exact final discrete-action cardinality is pending.
 - Somake 1.0.9 remains conditional and contributes **+0 strict** until its current exact registry/reachability gates close.
 
-The strict reconstructible semantic minimum is therefore **1392** (`1382 + 9 + 1`). The semantic denominator and the cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1433** (`1382 + 9 + 1 + 41`). The semantic denominator and the cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -99,9 +100,10 @@ Therefore:
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
 - semantic numerator delta from Companions! 1.3.4 source-pinned closure: **+9**;
 - semantic numerator delta from Crystal Chronicles 0.1.3-alpha source-pinned closure: **+1**;
+- semantic numerator delta from Relics 0.12.8 exact ability/synergy closure: **+41**;
 - semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
 - semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
-- strict reconstructible semantic minimum: **1392**;
+- strict reconstructible semantic minimum: **1433**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
