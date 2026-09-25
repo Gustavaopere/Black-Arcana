@@ -6,7 +6,7 @@ Status: `⚠️ PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@a5a862b0eb7adae9fcc1344971f33b22bc30541e`
+`neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`
 
 Certified dossier:
 
@@ -59,6 +59,8 @@ The publisher also confirms:
 - Elyra's Diary unlocking enhanced prayers;
 - Rite of Silent Bound;
 - Souls used for magic scroll/tablet enchanting and Grave Key upgrades.
+
+Naming reconciliation: the publisher prose uses **Rite of Silent Bound**, while the exact 9.5.6 artifact exposes **Rite of Silent Bond** / `NOTES_SILENT_BOND` / `trySilentBond(...)`. The catalog preserves the publisher wording as provenance but uses **Silent Bond** as the release-exact counted action identity.
 
 These public facts are now reconciled against the exact 9.5.6 artifact rather than being the only evidence.
 
