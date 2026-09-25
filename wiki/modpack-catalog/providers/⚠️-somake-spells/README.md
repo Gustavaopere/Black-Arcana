@@ -56,7 +56,10 @@ This proves those charge surfaces for the 1.0.8-fix artifact only. It does not e
 - [PROGRESSION-EQUIPMENT.md](PROGRESSION-EQUIPMENT.md) — books, Grimoires, Upgrade Forge, ritual path and equipment;
 - [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md) — exact artifact/provenance/dependency/QA boundary;
 - [CURRENT-1.0.9-REVALIDATION-CHECKLIST.md](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) — authoritative current-line closure gates for 1.0.9;
-- [EXACT-1.0.9-RESOURCE-AUDIT.md](EXACT-1.0.9-RESOURCE-AUDIT.md) — exact publisher-release hash/metadata/resource evidence for 1.0.9;\n- [EXACT-1.0.9-REGISTRY-AUDIT.md](EXACT-1.0.9-REGISTRY-AUDIT.md) — exact hash-matched physical/release registry closure: 83 declared IDs, +17/-1 delta, current optional-registration topology and host override facts;\n- [EXACT-1.0.9-REGISTRATION-GATE-MAP.md](EXACT-1.0.9-REGISTRATION-GATE-MAP.md) — exact 67 unconditional + 16 optional-provider-gated mapping and current-pack 83/83 registration outcome;\n- [SPELL-CATALOG-1.0.9.md](SPELL-CATALOG-1.0.9.md) — current 83-ID registry inventory; active by current mod composition but not yet strict-counted;
+- [EXACT-1.0.9-RESOURCE-AUDIT.md](EXACT-1.0.9-RESOURCE-AUDIT.md) — exact publisher-release hash/metadata/resource evidence for 1.0.9;
+- [EXACT-1.0.9-REGISTRY-AUDIT.md](EXACT-1.0.9-REGISTRY-AUDIT.md) — exact hash-matched physical/release registry closure: 83 declared IDs, +17/-1 delta, current optional-registration topology and host override facts;
+- [EXACT-1.0.9-REGISTRATION-GATE-MAP.md](EXACT-1.0.9-REGISTRATION-GATE-MAP.md) — exact 67 unconditional + 16 optional-provider-gated mapping and current-pack 83/83 registration outcome;
+- [SPELL-CATALOG-1.0.9.md](SPELL-CATALOG-1.0.9.md) — current 83-ID registry inventory; active by current mod composition but not yet strict-counted;
 - [EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) — historical 1.0.8-fix hash-matched registry/gate/config facts;
 - [INTEGRATION-RULES.md](INTEGRATION-RULES.md) — Black Arcana authority and fail-closed rules.
 
