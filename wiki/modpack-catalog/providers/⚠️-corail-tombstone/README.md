@@ -1,12 +1,12 @@
 # Corail Tombstone — 9.5.6
 
-Status: `PARTIAL / PUBLISHER-BOUNDED MAGIC SURFACE / EXACT 9.5.6 PUBLISHER FILE / SEMANTIC CARDINALITY PENDING / RUNTIME QA FAIL-CLOSED`
+Status: `⚠️ PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_BOUNDED PRAYER-RITE ACTIONS / CONFIG-CONDITIONAL MAGIC-ITEM ACTIONS REMAIN / RUNTIME QA FAIL-CLOSED`
 
 ## Current physical identity
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@d7c99d23ef1b38fe62c86a362ec521ced8861f96`
+`neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`
 
 Certified dossier:
 
@@ -19,9 +19,9 @@ Physical identity preserved there:
 - runtime: `9.5.6`;
 - Minecraft 1.21.1 / NeoForge / Java 21.
 
-The sibling dossier does not preserve an independent installed-JAR digest for this row. Installed-byte equality with the publisher artifact is therefore not claimed.
+The sibling dossier still does **not** preserve an independent installed-JAR digest for this row. Installed-byte equality with the audited publisher artifact is therefore not claimed.
 
-## Exact publisher release
+## Exact publisher artifact
 
 CurseForge project: `243707`.
 
@@ -30,104 +30,180 @@ Exact NeoForge 1.21.1 file:
 - file ID: `8842741`;
 - filename: `tombstone-neoforge-1.21.1-9.5.6.jar`;
 - uploaded: 2026-09-09;
-- loader: NeoForge;
-- supported game version: 1.21.1;
-- publisher state: Release.
+- Release;
+- NeoForge 1.21.1.
 
-The exact 9.5.6 changelog fixes XP restoration on death with high level counts caused by integer overflow. The same release page preserves the relevant 1.21.1 lineage:
+Clean-room NON-MERGE audit of that exact artifact observed:
 
-- 9.5.5: Create Aeronautics vehicle-respawn compatibility;
-- 9.5.4: learned Ritual Flute melodies play automatically on the correct block and the old Ritual Flute screen is removed;
-- 9.5.3: adds the lore sequence "The Nights of Nour";
-- 9.5.2: Grave Guardian trades become data-driven and readable scrolls are adjusted;
-- 9.5.0: adds Bone Scepter and spellcasting animation for tamed undeads / Grave Guardian.
+- bytes: `2,520,705`;
+- SHA-1: `d830d16caa20b0d23a44ed6b1d339bc22afc2460`;
+- SHA-256: `520e2a3cb5fb8001da20a23aaf39a7fd8fd937af962c2b43c55460099e30b23b`;
+- 590 provider classes;
+- 1,066 provider resources;
+- 0 embedded jar-in-jar libraries.
 
-Publisher file page:
-`https://www.curseforge.com/minecraft/mc-mods/corail-tombstone/files/8842741`
+This is exact publisher-artifact evidence, but remains `RELEASE_BOUNDED` relative to the installed pack because no independent physical SHA exists in the sibling dossier.
+
+See `EXACT-9.5.6-ACTION-INVENTORY.md`.
 
 ## Publisher-confirmed magic system
 
 The current publisher description explicitly states that Tombstone has a magic system based on enchantable items powered by Souls haunting Decorative Graves.
 
-Confirmed public magic surfaces include:
+The publisher also confirms:
 
-- Souls used to enchant magic scrolls/tablets and upgrade Grave's Key;
-- Forgotten Knowledge readable scrolls;
-- Ritual Flute as a starting/rite-support item;
-- enhanced prayers unlocked through Elyra's Diary;
-- the named "Rite of Silent Bound" archive/knowledge path, associated with undead affinity under conditions;
-- Ankh of Pray prayer interaction near Decorative Graves;
-- Knowledge of Death progression/perks tied to Soul use, prayer and Tombstone advancements;
-- provider enchantments and supernatural effects;
-- Bone Scepter and tamed-undead / Grave Guardian magical presentation.
+- Ankh prayer near a Decorative Grave;
+- Knowledge of Death progression;
+- readable Forgotten Knowledge scrolls;
+- Ritual Flute as loot used to start some forgotten-knowledge flows;
+- Elyra's Diary unlocking enhanced prayers;
+- Rite of Silent Bound;
+- Souls used for magic scroll/tablet enchanting and Grave Key upgrades.
 
-These facts establish a real provider-owned magical subsystem. They do **not** establish a complete action registry or a complete list of discrete rites/prayers/tablet actions for the exact installed release.
+Naming reconciliation: the publisher prose uses **Rite of Silent Bound**, while the exact 9.5.6 artifact exposes **Rite of Silent Bond** / `NOTES_SILENT_BOND` / `trySilentBond(...)`. The catalog preserves the publisher wording as provenance but uses **Silent Bond** as the release-exact counted action identity.
 
-## Explicitly enumerated enchantments
+These public facts are now reconciled against the exact 9.5.6 artifact rather than being the only evidence.
 
-The current publisher page enumerates 13 Tombstone enchantments:
+## Strict counted action surface
 
-1. Soulbound;
-2. Shadow Step;
-3. Magic Siphon;
-4. Plague Bringer;
-5. Blessing;
-6. Curse of Bones;
-7. Frostbite;
-8. Spectral Bite;
-9. Spectral Conjurer;
-10. Incurable Wounds;
-11. Decrepitude;
-12. Sanctified;
-13. Ruthless Strike.
+The exact release closes **10 provider-owned player-facing semantic magic actions** that are not item/status duplicates.
 
-These are gear/enchantment identities and are **not counted as semantic spell/rite actions** under the Black Arcana magic-action metric.
+### Prayer actions — 6
 
-## Explicitly enumerated effects
+1. Grave Prayer — exact `PrayerHelper.onGrave(...)` action plus publisher-documented Ankh prayer near a Decorative Grave;
+2. Dissonance — exact provider bonus identity + `PrayerHelper.dissonance(...)`;
+3. Empathy — exact provider bonus identity + `PrayerHelper.empathy(...)`;
+4. Harmonization — exact provider bonus identity + `PrayerHelper.harmonization(...)`;
+5. Protection — exact provider bonus/stat/action identity + `PrayerHelper.protection(...)`;
+6. Undead — exact provider bonus identity + `PrayerHelper.undead(...)`.
 
-The current publisher page also enumerates 24 Tombstone effects, including Ghostly Shape, Diversion, Preservation, True Sight, Bone Shield, Aquatic Life, Restoration, Giant Strength, Little World and Beyond the Grave Bond.
+`exorcism(...)` and `zombify(...)` are implementation branches/helpers and are not promoted to separate player-facing identities.
 
-These are status/effect identities and are **not counted as independent spell/rite actions** unless a separate provider-owned action identity is independently established.
+Exact reachability support:
 
-See `PUBLISHER-9.5.6-MAGIC-SURFACE.md` for the public evidence inventory.
+- the exact artifact packages `data/tombstone/recipe/ankh_of_prayer.json`;
+- the matching recipe advancement is packaged;
+- current publisher documentation independently describes the Ankh prayer loop;
+- the exact config surface exposes `prayerCooldown`, not a prayer-disable switch;
+- Elyra's Diary is referenced by the exact PrayerHelper surface and the publisher documents it as the enhanced-prayer unlock.
 
-## Semantic accounting
+### Ritual Flute actions — 4
 
-Current strict semantic contribution: **PENDING / NOT YET ADDED TO THE GLOBAL NUMERATOR**.
+The exact `ItemRitualFlute` signature exposes four distinct note/action paths:
 
-Reason:
+1. Heal Dead Coral — `NOTES_HEAL_DEAD_CORAL` / `tryHealDeadCoral(...)`;
+2. Coral Chant — `NOTES_CORAL_CHANT` / `tryCoralChant(...)`;
+3. Remanence — `NOTES_REMANENCE` / `tryRemanence(...)`;
+4. Silent Bond — `NOTES_SILENT_BOND` / `trySilentBond(...)`.
 
-- provider-owned magic is confirmed;
-- at least one prayer action family and rite/forgotten-knowledge path are publicly described;
-- magic scroll/tablet use exists;
-- however, the public publisher material does not expose an exact 9.5.6 registry/list of all discrete prayers, rites, scroll actions or tablet actions;
-- the public GitHub repository is an issues/update repository rather than the full current implementation source;
-- All Rights Reserved licensing and clean-room rules prohibit filling that gap by copying implementation.
+The exact config scan found no Ritual Flute/rite enable-disable field. Current publisher documentation says the Ritual Flute can be found as loot and is used to begin some Forgotten Knowledge flows.
 
-Therefore this provider remains **⚠️ partial / conditioned** rather than being falsely closed as `+0` or assigned an invented count.
+### Semantic state
+
+These ten identities are:
+
+`COUNTED_RELEASE_BOUNDED = 10`
+
+Provider-specific strict semantic delta from this checkpoint:
+
+**+10**
+
+Shared global semantic ledgers are intentionally not changed in this provider-specific PR; they should be reconciled separately after this provider checkpoint merges.
+
+## Explicit exclusions
+
+### Scroll buffs — +0
+
+Exact enum `ItemScrollBuff$SpellBuff` contains 11 variants:
+
+- Preservation;
+- Unstable Intangibility;
+- Feather Fall;
+- Purification;
+- True Sight;
+- Reach;
+- Lightning Resistance;
+- Frost Resistance;
+- Aquatic Life;
+- Mercy;
+- Projectile Reflection.
+
+Each variant maps to a `MobEffect` supplier. The Black Arcana semantic metric excludes status/effect identities and physical item wrappers around them.
+
+Therefore:
+
+**11 scroll-buff variants = +0 semantic actions.**
+
+### Enchantments/effects — +0
+
+The publisher-listed 13 enchantments remain gear identities.
+
+The publisher-listed 24 effects remain status identities.
+
+Neither family enters the strict semantic action numerator.
+
+### Forgotten Knowledge documents — +0 by themselves
+
+Exact `ReadableScrollType` identities:
+
+- Rite of Silent Bond;
+- Elyra's Diary;
+- Coral Chant;
+- Erdos Fragments;
+- Nights of Nour.
+
+These are progression/lore documents. Their resulting prayer/rite actions are counted once under the action owner; the documents themselves add zero.
+
+### Books and progression state — +0 by themselves
+
+Books, Souls, Knowledge of Death points/perks and advancement/progression records are support/progression surfaces unless they independently mint a player-facing action identity.
+
+## Remaining conditional action candidates
+
+The exact 9.5.6 artifact exposes additional active `ItemCastableMagic`/magic-item surfaces, but the provider has per-item `allow_*` config for them and the deployed pack config is unavailable.
+
+Examples include:
+
+- Tablet of Assistance;
+- Tablet of Cupidity;
+- Tablet of Guard;
+- Tablet of Home;
+- Tablet of Recall;
+- Gemstone of Familiar;
+- Gemstone of Guardian;
+- Gemstone of Merchant;
+- Grave Key;
+- Lost Tablet;
+- Magic Scroll;
+- Scroll of Knowledge.
+
+These are **not added to the strict numerator** in this checkpoint.
+
+Gemstone of Prayer is treated as an invocation/support surface for the already-counted prayer family, not a new prayer identity.
+
+Further exact semantic deduplication plus deployed `AllowedMagicItems` state is required before promoting any of these candidates.
 
 ## Runtime / authority boundary
 
 Corail Tombstone remains authority for:
 
 - grave creation/recovery;
-- Grave Souls and Tombstone magic items;
+- Grave Souls and magic items;
 - Knowledge of Death/perks;
 - Forgotten Knowledge;
-- provider prayers/rites;
+- provider prayers and Ritual Flute action state;
 - provider enchantments/effects;
-- Tombstone death/teleport utilities.
+- Tombstone teleport/death utilities.
 
-Black Arcana must not duplicate those runtimes. RPG Skill Tree remains progression/Mastery/perk/gate authority only where a real boundary exists; Tombstone's own Knowledge of Death remains provider-owned state unless an explicit integration contract is implemented.
+Black Arcana must not duplicate those runtimes. RPG Skill Tree remains progression/Mastery/perk/gate authority only where a real contract exists; Tombstone's Knowledge of Death remains provider-owned state.
 
 ## Still fail-closed
 
 - installed-JAR ↔ publisher-file byte equality;
-- exact registry/resource inventory of all prayers, rites, scrolls/tablets and Forgotten Knowledge actions;
-- deployed config enabling/disabling features/items/enchantments;
-- exact Ankh prayer cooldown/config in the assembled pack;
-- Ritual Flute learned-melody/rite reachability;
-- Grave Soul consumption and exactly-once settlement;
+- deployed `AllowedMagicItems` state;
+- semantic promotion of config-gated castable magic candidates;
+- exact resource/Soul consumption and exactly-once settlement;
+- prayer/rite persistence and multiplayer authority;
 - Knowledge of Death persistence;
 - death/grave/XP restoration;
 - Create Aeronautics respawn-on-vehicle;
@@ -138,6 +214,8 @@ Black Arcana must not duplicate those runtimes. RPG Skill Tree remains progressi
 
 ## Result
 
-**⚠️ Partially cataloged:** exact physical/provider release is pinned and the publisher-confirmed magical surface is inventoried, but discrete semantic action cardinality remains unresolved.
+**⚠️ Partially cataloged, materially advanced.**
 
-No strict semantic delta is published from this checkpoint.
+The exact publisher 9.5.6 artifact now closes **10 release-bounded semantic prayer/rite actions** and multiple explicit zero-semantic families. Additional magic-item action candidates remain conditional on deployed provider config and semantic deduplication.
+
+Provider strict semantic delta: **+10**.
