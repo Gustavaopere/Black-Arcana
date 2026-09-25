@@ -6,6 +6,22 @@ The principal percentage reported to the user is the coverage of **semantic magi
 
 The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. At the Phase 2BT checkpoint the strict minimum remained **1344**. The global denominator is still incomplete and no semantic percentage is declared.
 
+## Current reconciliation — 24/09/2026
+
+Current sibling authority `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a` preserves 587 top-level entries. The 46 physical rows whose category path contains `Magic` all map to catalog provider directories after ownership-name normalization: **39 ✅ cataloged / 7 ⚠️ partial-conditioned**.
+
+Semantic effect of the current reconciliation:
+
+- Acolyte 1.0.3: **+0** — consumes Iron's-owned spell identities.
+- Companions! 1.3.4: **+9 `COUNTED_SOURCE_PINNED`** Magic Book actions.
+- Crystal Chronicles 0.1.3-alpha: **+1 `COUNTED_SOURCE_PINNED`** (`crystal_chronicles:prismatic_portal`).
+- Dungeon's Delight 1.5.1, Fantasy Armor 1.2.4, Enchantment Descriptions 21.1.11 and A Good Place 1.2.5: **+0** each after explicit zero-semantic classification.
+- Cataclysm: Spellbooks 1.1.14: retains **59** already-counted spell identities; physical SHA-1 equals audited publisher File 8847070, strengthening evidence to `COUNTED_EXACT` with **+0 current delta**.
+- Corail Tombstone 9.5.6 and Relics 0.12.8: provider magic confirmed but exact final discrete-action cardinality remains pending.
+- Somake 1.0.9 remains conditional and contributes **+0 strict** until its current exact registry/reachability gates close.
+
+The strict reconstructible semantic minimum is therefore **1392** (`1382 + 9 + 1`). The semantic denominator and the cross-domain technical denominator remain incomplete; no percentage is declared.
+
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
 The sibling physical re-audit at `neoforge-rpg-skilltree@278b427023136d7c43d85dc188d0eac1ac85ef3a` certifies `hazennstuff-1.4.0.14.jar` / mod id `hazennstuff` / runtime `1.4.0.14` / physical SHA-1 `3be20bacb44c1923348ab6f61b685eec6aacfdcd`. Exact public source pin `Hazentouvel/Hazen_N_Stuff@5fcaf39cf399609f6c1c87d14f8d4807098c9cce` declares the same provider version and closes **38 active Iron's spell registrations**. The same release localization has 41 root spell keys: `brimstone_hellblast` and `supernova` have no active registry entry, while `reign_of_tyros` has a source class/localization root but its registration line is commented; all three are excluded. Registry-level source inspection finds no conditional registration/config/mod-presence branch around the 38 active identities. Thirty-five spells inherit host/default crafting gates; Golden Shower, Night's Edge Strike and Scorching Slash have provider-specific inventory gates whose required provider items have exact release crafting paths. Custom Cosmic/Radiance/Shadow/Hydro focus routing is also source-reconciled against the current HazentouveLib 1.0.9 / Ace's Spell Utils infrastructure. Therefore Hazen contributes **+38 `COUNTED_SOURCE_PINNED`**, raising the current strict reconstructible minimum from **1344 to 1382**. Runtime compatibility remains fail-closed.
@@ -76,13 +92,15 @@ Therefore:
 - semantic numerator delta from Gaze 1.1.7.1 exact closure: **+1**;
 - semantic numerator delta from Goety 3.1.4 exact closure: **+361**;
 - semantic numerator delta from Leyline Spellbooks 1.0.3 exact closure: **+14**;
-- semantic numerator delta from Cataclysm: Spellbooks 1.1.13 exact closure: **+59**;
+- semantic numerator delta from Cataclysm: Spellbooks exact closure: **+59 historical/current retained**; 1.1.14 revalidation changes evidence strength, not the numerator;
 - semantic numerator delta from Alshanex's Familiars 4.0.3 exact closure: **+18**;
 - semantic numerator delta from the preceding Werewolves correction: **+1**;
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
+- semantic numerator delta from Companions! 1.3.4 source-pinned closure: **+9**;
+- semantic numerator delta from Crystal Chronicles 0.1.3-alpha source-pinned closure: **+1**;
 - semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
 - semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
-- strict reconstructible semantic minimum: **1382**;
+- strict reconstructible semantic minimum: **1392**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
