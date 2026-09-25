@@ -159,7 +159,7 @@ Iron's Apothic is consequently a source-pinned magic bridge/support closure with
 
 ## Current 24/09/2026 reconciliation
 
-Current sibling authority `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a` preserves the current physical provider lines used here.
+Current sibling authority `neoforge-rpg-skilltree@ed5ab7ee670c1810e6ce5b79c94e91a6341a2f97` preserves the current physical provider lines used here.
 
 Current semantic deltas since the 1382 checkpoint:
 

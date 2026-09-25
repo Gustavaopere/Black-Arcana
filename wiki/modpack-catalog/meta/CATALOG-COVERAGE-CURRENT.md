@@ -8,7 +8,7 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Current reconciliation — 24/09/2026
 
-Current sibling authority `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a` preserves 587 top-level entries. The 46 physical rows whose category path contains `Magic` all map to catalog provider directories after ownership-name normalization: **39 ✅ cataloged / 7 ⚠️ partial-conditioned**.
+Current sibling authority `neoforge-rpg-skilltree@ed5ab7ee670c1810e6ce5b79c94e91a6341a2f97` preserves 587 top-level entries. The 46 physical rows whose category path contains `Magic` all map to catalog provider directories after ownership-name normalization: **39 ✅ cataloged / 7 ⚠️ partial-conditioned**.
 
 Semantic effect of the current reconciliation:
 

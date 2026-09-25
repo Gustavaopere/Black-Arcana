@@ -4,7 +4,7 @@
 
 `AUDITORIA EM ANDAMENTO — categoria física Magic reconciliada em 24/09/2026 / denominador global PENDING REBASE`
 
-O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade física corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@49d9910ca0abfb9c0608c2730ab3ae8cefc59a9a`, cujos dossiês atuais preservam 587 entradas top-level incluindo NeoForge `21.1.250`. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
+O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade física corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@ed5ab7ee670c1810e6ce5b79c94e91a6341a2f97`, cujos dossiês atuais preservam 587 entradas top-level incluindo NeoForge `21.1.250`. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
 
 O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
