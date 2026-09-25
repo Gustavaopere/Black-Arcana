@@ -56,7 +56,7 @@ No shared global minimum is changed in this provider-specific overlay; shared le
 ## Still open
 
 - installed-JAR ↔ publisher-file byte equality;
-- deployed `AllowedMagicItems` state;
+- deployed `AllowedMagicItems` state; the read-only collector now has a bounded 12-key capture path, but no actual pack result is present in this checkpoint;
 - five tablet action candidates;
 - Familiar/Guardian/Merchant gemstone action candidates;
 - Grave Key / Lost Tablet / Magic Scroll / Scroll of Knowledge semantic eligibility;
