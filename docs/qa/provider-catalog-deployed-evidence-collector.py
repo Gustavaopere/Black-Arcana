@@ -30,6 +30,22 @@ TRAVELOPTICS_PATCH_SHA1 = "680fa679d8ea2419a79571f455436367222f6f9d"
 SOMAKE_109_RELEASE_SHA1 = "171841ac9f802be9309ecc166c1d972ac6d404c0"
 GAZE_1171_SHA1 = "a8cb3190bde157f78160ce65c202ce2d47fb2041"
 NEG_462_RELEASE_SHA1 = "32eea2c478a346ee7499f6a0db156241116f73e9"
+TOMBSTONE_956_RELEASE_SHA1 = "d830d16caa20b0d23a44ed6b1d339bc22afc2460"
+
+TOMBSTONE_ALLOWED_MAGIC_ITEM_KEYS = [
+    "allow_tablet_of_assistance",
+    "allow_tablet_of_cupidity",
+    "allow_tablet_of_guard",
+    "allow_tablet_of_home",
+    "allow_tablet_of_recall",
+    "allow_gemstone_of_familiar",
+    "allow_gemstone_of_guardian",
+    "allow_gemstone_of_merchant",
+    "allow_grave_key",
+    "allow_lost_tablet",
+    "allow_magic_scroll",
+    "allow_scroll_of_knowledge",
+]
 
 NEG_CONFIGS = [
     ("not_enough_glyphs:plow", "not_enough_glyphs/plow.toml"),
@@ -75,6 +91,7 @@ NEG_CONFIGS = [
 
 MOD_PATTERNS = {
     "asterism_arcanum": ["asterismarcanum-1.21.1-0.1.0.jar"],
+    "corail_tombstone": ["tombstone-neoforge-1.21.1-9.5.6.jar"],
     "gaze": ["gaze-1.1.7.1.jar"],
     "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
     "somake_spells": ["somakespells-1.0.9-1.21.1.jar"],
@@ -405,6 +422,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["known_1_1_7_1_equality"] = entry["sha1"] == GAZE_1171_SHA1
                 elif provider == "not_enough_glyphs":
                     entry["release_4_6_2_equality"] = entry["sha1"] == NEG_462_RELEASE_SHA1
+                elif provider == "corail_tombstone":
+                    entry["release_9_5_6_equality"] = entry["sha1"] == TOMBSTONE_956_RELEASE_SHA1
                 entries.append(entry)
         result[provider] = entries
     return result
@@ -802,6 +821,23 @@ def collect_irons_spell_namespace_overrides(
     return out
 
 
+def collect_tombstone(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    roots = [instance / "config", instance / "defaultconfigs"]
+    roots.extend(world / "serverconfig" for world in worlds)
+
+    rows = []
+    for key in TOMBSTONE_ALLOWED_MAGIC_ITEM_KEYS:
+        rows.append({
+            "config_key": key,
+            "observations": collect_selected_key(instance, roots, key),
+        })
+
+    return {
+        "expected_candidate_count": len(TOMBSTONE_ALLOWED_MAGIC_ITEM_KEYS),
+        "rows": rows,
+    }
+
+
 def collect_somake(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
@@ -908,6 +944,7 @@ def main() -> int:
             args.probe_log.expanduser() if args.probe_log is not None else None,
         ),
         "asterism_arcanum": collect_asterism(instance, worlds),
+        "corail_tombstone": collect_tombstone(instance, worlds),
         "gaze": collect_gaze(instance, worlds),
         "not_enough_glyphs": collect_neg(instance, worlds),
         "somake_spells": collect_somake(instance, worlds),
@@ -920,6 +957,7 @@ def main() -> int:
             "Runtime probe ingestion never retains raw log lines, timestamps, thread names, or unrelated log content.",
             "A deployed reference to traveloptics:blackout is evidence input, not automatic proof of a survival acquisition route.",
             "Observed Somake Iron's spell-config files are override evidence only; file presence is not treated as proof of registration or reachability.",
+            "Observed Tombstone AllowedMagicItems values are eligibility evidence only; they do not by themselves prove semantic deduplication, acquisition, or runtime reachability.",
         ],
     }
 
