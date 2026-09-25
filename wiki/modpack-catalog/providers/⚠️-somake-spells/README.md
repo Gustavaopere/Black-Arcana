@@ -80,7 +80,7 @@ The 1.0.8 changelog explicitly says Magic From the East and Born in Chaos are **
 
 ### Latest explicit provider-stack physical checkpoint
 
-The following presence list is preserved from the latest complete provider-stack physical checkpoint used by this dossier. The sibling's current reorganized certification index is being rebuilt in physical-order batches and is not treated as an absence authority for entries it has not yet reached.
+The following presence list is preserved from the earlier complete provider-stack physical checkpoint used by this dossier. Current sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589` now independently confirms the three exact Somake registration-gate providers — Mowzie's Mobs, ISS: Magic From The East and Legendary Monsters — while containing no Traveloptics dossier/path/mod-id/filename reference.
 
 Present at that checkpoint:
 
@@ -102,15 +102,13 @@ Exact 1.0.9 clean-room registration-gate audit now closes the current predicate 
 
 The current pack contains all three required providers — Mowzie's Mobs, ISS: Magic From The East and Legendary Monsters — so the current mod-composition registration outcome is **83/83 declared Somake spell IDs active by registration predicate**. This closes registration composition only. It does not establish effective Iron's `enabled` / `allow_crafting`, deployed Somake spell-lock state or survival acquisition.
 
-## Aqua / T.O Magic coexistence
+## Aqua authority / historical T.O Magic coexistence
 
 Somake states that Aqua was created to cover the absence of Aqua/T.O Magic on 1.21.1 and that its Aqua content would migrate if T.O Magic officially updated.
 
-At the same explicit physical checkpoint, the pack contains `traveloptics-4.4.0.1-1.21.1.jar`; the T.O Magic publisher labels that 1.21.1 build **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**.
+At that historical physical checkpoint, the pack also contained `traveloptics-4.4.0.1-1.21.1.jar`; the T.O Magic publisher labels that 1.21.1 build **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**. That coexistence remains historical provenance only.
 
-Therefore Somake Aqua and the T.O Magic alpha were both physically present at that checkpoint, but the historical migration statement does **not** prove that authority migrated to this deprecated alpha. Duplicate school/registry/runtime interaction is a live QA blocker.
-
-Until runtime/API evidence resolves it, Black Arcana must not select one provider's Aqua identity by assumption or create another Aqua pipeline.
+Current sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics entry, so duplicate Somake↔T.O Aqua runtime interaction is **not a current blocker**. Somake's own Aqua focus/acquisition/reachability still requires provider/host evidence, and Black Arcana must not create another generic Aqua pipeline by assumption.
 
 ## Publicly named current-line spell evidence
 
@@ -138,6 +136,6 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 - deployed value of the relevant current COMMON config — `UNVERIFIED`;
 - complete object-level survival acquisition/reachability — `UNVERIFIED / CONDITIONAL`;
 - values/formulas/stable integration API/hooks/networking/persistence — `UNVERIFIED / FAIL-CLOSED` except for narrow facts explicitly recorded by the artifact audit;
-- Somake↔T.O Aqua authority on the current dual-installed stack — `RUNTIME QA REQUIRED`.
+- Somake Aqua focus/acquisition/reachability — `UNVERIFIED / CONDITIONAL`; historical T.O coexistence is not current at sibling `d809c7c2e617f5ee14f6867af618c52922d85589`.
 
 The ARR artifact was inspected only to retain factual hash/metadata, resource/registry identities, class/member signatures and narrow control-flow/config predicates needed for catalog interoperability. No implementation body, source reconstruction, asset, model, sound or upstream prose is copied/adapted or treated as reusable material.
