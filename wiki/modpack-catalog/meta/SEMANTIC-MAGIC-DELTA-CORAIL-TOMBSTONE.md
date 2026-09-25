@@ -51,4 +51,4 @@ These remain outside the strict sum.
 
 Provider delta: **+10**.
 
-The shared global ledger should add this delta only after reconciling concurrent catalog PRs; this file does not assert a new global total.
+The shared global ledger should add this delta in a separate post-merge reconciliation; this provider-specific file does not assert a new global total.
