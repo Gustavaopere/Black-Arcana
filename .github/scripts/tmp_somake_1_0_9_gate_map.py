@@ -230,6 +230,18 @@ def analyze_modspells(zf):
  for owner,name in sorted(helper_refs):
   print(f"SOMAKE_MODSPELLS_COMPAT_HELPER_REF={owner}.{name}")
 
+ # Narrow diagnostic for any branch that guards registrations but whose predicate source
+ # was not resolved above. Emit only symbolic field/method references, not bytecode.
+ for off,op,target,label,source,ids in branch_rows:
+  if label or not ids:
+   continue
+  idx=next(i for i,d in enumerate(decoded) if d["off"]==off)
+  facts=[]
+  for x in decoded[max(0,idx-12):idx]:
+   if x["kind"] in ("GETSTATIC","GETFIELD","INVOKE","LOAD_LOCAL","LDC"):
+    facts.append(f"{x['kind']}@{x['off']}:{x['value']}")
+  print(f"SOMAKE_UNRESOLVED_BRANCH_CONTEXT=off={off}|register_ids={','.join(ids)}|facts={'||'.join(facts)}")
+
 def analyze_allow(zf,spell_id,path):
  cp,utf,cls,string,ref,fields,methods=parse_class(zf.read(path))
  code=method_code(methods,"allowCrafting")
