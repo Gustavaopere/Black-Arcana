@@ -11,6 +11,7 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 - Asterism Arcanum 0.1.0;
 - Gaze 1.1.7.1;
 - Not Enough Glyphs 4.6.2;
+- Corail Tombstone 9.5.6;
 - Somake Spells 1.0.9;
 - T.O Magic n' Extras / Traveloptics 4.4.0.1;
 - bounded deployed customization references relevant to those same closure gates.
@@ -116,7 +117,8 @@ Special comparisons:
   - original SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8`;
   - exact patch candidate SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`;
 - Gaze 1.1.7.1 is compared against exact known artifact SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`;
-- Not Enough Glyphs 4.6.2 is compared against exact publisher-release SHA-1 `32eea2c478a346ee7499f6a0db156241116f73e9`.
+- Not Enough Glyphs 4.6.2 is compared against exact publisher-release SHA-1 `32eea2c478a346ee7499f6a0db156241116f73e9`;
+- Corail Tombstone 9.5.6 is compared against exact publisher-release SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`.
 
 A missing file is not converted into a replacement identity.
 
@@ -170,6 +172,35 @@ It checks:
 - discovered/explicit world `serverconfig/`.
 
 The catalog must resolve precedence from the actual deployed environment. A template file is not automatically the effective world value.
+
+### Corail Tombstone
+
+The collector reads only the **12 Tombstone `AllowedMagicItems` booleans that currently block semantic closure**:
+
+- `allow_tablet_of_assistance`;
+- `allow_tablet_of_cupidity`;
+- `allow_tablet_of_guard`;
+- `allow_tablet_of_home`;
+- `allow_tablet_of_recall`;
+- `allow_gemstone_of_familiar`;
+- `allow_gemstone_of_guardian`;
+- `allow_gemstone_of_merchant`;
+- `allow_grave_key`;
+- `allow_lost_tablet`;
+- `allow_magic_scroll`;
+- `allow_scroll_of_knowledge`.
+
+Roots are deliberately bounded to:
+
+- `config/`;
+- `defaultconfigs/`;
+- every discovered/explicit world `serverconfig/`.
+
+Only matching key paths, boolean values, relative file paths and parser status/error are retained. The collector does **not** copy the surrounding Tombstone config.
+
+`defaultconfigs` remains template evidence only. If multiple observations exist, the catalog reviewer must resolve actual deployed precedence from the instance/world that generated the report.
+
+These values close only the **provider eligibility/config** part of Tombstone's remaining magic-item candidates. They do not automatically decide semantic deduplication, acquisition, use reachability, runtime settlement or whether a candidate should enter the strict numerator.
 
 ### Somake Spells
 
@@ -288,6 +319,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Asterism: deployed Astral Gateway Iron's spell config/datapack;
 - Gaze: effective `disableGazeRites`;
 - NEG: effective `[general].enabled` for 39 candidates;
+- Corail Tombstone: physical 9.5.6 equality plus the 12 bounded `AllowedMagicItems` booleans that gate the remaining tablets/gemstones/Grave Key/Lost Tablet/Magic Scroll/Scroll of Knowledge candidates; semantic deduplication and reachability still require provider-specific review;
 - Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact **deployed** 1.0.9 registry identity may be paired from deterministic assembled-server registry observation, while generalized registration predicates remain provider-authoritative;
 - Traveloptics: original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references that may point to a pack-specific acquisition route.
 
