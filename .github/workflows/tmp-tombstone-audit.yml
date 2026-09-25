@@ -22,3 +22,5 @@ jobs:
         run: python3 .github/scripts/tmp_corail_tombstone_9_5_6_focus.py
       - name: Run executable item surface audit
         run: python3 .github/scripts/tmp_corail_tombstone_9_5_6_itemmap.py
+      - name: Map Tombstone prayer and rite identities
+        run: python3 .github/scripts/tmp_corail_tombstone_9_5_6_actionmap.py
