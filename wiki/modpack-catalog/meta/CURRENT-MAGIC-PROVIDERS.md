@@ -4,11 +4,11 @@
 
 `AUDITORIA EM ANDAMENTO — categoria física Magic reconciliada em 24/09/2026 / denominador global PENDING REBASE`
 
-O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade física corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@dd83e06b25d9a4ab70d5f1bf0702d8375b388242`, cujos dossiês atuais preservam 587 entradas top-level incluindo NeoForge `21.1.250`. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
+O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade física corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`, cujos dossiês atuais preservam 587 entradas top-level incluindo NeoForge `21.1.250`. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
 
 O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O checkpoint Hazen havia levado o mínimo estrito a **1382**; Companions adicionou **+9 `COUNTED_SOURCE_PINNED`**, Crystal Chronicles **+1 `COUNTED_SOURCE_PINNED`** e Relics 0.12.8 agora adiciona **+41 `COUNTED_EXACT`** (39 base abilities + 2 synergies distintas), levando o mínimo estrito corrente a **1433**. Acolyte, Dungeon's Delight, Fantasy Armor, Enchantment Descriptions, A Good Place, Apokinetics e a revalidação Cataclysm 1.1.14 não adicionam novo delta nesta rodada. Corail Tombstone permanece fora do numerador por cardinalidade pendente; Somake continua condicionado.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O checkpoint Hazen havia levado o mínimo estrito a **1382**; Companions adicionou **+9 `COUNTED_SOURCE_PINNED`**, Crystal Chronicles **+1 `COUNTED_SOURCE_PINNED`**, Relics 0.12.8 **+41 `COUNTED_EXACT`** e Corail Tombstone 9.5.6 agora adiciona **+10 `COUNTED_RELEASE_BOUNDED`** (6 prayers + 4 Ritual Flute actions), levando o mínimo estrito corrente a **1443**. Acolyte, Dungeon's Delight, Fantasy Armor, Enchantment Descriptions, A Good Place, Apokinetics e a revalidação Cataclysm 1.1.14 não adicionam novo delta nesta rodada. Tombstone continua ⚠️ parcial porque castable magic-item actions adicionais permanecem condicionadas; Somake continua condicionado.
 
 Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 naquele checkpoint e mantém **1344 / 66 de 100** historicamente. Phase 2BT posteriormente fecha o componente #67 com Vampire Spells Addon sem alterar o total semântico.
 
@@ -16,7 +16,7 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — 24/09/2026
 
-No sibling atual `neoforge-rpg-skilltree@dd83e06b25d9a4ab70d5f1bf0702d8375b388242` há **45 linhas** cujas pastas de categoria contêm `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), as 45 linhas possuem diretório correspondente no catálogo.
+No sibling atual `neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84` há **45 linhas** cujas pastas de categoria contêm `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), as 45 linhas possuem diretório correspondente no catálogo.
 
 Estado efetivo desses 45 providers:
 
@@ -39,11 +39,11 @@ Fechamentos recentes relevantes:
 - ✅ A Good Place 1.2.5 — client placement-animation presentation; **+0**.
 - ✅ Create: Apokinetics 1.0.6 — exact physical/publisher hash match plus exact-binary bounded audit closes the machine-augmentation surface as **+0** spells/glyphs/rituals.
 - ✅ Cataclysm: Spellbooks 1.1.14 — **59/59** current registrations retained; installed SHA-1 equals audited publisher File 8847070; no delta versus the previously counted 59.
-- ⚠️ Corail Tombstone 9.5.6 — magic/prayer/rite/scroll subsystem confirmed; exact discrete action cardinality pending.
+- ⚠️ Corail Tombstone 9.5.6 — **10 `COUNTED_RELEASE_BOUNDED` actions** strict-counted (6 prayer + 4 Ritual Flute); additional config-sensitive castable magic-item actions remain conditional.
 - ✅ Relics 0.12.8 — exact physical/publisher artifact equality; **39 base abilities + 2 distinct synergies = 41 `COUNTED_EXACT` provider powers**; runtime/config QA remains fail-closed.
 - ⚠️ Somake 1.0.9 — exact deployed registry outcome may be proven by deterministic assembled-server observation, but generalized predicates, config/reachability and final current inventory remain conditional.
 
-O mínimo semântico estrito corrente é **1433**. O denominador semântico final e o denominador técnico cross-domain continuam abertos; não publicar percentual global.
+O mínimo semântico estrito corrente é **1443**. O denominador semântico final e o denominador técnico cross-domain continuam abertos; não publicar percentual global.
 
 ## Provider freshness override — Ars Controle 1.6.16
 
