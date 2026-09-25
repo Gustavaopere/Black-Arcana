@@ -106,7 +106,7 @@ Provider-specific strict semantic delta from this checkpoint:
 
 **+10**
 
-Shared global semantic ledgers are intentionally not changed in this PR while concurrent catalog reconciliation is open.
+Shared global semantic ledgers are intentionally not changed in this provider-specific PR; they should be reconciled separately after this provider checkpoint merges.
 
 ## Explicit exclusions
 
