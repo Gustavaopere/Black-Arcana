@@ -7,6 +7,8 @@ from pathlib import Path
 
 URL = "https://www.cursemaven.com/curse/maven/corail-tombstone-243707/8842741/corail-tombstone-243707-8842741.jar"
 TARGETS = [
+    "ovh.corail.tombstone.config.ConfigTombstone$General",
+    "ovh.corail.tombstone.config.SharedConfigTombstone$DecorativeGrave",
     "ovh.corail.tombstone.item.ItemScrollBuff$SpellBuff",
     "ovh.corail.tombstone.item.ItemLostTablet$Type",
     "ovh.corail.tombstone.item.ItemReadableScroll$ReadableScrollType",
