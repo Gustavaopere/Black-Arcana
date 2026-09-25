@@ -173,11 +173,44 @@ def analyze_modspells(data):
                     register_ids.append(last_string)
                 if owner and owner.endswith("/ModList") and name=="isLoaded":
                     isloaded_args.append(last_string)
+    # Bounded conditional-scope topology: pair isLoaded-like calls with the next
+    # forward conditional branch and list register calls inside that skipped range.
+    events=[]
+    last_string=None
+    register_events=[]
+    call_events=[]
+    for off,op,raw in ins:
+        if op==0x12:
+            s=string(raw[1])
+            if s is not None: last_string=s
+        elif op in (0x13,0x14):
+            s=string(struct.unpack_from(">H",raw,1)[0])
+            if s is not None: last_string=s
+        elif op in (0xb6,0xb7,0xb8,0xb9):
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if rr:
+                owner,name,desc,tag=rr
+                if owner and "DeferredRegister" in owner and name=="register":
+                    register_events.append((off,last_string))
+                if name=="isLoaded":
+                    call_events.append((off,owner,last_string))
+    conditional_ops=set(range(0x99,0xa7))|{0xc6,0xc7}
+    gate_scopes=[]
+    for call_off,owner,arg in call_events:
+        later=[x for x in ins if x[0]>call_off][:4]
+        br=next((x for x in later if x[1] in conditional_ops),None)
+        if not br or len(br[2])<3:
+            continue
+        rel=struct.unpack(">h",br[2][1:3])[0]
+        target=br[0]+rel
+        scoped=[rid for roff,rid in register_events if br[0] < roff < target] if target>br[0] else []
+        gate_scopes.append((call_off,owner,arg,br[0],br[1],target,scoped))
     return {
       "holder_fields":holders,
       "register_ids":register_ids,
       "isloaded_args":isloaded_args,
       "branch_count":branches,
+      "gate_scopes":gate_scopes,
       "utf8":utf8
     }
 
@@ -270,6 +303,9 @@ def inspect(label, blob, expected_sha1):
         print(f"SOMAKE_{label}_REGISTER_CALL_COUNT={len(ids)}")
         print(f"SOMAKE_{label}_BRANCH_OPCODE_COUNT={a['branch_count']}")
         print(f"SOMAKE_{label}_ISLOADED_CALL_ARGS=" + ",".join(x or "<none>" for x in a["isloaded_args"]))
+        print(f"SOMAKE_{label}_GATE_SCOPE_COUNT={len(a['gate_scopes'])}")
+        for call_off,owner,arg,br_off,br_op,target,scoped in a["gate_scopes"]:
+            print(f"SOMAKE_{label}_GATE_SCOPE=call@{call_off}|owner={owner}|arg={arg}|branch@{br_off}:0x{br_op:02x}|target={target}|registrations={','.join(x or '<none>' for x in scoped)}")
         print(f"SOMAKE_{label}_REGISTRY_IDS=" + ",".join(ids))
         sigs=spell_class_signatures(zf)
         allow=[row for row in sigs if row[1]]
