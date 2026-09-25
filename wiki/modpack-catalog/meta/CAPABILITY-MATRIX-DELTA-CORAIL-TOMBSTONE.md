@@ -1,46 +1,50 @@
 # Capability Matrix Delta — Corail Tombstone 9.5.6
 
-Status: `PARTIAL / PUBLISHER-BOUNDED MAGIC SYSTEM / SEMANTIC CARDINALITY PENDING`
-
-This file records only Tombstone-specific overlap. It does not replace the global capability matrix.
+Status: `⚠️ PARTIAL / 10 COUNTED_RELEASE_BOUNDED PRAYER-RITE ACTIONS / CONFIG-CONDITIONAL CASTABLE MAGIC REMAINS`
 
 | Tombstone capability | Provider-native meaning | Black Arcana consequence |
 |---|---|---|
-| Grave Souls | provider resource used for magical enchanting and related progression | do not duplicate or settle Tombstone Soul consumption inside Black Arcana |
-| magic scrolls/tablets | provider magical item/action family | keep provider ownership; enumerate before any semantic deduplication |
-| Ankh prayer | grave-adjacent provider prayer interaction | do not map generic Black Arcana prayer/ritual UX onto Tombstone without a verified boundary |
-| enhanced prayers | Forgotten Knowledge unlock expands prayer behavior | preserve provider unlock/state and exact config |
-| Ritual Flute | learned melody / correct-block rite support | do not create a second melody/rite state machine |
-| Rite of Silent Bound | named forgotten-knowledge/rite surface tied to undead affinity | preserve provider state; exact action semantics remain unresolved |
-| Knowledge of Death | provider progression/perk runtime | do not transfer ownership to Black Arcana or RPG Skill Tree without a real contract |
-| 13 enchantments | equipment-driven magical modifiers | gear content; not separate spell identities |
-| 24 effects | provider supernatural status states | status content; not separate spell identities |
-| grave/death recovery | authoritative provider inventory/death lifecycle | Black Arcana magic must not double-process death/recovery |
-| XP restoration | Tombstone death/recovery economy, with 9.5.6 overflow fix | never duplicate XP settlement |
-| Create Aeronautics respawn compatibility | provider-specific vehicle respawn boundary introduced in 9.5.5 | treat as external runtime QA, not generic compatibility |
+| Grave Prayer | Ankh prayer near prayable grave; exact `onGrave` action | preserve provider cooldown/Knowledge settlement; counted once |
+| enhanced prayer family | Dissonance, Empathy, Harmonization, Protection, Undead | five provider action identities; do not duplicate branches such as exorcism/zombify |
+| Ritual Flute | four exact note/action paths: Heal Dead Coral, Coral Chant, Remanence, Silent Bond | preserve learned/progression state and provider melody execution; counted once per action |
+| Grave Souls | provider resource used for magic enchanting/progression | do not duplicate Soul consumption |
+| 11 scroll buffs | physical scrolls backed by provider MobEffects | effect/status physicalization; +0 semantic actions |
+| readable Forgotten Knowledge | lore/progression documents | +0 by themselves; unlock/resulting actions counted under their action owner |
+| five magic tablets | provider `ItemCastableMagic` actions | current semantic eligibility conditional on deployed `allowTablet*` config |
+| Familiar/Guardian/Merchant gemstones | provider castable magic actions | current semantic eligibility conditional on deployed `allowGemstone*` config |
+| Gemstone of Prayer | prayer invocation/support surface | deduplicate against the counted prayer family |
+| Grave Key / Lost Tablet / Magic Scroll / Scroll of Knowledge | active magic-item surfaces | keep provider authority; semantic promotion waits for config + dedup closure |
+| Knowledge of Death | provider progression/perk runtime | do not transfer authority to Black Arcana/RPG Skill Tree |
+| 13 enchantments | equipment-driven magical modifiers | gear content; +0 |
+| 24 effects | provider supernatural status states | status content; +0 |
+| grave/death recovery | authoritative provider inventory/death lifecycle | Black Arcana must not double-process death/recovery |
+| XP restoration | Tombstone death/recovery economy | never duplicate XP settlement |
+| Create Aeronautics respawn compatibility | provider vehicle-respawn boundary | external runtime QA, not semantic spell overlap |
 
 ## Semantic boundary
 
-The publisher confirms Tombstone has discrete magic-related action families, but the exact 9.5.6 cardinality is not publicly closed.
+Exact release-bounded counted actions:
 
-Therefore:
+- Grave Prayer: 1;
+- enhanced prayers: 5;
+- Ritual Flute actions: 4.
 
-- enchantments: **+0 semantic actions**;
-- effects: **+0 semantic actions**;
-- Souls/Knowledge state: **+0 by themselves**;
-- prayers/rites/scroll-tablet actions: **cardinality pending**.
+Strict semantic delta:
 
-Strict semantic delta: **PENDING**.
+**+10 `COUNTED_RELEASE_BOUNDED`**.
+
+The provider remains ⚠️ because config-sensitive castable items are not yet fully eligible/deduplicated.
 
 ## Runtime boundary
 
-Any integration remains fail-closed until the exact assembled pack proves:
+Catalog count is independent from runtime PASS.
 
-- registry/config parity;
-- action reachability;
-- exactly-once Soul/resource settlement;
+Remain fail-closed for:
+
+- deployed `AllowedMagicItems`;
+- Soul/resource exactly-once settlement;
 - prayer/rite persistence;
 - grave/death lifecycle coexistence;
-- multiplayer/protection behavior;
-- vehicle respawn coexistence;
-- restart/reload/migration behavior.
+- multiplayer/protection;
+- vehicle respawn;
+- restart/reload/migration.
