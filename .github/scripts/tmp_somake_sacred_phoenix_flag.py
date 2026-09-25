@@ -129,6 +129,28 @@ def analyze_startup_features(zf):
             print(f"SOMAKE_STARTUP_CLINIT_CONTEXT={off}|{kind}|{value}")
     print("SOMAKE_STARTUP_AUDIT_COMPLETE=true")
 
+
+def dump_symbolic_method(zf, class_path, method_name, prefix):
+    cp,string,ref,methods=parse(zf.read(class_path))
+    code=next((c for n,d,c in methods if n==method_name),None)
+    if code is None:
+        raise RuntimeError(f"{class_path}:{method_name} not found")
+    print(f"{prefix}_METHOD={method_name}")
+    for off,op,raw in insns(code):
+        value=None; kind=f"OP_{op:02x}"
+        if op==0x12:
+            value=string(raw[1]); kind="LDC"
+        elif op in (0x13,0x14):
+            value=string(struct.unpack_from(">H",raw,1)[0]); kind="LDC"
+        elif op in (0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xb8,0xb9):
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if rr:
+                value=rr[:3]
+                kind={0xb2:"GETSTATIC",0xb3:"PUTSTATIC",0xb4:"GETFIELD",0xb5:"PUTFIELD",0xb6:"INVOKEVIRTUAL",0xb7:"INVOKESPECIAL",0xb8:"INVOKESTATIC",0xb9:"INVOKEINTERFACE"}[op]
+        if kind in {"LDC","GETSTATIC","PUTSTATIC","GETFIELD","PUTFIELD","INVOKEVIRTUAL","INVOKESPECIAL","INVOKESTATIC","INVOKEINTERFACE"}:
+            print(f"{prefix}_CONTEXT={off}|{kind}|{value}")
+    print(f"{prefix}_COMPLETE=true")
+
 def main():
     req=urllib.request.Request(URL,headers={"User-Agent":"Black-Arcana-clean-room-audit/1"})
     with urllib.request.urlopen(req,timeout=120) as resp: blob=resp.read()
@@ -137,6 +159,9 @@ def main():
     if got!=SHA1: raise RuntimeError(f"sha mismatch {got}")
     with zipfile.ZipFile(io.BytesIO(blob)) as zf:
         analyze_startup_features(zf)
+        dump_symbolic_method(zf, "com/somake/somakespells/config/StartupFeatures.class", "readSacredPhoenixBlessing", "SOMAKE_READ_SACRED")
+        dump_symbolic_method(zf, "com/somake/somakespells/compat/MagicFromTheEastCompat.class", "isLoaded", "SOMAKE_MFTE_HELPER")
+        dump_symbolic_method(zf, "com/somake/somakespells/compat/LegendaryMonstersCompat.class", "isLoaded", "SOMAKE_LEGENDARY_HELPER")
         cp,string,ref,methods=parse(zf.read(TARGET))
     code=next(c for n,d,c in methods if n=="<clinit>")
     seq=insns(code)
