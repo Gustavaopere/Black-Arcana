@@ -48,7 +48,7 @@ O sibling revalidado em `neoforge-rpg-skilltree@ee08513c9e8992418c508bae485f3a18
 
 O source oficial exato `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` declara `mod_version=1.6.16` e Ars Nouveau `5.13.1.1403`. A comparação contra o checkpoint canônico anterior `ecbb83ba512bc9ca7a025556fb9c62dbd32b6430` (1.6.15) contém seis commits; o único Java de gameplay alterado é `WarpingSpellPrismBlock.java`. O arquivo autoritativo de registro `ACRegistry.java` permanece exatamente no mesmo Git blob `b38959053740605768a8945ed40c012c6bef5953` nos dois checkpoints.
 
-Consequência canônica: **✅ Ars Controle 1.6.16 — 9/9 spell parts source-pinned permanecem catalogados; +0 delta semântico; mínimo estrito continua 1382**. As correções do Warping Spell Prism, mixins, Source settlement, cross-dimension, persistência e comportamento assembled-pack continuam runtime QA fail-closed.
+Consequência naquele checkpoint: **✅ Ars Controle 1.6.16 — 9/9 spell parts source-pinned permanecem catalogados; +0 delta semântico; o mínimo estrito então continuava em 1382**. As correções do Warping Spell Prism, mixins, Source settlement, cross-dimension, persistência e comportamento assembled-pack continuam runtime QA fail-closed.
 
 ## Provider freshness override — Hazen N Stuff 1.4.0.14
 
@@ -56,7 +56,7 @@ O sibling revalidado em `neoforge-rpg-skilltree@278b427023136d7c43d85dc188d0eac1
 
 O source oficial release-correlated `Hazentouvel/Hazen_N_Stuff@5fcaf39cf399609f6c1c87d14f8d4807098c9cce` declara 1.4.0.14 e fecha **38 active spell registrations**. O `en_us` do mesmo pin contém 41 root spell keys; `brimstone_hellblast` e `supernova` ficam excluídos por não possuírem active registry entry, e `reign_of_tyros` fica excluído porque sua linha `registerSpell(...)` está comentada no pin exato apesar da classe/localization existente. O registry source-pinned não contém branch de registration por config/mod-presence em torno das 38 identidades ativas. Os três `canBeCraftedBy` especiais — Golden Shower, Night's Edge Strike e Scorching Slash — possuem acquisition path provider-owned no mesmo release; custom focus routes Cosmic/Radiance/Shadow/Hydro também foram reconciliadas com HazentouveLib 1.0.9/Ace's Spell Utils.
 
-Consequência canônica: **✅ Hazen N Stuff — 38/38 source-pinned spell registrations catalogadas; +38 semantic objects; runtime QA fail-closed**. O mínimo semântico reconstruível passa para **1382**. Como Hazen não estava no denominador técnico histórico de 100 componentes, o denominador técnico global fica explicitamente `PENDING REBASE`.
+Consequência naquele checkpoint: **✅ Hazen N Stuff — 38/38 source-pinned spell registrations catalogadas; +38 semantic objects; runtime QA fail-closed**. O mínimo semântico reconstruível então passou para **1382**. Como Hazen não estava no denominador técnico histórico de 100 componentes, o denominador técnico global fica explicitamente `PENDING REBASE`.
 
 ## Provider freshness override — Create: Wizardry 1.21.1-0.5.1-pre1
 
@@ -64,7 +64,7 @@ O sibling atual em `neoforge-rpg-skilltree@4767f5c637c02c6d91ccb43a86ea1539f42a2
 
 O source oficial version-correlated `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declara a mesma versão. A auditoria estrutural encontra 75 Java files, 328 resources e **zero** superfície provider-owned de spell registry/resource: sem `registerSpell`, `SpellRegistry`, `DeferredRegister<AbstractSpell>`, `Registries.SPELL`, `SPELLS.register` ou namespace `spell.create_wizardry`. Blaze Caster e Mana Siphon consomem `SpellData`/`AbstractSpell` do Iron's e alteram/automatizam o pipeline host; isso não transfere ownership dos spells. A blacklist explícita do Blaze Caster contém 31 host spell path names e também não cria identidades novas.
 
-Consequência canônica: **✅ Create: Wizardry — componente mágico/cross-domain catalogado como `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0 semantic objects; runtime QA fail-closed**. O mínimo estrito permanece **1382** neste `main`. Como o denominador técnico global está em rebase, nenhum novo percentual/fração técnica é publicado.
+Consequência naquele checkpoint: **✅ Create: Wizardry — componente mágico/cross-domain catalogado como `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0 semantic objects; runtime QA fail-closed**. O mínimo estrito então permanecia em **1382**. Como o denominador técnico global está em rebase, nenhum novo percentual/fração técnica é publicado.
 
 ## Provider freshness override — Iron's Apothic 2.2.2
 
@@ -72,7 +72,7 @@ O sibling certificado em `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96
 
 O source oficial exato `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declara `mod_version=2.2.2`. Nesse pin, o provider registra **7 codecs próprios de affix** no registry de Apotheosis, possui **140 definições JSON de affix**, das quais **48** ficam explicitamente em superfícies `spell`/`imbued`, e **24 definições de gem**. `SpellTriggerAffix` resolve spells pelo `SpellRegistry` de Iron's e `SpellCastUtil` executa o `AbstractSpell` externo pelo pipeline de casting do host; não há registry próprio de spell do provider no source exato.
 
-Consequência canônica: **✅ Iron's Apothic 2.2.2 — bridge mágico/source-pinned catalogado, 48 spell-oriented affix definitions tratadas como triggers/suporte sobre spells externos, 0 provider-owned spell registrations, +0 semantic objects**. O mínimo estrito permanece **1382**. O denominador técnico global continua `PENDING REBASE`; não é publicado novo percentual. Compatibilidade assembled-pack com Iron's 3.16.3, Apotheosis 8.8.0, optional schools, cooldown/target settlement e recursão cross-mod permanecem runtime QA fail-closed.
+Consequência naquele checkpoint: **✅ Iron's Apothic 2.2.2 — bridge mágico/source-pinned catalogado, 48 spell-oriented affix definitions tratadas como triggers/suporte sobre spells externos, 0 provider-owned spell registrations, +0 semantic objects**. O mínimo estrito então permanecia em **1382**. O denominador técnico global continua `PENDING REBASE`; não é publicado novo percentual. Compatibilidade assembled-pack com Iron's 3.16.3, Apotheosis 8.8.0, optional schools, cooldown/target settlement e recursão cross-mod permanecem runtime QA fail-closed.
 
 ## Provider freshness override — Somake 1.0.9
 
@@ -92,7 +92,7 @@ A release oficial atual é CurseForge project/file `1023517 / 8880291`. O audit 
 
 O source oficial `Alexthw46/NotEnoughGlyphs@45604dd18d9d2e3e7ca80a2c616b3309f42aca77` declara `mod_version=4.6.2`. Comparado ao pin histórico 4.6.1, `ArsNouveauRegistry.java` permanece blob `28c2007999ec6e534b8c5cd2c90b012c81072cff` e `EffectMomentum.java` permanece blob `7dd4f7ebe06cbadd282fddb1a6ca603013d2af2a`, ainda com `isEnabled() = false`. O conjunto físico atual mantém Ars Elemental e Ars Controle presentes, enquanto Too Many Glyphs, Ars Omega e Ars Trinkets permanecem ausentes da modlist. Portanto a matriz corrente continua **40 registrations / 39 source-enabled / Momentum source-disabled**.
 
-Consequência canônica: Not Enough Glyphs continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O blocker não é mais versão/registry; é exclusivamente a ausência dos valores efetivos de SERVER config `[general].enabled` para os 39 candidatos. Os totais canônicos permanecem **1344** objetos semânticos mínimos e **68/100** componentes técnicos.
+Not Enough Glyphs continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O blocker não é mais versão/registry; é exclusivamente a ausência dos valores efetivos de SERVER config `[general].enabled` para os 39 candidatos. No checkpoint histórico em que esta seção foi fechada, os totais eram **1344** objetos semânticos mínimos e **68/100** componentes técnicos; os totais correntes acima prevalecem.
 
 ## Freshness histórica 2026-09-07
 

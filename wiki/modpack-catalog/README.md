@@ -99,7 +99,7 @@ Examples:
 - Iron's: `providers/irons-spells/<school>/<spell>.md`;
 - Asterism/Paladin/Dreamless and other school-based Iron's addons: `providers/<addon>/<school>/<spell>.md`;
 - Apprentice's Codex: `providers/apprentice-codex/<school>/<spell>.md` for its 83 Iron's-native spells, plus provider-wide item/block/effect/attribute, School Affinity, acquisition and compatibility inventories;
-- Cataclysm: Spellbooks: `providers/cataclysm-spellbooks/` separates exact installed/current publisher evidence from `SOURCE-1.1.11-BASELINE.md`; stale source rows are never promoted to current 1.1.13 spell pages;
+- Cataclysm: Spellbooks: `providers/cataclysm-spellbooks/` separates exact installed/current publisher evidence from `SOURCE-1.1.11-BASELINE.md`; the exact 1.1.13 material is retained as historical/hash-matched control, while current 1.1.14 revalidation is recorded separately; stale source rows are never promoted across release boundaries;
 - Ars Nouveau: `providers/ars-nouveau/glyphs/forms|effects|augments/<glyph>.md`, plus `rituals/` and `systems/`;
 - Goety: Focuses / rituals / brews / servants / systems;
 - Goety Cataclysm and Goety Iron: separate addon-provider directories; they are not folded into Goety's base Focus count;
