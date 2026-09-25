@@ -8,7 +8,7 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Current reconciliation — 24/09/2026
 
-Current sibling authority `neoforge-rpg-skilltree@5ad350730a16e786f91396336c16c7b193feb7ac` contains **588 current modlist dossier Markdown files**. The current category layout contains **50 physical rows whose category path contains `Magic`**; all map to catalog provider directories after ownership-name normalization: **46 ✅ cataloged / 4 ⚠️ partial-conditioned**. Gaze remains one additional global ⚠️ magic provider categorized under `Addons/`. Traveloptics is absent from the current sibling modlist/dossier tree and survives only as a historical Phase 2BS audit, not as a current partial provider.
+Current sibling authority `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` contains **50 current status-prefixed physical rows whose category path contains `Magic`**; all map to catalog provider directories after ownership-name normalization: **46 ✅ cataloged / 4 ⚠️ partial-conditioned**. Unprefixed legacy/export Markdown files under `modlist/` are not treated as current physical rows. Gaze remains one additional global ⚠️ magic provider categorized under `Addons/`. Traveloptics is absent from the current sibling modlist/dossier tree and survives only as a historical Phase 2BS audit, not as a current partial provider.
 
 Semantic effect of the current reconciliation:
 
