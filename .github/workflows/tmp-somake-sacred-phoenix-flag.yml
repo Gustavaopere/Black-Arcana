@@ -1,0 +1,21 @@
+name: Somake Sacred Phoenix Flag Audit NON-MERGE
+
+on:
+  push:
+    branches:
+      - 'audit/somake-1.0.9-sacred-phoenix-flag-2026-09-25'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Resolve Somake Sacred Phoenix registration flag NON-MERGE
+        run: python3 .github/scripts/tmp_somake_sacred_phoenix_flag.py
