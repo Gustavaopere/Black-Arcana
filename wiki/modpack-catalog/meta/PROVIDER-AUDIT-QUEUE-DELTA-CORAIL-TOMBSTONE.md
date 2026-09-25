@@ -51,7 +51,7 @@ Provider strict contribution:
 
 **+10 `COUNTED_RELEASE_BOUNDED`**.
 
-No shared global minimum is changed in this overlay while a concurrent catalog-reconciliation PR is open.
+No shared global minimum is changed in this provider-specific overlay; shared ledgers should be reconciled separately after this checkpoint merges.
 
 ## Still open
 
