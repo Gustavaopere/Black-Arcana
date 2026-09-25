@@ -1,10 +1,10 @@
 # Somake Spells 1.0.9 — Current Physical Revalidation Checklist
 
-Status: `⚠️ CURRENT PHYSICAL 1.0.9 / PHYSICAL=PUBLISHER SHA-1 / EXACT 83-ID REGISTRY DECLARATION / DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN`
+Status: `⚠️ CURRENT PHYSICAL 1.0.9 / PHYSICAL=PUBLISHER SHA-1 / EXACT 83-ID REGISTRY / CURRENT MOD-COMPOSITION 83/83 / SPELL-LOCK DEFAULT FALSE / DEPLOYED HOST+LOCK CONFIG + REACHABILITY OPEN`
 
 ## Authority reset
 
-The current sibling modlist at `Gustavaopere/neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` identifies the installed provider as:
+The current sibling modlist rechecked at `Gustavaopere/neoforge-rpg-skilltree@af648d441441dde929cd49c5e18509347f06f09a` identifies the installed provider as:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`;
 - mod id: `somakespells`;
@@ -137,21 +137,26 @@ Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1
    - physical ↔ publisher equality: **true**.
    - see [`PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md).
 
-2. **Current registry declaration — CLOSED AT RELEASE LEVEL**
-   - exact File 8867079 declared inventory: **83 unique spell IDs**;
+2. **Current registry declaration — CLOSED AT EXACT PHYSICAL LEVEL**
+   - exact File 8867079 / physical SHA-matched inventory: **83 unique spell IDs**;
    - exact delta vs 1.0.8-fix: **+17 / -1 (`summon_zombie`)**;
-   - current spell cards are consolidated in `SPELL-CATALOG-1.0.9.md`;
-   - **still open:** which conditional registrations are active in the assembled pack; runtime observation remains accepted current-pack authority for that outcome.
+   - current spell cards are consolidated in `SPELL-CATALOG-1.0.9.md`.
 
-3. **Optional-provider gates / deployed registration outcome**
-   - for any generalized claim about how Somake behaves across different mod compositions, exact predicates must come from permitted provider-authoritative evidence;
-   - for **this current pack catalog**, an exact assembled-pack registry snapshot may close which optional registrations are actually present when paired with current physical mod presence/absence;
-   - such runtime evidence proves the deployed outcome only and must not be rewritten as a universal predicate rule.
+3. **Optional-provider gates / current registration outcome — CLOSED**
+   - refined NON-MERGE audit HEAD `071bdd92fed50aea65ad47772f4d1fb0cb8b7536`, run `36161117761`;
+   - exact registry topology: **67 unconditional + 16 unique conditional registrations**;
+   - Mowzie's Mobs gates `blessed_connection`, `guardian_connection`, `cursed_connection`;
+   - ISS gates `mirror_strike` and `symmetry_empowerment`;
+   - Legendary Monsters gates nine Spirit IDs;
+   - `crimson_reflection` and `spirit_empowerment` are nested and require **both ISS + Legendary Monsters**;
+   - all three registration-gate providers are physically present in the current pack, so Somake's own registration predicates admit **83/83** declared IDs;
+   - Born in Chaos, Tunes 'n Tomes and Geomancy Plus compatibility checks exist elsewhere but do not gate `ModSpells` registrations in exact 1.0.9.
+   - this is current-pack registration-composition evidence, not a statement that every ID is survival-obtainable or enabled by deployed Iron's config.
 
 4. **Somake global progression/config**
    - `enableSpellLockSystem` existence in 1.0.9: **CLOSED**;
    - `somakespells/general/common.toml` path symbol in 1.0.9: **CLOSED**;
-   - exact current default/control-flow semantics: still bounded unless separately proven;
+   - exact current boolean code default: **`false`**, closed by the refined exact-binary audit;
    - effective deployed value from the actual pack when reachability depends on it: **OPEN**.
 
 5. **Iron's host gates**
@@ -164,7 +169,7 @@ The isolated `black_arcana_catalog_qa` companion now emits the exact observed Ir
 
 Canonical runbook: [`docs/qa/provider-catalog-runtime-registry-probe.md`](../../../../docs/qa/provider-catalog-runtime-registry-probe.md).
 
-When paired with the filesystem collector and current physical modlist, those rows may satisfy the **current-pack registration outcome** portions of items 2 and 3 above. They do not by themselves establish survival reachability, `enableSpellLockSystem`, generalized optional-registration predicates, or Aqua authority.
+Registration composition is now closed structurally for the current pack, so the runtime probe is no longer required merely to identify the 83/83 Somake registration subset. It remains the preferred read-only path for observing effective Iron's school / `enabled` / `allow_crafting` values on the exact assembled server. It does not by itself establish survival reachability, deployed `enableSpellLockSystem`, or Aqua authority.
 
 6. **Aqua / T.O coexistence**
    - current Somake Aqua authority and focus/acquisition behavior with installed Traveloptics 4.4.0.1;
@@ -183,4 +188,4 @@ Permitted evidence may include exact hash/metadata, resource paths and structure
 
 Somake remains **⚠️ Parcial / condicionado**.
 
-The historical 1.0.8-fix semantic contribution remains **+0** and is not reused as current evidence. The current 1.0.9 release total is now **83 declared registry identities**, but no strict semantic-count or technical-component promotion is declared until deployed active-subset/host/config/reachability gates close.
+The historical 1.0.8-fix semantic contribution remains **+0** and is not reused as current evidence. The current 1.0.9 release total is **83 exact physical registry identities**, and the current mod composition admits **83/83** through Somake's own registration predicates. No strict semantic-count or technical-component promotion is declared until effective host/provider config and survival reachability close.

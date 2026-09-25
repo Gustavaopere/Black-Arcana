@@ -1,10 +1,10 @@
 # Somake Spells — current physical 1.0.9 / historical exact 1.0.8-fix audit
 
-Status: `⚠️ CURRENT PHYSICAL 1.0.9 / PHYSICAL SHA-1 = EXACT PUBLISHER FILE 8867079 / EXACT 83-ID REGISTRY DECLARATION / DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN / CONDITIONAL +0 / FAIL-CLOSED`
+Status: `⚠️ CURRENT PHYSICAL 1.0.9 / PHYSICAL SHA-1 = EXACT PUBLISHER FILE 8867079 / EXACT 83-ID REGISTRY / CURRENT MOD-COMPOSITION REGISTRATION OUTCOME 83/83 / SPELL-LOCK DEFAULT FALSE / DEPLOYED HOST+LOCK CONFIG + SURVIVAL REACHABILITY OPEN / CONDITIONAL +0 / FAIL-CLOSED`
 
 ## Current installed identity — 1.0.9
 
-Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` supersedes the former 1.0.8-fix physical-line claim:
+Current sibling modlist authority rechecked at `Gustavaopere/neoforge-rpg-skilltree@af648d441441dde929cd49c5e18509347f06f09a` preserves the 1.0.9 physical line and supersedes the former 1.0.8-fix physical-line claim:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`
 - Mod id: `somakespells`
@@ -56,7 +56,7 @@ This proves those charge surfaces for the 1.0.8-fix artifact only. It does not e
 - [PROGRESSION-EQUIPMENT.md](PROGRESSION-EQUIPMENT.md) — books, Grimoires, Upgrade Forge, ritual path and equipment;
 - [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md) — exact artifact/provenance/dependency/QA boundary;
 - [CURRENT-1.0.9-REVALIDATION-CHECKLIST.md](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) — authoritative current-line closure gates for 1.0.9;
-- [EXACT-1.0.9-RESOURCE-AUDIT.md](EXACT-1.0.9-RESOURCE-AUDIT.md) — exact publisher-release hash/metadata/resource evidence for 1.0.9;\n- [EXACT-1.0.9-REGISTRY-AUDIT.md](EXACT-1.0.9-REGISTRY-AUDIT.md) — exact publisher-release structural registry closure: 83 declared spell identities, +17/-1 delta, host override/gate facts;\n- [SPELL-CATALOG-1.0.9.md](SPELL-CATALOG-1.0.9.md) — current 83-ID registry inventory; not yet strict-counted;
+- [EXACT-1.0.9-RESOURCE-AUDIT.md](EXACT-1.0.9-RESOURCE-AUDIT.md) — exact publisher-release hash/metadata/resource evidence for 1.0.9;\n- [EXACT-1.0.9-REGISTRY-AUDIT.md](EXACT-1.0.9-REGISTRY-AUDIT.md) — exact hash-matched physical/release registry closure: 83 declared IDs, +17/-1 delta, current optional-registration topology and host override facts;\n- [EXACT-1.0.9-REGISTRATION-GATE-MAP.md](EXACT-1.0.9-REGISTRATION-GATE-MAP.md) — exact 67 unconditional + 16 optional-provider-gated mapping and current-pack 83/83 registration outcome;\n- [SPELL-CATALOG-1.0.9.md](SPELL-CATALOG-1.0.9.md) — current 83-ID registry inventory; active by current mod composition but not yet strict-counted;
 - [EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) — historical 1.0.8-fix hash-matched registry/gate/config facts;
 - [INTEGRATION-RULES.md](INTEGRATION-RULES.md) — Black Arcana authority and fail-closed rules.
 
@@ -95,7 +95,9 @@ Not located at that checkpoint:
 
 - Better Combat.
 
-Presence alone is not enough to prove a current optional integration path. The historical 1.0.8-fix artifact proved six conditional registrations for that artifact: `mowziesmobs` gated Blessed/Guardian/Cursed Connection and `iss_magicfromtheeast` gated Mirror Strike/Spirit Empowerment/Symmetry Empowerment. Those mod IDs were present at that physical checkpoint, but that fact does **not** prove that 1.0.9 retains the same six predicates or the same 61+6 registry partition. Current 1.0.9 optional registration predicates remain open until provider-authoritative evidence closes them.
+Exact 1.0.9 clean-room registration-gate audit now closes the current predicate topology rather than carrying forward 1.0.8 assumptions. `ModSpells` caches exactly three registration booleans: `MOWZIE_LOADED` from `ModList.isLoaded("mowziesmobs")`, `ISS_LOADED` from `MagicFromTheEastCompat.isLoaded()`, and `LEGENDARY_MONSTERS_LOADED` from `LegendaryMonstersCompat.isLoaded()`. The exact ID mapping is preserved in [`EXACT-1.0.9-REGISTRATION-GATE-MAP.md`](EXACT-1.0.9-REGISTRATION-GATE-MAP.md).
+
+The current pack contains all three required providers — Mowzie's Mobs, ISS: Magic From The East and Legendary Monsters — so the current mod-composition registration outcome is **83/83 declared Somake spell IDs active by registration predicate**. This closes registration composition only. It does not establish effective Iron's `enabled` / `allow_crafting`, deployed Somake spell-lock state or survival acquisition.
 
 ## Aqua / T.O Magic coexistence
 
@@ -126,9 +128,10 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 - current installed filename/runtime — `HIGH`, sibling modlist identifies `somakespells-1.0.9-1.21.1.jar` / runtime `1.0.9`;
 - exact 1.0.9 publisher release identity/hash — `HIGH`, File `8867079` / SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`;
 - current physical-pack byte equality to that release — `HIGH / HASH-MATCHED`: physical SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` equals exact File `8867079`; this closes artifact equality but not the assembled active subset, config or reachability;
-- exact current 1.0.9 publisher-release registry declaration — `HIGH / RELEASE-BOUNDED`: 83 fields + 83 register calls + 83 unique IDs + 83 top-level spell classes; active deployed subset remains unverified;
-- exact current 1.0.9 optional-registration mapping/deployed outcome — `PARTIAL`: current artifact exposes optional-mod checks, but exact ID↔predicate mapping and assembled-pack active subset remain unverified;
-- `enableSpellLockSystem` symbol + `somakespells/general/common.toml` path — `CURRENT 1.0.9 REVALIDATED`; exact default/control-flow and deployed value remain open;
+- exact current 1.0.9 physical/release registry declaration — `HIGH / HASH-MATCHED`: 83 fields + 83 register calls + 83 unique IDs + 83 top-level spell classes;
+- exact current 1.0.9 optional-registration mapping — `HIGH / EXACT-BINARY`: 67 unconditional IDs + 16 unique conditional IDs gated only by Mowzie's Mobs, ISS: Magic From The East and/or Legendary Monsters;
+- current-pack registration outcome — `HIGH / COMPOSITION-CLOSED`: all three registration-gate providers are physically installed, therefore 83/83 declared IDs satisfy Somake's own registration predicates in the current pack;
+- `enableSpellLockSystem` symbol + `somakespells/general/common.toml` path + code default — `CURRENT 1.0.9 REVALIDATED`; exact boolean default is `false`, while the effective deployed value remains open;
 - deployed value of the relevant current COMMON config — `UNVERIFIED`;
 - complete object-level survival acquisition/reachability — `UNVERIFIED / CONDITIONAL`;
 - values/formulas/stable integration API/hooks/networking/persistence — `UNVERIFIED / FAIL-CLOSED` except for narrow facts explicitly recorded by the artifact audit;

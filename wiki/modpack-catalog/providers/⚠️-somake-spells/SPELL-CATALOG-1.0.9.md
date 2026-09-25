@@ -1,6 +1,6 @@
 # Somake Spells 1.0.9 — current exact release spell registry
 
-Status: `83 EXACT PUBLISHER-RELEASE REGISTRY IDENTITIES / RELEASE-BOUNDED / NOT YET STRICT-COUNTED`
+Status: `83 EXACT PHYSICAL REGISTRY IDENTITIES / CURRENT MOD-COMPOSITION REGISTRATION OUTCOME 83/83 / NOT YET STRICT-COUNTED`
 
 This file is the current 1.0.9 registry inventory. The older `registry/` card directory remains historical 1.0.8-fix evidence and must not be treated as a complete 1.0.9 card set.
 
@@ -98,8 +98,22 @@ Compared with exact historical 1.0.8-fix:
 - **1 removed** (`summon_zombie`);
 - **83 current declared registry identities**.
 
+## Exact registration-gate partition
+
+Exact physical 1.0.9 registration topology:
+
+- **67 unconditional IDs**;
+- **3 Mowzie's-only**: `blessed_connection`, `guardian_connection`, `cursed_connection`;
+- **2 ISS-only**: `mirror_strike`, `symmetry_empowerment`;
+- **9 Legendary-Monsters-only**: `procession_of_souls`, `grave_sigil`, `soul_bastion`, `soul_latch`, `spiral_of_ruin`, `soulfall_judgment`, `soul_reprisal`, `spectral_rondo`, `winged_ruin`;
+- **2 ISS + Legendary nested-gate IDs**: `crimson_reflection`, `spirit_empowerment`.
+
+All three registration-gate providers are physically installed in the current pack, so the current mod-composition registration outcome is **83/83**.
+
+See [`EXACT-1.0.9-REGISTRATION-GATE-MAP.md`](EXACT-1.0.9-REGISTRATION-GATE-MAP.md).
+
 ## Counting boundary
 
-Registry declaration alone is not strict semantic promotion for Somake.
+Exact registration activity alone is not strict semantic promotion for Somake.
 
-This current inventory remains outside the strict numerator until the provider's deployed active subset, host/config gates and survival reachability are sufficiently closed under the canonical counting rule.
+This current inventory remains outside the strict numerator until effective host/provider config and survival reachability are sufficiently closed under the canonical counting rule.
