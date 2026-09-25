@@ -4,7 +4,7 @@
 
 `AUDITORIA EM ANDAMENTO — categoria física Magic reconciliada em 24/09/2026 / denominador global PENDING REBASE`
 
-O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@5ad350730a16e786f91396336c16c7b193feb7ac`, que contém **588 arquivos Markdown de dossiê da modlist atual**. Isso não é automaticamente convertido em um novo número de mods top-level. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
+O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1`. A árvore `modlist/` mistura dossiês físicos atuais com exports legados sem prefixo de status; por isso a contagem bruta de Markdown não é convertida em número de mods top-level. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
 
 O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
@@ -16,7 +16,7 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — 24/09/2026
 
-No sibling atual `neoforge-rpg-skilltree@5ad350730a16e786f91396336c16c7b193feb7ac` há **50 linhas** cujas pastas de categoria contêm `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), as 50 linhas possuem diretório correspondente no catálogo.
+No sibling atual `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` há **50 linhas status-prefixed atuais** cujas pastas de categoria contêm `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), as 50 linhas possuem diretório correspondente no catálogo.
 
 Estado efetivo desses 50 providers:
 
@@ -28,7 +28,7 @@ Estado efetivo desses 50 providers:
 
 **Cross-domain note:** Gaze 1.1.7.1 remains ⚠️ in the global magic-provider catalog because it owns one counted spell and 26 config-conditional rites, but its current sibling dossier lives under `PROJECT-INSTRUCTIONS/modlist/Addons/`; it is therefore not part of the 50-row physical `Magic` category count.
 
-**Historical-provider note:** Traveloptics/T.O Magic n' Extras is absent from sibling `neoforge-rpg-skilltree@5ad350730a16e786f91396336c16c7b193feb7ac` by path/name/mod-id/filename search. Its Phase 2BS audit remains historical evidence, but Traveloptics is no longer a current installed-provider blocker.
+**Historical-provider note:** sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` has no current status-prefixed/categorized Traveloptics physical row. A legacy uncategorized export dossier, `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`, remains and explicitly points to the older 595-mod physical snapshot. Phase 2BS remains historical evidence; Traveloptics is not a current installed-provider blocker.
 
 Fechamentos recentes relevantes:
 
@@ -205,7 +205,7 @@ Isso não é runtime PASS. Igualdade byte-for-byte do JAR físico, resolução r
 
 O exact publisher release file `6342780` fecha **33** registrations `traveloptics:<id>` no `TOSpells`, com 33 field→classe→ID mappings e zero branches no initializer. Outros **32** root localization spell IDs existem no alpha, mas não estão registrados e são excluídos. `AbstractUniqueSpell.allowCrafting=false`; nove dos dez Unique registrados possuem rotas de loot estruturadas, enquanto `traveloptics:blackout` não possui referência estruturada nem referência provider-owned fora do registry encontrada pelo audit.
 
-O audit de risco também prova que `TOLootModifiers` contém os nomes `key_loot` e `universal_loot`, mas referencia `KeyLootModifier.CODEC` duas vezes e `UniversalLootModifier.CODEC` zero vezes. Um patch de terceiro descreve esse mesmo wiring como defeito de startup, porém Black Arcana não declara crash reproduzido. A promoção fica fail-closed até runtime físico autoritativo e reachability de Blackout. Durable PR #228 mergeou em `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; post-merge CI #2682 / run `34741699505` passou e publicou artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Estado naquele checkpoint: **⚠️ parcial/condicionado / +0 strict / componente aberto**. No sibling atual `5ad350730a16e786f91396336c16c7b193feb7ac`, Traveloptics não está mais presente e não compõe a fila física corrente.
+O audit de risco também prova que `TOLootModifiers` contém os nomes `key_loot` e `universal_loot`, mas referencia `KeyLootModifier.CODEC` duas vezes e `UniversalLootModifier.CODEC` zero vezes. Um patch de terceiro descreve esse mesmo wiring como defeito de startup, porém Black Arcana não declara crash reproduzido. A promoção fica fail-closed até runtime físico autoritativo e reachability de Blackout. Durable PR #228 mergeou em `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; post-merge CI #2682 / run `34741699505` passou e publicou artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Estado naquele checkpoint: **⚠️ parcial/condicionado / +0 strict / componente aberto**. No sibling atual `76cf13e7d1110116f67c290eaa15891888279fc1`, Traveloptics não possui linha física atual status-prefixed/categorizada e não compõe a fila física corrente; o dossiê legado sem prefixo permanece apenas como provenance.
 
 ## Checkpoint GTBC's Geomancy Plus — Phase 2BR canonical
 
