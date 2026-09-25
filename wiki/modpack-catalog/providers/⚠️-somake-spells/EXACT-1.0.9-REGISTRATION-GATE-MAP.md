@@ -124,7 +124,7 @@ Still open:
 - effective Iron's `allow_crafting`;
 - deployed Somake `enableSpellLockSystem`;
 - acquisition/focus/reachability, especially the seven spells with provider `allowCrafting()` overrides;
-- Somake Aqua ↔ Traveloptics coexistence/authority;
+- Somake Aqua current focus/acquisition/reachability; historical Traveloptics coexistence is retired as a current blocker because sibling `d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics entry;
 - assembled-pack runtime/progression settlement.
 
 Therefore Somake remains **⚠️ partial / conditioned** and contributes **+0 strict** from this checkpoint.
