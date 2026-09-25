@@ -1,73 +1,82 @@
 # Provider Audit Queue Delta — Create: Apokinetics 1.0.6
 
-Date: `2026-09-23`
+Date: `2026-09-24`
 
-This narrow overlay applies to `apokinetics` until the current physical magic-provider queue is regenerated from the sibling's newest physical modlist.
+This overlay applies to `apokinetics` until the current physical magic-provider queue is regenerated integrally.
 
 ## Current row
 
-| Mod ID | Installed identity | Current effective audit state |
+| Mod ID | Installed identity | Effective audit state |
 |---|---|---|
-| `apokinetics` | `apokinetics-1.0.6.jar` / runtime `1.0.6` / physical order #29 / SHA-1 `8af4fc7fb17f4d60ead9d0c098d0650d6fdefa68` | ⚠️ `PUBLISHER-RELEASE-PINNED / 12 MACHINE GEM CAPABILITIES CATALOGED / MAGIC-RELEVANT SUPPORT SYSTEM / SPELL-REGISTRY ABSENCE UNVERIFIED / +0 STRICT SPELL-SEMANTIC / RUNTIME QA FAIL-CLOSED` |
+| `apokinetics` | `apokinetics-1.0.6.jar` / runtime `1.0.6` / physical order #29 / SHA-1 `8af4fc7fb17f4d60ead9d0c098d0650d6fdefa68` | ✅ `CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / 12 MACHINE GEM CAPABILITIES / BOUNDED EXACT-BINARY ZERO SPELL-GLYPH-RITUAL SURFACE / +0 STRICT SEMANTIC MAGIC / RUNTIME QA FAIL-CLOSED` |
 
-## Physical evidence
+## Physical authority
 
-Sibling authority:
+Sibling authority rechecked at:
 
-`neoforge-rpg-skilltree@1fec841296be24b56fd89398b58e702fce6c1c6a`
+`neoforge-rpg-skilltree@e3689bbc04ba54be1612a13c242496330e99df06`
 
 Certified dossier:
 
 `PROJECT-INSTRUCTIONS/modlist/Addons + Automation + Create + Magic + Technology/✅-create-apokinetics v1.0.6.md`
 
-The dossier records:
+## Exact artifact equality
 
-- physical order #29;
-- `apokinetics-1.0.6.jar`;
-- mod id `apokinetics`;
-- runtime `1.0.6`;
-- SHA-1 `8af4fc7fb17f4d60ead9d0c098d0650d6fdefa68`.
+Physical SHA-1:
 
-## Publisher evidence
+`8af4fc7fb17f4d60ead9d0c098d0650d6fdefa68`
 
-Official CurseForge release:
+Audited publisher File `8790422` SHA-1:
 
-- project `1606442`;
-- file `8790422`;
-- NeoForge 1.21.1;
-- Client & Server;
-- All Rights Reserved;
-- twelve documented Machine Gem capability types.
+`8af4fc7fb17f4d60ead9d0c098d0650d6fdefa68`
 
-The publisher page and exact 1.0.6 changelog are sufficient to catalog the documented augmentation surface and version-specific risk/fix surface.
+Equality: **closed**.
+
+Publisher SHA-256 observed by the NON-MERGE audit:
+
+`ca4f24cec8f5c9b5126989967498bb4857225a062f183e54000f17a4ca2a74fb`
+
+## Exact-binary semantic closure
+
+NON-MERGE checkpoint:
+
+- commit `7871abf34e6443d7944afd5315dd5f196825125f`;
+- CI run `36079263855`;
+- audit step SUCCESS;
+- verify/GameTest/dedicated-server/companion smoke SUCCESS.
+
+Exact artifact inventory:
+
+- 273 classes;
+- 120 provider resources;
+- 0 jar-in-jar libraries;
+- semantic class-path hits: 0;
+- semantic resource-path hits: 0;
+- spell/glyph/ritual/rite classfile-token hits: 0;
+- known external magic API reference hits: 0.
 
 ## Closed by current evidence
 
-- current physical identity and physical SHA-1;
-- exact publisher release identity;
-- 12/12 publisher-documented Machine Gem names and top-level functions;
-- purity/Rotation system at publisher-contract level;
-- Kinetic Pylon high-level capability mapping;
-- Factory Locator / Scanner / Wrench / Table roles;
-- configuration families that can enable, disable or tune the machine augmentation surface;
-- provider/authority split between Create, Apothic and Apokinetics.
+- current physical identity and hash;
+- exact publisher artifact identity and hash equality;
+- 12/12 publisher-documented Machine Gem capability types;
+- provider machine/table/pylon/socket/tool ownership surface;
+- bounded exact-binary absence of spell/glyph/ritual/rite registry/resource/API surface under the current metric;
+- strict semantic contribution fixed at +0.
 
-## Still open
+## Runtime gates remain fail-closed
 
-- publisher-file hash comparison against the installed SHA-1;
-- internal 1.0.6 registry/resource inventory;
-- binary-proven absence of any hidden provider-owned spell registration;
-- exact deployed config values;
-- exact enabled-gem set in the assembled pack;
-- machine-specific socket blacklists/acceptance;
-- anti-dupe behavior against pack-specific recipes;
+- deployed config and enabled-gem set;
+- socket acceptance/blacklists;
+- custom-recipe anti-dupe behavior;
 - Create-addon mixin coexistence;
-- persistence and multiplayer/runtime QA.
+- persistence/lifecycle;
+- multiplayer/runtime balance.
 
 ## Semantic accounting
 
-The 12 Machine Gems are recorded as support/augmentation capabilities, **not** spell/glyph/ritual identities.
+Machine Gems and provider factory systems are support/augmentation capabilities.
 
-Strict spell-semantic delta: **+0**.
+Strict semantic delta: **+0**.
 
-Because absence of an internal spell registry is not independently proven, this row remains **⚠️ parcial/condicionado** rather than ✅.
+Effective catalog state: **✅ cataloged**.
