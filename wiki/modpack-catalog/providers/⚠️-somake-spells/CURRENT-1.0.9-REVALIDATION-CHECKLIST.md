@@ -75,7 +75,7 @@ Official file page:
 
 This closes the **broad provider-presence condition** for the Legendary Monsters content tranche at publisher level. The latest explicit provider-specific physical checkpoint preserved for this pack identifies `legendary_monsters` 2.2.2 as installed, so that broad condition is satisfied at that checkpoint. The sibling's current reorganized certification index is still partial and has not yet reached that physical entry; its omission from that partial index is therefore not treated as evidence of absence.
 
-It does **not** close the exact 1.0.9 spell registry or map every named/localized Spirit spell to a specific conditional registration. The changelog names a Spirit/Red Soul feature tranche, while the resource-only audit exposes additional localization roots not fully enumerated by the changelog; therefore object-level registry identity and exact predicates remain fail-closed.
+The publisher changelog by itself did **not** close the 1.0.9 registry or map every named/localized Spirit spell to a specific conditional registration. The later exact structural audit now closes the release-level registry at **83 declared IDs**; exact ID↔optional-predicate mapping and deployed active subset remain fail-closed.
 
 ## Exact 1.0.9 resource-only audit now closed
 
@@ -181,4 +181,4 @@ Permitted evidence may include exact hash/metadata, resource paths and structure
 
 Somake remains **⚠️ Parcial / condicionado**.
 
-The historical 1.0.8-fix semantic contribution remains **+0** and does not become a 1.0.9 count. No 1.0.9 spell total or technical component promotion is declared until the current-line registry and reachability gates are reclosed.
+The historical 1.0.8-fix semantic contribution remains **+0** and is not reused as current evidence. The current 1.0.9 release total is now **83 declared registry identities**, but no strict semantic-count or technical-component promotion is declared until deployed active-subset/host/config/reachability gates close.
