@@ -117,6 +117,37 @@ def main() -> int:
             ability_roots = sorted(set(ability_roots))
             synergy_roots = sorted(set(synergy_roots))
 
+            # Targeted clean-room deduplication probe for the only exact synergy roots.
+            en_us = json.loads(zf.read("assets/relics/lang/en_us.json"))
+            synergy_probe_relics = ["glitchy_mantle", "kinetic_belt"]
+            synergy_probe = {}
+            for relic_id in synergy_probe_relics:
+                prefix = f"relics.description.{relic_id}.synergy.electricity"
+                values = {
+                    "title": str(en_us.get(prefix, "")),
+                    "disabled": str(en_us.get(prefix + ".disabled.description", "")),
+                    "enabled": str(en_us.get(prefix + ".enabled.description", "")),
+                }
+                synergy_probe[relic_id] = {
+                    k: digest(v.encode("utf-8"), "sha256") for k, v in values.items()
+                }
+
+            probe_classes = {
+                "glitchy_mantle": "it/hurts/sskirillss/relics/items/relics/back/GlitchyMantleItem.class",
+                "kinetic_belt": "it/hurts/sskirillss/relics/items/relics/belt/KineticBeltItem.class",
+            }
+            class_probe = {}
+            for relic_id, class_path in probe_classes.items():
+                raw = zf.read(class_path)
+                printable = {
+                    m.decode("ascii", errors="ignore")
+                    for m in re.findall(rb"[A-Za-z0-9_./:$-]{4,}", raw)
+                }
+                class_probe[relic_id] = sorted(
+                    s for s in printable
+                    if re.search(r"electric|synerg|GlitchyMantle|KineticBelt|glitchy_mantle|kinetic_belt", s, re.I)
+                )
+
             print(f"RELICS_BASE_ABILITY_ROOT_COUNT={len(ability_roots)}")
             for relic_id, ability_id in ability_roots:
                 print(f"RELICS_BASE_ABILITY_ROOT={relic_id}|{ability_id}")
@@ -128,6 +159,21 @@ def main() -> int:
             print(f"RELICS_RELIC_ITEM_CLASS_COUNT={len(relic_item_classes)}")
             for name in relic_item_classes:
                 print(f"RELICS_RELIC_ITEM_CLASS={name}")
+
+            print("RELICS_SYNERGY_TITLE_HASH_EQUAL=" + str(
+                synergy_probe["glitchy_mantle"]["title"] == synergy_probe["kinetic_belt"]["title"]
+            ).lower())
+            print("RELICS_SYNERGY_DISABLED_DESCRIPTION_HASH_EQUAL=" + str(
+                synergy_probe["glitchy_mantle"]["disabled"] == synergy_probe["kinetic_belt"]["disabled"]
+            ).lower())
+            print("RELICS_SYNERGY_ENABLED_DESCRIPTION_HASH_EQUAL=" + str(
+                synergy_probe["glitchy_mantle"]["enabled"] == synergy_probe["kinetic_belt"]["enabled"]
+            ).lower())
+            for relic_id in synergy_probe_relics:
+                for field, value in sorted(synergy_probe[relic_id].items()):
+                    print(f"RELICS_SYNERGY_VALUE_SHA256={relic_id}|{field}|{value}")
+                for value in class_probe[relic_id]:
+                    print(f"RELICS_SYNERGY_CLASS_TOKEN={relic_id}|{value}")
 
             print(f"RELICS_LANG_CANDIDATE_COUNT={len(lang_candidates)}")
             for lang_path,key in lang_candidates[:1200]:
