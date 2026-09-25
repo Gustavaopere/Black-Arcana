@@ -253,6 +253,42 @@ def spell_class_signatures(zf):
         ))
     return sorted(rows)
 
+def modspells_event_trace(data):
+    cp,utf,cls,string,ref,fields,methods,utf8=parse_class(data)
+    clinit=next((m for m in methods if m[0]=="<clinit>"),None)
+    if not clinit or clinit[3] is None:
+        return []
+    out=[]
+    last_string=None
+    for off,op,raw in instructions(clinit[3]):
+        if op==0x12:
+            s=string(raw[1])
+            if s is not None:
+                last_string=s
+        elif op in (0x13,0x14):
+            s=string(struct.unpack_from(">H",raw,1)[0])
+            if s is not None:
+                last_string=s
+        elif op in (0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xb8,0xb9):
+            rr=ref(struct.unpack_from(">H",raw,1)[0])
+            if rr:
+                owner,name,desc,tag=rr
+                if op in (0xb2,0xb3,0xb4,0xb5):
+                    if owner and owner.endswith("/ModSpells"):
+                        out.append((off,f"FIELD:{['getstatic','putstatic','getfield','putfield'][(op-0xb2)]}:{name}"))
+                else:
+                    if owner and "DeferredRegister" in owner and name=="register":
+                        out.append((off,f"REGISTER:{last_string}"))
+                    elif name=="isLoaded":
+                        out.append((off,f"ISLOADED:{owner}|arg={last_string}"))
+        elif op in set(range(0x99,0xa7))|{0xc6,0xc7}:
+            rel=struct.unpack(">h",raw[1:3])[0]
+            out.append((off,f"BRANCH:0x{op:02x}->" + str(off+rel)))
+        elif op in (0xa7,):
+            rel=struct.unpack(">h",raw[1:3])[0]
+            out.append((off,f"GOTO->" + str(off+rel)))
+    return out
+
 def modlist_isloaded_hits(zf):
     rows=[]
     for name in zf.namelist():
@@ -307,6 +343,11 @@ def inspect(label, blob, expected_sha1):
         for call_off,owner,arg,br_off,br_op,target,scoped in a["gate_scopes"]:
             print(f"SOMAKE_{label}_GATE_SCOPE=call@{call_off}|owner={owner}|arg={arg}|branch@{br_off}:0x{br_op:02x}|target={target}|registrations={','.join(x or '<none>' for x in scoped)}")
         print(f"SOMAKE_{label}_REGISTRY_IDS=" + ",".join(ids))
+        if label=="CURRENT_1_0_9":
+            trace=modspells_event_trace(zf.read(MODSPELLS))
+            print(f"SOMAKE_{label}_MODSPELLS_TRACE_EVENT_COUNT={len(trace)}")
+            for off,event in trace:
+                print(f"SOMAKE_{label}_MODSPELLS_TRACE={off}|{event}")
         sigs=spell_class_signatures(zf)
         allow=[row for row in sigs if row[1]]
         enabled=[row for row in sigs if row[2]]
