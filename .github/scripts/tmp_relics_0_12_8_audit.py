@@ -62,7 +62,7 @@ def main() -> int:
             synergy_roots = []
             relic_item_classes = sorted(
                 n for n in classes
-                if re.match(r"^it/hurts/sskirillss/relics/items/relics/(?:[^/]+/)*[^/$]+(?:Item)?\\.class$", n)
+                if re.match(r"^it/hurts/sskirillss/relics/items/relics/(?:[^/]+/)*[^/$]+(?:Item)?\.class$", n)
                 and "$" not in n
                 and "/base/" not in n
             )
@@ -77,10 +77,10 @@ def main() -> int:
                     for key in sorted(lang):
                         lk = key.lower()
                         if lang_path.endswith("en_us.json"):
-                            ma = re.match(r"^relics\\.description\\.([a-z0-9_]+)\\.ability\\.([a-z0-9_]+)$", key)
+                            ma = re.match(r"^relics\.description\.([a-z0-9_]+)\.ability\.([a-z0-9_]+)$", key)
                             if ma:
                                 ability_roots.append((ma.group(1), ma.group(2)))
-                            ms = re.match(r"^relics\\.description\\.([a-z0-9_]+)\\.synergy\\.([a-z0-9_]+)$", key)
+                            ms = re.match(r"^relics\.description\.([a-z0-9_]+)\.synergy\.([a-z0-9_]+)$", key)
                             if ms:
                                 synergy_roots.append((ms.group(1), ms.group(2)))
                         if "ability" in lk or "synergy" in lk or ".relic." in lk or lk.startswith("item.relics."):
