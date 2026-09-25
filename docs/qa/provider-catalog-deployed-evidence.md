@@ -46,6 +46,15 @@ Default output:
 
 `provider-catalog-deployed-evidence.json`
 
+If `<instance>/logs/latest.log` contains a completed `[BLACK_ARCANA_CATALOG_PROBE]` block, the collector also folds that block into the JSON using a strict field whitelist. To point at a different log without copying it into the instance:
+
+```bash
+python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack-instance" \
+  --probe-log "/path/to/server/logs/latest.log"
+```
+
+Raw log text is never retained in the report.
+
 Custom output:
 
 ```bash
@@ -54,6 +63,42 @@ python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack
 ```
 
 ## What the collector records
+
+### Catalog runtime probe bundle
+
+When a runtime-probe log is available, the collector scans it line-by-line. It accepts the exact prefix:
+
+`[BLACK_ARCANA_CATALOG_PROBE]`
+
+only in one of two forms:
+
+- a pre-filtered line begins directly with the prefix; or
+- a raw FML `latest.log` line has the exact companion logger field `dev.gustavopere.blackarcana.qa.catalog.CatalogRuntimeEvidence` immediately before the message.
+
+Suffix-like text is not sufficient. Embedded occurrences — including chat/player text such as `x]: [BLACK_ARCANA_CATALOG_PROBE] ...` — are rejected and counted without retaining their contents.
+
+It keeps only the **last complete** `type=begin ... type=end` block. Incomplete/stale trailing blocks are not promoted over an earlier complete run.
+
+The parser accepts only the bounded fields emitted by the QA companion:
+
+- verified target mod IDs and boolean loaded state;
+- target Iron's spell IDs, school, `enabled`, `allow_crafting` and bounded failure status;
+- target namespace registered counts;
+- Traveloptics `key_loot` / `universal_loot` serializer presence;
+- Traveloptics serializer-pair status and distinct-object boolean.
+
+Only probe schemas `1` and `2` are currently accepted. Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows, a count of malformed/unrecognized prefixed rows, and a separate count of embedded-prefix rows rejected before parsing.
+
+Possible parser states:
+
+- `COMPLETE` — at least one complete **supported** probe block was found; the last complete block is retained;
+- `UNSUPPORTED_SCHEMA` — the last complete block declares a probe schema newer/unknown to this collector; its rows are discarded fail-closed;
+- `NO_COMPLETE_BLOCK` — prefixed rows exist but no complete begin/end block closed;
+- `NO_PROBE_ROWS` — the selected log exists but contains no probe prefix;
+- `NOT_FOUND` — no selected/default log exists;
+- `READ_ERROR` — the selected log could not be read.
+
+This bundle is still evidence input. A `COMPLETE` block does not promote any provider automatically.
 
 ### Physical JAR fingerprints
 
@@ -214,12 +259,12 @@ The collector deliberately avoids:
 - quest prose;
 - datapack payload bodies;
 - player data;
-- logs;
+- raw log lines, timestamps, thread names, chat/player message bodies and unrelated log content;
 - saves;
 - authentication/secrets;
 - unrelated mod configuration.
 
-Only relative paths, selected values, file hashes and bounded exact-literal locations are emitted.
+Only relative paths, selected values, file hashes, bounded exact-literal locations and whitelisted structured catalog-probe fields are emitted.
 
 Review the JSON before attaching it anywhere.
 

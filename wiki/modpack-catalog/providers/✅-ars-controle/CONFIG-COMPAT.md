@@ -1,8 +1,8 @@
-# Ars Controle 1.6.15 — config, dependencies and compatibility
+# Ars Controle 1.6.16 — config, dependencies and compatibility
 
 Status: `SOURCE-PINNED DEFAULTS / EFFECTIVE PACK CONFIG+RUNTIME QA PENDING`
 
-Source checkpoint: `Vonr/Ars-Controle@ecbb83ba512bc9ca7a025556fb9c62dbd32b6430`.
+Source checkpoint: `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` (`ver: 1.6.16`). The 1.6.15→1.6.16 compare contains no config-source change; this file therefore preserves the existing config surface while updating the exact release authority.
 
 ## Declared dependency baseline
 
@@ -10,7 +10,7 @@ Exact source metadata/build properties declare:
 
 - Minecraft `1.21.1`;
 - NeoForge source build `21.1.217`, metadata range `[21,)`;
-- Ars Nouveau build baseline `5.10.6.1245`, metadata requirement `>=5.10.6`;
+- Ars Nouveau build baseline `5.13.1.1403`, metadata requirement `>=5.13.1`;
 - Curios build baseline `9.0.12`, metadata requirement `>=1.21-9.0.0`;
 - CC:Tweaked build baseline `1.112.0` for optional peripheral code.
 
@@ -48,7 +48,7 @@ The source comment defines 1 Source Jar as 10000 Source.
 
 | Key | Default | Audit state |
 |---|---:|---|
-| `scryers_linkage.load_time` | `600` | declared, but audited 1.6.15 linkage block/tile/capability paths do not demonstrate the corresponding chunk-ticket behavior; `RUNTIME QA REQUIRED` |
+| `scryers_linkage.load_time` | `600` | declared, but audited 1.6.16 linkage block/tile/capability paths do not demonstrate the corresponding chunk-ticket behavior; `RUNTIME QA REQUIRED` |
 
 ## Startup config
 
@@ -82,8 +82,8 @@ Curios is declared mandatory by the exact mod metadata, not an optional integrat
 
 ## Notion compatibility correction
 
-The older Notion dossier listed optional Ars Additions, Alex's Caves and StarbuncleMania extensions and a broader 31-component logic surface. The exact 1.6.15 registry/build/runtime paths audited for Phase 2R do not promote those as registered glyph/system surfaces. They remain historical/editorial claims unless separately proven against this exact artifact/source.
+The older Notion dossier listed optional Ars Additions, Alex's Caves and StarbuncleMania extensions and a broader 31-component logic surface. The exact 1.6.16 registry/build/runtime paths audited for Phase 2R do not promote those as registered glyph/system surfaces. They remain historical/editorial claims unless separately proven against this exact artifact/source.
 
 ## Fail-closed policy
 
-Any future Black Arcana adapter must verify its exact seam against the installed Ars Nouveau 5.13.1 / Ars Controle 1.6.15 combination. Metadata compatibility ranges, class names, persisted NBT/components or source visibility are not sufficient by themselves.
+Any future Black Arcana adapter must verify its exact seam against the installed Ars Nouveau 5.13.1 / Ars Controle 1.6.16 combination. Metadata compatibility ranges, class names, persisted NBT/components or source visibility are not sufficient by themselves.

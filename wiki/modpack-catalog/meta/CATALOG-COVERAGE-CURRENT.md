@@ -4,7 +4,28 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. The current strict minimum therefore remains **1344**. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. At the Phase 2BT checkpoint the strict minimum remained **1344**. The global denominator is still incomplete and no semantic percentage is declared.
+
+## Current provider override — Hazen N Stuff 1.4.0.14
+
+The sibling physical re-audit at `neoforge-rpg-skilltree@278b427023136d7c43d85dc188d0eac1ac85ef3a` certifies `hazennstuff-1.4.0.14.jar` / mod id `hazennstuff` / runtime `1.4.0.14` / physical SHA-1 `3be20bacb44c1923348ab6f61b685eec6aacfdcd`. Exact public source pin `Hazentouvel/Hazen_N_Stuff@5fcaf39cf399609f6c1c87d14f8d4807098c9cce` declares the same provider version and closes **38 active Iron's spell registrations**. The same release localization has 41 root spell keys: `brimstone_hellblast` and `supernova` have no active registry entry, while `reign_of_tyros` has a source class/localization root but its registration line is commented; all three are excluded. Registry-level source inspection finds no conditional registration/config/mod-presence branch around the 38 active identities. Thirty-five spells inherit host/default crafting gates; Golden Shower, Night's Edge Strike and Scorching Slash have provider-specific inventory gates whose required provider items have exact release crafting paths. Custom Cosmic/Radiance/Shadow/Hydro focus routing is also source-reconciled against the current HazentouveLib 1.0.9 / Ace's Spell Utils infrastructure. Therefore Hazen contributes **+38 `COUNTED_SOURCE_PINNED`**, raising the current strict reconstructible minimum from **1344 to 1382**. Runtime compatibility remains fail-closed.
+
+The old technical `68/100` component ratio is now a **historical checkpoint**, not a current denominator claim: the 22/09 sibling physical re-audit has surfaced magic components not represented in that older 100-component baseline. Hazen closes the next known provider component, but the denominator must be regenerated from the current physical modlist before another fraction or percentage is published. See [Hazen N Stuff](../providers/%E2%9C%85-hazen-n-stuff/README.md) and [its source-pinned inventory](../providers/%E2%9C%85-hazen-n-stuff/SOURCE-1.4.0.14-SPELL-INVENTORY.md).
+
+## Current provider override — Create: Wizardry 1.21.1-0.5.1-pre1
+
+The current sibling physical index at `neoforge-rpg-skilltree@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b` certifies physical row **#166** as `create_wizardry-1.21.1-0.5.1-pre1.jar` / mod id `create_wizardry` / runtime `1.21.1-0.5.1-pre1`. Exact official public source pin `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declares the same version line. No independent installed-JAR hash is retained for this row, so byte equality is not claimed.
+
+Bounded source inspection closes the semantic ownership question: no provider spell registry/resource surface is present, while Blaze Caster and Mana Siphon consume existing Iron's spell/mana contracts. Create: Wizardry is therefore **✅ cataloged** as `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION` with **+0** independent semantic magic objects. The current strict reconstructible minimum remains **1382** on this base. Runtime automation/resource settlement remains fail-closed. See [Create: Wizardry](../providers/%E2%9C%85-create-wizardry/README.md) and [its source-pinned magic-surface audit](../providers/%E2%9C%85-create-wizardry/SOURCE-1.21.1-0.5.1-PRE1-MAGIC-SURFACE.md).
+
+
+## Current provider override — Iron's Apothic 2.2.2
+
+The current sibling certified row at `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` records `irons_apothic-2.2.2.jar` / mod id `irons_apothic` / runtime `2.2.2` at row #339. Exact official source pin `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declares the same version and closes the provider's magic surface as a bridge over Iron's and Apotheosis/Apothic.
+
+The exact source registers 7 custom affix codecs, contains 140 affix definitions, 48 explicit spell/imbued-spell affix definitions and 24 gem definitions. Spell-trigger codecs resolve external holders from Iron's `SpellRegistry`; no provider-owned spell registry is established. Iron's Apothic is therefore **✅ cataloged** with **+0 independent semantic magic objects**, leaving the strict minimum at **1382**. The current technical denominator remains `PENDING REBASE`, so this closure is not assigned a new `N/100` component fraction. Runtime proc/cooldown/targeting and version-drift QA remain fail-closed.
+
+See [Iron's Apothic](../providers/%E2%9C%85-irons-apothic/README.md), [exact source magic-surface inventory](../providers/%E2%9C%85-irons-apothic/SOURCE-2.2.2-MAGIC-SURFACE.md), and the narrow queue/capability overlays.
 
 Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — is a **partial catalog with +0 strict semantic delta and +0 component delta**. Exact publisher file `6342780` closes 33 registered spell identities and excludes 32 residual localization-only roots. `traveloptics:blackout` remains reachability-unresolved under `AbstractUniqueSpell.allowCrafting=false`, and exact `TOLootModifiers` wiring references `KeyLootModifier.CODEC` twice while `UniversalLootModifier.CODEC` is absent from that registration path. Runtime crash is not claimed reproduced. Phase 2BS therefore leaves the strict minimum at **1344** and technical closure at **66/100 at that checkpoint**. See [`../providers/traveloptics/README.md`](../providers/traveloptics/README.md), [`../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md`](../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md) and [`PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md`](./PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md).
 
@@ -61,7 +82,7 @@ Therefore:
 - semantic numerator/denominator delta attributable to GTBC's SpellLib: **+0**;
 - semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
 - semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
-- strict reconstructible semantic minimum: **1344**;
+- strict reconstructible semantic minimum: **1382**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
@@ -139,7 +160,7 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 
 ## Internal provider-component closure metric
 
-**Canonical provider-component coverage after the Mobstein 5.4.4 shared reconciliation: 68/100 = 68%.**
+**Historical provider-component checkpoint after the Mobstein 5.4.4 shared reconciliation: 68/100 = 68%. The current denominator is `PENDING REBASE` and this fraction must not be published as current coverage.**
 
 Mobstein 5.4.4 / PR #318 was squash-merged as `73cd692ac0f6aa96ee1a6c422f09d0fcc648c8f4`; exact-SHA post-merge Black Arcana CI **#3217** / run `35293505012` completed GREEN. The provider contributes semantic **+0 `ZERO_SEMANTIC_ACTIONS`** and this shared reconciliation closes technical component **#68**. This is catalog closure, not a runtime/API compatibility PASS.
 
@@ -173,7 +194,7 @@ The complete pre-Phase-2AX coverage text is preserved byte-for-byte in [`CATALOG
 
 ## Current working component denominator
 
-The internal operational denominator remains **100 magic/cross-domain component units** under the established physical reconciliation:
+The historical internal operational denominator was **100 magic/cross-domain component units** under the older physical reconciliation. The current denominator is **`PENDING REBASE`** after the sibling physical re-audit surfaced additional magic/cross-domain components:
 
 - 103 historical candidate IDs;
 - 5 historically listed candidates now absent: `ars_morph`, `morerelics`, `reliquary`, `vestis`, `woodwalkers_spellbooks`;
