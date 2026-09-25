@@ -1,10 +1,10 @@
 # Somake Spells — current physical 1.0.9 / historical exact 1.0.8-fix audit
 
-Status: `⚠️ CURRENT PHYSICAL 1.0.9 / 1.0.8-FIX EXACT AUDIT HISTORICAL / 1.0.9 REGISTRY+OPTIONAL GATES+REACHABILITY NOT RECLOSED / CONDITIONAL +0 / FAIL-CLOSED`
+Status: `⚠️ CURRENT PHYSICAL 1.0.9 / EXACT PUBLISHER-RELEASE REGISTRY 83 CLOSED / PHYSICAL BYTE EQUALITY + DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN / CONDITIONAL +0 / FAIL-CLOSED`
 
 ## Current installed identity — 1.0.9
 
-Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@7e3a694fa76a8ea39c6d42e2d46ee385a98c6149` supersedes the former 1.0.8-fix physical-line claim:
+Current sibling modlist authority at `Gustavaopere/neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84` supersedes the former 1.0.8-fix physical-line claim:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`
 - Mod id: `somakespells`
@@ -56,7 +56,7 @@ This proves those charge surfaces for the 1.0.8-fix artifact only. It does not e
 - [PROGRESSION-EQUIPMENT.md](PROGRESSION-EQUIPMENT.md) — books, Grimoires, Upgrade Forge, ritual path and equipment;
 - [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md) — exact artifact/provenance/dependency/QA boundary;
 - [CURRENT-1.0.9-REVALIDATION-CHECKLIST.md](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) — authoritative current-line closure gates for 1.0.9;
-- [EXACT-1.0.9-RESOURCE-AUDIT.md](EXACT-1.0.9-RESOURCE-AUDIT.md) — exact publisher-release hash/metadata/resource evidence for 1.0.9; not physical-pack byte equality or registry proof;
+- [EXACT-1.0.9-RESOURCE-AUDIT.md](EXACT-1.0.9-RESOURCE-AUDIT.md) — exact publisher-release hash/metadata/resource evidence for 1.0.9;\n- [EXACT-1.0.9-REGISTRY-AUDIT.md](EXACT-1.0.9-REGISTRY-AUDIT.md) — exact publisher-release structural registry closure: 83 declared spell identities, +17/-1 delta, host override/gate facts;\n- [SPELL-CATALOG-1.0.9.md](SPELL-CATALOG-1.0.9.md) — current 83-ID registry inventory; not yet strict-counted;
 - [EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) — historical 1.0.8-fix hash-matched registry/gate/config facts;
 - [INTEGRATION-RULES.md](INTEGRATION-RULES.md) — Black Arcana authority and fail-closed rules.
 
@@ -111,7 +111,7 @@ Until runtime/API evidence resolves it, Black Arcana must not select one provide
 
 The exact 1.0.9 File `8867079` changelog explicitly publishes **16 spell names** in its **New Spells** section: ten Spirit/Evocation, one Holy, one Sound, one Aqua and three Blood. These names and publisher-level semantics are materialized separately in [`CURRENT-1.0.9-PUBLIC-NAMED-SPELLS.md`](CURRENT-1.0.9-PUBLIC-NAMED-SPELLS.md).
 
-That ledger is naming/semantic provenance only. It does **not** establish registry IDs, unconditional registration, host enablement or survival reachability. The exact 1.0.8-fix artifact still supplies only a **historical** 67-ID registry inventory in `EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md`; it is not a 1.0.9 registry. The 1.0.9 resource audit independently bounds a localization surface of 83 base spell roots, but those roots are not registry proof. Historical or publisher naming evidence must not be substituted for current registry IDs, school mechanics or numerical values.
+That ledger remains naming/semantic provenance only. Registry identity is now closed separately by the exact 1.0.9 structural audit at **83 declared IDs**; publisher names/localization still do not establish school mechanics, active deployed registration, host enablement or survival reachability.
 
 ## Authority / deduplication
 
@@ -126,9 +126,9 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 - current installed filename/runtime — `HIGH`, sibling modlist identifies `somakespells-1.0.9-1.21.1.jar` / runtime `1.0.9`;
 - exact 1.0.9 publisher release identity/hash — `HIGH`, File `8867079` / SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`;
 - current physical-pack byte equality to that release — `UNVERIFIED`, installed JAR SHA-1 not yet captured;
-- exact current 1.0.9 spell registry — `UNVERIFIED`; 83 localization roots are not substituted for registry entries;
-- exact current 1.0.9 optional registry predicates — `UNVERIFIED`; the 1.0.8-fix `mowziesmobs` / `iss_magicfromtheeast` predicates are historical evidence only;
-- `enableSpellLockSystem` path/default — `HISTORICAL 1.0.8-FIX HIGH / CURRENT 1.0.9 REVALIDATION REQUIRED`;
+- exact current 1.0.9 publisher-release registry declaration — `HIGH / RELEASE-BOUNDED`: 83 fields + 83 register calls + 83 unique IDs + 83 top-level spell classes; active deployed subset remains unverified;
+- exact current 1.0.9 optional-registration mapping/deployed outcome — `PARTIAL`: current artifact exposes optional-mod checks, but exact ID↔predicate mapping and assembled-pack active subset remain unverified;
+- `enableSpellLockSystem` symbol + `somakespells/general/common.toml` path — `CURRENT 1.0.9 REVALIDATED`; exact default/control-flow and deployed value remain open;
 - deployed value of the relevant current COMMON config — `UNVERIFIED`;
 - complete object-level survival acquisition/reachability — `UNVERIFIED / CONDITIONAL`;
 - values/formulas/stable integration API/hooks/networking/persistence — `UNVERIFIED / FAIL-CLOSED` except for narrow facts explicitly recorded by the artifact audit;
