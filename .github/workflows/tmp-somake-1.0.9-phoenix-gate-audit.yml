@@ -1,0 +1,20 @@
+name: Somake 1.0.9 Phoenix Gate Audit NON-MERGE
+
+on:
+  push:
+    branches:
+      - 'feat/audit-somake-1.0.9-phoenix-gate-2026-09-25'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Exact Somake 1.0.9 phoenix-gate structural audit NON-MERGE
+        run: python3 .github/scripts/tmp_somake_1_0_9_registry_audit.py
