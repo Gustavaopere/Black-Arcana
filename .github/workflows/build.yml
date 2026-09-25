@@ -48,6 +48,9 @@ jobs:
             git diff --check "$BASE" HEAD
           fi
 
+      - name: Temporary Apokinetics 1.0.6 exact binary semantic audit NON-MERGE
+        run: python3 .github/scripts/tmp_apokinetics_1_0_6_audit.py
+
       - name: NeoForge build
         run: ./gradlew --no-daemon build
 
