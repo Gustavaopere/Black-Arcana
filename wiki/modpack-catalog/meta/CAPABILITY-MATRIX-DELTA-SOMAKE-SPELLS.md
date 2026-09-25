@@ -4,7 +4,7 @@ Scope: semantic deduplication based on the current 1.0.9 physical line and exact
 
 | Capability / semantic family | Public Somake evidence | Provider authority | Black Arcana disposition | Evidence ceiling |
 |---|---|---|---|---|
-| Aqua school / water spell family | current publisher declares Somake Aqua school and 50+ spell scale | Somake + Iron's school/cast substrate | `PROVIDER-OCCUPIED`; do not add duplicate generic Aqua school | exact 83-ID release registry known; school membership/reachability still partial; T.O coexistence QA-blocked |
+| Aqua school / water spell family | current publisher declares Somake Aqua school and 50+ spell scale | Somake + Iron's school/cast substrate | `PROVIDER-OCCUPIED`; do not add duplicate generic Aqua school | exact 83-ID release registry known; school membership/reachability still partial; historical T.O coexistence is not a current blocker because Traveloptics is absent from the current sibling |
 | Elemental Charges | current project declares one charge per element; installed fix repairs Symmetry/Spirit charge buffs | Somake state/resource semantics | `DO NOT CREATE SECOND LEDGER`; read only through proven hook | IDs, caps, expiry, buffs, persistence unknown |
 | Symmetry spell family | current publisher names Symmetry as primary family and external-integration surface | Somake | Order candidates must prove law/seal/constraint semantics beyond Symmetry | full Symmetry inventory unknown |
 | Damage-prevention transfer link | Guardian Connetion 1.0.7: protected target, prevented damage redirected to linked caster | Somake spell semantics | `OVERLAP / DOUBLE-PROCESS RISK`; no generic redirect clone | registry identity present in exact 1.0.9 release; event ordering/reachability unknown |
@@ -43,7 +43,7 @@ Somake's Soul Fire/Infernal Fire ritual path directly occupies infernal progress
 
 ### Aqua / elemental
 
-The current pack contains Somake Aqua and deprecated T.O Magic 1.21.1 alpha simultaneously. No new Black Arcana Aqua school should be proposed. Existing provider authority must be resolved in runtime QA before any adapter assumes which registry/school is canonical.
+Historical physical checkpoints contained Somake Aqua and the deprecated T.O Magic 1.21.1 alpha simultaneously. Current sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics dossier/path/mod-id/filename reference, so that dual-installed conflict is not current. Somake still occupies its own Aqua surface; no new Black Arcana Aqua school should be proposed without a distinct forbidden-magic authority contract.
 
 ### Chaos
 
