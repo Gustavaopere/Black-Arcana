@@ -4,7 +4,7 @@
 
 `HISTORICAL PHASE 2BS CHECKPOINT / NOT PRESENT IN CURRENT SIBLING MODLIST / FORMER PHYSICAL OTHER_VERIFIED SHA-1 / 33-ID PUBLISHER-BASELINE REGISTRY / STRICT +0 HISTORICAL`
 
-Current physical status: **NOT INSTALLED / NOT A CURRENT PROVIDER BLOCKER** at sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589`.
+Current physical status: **NOT INSTALLED / NOT A CURRENT PROVIDER BLOCKER** at sibling `neoforge-rpg-skilltree@5ad350730a16e786f91396336c16c7b193feb7ac`.
 
 The former Phase 2BS state remains **⚠️ partial/conditioned historical evidence** for the old 4.4.0.1 line. It is retained for provenance and future reintroduction audits, not counted as an unresolved provider in the current pack.
 
@@ -22,7 +22,7 @@ The former Phase 2BS state remains **⚠️ partial/conditioned historical evide
 - publisher license: **All Rights Reserved**
 - required artifact dependencies declared by the exact JAR: Iron's Spells 'n Spellbooks `[1.21.1-3.10.0,)`, L_Ender's Cataclysm `[2.60.,)`, Apothic Attributes `[2.6.1,)`
 
-Historical sibling checkpoint `neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` recorded `traveloptics-4.4.0.1-1.21.1.jar`. A later hash-bearing Project physical checkpoint dated 2026-09-16 fingerprinted that installed filename at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. Current sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics path/name/mod-id/filename reference, so those physical statements are historical rather than current. That value differs from both exact publisher File `6342780` SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8` and known patch File `8861368` SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Physical disposition is therefore `OTHER_VERIFIED`: the installed bytes are a third artifact/repack/replacement whose content delta is not yet materialized. The 33-ID File-6342780 inventory remains an exact publisher baseline, **not** an exact-current-physical registry claim. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
+Historical sibling checkpoint `neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` recorded `traveloptics-4.4.0.1-1.21.1.jar`. A later hash-bearing Project physical checkpoint dated 2026-09-16 fingerprinted that installed filename at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. Current sibling `neoforge-rpg-skilltree@5ad350730a16e786f91396336c16c7b193feb7ac` contains no Traveloptics path/name/mod-id/filename reference, so those physical statements are historical rather than current. That value differs from both exact publisher File `6342780` SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8` and known patch File `8861368` SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Physical disposition is therefore `OTHER_VERIFIED`: the installed bytes are a third artifact/repack/replacement whose content delta is not yet materialized. The 33-ID File-6342780 inventory remains an exact publisher baseline, **not** an exact-current-physical registry claim. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
 
 ## Publisher release boundary
 
@@ -182,7 +182,7 @@ T.O Magic remains owner of its provider spell identities, items, loot modifiers 
 
 RPG Skill Tree remains only a sibling/provider of progression, attributes, Mastery, perks and gates through verified contracts; it does not own T.O Magic casting or Black Arcana runtime.
 
-At the historical Phase 2BS checkpoint, Somake Aqua and this deprecated T.O alpha were both physically present, so Aqua authority could not be selected by assumption. Current sibling `d809c7c2e617f5ee14f6867af618c52922d85589` no longer contains Traveloptics; that specific dual-installed coexistence blocker is therefore **not current** unless Traveloptics is reintroduced.
+At the historical Phase 2BS checkpoint, Somake Aqua and this deprecated T.O alpha were both physically present, so Aqua authority could not be selected by assumption. Current sibling `5ad350730a16e786f91396336c16c7b193feb7ac` no longer contains Traveloptics; that specific dual-installed coexistence blocker is therefore **not current** unless Traveloptics is reintroduced.
 
 ## Evidence ceiling
 
