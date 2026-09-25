@@ -1,12 +1,12 @@
 # Somake Spells 1.0.9 — exact release registry structural audit
 
-Status: `EXACT PUBLISHER RELEASE / 83 DECLARED SPELL REGISTRATIONS / RELEASE-BOUNDED / PHYSICAL BYTE EQUALITY OPEN / DEPLOYED ACTIVE SUBSET + REACHABILITY OPEN`
+Status: `EXACT PHYSICAL=PUBLISHER 1.0.9 / 83 DECLARED SPELL REGISTRATIONS / 67 UNCONDITIONAL + 16 OPTIONAL-GATED / CURRENT MOD-COMPOSITION 83/83 / REACHABILITY + DEPLOYED CONFIG OPEN`
 
 ## Provenance
 
 Current physical line:
 
-- sibling authority rechecked at `neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84`;
+- sibling authority rechecked at `neoforge-rpg-skilltree@af648d441441dde929cd49c5e18509347f06f09a`;
 - installed filename: `somakespells-1.0.9-1.21.1.jar`;
 - mod id: `somakespells`;
 - runtime: `1.0.9`.
@@ -19,7 +19,7 @@ Exact publisher artifact:
 - observed SHA-256 `1f48dfb93e290b45b628b280d902b2b6471b9d80c2c1b70a4980f14dbe85d48a`;
 - observed size `2,543,689` bytes.
 
-The current sibling dossier does not preserve an independent physical SHA-1 for the installed 1.0.9 JAR. This audit is therefore exact for the publisher release artifact and version-line correlated to the physical pack, but **does not claim installed-byte equality**.
+Project Library physical checkpoint `modlist(1).txt` fingerprints the installed `somakespells-1.0.9-1.21.1.jar` at SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, exactly equal to File `8867079`. Physical installed bytes ↔ audited publisher artifact equality is therefore **closed**.
 
 ## NON-MERGE clean-room checkpoints
 
@@ -29,7 +29,11 @@ Registry audit commit lineage:
 - refined checkpoint: `fcd6ce8c59cf5d7a153198fc45eff4761c274ba5`;
 - audit-only run: `36092269302`;
 - audit job: `107936996913`;
-- result: **SUCCESS**.
+- result: **SUCCESS**;
+- registration-gate refinement HEAD: `071bdd92fed50aea65ad47772f4d1fb0cb8b7536`;
+- refinement run: `36161117761`;
+- verify job: `108157871675` — **SUCCESS**;
+- Stage 05 companion smoke job: `108159016060` — **SUCCESS**.
 
 The audit retained only cryptographic hashes, archive/resource identities, class/member signatures, exact registry string identities, aggregate branch/call counts and bounded compatibility/config symbols. No implementation body or protected asset content is copied or reconstructed.
 
@@ -120,7 +124,7 @@ The exact 1.0.9 artifact still contains:
 - `enableSpellLockSystem` in `Config.class`;
 - `somakespells/general/common.toml` in the main mod bootstrap surface.
 
-This revalidates existence/path symbols, not the effective deployed value and not the exact default/control-flow semantics.
+The refined exact-binary audit additionally closes the `enableSpellLockSystem` NeoForge config definition with code default **`false`**. The effective deployed COMMON value remains unverified; a code default is not substituted for deployed state.
 
 Artifact-wide `ModList.isLoaded(...)` calls were observed for current integration surfaces including:
 
@@ -131,7 +135,15 @@ Artifact-wide `ModList.isLoaded(...)` calls were observed for current integratio
 - `tunes_n_tomes`;
 - `gtbcs_geomancy_plus`.
 
-These prove current compatibility gates exist somewhere in Somake 1.0.9. They do **not** map every optional mod to specific spell-registration IDs or prove the active subset in the assembled pack.
+The artifact-wide compatibility checks above are broader than the spell-registration path. The refined exact-binary audit follows only `ModSpells` registration control flow and closes exactly three cached registration predicates:
+
+- Mowzie's Mobs → 3 IDs;
+- ISS: Magic From The East → 4 gate uses, including two IDs nested with Legendary Monsters;
+- Legendary Monsters → 11 gate uses, including the same two nested IDs.
+
+After deduplication, the exact 1.0.9 registry is **67 unconditional + 16 unique conditional registrations**. Born in Chaos, Tunes 'n Tomes and Geomancy Plus have compatibility checks elsewhere in the artifact but do not gate `ModSpells` registrations in this exact release.
+
+The current physical pack contains Mowzie's Mobs, ISS: Magic From The East and Legendary Monsters. Therefore Somake's own optional-registration predicates admit **83/83** declared IDs for this pack composition. See [`EXACT-1.0.9-REGISTRATION-GATE-MAP.md`](EXACT-1.0.9-REGISTRATION-GATE-MAP.md).
 
 ## Semantic accounting
 
@@ -141,13 +153,11 @@ Strict semantic contribution: **+0 at this checkpoint**.
 
 Reason: the current counting rule still requires deployed/usable semantic reachability. Remaining blockers include:
 
-- physical installed-JAR ↔ publisher-file equality;
-- deployed active registry subset under optional-provider composition;
 - effective Iron's `enabled` / `allow_crafting` config/datapack state;
 - effective `enableSpellLockSystem` state where it affects use/progression;
 - school-focus/acquisition paths;
 - object-level or bounded-set survival reachability;
-- Somake Aqua ↔ Traveloptics coexistence/authority.
+- Somake Aqua current focus/acquisition/reachability. Historical Traveloptics coexistence is not a current blocker because sibling `d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics entry.
 
 ## Result
 
@@ -155,4 +165,4 @@ The previous statement `1.0.9 registry UNVERIFIED` is superseded.
 
 Current exact publisher-release registry state:
 
-**83 declared spell identities / RELEASE-BOUNDED / active deployed subset and semantic reachability still conditional.**
+**83 exact physical spell identities / current mod-composition registration outcome 83/83 / semantic reachability and deployed host/provider config still conditional.**
