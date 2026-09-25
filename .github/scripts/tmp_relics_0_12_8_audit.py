@@ -160,6 +160,49 @@ def main() -> int:
             for name in relic_item_classes:
                 print(f"RELICS_RELIC_ITEM_CLASS={name}")
 
+            synergy_owner_signatures = {}
+            relic_constant_re = re.compile(
+                r"(?:MANTLE|BELT|NECKLACE|BOOT|SKATE|STAFF|MASK|RING|SPHERE|FLUTE|HAT|CLOT|SHIELD|DISPERSER)",
+                re.I,
+            )
+            for relic_id, class_path in probe_classes.items():
+                raw = zf.read(class_path)
+                printable = sorted({
+                    m.decode("ascii", errors="ignore")
+                    for m in re.findall(rb"[A-Za-z0-9_./:$-]{4,}", raw)
+                })
+                synergy_tokens = sorted(
+                    s for s in printable
+                    if (
+                        "SynergyTemplate" in s
+                        or "SynergyData" in s
+                        or "AbilityConditionTemplate" in s
+                        or "RelicConditionTemplate" in s
+                        or "electricity" in s.lower()
+                        or relic_constant_re.search(s)
+                    )
+                )
+                synergy_owner_signatures[relic_id] = {
+                    "class_sha256": digest(raw, "sha256"),
+                    "tokens": synergy_tokens,
+                }
+
+            print(f"RELICS_SYNERGY_OWNER_COUNT={len(synergy_owner_signatures)}")
+            for relic_id in sorted(synergy_owner_signatures):
+                sig = synergy_owner_signatures[relic_id]
+                print(f"RELICS_SYNERGY_OWNER_CLASS_SHA256={relic_id}|{sig['class_sha256']}")
+                print(f"RELICS_SYNERGY_OWNER_TOKEN_COUNT={relic_id}|{len(sig['tokens'])}")
+                for token in sig["tokens"]:
+                    print(f"RELICS_SYNERGY_OWNER_TOKEN={relic_id}|{token}")
+            print("RELICS_SYNERGY_OWNER_CLASS_HASH_EQUAL=" + str(
+                synergy_owner_signatures["glitchy_mantle"]["class_sha256"]
+                == synergy_owner_signatures["kinetic_belt"]["class_sha256"]
+            ).lower())
+            print("RELICS_SYNERGY_OWNER_TOKEN_SET_EQUAL=" + str(
+                synergy_owner_signatures["glitchy_mantle"]["tokens"]
+                == synergy_owner_signatures["kinetic_belt"]["tokens"]
+            ).lower())
+
             print("RELICS_SYNERGY_TITLE_HASH_EQUAL=" + str(
                 synergy_probe["glitchy_mantle"]["title"] == synergy_probe["kinetic_belt"]["title"]
             ).lower())
