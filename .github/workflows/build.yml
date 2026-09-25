@@ -33,6 +33,9 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      - name: Provider catalog collector Python tests
+        run: python3 docs/qa/provider_catalog_deployed_evidence_collector_test.py
+
       - name: Unit tests
         run: ./gradlew --no-daemon test
 
