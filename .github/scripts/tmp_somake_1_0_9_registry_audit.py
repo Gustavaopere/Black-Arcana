@@ -437,6 +437,10 @@ def inspect(label, blob, expected_sha1):
             print(f"SOMAKE_{label}_PHOENIX_PREDICATE_DETAIL_COUNT={len(phoenix)}")
             for off,event in phoenix:
                 print(f"SOMAKE_{label}_PHOENIX_PREDICATE_DETAIL={off}|{event}")
+            phoenix_init=target_method_detail(zf,"com/somake/somakespells/config/StartupFeatures.class","<clinit>")
+            print(f"SOMAKE_{label}_PHOENIX_STARTUP_CLINIT_DETAIL_COUNT={len(phoenix_init)}")
+            for off,event in phoenix_init:
+                print(f"SOMAKE_{label}_PHOENIX_STARTUP_CLINIT_DETAIL={off}|{event}")
             trace=modspells_event_trace(zf.read(MODSPELLS))
             print(f"SOMAKE_{label}_MODSPELLS_TRACE_EVENT_COUNT={len(trace)}")
             for off,event in trace:
