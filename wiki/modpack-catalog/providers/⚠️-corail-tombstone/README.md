@@ -183,6 +183,8 @@ Gemstone of Prayer is treated as an invocation/support surface for the already-c
 
 Further exact semantic deduplication plus deployed `AllowedMagicItems` state is required before promoting any of these candidates.
 
+The read-only collection path is now standardized by [`docs/qa/provider-catalog-deployed-evidence.md`](../../../../docs/qa/provider-catalog-deployed-evidence.md): it records only the 12 Tombstone eligibility booleans relevant to these candidates from bounded deployed config roots. No actual pack value has been captured by this repository checkpoint; the provider therefore remains fail-closed.
+
 ## Runtime / authority boundary
 
 Corail Tombstone remains authority for:
