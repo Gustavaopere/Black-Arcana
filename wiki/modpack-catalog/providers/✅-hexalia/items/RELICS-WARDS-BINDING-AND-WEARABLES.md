@@ -1,16 +1,16 @@
-# Hexalia 1.3.6 — Relics, wards, binding and wearables
+# Hexalia 1.3.7 — Relics, wards, binding and wearables
 
 ## Status
 
-`SOURCE-PINNED 1.3.6 / HIGH-IMPACT INDEPENDENT CAPABILITIES AUDITED / INSTALLED-RUNTIME EQUIVALENCE PENDING`
+`1.3.6 BASELINE + 1.3.7 RELEASE DELTA / HIGH-IMPACT CAPABILITIES AUDITED / FIVE CURRENT ACCESSORIES CLASSIFIED / ASSEMBLED RUNTIME QA SEPARATE`
 
-Canonical source pin:
+Baseline source pin for retained systems: `AstralyaStudios/Hexalia@4952c65233bf31e9f0d3e55ff76be7fa1007ee3d` (1.3.6).
 
-`AstralyaStudios/Hexalia@4952c65233bf31e9f0d3e55ff76be7fa1007ee3d`
+Current release-delta source pin: `AstralyaStudios/Hexalia@98c22aaf70e069c616fed5ad2dc56d2b37fcd283` (1.3.7).
 
-This page covers significant Hexalia behavior that does not fit cleanly under Small Cauldron, Nature's Ritual, Celestial Infusion, Mutation, Mortar & Pestle, Censer or the idol family.
+This page covers significant Hexalia behavior that does not fit cleanly under Small Cauldron, Nature's Ritual, Celestial Infusion, Mutation, Mortar & Pestle, Censer or the idol family. Detailed retained-system formulas below remain tied to their original 1.3.6 audit unless explicitly repinned; the new 1.3.7 Accessories delta is release-source-pinned.
 
-Installed pack identity remains `hexalia-neoforge-1.3.6.jar` with runtime metadata `1.3.5`; source-derived formulas remain runtime-QA gated.
+Current physical provider is `hexalia-neoforge-1.3.7.jar` / SHA-1 `ca90edf1664cf6d44fe7e5318c71069050499c7e`.
 
 # Spiritroot Tether — persistent Mob binding/transport
 
@@ -214,6 +214,39 @@ When worn:
 
 This is provider equipment adaptation rather than spellcasting.
 
+# 1.3.7 Accessories delta — passive/proc equipment
+
+The 1.3.7 release adds five Accessories-integrated magical items. All five are provider-owned equipment effects and are **excluded from the semantic spell/ritual count** because they are passive state or proc behavior rather than discrete cast/action identities.
+
+## Seafoam Talisman
+
+- accessory slot family: necklace;
+- while underwater, provider tick logic replenishes air gradually;
+- every 200 player ticks it additionally restores 20 air, clamped to the player's maximum.
+
+## Moonward Ring
+
+- accessory slot family: ring;
+- while equipped, provider player-tick logic removes vanilla Darkness and Blindness.
+
+## Witchheart Cluster
+
+- accessory slot family: charm;
+- while equipped, adds a transient `+4.0` MAX_HEALTH modifier, i.e. two hearts;
+- modifier is removed when no longer equipped.
+
+## Wyrd Feather
+
+- accessory slot family: charm;
+- on direct melee or projectile hurt, `10%` provider chance to cancel the incoming hit;
+- indirect/non-direct damage sources are not admitted by the located path.
+
+## Green Omen
+
+- accessory slot family: ring;
+- when a non-creative player harvests a block in Hexalia's crop tag, `10%` provider chance to clone the normal drop list as bonus drops.
+
+These five effects remain Hexalia/Accessories authority. Black Arcana must not reapply their modifiers, effect cleansing, air restoration, dodge cancellation or bonus drops.
 # Silkweave and Moonweave — magic resistance
 
 Hexalia stores per-piece magic-resistance percentages through persistent item data components.
@@ -263,7 +296,7 @@ These blocks are therefore classified as decorative/ambient for the magic-capabi
 
 # Runtime/API QA blockers
 
-1. reconcile public/source `1.3.6` with installed runtime metadata `1.3.5`;
+1. verify assembled runtime behavior of the physical 1.3.7 JAR against the release-source boundaries above; source-build byte equality is not assumed;
 2. validate Spiritroot Tether entity admission, cross-dimensional release and persistence against the installed modpack;
 3. test Dreamcatcher fuel/runtime defaults in the installed JAR;
 4. verify Thornbow Bleeding and damage interaction with the pack's combat pipeline;
