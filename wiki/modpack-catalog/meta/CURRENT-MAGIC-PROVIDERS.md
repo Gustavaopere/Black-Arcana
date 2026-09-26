@@ -44,7 +44,7 @@ Fechamentos recentes relevantes:
 - ✅ Ender's Spells and Stuff: Requiem 0.1.7 — **58** source-pinned current registered roots under the present DTE-enabled provider set; **53 `COUNTED_SOURCE_PINNED`** player-facing semantic actions after excluding 5 implementation/residual roots.
 - ⚠️ Corail Tombstone 9.5.6 — **10 `COUNTED_RELEASE_BOUNDED` actions** strict-counted (6 prayer + 4 Ritual Flute); additional config-sensitive castable magic-item actions remain conditional.
 - ✅ Relics 0.12.8 — exact physical/publisher artifact equality; **39 base abilities + 2 distinct synergies = 41 `COUNTED_EXACT` provider powers**; runtime/config QA remains fail-closed.
-- ⚠️ Somake 1.0.9 — exact deployed registry outcome may be proven by deterministic assembled-server observation, but generalized predicates, config/reachability and final current inventory remain conditional.
+- ⚠️ Somake 1.0.9 — physical SHA-1 equals exact publisher File `8867079`; exact physical registry is **83 IDs**, gate topology is **67 unconditional + 16 optional**, current mod composition admits **83/83**, and all 83 current identities now have individual cards. Remaining blockers are effective deployed Iron's/provider config and survival reachability.
 
 O mínimo semântico estrito corrente é **1496**. O denominador semântico final e o denominador técnico cross-domain continuam abertos; não publicar percentual global.
 
@@ -82,13 +82,33 @@ Consequência naquele checkpoint: **✅ Iron's Apothic 2.2.2 — bridge mágico/
 
 ## Provider freshness override — Somake 1.0.9
 
-A autoridade global de 595 top-levels acima permanece o checkpoint histórico reconciliado de 2026-09-11; ela **não** é rebatizada silenciosamente como um snapshot global mais novo.
+Current sibling authority rechecked at `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` retains the certified physical dossier `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic/✅-somake v1.0.9.md` for `somakespells-1.0.9-1.21.1.jar` / mod id `somakespells` / runtime `1.0.9`.
 
-Há, porém, uma autoridade física provider-specific mais recente no sibling: o índice reorganizado atual, verificado em `neoforge-rpg-skilltree@cd514bc0456a42ef3f76059c32d9e59d88f1e06b`, preserva a entrada certificada `somakespells-1.0.9-1.21.1.jar` / mod id `somakespells` / runtime `1.0.9`. Esse índice ainda está sendo reconstruído por lotes, portanto ele é usado aqui para a entrada Somake que já foi certificada, não como prova de ausência para providers ainda não alcançados. Isso supersede apenas a antiga afirmação de que Somake 1.0.8-fix é a linha física corrente.
+The current Black Arcana evidence is materially beyond the earlier resource-only checkpoint:
 
-O audit clean-room resource-only da release exata 1.0.9 (CurseForge file `8867079`) fechou SHA-1 de release `171841ac9f802be9309ecc166c1d972ac6d404c0`, metadata de dependências e superfície de resources/localization. O audit encontra 83 roots `spell.somakespells.<id>` e 83 `.guide` correspondentes, mas **não** converte localization em registry. O changelog exato 1.21.1 da mesma release também nomeia 16 spells atuais — 10 Spirit/Evocation, 1 Holy, 1 Sound, 1 Aqua e 3 Blood — e declara `Summon Zombie` substituído por `Summon Drowned`; esse ledger fecha apenas proveniência nominal/semântica pública, não IDs de registry nem total completo. O changelog oficial da mesma release confirma que Legendary Monsters é opcional e que a tranche Spirit/Red Soul/items correspondente só carrega quando o provider está instalado. O dossiê provider-specific atual do sibling preserva `legendary_monsters` 2.2.2 como instalado no seu último checkpoint físico explícito, fechando apenas essa condição ampla de presença naquele checkpoint. A igualdade byte-for-byte do Somake 1.0.9 com o JAR físico, o registry corrente, o mapeamento objeto-a-objeto dos predicates opcionais e a reachability/config implantada continuam abertos.
+- physical Project Library SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- exact publisher CurseForge File `8867079` SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- physical ↔ publisher artifact equality: **closed**;
+- exact physical/release registry: **83 unique spell IDs**;
+- exact registration topology: **67 unconditional + 16 unique optional-provider-gated**;
+- exact optional gates: 3 Mowzie's-only, 2 ISS-only, 9 Legendary-Monsters-only and 2 nested ISS+Legendary;
+- all three required registration-gate providers are physically present in the current pack, so Somake's own registration predicates admit **83/83** declared spell IDs;
+- exact provider code default for `enableSpellLockSystem`: **false**;
+- all **83 current identities** are materialized individually through `MAGIC-CARDS-1.0.9.md` and `registry-1.0.9/`.
 
-Consequência canônica: Somake continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O checkpoint Phase 2BF de 1.0.8-fix abaixo permanece histórico e não descreve o registry corrente.
+This closes physical identity, exact registry identity, object-level optional-registration predicates and current registration composition. The runtime probe is no longer needed merely to discover which Somake IDs register in this pack.
+
+Somake nevertheless remains **⚠️ partial / conditioned / +0 strict**. The unresolved catalog gates are narrower:
+
+- effective deployed Iron's per-spell/global/datapack `enabled`;
+- effective deployed Iron's `allow_crafting`, especially around the seven provider `allowCrafting()` overrides;
+- effective deployed Somake `enableSpellLockSystem` COMMON value;
+- object-level or bounded-set survival acquisition/reachability, including Aqua/focus paths;
+- assembled-pack progression/runtime settlement remains separate QA.
+
+No source default is promoted into a deployed-state fact. The historical 1.0.8-fix 67-ID audit remains historical only and must not be reused as current authority.
+
+Consequence: Somake remains **⚠️ partial/conditioned / +0 strict**, but **registry discovery and current composition are no longer blockers**.
 
 ## Provider freshness override — Not Enough Glyphs 4.6.2
 
