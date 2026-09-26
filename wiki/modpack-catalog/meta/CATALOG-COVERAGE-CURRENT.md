@@ -104,10 +104,11 @@ Therefore:
 - semantic numerator delta from Companions! 1.3.4 source-pinned closure: **+9**;
 - semantic numerator delta from Crystal Chronicles 0.1.3-alpha source-pinned closure: **+1**;
 - semantic numerator delta from Relics 0.12.8 exact ability/synergy closure: **+41**;
+- semantic numerator delta from Reliquified Iron's Spells 'n Spellbooks 0.2.7 source-pinned ability closure: **+25**;
 - semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
 - semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
 - semantic numerator delta from Ender's Spells and Stuff: Requiem 0.1.7 source-pinned closure: **+53**;
-- strict reconstructible semantic minimum: **1496**;
+- strict reconstructible semantic minimum: **1521**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
@@ -117,6 +118,12 @@ Phase 2BH is canonical for Goety 3.1.4 from exact hash-matched artifact evidence
 
 The previous chat-only working tally is not an authority and is not used as an input to the versioned ledger.
 
+
+## Reliquified Iron's Spells 'n Spellbooks 0.2.7 semantic closure
+
+Current physical Project Library authority records `reliquified_irons_spells_and_spellbooks-1.21.1-0.2.7.jar` / SHA-1 `e22fd94c87cb88b3cfa4637c48a1058260d35a9b`. Exact-version official source `Octo-Studios/reliquified-irons-spells-n-spellbooks@1dfa5557ae3ae59c793682bd8e386f81d7feaa32` closes **25 provider-owned relic ability roots** in 23 ability-bearing relic classes. All 23 classes define the source-level `RISASLootEntries.ANY_STRUCTURE` route into Iron's structure chest loot. The semantic state is `COUNTED_SOURCE_PINNED`, **+25**.
+
+This is catalog closure, not assembled-runtime PASS. Physical/source byte equality, live structure loot, Relics 0.12.8 compatibility, Iron's 3.16.3 interactions, packet/mixin behavior and mana/cooldown settlement remain separate QA. The global technical component denominator remains `PENDING REBASE`; no current technical percentage is inferred from this semantic promotion.
 ## Phase 2BT — Vampire Spells Addon 0.0.9 component #67, source-pinned zero closure
 
 Official release `1.21.1-0.0.9` is correlated to exact source target `xsharov/VampireSpellsAddon@2d36e94e67611a316b7311b11e4574b499025580`. The provider is an Iron's + Vampirism compatibility/runtime-policy overlay: the audited magic IDs are Iron's-owned, provider registration installs bridges/listeners, and no provider-owned spell, school, ritual or equivalent action registrar is established. Semantic disposition is `ZERO_BRIDGE_INFRA`, **+0**.
