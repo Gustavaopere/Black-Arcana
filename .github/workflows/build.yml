@@ -51,6 +51,9 @@ jobs:
             git diff --check "$BASE" HEAD
           fi
 
+      - name: Temporary Asterism Arcanum 0.1.0 exact binary audit NON-MERGE
+        run: python3 .github/scripts/tmp_asterism_arcanum_0_1_0_audit.py
+
       - name: NeoForge build
         run: ./gradlew --no-daemon build
 
