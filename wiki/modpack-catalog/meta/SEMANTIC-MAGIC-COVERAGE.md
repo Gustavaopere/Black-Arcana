@@ -215,7 +215,7 @@ Arithmetic cross-check by provider family:
 | [Ars 'n' Spells](../providers/ars-n-spells/README.md) | 3.3.2 | 5 | `COUNTED_SOURCE_PINNED` | 5 ritual identities; eight `ars_cross_*` proxy slots contribute zero |
 | [Iron's Spells 'n Spellbooks](../providers/irons-spells/README.md) | 3.16.3 | 110 | `COUNTED_EXACT` | 110/110 active spell registry entries; deprecated Cloud of Regeneration excluded |
 | [Apprentice's Codex](../providers/apprentice-codex/README.md) | 0.9.7.1 | 83 | `COUNTED_SOURCE_PINNED` | exact 83-spell registry inventory |
-| [Asterism Arcanum](../providers/asterism-arcanum/README.md) | 1.21.1-0.1.0 | 10 | `COUNTED_SOURCE_PINNED` | 10 survival spell identities; `astral_gateway` is tracked separately as conditional |
+| [Asterism Arcanum](../providers/⚠️-asterism-arcanum/README.md) | 1.21.1-0.1.0 | 10 | `COUNTED_EXACT` | physical SHA-1 equals exact publisher File 8157080; exact binary registrar references all 11 expected spell classes, while publisher lists 10 normal survival spells and `astral_gateway` remains separately conditional/creative-only |
 | [Backported Spellbooks](../providers/backported-spellbooks/README.md) | physical 0.1.2 / embedded 0.1.0 | 6 | `COUNTED_RELEASE_BOUNDED` | release-day official source ceiling registers six standalone Iron's spells |
 | [Deeper & Darker Spellbooks](../providers/deeper-and-darker-spellbooks/README.md) | 1.3.3 Version B | 4 | `COUNTED_RELEASE_BOUNDED` | 4 current provider spell identities |
 | [Discerning The Eldritch](../providers/discerning-the-eldritch/README.md) | 1.4.4 | 22 | `COUNTED_SOURCE_PINNED` | 22/22 registered spells, including its ritual-school spell registrations once |
