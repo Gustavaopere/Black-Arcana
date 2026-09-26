@@ -113,7 +113,7 @@ Catalog closure is not an assembled-pack PASS. Regression gates include:
 
 - physical 0.1.1 + fix 1.0.2 + Relics 0.12.8 + Cataclysm + OctoLib boot;
 - all nine relic owners instantiate and acquire correctly;
-- the five explicitly transformed relics preserve their 11-owner inventory semantics without duplicate processing;
+- the five explicitly transformed relics preserve their original provider-owned ability identities without duplicate processing;
 - equip/unequip, XP/rank/cooldown persistence and death/relog/restart;
 - active/motion abilities in dedicated multiplayer;
 - no duplicate legacy + fixed ability settlement;
