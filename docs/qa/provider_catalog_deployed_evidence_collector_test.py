@@ -109,5 +109,23 @@ allow_lost_tablet = false
             self.assertFalse(entry["release_9_5_6_equality"])
 
 
+    def test_hash_inventory_checks_current_asterism_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            jar = mods / "asterismarcanum-1.21.1-0.1.0.jar"
+            jar.write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("asterism_arcanum", result)
+            self.assertEqual(1, len(result["asterism_arcanum"]))
+            entry = result["asterism_arcanum"][0]
+            self.assertEqual("asterismarcanum-1.21.1-0.1.0.jar", entry["filename"])
+            self.assertIn("current_physical_0_1_0_equality", entry)
+            self.assertFalse(entry["current_physical_0_1_0_equality"])
+
+
 if __name__ == "__main__":
     unittest.main()
