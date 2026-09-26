@@ -6,9 +6,9 @@
 
 Physical artifact: `hexalia-neoforge-1.3.7.jar` / SHA-1 `ca90edf1664cf6d44fe7e5318c71069050499c7e`.
 
-Exact current source pin: `AstralyaStudios/Hexalia@1230d32056f155e58ee1139c105a93eeea42fa05`.
+Release-correlated source pin: `AstralyaStudios/Hexalia@98c22aaf70e069c616fed5ad2dc56d2b37fcd283` (2026-09-13, `Hexalia 1.3.7`). Later same-version maintenance HEAD `1230d32056f155e58ee1139c105a93eeea42fa05` is not treated as the physical-release pin.
 
-The generated 1.3.7 data set contains exactly **23** `hexalia:natures_ritual` recipe JSONs. The previous 1.3.6 catalog contained 19 player-facing recipes plus a debug recipe; current 1.3.7 data contains the 19 retained player recipes plus four new player-facing identities and no `debug_natures_ritual` recipe.
+The release-correlated 1.3.7 generated data set contains exactly **23** `hexalia:natures_ritual` recipe JSONs. The previous 1.3.6 catalog contained 19 player-facing recipes plus a debug recipe; current 1.3.7 data contains the 19 retained player recipes plus four new player-facing identities and no `debug_natures_ritual` recipe.
 
 ## Semantic delta from 1.3.6
 
@@ -70,10 +70,10 @@ This entire soul-capture/manifestation sequence remains Hexalia-owned and must n
 | `hexalia:air_node_from_ritual_table` | `minecraft:amethyst_shard` | feather; dandelion | `hexalia:air_node` | 2 / 80 ticks | no |
 | `hexalia:water_node_from_ritual_table` | `minecraft:amethyst_shard` | lily pad; ink sac | `hexalia:water_node` | 2 / 80 ticks | no |
 | `hexalia:earth_node_from_ritual_table` | `minecraft:amethyst_shard` | clay ball; brown mushroom | `hexalia:earth_node` | 2 / 80 ticks | no |
-| `hexalia:astrylis_from_ritual_table` | `minecraft:lily_of_the_valley` | celestial crystal; earth node; bone meal; glowstone dust | `hexalia:astrylis` | 4 / 160 ticks | no |
-| `hexalia:kelpweave_blade_from_ritual_table` | `hexalia:ancient_seed` | water node; wooden sword; kelp; siren paste | `hexalia:kelpweave_blade` | 4 / 160 ticks | no |
-| `hexalia:rootshaper_from_ritual_table` | `hexalia:ancient_seed` | earth node; wooden pickaxe; wooden shovel; dream paste | `hexalia:rootshaper` | 4 / 160 ticks | no |
-| `hexalia:sage_pendant_from_ritual_table` | `hexalia:celestial_crystal` | gold nugget; book; experience bottle; spirit powder | `hexalia:sage_pendant` | 4 / 160 ticks | no |
+| `hexalia:astrylis_from_ritual_table` | `minecraft:lily_of_the_valley` | celestial crystal; earth node; bone meal; glowstone dust; amethyst shard; sunflower | `hexalia:astrylis` | 6 / 240 ticks | no |
+| `hexalia:kelpweave_blade_from_ritual_table` | `hexalia:ancient_seed` | water node; wooden sword; kelp; siren paste; prismarine shard; nautilus shell | `hexalia:kelpweave_blade` | 6 / 240 ticks | no |
+| `hexalia:rootshaper_from_ritual_table` | `hexalia:ancient_seed` | earth node; wooden pickaxe; wooden shovel; dream paste; rooted dirt; tree resin | `hexalia:rootshaper` | 6 / 240 ticks | no |
+| `hexalia:sage_pendant_from_ritual_table` | `hexalia:celestial_crystal` | gold nugget; book; experience bottle; spirit powder; amethyst shard | `hexalia:sage_pendant` | 5 / 200 ticks | no |
 | `hexalia:bloomwrap_hat_from_ritual_table` | leather helmet | pink tulip; silk fiber; mandrake; rooted dirt | `hexalia:bloomwrap_hat` | 4 / 160 ticks | no |
 | `hexalia:bloomwrap_robes_from_ritual_table` | leather chestplate | moss block; earth node; silk fiber; iron nugget | `hexalia:bloomwrap_robes` | 4 / 160 ticks | no |
 | `hexalia:bloomwrap_leggings_from_ritual_table` | leather leggings | peony; spirit bloom; silk fiber; honeycomb | `hexalia:bloomwrap_leggings` | 4 / 160 ticks | no |
@@ -84,7 +84,7 @@ This entire soul-capture/manifestation sequence remains Hexalia-owned and must n
 | `hexalia:windsong_from_ritual_table` | oxeye daisy | air node; ghost powder; feather; phantom membrane | `hexalia:windsong` | 4 / 160 ticks | no |
 | `hexalia:lourdes_from_ritual_table` | blue orchid | air node; honeycomb; glistering melon slice; dream paste | `hexalia:lourdes` | 4 / 160 ticks | no |
 | `hexalia:aegiflora_from_ritual_table` | dandelion | gunpowder; ghost powder; lotus blossom; moss block | `hexalia:aegiflora` | 4 / 160 ticks | no |
-| `hexalia:morphora_from_ritual_table` | poppy | dream paste; spirit powder; earth node; tree resin | `hexalia:morphora` | 4 / 160 ticks | no |
+| `hexalia:morphora_from_ritual_table` | poppy | dream paste; spirit powder; earth node; tree resin; fermented spider eye; slime ball | `hexalia:morphora` | 6 / 240 ticks | no |
 | `hexalia:cinderhew_from_ritual_table` | `hexalia:ancient_seed` | wooden axe; fire node; blaze powder; tree resin; charcoal; flint | `hexalia:cinderhew` | 6 / 240 ticks | no |
 | `hexalia:heartseed_from_ritual_table` | golden apple | fragrant nectar; amethyst shard; spirit powder; lotus flower; honeycomb; poppy | `hexalia:heartseed` | 6 / 240 ticks | no |
 | `hexalia:summon_silk_moth` | `hexalia:fragrant_nectar` | string; white wool; spirit powder; celestial bloom; glowstone dust; witchweed | entity `hexalia:silk_moth` ×1 | 6 / 240 ticks + 50-tick manifestation after soul | yes |
