@@ -1,57 +1,78 @@
-# Hexalia — filename/source release 1.3.6, installed runtime metadata 1.3.5
+# Hexalia — current physical/source 1.3.7
 
 ## Status
 
-`EXACT PUBLIC NEOFORGE RELEASE 1.3.6 / SOURCE-PINNED RELEASE COMMIT 4952c652 / MIT / PHYSICAL FILENAME 1.3.6 / INSTALLED RUNTIME METADATA 1.3.5 / BREWS 8/8 / NATURE'S RITUAL 19/19 PLAYER-FACING / CELESTIAL INFUSION 6/6 / MUTATION 21/21 / MORTAR & PESTLE 12/12 / CENSER 10/10 / IDOLS AUDITED / EXACT INSTALLED-JAR EQUIVALENCE + RUNTIME/API QA PENDING`
+`✅ CATALOGED / PHYSICAL 1.3.7 / SOURCE-PINNED 1.3.7 / NATURE'S RITUAL 23/23 / CELESTIAL INFUSION 6/6 / CURRENT SEMANTIC MAGIC SURFACE 29 / REMAINING NON-SEMANTIC SUBCATALOGS PRESERVE THEIR PREVIOUS AUDITS / ASSEMBLED RUNTIME QA SEPARATE`
 
-## Runtime identity
+## Current physical identity
 
-The current physical modlist remains authority for what actually loads in the pack:
+The newest physical Project Library modlist is authoritative for installed identity:
 
 - provider: **Hexalia**;
-- installed JAR: `hexalia-neoforge-1.3.6.jar`;
+- JAR: `hexalia-neoforge-1.3.7.jar`;
 - mod id: `hexalia`;
-- runtime version reported by the installed JAR: `1.3.5`;
-- mixin config: `hexalia-neoforge.mixins.json`;
-- loader/game: NeoForge 1.21.1;
-- role: `RITUAL / BREWING / WITCHCRAFT PROVIDER`.
+- runtime: `1.3.7`;
+- SHA-1: `ca90edf1664cf6d44fe7e5318c71069050499c7e`;
+- Minecraft / loader: 1.21.1 / NeoForge.
 
-The filename/runtime mismatch is real and must remain visible. Black Arcana must not normalize `1.3.6` and `1.3.5` into one unqualified version string.
+This supersedes the older 1.3.6 filename / 1.3.5 metadata drift that remains documented below only as historical provenance.
 
-## Exact public release + source pin
+## Exact current source pin
 
-CurseForge publishes the NeoForge 1.21.1 artifact as:
+Official repository: `AstralyaStudios/Hexalia`.
 
-- project ID `962878`;
-- file ID `8658488`;
-- file name `hexalia-neoforge-1.3.6.jar`;
-- release date `2026-08-16`;
-- release line `Hexalia 1.3.6-1.21.1 - NeoForge`;
-- license `MIT`.
+Current source pin: `1230d32056f155e58ee1139c105a93eeea42fa05` on branch `hexalia-1.21.1`.
 
-The official source repository `AstralyaStudios/Hexalia` contains commit:
+The commit is dated 2026-09-21 with message `Hexalia 1.3.7 fixes and parity cleanup`; `gradle.properties` declares:
 
-`4952c65233bf31e9f0d3e55ff76be7fa1007ee3d`
+- `mod_version=1.3.7`;
+- `minecraft_version=1.21.1`;
+- NeoForge development baseline `21.1.215`.
 
-with message `Release Hexalia 1.3.6`, also dated 2026-08-16. At that pin `gradle.properties` declares `mod_version=1.3.6` and `minecraft_version=1.21.1`, while NeoForge metadata declares MIT licensing, `modId = "hexalia"` and `version = "${version}"`.
+The installed artifact SHA-1 is known, but reproducible byte equality between the physical JAR and this source tree has not been established. Current semantic evidence is therefore source-pinned rather than exact-binary.
 
-Source inspection for release-line cataloging is therefore pinned and license-permitted. No upstream code/assets are copied or adapted into Black Arcana.
+## 1.3.7 semantic delta
 
-### Important equivalence limitation
+The exact current source contains **23** generated `hexalia:natures_ritual` recipes and **6** generated `hexalia:celestial_infusion` recipes.
 
-The public release filename and source pin say `1.3.6`, while the installed JAR reports runtime `1.3.5`. That prevents a stronger claim that the installed binary is byte-for-byte/metadata-equivalent to the pinned source build.
+Compared with the previously cataloged 1.3.6 semantic surface:
 
-Consequently:
+- Nature's Ritual: **19 → 23** player-facing identities;
+- Celestial Infusion: **6 → 6**, unchanged;
+- net semantic delta: **+4**;
+- current Hexalia semantic magic surface under the Black Arcana metric: **29 discrete provider-owned actions**.
 
-- source-derived registry/data/behavior facts are `SOURCE-PINNED 1.3.6`;
-- installed presence/filename/runtime remain `MODLIST-PINNED`;
-- exact installed-runtime behavior remains QA-gated where integration depends on it.
+The four new Nature's Ritual identities are:
 
-## Documentation freshness
+- `hexalia:cinderhew_from_ritual_table`;
+- `hexalia:heartseed_from_ritual_table`;
+- `hexalia:summon_cacofey`;
+- `hexalia:summon_silk_moth`.
 
-The official GitHub Wiki currently identifies its supported version as `1.3.3`; it is useful for player-facing concepts, but 1.3.6 pinned source/data and the publisher changelog take precedence for version-specific facts.
+The two summon recipes are not item recipes: they set `requires_soul=true` and produce one provider entity after the provider's soul-manifestation phase.
 
-The 1.3.6 changelog records, among other fixes, Mortar & Pestle recipe/documentation corrections and makes Nature's Ritual nearby-crop requirement configurable `0–32`, default `8`.
+## Nature's Ritual lifecycle changed in 1.3.7
+
+The 1.3.6 four-cardinal-brazier description is no longer current. Exact 1.3.7 source now:
+
+- scans non-empty Ritual Braziers in a **horizontal radius of 8** around the Ritual Table;
+- sorts available braziers deterministically by distance and block position;
+- matches an arbitrary number of recipe offerings against that pool;
+- requires every selected brazier to be salted at admission;
+- consumes one selected offering every 40 ticks and clears that brazier's salt;
+- keeps the configurable mature-crop requirement (`0..32`, default supplied by provider config) within horizontal radius 8;
+- sets transformation duration to `40 ticks × selected offerings`;
+- cancels if the center input or a still-required offering disappears.
+
+For `requires_soul` recipes, finishing the offering phase does not immediately settle the ritual. The table enters `AWAITING_SOUL`. A non-player living entity killed by a player using `hexalia:athame` within radius 8 may be captured by the nearest awaiting table; a 50-tick soul-manifestation phase then creates the configured entity result. This is provider-owned admission/settlement and must not be duplicated by Black Arcana.
+
+## Celestial Infusion 1.3.7 verification
+
+`CelestialInfusion.java`, `CelestialInfusionRecipe.java`, and all six generated Celestial Infusion recipe JSON blobs are byte-identical between the audited 1.3.6 source pin and current 1.3.7 source pin. The existing 6/6 catalog remains semantically current and is repinned to 1.3.7.
+
+## Scope boundary for older subcatalogs
+
+Only the semantic ritual/infusion surface is promoted by this re-audit. Brews, mutations, Mortar & Pestle, Censer, idols and other capability inventories below retain their previous source-level audits unless their own files explicitly say otherwise. No unsupported 1.3.7 equivalence is inferred for those surfaces.
 
 ## Canonical subcatalogs
 
@@ -63,16 +84,14 @@ The source-pinned 1.3.6 catalog contains Arachnid Grace, Bloodlust, Daybloom, Ho
 
 Provider descriptions and located executable paths do not agree perfectly for several brews. Bloodlust, Hollow Silence, Siphon, Slimewalker and Spikeskin retain explicit runtime/behavior QA blockers rather than having missing semantics inferred.
 
-### Nature's Ritual — 19/19 player-facing
+### Nature's Ritual — 23/23 player-facing
 
 - [Nature's Ritual catalog](rituals/NATURES-RITUAL-CATALOG.md)
 - [Ritual output capability audit](rituals/RITUAL-OUTPUT-CAPABILITIES.md)
 
-`debug_natures_ritual` exists at the source pin but is deliberately excluded from player-facing counts.
+Current 1.3.7 source exposes 23 player-facing Nature's Ritual recipes. The previous `debug_natures_ritual` entry is not present in the current generated recipe set.
 
-The source-pinned lifecycle uses a Ritual Table, Hex Focus, cardinal Ritual Braziers two blocks from the table, salt on each used brazier and a configurable mature-crop requirement. Default crop requirement is `8` in radius `8`; consumed mature crops are reset to age 0 on successful completion.
-
-Duration is `40 ticks × number of used braziers`: two-brazier recipes complete in 80 ticks and four-brazier recipes in 160 ticks.
+The current lifecycle scans salted non-empty Ritual Braziers within horizontal radius 8 and matches as many offerings as the recipe requires. Duration remains `40 ticks × selected offerings`; current recipes therefore extend beyond the old 2/4-brazier shape. Two new summoning rituals additionally require provider-native soul capture with an Athame after the offering phase.
 
 Capability-bearing outputs include Aegiflora, Astrylis, Grimshade, Lourdes, Morphora, Nautilite, Windsong, four elemental nodes, Rootshaper, Kelpweave Blade, Sage Pendant, Rabbage Seeds and the four Bloomwrap armor pieces.
 
@@ -89,7 +108,7 @@ Important source-level examples:
 - Sage Pendant modifies XP-orb pickup value while in offhand and consumes durability;
 - Bloomwrap pieces provide separate knockback, reflection, regeneration and movement behaviors.
 
-### Celestial Infusion — 6/6
+### Celestial Infusion — 6/6 (1.3.7 blob-verified)
 
 - [Celestial Infusion catalog](infusions/CELESTIAL-INFUSION-CATALOG.md)
 
