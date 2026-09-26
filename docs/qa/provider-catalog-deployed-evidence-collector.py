@@ -27,6 +27,7 @@ from typing import Any
 
 TRAVELOPTICS_ORIGINAL_SHA1 = "3808493ce45cdfeb6408e85578adecf13df698e8"
 TRAVELOPTICS_PATCH_SHA1 = "680fa679d8ea2419a79571f455436367222f6f9d"
+ASTERISM_010_PHYSICAL_SHA1 = "4a25ba80116168ddcc812f71467c0598127e774a"
 SOMAKE_109_RELEASE_SHA1 = "171841ac9f802be9309ecc166c1d972ac6d404c0"
 GAZE_1171_SHA1 = "a8cb3190bde157f78160ce65c202ce2d47fb2041"
 NEG_462_RELEASE_SHA1 = "32eea2c478a346ee7499f6a0db156241116f73e9"
@@ -409,7 +410,9 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
             path = mods / name
             if path.is_file():
                 entry = digest_file(path)
-                if provider == "traveloptics":
+                if provider == "asterism_arcanum":
+                    entry["current_physical_0_1_0_equality"] = entry["sha1"] == ASTERISM_010_PHYSICAL_SHA1
+                elif provider == "traveloptics":
                     if entry["sha1"] == TRAVELOPTICS_ORIGINAL_SHA1:
                         entry["classification"] = "ORIGINAL_EXACT"
                     elif entry["sha1"] == TRAVELOPTICS_PATCH_SHA1:
