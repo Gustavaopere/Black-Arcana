@@ -85,10 +85,11 @@ The parser accepts only the bounded fields emitted by the QA companion:
 - verified target mod IDs and boolean loaded state;
 - target Iron's spell IDs, school, `enabled`, `allow_crafting` and bounded failure status;
 - target namespace registered counts;
+- the exact 39 canonical Not Enough Glyphs candidate IDs with runtime registration/effective `enabled` state;
 - Traveloptics `key_loot` / `universal_loot` serializer presence;
 - Traveloptics serializer-pair status and distinct-object boolean.
 
-Only probe schemas `1` and `2` are currently accepted. Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows, a count of malformed/unrecognized prefixed rows, and a separate count of embedded-prefix rows rejected before parsing.
+Probe schemas `1`, `2` and `3` are accepted. Schema 3 adds bounded Not Enough Glyphs `type=glyph` rows while retaining backward compatibility with earlier probe logs. Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows, a count of malformed/unrecognized prefixed rows, and a separate count of embedded-prefix rows rejected before parsing.
 
 Possible parser states:
 
@@ -175,6 +176,8 @@ It checks:
 - discovered/explicit world `serverconfig/`.
 
 The catalog must resolve precedence from the actual deployed environment. A template file is not automatically the effective world value.
+
+When a schema-3 runtime probe block is available from the same exact assembled server, the collector may also retain `type=glyph` rows for **only** those 39 canonical IDs. `status=OBSERVED enabled=<bool>` is direct runtime evidence of the effective Ars `AbstractSpellPart.isEnabled()` value after SERVER config loading; `NOT_REGISTERED` and `HOST_VALUE_UNAVAILABLE` remain fail-closed. This runtime route can replace manual TOML precedence reconstruction for the enabled-state gate of an observed candidate, but it does not prove unrelated Binder/protection/balance behavior.
 
 ### Corail Tombstone
 
@@ -321,7 +324,7 @@ Do not convert missing files into source-default values unless the actual runtim
 
 - Asterism: deployed Astral Gateway Iron's spell config/datapack;
 - Gaze: effective `disableGazeRites`;
-- NEG: effective `[general].enabled` for 39 candidates;
+- NEG: effective enabled state for 39 candidates, via deployed TOML evidence or schema-3 exact-server `type=glyph` runtime observations;
 - Corail Tombstone: physical 9.5.6 equality plus the 12 bounded `AllowedMagicItems` booleans that gate the remaining tablets/gemstones/Grave Key/Lost Tablet/Magic Scroll/Scroll of Knowledge candidates; semantic deduplication and reachability still require provider-specific review;
 - Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact **deployed** 1.0.9 registry identity may be paired from deterministic assembled-server registry observation, while generalized registration predicates remain provider-authoritative;
 - Traveloptics: **historical-instance only** — original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references for an archived 4.4.0.1 pack; it is not a current sibling blocker.
