@@ -1,29 +1,33 @@
-# Ars 'n' Spells 3.3.2
+# Ars 'n' Spells 3.3.4
 
-Status: `PHASE 2AG — INSTALLED 3.3.2 / EXACT RELEASE DELTA / NEOFORGE 1.21.1 SOURCE BASELINE 3.3.0`
+Status: `✅ CATALOGED / INSTALLED 3.3.4 / RELEASE-BOUNDED 3.3.4 / PUBLIC NEOFORGE SOURCE CURRENT THROUGH 3.3.3 / 5 PROVIDER RITUAL IDENTITIES / +0 VERSION-DELTA TO SEMANTIC COUNT`
 
 ## Physical identity
 
 - Mod id: `ars_n_spells`
-- Physical JAR: `ars_n_spells-3.3.2.jar`
-- Runtime version: `3.3.2`
-- SHA-1: `2d2274ff786c42ea46c53fec866116f83d98fe5a`
+- Physical JAR: `ars_n_spells-3.3.4.jar`
+- Runtime version: `3.3.4`
+- SHA-1: `53966330a468e626cd6469259af6778a5a7d9305`
 - Minecraft: `1.21.1`
 - Loader: NeoForge `21.1.248`
 - Physical companion engines relevant to this bridge: Ars Nouveau `5.13.1`, Iron's Spells 'n Spellbooks `1.21.1-3.16.3`, Ars Elemental `0.7.10.1`, Ars Zero `2.0.2`.
 
 ## Evidence layers
 
-The installed artifact is **3.3.2**. The strongest public source available for the same loader/game line is the official `otectus/ars-n-spells` branch `port/neoforge-1.21.1` at commit `a9930223c96806e5d748ea69d02f9a32cab62de9`, whose `gradle.properties` declares `mod_version=3.3.0`, Minecraft `1.21.1`, NeoForge `21.1.248`, Ars Nouveau `5.13.1.1400` and Iron's `1.21.1-3.16.3`.
+The installed artifact is **3.3.4**. Physical identity is closed by the current 587-entry modlist.
 
-Therefore this catalog deliberately distinguishes:
+Official CurseForge file `8881108`, `ars_n_spells-3.3.4.jar`, is a NeoForge 1.21.1 Release dated 2026-09-14. Its published 3.3.4 delta is concentrated on native cast/payment ownership, measured debit/refund recovery, cooldown lifecycle alignment, Curios attribute mirroring defaults, carrier revisions/protocol 7, MixinExtras restoration and blank-scroll loot restoration.
 
-1. **physical/release-exact 3.3.2 facts** — presence, version, hash and published 3.3.1/3.3.2 release deltas;
-2. **source-pinned 3.3.0 NeoForge facts** — registrations, registry paths, proxy pool, mana modes and implementation boundaries visible at the official 1.21.1 source pin;
-3. **unverified 3.3.2 binary internals** — exact class/signature/registry parity after 3.3.0 is not claimed without exact JAR extraction.
+The official NeoForge 1.21.1 source branch is public through the **3.3.3** implementation line (`otectus/ars-n-spells@41fac17065c381104b17fdaab307d89ba21b49ab`; its `gradle.properties` declares `mod_version=3.3.3`). The 3.3.3 source and its architecture inventory explicitly expose **five rituals**: unconditional Spell Uninscription plus Iron's-gated Spell Transcription, Spellbook Binding, Mana Infusion and Mana Well.
 
-The exact 3.3.1 release removes the transaction receipt HUD. The exact 3.3.2 release fixes contextual Iron's mana-bar visibility and states that there are **no config, network-protocol or save-format changes from 3.3.1**. Those deltas do not publicly announce gameplay registrations being added or removed, but absence from release notes is not promoted to byte-for-byte registry proof.
+Therefore the current evidence stack is deliberately split:
 
+1. **physical/release-exact 3.3.4** — installed version/hash and publisher release delta;
+2. **source-pinned 3.3.3** — exact current public ritual registry/bridge architecture before the 3.3.4 payment/cast hardening;
+3. **release-bounded semantic closure for 3.3.4** — the 3.3.4 publisher delta does not introduce a new ritual/spell registration surface, while the named five-ritual provider model remains the documented/current bridge surface;
+4. **unproven 3.3.4 internals** — exact class byte parity/signatures are not claimed without the physical JAR or a public 3.3.4 source pin.
+
+The result is a current provider count of **5 ritual identities**, with **zero semantic count delta** from the previously counted 3.3.2 line.
 ## Provider classification
 
 Primary class: `BRIDGE / COMPAT / PROGRESSION`, with a real ritual/workstation surface.
@@ -101,7 +105,7 @@ Black Arcana must not:
 - treat `ars_cross_*` as ordinary independent offensive spells and process them a second time;
 - mirror provider cooldown/progression/school attribution for the same causal cast;
 - bypass the provider's carrier validation, proxy allocation or native-wheel routing with a second cross-cast packet path;
-- infer exact 3.3.2 internal signatures from the 3.3.0 source baseline.
+- infer exact 3.3.4 internal signatures from the 3.3.3 public source baseline.
 
 For a provider-routed cast, Black Arcana integration must preserve one causal cast identity. If an integration needs an exact internal hook that is not proven on 3.3.2, it remains **fail-closed**.
 
@@ -111,15 +115,17 @@ Ars 'n' Spells does not transfer authority over Black Arcana Corruption, Strain,
 
 If a Black Arcana effect triggered through an approved adapter performs destructive world mutation, that Black Arcana-owned mutation still requires the canonical `WorldEffectPolicy` path.
 
-## Current 3.3.2 HUD delta
+## Current 3.3.4 release delta
 
-Current UI facts that matter to the catalog:
+Current release facts relevant to the catalog:
 
-- the transaction receipt HUD is **not current content**; it was removed in 3.3.1;
-- 3.3.2 fixes the contextual Iron's mana bar so full displayed mana hides correctly with fractional maximums and the XP bar can return at the XP anchor;
-- 3.3.2 states no config, network-protocol or save-format change from 3.3.1.
+- transaction receipt HUD remains removed since 3.3.1;
+- the 3.3.2 contextual mana-bar fix remains part of the current line;
+- 3.3.3 adds Blank Scroll, native Iron's Inscription Table binding and Spell Loom/carrier revisions while retaining the existing five-ritual model;
+- 3.3.4 moves payment ownership to the final native cast lifecycle, hardens debit/refund recovery and validation, advances carrier/network revision handling, and restores selected blank-scroll loot;
+- none of those published 3.3.4 changes establish a sixth provider ritual identity.
 
-These presentation changes do not grant the client any new gameplay authority.
+These bridge/payment/presentation changes do not transfer gameplay authority to the client or create extra semantic spells.
 
 ## Evidence/provenance
 
