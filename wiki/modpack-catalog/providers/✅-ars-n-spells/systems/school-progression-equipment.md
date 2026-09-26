@@ -2,9 +2,9 @@
 
 ## Evidence boundary
 
-Physical provider: Ars 'n' Spells `3.3.2`.
+Physical provider: Ars 'n' Spells `3.3.4`.
 
-Implementation facts on this page are pinned to the official NeoForge 1.21.1 `3.3.0` source baseline at `a9930223c96806e5d748ea69d02f9a32cab62de9`. Exact 3.3.2 internal parity remains `NÃO VERIFICADO`.
+Detailed implementation facts on this page remain pinned to the audited NeoForge 1.21.1 `3.3.0` source baseline at `a9930223c96806e5d748ea69d02f9a32cab62de9`. Public source reaches 3.3.3; exact 3.3.4 internal parity remains `NÃO VERIFICADO`.
 
 ## School resolution authority
 
@@ -53,7 +53,7 @@ The 1.21.1 source reads Ars 5.x player attributes/perk-derived totals rather tha
 
 ## Resonance and shared scaling
 
-Ars 'n' Spells also owns its resonance/scaling contribution to the cross-system bridge. Exact 3.3.2 formulas or signatures are not restated here unless proven on the installed artifact; the important dedup contract is that Black Arcana must not independently mirror the same provider scaling into both host engines.
+Ars 'n' Spells also owns its resonance/scaling contribution to the cross-system bridge. Exact 3.3.4 formulas or signatures are not restated here unless proven on the installed artifact; the important dedup contract is that Black Arcana must not independently mirror the same provider scaling into both host engines.
 
 ## Black Arcana boundary
 
@@ -65,4 +65,4 @@ Black Arcana may consume a verified provider result where a real adapter exists,
 - duplicate equipment bonus cross-feed;
 - convert provider affinity/progression automatically into Black Arcana Corruption, Strain, Arcane Danger or RPG Mastery.
 
-If an exact 3.3.2 school/progression/equipment hook is required and has not been verified, the integration fails closed.
+If an exact 3.3.4 school/progression/equipment hook is required and has not been verified, the integration fails closed.
