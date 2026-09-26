@@ -4,7 +4,7 @@
 
 `AUDITORIA EM ANDAMENTO — categoria física Magic reconciliada em 24/09/2026 / denominador global PENDING REBASE`
 
-O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1`. A árvore `modlist/` mistura dossiês físicos atuais com exports legados sem prefixo de status; por isso a contagem bruta de Markdown não é convertida em número de mods top-level. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
+O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8`. A árvore `modlist/` mistura dossiês físicos atuais com exports legados sem prefixo de status; por isso a contagem bruta de Markdown não é convertida em número de mods top-level. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
 
 O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
@@ -14,21 +14,21 @@ Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjun
 
 Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, mas não prevalecem sobre o snapshot físico atual.
 
-## Reconciliação física Magic — 24/09/2026
+## Reconciliação física Magic — 26/09/2026
 
-No sibling atual `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` há **50 linhas status-prefixed atuais** cujas pastas de categoria contêm `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), as 50 linhas possuem diretório correspondente no catálogo.
+No sibling atual `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` há **45 linhas status-prefixed atuais** cujas pastas de categoria contêm exatamente `Magic`. Após normalização de nomes de ownership (por exemplo `somake` → `somake-spells`, `create-apokinetics` → `apokinetics`, `alshanexs-familiars` → `alshanex-familiars`), todas as 45 linhas possuem diretório correspondente no catálogo, incluindo os quatro diretórios ⚠️.
 
-Estado efetivo desses 50 providers:
+Estado efetivo desses 45 providers:
 
-- **46 ✅ catalogados**;
+- **41 ✅ catalogados**;
 - **4 ⚠️ parciais/condicionados** dentro da categoria física `Magic`: Asterism Arcanum, Somake Spells, Not Enough Glyphs e Corail Tombstone;
 - **0 ❌ não catalogados** dentro dessa categoria física;
 - **0 🟡 em implementação** após a integração desta rodada;
 - **0 ⛔ bloqueados** por ausência total de evidência.
 
-**Cross-domain note:** Gaze 1.1.7.1 remains ⚠️ in the global magic-provider catalog because it owns one counted spell and 26 config-conditional rites, but its current sibling dossier lives under `PROJECT-INSTRUCTIONS/modlist/Addons/`; it is therefore not part of the 50-row physical `Magic` category count. Ender's Spells and Stuff: Requiem 0.1.7 is likewise cross-domain under `Addons/`, but is now ✅ cataloged with 53 strict semantic actions and therefore contributes to the global semantic numerator without changing the physical-`Magic` subtotal.
+**Cross-domain note:** Gaze 1.1.7.1 remains ⚠️ in the global magic-provider catalog because it owns one counted spell and 26 config-conditional rites, but its current sibling dossier lives under `PROJECT-INSTRUCTIONS/modlist/Addons/`; it is therefore not part of the 45-row physical `Magic` category count. Ender's Spells and Stuff: Requiem 0.1.7 is likewise cross-domain under `Addons/`, but is ✅ cataloged with 53 strict semantic actions and therefore contributes to the global semantic numerator without changing the physical-`Magic` subtotal. Iron's Spellbooks KubeJS 4.0.3 is another cross-domain magic-capable component under a root-level dossier; its dedicated Black Arcana provider audit is being handled separately because pack scripts can create content outside the bridge namespace.
 
-**Historical-provider note:** sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` has no current status-prefixed/categorized Traveloptics physical row. A legacy uncategorized export dossier, `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`, remains and explicitly points to the older 595-mod physical snapshot. Phase 2BS remains historical evidence; Traveloptics is not a current installed-provider blocker.
+**Historical-provider note:** sibling `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` has no current status-prefixed/categorized Traveloptics physical row. A legacy uncategorized export dossier, `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`, remains and explicitly points to the older 595-mod physical snapshot. Phase 2BS remains historical evidence; Traveloptics is not a current installed-provider blocker.
 
 Fechamentos recentes relevantes:
 
@@ -44,7 +44,7 @@ Fechamentos recentes relevantes:
 - ✅ Ender's Spells and Stuff: Requiem 0.1.7 — **58** source-pinned current registered roots under the present DTE-enabled provider set; **53 `COUNTED_SOURCE_PINNED`** player-facing semantic actions after excluding 5 implementation/residual roots.
 - ⚠️ Corail Tombstone 9.5.6 — **10 `COUNTED_RELEASE_BOUNDED` actions** strict-counted (6 prayer + 4 Ritual Flute); additional config-sensitive castable magic-item actions remain conditional.
 - ✅ Relics 0.12.8 — exact physical/publisher artifact equality; **39 base abilities + 2 distinct synergies = 41 `COUNTED_EXACT` provider powers**; runtime/config QA remains fail-closed.
-- ⚠️ Somake 1.0.9 — exact deployed registry outcome may be proven by deterministic assembled-server observation, but generalized predicates, config/reachability and final current inventory remain conditional.
+- ⚠️ Somake 1.0.9 — physical SHA-1 equals exact publisher File `8867079`; exact physical registry is **83 IDs**, gate topology is **67 unconditional + 16 optional**, current mod composition admits **83/83**, and all 83 current identities now have individual cards. Remaining blockers are effective deployed Iron's/provider config and survival reachability.
 
 O mínimo semântico estrito corrente é **1496**. O denominador semântico final e o denominador técnico cross-domain continuam abertos; não publicar percentual global.
 
@@ -82,13 +82,33 @@ Consequência naquele checkpoint: **✅ Iron's Apothic 2.2.2 — bridge mágico/
 
 ## Provider freshness override — Somake 1.0.9
 
-A autoridade global de 595 top-levels acima permanece o checkpoint histórico reconciliado de 2026-09-11; ela **não** é rebatizada silenciosamente como um snapshot global mais novo.
+Current sibling authority rechecked at `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` retains the certified physical dossier `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic/✅-somake v1.0.9.md` for `somakespells-1.0.9-1.21.1.jar` / mod id `somakespells` / runtime `1.0.9`.
 
-Há, porém, uma autoridade física provider-specific mais recente no sibling: o índice reorganizado atual, verificado em `neoforge-rpg-skilltree@cd514bc0456a42ef3f76059c32d9e59d88f1e06b`, preserva a entrada certificada `somakespells-1.0.9-1.21.1.jar` / mod id `somakespells` / runtime `1.0.9`. Esse índice ainda está sendo reconstruído por lotes, portanto ele é usado aqui para a entrada Somake que já foi certificada, não como prova de ausência para providers ainda não alcançados. Isso supersede apenas a antiga afirmação de que Somake 1.0.8-fix é a linha física corrente.
+The current Black Arcana evidence is materially beyond the earlier resource-only checkpoint:
 
-O audit clean-room resource-only da release exata 1.0.9 (CurseForge file `8867079`) fechou SHA-1 de release `171841ac9f802be9309ecc166c1d972ac6d404c0`, metadata de dependências e superfície de resources/localization. O audit encontra 83 roots `spell.somakespells.<id>` e 83 `.guide` correspondentes, mas **não** converte localization em registry. O changelog exato 1.21.1 da mesma release também nomeia 16 spells atuais — 10 Spirit/Evocation, 1 Holy, 1 Sound, 1 Aqua e 3 Blood — e declara `Summon Zombie` substituído por `Summon Drowned`; esse ledger fecha apenas proveniência nominal/semântica pública, não IDs de registry nem total completo. O changelog oficial da mesma release confirma que Legendary Monsters é opcional e que a tranche Spirit/Red Soul/items correspondente só carrega quando o provider está instalado. O dossiê provider-specific atual do sibling preserva `legendary_monsters` 2.2.2 como instalado no seu último checkpoint físico explícito, fechando apenas essa condição ampla de presença naquele checkpoint. A igualdade byte-for-byte do Somake 1.0.9 com o JAR físico, o registry corrente, o mapeamento objeto-a-objeto dos predicates opcionais e a reachability/config implantada continuam abertos.
+- physical Project Library SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- exact publisher CurseForge File `8867079` SHA-1: `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- physical ↔ publisher artifact equality: **closed**;
+- exact physical/release registry: **83 unique spell IDs**;
+- exact registration topology: **67 unconditional + 16 unique optional-provider-gated**;
+- exact optional gates: 3 Mowzie's-only, 2 ISS-only, 9 Legendary-Monsters-only and 2 nested ISS+Legendary;
+- all three required registration-gate providers are physically present in the current pack, so Somake's own registration predicates admit **83/83** declared spell IDs;
+- exact provider code default for `enableSpellLockSystem`: **false**;
+- all **83 current identities** are materialized individually through `MAGIC-CARDS-1.0.9.md` and `registry-1.0.9/`.
 
-Consequência canônica: Somake continua **⚠️ parcial/condicionado / +0 strict / sem ponto de componente**. O checkpoint Phase 2BF de 1.0.8-fix abaixo permanece histórico e não descreve o registry corrente.
+This closes physical identity, exact registry identity, object-level optional-registration predicates and current registration composition. The runtime probe is no longer needed merely to discover which Somake IDs register in this pack.
+
+Somake nevertheless remains **⚠️ partial / conditioned / +0 strict**. The unresolved catalog gates are narrower:
+
+- effective deployed Iron's per-spell/global/datapack `enabled`;
+- effective deployed Iron's `allow_crafting`, especially around the seven provider `allowCrafting()` overrides;
+- effective deployed Somake `enableSpellLockSystem` COMMON value;
+- object-level or bounded-set survival acquisition/reachability, including Aqua/focus paths;
+- assembled-pack progression/runtime settlement remains separate QA.
+
+No source default is promoted into a deployed-state fact. The historical 1.0.8-fix 67-ID audit remains historical only and must not be reused as current authority.
+
+Consequence: Somake remains **⚠️ partial/conditioned / +0 strict**, but **registry discovery and current composition are no longer blockers**.
 
 ## Provider freshness override — Not Enough Glyphs 4.6.2
 
