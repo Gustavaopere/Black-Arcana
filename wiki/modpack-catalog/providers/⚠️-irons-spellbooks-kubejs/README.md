@@ -83,6 +83,20 @@ Strict contribution from the base framework itself: **+0**.
 
 Any pack-script-defined semantic objects remain outside the denominator until the exact current script set or equivalent authoritative assembled-instance provenance is audited.
 
+## Historical assembled-instance script evidence — not current closure
+
+Project Library logs from a physical boot on 2026-09-08 provide a bounded historical observation:
+
+- KubeJS Startup logged `startup_scripts:main.js#2: Hello, World! (Loaded startup example script)`;
+- it then logged `Loaded 1/1 KubeJS startup scripts ... with 0 errors and 0 warnings`;
+- the same boot inventory reports Iron's Spellbooks KubeJS 4.0.3 and KubeJS `2101.7.2-build.374`.
+
+This strongly indicates that **that 2026-09-08 instance** had only the default/example startup script and no observed custom Iron's spell registration script.
+
+It does **not** close the current pack: current sibling authority now records KubeJS `2101.7.2-build.377`, and the exact current `kubejs/` directory has not been captured. Historical script absence is not propagated across a later physical pack checkpoint.
+
+Accordingly the current script-defined inventory remains `UNVERIFIED / NOT ADDITIVE` until current-instance evidence is available.
+
 ## Closure path
 
 See [`PACK-SCRIPT-CLOSURE-CHECKLIST.md`](PACK-SCRIPT-CLOSURE-CHECKLIST.md).
