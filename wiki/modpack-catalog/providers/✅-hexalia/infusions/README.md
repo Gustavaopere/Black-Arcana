@@ -1,18 +1,18 @@
-# Hexalia 1.3.6 — Infusions
+# Hexalia 1.3.7 — Infusions
 
 ## Estado
 
-`CELESTIAL INFUSION SOURCE-PINNED / RECIPES 6/6 / CHANNEL+ENVIRONMENT LIFECYCLE AUDITED / INSTALLED-RUNTIME EQUIVALENCE PENDING`
+`CELESTIAL INFUSION RELEASE-SOURCE-PINNED 1.3.7 / RECIPES 6/6 / 1.3.6→1.3.7 RELEASE BLOBS UNCHANGED / CHANNEL+ENVIRONMENT LIFECYCLE AUDITED / ASSEMBLED RUNTIME QA SEPARATE`
 
 Canonical release-line source:
 
-`AstralyaStudios/Hexalia@4952c65233bf31e9f0d3e55ff76be7fa1007ee3d`
+`AstralyaStudios/Hexalia@98c22aaf70e069c616fed5ad2dc56d2b37fcd283` (`Hexalia 1.3.7` release commit)
 
 ## Current catalog
 
 - [Celestial Infusion — 6/6 recipes and channel lifecycle](CELESTIAL-INFUSION-CATALOG.md)
 
-The current source-pinned 1.3.6 inventory consists of:
+The current 1.3.7 release inventory remains:
 
 - Glow Berries → Galeberries;
 - Amethyst Shard → Celestial Crystal;
@@ -23,3 +23,4 @@ Celestial Infusion uses a Ritual Brazier and Hex Focus but is **not** Nature's R
 ## Authority rule
 
 Hexalia owns the recipe, channel, environmental admission and Celestial Bloom degradation. Black Arcana must not duplicate those costs or re-run the infusion through its casting pipeline. Celestial presentation alone does not transfer this system into a future Holy/Divine school.
+The six recipe JSONs plus `CelestialInfusion.java` and `CelestialInfusionRecipe.java` are unchanged between the audited 1.3.6 release pin and the 1.3.7 release commit. This repin is based on direct source comparison, not changelog inference.
