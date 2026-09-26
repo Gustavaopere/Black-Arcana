@@ -20,9 +20,10 @@ Semantic effect of the current reconciliation:
 - Relics 0.12.8: **+41 `COUNTED_EXACT`** — exact physical SHA equals audited publisher File 8158315; exact artifact inventory closes 39 base abilities + 2 distinct owner-scoped synergies; rank/mode variants add zero identities.
 - Cataclysm: Spellbooks 1.1.14: retains **59** already-counted spell identities; physical SHA-1 equals audited publisher File 8847070, strengthening evidence to `COUNTED_EXACT` with **+0 current delta**.
 - Corail Tombstone 9.5.6 remains partial but contributes **+10 `COUNTED_RELEASE_BOUNDED`** actions: six prayer identities + four Ritual Flute actions. Additional config-sensitive castable magic-item actions remain conditional.
+- Ender's Spells and Stuff: Requiem 0.1.7 contributes **+53 `COUNTED_SOURCE_PINNED`** actions: 58 current source-pinned registered roots with DTE present, minus 5 implementation/residual roots excluded by the semantic metric.
 - Somake 1.0.9 remains conditional and contributes **+0 strict** until its current exact registry/reachability gates close.
 
-The strict reconstructible semantic minimum is therefore **1443** (`1382 + 9 + 1 + 41 + 10`). The semantic denominator and the cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1496** (`1382 + 9 + 1 + 41 + 10 + 53`). The semantic denominator and the cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -103,7 +104,8 @@ Therefore:
 - semantic numerator delta from Relics 0.12.8 exact ability/synergy closure: **+41**;
 - semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
 - semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
-- strict reconstructible semantic minimum: **1443**;
+- semantic numerator delta from Ender's Spells and Stuff: Requiem 0.1.7 source-pinned closure: **+53**;
+- strict reconstructible semantic minimum: **1496**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
