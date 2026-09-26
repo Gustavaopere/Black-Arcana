@@ -89,7 +89,7 @@ Current Asterism strict contribution: **10**.
 
 Current semantic delta from this evidence-upgrade checkpoint: **+0**.
 
-The global strict minimum therefore remains **1443**.
+At this Asterism evidence-upgrade checkpoint, before the later Ender's Spells and Stuff: Requiem reconciliation, the global strict minimum remained **1443**. The current global total is maintained by the shared semantic ledger rather than frozen in this provider-local checkpoint.
 
 ## Astral Gateway boundary
 
