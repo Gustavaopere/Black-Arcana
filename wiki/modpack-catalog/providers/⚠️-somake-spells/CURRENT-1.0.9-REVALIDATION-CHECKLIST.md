@@ -140,7 +140,7 @@ Before Somake can leave `⚠️ Parcial / condicionado`, capture authoritative 1
 2. **Current registry declaration — CLOSED AT EXACT PHYSICAL LEVEL**
    - exact File 8867079 / physical SHA-matched inventory: **83 unique spell IDs**;
    - exact delta vs 1.0.8-fix: **+17 / -1 (`summon_zombie`)**;
-   - current spell cards are consolidated in `SPELL-CATALOG-1.0.9.md`.
+   - current exact registry inventory is consolidated in `SPELL-CATALOG-1.0.9.md`; all 83 current identities are also materialized individually through `MAGIC-CARDS-1.0.9.md` and `registry-1.0.9/`.
 
 3. **Optional-provider gates / current registration outcome — CLOSED**
    - refined NON-MERGE audit HEAD `071bdd92fed50aea65ad47772f4d1fb0cb8b7536`, run `36161117761`;
