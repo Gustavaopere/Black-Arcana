@@ -127,5 +127,39 @@ allow_lost_tablet = false
             self.assertFalse(entry["current_physical_0_1_0_equality"])
 
 
+    def test_runtime_probe_accepts_schema3_neg_glyph_observation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            logs = instance / "logs"
+            logs.mkdir(parents=True)
+            (logs / "latest.log").write_text(
+                "\n".join(
+                    [
+                        "[BLACK_ARCANA_CATALOG_PROBE] type=begin schema=3",
+                        "[BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:plow status=OBSERVED enabled=true",
+                        "[BLACK_ARCANA_CATALOG_PROBE] type=end schema=3",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            result = collector.collect_catalog_runtime_probe(instance, None)
+
+            self.assertEqual("COMPLETE", result["status"])
+            self.assertEqual(3, result["schema"])
+            self.assertEqual(
+                [
+                    {
+                        "type": "glyph",
+                        "id": "not_enough_glyphs:plow",
+                        "status": "OBSERVED",
+                        "enabled": True,
+                    }
+                ],
+                result["rows"],
+            )
+
+
 if __name__ == "__main__":
     unittest.main()
