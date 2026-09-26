@@ -82,7 +82,7 @@ The release also adds Gravebloom Brew, Heartseed, Cinderhew, Herb Jar and five A
 
 - [Brew catalog](brews/README.md)
 
-The 1.3.7 release catalog contains the previous eight brews plus **Gravebloom**, for **9/9** current recipes. Gravebloom is a standard 240-second `BrewItem`: while its effect is active, player kills of Monsters invoke the provider's moss/plant growth event. Persistent effect ticks/death hooks are not separate semantic casts.
+The 1.3.7 release catalog contains the previous eight brews plus **Gravebloom**, for **9/9** current recipes. Gravebloom is a standard `BrewItem` with **1800 ticks = 90 s** base duration: while its effect is active, player kills of Monsters invoke the provider's moss/plant growth event. Persistent effect ticks/death hooks are not separate semantic casts.
 
 Provider descriptions and located executable paths do not agree perfectly for several brews. Bloodlust, Hollow Silence, Siphon, Slimewalker and Spikeskin retain explicit runtime/behavior QA blockers rather than having missing semantics inferred.
 
