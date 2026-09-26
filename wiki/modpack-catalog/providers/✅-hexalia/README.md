@@ -2,7 +2,7 @@
 
 ## Status
 
-`✅ CATALOGED / PHYSICAL 1.3.7 / SOURCE-PINNED 1.3.7 / NATURE'S RITUAL 23/23 / CELESTIAL INFUSION 6/6 / CURRENT SEMANTIC MAGIC SURFACE 29 / REMAINING NON-SEMANTIC SUBCATALOGS PRESERVE THEIR PREVIOUS AUDITS / ASSEMBLED RUNTIME QA SEPARATE`
+`✅ CATALOGED / PHYSICAL 1.3.7 / RELEASE-SOURCE-PINNED 1.3.7 / NATURE'S RITUAL 23/23 / CELESTIAL INFUSION 6/6 / BREWS 9/9 / CURRENT SEMANTIC MAGIC SURFACE 29 / 1.3.7 CONTENT DELTA AUDITED / ASSEMBLED RUNTIME QA SEPARATE`
 
 ## Current physical identity
 
@@ -17,23 +17,25 @@ The newest physical Project Library modlist is authoritative for installed ident
 
 This supersedes the older 1.3.6 filename / 1.3.5 metadata drift that remains documented below only as historical provenance.
 
-## Exact current source pin
+## Release-correlated source pin
 
 Official repository: `AstralyaStudios/Hexalia`.
 
-Current source pin: `1230d32056f155e58ee1139c105a93eeea42fa05` on branch `hexalia-1.21.1`.
+Release-correlated source pin: `98c22aaf70e069c616fed5ad2dc56d2b37fcd283` on branch `hexalia-1.21.1`.
 
-The commit is dated 2026-09-21 with message `Hexalia 1.3.7 fixes and parity cleanup`; `gradle.properties` declares:
+The commit is dated 2026-09-13 with message `Hexalia 1.3.7`, matching the physical/publisher release date; `gradle.properties` declares:
 
 - `mod_version=1.3.7`;
 - `minecraft_version=1.21.1`;
 - NeoForge development baseline `21.1.215`.
 
-The installed artifact SHA-1 is known, but reproducible byte equality between the physical JAR and this source tree has not been established. Current semantic evidence is therefore source-pinned rather than exact-binary.
+The branch later advanced to `1230d32056f155e58ee1139c105a93eeea42fa05` (`Hexalia 1.3.7 fixes and parity cleanup`, 2026-09-21). That later same-version source is useful as maintenance provenance but is **not projected backward** as physical-release behavior unless a fact is separately release-bounded.
+
+The installed artifact SHA-1 is known, but reproducible byte equality between the physical JAR and the release source build has not been established. Current semantic evidence is therefore `COUNTED_SOURCE_PINNED`, not exact-binary.
 
 ## 1.3.7 semantic delta
 
-The exact current source contains **23** generated `hexalia:natures_ritual` recipes and **6** generated `hexalia:celestial_infusion` recipes.
+The exact 1.3.7 release source contains **23** generated `hexalia:natures_ritual` recipes and **6** generated `hexalia:celestial_infusion` recipes.
 
 Compared with the previously cataloged 1.3.6 semantic surface:
 
@@ -53,7 +55,7 @@ The two summon recipes are not item recipes: they set `requires_soul=true` and p
 
 ## Nature's Ritual lifecycle changed in 1.3.7
 
-The 1.3.6 four-cardinal-brazier description is no longer current. Exact 1.3.7 source now:
+The 1.3.6 four-cardinal-brazier description is no longer current. Release-correlated 1.3.7 source:
 
 - scans non-empty Ritual Braziers in a **horizontal radius of 8** around the Ritual Table;
 - sorts available braziers deterministically by distance and block position;
@@ -68,19 +70,19 @@ For `requires_soul` recipes, finishing the offering phase does not immediately s
 
 ## Celestial Infusion 1.3.7 verification
 
-`CelestialInfusion.java`, `CelestialInfusionRecipe.java`, and all six generated Celestial Infusion recipe JSON blobs are byte-identical between the audited 1.3.6 source pin and current 1.3.7 source pin. The existing 6/6 catalog remains semantically current and is repinned to 1.3.7.
+`CelestialInfusion.java`, `CelestialInfusionRecipe.java`, and all six generated Celestial Infusion recipe JSON blobs are unchanged between the audited 1.3.6 release pin and the 1.3.7 release commit. The existing 6/6 catalog therefore remains semantically current and is repinned to the 1.3.7 release boundary.
 
-## Scope boundary for older subcatalogs
+## 1.3.7 non-semantic content delta
 
-Only the semantic ritual/infusion surface is promoted by this re-audit. Brews, mutations, Mortar & Pestle, Censer, idols and other capability inventories below retain their previous source-level audits unless their own files explicitly say otherwise. No unsupported 1.3.7 equivalence is inferred for those surfaces.
+The release also adds Gravebloom Brew, Heartseed, Cinderhew, Herb Jar and five Accessories-based magical wearables (`seafoam_talisman`, `moonward_ring`, `witchheart_cluster`, `wyrd_feather`, `green_omen`). These are cataloged as provider items/effects rather than extra semantic spell/ritual identities under the current metric. Gravebloom expands the Small Cauldron brew inventory from 8 to 9; the new accessories are passive/proc equipment; Cinderhew is a weapon/tool action path; Heartseed is a consumable taming interaction.
 
 ## Canonical subcatalogs
 
-### Small Cauldron brews — 8/8
+### Small Cauldron brews — 9/9
 
 - [Brew catalog](brews/README.md)
 
-The source-pinned 1.3.6 catalog contains Arachnid Grace, Bloodlust, Daybloom, Hollow Silence, Homestead, Siphon, Slimewalker and Spikeskin. All eight source recipes are cataloged individually.
+The 1.3.7 release catalog contains the previous eight brews plus **Gravebloom**, for **9/9** current recipes. Gravebloom is a standard 240-second `BrewItem`: while its effect is active, player kills of Monsters invoke the provider's moss/plant growth event. Persistent effect ticks/death hooks are not separate semantic casts.
 
 Provider descriptions and located executable paths do not agree perfectly for several brews. Bloodlust, Hollow Silence, Siphon, Slimewalker and Spikeskin retain explicit runtime/behavior QA blockers rather than having missing semantics inferred.
 
@@ -218,12 +220,12 @@ No audited Hexalia source-pinned surface proves Black Arcana's proposed server-a
 
 ## Remaining open audit items
 
-1. reconcile exact installed-JAR identity against public File ID `8658488` and explain why runtime metadata reports `1.3.5`;
-2. retain explicit runtime QA for brew description/source discrepancies, especially Hollow Silence, Bloodlust, Siphon, Slimewalker and Spikeskin;
+1. establish reproducible byte equality, if ever needed, between the physical 1.3.7 JAR and the release-correlated source; do not infer it from matching version labels;
+2. retain explicit runtime QA for brew description/source discrepancies, especially Hollow Silence, Bloodlust, Siphon, Slimewalker and Spikeskin, plus live Gravebloom world mutation;
 3. identify supported/stable integration API or event surfaces; do not couple to implementation classes merely because they are visible;
 4. perform exact pack runtime QA for brews, rituals, Celestial Infusion, mutations, Mortar & Pestle, salves, Censer and idols before promoting source-derived formulas to installed-runtime facts;
 5. run cross-mod interaction QA where provider behavior is deliberately broad, especially Brambleguard bleed-path removal, Censer Hollow Aura, Blighted Bloom and weather/world-changing items.
 
 ## Phase 3 gate
 
-Hexalia now has granular source-pinned semantic coverage across its major witchcraft preparation and persistent-effect systems, but implementation remains `BLOCKED / FAIL-CLOSED FOR PROVIDER-SPECIFIC HOOKS` until stable integration boundaries and the installed `1.3.6 filename / 1.3.5 runtime` equivalence question are resolved where required. Source catalog completion is not installed-runtime validation.
+Hexalia now has current 1.3.7 release-source-pinned semantic coverage across its ritual/infusion action surface and a bounded 1.3.7 content-delta audit. Provider-specific Black Arcana hooks remain fail-closed until stable integration boundaries and assembled-pack runtime behavior are verified. Catalog completion is not installed-runtime validation.
