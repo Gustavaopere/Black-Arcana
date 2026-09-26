@@ -6,24 +6,29 @@ The principal percentage reported to the user is the coverage of **semantic magi
 
 The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. At the Phase 2BT checkpoint the strict minimum remained **1344**. The global denominator is still incomplete and no semantic percentage is declared.
 
-## Current reconciliation — 24/09/2026
+## Current reconciliation — 26/09/2026
 
-Current sibling authority `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` contains **45 current status-prefixed physical rows whose category path contains exactly `Magic`**; all map to catalog provider directories after ownership-name normalization: **41 ✅ cataloged / 4 ⚠️ partial-conditioned**. Unprefixed legacy/export Markdown files under `modlist/` are not treated as current physical rows. Gaze remains an additional global ⚠️ magic provider categorized under `Addons/`; Ender's Spells and Stuff: Requiem remains a cross-domain ✅ provider under `Addons/`. Iron's Spellbooks KubeJS is a root-level cross-domain magic-capable framework whose pack-script inventory is audited separately. Traveloptics is absent from the current sibling modlist/dossier tree and survives only as a historical Phase 2BS audit, not as a current partial provider.
+Presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers when they postdate that snapshot. The sibling's status-prefixed category paths still yield **45 current `Magic` rows = 41 ✅ cataloged + 4 ⚠️ partial-conditioned**, but this is only a category subtotal. The global cross-domain set is larger and includes current root/Addons providers such as Gaze, Requiem, Traveloptics, More Relics, the KubeJS bridges, Spell Actionbar/Specs/Recolor/Immersive Portal layers and the Reliquified addons.
 
 Semantic effect of the current reconciliation:
 
-- Acolyte 1.0.3: **+0** — consumes Iron's-owned spell identities.
 - Companions! 1.3.4: **+9 `COUNTED_SOURCE_PINNED`** Magic Book actions.
 - Crystal Chronicles 0.1.3-alpha: **+1 `COUNTED_SOURCE_PINNED`** (`crystal_chronicles:prismatic_portal`).
-- Dungeon's Delight 1.5.1, Fantasy Armor 1.2.4, Enchantment Descriptions 21.1.11 and A Good Place 1.2.5: **+0** each after explicit zero-semantic classification.
-- Create: Apokinetics 1.0.6: **+0** — exact physical SHA equals audited publisher File 8790422; exact-binary bounded scan closes zero spell/glyph/ritual surface while runtime/economy QA remains fail-closed.
-- Relics 0.12.8: **+41 `COUNTED_EXACT`** — exact physical SHA equals audited publisher File 8158315; exact artifact inventory closes 39 base abilities + 2 distinct owner-scoped synergies; rank/mode variants add zero identities.
-- Cataclysm: Spellbooks 1.1.14: retains **59** already-counted spell identities; physical SHA-1 equals audited publisher File 8847070, strengthening evidence to `COUNTED_EXACT` with **+0 current delta**.
-- Corail Tombstone 9.5.6 remains partial but contributes **+10 `COUNTED_RELEASE_BOUNDED`** actions: six prayer identities + four Ritual Flute actions. Additional config-sensitive castable magic-item actions remain conditional.
-- Ender's Spells and Stuff: Requiem 0.1.7 contributes **+53 `COUNTED_SOURCE_PINNED`** actions: 58 current source-pinned registered roots with DTE present, minus 5 implementation/residual roots excluded by the semantic metric.
-- Somake 1.0.9 remains conditional and contributes **+0 strict**; physical↔publisher equality, exact 83-ID registry, exact 67+16 registration gates, current-composition **83/83** admission and 83 individual current cards are closed. Effective deployed host/provider config and survival reachability remain open.
+- Relics 0.12.8: **+41 `COUNTED_EXACT`** — 39 base abilities + 2 owner-scoped synergies.
+- Corail Tombstone 9.5.6: **+10 `COUNTED_RELEASE_BOUNDED`** — six prayers + four Ritual Flute actions; 12 more action families remain config-conditional.
+- Ender's Spells and Stuff: Requiem 0.1.7: **+53 `COUNTED_SOURCE_PINNED`**.
+- Hexalia 1.3.7: current semantic surface **29 = 23 Nature's Ritual + 6 Celestial Infusion**, a **+4** delta over the previously counted 25.
+- Reliquified Ars Nouveau 0.8.1: **+19 `COUNTED_SOURCE_PINNED`**.
+- Reliquified Artifacts 1.0.8: **+52 `COUNTED_SOURCE_PINNED`**.
+- Reliquified Iron's Spells 'n Spellbooks 0.2.7: **+25 `COUNTED_SOURCE_PINNED`**.
+- Ars 'n' Spells 3.3.4: **+0 version delta**; five ritual identities remain counted, with current state `COUNTED_RELEASE_BOUNDED`.
+- Cataclysm: Spellbooks 1.1.14: **+0 current delta**, retaining 59 already-counted identities with stronger exact evidence.
+- Acolyte, Dungeon's Delight, Fantasy Armor, Enchantment Descriptions, A Good Place, Create: Apokinetics, Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Specs: **+0 independent semantic objects** under the current metric.
+- More Relics 1.7.7-forRelics-0.12.8-1.0 and Traveloptics 4.4.0.1-1.21.1 are current **⚠️ / +0 strict pending closure**; neither published relic names nor the old 33-spell Traveloptics publisher baseline is promoted into the exact current physical numerator.
+- Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
+- Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
 
-The strict reconstructible semantic minimum is therefore **1496** (`1382 + 9 + 1 + 41 + 10 + 53`). The semantic denominator and the cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1596**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -46,7 +51,7 @@ The exact source registers 7 custom affix codecs, contains 140 affix definitions
 
 See [Iron's Apothic](../providers/%E2%9C%85-irons-apothic/README.md), [exact source magic-surface inventory](../providers/%E2%9C%85-irons-apothic/SOURCE-2.2.2-MAGIC-SURFACE.md), and the narrow queue/capability overlays.
 
-Historical Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — was a **partial catalog with +0 strict semantic delta and +0 component delta**. Exact publisher file `6342780` closes 33 registered spell identities and excludes 32 residual localization-only roots. `traveloptics:blackout` remains reachability-unresolved under `AbstractUniqueSpell.allowCrafting=false`, and exact `TOLootModifiers` wiring references `KeyLootModifier.CODEC` twice while `UniversalLootModifier.CODEC` is absent from that registration path. Runtime crash is not claimed reproduced. Phase 2BS therefore leaves the strict minimum at **1344** and technical closure at **66/100 at that checkpoint**. See [`../providers/traveloptics/README.md`](../providers/traveloptics/README.md), [`../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md`](../providers/traveloptics/EXACT-4.4.0.1-ARTIFACT-AUDIT.md) and [`PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md`](./PHASE2BS-TRAVELOPTICS-4.4.0.1-PARTIAL-CHECKPOINT.md).
+Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — remains the historical publisher-artifact audit: exact File `6342780` closes 33 registered spell identities and excludes 32 residual localization-only roots, with `blackout` reachability unresolved and suspicious loot-modifier codec wiring. Newer physical Project Library authority now confirms Traveloptics is **currently installed** at the same version line with SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; that digest differs from both the audited publisher alpha and known patch artifact, so the provider is current **⚠️ `OTHER_VERIFIED` / +0 strict** until the installed bytes/current registry are closed. See [`../providers/⚠️-traveloptics/README.md`](../providers/⚠️-traveloptics/README.md).
 
 Phase 2BT — Vampire Spells Addon 0.0.9 — has semantic delta **+0** and closes technical component **#67**. Official release `1.21.1-0.0.9` and exact source target `xsharov/VampireSpellsAddon@2d36e94e67611a316b7311b11e4574b499025580` show a compatibility/runtime-policy overlay over Iron's + Vampirism: spell/school identifiers belong to `irons_spellbooks`, integration is installed through bridge/listener surfaces, and no provider-owned spell, school, ritual or equivalent action registrar is established. PR #239 merged the durable audit as `main@1c5091807a8773d378c34ffac2e737b5f08b545c`, and the exact merge SHA passed Black Arcana CI run `34795795283` GREEN. The strict semantic minimum remains **1344** while technical component closure becomes **67/100**. Runtime bridge behavior, effective config and physical byte equality remain separate fail-closed gates. See [`../providers/vampire-spells-addon/RELEASE-SOURCE-0.0.9-AUDIT.md`](../providers/vampire-spells-addon/RELEASE-SOURCE-0.0.9-AUDIT.md).
 
@@ -107,11 +112,17 @@ Therefore:
 - semantic numerator delta from Goety Iron 3.1 exact closure: **+14**;
 - semantic numerator delta from Goety Cataclysm 1.21.1-1.8.2 exact closure: **+52**;
 - semantic numerator delta from Ender's Spells and Stuff: Requiem 0.1.7 source-pinned closure: **+53**;
-- strict reconstructible semantic minimum: **1496**;
+- semantic numerator delta from Hexalia 1.3.7 current release-source reconciliation: **+4**;
+- semantic numerator delta from Reliquified Ars Nouveau 0.8.1 source-pinned closure: **+19**;
+- semantic numerator delta from Reliquified Artifacts 1.0.8 source-pinned closure: **+52**;
+- semantic numerator delta from Reliquified Iron's Spells 'n Spellbooks 0.2.7 source-pinned closure: **+25**;
+- semantic numerator/denominator delta currently attributable to More Relics 1.7.7 compat audit: **+0 strict pending exact ability-root closure**;
+- semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
+- strict reconstructible semantic minimum: **1596**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
-The preceding semantic-only promotion was **Malum +26**: whole-interval path history across the observed `1.8.2` source window plus stable endpoint blobs close 26 base-Malum `SpiritRiteType` identities. Release-bounded Codex evidence separately proves that the two special identities, `undirected_rite` and `unchained_rite`, are player-facing rather than sentinel/proxy slots: `TotemMagicEntries.setupEntries(ArcanaProgressionScreen)` adds each as a distinct progression entry backed by its corresponding `RiteHolder`, `SpiritRiteTextPage`, and `SpiritRiteRecipePage`, while every observed `CodexLangDatagen.java` snapshot in the 1.8.2 interval preserves dedicated entries for both. The same release-bounded audit also records 37 active `GeasEffectType` identities and 9 `SpiritArcanaType` resource identities, but those are excluded from the current semantic-action metric by definition. Exact installed-JAR/source equivalence and runtime/API/recipe mechanics remain separate gates. The preceding semantic-only promotion was **Hexalia +25**: 19 player-facing Nature's Ritual identities plus 6 Celestial Infusion identities release-bounded across the observed 1.3.5 metadata / 1.3.6 filename-source boundary. Neither semantic promotion changes the internal provider-component closure metric below.
+The preceding semantic-only promotion was **Malum +26**: whole-interval path history across the observed `1.8.2` source window plus stable endpoint blobs close 26 base-Malum `SpiritRiteType` identities. Release-bounded Codex evidence separately proves the two special identities player-facing; Geas/resource/effect registries remain metric-excluded. Hexalia's earlier 1.3.6 checkpoint contributed **25**, but the current 1.3.7 release-source audit expands that same provider surface to **29** with four additional Nature's Ritual identities. These semantic promotions do not by themselves close the global provider-component denominator.
 
 Phase 2BH is canonical for Goety 3.1.4 from exact hash-matched artifact evidence: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical values are **1249 / 57 of 100**. Runtime/API/balance gates remain separate.
 

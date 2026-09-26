@@ -2,13 +2,13 @@
 
 ## Estado
 
-`AUDITORIA EM ANDAMENTO — categoria física Magic reconciliada em 24/09/2026 / denominador global PENDING REBASE`
+`AUDITORIA EM ANDAMENTO — categoria física Magic reconciliada em 26/09/2026 / cross-domain provider queue reconciliada / denominador global PENDING REBASE`
 
-O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade corrente usada nesta reconciliação é o sibling `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8`. A árvore `modlist/` mistura dossiês físicos atuais com exports legados sem prefixo de status; por isso a contagem bruta de Markdown não é convertida em número de mods top-level. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain é maior que essa pasta.
+O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade corrente para presença/versão combina a modlist física do Project Library com os dossiês físicos sibling mais novos quando estes a supersedem; a taxonomia status-prefixed do sibling não é usada para negar um JAR diretamente observado. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain/root-level é maior que essa pasta.
 
 O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O checkpoint Hazen havia levado o mínimo estrito a **1382**; Companions adicionou **+9 `COUNTED_SOURCE_PINNED`**, Crystal Chronicles **+1 `COUNTED_SOURCE_PINNED`**, Relics 0.12.8 **+41 `COUNTED_EXACT`**, Corail Tombstone 9.5.6 adicionou **+10 `COUNTED_RELEASE_BOUNDED`** (6 prayers + 4 Ritual Flute actions) e Ender's Spells and Stuff: Requiem 0.1.7 adiciona **+53 `COUNTED_SOURCE_PINNED`**, levando o mínimo estrito corrente a **1496**. Acolyte, Dungeon's Delight, Fantasy Armor, Enchantment Descriptions, A Good Place, Apokinetics e a revalidação Cataclysm 1.1.14 não adicionam novo delta nesta rodada. Tombstone continua ⚠️ parcial porque castable magic-item actions adicionais permanecem condicionadas; Somake continua condicionado.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O mínimo estrito de **1496** foi posteriormente ampliado por Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau 0.8.1 (**+19**), Reliquified Artifacts 1.0.8 (**+52**) e Reliquified Iron's Spells 'n Spellbooks 0.2.7 (**+25**), levando o mínimo estrito corrente a **1596**. Ars 'n' Spells 3.3.4, More Relics, Traveloptics, KubeJS bridges e os novos layers de UI/compat foram reclassificados sem delta estrito adicional nesta rodada. Tombstone, Gaze rites, Not Enough Glyphs, Somake e outros blockers abaixo continuam fail-closed onde configuração/inventário atual não está fechado.
 
 Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 naquele checkpoint e mantém **1344 / 66 de 100** historicamente. Phase 2BT posteriormente fecha o componente #67 com Vampire Spells Addon sem alterar o total semântico.
 
@@ -26,9 +26,9 @@ Estado efetivo desses 45 providers:
 - **0 🟡 em implementação** após a integração desta rodada;
 - **0 ⛔ bloqueados** por ausência total de evidência.
 
-**Cross-domain note:** Gaze 1.1.7.1 remains ⚠️ in the global magic-provider catalog because it owns one counted spell and 26 config-conditional rites, but its current sibling dossier lives under `PROJECT-INSTRUCTIONS/modlist/Addons/`; it is therefore not part of the 45-row physical `Magic` category count. Ender's Spells and Stuff: Requiem 0.1.7 is likewise cross-domain under `Addons/`, but is ✅ cataloged with 53 strict semantic actions and therefore contributes to the global semantic numerator without changing the physical-`Magic` subtotal. Iron's Spellbooks KubeJS 4.0.3 is another cross-domain magic-capable component under a root-level dossier; its dedicated Black Arcana provider audit is being handled separately because pack scripts can create content outside the bridge namespace.
+**Cross-domain note:** the 45-row physical `Magic` subtotal excludes several current root/Addons providers. Gaze remains ⚠️ with one counted spell + 26 config-conditional rites; Ender's Spells and Stuff: Requiem is ✅ with 53 strict actions; Reliquified Ars Nouveau, Reliquified Artifacts and Reliquified Iron's are ✅ with 19, 52 and 25 source-pinned ability roots respectively. Iron's Spellbooks KubeJS and KubeJS Ars Nouveau remain ⚠️ because current pack scripts/mutations are not authoritatively captured. More Relics and Traveloptics are current ⚠️ providers with +0 strict pending exact-current inventory closure. Spell Actionbar, Specs, Recolor and the Immersive Portal bridge are ⚠️ technical/runtime components with explicit +0 independent semantic identities.
 
-**Historical-provider note:** sibling `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` has no current status-prefixed/categorized Traveloptics physical row. A legacy uncategorized export dossier, `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`, remains and explicitly points to the older 595-mod physical snapshot. Phase 2BS remains historical evidence; Traveloptics is not a current installed-provider blocker.
+**Traveloptics current-physical override:** Project Library physical evidence directly records `traveloptics-4.4.0.1-1.21.1.jar` / SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This outranks the absence of a status-prefixed sibling row for presence/version. The installed digest differs from the audited publisher alpha and known patch artifact, so Traveloptics is a current **⚠️ `OTHER_VERIFIED` / +0 strict** provider blocker until its installed-byte registry and reachability are closed.
 
 Fechamentos recentes relevantes:
 
@@ -45,8 +45,17 @@ Fechamentos recentes relevantes:
 - ⚠️ Corail Tombstone 9.5.6 — **10 `COUNTED_RELEASE_BOUNDED` actions** strict-counted (6 prayer + 4 Ritual Flute); additional config-sensitive castable magic-item actions remain conditional.
 - ✅ Relics 0.12.8 — exact physical/publisher artifact equality; **39 base abilities + 2 distinct synergies = 41 `COUNTED_EXACT` provider powers**; runtime/config QA remains fail-closed.
 - ⚠️ Somake 1.0.9 — physical SHA-1 equals exact publisher File `8867079`; exact physical registry is **83 IDs**, gate topology is **67 unconditional + 16 optional**, current mod composition admits **83/83**, and all 83 current identities now have individual cards. Remaining blockers are effective deployed Iron's/provider config and survival reachability.
+- ✅ Ars 'n' Spells 3.3.4 — **5** ritual identities retained; `COUNTED_RELEASE_BOUNDED`; current version delta **+0**.
+- ✅ Hexalia 1.3.7 — **29 `COUNTED_SOURCE_PINNED`** semantic actions (23 Nature's Ritual + 6 Celestial Infusion), **+4** versus the prior line.
+- ✅ Reliquified Ars Nouveau 0.8.1 — **19 `COUNTED_SOURCE_PINNED`** owner-scoped ability roots.
+- ✅ Reliquified Artifacts 1.0.8 — **52 `COUNTED_SOURCE_PINNED`** owner-scoped ability roots.
+- ✅ Reliquified Iron's Spells 'n Spellbooks 0.2.7 — **25 `COUNTED_SOURCE_PINNED`** provider-owned relic ability roots.
+- ⚠️ More Relics 1.7.7-forRelics-0.12.8-1.0 — 29 published relic names, exact current ability-root inventory still open; **+0 strict pending closure**.
+- ⚠️ Traveloptics 4.4.0.1-1.21.1 — current physical provider; installed artifact is `OTHER_VERIFIED`; publisher-baseline 33 spells are not promoted as exact-current; **+0 strict**.
+- ⚠️ Iron's Spellbooks KubeJS 4.0.3 / KubeJS Ars Nouveau 1.3.2 — **+0 fixed built-in identities**, current pack script/mutation inventory still open.
+- ⚠️ Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Specs — runtime/interop audits remain partial, but each is explicitly **+0 independent semantic identities**.
 
-O mínimo semântico estrito corrente é **1496**. O denominador semântico final e o denominador técnico cross-domain continuam abertos; não publicar percentual global.
+O mínimo semântico estrito corrente é **1596**. O denominador semântico final e o denominador técnico cross-domain continuam abertos; não publicar percentual global.
 
 ## Provider freshness override — Ars Controle 1.6.16
 
@@ -125,7 +134,7 @@ Not Enough Glyphs continua **⚠️ parcial/condicionado / +0 strict / sem ponto
 O checkpoint de 2026-09-07 registrou updates como:
 
 - Apotheosis `8.7.0 → 8.8.0`;
-- Ars 'n' Spells `3.2.4 → 3.3.0` naquele snapshot; o runtime físico atual está em `3.3.2`;
+- Ars 'n' Spells `3.2.4 → 3.3.0` naquele snapshot; o runtime físico atual está em `3.3.4`;
 - GTBC's SpellLib `2.1.0 → 2.2.0` (`2.2.0-1.21.1` no runtime);
 - Vampirism `1.10.12 → 1.10.13`.
 
@@ -222,11 +231,11 @@ O estado semântico é `ZERO_BRIDGE_INFRA`: **+0** objetos. A release/source aud
 
 Isso não é runtime PASS. Igualdade byte-for-byte do JAR físico, resolução reflexiva assembled-pack, ordem de mixins/events, serverconfig efetivo, settlement de blood/mana/damage/cooldown e coexistência com outros bridges permanecem fail-closed. Iron's/Vampirism continuam authorities dos spells/recursos modificados; Black Arcana não cria identidade ou settlement duplicado.
 
-## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — historical partial checkpoint
+## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 — historical publisher checkpoint with current-physical override
 
 O exact publisher release file `6342780` fecha **33** registrations `traveloptics:<id>` no `TOSpells`, com 33 field→classe→ID mappings e zero branches no initializer. Outros **32** root localization spell IDs existem no alpha, mas não estão registrados e são excluídos. `AbstractUniqueSpell.allowCrafting=false`; nove dos dez Unique registrados possuem rotas de loot estruturadas, enquanto `traveloptics:blackout` não possui referência estruturada nem referência provider-owned fora do registry encontrada pelo audit.
 
-O audit de risco também prova que `TOLootModifiers` contém os nomes `key_loot` e `universal_loot`, mas referencia `KeyLootModifier.CODEC` duas vezes e `UniversalLootModifier.CODEC` zero vezes. Um patch de terceiro descreve esse mesmo wiring como defeito de startup, porém Black Arcana não declara crash reproduzido. A promoção fica fail-closed até runtime físico autoritativo e reachability de Blackout. Durable PR #228 mergeou em `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; post-merge CI #2682 / run `34741699505` passou e publicou artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Estado naquele checkpoint: **⚠️ parcial/condicionado / +0 strict / componente aberto**. No sibling atual `76cf13e7d1110116f67c290eaa15891888279fc1`, Traveloptics não possui linha física atual status-prefixed/categorizada e não compõe a fila física corrente; o dossiê legado sem prefixo permanece apenas como provenance.
+O audit de risco também prova que `TOLootModifiers` contém os nomes `key_loot` e `universal_loot`, mas referencia `KeyLootModifier.CODEC` duas vezes e `UniversalLootModifier.CODEC` zero vezes. Um patch de terceiro descreve esse mesmo wiring como defeito de startup, porém Black Arcana não declara crash reproduzido. Durable PR #228 mergeou o publisher-artifact checkpoint em `main@0bd1c04460e63a03b6b484b785247e75f6e44178`; post-merge CI #2682 / run `34741699505` passou e publicou artifact `10311724779` (`sha256:05e28f0dc516e3b51bbd9016a37816cd1854e45caeaa71745189b20297ae3813`). Estado naquele checkpoint: **⚠️ parcial/condicionado / +0 strict / componente aberto**. Evidência física posterior volta a confirmar o provider instalado, porém com SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, diferente do publisher alpha auditado e do patch conhecido; por isso a fila atual mantém Traveloptics como **⚠️ current physical / `OTHER_VERIFIED` / +0 strict**, sem projetar os 33 IDs do publisher como registry exato do JAR instalado.
 
 ## Checkpoint GTBC's Geomancy Plus — Phase 2BR canonical
 
