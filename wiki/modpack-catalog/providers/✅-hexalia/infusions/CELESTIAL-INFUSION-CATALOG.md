@@ -6,9 +6,9 @@
 
 Source pin:
 
-`AstralyaStudios/Hexalia@1230d32056f155e58ee1139c105a93eeea42fa05`
+`AstralyaStudios/Hexalia@98c22aaf70e069c616fed5ad2dc56d2b37fcd283` (release commit; later same-version maintenance is not projected backward)
 
-The current 1.3.7 source pin was compared directly to the previously audited 1.3.6 pin. `CelestialInfusion.java`, `CelestialInfusionRecipe.java`, and every one of the six generated Celestial Infusion recipe JSONs are blob-identical across the two pins. The 6/6 semantic inventory and lifecycle below therefore remain current without extrapolating from changelog prose.
+The 1.3.7 release commit was compared directly to the previously audited 1.3.6 release pin. `CelestialInfusion.java`, `CelestialInfusionRecipe.java`, and every one of the six generated Celestial Infusion recipe JSONs are blob-identical across the two pins. The 6/6 semantic inventory and lifecycle below therefore remain current without extrapolating from changelog prose.
 
 ## Provider-native process
 
@@ -16,7 +16,7 @@ Celestial Infusion is performed on a **Ritual Brazier** and is distinct from Nat
 
 ### Start requirements
 
-The exact 1.3.6 path requires:
+The 1.3.7 release path, unchanged for this subsystem from the audited 1.3.6 path, requires:
 
 - a non-empty Ritual Brazier containing a recipe input;
 - `hexalia:hex_focus` in main hand or offhand to initiate;
@@ -63,7 +63,7 @@ This degradation is provider-owned world mutation and must not be repeated by Bl
 
 ## Moonweave interaction with brews
 
-The seven standard Hexalia `BrewItem` consumables check the full Moonweave set and multiply their effect duration by `1.5`.
+The eight standard Hexalia `BrewItem` consumables in 1.3.7 (the previous seven plus Gravebloom; Homestead remains its separate one-shot class) check the full Moonweave set and multiply their effect duration by `1.5`.
 
 Therefore Celestial Infusion is not merely cosmetic gear progression: it produces an equipment set that directly extends Hexalia brew lifecycle. This relation remains Hexalia-owned and should not be duplicated as a Black Arcana potion-duration subsystem.
 
