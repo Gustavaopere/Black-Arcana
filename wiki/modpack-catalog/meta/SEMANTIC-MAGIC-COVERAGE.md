@@ -57,9 +57,9 @@ Official release `1.21.1-0.0.9` and exact source target `xsharov/VampireSpellsAd
 
 Phase 2BT is therefore `ZERO_BRIDGE_INFRA` and contributes **+0 semantic magic objects**. The strict reconstructible minimum remains **1344**. PR #239 merged the durable audit as `main@1c5091807a8773d378c34ffac2e737b5f08b545c`, whose exact post-merge Black Arcana CI run `34795795283` is GREEN. The shared reconciliation promotes only the separate technical provider-component metric to **#67 / 67 of 100**. Physical-JAR byte equality, reflective bridge resolution, mixin/event ordering, effective serverconfig and live resource/damage/cooldown settlement remain runtime QA and are not inferred from this catalog closure.
 
-## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 historical partial catalog
+## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 historical publisher audit with current-physical override
 
-Historical publisher file `6342780` closes **33 unique registered `traveloptics:<id>` spell identities**, 33 field→class→ID mappings and zero registry initializer branches for that audited release. Current sibling `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` contains no current status-prefixed/categorized Traveloptics physical row. It retains only a legacy uncategorized `modlist/to-magic-n-extras.md` export bound to the older 595-mod snapshot, so the Phase 2BS row is provenance only and is not a current denominator/blocker. The same exact alpha carries 32 additional root localization spell IDs that are not registered and are excluded. Provider ancestry proves `AbstractUniqueSpell.allowCrafting() = false` and `AbstractWeaponSpell.allowCrafting() = true`; nine of ten Unique registrations have direct structured loot anchors, while `traveloptics:blackout` remains object-level survival-unresolved.
+Historical publisher file `6342780` closes **33 unique registered `traveloptics:<id>` spell identities**, 33 field→class→ID mappings and zero registry initializer branches for that audited release. Newer physical Project Library authority directly records the provider as installed at the same version line with SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; that digest matches neither publisher File `6342780` nor the known patch artifact, so the installed bytes are `OTHER_VERIFIED` and the 33-ID inventory remains a publisher baseline rather than an exact-current registry claim. The exact publisher alpha also carries 32 residual localization spell roots that are unregistered and excluded. Provider ancestry proves `AbstractUniqueSpell.allowCrafting() = false` and `AbstractWeaponSpell.allowCrafting() = true`; nine of ten Unique registrations have structured loot anchors, while `traveloptics:blackout` remains object-level survival-unresolved.
 
 A focused exact-artifact audit also proves a runtime-risk wiring fact: `TOLootModifiers` registers both `key_loot` and `universal_loot`, while `KeyLootModifier.CODEC` is referenced twice and `UniversalLootModifier.CODEC` zero times. Black Arcana does not claim the reported runtime crash is reproduced, but runtime viability remains fail-closed. Consequently all 33 registry identities remain catalog inventory rather than a strict counted promotion: Phase 2BS contributes **+0 strict**, the reconstructible minimum stays **1344**, and technical component closure stays **66/100 at that checkpoint**.
 
@@ -157,31 +157,35 @@ The exact source registers seven custom Apotheosis affix codecs and contains 140
 
 Iron's Apothic is consequently a source-pinned magic bridge/support closure with **+0 independent semantic magic objects**. The strict reconstructible minimum remains **1382**. Installed-JAR byte equality and assembled-pack affix/cooldown/target/proc behavior remain runtime QA, not semantic-count evidence.
 
-## Current 24/09/2026 reconciliation
+## Current 26/09/2026 reconciliation
 
-Current sibling authority `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` preserves the status-prefixed current provider lines used here; Traveloptics has no current certified physical row, while its uncategorized legacy export remains provenance only.
+Current presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers where they supersede that snapshot. The sibling status-prefixed `Magic` category still contains **45 mapped rows = 41 ✅ + 4 ⚠️**, but that subtotal is not the global provider denominator: current cross-domain/root-level providers include Gaze, Ender's Spells and Stuff: Requiem, Traveloptics, More Relics, KubeJS bridges, Spell Actionbar/Specs/Recolor/Immersive Portal compatibility layers and the Reliquified addons.
 
 Current semantic deltas since the 1382 checkpoint:
 
 - Acolyte 1.0.3: **+0** — no provider-owned spell registry; observed spell references remain Iron's-owned.
 - Companions! 1.3.4: **+9 `COUNTED_SOURCE_PINNED`** provider-owned Magic Book actions with source-level survival routes.
 - Crystal Chronicles 0.1.3-alpha: **+1 `COUNTED_SOURCE_PINNED`** — `crystal_chronicles:prismatic_portal`.
-- Dungeon's Delight 1.5.1: **+0** — mob effects, enchantments, food/cooking and item systems are metric-excluded support surfaces.
-- Fantasy Armor 1.2.4: **+0** — passive gear/MobEffect surface, no spell/ritual/active-action registry.
-- Enchantment Descriptions 21.1.11: **+0** — client presentation only.
-- A Good Place 1.2.5: **+0** — client placement-animation presentation only.
-- Create: Apokinetics 1.0.6: **+0** — exact physical/publisher artifact equality plus bounded clean-room exact-binary scan closes zero spell/glyph/ritual surface; Machine Gems remain support/augmentation capabilities.
-- Relics 0.12.8: **+41 `COUNTED_EXACT`** — exact physical/publisher artifact equality; 39 base ability roots + 2 distinct owner-scoped synergy roots; rank/mode variants are not extra identities.
-- Cataclysm: Spellbooks 1.1.14: **+0 delta** — retains the already counted 59 identities; physical SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5` equals audited publisher File 8847070 and the registry class is byte-identical to the exact 1.1.13 control, so current evidence is `COUNTED_EXACT`.
-- Corail Tombstone 9.5.6: **+10 `COUNTED_RELEASE_BOUNDED`** — six prayer identities + four Ritual Flute actions are release-exact/reachability-bounded; provider remains **⚠️ partial/conditioned** because additional config-sensitive castable magic-item actions are still unresolved.
-- Ender's Spells and Stuff: Requiem 0.1.7: **+53 `COUNTED_SOURCE_PINNED`** — exact release-correlated source closes 58 current registered roots under the present provider set; five implementation/residual roots are excluded, leaving 53 provider-owned player-facing semantic actions.
-- Somake 1.0.9 remains **CONDITIONAL / +0 strict**; physical SHA-1 equality to exact publisher File `8867079`, the exact 83-ID registry, the 67-unconditional + 16-optional registration-gate map, current-composition admission of **83/83**, and 83 individual current cards are closed. Only effective deployed Iron's/provider config and survival reachability remain semantic-count blockers.
+- Dungeon's Delight 1.5.1, Fantasy Armor 1.2.4, Enchantment Descriptions 21.1.11, A Good Place 1.2.5 and Create: Apokinetics 1.0.6: **+0** after explicit zero-semantic classification.
+- Relics 0.12.8: **+41 `COUNTED_EXACT`** — 39 base ability roots + 2 distinct owner-scoped synergy roots.
+- Cataclysm: Spellbooks 1.1.14: **+0 current delta** — retains the already counted 59 identities with stronger exact-artifact evidence.
+- Corail Tombstone 9.5.6: **+10 `COUNTED_RELEASE_BOUNDED`** — six prayers + four Ritual Flute actions; 12 additional castable-action families remain config-conditional.
+- Ender's Spells and Stuff: Requiem 0.1.7: **+53 `COUNTED_SOURCE_PINNED`** player-facing semantic actions.
+- Ars 'n' Spells 3.3.4: **+0 version delta** — the current provider remains five ritual identities; 3.3.4 is `COUNTED_RELEASE_BOUNDED` because public NeoForge source stops at 3.3.3 while the exact publisher release documents no new ritual/spell-registration surface.
+- Hexalia 1.3.7: **+4 `COUNTED_SOURCE_PINNED`** over the previous 25-object line — 23 Nature's Rituals + 6 Celestial Infusions = **29** current semantic actions.
+- Reliquified Ars Nouveau 0.8.1: **+19 `COUNTED_SOURCE_PINNED`** owner-scoped Relics ability roots.
+- Reliquified Artifacts 1.0.8: **+52 `COUNTED_SOURCE_PINNED`** owner-scoped Relics ability roots.
+- Reliquified Iron's Spells 'n Spellbooks 0.2.7: **+25 `COUNTED_SOURCE_PINNED`** provider-owned relic ability roots.
+- More Relics 1.7.7-forRelics-0.12.8-1.0 remains **⚠️ / +0 strict pending exact ability-root closure**; 29 published relic names are content identities, not automatically 29 semantic actions.
+- Traveloptics 4.4.0.1-1.21.1 is again a **current physical ⚠️ provider / +0 strict**: the installed SHA-1 is `OTHER_VERIFIED` and differs from both the audited 33-ID publisher alpha and known patch artifact, so the exact current registry is not projected from the publisher baseline.
+- Somake 1.0.9 remains **CONDITIONAL / +0 strict**; exact 83-ID registry/current-composition admission is closed, while effective deployed host/provider config and survival reachability remain open.
+- Iron's Spellbooks KubeJS 4.0.3 and KubeJS Ars Nouveau 1.3.2 contribute **+0 fixed built-in identities**, but their current pack-script mutation/registration surfaces remain unverified and therefore stay denominator-open.
 
-Therefore the strict reconstructible minimum becomes **1496**. This remains a minimum, not a final denominator or percentage.
+Therefore the strict reconstructible minimum is **1596**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1496 semantic magic objects are currently reconstructible from canonical provider records after Companions (+9), Crystal Chronicles (+1), Relics (+41), Corail Tombstone (+10) and Ender's Spells and Stuff: Requiem (+53) promotions.**
+**1596 semantic magic objects are currently reconstructible from canonical provider records after the previous 1496 baseline plus Hexalia 1.3.7 (+4), Reliquified Ars Nouveau (+19), Reliquified Artifacts (+52) and Reliquified Iron's Spells 'n Spellbooks (+25).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -191,15 +195,18 @@ Arithmetic cross-check by provider family:
 - Iron's ecosystem and spell-content addons: **662**;
 - Companions provider-owned Magic Books: **9**;
 - Relics provider-owned ability/synergy layer: **41**;
+- Reliquified Ars Nouveau owner-scoped ability layer: **19**;
+- Reliquified Artifacts owner-scoped ability layer: **52**;
+- Reliquified Iron's Spells 'n Spellbooks ability layer: **25**;
 - Corail Tombstone counted prayer/Ritual-Flute layer: **10**;
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
-- Hexalia ritual/infusion layer: **25**;
+- Hexalia ritual/infusion layer: **29**;
 - Malum Spirit Rite layer: **26**;
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `199 + 662 + 9 + 41 + 10 + 42 + 55 + 25 + 26 + 361 + 14 + 52 = 1496`.
+- total: `199 + 662 + 9 + 41 + 19 + 52 + 25 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1596`.
 
 ### Counted ledger
 
@@ -212,7 +219,7 @@ Arithmetic cross-check by provider family:
 | [Ars Hex](../providers/ars-hex/README.md) | 5.0.4b | 1 | `COUNTED_SOURCE_PINNED` | one current Malum-backed registered glyph under the physical provider set |
 | [Ars Zero](../providers/ars-zero/README.md) | 2.0.2 | 12 | `COUNTED_RELEASE_BOUNDED` | 12 current unique glyph capabilities; disabled copied AOE/Amplifier variants excluded |
 | [Ars Elemental](../providers/ars-elemental/README.md) | 0.7.10.1 | 47 | `COUNTED_SOURCE_PINNED` | 39 production spell parts + 8 rituals |
-| [Ars 'n' Spells](../providers/ars-n-spells/README.md) | 3.3.2 | 5 | `COUNTED_SOURCE_PINNED` | 5 ritual identities; eight `ars_cross_*` proxy slots contribute zero |
+| [Ars 'n' Spells](../providers/ars-n-spells/README.md) | 3.3.4 | 5 | `COUNTED_RELEASE_BOUNDED` | current 3.3.4 physical/publisher release preserves the five-ritual provider model; public NeoForge source is current through 3.3.3; eight `ars_cross_*` proxy slots contribute zero standalone identities |
 | [Iron's Spells 'n Spellbooks](../providers/irons-spells/README.md) | 3.16.3 | 110 | `COUNTED_EXACT` | 110/110 active spell registry entries; deprecated Cloud of Regeneration excluded |
 | [Apprentice's Codex](../providers/apprentice-codex/README.md) | 0.9.7.1 | 83 | `COUNTED_SOURCE_PINNED` | exact 83-spell registry inventory |
 | [Asterism Arcanum](../providers/⚠️-asterism-arcanum/README.md) | 1.21.1-0.1.0 | 10 | `COUNTED_EXACT` | physical SHA-1 equals exact publisher File 8157080; exact binary registrar references all 11 expected spell classes, while publisher lists 10 normal survival spells and `astral_gateway` remains separately conditional/creative-only |
@@ -241,6 +248,9 @@ Arithmetic cross-check by provider family:
 | [Leyline Spellbooks](../providers/leyline-spellbooks/README.md) | 1.0.3 | 14 | `COUNTED_EXACT` | exact hash-matched JAR closes 14 unconditional `AbstractSpell` registrations; no provider-specific spell lock/conditional registration gate is present; generic Iron's host config remains separate runtime QA |
 | [Gaze](../providers/gaze/README.md) | 1.1.7.1 | 1 | `COUNTED_EXACT` | exact hash-matched artifact closes one Gaze-owned Iron's `AbstractSpell`, Soulward Shield; physical Iron's satisfies the provider gate; 26 Spirit Rites remain config-conditional and 2 Geas + 8 rune items are metric-excluded |
 | [Relics](../providers/✅-relics/README.md) | 0.12.8 | 41 | `COUNTED_EXACT` | exact physical/publisher artifact equality closes 39 owner-scoped base abilities + 2 distinct owner-scoped synergies; modes/rank modifiers and relic items add zero extra identities; runtime/config QA remains separate |
+| [Reliquified Ars Nouveau](../providers/✅-reliquified-ars-nouveau/README.md) | 0.8.1 | 19 | `COUNTED_SOURCE_PINNED` | exact-version source closes 19 registered relic owners and 19 owner-scoped `AbilityTemplate` roots with provider-native Ars loot routes |
+| [Reliquified Artifacts](../providers/✅-reliquified-artifacts/README.md) | 1.0.8 | 52 | `COUNTED_SOURCE_PINNED` | 48 Artifact owners map to 52 owner-scoped ability roots; source-level loot/conversion routes close acquisition for all owners |
+| [Reliquified Iron's Spells 'n Spellbooks](../providers/✅-reliquified-irons-spells-n-spellbooks/README.md) | 0.2.7 | 25 | `COUNTED_SOURCE_PINNED` | exact-version source closes 25 provider-owned relic ability roots in 23 ability-bearing relic classes; each counted class has the provider `ANY_STRUCTURE` Iron's chest-loot route |
 | [Corail Tombstone](../providers/⚠️-corail-tombstone/README.md) | 9.5.6 | 10 | `COUNTED_RELEASE_BOUNDED` | exact publisher artifact closes 6 prayer + 4 Ritual Flute action identities; publisher `Silent Bound` wording is provenance-only while exact artifact identity is `Silent Bond`; additional config-sensitive castable magic-item actions remain conditional |
 | [Goety](../providers/goety/README.md) | 3.1.4 | 361 | `COUNTED_EXACT` | exact hash-matched JAR closes 123 active/acquirable Focus actions + 238 available distinct non-Focus ritual actions after semantic deduplication and physical-provider condition filtering; runtime/API/balance QA remains separate |
 | [Goety Iron](../providers/goety-iron/README.md) | 3.1 | 14 | `COUNTED_EXACT` | exact hash-matched JAR closes 2 unconditional addon-owned Focus identities + 12 distinct non-Focus rituals; 2 Focus-acquisition rituals deduplicated; no base-Goety semantic duplicates |
@@ -249,9 +259,9 @@ Arithmetic cross-check by provider family:
 | [Vampirism](../providers/vampirism/README.md) | 1.10.13 | 19 | `COUNTED_SOURCE_PINNED` | 14 Vampire + 3 Hunter + 2 shared Lord registered player actions; counted as provider-native discrete supernatural actions, not Iron's spells |
 | [Bloodlines](../providers/bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike; exact source registers its action/skill/node/config but omits the node from the configured Gravebound tree and from all rank-default grants, so it is not normally survival-reachable in this build |
 | [Werewolves](../providers/werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
-| [Hexalia](../providers/hexalia/README.md) | physical filename 1.3.6 / runtime metadata 1.3.5 | 25 | `COUNTED_RELEASE_BOUNDED` | 19 player-facing Nature's Ritual identities + 6 Celestial Infusion identities; mutation, Mortar & Pestle, Small Cauldron/brews, Censer, idols and equipment remain excluded by metric scope |
+| [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1496** |  |  |
+| **Strict total** |  | **1596** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -281,13 +291,13 @@ The exact implementation-package distribution is 7 Abyssal, 4 Ender, 1 Evocation
 
 The generic/current publisher project page advertises 65 spells, but that project-scale claim is not substituted for the physically installed 1.1.13 registry; a newer 1.1.14 beta also exists after the installed file. Exact numerical mechanics, acquisition and runtime/API integration remain separate gates. See [`../providers/cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md`](../providers/cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md) and [`../providers/cataclysm-spellbooks/EXACT-1.1.13-SPELL-INVENTORY.md`](../providers/cataclysm-spellbooks/EXACT-1.1.13-SPELL-INVENTORY.md).
 
-### Hexalia release-boundary reconciliation
+### Hexalia 1.3.7 release-source reconciliation
 
-Hexalia remains an explicit physical/source identity mismatch: the installed file is `hexalia-neoforge-1.3.6.jar`, while its runtime metadata reports `1.3.5`. That prevents an exact installed-JAR/source-equivalence claim, but it no longer blocks this narrow semantic count.
+Current physical authority is `hexalia-neoforge-1.3.7.jar` / runtime `1.3.7` / SHA-1 `ca90edf1664cf6d44fe7e5318c71069050499c7e`. Release-correlated official source `AstralyaStudios/Hexalia@98c22aaf70e069c616fed5ad2dc56d2b37fcd283` declares the same version. Reproducible physical-JAR↔source-build byte equality is not claimed, so the semantic state is `COUNTED_SOURCE_PINNED`, not `COUNTED_EXACT`.
 
-The official source commit `ef34896fc1a2a02da46b49a46ca78ca236bdc2dc` (`Update 1.3.5`) declares `mod_version=1.3.5`; its immediate release successor `4952c65233bf31e9f0d3e55ff76be7fa1007ee3d` (`Release Hexalia 1.3.6`) declares `mod_version=1.3.6`. Comparing those checkpoints shows no Nature's Ritual or Celestial Infusion recipe JSON added, removed or modified. The official 1.3.5 publisher changelog also records restoration of the Galeberries Celestial Infusion recipe, so the six-infusion inventory is already present on the 1.3.5 release line.
+The 1.3.7 release data closes **23** generated `hexalia:natures_ritual` recipes and **6** generated `hexalia:celestial_infusion` recipes. Relative to the previous 1.3.6 catalog, Nature's Ritual rises from 19 to 23 while Celestial Infusion remains 6, yielding **29 current semantic actions / +4 delta**. The four added ritual identities are `cinderhew_from_ritual_table`, `heartseed_from_ritual_table`, `summon_silk_moth` and `summon_cacofey`.
 
-Therefore the intersection relevant to this metric is stable across the observed `1.3.5` metadata / `1.3.6` filename-source boundary: **19 player-facing Nature's Rituals + 6 Celestial Infusions = 25**. The debug Nature's Ritual is excluded. Exact installed-binary equivalence, runtime mechanics and provider API/hook QA remain open independently.
+The same release adds Gravebloom Brew and additional equipment/items, but those surfaces remain metric-excluded as consumable persistent effects, gear/passive/proc state, tool/item interaction or downstream entity behavior. Assembled runtime, world mutation and provider API QA remain separate.
 
 ### Malum 1.8.2 release-boundary reconciliation
 
@@ -321,8 +331,11 @@ This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence
 
 | Provider | Quantity | State | Reason |
 |---|---:|---|---|
-| Asterism Arcanum | 1 | `CONDITIONAL` | `astral_gateway` is registered but documented creative-only/unfinished |
-| Not Enough Glyphs 4.6.2 | 39 | `CONDITIONAL / CURRENT SOURCE MATRIX RECLOSED / CONFIG AUTHORITY CLOSED / +0` | current 4.6.2 source pin preserves the exact registration and Momentum blobs from 4.6.1, so the current-pack source result remains 40 registrations with `momentum` source-disabled and 39 candidates. Ars Nouveau 5.13.1 registers each spell part as a `SERVER` config at `<namespace>/<path>.toml`; inherited `[general].enabled` defaults true, but the deployed server/world override set is unavailable, so source defaults are not promoted to active-pack facts |
+| [Asterism Arcanum](../providers/⚠️-asterism-arcanum/README.md) | 1 | `CONDITIONAL` | `astral_gateway` is registered but publisher-documented unfinished/creative-only and is not promoted as normal survival content |
+| [Corail Tombstone](../providers/⚠️-corail-tombstone/README.md) | 12 additional families | `CONDITIONAL` | 10 prayer/Ritual-Flute actions are already counted; 12 exact deduplicated castable-action families depend on deployed `allow_*`/magic-item configuration |
+| [Gaze](../providers/⚠️-gaze/README.md) | 26 rites | `CONDITIONAL` | exact artifact closes 26 player-facing Spirit Rites, but deployed COMMON `disableGazeRites` is unavailable; source default is not substituted |
+| [Not Enough Glyphs](../providers/⚠️-not-enough-glyphs/README.md) | 39 candidates | `CONDITIONAL` | current matrix is 40 registrations / 39 source-enabled; deployed per-spell SERVER `[general].enabled` values are unavailable |
+| [Somake Spells](../providers/⚠️-somake-spells/README.md) | 83 registered IDs | `CONDITIONAL` | exact registry/current provider composition is closed at 83/83, but effective Iron's `enabled` / `allow_crafting`, deployed Somake spell-lock config and survival reachability remain open |
 
 The four real Ars Elemental primitives referenced by Not Enough Glyphs are not NEG-owned registrations and are already counted under Ars Elemental. Historical fallback namespaces do not create a second owner when the real provider is present.
 
@@ -342,6 +355,10 @@ The following audited providers add **0** independent semantic objects under thi
 - [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
 - [Mobstein](../providers/✅-mobstein/README.md) — exact 5.4.4 physical SHA-1 plus hash-matched resource-only clean-room audit closes the residual boundary as `ZERO_SEMANTIC_ACTIONS`: documented syringes are item interactions and surfaced action-like keybinds are entity/mount controls; **+0** independent semantic magic objects; runtime/API integration remains separately fail-closed;
 - [Acolyte](../providers/✅-acolyte/README.md) — exact 1.0.3 release-bounded structural audit finds no provider-owned spell identity; Iron's host spells remain externally owned; **+0**.
+- [Immersive Portal - Iron's Spells Addon](../providers/⚠️-immersive-portal-irons-spells-addon/README.md) — adapts Iron's existing Portal Spell into the portal runtime; **0 independent spell identities / +0 strict**; release-exact/runtime QA remains partial.
+- [Iron's Spells Recolor](../providers/⚠️-irons-spells-recolor/README.md) — presentation/synchronization over existing Iron's spells; **0 independent spell identities / +0 strict**.
+- [Spell Actionbar](../providers/⚠️-spell-actionbar/README.md) — UI/loadout/HUD/quick-cast layer over existing Iron's spells; **0 independent spell identities / +0 strict**.
+- [Spell Codex / Specs](../providers/⚠️-spell-codex-specs/README.md) — discovery/unlock/progression/cast-gate layer over existing Iron's spell identities; **0 independent spell identities / +0 strict**.
 - [Dungeon's Delight](../providers/✅-dungeons-delight/README.md) — 1.5.1 source-pinned effects/enchantments/food mechanics with no spell/ritual/action registry; **+0**.
 - [Fantasy Armor](../providers/✅-fantasy-armor/README.md) — 1.2.4 source-pinned passive gear/effect magic; **+0**.
 - [Enchantment Descriptions](../providers/✅-enchantment-descriptions/README.md) — 21.1.11 client tooltip/localization presentation; **+0**.
@@ -355,20 +372,22 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows are deliberately **not additive to 1496** until their exact/current inventory and deduplication state meet the inclusion rule.
+These providers remain **outside the 1596 strict sum** because the current physical semantic inventory is not yet closed object-by-object:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
-| [Somake Spells](../providers/⚠️-somake-spells/README.md) 1.0.9 | exact physical SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` equals publisher File `8867079`; exact physical registry closes **83 unique spell IDs**; exact gate topology is **67 unconditional + 16 optional-provider-gated**; Mowzie's Mobs, ISS and Legendary Monsters are present, so the current composition admits **83/83** registrations; all 83 current identities are materialized under `MAGIC-CARDS-1.0.9.md` / `registry-1.0.9/`; provider code default for `enableSpellLockSystem` is `false` | `CONDITIONAL / EXACT PHYSICAL REGISTRY CLOSED / CURRENT COMPOSITION 83/83 / +0` | effective deployed Iron's `enabled` / `allow_crafting`, deployed Somake `enableSpellLockSystem`, and object-level or bounded-set survival acquisition/reachability remain open; source/default values are not substituted for deployed state |
-| [Gaze](../providers/gaze/README.md) 1.1.7.1 rites | exact hash-matched artifact closes **26 player-facing Spirit Rite identities** | `CONDITIONAL / EXACT REGISTRY CLOSED / +0 RITES` | exact provider control flow suppresses the rite surfaces when resolved COMMON config `disableGazeRites=true`; deployed pack value is unavailable, so source default `false` is not substituted |
+| [More Relics](../providers/⚠️-more-relics/README.md) | current 1.7.7-forRelics-0.12.8 compatibility build, 29 published relic names | `OPEN / +0 STRICT` | exact current registry IDs and Relics `AbilityTemplate` roots are not yet reconstructed; item names are not automatically semantic actions |
+| [Traveloptics](../providers/⚠️-traveloptics/README.md) | current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; audited publisher baseline has 33 spells | `OPEN / OTHER_VERIFIED / +0 STRICT` | installed bytes differ from both the audited publisher alpha and known patch artifact, so the 33-ID baseline is not promoted as the exact current physical registry |
+| [Iron's Spellbooks KubeJS](../providers/⚠️-irons-spellbooks-kubejs/README.md) | base addon has 0 fixed built-in spell identities; exact 4.0.3 builder/framework source is known | `OPEN SCRIPT INVENTORY / +0 FIXED BUILT-IN` | current physical `kubejs/` script set is not captured; scripts may register Iron's spells/schools under arbitrary namespaces |
+| [KubeJS Ars Nouveau](../providers/⚠️-kubejs-ars-nouveau/README.md) | recipe-schema bridge has 0 provider-owned fixed glyph/spell identities | `OPEN SCRIPT MUTATIONS / +0 FIXED BUILT-IN` | current server/startup scripts can mutate Ars recipes/content and are not authoritatively captured for this pack |
 
 Other provider directories that have not yet been normalized into a semantic-object row also remain outside the denominator. Absence from the strict table is never interpreted as zero without an explicit zero disposition.
 
 ## Important interpretation rules
 
-1. **1496 is not “1496 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1496 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1496 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1596 is not “1596 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1596 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1596 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
