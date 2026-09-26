@@ -8,7 +8,7 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Current reconciliation — 24/09/2026
 
-Current sibling authority `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` contains **50 current status-prefixed physical rows whose category path contains `Magic`**; all map to catalog provider directories after ownership-name normalization: **46 ✅ cataloged / 4 ⚠️ partial-conditioned**. Unprefixed legacy/export Markdown files under `modlist/` are not treated as current physical rows. Gaze remains one additional global ⚠️ magic provider categorized under `Addons/`. Traveloptics is absent from the current sibling modlist/dossier tree and survives only as a historical Phase 2BS audit, not as a current partial provider.
+Current sibling authority `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` contains **45 current status-prefixed physical rows whose category path contains exactly `Magic`**; all map to catalog provider directories after ownership-name normalization: **41 ✅ cataloged / 4 ⚠️ partial-conditioned**. Unprefixed legacy/export Markdown files under `modlist/` are not treated as current physical rows. Gaze remains an additional global ⚠️ magic provider categorized under `Addons/`; Ender's Spells and Stuff: Requiem remains a cross-domain ✅ provider under `Addons/`. Iron's Spellbooks KubeJS is a root-level cross-domain magic-capable framework whose pack-script inventory is audited separately. Traveloptics is absent from the current sibling modlist/dossier tree and survives only as a historical Phase 2BS audit, not as a current partial provider.
 
 Semantic effect of the current reconciliation:
 
