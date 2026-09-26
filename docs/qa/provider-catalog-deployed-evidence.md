@@ -13,7 +13,7 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 - Not Enough Glyphs 4.6.2;
 - Corail Tombstone 9.5.6;
 - Somake Spells 1.0.9;
-- T.O Magic n' Extras / Traveloptics 4.4.0.1;
+- T.O Magic n' Extras / Traveloptics 4.4.0.1 — **historical-instance support only; not a current sibling provider**;
 - bounded deployed customization references relevant to those same closure gates.
 
 It does not alter the instance, generate provider configs, enable content, create datapacks, or infer defaults from absent files.
@@ -112,6 +112,7 @@ For the known current filenames it records:
 
 Special comparisons:
 
+- Asterism Arcanum 0.1.0 is compared against the current physical sibling SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a`;
 - Somake 1.0.9 is compared against exact release SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`;
 - Traveloptics is classified against:
   - original SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8`;
@@ -123,6 +124,8 @@ Special comparisons:
 A missing file is not converted into a replacement identity.
 
 ### Asterism Arcanum
+
+The JAR hash entry is compared against the current physical sibling SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a`. This verifies that collected config evidence came from an instance carrying the same Asterism artifact fingerprint as the current modlist checkpoint; it does not replace the deployed config gate below.
 
 Reads only the Iron's spell-config values required by the Astral Gateway checklist:
 
@@ -321,6 +324,6 @@ Do not convert missing files into source-default values unless the actual runtim
 - NEG: effective `[general].enabled` for 39 candidates;
 - Corail Tombstone: physical 9.5.6 equality plus the 12 bounded `AllowedMagicItems` booleans that gate the remaining tablets/gemstones/Grave Key/Lost Tablet/Magic Scroll/Scroll of Knowledge candidates; semantic deduplication and reachability still require provider-specific review;
 - Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact **deployed** 1.0.9 registry identity may be paired from deterministic assembled-server registry observation, while generalized registration predicates remain provider-authoritative;
-- Traveloptics: original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references that may point to a pack-specific acquisition route.
+- Traveloptics: **historical-instance only** — original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references for an archived 4.4.0.1 pack; it is not a current sibling blocker.
 
 The collector does not solve Somake's exact 1.0.9 registry by itself. Pair it with [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) when exact assembled-server Iron's registry identity and effective host `school` / `enabled` / `allow_crafting` observations are required. For the current physical pack, those runtime rows may close the deployed registration outcome when paired with physical identity/mod-presence evidence; they do not establish a universal predicate contract. The runtime probe is separate QA evidence and still does not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.
