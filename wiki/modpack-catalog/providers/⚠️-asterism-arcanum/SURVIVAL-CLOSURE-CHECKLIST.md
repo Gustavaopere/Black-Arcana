@@ -1,6 +1,6 @@
 # Asterism Arcanum 0.1.0 — Astral Gateway Survival Closure Checklist
 
-Status: `REGISTRY 11 EXACT / 10 SURVIVAL COUNTED / ASTRAL GATEWAY DEFAULT HOST LOOT-ELIGIBLE / DEPLOYED IRON'S SPELL CONFIG UNVERIFIED / PROVIDER REMAINS CONDITIONAL`
+Status: `EXACT HASH-MATCHED 0.1.0 ARTIFACT / REGISTRY 11 BINARY-CORRELATED / 10 SURVIVAL COUNTED_EXACT / ASTRAL GATEWAY DEFAULT HOST LOOT-ELIGIBLE / DEPLOYED IRON'S SPELL CONFIG UNVERIFIED / PROVIDER REMAINS CONDITIONAL`
 
 ## Purpose
 
@@ -116,13 +116,18 @@ Keep Asterism Arcanum at `⚠️ Parcial / condicionado` and keep Astral Gateway
 ## Already closed — do not redo
 
 - installed artifact identity `asterismarcanum-1.21.1-0.1.0.jar`;
+- physical SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a` = exact publisher File `8157080` SHA-1;
+- exact publisher SHA-256 `191422cf3096a79e158d3262b52ea98fb1abc745847d4eb356548a5a5f58eebc`;
 - exact source pin `BirdieVibes/Asterism-Arcanum@f1738c7813a85d31a6da10e6c9f2dbce18d2b583`;
+- exact binary registrar correlation for 11 expected spell classes and zero Trailblaze registry reference;
 - registry size 11;
 - 10/10 ordinary survival spell identities and individual cards;
 - Astral Gateway exact registry ID and individual card;
 - Trailblaze exclusion because its registration is commented;
 - Astral school identity and source-backed school membership;
-- Astromancer randomized Astral-scroll loot pipeline;
+- exact artifact Astromancer randomized Astral-scroll loot resource;
+- zero packaged `irons_spellbooks_spell_config` / `astral_gateway` override resources;
+- zero AstralGateway host-gate method overrides for `allowLooting`, `allowCrafting`, `isEnabled`, `canBeCraftedBy`;
 - provider-native settlement boundaries for all cataloged spells.
 
 ## Separate runtime QA — not this catalog gate

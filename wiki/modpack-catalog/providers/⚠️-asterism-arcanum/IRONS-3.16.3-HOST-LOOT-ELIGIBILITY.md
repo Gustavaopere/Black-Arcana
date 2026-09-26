@@ -1,6 +1,6 @@
 # Asterism Arcanum 0.1.0 — Iron's 3.16.3 host loot eligibility audit
 
-Status: `EXACT ASTERISM SOURCE PIN + EXACT IRON'S 3.16.3 SOURCE / ASTRAL GATEWAY DEFAULT LOOT-ELIGIBLE / DEPLOYED SPELL CONFIG STILL UNVERIFIED`
+Status: `EXACT HASH-MATCHED ASTERISM 0.1.0 ARTIFACT + EXACT IRON'S 3.16.3 SOURCE / NO PACKAGED GATEWAY HOST OVERRIDE / ASTRAL GATEWAY DEFAULT LOOT-ELIGIBLE / DEPLOYED SPELL CONFIG STILL UNVERIFIED`
 
 ## Exact sources
 
@@ -114,3 +114,19 @@ The remaining current-pack catalog question is narrower:
 Without deployed config/datapack evidence, the catalog must still treat Astral Gateway as **⚠️ conditional** rather than assert survival availability from defaults.
 
 Asterism/Iron's remain runtime authority. Black Arcana does not recreate the spell, alter provider config, or synthesize an acquisition route.
+
+
+## Exact 0.1.0 binary corroboration — 2026-09-26
+
+NON-MERGE exact-artifact audit commit `1c27d711f1359075edc403d30e86de9397a38f13` / CI run `36252798657` hash-matched publisher File `8157080` to physical SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a`.
+
+The exact binary independently confirms the narrow host-gate assumptions used above:
+
+- `ASARSpellRegistry.class` references all 11 expected registered spell classes;
+- Trailblaze is not referenced by the exact binary registrar;
+- the exact artifact packages zero `irons_spellbooks_spell_config` resources;
+- it packages zero `astral_gateway` host override resources;
+- `AstralGatewaySpell` declares none of `allowLooting`, `allowCrafting`, `isEnabled` or `canBeCraftedBy`;
+- the Astromancer loot resource is present.
+
+Therefore there is no provider-packaged override that resolves Gateway's effective deployed state one way or the other. The remaining uncertainty is external deployed Iron's config/datapack state, exactly as this checklist requires.
