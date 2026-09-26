@@ -4,9 +4,9 @@ Registry identity at the official NeoForge 1.21.1 source baseline: `ars_n_spells
 
 ## Evidence status
 
-- Physical provider: Ars 'n' Spells `3.3.2`.
+- Physical provider: Ars 'n' Spells `3.3.4`.
 - Implementation evidence: official NeoForge `3.3.0` source pin `a9930223c96806e5d748ea69d02f9a32cab62de9`.
-- Exact 3.3.2 binary registry parity: `NÃO VERIFICADO`.
+- Exact 3.3.4 binary registry parity: `NÃO VERIFICADO`; current semantics remain source/release bounded.
 
 The 3.3.0 NeoForge registration handler registers this ritual when Iron's Spellbooks is loaded. Iron's is present in the current physical pack.
 
@@ -22,4 +22,4 @@ This ritual uses the provider's one-shot `AnsRitual` lifecycle and its default *
 
 Black Arcana must not mirror the grant into a second pool, independently choose which host pool receives it, or award a second grant after observing provider completion.
 
-The configured amount, active routing mode and settlement remain provider-owned. If an exact 3.3.2 integration hook is needed, it remains fail-closed until that hook is verified on the installed artifact.
+The configured amount, active routing mode and settlement remain provider-owned. If an exact 3.3.4 integration hook is needed, it remains fail-closed until that hook is verified on the installed artifact.

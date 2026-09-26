@@ -2,7 +2,7 @@
 
 ## Evidence boundary
 
-Physical runtime is Ars 'n' Spells `3.3.2`. Registry/proxy implementation facts below are source-pinned to the official NeoForge 1.21.1 `3.3.0` branch at `a9930223c96806e5d748ea69d02f9a32cab62de9`. Exact 3.3.2 binary internals remain unverified.
+Physical runtime is Ars 'n' Spells `3.3.4`. Detailed registry/proxy implementation facts below remain source-pinned to the audited NeoForge 1.21.1 `3.3.0` commit `a9930223c96806e5d748ea69d02f9a32cab62de9`; public 3.3.3 source still exposes `PROXY_POOL_SIZE = 8` / `ars_cross_1..8`. Exact 3.3.4 binary internals remain unverified.
 
 ## Finite native-wheel proxy pool
 
@@ -45,4 +45,4 @@ Black Arcana must preserve the same causal distinction:
 
 A client-selected wheel entry is not authority for cost, payload, progression or success. Any Black Arcana integration must consume a verified server/provider result and must not introduce a second C2S path that bypasses Ars 'n' Spells carrier/proxy validation.
 
-If no safe 3.3.2 hook exists to correlate proxy and delegated cast identities, integration remains fail-closed rather than risking double processing.
+If no safe 3.3.4 hook exists to correlate proxy and delegated cast identities, integration remains fail-closed rather than risking double processing.
