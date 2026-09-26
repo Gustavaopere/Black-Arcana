@@ -1,120 +1,119 @@
-# Evidence and Provenance — Ars 'n' Spells 3.3.2
+# Evidence and Provenance — Ars 'n' Spells 3.3.4
 
 ## Physical pack authority
 
-Source of presence/version: latest physical `/mnt/data/modlist.txt` used by the Black Arcana project checkpoint.
+Current physical Project Library authority (`modlist(1).txt`, 2026-09-22 checkpoint):
 
-Verified physical row:
+- JAR `ars_n_spells-3.3.4.jar`;
+- mod id `ars_n_spells`;
+- display name `Ars 'n' Spells`;
+- runtime `3.3.4`;
+- SHA-1 `53966330a468e626cd6469259af6778a5a7d9305`.
 
-- `ars_n_spells-3.3.2.jar`
-- mod id `ars_n_spells`
-- display name `Ars 'n' Spells`
-- runtime version `3.3.2`
-- SHA-1 `2d2274ff786c42ea46c53fec866116f83d98fe5a`
+Relevant physical companion engines:
 
-Relevant current pack anchors:
+- Ars Nouveau `5.13.1`;
+- Iron's Spells 'n Spellbooks `1.21.1-3.16.3`;
+- Ars Elemental `0.7.10.1`;
+- Ars Zero `2.0.2`.
 
-- NeoForge `21.1.248`
-- Ars Nouveau `5.13.1`
-- Iron's Spells 'n Spellbooks `1.21.1-3.16.3`
-- Ars Elemental `0.7.10.1`
-- Ars Zero `2.0.2`
+The physical modlist is authority for installed presence/version/hash. It does not by itself expose Java internals.
 
-The physical modlist is authority for installed presence and version. It does not by itself expose Java registry internals.
+## Exact 3.3.4 release evidence
 
-## Exact 3.3.2 release evidence
-
-Official CurseForge project: project `1447914`, license GPLv3, client & server.
+Official CurseForge project: project `1447914`, GPLv3, client & server.
 
 Exact current file:
 
-- file id `8832580`
-- `ars_n_spells-3.3.2.jar`
-- NeoForge / Minecraft 1.21.1
-- uploaded 2026-09-07
-- release page: `https://www.curseforge.com/minecraft/mc-mods/ars-n-spells/files/8832580`
+- file id `8881108`;
+- `ars_n_spells-3.3.4.jar`;
+- NeoForge / Minecraft 1.21.1;
+- uploaded 2026-09-14;
+- Release;
+- publisher changelog version `[3.3.4] - 2026-09-14`.
 
-Published 3.3.2 delta:
+Publisher-declared 3.3.4 changes relevant to Black Arcana boundaries:
 
-- fixes contextual Iron's mana-bar visibility when displayed mana is full but maximum values are fractional;
-- restores XP-bar visibility at the XP anchor when the contextual mana bar hides;
-- aligns Forge/NeoForge mana-visibility rules/regressions;
-- explicitly states no config, network-protocol or save-format changes from 3.3.1.
+- native cast payment ownership moved to the final host cast lifecycle;
+- final cost listeners run once and the replaced native debit is suppressed;
+- effects, channel cancellation, scroll consumption and native/category cooldowns share one lifecycle;
+- measured debit/refund recovery and persistent unresolved obligations were added;
+- Curios attribute mirroring toggle and cross-loader defaults/parity were updated;
+- carrier revisions now cover every native item component;
+- client/server protocol advances to **7**;
+- selected blank-scroll loot was restored in Iron's structure loot tables;
+- MixinExtras 0.5.3 and payment/ticker mixin gates were restored.
 
-Exact 3.3.1 NeoForge file:
+These release notes are authoritative for those declared changes. They do not expose exact 3.3.4 class signatures or prove registry byte parity.
 
-- file id `8827129`
-- release page: `https://www.curseforge.com/minecraft/mc-mods/ars-n-spells/files/8827129`
-- published delta: removal of the transaction receipt HUD/panel.
+## Historical exact release deltas retained
 
-These releases are authoritative for those declared deltas. They are not a substitute for exact 3.3.2 binary registry inspection.
+- 3.3.1 removes the transaction receipt HUD/panel;
+- 3.3.2 fixes contextual Iron's mana-bar visibility and explicitly reports no config/network/save-format delta from 3.3.1;
+- 3.3.3 moves the public NeoForge source line to the ornate Spell Loom/carrier revision architecture and protocol 6.
 
-## Official NeoForge 1.21.1 source baseline
+## Official NeoForge 1.21.1 source evidence
 
-Repository: `https://github.com/otectus/ars-n-spells`
+Repository: `otectus/ars-n-spells`.
 
-Branch: `port/neoforge-1.21.1`
+Public branch: `port/neoforge-1.21.1`.
 
-Pinned commit: `a9930223c96806e5d748ea69d02f9a32cab62de9`
+Latest public source checkpoint currently on that branch:
 
-Commit title identifies it as the 3.3.0 release/parity checkpoint for the NeoForge 1.21.1 line.
+- commit `41fac17065c381104b17fdaab307d89ba21b49ab`;
+- commit title `release: 3.3.3 - Spell Loom workstation, mana-bar visibility fix and receipt HUD removal`;
+- `gradle.properties` declares `mod_version=3.3.3`, Minecraft `1.21.1`, NeoForge `21.1.248`, Ars Nouveau `5.13.1.1400` and Iron's `1.21.1-3.16.3`.
 
-`gradle.properties` at that pin declares:
+The earlier detailed semantic/source audit remains pinned to:
 
-- Minecraft `1.21.1`;
-- NeoForge `21.1.248`;
-- Java 21 compile/run toolchain;
-- `mod_id=ars_n_spells`;
-- `mod_version=3.3.0`;
-- Ars Nouveau `5.13.1.1400`, runtime range `[5.13,6.0)`;
-- Iron's `1.21.1-3.16.3`, runtime range `[1.21.1-3.16.3,1.21.1-4.0.0)`;
-- optional Ars Elemental `0.7.10.1` test profile;
-- optional Ars Zero `2.0.2` test profile.
+- commit `a9930223c96806e5d748ea69d02f9a32cab62de9`;
+- declared `mod_version=3.3.0`.
 
-This is strong same-loader/game source evidence, but it is still **3.3.0**, not 3.3.2.
+That 3.3.0 pin remains the baseline for subdocuments that were inspected line-by-line there. Public 3.3.3 is used only for facts independently verified on that source line, including current source version, protocol 6, current Spell Loom/carrier architecture and continued proxy-pool size 8.
 
-## Source surfaces audited
+There is **no public NeoForge 3.3.4 source pin in the branch used here**. Exact 3.3.4 internals therefore remain release-bounded / fail-closed.
 
-At the pinned NeoForge baseline the Phase 2AG pass inspected the provider's public source surfaces for:
+## Semantic registry boundary
 
-- ritual registration and tablet splice;
-- Spell Uninscription;
-- Spell Transcription;
-- Spellbook Binding;
-- Mana Infusion;
-- Mana Well;
-- shared one-shot ritual lifecycle;
-- mana-unification enum;
-- cross-mod data components;
-- finite `ars_cross_*` Iron's proxy registry.
+The provider catalog retains **five ritual identities**:
 
-The baseline proves five ritual registrations under the current pack condition (Iron's present) and eight proxy transport registry objects.
+1. `ars_n_spells:spell_uninscription`;
+2. `ars_n_spells:spell_transcription`;
+3. `ars_n_spells:spellbook_binding`;
+4. `ars_n_spells:mana_infusion`;
+5. `ars_n_spells:mana_well`.
 
-## Upstream test evidence
+The public source line also retains an eight-slot Iron's proxy pool, `ars_cross_1..8`. These are transport registry objects, not eight standalone semantic spells.
 
-The official 3.3.0 NeoForge release commit reports upstream green checks including 920 unit tests / 68 suites and 86/86 GameTest scenarios in both absent/loaded dependency profiles, plus zero contract-parity drift.
+Current semantic disposition:
 
-This is provider-project evidence only. It is **not** Black Arcana full-modpack runtime QA and is not reported as a local PASS for the installed 3.3.2 JAR.
+- provider ritual identities: **5**;
+- proxy registry objects: **8 infrastructure objects**;
+- standalone semantic spell contribution from proxies: **0**;
+- semantic delta from the previously cataloged 3.3.2 line: **+0**.
+
+Because 3.3.4 changes payment/carrier internals without publishing a source pin, this semantic continuity is `RELEASE_BOUNDED`, not a claim of exact binary registry equivalence.
 
 ## Confidence labels
 
-- Physical presence/version/hash: **HIGH / exact physical artifact row**.
-- 3.3.1/3.3.2 published deltas: **HIGH / exact official release pages**.
-- NeoForge 1.21.1 3.3.0 source semantics: **HIGH / official source pin**.
-- Continuity of five ritual identities and eight proxies into 3.3.2: **MEDIUM-HIGH at semantic release-line level**, because later published deltas are HUD-only; **NOT binary-proven**.
-- Exact 3.3.2 classes, signatures, registry implementation, packet codecs and internal ordering: **NÃO VERIFICADO** unless independently exposed by exact release evidence.
+- physical presence/version/hash: **HIGH / exact physical row**;
+- 3.3.4 publisher delta: **HIGH / exact official release page**;
+- public 3.3.3 source facts: **HIGH / official source pin**;
+- detailed 3.3.0 implementation facts retained in legacy subcatalogs: **HIGH for that pin**;
+- five-ritual / eight-proxy continuity into 3.3.4: **RELEASE-BOUNDED / not binary-proven**;
+- exact 3.3.4 classes, signatures, packet codecs, mixin targets and ordering: **UNVERIFIED unless exposed by release evidence**.
 
 ## Clean-room rule
 
-This catalog paraphrases publicly inspectable provider behavior for compatibility/deduplication analysis. Black Arcana must not copy Ars 'n' Spells source code, assets, text, models, sounds or implementation structures into its own runtime merely because the provider is GPLv3.
-
-Any future code reuse would require an explicit licensing/provenance decision consistent with Black Arcana's own publication plan. Interoperability inspection does not automatically authorize implementation copying.
+This catalog records only factual provider behavior and interoperability boundaries. It does not authorize copying Ars 'n' Spells source, assets, text or implementation into Black Arcana.
 
 ## Pending exact-runtime evidence
 
-- exact installed 3.3.2 JAR binary extraction/registry comparison;
-- full physical-modpack runtime validation of the five ritual paths;
-- full physical-modpack runtime validation of cross-casting/proxy settlement;
-- any exact 3.3.2 internal hook Black Arcana may eventually want to consume.
+- physical 3.3.4 JAR structural extraction / registry comparison if an exact hook is ever required;
+- assembled-pack validation of provider payment ownership and cross-cast settlement;
+- Spell Loom/carrier revision compatibility against the physical pack;
+- protocol 7 client/server behavior;
+- restored blank-scroll loot in the assembled datapack stack;
+- any exact 3.3.4 internal hook Black Arcana may eventually consume.
 
-Until those are available, exact-internal adapters remain fail-closed.
+Until those are closed, provider-specific exact-internal adapters remain fail-closed.
