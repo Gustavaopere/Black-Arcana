@@ -2,9 +2,9 @@
 
 ## Evidence boundary
 
-This page describes the official Ars 'n' Spells NeoForge 1.21.1 **3.3.0 source baseline** at `otectus/ars-n-spells@a9930223c96806e5d748ea69d02f9a32cab62de9`, plus exact 3.3.1/3.3.2 release deltas. The physical pack runs `ars_n_spells-3.3.2.jar`.
+This page preserves the detailed Ars 'n' Spells NeoForge 1.21.1 **3.3.0 source baseline** at `otectus/ars-n-spells@a9930223c96806e5d748ea69d02f9a32cab62de9`, with later release boundaries layered on top. The physical pack now runs `ars_n_spells-3.3.4.jar`; public source reaches 3.3.3, while 3.3.4 payment ownership is publisher-release-bounded.
 
-Exact 3.3.2 internal routing signatures are not claimed without binary/source parity evidence.
+Exact 3.3.4 internal routing/payment signatures are not claimed without binary/source parity evidence.
 
 ## Five provider-owned modes
 
@@ -46,3 +46,6 @@ Black Arcana must not create:
 For a cast routed by Ars 'n' Spells, resource facts must come from an explicit verified provider boundary or from the provider's settled outcome. Similar-looking mana values are not permission to recompute the transaction.
 
 Black Arcana's own Corruption, Strain and Arcane Danger remain separate channels and must never be collapsed into Ars 'n' Spells mana.
+## Current 3.3.4 payment boundary
+
+The exact 3.3.4 publisher release states that native cast payment ownership is consolidated at the final host cast lifecycle, with replaced native debit suppressed, final cost listeners running once, shared effect/channel/scroll/cooldown lifecycle, and measured debit/refund recovery. Black Arcana must therefore treat provider payment settlement as authoritative and must not re-debit Ars/Iron's resources for the same routed cast. Exact internal hook signatures remain fail-closed.
