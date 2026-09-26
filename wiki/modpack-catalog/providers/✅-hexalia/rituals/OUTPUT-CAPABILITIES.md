@@ -1,16 +1,16 @@
-# Hexalia 1.3.6 — Nature's Ritual output capabilities
+# Hexalia 1.3.7 — Nature's Ritual output capabilities
 
 ## Estado
 
-`SOURCE-PINNED 1.3.6 / ALL 19 PLAYER-FACING RITUAL OUTPUTS CLASSIFIED / HIGH-IMPACT BEHAVIOR PATHS AUDITED / INSTALLED-RUNTIME EQUIVALENCE PENDING`
+`RELEASE-SOURCE-PINNED 1.3.7 / ALL 23 PLAYER-FACING RITUAL OUTPUTS CLASSIFIED / PREVIOUS 19 HIGH-IMPACT PATHS RETAIN THEIR AUDITED BASELINE / FOUR 1.3.7 ADDITIONS BOUNDED / ASSEMBLED RUNTIME QA SEPARATE`
 
 Source authority:
 
-`AstralyaStudios/Hexalia@4952c65233bf31e9f0d3e55ff76be7fa1007ee3d`
+`AstralyaStudios/Hexalia@98c22aaf70e069c616fed5ad2dc56d2b37fcd283` — release commit `Hexalia 1.3.7`
 
-This document complements [NATURES-RITUAL-CATALOG.md](NATURES-RITUAL-CATALOG.md): that file closes the **19/19 recipes**; this file classifies what those outputs actually do and which Black Arcana capability families they overlap.
+This document complements [NATURES-RITUAL-CATALOG.md](NATURES-RITUAL-CATALOG.md): that file closes the **23/23 current recipes**; this file classifies all 23 result identities and preserves the earlier detailed capability audits for the 19 retained outputs.
 
-The installed physical file is named `hexalia-neoforge-1.3.6.jar` but reports runtime metadata `1.3.5`. Every implementation statement here is therefore `SOURCE-PINNED 1.3.6`, not exact installed-runtime validation.
+Current physical identity is `hexalia-neoforge-1.3.7.jar` / SHA-1 `ca90edf1664cf6d44fe7e5318c71069050499c7e`. The 19 retained output capability descriptions below were originally audited on the 1.3.6 source baseline; this 1.3.7 re-audit closes their continued ritual identities and separately audits the four newly added results. It does not silently claim every retained implementation blob is unchanged.
 
 ## 1. Elemental Nodes — 4 outputs
 
@@ -304,6 +304,29 @@ Dedup/progression impact: Hexalia is already mutating the actual XP orb value at
 
 Dedup impact: nature-conditioned armor already covers knockback resistance, damage reflection, flower-linked regeneration and terrain-linked speed. Black Arcana/RPG equipment perks must avoid double-processing these provider-owned effects.
 
+## 14. Cinderhew — ritual-created fire axe / throwable weapon
+
+- ritual output: `hexalia:cinderhew`;
+- class: custom `AxeItem`;
+- melee adds `2.0` on-fire damage and ignites non-fire-immune targets for 2 seconds;
+- right-click throws the held Cinderhew as a provider projectile and applies a `100`-tick item cooldown;
+- shift-breaking burnable logs uses the provider conversion path and drops 1–2 charcoal.
+
+This is a capability-bearing ritual output, but its attacks/tool interactions are downstream weapon behavior rather than additional ritual/cast identities.
+
+## 15. Heartseed — one-shot taming item
+
+- ritual output: `hexalia:heartseed`;
+- interaction target: alive, untamed `TamableAnimal`;
+- successful server-side use tames the animal to the interacting player and consumes one Heartseed outside creative mode.
+
+This is provider item interaction, not a second ritual or standalone spell identity.
+
+## 16. Silk Moth + Cacofey entity results
+
+`summon_silk_moth` and `summon_cacofey` are the two current soul-gated Nature's Rituals. Their outputs are one `hexalia:silk_moth` and one `hexalia:cacofey`, respectively, after the provider's soul-capture and 50-tick manifestation phase.
+
+The counted semantic identity is the summoning ritual. The created entity's later AI, combat, drops and lifecycle are downstream provider behavior and add zero extra semantic actions here.
 ## Output classification summary
 
 | Output family | Count | Primary capability |
@@ -313,7 +336,9 @@ Dedup impact: nature-conditioned armor already covers knockback resistance, dama
 | cultivated projectile line | 1 | Rabbage Seeds → Rabbage Bleeding projectile |
 | ritual tools/weapons/accessories | 3 | Kelpweave Blade, Rootshaper, Sage Pendant |
 | ritual armor pieces | 4 | Bloomwrap Hat/Robes/Leggings/Boots |
-| **total player-facing outputs** | **19** | matches Nature's Ritual recipe catalog |
+| 1.3.7 ritual-created items | 2 | Cinderhew, Heartseed |
+| 1.3.7 entity summons | 2 | Silk Moth, Cacofey |
+| **total player-facing outputs** | **23** | matches current Nature's Ritual recipe catalog |
 
 ## Black Arcana authority rule
 

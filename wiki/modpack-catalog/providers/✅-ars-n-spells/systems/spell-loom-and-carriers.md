@@ -2,9 +2,9 @@
 
 ## Evidence boundary
 
-Physical provider: Ars 'n' Spells `3.3.2`.
+Physical provider: Ars 'n' Spells `3.3.4`.
 
-Implementation details here are pinned to the official NeoForge 1.21.1 `3.3.0` source line at `a9930223c96806e5d748ea69d02f9a32cab62de9`. The exact 3.3.1/3.3.2 public deltas are HUD-only; exact 3.3.2 carrier bytecode parity is still `NÃO VERIFICADO`.
+The original implementation audit is pinned to the NeoForge 1.21.1 `3.3.0` source line at `a9930223c96806e5d748ea69d02f9a32cab62de9`. Public 3.3.3 source at `41fac17065c381104b17fdaab307d89ba21b49ab` materially revises Spell Loom/carrier workflows. Exact 3.3.4 carrier bytecode parity is still `NÃO VERIFICADO`; only the publisher-declared 3.3.4 carrier/payment/protocol delta is treated as release-exact.
 
 ## Provider role
 
@@ -39,3 +39,6 @@ These behaviors matter because a second serializer/settler in Black Arcana could
 Black Arcana must not invent a parallel universal spellbook format over these same Ars↔Iron's carriers. It may have its own canonical loadout/casting representation for Black Arcana spells, but external Ars spell graphs stored by Ars 'n' Spells remain provider-owned.
 
 If a future Black Arcana feature needs to reference a provider-bound Ars spell, the safe design is an opaque/provider-native identity or verified adapter—not copying the serialized implementation format into Black Arcana persistence.
+## Current release delta
+
+Public 3.3.3 replaces the earlier Loom implementation with the current workstation/carrier architecture and protocol 6. Exact 3.3.4 release evidence then states that carrier revisions cover every native item component, protocol advances to 7, and payment/cast ownership is consolidated. Black Arcana must not maintain a parallel carrier revision, inscription or payment system and must fail closed on unverified 3.3.4 internal hooks.
