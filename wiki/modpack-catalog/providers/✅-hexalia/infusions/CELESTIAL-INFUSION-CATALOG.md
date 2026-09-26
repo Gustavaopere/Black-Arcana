@@ -1,12 +1,14 @@
-# Hexalia 1.3.6 — Celestial Infusion catalog
+# Hexalia 1.3.7 — Celestial Infusion catalog
 
 ## Estado
 
-`SOURCE-PINNED 1.3.6 / RECIPES 6/6 / CHANNEL+ENVIRONMENT LIFECYCLE AUDITED / INSTALLED-RUNTIME EQUIVALENCE PENDING`
+`SOURCE-PINNED 1.3.7 / RECIPES 6/6 / CORE IMPLEMENTATION + ALL 6 RECIPE BLOBS IDENTICAL TO 1.3.6 / CHANNEL+ENVIRONMENT LIFECYCLE AUDITED / PHYSICAL-JAR BYTE EQUALITY UNPROVEN`
 
 Source pin:
 
-`AstralyaStudios/Hexalia@4952c65233bf31e9f0d3e55ff76be7fa1007ee3d`
+`AstralyaStudios/Hexalia@1230d32056f155e58ee1139c105a93eeea42fa05`
+
+The current 1.3.7 source pin was compared directly to the previously audited 1.3.6 pin. `CelestialInfusion.java`, `CelestialInfusionRecipe.java`, and every one of the six generated Celestial Infusion recipe JSONs are blob-identical across the two pins. The 6/6 semantic inventory and lifecycle below therefore remain current without extrapolating from changelog prose.
 
 ## Provider-native process
 
