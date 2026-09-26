@@ -161,5 +161,13 @@ allow_lost_tablet = false
             )
 
 
+    def test_runtime_probe_rejects_unbounded_glyph_observation(self) -> None:
+        row = collector.parse_catalog_probe_payload(
+            "type=glyph id=ars_nouveau:break status=OBSERVED enabled=true"
+        )
+
+        self.assertIsNone(row)
+
+
 if __name__ == "__main__":
     unittest.main()
