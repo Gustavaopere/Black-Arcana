@@ -6,7 +6,7 @@ Status: `EXACT PUBLISHER FILE 8842741 / HASH-MATCHED CASTABLE-SURFACE AUDIT / 12
 
 Current sibling authority rechecked at:
 
-`neoforge-rpg-skilltree@6657e5bd006d16a244fd4cfe219fc7a15c911714`
+`neoforge-rpg-skilltree@006fca21e09b05b0426da1ddd46b3743a5e96fa8`
 
 Physical row remains:
 

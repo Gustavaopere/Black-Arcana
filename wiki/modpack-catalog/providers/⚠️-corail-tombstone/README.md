@@ -6,7 +6,7 @@ Status: `⚠️ PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@6657e5bd006d16a244fd4cfe219fc7a15c911714`
+`neoforge-rpg-skilltree@006fca21e09b05b0426da1ddd46b3743a5e96fa8`
 
 Certified dossier:
 
@@ -45,6 +45,8 @@ Clean-room NON-MERGE audit of that exact artifact observed:
 This is exact publisher-artifact evidence, but remains `RELEASE_BOUNDED` relative to the installed pack because no independent physical SHA exists in the sibling dossier.
 
 See `EXACT-9.5.6-ACTION-INVENTORY.md`.
+
+Individual action cards: [`actions/README.md`](actions/README.md).
 
 ## Publisher-confirmed magic system
 

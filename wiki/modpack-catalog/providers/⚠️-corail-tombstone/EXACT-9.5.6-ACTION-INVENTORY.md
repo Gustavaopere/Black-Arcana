@@ -12,7 +12,7 @@ Physical pack identity:
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@6657e5bd006d16a244fd4cfe219fc7a15c911714`
+`neoforge-rpg-skilltree@006fca21e09b05b0426da1ddd46b3743a5e96fa8`
 
 The sibling does not preserve an independent physical SHA for this row.
 
@@ -176,6 +176,10 @@ Gemstone of Prayer is not counted separately from the prayer action family.
 A later exact hash-matched castable-surface audit resolves these together with the tablets/gemstones to **12 one-to-one action families**. The semantic ambiguity in this section is superseded by [`EXACT-9.5.6-CONDITIONAL-CASTABLE-MATRIX.md`](EXACT-9.5.6-CONDITIONAL-CASTABLE-MATRIX.md).
 
 These candidates do not enter the strict +10 until the corresponding deployed `allow_*` values are known.
+
+## Individual action cards
+
+The 10 strict-counted and 12 conditional action families are materialized individually under [`actions/`](actions/README.md). The cards do not alter the accounting state; they expose per-identity provenance, deduplication and authority boundaries.
 
 ## Clean-room boundary
 
