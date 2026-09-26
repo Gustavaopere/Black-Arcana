@@ -2,7 +2,7 @@
 
 Status: `PHASE 2 — INVENTORY BASELINE ESTABLISHED`
 
-The current modlist snapshot contains 607 top-level entries. This registry reconciles magic-guide components against that snapshot and adds current magic-support components detected outside the magic guide.
+This registry began from an older 607-entry snapshot and preserves stable row numbers for provenance. Current presence is reconciled against sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1`; status-prefixed current physical rows are authoritative, while uncategorized legacy/export Markdown files are provenance only. Retired rows are omitted rather than renumbering later historical row identifiers.
 
 | # | Current mod | Mod id | Current JAR | Runtime version | Phase 2 class | Granular capability catalog |
 |---:|---|---|---|---|---|---|
@@ -47,7 +47,6 @@ The current modlist snapshot contains 607 top-level entries. This registry recon
 | 39 | Leyline Spellbooks | `leylines` | `leylines-1.0.3.jar` | `1.0.3` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 40 | Monsters & Spellbooks | `monsterspellbooks` | `monsterspellbooks-0.0.16.3.jar` | `0.0.16.3` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 41 | Paladin Spells - Iron's Spells 'n Spellbooks Addon | `paladin_spells` | `paladin_spells-1.21.1-1.1.1.jar` | `1.21.1-1.1.1` | SPELL PROVIDER / CONTENT ADDON | YES |
-| 42 | T.O Magic n' Extras | `traveloptics` | `traveloptics-4.4.0.1-1.21.1.jar` | `4.4.0.1-1.21.1` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 43 | Tunes 'n Tomes Mod | `tunes_n_tomes` | `tunes_n_tomes-1.1.0-HOTFIX.jar` | `1.1.0-HOTFIX` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 44 | Wind's Spellbooks : Iron's Spells 'n Spellbooks Addon | `wind_spellbooks` | `wind_spellbooks-1.0.5.jar` | `1.0.5` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 45 | Alshanex's Familiars Mod | `alshanex_familiars` | `alshanex_familiars-1.21.1_v4.0.3.jar` | `1.21.1_v4.0.3` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
@@ -127,7 +126,7 @@ The current modlist supersedes older guide text. Confirmed examples include:
 - Apothic Enchanting `1.6.2`;
 - Create: Enchantment Industry `2.5.3b`.
 
-`T.O Magic n' Extras` is present in the current modlist as `traveloptics-4.4.0.1-1.21.1.jar`; older removal notes do not override current presence.
+Historical row **#42** was T.O Magic n' Extras / `traveloptics`. It was present in earlier physical snapshots, and sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` contains no current status-prefixed/categorized Traveloptics physical row. It does retain legacy `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`, whose own authority is the older 595-mod export. Row #42 is therefore retired from the **current** registry while historical Phase 2BS evidence remains preserved.
 
 ## Registry caveat
 

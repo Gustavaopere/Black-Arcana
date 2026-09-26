@@ -2,11 +2,13 @@
 
 ## Status
 
-`PHYSICAL OTHER_VERIFIED SHA-1 / NOT PUBLISHER FILE 6342780 / NOT KNOWN PATCH 8861368 / 33-ID PUBLISHER-BASELINE REGISTRY / CURRENT PHYSICAL REGISTRY REAUDIT REQUIRED / UNIQUE-SPELL REACHABILITY + LOOT-CODEC RUNTIME OPEN / STRICT +0 / COMPONENT OPEN`
+`HISTORICAL PHASE 2BS CHECKPOINT / NO CURRENT STATUS-PREFIXED PHYSICAL ROW / LEGACY EXPORT DOSSIER RETAINED / FORMER PHYSICAL OTHER_VERIFIED SHA-1 / 33-ID PUBLISHER-BASELINE REGISTRY / STRICT +0 HISTORICAL`
 
-Project status: **⚠️ partial/conditioned**. Strict semantic promotion is blocked; this checkpoint does **not** create component #67.
+Current physical status: **NO CURRENT STATUS-PREFIXED/CATEGORIZED PHYSICAL ROW / NOT A CURRENT PROVIDER BLOCKER** at sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1`. A legacy uncategorized export dossier remains under `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md` and explicitly uses the older 595-mod physical snapshot.
 
-## Installed authority
+The former Phase 2BS state remains **⚠️ partial/conditioned historical evidence** for the old 4.4.0.1 line. It is retained for provenance and future reintroduction audits, not counted as an unresolved provider in the current pack.
+
+## Historical installed authority
 
 - provider: **T.O Magic n' Extras**
 - mod id: `traveloptics`
@@ -20,7 +22,7 @@ Project status: **⚠️ partial/conditioned**. Strict semantic promotion is blo
 - publisher license: **All Rights Reserved**
 - required artifact dependencies declared by the exact JAR: Iron's Spells 'n Spellbooks `[1.21.1-3.10.0,)`, L_Ender's Cataclysm `[2.60.,)`, Apothic Attributes `[2.6.1,)`
 
-The physical modlist/version line is authoritative for installed presence. The current sibling at `neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` still records `traveloptics-4.4.0.1-1.21.1.jar`. A later hash-bearing Project physical modlist checkpoint dated 2026-09-16 fingerprints that installed filename at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. That value differs from both exact publisher File `6342780` SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8` and known patch File `8861368` SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Physical disposition is therefore `OTHER_VERIFIED`: the installed bytes are a third artifact/repack/replacement whose content delta is not yet materialized. The 33-ID File-6342780 inventory remains an exact publisher baseline, **not** an exact-current-physical registry claim. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
+Historical sibling checkpoint `neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0` recorded `traveloptics-4.4.0.1-1.21.1.jar`. A later hash-bearing Project physical checkpoint dated 2026-09-16 fingerprinted that installed filename at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. Current sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` contains no current status-prefixed/categorized Traveloptics physical row; the remaining uncategorized `to-magic-n-extras.md` file is an older 595-mod export dossier, so those physical statements are historical rather than current. That value differs from both exact publisher File `6342780` SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8` and known patch File `8861368` SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Physical disposition is therefore `OTHER_VERIFIED`: the installed bytes are a third artifact/repack/replacement whose content delta is not yet materialized. The 33-ID File-6342780 inventory remains an exact publisher baseline, **not** an exact-current-physical registry claim. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
 
 ## Publisher release boundary
 
@@ -180,11 +182,12 @@ T.O Magic remains owner of its provider spell identities, items, loot modifiers 
 
 RPG Skill Tree remains only a sibling/provider of progression, attributes, Mastery, perks and gates through verified contracts; it does not own T.O Magic casting or Black Arcana runtime.
 
-The coexistence issue already documented by Somake remains open: Somake Aqua and this deprecated T.O alpha are both physically present, while the historical Somake migration statement does not establish authority migration to this alpha. No Aqua authority is selected by assumption.
+At the historical Phase 2BS checkpoint, Somake Aqua and this deprecated T.O alpha were both physically present, so Aqua authority could not be selected by assumption. Current sibling `76cf13e7d1110116f67c290eaa15891888279fc1` has no current certified/status-prefixed Traveloptics physical row; the legacy export dossier does not establish current installation. That specific dual-installed coexistence blocker is therefore **not current** unless Traveloptics is reintroduced into the physical pack.
 
 ## Evidence ceiling
 
-- physical presence/version line: `HIGH`;
+- historical physical presence/version line: `HIGH`;
+- current sibling physical-row presence: `ABSENT / NO STATUS-PREFIXED OR CATEGORIZED CURRENT ROW`; legacy uncategorized export dossier retained;
 - exact publisher file identity/hashes: `HIGH`;
 - exact 33 registration identities: `HIGH`;
 - exclusion of 32 residual localization roots: `HIGH`;
@@ -204,11 +207,14 @@ No method bodies, source reconstruction, localization prose, recipe/loot payload
 
 ## Remaining gates
 
-1. materialize/audit the `OTHER_VERIFIED` physical artifact SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` and reconcile its registry/`TOLootModifiers` bytes against the known original and patch;
-2. prove assembled-pack registry initialization with that exact physical artifact;
-3. close `traveloptics:blackout` survival reachability with exact object-level evidence;
-4. reconcile Somake Aqua ↔ T.O Aqua coexistence only from actual runtime/provider evidence;
-5. only after those gates may a future checkpoint consider strict semantic promotion or component #67.
+There is no current-pack promotion gate while Traveloptics has no current certified/status-prefixed physical row. If the provider is reintroduced, the audit must restart from the new physical artifact rather than inheriting the old alpha as current authority. At that time, re-evaluate:
+
+1. exact physical artifact identity/hash and registry;
+2. `TOLootModifiers` wiring/runtime initialization;
+3. `traveloptics:blackout` object-level survival reachability;
+4. any Somake Aqua ↔ T.O Aqua coexistence actually present in the reintroduced stack.
+
+Until reintroduction, this dossier is historical provenance only.
 
 ## Audit anchors
 

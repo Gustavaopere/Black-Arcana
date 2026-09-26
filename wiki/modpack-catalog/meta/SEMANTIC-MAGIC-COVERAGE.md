@@ -57,9 +57,9 @@ Official release `1.21.1-0.0.9` and exact source target `xsharov/VampireSpellsAd
 
 Phase 2BT is therefore `ZERO_BRIDGE_INFRA` and contributes **+0 semantic magic objects**. The strict reconstructible minimum remains **1344**. PR #239 merged the durable audit as `main@1c5091807a8773d378c34ffac2e737b5f08b545c`, whose exact post-merge Black Arcana CI run `34795795283` is GREEN. The shared reconciliation promotes only the separate technical provider-component metric to **#67 / 67 of 100**. Physical-JAR byte equality, reflective bridge resolution, mixin/event ordering, effective serverconfig and live resource/damage/cooldown settlement remain runtime QA and are not inferred from this catalog closure.
 
-## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 partial catalog
+## Phase 2BS — T.O Magic n' Extras / Traveloptics 4.4.0.1-1.21.1 historical partial catalog
 
-Exact publisher file `6342780` closes **33 unique registered `traveloptics:<id>` spell identities**, 33 field→class→ID mappings and zero registry initializer branches. The same exact alpha carries 32 additional root localization spell IDs that are not registered and are excluded. Provider ancestry proves `AbstractUniqueSpell.allowCrafting() = false` and `AbstractWeaponSpell.allowCrafting() = true`; nine of ten Unique registrations have direct structured loot anchors, while `traveloptics:blackout` remains object-level survival-unresolved.
+Historical publisher file `6342780` closes **33 unique registered `traveloptics:<id>` spell identities**, 33 field→class→ID mappings and zero registry initializer branches for that audited release. Current sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` contains no current status-prefixed/categorized Traveloptics physical row. It retains only a legacy uncategorized `modlist/to-magic-n-extras.md` export bound to the older 595-mod snapshot, so the Phase 2BS row is provenance only and is not a current denominator/blocker. The same exact alpha carries 32 additional root localization spell IDs that are not registered and are excluded. Provider ancestry proves `AbstractUniqueSpell.allowCrafting() = false` and `AbstractWeaponSpell.allowCrafting() = true`; nine of ten Unique registrations have direct structured loot anchors, while `traveloptics:blackout` remains object-level survival-unresolved.
 
 A focused exact-artifact audit also proves a runtime-risk wiring fact: `TOLootModifiers` registers both `key_loot` and `universal_loot`, while `KeyLootModifier.CODEC` is referenced twice and `UniversalLootModifier.CODEC` zero times. Black Arcana does not claim the reported runtime crash is reproduced, but runtime viability remains fail-closed. Consequently all 33 registry identities remain catalog inventory rather than a strict counted promotion: Phase 2BS contributes **+0 strict**, the reconstructible minimum stays **1344**, and technical component closure stays **66/100 at that checkpoint**.
 
@@ -159,7 +159,7 @@ Iron's Apothic is consequently a source-pinned magic bridge/support closure with
 
 ## Current 24/09/2026 reconciliation
 
-Current sibling authority `neoforge-rpg-skilltree@e54536b2c875d7b60edc27669473d1d8a71eaf84` preserves the current physical provider lines used here.
+Current sibling authority `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` preserves the status-prefixed current provider lines used here; Traveloptics has no current certified physical row, while its uncategorized legacy export remains provenance only.
 
 Current semantic deltas since the 1382 checkpoint:
 
