@@ -1,6 +1,6 @@
 # Not Enough Glyphs 4.6.2 — Deployed SERVER Config Checklist
 
-Status: `39 SOURCE-ENABLED REGISTRATIONS / DEPLOYED ENABLED STATE UNVERIFIED`
+Status: `39 SOURCE-ENABLED REGISTRATIONS / DEPLOYED EFFECTIVE ENABLED STATE UNVERIFIED / FILESYSTEM OR SCHEMA-3 RUNTIME EVIDENCE ACCEPTED`
 
 ## Purpose
 
@@ -10,7 +10,7 @@ Exact current 4.6.2 source-semver pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77`
 
 Exact Ars Nouveau 5.13.1 config construction, already audited in this provider dossier, maps a registered spell-part identity `<namespace>:<path>` to SERVER config file `<namespace>/<path>.toml`, where `[general].enabled` controls the base spell-part enabled state. Source default `true` is **not** accepted as deployed pack state because SERVER config may be world-overridden.
 
-Therefore every row below remains `NÃO VERIFICADO` until the effective deployed config is captured from an authoritative server/world configuration set.
+Therefore every row below remains `NÃO VERIFICADO` until its effective deployed state is established either from an authoritative server/world configuration set **or** from a schema-3 Black Arcana catalog QA runtime observation on the exact assembled server.
 
 ## NEG-native — 14 source-enabled
 
@@ -92,7 +92,11 @@ Expected base config path, if emitted by the Ars spell-part config construction,
 
 ## Acceptance rule
 
-A candidate may move from `CONFIG_CONDITIONAL` only when authoritative deployed evidence establishes its effective SERVER config state. Acceptable evidence must be tied to the actual pack/world/server configuration, not copied from source defaults or a fresh generated config.
+A candidate may move from `CONFIG_CONDITIONAL` only when authoritative deployed evidence establishes its **effective** enabled state. Source defaults or freshly generated configs are insufficient.
+
+Two bounded evidence routes are accepted:
+
+### Route A — deployed config
 
 For each observed file, record at minimum:
 
@@ -101,6 +105,23 @@ For each observed file, record at minimum:
 - source of the deployed configuration (server/world instance or authoritative exported config set);
 - pack/world checkpoint or fingerprint sufficient to distinguish it from defaults;
 - any absent file whose effective value is resolved by authoritative runtime/config behavior rather than assumption.
+
+### Route B — exact-server runtime probe
+
+Run the removable Black Arcana catalog QA companion on the exact assembled server. Probe schema 3 queries **only these 39 candidate IDs** through Ars Nouveau 5.13.1 public APIs.
+
+Accepted row:
+
+`type=glyph id=<candidate> status=OBSERVED enabled=<true|false>`
+
+Meaning:
+
+- `enabled=true` — effective Ars `AbstractSpellPart.isEnabled()` is true for that candidate in that exact run;
+- `enabled=false` — candidate remains disabled for strict catalog counting in that exact run;
+- `NOT_REGISTERED` — do not count; investigate pack/provider composition before changing the source matrix;
+- `HOST_VALUE_UNAVAILABLE` — fail closed.
+
+The runtime route must be paired with the current physical NEG fingerprint and pack checkpoint. It replaces manual TOML precedence reconstruction **only for the effective enabled-state gate**; it does not prove Binder behavior, protection compatibility, numerical balance or unrelated runtime QA.
 
 Until then:
 

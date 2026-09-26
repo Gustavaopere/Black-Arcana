@@ -6,18 +6,19 @@ Status: `SUPPORTING QA COMPANION / READ-ONLY OBSERVATION / NOT PRODUCTION CONTEN
 
 The filesystem collector in `provider-catalog-deployed-evidence-collector.py` closes physical hashes and bounded deployed configuration surfaces, but it deliberately does not infer a provider registry from localization or config filenames.
 
-`black_arcana_catalog_qa` is a separate removable NeoForge companion used on the **actual assembled server** to observe the current Iron's spell registry through the supported Iron's API.
+`black_arcana_catalog_qa` is a separate removable NeoForge companion used on the **actual assembled server** to observe the current Iron's spell registry through the supported Iron's API and the exact bounded Not Enough Glyphs candidate set through Ars Nouveau's public glyph API.
 
 It is intended to reduce current conditional-provider blockers for:
 
 - Somake Spells 1.0.9;
 - Asterism Arcanum 0.1.0;
 - Gaze 1.1.7.1 Iron's-hosted spell surfaces;
-- T.O Magic n' Extras / Traveloptics 4.4.0.1.
+- Not Enough Glyphs 4.6.2 effective glyph enablement;
+- T.O Magic n' Extras / Traveloptics 4.4.0.1 — historical-instance support only.
 
-For Traveloptics it also observes the two exact NeoForge global-loot-modifier serializer IDs already named by the canonical closure checklist: `traveloptics:key_loot` and `traveloptics:universal_loot`.
+For historical Traveloptics instances it also observes the two exact NeoForge global-loot-modifier serializer IDs already named by the canonical closure checklist: `traveloptics:key_loot` and `traveloptics:universal_loot`.
 
-It does not enumerate Ars Nouveau registries and therefore does not replace the deployed Not Enough Glyphs SERVER-config checklist.
+For Not Enough Glyphs it does **not** enumerate the global Ars registry. Schema 3 queries only the exact 39 candidate IDs already listed by the canonical NEG checklist and records their effective `AbstractSpellPart.isEnabled()` state. The filesystem SERVER-config checklist remains an independent supporting route.
 
 ## Isolation
 
@@ -48,6 +49,8 @@ The companion requires:
 - NeoForge;
 - Minecraft 1.21.1.
 
+Ars Nouveau is consulted only when both `ars_nouveau` and `not_enough_glyphs` are actually loaded. The Ars-specific observer lives in a separate class so historical/non-Ars probe uses do not become an unconditional Ars runtime requirement.
+
 It is server-side QA infrastructure, not gameplay content.
 
 ## Exact host API authority
@@ -69,6 +72,18 @@ At that checkpoint:
 - `SchoolType.getId()` exposes the resolved school identifier.
 
 The probe uses only those public host surfaces plus NeoForge `ModList.isLoaded`.
+
+For Not Enough Glyphs, the exact Ars Nouveau 5.13.1 source checkpoint used by the catalog is:
+
+`baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`
+
+At that checkpoint:
+
+- `GlyphRegistry.getSpellPart(ResourceLocation)` is public;
+- `AbstractSpellPart.isEnabled()` is public and reads the effective SERVER-config-backed `ENABLED` value;
+- `GlyphRegistry.registerSpell(...)` registers each spell-part config under `<namespace>/<path>.toml`.
+
+The probe uses only `getSpellPart(...)` and `isEnabled()` for the exact 39 NEG candidates already present in the canonical checklist. It does not enumerate unrelated Ars glyphs or inspect provider implementation classes.
 
 The project is pinned to NeoForge `21.1.248`. NeoForge's 1.21-1.21.1 Global Loot Modifier contract registers each modifier `MapCodec` in `NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS`; the corresponding public runtime registry is `NeoForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS`. The probe queries that registry only for the exact two Traveloptics IDs above. It does not resolve or print provider codec class names.
 
@@ -94,7 +109,16 @@ For each observed Iron's spell registry entry it emits only:
 - effective `enabled`;
 - effective `allow_crafting`.
 
-For Traveloptics loot-modifier registration it emits only:
+For the exact 39 Not Enough Glyphs candidate IDs it emits only:
+
+- registry ID;
+- `status=OBSERVED` plus effective `enabled=true|false`, or;
+- `status=NOT_REGISTERED`, or;
+- bounded `status=HOST_VALUE_UNAVAILABLE error=<ExceptionClass>`.
+
+No other Ars glyph IDs are accepted by the collector whitelist.
+
+For historical Traveloptics loot-modifier registration it emits only:
 
 - whether `traveloptics:key_loot` is present in NeoForge's global-loot-modifier serializer registry;
 - whether `traveloptics:universal_loot` is present;
@@ -108,6 +132,7 @@ Example shapes:
 
 ```text
 [BLACK_ARCANA_CATALOG_PROBE] type=spell id=somakespells:<id> status=OBSERVED school=<namespace:id> enabled=true allow_crafting=true
+[BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:plow status=OBSERVED enabled=true
 [BLACK_ARCANA_CATALOG_PROBE] type=loot_modifier_serializer id=traveloptics:key_loot status=OBSERVED
 [BLACK_ARCANA_CATALOG_PROBE] type=loot_modifier_pair namespace=traveloptics status=OBSERVED distinct_codec_instances=true
 ```
@@ -150,7 +175,14 @@ A registry row from the actual assembled server can close, for that exact run:
 - observed effective Iron's `enabled`;
 - observed effective Iron's `allow_crafting`.
 
-For Traveloptics Gate 2, a successful exact-pack startup that reaches this probe can additionally provide direct evidence that the two expected NeoForge serializer IDs are present. A `distinct_codec_instances=true` row is bounded evidence that those two registry keys do not resolve to the same codec object in that run. Gate 2 still requires the actual deployed JAR hash/disposition to be paired with the startup evidence; the probe alone does not identify the physical bytes.
+A bounded NEG `type=glyph` row from schema 3 can close, for that exact assembled-server run:
+
+- whether each canonical candidate is present in Ars' runtime glyph map;
+- the effective Ars `isEnabled()` value after SERVER config has loaded.
+
+When paired with the already-closed NEG 4.6.2 physical/source registration matrix, those rows can satisfy the deployed-enabled-state gate candidate by candidate. They do not by themselves prove downstream protection, Binder behavior or balance.
+
+For historical Traveloptics Gate 2, a successful exact-pack startup that reaches this probe can additionally provide direct evidence that the two expected NeoForge serializer IDs are present. A `distinct_codec_instances=true` row is bounded evidence that those two registry keys do not resolve to the same codec object in that run. Gate 2 still requires the actual deployed JAR hash/disposition to be paired with the startup evidence; the probe alone does not identify the physical bytes.
 
 It does **not** by itself close:
 
@@ -161,7 +193,7 @@ It does **not** by itself close:
 - Traveloptics loot-modifier data activation or loot behavior beyond serializer registration;
 - Somake↔Traveloptics Aqua runtime authority;
 - Gaze Rite initialization;
-- Not Enough Glyphs `[general].enabled`.
+- Not Enough Glyphs acquisition/protection/runtime behavior beyond the exact runtime registration + effective-enabled observation.
 
 Those remain governed by the existing provider-specific closure checklists and the filesystem collector.
 
@@ -176,6 +208,8 @@ with only the exception class name. It does not invent a fallback value.
 If an Iron's spell registry key resolves without a value, it emits:
 
 `status=REGISTRY_VALUE_UNAVAILABLE`
+
+For a bounded NEG glyph target, a missing runtime entry emits `status=NOT_REGISTERED`; failure to read the host value emits `status=HOST_VALUE_UNAVAILABLE` with only the exception class name.
 
 For the bounded Traveloptics serializer observation, missing keys emit `status=NOT_PRESENT`; a partial pair emits `status=INCOMPLETE`; registry access failure emits `status=REGISTRY_VALUE_UNAVAILABLE`.
 

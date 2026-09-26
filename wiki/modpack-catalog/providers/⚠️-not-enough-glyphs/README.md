@@ -1,13 +1,13 @@
 # Not Enough Glyphs
 
-Status: `⚠️ CURRENT PHYSICAL 4.6.2 / SOURCE-PINNED REGISTRATION MATRIX REVALIDATED / 40 REGISTERED PRIMITIVES, 39 SOURCE-ENABLED / DEPLOYED SERVER CONFIG UNVERIFIED / FAIL-CLOSED`
+Status: `⚠️ CURRENT PHYSICAL 4.6.2 / PHYSICAL SHA-1 = EXACT PUBLISHER RELEASE / SOURCE-PINNED REGISTRATION MATRIX REVALIDATED / 40 REGISTERED PRIMITIVES, 39 SOURCE-ENABLED / DEPLOYED EFFECTIVE ENABLED STATE UNVERIFIED / SCHEMA-3 RUNTIME PROBE ROUTE AVAILABLE / FAIL-CLOSED`
 
 ## Runtime identity
 
 - Mod id: `not_enough_glyphs`
 - Physical JAR: `not_enough_glyphs-1.21.1-4.6.2.jar`
 - Runtime version: `4.6.2`
-- Physical pack SHA-1: **not yet captured in current Black Arcana authority material**
+- Physical pack SHA-1: `32eea2c478a346ee7499f6a0db156241116f73e9` — current sibling physical authority; equals the exact publisher-release SHA-1
 - Exact publisher-release SHA-1: `32eea2c478a346ee7499f6a0db156241116f73e9`
 - Exact publisher-release SHA-256: `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12`
 - Previous 4.6.1 SHA-1 `e5fd04b7c40d6d5a9aea5d6356f3eb628941fca4`: **historical only**
@@ -22,7 +22,7 @@ See [`CURRENT-4.6.2-SOURCE-REVALIDATION.md`](CURRENT-4.6.2-SOURCE-REVALIDATION.m
 
 ## Current-pack registration result
 
-Registration is conditional on loaded providers. In the current physical modlist revalidated at sibling `cd38efb9c1a888c86addace69876400cf8845908`:
+Registration is conditional on loaded providers. In the current physical modlist revalidated at sibling `8860baa30d8c2b671f042845314bba83b14acfe6`:
 
 - `ars_elemental` **is installed** → NEG does not register its local Arc/Homing fallbacks; it only references the four real Ars Elemental primitives in its internal `registeredSpells` list and enables four Elemental Binder focus perks.
 - `ars_controle` **is installed** → NEG does not register its local `ars_controle:filter_random` fallback.
@@ -108,6 +108,7 @@ Phase 3 remains blocked by the canonical deduplication rule.
 - [`SPELL-BINDER-AND-PERKS.md`](SPELL-BINDER-AND-PERKS.md)
 - [`RUNTIME-BOUNDARIES.md`](RUNTIME-BOUNDARIES.md)
 - [`DELEGATION-AND-DISABLED.md`](DELEGATION-AND-DISABLED.md)
+- [`DEPLOYED-CONFIG-CHECKLIST.md`](DEPLOYED-CONFIG-CHECKLIST.md) — 39-candidate effective-enabled evidence paths, including schema-3 runtime observation;
 - [`EVIDENCE-AND-PROVENANCE.md`](EVIDENCE-AND-PROVENANCE.md)
 - [`glyphs/`](glyphs/)
 
@@ -117,4 +118,8 @@ The remaining 39-glyph semantic blocker is now narrowed to the deployed Ars/NeoF
 
 `AbstractSpellPart.buildConfig(...)` defines `[general].enabled` with source default `true`, and `isEnabled()` reads that config value. `momentum` remains a separate provider override that returns disabled in NEG source. NeoForge 1.21.1 SERVER configs are server-authoritative/synchronized and may be overridden per world under `world/serverconfig`; consequently the source default is not accepted as the deployed pack state.
 
-No authoritative deployed NEG glyph-config TOMLs are present in current project/sibling repository evidence. The current 4.6.2 revalidation therefore changes **neither** current canonical metric: strict semantic minimum remains **1344**, and provider-component closure remains **68/100**. A future promotion may count only those of the 39 candidates whose effective deployed `[general].enabled` state is proven true. Runtime/balance/protection QA remains separate.
+No authoritative deployed NEG glyph-config TOMLs are present in current project/sibling repository evidence. The static catalog therefore still does **not** promote any of the 39 candidates from this dossier alone.
+
+The closure path is no longer limited to manual TOML collection. Black Arcana's removable catalog QA companion schema 3 now queries the exact 39 canonical IDs through Ars Nouveau 5.13.1 public APIs: `GlyphRegistry.getSpellPart(...)` plus effective `AbstractSpellPart.isEnabled()`. A `type=glyph ... status=OBSERVED enabled=true|false` row from the actual assembled server may satisfy the deployed-enabled-state gate for that exact candidate; `NOT_REGISTERED` and `HOST_VALUE_UNAVAILABLE` remain fail-closed. The filesystem collector remains an independent supporting route.
+
+The historical 1344 / 68-of-100 figures above belong to the Phase 2BI checkpoint; the current shared semantic ledger is authoritative for the later global total. Runtime/balance/protection/Binder QA remains separate from the enabled-state catalog gate.

@@ -114,8 +114,9 @@ CATALOG_PROBE_LOG_LINE_RE = re.compile(
     rf"\[{re.escape(CATALOG_PROBE_LOGGER)}/[^\]\r\n]*\]: "
     rf"{re.escape(CATALOG_PROBE_PREFIX)}(?P<payload>.*)$"
 )
-SUPPORTED_CATALOG_PROBE_SCHEMAS = {1, 2}
+SUPPORTED_CATALOG_PROBE_SCHEMAS = {1, 2, 3}
 TARGET_PROBE_MOD_IDS = {
+    "ars_nouveau",
     "asterismarcanum",
     "gaze",
     "irons_spellbooks",
@@ -133,6 +134,7 @@ TARGET_PROBE_LOOT_IDS = {
     "traveloptics:key_loot",
     "traveloptics:universal_loot",
 }
+TARGET_PROBE_GLYPH_IDS = {registry_id for registry_id, _ in NEG_CONFIGS}
 RESOURCE_LOCATION_RE = re.compile(r"^[a-z0-9_.-]+:[a-z0-9_./-]+$")
 SIMPLE_ERROR_RE = re.compile(r"^[A-Za-z0-9_$]+$")
 
@@ -215,6 +217,35 @@ def parse_catalog_probe_payload(payload: str) -> dict[str, Any] | None:
             if error is None:
                 return None
             return {"type": "spell", "id": registry_id, "status": status, "error": error}
+        return None
+
+    if row_type == "glyph":
+        registry_id = _probe_resource_location(fields.get("id"))
+        status = fields.get("status")
+        if registry_id not in TARGET_PROBE_GLYPH_IDS:
+            return None
+        if status == "OBSERVED":
+            enabled = _probe_bool(fields.get("enabled"))
+            if enabled is None:
+                return None
+            return {
+                "type": "glyph",
+                "id": registry_id,
+                "status": status,
+                "enabled": enabled,
+            }
+        if status == "NOT_REGISTERED":
+            return {"type": "glyph", "id": registry_id, "status": status}
+        if status == "HOST_VALUE_UNAVAILABLE":
+            error = _probe_error(fields.get("error"))
+            if error is None:
+                return None
+            return {
+                "type": "glyph",
+                "id": registry_id,
+                "status": status,
+                "error": error,
+            }
         return None
 
     if row_type == "summary":
