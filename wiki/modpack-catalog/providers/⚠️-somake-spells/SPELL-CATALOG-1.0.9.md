@@ -2,7 +2,7 @@
 
 Status: `83 EXACT PHYSICAL REGISTRY IDENTITIES / CURRENT MOD-COMPOSITION REGISTRATION OUTCOME 83/83 / NOT YET STRICT-COUNTED`
 
-This file is the current 1.0.9 registry inventory. The older `registry/` card directory remains historical 1.0.8-fix evidence and must not be treated as a complete 1.0.9 card set.
+This file is the current 1.0.9 registry inventory. Individual current-line cards are materialized in [`MAGIC-CARDS-1.0.9.md`](MAGIC-CARDS-1.0.9.md) under `registry-1.0.9/`. The older `registry/` card directory remains historical 1.0.8-fix evidence and must not be treated as a 1.0.9 card set.
 
 | # | Registry identity | Structural note |
 |---:|---|---|

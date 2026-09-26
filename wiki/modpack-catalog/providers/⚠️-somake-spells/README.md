@@ -60,6 +60,7 @@ This proves those charge surfaces for the 1.0.8-fix artifact only. It does not e
 - [EXACT-1.0.9-REGISTRY-AUDIT.md](EXACT-1.0.9-REGISTRY-AUDIT.md) — exact hash-matched physical/release registry closure: 83 declared IDs, +17/-1 delta, current optional-registration topology and host override facts;
 - [EXACT-1.0.9-REGISTRATION-GATE-MAP.md](EXACT-1.0.9-REGISTRATION-GATE-MAP.md) — exact 67 unconditional + 16 optional-provider-gated mapping and current-pack 83/83 registration outcome;
 - [SPELL-CATALOG-1.0.9.md](SPELL-CATALOG-1.0.9.md) — current 83-ID registry inventory; active by current mod composition but not yet strict-counted;
+- [MAGIC-CARDS-1.0.9.md](MAGIC-CARDS-1.0.9.md) — 83 current exact registry identities materialized as individual cards under `registry-1.0.9/`; registration admitted 83/83 by current composition, strict count still conditional;
 - [EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) — historical 1.0.8-fix hash-matched registry/gate/config facts;
 - [INTEGRATION-RULES.md](INTEGRATION-RULES.md) — Black Arcana authority and fail-closed rules.
 
