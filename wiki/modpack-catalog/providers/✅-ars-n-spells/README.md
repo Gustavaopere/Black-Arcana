@@ -46,7 +46,7 @@ No Ars Nouveau glyph registrations owned by Ars 'n' Spells were proven in this p
 
 ## Current semantic ritual surface
 
-The exact 3.3.0 NeoForge source baseline registers five ritual identities under the physical pack condition where Iron's is installed:
+The provider ritual model remains five identities on the public NeoForge 1.21.1 source line; the detailed implementations below remain pinned to the audited 3.3.0 baseline, while public 3.3.3 still exposes the same named ritual family under the current pack condition:
 
 1. `ars_n_spells:spell_uninscription` — unconditional cleanup/uninscription ritual;
 2. `ars_n_spells:spell_transcription` — transcribes one supported spell source onto one blank carrier target;
@@ -60,7 +60,7 @@ The first four one-shot rituals use the provider's `AnsRitual` lifecycle at the 
 
 ## Internal Iron's proxy registry is not eight new spells
 
-When Iron's is present, the 3.3.0 NeoForge source registers a finite pool of eight real Iron's `AbstractSpell` registry objects:
+When Iron's is present, the audited source line registers a finite pool of eight real Iron's `AbstractSpell` registry objects; public 3.3.3 still exposes `PROXY_POOL_SIZE = 8` / `ars_cross_1..8`:
 
 `ars_n_spells:ars_cross_1` … `ars_n_spells:ars_cross_8`
 
@@ -76,7 +76,7 @@ See [`systems/cross-casting-and-proxy-pool.md`](systems/cross-casting-and-proxy-
 
 ## Mana unification modes
 
-The 3.3.0 NeoForge source baseline exposes five modes:
+The audited NeoForge source line exposes five mana-unification modes; detailed semantics remain pinned to the 3.3.0 baseline:
 
 - `ISS_PRIMARY` / `iss_primary`;
 - `ARS_PRIMARY` / `ars_primary`;
@@ -90,7 +90,7 @@ See [`systems/mana-unification.md`](systems/mana-unification.md).
 
 ## Spell Loom / carriers
 
-The provider owns the serialization/export/inscription lifecycle that lets Ars spell graphs be carried across the engine boundary. The 3.3.0 NeoForge source/release baseline includes correctness hardening so preview is non-mutating, reusable books/foci are not consumed as disposable sources, inscription handles stack counts deliberately, and cleanup removes ANS-owned cross-cast state without treating ordinary native spells as its own authority.
+The provider owns the serialization/export/inscription lifecycle that lets Ars spell graphs be carried across the engine boundary. The audited 3.3.0 baseline established the original correctness rules; public 3.3.3 materially revises Spell Loom/carrier workflows, and the exact 3.3.4 release further revises carrier payment/revision ownership. Black Arcana treats the provider as sole authority for this lifecycle and does not project unverified 3.3.4 internal signatures.
 
 See [`systems/spell-loom-and-carriers.md`](systems/spell-loom-and-carriers.md).
 
@@ -107,7 +107,7 @@ Black Arcana must not:
 - bypass the provider's carrier validation, proxy allocation or native-wheel routing with a second cross-cast packet path;
 - infer exact 3.3.4 internal signatures from the 3.3.3 public source baseline.
 
-For a provider-routed cast, Black Arcana integration must preserve one causal cast identity. If an integration needs an exact internal hook that is not proven on 3.3.2, it remains **fail-closed**.
+For a provider-routed cast, Black Arcana integration must preserve one causal cast identity. If an integration needs an exact internal hook that is not proven on 3.3.4, it remains **fail-closed**.
 
 ## World and hazard boundary
 
