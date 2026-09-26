@@ -17,13 +17,14 @@ import java.util.TreeMap;
  * Emits a bounded, read-only runtime snapshot from public host APIs.
  *
  * <p>The output deliberately contains only target mod presence, Iron's spell
- * registry identity/effective host values, and the two Traveloptics global
- * loot-modifier serializer registrations required by its closure checklist.
+ * registry identity/effective host values, the bounded Not Enough Glyphs
+ * effective Ars glyph state, and the two Traveloptics global loot-modifier
+ * serializer registrations required by its historical closure checklist.
  * It never inspects provider implementation classes or reconstructs behavior.</p>
  */
 final class CatalogRuntimeEvidence {
     static final String PREFIX = "[BLACK_ARCANA_CATALOG_PROBE]";
-    static final int SCHEMA_VERSION = 2;
+    static final int SCHEMA_VERSION = 3;
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -35,6 +36,7 @@ final class CatalogRuntimeEvidence {
     );
 
     private static final List<String> TARGET_MOD_IDS = List.of(
+        "ars_nouveau",
         "asterismarcanum",
         "gaze",
         "irons_spellbooks",
@@ -74,6 +76,10 @@ final class CatalogRuntimeEvidence {
                 namespace,
                 counts.getOrDefault(namespace, 0)
             );
+        }
+
+        if (ModList.get().isLoaded("ars_nouveau") && ModList.get().isLoaded("not_enough_glyphs")) {
+            NegGlyphRuntimeEvidence.emit();
         }
 
         emitTravelopticsLootModifierRegistry();
