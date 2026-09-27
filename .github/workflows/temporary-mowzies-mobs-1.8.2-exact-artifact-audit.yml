@@ -1,0 +1,151 @@
+name: Temporary Mowzie's Mobs 1.8.2 Exact Artifact Audit
+
+on:
+  push:
+    branches:
+      - audit/mowzies-mobs-1.8.2-exact-artifact-2026-09-26
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download and hash-gate exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          URL='https://cursemaven.com/curse/maven/mowzies-mobs-250498/7760267/mowzies-mobs-250498-7760267.jar'
+          curl --fail --location --retry 3 --retry-delay 2 "$URL" -o /tmp/provider.jar
+          ACTUAL="$(sha1sum /tmp/provider.jar | awk '{print $1}')"
+          EXPECTED='d64475cd77444b056ece6472c79d40293dc63c6c'
+          printf 'expected_physical_sha1=%s\nactual_publisher_sha1=%s\n' "$EXPECTED" "$ACTUAL" | tee audit/hash.txt
+          test "$ACTUAL" = "$EXPECTED"
+          sha256sum /tmp/provider.jar | tee audit/sha256.txt
+
+      - name: Extract narrow player-ability facts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib, re, subprocess
+          from zipfile import ZipFile
+
+          jar='/tmp/provider.jar'
+          out=["MOWZIE'S MOBS 1.8.2 EXACT ARTIFACT FACTS",
+               "Inspection is hash-gated to the physical pack SHA-1 before this step.",
+               "Only metadata, player-ability identities, exact array membership and narrow gate references are retained.",
+               ""]
+          with ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              toml='META-INF/neoforge.mods.toml'
+              out.append('[metadata]')
+              if toml in names:
+                  txt=z.read(toml).decode('utf-8','replace')
+                  for line in txt.splitlines():
+                      s=line.strip()
+                      if s.startswith(('modId=','version=','displayName=','license=')):
+                          out.append(s)
+              out.append('')
+              ability_classes=[n for n in names if n.endswith('.class') and '/server/ability/abilities/player/' in n]
+              out.append('[player ability class files]')
+              out += ability_classes
+              out.append(f'player_ability_class_file_count={len(ability_classes)}')
+              out.append('')
+
+          cls='com.bobmowzie.mowziesmobs.server.ability.AbilityHandler'
+          decl=subprocess.run(['javap','-classpath',jar,'-p',cls],text=True,capture_output=True,check=True).stdout
+          dis=subprocess.run(['javap','-classpath',jar,'-c','-p',cls],text=True,capture_output=True,check=True).stdout
+          out.append('[AbilityHandler declarations]')
+          ability_fields=[]
+          for line in decl.splitlines():
+              s=line.strip()
+              if 'AbilityType<net.minecraft.world.entity.player.Player' in s and s.endswith(';'):
+                  ability_fields.append(s)
+          out += ability_fields
+          out.append(f'player_ability_type_field_count={len(ability_fields)}')
+          out.append('')
+
+          static=dis.split('static {};',1)[1] if 'static {};' in dis else ''
+          out.append('[AbilityHandler static string ids]')
+          ids=[]
+          for line in static.splitlines():
+              m=re.search(r'// String ([a-z0-9_]+)$',line)
+              if m:
+                  v=m.group(1)
+                  if v not in ids:
+                      ids.append(v)
+          out += ids
+          out.append(f'unique_static_string_id_count={len(ids)}')
+          out.append('')
+
+          out.append('[PLAYER_ABILITIES exact membership]')
+          # Recover getstatic field references in the array-construction region immediately before PLAYER_ABILITIES putstatic.
+          lines=static.splitlines()
+          put_idx=None
+          for i,line in enumerate(lines):
+              if 'Field PLAYER_ABILITIES:' in line and 'putstatic' in line:
+                  put_idx=i
+                  break
+          members=[]
+          if put_idx is not None:
+              start=max(0,put_idx-120)
+              for line in lines[start:put_idx+1]:
+                  m=re.search(r'getstatic\s+.*Field ([A-Z0-9_]+):',line)
+                  if m and m.group(1)!='PLAYER_ABILITIES':
+                      members.append(m.group(1))
+          # Keep last contiguous unique field sequence corresponding to array stores.
+          filtered=[]
+          for m in members:
+              if m not in filtered:
+                  filtered.append(m)
+          out += filtered
+          out.append(f'player_abilities_member_count={len(filtered)}')
+          out.append('')
+
+          targets=[
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.heliomancy.HeliomancyAbilityBase',
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.geomancy.SpawnBoulderAbility',
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.geomancy.SpawnPillarAbility',
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.geomancy.TunnelingAbility',
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.geomancy.RockSlingAbility',
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.geomancy.HitBoulderAbility',
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.WroughtAxeSwingAbility',
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.WroughtAxeSlamAbility',
+            'com.bobmowzie.mowziesmobs.server.ability.abilities.player.IceBreathAbility'
+          ]
+          for t in targets:
+              p=subprocess.run(['javap','-classpath',jar,'-c','-p',t],text=True,capture_output=True)
+              out.append(f'[narrow gate references: {t}]')
+              if p.returncode!=0:
+                  out.append('<class unavailable>')
+                  out.append('')
+                  continue
+              hits=[]
+              for line in p.stdout.splitlines():
+                  if any(k in line for k in (
+                      'canUse', 'enableTunneling', 'SUNS_BLESSING', 'EARTHREND_GAUNTLET',
+                      'ICE_CRYSTAL', 'SCULPTOR_STAFF', 'AXE_OF_A_THOUSAND_METALS',
+                      'EffectGeomancy.canUse', 'hasEffect', 'getSelected'
+                  )):
+                      hits.append(line.strip())
+              out += hits or ['<none>']
+              out.append('')
+
+          pathlib.Path('audit/facts.txt').write_text('\n'.join(out)+'\n',encoding='utf-8')
+          print('\n'.join(out))
+          PY
+
+      - name: Publish text-only audit report
+        uses: actions/upload-artifact@v7
+        with:
+          name: mowzies-mobs-1.8.2-exact-artifact-audit
+          path: audit/*.txt
+          if-no-files-found: error
+          retention-days: 3
