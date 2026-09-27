@@ -2,13 +2,13 @@
 
 ## Estado
 
-`AUDITORIA EM ANDAMENTO — categoria física Magic expandida no sibling e em reconciliação / cross-domain provider queue reconciliada / denominador global PENDING REBASE`
+`AUDITORIA EM ANDAMENTO — categoria física Magic atual reconciliada 84/84 / cross-domain provider queue ainda PENDING REBASE`
 
 O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint histórico de 2026-09-11**. A autoridade corrente para presença/versão combina a modlist física do Project Library com os dossiês físicos sibling mais novos quando estes a supersedem; a taxonomia status-prefixed do sibling não é usada para negar um JAR diretamente observado. O denominador global de providers continua `PENDING REBASE`: a categoria física `Magic` está mapeada, mas o universo cross-domain/root-level é maior que essa pasta.
 
 O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
-A árvore canônica atual possui **109 diretórios top-level de provider = 99 ✅ + 10 ⚠️**. Esse número já elimina a duplicata histórica `vampiric-ageing`/`vampiricageing` do mesmo mod id `vampiricageing`. É uma métrica estrutural do catálogo, não uma fração de cobertura: não substitui o denominador técnico cross-domain `PENDING REBASE` e não deve ser usado para calcular porcentagem semântica.
+A árvore canônica atual possui **115 diretórios top-level de provider = 99 ✅ + 16 ⚠️**. Esse número já elimina a duplicata histórica `vampiric-ageing`/`vampiricageing` do mesmo mod id `vampiricageing`. É uma métrica estrutural do catálogo, não uma fração de cobertura: não substitui o denominador técnico cross-domain `PENDING REBASE` e não deve ser usado para calcular porcentagem semântica.
 
 A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O mínimo estrito de **1496** foi posteriormente ampliado por Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau 0.8.1 (**+19**), Reliquified Artifacts 1.0.8 (**+52**), Reliquified Iron's Spells 'n Spellbooks 0.2.7 (**+25**), More Relics (**+61**), Ozymandias Sundries (**+2**), Mowzie's Mobs (**+10 strict**) e Ice And Fire CE (**+8 strict**), levando o mínimo estrito corrente a **1677**. Ars 'n' Spells 3.3.4, Traveloptics, KubeJS bridges e os novos layers de UI/compat foram reclassificados sem outro delta estrito nesta rodada. Tombstone, Gaze rites, Not Enough Glyphs, Somake e outros blockers abaixo continuam fail-closed onde configuração/inventário atual não está fechado.
 
@@ -18,20 +18,19 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — snapshot sibling atual
 
-No sibling ``neoforge-rpg-skilltree` current `main` with Tombstone dossier blob `7b99ee63892e9bd3711e27a651c0b62c0d71ba47`` existem **67 linhas status-prefixed cujas pastas de categoria contêm `Magic`**. Essa classificação sibling descreve a taxonomia física do modpack; o prefixo ✅ do dossiê sibling não equivale automaticamente a ✅ do catálogo semântico Black Arcana.
+A autoridade física corrente é `neoforge-rpg-skilltree@c701aa74b1e0109659a9f40206603dd960726445`. Aplicando o critério ao **campo de categoria** da modlist, existem **84 linhas cuja categoria contém `Magic`**. O nome do mod não é usado como atalho de classificação.
 
-Após normalização de ownership/aliases e os fechamentos de Ozymandias + Mowzie's Mobs + Photon + RunicLib nesta rodada:
+Após normalização de ownership/aliases e a reconciliação de 27/09:
 
-- **59 ✅ catalogados** com diretório Black Arcana correspondente;
-- **8 ⚠️ parciais/condicionados** com diretório Black Arcana correspondente: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition;
-- **0 ⚠️ em classificação semântica** sem diretório Black Arcana;
-- **0 ❌** são declarados apenas pela taxonomia sibling: toda linha física `Magic` atual possui classificação explícita;
+- **70 ✅ catalogados** com diretório Black Arcana correspondente;
+- **14 ⚠️ parciais/condicionados** com diretório Black Arcana correspondente;
+- **0 ❌** linhas físicas `Magic` sem classificação;
 - **0 🟡** de implementação ativa;
 - **0 ⛔** por ausência total de evidência.
 
-Assim, **67/67** linhas da categoria física `Magic` mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**). A fila category-only desta taxonomia está vazia. Isso não fecha o denominador semântico global cross-domain.
+Assim, **84/84** linhas da categoria física `Magic` estão mapeadas em Black Arcana (**70 ✅ + 14 ⚠️**). Isso é um subtotal físico/categorial, não o denominador semântico global.
 
-**Reclassificação sibling recente:** nove linhas compõem a sequência atual. Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable, Iron's Spellbooks KubeJS e Hexalia já tinham diretório Black Arcana; IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages foram fechados como ✅ `+0`; Ice And Fire Community Edition permanece ⚠️, agora com 8 ações `COUNTED_EXACT` e apenas 1 família ainda condicional (Ghost Sword por config implantada); Dread Lich Staff foi promovido por auditoria exata do runtime atual de drop de equipamento.
+O delta contra o snapshot anterior de 67 linhas é **+17**. Onze dessas linhas já possuíam provider canônico e não geram nova contagem. Seis foram materializadas agora como ⚠️: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords e Waystones. Todas permanecem `+0 strict` nesta rodada porque seus inventários/classificações semânticas exatos ainda não estão fechados. Ver [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
 
 **Cross-domain note:** o subtotal físico `Magic` continua sem representar o universo global. Gaze permanece ⚠️ com um spell contado + 26 rites config-condicionais; Ender's Spells and Stuff: Requiem é ✅ com 53 ações strict; Reliquified Ars Nouveau, Reliquified Artifacts e Reliquified Iron's são ✅ com 19, 52 e 25 ability roots source-pinned; Iron's Spellbooks KubeJS agora também aparece nessa categoria sibling e permanece ⚠️ por inventário mutável de scripts; More Relics é ✅ com 61 ability roots exatas; Ozymandias Sundries agora é ✅ com 2 spells exatos; Mowzie's Mobs é ⚠️ com 10 poderes strict + 1 Tunneling config-condicional; Traveloptics permanece ⚠️ +0 strict pendente de fechamento exato-current. Spell Actionbar, Specs, Recolor e Immersive Portal estão ✅ catalogados com +0 identidades independentes; QA técnico/runtime permanece separado.
 **Traveloptics current-physical override:** Project Library physical evidence directly records `traveloptics-4.4.0.1-1.21.1.jar` / SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This outranks the absence of a status-prefixed sibling row for presence/version. The installed digest differs from the audited publisher alpha and known patch artifact, so Traveloptics is a current **⚠️ `OTHER_VERIFIED` / +0 strict** provider blocker until its installed-byte registry and reachability are closed.
