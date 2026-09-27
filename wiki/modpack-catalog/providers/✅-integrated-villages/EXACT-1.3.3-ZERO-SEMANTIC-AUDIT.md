@@ -27,4 +27,3 @@ The workflow hard-gates publisher bytes against the physical pack SHA-1 before r
 ## Conclusion
 
 The exact installed provider is worldgen/structure/loot/integration data, not a player spell/ritual/ability provider. Strict semantic delta: **+0**.
-
