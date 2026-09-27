@@ -1,6 +1,6 @@
 # Spell Actionbar — 1.1.4
 
-Status: `⚠️ PARTIAL / CURRENT PHYSICAL 1.1.4 / IRON'S LOADOUT+HUD+QUICK-CAST SURFACE / 0 INDEPENDENT SPELL IDENTITIES / EXACT IMPLEMENTATION SURFACE NOT FULLY RECONSTRUCTED / +0 STRICT`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 1.1.4 / ZERO_SEMANTIC_UI_LOADOUT_QUICKCAST / +0 STRICT / EXACT IMPLEMENTATION+RUNTIME QA SEPARATE`
 
 ## Current physical identity
 
@@ -35,13 +35,13 @@ The same Iron's spell shown or cast from an actionbar slot remains the same prov
 
 Strict semantic delta: **+0**.
 
-## Why the provider remains ⚠️
+## Catalog closure vs runtime QA
 
 Physical installation and high-level role are closed, but this Black Arcana audit has not independently reconstructed the complete exact 1.1.4 implementation/API surface from the installed binary or an exact source pin.
 
 Therefore packet/input behavior, exact persistence format and all API signatures remain fail-closed beyond the sibling/publisher evidence.
 
-Current catalog state: **⚠️ partial / conditioned / +0 strict**.
+Current semantic catalog state: **✅ cataloged / +0 strict**. Exact packet/input/persistence/API behavior remains separate runtime QA.
 
 ## Authority and safety boundary
 
@@ -66,6 +66,6 @@ Relevant assembled checks include:
 
 ## Result
 
-**⚠️ Partial / conditioned.**
+**✅ Cataloged.**
 
-Semantic inventory: **0 independent spells**. Spell Actionbar is cataloged as a UI/loadout/quick-cast interoperability component over Iron's Spells.
+Semantic inventory: **0 independent spells**. Spell Actionbar is cataloged as a UI/loadout/quick-cast interoperability component over Iron's Spells; runtime/input/API QA remains separate.

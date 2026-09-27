@@ -2,7 +2,7 @@
 
 Checkpoint: 2026-09-27
 
-Status: `14 PROVIDER DIRECTORIES ⚠️ / 10 CATALOG-CLOSURE ROUTES + 4 TECHNICAL-RUNTIME PARTIALS / ICE AND FIRE +7 STRICT PROMOTED, 2 ACTION BLOCKERS REMAIN`
+Status: `10 PROVIDER DIRECTORIES ⚠️ / 10 CATALOG-CLOSURE ROUTES / 4 ZERO-SEMANTIC TECHNICAL PROVIDERS PROMOTED TO ✅ CATALOGED / ICE AND FIRE +7 STRICT PROMOTED, 2 ACTION BLOCKERS REMAIN`
 
 ## Purpose
 
@@ -12,9 +12,9 @@ It does **not** replace provider dossiers, does not change the strict semantic l
 
 Current provider-directory reality on base `main@0ecfa67028c588b973e31e48eb4dd4dcc2360ac7` plus this Ice And Fire CE partial-promotion change set:
 
-- **14** provider directories carry the ⚠️ prefix;
-- **10** still have a catalog/config/script/effective-state closure gate listed below;
-- **4** are technical/runtime-only partials with **+0 independent semantic identities** already established: Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Spell Codex Specs.
+- **10** provider directories carry the ⚠️ prefix;
+- all **10** still have a catalog/config/script/effective-state closure gate listed below;
+- Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Spell Codex Specs are now **✅ cataloged at +0 independent semantic identities**; their remaining interoperability/runtime QA stays separate.
 
 A provider leaves this index only when its own acceptance rule is satisfied by authoritative current-pack evidence and the canonical provider status is updated accordingly.
 
@@ -33,16 +33,16 @@ A provider leaves this index only when its own acceptance rule is satisfied by a
 | T.O Magic n' Extras / Traveloptics `4.4.0.1-1.21.1` | Current physical filename and SHA-1 are known; installed artifact is `OTHER_VERIFIED` relative to the audited publisher alpha/known patch; publisher baseline closes 33 IDs but is not promoted as exact-current | Exact current physical registry/content delta; assembled loot-modifier initialization; 1.21.1-specific `traveloptics:blackout` survival route; Somake Aqua coexistence/authority | [CLOSURE-CHECKLIST.md](../providers/⚠️-traveloptics/CLOSURE-CHECKLIST.md) |
 | Ice And Fire Community Edition `2.1.2` | Exact physical SHA-1 equals publisher File `8757837`; exact source closes 9 active action families; exact reachability run `36323035696` promotes 7 families through provider recipe/loot data | Dread Lich Staff: explicit current acquisition route still unproven. Ghost Sword: exact recipe is closed, but deployed Jupiter `tools.phantasmalBladeAbility` is still required | [DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md](../providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md) |
 
-## Technical/runtime-only partial provider directories
+## Catalog-closed zero-semantic technical providers
 
-These folders remain ⚠️ because interoperability/runtime QA is open, but their independent semantic contribution is already closed at **+0**. They do not block the current strict semantic numerator:
+These providers are **✅ cataloged** because their independent semantic contribution is fully closed at **+0**:
 
 - Immersive Portal Iron's Spells addon;
 - Iron's Spells Recolor;
 - Spell Actionbar;
 - Spell Codex Specs.
 
-Do not move their technical QA into the semantic numerator. Promote their folder status only when the provider-specific declared catalog/runtime scope is actually closed.
+Their exact implementation/interoperability/config/runtime QA remains fail-closed and separate. Do not move that technical debt into the semantic numerator or reinterpret ✅ as runtime certification.
 
 ## Deployed-evidence collector coverage
 

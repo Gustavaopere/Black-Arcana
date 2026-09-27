@@ -1,6 +1,6 @@
 # Immersive Portal - Iron's Spells 'n Spellbooks Addon — 1.0.1
 
-Status: `⚠️ PARTIAL / CURRENT PHYSICAL 1.0.1 / PORTAL-SPELL BRIDGE / +0 INDEPENDENT SPELL IDENTITIES / PUBLIC SOURCE STILL 1.0.0 / RELEASE-EXACT INTERNALS + ASSEMBLED QA FAIL-CLOSED`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 1.0.1 / ZERO_SEMANTIC_PORTAL_BRIDGE / +0 STRICT / RELEASE-EXACT INTERNALS + ASSEMBLED QA SEPARATE`
 
 ## Current physical identity
 
@@ -65,9 +65,9 @@ The bridge modifies/adapts behavior of an existing Iron's spell. It therefore co
 
 This does not make the component irrelevant: it owns a real runtime interoperability layer around portal creation, lifecycle, transfer and presentation.
 
-## Why the provider remains ⚠️
+## Catalog closure vs runtime QA
 
-Do not promote this provider to a fully source-exact ✅ closure yet because:
+The semantic catalog is closed at **zero independent spell identities**. The following technical/runtime claims remain intentionally fail-closed:
 
 1. installed artifact is 1.0.1 while public source still declares 1.0.0;
 2. the 1.0.1 changelog only states `Fixed some issues`; exact changed internals are not published in the evidence currently available;
@@ -75,7 +75,7 @@ Do not promote this provider to a fully source-exact ✅ closure yet because:
 4. the pack uses Immersive Aeronautics as the provider of `immersive_portals_core`, so assembled compatibility must be validated against that rewrite;
 5. lifecycle and exactly-once portal creation are runtime QA questions, separate from semantic identity.
 
-Therefore the catalog state is **⚠️ partial / conditioned**, with semantic contribution fixed at **+0 independent spell identities**.
+Therefore the **catalog state is ✅** with semantic contribution fixed at **+0 independent spell identities**. Exact 1.0.1 internals and assembled interoperability remain separate runtime QA.
 
 ## Authority and deduplication
 
@@ -101,6 +101,6 @@ Required assembled checks remain fail-closed:
 
 ## Result
 
-**⚠️ Partial / conditioned.**
+**✅ Cataloged.**
 
-Semantic inventory: **0 independent spells**. The addon is cataloged as a host-spell interoperability bridge; release-exact 1.0.1 internals and assembled runtime behavior remain open.
+Semantic inventory: **0 independent spells**. The addon is cataloged as a host-spell interoperability bridge; release-exact 1.0.1 internals and assembled runtime behavior remain open as separate QA.
