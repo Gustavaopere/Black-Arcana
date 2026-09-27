@@ -138,6 +138,59 @@ jobs:
               out += hits or ['<none>']
               out.append('')
 
+          trigger_targets={
+            'com.bobmowzie.mowziesmobs.server.item.ItemWroughtAxe': [
+              'WROUGHT_AXE_SWING_ABILITY','WROUGHT_AXE_SLAM_ABILITY'
+            ],
+            'com.bobmowzie.mowziesmobs.server.ServerEventHandler': [
+              'SUNSTRIKE_ABILITY','SOLAR_BEAM_ABILITY','BACKSTAB_ABILITY'
+            ],
+            'com.bobmowzie.mowziesmobs.server.entity.effects.geomancy.EntityBoulderProjectile': [
+              'HIT_BOULDER_ABILITY'
+            ],
+            'com.bobmowzie.mowziesmobs.server.item.ItemSculptorStaff': [
+              'ROCK_SLING'
+            ],
+            'com.bobmowzie.mowziesmobs.server.item.ItemIceCrystal': [
+              'ICE_BREATH_ABILITY'
+            ],
+            'com.bobmowzie.mowziesmobs.server.item.ItemEarthrendGauntlet': [
+              'TUNNELING_ABILITY'
+            ],
+            'com.bobmowzie.mowziesmobs.server.message.MessageUmvuthiTrade': [
+              'SUNS_BLESSING'
+            ],
+            'com.bobmowzie.mowziesmobs.client.gui.GuiSculptorTrade': [
+              'EARTHREND_GAUNTLET'
+            ]
+          }
+          out.append('[exact trigger/acquisition references]')
+          for t,tokens in trigger_targets.items():
+              p=subprocess.run(['javap','-classpath',jar,'-c','-p',t],text=True,capture_output=True)
+              if p.returncode!=0:
+                  out.append(f'{t}=<class unavailable>')
+                  continue
+              found=[]
+              for token in tokens:
+                  if token in p.stdout:
+                      found.append(token)
+              out.append(f"{t}="+(",".join(found) if found else "<none>"))
+          out.append('')
+
+          with ZipFile(jar) as z:
+              names=set(z.namelist())
+              resource_checks=[
+                'data/mowziesmobs/loot_table/entities/frostmaw.json',
+                'data/mowziesmobs/loot_table/entities/sculptor.json',
+                'data/mowziesmobs/advancement/suns_blessing.json',
+                'data/mowziesmobs/advancement/sculptor_challenge.json',
+                'data/mowziesmobs/advancement/steal_ice_crystal.json'
+              ]
+              out.append('[exact packaged reachability resources]')
+              for r in resource_checks:
+                  out.append(f'{r}={str(r in names).lower()}')
+              out.append('')
+
           pathlib.Path('audit/facts.txt').write_text('\n'.join(out)+'\n',encoding='utf-8')
           print('\n'.join(out))
           PY
