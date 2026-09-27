@@ -29,4 +29,3 @@ The eight provider definitions are `confusion`, `damaging`, `fire_resistance`, `
 ## Conclusion
 
 The exact installed provider is pickup/effect infrastructure. Strict semantic delta: **+0**.
-
