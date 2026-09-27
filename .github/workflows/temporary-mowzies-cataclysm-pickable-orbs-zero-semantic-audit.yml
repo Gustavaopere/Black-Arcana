@@ -165,6 +165,21 @@ jobs:
               out.append(f'item_entity_registry_class_count={len(item_entity_classes)}')
               out.append('')
 
+              if provider == 'ironsable_wind':
+                  class_names=sorted(n for n in names if n.endswith('.class'))
+                  out.append('[IronSable Wind exact class inventory]')
+                  out += class_names[:160] or ['<none>']
+                  out.append(f'ironsable_wind_class_count={len(class_names)}')
+                  raw=b'\n'.join(z.read(n) for n in class_names)
+                  tokens=[
+                      b'wind_spellbooks', b'tornado', b'almighty_push',
+                      b'wind_blade', b'aeropic', b'ironsable', b'sable'
+                  ]
+                  out.append('[IronSable Wind narrow host/spell reference tokens]')
+                  for tok in tokens:
+                      out.append(f'{tok.decode()}={str(tok in raw).lower()}')
+                  out.append('')
+
               gameplay=[
                   n for n in resources
                   if any(seg in n.lower() for seg in (
