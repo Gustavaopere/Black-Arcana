@@ -8,7 +8,7 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Current reconciliation — 26/09/2026
 
-Presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers when they postdate that snapshot. The sibling's status-prefixed category paths still yield **45 current `Magic` rows = 41 ✅ cataloged + 4 ⚠️ partial-conditioned**, but this is only a category subtotal. The global cross-domain set is larger and includes current root/Addons providers such as Gaze, Requiem, Traveloptics, More Relics, the KubeJS bridges, Spell Actionbar/Specs/Recolor/Immersive Portal layers and the Reliquified addons.
+Presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers when they postdate that snapshot. The latest sibling taxonomy at `neoforge-rpg-skilltree@359e86c3264af8289e391417abc726f0b2b7e73e` now yields **58 status-prefixed rows whose category path includes `Magic`**. This is a broad physical/category subtotal, not the Black Arcana semantic denominator. After ownership-alias normalization and this Ozymandias closure, **53/58** map to Black Arcana provider directories (**48 ✅ + 5 ⚠️**); Photon, RunicLib, Mowzie's Mobs, Mowzie's Cataclysm and Pickable Orbs remain category-only rows requiring explicit semantic classification. The global cross-domain set is still larger and includes current root/Addons providers such as Gaze, Requiem, Traveloptics, the KubeJS bridges, Spell Actionbar/Specs/Recolor/Immersive Portal layers and the Reliquified addons.
 
 Semantic effect of the current reconciliation:
 
@@ -25,10 +25,11 @@ Semantic effect of the current reconciliation:
 - Cataclysm: Spellbooks 1.1.14: **+0 current delta**, retaining 59 already-counted identities with stronger exact evidence.
 - Acolyte, Dungeon's Delight, Fantasy Armor, Enchantment Descriptions, A Good Place, Create: Apokinetics, Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Specs: **+0 independent semantic objects** under the current metric.
 - More Relics 1.7.7-forRelics-0.12.8-1.0 is now **✅ `COUNTED_EXACT` / +61 strict** after NON-MERGE exact-artifact audit #409 hash-matched File `8859015` and closed 61 owner-scoped ability roots. Traveloptics 4.4.0.1-1.21.1 remains current **⚠️ / +0 strict pending closure**; its old 33-spell publisher baseline is not promoted into the exact current physical numerator.
+- Ozymandias Sundries physical 0.0.5 / embedded metadata 0.0.1 is now **✅ `COUNTED_EXACT` / +2 strict** after exact-artifact run `36286741917` hash-matched File `6978561`; the exact registrar has two unconditional registrations (`levitate`, `lightning_warp`), zero initializer branches and zero packaged Iron's spell-config override paths. Unregistered spell classes/localization residue are excluded.
 - Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
 - Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
 
-The strict reconstructible semantic minimum is therefore **1657**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1659**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
