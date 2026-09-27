@@ -1,12 +1,12 @@
 # Corail Tombstone 9.5.6 — conditional castable action matrix
 
-Status: `EXACT PUBLISHER FILE 8842741 / HASH-MATCHED CASTABLE-SURFACE AUDIT / 12 SEMANTIC ACTION FAMILIES DEDUPED / DEPLOYED ALLOW_* VALUES MISSING / NOT STRICT-ADDITIVE YET`
+Status: `EXACT PHYSICAL=PUBLISHER FILE 8842741 / HASH-MATCHED CASTABLE-SURFACE AUDIT / 12 SEMANTIC ACTION FAMILIES DEDUPED / DEPLOYED ALLOW_* VALUES MISSING / NOT STRICT-ADDITIVE YET`
 
 ## Evidence
 
 Current sibling authority rechecked at:
 
-`neoforge-rpg-skilltree@006fca21e09b05b0426da1ddd46b3743a5e96fa8`
+`neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
 
 Physical row remains:
 
@@ -19,6 +19,8 @@ Exact audited publisher artifact:
 - CurseForge File `8842741`;
 - 2,520,705 bytes;
 - SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`.
+
+Project Library physical modlist snapshot `modlist(1).txt` (2026-09-16) records the installed `tombstone-neoforge-1.21.1-9.5.6.jar` with the same SHA-1. Physical↔publisher equality is therefore closed for the cataloged 9.5.6 line.
 
 Focused NON-MERGE checkpoint:
 
@@ -69,7 +71,7 @@ The read-only collector already has a bounded capture path for exactly these 12 
 
 Consequently:
 
-- strict Tombstone contribution remains **+10 `COUNTED_RELEASE_BOUNDED`**;
+- strict Tombstone contribution remains **+10 `COUNTED_EXACT`**;
 - conditional castable ceiling is **+12**;
 - provider remains **⚠️ partial / conditioned**;
 - runtime/economy/death/grave QA remains separate and fail-closed.

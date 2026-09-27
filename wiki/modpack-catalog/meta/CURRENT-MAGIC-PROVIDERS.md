@@ -48,7 +48,7 @@ Fechamentos recentes relevantes:
 - ✅ Create: Apokinetics 1.0.6 — exact physical/publisher hash match plus exact-binary bounded audit closes the machine-augmentation surface as **+0** spells/glyphs/rituals.
 - ✅ Cataclysm: Spellbooks 1.1.14 — **59/59** current registrations retained; installed SHA-1 equals audited publisher File 8847070; no delta versus the previously counted 59.
 - ✅ Ender's Spells and Stuff: Requiem 0.1.7 — **58** source-pinned current registered roots under the present DTE-enabled provider set; **53 `COUNTED_SOURCE_PINNED`** player-facing semantic actions after excluding 5 implementation/residual roots.
-- ⚠️ Corail Tombstone 9.5.6 — **10 `COUNTED_RELEASE_BOUNDED` actions** strict-counted (6 prayer + 4 Ritual Flute); additional config-sensitive castable magic-item actions remain conditional.
+- ⚠️ Corail Tombstone 9.5.6 — Project Library physical SHA-1 equals audited File `8842741`; **10 `COUNTED_EXACT` actions** strict-counted (6 prayer + 4 Ritual Flute); 12 config-sensitive castable magic-item actions remain conditional.
 - ✅ Relics 0.12.8 — exact physical/publisher artifact equality; **39 base abilities + 2 distinct synergies = 41 `COUNTED_EXACT` provider powers**; runtime/config QA remains fail-closed.
 - ⚠️ Somake 1.0.9 — physical SHA-1 equals exact publisher File `8867079`; exact physical registry is **83 IDs**, gate topology is **67 unconditional + 16 optional**, current mod composition admits **83/83**, and all 83 current identities now have individual cards. Remaining blockers are effective deployed Iron's/provider config and survival reachability.
 - ✅ Ars 'n' Spells 3.3.4 — **5** ritual identities retained; `COUNTED_RELEASE_BOUNDED`; current version delta **+0**.

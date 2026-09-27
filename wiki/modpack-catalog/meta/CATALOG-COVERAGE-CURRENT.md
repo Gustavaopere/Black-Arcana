@@ -23,7 +23,7 @@ Semantic effect of the current reconciliation:
 - Companions! 1.3.4: **+9 `COUNTED_SOURCE_PINNED`** Magic Book actions.
 - Crystal Chronicles 0.1.3-alpha: **+1 `COUNTED_SOURCE_PINNED`** (`crystal_chronicles:prismatic_portal`).
 - Relics 0.12.8: **+41 `COUNTED_EXACT`** — 39 base abilities + 2 owner-scoped synergies.
-- Corail Tombstone 9.5.6: **+10 `COUNTED_RELEASE_BOUNDED`** — six prayers + four Ritual Flute actions; 12 more action families remain config-conditional.
+- Corail Tombstone 9.5.6: **+10 `COUNTED_EXACT`** — six prayers + four Ritual Flute actions; 12 more action families remain config-conditional.
 - Ender's Spells and Stuff: Requiem 0.1.7: **+53 `COUNTED_SOURCE_PINNED`**.
 - Hexalia 1.3.7: current semantic surface **29 = 23 Nature's Ritual + 6 Celestial Infusion**, a **+4** delta over the previously counted 25.
 - Reliquified Ars Nouveau 0.8.1: **+19 `COUNTED_SOURCE_PINNED`**.

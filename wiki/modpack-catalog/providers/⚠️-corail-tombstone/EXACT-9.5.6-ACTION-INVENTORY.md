@@ -1,6 +1,6 @@
-# Corail Tombstone 9.5.6 — exact publisher-artifact action inventory
+# Corail Tombstone 9.5.6 — exact physical/publisher action inventory
 
-Status: `EXACT PUBLISHER FILE 8842741 / CLEAN-ROOM STRUCTURAL INVENTORY / 10 COUNTED_RELEASE_BOUNDED ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING`
+Status: `EXACT PHYSICAL=PUBLISHER FILE 8842741 / CLEAN-ROOM STRUCTURAL INVENTORY / 10 COUNTED_EXACT ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING`
 
 ## Evidence boundary
 
@@ -12,9 +12,9 @@ Physical pack identity:
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@006fca21e09b05b0426da1ddd46b3743a5e96fa8`
+`neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
 
-The sibling does not preserve an independent physical SHA for this row.
+The sibling preserves the current 9.5.6 filename/version line. Independent Project Library physical modlist snapshot `modlist(1).txt` (2026-09-16) records the installed Tombstone SHA-1 as `d830d16caa20b0d23a44ed6b1d339bc22afc2460`, equal to publisher File `8842741`.
 
 Exact publisher artifact:
 
@@ -25,7 +25,7 @@ Exact publisher artifact:
 - SHA-256 `520e2a3cb5fb8001da20a23aaf39a7fd8fd937af962c2b43c55460099e30b23b`;
 - 2,520,705 bytes.
 
-Evidence state: **release-bounded**, not installed-byte exact.
+Evidence state: **installed-byte exact** for the current 9.5.6 physical snapshot.
 
 ## NON-MERGE audit checkpoints
 
@@ -55,12 +55,12 @@ Exact publisher artifact:
 
 | Identity | Exact release evidence | State |
 |---|---|---|
-| Grave Prayer | `PrayerHelper.onGrave(...)`; `PRAY_ON_GRAVE`; exact Ankh recipe; publisher Ankh prayer documentation | `COUNTED_RELEASE_BOUNDED` |
-| Dissonance | `bonus.tombstone.pray_of_dissonance`; `PrayerHelper.dissonance(...)` | `COUNTED_RELEASE_BOUNDED` |
-| Empathy | `bonus.tombstone.pray_of_empathy`; `PrayerHelper.empathy(...)` | `COUNTED_RELEASE_BOUNDED` |
-| Harmonization | `bonus.tombstone.pray_of_harmonization`; `PrayerHelper.harmonization(...)` | `COUNTED_RELEASE_BOUNDED` |
-| Protection | `bonus.tombstone.pray_of_protection`; `PrayerHelper.protection(...)`; provider stat/advancement identities | `COUNTED_RELEASE_BOUNDED` |
-| Undead | `bonus.tombstone.pray_of_undead`; `PrayerHelper.undead(...)` | `COUNTED_RELEASE_BOUNDED` |
+| Grave Prayer | `PrayerHelper.onGrave(...)`; `PRAY_ON_GRAVE`; exact Ankh recipe; publisher Ankh prayer documentation | `COUNTED_EXACT` |
+| Dissonance | `bonus.tombstone.pray_of_dissonance`; `PrayerHelper.dissonance(...)` | `COUNTED_EXACT` |
+| Empathy | `bonus.tombstone.pray_of_empathy`; `PrayerHelper.empathy(...)` | `COUNTED_EXACT` |
+| Harmonization | `bonus.tombstone.pray_of_harmonization`; `PrayerHelper.harmonization(...)` | `COUNTED_EXACT` |
+| Protection | `bonus.tombstone.pray_of_protection`; `PrayerHelper.protection(...)`; provider stat/advancement identities | `COUNTED_EXACT` |
+| Undead | `bonus.tombstone.pray_of_undead`; `PrayerHelper.undead(...)` | `COUNTED_EXACT` |
 
 Exact config signatures relevant to this family expose `prayerCooldown`. No exact prayer enable/disable field was observed.
 
@@ -74,10 +74,10 @@ Exact `ItemRitualFlute` signatures expose:
 
 | Identity | Exact signature evidence | State |
 |---|---|---|
-| Heal Dead Coral | `NOTES_HEAL_DEAD_CORAL`; `tryHealDeadCoral(...)` | `COUNTED_RELEASE_BOUNDED` |
-| Coral Chant | `NOTES_CORAL_CHANT`; `tryCoralChant(...)` | `COUNTED_RELEASE_BOUNDED` |
-| Remanence | `NOTES_REMANENCE`; `tryRemanence(...)` | `COUNTED_RELEASE_BOUNDED` |
-| Silent Bond | `NOTES_SILENT_BOND`; `trySilentBond(...)` | `COUNTED_RELEASE_BOUNDED` |
+| Heal Dead Coral | `NOTES_HEAL_DEAD_CORAL`; `tryHealDeadCoral(...)` | `COUNTED_EXACT` |
+| Coral Chant | `NOTES_CORAL_CHANT`; `tryCoralChant(...)` | `COUNTED_EXACT` |
+| Remanence | `NOTES_REMANENCE`; `tryRemanence(...)` | `COUNTED_EXACT` |
+| Silent Bond | `NOTES_SILENT_BOND`; `trySilentBond(...)` | `COUNTED_EXACT` |
 
 The exact config scan found no `ritual_flute` enable/disable token and no server/common config token for Coral Chant, Remanence or Silent Bond.
 
@@ -93,7 +93,7 @@ Ritual Flute subtotal: **4**.
 
 Strict provider contribution from this checkpoint:
 
-**+10 `COUNTED_RELEASE_BOUNDED`**
+**+10 `COUNTED_EXACT`**
 
 ## Excluded duplicate/support surfaces
 
@@ -191,7 +191,7 @@ No implementation bodies, assets, models, textures or sounds are copied into Bla
 
 Current exact-release semantic state:
 
-- **10 counted release-bounded actions**;
+- **10 `COUNTED_EXACT` actions**;
 - explicit effect/gear/lore exclusions;
 - 12 exact deduplicated config-sensitive castable action families remain conditional on deployed booleans;
 - provider remains **⚠️ partial / conditioned**.

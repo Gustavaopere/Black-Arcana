@@ -1,12 +1,13 @@
 # Corail Tombstone 9.5.6 — deployed config closure checklist
 
-Status: `10 STRICT RELEASE-BOUNDED ACTIONS CLOSED / 12 CASTABLE FAMILIES EXACTLY DEDUPED / PHYSICAL HASH + DEPLOYED ALLOW FLAGS REQUIRED`
+Status: `10 STRICT COUNTED_EXACT ACTIONS CLOSED / PHYSICAL=PUBLISHER HASH CLOSED / 12 CASTABLE FAMILIES EXACTLY DEDUPED / DEPLOYED ALLOW FLAGS REQUIRED`
 
 ## Already closed — do not redo
 
 - current filename/runtime line: `tombstone-neoforge-1.21.1-9.5.6.jar`;
 - exact publisher File `8842741` SHA-1: `d830d16caa20b0d23a44ed6b1d339bc22afc2460`;
-- 6 prayer + 4 Ritual Flute semantic actions strict-counted release-bounded;
+- Project Library physical modlist snapshot `modlist(1).txt` (2026-09-16) records the installed Tombstone JAR with the same SHA-1; physical↔publisher equality is closed;
+- 6 prayer + 4 Ritual Flute semantic actions strict-counted as `COUNTED_EXACT`;
 - 12 remaining castable magic-item action families exactly deduplicated one-to-one to provider `allow_*` gates;
 - scroll-buff/effect/enchantment/document wrappers excluded by the semantic metric.
 
@@ -19,7 +20,7 @@ Run the bounded collector on the exact current assembled instance/world.
 Required report evidence:
 
 1. exactly one `mods.corail_tombstone` row for `tombstone-neoforge-1.21.1-9.5.6.jar`;
-2. `release_9_5_6_equality = true` before promoting release-exact conditional rows into current physical authority;
+2. `release_9_5_6_equality = true` should still be re-observed when collecting the eventual current-instance config report as a drift guard; canonical catalog identity is already closed by the physical modlist snapshot;
 3. effective deployed values for these 12 keys:
 
 - `allow_tablet_of_assistance`;
@@ -41,7 +42,7 @@ The collector reads only bounded config roots and only those keys. `defaultconfi
 
 For each of the 12 exact rows in `EXACT-9.5.6-CONDITIONAL-CASTABLE-MATRIX.md`:
 
-- effective `allow_*=true` + matching physical 9.5.6 fingerprint → eligible for strict promotion according to the already-closed one-to-one semantic mapping;
+- effective `allow_*=true` + matching current-instance 9.5.6 fingerprint → eligible for strict promotion according to the already-closed one-to-one semantic mapping;
 - effective `allow_*=false` + matching physical fingerprint → close as deployed-disabled, **+0** for that row;
 - missing/ambiguous value or non-matching physical artifact → keep that row conditional.
 

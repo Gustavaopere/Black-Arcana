@@ -1,12 +1,12 @@
 # Corail Tombstone — 9.5.6
 
-Status: `⚠️ PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_BOUNDED PRAYER-RITE ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL CASTABLE ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING / RUNTIME QA FAIL-CLOSED`
+Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / 10 COUNTED_EXACT PRAYER-RITE ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL CASTABLE ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING / RUNTIME QA FAIL-CLOSED`
 
 ## Current physical identity
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@006fca21e09b05b0426da1ddd46b3743a5e96fa8`
+`neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
 
 Certified dossier:
 
@@ -19,7 +19,7 @@ Physical identity preserved there:
 - runtime: `9.5.6`;
 - Minecraft 1.21.1 / NeoForge / Java 21.
 
-The sibling dossier still does **not** preserve an independent installed-JAR digest for this row. Installed-byte equality with the audited publisher artifact is therefore not claimed.
+The sibling dossier preserves filename/version but not the digest. Independent physical authority is supplied by the Project Library physical modlist snapshot `modlist(1).txt` (2026-09-16): its Tombstone row records SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`. That equals the audited publisher File `8842741` SHA-1, so installed physical bytes and the audited publisher artifact are exact-equal for this current 9.5.6 line.
 
 ## Exact publisher artifact
 
@@ -42,7 +42,7 @@ Clean-room NON-MERGE audit of that exact artifact observed:
 - 1,066 provider resources;
 - 0 embedded jar-in-jar libraries.
 
-This is exact publisher-artifact evidence, but remains `RELEASE_BOUNDED` relative to the installed pack because no independent physical SHA exists in the sibling dossier.
+Physical Project Library SHA-1 equality closes the installed artifact as the same bytes audited from publisher File `8842741`. The ten already-counted prayer/Ritual-Flute identities are therefore promoted in confidence from `COUNTED_RELEASE_BOUNDED` to `COUNTED_EXACT`; their cardinality does not change.
 
 See `EXACT-9.5.6-ACTION-INVENTORY.md`.
 
@@ -104,7 +104,7 @@ The exact config scan found no Ritual Flute/rite enable-disable field. Current p
 
 These ten identities are:
 
-`COUNTED_RELEASE_BOUNDED = 10`
+`COUNTED_EXACT = 10`
 
 Provider-specific strict semantic delta from this checkpoint:
 
@@ -203,7 +203,6 @@ Black Arcana must not duplicate those runtimes. RPG Skill Tree remains progressi
 
 ## Still fail-closed
 
-- installed-JAR ↔ publisher-file byte equality;
 - deployed `AllowedMagicItems` state for the 12 exact one-to-one action gates;
 - strict promotion of the corresponding enabled conditional action families;
 - exact resource/Soul consumption and exactly-once settlement;
@@ -220,6 +219,6 @@ Black Arcana must not duplicate those runtimes. RPG Skill Tree remains progressi
 
 **⚠️ Partially cataloged, materially advanced.**
 
-The exact publisher 9.5.6 artifact now closes **10 release-bounded semantic prayer/rite actions** and multiple explicit zero-semantic families. The remaining magic-item surface is exactly deduplicated to **12 config-gated action families**; provider config, not semantic identity ambiguity, is now the catalog blocker.
+The exact physical=publisher 9.5.6 artifact closes **10 `COUNTED_EXACT` semantic prayer/rite actions** and multiple explicit zero-semantic families. The remaining magic-item surface is exactly deduplicated to **12 config-gated action families**; provider config, not semantic identity ambiguity, is now the catalog blocker.
 
 Provider strict semantic delta: **+10**.
