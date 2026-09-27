@@ -20,8 +20,8 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Materialize exact NeoForge modding runtime
-        run: ./gradlew compileJava --no-daemon
+      - name: Materialize current-pack NeoForge 21.1.250 modding runtime
+        run: ./gradlew compileJava --no-daemon -Pneo_version=21.1.250
 
       - name: Extract bounded Mob equipment-drop facts
         shell: bash
@@ -47,7 +47,7 @@ jobs:
 
           out=[
               'MINECRAFT/NEOFORGE 1.21.1 MOB EQUIPMENT DROP FACTS',
-              'Project pins: minecraft=1.21.1, neoforge=21.1.248, parchment=2024.11.17.',
+              'Audit runtime pins: minecraft=1.21.1, neoforge=21.1.250 (current physical pack), parchment=2024.11.17.',
               f'candidate_jar_count={len(candidates)}',
           ]
           if not candidates:
