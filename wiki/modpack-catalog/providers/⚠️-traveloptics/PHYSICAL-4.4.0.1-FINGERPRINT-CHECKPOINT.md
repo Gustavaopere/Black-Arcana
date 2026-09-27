@@ -1,6 +1,6 @@
 # T.O Magic n' Extras 4.4.0.1 — physical fingerprint checkpoint
 
-Status: `PHYSICAL SHA-1 CAPTURED / OTHER_VERIFIED / CURSEFORGE FILE 6342780 SLOT MARKED LOCALLY MODIFIED / NOT KNOWN PATCH 8861368 / CURRENT PHYSICAL BYTES REQUIRE AUDIT`
+Status: `PHYSICAL SHA-1 CAPTURED / OTHER_VERIFIED / CURRENT PROVENANCE UNIDENTIFIED / OLDER FILE-6342780 LAUNCHER SNAPSHOT IS NON-CONTEMPORANEOUS / NOT KNOWN PATCH 8861368 / CURRENT PHYSICAL BYTES REQUIRE AUDIT`
 
 ## Physical evidence
 
@@ -31,7 +31,7 @@ Physical comparison:
 
 Disposition: **`OTHER_VERIFIED`**.
 
-## CurseForge instance provenance refinement
+## Older CurseForge instance metadata — historical context only
 
 A Project Library `minecraftinstance.json` snapshot stored on 2026-08-18 preserves the CurseForge-managed install metadata for the same on-disk filename:
 
@@ -44,9 +44,9 @@ A Project Library `minecraftinstance.json` snapshot stored on 2026-08-18 preserv
 - `isFuzzyMatch=false`;
 - `latestFile.id=6342780`.
 
-Combined with the later physical SHA-1 `7b74816e...`, this narrows provenance materially: the installed path is still managed as CurseForge File `6342780`, but its bytes have been modified locally relative to the tracked publisher hash. This is **not** evidence of a second official Traveloptics release and does **not** identify the modification contents.
+This snapshot predates the 2026-09-16 physical SHA-1 capture. It proves only that **on 2026-08-18** the launcher tracked that filename as File `6342780` and considered the then-current bytes modified relative to the publisher hash. It does **not** establish temporal continuity to the later `7b74816e...` bytes; the JAR could have been replaced under the same filename in the intervening period.
 
-The current bytes also do not equal known patch File `8861368`; therefore the exact local modification must still be materialized/audited before its registry or loot-modifier semantics can be promoted.
+The September bytes also do not equal known patch File `8861368`. Therefore current provenance remains unidentified and the exact `7b74816e...` bytes/content must still be materialized or otherwise contemporaneously evidenced before registry or loot-modifier semantics can be promoted.
 
 An exact-hash web lookup rechecked on 2026-09-27 returned no indexed public match for `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; absence of a search hit is not content/provenance proof.
 
@@ -54,7 +54,7 @@ An exact-hash web lookup rechecked on 2026-09-27 returned no indexed public matc
 
 The clean-room File-6342780 audit remains valid for that publisher artifact and provides a **33-ID release baseline**. It can no longer be presented as byte-exact evidence for the currently fingerprinted physical JAR.
 
-Although launcher-level provenance is now narrowed to a locally modified File-6342780 install, the exact `7b74816e...` modification bytes/content are still unavailable. Until those bytes or equivalent exact content evidence are available:
+The older launcher metadata does not narrow provenance of the September `7b74816e...` artifact. Until those bytes or equivalent contemporaneous exact-content evidence are available:
 
 - current physical spell-registry equality to the 33-ID baseline is **unverified**;
 - current physical `TOLootModifiers` wiring is **unverified**;
@@ -64,4 +64,4 @@ Although launcher-level provenance is now narrowed to a locally modified File-63
 
 ## Clean-room boundary
 
-This checkpoint records only physical filename/version, SHA-1/fingerprint, CurseForge install metadata fields, and comparisons against already-audited artifact hashes. No upstream binary or implementation body is redistributed.
+This checkpoint records only dated physical filename/version/SHA-1 evidence, dated CurseForge install metadata fields, and comparisons against already-audited artifact hashes. The two dated snapshots are not treated as continuous provenance. No upstream binary or implementation body is redistributed.
