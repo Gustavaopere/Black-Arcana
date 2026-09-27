@@ -1,0 +1,18 @@
+name: Temporary Ice and Fire Jupiter Collector TDD
+
+on:
+  push:
+    branches:
+      - test/catalog-iceandfire-jupiter-evidence-2026-09-27
+
+permissions:
+  contents: read
+
+jobs:
+  focused:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run focused provider collector tests
+        run: python3 docs/qa/provider_catalog_deployed_evidence_collector_test.py
