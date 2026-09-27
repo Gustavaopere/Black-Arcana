@@ -39,15 +39,15 @@ jobs:
 
           jar = '/tmp/provider.jar'
           owners = {
-              'scouring_eye': ('items/relics/inventory/ScouringEyeItem.class', 'glowing_scour'),
-              'void_vortex_in_bottle': ('items/relics/charm/VoidVortexInBottleItem.class', 'spawn_vortex'),
-              'void_mantle': ('items/relics/back/VoidMantleItem.class', 'void_rune'),
-              'vacuum_glove': ('items/relics/hands/VacuumGloveItem.class', 'vacuum_slowdown'),
-              'void_bubble': ('items/relics/head/VoidBubbleItem.class', 'protective_bubble'),
-              'ring_of_the_flame_kindler': ('items/relics/ring/FlameKindlerRingItem.class', 'flame_summon'),
-              'mask_of_rage': ('items/relics/head/MaskOfRageItem.class', 'ram_mode'),
-              'fire_plate': ('items/relics/charm/FirePlateItem.class', 'spawn_shield'),
-              'volcano': ('items/relics/back/VolcanoItem.class', 'jetpack'),
+              'scouring_eye': ('ScouringEyeItem.class', 'glowing_scour'),
+              'void_vortex_in_bottle': ('VoidVortexInBottleItem.class', 'spawn_vortex'),
+              'void_mantle': ('VoidMantleItem.class', 'void_rune'),
+              'vacuum_glove': ('VacuumGloveItem.class', 'vacuum_slowdown'),
+              'void_bubble': ('VoidBubbleItem.class', 'protective_bubble'),
+              'ring_of_the_flame_kindler': ('FlameKindlerRingItem.class', 'flame_summon'),
+              'mask_of_rage': ('MaskOfRageItem.class', 'ram_mode'),
+              'fire_plate': ('FirePlateItem.class', 'spawn_shield'),
+              'volcano': ('VolcanoItem.class', 'jetpack'),
           }
 
           out = [
@@ -58,9 +58,10 @@ jobs:
 
           with ZipFile(jar) as z:
               names = set(z.namelist())
+              class_names = sorted(n for n in names if n.endswith('.class'))
 
               out.append('[metadata]')
-              for p in ('META-INF/neoforge.mods.toml', 'META-INF/MANIFEST.MF'):
+              for p in ('META-INF/neoforge.mods.toml', 'META-INF/mods.toml', 'META-INF/MANIFEST.MF'):
                   if p in names:
                       txt = z.read(p).decode('utf-8', 'replace')
                       for line in txt.splitlines():
@@ -69,54 +70,52 @@ jobs:
                               out.append(s)
               out.append('')
 
-              rec_candidates = sorted(n for n in names if n.endswith('/init/RECItems.class'))
-              out.append('[RECItems candidates]')
-              out.extend(rec_candidates or ['<none>'])
-              if len(rec_candidates) != 1:
-                  raise SystemExit(f'expected exactly one RECItems.class, got {len(rec_candidates)}')
-
-              recitems = rec_candidates[0]
-              prefix = recitems[:-len('init/RECItems.class')]
-              loot = prefix + 'items/base/data/RECLootEntries.class'
-              out.append('[inferred java prefix]')
-              out.append(prefix)
+              out.append('[owner class resolution]')
+              resolved = {}
+              for item_id, (simple_name, ability_id) in owners.items():
+                  candidates = [n for n in class_names if n.endswith('/' + simple_name)]
+                  out.append(f'{item_id}|class_candidates={len(candidates)}|' + (','.join(candidates) if candidates else '<none>'))
+                  if len(candidates) != 1:
+                      raise SystemExit(f'owner class resolution failed for {item_id}: {candidates}')
+                  resolved[item_id] = candidates[0]
+              out.append(f'resolved_owner_count={len(resolved)}')
               out.append('')
 
-              relic_classes = sorted(
-                  n for n in names
-                  if n.startswith(prefix + 'items/relics/')
-                  and n.endswith('.class')
-                  and '$' not in n
-              )
-              out.append('[provider relic owner classes]')
-              out.extend(relic_classes)
-              out.append(f'provider_relic_owner_class_count={len(relic_classes)}')
+              item_tokens = [k.encode() for k in owners]
+              reg_candidates = []
+              for n in class_names:
+                  raw = z.read(n)
+                  hits = sum(tok in raw for tok in item_tokens)
+                  if hits:
+                      reg_candidates.append((hits, n))
+              reg_candidates.sort(reverse=True)
+              out.append('[classes containing owner registration-id tokens]')
+              for hits, n in reg_candidates[:30]:
+                  out.append(f'{hits}|{n}')
+              exact_regs = [n for hits, n in reg_candidates if hits == len(owners)]
+              out.append(f'full_owner_id_set_class_count={len(exact_regs)}')
+              if len(exact_regs) != 1:
+                  raise SystemExit(f'expected exactly one class containing all owner ids, got {exact_regs}')
               out.append('')
 
-              rb = z.read(recitems)
-              out.append('[exact owner registrations]')
-              for item_id, (rel, ability_id) in owners.items():
-                  cp = prefix + rel
-                  present = cp in names
-                  reg_token = item_id.encode() in rb
-                  owner_bytes = z.read(cp) if present else b''
-                  ability_token = ability_id.encode() in owner_bytes
-                  template_token = b'AbilityTemplate' in owner_bytes
+              out.append('[exact owner ability roots]')
+              for item_id, (_, ability_id) in owners.items():
+                  cp = resolved[item_id]
+                  raw = z.read(cp)
+                  ability_token = ability_id.encode() in raw
+                  template_token = b'AbilityTemplate' in raw
                   out.append(
-                      f'{item_id}|class={str(present).lower()}'
-                      f'|registration_token={str(reg_token).lower()}'
-                      f'|ability={ability_id}'
+                      f'{item_id}|class={cp}|ability={ability_id}'
                       f'|ability_token={str(ability_token).lower()}'
                       f'|ability_template_ref={str(template_token).lower()}'
                   )
-                  if not (present and reg_token and ability_token and template_token):
-                      raise SystemExit(f'owner/ability fact failed for {item_id}')
-              out.append(f'expected_owner_count={len(owners)}')
+                  if not (ability_token and template_token):
+                      raise SystemExit(f'ability root failed for {item_id}')
               out.append(f'unique_ability_id_count={len(set(v[1] for v in owners.values()))}')
               out.append('')
 
               ability_classes = []
-              for n in sorted(x for x in names if x.startswith(prefix) and x.endswith('.class')):
+              for n in class_names:
                   if b'AbilityTemplate' in z.read(n):
                       ability_classes.append(n)
               out.append('[classes referencing AbilityTemplate]')
@@ -126,22 +125,22 @@ jobs:
 
               out.append('[loot anchor references per owner]')
               loot_tokens = (b'THE_NETHER', b'THE_END', b'CURSED_PYRAMID', b'FROSTED_PRISON')
-              for item_id, (rel, _) in owners.items():
-                  raw = z.read(prefix + rel)
+              for item_id, cp in resolved.items():
+                  raw = z.read(cp)
                   hits = [t.decode() for t in loot_tokens if t in raw]
                   out.append(f'{item_id}=' + (','.join(hits) if hits else '<none>'))
               out.append('')
 
-              out.append('[provider loot entry constants]')
-              if loot in names:
-                  raw = z.read(loot)
-                  for token in (
-                      b'cataclysm:archaeology/cursed_pyramid',
-                      b'cataclysm:chests/frosted_prison_treasure'
-                  ):
-                      out.append(f'{token.decode()}={str(token in raw).lower()}')
-              else:
-                  out.append('<RECLootEntries.class missing>')
+              loot_literals = (
+                  b'cataclysm:archaeology/cursed_pyramid',
+                  b'cataclysm:chests/frosted_prison_treasure'
+              )
+              out.append('[classes containing provider loot-table literals]')
+              for n in class_names:
+                  raw = z.read(n)
+                  hits = [t.decode() for t in loot_literals if t in raw]
+                  if hits:
+                      out.append(f'{n}=' + ','.join(hits))
               out.append('')
 
               provider_resources = sorted(
