@@ -32,6 +32,7 @@ SOMAKE_109_RELEASE_SHA1 = "171841ac9f802be9309ecc166c1d972ac6d404c0"
 GAZE_1171_SHA1 = "a8cb3190bde157f78160ce65c202ce2d47fb2041"
 NEG_462_RELEASE_SHA1 = "32eea2c478a346ee7499f6a0db156241116f73e9"
 TOMBSTONE_956_RELEASE_SHA1 = "d830d16caa20b0d23a44ed6b1d339bc22afc2460"
+MOWZIES_MOBS_182_PHYSICAL_SHA1 = "d64475cd77444b056ece6472c79d40293dc63c6c"
 
 TOMBSTONE_ALLOWED_MAGIC_ITEM_KEYS = [
     "allow_tablet_of_assistance",
@@ -95,6 +96,7 @@ MOD_PATTERNS = {
     "corail_tombstone": ["tombstone-neoforge-1.21.1-9.5.6.jar"],
     "gaze": ["gaze-1.1.7.1.jar"],
     "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
+    "mowzies_mobs": ["mowziesmobs-1.21.1-1.8.2.jar"],
     "somake_spells": ["somakespells-1.0.9-1.21.1.jar"],
     "traveloptics": [
         "traveloptics-4.4.0.1-1.21.1.jar",
@@ -458,6 +460,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["release_4_6_2_equality"] = entry["sha1"] == NEG_462_RELEASE_SHA1
                 elif provider == "corail_tombstone":
                     entry["release_9_5_6_equality"] = entry["sha1"] == TOMBSTONE_956_RELEASE_SHA1
+                elif provider == "mowzies_mobs":
+                    entry["current_physical_1_8_2_equality"] = entry["sha1"] == MOWZIES_MOBS_182_PHYSICAL_SHA1
                 entries.append(entry)
         result[provider] = entries
     return result
