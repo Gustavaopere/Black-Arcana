@@ -37,147 +37,87 @@ jobs:
           import pathlib
           from zipfile import ZipFile
 
-          jar='/tmp/provider.jar'
-          prefix=None
-          recitems=None
-          loot=None
-          owners={
-              'scouring_eye': ('items/relics/inventory/ScouringEyeItem.class','glowing_scour'),
-              'void_vortex_in_bottle': ('items/relics/charm/VoidVortexInBottleItem.class','spawn_vortex'),
-              'void_mantle': ('items/relics/back/VoidMantleItem.class','void_rune'),
-              'vacuum_glove': ('items/relics/hands/VacuumGloveItem.class','vacuum_slowdown'),
-              'void_bubble': ('items/relics/head/VoidBubbleItem.class','protective_bubble'),
-              'ring_of_the_flame_kindler': ('items/relics/ring/FlameKindlerRingItem.class','flame_summon'),
-              'mask_of_rage': ('items/relics/head/MaskOfRageItem.class','ram_mode'),
-              'fire_plate': ('items/relics/charm/FirePlateItem.class','spawn_shield'),
-              'volcano': ('items/relics/back/VolcanoItem.class','jetpack'),
+          jar = '/tmp/provider.jar'
+          owners = {
+              'scouring_eye': ('items/relics/inventory/ScouringEyeItem.class', 'glowing_scour'),
+              'void_vortex_in_bottle': ('items/relics/charm/VoidVortexInBottleItem.class', 'spawn_vortex'),
+              'void_mantle': ('items/relics/back/VoidMantleItem.class', 'void_rune'),
+              'vacuum_glove': ('items/relics/hands/VacuumGloveItem.class', 'vacuum_slowdown'),
+              'void_bubble': ('items/relics/head/VoidBubbleItem.class', 'protective_bubble'),
+              'ring_of_the_flame_kindler': ('items/relics/ring/FlameKindlerRingItem.class', 'flame_summon'),
+              'mask_of_rage': ('items/relics/head/MaskOfRageItem.class', 'ram_mode'),
+              'fire_plate': ('items/relics/charm/FirePlateItem.class', 'spawn_shield'),
+              'volcano': ('items/relics/back/VolcanoItem.class', 'jetpack'),
           }
-          out=[
+
+          out = [
               "RELIQUIFIED L_ENDER'S CATACLYSM 0.1.1 EXACT ARTIFACT FACTS",
               "Inspection is hash-gated before this step.",
               ""
           ]
+
           with ZipFile(jar) as z:
-              names=set(z.namelist())
+              names = set(z.namelist())
+
               out.append('[metadata]')
-              for p in ('META-INF/neoforge.mods.toml','META-INF/MANIFEST.MF'):
+              for p in ('META-INF/neoforge.mods.toml', 'META-INF/MANIFEST.MF'):
                   if p in names:
-                      txt=z.read(p).decode('utf-8','replace')
+                      txt = z.read(p).decode('utf-8', 'replace')
                       for line in txt.splitlines():
-                          s=line.strip()
-                          if s.startswith(('modId=','version=','displayName=','license=','Implementation-Version:')):
+                          s = line.strip()
+                          if s.startswith(('modId=', 'version=', 'displayName=', 'license=', 'Implementation-Version:')):
                               out.append(s)
               out.append('')
 
-              rec_candidates=sorted(n for n in names if n.endswith('/init/RECItems.class'))
+              rec_candidates = sorted(n for n in names if n.endswith('/init/RECItems.class'))
+              out.append('[RECItems candidates]')
+              out.extend(rec_candidates or ['<none>'])
               if len(rec_candidates) != 1:
-                  out.append('[RECItems candidates]')
-                  out.extend(rec_candidates or ['<none>'])
                   raise SystemExit(f'expected exactly one RECItems.class, got {len(rec_candidates)}')
-              recitems=rec_candidates[0]
-              prefix=recitems[:-len('init/RECItems.class')]
-              loot=prefix+'items/base/data/RECLootEntries.class'
+
+              recitems = rec_candidates[0]
+              prefix = recitems[:-len('init/RECItems.class')]
+              loot = prefix + 'items/base/data/RECLootEntries.class'
               out.append('[inferred java prefix]')
               out.append(prefix)
               out.append('')
 
-              relic_classes=sorted(n for n in names if n.startswith(prefix+'items/relics/') and n.endswith('.class') and '
-              out.extend(relic_classes)
-              out.append(f'provider_relic_owner_class_count={len(relic_classes)}')
-              out.append('')
-
-              if recitems not in names:
-                  raise SystemExit('RECItems.class missing')
-              rb=z.read(recitems)
-              out.append('[exact owner registrations]')
-              for item_id,(rel,ability_id) in owners.items():
-                  cp=prefix+rel
-                  present=cp in names
-                  reg_token=item_id.encode() in rb
-                  owner_bytes=z.read(cp) if present else b''
-                  ability_token=ability_id.encode() in owner_bytes
-                  template_token=b'AbilityTemplate' in owner_bytes
-                  out.append(f'{item_id}|class={str(present).lower()}|registration_token={str(reg_token).lower()}|ability={ability_id}|ability_token={str(ability_token).lower()}|ability_template_ref={str(template_token).lower()}')
-                  if not (present and reg_token and ability_token and template_token):
-                      raise SystemExit(f'owner/ability fact failed for {item_id}')
-              out.append(f'expected_owner_count={len(owners)}')
-              out.append(f'unique_ability_id_count={len(set(v[1] for v in owners.values()))}')
-              out.append('')
-
-              ability_classes=[]
-              for n in sorted(x for x in names if x.startswith(prefix) and x.endswith('.class')):
-                  raw=z.read(n)
-                  if b'AbilityTemplate' in raw:
-                      ability_classes.append(n)
-              out.append('[classes referencing AbilityTemplate]')
-              out.extend(ability_classes)
-              out.append(f'ability_template_class_count={len(ability_classes)}')
-              out.append('')
-
-              out.append('[loot anchor references per owner]')
-              loot_tokens=(b'THE_NETHER',b'THE_END',b'CURSED_PYRAMID',b'FROSTED_PRISON')
-              for item_id,(rel,_) in owners.items():
-                  raw=z.read(prefix+rel)
-                  hits=[t.decode() for t in loot_tokens if t in raw]
-                  out.append(f'{item_id}='+(','.join(hits) if hits else '<none>'))
-              out.append('')
-
-              out.append('[provider loot entry constants]')
-              if loot in names:
-                  raw=z.read(loot)
-                  for token in (b'cataclysm:archaeology/cursed_pyramid',b'cataclysm:chests/frosted_prison_treasure'):
-                      out.append(f'{token.decode()}={str(token in raw).lower()}')
-              else:
-                  out.append('<RECLootEntries.class missing>')
-              out.append('')
-
-              provider_resources=sorted(n for n in names if n.startswith('assets/reliquified_lenders_cataclysm/') or n.startswith('data/reliquified_lenders_cataclysm/'))
-              out.append('[provider namespace resource totals]')
-              out.append(f'provider_resource_file_count={len(provider_resources)}')
-              out.append(f'provider_asset_file_count={sum(n.startswith("assets/reliquified_lenders_cataclysm/") for n in provider_resources)}')
-              out.append(f'provider_data_file_count={sum(n.startswith("data/reliquified_lenders_cataclysm/") for n in provider_resources)}')
-              out.append('')
-
-          text='\n'.join(out)+'\n'
-          pathlib.Path('audit/facts.txt').write_text(text,encoding='utf-8')
-          print(text)
-          PY
-
-      - name: Publish text-only audit report
-        uses: actions/upload-artifact@v7
-        with:
-          name: reliquified-lenders-cataclysm-0.1.1-exact-artifact-audit
-          path: audit/*.txt
-          if-no-files-found: error
-          retention-days: 3
- not in n)
+              relic_classes = sorted(
+                  n for n in names
+                  if n.startswith(prefix + 'items/relics/')
+                  and n.endswith('.class')
+                  and '$' not in n
+              )
               out.append('[provider relic owner classes]')
               out.extend(relic_classes)
               out.append(f'provider_relic_owner_class_count={len(relic_classes)}')
               out.append('')
 
-              if recitems not in names:
-                  raise SystemExit('RECItems.class missing')
-              rb=z.read(recitems)
+              rb = z.read(recitems)
               out.append('[exact owner registrations]')
-              for item_id,(rel,ability_id) in owners.items():
-                  cp=prefix+rel
-                  present=cp in names
-                  reg_token=item_id.encode() in rb
-                  owner_bytes=z.read(cp) if present else b''
-                  ability_token=ability_id.encode() in owner_bytes
-                  template_token=b'AbilityTemplate' in owner_bytes
-                  out.append(f'{item_id}|class={str(present).lower()}|registration_token={str(reg_token).lower()}|ability={ability_id}|ability_token={str(ability_token).lower()}|ability_template_ref={str(template_token).lower()}')
+              for item_id, (rel, ability_id) in owners.items():
+                  cp = prefix + rel
+                  present = cp in names
+                  reg_token = item_id.encode() in rb
+                  owner_bytes = z.read(cp) if present else b''
+                  ability_token = ability_id.encode() in owner_bytes
+                  template_token = b'AbilityTemplate' in owner_bytes
+                  out.append(
+                      f'{item_id}|class={str(present).lower()}'
+                      f'|registration_token={str(reg_token).lower()}'
+                      f'|ability={ability_id}'
+                      f'|ability_token={str(ability_token).lower()}'
+                      f'|ability_template_ref={str(template_token).lower()}'
+                  )
                   if not (present and reg_token and ability_token and template_token):
                       raise SystemExit(f'owner/ability fact failed for {item_id}')
               out.append(f'expected_owner_count={len(owners)}')
               out.append(f'unique_ability_id_count={len(set(v[1] for v in owners.values()))}')
               out.append('')
 
-              ability_classes=[]
+              ability_classes = []
               for n in sorted(x for x in names if x.startswith(prefix) and x.endswith('.class')):
-                  raw=z.read(n)
-                  if b'AbilityTemplate' in raw:
+                  if b'AbilityTemplate' in z.read(n):
                       ability_classes.append(n)
               out.append('[classes referencing AbilityTemplate]')
               out.extend(ability_classes)
@@ -185,32 +125,39 @@ jobs:
               out.append('')
 
               out.append('[loot anchor references per owner]')
-              loot_tokens=(b'THE_NETHER',b'THE_END',b'CURSED_PYRAMID',b'FROSTED_PRISON')
-              for item_id,(rel,_) in owners.items():
-                  raw=z.read(prefix+rel)
-                  hits=[t.decode() for t in loot_tokens if t in raw]
-                  out.append(f'{item_id}='+(','.join(hits) if hits else '<none>'))
+              loot_tokens = (b'THE_NETHER', b'THE_END', b'CURSED_PYRAMID', b'FROSTED_PRISON')
+              for item_id, (rel, _) in owners.items():
+                  raw = z.read(prefix + rel)
+                  hits = [t.decode() for t in loot_tokens if t in raw]
+                  out.append(f'{item_id}=' + (','.join(hits) if hits else '<none>'))
               out.append('')
 
               out.append('[provider loot entry constants]')
               if loot in names:
-                  raw=z.read(loot)
-                  for token in (b'cataclysm:archaeology/cursed_pyramid',b'cataclysm:chests/frosted_prison_treasure'):
+                  raw = z.read(loot)
+                  for token in (
+                      b'cataclysm:archaeology/cursed_pyramid',
+                      b'cataclysm:chests/frosted_prison_treasure'
+                  ):
                       out.append(f'{token.decode()}={str(token in raw).lower()}')
               else:
                   out.append('<RECLootEntries.class missing>')
               out.append('')
 
-              provider_resources=sorted(n for n in names if n.startswith('assets/reliquified_lenders_cataclysm/') or n.startswith('data/reliquified_lenders_cataclysm/'))
+              provider_resources = sorted(
+                  n for n in names
+                  if n.startswith('assets/reliquified_lenders_cataclysm/')
+                  or n.startswith('data/reliquified_lenders_cataclysm/')
+              )
               out.append('[provider namespace resource totals]')
               out.append(f'provider_resource_file_count={len(provider_resources)}')
               out.append(f'provider_asset_file_count={sum(n.startswith("assets/reliquified_lenders_cataclysm/") for n in provider_resources)}')
               out.append(f'provider_data_file_count={sum(n.startswith("data/reliquified_lenders_cataclysm/") for n in provider_resources)}')
               out.append('')
 
-          text='\n'.join(out)+'\n'
-          pathlib.Path('audit/facts.txt').write_text(text,encoding='utf-8')
-          print(text)
+          text_out = '\n'.join(out) + '\n'
+          pathlib.Path('audit/facts.txt').write_text(text_out, encoding='utf-8')
+          print(text_out)
           PY
 
       - name: Publish text-only audit report
