@@ -1,44 +1,73 @@
 # Black Arcana — Conditional Provider Closure Index
 
-Checkpoint: 2026-09-20
+Checkpoint: 2026-09-27
 
-Status: `5 PROVIDERS ⚠️ / CLOSURE PATHS EXPLICIT / MOBSTEIN CLOSED 2026-09-17 / NO SEMANTIC COUNT PROMOTION`
+Status: `13 PROVIDER DIRECTORIES ⚠️ / 9 CATALOG-CLOSURE ROUTES + 4 TECHNICAL-RUNTIME PARTIALS / NO SEMANTIC COUNT PROMOTION`
 
 ## Purpose
 
-This index is the operational entry point for the providers whose magic catalog is still `⚠️ Parcial / condicionado`.
+This index routes the providers whose current Black Arcana catalog state remains `⚠️ Partial / conditioned`.
 
-It does **not** replace the provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and direct future work to the exact evidence gate that remains open.
+It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-A provider leaves this index only when its own checklist acceptance rule is satisfied by authoritative current-pack evidence and the canonical provider status is updated accordingly.
+Current provider-directory reality on `main@38d7fed83b4d5a4fda42f0773169b7a2ebfc5e90`:
 
-## Current conditional providers
+- **13** provider directories carry the ⚠️ prefix;
+- **9** still have a catalog/config/script/effective-state closure gate listed below;
+- **4** are technical/runtime-only partials with **+0 independent semantic identities** already established: Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Spell Codex Specs.
 
-| Provider | Current catalog closure already achieved | Remaining blocker | Canonical closure checklist |
+A provider leaves this index only when its own acceptance rule is satisfied by authoritative current-pack evidence and the canonical provider status is updated accordingly.
+
+## Current catalog-closure providers
+
+| Provider | Current closure already achieved | Remaining catalog blocker | Canonical closure route |
 |---|---|---|---|
-| Asterism Arcanum `1.21.1-0.1.0` | 11 exact registered spell identities known; 10 ordinary survival spells already counted; `TrailblazeSpell` excluded; exact Iron's 3.16.3 host audit proves `astral_gateway` is default Astral-loot eligible and that Astromancer `quality 0.25..0.85` does not exclude Legendary rarity | Effective deployed Iron's spell config/datapack for `asterismarcanum:astral_gateway` (`enabled`, effective `school`, `allow_crafting` plus global/datapack overrides), or deterministic assembled-pack observation; publisher creative-only intent does not override host defaults | [`⚠️-asterism-arcanum/SURVIVAL-CLOSURE-CHECKLIST.md`](../providers/⚠️-asterism-arcanum/SURVIVAL-CLOSURE-CHECKLIST.md) |
-| Gaze `1.1.7.1` | Soulward Shield counted exact; 26 exact Spirit Rite identities enumerated; Geas effects/runes metric-excluded | Effective deployed COMMON value of `disableGazeRites` or equivalent authoritative assembled-pack proof of Rite registry initialization | [`⚠️-gaze/DEPLOYED-CONFIG-CHECKLIST.md`](../providers/⚠️-gaze/DEPLOYED-CONFIG-CHECKLIST.md) |
-| Not Enough Glyphs `4.6.2` | current physical line revalidated through sibling `64ce655d…`; exact public source pin `45604dd1…` declares 4.6.2; `ArsNouveauRegistry.java` and `EffectMomentum.java` are byte-identical Git blobs to the audited 4.6.1 pin, preserving 40 registrations / 39 source-enabled candidates and Momentum source-disabled | Effective deployed `[general].enabled` state for the 39 candidates from the actual server/world configuration | [`⚠️-not-enough-glyphs/DEPLOYED-CONFIG-CHECKLIST.md`](../providers/⚠️-not-enough-glyphs/DEPLOYED-CONFIG-CHECKLIST.md) |
-| Somake Spells `1.0.9` | Exact publisher File `8867079` is resource-audited and structurally registry-audited: **83 declared spell registrations**, exact +17/-1 delta from 1.0.8-fix, 83/83 localization parity, 0 provider `isEnabled()` overrides, 7 `allowCrafting()` overrides, and current spell-lock/config symbols revalidated; historical 67-ID audit retained only as older control | Prove installed-JAR ↔ File `8867079` byte equality; close deployed active registry subset / optional-registration outcome, effective Iron's config/datapack gates, effective spell-lock state, school-focus/acquisition, object-level or bounded-set survival reachability, and Somake↔Traveloptics Aqua authority | [`⚠️-somake-spells/CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`](../providers/⚠️-somake-spells/CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) |
-| T.O Magic n' Extras / Traveloptics `4.4.0.1-1.21.1` | 33 publisher-release registered spell identities cataloged by verified school; 32 residual localization-only IDs excluded; unique/weapon spell structure audited; original File `6342780` and one-class patch candidate File `8861368` fingerprinted; broad Dead King → Blackout publisher route version-bounded to full-project/1.20.1 context because exact alpha `6342780` lacks the supporting registered Dead King route/structured loot surface | Four finite gates remain deployment/runtime-bound: actual physical hash/disposition (original vs exact patch vs other); loot-modifier registry initialization on assembled pack; `traveloptics:blackout` **1.21.1-specific** survival acquisition; Somake Aqua ↔ T.O Aqua coexistence/authority | [`⚠️-traveloptics/CLOSURE-CHECKLIST.md`](../providers/⚠️-traveloptics/CLOSURE-CHECKLIST.md) |
+| Asterism Arcanum `1.21.1-0.1.0` | 11 exact registered spell identities; 10 ordinary survival spells strict-counted; `TrailblazeSpell` excluded; exact Iron's 3.16.3 host audit proves `astral_gateway` is default Astral-loot eligible | Effective deployed Iron's spell config/datapack for `asterismarcanum:astral_gateway`: `enabled`, effective `school`, `allow_crafting`, global fallback and datapack overrides; or deterministic assembled-pack equivalent | [SURVIVAL-CLOSURE-CHECKLIST.md](../providers/⚠️-asterism-arcanum/SURVIVAL-CLOSURE-CHECKLIST.md) |
+| Gaze `1.1.7.1` | Soulward Shield strict-counted exact; 26 exact Spirit Rite identities enumerated; Geas effects/runes excluded by metric | Effective deployed COMMON `disableGazeRites` or authoritative assembled-pack proof of Rite registry initialization | [DEPLOYED-CONFIG-CHECKLIST.md](../providers/⚠️-gaze/DEPLOYED-CONFIG-CHECKLIST.md) |
+| Not Enough Glyphs `4.6.2` | Exact physical/publisher line and source registration matrix closed: 40 registrations, 39 source-enabled candidates, Momentum source-disabled; canonical `glyph_*` resource ids corrected | Effective deployed `[general].enabled` state for the 39 candidates, via actual SERVER configs or schema-3 runtime-probe evidence | [DEPLOYED-CONFIG-CHECKLIST.md](../providers/⚠️-not-enough-glyphs/DEPLOYED-CONFIG-CHECKLIST.md) |
+| Somake Spells `1.0.9` | Physical SHA-1 equals exact File `8867079`; exact registry = 83 IDs; exact gate topology = 67 unconditional + 16 optional; current provider composition admits 83/83 | Effective deployed `enableSpellLockSystem`; effective Iron's `enabled` / `school` / `allow_crafting` overrides; provider/host survival acquisition and current Aqua coexistence/authority where applicable | [CURRENT-1.0.9-REVALIDATION-CHECKLIST.md](../providers/⚠️-somake-spells/CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) |
+| Corail Tombstone `9.5.6` | 10 prayer/Ritual Flute actions strict-counted release-bounded; 12 additional castable action families exactly deduplicated one-to-one to `allow_*` gates | Installed-JAR equality to exact File `8842741` plus effective deployed values of the 12 `AllowedMagicItems` booleans; missing/ambiguous values remain fail-closed | [DEPLOYED-CONFIG-CHECKLIST.md](../providers/⚠️-corail-tombstone/DEPLOYED-CONFIG-CHECKLIST.md) |
+| Mowzie's Mobs `1.8.2` | Exact physical=publisher artifact; 13 active player-ability slots reconciled to 10 strict actions + 1 conditional Tunneling action; technical `hit_boulder` / `backstab` excluded | Effective deployed `tools_and_abilities.earthrend_gauntlet.enable_tunneling` from the exact current instance/world; physical fingerprint must match the cataloged 1.8.2 SHA-1 | [DEPLOYED-CONFIG-CHECKLIST.md](../providers/⚠️-mowzies-mobs/DEPLOYED-CONFIG-CHECKLIST.md) |
+| Iron's Spellbooks KubeJS `4.0.3` | Exact framework/source pinned; base framework contributes +0 fixed built-in identities; spell/school builder capability is known | Exact current `kubejs/**` script inventory or bounded assembled-registry provenance proving which script-defined spells/schools exist, including zero-content closure if none exist | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/⚠️-irons-spellbooks-kubejs/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
+| KubeJS Ars Nouveau `1.3.2` | Exact physical release identified; framework exposes six Ars recipe schemas and +0 provider-owned spell/glyph identities | Exact current `kubejs/server_scripts/**` / relevant `kubejs/data/**` mutation inventory to close recipe/tome reachability and economy effects on existing Ars objects | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/⚠️-kubejs-ars-nouveau/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
+| T.O Magic n' Extras / Traveloptics `4.4.0.1-1.21.1` | Current physical filename and SHA-1 are known; installed artifact is `OTHER_VERIFIED` relative to the audited publisher alpha/known patch; publisher baseline closes 33 IDs but is not promoted as exact-current | Exact current physical registry/content delta; assembled loot-modifier initialization; 1.21.1-specific `traveloptics:blackout` survival route; Somake Aqua coexistence/authority | [CLOSURE-CHECKLIST.md](../providers/⚠️-traveloptics/CLOSURE-CHECKLIST.md) |
 
-## Recently closed
+## Technical/runtime-only partial provider directories
 
-**Mobstein `5.4.4` — ✅ Catalogado.** Exact physical SHA-1 `3672d88f940ddd474a5429d7066b099cd0ce0c29` plus temporary non-merge audit PR #316 / HEAD `138441e4cd70896378d30287b3283ec07aaed43b` / successful dedicated audit run `35285950286` closed the residual semantic boundary. No independent provider-owned spell/ritual/rite/ability/action identity was established; documented syringe behavior remains item interaction and the surfaced action-like keybinds are entity/mount controls. Strict semantic delta: **+0**. Runtime/API integration remains separate and fail-closed.
+These folders remain ⚠️ because interoperability/runtime QA is open, but their independent semantic contribution is already closed at **+0**. They do not block the current strict semantic numerator:
 
-Canonical dossier: [`✅-mobstein/README.md`](../providers/✅-mobstein/README.md).
+- Immersive Portal Iron's Spells addon;
+- Iron's Spells Recolor;
+- Spell Actionbar;
+- Spell Codex Specs.
+
+Do not move their technical QA into the semantic numerator. Promote their folder status only when the provider-specific declared catalog/runtime scope is actually closed.
+
+## Deployed-evidence collector coverage
+
+The read-only collector in [`docs/qa/provider-catalog-deployed-evidence.md`](../../../docs/qa/provider-catalog-deployed-evidence.md) currently has bounded routes for:
+
+- Asterism physical fingerprint + Astral Gateway Iron's config/datapack;
+- Gaze physical fingerprint + `disableGazeRites`;
+- NEG physical fingerprint + 39 canonical enabled-state paths/runtime rows;
+- Tombstone physical fingerprint + 12 `AllowedMagicItems` booleans;
+- Somake physical fingerprint + spell-lock and Iron's override evidence;
+- Mowzie's physical fingerprint + `enable_tunneling`;
+- Traveloptics physical classification + bounded `traveloptics:blackout` references.
+
+The two KubeJS bridges require current script-tree evidence and are not closed by this collector alone.
 
 ## Evidence priority
 
-For these five providers, future work must use the following order:
+For these providers, future work must use this order:
 
-1. actual current-pack deployed config/datapack/runtime evidence when the checklist requires it;
+1. actual current-pack deployed config/script/datapack/runtime evidence when the checklist requires it;
 2. exact physical artifact identity/hash and provider-exposed registry/resource state;
 3. exact source/API/public provider documentation when legally and technically available;
 4. deterministic assembled-pack runtime observation;
 5. public editorial guidance only for semantic description when it cannot prove deployed state.
 
-Source defaults, generic publisher claims, creative/command access, registry presence alone, and unrelated Black Arcana CI are not substitutes for the specific deployed evidence named in each checklist.
+Source defaults, generic publisher claims, creative/command access, registry presence alone, and unrelated Black Arcana CI are not substitutes for the specific deployed evidence named by each checklist.
 
 ## Clean-room and authority rules
 
@@ -46,28 +75,30 @@ Source defaults, generic publisher claims, creative/command access, registry pre
 - Do not invent registry IDs, hooks, classes, configs, acquisition paths, settlement semantics or runtime results.
 - Do not create a Black Arcana fallback that replaces missing provider behavior.
 - Black Arcana owns its runtime; provider-native magic remains provider authority; RPG Skill Tree remains progression/Mastery/perk/gate authority through real contracts only.
-- Runtime/API QA may remain fail-closed after catalog closure and is not, by itself, a reason to keep a fully closed catalog at `⚠️`.
+- Runtime/API QA may remain fail-closed after catalog closure and is not, by itself, a reason to keep a fully closed semantic catalog at ⚠️.
 
 ## Do not redo
 
-The following categories are already closed at their provider-specific evidence level and should not be re-enumerated unless a newer physical version changes the authority baseline:
+Already closed evidence must be reused unless the physical/source line changes:
 
-- Asterism: registry 11 and 10 ordinary survival cards;
-- Gaze: Soulward Shield plus 26 exact Rite identities;
-- Mobstein left this conditional index on 2026-09-17 after exact hash-matched resource-only evidence closed the residual active-action boundary at semantic `+0`; do not reopen it unless the physical provider line changes or new authoritative evidence exposes a distinct action identity;
-- Not Enough Glyphs: 4.6.2 source registration inventory and fallback namespace resolution are revalidated from unchanged registry blobs; do not redo unless the physical/source line changes again;
-- Somake: exact File 8867079 now closes the 1.0.9 **declared** registry at 83 IDs; do not redo registry enumeration unless the version changes. The historical 67-ID 1.0.8-fix audit remains an older control only. Physical equality, active conditional subset, deployed host/config gates and survival reachability remain separate and may use exact assembled-server observation where the checklist permits;
-- Traveloptics: 33 registered identities, verified school cards and 32 residual localization exclusions.
+- Asterism: 11 exact registrations; 10 ordinary survival cards already strict-counted;
+- Gaze: Soulward Shield + 26 exact Rite identities;
+- NEG: 4.6.2 registration/fallback matrix = 40 / 39 source-enabled and canonical `glyph_*` identities;
+- Somake: physical equality, exact 83-ID registry, exact 67+16 gate topology and current 83/83 registration composition;
+- Tombstone: 10 strict prayer/rite actions + exact one-to-one deduplication of 12 config-gated castable families;
+- Mowzie's: exact 1.8.2 physical artifact, 13 active slots, semantic split 10 strict + 1 conditional + 2 technical/subaction exclusions;
+- Traveloptics: physical SHA-1 disposition is already `OTHER_VERIFIED`; publisher-baseline 33-ID inventory remains baseline only;
+- KubeJS frameworks: framework/API role is already classified; only current pack scripts/mutations remain open.
 
 ## Promotion discipline
 
 When one checklist closes:
 
 1. capture the exact evidence checkpoint/fingerprint;
-2. update the provider dossier/object rows affected by that evidence;
-3. reconcile the strict semantic ledger only if the global counting rule actually changes;
+2. update only provider/object rows actually proven;
+3. reconcile the strict semantic ledger only if the counting rule/result changes;
 4. update the provider folder prefix only when its declared catalog scope is fully closed;
 5. keep runtime/integration QA separate;
-6. recheck the latest physical modlist/provider version before claiming the closure still applies.
+6. recheck the latest physical modlist/provider version immediately before merge.
 
-This index is a routing document. It does not add semantic objects and does not change the current strict-count total by itself.
+This index is a routing document. It adds no semantic objects and leaves the current strict minimum unchanged.
