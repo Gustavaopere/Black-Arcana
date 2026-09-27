@@ -45,7 +45,7 @@ Blockers estáticos que continuam fail-closed por falta de evidência implantada
 ## Snapshot histórico de autoridade — não corrente
 
 - Black Arcana base desta reconciliação: `main@e391e11675b951150a7b01049d2d908b01d82641`.
-- RPG Skill Tree sibling mais recente consultado: `main@47db7f259c8c5260a1eefb1b613e48d7404a3580`.
+- RPG Skill Tree sibling mais recente consultado: `main@1211ebfef1bd6af46705250f2acd54da8f090c96`.
 - O índice físico sibling atual reconcilia **587 entradas top-level incluindo o modloader**; para Create: Wizardry, a linha certificada atual é **#166**. O antigo snapshot Black Arcana de 595 entradas abaixo permanece histórico até regeneração integral do denominator mágico.
 - Snapshot físico histórico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
