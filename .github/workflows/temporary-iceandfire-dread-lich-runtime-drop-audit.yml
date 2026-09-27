@@ -1,0 +1,147 @@
+name: Temporary Ice and Fire Dread Lich Staff Runtime Drop Audit
+
+on:
+  push:
+    branches:
+      - audit/iceandfire-dread-lich-staff-runtime-drop-2026-09-27
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Materialize exact NeoForge modding runtime
+        run: ./gradlew compileJava --no-daemon
+
+      - name: Extract bounded Mob equipment-drop facts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          python3 - <<'PY'
+          import pathlib, subprocess, zipfile, re
+
+          target='net/minecraft/world/entity/Mob.class'
+          candidates=[]
+          roots=[pathlib.Path.home()/'.gradle/caches', pathlib.Path('build')]
+          for root in roots:
+              if not root.exists():
+                  continue
+              for p in root.rglob('*.jar'):
+                  try:
+                      with zipfile.ZipFile(p) as z:
+                          if target in z.namelist():
+                              candidates.append(p)
+                  except Exception:
+                      pass
+
+          out=[
+              'MINECRAFT/NEOFORGE 1.21.1 MOB EQUIPMENT DROP FACTS',
+              'Project pins: minecraft=1.21.1, neoforge=21.1.248, parchment=2024.11.17.',
+              f'candidate_jar_count={len(candidates)}',
+          ]
+          if not candidates:
+              raise SystemExit('No mapped runtime JAR containing Mob.class found')
+
+          chosen=None
+          chosen_text=None
+          for p in candidates:
+              cp=str(p)
+              proc=subprocess.run(
+                  ['javap','-classpath',cp,'-c','-p','net.minecraft.world.entity.Mob'],
+                  text=True,capture_output=True
+              )
+              if proc.returncode==0 and 'DEFAULT_EQUIPMENT_DROP_CHANCE' in proc.stdout:
+                  chosen=p
+                  chosen_text=proc.stdout
+                  break
+          if chosen is None:
+              raise SystemExit('No javap-readable mapped Mob.class candidate found')
+
+          out.append('chosen_runtime_jar='+chosen.name)
+
+          decl=subprocess.run(
+              ['javap','-classpath',str(chosen),'-p','net.minecraft.world.entity.Mob'],
+              text=True,capture_output=True,check=True
+          ).stdout
+
+          for line in decl.splitlines():
+              s=line.strip()
+              if ('DEFAULT_EQUIPMENT_DROP_CHANCE' in s or
+                  'handDropChances' in s or
+                  'armorDropChances' in s or
+                  'setDropChance(' in s or
+                  'getEquipmentDropChance(' in s or
+                  'dropCustomDeathLoot(' in s or
+                  'dropEquipment(' in s):
+                  out.append('decl='+s)
+
+          def method_block(text, header_fragment):
+              lines=text.splitlines()
+              for i,line in enumerate(lines):
+                  if header_fragment in line:
+                      block=[line.strip()]
+                      j=i+1
+                      while j<len(lines):
+                          if lines[j].strip()=='' and len(block)>1:
+                              break
+                          block.append(lines[j].strip())
+                          j+=1
+                      return block
+              return []
+
+          for frag in [
+              'net.minecraft.world.entity.Mob(net.minecraft.world.entity.EntityType',
+              'protected void dropCustomDeathLoot(',
+              'protected void dropEquipment(',
+              'public void setDropChance(',
+              'protected float getEquipmentDropChance('
+          ]:
+              block=method_block(chosen_text,frag)
+              out.append('METHOD '+frag)
+              if not block:
+                  out.append('<not found>')
+                  continue
+              # Retain only narrow semantic bytecode facts.
+              for line in block:
+                  if any(tok in line for tok in [
+                      '0.085', '0.0f', '1.0f',
+                      'handDropChances', 'armorDropChances',
+                      'getEquipmentDropChance', 'getItemBySlot',
+                      'spawnAtLocation', 'EquipmentSlot',
+                      'RandomSource.nextFloat', 'MOB_DROPS',
+                      'DROP_CHANCE', 'putfield', 'getfield',
+                      'invokevirtual', 'invokestatic', 'if', 'fcmpl', 'fcmpg'
+                  ]):
+                      out.append(line)
+
+          # Exact constant from verbose classfile when present.
+          verbose=subprocess.run(
+              ['javap','-classpath',str(chosen),'-v','-p','net.minecraft.world.entity.Mob'],
+              text=True,capture_output=True,check=True
+          ).stdout
+          for line in verbose.splitlines():
+              if '0.085' in line or 'DEFAULT_EQUIPMENT_DROP_CHANCE' in line:
+                  out.append('verbose='+line.strip())
+
+          pathlib.Path('audit/facts.txt').write_text('\n'.join(out)+'\n',encoding='utf-8')
+          print('\n'.join(out))
+          PY
+
+      - name: Publish text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: iceandfire-dread-lich-runtime-drop-audit
+          path: audit/facts.txt
+          if-no-files-found: error
+          retention-days: 3
