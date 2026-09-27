@@ -23,6 +23,7 @@ Estado canônico corrente:
 - ✅ mínimo semântico estrito reconstruível: **1677 objetos mágicos**;
 - ⚠️ denominador semântico final: **ainda aberto** — não publicar porcentagem global;
 - ⚠️ denominador técnico cross-domain: **`PENDING REBASE`** — o antigo `68/100` é histórico;
+- ✅ inventário estrutural do catálogo: **109 diretórios top-level de provider = 99 ✅ + 10 ⚠️** após consolidar a duplicata histórica de Vampiric Ageing; esta contagem mede diretórios canônicos, **não** substitui o denominador técnico cross-domain nem o denominador semântico;
 - taxonomia física sibling atual com categoria `Magic`: **67 linhas** no sibling `8a0dbdf…`; após normalização e os fechamentos atuais, **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**);
 - os oito ⚠️ já mapeados nessa categoria física são **Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition**;
 - a fila category-only da taxonomia física `Magic` está **vazia**; todos os 67 itens possuem classificação Black Arcana explícita;

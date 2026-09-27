@@ -1,3 +1,5 @@
+> Historical duplicate snapshot. The canonical provider dossier is [the parent directory](../README.md). This subtree is preserved for provenance only and must not be counted as a second provider or second semantic contribution.
+
 # Vampiric Ageing 1.21-1.4.21
 
 Canonical source-level provider audit for the installed Black Arcana build.

@@ -16,6 +16,14 @@ Status: `SOURCE-PINNED 1.4.21 / GRANULAR SOURCE CATALOG COMPLETE / RUNTIME QA PE
 
 The selected commit is the exact 1.4.21 source line: its `gradle.properties` declares `mod_version=1.21-1.4.21`, and the official NeoForge 1.21.1 release artifact is the installed build.
 
+## Catalog path consolidation
+
+This directory is the single canonical top-level catalog entry for mod id `vampiricageing`.
+
+A historical duplicate top-level directory named `✅-vampiricageing` described the same installed JAR `vampiricageing-1.21-1.4.21.jar`, the same mod id and the same exact upstream source pin `16049e9aeadc47b2307995901c373521cef5fd76`. It has been consolidated under [`legacy-vampiricageing/`](legacy-vampiricageing/) for provenance. Those preserved files are supplemental historical decomposition, **not a second provider** and not a second semantic-count contribution.
+
+The parent directory remains authoritative when the two document sets overlap.
+
 ## What this provider is
 
 Vampiric Ageing is a progression/RPG addon over Vampirism, with optional Werewolves integration. It does not introduce a spell engine. Its primary authority is an `AgeingManager` attachment that tracks an Age Type, Age Rank, rank progress and optional type-specific state, then grants/modifies provider-native Vampirism/Werewolves skills, actions, attributes and faction mechanics.
