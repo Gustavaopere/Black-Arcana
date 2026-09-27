@@ -29,7 +29,7 @@ jobs:
           test "$ACTUAL" = "$EXPECTED"
           sha256sum /tmp/provider.jar | tee audit/sha256.txt
 
-      - name: Extract clean-room registry and ability facts
+      - name: Discover exact class and token topology
         shell: bash
         run: |
           set -euo pipefail
@@ -37,132 +37,73 @@ jobs:
           import pathlib
           from zipfile import ZipFile
 
-          jar = '/tmp/provider.jar'
-          owners = {
-              'scouring_eye': ('ScouringEyeItem.class', 'glowing_scour'),
-              'void_vortex_in_bottle': ('VoidVortexInBottleItem.class', 'spawn_vortex'),
-              'void_mantle': ('VoidMantleItem.class', 'void_rune'),
-              'vacuum_glove': ('VacuumGloveItem.class', 'vacuum_slowdown'),
-              'void_bubble': ('VoidBubbleItem.class', 'protective_bubble'),
-              'ring_of_the_flame_kindler': ('FlameKindlerRingItem.class', 'flame_summon'),
-              'mask_of_rage': ('MaskOfRageItem.class', 'ram_mode'),
-              'fire_plate': ('FirePlateItem.class', 'spawn_shield'),
-              'volcano': ('VolcanoItem.class', 'jetpack'),
-          }
-
-          out = [
-              "RELIQUIFIED L_ENDER'S CATACLYSM 0.1.1 EXACT ARTIFACT FACTS",
-              "Inspection is hash-gated before this step.",
-              ""
+          jar='/tmp/provider.jar'
+          item_ids=[
+              'scouring_eye','void_vortex_in_bottle','void_mantle','void_cloak',
+              'vacuum_glove','void_bubble','ring_of_the_flame_kindler',
+              'mask_of_rage','fire_plate','volcano'
           ]
-
+          ability_ids=[
+              'glowing_scour','spawn_vortex','void_rune','vacuum_slowdown',
+              'protective_bubble','flame_summon','ram_mode','spawn_shield','jetpack'
+          ]
+          out=["RELIQUIFIED L_ENDER'S CATACLYSM 0.1.1 EXACT DISCOVERY",""]
           with ZipFile(jar) as z:
-              names = set(z.namelist())
-              class_names = sorted(n for n in names if n.endswith('.class'))
+              names=set(z.namelist())
+              classes=sorted(n for n in names if n.endswith('.class'))
 
               out.append('[metadata]')
-              for p in ('META-INF/neoforge.mods.toml', 'META-INF/mods.toml', 'META-INF/MANIFEST.MF'):
+              for p in ('META-INF/neoforge.mods.toml','META-INF/mods.toml','META-INF/MANIFEST.MF'):
                   if p in names:
-                      txt = z.read(p).decode('utf-8', 'replace')
+                      txt=z.read(p).decode('utf-8','replace')
                       for line in txt.splitlines():
-                          s = line.strip()
-                          if s.startswith(('modId=', 'version=', 'displayName=', 'license=', 'Implementation-Version:')):
+                          s=line.strip()
+                          if s.startswith(('modId=','version=','displayName=','license=','Implementation-Version:')):
                               out.append(s)
               out.append('')
 
-              out.append('[owner class resolution]')
-              resolved = {}
-              for item_id, (simple_name, ability_id) in owners.items():
-                  candidates = [n for n in class_names if n.endswith('/' + simple_name)]
-                  out.append(f'{item_id}|class_candidates={len(candidates)}|' + (','.join(candidates) if candidates else '<none>'))
-                  if len(candidates) != 1:
-                      raise SystemExit(f'owner class resolution failed for {item_id}: {candidates}')
-                  resolved[item_id] = candidates[0]
-              out.append(f'resolved_owner_count={len(resolved)}')
+              out.append('[relic/item-like classes]')
+              candidates=[
+                  n for n in classes
+                  if '/relic' in n.lower() or n.endswith('Item.class') or n.endswith('Items.class')
+              ]
+              out.extend(candidates)
+              out.append(f'candidate_class_count={len(candidates)}')
               out.append('')
 
-              item_tokens = [k.encode() for k in owners]
-              reg_candidates = []
-              for n in class_names:
-                  raw = z.read(n)
-                  hits = sum(tok in raw for tok in item_tokens)
-                  if hits:
-                      reg_candidates.append((hits, n))
-              reg_candidates.sort(reverse=True)
-              out.append('[classes containing owner registration-id tokens]')
-              for hits, n in reg_candidates[:30]:
-                  out.append(f'{hits}|{n}')
-              exact_regs = [n for hits, n in reg_candidates if hits == len(owners)]
-              out.append(f'full_owner_id_set_class_count={len(exact_regs)}')
-              if len(exact_regs) != 1:
-                  raise SystemExit(f'expected exactly one class containing all owner ids, got {exact_regs}')
+              out.append('[item-id token locations]')
+              for token in item_ids:
+                  hits=[n for n in classes if token.encode() in z.read(n)]
+                  out.append(f'{token}=' + (','.join(hits) if hits else '<none>'))
               out.append('')
 
-              out.append('[exact owner ability roots]')
-              for item_id, (_, ability_id) in owners.items():
-                  cp = resolved[item_id]
-                  raw = z.read(cp)
-                  ability_token = ability_id.encode() in raw
-                  template_token = b'AbilityTemplate' in raw
-                  out.append(
-                      f'{item_id}|class={cp}|ability={ability_id}'
-                      f'|ability_token={str(ability_token).lower()}'
-                      f'|ability_template_ref={str(template_token).lower()}'
-                  )
-                  if not (ability_token and template_token):
-                      raise SystemExit(f'ability root failed for {item_id}')
-              out.append(f'unique_ability_id_count={len(set(v[1] for v in owners.values()))}')
+              out.append('[ability-id token locations]')
+              for token in ability_ids:
+                  hits=[n for n in classes if token.encode() in z.read(n)]
+                  out.append(f'{token}=' + (','.join(hits) if hits else '<none>'))
               out.append('')
 
-              ability_classes = []
-              for n in class_names:
-                  if b'AbilityTemplate' in z.read(n):
-                      ability_classes.append(n)
-              out.append('[classes referencing AbilityTemplate]')
-              out.extend(ability_classes)
-              out.append(f'ability_template_class_count={len(ability_classes)}')
+              out.append('[AbilityTemplate references]')
+              hits=[n for n in classes if b'AbilityTemplate' in z.read(n)]
+              out.extend(hits or ['<none>'])
+              out.append(f'ability_template_class_count={len(hits)}')
               out.append('')
 
-              out.append('[loot anchor references per owner]')
-              loot_tokens = (b'THE_NETHER', b'THE_END', b'CURSED_PYRAMID', b'FROSTED_PRISON')
-              for item_id, cp in resolved.items():
-                  raw = z.read(cp)
-                  hits = [t.decode() for t in loot_tokens if t in raw]
-                  out.append(f'{item_id}=' + (','.join(hits) if hits else '<none>'))
+              out.append('[loot-token locations]')
+              for token in ('THE_NETHER','THE_END','CURSED_PYRAMID','FROSTED_PRISON','cursed_pyramid','frosted_prison_treasure'):
+                  hits=[n for n in classes if token.encode() in z.read(n)]
+                  out.append(f'{token}=' + (','.join(hits) if hits else '<none>'))
               out.append('')
 
-              loot_literals = (
-                  b'cataclysm:archaeology/cursed_pyramid',
-                  b'cataclysm:chests/frosted_prison_treasure'
-              )
-              out.append('[classes containing provider loot-table literals]')
-              for n in class_names:
-                  raw = z.read(n)
-                  hits = [t.decode() for t in loot_literals if t in raw]
-                  if hits:
-                      out.append(f'{n}=' + ','.join(hits))
-              out.append('')
-
-              provider_resources = sorted(
-                  n for n in names
-                  if n.startswith('assets/reliquified_lenders_cataclysm/')
-                  or n.startswith('data/reliquified_lenders_cataclysm/')
-              )
-              out.append('[provider namespace resource totals]')
-              out.append(f'provider_resource_file_count={len(provider_resources)}')
-              out.append(f'provider_asset_file_count={sum(n.startswith("assets/reliquified_lenders_cataclysm/") for n in provider_resources)}')
-              out.append(f'provider_data_file_count={sum(n.startswith("data/reliquified_lenders_cataclysm/") for n in provider_resources)}')
-              out.append('')
-
-          text_out = '\n'.join(out) + '\n'
-          pathlib.Path('audit/facts.txt').write_text(text_out, encoding='utf-8')
-          print(text_out)
+          txt='\n'.join(out)+'\n'
+          pathlib.Path('audit/facts.txt').write_text(txt,encoding='utf-8')
+          print(txt)
           PY
 
       - name: Publish text-only audit report
         uses: actions/upload-artifact@v7
         with:
-          name: reliquified-lenders-cataclysm-0.1.1-exact-artifact-audit
+          name: reliquified-lenders-cataclysm-0.1.1-exact-discovery
           path: audit/*.txt
           if-no-files-found: error
           retention-days: 3
