@@ -71,6 +71,11 @@ jobs:
               out += sorted(roots) or ['<none>']
               out.append(f'root_spell_localization_count={len(roots)}')
               out.append('')
+              packaged_host_configs=[n for n in names if 'irons_spellbooks_spell_config' in n]
+              out.append('[packaged Iron\'s host spell config overrides]')
+              out += packaged_host_configs or ['<none>']
+              out.append(f'packaged_host_spell_config_path_count={len(packaged_host_configs)}')
+              out.append('')
               spell_classes=[n for n in names if n.endswith('.class') and n.startswith('net/ozymandias/ozymandiassundries/spells/')]
               out.append('[provider spell classes]')
               out += spell_classes or ['<none>']
@@ -87,7 +92,7 @@ jobs:
               decl=subprocess.run(['javap','-classpath',jar,'-p',cls],text=True,capture_output=True,check=True).stdout
               dis=subprocess.run(['javap','-classpath',jar,'-c','-p',cls],text=True,capture_output=True,check=True).stdout
               out.append(f'[registry declarations: {cls}]')
-              abstract=[l.strip() for l in decl.splitlines() if 'Supplier<io.redspace.ironsspellbooks.api.spells.AbstractSpell>' in l]
+              abstract=[l.strip() for l in decl.splitlines() if re.search(r'public static final java\\.util\\.function\\.Supplier<io\\.redspace\\.ironsspellbooks\\.api\\.spells\\.AbstractSpell> [A-Z0-9_]+;', l.strip())]
               out += abstract
               out.append(f'abstract_spell_supplier_field_count={len(abstract)}')
               static=dis.split('static {};',1)[1] if 'static {};' in dis else ''
@@ -120,6 +125,7 @@ jobs:
           ]
           for cls in target_classes:
               decl=subprocess.run(['javap','-classpath',jar,'-p',cls],text=True,capture_output=True,check=True).stdout
+              dis=subprocess.run(['javap','-classpath',jar,'-c','-p',cls],text=True,capture_output=True,check=True).stdout
               out.append(f'[gate-method declarations: {cls}]')
               hits=[]
               for l in decl.splitlines():
@@ -127,6 +133,14 @@ jobs:
                   if any(k in s for k in ('allowCrafting','allowLooting','isEnabled','canBeCraftedBy','getDefaultConfig','getSpellResource')):
                       hits.append(s)
               out += hits or ['<none>']
+              marker='public '+cls+'();'
+              constructor=dis.split(marker,1)[1].split('\n\n',1)[0] if marker in dis else ''
+              constructor_roots=[]
+              for l in constructor.splitlines():
+                  m=re.search(r'// String ([A-Za-z0-9_]+)',l)
+                  if m and m.group(1) in roots:
+                      constructor_roots.append(m.group(1))
+              out.append('constructor_root_spell_ids='+','.join(constructor_roots))
               out.append('')
 
           text='\n'.join(out)+'\n'
