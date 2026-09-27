@@ -17,6 +17,14 @@ Close the only semantic question that the base-addon audit cannot answer: whethe
 - exact official source pin `sentwayfarer/irons_spells_js@f3c05a102707a87ac3b8f0d2df5d2ffa5ae5b6c7`;
 - base framework exposes spell/school builders rather than a fixed provider spell roster.
 
+## Collector-assisted evidence
+
+Run the current deployed-evidence collector on the authoritative instance first. Its `kubejs_script_inventory` section records the exact bounded `startup_scripts`, `server_scripts`, `client_scripts` and `data` files by relative path, SHA-256 and byte size without copying bodies.
+
+- If the authoritative current `kubejs/` root is absent or all four bounded surfaces are empty, that is acceptable zero-content evidence for the script-tree part of this checklist.
+- If any relevant files exist, inspect those exact hashed files for Iron's spell/school builder registrations and continue with the provenance rules below.
+- Do not infer zero content from repository search; the collector must be run against the assembled instance.
+
 ## Required physical script inputs
 
 Collect from the same current assembled instance used as pack authority:
