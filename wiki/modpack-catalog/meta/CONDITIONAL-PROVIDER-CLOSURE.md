@@ -2,7 +2,7 @@
 
 Checkpoint: 2026-09-27
 
-Status: `14 PROVIDER DIRECTORIES ⚠️ / 10 CATALOG-CLOSURE ROUTES + 4 TECHNICAL-RUNTIME PARTIALS / NO SEMANTIC COUNT PROMOTION`
+Status: `14 PROVIDER DIRECTORIES ⚠️ / 10 CATALOG-CLOSURE ROUTES + 4 TECHNICAL-RUNTIME PARTIALS / ICE AND FIRE +7 STRICT PROMOTED, 2 ACTION BLOCKERS REMAIN`
 
 ## Purpose
 
@@ -10,7 +10,7 @@ This index routes the providers whose current Black Arcana catalog state remains
 
 It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-Current provider-directory reality in this PR change set (base `main@8966dccf557211f4e71cdc289b34597db38076ef` plus the Ice And Fire CE provider mapping):
+Current provider-directory reality on base `main@0ecfa67028c588b973e31e48eb4dd4dcc2360ac7` plus this Ice And Fire CE partial-promotion change set:
 
 - **14** provider directories carry the ⚠️ prefix;
 - **10** still have a catalog/config/script/effective-state closure gate listed below;
@@ -31,7 +31,7 @@ A provider leaves this index only when its own acceptance rule is satisfied by a
 | Iron's Spellbooks KubeJS `4.0.3` | Exact framework/source pinned; base framework contributes +0 fixed built-in identities; spell/school builder capability is known | Exact current `kubejs/**` script inventory or bounded assembled-registry provenance proving which script-defined spells/schools exist, including zero-content closure if none exist | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/⚠️-irons-spellbooks-kubejs/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
 | KubeJS Ars Nouveau `1.3.2` | Exact physical release identified; framework exposes six Ars recipe schemas and +0 provider-owned spell/glyph identities | Exact current `kubejs/server_scripts/**` / relevant `kubejs/data/**` mutation inventory to close recipe/tome reachability and economy effects on existing Ars objects | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/⚠️-kubejs-ars-nouveau/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
 | T.O Magic n' Extras / Traveloptics `4.4.0.1-1.21.1` | Current physical filename and SHA-1 are known; installed artifact is `OTHER_VERIFIED` relative to the audited publisher alpha/known patch; publisher baseline closes 33 IDs but is not promoted as exact-current | Exact current physical registry/content delta; assembled loot-modifier initialization; 1.21.1-specific `traveloptics:blackout` survival route; Somake Aqua coexistence/authority | [CLOSURE-CHECKLIST.md](../providers/⚠️-traveloptics/CLOSURE-CHECKLIST.md) |
-| Ice And Fire Community Edition `2.1.2` | Exact physical SHA-1 equals publisher File `8757837`; exact release source pin closes eight direct active magic-item actions plus one Ghost Sword swing ability | Bound current survival acquisition for the nine candidates and capture deployed Jupiter `tools.phantasmalBladeAbility` for Ghost Sword; missing/ambiguous routes stay fail-closed | [DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md](../providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md) |
+| Ice And Fire Community Edition `2.1.2` | Exact physical SHA-1 equals publisher File `8757837`; exact source closes 9 active action families; exact reachability run `36323035696` promotes 7 families through provider recipe/loot data | Dread Lich Staff: explicit current acquisition route still unproven. Ghost Sword: exact recipe is closed, but deployed Jupiter `tools.phantasmalBladeAbility` is still required | [DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md](../providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md) |
 
 ## Technical/runtime-only partial provider directories
 

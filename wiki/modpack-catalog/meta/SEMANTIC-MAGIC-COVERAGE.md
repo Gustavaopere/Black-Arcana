@@ -187,16 +187,16 @@ Current semantic deltas since the 1382 checkpoint:
 - IronSable X Wind's Spellbooks 1.0.0: **+0 `ZERO_SEMANTIC_EXISTING_SPELL_PHYSICS_BRIDGE`** — exact hash-matched File `8598265` has 14 classes, all in bridge/core physics roles, zero provider resources and direct binary references to Wind's existing `tornado`, `almighty_push`, `wind_blade` and `aeropic` identities plus IronSable/Sable hosts.
 - Iron's Gems 'n Jewelry 1.21.1-2.0.2: **+0 `ZERO_SEMANTIC_EQUIPMENT_PROC_FRAMEWORK`** — exact hash-matched File `8365016` has no spell/ritual/rite/ability-named surface. Its eight `IAction` codecs are source-corroborated downstream payloads for jewelry bonus/proc events such as attack, projectile hit, shield block and damage reception, not selectable casts.
 - Integrated Villages 1.3.3+1.21.1-neoforge: **+0 `ZERO_SEMANTIC_WORLDGEN_INTEGRATION`** — exact hash-matched File `8161672` is dominated by 1440 provider data files across structures/worldgen/loot/tags/advancements and exposes zero semantic-action-like paths/classes.
-- Ice And Fire Community Edition 2.1.2: **⚠️ 9 player-facing magic-action candidates / +0 strict in this tranche** — exact physical/publisher File `8757837` equality closes the current JAR identity; exact release source pin `IAFEnvoy/IceAndFire-CE@0cf5a2458e1ccf552b9859531ee21c4816e5a686` delineates eight direct active magic-item actions plus the config-gated Ghost Sword/Phantasmal Blade swing ability. Survival acquisition/current effective config are not yet closed, so none of the nine is promoted into the strict numerator here.
+- Ice And Fire Community Edition 2.1.2: **+7 `COUNTED_EXACT` strict + 2 `CONDITIONAL`** — exact reachability extension run `36323035696` proves current-JAR recipe/loot routes for Cockatrice Scepter, Deathworm Gauntlet, Gorgon Head, Pixie Wand, Siren Flute, Summoning Crystal and Stymphalian Feather Bundle. Dread Lich Staff still lacks an explicit provider/current-data acquisition route; Ghost Sword has an exact recipe but remains gated by deployed Jupiter `tools.phantasmalBladeAbility`.
 - Traveloptics 4.4.0.1-1.21.1 is again a **current physical ⚠️ provider / +0 strict**: the installed SHA-1 is `OTHER_VERIFIED` and differs from both the audited 33-ID publisher alpha and known patch artifact, so the exact current registry is not projected from the publisher baseline.
 - Somake 1.0.9 remains **CONDITIONAL / +0 strict**; exact 83-ID registry/current-composition admission is closed, while effective deployed host/provider config and survival reachability remain open.
 - Iron's Spellbooks KubeJS 4.0.3 and KubeJS Ars Nouveau 1.3.2 contribute **+0 fixed built-in identities**, but their current pack-script mutation/registration surfaces remain unverified and therefore stay denominator-open.
 
-Therefore the strict reconstructible minimum is **1669**. This is a minimum, not a final denominator or coverage percentage.
+Therefore the strict reconstructible minimum is **1676**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1669 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2) and Mowzie's Mobs (+10 strict).**
+**1676 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict) and Ice And Fire CE (+7 strict).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -208,6 +208,7 @@ Arithmetic cross-check by provider family:
 - Relics provider-owned ability/synergy layer: **41**;
 - More Relics owner-scoped ability layer: **61**;
 - Mowzie's Mobs discrete player-power layer: **10**;
+- Ice And Fire CE active magic-action layer: **7**;
 - Reliquified Ars Nouveau owner-scoped ability layer: **19**;
 - Reliquified Artifacts owner-scoped ability layer: **52**;
 - Reliquified Iron's Spells 'n Spellbooks ability layer: **25**;
@@ -219,7 +220,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `199 + 664 + 9 + 41 + 61 + 10 + 19 + 52 + 25 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1669`.
+- total: `199 + 664 + 9 + 41 + 61 + 10 + 7 + 19 + 52 + 25 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1676`.
 
 ### Counted ledger
 
@@ -264,6 +265,7 @@ Arithmetic cross-check by provider family:
 | [Relics](../providers/✅-relics/README.md) | 0.12.8 | 41 | `COUNTED_EXACT` | exact physical/publisher artifact equality closes 39 owner-scoped base abilities + 2 distinct owner-scoped synergies; modes/rank modifiers and relic items add zero extra identities; runtime/config QA remains separate |
 | [More Relics](../providers/✅-more-relics/README.md) | 1.7.7-forRelics-0.12.8-1.0 | 61 | `COUNTED_EXACT` | exact physical/publisher File `8859015` equality closes 29 relic owners and 61 owner-scoped ability roots; bytecode builder roots and localization owner/ability roots agree exactly; 20 direct exact-JAR loot templates plus current publisher acquisition/evolution routes bound catalog reachability |
 | [Mowzie's Mobs](../providers/⚠️-mowzies-mobs/README.md) | 1.8.2 | 10 | `COUNTED_EXACT` + 1 `CONDITIONAL` | exact physical/publisher File `7760267` closes 13 active player-ability slots; 10 independent powers are strict-counted, `tunneling` is held conditional by deployed `enableTunneling`, `hit_boulder`/`backstab` are technical-subaction slots, and four declared ids are absent from the active array |
+| [Ice And Fire CE](../providers/⚠️-ice-and-fire-ce/README.md) | 2.1.2 | 7 | `COUNTED_EXACT` + 2 `CONDITIONAL` | exact physical/publisher File `8757837` plus exact current-JAR data references close seven reachable active magic-action families; Dread Lich Staff remains acquisition-unproven and Ghost Sword remains gated by deployed `tools.phantasmalBladeAbility` despite its exact recipe |
 | [Reliquified Ars Nouveau](../providers/✅-reliquified-ars-nouveau/README.md) | 0.8.1 | 19 | `COUNTED_SOURCE_PINNED` | exact-version source closes 19 registered relic owners and 19 owner-scoped `AbilityTemplate` roots with provider-native Ars loot routes |
 | [Reliquified Artifacts](../providers/✅-reliquified-artifacts/README.md) | 1.0.8 | 52 | `COUNTED_SOURCE_PINNED` | 48 Artifact owners map to 52 owner-scoped ability roots; source-level loot/conversion routes close acquisition for all owners |
 | [Reliquified Iron's Spells 'n Spellbooks](../providers/✅-reliquified-irons-spells-n-spellbooks/README.md) | 0.2.7 | 25 | `COUNTED_SOURCE_PINNED` | exact-version source closes 25 provider-owned relic ability roots in 23 ability-bearing relic classes; each counted class has the provider `ANY_STRUCTURE` Iron's chest-loot route |
@@ -277,7 +279,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1669** |  |  |
+| **Strict total** |  | **1676** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -353,7 +355,7 @@ This is `COUNTED_RELEASE_BOUNDED`, not an exact installed-JAR/source-equivalence
 | [Not Enough Glyphs](../providers/⚠️-not-enough-glyphs/README.md) | 39 candidates | `CONDITIONAL` | current matrix is 40 registrations / 39 source-enabled; deployed per-spell SERVER `[general].enabled` values are unavailable |
 | [Somake Spells](../providers/⚠️-somake-spells/README.md) | 83 registered IDs | `CONDITIONAL` | exact registry/current provider composition is closed at 83/83, but effective Iron's `enabled` / `allow_crafting`, deployed Somake spell-lock config and survival reachability remain open |
 | [Mowzie's Mobs](../providers/⚠️-mowzies-mobs/README.md) | 1 Tunneling power | `CONDITIONAL` | exact `TunnelingAbility.canUse()` reads provider COMMON `enableTunneling`; deployed pack value is unavailable and source/default values are not substituted |
-| [Ice And Fire CE](../providers/⚠️-ice-and-fire-ce/README.md) | 9 active magic-action candidates | `CONDITIONAL` | exact physical artifact + exact 2.1.2 source pin close the candidate action surface; current survival acquisition is not yet fully bounded and Ghost Sword additionally reads deployed `tools.phantasmalBladeAbility` |
+| [Ice And Fire CE](../providers/⚠️-ice-and-fire-ce/README.md) | 2 remaining action families | `CONDITIONAL` | Dread Lich Staff lacks an explicit exact current acquisition route; Ghost Sword has an exact recipe but still reads deployed Jupiter `tools.phantasmalBladeAbility` |
 
 The four real Ars Elemental primitives referenced by Not Enough Glyphs are not NEG-owned registrations and are already counted under Ars Elemental. Historical fallback namespaces do not create a second owner when the real provider is present.
 
@@ -397,7 +399,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These providers remain **outside the 1669 strict sum** because the current physical semantic inventory is not yet closed object-by-object:
+These providers remain **outside the 1676 strict sum** because the current physical semantic inventory is not yet closed object-by-object:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -409,9 +411,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1669 is not “1669 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1669 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1669 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1676 is not “1676 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1676 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1676 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.

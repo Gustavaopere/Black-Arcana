@@ -20,7 +20,7 @@ Os números correntes **não** devem ser lidos da tabela histórica da seção 1
 
 Estado canônico corrente:
 
-- ✅ mínimo semântico estrito reconstruível: **1669 objetos mágicos**;
+- ✅ mínimo semântico estrito reconstruível: **1676 objetos mágicos**;
 - ⚠️ denominador semântico final: **ainda aberto** — não publicar porcentagem global;
 - ⚠️ denominador técnico cross-domain: **`PENDING REBASE`** — o antigo `68/100` é histórico;
 - taxonomia física sibling atual com categoria `Magic`: **67 linhas** no sibling `bb5372c…`; após normalização e os fechamentos atuais, **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**);
@@ -28,9 +28,9 @@ Estado canônico corrente:
 - a fila category-only da taxonomia física `Magic` está **vazia**; todos os 67 itens possuem classificação Black Arcana explícita;
 - providers cross-domain/root-level atuais ampliam esse universo: Gaze, Requiem, Traveloptics, More Relics, Iron's Spellbooks KubeJS, Spell Actionbar/Specs/Recolor/Immersive Portal e addons Reliquified, entre outros.
 
-Deltas já incorporados depois do antigo checkpoint 1382 incluem Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau (**+19**), Reliquified Artifacts (**+52**), Reliquified Iron's Spells 'n Spellbooks (**+25**), More Relics (**+61**), Ozymandias Sundries (**+2**) e Mowzie's Mobs (**+10 strict; +1 conditional fora do strict**). Wind's Spellbooks, Ars 'n' Spells 3.3.4 e outros providers revalidados permanecem dentro da aritmética corrente sem novo delta nesta reconciliação.
+Deltas já incorporados depois do antigo checkpoint 1382 incluem Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau (**+19**), Reliquified Artifacts (**+52**), Reliquified Iron's Spells 'n Spellbooks (**+25**), More Relics (**+61**), Ozymandias Sundries (**+2**), Mowzie's Mobs (**+10 strict; +1 conditional fora do strict**) e Ice And Fire CE (**+7 strict; +2 conditional fora do strict**). Wind's Spellbooks, Ars 'n' Spells 3.3.4 e outros providers revalidados permanecem dentro da aritmética corrente sem novo delta nesta reconciliação.
 
-Blockers estáticos que continuam fail-closed por falta de evidência implantada/exata incluem: 26 Spirit Rites de Gaze, 39 candidatos de Not Enough Glyphs, 12 famílias condicionais de Tombstone, config/reachability de Somake, `astral_gateway`, `mowziesmobs:tunneling` condicionado por `enableTunneling`, os 9 candidatos ativos de Ice And Fire CE (aquisição/config; Ghost Sword também `phantasmalBladeAbility`), o registry/reachability exato atual de Traveloptics e as superfícies mutáveis dos bridges KubeJS.
+Blockers estáticos que continuam fail-closed por falta de evidência implantada/exata incluem: 26 Spirit Rites de Gaze, 39 candidatos de Not Enough Glyphs, 12 famílias condicionais de Tombstone, config/reachability de Somake, `astral_gateway`, `mowziesmobs:tunneling` condicionado por `enableTunneling`, Dread Lich Staff por aquisição e Ghost Sword por `tools.phantasmalBladeAbility` em Ice And Fire CE, o registry/reachability exato atual de Traveloptics e as superfícies mutáveis dos bridges KubeJS.
 ## Legenda obrigatória
 
 - ✅ **Catalogado** — existe inventário/contrato suficientemente fechado para o escopo indicado; isso inclui fechamento correto em **zero** objetos mágicos próprios.
@@ -166,7 +166,7 @@ Estado global dessa camada: ✅ **Catalogado (32 contratos)**.
 
 As métricas têm denominadores diferentes:
 
-- ✅ **Ledger semântico strict-counted corrente:** **1669 objetos mágicos reconstruíveis**.
+- ✅ **Ledger semântico strict-counted corrente:** **1676 objetos mágicos reconstruíveis**.
 - ⚠️ **Denominador semântico global:** ainda incompleto; portanto **nenhuma porcentagem final de spells/magia é declarada**.
 - ⚠️ **Cobertura técnica de componentes:** o antigo `68/100` é apenas checkpoint histórico; o denominador técnico global permanece `PENDING REBASE`.
 - ✅ **Taxonomia física sibling `Magic`:** **67 linhas**; **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**), sem fila category-only.
@@ -174,8 +174,8 @@ As métricas têm denominadores diferentes:
 - ✅ **Fila de classificação semântica da categoria física `Magic`:** vazia no snapshot sibling atual.
 - ⚠️ **Cross-domain condicionais relevantes:** Gaze, Traveloptics, Iron's Spellbooks KubeJS e KubeJS Ars Nouveau; More Relics agora está ✅ `COUNTED_EXACT` com 61 owner-scoped abilities; componentes UI/compat como Spell Actionbar, Specs, Recolor e Immersive Portal têm +0 independente, mas QA técnico separado.
 - ✅ **Zero-semantic exact closures recentes:** Photon 2.2.6.a (`ZERO_SEMANTIC_VFX_INFRA`) e RunicLib 5.0.7 (`ZERO_SEMANTIC_LIBRARY_INFRA`), ambos +0.
-- ✅ **Fechamentos finais da categoria física `Magic`:** Mowzie's Cataclysm, Pickable Orbs, IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages — todos exact-artifact, todos **+0** sob a métrica semântica; mínimo strict permanece **1669**.
-- ✅ **Deltas recentes strict-counted:** Hexalia 1.3.7 +4; Reliquified Ars Nouveau +19; Reliquified Artifacts +52; Reliquified Iron's +25; More Relics +61. Ozymandias Sundries +2; Mowzie's Mobs +10 strict.
+- ✅ **Fechamentos finais da categoria física `Magic`:** Mowzie's Cataclysm, Pickable Orbs, IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages — todos exact-artifact, todos **+0** sob a métrica semântica; esses fechamentos não alteram o mínimo strict, que após a promoção parcial de Ice And Fire CE é **1676**.
+- ✅ **Deltas recentes strict-counted:** Hexalia 1.3.7 +4; Reliquified Ars Nouveau +19; Reliquified Artifacts +52; Reliquified Iron's +25; More Relics +61; Ozymandias Sundries +2; Mowzie's Mobs +10 strict; Ice And Fire CE +7 strict.
 - ✅ **Wind's Spellbooks:** 7/7 já estavam strict-counted; a migração atual é apenas continuidade de provider-tree, não +7 adicional.
 - ✅ **Black Arcana próprio:** 32 contratos de candidatos; runtime/Stage continua separado do catálogo.
 

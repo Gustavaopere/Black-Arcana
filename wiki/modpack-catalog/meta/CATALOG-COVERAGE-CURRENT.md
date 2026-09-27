@@ -27,12 +27,12 @@ Semantic effect of the current reconciliation:
 - More Relics 1.7.7-forRelics-0.12.8-1.0 is now **✅ `COUNTED_EXACT` / +61 strict** after NON-MERGE exact-artifact audit #409 hash-matched File `8859015` and closed 61 owner-scoped ability roots. Traveloptics 4.4.0.1-1.21.1 remains current **⚠️ / +0 strict pending closure**; its old 33-spell publisher baseline is not promoted into the exact current physical numerator.
 - Ozymandias Sundries physical 0.0.5 / embedded metadata 0.0.1 is now **✅ `COUNTED_EXACT` / +2 strict** after exact-artifact run `36286741917` hash-matched File `6978561`; the exact registrar has two unconditional registrations (`levitate`, `lightning_warp`), zero initializer branches and zero packaged Iron's spell-config override paths. Unregistered spell classes/localization residue are excluded.
 - Mowzie's Mobs 1.8.2 is now **⚠️ / +10 `COUNTED_EXACT` strict + 1 `CONDITIONAL`** after exact-artifact run `36288758348` hash-matched File `7760267`; the exact active array has 13 player-ability slots. Ten independent powers are strict-counted, `tunneling` remains config-conditional on deployed `enableTunneling`, `hit_boulder` and `backstab` are technical/subaction slots, and four declared ids are inactive.
-- Ice And Fire Community Edition 2.1.2 is now **⚠️ / +0 strict pending closure**. Exact run `36316219802` hash-matched physical SHA-1 `0786f4142b7cabd958688f68beef3e63e9c0ae8b` to publisher File `8757837`; exact release source pin `0cf5a2458e1ccf552b9859531ee21c4816e5a686` closes nine active magic-action candidates, but survival acquisition and the deployed `phantasmalBladeAbility` gate remain open.
+- Ice And Fire Community Edition 2.1.2 is now **⚠️ / +7 `COUNTED_EXACT` strict + 2 `CONDITIONAL`**. Exact reachability run `36323035696` on the same hash-matched File `8757837` closes current recipe/loot acquisition for seven independent action families. Dread Lich Staff remains acquisition-unproven; Ghost Sword has exact acquisition but deployed `phantasmalBladeAbility` remains unresolved.
 - Mowzie's Cataclysm 1.2.2, Pickable Orbs 1.21.1-1.0.0, IronSable X Wind's Spellbooks 1.0.0, Iron's Gems 'n Jewelry 1.21.1-2.0.2 and Integrated Villages 1.3.3+1.21.1-neoforge are now **✅ exact zero-semantic closures / +0 strict each**. Their exact artifacts respectively close locator Eyes, pickup-effect entities, an existing-spell physics bridge, equipment proc payloads and worldgen/structure integration without minting independent player magic identities.
 - Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
 - Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
 
-The strict reconstructible semantic minimum is therefore **1669**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1676**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -123,8 +123,9 @@ Therefore:
 - semantic numerator delta from More Relics 1.7.7-forRelics-0.12.8-1.0 exact-artifact ability closure: **+61 `COUNTED_EXACT`**;
 - semantic numerator delta from Ozymandias Sundries physical 0.0.5 exact-artifact closure: **+2 `COUNTED_EXACT`**;
 - semantic numerator delta from Mowzie's Mobs 1.8.2 exact-artifact closure: **+10 `COUNTED_EXACT`**; one additional Tunneling power remains conditional;
+- semantic numerator delta from Ice And Fire CE 2.1.2 exact-artifact reachability closure: **+7 `COUNTED_EXACT`**; Dread Lich Staff and Ghost Sword remain conditional;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
-- strict reconstructible semantic minimum: **1669**;
+- strict reconstructible semantic minimum: **1676**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
