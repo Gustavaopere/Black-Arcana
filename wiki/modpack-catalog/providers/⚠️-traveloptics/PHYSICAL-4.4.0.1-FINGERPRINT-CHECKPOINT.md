@@ -12,7 +12,7 @@ A Project Library physical modlist checkpoint, `modlist(1).txt`, captured on **2
 - SHA-1: `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - package/fingerprint column: `4254006126`.
 
-The current sibling at `neoforge-rpg-skilltree@d954e7ce193823a0b98fd893f6f915178ed3d597` still preserves the same installed filename/version.
+The current sibling at `neoforge-rpg-skilltree@47db7f259c8c5260a1eefb1b613e48d7404a3580` still preserves the same installed filename/version.
 
 ## Known comparison artifacts
 
