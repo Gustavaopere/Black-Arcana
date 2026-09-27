@@ -2,7 +2,7 @@
 
 Checkpoint: 2026-09-27
 
-Status: `10 PROVIDER DIRECTORIES ⚠️ / 10 CATALOG-CLOSURE ROUTES / 4 ZERO-SEMANTIC TECHNICAL PROVIDERS PROMOTED TO ✅ CATALOGED / ICE AND FIRE +8 STRICT PROMOTED, 1 ACTION BLOCKER REMAINS`
+Status: `16 PROVIDER DIRECTORIES ⚠️ / 16 CATALOG-CLOSURE ROUTES / CURRENT PHYSICAL MAGIC TAXONOMY 84/84 MAPPED / STRICT MINIMUM 1677 UNCHANGED`
 
 ## Purpose
 
@@ -10,10 +10,10 @@ This index routes the providers whose current Black Arcana catalog state remains
 
 It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@d954e7ce193823a0b98fd893f6f915178ed3d597`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
+Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@c701aa74b1e0109659a9f40206603dd960726445`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
 
-- **10** provider directories carry the ⚠️ prefix;
-- all **10** still have a catalog/config/script/effective-state closure gate listed below;
+- **16** provider directories carry the ⚠️ prefix;
+- all **16** still have a catalog/config/script/effective-state/semantic-classification closure gate listed below;
 - Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Spell Codex Specs are now **✅ cataloged at +0 independent semantic identities**; their remaining interoperability/runtime QA stays separate.
 
 A provider leaves this index only when its own acceptance rule is satisfied by authoritative current-pack evidence and the canonical provider status is updated accordingly.
@@ -32,6 +32,12 @@ A provider leaves this index only when its own acceptance rule is satisfied by a
 | KubeJS Ars Nouveau `1.3.2` | Exact physical release identified; framework exposes six Ars recipe schemas and +0 provider-owned spell/glyph identities | Exact current `kubejs/server_scripts/**` / relevant `kubejs/data/**` mutation inventory to close recipe/tome reachability and economy effects on existing Ars objects | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/⚠️-kubejs-ars-nouveau/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
 | T.O Magic n' Extras / Traveloptics `4.4.0.1-1.21.1` | Current physical filename/SHA-1 are known; an older 2026-08-18 CurseForge snapshot records File `6342780` with `isModified=true`, but it does not prove ancestry of the later 2026-09-16 SHA-1; physical bytes remain `OTHER_VERIFIED` vs publisher/known patch; 33-ID publisher baseline is not exact-current | Exact current physical provenance/content delta; assembled loot-modifier initialization; 1.21.1-specific `traveloptics:blackout` survival route; Somake Aqua coexistence/authority | [CLOSURE-CHECKLIST.md](../providers/⚠️-traveloptics/CLOSURE-CHECKLIST.md) |
 | Ice And Fire Community Edition `2.1.2` | Exact physical SHA-1 equals publisher File `8757837`; exact source closes 9 active action families; exact provider-data reachability promotes 7 and current-pack NeoForge 21.1.250 runtime audit `36327488231` promotes Dread Lich Staff for 8 strict total | Ghost Sword only: exact recipe is closed, but deployed Jupiter `tools.phantasmalBladeAbility` is still required | [DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md](../providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md) |
+| Reliquified L_Ender's Cataclysm `0.1.1` | Exact physical JAR/mod-id/version/SHA-1 closed; five concrete relics are publisher/fix-documented in the current stack | Complete current 0.1.1 provider-owned relic/action inventory; named relic owners do not prove discrete-action cardinality | [README.md](../providers/⚠️-reliquified-l-enders-cataclysm/README.md) |
+| ShadowsZ `1.1.9` | Exact physical identity closed; Miasma, Umbral Bond and Aura of the Monarch establish a 3-spell lower bound | Complete exact 1.1.9 spell/action inventory and classification of Arising/Position Swap/control actions; effective config where it changes active surface | [README.md](../providers/⚠️-shadowsz/README.md) |
+| Simply Swords: Cataclysm `1.0.2+1.21.1+neoforge` | Exact physical identity closed; current-release docs establish Blazing Brand, Accursed Rage, Mecha Smite and Mecha Pulse as four ability-family candidates | Exact current 1.0.2 completeness/registration and any feature gates; public default source line inspected is older 1.20.1/1.0.1 and is not promoted | [README.md](../providers/⚠️-simply-swords-cataclysm/README.md) |
+| Simply More `1.3.0 Alpha 5` | Physical SHA-1 is reconciled to publisher File 8736778; item/Unique headlines and existence of active/passive ability behavior are known | Complete Alpha-5 semantic action inventory; rework/no-function uniques and partial Iron's compatibility must be separated from countable actions | [README.md](../providers/⚠️-simply-more/README.md) |
+| Simply Swords `1.70.2-1.21.1` | Exact physical identity closed; provider ownership of Runic Powers, Unique abilities and implicits is established | Exact 1.70.2 source/artifact action inventory with disabled/config-gated entries and addon deduplication | [README.md](../providers/⚠️-simply-swords/README.md) |
+| Waystones `21.1.45` | Exact current physical identity closed; provider teleport-network authority is known | Decide from exact 21.1.45 provider-native semantics whether any discrete supernatural player action qualifies; category `Magic` alone is not sufficient | [README.md](../providers/⚠️-waystones/README.md) |
 
 ## Catalog-closed zero-semantic technical providers
 

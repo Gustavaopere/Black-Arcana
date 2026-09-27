@@ -158,9 +158,11 @@ The exact source registers seven custom Apotheosis affix codecs and contains 140
 
 Iron's Apothic is consequently a source-pinned magic bridge/support closure with **+0 independent semantic magic objects**. The strict reconstructible minimum remains **1382**. Installed-JAR byte equality and assembled-pack affix/cooldown/target/proc behavior remain runtime QA, not semantic-count evidence.
 
-## Current 26/09/2026 reconciliation
+## Current 27/09/2026 reconciliation
 
-Current presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers where they supersede that snapshot. The latest sibling taxonomy at ``neoforge-rpg-skilltree` current `main` with Tombstone dossier blob `7b99ee63892e9bd3711e27a651c0b62c0d71ba47`` contains **67 status-prefixed rows whose category path includes `Magic`**. That taxonomy is broader than the Black Arcana semantic-provider denominator. After ownership-alias normalization and the current exact zero-semantic closures, **67/67** rows map to Black Arcana provider directories (**59 ✅ + 8 ⚠️**). No row in the current physical sibling `Magic` category remains without an explicit Black Arcana semantic classification. Nine rows now compose the recent sibling `Magic` reclassification sequence: Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable, Iron's Spellbooks KubeJS, IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry, Integrated Villages, Hexalia and Ice And Fire Community Edition. Hexalia was already cataloged; Ice And Fire CE is now explicitly mapped as a partial/conditioned provider. Current cross-domain/root-level providers outside that folder taxonomy also remain relevant, including Gaze, Ender's Spells and Stuff: Requiem, Traveloptics, Spell Actionbar/Specs/Recolor/Immersive Portal compatibility layers and the Reliquified addons.
+Current presence/version authority is the newest physical Project Library evidence plus newer sibling physical dossiers where they supersede that snapshot. At `neoforge-rpg-skilltree@c701aa74b1e0109659a9f40206603dd960726445`, the modlist contains **84 rows whose category field includes `Magic`**. All **84/84** now map to Black Arcana provider directories (**70 ✅ + 14 ⚠️**). The prior 67-row snapshot is historical.
+
+The +17 category delta does not itself alter the semantic ledger. Eleven providers were already represented. Six newly mapped providers remain outside the strict sum pending exact inventory/classification closure: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
 
 Current semantic deltas since the 1382 checkpoint:
 
@@ -406,6 +408,12 @@ These providers remain **outside the 1677 strict sum** because the current physi
 | [Traveloptics](../providers/⚠️-traveloptics/README.md) | current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; audited publisher baseline has 33 spells | `OPEN / OTHER_VERIFIED / +0 STRICT` | installed bytes differ from both the audited publisher alpha and known patch artifact, so the 33-ID baseline is not promoted as the exact current physical registry |
 | [Iron's Spellbooks KubeJS](../providers/⚠️-irons-spellbooks-kubejs/README.md) | base addon has 0 fixed built-in spell identities; exact 4.0.3 builder/framework source is known | `OPEN SCRIPT INVENTORY / +0 FIXED BUILT-IN` | current physical `kubejs/` script set is not captured; scripts may register Iron's spells/schools under arbitrary namespaces |
 | [KubeJS Ars Nouveau](../providers/⚠️-kubejs-ars-nouveau/README.md) | recipe-schema bridge has 0 provider-owned fixed glyph/spell identities | `OPEN SCRIPT MUTATIONS / +0 FIXED BUILT-IN` | current server/startup scripts can mutate Ars recipes/content and are not authoritatively captured for this pack |
+| [Reliquified L_Ender's Cataclysm](../providers/⚠️-reliquified-l-enders-cataclysm/README.md) | exact physical 0.1.1 identity; five concrete relic owners documented in current stack | `OPEN INVENTORY / +0 STRICT` | relic/item owners do not prove the complete number of discrete provider-owned supernatural actions |
+| [ShadowsZ](../providers/⚠️-shadowsz/README.md) | exact physical 1.1.9 identity; Miasma, Umbral Bond and Aura of the Monarch establish at least 3 provider spells | `LOWER_BOUND 3 / +0 STRICT` | three named spells are not proven to be the complete current spell/action inventory |
+| [Simply Swords: Cataclysm](../providers/⚠️-simply-swords-cataclysm/README.md) | exact physical 1.0.2 identity; Blazing Brand, Accursed Rage, Mecha Smite and Mecha Pulse are current-release ability candidates | `LOWER_BOUND 4 CANDIDATES / +0 STRICT` | exact-current completeness is open and the inspected public default source line is older 1.20.1/1.0.1 |
+| [Simply More](../providers/⚠️-simply-more/README.md) | exact Alpha-5 physical/publisher reconciliation; active/passive ability behavior exists | `OPEN / +0 STRICT` | 10 weapon types / 33 Unique items are not action counts and the Alpha explicitly contains rework/incomplete functionality |
+| [Simply Swords](../providers/⚠️-simply-swords/README.md) | exact physical 1.70.2 identity; provider owns Runic/Unique/implicit systems | `OPEN / +0 STRICT` | exact installed discrete-action inventory is not reconstructed; items, tablets, gems and UI/processes are excluded by themselves |
+| [Waystones](../providers/⚠️-waystones/README.md) | exact physical 21.1.45 identity; provider owns persistent teleport network | `OPEN CLASSIFICATION / +0 STRICT` | sibling `Magic` category membership alone does not prove a semantic spell/ritual/action identity |
 
 Other provider directories that have not yet been normalized into a semantic-object row also remain outside the denominator. Absence from the strict table is never interpreted as zero without an explicit zero disposition.
 
@@ -423,8 +431,13 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 To converge on a final denominator efficiently, prioritize:
 
-1. another still-open provider/component for which current/exact evidence can materially reduce inventory or classification uncertainty;
-2. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.2 and Gaze 1.1.7.1 Rites when such evidence becomes available;
-3. obtain deployed host/provider config evidence and close Somake 1.0.9 survival reachability; physical↔publisher equality, exact 83-ID registry, exact 67+16 registration-gate mapping, current-composition 83/83 admission and current 83-card materialization are already closed and must not be re-audited as open.
+1. Reliquified L_Ender's Cataclysm 0.1.1 — complete relic/action inventory;
+2. ShadowsZ 1.1.9 — exact spell/action registry and action classification;
+3. Simply Swords: Cataclysm 1.0.2 — exact-current ability completeness;
+4. Simply More Alpha 5 — complete live unique/implicit ability inventory;
+5. Simply Swords 1.70.2 — exact Runic/Unique/implicit semantic inventory;
+6. Waystones 21.1.45 — exact semantic classification of its teleport network;
+7. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.2 and Gaze 1.1.7.1 Rites when such evidence becomes available;
+8. obtain deployed host/provider config evidence and close Somake 1.0.9 survival reachability; physical↔publisher equality, exact 83-ID registry, exact 67+16 registration-gate mapping, current-composition 83/83 admission and current 83-card materialization are already closed and must not be re-audited as open.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
