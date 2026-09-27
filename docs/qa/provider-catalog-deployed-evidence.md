@@ -292,7 +292,7 @@ Observed locations are limited to:
 
 The report retains only relative paths and those selected fields. It does not copy full JSON payloads.
 
-The physical Somake JAR is hashed independently. Matching the publisher release hash closes byte equality only. An observed spell-config file or override is **evidence about a named config surface, not proof that the corresponding spell is registered, enabled in every layer, or survival-reachable**. The collector still does not close the exact 1.0.9 registry by itself.
+The physical Somake JAR is hashed independently. Matching the publisher release hash closes byte equality only. An observed spell-config file or override is **evidence about a named config surface, not proof that the corresponding spell is enabled in every layer or survival-reachable**. The exact 1.0.9 registry and current 83/83 registration composition are already closed canonically by separate provider evidence; this collector does not replace or re-prove that registry.
 
 ### Traveloptics
 
