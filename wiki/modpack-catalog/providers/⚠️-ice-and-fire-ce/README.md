@@ -1,6 +1,6 @@
 # Ice And Fire Community Edition — 2.1.2
 
-Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / EXACT 2.1.2 SOURCE-SEMVER PIN / 9 ACTIVE MAGIC-ACTION CANDIDATES / +0 STRICT PENDING REACHABILITY+CONFIG`
+Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / EXACT 2.1.2 SOURCE-SEMVER PIN / 7 COUNTED_EXACT ACTION FAMILIES + 2 CONDITIONAL / +7 STRICT / RUNTIME QA SEPARATE`
 
 ## Current physical authority
 
@@ -19,25 +19,28 @@ The public `IAFEnvoy/IceAndFire-CE` `1.21.1` branch has since advanced to 2.1.3.
 
 The source pin is version-exact for semantic corroboration, but is not asserted byte-identical to the publisher JAR.
 
-## Current semantic candidate inventory
+## Current semantic inventory
 
-Exact artifact inspection closes the current item/class surface; exact 2.1.2 source closes the player-facing behavior of **9 independent active magic-action candidates**:
+Exact artifact inspection + exact 2.1.2 source close **9 independent active magic-action families**. A second hash-gated exact-JAR audit run (`36323035696`) closes provider-native recipe/loot acquisition for seven of them.
 
-1. Cockatrice Scepter — sustained withering beam;
-2. Deathworm Gauntlet — active lunge/strike action (three color variants, one semantic family);
-3. Gorgon Head — petrification action;
-4. Dread Lich Staff — dread-skull projectile;
-5. Pixie Wand — pixie magic-charge projectile;
-6. Siren Flute — targeted charm/love action;
-7. Summoning Crystal — teleport a bound Fire/Ice/Lightning dragon (three crystal variants, one semantic family);
-8. Stymphalian Feather Bundle — radial eight-feather volley;
-9. Ghost Sword / Phantasmal Blade — swing-triggered ghost-sword projectile.
+### Strict-counted — 7
+
+1. Cockatrice Scepter — sustained withering beam; exact current recipe + recipe advancement;
+2. Deathworm Gauntlet — active lunge/strike family; three color recipes, one semantic family;
+3. Gorgon Head — petrification action; exact Gorgon entity loot table;
+4. Pixie Wand — pixie magic-charge projectile; exact current recipe;
+5. Siren Flute — targeted charm/love action; exact current recipe;
+6. Summoning Crystal — teleport a bound Fire/Ice/Lightning dragon; three variant recipes, one semantic family;
+7. Stymphalian Feather Bundle — radial eight-feather volley; exact current recipe.
+
+These seven contribute **+7 `COUNTED_EXACT`** semantic objects.
+
+### Remaining conditional — 2
+
+- **Dread Lich Staff** — the exact source equips Dread Liches with the staff, but the exact provider data scan contains no staff recipe/loot/advancement reference and no explicit provider drop-chance route has been proven. Vanilla equipment-drop behavior is not inferred.
+- **Ghost Sword / Phantasmal Blade** — exact current recipe/advancement acquisition is closed, but the swing projectile reads provider-native Jupiter gate `tools.phantasmalBladeAbility`. The deployed value is not available in authoritative project evidence.
 
 See [`ACTIVE-MAGIC-INVENTORY.md`](ACTIVE-MAGIC-INVENTORY.md).
-
-## Why the provider remains ⚠️
-
-This tranche deliberately contributes **+0 strict**. The action identities are sufficiently bounded to catalog, but current survival/reachability is not closed one-by-one against the assembled pack. Ghost Sword additionally has an exact provider-native gate: `tools.phantasmalBladeAbility`. The exact 2.1.2 source default is `true`, but source defaults are not substituted for deployed Jupiter config.
 
 ## Explicit exclusions
 
@@ -52,6 +55,17 @@ This tranche deliberately contributes **+0 strict**. The action identities are s
 
 Ice And Fire CE remains authority for dragons, mythical mobs, tame/ownership/growth state, Dragon Forge, item/power settlement, Jupiter config and worldgen. Black Arcana must not duplicate those runtimes.
 
+## Runtime QA remains separate
+
+Strict semantic inventory closure does not certify:
+
+- deployed `tools.phantasmalBladeAbility`;
+- actual Dread Lich Staff acquisition in the assembled pack;
+- current full-pack worldgen/entity availability;
+- multiplayer/network settlement;
+- item durability/cooldown/config balance;
+- interaction with addons or other magic providers.
+
 ## Result
 
-**⚠️ Partial / conditioned.** Exact physical identity and the 9-action candidate surface are cataloged; strict contribution remains **+0** pending reachability/config closure.
+**⚠️ Partial / conditioned.** Seven exact, provider-reachable magic-action families are strict-counted; **2** action families remain fail-closed. Current strict contribution: **+7**.
