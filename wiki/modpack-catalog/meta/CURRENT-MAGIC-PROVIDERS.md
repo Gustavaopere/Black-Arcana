@@ -8,7 +8,7 @@ O bloco de 595 entradas / NeoForge `21.1.248` abaixo é um **checkpoint históri
 
 O antigo denominador interno de **100 componentes mágicos/cross-domain** permanece apenas como checkpoint histórico: ele foi construído antes da rodada física sibling de 22/09 revelar componentes mágicos adicionais, incluindo Hazen N Stuff. Os fechamentos até Mobstein continuam válidos como **68 componentes canônicos daquele conjunto**, mas `68/100` não deve mais ser publicado como fração técnica corrente. Hazen N Stuff fecha o próximo componente conhecido; o novo denominador global fica `PENDING REBASE` até reconciliação integral da modlist física atual.
 
-A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O mínimo estrito de **1496** foi posteriormente ampliado por Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau 0.8.1 (**+19**), Reliquified Artifacts 1.0.8 (**+52**), Reliquified Iron's Spells 'n Spellbooks 0.2.7 (**+25**), More Relics (**+61**) e Ozymandias Sundries (**+2**), levando o mínimo estrito corrente a **1659**. Ars 'n' Spells 3.3.4, Traveloptics, KubeJS bridges e os novos layers de UI/compat foram reclassificados sem outro delta estrito nesta rodada. Tombstone, Gaze rites, Not Enough Glyphs, Somake e outros blockers abaixo continuam fail-closed onde configuração/inventário atual não está fechado.
+A métrica principal para o usuário é a cobertura de objetos mágicos semânticos — spells, glyphs/spell-parts, rituais/rites e equivalentes discretos. Seu denominador global ainda está em reconstrução; portanto nenhuma porcentagem final é declarada aqui. O mínimo estrito de **1496** foi posteriormente ampliado por Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau 0.8.1 (**+19**), Reliquified Artifacts 1.0.8 (**+52**), Reliquified Iron's Spells 'n Spellbooks 0.2.7 (**+25**), More Relics (**+61**), Ozymandias Sundries (**+2**) e Mowzie's Mobs (**+10 strict**), levando o mínimo estrito corrente a **1669**. Ars 'n' Spells 3.3.4, Traveloptics, KubeJS bridges e os novos layers de UI/compat foram reclassificados sem outro delta estrito nesta rodada. Tombstone, Gaze rites, Not Enough Glyphs, Somake e outros blockers abaixo continuam fail-closed onde configuração/inventário atual não está fechado.
 
 Phase 2BS adiciona T.O Magic n' Extras / `traveloptics` 4.4.0.1-1.21.1 ao conjunto **⚠️ parcial/condicionado**: o publisher file exato `6342780` fecha 33 identidades de spell registradas e exclui 32 roots de localization residuais, mas `traveloptics:blackout` permanece sem rota survival objeto-a-objeto fechada e o JAR exato apresenta risco estrutural em `TOLootModifiers` (`KeyLootModifier.CODEC` referenciado duas vezes; `UniversalLootModifier.CODEC` zero). Portanto Phase 2BS contribui **+0 strict**, não cria componente #67 naquele checkpoint e mantém **1344 / 66 de 100** historicamente. Phase 2BT posteriormente fecha o componente #67 com Vampire Spells Addon sem alterar o total semântico.
 
@@ -18,18 +18,18 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 No sibling `neoforge-rpg-skilltree@359e86c3264af8289e391417abc726f0b2b7e73e` existem **58 linhas status-prefixed cujas pastas de categoria contêm `Magic`**. Essa classificação sibling descreve a taxonomia física do modpack; o prefixo ✅ do dossiê sibling não equivale automaticamente a ✅ do catálogo semântico Black Arcana.
 
-Após normalização de ownership/aliases e o fechamento de Ozymandias nesta rodada:
+Após normalização de ownership/aliases e os fechamentos de Ozymandias + Mowzie's Mobs nesta rodada:
 
 - **48 ✅ catalogados** com diretório Black Arcana correspondente;
-- **5 ⚠️ parciais/condicionados** com diretório Black Arcana correspondente: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone e KubeJS Ars Nouveau;
-- **5 ⚠️ em classificação semântica** por ainda não possuírem diretório Black Arcana: Photon, RunicLib, Mowzie's Mobs, Mowzie's Cataclysm e Pickable Orbs;
+- **6 ⚠️ parciais/condicionados** com diretório Black Arcana correspondente: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau e Mowzie's Mobs;
+- **4 ⚠️ em classificação semântica** por ainda não possuírem diretório Black Arcana: Photon, RunicLib, Mowzie's Cataclysm e Pickable Orbs;
 - **0 ❌** são declarados apenas pela taxonomia sibling: os cinco itens acima ainda precisam ser classificados antes de decidir se são providers semânticos, infraestrutura zero-semantic ou conteúdo fora da métrica;
 - **0 🟡** de implementação ativa;
 - **0 ⛔** por ausência total de evidência.
 
-Assim, **53/58** linhas da categoria física `Magic` já mapeiam para diretórios Black Arcana. As cinco restantes formam a próxima fila de classificação; elas não entram no denominador semântico por presunção.
+Assim, **54/58** linhas da categoria física `Magic` já mapeiam para diretórios Black Arcana. As quatro restantes formam a próxima fila de classificação; elas não entram no denominador semântico por presunção.
 
-**Cross-domain note:** o subtotal físico `Magic` continua sem representar o universo global. Gaze permanece ⚠️ com um spell contado + 26 rites config-condicionais; Ender's Spells and Stuff: Requiem é ✅ com 53 ações strict; Reliquified Ars Nouveau, Reliquified Artifacts e Reliquified Iron's são ✅ com 19, 52 e 25 ability roots source-pinned; Iron's Spellbooks KubeJS permanece ⚠️ fora dessa categoria sibling atual; More Relics é ✅ com 61 ability roots exatas; Ozymandias Sundries agora é ✅ com 2 spells exatos; Traveloptics permanece ⚠️ +0 strict pendente de fechamento exato-current. Spell Actionbar, Specs, Recolor e Immersive Portal continuam componentes técnicos/runtime com +0 identidades independentes.
+**Cross-domain note:** o subtotal físico `Magic` continua sem representar o universo global. Gaze permanece ⚠️ com um spell contado + 26 rites config-condicionais; Ender's Spells and Stuff: Requiem é ✅ com 53 ações strict; Reliquified Ars Nouveau, Reliquified Artifacts e Reliquified Iron's são ✅ com 19, 52 e 25 ability roots source-pinned; Iron's Spellbooks KubeJS permanece ⚠️ fora dessa categoria sibling atual; More Relics é ✅ com 61 ability roots exatas; Ozymandias Sundries agora é ✅ com 2 spells exatos; Mowzie's Mobs é ⚠️ com 10 poderes strict + 1 Tunneling config-condicional; Traveloptics permanece ⚠️ +0 strict pendente de fechamento exato-current. Spell Actionbar, Specs, Recolor e Immersive Portal continuam componentes técnicos/runtime com +0 identidades independentes.
 **Traveloptics current-physical override:** Project Library physical evidence directly records `traveloptics-4.4.0.1-1.21.1.jar` / SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This outranks the absence of a status-prefixed sibling row for presence/version. The installed digest differs from the audited publisher alpha and known patch artifact, so Traveloptics is a current **⚠️ `OTHER_VERIFIED` / +0 strict** provider blocker until its installed-byte registry and reachability are closed.
 
 Fechamentos recentes relevantes:
@@ -54,11 +54,12 @@ Fechamentos recentes relevantes:
 - ✅ Reliquified Iron's Spells 'n Spellbooks 0.2.7 — **25 `COUNTED_SOURCE_PINNED`** provider-owned relic ability roots.
 - ✅ More Relics 1.7.7-forRelics-0.12.8-1.0 — exact physical/publisher File `8859015` equality; **29 owners / 61 owner-scoped ability roots = +61 `COUNTED_EXACT`**; exact builder/localization root sets agree, runtime/config/evolution QA remains separate.
 - ✅ Ozymandias Sundries physical 0.0.5 / embedded 0.0.1 — exact File `6978561` hash match; **2 unconditional registered spells = +2 `COUNTED_EXACT`** (`levitate`, `lightning_warp`); unregistered class/localization residue excluded; runtime/config QA separate.
+- ⚠️ Mowzie's Mobs 1.8.2 — exact File `7760267` hash match; **13 active player-ability slots**, reconciled to **10 strict `COUNTED_EXACT` powers + 1 `CONDITIONAL` Tunneling power**; `hit_boulder`/`backstab` technical-subaction slots and four inactive ids excluded.
 - ⚠️ Traveloptics 4.4.0.1-1.21.1 — current physical provider; installed artifact is `OTHER_VERIFIED`; publisher-baseline 33 spells are not promoted as exact-current; **+0 strict**.
 - ⚠️ Iron's Spellbooks KubeJS 4.0.3 / KubeJS Ars Nouveau 1.3.2 — **+0 fixed built-in identities**, current pack script/mutation inventory still open.
 - ⚠️ Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Specs — runtime/interop audits remain partial, but each is explicitly **+0 independent semantic identities**.
 
-O mínimo semântico estrito corrente é **1659**. O denominador semântico final e o denominador técnico cross-domain continuam abertos; não publicar percentual global.
+O mínimo semântico estrito corrente é **1669**. O denominador semântico final e o denominador técnico cross-domain continuam abertos; não publicar percentual global.
 
 ## Provider freshness override — Ars Controle 1.6.16
 
