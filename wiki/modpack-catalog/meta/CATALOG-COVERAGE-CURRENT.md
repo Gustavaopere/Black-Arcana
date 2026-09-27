@@ -10,7 +10,7 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 The canonical provider tree now contains **115 top-level provider directories = 99 ✅ + 16 ⚠️**. This count was obtained directly from `wiki/modpack-catalog/providers/` after consolidating the duplicate Vampiric Ageing directory pair that represented the same mod id `vampiricageing`, installed JAR and source pin.
 
-This is a **repository catalog-structure metric only**. It does not regenerate the historical cross-domain component denominator, does not prove that 109 is the unique current physical-provider denominator, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
+This is a **repository catalog-structure metric only**. It does not regenerate the historical cross-domain component denominator, does not prove that 115 is the unique current physical-provider denominator, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
 
 See [PROVIDER-DIRECTORY-INVENTORY.md](./PROVIDER-DIRECTORY-INVENTORY.md).
 
