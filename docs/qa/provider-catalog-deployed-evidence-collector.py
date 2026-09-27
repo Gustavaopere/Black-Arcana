@@ -404,6 +404,43 @@ def rel(path: Path, root: Path) -> str:
         return path.name
 
 
+def collect_kubejs_script_inventory(instance: Path) -> dict[str, Any]:
+    root = instance / "kubejs"
+    surfaces = {
+        "startup_scripts": root / "startup_scripts",
+        "server_scripts": root / "server_scripts",
+        "client_scripts": root / "client_scripts",
+        "data": root / "data",
+    }
+    rows: list[dict[str, Any]] = []
+    counts = {surface: 0 for surface in surfaces}
+
+    for surface, surface_root in surfaces.items():
+        if not surface_root.is_dir():
+            continue
+        for path in sorted(surface_root.rglob("*")):
+            if not path.is_file() or path.suffix.lower() not in TEXT_EXTENSIONS:
+                continue
+            digest = digest_file(path)
+            rows.append(
+                {
+                    "surface": surface,
+                    "path": rel(path, instance),
+                    "sha256": digest["sha256"],
+                    "size_bytes": digest["size_bytes"],
+                }
+            )
+            counts[surface] += 1
+
+    rows.sort(key=lambda row: row["path"])
+    return {
+        "kubejs_root_present": root.is_dir(),
+        "file_count": len(rows),
+        "surface_counts": counts,
+        "files": rows,
+    }
+
+
 def candidate_worlds(instance: Path, explicit: list[Path]) -> list[Path]:
     out: list[Path] = []
     seen: set[Path] = set()
@@ -993,6 +1030,7 @@ def main() -> int:
             instance,
             args.probe_log.expanduser() if args.probe_log is not None else None,
         ),
+        "kubejs_script_inventory": collect_kubejs_script_inventory(instance),
         "asterism_arcanum": collect_asterism(instance, worlds),
         "corail_tombstone": collect_tombstone(instance, worlds),
         "gaze": collect_gaze(instance, worlds),
@@ -1005,6 +1043,7 @@ def main() -> int:
             "Missing files/keys are observations, not proof that provider defaults are active.",
             "defaultconfigs is template evidence and must not override an observed world/serverconfig value.",
             "No full config/script/quest/log payloads are copied into the report; only selected keys, hashes, bounded literal-reference locations, and whitelisted fields from the last complete catalog-probe block are emitted.",
+            "KubeJS inventory records only relative paths, surface labels, SHA-256 digests and byte sizes for bounded startup/server/client/data text files; script/data bodies are never copied.",
             "Runtime probe ingestion never retains raw log lines, timestamps, thread names, or unrelated log content.",
             "A deployed reference to traveloptics:blackout is evidence input, not automatic proof of a survival acquisition route.",
             "Observed Somake Iron's spell-config files are override evidence only; file presence is not treated as proof of registration or reachability.",
