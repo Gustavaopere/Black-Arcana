@@ -185,7 +185,7 @@ Gemstone of Prayer is treated as an invocation/support surface for the already-c
 
 Exact semantic deduplication of these 12 candidates is now closed by the hash-matched 9.5.6 castable-surface audit. Each candidate maps to one action family and one provider `allow_*` eligibility gate; internal modes/effects are not multiplied into extra identities. See `EXACT-9.5.6-CONDITIONAL-CASTABLE-MATRIX.md`. Only the deployed `AllowedMagicItems` values remain before any of these 12 families can enter the strict numerator.
 
-The read-only collection path is now standardized by [`docs/qa/provider-catalog-deployed-evidence.md`](../../../../docs/qa/provider-catalog-deployed-evidence.md): it records only the 12 Tombstone eligibility booleans relevant to these candidates from bounded deployed config roots. No actual pack value has been captured by this repository checkpoint; the provider therefore remains fail-closed.
+The read-only collection path is standardized by [`docs/qa/provider-catalog-deployed-evidence.md`](../../../../docs/qa/provider-catalog-deployed-evidence.md): it records only the exact 9.5.6 physical fingerprint comparison plus the 12 Tombstone eligibility booleans relevant to these candidates from bounded deployed config roots. Canonical acceptance steps are in [`DEPLOYED-CONFIG-CHECKLIST.md`](DEPLOYED-CONFIG-CHECKLIST.md). No actual current-instance value has been captured by this repository checkpoint; the provider therefore remains fail-closed.
 
 ## Runtime / authority boundary
 

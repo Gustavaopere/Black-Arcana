@@ -80,6 +80,8 @@ Therefore:
 
 Source default values are not substituted for the deployed pack config.
 
+Canonical closure procedure: [`DEPLOYED-CONFIG-CHECKLIST.md`](DEPLOYED-CONFIG-CHECKLIST.md). The read-only deployed-evidence collector now captures both the exact 1.8.2 physical fingerprint comparison and bounded `enable_tunneling` observations.
+
 ## Strict semantic disposition
 
 - strict counted actions: **10**;

@@ -13,7 +13,8 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 - Not Enough Glyphs 4.6.2;
 - Corail Tombstone 9.5.6;
 - Somake Spells 1.0.9;
-- T.O Magic n' Extras / Traveloptics 4.4.0.1 — **historical-instance support only; not a current sibling provider**;
+- Mowzie's Mobs 1.8.2;
+- T.O Magic n' Extras / Traveloptics 4.4.0.1 — current physical override/provider blocker even though it is absent from the sibling status-prefixed taxonomy;
 - bounded deployed customization references relevant to those same closure gates.
 
 It does not alter the instance, generate provider configs, enable content, create datapacks, or infer defaults from absent files.
@@ -120,7 +121,8 @@ Special comparisons:
   - exact patch candidate SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`;
 - Gaze 1.1.7.1 is compared against exact known artifact SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`;
 - Not Enough Glyphs 4.6.2 is compared against exact publisher-release SHA-1 `32eea2c478a346ee7499f6a0db156241116f73e9`;
-- Corail Tombstone 9.5.6 is compared against exact publisher-release SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`.
+- Corail Tombstone 9.5.6 is compared against exact publisher-release SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`;
+- Mowzie's Mobs 1.8.2 is compared against the exact current physical/publisher SHA-1 `d64475cd77444b056ece6472c79d40293dc63c6c`.
 
 A missing file is not converted into a replacement identity.
 
@@ -207,6 +209,28 @@ Only matching key paths, boolean values, relative file paths and parser status/e
 `defaultconfigs` remains template evidence only. If multiple observations exist, the catalog reviewer must resolve actual deployed precedence from the instance/world that generated the report.
 
 These values close only the **provider eligibility/config** part of Tombstone's remaining magic-item candidates. They do not automatically decide semantic deduplication, acquisition, use reachability, runtime settlement or whether a candidate should enter the strict numerator.
+
+### Mowzie's Mobs
+
+The collector hashes the exact current filename:
+
+`mowziesmobs-1.21.1-1.8.2.jar`
+
+and emits `current_physical_1_8_2_equality` against canonical SHA-1 `d64475cd77444b056ece6472c79d40293dc63c6c`.
+
+It also searches only the bounded config roots:
+
+- `config/`;
+- `defaultconfigs/`;
+- discovered/explicit world `serverconfig/`;
+
+for the exact key:
+
+`enable_tunneling`
+
+The catalog acceptance rule is provider-specific. A matching physical fingerprint plus an authoritative effective deployed value of `tools_and_abilities.earthrend_gauntlet.enable_tunneling` resolves the current catalog blocker. `true` promotes Tunneling into the strict semantic numerator; `false` closes it as deployed-disabled with no semantic delta. Missing/ambiguous precedence remains fail-closed.
+
+See [`wiki/modpack-catalog/providers/⚠️-mowzies-mobs/DEPLOYED-CONFIG-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-mowzies-mobs/DEPLOYED-CONFIG-CHECKLIST.md).
 
 ### Somake Spells
 
@@ -326,7 +350,8 @@ Do not convert missing files into source-default values unless the actual runtim
 - Gaze: effective `disableGazeRites`;
 - NEG: effective enabled state for 39 candidates, via deployed TOML evidence or schema-3 exact-server `type=glyph` runtime observations;
 - Corail Tombstone: physical 9.5.6 equality plus the 12 bounded `AllowedMagicItems` booleans that gate the remaining tablets/gemstones/Grave Key/Lost Tablet/Magic Scroll/Scroll of Knowledge candidates; semantic deduplication and reachability still require provider-specific review;
-- Somake: physical 1.0.9 equality, deployed `enableSpellLockSystem`, and bounded Iron's per-spell/global/datapack override evidence for `enabled`, `school` and `allow_crafting`; exact **deployed** 1.0.9 registry identity may be paired from deterministic assembled-server registry observation, while generalized registration predicates remain provider-authoritative;
-- Traveloptics: **historical-instance only** — original-vs-patched physical disposition plus bounded discovery of deployed `traveloptics:blackout` references for an archived 4.4.0.1 pack; it is not a current sibling blocker.
+- Somake: physical equality and 83/83 registration composition are already closed canonically; the collector can corroborate the installed hash and reduce the remaining deployed `enableSpellLockSystem` plus Iron's per-spell/global/datapack `enabled` / `school` / `allow_crafting` gates;
+- Mowzie's Mobs: current physical 1.8.2 equality plus effective deployed `enable_tunneling`;
+- Traveloptics: current physical override/provider blocker — classify the actual installed JAR and discover bounded deployed `traveloptics:blackout` references; exact-current registry/loot/acquisition review remains provider-specific.
 
-The collector does not solve Somake's exact 1.0.9 registry by itself. Pair it with [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) when exact assembled-server Iron's registry identity and effective host `school` / `enabled` / `allow_crafting` observations are required. For the current physical pack, those runtime rows may close the deployed registration outcome when paired with physical identity/mod-presence evidence; they do not establish a universal predicate contract. The runtime probe is separate QA evidence and still does not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.
+Somake's exact 1.0.9 registry and current 83/83 registration composition are already closed by canonical provider evidence; the collector is used for deployed config/host/reachability evidence, not to redo that registry. Pair it with [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) when exact assembled-server Iron's registry identity and effective host `school` / `enabled` / `allow_crafting` observations are required. For the current physical pack, those runtime rows may close the deployed registration outcome when paired with physical identity/mod-presence evidence; they do not establish a universal predicate contract. The runtime probe is separate QA evidence and still does not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.
