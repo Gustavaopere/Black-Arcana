@@ -281,7 +281,7 @@ Phase 2BD materialized CurseForge File ID `8675568` through Curse Maven in an is
 
 The seven spells are `summon_shadows`, `ice_age`, `ice_chamber`, `megido`, `fire_fist`, `end_mayhem` and `switcheroo`. The eleven rituals are the five familiar-shard rituals (`archmage`, `druid`, `frostling`, `hunter`, `lightning_mage`), `summoner_shard`, four magic power/resistance tier rituals and `truth_mirror`. Exact numerical mechanics and runtime QA remain separate gates.
 
-The 4.0 ownership migration remains controlling: Sound/Melodic content belongs to Tunes n' Tomes and is not counted again under Alshanex. Familiar AI/passives and casts of externally owned Iron's spells also add zero identities. Clean-room inspection retained only factual IDs/counts/signatures and structured resource facts; no upstream implementation/assets were copied or adapted. See [`../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md`](../providers/alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md).
+The 4.0 ownership migration remains controlling: Sound/Melodic content belongs to Tunes n' Tomes and is not counted again under Alshanex. Familiar AI/passives and casts of externally owned Iron's spells also add zero identities. Clean-room inspection retained only factual IDs/counts/signatures and structured resource facts; no upstream implementation/assets were copied or adapted. See [`../providers/✅-alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md`](../providers/✅-alshanex-familiars/EXACT-4.0.3-ARTIFACT-AUDIT.md).
 
 ### Cataclysm: Spellbooks 1.1.13 exact-artifact closure
 
@@ -289,7 +289,7 @@ Phase 2BE materialized CurseForge File ID `8792628` through Curse Maven in isola
 
 The exact implementation-package distribution is 7 Abyssal, 4 Ender, 1 Evocation, 5 Holy, 11 Fire, 5 Ice, 4 Nature and 22 Technomancy. The exact English localization has 69 root spell keys, but ten are not registered current spell IDs/classes and are excluded as translation-only/WIP-or-residual evidence: `conjure_abyssal_gnawer`, `conjure_clawdian`, `conjure_coral_golem`, `conjure_coralssus`, `cryopiercer`, `final_rend`, `hemorrhaging_impact`, `parting_shot`, `quick_strike`, `scorched_earth`.
 
-The generic/current publisher project page advertises 65 spells, but that project-scale claim is not substituted for the physically installed 1.1.13 registry; a newer 1.1.14 beta also exists after the installed file. Exact numerical mechanics, acquisition and runtime/API integration remain separate gates. See [`../providers/cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md`](../providers/cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md) and [`../providers/cataclysm-spellbooks/EXACT-1.1.13-SPELL-INVENTORY.md`](../providers/cataclysm-spellbooks/EXACT-1.1.13-SPELL-INVENTORY.md).
+The generic/current publisher project page advertises 65 spells, but that project-scale claim is not substituted for the physically installed 1.1.13 registry; a newer 1.1.14 beta also exists after the installed file. Exact numerical mechanics, acquisition and runtime/API integration remain separate gates. See [`../providers/✅-cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md`](../providers/✅-cataclysm-spellbooks/EXACT-1.1.13-ARTIFACT-AUDIT.md) and [`../providers/✅-cataclysm-spellbooks/EXACT-1.1.13-SPELL-INVENTORY.md`](../providers/✅-cataclysm-spellbooks/EXACT-1.1.13-SPELL-INVENTORY.md).
 
 ### Hexalia 1.3.7 release-source reconciliation
 
@@ -343,16 +343,16 @@ The four real Ars Elemental primitives referenced by Not Enough Glyphs are not N
 
 The following audited providers add **0** independent semantic objects under this metric:
 
-- [Ars Creo](../providers/ars-creo/README.md) — Create/Ars bridge, no own glyph registry;
-- [Ars Elemancy](../providers/ars-elemancy/README.md) — equipment specialization, empty glyph registration;
-- [Ars Polymorphia](../providers/ars-polymorphia/README.md) — Phase 2BM source-pinned recipe-conflict bridge; `ZERO_SEMANTIC_BRIDGE`, +0; current-host runtime compatibility remains fail-closed;
-- [Ars Sable](../providers/ars-sable/README.md) — Phase 2BN source-pinned spatial/sublevel compatibility bridge; `ZERO_SEMANTIC_BRIDGE`, +0; current-host Sable/Ars mixin compatibility remains fail-closed;
-- [FamiliarsLib](../providers/familiarslib/README.md) — familiar framework; historical Sound content removed from the 1.7 line;
-- [GTBC's SpellLib](../providers/gtbcs-spelllib/README.md) — shared spell/addon library infrastructure; publisher surface establishes no standalone gameplay/spell catalog in 2.2.0;
-- [Soul Fire'd](../providers/soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
-- [Vampire Spells Addon](../providers/vampire-spells-addon/README.md) — Phase 2BT exact-release source-pinned `ZERO_BRIDGE_INFRA`; +0; modifies Iron's/Vampirism behavior without minting a provider-owned spell/action identity; runtime bridge QA remains fail-closed;
+- [Ars Creo](../providers/✅-ars-creo/README.md) — Create/Ars bridge, no own glyph registry;
+- [Ars Elemancy](../providers/✅-ars-elemancy/README.md) — equipment specialization, empty glyph registration;
+- [Ars Polymorphia](../providers/✅-ars-polymorphia/README.md) — Phase 2BM source-pinned recipe-conflict bridge; `ZERO_SEMANTIC_BRIDGE`, +0; current-host runtime compatibility remains fail-closed;
+- [Ars Sable](../providers/✅-ars-sable/README.md) — Phase 2BN source-pinned spatial/sublevel compatibility bridge; `ZERO_SEMANTIC_BRIDGE`, +0; current-host Sable/Ars mixin compatibility remains fail-closed;
+- [FamiliarsLib](../providers/✅-familiarslib/README.md) — familiar framework; historical Sound content removed from the 1.7 line;
+- [GTBC's SpellLib](../providers/✅-gtbcs-spelllib/README.md) — shared spell/addon library infrastructure; publisher surface establishes no standalone gameplay/spell catalog in 2.2.0;
+- [Soul Fire'd](../providers/✅-soul-fire-d/README.md) — fire/enchantment content, 0 spells/glyphs/rituals;
+- [Vampire Spells Addon](../providers/✅-vampire-spells-addon/README.md) — Phase 2BT exact-release source-pinned `ZERO_BRIDGE_INFRA`; +0; modifies Iron's/Vampirism behavior without minting a provider-owned spell/action identity; runtime bridge QA remains fail-closed;
 - [Create: Wizardry](../providers/✅-create-wizardry/README.md) — current physical 1.21.1-0.5.1-pre1 source-pinned `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION`; +0; Blaze Caster/Mana Siphon automate or constrain Iron's-owned spell/mana behavior without minting provider-owned spell identities; runtime settlement remains fail-closed;
-- [Toxony](../providers/toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
+- [Toxony](../providers/✅-toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
 - [Mobstein](../providers/✅-mobstein/README.md) — exact 5.4.4 physical SHA-1 plus hash-matched resource-only clean-room audit closes the residual boundary as `ZERO_SEMANTIC_ACTIONS`: documented syringes are item interactions and surfaced action-like keybinds are entity/mount controls; **+0** independent semantic magic objects; runtime/API integration remains separately fail-closed;
 - [Acolyte](../providers/✅-acolyte/README.md) — exact 1.0.3 release-bounded structural audit finds no provider-owned spell identity; Iron's host spells remain externally owned; **+0**.
 - [Immersive Portal - Iron's Spells Addon](../providers/⚠️-immersive-portal-irons-spells-addon/README.md) — adapts Iron's existing Portal Spell into the portal runtime; **0 independent spell identities / +0 strict**; release-exact/runtime QA remains partial.
