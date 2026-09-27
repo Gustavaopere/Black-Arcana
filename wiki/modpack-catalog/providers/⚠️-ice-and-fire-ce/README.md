@@ -1,6 +1,6 @@
 # Ice And Fire Community Edition — 2.1.2
 
-Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / EXACT 2.1.2 SOURCE-SEMVER PIN / 7 COUNTED_EXACT ACTION FAMILIES + 2 CONDITIONAL / +7 STRICT / RUNTIME QA SEPARATE`
+Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / EXACT 2.1.2 SOURCE-SEMVER PIN / 8 COUNTED_EXACT ACTION FAMILIES + 1 CONDITIONAL / +8 STRICT / RUNTIME QA SEPARATE`
 
 ## Current physical authority
 
@@ -21,26 +21,26 @@ The source pin is version-exact for semantic corroboration, but is not asserted 
 
 ## Current semantic inventory
 
-Exact artifact inspection + exact 2.1.2 source close **9 independent active magic-action families**. A second hash-gated exact-JAR audit run (`36323035696`) closes provider-native recipe/loot acquisition for seven of them.
+Exact artifact inspection + exact 2.1.2 source close **9 independent active magic-action families**. Hash-gated exact-JAR run `36323035696` closes provider-native recipe/loot acquisition for seven; current-pack runtime audit `36327488231` closes Dread Lich Staff acquisition through exact 2.1.2 equipment behavior plus NeoForge 21.1.250 inherited equipment-drop semantics.
 
-### Strict-counted — 7
+### Strict-counted — 8
 
 1. Cockatrice Scepter — sustained withering beam; exact current recipe + recipe advancement;
 2. Deathworm Gauntlet — active lunge/strike family; three color recipes, one semantic family;
 3. Gorgon Head — petrification action; exact Gorgon entity loot table;
-4. Pixie Wand — pixie magic-charge projectile; exact current recipe;
-5. Siren Flute — targeted charm/love action; exact current recipe;
-6. Summoning Crystal — teleport a bound Fire/Ice/Lightning dragon; three variant recipes, one semantic family;
-7. Stymphalian Feather Bundle — radial eight-feather volley; exact current recipe.
+4. Dread Lich Staff — projectile staff; exact current JAR equips Dread Liches in `MAINHAND`, and exact current-pack NeoForge 21.1.250 gives ordinary hand equipment a `0.085` drop chance through the inherited `Mob` equipment-drop path;
+5. Pixie Wand — pixie magic-charge projectile; exact current recipe;
+6. Siren Flute — targeted charm/love action; exact current recipe;
+7. Summoning Crystal — teleport a bound Fire/Ice/Lightning dragon; three variant recipes, one semantic family;
+8. Stymphalian Feather Bundle — radial eight-feather volley; exact current recipe.
 
-These seven contribute **+7 `COUNTED_EXACT`** semantic objects.
+These eight contribute **+8 `COUNTED_EXACT`** semantic objects.
 
-### Remaining conditional — 2
+### Remaining conditional — 1
 
-- **Dread Lich Staff** — the exact source equips Dread Liches with the staff, but the exact provider data scan contains no staff recipe/loot/advancement reference and no explicit provider drop-chance route has been proven. Vanilla equipment-drop behavior is not inferred.
 - **Ghost Sword / Phantasmal Blade** — exact current recipe/advancement acquisition is closed, but the swing projectile reads provider-native Jupiter gate `tools.phantasmalBladeAbility`. The deployed value is not available in authoritative project evidence.
 
-See [`ACTIVE-MAGIC-INVENTORY.md`](ACTIVE-MAGIC-INVENTORY.md).
+See [`ACTIVE-MAGIC-INVENTORY.md`](ACTIVE-MAGIC-INVENTORY.md) and [`DREAD-LICH-STAFF-EXACT-RUNTIME-REACHABILITY.md`](DREAD-LICH-STAFF-EXACT-RUNTIME-REACHABILITY.md).
 
 ## Explicit exclusions
 
@@ -60,7 +60,6 @@ Ice And Fire CE remains authority for dragons, mythical mobs, tame/ownership/gro
 Strict semantic inventory closure does not certify:
 
 - deployed `tools.phantasmalBladeAbility`;
-- actual Dread Lich Staff acquisition in the assembled pack;
 - current full-pack worldgen/entity availability;
 - multiplayer/network settlement;
 - item durability/cooldown/config balance;
@@ -68,4 +67,4 @@ Strict semantic inventory closure does not certify:
 
 ## Result
 
-**⚠️ Partial / conditioned.** Seven exact, provider-reachable magic-action families are strict-counted; **2** action families remain fail-closed. Current strict contribution: **+7**.
+**⚠️ Partial / conditioned.** Eight exact, provider-reachable magic-action families are strict-counted; **1** action family remains fail-closed. Current strict contribution: **+8**.
