@@ -127,6 +127,15 @@ allow_lost_tablet = false
             self.assertFalse(entry["current_physical_0_1_0_equality"])
 
 
+    def test_neg_config_targets_use_canonical_glyph_resource_paths(self) -> None:
+        self.assertEqual(39, len(collector.NEG_CONFIGS))
+        for registry_id, relative_path in collector.NEG_CONFIGS:
+            namespace, path = registry_id.split(":", 1)
+            self.assertTrue(path.startswith("glyph_"), registry_id)
+            self.assertEqual(namespace, Path(relative_path).parent.as_posix())
+            self.assertTrue(Path(relative_path).name.startswith("glyph_"), relative_path)
+
+
     def test_runtime_probe_accepts_schema3_neg_glyph_observation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
