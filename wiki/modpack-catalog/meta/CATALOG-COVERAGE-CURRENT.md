@@ -123,8 +123,9 @@ Therefore:
 - semantic numerator delta from More Relics 1.7.7-forRelics-0.12.8-1.0 exact-artifact ability closure: **+61 `COUNTED_EXACT`**;
 - semantic numerator delta from Ozymandias Sundries physical 0.0.5 exact-artifact closure: **+2 `COUNTED_EXACT`**;
 - semantic numerator delta from Mowzie's Mobs 1.8.2 exact-artifact closure: **+10 `COUNTED_EXACT`**; one additional Tunneling power remains conditional;
+- semantic numerator delta from Ice And Fire CE 2.1.2 exact-artifact reachability closure: **+7 `COUNTED_EXACT`**; Dread Lich Staff and Ghost Sword remain conditional;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
-- strict reconstructible semantic minimum: **1669**;
+- strict reconstructible semantic minimum: **1676**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
