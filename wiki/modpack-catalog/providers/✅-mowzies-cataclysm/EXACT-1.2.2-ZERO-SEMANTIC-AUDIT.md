@@ -29,4 +29,3 @@ The eight data files are four Eye recipes and four worldgen structure tags. The 
 ## Conclusion
 
 The exact installed provider adds locator content, not a spell/ritual/ability catalog. Strict semantic delta: **+0**.
-
