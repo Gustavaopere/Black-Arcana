@@ -118,8 +118,9 @@ Therefore:
 - semantic numerator delta from Reliquified Artifacts 1.0.8 source-pinned closure: **+52**;
 - semantic numerator delta from Reliquified Iron's Spells 'n Spellbooks 0.2.7 source-pinned closure: **+25**;
 - semantic numerator delta from More Relics 1.7.7-forRelics-0.12.8-1.0 exact-artifact ability closure: **+61 `COUNTED_EXACT`**;
+- semantic numerator delta from Ozymandias Sundries physical 0.0.5 exact-artifact closure: **+2 `COUNTED_EXACT`**;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
-- strict reconstructible semantic minimum: **1657**;
+- strict reconstructible semantic minimum: **1659**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
