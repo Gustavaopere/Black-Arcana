@@ -1,6 +1,6 @@
 # Black Arcana — Catálogo Global de Magia e Feitiços
 
-Última sincronização: 2026-09-23
+Última sincronização: 2026-09-26
 
 Este arquivo é o índice operacional global de catalogação do projeto. A árvore detalhada canônica é `wiki/modpack-catalog/providers/`; o ledger semântico reconstruível é `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md`; e a cobertura técnica de componentes é `wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md`.
 
@@ -9,6 +9,27 @@ O objetivo deste índice é responder duas perguntas sem misturá-las:
 1. quais providers possuem ações mágicas semanticamente contáveis e já possuem inventário atual suficientemente fechado;
 2. quais providers/extensões mágicas foram auditados mas contribuem zero ações independentes, permanecem condicionais ou ainda precisam ser revalidados.
 
+## Override corrente — 26/09/2026
+
+Os números correntes **não** devem ser lidos da tabela histórica da seção 1. A autoridade atual é:
+
+- árvore detalhada: `wiki/modpack-catalog/providers/`;
+- ledger semântico: `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md`;
+- cobertura/rebase técnico: `wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md`;
+- visão de providers atuais: `wiki/modpack-catalog/meta/CURRENT-MAGIC-PROVIDERS.md`.
+
+Estado canônico corrente:
+
+- ✅ mínimo semântico estrito reconstruível: **1596 objetos mágicos**;
+- ⚠️ denominador semântico final: **ainda aberto** — não publicar porcentagem global;
+- ⚠️ denominador técnico cross-domain: **`PENDING REBASE`** — o antigo `68/100` é histórico;
+- subtotal físico sibling da categoria exata `Magic`: **45 providers = 41 ✅ + 4 ⚠️**;
+- os quatro ⚠️ nessa categoria física são **Asterism Arcanum, Somake Spells, Not Enough Glyphs e Corail Tombstone**;
+- providers cross-domain/root-level atuais ampliam esse universo: Gaze, Requiem, Traveloptics, More Relics, KubeJS bridges, Spell Actionbar/Specs/Recolor/Immersive Portal e addons Reliquified, entre outros.
+
+Deltas já incorporados depois do antigo checkpoint 1382 incluem Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau (**+19**), Reliquified Artifacts (**+52**) e Reliquified Iron's Spells 'n Spellbooks (**+25**). Wind's Spellbooks, Ars 'n' Spells 3.3.4 e outros providers revalidados permanecem dentro da aritmética corrente sem novo delta nesta reconciliação.
+
+Blockers estáticos que continuam fail-closed por falta de evidência implantada/exata incluem: 26 Spirit Rites de Gaze, 39 candidatos de Not Enough Glyphs, 12 famílias condicionais de Tombstone, config/reachability de Somake, `astral_gateway`, inventário exato atual de More Relics e Traveloptics, além das superfícies mutáveis dos bridges KubeJS.
 ## Legenda obrigatória
 
 - ✅ **Catalogado** — existe inventário/contrato suficientemente fechado para o escopo indicado; isso inclui fechamento correto em **zero** objetos mágicos próprios.
@@ -19,18 +40,18 @@ O objetivo deste índice é responder duas perguntas sem misturá-las:
 
 **Regra:** estes marcadores descrevem **catalogação**, salvo quando uma coluna diz explicitamente `Runtime`. `COUNTED_*` também é estado de confiança do inventário semântico, não certificado de runtime, ABI, balanceamento ou full-pack QA.
 
-## Snapshot de autoridade
+## Snapshot histórico de autoridade — não corrente
 
 - Black Arcana base desta reconciliação: `main@e391e11675b951150a7b01049d2d908b01d82641`.
 - RPG Skill Tree sibling mais recente consultado: `main@ee08513c9e8992418c508bae485f3a181deb7f9c`.
 - O índice físico sibling atual reconcilia **587 entradas top-level incluindo o modloader**; para Create: Wizardry, a linha certificada atual é **#166**. O antigo snapshot Black Arcana de 595 entradas abaixo permanece histórico até regeneração integral do denominator mágico.
 - Snapshot físico canônico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
-- **Override semântico corrente:** Hazen N Stuff #358 elevou o mínimo estrito canônico para **1382**. Create: Wizardry fecha em **+0**. Ars Controle físico #41 foi revalidado em `1.6.16`; o registry `ACRegistry.java` é blob-idêntico ao `1.6.15`, preservando 9 objetos e delta **+0**. Portanto o mínimo permanece **1382**.
+- **Checkpoint histórico:** neste ponto Hazen N Stuff havia elevado o mínimo estrito para **1382**; esse número foi posteriormente superado e hoje é apenas provenance. O override corrente acima prevalece.
 
-## 1. Ledger semântico global atual — 41 providers / 1382 objetos
+## 1. Snapshot histórico do ledger — 41 providers / 1382 objetos
 
-Esta tabela reproduz o conjunto **strict-counted** do ledger canônico. O contador inclui uma identidade apenas uma vez sob seu dono semântico: spell standalone, glyph/spell-part primitivo, ritual/rite ou ação sobrenatural equivalente. Escolas, itens, equipamentos, familiars, efeitos/status, recursos, aliases, slots-proxy, composições arbitrárias de Ars e consequências secundárias não geram nova identidade.
+Esta tabela preserva o conjunto **strict-counted do checkpoint 1382** e não deve ser usada como estado corrente. O contador histórico já seguia a regra de contar cada identidade uma vez sob seu dono semântico; a lista moderna deve ser lida no ledger canônico em `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md`.
 
 | Provider | Linha física/canônica | Objetos contados | Estado do inventário | Base semântica resumida |
 | --- | --- | ---: | --- | --- |
@@ -144,16 +165,15 @@ Estado global dessa camada: ✅ **Catalogado (32 contratos)**.
 
 As métricas têm denominadores diferentes:
 
-- ✅ **Ledger semântico strict-counted:** **41 providers / 1382 objetos mágicos reconstruíveis**.
+- ✅ **Ledger semântico strict-counted corrente:** **1596 objetos mágicos reconstruíveis**.
 - ⚠️ **Denominador semântico global:** ainda incompleto; portanto **nenhuma porcentagem final de spells/magia é declarada**.
-- ⚠️ **Cobertura técnica de componentes:** o antigo `68/100` é apenas checkpoint histórico; a modlist física atual revelou componentes adicionais e o denominador técnico global está `PENDING REBASE`. Nenhum percentual técnico corrente é declarado.
-- ✅ **Ars Controle 1.6.16 revalidado:** 9 spell parts preservados por continuidade exata do registry source; delta semântico +0.
-- ✅ **Zero-semantic/infra explicitamente auditados nesta reconciliação:** 10 providers listados acima; zero não significa ausência de auditoria.
-- ⚠️ **Current-ledger conditionals destacados:** Traveloptics, 26 Gaze Spirit Rites e Asterism `astral_gateway`.
-- ⚠️ **Legacy sibling candidates sem presença física atual afirmada:** `magic_schools`, `specs_irons_spellbooks`, `irons_apothic`.
-- ✅ **Create: Wizardry saiu desta lista:** presença física atual #166 e source pin 1.21.1-0.5.1-pre1 estão revalidados; o provider fecha em +0 spells próprios porque automatiza spells do Iron's sem registrar identidades próprias.
-- ✅ **Mahou Tsukai clean-room:** 53/53 linhas observáveis classificadas; presença física atual não afirmada.
-- ✅ **Black Arcana próprio:** 32 contratos de candidatos; Noetic 7/7 com proveniência individual.
+- ⚠️ **Cobertura técnica de componentes:** o antigo `68/100` é apenas checkpoint histórico; o denominador técnico global permanece `PENDING REBASE`.
+- ✅ **Categoria física sibling `Magic`:** **45 = 41 ✅ + 4 ⚠️**, sem ❌ atuais nessa categoria.
+- ⚠️ **Quatro condicionais da categoria física:** Asterism Arcanum, Somake Spells, Not Enough Glyphs e Corail Tombstone.
+- ⚠️ **Cross-domain condicionais relevantes:** Gaze, More Relics, Traveloptics, Iron's Spellbooks KubeJS e KubeJS Ars Nouveau; componentes UI/compat como Spell Actionbar, Specs, Recolor e Immersive Portal têm +0 independente, mas QA técnico separado.
+- ✅ **Deltas recentes strict-counted:** Hexalia 1.3.7 +4; Reliquified Ars Nouveau +19; Reliquified Artifacts +52; Reliquified Iron's +25.
+- ✅ **Wind's Spellbooks:** 7/7 já estavam strict-counted; a migração atual é apenas continuidade de provider-tree, não +7 adicional.
+- ✅ **Black Arcana próprio:** 32 contratos de candidatos; runtime/Stage continua separado do catálogo.
 
 ## 8. Regra de manutenção
 
