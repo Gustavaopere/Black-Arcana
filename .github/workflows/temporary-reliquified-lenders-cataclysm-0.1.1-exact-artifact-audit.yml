@@ -95,6 +95,48 @@ jobs:
                   out.append(f'{token}=' + (','.join(hits) if hits else '<none>'))
               out.append('')
 
+              target_classes=[
+                  'it.hurts.octostudios.reliquified_lenders_cataclysm.init.ItemRegistry',
+                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.back.VoidCloakItem',
+                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.charm.ScouringEyeItem',
+                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.charm.VoidVortexInBottleItem',
+                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.hands.VacuumGloveItem',
+                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.head.VoidBubbleItem'
+              ]
+              out.append('[narrow javap string constants]')
+              import subprocess, re
+              for cls in target_classes:
+                  p=subprocess.run(['javap','-classpath',jar,'-c','-p',cls],text=True,capture_output=True)
+                  out.append(f'## {cls}')
+                  if p.returncode != 0:
+                      out.append('<javap failed>')
+                      continue
+                  strings=[]
+                  for line in p.stdout.splitlines():
+                      m=re.search(r'// String (.+)
+
+          txt='\n'.join(out)+'\n'
+          pathlib.Path('audit/facts.txt').write_text(txt,encoding='utf-8')
+          print(txt)
+          PY
+
+      - name: Publish text-only audit report
+        uses: actions/upload-artifact@v7
+        with:
+          name: reliquified-lenders-cataclysm-0.1.1-exact-discovery
+          path: audit/*.txt
+          if-no-files-found: error
+          retention-days: 3
+,line)
+                      if m:
+                          s=m.group(1).strip()
+                          if s not in strings:
+                              strings.append(s)
+                  for s in strings:
+                      out.append(s)
+                  out.append(f'string_constant_count={len(strings)}')
+              out.append('')
+
           txt='\n'.join(out)+'\n'
           pathlib.Path('audit/facts.txt').write_text(txt,encoding='utf-8')
           print(txt)
