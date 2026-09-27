@@ -18,7 +18,7 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — snapshot sibling atual
 
-No sibling `neoforge-rpg-skilltree@e9cecb47612d5dcf07ff98d75198004c7a698fb5` existem **67 linhas status-prefixed cujas pastas de categoria contêm `Magic`**. Essa classificação sibling descreve a taxonomia física do modpack; o prefixo ✅ do dossiê sibling não equivale automaticamente a ✅ do catálogo semântico Black Arcana.
+No sibling ``neoforge-rpg-skilltree` current `main` with Tombstone dossier blob `7b99ee63892e9bd3711e27a651c0b62c0d71ba47`` existem **67 linhas status-prefixed cujas pastas de categoria contêm `Magic`**. Essa classificação sibling descreve a taxonomia física do modpack; o prefixo ✅ do dossiê sibling não equivale automaticamente a ✅ do catálogo semântico Black Arcana.
 
 Após normalização de ownership/aliases e os fechamentos de Ozymandias + Mowzie's Mobs + Photon + RunicLib nesta rodada:
 
