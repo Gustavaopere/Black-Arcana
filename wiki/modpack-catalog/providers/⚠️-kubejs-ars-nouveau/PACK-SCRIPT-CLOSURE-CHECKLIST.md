@@ -18,6 +18,12 @@ Close the current pack's concrete Ars Nouveau recipe mutations without confusing
 - public source is only versioned through 1.3.1 at inspected HEAD `18278a05d27def7200158a6d08516d5f22318e44`;
 - framework exposes six Ars recipe schemas rather than a new glyph/spell registry.
 
+## Collector-assisted evidence
+
+Run the current deployed-evidence collector on the authoritative assembled instance. Its `kubejs_script_inventory` section binds the audit to the exact startup/server/client/data text-file tree by relative path, SHA-256 and byte size without copying script bodies.
+
+For this recipe-only framework, an absent/empty authoritative `server_scripts` + relevant `data` surface closes the current recipe-mutation inventory at zero. Non-empty surfaces must be reviewed against the exact hashes and paths recorded by the collector.
+
 ## Required current pack inputs
 
 Capture from the exact current assembled instance:
