@@ -229,8 +229,9 @@ The complete pre-Phase-2AX coverage text is preserved byte-for-byte in [`CATALOG
 
 - Minecraft: 1.21.1
 - NeoForge: `21.1.248`
-- latest physical modlist: **595 top-level entries**
-- modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+- historical Black Arcana physical snapshot: **595 top-level entries**
+- historical snapshot SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+- current sibling certified index: **587 top-level entries including the modloader** at `neoforge-rpg-skilltree@a5c47883473815b05453f978b5d078e9e5ada31b`
 - jarjar/internal dependencies are not counted as top-level providers
 
 ## Current working component denominator
