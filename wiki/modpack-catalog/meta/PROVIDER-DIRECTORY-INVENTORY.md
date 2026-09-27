@@ -2,7 +2,7 @@
 
 Checkpoint: 2026-09-27
 
-Authority base for this closure: `main@aee952cf8acb618212c17e506fe6e7272e209fc1`.
+Authority base for this reconciliation: `main@aee952cf8acb618212c17e506fe6e7272e209fc1`.
 Current sibling physical authority: `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`.
 
 ## Current structural count
@@ -10,13 +10,13 @@ Current sibling physical authority: `neoforge-rpg-skilltree@ac23fc1c67937deeffe9
 The canonical tree `wiki/modpack-catalog/providers/` now contains:
 
 - **115** top-level provider directories;
-- **100 ✅ cataloged**;
-- **15 ⚠️ partial / conditioned**;
+- **99 ✅ cataloged**;
+- **16 ⚠️ partial / conditioned**;
 - **0 ❌**;
 - **0 🟡**;
 - **0 ⛔**.
 
-The fifteen current ⚠️ directories are:
+The sixteen current ⚠️ directories are:
 
 1. Asterism Arcanum;
 2. Corail Tombstone;
@@ -28,13 +28,14 @@ The fifteen current ⚠️ directories are:
 8. Not Enough Glyphs;
 9. Somake Spells;
 10. Traveloptics;
-11. ShadowsZ;
-12. Simply Swords: Cataclysm;
-13. Simply More;
-14. Simply Swords;
-15. Waystones.
+11. Reliquified L_Ender's Cataclysm;
+12. ShadowsZ;
+13. Simply Swords: Cataclysm;
+14. Simply More;
+15. Simply Swords;
+16. Waystones.
 
-Reliquified L_Ender's Cataclysm left this list on 27/09 after release-bounded closure of **7 provider-owned Relics ability roots** from the five published 0.1/0.1.1 relic owners.
+The six entries 11–16 were added by the 27/09 physical-`Magic` reconciliation. Their presence closes category mapping, **not** their semantic denominator. Reliquified L_Ender's Cataclysm now has a **release-line lower bound of 7 ability roots across 5 baseline relic owners**, but its complete current 0.1.1 denominator remains open, so it stays ⚠️ and contributes +0 strict.
 
 ## Duplicate resolved
 
@@ -53,7 +54,7 @@ The hyphenated directory remains canonical; the second document set is preserved
 
 It is a structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical. A current technical denominator still requires full physical/provider reconciliation across sibling dossiers, Project Library physical evidence and cross-domain/root-level providers.
 
-Likewise, **115 is not a semantic-magic denominator**. The current strict semantic minimum is **1684**, while the final semantic denominator is still open.
+Likewise, **115 is not a semantic-magic denominator**. The current strict semantic minimum remains **1677**, while the final semantic denominator is still open.
 
 ## Current physical Magic taxonomy
 
@@ -63,7 +64,7 @@ At sibling `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`:
 
 - physical rows whose **category field** contains `Magic`: **84**;
 - mapped into Black Arcana: **84/84**;
-- status split for those 84 rows: **71 ✅ + 13 ⚠️**;
+- status split for those 84 rows: **70 ✅ + 14 ⚠️**;
 - unmapped rows: **0**.
 
-The previous 67-row snapshot is historical. The +17 category delta consists of 11 providers that were already represented in Black Arcana plus six that were first materialized as partials in the 27/09 reconciliation. Reliquified L_Ender's Cataclysm has since been promoted to ✅ with **+7 `COUNTED_RELEASE_BOUNDED`**; the other five new partials remain open.
+The previous 67-row snapshot is historical. The +17 category delta consists of 11 providers already represented in Black Arcana and six newly mapped ⚠️ providers. No strict semantic delta is introduced by category reclassification.
