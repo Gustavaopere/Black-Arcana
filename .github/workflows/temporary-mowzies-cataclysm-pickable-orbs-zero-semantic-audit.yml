@@ -30,6 +30,13 @@ jobs:
             namespace: "pickable_orbs"
             primary_slug: "pickable-orbs"
             fallback_slug: "pickable-health-orbs"
+          - provider: ironsable_wind
+            project: "1643762"
+            file: "8598265"
+            expected_sha1: "c09c73a83deaf6439f2d33652898eb610dbfa4f3"
+            namespace: "ironsable_wind"
+            primary_slug: "ironsable-x-winds-spellbooks"
+            fallback_slug: ""
 
     steps:
       - name: Checkout
