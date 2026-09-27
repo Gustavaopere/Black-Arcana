@@ -4,7 +4,7 @@ Status: `✅ CATALOGED / CURRENT PHYSICAL 1.3.3+1.21.1 / ZERO_SEMANTIC_PRESENTAT
 
 ## Current physical identity — authority override
 
-The current physical Project Library modlist captured on 2026-09-16 supersedes the older sibling dossier's 1.3.2 installed-version statement.
+The current physical Project Library modlist captured on 2026-09-16 and the current sibling physical-authority header agree on the installed 1.3.3 line; both supersede the sibling dossier's preserved historical 1.3.2 body.
 
 Authoritative physical line:
 
@@ -18,7 +18,7 @@ Authoritative physical line:
   - `mixins.recolor_tablet.geomancy.json`;
   - `mixins.recolor_tablet.hazennstuff.json`.
 
-The current sibling dossier at `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` still describes 1.3.2 as installed and 1.3.3 as upstream drift. That dossier is stale for installed-version identity and is not used to overwrite the newer physical modlist.
+The current sibling dossier at `neoforge-rpg-skilltree@f75a050392e2881f84ffbf94dcba582f18a3b74e` now carries a top-level physical-authority header for `recolor_tablet-1.3.3+1.21.1.jar`, runtime `1.3.3+1.21.1`, SHA-1 `f3806de891b04d554d05c279808b057fdf7bdab5`. Historical 1.3.2 sections remain preserved below as provenance and do not override that current header.
 
 ## Provider role
 
