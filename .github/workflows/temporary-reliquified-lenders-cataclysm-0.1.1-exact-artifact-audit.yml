@@ -29,12 +29,13 @@ jobs:
           test "$ACTUAL" = "$EXPECTED"
           sha256sum /tmp/provider.jar | tee audit/sha256.txt
 
-      - name: Discover exact class and token topology
+      - name: Discover exact class and ability topology
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import pathlib
+          import subprocess
           from zipfile import ZipFile
 
           jar='/tmp/provider.jar'
@@ -44,9 +45,19 @@ jobs:
               'mask_of_rage','fire_plate','volcano'
           ]
           ability_ids=[
-              'glowing_scour','spawn_vortex','void_rune','vacuum_slowdown',
-              'protective_bubble','flame_summon','ram_mode','spawn_shield','jetpack'
+              'glowing_scour','spawn_vortex','void_invulnerability','void_rune',
+              'seismic_zone','vacuum_slowdown','protective_bubble',
+              'flame_summon','ram_mode','spawn_shield','jetpack'
           ]
+          target_classes=[
+              'it.hurts.octostudios.reliquified_lenders_cataclysm.init.ItemRegistry',
+              'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.back.VoidCloakItem',
+              'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.charm.ScouringEyeItem',
+              'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.charm.VoidVortexInBottleItem',
+              'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.hands.VacuumGloveItem',
+              'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.head.VoidBubbleItem'
+          ]
+
           out=["RELIQUIFIED L_ENDER'S CATACLYSM 0.1.1 EXACT DISCOVERY",""]
           with ZipFile(jar) as z:
               names=set(z.namelist())
@@ -95,47 +106,24 @@ jobs:
                   out.append(f'{token}=' + (','.join(hits) if hits else '<none>'))
               out.append('')
 
-              target_classes=[
-                  'it.hurts.octostudios.reliquified_lenders_cataclysm.init.ItemRegistry',
-                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.back.VoidCloakItem',
-                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.charm.ScouringEyeItem',
-                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.charm.VoidVortexInBottleItem',
-                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.hands.VacuumGloveItem',
-                  'it.hurts.octostudios.reliquified_lenders_cataclysm.items.relics.head.VoidBubbleItem'
-              ]
-              out.append('[narrow javap string constants]')
-              import subprocess, re
-              for cls in target_classes:
-                  p=subprocess.run(['javap','-classpath',jar,'-c','-p',cls],text=True,capture_output=True)
-                  out.append(f'## {cls}')
-                  if p.returncode != 0:
-                      out.append('<javap failed>')
+          out.append('[narrow javap string constants]')
+          for cls in target_classes:
+              p=subprocess.run(['javap','-classpath',jar,'-c','-p',cls],text=True,capture_output=True)
+              out.append(f'## {cls}')
+              if p.returncode != 0:
+                  out.append('<javap failed>')
+                  continue
+              strings=[]
+              for line in p.stdout.splitlines():
+                  marker='// String '
+                  if marker not in line:
                       continue
-                  strings=[]
-                  for line in p.stdout.splitlines():
-                      m=re.search(r'// String (.+)
-
-          txt='\n'.join(out)+'\n'
-          pathlib.Path('audit/facts.txt').write_text(txt,encoding='utf-8')
-          print(txt)
-          PY
-
-      - name: Publish text-only audit report
-        uses: actions/upload-artifact@v7
-        with:
-          name: reliquified-lenders-cataclysm-0.1.1-exact-discovery
-          path: audit/*.txt
-          if-no-files-found: error
-          retention-days: 3
-,line)
-                      if m:
-                          s=m.group(1).strip()
-                          if s not in strings:
-                              strings.append(s)
-                  for s in strings:
-                      out.append(s)
-                  out.append(f'string_constant_count={len(strings)}')
-              out.append('')
+                  s=line.split(marker,1)[1].strip()
+                  if s not in strings:
+                      strings.append(s)
+              out.extend(strings)
+              out.append(f'string_constant_count={len(strings)}')
+          out.append('')
 
           txt='\n'.join(out)+'\n'
           pathlib.Path('audit/facts.txt').write_text(txt,encoding='utf-8')
