@@ -54,9 +54,10 @@ The read-only collector in [`docs/qa/provider-catalog-deployed-evidence.md`](../
 - Tombstone physical fingerprint + 12 `AllowedMagicItems` booleans;
 - Somake physical fingerprint + spell-lock and Iron's override evidence;
 - Mowzie's physical fingerprint + `enable_tunneling`;
+- Ice And Fire CE physical 2.1.2 fingerprint + exact Jupiter `tools.phantasmalBladeAbility` gate;
 - Traveloptics physical classification + bounded `traveloptics:blackout` references.
 
-Ice And Fire CE is not yet covered by the generic collector because its effective Jupiter config is JSON/provider-native rather than one of the currently parsed config formats. Its provider checklist records the exact file/key and acquisition evidence required.
+Ice And Fire CE is now covered for the bounded Ghost Sword Jupiter gate. The collector reads only `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility`; Dread Lich Staff acquisition remains outside generic config collection and still requires provider-specific reachability evidence.
 
 The collector now emits an exact bounded KubeJS script/data path+hash inventory for both KubeJS providers. That can prove an authoritative current tree is absent/empty; non-empty trees still require provider-specific script/provenance review and are not auto-closed by the collector.
 

@@ -35,6 +35,8 @@ Capture the actual current instance file used by Ice And Fire CE's Jupiter confi
 
 Exact 2.1.2 source identifies the provider-native path as `config/iceandfire/iaf-common.json`. Do not substitute the source default (`true`) for the deployed value.
 
+The deployed-evidence collector now captures this exact file/key without copying the surrounding Jupiter JSON. Accepted evidence is `status=OBSERVED` with a boolean value from the actual current instance plus matching physical 2.1.2 fingerprint; `NOT_FOUND`, `KEY_NOT_FOUND`, `PARSE_ERROR` and `INVALID_TYPE` remain fail-closed.
+
 If the deployed value is proven true and no overriding runtime gate is found, Ghost Sword can be promoted individually.
 
 ## Remaining reachability evidence
