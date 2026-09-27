@@ -32,7 +32,7 @@ Semantic effect of the current reconciliation:
 - Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
 - Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
 
-The strict reconstructible semantic minimum is therefore **1676**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1677**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -125,7 +125,7 @@ Therefore:
 - semantic numerator delta from Mowzie's Mobs 1.8.2 exact-artifact closure: **+10 `COUNTED_EXACT`**; one additional Tunneling power remains conditional;
 - semantic numerator delta from Ice And Fire CE 2.1.2 exact-artifact reachability closure: **+7 `COUNTED_EXACT`**; Dread Lich Staff and Ghost Sword remain conditional;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
-- strict reconstructible semantic minimum: **1676**;
+- strict reconstructible semantic minimum: **1677**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 

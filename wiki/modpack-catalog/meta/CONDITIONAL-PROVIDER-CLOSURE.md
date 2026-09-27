@@ -2,7 +2,7 @@
 
 Checkpoint: 2026-09-27
 
-Status: `10 PROVIDER DIRECTORIES ⚠️ / 10 CATALOG-CLOSURE ROUTES / 4 ZERO-SEMANTIC TECHNICAL PROVIDERS PROMOTED TO ✅ CATALOGED / ICE AND FIRE +7 STRICT PROMOTED, 2 ACTION BLOCKERS REMAIN`
+Status: `10 PROVIDER DIRECTORIES ⚠️ / 10 CATALOG-CLOSURE ROUTES / 4 ZERO-SEMANTIC TECHNICAL PROVIDERS PROMOTED TO ✅ CATALOGED / ICE AND FIRE +8 STRICT PROMOTED, 1 ACTION BLOCKER REMAINS`
 
 ## Purpose
 
@@ -31,7 +31,7 @@ A provider leaves this index only when its own acceptance rule is satisfied by a
 | Iron's Spellbooks KubeJS `4.0.3` | Exact framework/source pinned; base framework contributes +0 fixed built-in identities; spell/school builder capability is known | Exact current `kubejs/**` script inventory or bounded assembled-registry provenance proving which script-defined spells/schools exist, including zero-content closure if none exist | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/⚠️-irons-spellbooks-kubejs/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
 | KubeJS Ars Nouveau `1.3.2` | Exact physical release identified; framework exposes six Ars recipe schemas and +0 provider-owned spell/glyph identities | Exact current `kubejs/server_scripts/**` / relevant `kubejs/data/**` mutation inventory to close recipe/tome reachability and economy effects on existing Ars objects | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/⚠️-kubejs-ars-nouveau/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
 | T.O Magic n' Extras / Traveloptics `4.4.0.1-1.21.1` | Current physical filename and SHA-1 are known; installed artifact is `OTHER_VERIFIED` relative to the audited publisher alpha/known patch; publisher baseline closes 33 IDs but is not promoted as exact-current | Exact current physical registry/content delta; assembled loot-modifier initialization; 1.21.1-specific `traveloptics:blackout` survival route; Somake Aqua coexistence/authority | [CLOSURE-CHECKLIST.md](../providers/⚠️-traveloptics/CLOSURE-CHECKLIST.md) |
-| Ice And Fire Community Edition `2.1.2` | Exact physical SHA-1 equals publisher File `8757837`; exact source closes 9 active action families; exact reachability run `36323035696` promotes 7 families through provider recipe/loot data | Dread Lich Staff: explicit current acquisition route still unproven. Ghost Sword: exact recipe is closed, but deployed Jupiter `tools.phantasmalBladeAbility` is still required | [DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md](../providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md) |
+| Ice And Fire Community Edition `2.1.2` | Exact physical SHA-1 equals publisher File `8757837`; exact source closes 9 active action families; exact provider-data reachability promotes 7 and current-pack NeoForge 21.1.250 runtime audit `36327488231` promotes Dread Lich Staff for 8 strict total | Ghost Sword only: exact recipe is closed, but deployed Jupiter `tools.phantasmalBladeAbility` is still required | [DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md](../providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md) |
 
 ## Catalog-closed zero-semantic technical providers
 
@@ -57,7 +57,7 @@ The read-only collector in [`docs/qa/provider-catalog-deployed-evidence.md`](../
 - Ice And Fire CE physical 2.1.2 fingerprint + exact Jupiter `tools.phantasmalBladeAbility` gate;
 - Traveloptics physical classification + bounded `traveloptics:blackout` references.
 
-Ice And Fire CE is now covered for the bounded Ghost Sword Jupiter gate. The collector reads only `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility`; Dread Lich Staff acquisition remains outside generic config collection and still requires provider-specific reachability evidence.
+Ice And Fire CE is now covered for the bounded Ghost Sword Jupiter gate. The collector reads only `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility`. Dread Lich Staff acquisition is separately closed by exact provider/runtime audit `36327488231` and no longer needs collector evidence.
 
 The collector now emits an exact bounded KubeJS script/data path+hash inventory for both KubeJS providers. That can prove an authoritative current tree is absent/empty; non-empty trees still require provider-specific script/provenance review and are not auto-closed by the collector.
 
@@ -92,7 +92,7 @@ Already closed evidence must be reused unless the physical/source line changes:
 - Tombstone: 10 strict prayer/rite actions + exact one-to-one deduplication of 12 config-gated castable families;
 - Mowzie's: exact 1.8.2 physical artifact, 13 active slots, semantic split 10 strict + 1 conditional + 2 technical/subaction exclusions;
 - Traveloptics: physical SHA-1 disposition is already `OTHER_VERIFIED`; publisher-baseline 33-ID inventory remains baseline only;
-- Ice And Fire CE: exact 2.1.2 physical/publisher identity and exact source-semver action candidates are closed; acquisition/current Jupiter config remain the only catalog blockers;
+- Ice And Fire CE: exact 2.1.2 physical/publisher identity, action candidates and Dread Lich Staff inherited drop reachability are closed; only the current Ghost Sword Jupiter config remains a catalog blocker;
 - KubeJS frameworks: framework/API role is already classified; only current pack scripts/mutations remain open.
 
 ## Promotion discipline
