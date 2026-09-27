@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -184,6 +186,82 @@ allow_lost_tablet = false
         )
 
         self.assertIsNone(row)
+
+
+    def test_collects_mowzies_tunneling_gate_without_assuming_default(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            (instance / "config").mkdir(parents=True)
+            (instance / "defaultconfigs").mkdir(parents=True)
+            world = instance / "world"
+            (world / "serverconfig").mkdir(parents=True)
+
+            (instance / "config" / "mowziesmobs-common.toml").write_text(
+                """
+[tools_and_abilities.earthrend_gauntlet]
+enable_tunneling = false
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            (instance / "defaultconfigs" / "mowziesmobs-common.toml").write_text(
+                """
+[tools_and_abilities.earthrend_gauntlet]
+enable_tunneling = true
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+
+            worlds = collector.candidate_worlds(instance, [])
+            result = collector.collect_mowzies_mobs(instance, worlds)
+
+            self.assertEqual(
+                [
+                    ("config/mowziesmobs-common.toml", False),
+                    ("defaultconfigs/mowziesmobs-common.toml", True),
+                ],
+                [
+                    (obs["path"], obs["value"])
+                    for obs in result["enable_tunneling_matches"]
+                ],
+            )
+
+
+    def test_main_report_includes_mowzies_tunneling_gate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            (instance / "mods").mkdir(parents=True)
+            (instance / "config").mkdir(parents=True)
+            (instance / "config" / "mowziesmobs-common.toml").write_text(
+                """
+[tools_and_abilities.earthrend_gauntlet]
+enable_tunneling = false
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            output = instance / "evidence.json"
+
+            with patch(
+                "sys.argv",
+                [
+                    "provider-catalog-deployed-evidence-collector.py",
+                    str(instance),
+                    "--output",
+                    str(output),
+                ],
+            ):
+                self.assertEqual(0, collector.main())
+
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(
+                [("config/mowziesmobs-common.toml", False)],
+                [
+                    (obs["path"], obs["value"])
+                    for obs in report["mowzies_mobs"]["enable_tunneling_matches"]
+                ],
+            )
 
 
 if __name__ == "__main__":

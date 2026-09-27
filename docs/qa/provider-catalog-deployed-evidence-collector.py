@@ -855,6 +855,18 @@ def collect_irons_spell_namespace_overrides(
     return out
 
 
+def collect_mowzies_mobs(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    roots = [instance / "config", instance / "defaultconfigs"]
+    roots.extend(world / "serverconfig" for world in worlds)
+    return {
+        "enable_tunneling_matches": collect_selected_key(
+            instance,
+            roots,
+            "enable_tunneling",
+        )
+    }
+
+
 def collect_tombstone(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
@@ -980,6 +992,7 @@ def main() -> int:
         "asterism_arcanum": collect_asterism(instance, worlds),
         "corail_tombstone": collect_tombstone(instance, worlds),
         "gaze": collect_gaze(instance, worlds),
+        "mowzies_mobs": collect_mowzies_mobs(instance, worlds),
         "not_enough_glyphs": collect_neg(instance, worlds),
         "somake_spells": collect_somake(instance, worlds),
         "traveloptics": collect_traveloptics(instance, worlds),
