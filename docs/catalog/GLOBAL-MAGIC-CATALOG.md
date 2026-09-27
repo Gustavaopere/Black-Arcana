@@ -23,7 +23,7 @@ Estado canônico corrente:
 - ✅ mínimo semântico estrito reconstruível: **1669 objetos mágicos**;
 - ⚠️ denominador semântico final: **ainda aberto** — não publicar porcentagem global;
 - ⚠️ denominador técnico cross-domain: **`PENDING REBASE`** — o antigo `68/100` é histórico;
-- taxonomia física sibling atual com categoria `Magic`: **67 linhas** no sibling `4d9abd7…`; após normalização e os fechamentos atuais, **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**);
+- taxonomia física sibling atual com categoria `Magic`: **67 linhas** no sibling `bb5372c…`; após normalização e os fechamentos atuais, **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**);
 - os oito ⚠️ já mapeados nessa categoria física são **Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition**;
 - a fila category-only da taxonomia física `Magic` está **vazia**; todos os 67 itens possuem classificação Black Arcana explícita;
 - providers cross-domain/root-level atuais ampliam esse universo: Gaze, Requiem, Traveloptics, More Relics, Iron's Spellbooks KubeJS, Spell Actionbar/Specs/Recolor/Immersive Portal e addons Reliquified, entre outros.

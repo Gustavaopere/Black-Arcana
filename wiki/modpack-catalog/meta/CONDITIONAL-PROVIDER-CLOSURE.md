@@ -10,7 +10,7 @@ This index routes the providers whose current Black Arcana catalog state remains
 
 It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-Current provider-directory reality on `main@38d7fed83b4d5a4fda42f0773169b7a2ebfc5e90`:
+Current provider-directory reality in this PR change set (base `main@8966dccf557211f4e71cdc289b34597db38076ef` plus the Ice And Fire CE provider mapping):
 
 - **14** provider directories carry the ⚠️ prefix;
 - **10** still have a catalog/config/script/effective-state closure gate listed below;
