@@ -12,7 +12,7 @@ Physical pack identity:
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
+`neoforge-rpg-skilltree@e9cecb47612d5dcf07ff98d75198004c7a698fb5`
 
 The sibling preserves the current 9.5.6 filename/version line. Independent Project Library physical modlist snapshot `modlist(1).txt` (2026-09-16) records the installed Tombstone SHA-1 as `d830d16caa20b0d23a44ed6b1d339bc22afc2460`, equal to publisher File `8842741`.
 
