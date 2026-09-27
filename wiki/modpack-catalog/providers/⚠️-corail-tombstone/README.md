@@ -6,7 +6,7 @@ Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / 10 COUNTED_EXACT P
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@e9cecb47612d5dcf07ff98d75198004c7a698fb5`
+``neoforge-rpg-skilltree` current `main` with Tombstone dossier blob `7b99ee63892e9bd3711e27a651c0b62c0d71ba47``
 
 Certified dossier:
 
