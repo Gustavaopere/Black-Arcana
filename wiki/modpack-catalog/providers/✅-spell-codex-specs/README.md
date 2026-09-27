@@ -1,6 +1,6 @@
 # Spell Codex / Specs: Iron's Spells 'n Spellbooks Addon — 1.6.5
 
-Status: `⚠️ PARTIAL / CURRENT PHYSICAL 1.6.5 / IRON'S DISCOVERY+UNLOCK+CAST-GATE LAYER / 0 INDEPENDENT SPELL IDENTITIES / DEPLOYED CONFIG+REACHABILITY OPEN / +0 STRICT`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 1.6.5 / ZERO_SEMANTIC_DISCOVERY_UNLOCK_GATE / +0 STRICT / DEPLOYED CONFIG+RUNTIME QA SEPARATE`
 
 ## Current physical identity
 
@@ -39,7 +39,7 @@ The Codex references, discovers, unlocks or gates provider spells; it does not m
 
 Strict semantic delta: **+0**.
 
-## Why the provider remains ⚠️
+## Catalog closure vs runtime QA
 
 Although the physical version and provider role are known, the deployed current pack values for Specs JSON/config are not available as authoritative evidence here.
 
@@ -51,7 +51,7 @@ Those values can materially affect:
 - actual discovery/unlock reachability;
 - composition with other progression gates.
 
-Therefore Specs remains **⚠️ partial / conditioned** as a runtime/progression component even though its independent spell contribution is +0.
+Therefore the **semantic catalog is ✅ closed at +0 independent spell identities**. Specs remains a runtime/progression component whose deployed config, reachability and gate composition require separate QA.
 
 ## Authority boundary with Black Arcana and RPG Skill Tree
 
@@ -77,6 +77,6 @@ Relevant assembled checks include:
 
 ## Result
 
-**⚠️ Partial / conditioned.**
+**✅ Cataloged.**
 
-Semantic inventory: **0 independent spells**. Specs/Spell Codex is cataloged as a discovery/progression/cast-gate layer over existing Iron's spell identities.
+Semantic inventory: **0 independent spells**. Specs/Spell Codex is cataloged as a discovery/progression/cast-gate layer over existing Iron's spell identities; deployed config and runtime gate composition remain separate QA.

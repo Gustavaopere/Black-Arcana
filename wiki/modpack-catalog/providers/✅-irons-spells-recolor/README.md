@@ -1,6 +1,6 @@
 # Iron's Spells 'n Spellbooks: Recolor — 1.3.3+1.21.1
 
-Status: `⚠️ PARTIAL / CURRENT PHYSICAL 1.3.3+1.21.1 / PRESENTATION+SYNC ADDON / 0 INDEPENDENT SPELL IDENTITIES ESTABLISHED / EXACT 1.3.3 SOURCE+BINARY SEMANTIC SURFACE NOT FULLY RECONSTRUCTED / +0 STRICT`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 1.3.3+1.21.1 / ZERO_SEMANTIC_PRESENTATION_SYNC / +0 STRICT / EXACT INTERNAL+RUNTIME QA SEPARATE`
 
 ## Current physical identity — authority override
 
@@ -58,7 +58,7 @@ Therefore:
 - strict semantic delta: **+0**;
 - existing host spell ownership remains unchanged.
 
-## Why the provider remains ⚠️
+## Catalog closure vs runtime QA
 
 The installed artifact identity and mixin surface are physical-exact, but this Black Arcana audit does not yet have an exact public source pin or bounded decompilation/structural inventory for the installed 1.3.3 JAR.
 
@@ -66,9 +66,11 @@ Accordingly it would be unsafe to claim exhaustive binary closure for every pack
 
 The known role is sufficient to prevent semantic double-counting, while exact internal/runtime behavior remains fail-closed.
 
-Current state:
+Semantic catalog state:
 
-**⚠️ partial / conditioned / presentation-only known surface / +0 strict**.
+**✅ cataloged / presentation-sync layer / +0 strict**.
+
+Exact packet/persistence/config/runtime behavior remains separate QA and is not implied by the catalog status.
 
 ## Authority and deduplication
 
@@ -93,6 +95,6 @@ Separate assembled checks include:
 
 ## Result
 
-**⚠️ Partial / conditioned.**
+**✅ Cataloged.**
 
-Current physical identity is 1.3.3+1.21.1. Known semantic contribution: **0 independent spells**. The provider is a presentation/synchronization layer over existing host spells; exhaustive exact-1.3.3 binary closure remains open.
+Current physical identity is 1.3.3+1.21.1. Semantic contribution: **0 independent spells**. The provider is a presentation/synchronization layer over existing host spells; exhaustive exact-1.3.3 binary/runtime closure remains separate QA.

@@ -382,10 +382,10 @@ The following audited providers add **0** independent semantic objects under thi
 - [Toxony](../providers/✅-toxony/README.md) — harmful effects, oils, mutagens and alchemy state are provider content but are not spells/rituals/discrete action-registry identities under the current metric;
 - [Mobstein](../providers/✅-mobstein/README.md) — exact 5.4.4 physical SHA-1 plus hash-matched resource-only clean-room audit closes the residual boundary as `ZERO_SEMANTIC_ACTIONS`: documented syringes are item interactions and surfaced action-like keybinds are entity/mount controls; **+0** independent semantic magic objects; runtime/API integration remains separately fail-closed;
 - [Acolyte](../providers/✅-acolyte/README.md) — exact 1.0.3 release-bounded structural audit finds no provider-owned spell identity; Iron's host spells remain externally owned; **+0**.
-- [Immersive Portal - Iron's Spells Addon](../providers/⚠️-immersive-portal-irons-spells-addon/README.md) — adapts Iron's existing Portal Spell into the portal runtime; **0 independent spell identities / +0 strict**; release-exact/runtime QA remains partial.
-- [Iron's Spells Recolor](../providers/⚠️-irons-spells-recolor/README.md) — presentation/synchronization over existing Iron's spells; **0 independent spell identities / +0 strict**.
-- [Spell Actionbar](../providers/⚠️-spell-actionbar/README.md) — UI/loadout/HUD/quick-cast layer over existing Iron's spells; **0 independent spell identities / +0 strict**.
-- [Spell Codex / Specs](../providers/⚠️-spell-codex-specs/README.md) — discovery/unlock/progression/cast-gate layer over existing Iron's spell identities; **0 independent spell identities / +0 strict**.
+- [Immersive Portal - Iron's Spells Addon](../providers/✅-immersive-portal-irons-spells-addon/README.md) — adapts Iron's existing Portal Spell into the portal runtime; **0 independent spell identities / +0 strict**; semantic catalog closed, release-exact/runtime QA separate.
+- [Iron's Spells Recolor](../providers/✅-irons-spells-recolor/README.md) — presentation/synchronization over existing Iron's spells; **0 independent spell identities / +0 strict**.
+- [Spell Actionbar](../providers/✅-spell-actionbar/README.md) — UI/loadout/HUD/quick-cast layer over existing Iron's spells; **0 independent spell identities / +0 strict**.
+- [Spell Codex / Specs](../providers/✅-spell-codex-specs/README.md) — discovery/unlock/progression/cast-gate layer over existing Iron's spell identities; **0 independent spell identities / +0 strict**.
 - [Dungeon's Delight](../providers/✅-dungeons-delight/README.md) — 1.5.1 source-pinned effects/enchantments/food mechanics with no spell/ritual/action registry; **+0**.
 - [Fantasy Armor](../providers/✅-fantasy-armor/README.md) — 1.2.4 source-pinned passive gear/effect magic; **+0**.
 - [Enchantment Descriptions](../providers/✅-enchantment-descriptions/README.md) — 21.1.11 client tooltip/localization presentation; **+0**.
