@@ -33,4 +33,3 @@ This proves the action registry is a proc/effect primitive layer, not evidence o
 ## Conclusion
 
 Strict semantic delta: **+0**. Runtime proc/cooldown/stacking behavior remains separate QA.
-
