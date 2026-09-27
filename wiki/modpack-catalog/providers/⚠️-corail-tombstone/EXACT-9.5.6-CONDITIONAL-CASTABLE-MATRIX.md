@@ -6,7 +6,7 @@ Status: `EXACT PHYSICAL=PUBLISHER FILE 8842741 / HASH-MATCHED CASTABLE-SURFACE A
 
 Current sibling authority rechecked at:
 
-`neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
+`neoforge-rpg-skilltree@e9cecb47612d5dcf07ff98d75198004c7a698fb5`
 
 Physical row remains:
 
