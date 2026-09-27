@@ -1,0 +1,143 @@
+name: Temporary Ozymandias Sundries 0.0.5 Exact Artifact Audit
+
+on:
+  push:
+    branches:
+      - audit/ozymandias-sundries-0.0.5-exact-artifact-2026-09-26
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download and hash-gate exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          URL='https://cursemaven.com/curse/maven/ozymandias-sundries-1209674/6978561/ozymandias-sundries-1209674-6978561.jar'
+          curl --fail --location --retry 3 --retry-delay 2 "$URL" -o /tmp/provider.jar
+          ACTUAL="$(sha1sum /tmp/provider.jar | awk '{print $1}')"
+          EXPECTED='b973622ed90f47108aba481fec3beb19b432d853'
+          printf 'expected_physical_sha1=%s\nactual_publisher_sha1=%s\n' "$EXPECTED" "$ACTUAL" | tee audit/hash.txt
+          test "$ACTUAL" = "$EXPECTED"
+          sha256sum /tmp/provider.jar | tee audit/sha256.txt
+
+      - name: Extract factual registry and resource inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import re
+          import subprocess
+          from zipfile import ZipFile
+
+          jar='/tmp/provider.jar'
+          out=[]
+          roots=set()
+          registry_candidates=[]
+          with ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              out += ['OZYMANDIAS SUNDRIES 0.0.5 EXACT ARTIFACT FACTS',
+                      'Inspection is hash-gated to the physical pack SHA-1 before this step.',
+                      'Only metadata, registry identities, class/member signatures and narrow registration facts are retained.',
+                      '']
+              toml='META-INF/neoforge.mods.toml'
+              out.append('[metadata]')
+              if toml in names:
+                  txt=z.read(toml).decode('utf-8','replace')
+                  for line in txt.splitlines():
+                      s=line.strip()
+                      if s.startswith(('modId=','version=','displayName=','license=')):
+                          out.append(s)
+              out.append('')
+              lang='assets/ozymandias_sundries/lang/en_us.json'
+              if lang in names:
+                  obj=json.loads(z.read(lang))
+                  for k in obj:
+                      if k.startswith('spell.ozymandias_sundries.'):
+                          rem=k[len('spell.ozymandias_sundries.'):]
+                          if '.' not in rem:
+                              roots.add(rem)
+              out.append('[root spell localization ids]')
+              out += sorted(roots) or ['<none>']
+              out.append(f'root_spell_localization_count={len(roots)}')
+              out.append('')
+              spell_classes=[n for n in names if n.endswith('.class') and n.startswith('net/ozymandias/ozymandiassundries/spells/')]
+              out.append('[provider spell classes]')
+              out += spell_classes or ['<none>']
+              out.append(f'provider_spell_class_count={len(spell_classes)}')
+              out.append('')
+              registry_candidates=[n for n in names if n.endswith('SpellRegistries.class') and 'ozymandias' in n]
+              out.append('[registry candidates]')
+              out += registry_candidates or ['<none>']
+              out.append(f'registry_candidate_count={len(registry_candidates)}')
+              out.append('')
+
+          for path in registry_candidates:
+              cls=path[:-6].replace('/','.')
+              decl=subprocess.run(['javap','-classpath',jar,'-p',cls],text=True,capture_output=True,check=True).stdout
+              dis=subprocess.run(['javap','-classpath',jar,'-c','-p',cls],text=True,capture_output=True,check=True).stdout
+              out.append(f'[registry declarations: {cls}]')
+              abstract=[l.strip() for l in decl.splitlines() if 'Supplier<io.redspace.ironsspellbooks.api.spells.AbstractSpell>' in l]
+              out += abstract
+              out.append(f'abstract_spell_supplier_field_count={len(abstract)}')
+              static=dis.split('static {};',1)[1] if 'static {};' in dis else ''
+              static=static.split('\n\n',1)[0]
+              calls=sum('registerSpell:' in l for l in static.splitlines())
+              branches=sum(bool(re.search(r'\b(if[a-z_]*|goto|tableswitch|lookupswitch)\b',l)) for l in static.splitlines())
+              newclasses=[]
+              putfields=[]
+              literals=[]
+              for l in static.splitlines():
+                  m=re.search(r'new\s+#\d+\s+// class\s+([^\s]+)',l)
+                  if m and '/spells/' in m.group(1):
+                      newclasses.append(m.group(1).replace('/','.'))
+                  m=re.search(r'putstatic\s+.*Field\s+([A-Za-z0-9_$]+):',l)
+                  if m:
+                      putfields.append(m.group(1))
+                  m=re.search(r'// String ([A-Za-z0-9_]+)',l)
+                  if m and m.group(1) in roots:
+                      literals.append(m.group(1))
+              out.append(f'registerSpell_call_count={calls}')
+              out.append(f'conditional_branch_count_in_static_initializer={branches}')
+              out.append('new_spell_classes='+','.join(newclasses))
+              out.append('putstatic_fields='+','.join(putfields))
+              out.append('static_root_literals='+','.join(literals))
+              out.append('')
+
+          target_classes=[
+            'net.ozymandias.ozymandiassundries.spells.ender.LevitateSpell',
+            'net.ozymandias.ozymandiassundries.spells.lightning.LightningWarpSpell'
+          ]
+          for cls in target_classes:
+              decl=subprocess.run(['javap','-classpath',jar,'-p',cls],text=True,capture_output=True,check=True).stdout
+              out.append(f'[gate-method declarations: {cls}]')
+              hits=[]
+              for l in decl.splitlines():
+                  s=l.strip()
+                  if any(k in s for k in ('allowCrafting','allowLooting','isEnabled','canBeCraftedBy','getDefaultConfig','getSpellResource')):
+                      hits.append(s)
+              out += hits or ['<none>']
+              out.append('')
+
+          text='\n'.join(out)+'\n'
+          pathlib.Path('audit/facts.txt').write_text(text,encoding='utf-8')
+          print(text)
+          PY
+
+      - name: Publish text-only audit report
+        uses: actions/upload-artifact@v7
+        with:
+          name: ozymandias-sundries-0.0.5-exact-artifact-audit
+          path: audit/*.txt
+          if-no-files-found: error
+          retention-days: 3
