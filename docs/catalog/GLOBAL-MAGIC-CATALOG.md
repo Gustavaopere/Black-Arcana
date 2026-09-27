@@ -169,8 +169,8 @@ As métricas têm denominadores diferentes:
 - ✅ **Ledger semântico strict-counted corrente:** **1669 objetos mágicos reconstruíveis**.
 - ⚠️ **Denominador semântico global:** ainda incompleto; portanto **nenhuma porcentagem final de spells/magia é declarada**.
 - ⚠️ **Cobertura técnica de componentes:** o antigo `68/100` é apenas checkpoint histórico; o denominador técnico global permanece `PENDING REBASE`.
-- ✅ **Taxonomia física sibling `Magic`:** **65 linhas**; **65/65** mapeiam para diretórios Black Arcana (**58 ✅ + 7 ⚠️**), sem fila category-only.
-- ⚠️ **Sete condicionais já mapeados:** Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS e Mowzie's Mobs.
+- ✅ **Taxonomia física sibling `Magic`:** **67 linhas**; **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**), sem fila category-only.
+- ⚠️ **Oito condicionais já mapeados:** Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition.
 - ✅ **Fila de classificação semântica da categoria física `Magic`:** vazia no snapshot sibling atual.
 - ⚠️ **Cross-domain condicionais relevantes:** Gaze, Traveloptics, Iron's Spellbooks KubeJS e KubeJS Ars Nouveau; More Relics agora está ✅ `COUNTED_EXACT` com 61 owner-scoped abilities; componentes UI/compat como Spell Actionbar, Specs, Recolor e Immersive Portal têm +0 independente, mas QA técnico separado.
 - ✅ **Zero-semantic exact closures recentes:** Photon 2.2.6.a (`ZERO_SEMANTIC_VFX_INFRA`) e RunicLib 5.0.7 (`ZERO_SEMANTIC_LIBRARY_INFRA`), ambos +0.
