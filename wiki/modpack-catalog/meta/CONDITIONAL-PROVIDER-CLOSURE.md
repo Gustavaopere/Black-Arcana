@@ -55,7 +55,7 @@ The read-only collector in [`docs/qa/provider-catalog-deployed-evidence.md`](../
 - Mowzie's physical fingerprint + `enable_tunneling`;
 - Traveloptics physical classification + bounded `traveloptics:blackout` references.
 
-The two KubeJS bridges require current script-tree evidence and are not closed by this collector alone.
+The collector now emits an exact bounded KubeJS script/data path+hash inventory for both KubeJS providers. That can prove an authoritative current tree is absent/empty; non-empty trees still require provider-specific script/provenance review and are not auto-closed by the collector.
 
 ## Evidence priority
 
