@@ -107,6 +107,12 @@ jobs:
               out.append(f'provider_data_file_count={sum(n.startswith(f"data/{namespace}/") for n in resources)}')
               out.append('')
 
+              provider_data=sorted(n for n in resources if n.startswith(f'data/{namespace}/'))
+              out.append('[all provider data paths]')
+              out += provider_data or ['<none>']
+              out.append(f'all_provider_data_path_count={len(provider_data)}')
+              out.append('')
+
               semantic_paths=[
                   n for n in names
                   if any(re.search(rf'(^|[/_.-]){re.escape(tok)}([/_.-]|$)',n.lower()) for tok in semantic_tokens)
