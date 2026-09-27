@@ -1,0 +1,182 @@
+name: Temporary Ice and Fire CE 2.1.2 Exact Artifact Audit
+
+on:
+  push:
+    branches:
+      - audit/iceandfire-ce-2.1.2-exact-artifact-2026-09-27
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download and hash-gate exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          URL='https://cursemaven.com/curse/maven/iceandfire-ce-1040076/8757837/iceandfire-ce-1040076-8757837.jar'
+          curl --fail --location --retry 3 --retry-delay 2 "$URL" -o /tmp/provider.jar
+          ACTUAL="$(sha1sum /tmp/provider.jar | awk '{print $1}')"
+          EXPECTED='0786f4142b7cabd958688f68beef3e63e9c0ae8b'
+          printf 'expected_physical_sha1=%s\nactual_publisher_sha1=%s\n' "$EXPECTED" "$ACTUAL" | tee audit/hash.txt
+          test "$ACTUAL" = "$EXPECTED"
+          sha256sum /tmp/provider.jar | tee audit/sha256.txt
+
+      - name: Extract clean-room active-item surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import re
+          import subprocess
+          from zipfile import ZipFile
+
+          jar='/tmp/provider.jar'
+          out=[
+              'ICE AND FIRE CE 2.1.2 EXACT ARTIFACT FACTS',
+              'Inspection is hash-gated to the physical pack SHA-1 before this step.',
+              'Only metadata, class/resource identities, method signatures, and narrow registry facts are retained.',
+              ''
+          ]
+
+          with ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              out.append('[metadata]')
+              for toml in ('META-INF/neoforge.mods.toml','META-INF/mods.toml'):
+                  if toml in names:
+                      txt=z.read(toml).decode('utf-8','replace')
+                      for line in txt.splitlines():
+                          s=line.strip()
+                          if s.startswith(('modId=','version=','displayName=','license=')):
+                              out.append(s)
+              out.append('')
+
+              item_classes=[
+                  n for n in names
+                  if n.startswith('com/iafenvoy/iceandfire/item/')
+                  and n.endswith('Item.class')
+                  and '$' not in n
+              ]
+              out.append('[provider item class count]')
+              out.append(f'item_class_count={len(item_classes)}')
+              out.append('')
+
+              method_needles=(
+                  ' use(', ' useOn(', ' releaseUsing(', ' onUseTick(',
+                  ' finishUsingItem(', ' inventoryTick(', ' hurtEnemy(',
+                  ' postHurtEnemy(', ' interactLivingEntity('
+              )
+              active=[]
+              for path in item_classes:
+                  cls=path[:-6].replace('/','.')
+                  p=subprocess.run(
+                      ['javap','-classpath',jar,'-p',cls],
+                      text=True,capture_output=True
+                  )
+                  if p.returncode != 0:
+                      continue
+                  methods=[
+                      l.strip() for l in p.stdout.splitlines()
+                      if any(n in l for n in method_needles)
+                  ]
+                  if methods:
+                      active.append((cls,methods))
+              out.append('[item classes declaring active/use-related methods]')
+              for cls,methods in active:
+                  out.append(cls)
+                  out += ['  '+m for m in methods]
+              out.append(f'active_item_class_count={len(active)}')
+              out.append('')
+
+              candidates=[
+                  'com.iafenvoy.iceandfire.item.CockatriceScepterItem',
+                  'com.iafenvoy.iceandfire.item.DeathwormGauntletItem',
+                  'com.iafenvoy.iceandfire.item.DragonFluteItem',
+                  'com.iafenvoy.iceandfire.item.DragonHornItem',
+                  'com.iafenvoy.iceandfire.item.DreadQueenStaffItem',
+                  'com.iafenvoy.iceandfire.item.GorgonHeadItem',
+                  'com.iafenvoy.iceandfire.item.LichStaffItem',
+                  'com.iafenvoy.iceandfire.item.PixieWandItem',
+                  'com.iafenvoy.iceandfire.item.SirenFluteItem',
+                  'com.iafenvoy.iceandfire.item.SummoningCrystalItem',
+                  'com.iafenvoy.iceandfire.item.CyclopsEyeItem',
+                  'com.iafenvoy.iceandfire.item.StymphalianFeatherBundleItem',
+                  'com.iafenvoy.iceandfire.item.tool.GhostSwordItem',
+                  'com.iafenvoy.iceandfire.item.tool.TideTridentItem'
+              ]
+              out.append('[candidate method declarations]')
+              for cls in candidates:
+                  p=subprocess.run(['javap','-classpath',jar,'-p',cls],text=True,capture_output=True)
+                  out.append(cls)
+                  if p.returncode != 0:
+                      out.append('  <class unavailable>')
+                      continue
+                  sigs=[
+                      l.strip() for l in p.stdout.splitlines()
+                      if any(k in l for k in (
+                          ' use(', ' useOn(', ' releaseUsing(', ' onUseTick(',
+                          ' finishUsingItem(', ' inventoryTick(', ' hurtEnemy(',
+                          ' postHurtEnemy(', ' interactLivingEntity('
+                      ))
+                  ]
+                  out += ['  '+s for s in sigs] or ['  <no selected active signature>']
+              out.append('')
+
+              lang='assets/iceandfire/lang/en_us.json'
+              if lang in names:
+                  try:
+                      obj=json.loads(z.read(lang).decode('utf-8','replace'))
+                  except Exception:
+                      obj={}
+                  keys=[
+                      k for k in obj
+                      if k.startswith('item.iceandfire.')
+                      and any(tok in k for tok in (
+                          'cockatrice_scepter','deathworm_gauntlet','dragon_flute',
+                          'dragon_horn','dread_queen_staff','gorgon_head','lich_staff',
+                          'pixie_wand','siren_flute','summoning_crystal','cyclops_eye',
+                          'stymphalian_feather_bundle','ghost_sword','tide_trident'
+                      ))
+                  ]
+                  out.append('[candidate localization roots]')
+                  for k in sorted(keys):
+                      out.append(f'{k}={obj[k]}')
+                  out.append(f'candidate_localization_key_count={len(keys)}')
+                  out.append('')
+
+              recipe_paths=[
+                  n for n in names
+                  if n.startswith('data/iceandfire/recipe/')
+                  and any(tok in n for tok in (
+                      'cockatrice_scepter','deathworm_gauntlet','dragon_flute',
+                      'dragon_horn','gorgon_head','lich_staff','pixie_wand',
+                      'siren_flute','summoning_crystal','cyclops_eye',
+                      'stymphalian_feather_bundle','ghost_sword','tide_trident'
+                  ))
+              ]
+              out.append('[candidate recipe paths]')
+              out += recipe_paths or ['<none>']
+              out.append(f'candidate_recipe_path_count={len(recipe_paths)}')
+              out.append('')
+
+          text='\n'.join(out)+'\n'
+          pathlib.Path('audit/facts.txt').write_text(text,encoding='utf-8')
+          print(text)
+          PY
+
+      - name: Publish text-only audit report
+        uses: actions/upload-artifact@v7
+        with:
+          name: iceandfire-ce-2.1.2-exact-artifact-audit
+          path: audit/*.txt
+          if-no-files-found: error
+          retention-days: 3
