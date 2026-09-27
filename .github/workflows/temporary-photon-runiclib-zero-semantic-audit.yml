@@ -1,0 +1,163 @@
+name: Temporary Photon + RunicLib Exact Zero-Semantic Audit
+
+on:
+  push:
+    branches:
+      - audit/photon-runiclib-zero-semantic-2026-09-27
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - provider: photon
+            project: "871522"
+            file: "8824095"
+            expected_sha1: "5b725c08494375b4ae8917fca3f357a85a0fa6d2"
+            namespace: "photon"
+          - provider: runiclib
+            project: "880879"
+            file: "8188562"
+            expected_sha1: "f0422c70689d5b31b65ef5a84c1d5eb2d7536d4c"
+            namespace: "runiclib"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download and hash-gate exact publisher artifact
+        shell: bash
+        env:
+          PROVIDER: ${{ matrix.provider }}
+          PROJECT: ${{ matrix.project }}
+          FILE: ${{ matrix.file }}
+          EXPECTED_SHA1: ${{ matrix.expected_sha1 }}
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          URL="https://cursemaven.com/curse/maven/${PROVIDER}-${PROJECT}/${FILE}/${PROVIDER}-${PROJECT}-${FILE}.jar"
+          curl --fail --location --retry 3 --retry-delay 2 "$URL" -o /tmp/provider.jar
+          ACTUAL="$(sha1sum /tmp/provider.jar | awk '{print $1}')"
+          printf 'provider=%s\nproject=%s\nfile=%s\nexpected_physical_sha1=%s\nactual_publisher_sha1=%s\n' "$PROVIDER" "$PROJECT" "$FILE" "$EXPECTED_SHA1" "$ACTUAL" | tee audit/hash.txt
+          test "$ACTUAL" = "$EXPECTED_SHA1"
+          sha256sum /tmp/provider.jar | tee audit/sha256.txt
+
+      - name: Extract clean-room semantic-boundary facts
+        shell: bash
+        env:
+          PROVIDER: ${{ matrix.provider }}
+          NAMESPACE: ${{ matrix.namespace }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, pathlib, re
+          from zipfile import ZipFile
+
+          jar='/tmp/provider.jar'
+          provider=os.environ['PROVIDER']
+          namespace=os.environ['NAMESPACE']
+          semantic_tokens=('spell','ritual','rite','ability')
+          library_tokens=('effect','attribute','trade','service','api')
+          vfx_tokens=('particle','trail','emitter','editor','fx','effect')
+
+          out=[
+              f'{provider.upper()} EXACT ZERO-SEMANTIC BOUNDARY FACTS',
+              'Inspection is hash-gated to the physical pack SHA-1 before this step.',
+              'Only metadata, archive path identities and narrow class/resource-name facts are retained.',
+              ''
+          ]
+
+          with ZipFile(jar) as z:
+              names=sorted(n for n in z.namelist() if not n.endswith('/'))
+
+              out.append('[metadata]')
+              toml='META-INF/neoforge.mods.toml'
+              if toml in names:
+                  txt=z.read(toml).decode('utf-8','replace')
+                  for line in txt.splitlines():
+                      s=line.strip()
+                      if s.startswith(('modId=','version=','displayName=','license=')):
+                          out.append(s)
+              else:
+                  out.append('<neoforge.mods.toml missing>')
+              out.append('')
+
+              provider_resources=[
+                  n for n in names
+                  if n.startswith(f'assets/{namespace}/') or n.startswith(f'data/{namespace}/')
+              ]
+              out.append('[provider namespace resource totals]')
+              out.append(f'provider_resource_file_count={len(provider_resources)}')
+              out.append(f'provider_asset_file_count={sum(n.startswith(f"assets/{namespace}/") for n in provider_resources)}')
+              out.append(f'provider_data_file_count={sum(n.startswith(f"data/{namespace}/") for n in provider_resources)}')
+              out.append('')
+
+              semantic_paths=[
+                  n for n in names
+                  if any(re.search(rf'(^|[/_.-]){re.escape(tok)}([/_.-]|$)', n.lower()) for tok in semantic_tokens)
+              ]
+              out.append('[semantic-action-like archive paths]')
+              out += semantic_paths[:200] or ['<none>']
+              out.append(f'semantic_action_like_path_count={len(semantic_paths)}')
+              out.append('')
+
+              class_names=[n for n in names if n.endswith('.class')]
+              semantic_classes=[
+                  n for n in class_names
+                  if any(re.search(rf'(^|[/_$.-]){re.escape(tok)}([A-Z0-9_$.-]|$)', n, re.I) for tok in semantic_tokens)
+              ]
+              out.append('[semantic-action-like class names]')
+              out += semantic_classes[:200] or ['<none>']
+              out.append(f'semantic_action_like_class_count={len(semantic_classes)}')
+              out.append('')
+
+              if provider == 'runiclib':
+                  support=[
+                      n for n in class_names
+                      if any(tok in n.lower() for tok in library_tokens)
+                  ]
+                  out.append('[library-surface class-name sample]')
+                  out += support[:120] or ['<none>']
+                  out.append(f'library_surface_class_count={len(support)}')
+                  out.append('')
+              elif provider == 'photon':
+                  support=[
+                      n for n in class_names
+                      if any(tok in n.lower() for tok in vfx_tokens)
+                  ]
+                  out.append('[vfx-surface class-name sample]')
+                  out += support[:120] or ['<none>']
+                  out.append(f'vfx_surface_class_count={len(support)}')
+                  out.append('')
+
+              registryish=[
+                  n for n in provider_resources
+                  if any(seg in n.lower() for seg in (
+                      '/recipe/','/recipes/','/loot_table/','/loot_tables/',
+                      '/advancement/','/advancements/','/tags/',
+                      '/damage_type/','/worldgen/'
+                  ))
+              ]
+              out.append('[provider data gameplay-resource paths]')
+              out += registryish[:200] or ['<none>']
+              out.append(f'provider_gameplay_data_path_count={len(registryish)}')
+              out.append('')
+
+          text='\n'.join(out)+'\n'
+          pathlib.Path('audit/facts.txt').write_text(text,encoding='utf-8')
+          print(text)
+          PY
+
+      - name: Publish text-only audit report
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.provider }}-exact-zero-semantic-audit
+          path: audit/*.txt
+          if-no-files-found: error
+          retention-days: 3
