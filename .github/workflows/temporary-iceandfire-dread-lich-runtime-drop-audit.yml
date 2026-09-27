@@ -138,6 +138,48 @@ jobs:
           print('\n'.join(out))
           PY
 
+      - name: Hash-gate exact Ice and Fire CE 2.1.2 and extract Dread Lich equipment facts
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://cursemaven.com/curse/maven/ice-and-fire-community-edition-1040076/8757837/ice-and-fire-community-edition-1040076-8757837.jar'
+          curl --fail --location --retry 3 --retry-delay 2 "$URL" -o /tmp/iceandfire.jar
+          EXPECTED='0786f4142b7cabd958688f68beef3e63e9c0ae8b'
+          ACTUAL="$(sha1sum /tmp/iceandfire.jar | awk '{print $1}')"
+          printf '\nICE AND FIRE CE 2.1.2 EXACT DREAD LICH FACTS\nexpected_sha1=%s\nactual_sha1=%s\n' "$EXPECTED" "$ACTUAL" | tee -a audit/facts.txt
+          test "$ACTUAL" = "$EXPECTED"
+          sha256sum /tmp/iceandfire.jar | tee -a audit/facts.txt
+
+          python3 - <<'PY' | tee -a audit/facts.txt
+          import subprocess, re
+
+          jar='/tmp/iceandfire.jar'
+          cls='com.iafenvoy.iceandfire.entity.DreadLichEntity'
+          decl=subprocess.run(['javap','-classpath',jar,'-p',cls],text=True,capture_output=True,check=True).stdout
+          dis=subprocess.run(['javap','-classpath',jar,'-c','-p',cls],text=True,capture_output=True,check=True).stdout
+          parent='com.iafenvoy.iceandfire.entity.DreadMobEntity'
+          pdecl=subprocess.run(['javap','-classpath',jar,'-p',parent],text=True,capture_output=True,check=True).stdout
+
+          print('dread_lich_extends_dread_mob='+str('extends com.iafenvoy.iceandfire.entity.DreadMobEntity' in decl).lower())
+          print('dread_lich_declares_setDropChance='+str('setDropChance(' in decl).lower())
+          print('dread_lich_declares_dropCustomDeathLoot='+str('dropCustomDeathLoot(' in decl).lower())
+          print('dread_mob_declares_dropCustomDeathLoot='+str('dropCustomDeathLoot(' in pdecl).lower())
+
+          marker='protected void populateDefaultEquipmentSlots'
+          block=''
+          if marker in dis:
+              block=dis.split(marker,1)[1].split('\n\n',1)[0]
+          checks={
+              'populate_calls_super': 'DreadMobEntity.populateDefaultEquipmentSlots' in block,
+              'populate_references_LICH_STAFF': 'IafItems.LICH_STAFF' in block,
+              'populate_references_MAINHAND': 'EquipmentSlot.MAINHAND' in block,
+              'populate_calls_setItemSlot': 'setItemSlot' in block,
+              'populate_calls_setDropChance': 'setDropChance' in block,
+          }
+          for k,v in checks.items():
+              print(k+'='+str(v).lower())
+          PY
+
       - name: Publish text-only audit
         uses: actions/upload-artifact@v7
         with:
