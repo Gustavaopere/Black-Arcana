@@ -174,8 +174,8 @@ As métricas têm denominadores diferentes:
 - ✅ **Fila de classificação semântica da categoria física `Magic`:** vazia no snapshot sibling atual.
 - ⚠️ **Cross-domain condicionais relevantes:** Gaze, Traveloptics, Iron's Spellbooks KubeJS e KubeJS Ars Nouveau; More Relics agora está ✅ `COUNTED_EXACT` com 61 owner-scoped abilities; componentes UI/compat como Spell Actionbar, Specs, Recolor e Immersive Portal têm +0 independente, mas QA técnico separado.
 - ✅ **Zero-semantic exact closures recentes:** Photon 2.2.6.a (`ZERO_SEMANTIC_VFX_INFRA`) e RunicLib 5.0.7 (`ZERO_SEMANTIC_LIBRARY_INFRA`), ambos +0.
-- ✅ **Fechamentos finais da categoria física `Magic`:** Mowzie's Cataclysm, Pickable Orbs, IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages — todos exact-artifact, todos **+0** sob a métrica semântica; mínimo strict permanece **1669**.
-- ✅ **Deltas recentes strict-counted:** Hexalia 1.3.7 +4; Reliquified Ars Nouveau +19; Reliquified Artifacts +52; Reliquified Iron's +25; More Relics +61. Ozymandias Sundries +2; Mowzie's Mobs +10 strict.
+- ✅ **Fechamentos finais da categoria física `Magic`:** Mowzie's Cataclysm, Pickable Orbs, IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages — todos exact-artifact, todos **+0** sob a métrica semântica; esses fechamentos não alteram o mínimo strict, que após a promoção parcial de Ice And Fire CE é **1676**.
+- ✅ **Deltas recentes strict-counted:** Hexalia 1.3.7 +4; Reliquified Ars Nouveau +19; Reliquified Artifacts +52; Reliquified Iron's +25; More Relics +61; Ozymandias Sundries +2; Mowzie's Mobs +10 strict; Ice And Fire CE +7 strict.
 - ✅ **Wind's Spellbooks:** 7/7 já estavam strict-counted; a migração atual é apenas continuidade de provider-tree, não +7 adicional.
 - ✅ **Black Arcana próprio:** 32 contratos de candidatos; runtime/Stage continua separado do catálogo.
 
