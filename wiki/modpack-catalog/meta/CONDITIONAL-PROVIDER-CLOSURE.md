@@ -10,7 +10,7 @@ This index routes the providers whose current Black Arcana catalog state remains
 
 It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-Current provider-directory reality on base `main@0ecfa67028c588b973e31e48eb4dd4dcc2360ac7` plus this Ice And Fire CE partial-promotion change set:
+Current provider-directory reality at `Black-Arcana@8b8086723aa177147d3f3b82a1119aa9d76b2e0c`, reconciled against sibling physical authority `neoforge-rpg-skilltree@f75a050392e2881f84ffbf94dcba582f18a3b74e`:
 
 - **10** provider directories carry the ⚠️ prefix;
 - all **10** still have a catalog/config/script/effective-state closure gate listed below;
@@ -106,4 +106,4 @@ When one checklist closes:
 5. keep runtime/integration QA separate;
 6. recheck the latest physical modlist/provider version immediately before merge.
 
-This index is a routing document. It adds no semantic objects and leaves the current strict minimum unchanged.
+This index is a routing document. It adds no semantic objects and leaves the current strict minimum unchanged at **1677**.
