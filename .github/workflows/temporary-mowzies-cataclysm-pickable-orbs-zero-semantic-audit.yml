@@ -37,6 +37,20 @@ jobs:
             namespace: "ironsable_wind"
             primary_slug: "ironsable-x-winds-spellbooks"
             fallback_slug: ""
+          - provider: irons_jewelry
+            project: "1101111"
+            file: "8365016"
+            expected_sha1: "2f8d934d04111037dcf3fe7b04c96aec892da744"
+            namespace: "irons_jewelry"
+            primary_slug: "irons-jewelry"
+            fallback_slug: ""
+          - provider: integrated_villages
+            project: "661376"
+            file: "8161672"
+            expected_sha1: "4ba7360abf671b1f0f40c43c590977da2048490e"
+            namespace: "integrated_villages"
+            primary_slug: "integrated-villages"
+            fallback_slug: ""
 
     steps:
       - name: Checkout
@@ -78,6 +92,7 @@ jobs:
           set -euo pipefail
           python3 - <<'PY'
           import json, os, pathlib, re
+          from collections import Counter
           from zipfile import ZipFile
 
           jar='/tmp/provider.jar'
@@ -115,9 +130,14 @@ jobs:
               out.append('')
 
               provider_data=sorted(n for n in resources if n.startswith(f'data/{namespace}/'))
-              out.append('[all provider data paths]')
-              out += provider_data or ['<none>']
+              out.append('[provider data path sample]')
+              out += provider_data[:300] or ['<none>']
               out.append(f'all_provider_data_path_count={len(provider_data)}')
+              buckets=Counter()
+              for n in provider_data:
+                  rest=n[len(f'data/{namespace}/'):]
+                  buckets[rest.split('/',1)[0] if '/' in rest else '<root>'] += 1
+              out.append('provider_data_top_level_buckets='+','.join(f'{k}:{v}' for k,v in sorted(buckets.items())))
               out.append('')
 
               semantic_paths=[
