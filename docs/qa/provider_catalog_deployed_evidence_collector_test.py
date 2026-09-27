@@ -349,5 +349,61 @@ enable_tunneling = false
             self.assertEqual([], report["kubejs_script_inventory"]["files"])
 
 
+    def test_main_report_collects_exact_ice_and_fire_jupiter_gate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            config = instance / "config" / "iceandfire"
+            mods.mkdir(parents=True)
+            config.mkdir(parents=True)
+
+            (mods / "iceandfire-2.1.2.jar").write_bytes(b"fixture")
+            (config / "iaf-common.json").write_text(
+                json.dumps(
+                    {
+                        "phantasmalBladeAbility": False,
+                        "tools": {
+                            "phantasmalBladeAbility": True,
+                            "unrelated": "do-not-collect",
+                        },
+                        "other": {"secret": "do-not-collect"},
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            output = instance / "evidence.json"
+
+            with patch(
+                "sys.argv",
+                [
+                    "provider-catalog-deployed-evidence-collector.py",
+                    str(instance),
+                    "--output",
+                    str(output),
+                ],
+            ):
+                self.assertEqual(0, collector.main())
+
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertIn("ice_and_fire_ce", report)
+            self.assertEqual(
+                {
+                    "path": "config/iceandfire/iaf-common.json",
+                    "key_path": "tools.phantasmalBladeAbility",
+                    "status": "OBSERVED",
+                    "value": True,
+                },
+                report["ice_and_fire_ce"]["phantasmal_blade_ability"],
+            )
+            self.assertEqual(1, len(report["mods"]["ice_and_fire_ce"]))
+            self.assertFalse(
+                report["mods"]["ice_and_fire_ce"][0]["release_2_1_2_equality"]
+            )
+            serialized = json.dumps(report["ice_and_fire_ce"])
+            self.assertNotIn("unrelated", serialized)
+            self.assertNotIn("secret", serialized)
+
+
 if __name__ == "__main__":
     unittest.main()

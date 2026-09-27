@@ -33,6 +33,7 @@ GAZE_1171_SHA1 = "a8cb3190bde157f78160ce65c202ce2d47fb2041"
 NEG_462_RELEASE_SHA1 = "32eea2c478a346ee7499f6a0db156241116f73e9"
 TOMBSTONE_956_RELEASE_SHA1 = "d830d16caa20b0d23a44ed6b1d339bc22afc2460"
 MOWZIES_MOBS_182_PHYSICAL_SHA1 = "d64475cd77444b056ece6472c79d40293dc63c6c"
+ICE_AND_FIRE_CE_212_RELEASE_SHA1 = "0786f4142b7cabd958688f68beef3e63e9c0ae8b"
 
 TOMBSTONE_ALLOWED_MAGIC_ITEM_KEYS = [
     "allow_tablet_of_assistance",
@@ -95,6 +96,7 @@ MOD_PATTERNS = {
     "asterism_arcanum": ["asterismarcanum-1.21.1-0.1.0.jar"],
     "corail_tombstone": ["tombstone-neoforge-1.21.1-9.5.6.jar"],
     "gaze": ["gaze-1.1.7.1.jar"],
+    "ice_and_fire_ce": ["iceandfire-2.1.2.jar"],
     "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
     "mowzies_mobs": ["mowziesmobs-1.21.1-1.8.2.jar"],
     "somake_spells": ["somakespells-1.0.9-1.21.1.jar"],
@@ -499,6 +501,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["release_9_5_6_equality"] = entry["sha1"] == TOMBSTONE_956_RELEASE_SHA1
                 elif provider == "mowzies_mobs":
                     entry["current_physical_1_8_2_equality"] = entry["sha1"] == MOWZIES_MOBS_182_PHYSICAL_SHA1
+                elif provider == "ice_and_fire_ce":
+                    entry["release_2_1_2_equality"] = entry["sha1"] == ICE_AND_FIRE_CE_212_RELEASE_SHA1
                 entries.append(entry)
         result[provider] = entries
     return result
@@ -753,6 +757,39 @@ def collect_selected_key(instance: Path, roots: list[Path], key: str) -> list[di
                 })
 
     return matches
+
+
+def collect_ice_and_fire_ce(instance: Path) -> dict[str, Any]:
+    path = instance / "config" / "iceandfire" / "iaf-common.json"
+    evidence: dict[str, Any] = {
+        "path": rel(path, instance),
+        "key_path": "tools.phantasmalBladeAbility",
+        "status": "NOT_FOUND",
+    }
+    if not path.is_file():
+        return {"phantasmal_blade_ability": evidence}
+
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        evidence["status"] = "PARSE_ERROR"
+        evidence["error"] = type(exc).__name__
+        return {"phantasmal_blade_ability": evidence}
+
+    tools = data.get("tools") if isinstance(data, dict) else None
+    if not isinstance(tools, dict) or "phantasmalBladeAbility" not in tools:
+        evidence["status"] = "KEY_NOT_FOUND"
+        return {"phantasmal_blade_ability": evidence}
+
+    value = tools["phantasmalBladeAbility"]
+    if not isinstance(value, bool):
+        evidence["status"] = "INVALID_TYPE"
+        evidence["value_type"] = type(value).__name__
+        return {"phantasmal_blade_ability": evidence}
+
+    evidence["status"] = "OBSERVED"
+    evidence["value"] = value
+    return {"phantasmal_blade_ability": evidence}
 
 
 def collect_gaze(instance: Path, worlds: list[Path]) -> dict[str, Any]:
@@ -1034,6 +1071,7 @@ def main() -> int:
         "asterism_arcanum": collect_asterism(instance, worlds),
         "corail_tombstone": collect_tombstone(instance, worlds),
         "gaze": collect_gaze(instance, worlds),
+        "ice_and_fire_ce": collect_ice_and_fire_ce(instance),
         "mowzies_mobs": collect_mowzies_mobs(instance, worlds),
         "not_enough_glyphs": collect_neg(instance, worlds),
         "somake_spells": collect_somake(instance, worlds),
@@ -1048,6 +1086,7 @@ def main() -> int:
             "A deployed reference to traveloptics:blackout is evidence input, not automatic proof of a survival acquisition route.",
             "Observed Somake Iron's spell-config files are override evidence only; file presence is not treated as proof of registration or reachability.",
             "Observed Tombstone AllowedMagicItems values are eligibility evidence only; they do not by themselves prove semantic deduplication, acquisition, or runtime reachability.",
+            "Observed Ice And Fire CE tools.phantasmalBladeAbility is deployed gate evidence only; missing/invalid values never fall back to the source default.",
         ],
     }
 
