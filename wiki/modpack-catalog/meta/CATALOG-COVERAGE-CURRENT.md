@@ -24,11 +24,11 @@ Semantic effect of the current reconciliation:
 - Ars 'n' Spells 3.3.4: **+0 version delta**; five ritual identities remain counted, with current state `COUNTED_RELEASE_BOUNDED`.
 - Cataclysm: Spellbooks 1.1.14: **+0 current delta**, retaining 59 already-counted identities with stronger exact evidence.
 - Acolyte, Dungeon's Delight, Fantasy Armor, Enchantment Descriptions, A Good Place, Create: Apokinetics, Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Specs: **+0 independent semantic objects** under the current metric.
-- More Relics 1.7.7-forRelics-0.12.8-1.0 and Traveloptics 4.4.0.1-1.21.1 are current **⚠️ / +0 strict pending closure**; neither published relic names nor the old 33-spell Traveloptics publisher baseline is promoted into the exact current physical numerator.
+- More Relics 1.7.7-forRelics-0.12.8-1.0 is now **✅ `COUNTED_EXACT` / +61 strict** after NON-MERGE exact-artifact audit #409 hash-matched File `8859015` and closed 61 owner-scoped ability roots. Traveloptics 4.4.0.1-1.21.1 remains current **⚠️ / +0 strict pending closure**; its old 33-spell publisher baseline is not promoted into the exact current physical numerator.
 - Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
 - Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
 
-The strict reconstructible semantic minimum is therefore **1596**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1657**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -116,9 +116,9 @@ Therefore:
 - semantic numerator delta from Reliquified Ars Nouveau 0.8.1 source-pinned closure: **+19**;
 - semantic numerator delta from Reliquified Artifacts 1.0.8 source-pinned closure: **+52**;
 - semantic numerator delta from Reliquified Iron's Spells 'n Spellbooks 0.2.7 source-pinned closure: **+25**;
-- semantic numerator/denominator delta currently attributable to More Relics 1.7.7 compat audit: **+0 strict pending exact ability-root closure**;
+- semantic numerator delta from More Relics 1.7.7-forRelics-0.12.8-1.0 exact-artifact ability closure: **+61 `COUNTED_EXACT`**;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
-- strict reconstructible semantic minimum: **1596**;
+- strict reconstructible semantic minimum: **1657**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
