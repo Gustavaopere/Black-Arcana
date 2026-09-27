@@ -20,16 +20,16 @@ No sibling `neoforge-rpg-skilltree@8a9277edb2f8e7172044614c1a046c9c2ef3a253` exi
 
 Após normalização de ownership/aliases e os fechamentos de Ozymandias + Mowzie's Mobs + Photon + RunicLib nesta rodada:
 
-- **53 ✅ catalogados** com diretório Black Arcana correspondente;
+- **58 ✅ catalogados** com diretório Black Arcana correspondente;
 - **7 ⚠️ parciais/condicionados** com diretório Black Arcana correspondente: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS e Mowzie's Mobs;
-- **5 ⚠️ em classificação semântica** por ainda não possuírem diretório Black Arcana: Iron's Gems 'n Jewelry, Integrated Villages, Mowzie's Cataclysm, Pickable Orbs e IronSable X Wind's Spellbooks;
-- **0 ❌** são declarados apenas pela taxonomia sibling: os cinco itens acima ainda precisam ser classificados antes de decidir se são providers semânticos, infraestrutura zero-semantic ou conteúdo fora da métrica;
+- **0 ⚠️ em classificação semântica** sem diretório Black Arcana;
+- **0 ❌** são declarados apenas pela taxonomia sibling: toda linha física `Magic` atual possui classificação explícita;
 - **0 🟡** de implementação ativa;
 - **0 ⛔** por ausência total de evidência.
 
-Assim, **60/65** linhas da categoria física `Magic` já mapeiam para diretórios Black Arcana. As cinco restantes formam a próxima fila de classificação; elas não entram no denominador semântico por presunção.
+Assim, **65/65** linhas da categoria física `Magic` mapeiam para diretórios Black Arcana (**58 ✅ + 7 ⚠️**). A fila category-only desta taxonomia está vazia. Isso não fecha o denominador semântico global cross-domain.
 
-**Reclassificação sibling recente:** sete linhas foram adicionadas à pasta/categoria `Magic` sem necessariamente serem providers novos. Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable e Iron's Spellbooks KubeJS já tinham diretório Black Arcana; IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages entraram na fila de classificação.
+**Reclassificação sibling recente:** sete linhas foram adicionadas à pasta/categoria `Magic` sem necessariamente serem providers novos. Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable e Iron's Spellbooks KubeJS já tinham diretório Black Arcana; IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages foram agora fechados como ✅ `+0` semanticamente independentes.
 
 **Cross-domain note:** o subtotal físico `Magic` continua sem representar o universo global. Gaze permanece ⚠️ com um spell contado + 26 rites config-condicionais; Ender's Spells and Stuff: Requiem é ✅ com 53 ações strict; Reliquified Ars Nouveau, Reliquified Artifacts e Reliquified Iron's são ✅ com 19, 52 e 25 ability roots source-pinned; Iron's Spellbooks KubeJS permanece ⚠️ fora dessa categoria sibling atual; More Relics é ✅ com 61 ability roots exatas; Ozymandias Sundries agora é ✅ com 2 spells exatos; Mowzie's Mobs é ⚠️ com 10 poderes strict + 1 Tunneling config-condicional; Traveloptics permanece ⚠️ +0 strict pendente de fechamento exato-current. Spell Actionbar, Specs, Recolor e Immersive Portal continuam componentes técnicos/runtime com +0 identidades independentes.
 **Traveloptics current-physical override:** Project Library physical evidence directly records `traveloptics-4.4.0.1-1.21.1.jar` / SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This outranks the absence of a status-prefixed sibling row for presence/version. The installed digest differs from the audited publisher alpha and known patch artifact, so Traveloptics is a current **⚠️ `OTHER_VERIFIED` / +0 strict** provider blocker until its installed-byte registry and reachability are closed.
@@ -59,6 +59,11 @@ Fechamentos recentes relevantes:
 - ⚠️ Mowzie's Mobs 1.8.2 — exact File `7760267` hash match; **13 active player-ability slots**, reconciled to **10 strict `COUNTED_EXACT` powers + 1 `CONDITIONAL` Tunneling power**; `hit_boulder`/`backstab` technical-subaction slots and four inactive ids excluded.
 - ✅ Photon 2.2.6.a — exact physical/publisher File `8824095` equality; VFX/editor infrastructure only under the semantic metric; **+0 `ZERO_SEMANTIC_VFX_INFRA`**.
 - ✅ RunicLib 5.0.7 — exact physical/publisher File `8188562` equality; reusable effect/attribute/damage/trade/services library surface only; **+0 `ZERO_SEMANTIC_LIBRARY_INFRA`**.
+- ✅ Mowzie's Cataclysm 1.2.2 — exact File `8196282` equality; quatro Eyes de localização + recipes/tags, **+0 `ZERO_SEMANTIC_LOCATOR_BRIDGE`**.
+- ✅ Pickable Orbs 1.21.1-1.0.0 — exact File `8660158` equality; oito definições de pickup e `OrbEntity`, **+0 `ZERO_SEMANTIC_PICKUP_EFFECT_INFRA`**.
+- ✅ IronSable X Wind's Spellbooks 1.0.0 — exact File `8598265` equality; bridge física sobre Tornado/Almighty Push/Wind Blade/Aeropic já pertencentes a Wind's Spellbooks, **+0 `ZERO_SEMANTIC_EXISTING_SPELL_PHYSICS_BRIDGE`**.
+- ✅ Iron's Gems 'n Jewelry 1.21.1-2.0.2 — exact File `8365016` equality; oito codecs `IAction` são payloads de proc/bônus de joia, não casts independentes, **+0 `ZERO_SEMANTIC_EQUIPMENT_PROC_FRAMEWORK`**.
+- ✅ Integrated Villages 1.3.3+1.21.1-neoforge — exact File `8161672` equality; worldgen/structures/loot/data integration, **+0 `ZERO_SEMANTIC_WORLDGEN_INTEGRATION`**.
 - ⚠️ Traveloptics 4.4.0.1-1.21.1 — current physical provider; installed artifact is `OTHER_VERIFIED`; publisher-baseline 33 spells are not promoted as exact-current; **+0 strict**.
 - ⚠️ Iron's Spellbooks KubeJS 4.0.3 / KubeJS Ars Nouveau 1.3.2 — **+0 fixed built-in identities**, current pack script/mutation inventory still open.
 - ⚠️ Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Specs — runtime/interop audits remain partial, but each is explicitly **+0 independent semantic identities**.
