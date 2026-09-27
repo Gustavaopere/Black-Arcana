@@ -6,7 +6,7 @@
 
 Current physical status: **INSTALLED / CURRENT PROVIDER BLOCKER**. The Project Library physical modlist captured on **2026-09-16** directly records `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This physical modlist outranks absence from the sibling's status-prefixed dossier taxonomy for presence/version questions.
 
-The Phase 2BS publisher-artifact audit remains canonical evidence for File `6342780`, while the later physical-fingerprint checkpoint proves that the installed JAR is a third artifact (`OTHER_VERIFIED`). Therefore Traveloptics is again an active **⚠️ partial/conditioned provider**, not historical-only.
+The Phase 2BS publisher-artifact audit remains canonical evidence for File `6342780`. A later physical-fingerprint checkpoint proves the 2026-09-16 on-disk bytes differ (`OTHER_VERIFIED`). A separate 2026-08-18 Project Library CurseForge snapshot records the same filename in project/file `1046916 / 6342780`, publisher SHA-1 `380849...`, with `isModified=true`; because that metadata predates the later physical SHA-1, it is historical context and **does not identify the provenance of the September `7b74816e...` artifact**. Traveloptics remains an active **⚠️ partial/conditioned provider**, not historical-only.
 
 ## Current installed authority
 
@@ -22,7 +22,7 @@ The Phase 2BS publisher-artifact audit remains canonical evidence for File `6342
 - publisher license: **All Rights Reserved**
 - required artifact dependencies declared by the exact JAR: Iron's Spells 'n Spellbooks `[1.21.1-3.10.0,)`, L_Ender's Cataclysm `[2.60.,)`, Apothic Attributes `[2.6.1,)`
 
-Physical Project Library checkpoint `modlist(1).txt` dated 2026-09-16 fingerprints the installed filename at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This differs from both exact publisher File `6342780` SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8` and known patch File `8861368` SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Physical disposition is therefore **`OTHER_VERIFIED`**: the installed bytes are a third artifact/repack/replacement whose content delta is not yet materialized. The 33-ID File-6342780 inventory remains an exact publisher baseline, **not** an exact-current-physical registry claim. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
+Physical Project Library checkpoint `modlist(1).txt` dated 2026-09-16 fingerprints the installed filename at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This differs from both exact publisher File `6342780` SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8` and known patch File `8861368` SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Physical disposition remains **`OTHER_VERIFIED`** and current provenance remains unidentified. The older 2026-08-18 `minecraftinstance.json` snapshot records a File-6342780 slot with `isModified=true`, but cannot prove that the later September bytes descend from that earlier state. The 33-ID File-6342780 inventory therefore remains an exact publisher baseline, **not** an exact-current-physical registry claim. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
 
 The sibling `to-magic-n-extras.md` dossier is retained as descriptive/provenance context, but its taxonomy/prefix state is no longer used to negate the directly observed physical modlist row.
 
@@ -211,7 +211,7 @@ No method bodies, source reconstruction, localization prose, recipe/loot payload
 
 Traveloptics is currently installed and remains blocked on a finite current-pack closure set:
 
-1. materialize or otherwise authoritatively identify the exact `7b74816e...` physical bytes and reconstruct the current registry/content delta;
+1. materialize the exact `7b74816e...` physical bytes or obtain contemporaneous exact provenance, then reconstruct the current registry/content delta;
 2. verify current physical `TOLootModifiers` wiring and assembled registry initialization;
 3. close `traveloptics:blackout` object-level survival reachability for the actual physical artifact;
 4. close Somake Aqua ↔ T.O Aqua coexistence/authority on the assembled current stack.

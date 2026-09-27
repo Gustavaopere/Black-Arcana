@@ -13,13 +13,13 @@ This checklist does not promote the provider, does not treat a third-party patch
 Current physical evidence establishes the installed version line and filename:
 
 - observed installed filename: `traveloptics-4.4.0.1-1.21.1.jar`;
-- latest sibling dossier rechecked at `neoforge-rpg-skilltree@4d9710dc0c9bf17e1fdaef29e48d843de80288d0`: `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md` still marks that filename/version as physically installed; the dossier carries no physical cryptographic hash;
+- latest sibling dossier rechecked at `neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`: `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md` still marks that filename/version as physically installed; the dossier carries no physical cryptographic hash;
 - physical version line: `4.4.0.1-1.21.1`;
 - exact publisher file: CurseForge project/file `1046916 / 6342780`;
 - exact publisher-release SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
 - exact publisher-release SHA-256: `0372b4b8593288726fb0d6e8cdb86202a87677d0c2dafeb96cab50bf057ec298`.
 
-Project Library physical modlist checkpoint `modlist(1).txt` dated 2026-09-16 preserves SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` for `traveloptics-4.4.0.1-1.21.1.jar`. It is neither the original publisher SHA-1 nor the known patch SHA-1. Gate 1 therefore advances from unknown hash to a verified third-artifact disposition.
+Project Library physical modlist checkpoint `modlist(1).txt` dated 2026-09-16 preserves SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` for `traveloptics-4.4.0.1-1.21.1.jar`. It is neither the original publisher SHA-1 nor the known patch SHA-1. A separate Project Library `minecraftinstance.json` snapshot dated 2026-08-18 records the same filename in a CurseForge File `6342780` slot with publisher SHA-1 `380849...` and `isModified=true` (`isWorkingCopy=false`, `isFuzzyMatch=false`). Because that launcher snapshot predates the 2026-09-16 physical hash by nearly a month, it is **historical context only** and does not prove that the later `7b74816e...` bytes descend from that earlier slot.
 
 A third-party compatibility project published after the original audit exposes patched file `1690333 / 8861368`, filename `traveloptics-4.4.0.1.1-1.21.1-patched.jar`. Exact clean-room binary-diff evidence now fingerprints that candidate at SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d` / SHA-256 `05f588202900c691fb70389435c9997d090f81a699f7df7cdebcbec552298cc2`. Compared with original File `6342780`, both JARs contain 1339 entries, with zero additions/removals and exactly one changed entry: `com/gametechbc/traveloptics/loot/TOLootModifiers.class`; zero non-class resources differ. The patch publisher attributes that one-class delta to correcting the `universal_loot` codec wiring. This establishes an exact comparison target, **not** deployment. Current sibling evidence still does not prove which byte sequence is physically installed. See [`PATCH-8861368-BINARY-DIFF.md`](PATCH-8861368-BINARY-DIFF.md).
 
@@ -29,9 +29,9 @@ Required authoritative result:
 |---|---|---|
 | Is the physical JAR byte-identical to original File `6342780`? | compare physical SHA-1 with `3808493ce45cdfeb6408e85578adecf13df698e8` | `NÃO` — physical is `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` |
 | Is the known patch File `8861368` physically installed? | compare physical SHA-1 with `680fa679d8ea2419a79571f455436367222f6f9d` | `NÃO` |
-| If another replacement exists, what is it? | exact physical hash + provenance/content audit | `PARCIAL` — `OTHER_VERIFIED` hash known; provenance/content delta not yet materialized |
+| What is the `OTHER_VERIFIED` replacement? | exact physical hash + contemporaneous provenance/content audit | `ABERTO` — the August launcher snapshot cannot identify the September `7b74816e...` artifact; exact current provenance/content delta remains unknown |
 
-Physical disposition is now **`OTHER_VERIFIED`**. Do not infer its implementation from the unchanged nominal filename/version. The next gate is to materialize/audit the exact `7b74816e...` bytes or obtain equivalent authoritative provenance.
+Physical disposition remains **`OTHER_VERIFIED`**. Current provenance remains **unidentified beyond filename/version/hash**; the August CurseForge metadata cannot be projected onto the September bytes. Do not infer registry equality, File-6342780 ancestry, or the known patch fix from the unchanged nominal filename/version. The next gate is to materialize/audit the exact `7b74816e...` bytes or obtain equivalent contemporaneous exact-content provenance.
 
 ## Gate 2 — Loot-modifier registry initialization
 
