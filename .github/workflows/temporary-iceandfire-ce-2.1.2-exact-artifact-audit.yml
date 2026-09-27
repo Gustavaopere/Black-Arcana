@@ -168,6 +168,52 @@ jobs:
               out.append(f'candidate_recipe_path_count={len(recipe_paths)}')
               out.append('')
 
+              candidate_ids=[
+                  'iceandfire:cockatrice_scepter',
+                  'iceandfire:deathworm_gauntlet_red',
+                  'iceandfire:deathworm_gauntlet_white',
+                  'iceandfire:deathworm_gauntlet_yellow',
+                  'iceandfire:gorgon_head',
+                  'iceandfire:lich_staff',
+                  'iceandfire:pixie_wand',
+                  'iceandfire:siren_flute',
+                  'iceandfire:summoning_crystal_fire',
+                  'iceandfire:summoning_crystal_ice',
+                  'iceandfire:summoning_crystal_lightning',
+                  'iceandfire:stymphalian_feather_bundle',
+                  'iceandfire:ghost_sword'
+              ]
+              data_json=[
+                  n for n in names
+                  if n.startswith('data/iceandfire/') and n.endswith('.json')
+              ]
+              refs={cid:[] for cid in candidate_ids}
+              for n in data_json:
+                  try:
+                      raw=z.read(n).decode('utf-8','replace')
+                  except Exception:
+                      continue
+                  for cid in candidate_ids:
+                      if cid in raw:
+                          refs[cid].append(n)
+              out.append('[candidate exact data references]')
+              for cid in candidate_ids:
+                  out.append(cid)
+                  out += ['  '+p for p in refs[cid]] or ['  <none>']
+              out.append('')
+
+              buckets=('recipe/','loot_table/','advancement/','tags/','worldgen/')
+              out.append('[candidate acquisition reference summary]')
+              for cid in candidate_ids:
+                  hits=refs[cid]
+                  typed=[]
+                  for b in buckets:
+                      n=sum(('/'+b) in p for p in hits)
+                      if n:
+                          typed.append(f'{b.rstrip("/")}={n}')
+                  out.append(f'{cid}: '+(','.join(typed) if typed else '<none>'))
+              out.append('')
+
           text='\n'.join(out)+'\n'
           pathlib.Path('audit/facts.txt').write_text(text,encoding='utf-8')
           print(text)
