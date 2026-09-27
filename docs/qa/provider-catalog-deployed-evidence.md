@@ -265,7 +265,7 @@ and only the nested key:
 
 The report emits the relative path, exact key path, a bounded status and the boolean value only when it is actually present and boolean. A same-named key outside `tools` is ignored. Missing files/keys, malformed JSON and invalid value types stay explicit fail-closed states; the collector never substitutes the source default.
 
-This evidence can promote Ghost Sword only when it comes from the actual current instance, the physical JAR matches 2.1.2, the observed value is `true`, and no overriding runtime gate is found. It does not close Dread Lich Staff acquisition.
+This evidence can promote Ghost Sword only when it comes from the actual current instance, the physical JAR matches 2.1.2, the observed value is `true`, and no overriding runtime gate is found. Dread Lich Staff acquisition is already closed separately by current-pack NeoForge 21.1.250 runtime audit `36327488231`; this collector is not its evidence path.
 
 See [`wiki/modpack-catalog/providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md).
 ### Somake Spells
@@ -388,7 +388,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Corail Tombstone: physical 9.5.6 equality plus the 12 bounded `AllowedMagicItems` booleans that gate the remaining tablets/gemstones/Grave Key/Lost Tablet/Magic Scroll/Scroll of Knowledge candidates; semantic deduplication and reachability still require provider-specific review;
 - Somake: physical equality and 83/83 registration composition are already closed canonically; the collector can corroborate the installed hash and reduce the remaining deployed `enableSpellLockSystem` plus Iron's per-spell/global/datapack `enabled` / `school` / `allow_crafting` gates;
 - Mowzie's Mobs: current physical 1.8.2 equality plus effective deployed `enable_tunneling`;
-- Ice And Fire CE: current physical 2.1.2 equality plus deployed `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility` for the Ghost Sword gate; Dread Lich Staff acquisition remains a separate provider-specific blocker;
+- Ice And Fire CE: current physical 2.1.2 equality plus deployed `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility` for the sole remaining Ghost Sword gate; Dread Lich Staff acquisition is already closed by provider-specific runtime audit `36327488231`;
 - Traveloptics: current physical override/provider blocker — classify the actual installed JAR and discover bounded deployed `traveloptics:blackout` references; exact-current registry/loot/acquisition review remains provider-specific.
 - Iron's Spellbooks KubeJS / KubeJS Ars Nouveau: use `kubejs_script_inventory` to bind the review to the exact current script/data tree; inspect non-empty files separately according to each provider checklist.
 
