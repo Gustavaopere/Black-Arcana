@@ -186,5 +186,45 @@ allow_lost_tablet = false
         self.assertIsNone(row)
 
 
+    def test_collects_mowzies_tunneling_gate_without_assuming_default(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            (instance / "config").mkdir(parents=True)
+            (instance / "defaultconfigs").mkdir(parents=True)
+            world = instance / "world"
+            (world / "serverconfig").mkdir(parents=True)
+
+            (instance / "config" / "mowziesmobs-common.toml").write_text(
+                """
+[tools_and_abilities.earthrend_gauntlet]
+enable_tunneling = false
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            (instance / "defaultconfigs" / "mowziesmobs-common.toml").write_text(
+                """
+[tools_and_abilities.earthrend_gauntlet]
+enable_tunneling = true
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+
+            worlds = collector.candidate_worlds(instance, [])
+            result = collector.collect_mowzies_mobs(instance, worlds)
+
+            self.assertEqual(
+                [
+                    ("config/mowziesmobs-common.toml", False),
+                    ("defaultconfigs/mowziesmobs-common.toml", True),
+                ],
+                [
+                    (obs["path"], obs["value"])
+                    for obs in result["enable_tunneling_matches"]
+                ],
+            )
+
+
 if __name__ == "__main__":
     unittest.main()
