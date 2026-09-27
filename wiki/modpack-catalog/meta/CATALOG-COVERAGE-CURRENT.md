@@ -8,7 +8,7 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Structural provider-directory inventory — 27/09/2026
 
-The canonical provider tree now contains **115 top-level provider directories = 99 ✅ + 16 ⚠️**. This count was obtained directly from `wiki/modpack-catalog/providers/` after consolidating the duplicate Vampiric Ageing directory pair that represented the same mod id `vampiricageing`, installed JAR and source pin.
+The canonical provider tree now contains **115 top-level provider directories = 100 ✅ + 15 ⚠️**. This count was obtained directly from `wiki/modpack-catalog/providers/` after consolidating the duplicate Vampiric Ageing directory pair that represented the same mod id `vampiricageing`, installed JAR and source pin.
 
 This is a **repository catalog-structure metric only**. It does not regenerate the historical cross-domain component denominator, does not prove that 115 is the unique current physical-provider denominator, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
 
@@ -16,13 +16,13 @@ See [PROVIDER-DIRECTORY-INVENTORY.md](./PROVIDER-DIRECTORY-INVENTORY.md).
 
 ## Current reconciliation — 27/09/2026
 
-Presence/version authority is the newest physical Project Library evidence plus newer sibling physical dossiers when they supersede that snapshot. At `neoforge-rpg-skilltree@c701aa74b1e0109659a9f40206603dd960726445`, the current modlist has **84 rows whose category field contains `Magic`**. After ownership normalization and the new six partial-provider mappings, **84/84** map to Black Arcana provider directories (**70 ✅ + 14 ⚠️**). The previous 67-row snapshot is historical.
+Presence/version authority is the newest physical Project Library evidence plus newer sibling physical dossiers when they supersede that snapshot. At `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`, the current modlist has **84 rows whose category field contains `Magic`**. After ownership normalization and the subsequent Reliquified Cataclysm closure, **84/84** map to Black Arcana provider directories (**71 ✅ + 13 ⚠️**). The previous 67-row snapshot is historical.
 
-The +17 physical-category delta contains eleven providers that were already cataloged and six newly materialized ⚠️ providers: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. Category reclassification does not create semantic objects. Their current exact completeness/classification blockers are recorded in [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md) and [CONDITIONAL-PROVIDER-CLOSURE.md](./CONDITIONAL-PROVIDER-CLOSURE.md). The global cross-domain set remains larger than this physical-category subtotal.
+The +17 physical-category delta contains eleven providers that were already cataloged and six providers first materialized as ⚠️: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. Reliquified L_Ender's Cataclysm 0.1.1 is now ✅ with **+7 `COUNTED_RELEASE_BOUNDED`** ability roots; the other five remain partial. Category reclassification itself still creates no semantic objects. Current blockers are recorded in [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md) and [CONDITIONAL-PROVIDER-CLOSURE.md](./CONDITIONAL-PROVIDER-CLOSURE.md). The global cross-domain set remains larger than this physical-category subtotal.
 
 Semantic effect of the current reconciliation:
 
-- 27/09 physical-category expansion 67→84: **+0 strict**; eleven rows were already represented and six new provider mappings remain fail-closed pending exact semantic closure.
+- 27/09 physical-category expansion 67→84: the reclassification itself is **+0 strict**; subsequent Reliquified L_Ender's Cataclysm 0.1.1 release-bounded closure contributes **+7 strict**.
 
 - Companions! 1.3.4: **+9 `COUNTED_SOURCE_PINNED`** Magic Book actions.
 - Crystal Chronicles 0.1.3-alpha: **+1 `COUNTED_SOURCE_PINNED`** (`crystal_chronicles:prismatic_portal`).
@@ -44,7 +44,7 @@ Semantic effect of the current reconciliation:
 - Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
 - Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
 
-The strict reconstructible semantic minimum is therefore **1677**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1684**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -137,7 +137,7 @@ Therefore:
 - semantic numerator delta from Mowzie's Mobs 1.8.2 exact-artifact closure: **+10 `COUNTED_EXACT`**; one additional Tunneling power remains conditional;
 - semantic numerator delta from Ice And Fire CE 2.1.2 exact-artifact/current-runtime reachability closure: **+8 `COUNTED_EXACT`**; only Ghost Sword remains conditional;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
-- strict reconstructible semantic minimum: **1677**;
+- strict reconstructible semantic minimum: **1684**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
