@@ -23,14 +23,14 @@ Estado canônico corrente:
 - ✅ mínimo semântico estrito reconstruível: **1669 objetos mágicos**;
 - ⚠️ denominador semântico final: **ainda aberto** — não publicar porcentagem global;
 - ⚠️ denominador técnico cross-domain: **`PENDING REBASE`** — o antigo `68/100` é histórico;
-- taxonomia física sibling atual com categoria `Magic`: **65 linhas** no sibling `a5c4788…`; após normalização e os fechamentos atuais, **65/65** mapeiam para diretórios Black Arcana (**58 ✅ + 7 ⚠️**);
-- os sete ⚠️ já mapeados nessa categoria física são **Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS e Mowzie's Mobs**;
-- a fila category-only da taxonomia física `Magic` está **vazia**; todos os 65 itens possuem classificação Black Arcana explícita;
+- taxonomia física sibling atual com categoria `Magic`: **67 linhas** no sibling `bb5372c…`; após normalização e os fechamentos atuais, **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**);
+- os oito ⚠️ já mapeados nessa categoria física são **Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition**;
+- a fila category-only da taxonomia física `Magic` está **vazia**; todos os 67 itens possuem classificação Black Arcana explícita;
 - providers cross-domain/root-level atuais ampliam esse universo: Gaze, Requiem, Traveloptics, More Relics, Iron's Spellbooks KubeJS, Spell Actionbar/Specs/Recolor/Immersive Portal e addons Reliquified, entre outros.
 
 Deltas já incorporados depois do antigo checkpoint 1382 incluem Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau (**+19**), Reliquified Artifacts (**+52**), Reliquified Iron's Spells 'n Spellbooks (**+25**), More Relics (**+61**), Ozymandias Sundries (**+2**) e Mowzie's Mobs (**+10 strict; +1 conditional fora do strict**). Wind's Spellbooks, Ars 'n' Spells 3.3.4 e outros providers revalidados permanecem dentro da aritmética corrente sem novo delta nesta reconciliação.
 
-Blockers estáticos que continuam fail-closed por falta de evidência implantada/exata incluem: 26 Spirit Rites de Gaze, 39 candidatos de Not Enough Glyphs, 12 famílias condicionais de Tombstone, config/reachability de Somake, `astral_gateway`, `mowziesmobs:tunneling` condicionado por `enableTunneling`, o registry/reachability exato atual de Traveloptics e as superfícies mutáveis dos bridges KubeJS.
+Blockers estáticos que continuam fail-closed por falta de evidência implantada/exata incluem: 26 Spirit Rites de Gaze, 39 candidatos de Not Enough Glyphs, 12 famílias condicionais de Tombstone, config/reachability de Somake, `astral_gateway`, `mowziesmobs:tunneling` condicionado por `enableTunneling`, os 9 candidatos ativos de Ice And Fire CE (aquisição/config; Ghost Sword também `phantasmalBladeAbility`), o registry/reachability exato atual de Traveloptics e as superfícies mutáveis dos bridges KubeJS.
 ## Legenda obrigatória
 
 - ✅ **Catalogado** — existe inventário/contrato suficientemente fechado para o escopo indicado; isso inclui fechamento correto em **zero** objetos mágicos próprios.
@@ -169,8 +169,8 @@ As métricas têm denominadores diferentes:
 - ✅ **Ledger semântico strict-counted corrente:** **1669 objetos mágicos reconstruíveis**.
 - ⚠️ **Denominador semântico global:** ainda incompleto; portanto **nenhuma porcentagem final de spells/magia é declarada**.
 - ⚠️ **Cobertura técnica de componentes:** o antigo `68/100` é apenas checkpoint histórico; o denominador técnico global permanece `PENDING REBASE`.
-- ✅ **Taxonomia física sibling `Magic`:** **65 linhas**; **65/65** mapeiam para diretórios Black Arcana (**58 ✅ + 7 ⚠️**), sem fila category-only.
-- ⚠️ **Sete condicionais já mapeados:** Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS e Mowzie's Mobs.
+- ✅ **Taxonomia física sibling `Magic`:** **67 linhas**; **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**), sem fila category-only.
+- ⚠️ **Oito condicionais já mapeados:** Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition.
 - ✅ **Fila de classificação semântica da categoria física `Magic`:** vazia no snapshot sibling atual.
 - ⚠️ **Cross-domain condicionais relevantes:** Gaze, Traveloptics, Iron's Spellbooks KubeJS e KubeJS Ars Nouveau; More Relics agora está ✅ `COUNTED_EXACT` com 61 owner-scoped abilities; componentes UI/compat como Spell Actionbar, Specs, Recolor e Immersive Portal têm +0 independente, mas QA técnico separado.
 - ✅ **Zero-semantic exact closures recentes:** Photon 2.2.6.a (`ZERO_SEMANTIC_VFX_INFRA`) e RunicLib 5.0.7 (`ZERO_SEMANTIC_LIBRARY_INFRA`), ambos +0.

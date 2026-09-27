@@ -16,20 +16,20 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — snapshot sibling atual
 
-No sibling `neoforge-rpg-skilltree@a5c47883473815b05453f978b5d078e9e5ada31b` existem **65 linhas status-prefixed cujas pastas de categoria contêm `Magic`**. Essa classificação sibling descreve a taxonomia física do modpack; o prefixo ✅ do dossiê sibling não equivale automaticamente a ✅ do catálogo semântico Black Arcana.
+No sibling `neoforge-rpg-skilltree@bb5372cc20e3c47779036d500231af53b4957b38` existem **67 linhas status-prefixed cujas pastas de categoria contêm `Magic`**. Essa classificação sibling descreve a taxonomia física do modpack; o prefixo ✅ do dossiê sibling não equivale automaticamente a ✅ do catálogo semântico Black Arcana.
 
 Após normalização de ownership/aliases e os fechamentos de Ozymandias + Mowzie's Mobs + Photon + RunicLib nesta rodada:
 
-- **58 ✅ catalogados** com diretório Black Arcana correspondente;
-- **7 ⚠️ parciais/condicionados** com diretório Black Arcana correspondente: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS e Mowzie's Mobs;
+- **59 ✅ catalogados** com diretório Black Arcana correspondente;
+- **8 ⚠️ parciais/condicionados** com diretório Black Arcana correspondente: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition;
 - **0 ⚠️ em classificação semântica** sem diretório Black Arcana;
 - **0 ❌** são declarados apenas pela taxonomia sibling: toda linha física `Magic` atual possui classificação explícita;
 - **0 🟡** de implementação ativa;
 - **0 ⛔** por ausência total de evidência.
 
-Assim, **65/65** linhas da categoria física `Magic` mapeiam para diretórios Black Arcana (**58 ✅ + 7 ⚠️**). A fila category-only desta taxonomia está vazia. Isso não fecha o denominador semântico global cross-domain.
+Assim, **67/67** linhas da categoria física `Magic` mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**). A fila category-only desta taxonomia está vazia. Isso não fecha o denominador semântico global cross-domain.
 
-**Reclassificação sibling recente:** sete linhas foram adicionadas à pasta/categoria `Magic` sem necessariamente serem providers novos. Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable e Iron's Spellbooks KubeJS já tinham diretório Black Arcana; IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages foram agora fechados como ✅ `+0` semanticamente independentes.
+**Reclassificação sibling recente:** nove linhas compõem a sequência atual. Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable, Iron's Spellbooks KubeJS e Hexalia já tinham diretório Black Arcana; IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages foram fechados como ✅ `+0`; Ice And Fire Community Edition entra agora como ⚠️ com inventário ativo delimitado e alcance/config ainda aberto.
 
 **Cross-domain note:** o subtotal físico `Magic` continua sem representar o universo global. Gaze permanece ⚠️ com um spell contado + 26 rites config-condicionais; Ender's Spells and Stuff: Requiem é ✅ com 53 ações strict; Reliquified Ars Nouveau, Reliquified Artifacts e Reliquified Iron's são ✅ com 19, 52 e 25 ability roots source-pinned; Iron's Spellbooks KubeJS agora também aparece nessa categoria sibling e permanece ⚠️ por inventário mutável de scripts; More Relics é ✅ com 61 ability roots exatas; Ozymandias Sundries agora é ✅ com 2 spells exatos; Mowzie's Mobs é ⚠️ com 10 poderes strict + 1 Tunneling config-condicional; Traveloptics permanece ⚠️ +0 strict pendente de fechamento exato-current. Spell Actionbar, Specs, Recolor e Immersive Portal continuam componentes técnicos/runtime com +0 identidades independentes.
 **Traveloptics current-physical override:** Project Library physical evidence directly records `traveloptics-4.4.0.1-1.21.1.jar` / SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This outranks the absence of a status-prefixed sibling row for presence/version. The installed digest differs from the audited publisher alpha and known patch artifact, so Traveloptics is a current **⚠️ `OTHER_VERIFIED` / +0 strict** provider blocker until its installed-byte registry and reachability are closed.
@@ -57,6 +57,7 @@ Fechamentos recentes relevantes:
 - ✅ More Relics 1.7.7-forRelics-0.12.8-1.0 — exact physical/publisher File `8859015` equality; **29 owners / 61 owner-scoped ability roots = +61 `COUNTED_EXACT`**; exact builder/localization root sets agree, runtime/config/evolution QA remains separate.
 - ✅ Ozymandias Sundries physical 0.0.5 / embedded 0.0.1 — exact File `6978561` hash match; **2 unconditional registered spells = +2 `COUNTED_EXACT`** (`levitate`, `lightning_warp`); unregistered class/localization residue excluded; runtime/config QA separate.
 - ⚠️ Mowzie's Mobs 1.8.2 — exact File `7760267` hash match; **13 active player-ability slots**, reconciled to **10 strict `COUNTED_EXACT` powers + 1 `CONDITIONAL` Tunneling power**; `hit_boulder`/`backstab` technical-subaction slots and four inactive ids excluded.
+- ⚠️ Ice And Fire Community Edition 2.1.2 — exact physical/publisher File `8757837` equality; exact release source pin `0cf5a2458e1ccf552b9859531ee21c4816e5a686`; **9 active magic-action candidates / +0 strict pending survival/config closure**.
 - ✅ Photon 2.2.6.a — exact physical/publisher File `8824095` equality; VFX/editor infrastructure only under the semantic metric; **+0 `ZERO_SEMANTIC_VFX_INFRA`**.
 - ✅ RunicLib 5.0.7 — exact physical/publisher File `8188562` equality; reusable effect/attribute/damage/trade/services library surface only; **+0 `ZERO_SEMANTIC_LIBRARY_INFRA`**.
 - ✅ Mowzie's Cataclysm 1.2.2 — exact File `8196282` equality; quatro Eyes de localização + recipes/tags, **+0 `ZERO_SEMANTIC_LOCATOR_BRIDGE`**.
