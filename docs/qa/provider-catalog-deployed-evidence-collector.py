@@ -992,6 +992,7 @@ def main() -> int:
         "asterism_arcanum": collect_asterism(instance, worlds),
         "corail_tombstone": collect_tombstone(instance, worlds),
         "gaze": collect_gaze(instance, worlds),
+        "mowzies_mobs": collect_mowzies_mobs(instance, worlds),
         "not_enough_glyphs": collect_neg(instance, worlds),
         "somake_spells": collect_somake(instance, worlds),
         "traveloptics": collect_traveloptics(instance, worlds),
