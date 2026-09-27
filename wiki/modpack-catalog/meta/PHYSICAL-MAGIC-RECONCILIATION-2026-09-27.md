@@ -5,7 +5,7 @@ Status: `84/84 CURRENT PHYSICAL MAGIC ROWS MAPPED / 70 ✅ + 14 ⚠️ / STRICT 
 ## Authority
 
 - Black Arcana base: `main@99e56bfa174969d538331f2fc40b2211b5b79b2a`
-- sibling physical/modlist authority: `neoforge-rpg-skilltree@c701aa74b1e0109659a9f40206603dd960726445`
+- sibling physical/modlist authority: `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`
 - source table: `PROJECT-INSTRUCTIONS/modlist/modlist.md`
 - category rule: a row belongs to this subtotal only when the **category field** contains the exact category `Magic`; the word "Magic" in a display name is not sufficient.
 
@@ -26,7 +26,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 476 | Reliquified Ars Nouveau | ✅ existing canonical provider; +19 strict already owned in ledger |
 | 477 | Reliquified Artifacts | ✅ existing canonical provider; +52 strict already owned in ledger |
 | 478 | Reliquified Iron's Spells 'n Spellbooks | ✅ existing canonical provider; +25 strict already owned in ledger |
-| 479 | Reliquified L_Ender's Cataclysm | ⚠️ new canonical mapping; complete current relic/action inventory open |
+| 479 | Reliquified L_Ender's Cataclysm | ⚠️ lower bound improved to 7 ability roots across 5 baseline relic owners; complete current 0.1.1 denominator open |
 | 500 | ShadowsZ | ⚠️ new canonical mapping; 3 named Umbral spells are a lower bound, complete action inventory open |
 | 501 | Simply Swords: Cataclysm | ⚠️ new canonical mapping; 4 documented current-release ability families, exact-current completeness open |
 | 502 | Simply More | ⚠️ new canonical mapping; Alpha-5 unique/implicit ability inventory open |
@@ -55,7 +55,7 @@ The eleven reclassified rows with existing provider catalogs were already repres
 
 The six newly mapped providers are deliberately fail-closed:
 
-- Reliquified L_Ender's Cataclysm: real relic content is proven, complete discrete-action cardinality is not;
+- Reliquified L_Ender's Cataclysm: public 0.1 release-day source proves 5 baseline relic owners / 7 ability roots and the current-pack compatibility-transform log corroborates the same 5 loaded classes; complete 0.1.1 discrete-action cardinality is still not proven;
 - ShadowsZ: at least three Umbral spells are named, but the complete current spell/action inventory is not closed;
 - Simply Swords: Cataclysm: four current-release ability families are documented, but exact installed completeness is not yet proven;
 - Simply More: item/Unique totals do not equal action totals, and the installed Alpha line explicitly contains rework/incomplete functionality;
@@ -75,7 +75,7 @@ This is a structural count, not a global semantic denominator.
 
 ## Next closure queue
 
-The six new providers should be closed in physical order unless stronger current evidence appears elsewhere:
+The six new providers remain in the closure queue and should be closed in physical order unless stronger current evidence appears elsewhere:
 
 1. Reliquified L_Ender's Cataclysm 0.1.1;
 2. ShadowsZ 1.1.9;

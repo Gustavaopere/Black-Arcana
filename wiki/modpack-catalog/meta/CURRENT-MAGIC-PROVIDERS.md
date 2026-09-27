@@ -18,7 +18,7 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — snapshot sibling atual
 
-A autoridade física corrente é `neoforge-rpg-skilltree@c701aa74b1e0109659a9f40206603dd960726445`. Aplicando o critério ao **campo de categoria** da modlist, existem **84 linhas cuja categoria contém `Magic`**. O nome do mod não é usado como atalho de classificação.
+A autoridade física corrente é `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`. Aplicando o critério ao **campo de categoria** da modlist, existem **84 linhas cuja categoria contém `Magic`**. O nome do mod não é usado como atalho de classificação.
 
 Após normalização de ownership/aliases e a reconciliação de 27/09:
 
@@ -30,7 +30,7 @@ Após normalização de ownership/aliases e a reconciliação de 27/09:
 
 Assim, **84/84** linhas da categoria física `Magic` estão mapeadas em Black Arcana (**70 ✅ + 14 ⚠️**). Isso é um subtotal físico/categorial, não o denominador semântico global.
 
-O delta contra o snapshot anterior de 67 linhas é **+17**. Onze dessas linhas já possuíam provider canônico e não geram nova contagem. Seis foram materializadas agora como ⚠️: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords e Waystones. Todas permanecem `+0 strict` nesta rodada porque seus inventários/classificações semânticas exatos ainda não estão fechados. Ver [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
+O delta contra o snapshot anterior de 67 linhas é **+17**. Onze dessas linhas já possuíam provider canônico e não geram nova contagem. Seis foram materializadas como ⚠️: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords e Waystones. Reliquified L_Ender's Cataclysm agora tem **lower bound release-line de 7 ability roots em 5 relic owners**, corroborado no pack atual pelas mesmas cinco classes transformadas pelo fix, mas o denominador completo de 0.1.1 continua aberto; portanto os seis permanecem `+0 strict`. Ver [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
 
 **Cross-domain note:** o subtotal físico `Magic` continua sem representar o universo global. Gaze permanece ⚠️ com um spell contado + 26 rites config-condicionais; Ender's Spells and Stuff: Requiem é ✅ com 53 ações strict; Reliquified Ars Nouveau, Reliquified Artifacts e Reliquified Iron's são ✅ com 19, 52 e 25 ability roots source-pinned; Iron's Spellbooks KubeJS agora também aparece nessa categoria sibling e permanece ⚠️ por inventário mutável de scripts; More Relics é ✅ com 61 ability roots exatas; Ozymandias Sundries agora é ✅ com 2 spells exatos; Mowzie's Mobs é ⚠️ com 10 poderes strict + 1 Tunneling config-condicional; Traveloptics permanece ⚠️ +0 strict pendente de fechamento exato-current. Spell Actionbar, Specs, Recolor e Immersive Portal estão ✅ catalogados com +0 identidades independentes; QA técnico/runtime permanece separado.
 **Traveloptics current-physical override:** Project Library physical evidence directly records `traveloptics-4.4.0.1-1.21.1.jar` / SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This outranks the absence of a status-prefixed sibling row for presence/version. The installed digest differs from the audited publisher alpha and known patch artifact, so Traveloptics is a current **⚠️ `OTHER_VERIFIED` / +0 strict** provider blocker until its installed-byte registry and reachability are closed.

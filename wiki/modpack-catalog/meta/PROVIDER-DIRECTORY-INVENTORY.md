@@ -2,8 +2,8 @@
 
 Checkpoint: 2026-09-27
 
-Authority base for this reconciliation: `main@99e56bfa174969d538331f2fc40b2211b5b79b2a`.
-Current sibling physical authority: `neoforge-rpg-skilltree@c701aa74b1e0109659a9f40206603dd960726445`.
+Authority base for this reconciliation: `main@aee952cf8acb618212c17e506fe6e7272e209fc1`.
+Current sibling physical authority: `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`.
 
 ## Current structural count
 
@@ -35,7 +35,7 @@ The sixteen current ⚠️ directories are:
 15. Simply Swords;
 16. Waystones.
 
-The six entries 11–16 were added by the 27/09 physical-`Magic` reconciliation. Their presence closes category mapping, **not** their semantic denominator.
+The six entries 11–16 were added by the 27/09 physical-`Magic` reconciliation. Their presence closes category mapping, **not** their semantic denominator. Reliquified L_Ender's Cataclysm now has a **release-line lower bound of 7 ability roots across 5 baseline relic owners**, but its complete current 0.1.1 denominator remains open, so it stays ⚠️ and contributes +0 strict.
 
 ## Duplicate resolved
 
@@ -60,7 +60,7 @@ Likewise, **115 is not a semantic-magic denominator**. The current strict semant
 
 See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
 
-At sibling `neoforge-rpg-skilltree@c701aa74b1e0109659a9f40206603dd960726445`:
+At sibling `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`:
 
 - physical rows whose **category field** contains `Magic`: **84**;
 - mapped into Black Arcana: **84/84**;
