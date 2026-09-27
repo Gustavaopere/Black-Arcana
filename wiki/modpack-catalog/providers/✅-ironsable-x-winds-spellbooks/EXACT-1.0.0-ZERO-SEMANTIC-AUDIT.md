@@ -27,4 +27,3 @@ Exact classes include dedicated physics handlers for Aeropic, Almighty Push, Tor
 ## Deduplication
 
 Wind's Spellbooks already owns `wind_spellbooks:tornado`, `wind_spellbooks:almighty_push`, `wind_spellbooks:wind_blade` and `wind_spellbooks:aeropic`. The bridge changes physical interaction only. Strict semantic delta: **+0**.
-
