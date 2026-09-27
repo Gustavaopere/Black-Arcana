@@ -16,14 +16,14 @@ See [PROVIDER-DIRECTORY-INVENTORY.md](./PROVIDER-DIRECTORY-INVENTORY.md).
 
 ## Current reconciliation — 26/09/2026
 
-Presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers when they postdate that snapshot. The latest sibling taxonomy at `neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96` now yields **67 status-prefixed rows whose category path includes `Magic`**. This is a broad physical/category subtotal, not the Black Arcana semantic denominator. After ownership-alias normalization and the current exact zero-semantic closures, **67/67** map to Black Arcana provider directories (**59 ✅ + 8 ⚠️**). No current sibling `Magic` row remains category-only/unclassified in Black Arcana. Nine rows now compose the recent sibling `Magic` reclassification set. Iron's base, ISS: Magic From The East, IronSable, Iron's Spellbooks KubeJS and Hexalia were already represented; IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry and Integrated Villages are exact zero-semantic closures; Ice And Fire CE is newly mapped as ⚠️ pending action reachability/config closure. The global cross-domain set is still larger and includes current root/Addons providers such as Gaze, Requiem, Traveloptics, the KubeJS bridges, Spell Actionbar/Specs/Recolor/Immersive Portal layers and the Reliquified addons.
+Presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers when they postdate that snapshot. The latest sibling taxonomy at ``neoforge-rpg-skilltree` current `main` with Tombstone dossier blob `7b99ee63892e9bd3711e27a651c0b62c0d71ba47`` now yields **67 status-prefixed rows whose category path includes `Magic`**. This is a broad physical/category subtotal, not the Black Arcana semantic denominator. After ownership-alias normalization and the current exact zero-semantic closures, **67/67** map to Black Arcana provider directories (**59 ✅ + 8 ⚠️**). No current sibling `Magic` row remains category-only/unclassified in Black Arcana. Nine rows now compose the recent sibling `Magic` reclassification set. Iron's base, ISS: Magic From The East, IronSable, Iron's Spellbooks KubeJS and Hexalia were already represented; IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry and Integrated Villages are exact zero-semantic closures; Ice And Fire CE is newly mapped as ⚠️ pending action reachability/config closure. The global cross-domain set is still larger and includes current root/Addons providers such as Gaze, Requiem, Traveloptics, the KubeJS bridges, Spell Actionbar/Specs/Recolor/Immersive Portal layers and the Reliquified addons.
 
 Semantic effect of the current reconciliation:
 
 - Companions! 1.3.4: **+9 `COUNTED_SOURCE_PINNED`** Magic Book actions.
 - Crystal Chronicles 0.1.3-alpha: **+1 `COUNTED_SOURCE_PINNED`** (`crystal_chronicles:prismatic_portal`).
 - Relics 0.12.8: **+41 `COUNTED_EXACT`** — 39 base abilities + 2 owner-scoped synergies.
-- Corail Tombstone 9.5.6: **+10 `COUNTED_RELEASE_BOUNDED`** — six prayers + four Ritual Flute actions; 12 more action families remain config-conditional.
+- Corail Tombstone 9.5.6: **+10 `COUNTED_EXACT`** — six prayers + four Ritual Flute actions; 12 more action families remain config-conditional.
 - Ender's Spells and Stuff: Requiem 0.1.7: **+53 `COUNTED_SOURCE_PINNED`**.
 - Hexalia 1.3.7: current semantic surface **29 = 23 Nature's Ritual + 6 Celestial Infusion**, a **+4** delta over the previously counted 25.
 - Reliquified Ars Nouveau 0.8.1: **+19 `COUNTED_SOURCE_PINNED`**.
@@ -241,7 +241,7 @@ The complete pre-Phase-2AX coverage text is preserved byte-for-byte in [`CATALOG
 - NeoForge: `21.1.248`
 - historical Black Arcana physical snapshot: **595 top-level entries**
 - historical snapshot SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
-- current sibling certified index: **587 top-level entries including the modloader** at `neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
+- current sibling certified index: **587 top-level entries including the modloader** at ``neoforge-rpg-skilltree` current `main` with Tombstone dossier blob `7b99ee63892e9bd3711e27a651c0b62c0d71ba47``
 - jarjar/internal dependencies are not counted as top-level providers
 
 ## Current working component denominator
