@@ -19,8 +19,9 @@ A provider-native identity is counted once under its semantic owner. Bridge/comp
 
 - Minecraft: **1.21.1**
 - NeoForge: **21.1.248**
-- physical modlist: **595 top-level entries**
-- physical modlist SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+- historical Black Arcana physical snapshot: **595 top-level entries**
+- historical snapshot SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+- current sibling certified index: **587 top-level entries including the modloader** at `neoforge-rpg-skilltree@a5c47883473815b05453f978b5d078e9e5ada31b`
 - reconstruction base: `main@4f3dab1a4801393873f9d4b7857782fcf6298e56`
 - base post-merge validation: Black Arcana CI **#2349**, attempt 2 GREEN on the exact base SHA
 - Phase 2BE canonicalized at `main@cce7f51794e4e65b0d97511eb55f710afc6e02f0`: PR #189 exact HEAD `e787699d25b283b8040cd179f605143e8ee396de` passed Black Arcana CI **#2483**; the merge SHA passed Black Arcana CI **#2484 attempt 2** GREEN after attempt 1 ended on an external `code.redspace.io` read timeout before compilation/tests
@@ -159,7 +160,7 @@ Iron's Apothic is consequently a source-pinned magic bridge/support closure with
 
 ## Current 26/09/2026 reconciliation
 
-Current presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers where they supersede that snapshot. The latest sibling taxonomy at `neoforge-rpg-skilltree@8a9277edb2f8e7172044614c1a046c9c2ef3a253` contains **65 status-prefixed rows whose category path includes `Magic`**. That taxonomy is broader than the Black Arcana semantic-provider denominator. After ownership-alias normalization and the current exact zero-semantic closures, **65/65** rows map to Black Arcana provider directories (**58 ✅ + 7 ⚠️**). No row in the current physical sibling `Magic` category remains without an explicit Black Arcana semantic classification. Seven rows were newly moved into the sibling `Magic` taxonomy across the current reclassification sequence: Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable, Iron's Spellbooks KubeJS, IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry and Integrated Villages. The first four were already represented in Black Arcana; the latter three are now also explicitly closed below. Current cross-domain/root-level providers outside that folder taxonomy also remain relevant, including Gaze, Ender's Spells and Stuff: Requiem, Traveloptics, Spell Actionbar/Specs/Recolor/Immersive Portal compatibility layers and the Reliquified addons.
+Current presence/version authority is the newest physical Project Library modlist plus newer sibling physical dossiers where they supersede that snapshot. The latest sibling taxonomy at `neoforge-rpg-skilltree@a5c47883473815b05453f978b5d078e9e5ada31b` contains **65 status-prefixed rows whose category path includes `Magic`**. That taxonomy is broader than the Black Arcana semantic-provider denominator. After ownership-alias normalization and the current exact zero-semantic closures, **65/65** rows map to Black Arcana provider directories (**58 ✅ + 7 ⚠️**). No row in the current physical sibling `Magic` category remains without an explicit Black Arcana semantic classification. Seven rows were newly moved into the sibling `Magic` taxonomy across the current reclassification sequence: Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable, Iron's Spellbooks KubeJS, IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry and Integrated Villages. The first four were already represented in Black Arcana; the latter three are now also explicitly closed below. Current cross-domain/root-level providers outside that folder taxonomy also remain relevant, including Gaze, Ender's Spells and Stuff: Requiem, Traveloptics, Spell Actionbar/Specs/Recolor/Immersive Portal compatibility layers and the Reliquified addons.
 
 Current semantic deltas since the 1382 checkpoint:
 
