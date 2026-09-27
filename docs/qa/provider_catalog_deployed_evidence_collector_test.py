@@ -136,7 +136,7 @@ allow_lost_tablet = false
                 "\n".join(
                     [
                         "[BLACK_ARCANA_CATALOG_PROBE] type=begin schema=3",
-                        "[BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:plow status=OBSERVED enabled=true",
+                        "[BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:glyph_plow status=OBSERVED enabled=true",
                         "[BLACK_ARCANA_CATALOG_PROBE] type=end schema=3",
                     ]
                 )
@@ -152,13 +152,21 @@ allow_lost_tablet = false
                 [
                     {
                         "type": "glyph",
-                        "id": "not_enough_glyphs:plow",
+                        "id": "not_enough_glyphs:glyph_plow",
                         "status": "OBSERVED",
                         "enabled": True,
                     }
                 ],
                 result["rows"],
             )
+
+
+    def test_runtime_probe_rejects_legacy_unprefixed_neg_glyph_id(self) -> None:
+        row = collector.parse_catalog_probe_payload(
+            "type=glyph id=not_enough_glyphs:plow status=OBSERVED enabled=true"
+        )
+
+        self.assertIsNone(row)
 
 
     def test_runtime_probe_rejects_unbounded_glyph_observation(self) -> None:
