@@ -1,0 +1,179 @@
+name: Temporary Mowzie Cataclysm + Pickable Orbs Exact Semantic Audit
+
+on:
+  push:
+    branches:
+      - audit/mowzies-cataclysm-pickable-orbs-zero-semantic-2026-09-27
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - provider: mowzies_cataclysm
+            project: "1128348"
+            file: "8196282"
+            expected_sha1: "0dff3e849155ca343d1a500f5b9ca2b54ffa692d"
+            namespace: "mowzies_cataclysm"
+            primary_slug: "mowzies-cataclysm"
+            fallback_slug: ""
+          - provider: pickable_orbs
+            project: "554992"
+            file: "8660158"
+            expected_sha1: "b0574cd2712f03619b59bfc36ce85f2a692ecfe6"
+            namespace: "pickable_orbs"
+            primary_slug: "pickable-orbs"
+            fallback_slug: "pickable-health-orbs"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download and hash-gate exact publisher artifact
+        shell: bash
+        env:
+          PROVIDER: ${{ matrix.provider }}
+          PROJECT: ${{ matrix.project }}
+          FILE: ${{ matrix.file }}
+          EXPECTED_SHA1: ${{ matrix.expected_sha1 }}
+          PRIMARY_SLUG: ${{ matrix.primary_slug }}
+          FALLBACK_SLUG: ${{ matrix.fallback_slug }}
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          fetch_slug() {
+            local slug="$1"
+            [ -n "$slug" ] || return 1
+            local url="https://cursemaven.com/curse/maven/${slug}-${PROJECT}/${FILE}/${slug}-${PROJECT}-${FILE}.jar"
+            echo "trying_slug=${slug}"
+            curl --fail --location --retry 2 --retry-delay 1 "$url" -o /tmp/provider.jar
+          }
+          if ! fetch_slug "$PRIMARY_SLUG"; then
+            fetch_slug "$FALLBACK_SLUG"
+          fi
+          ACTUAL="$(sha1sum /tmp/provider.jar | awk '{print $1}')"
+          printf 'provider=%s\nproject=%s\nfile=%s\nexpected_physical_sha1=%s\nactual_publisher_sha1=%s\n' "$PROVIDER" "$PROJECT" "$FILE" "$EXPECTED_SHA1" "$ACTUAL" | tee audit/hash.txt
+          test "$ACTUAL" = "$EXPECTED_SHA1"
+          sha256sum /tmp/provider.jar | tee audit/sha256.txt
+
+      - name: Extract clean-room semantic-boundary facts
+        shell: bash
+        env:
+          PROVIDER: ${{ matrix.provider }}
+          NAMESPACE: ${{ matrix.namespace }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, pathlib, re
+          from zipfile import ZipFile
+
+          jar='/tmp/provider.jar'
+          provider=os.environ['PROVIDER']
+          namespace=os.environ['NAMESPACE']
+          semantic_tokens=('spell','ritual','rite','ability','cast')
+
+          out=[
+              f'{provider.upper()} EXACT SEMANTIC BOUNDARY FACTS',
+              'Inspection is hash-gated to the physical pack SHA-1 before this step.',
+              'Only metadata, archive identities and narrow resource/class-name facts are retained.',
+              ''
+          ]
+
+          with ZipFile(jar) as z:
+              names=sorted(n for n in z.namelist() if not n.endswith('/'))
+              out.append('[metadata]')
+              for toml in ('META-INF/neoforge.mods.toml','META-INF/mods.toml'):
+                  if toml in names:
+                      txt=z.read(toml).decode('utf-8','replace')
+                      for line in txt.splitlines():
+                          s=line.strip()
+                          if s.startswith(('modId=','version=','displayName=','license=')):
+                              out.append(s)
+              out.append('')
+
+              resources=[
+                  n for n in names
+                  if n.startswith(f'assets/{namespace}/') or n.startswith(f'data/{namespace}/')
+              ]
+              out.append('[provider namespace totals]')
+              out.append(f'provider_resource_file_count={len(resources)}')
+              out.append(f'provider_asset_file_count={sum(n.startswith(f"assets/{namespace}/") for n in resources)}')
+              out.append(f'provider_data_file_count={sum(n.startswith(f"data/{namespace}/") for n in resources)}')
+              out.append('')
+
+              semantic_paths=[
+                  n for n in names
+                  if any(re.search(rf'(^|[/_.-]){re.escape(tok)}([/_.-]|$)',n.lower()) for tok in semantic_tokens)
+              ]
+              semantic_classes=[
+                  n for n in names if n.endswith('.class') and
+                  any(re.search(rf'(^|[/_$.-]){re.escape(tok)}([A-Z0-9_$.-]|$)',n,re.I) for tok in semantic_tokens)
+              ]
+              out.append('[semantic-action-like archive paths]')
+              out += semantic_paths[:150] or ['<none>']
+              out.append(f'semantic_action_like_path_count={len(semantic_paths)}')
+              out.append('[semantic-action-like class names]')
+              out += semantic_classes[:150] or ['<none>']
+              out.append(f'semantic_action_like_class_count={len(semantic_classes)}')
+              out.append('')
+
+              item_entity_classes=[
+                  n for n in names if n.endswith('.class') and
+                  any(tok in n.lower() for tok in ('item','eye','orb','entity','registry','register'))
+              ]
+              out.append('[item/entity/registry class-name sample]')
+              out += item_entity_classes[:180] or ['<none>']
+              out.append(f'item_entity_registry_class_count={len(item_entity_classes)}')
+              out.append('')
+
+              gameplay=[
+                  n for n in resources
+                  if any(seg in n.lower() for seg in (
+                      '/recipe/','/recipes/','/loot_table/','/loot_tables/',
+                      '/advancement/','/advancements/','/tags/',
+                      '/damage_type/','/worldgen/'
+                  ))
+              ]
+              out.append('[provider gameplay data paths]')
+              out += gameplay[:200] or ['<none>']
+              out.append(f'provider_gameplay_data_path_count={len(gameplay)}')
+              out.append('')
+
+              lang_candidates=[
+                  f'assets/{namespace}/lang/en_us.json',
+                  f'assets/{namespace}/lang/en_us.json5'
+              ]
+              for lang in lang_candidates:
+                  if lang in names:
+                      try:
+                          obj=json.loads(z.read(lang).decode('utf-8','replace'))
+                      except Exception:
+                          continue
+                      roots=[]
+                      for k,v in obj.items():
+                          kl=k.lower()
+                          if any(x in kl for x in ('item.','entity.')) and any(x in kl for x in ('eye','orb')):
+                              roots.append(f'{k}={v}')
+                      out.append(f'[eye/orb localization roots from {lang}]')
+                      out += sorted(roots)[:100] or ['<none>']
+                      out.append(f'eye_orb_localization_count={len(roots)}')
+                      out.append('')
+
+          text='\n'.join(out)+'\n'
+          pathlib.Path('audit/facts.txt').write_text(text,encoding='utf-8')
+          print(text)
+          PY
+
+      - name: Publish text-only audit report
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.provider }}-exact-semantic-boundary-audit
+          path: audit/*.txt
+          if-no-files-found: error
+          retention-days: 3
