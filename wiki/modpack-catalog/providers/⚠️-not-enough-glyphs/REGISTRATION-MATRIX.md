@@ -6,7 +6,7 @@ Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at
 
 - NEG calls `APIRegistry.registerSpell` for **40** primitives under the current pack's loaded-mod conditions.
 - **39** are source-enabled before external/user config.
-- `not_enough_glyphs:momentum` is registered but source-disabled.
+- `not_enough_glyphs:glyph_momentum` is registered but source-disabled.
 - Four Ars Elemental primitives are appended to NEG's internal `registeredSpells` list because Ars Elemental is installed; they are **not** registered by NEG and are excluded from the 40.
 - Ars Controle Random is not registered by NEG because Ars Controle is installed.
 
@@ -24,46 +24,46 @@ Authority for conditional registration: `ArsNouveauRegistry.registerGlyphs()` at
 
 | Registry identity | Implementation class | Status | Acquisition summary |
 |---|---|---|---|
-| `not_enough_glyphs:plow` | `EffectPlow` | enabled | Earth Essence + Stone Hoe |
-| `not_enough_glyphs:trail` | `MethodTrail` | enabled | Dragon's Breath + 2 Echo Shards + Air Essence |
-| `not_enough_glyphs:momentum` | `EffectMomentum` | **source-disabled** | no generated glyph recipe |
-| `not_enough_glyphs:ride` | `EffectRide` | enabled | Saddle + Manipulation Essence |
-| `not_enough_glyphs:feed` | `EffectFeed` | enabled | 6 food-tag items + Conjuration Essence |
-| `not_enough_glyphs:filter_light` | `FilterLight` | enabled | Torch |
-| `not_enough_glyphs:filter_dark` | `FilterDark` | enabled | Torch + black dye tag |
-| `not_enough_glyphs:contingency_fall` | `FallContingency` | enabled | Abjuration Essence + Repeater + Feather |
-| `not_enough_glyphs:contingency_heal` | `HealContingency` | enabled | Abjuration Essence + Repeater + Honey Bottle |
-| `not_enough_glyphs:contingency_health` | `HeroicsContingency` | enabled | Abjuration Essence + Repeater + Leather Chestplate |
-| `not_enough_glyphs:contingency_death` | `DeathContingency` | enabled | Abjuration Essence + Repeater + skull tag |
-| `not_enough_glyphs:contingency_fire` | `FireContingency` | enabled | Abjuration Essence + Repeater + Magma Cream |
-| `not_enough_glyphs:contingency_blink` | `BlinkContingency` | enabled | Abjuration Essence + Repeater + Ender Pearl |
-| `not_enough_glyphs:contingency_time` | `ExpireContingency` | enabled | Abjuration Essence + Repeater + Clock |
-| `not_enough_glyphs:propagate_plane` | `PropagatePlane` | enabled | Manipulation Essence + Diamond Block + Firework Star + Wilden Spike |
-| `toomanyglyphs:ray` | `MethodRay` | enabled fallback | Target + Source Gem |
-| `toomanyglyphs:reverse_direction` | `EffectReverseDirection` | enabled fallback | Manipulation Essence + Glass Pane |
-| `toomanyglyphs:chaining` | `EffectChaining` | enabled fallback | Manipulation Essence + 3 Chains + Lapis Block + Redstone Block + Source Gem Block |
-| `toomanyglyphs:filter_block` | `FilterBlock` | enabled fallback | cobblestone tag |
-| `toomanyglyphs:filter_entity` | `FilterEntity` | enabled fallback | iron nugget tag |
-| `toomanyglyphs:filter_living` | `FilterLiving` | enabled fallback | Dandelion |
-| `toomanyglyphs:filter_living_not_monster` | `FilterLivingNotMonster` | enabled fallback | Oxeye Daisy |
-| `toomanyglyphs:filter_living_not_player` | `FilterLivingNotPlayer` | enabled fallback | Blue Orchid |
-| `toomanyglyphs:filter_monster` | `FilterMonster` | enabled fallback | Lily of the Valley |
-| `toomanyglyphs:filter_player` | `FilterPlayer` | enabled fallback | Poppy |
-| `toomanyglyphs:filter_item` | `FilterItem` | enabled fallback | Emerald |
-| `toomanyglyphs:filter_animal` | `FilterAnimal` | enabled fallback | Beef |
-| `toomanyglyphs:filter_is_baby` | `FilterBaby` | enabled fallback | egg tag |
-| `toomanyglyphs:filter_is_mature` | `FilterMature` | enabled fallback | Chicken |
-| `ars_trinkets:filter_self` | `FilterSelf.SELF` | enabled fallback | Cornflower |
-| `ars_trinkets:filter_not_self` | `FilterSelf.NOT_SELF` | enabled fallback | Allium |
-| `arsomega:flatten` | `EffectFlatten` | enabled fallback | Earth Essence + Iron Shovel + Anvil |
-| `arsomega:propagate_underfoot` | `PropagateUnderfoot` | enabled fallback | Manipulation Essence + Ars Underfoot glyph |
-| `arsomega:propagate_projectile` | `PropagateProjectile` | enabled fallback | Manipulation Essence + Ars Projectile glyph |
-| `arsomega:propagate_self` | `PropagateSelf` | enabled fallback | Manipulation Essence + Ars Self glyph |
-| `arsomega:missile` | `MethodMissile` | enabled fallback | 2 Firework Rockets + Air Essence + Fire Essence |
-| `arsomega:overhead` | `MethodOverhead` | enabled fallback | Iron Helmet + Air Essence |
-| `arsomega:propagate_missile` | `PropagateMissile` | enabled fallback | Manipulation Essence + Missile glyph |
-| `arsomega:propagate_overhead` | `PropagateOverhead` | enabled fallback | Manipulation Essence + Overhead glyph |
-| `ars_scalaes:resize` | `EffectResize` | enabled fallback | Manipulation Essence + Abjuration Essence + Brown Mushroom |
+| `not_enough_glyphs:glyph_plow` | `EffectPlow` | enabled | Earth Essence + Stone Hoe |
+| `not_enough_glyphs:glyph_trail` | `MethodTrail` | enabled | Dragon's Breath + 2 Echo Shards + Air Essence |
+| `not_enough_glyphs:glyph_momentum` | `EffectMomentum` | **source-disabled** | no generated glyph recipe |
+| `not_enough_glyphs:glyph_ride` | `EffectRide` | enabled | Saddle + Manipulation Essence |
+| `not_enough_glyphs:glyph_feed` | `EffectFeed` | enabled | 6 food-tag items + Conjuration Essence |
+| `not_enough_glyphs:glyph_filter_light` | `FilterLight` | enabled | Torch |
+| `not_enough_glyphs:glyph_filter_dark` | `FilterDark` | enabled | Torch + black dye tag |
+| `not_enough_glyphs:glyph_contingency_fall` | `FallContingency` | enabled | Abjuration Essence + Repeater + Feather |
+| `not_enough_glyphs:glyph_contingency_heal` | `HealContingency` | enabled | Abjuration Essence + Repeater + Honey Bottle |
+| `not_enough_glyphs:glyph_contingency_health` | `HeroicsContingency` | enabled | Abjuration Essence + Repeater + Leather Chestplate |
+| `not_enough_glyphs:glyph_contingency_death` | `DeathContingency` | enabled | Abjuration Essence + Repeater + skull tag |
+| `not_enough_glyphs:glyph_contingency_fire` | `FireContingency` | enabled | Abjuration Essence + Repeater + Magma Cream |
+| `not_enough_glyphs:glyph_contingency_blink` | `BlinkContingency` | enabled | Abjuration Essence + Repeater + Ender Pearl |
+| `not_enough_glyphs:glyph_contingency_time` | `ExpireContingency` | enabled | Abjuration Essence + Repeater + Clock |
+| `not_enough_glyphs:glyph_propagate_plane` | `PropagatePlane` | enabled | Manipulation Essence + Diamond Block + Firework Star + Wilden Spike |
+| `toomanyglyphs:glyph_ray` | `MethodRay` | enabled fallback | Target + Source Gem |
+| `toomanyglyphs:glyph_reverse_direction` | `EffectReverseDirection` | enabled fallback | Manipulation Essence + Glass Pane |
+| `toomanyglyphs:glyph_chaining` | `EffectChaining` | enabled fallback | Manipulation Essence + 3 Chains + Lapis Block + Redstone Block + Source Gem Block |
+| `toomanyglyphs:glyph_filter_block` | `FilterBlock` | enabled fallback | cobblestone tag |
+| `toomanyglyphs:glyph_filter_entity` | `FilterEntity` | enabled fallback | iron nugget tag |
+| `toomanyglyphs:glyph_filter_living` | `FilterLiving` | enabled fallback | Dandelion |
+| `toomanyglyphs:glyph_filter_living_not_monster` | `FilterLivingNotMonster` | enabled fallback | Oxeye Daisy |
+| `toomanyglyphs:glyph_filter_living_not_player` | `FilterLivingNotPlayer` | enabled fallback | Blue Orchid |
+| `toomanyglyphs:glyph_filter_monster` | `FilterMonster` | enabled fallback | Lily of the Valley |
+| `toomanyglyphs:glyph_filter_player` | `FilterPlayer` | enabled fallback | Poppy |
+| `toomanyglyphs:glyph_filter_item` | `FilterItem` | enabled fallback | Emerald |
+| `toomanyglyphs:glyph_filter_animal` | `FilterAnimal` | enabled fallback | Beef |
+| `toomanyglyphs:glyph_filter_is_baby` | `FilterBaby` | enabled fallback | egg tag |
+| `toomanyglyphs:glyph_filter_is_mature` | `FilterMature` | enabled fallback | Chicken |
+| `ars_trinkets:glyph_filter_self` | `FilterSelf.SELF` | enabled fallback | Cornflower |
+| `ars_trinkets:glyph_filter_not_self` | `FilterSelf.NOT_SELF` | enabled fallback | Allium |
+| `arsomega:glyph_flatten` | `EffectFlatten` | enabled fallback | Earth Essence + Iron Shovel + Anvil |
+| `arsomega:glyph_propagate_underfoot` | `PropagateUnderfoot` | enabled fallback | Manipulation Essence + Ars Underfoot glyph |
+| `arsomega:glyph_propagate_projectile` | `PropagateProjectile` | enabled fallback | Manipulation Essence + Ars Projectile glyph |
+| `arsomega:glyph_propagate_self` | `PropagateSelf` | enabled fallback | Manipulation Essence + Ars Self glyph |
+| `arsomega:glyph_missile` | `MethodMissile` | enabled fallback | 2 Firework Rockets + Air Essence + Fire Essence |
+| `arsomega:glyph_overhead` | `MethodOverhead` | enabled fallback | Iron Helmet + Air Essence |
+| `arsomega:glyph_propagate_missile` | `PropagateMissile` | enabled fallback | Manipulation Essence + Missile glyph |
+| `arsomega:glyph_propagate_overhead` | `PropagateOverhead` | enabled fallback | Manipulation Essence + Overhead glyph |
+| `ars_scalaes:glyph_resize` | `EffectResize` | enabled fallback | Manipulation Essence + Abjuration Essence + Brown Mushroom |
 
 ## Delegated but not re-registered
 

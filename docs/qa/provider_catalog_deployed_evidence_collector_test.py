@@ -127,6 +127,15 @@ allow_lost_tablet = false
             self.assertFalse(entry["current_physical_0_1_0_equality"])
 
 
+    def test_neg_config_targets_use_canonical_glyph_resource_paths(self) -> None:
+        self.assertEqual(39, len(collector.NEG_CONFIGS))
+        for registry_id, relative_path in collector.NEG_CONFIGS:
+            namespace, path = registry_id.split(":", 1)
+            self.assertTrue(path.startswith("glyph_"), registry_id)
+            self.assertEqual(namespace, Path(relative_path).parent.as_posix())
+            self.assertTrue(Path(relative_path).name.startswith("glyph_"), relative_path)
+
+
     def test_runtime_probe_accepts_schema3_neg_glyph_observation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
@@ -136,7 +145,7 @@ allow_lost_tablet = false
                 "\n".join(
                     [
                         "[BLACK_ARCANA_CATALOG_PROBE] type=begin schema=3",
-                        "[BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:plow status=OBSERVED enabled=true",
+                        "[BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:glyph_plow status=OBSERVED enabled=true",
                         "[BLACK_ARCANA_CATALOG_PROBE] type=end schema=3",
                     ]
                 )
@@ -152,13 +161,21 @@ allow_lost_tablet = false
                 [
                     {
                         "type": "glyph",
-                        "id": "not_enough_glyphs:plow",
+                        "id": "not_enough_glyphs:glyph_plow",
                         "status": "OBSERVED",
                         "enabled": True,
                     }
                 ],
                 result["rows"],
             )
+
+
+    def test_runtime_probe_rejects_legacy_unprefixed_neg_glyph_id(self) -> None:
+        row = collector.parse_catalog_probe_payload(
+            "type=glyph id=not_enough_glyphs:plow status=OBSERVED enabled=true"
+        )
+
+        self.assertIsNone(row)
 
 
     def test_runtime_probe_rejects_unbounded_glyph_observation(self) -> None:

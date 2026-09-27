@@ -86,7 +86,7 @@ Combined with the byte-identical 4.6.2 registration source, the current-pack sou
 
 - **40 NEG registration primitives** under the current loaded-provider conditions;
 - **39 source-enabled** before Ars/NeoForge SERVER config;
-- `not_enough_glyphs:momentum` registered but source-disabled;
+- `not_enough_glyphs:glyph_momentum` registered but source-disabled;
 - four real Ars Elemental primitives delegated/referenced but not re-registered by NEG;
 - Ars Controle Random fallback suppressed because Ars Controle is present.
 

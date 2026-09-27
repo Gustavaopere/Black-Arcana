@@ -75,7 +75,7 @@ Ride default mana is 20 and belongs to Manipulation. It refuses self, fake-playe
 
 ## Resize
 
-NEG unconditionally registers its fallback under `ars_scalaes:resize`. The class is Tier II, default mana 100 and manipulates vanilla `Attributes.SCALE` via provider grow/shrink effects. Exact duration helper units/values should remain provider-owned because source uses inherited config helpers and differing fallback literals.
+NEG unconditionally registers its fallback under `ars_scalaes:glyph_resize`. The class is Tier II, default mana 100 and manipulates vanilla `Attributes.SCALE` via provider grow/shrink effects. Exact duration helper units/values should remain provider-owned because source uses inherited config helpers and differing fallback literals.
 
 ## Mixins
 

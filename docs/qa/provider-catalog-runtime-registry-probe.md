@@ -132,7 +132,7 @@ Example shapes:
 
 ```text
 [BLACK_ARCANA_CATALOG_PROBE] type=spell id=somakespells:<id> status=OBSERVED school=<namespace:id> enabled=true allow_crafting=true
-[BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:plow status=OBSERVED enabled=true
+[BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:glyph_plow status=OBSERVED enabled=true
 [BLACK_ARCANA_CATALOG_PROBE] type=loot_modifier_serializer id=traveloptics:key_loot status=OBSERVED
 [BLACK_ARCANA_CATALOG_PROBE] type=loot_modifier_pair namespace=traveloptics status=OBSERVED distinct_codec_instances=true
 ```
