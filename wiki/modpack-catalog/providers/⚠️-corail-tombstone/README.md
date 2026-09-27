@@ -6,7 +6,7 @@ Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / 10 COUNTED_EXACT P
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
+`neoforge-rpg-skilltree@e9cecb47612d5dcf07ff98d75198004c7a698fb5`
 
 Certified dossier:
 
