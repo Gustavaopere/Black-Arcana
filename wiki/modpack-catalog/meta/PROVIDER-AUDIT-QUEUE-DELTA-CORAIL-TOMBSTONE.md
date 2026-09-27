@@ -14,7 +14,7 @@ This overlay applies to `tombstone` until the current physical-provider queue is
 
 Current sibling authority at this reconciliation:
 
-`neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
+`neoforge-rpg-skilltree@e9cecb47612d5dcf07ff98d75198004c7a698fb5`
 
 The sibling dossier preserves the current 9.5.6 filename/version line. Independent physical authority is supplied by the Project Library physical modlist snapshot `modlist(1).txt` (2026-09-16), which records installed SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`; this equals exact publisher File `8842741`.
 
