@@ -16,11 +16,11 @@ NEG deliberately preserves historical addon namespaces while providing fallback 
 
 ### Ars Trinkets
 
-`ars_trinkets` is absent. NEG implements/registers `ars_trinkets:filter_self` and `ars_trinkets:filter_not_self`.
+`ars_trinkets` is absent. NEG implements/registers `ars_trinkets:glyph_filter_self` and `ars_trinkets:glyph_filter_not_self`.
 
 ### Ars Scalaes
 
-NEG registers `ars_scalaes:resize` unconditionally in current source. Ars Scalaes itself is absent from the physical pack.
+NEG registers `ars_scalaes:glyph_resize` unconditionally in current source. Ars Scalaes itself is absent from the physical pack.
 
 ### Ars Elemental
 
@@ -34,7 +34,7 @@ Those four glyphs remain Ars Elemental runtime authority.
 
 ## Momentum
 
-`not_enough_glyphs:momentum` is passed through NEG's spell registration helper but its class explicitly returns `isEnabled() = false`. No generated glyph recipe exists in the exact source tree. Treat it as **source-disabled current content**, not an active default capability.
+`not_enough_glyphs:glyph_momentum` is passed through NEG's spell registration helper but its class explicitly returns `isEnabled() = false`. No generated glyph recipe exists in the exact source tree. Treat it as **source-disabled current content**, not an active default capability.
 
 ## Migration/perk aliases
 

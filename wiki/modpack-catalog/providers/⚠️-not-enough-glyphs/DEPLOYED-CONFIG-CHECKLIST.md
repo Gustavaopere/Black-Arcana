@@ -6,7 +6,7 @@ Status: `39 SOURCE-ENABLED REGISTRATIONS / DEPLOYED EFFECTIVE ENABLED STATE UNVE
 
 This checklist turns the remaining Not Enough Glyphs catalog blocker into a finite evidence request.
 
-Exact current 4.6.2 source-semver pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77` preserves the same `ArsNouveauRegistry.java` Git blob as 4.6.1, so the current-pack matrix remains 40 NEG registration primitives. `not_enough_glyphs:momentum` also retains the same source blob and explicit disabled override, leaving **39 source-enabled candidates** before Ars/NeoForge SERVER config.
+Exact current 4.6.2 source-semver pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77` preserves the same `ArsNouveauRegistry.java` Git blob as 4.6.1, so the current-pack matrix remains 40 NEG registration primitives. `not_enough_glyphs:glyph_momentum` also retains the same source blob and explicit disabled override, leaving **39 source-enabled candidates** before Ars/NeoForge SERVER config.
 
 Exact Ars Nouveau 5.13.1 config construction, already audited in this provider dossier, maps a registered spell-part identity `<namespace>:<path>` to SERVER config file `<namespace>/<path>.toml`, where `[general].enabled` controls the base spell-part enabled state. Source default `true` is **not** accepted as deployed pack state because SERVER config may be world-overridden.
 
@@ -16,20 +16,20 @@ Therefore every row below remains `NÃO VERIFICADO` until its effective deployed
 
 | Registry identity | Expected SERVER config path | Effective `[general].enabled` |
 |---|---|---|
-| `not_enough_glyphs:plow` | `not_enough_glyphs/plow.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:trail` | `not_enough_glyphs/trail.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:ride` | `not_enough_glyphs/ride.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:feed` | `not_enough_glyphs/feed.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:filter_light` | `not_enough_glyphs/filter_light.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:filter_dark` | `not_enough_glyphs/filter_dark.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:contingency_fall` | `not_enough_glyphs/contingency_fall.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:contingency_heal` | `not_enough_glyphs/contingency_heal.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:contingency_health` | `not_enough_glyphs/contingency_health.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:contingency_death` | `not_enough_glyphs/contingency_death.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:contingency_fire` | `not_enough_glyphs/contingency_fire.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:contingency_blink` | `not_enough_glyphs/contingency_blink.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:contingency_time` | `not_enough_glyphs/contingency_time.toml` | `NÃO VERIFICADO` |
-| `not_enough_glyphs:propagate_plane` | `not_enough_glyphs/propagate_plane.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_plow` | `not_enough_glyphs/glyph_plow.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_trail` | `not_enough_glyphs/glyph_trail.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_ride` | `not_enough_glyphs/glyph_ride.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_feed` | `not_enough_glyphs/glyph_feed.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_filter_light` | `not_enough_glyphs/glyph_filter_light.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_filter_dark` | `not_enough_glyphs/glyph_filter_dark.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_contingency_fall` | `not_enough_glyphs/glyph_contingency_fall.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_contingency_heal` | `not_enough_glyphs/glyph_contingency_heal.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_contingency_health` | `not_enough_glyphs/glyph_contingency_health.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_contingency_death` | `not_enough_glyphs/glyph_contingency_death.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_contingency_fire` | `not_enough_glyphs/glyph_contingency_fire.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_contingency_blink` | `not_enough_glyphs/glyph_contingency_blink.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_contingency_time` | `not_enough_glyphs/glyph_contingency_time.toml` | `NÃO VERIFICADO` |
+| `not_enough_glyphs:glyph_propagate_plane` | `not_enough_glyphs/glyph_propagate_plane.toml` | `NÃO VERIFICADO` |
 
 ## Too Many Glyphs fallback namespace — 14 source-enabled
 
@@ -37,20 +37,20 @@ These registrations are implemented by NEG in the current pack because `toomanyg
 
 | Registry identity | Expected SERVER config path | Effective `[general].enabled` |
 |---|---|---|
-| `toomanyglyphs:ray` | `toomanyglyphs/ray.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:reverse_direction` | `toomanyglyphs/reverse_direction.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:chaining` | `toomanyglyphs/chaining.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_block` | `toomanyglyphs/filter_block.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_entity` | `toomanyglyphs/filter_entity.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_living` | `toomanyglyphs/filter_living.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_living_not_monster` | `toomanyglyphs/filter_living_not_monster.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_living_not_player` | `toomanyglyphs/filter_living_not_player.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_monster` | `toomanyglyphs/filter_monster.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_player` | `toomanyglyphs/filter_player.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_item` | `toomanyglyphs/filter_item.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_animal` | `toomanyglyphs/filter_animal.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_is_baby` | `toomanyglyphs/filter_is_baby.toml` | `NÃO VERIFICADO` |
-| `toomanyglyphs:filter_is_mature` | `toomanyglyphs/filter_is_mature.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_ray` | `toomanyglyphs/glyph_ray.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_reverse_direction` | `toomanyglyphs/glyph_reverse_direction.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_chaining` | `toomanyglyphs/glyph_chaining.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_block` | `toomanyglyphs/glyph_filter_block.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_entity` | `toomanyglyphs/glyph_filter_entity.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_living` | `toomanyglyphs/glyph_filter_living.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_living_not_monster` | `toomanyglyphs/glyph_filter_living_not_monster.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_living_not_player` | `toomanyglyphs/glyph_filter_living_not_player.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_monster` | `toomanyglyphs/glyph_filter_monster.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_player` | `toomanyglyphs/glyph_filter_player.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_item` | `toomanyglyphs/glyph_filter_item.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_animal` | `toomanyglyphs/glyph_filter_animal.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_is_baby` | `toomanyglyphs/glyph_filter_is_baby.toml` | `NÃO VERIFICADO` |
+| `toomanyglyphs:glyph_filter_is_mature` | `toomanyglyphs/glyph_filter_is_mature.toml` | `NÃO VERIFICADO` |
 
 ## Ars Trinkets fallback namespace — 2 source-enabled
 
@@ -58,8 +58,8 @@ These registrations are implemented by NEG in the current pack because `toomanyg
 
 | Registry identity | Expected SERVER config path | Effective `[general].enabled` |
 |---|---|---|
-| `ars_trinkets:filter_self` | `ars_trinkets/filter_self.toml` | `NÃO VERIFICADO` |
-| `ars_trinkets:filter_not_self` | `ars_trinkets/filter_not_self.toml` | `NÃO VERIFICADO` |
+| `ars_trinkets:glyph_filter_self` | `ars_trinkets/glyph_filter_self.toml` | `NÃO VERIFICADO` |
+| `ars_trinkets:glyph_filter_not_self` | `ars_trinkets/glyph_filter_not_self.toml` | `NÃO VERIFICADO` |
 
 ## Ars Omega fallback namespace — 8 source-enabled
 
@@ -67,14 +67,14 @@ These registrations are implemented by NEG in the current pack because `toomanyg
 
 | Registry identity | Expected SERVER config path | Effective `[general].enabled` |
 |---|---|---|
-| `arsomega:flatten` | `arsomega/flatten.toml` | `NÃO VERIFICADO` |
-| `arsomega:propagate_underfoot` | `arsomega/propagate_underfoot.toml` | `NÃO VERIFICADO` |
-| `arsomega:propagate_projectile` | `arsomega/propagate_projectile.toml` | `NÃO VERIFICADO` |
-| `arsomega:propagate_self` | `arsomega/propagate_self.toml` | `NÃO VERIFICADO` |
-| `arsomega:missile` | `arsomega/missile.toml` | `NÃO VERIFICADO` |
-| `arsomega:overhead` | `arsomega/overhead.toml` | `NÃO VERIFICADO` |
-| `arsomega:propagate_missile` | `arsomega/propagate_missile.toml` | `NÃO VERIFICADO` |
-| `arsomega:propagate_overhead` | `arsomega/propagate_overhead.toml` | `NÃO VERIFICADO` |
+| `arsomega:glyph_flatten` | `arsomega/glyph_flatten.toml` | `NÃO VERIFICADO` |
+| `arsomega:glyph_propagate_underfoot` | `arsomega/glyph_propagate_underfoot.toml` | `NÃO VERIFICADO` |
+| `arsomega:glyph_propagate_projectile` | `arsomega/glyph_propagate_projectile.toml` | `NÃO VERIFICADO` |
+| `arsomega:glyph_propagate_self` | `arsomega/glyph_propagate_self.toml` | `NÃO VERIFICADO` |
+| `arsomega:glyph_missile` | `arsomega/glyph_missile.toml` | `NÃO VERIFICADO` |
+| `arsomega:glyph_overhead` | `arsomega/glyph_overhead.toml` | `NÃO VERIFICADO` |
+| `arsomega:glyph_propagate_missile` | `arsomega/glyph_propagate_missile.toml` | `NÃO VERIFICADO` |
+| `arsomega:glyph_propagate_overhead` | `arsomega/glyph_propagate_overhead.toml` | `NÃO VERIFICADO` |
 
 ## Ars Scalaes fallback namespace — 1 source-enabled
 
@@ -82,13 +82,13 @@ NEG registers Resize unconditionally under the historical `ars_scalaes` namespac
 
 | Registry identity | Expected SERVER config path | Effective `[general].enabled` |
 |---|---|---|
-| `ars_scalaes:resize` | `ars_scalaes/resize.toml` | `NÃO VERIFICADO` |
+| `ars_scalaes:glyph_resize` | `ars_scalaes/glyph_resize.toml` | `NÃO VERIFICADO` |
 
 ## Source-disabled registration
 
-`not_enough_glyphs:momentum` is registered but its provider implementation explicitly reports disabled in the audited source. It is therefore **not** one of the 39 candidates awaiting deployed config proof.
+`not_enough_glyphs:glyph_momentum` is registered but its provider implementation explicitly reports disabled in the audited source. It is therefore **not** one of the 39 candidates awaiting deployed config proof.
 
-Expected base config path, if emitted by the Ars spell-part config construction, is `not_enough_glyphs/momentum.toml`; observing an enabled config value would not override the provider's explicit source-level disable for catalog classification.
+Expected base config path, if emitted by the Ars spell-part config construction, is `not_enough_glyphs/glyph_momentum.toml`; observing an enabled config value would not override the provider's explicit source-level disable for catalog classification.
 
 ## Acceptance rule
 

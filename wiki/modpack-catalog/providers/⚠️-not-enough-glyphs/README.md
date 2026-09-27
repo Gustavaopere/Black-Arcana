@@ -31,7 +31,7 @@ Registration is conditional on loaded providers. In the current physical modlist
 - `ars_trinkets` **is absent** → NEG registers 2 Ars Trinkets fallback filters under `ars_trinkets`.
 - `ars_scalaes` is absent, but Resize is registered unconditionally under `ars_scalaes` by current NEG source.
 
-Result for this pack: **40 calls to `APIRegistry.registerSpell` by NEG**. `not_enough_glyphs:momentum` is still registered but explicitly returns `isEnabled() = false`, so **39 are source-enabled before user/provider config**.
+Result for this pack: **40 calls to `APIRegistry.registerSpell` by NEG**. `not_enough_glyphs:glyph_momentum` is still registered but explicitly returns `isEnabled() = false`, so **39 are source-enabled before user/provider config**.
 
 The internal documentation list additionally contains four real Ars Elemental primitives. They are **not** counted as NEG registrations.
 
