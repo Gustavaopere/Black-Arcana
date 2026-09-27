@@ -855,6 +855,18 @@ def collect_irons_spell_namespace_overrides(
     return out
 
 
+def collect_mowzies_mobs(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    roots = [instance / "config", instance / "defaultconfigs"]
+    roots.extend(world / "serverconfig" for world in worlds)
+    return {
+        "enable_tunneling_matches": collect_selected_key(
+            instance,
+            roots,
+            "enable_tunneling",
+        )
+    }
+
+
 def collect_tombstone(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
