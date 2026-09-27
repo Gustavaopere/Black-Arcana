@@ -8,15 +8,15 @@ This overlay applies to `tombstone` until the current physical-provider queue is
 
 | Mod ID | Installed identity | Effective audit state |
 |---|---|---|
-| `tombstone` | `tombstone-neoforge-1.21.1-9.5.6.jar` / runtime 9.5.6 | ⚠️ `PARTIAL / EXACT PUBLISHER ARTIFACT AUDITED / 10 COUNTED_RELEASE_BOUNDED PRAYER-RITE ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL CASTABLE ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING / RUNTIME QA FAIL-CLOSED` |
+| `tombstone` | `tombstone-neoforge-1.21.1-9.5.6.jar` / runtime 9.5.6 | ⚠️ `PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / 10 COUNTED_EXACT PRAYER-RITE ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL CASTABLE ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING / RUNTIME QA FAIL-CLOSED` |
 
 ## Physical evidence
 
-Sibling authority:
+Current sibling authority at this reconciliation:
 
-`neoforge-rpg-skilltree@6657e5bd006d16a244fd4cfe219fc7a15c911714`
+`neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`
 
-The sibling dossier still does not preserve an independent installed-JAR digest.
+The sibling dossier preserves the current 9.5.6 filename/version line. Independent physical authority is supplied by the Project Library physical modlist snapshot `modlist(1).txt` (2026-09-16), which records installed SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`; this equals exact publisher File `8842741`.
 
 ## Exact publisher evidence
 
@@ -30,6 +30,7 @@ Exact File `8842741` clean-room audit:
 
 ## Closed by current evidence
 
+- exact installed physical ↔ publisher byte identity for the cataloged 9.5.6 snapshot;
 - exact release artifact identity/hash;
 - six provider prayer action identities;
 - four Ritual Flute action identities;
@@ -50,13 +51,12 @@ Ritual Flute subtotal: **4**.
 
 Provider strict contribution:
 
-**+10 `COUNTED_RELEASE_BOUNDED`**.
+**+10 `COUNTED_EXACT`**.
 
 No shared global minimum is changed in this provider-specific overlay; shared ledgers should be reconciled separately after this checkpoint merges.
 
 ## Still open
 
-- installed-JAR ↔ publisher-file byte equality;
 - deployed `AllowedMagicItems` state; the read-only collector has a bounded 12-key capture path, but no actual pack result is present;
 - strict promotion of the 12 already-deduplicated conditional action families according to those booleans;
 - exact resource/Soul settlement;
