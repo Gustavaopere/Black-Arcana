@@ -16,6 +16,7 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 - Mowzie's Mobs 1.8.2;
 - T.O Magic n' Extras / Traveloptics 4.4.0.1 — current physical override/provider blocker even though it is absent from the sibling status-prefixed taxonomy;
 - bounded deployed customization references relevant to those same closure gates.
+- exact current KubeJS startup/server/client/data text-file inventory by relative path, SHA-256, byte size and surface label, without copying file bodies.
 
 It does not alter the instance, generate provider configs, enable content, create datapacks, or infer defaults from absent files.
 
@@ -65,6 +66,20 @@ python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack
 ```
 
 ## What the collector records
+
+### KubeJS script/data inventory
+
+The report includes `kubejs_script_inventory` with:
+
+- whether the instance has a `kubejs/` root at all;
+- total bounded file count;
+- per-surface counts for `startup_scripts`, `server_scripts`, `client_scripts` and `data`;
+- for each collected text file: relative path, surface label, SHA-256 and byte size.
+
+Only files under those four roots whose suffix is already in the collector's bounded text-extension allowlist are included. Script/data bodies are never copied.
+
+This inventory is evidence input for the Iron's Spellbooks KubeJS and KubeJS Ars Nouveau closure checklists. An explicitly absent/empty authoritative current `kubejs/` tree can support zero-content closure where the provider checklist allows it. A non-empty inventory still requires targeted script/provenance review; hashes and paths alone do not prove semantic registrations or recipe mutations.
+
 
 ### Catalog runtime probe bundle
 
@@ -353,5 +368,6 @@ Do not convert missing files into source-default values unless the actual runtim
 - Somake: physical equality and 83/83 registration composition are already closed canonically; the collector can corroborate the installed hash and reduce the remaining deployed `enableSpellLockSystem` plus Iron's per-spell/global/datapack `enabled` / `school` / `allow_crafting` gates;
 - Mowzie's Mobs: current physical 1.8.2 equality plus effective deployed `enable_tunneling`;
 - Traveloptics: current physical override/provider blocker — classify the actual installed JAR and discover bounded deployed `traveloptics:blackout` references; exact-current registry/loot/acquisition review remains provider-specific.
+- Iron's Spellbooks KubeJS / KubeJS Ars Nouveau: use `kubejs_script_inventory` to bind the review to the exact current script/data tree; inspect non-empty files separately according to each provider checklist.
 
 Somake's exact 1.0.9 registry and current 83/83 registration composition are already closed by canonical provider evidence; the collector is used for deployed config/host/reachability evidence, not to redo that registry. Pair it with [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) when exact assembled-server Iron's registry identity and effective host `school` / `enabled` / `allow_crafting` observations are required. For the current physical pack, those runtime rows may close the deployed registration outcome when paired with physical identity/mod-presence evidence; they do not establish a universal predicate contract. The runtime probe is separate QA evidence and still does not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.
