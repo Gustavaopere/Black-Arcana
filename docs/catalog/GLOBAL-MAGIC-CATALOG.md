@@ -23,7 +23,7 @@ Estado canônico corrente:
 - ✅ mínimo semântico estrito reconstruível: **1677 objetos mágicos**;
 - ⚠️ denominador semântico final: **ainda aberto** — não publicar porcentagem global;
 - ⚠️ denominador técnico cross-domain: **`PENDING REBASE`** — o antigo `68/100` é histórico;
-- taxonomia física sibling atual com categoria `Magic`: **67 linhas** no sibling `bb5372c…`; após normalização e os fechamentos atuais, **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**);
+- taxonomia física sibling atual com categoria `Magic`: **67 linhas** no sibling `8a0dbdf…`; após normalização e os fechamentos atuais, **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**);
 - os oito ⚠️ já mapeados nessa categoria física são **Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition**;
 - a fila category-only da taxonomia física `Magic` está **vazia**; todos os 67 itens possuem classificação Black Arcana explícita;
 - providers cross-domain/root-level atuais ampliam esse universo: Gaze, Requiem, Traveloptics, More Relics, Iron's Spellbooks KubeJS, Spell Actionbar/Specs/Recolor/Immersive Portal e addons Reliquified, entre outros.
@@ -44,7 +44,7 @@ Blockers estáticos que continuam fail-closed por falta de evidência implantada
 ## Snapshot histórico de autoridade — não corrente
 
 - Black Arcana base desta reconciliação: `main@e391e11675b951150a7b01049d2d908b01d82641`.
-- RPG Skill Tree sibling mais recente consultado: `main@a5c47883473815b05453f978b5d078e9e5ada31b`.
+- RPG Skill Tree sibling mais recente consultado: `main@8a0dbdfb16cf52039f07588cfb3774888287b280`.
 - O índice físico sibling atual reconcilia **587 entradas top-level incluindo o modloader**; para Create: Wizardry, a linha certificada atual é **#166**. O antigo snapshot Black Arcana de 595 entradas abaixo permanece histórico até regeneração integral do denominator mágico.
 - Snapshot físico histórico registrado nos ledgers do Black Arcana: Minecraft `1.21.1`, NeoForge `21.1.248`, **595 entradas top-level**, SHA-1 da modlist `7aaece7acbfb07ba4d0c66029042f36c50d046f0`.
 - O sibling mantém `docs/MODPACK_SCOPE.md`, derivado de `modlist(20260822-201255).txt`, como inventário versionado histórico de integração. Quando houver divergência, evidência física/canônica posterior do Black Arcana vence.
