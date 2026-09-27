@@ -16,20 +16,20 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — snapshot sibling atual
 
-No sibling `neoforge-rpg-skilltree@8cdc0770f623e086d075d9d262ec4b5bb5423493` existem **63 linhas status-prefixed cujas pastas de categoria contêm `Magic`**. Essa classificação sibling descreve a taxonomia física do modpack; o prefixo ✅ do dossiê sibling não equivale automaticamente a ✅ do catálogo semântico Black Arcana.
+No sibling `neoforge-rpg-skilltree@8a9277edb2f8e7172044614c1a046c9c2ef3a253` existem **65 linhas status-prefixed cujas pastas de categoria contêm `Magic`**. Essa classificação sibling descreve a taxonomia física do modpack; o prefixo ✅ do dossiê sibling não equivale automaticamente a ✅ do catálogo semântico Black Arcana.
 
 Após normalização de ownership/aliases e os fechamentos de Ozymandias + Mowzie's Mobs + Photon + RunicLib nesta rodada:
 
 - **53 ✅ catalogados** com diretório Black Arcana correspondente;
 - **7 ⚠️ parciais/condicionados** com diretório Black Arcana correspondente: Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS e Mowzie's Mobs;
-- **3 ⚠️ em classificação semântica** por ainda não possuírem diretório Black Arcana: Mowzie's Cataclysm, Pickable Orbs e IronSable X Wind's Spellbooks;
-- **0 ❌** são declarados apenas pela taxonomia sibling: os três itens acima ainda precisam ser classificados antes de decidir se são providers semânticos, infraestrutura zero-semantic ou conteúdo fora da métrica;
+- **5 ⚠️ em classificação semântica** por ainda não possuírem diretório Black Arcana: Iron's Gems 'n Jewelry, Integrated Villages, Mowzie's Cataclysm, Pickable Orbs e IronSable X Wind's Spellbooks;
+- **0 ❌** são declarados apenas pela taxonomia sibling: os cinco itens acima ainda precisam ser classificados antes de decidir se são providers semânticos, infraestrutura zero-semantic ou conteúdo fora da métrica;
 - **0 🟡** de implementação ativa;
 - **0 ⛔** por ausência total de evidência.
 
-Assim, **60/63** linhas da categoria física `Magic` já mapeiam para diretórios Black Arcana. As três restantes formam a próxima fila de classificação; elas não entram no denominador semântico por presunção.
+Assim, **60/65** linhas da categoria física `Magic` já mapeiam para diretórios Black Arcana. As cinco restantes formam a próxima fila de classificação; elas não entram no denominador semântico por presunção.
 
-**Reclassificação sibling recente:** cinco linhas foram adicionadas à pasta/categoria `Magic` sem necessariamente serem providers novos: Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable e Iron's Spellbooks KubeJS já tinham diretório Black Arcana; apenas IronSable X Wind's Spellbooks entrou como nova fila de classificação.
+**Reclassificação sibling recente:** sete linhas foram adicionadas à pasta/categoria `Magic` sem necessariamente serem providers novos. Iron's Spells 'n Spellbooks, ISS: Magic From The East, IronSable e Iron's Spellbooks KubeJS já tinham diretório Black Arcana; IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages entraram na fila de classificação.
 
 **Cross-domain note:** o subtotal físico `Magic` continua sem representar o universo global. Gaze permanece ⚠️ com um spell contado + 26 rites config-condicionais; Ender's Spells and Stuff: Requiem é ✅ com 53 ações strict; Reliquified Ars Nouveau, Reliquified Artifacts e Reliquified Iron's são ✅ com 19, 52 e 25 ability roots source-pinned; Iron's Spellbooks KubeJS permanece ⚠️ fora dessa categoria sibling atual; More Relics é ✅ com 61 ability roots exatas; Ozymandias Sundries agora é ✅ com 2 spells exatos; Mowzie's Mobs é ⚠️ com 10 poderes strict + 1 Tunneling config-condicional; Traveloptics permanece ⚠️ +0 strict pendente de fechamento exato-current. Spell Actionbar, Specs, Recolor e Immersive Portal continuam componentes técnicos/runtime com +0 identidades independentes.
 **Traveloptics current-physical override:** Project Library physical evidence directly records `traveloptics-4.4.0.1-1.21.1.jar` / SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This outranks the absence of a status-prefixed sibling row for presence/version. The installed digest differs from the audited publisher alpha and known patch artifact, so Traveloptics is a current **⚠️ `OTHER_VERIFIED` / +0 strict** provider blocker until its installed-byte registry and reachability are closed.
