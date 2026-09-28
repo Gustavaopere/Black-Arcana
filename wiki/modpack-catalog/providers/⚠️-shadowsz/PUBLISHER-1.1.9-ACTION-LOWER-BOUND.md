@@ -10,7 +10,7 @@ Record the strongest public current-version evidence available without treating 
 
 Sibling current physical authority:
 
-- `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`;
+- `neoforge-rpg-skilltree@27b79d8f494db868ea5a674f9d818f5ea62fd444`;
 - JAR `shadowsz-1.1.9.jar`;
 - mod id `shadowsz`;
 - runtime `1.1.9`;
