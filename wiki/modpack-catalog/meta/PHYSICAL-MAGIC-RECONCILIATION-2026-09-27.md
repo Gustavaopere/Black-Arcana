@@ -5,7 +5,7 @@ Status: `84/84 CURRENT PHYSICAL MAGIC ROWS MAPPED / 71 ✅ + 13 ⚠️ / STRICT 
 ## Authority
 
 - Black Arcana base before this closure: `main@49873930b2948b7d5ddf8f0417138dcebffec6ca`
-- sibling physical/modlist authority: `neoforge-rpg-skilltree@fcd2e239ad70c955e47df390d4c74d49dd3b7079`
+- sibling physical/modlist authority: `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`
 - source table: `PROJECT-INSTRUCTIONS/modlist/modlist.md`
 - category rule: a row belongs to this subtotal only when the **category field** contains the exact category `Magic`; the word "Magic" in a display name is not sufficient.
 
@@ -26,7 +26,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 476 | Reliquified Ars Nouveau | ✅ existing canonical provider; +19 strict already owned in ledger |
 | 477 | Reliquified Artifacts | ✅ existing canonical provider; +52 strict already owned in ledger |
 | 478 | Reliquified Iron's Spells 'n Spellbooks | ✅ existing canonical provider; +25 strict already owned in ledger |
-| 479 | Reliquified L_Ender's Cataclysm | ✅ exact publisher/physical SHA-1 equality plus bounded exact-artifact audit close 5 registered relic owners / 7 owner-scoped ability roots; `COUNTED_EXACT +7` |
+| 479 | Reliquified L_Ender's Cataclysm | ✅ exact publisher/physical SHA-1 equality plus bounded exact-artifact audit close 5 registered relic owners / 7 owner-scoped ability roots and exact-current loot routes for all five owners; `COUNTED_EXACT +7` |
 | 500 | ShadowsZ | ⚠️ current publisher lower bound 6: Shadow Eyes, Shadow Arising, Position Swap + 3 Umbral spells; complete action inventory open |
 | 501 | Simply Swords: Cataclysm | ⚠️ exact-version source inventory closed at 4 abilities; deployed STARTUP config decides current active subset |
 | 502 | Simply More | ⚠️ Alpha-5 semantic lower bound 9 player-invoked active roots; passive/proc surfaces and implicits excluded; legacy active inventory open |
@@ -53,7 +53,7 @@ This reconciliation now adds **+7 strict semantic objects** from the exact-curre
 
 The eleven reclassified rows with existing provider catalogs were already represented in the semantic ledger, so their movement into the sibling `Magic` category cannot be counted again.
 
-Reliquified L_Ender's Cataclysm is no longer fail-closed at the catalog denominator: exact publisher bytes match the physical SHA-1, and bounded audit run `36380842145` closes exactly five registered relic owners and seven owner-scoped `AbilityData.builder(...)` roots. It contributes **+7 `COUNTED_EXACT`**.
+Reliquified L_Ender's Cataclysm is no longer fail-closed at the catalog denominator: exact publisher bytes match the physical SHA-1, and bounded audit run `36416011761` closes exactly five registered relic owners and seven owner-scoped `AbilityData.builder(...)` roots. It contributes **+7 `COUNTED_EXACT`**.
 
 The remaining five newly mapped providers stay fail-closed:
 
