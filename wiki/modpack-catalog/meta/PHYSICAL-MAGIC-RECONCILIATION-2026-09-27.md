@@ -28,7 +28,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 478 | Reliquified Iron's Spells 'n Spellbooks | ✅ existing canonical provider; +25 strict already owned in ledger |
 | 479 | Reliquified L_Ender's Cataclysm | ⚠️ lower bound improved to 7 ability roots across 5 baseline relic owners; complete current 0.1.1 denominator open |
 | 500 | ShadowsZ | ⚠️ current publisher lower bound 6: Shadow Eyes, Shadow Arising, Position Swap + 3 Umbral spells; complete action inventory open |
-| 501 | Simply Swords: Cataclysm | ⚠️ new canonical mapping; 4 documented current-release ability families, exact-current completeness open |
+| 501 | Simply Swords: Cataclysm | ⚠️ exact-version source inventory closed at 4 abilities; deployed STARTUP config decides current active subset |
 | 502 | Simply More | ⚠️ new canonical mapping; Alpha-5 unique/implicit ability inventory open |
 | 503 | Simply Swords | ⚠️ new canonical mapping; Runic/Unique/implicit action inventory open |
 | 564 | Waystones | ⚠️ new canonical mapping; semantic classification of provider teleport network remains open |
@@ -57,7 +57,7 @@ The six newly mapped providers are deliberately fail-closed:
 
 - Reliquified L_Ender's Cataclysm: public 0.1 release-day source proves 5 baseline relic owners / 7 ability roots and the current-pack compatibility-transform log corroborates the same 5 loaded classes; complete 0.1.1 discrete-action cardinality is still not proven;
 - ShadowsZ: current publisher documentation confirms six supernatural player actions, but the complete current spell/action/control inventory and active config surface are not closed;
-- Simply Swords: Cataclysm: four current-release ability families are documented, but exact installed completeness is not yet proven;
+- Simply Swords: Cataclysm: exact-version release-correlated source closes four semantic abilities, but deployed STARTUP config can suppress their active surface and remains uncaptured;
 - Simply More: item/Unique totals do not equal action totals, and the installed Alpha line explicitly contains rework/incomplete functionality;
 - Simply Swords: weapon/item/Runic infrastructure does not itself prove the count of discrete supernatural player actions;
 - Waystones: physical `Magic` classification does not by itself establish a countable spell/ritual/action identity.
@@ -79,7 +79,7 @@ The six new providers remain in the closure queue and should be closed in physic
 
 1. Reliquified L_Ender's Cataclysm 0.1.1;
 2. ShadowsZ 1.1.9;
-3. Simply Swords: Cataclysm 1.0.2;
+3. Simply Swords: Cataclysm 1.0.2 deployed config;
 4. Simply More 1.3.0 Alpha 5;
 5. Simply Swords 1.70.2;
 6. Waystones 21.1.45.
