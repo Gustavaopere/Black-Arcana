@@ -158,6 +158,84 @@ jobs:
 
           report["relic_invocation_signatures"] = invocation_signatures
 
+          # Narrow factual bytecode audit: retain only AbilityData.builder(String)
+          # declarations and ItemRegistry register(String, Supplier) identities.
+          # Full disassembly output is not persisted or uploaded.
+          def owner_from_relic_class(cls):
+              simple = cls.rsplit(".", 1)[-1]
+              if simple.endswith("Item"):
+                  simple = simple[:-4]
+              return re.sub(r"(?<!^)(?=[A-Z])", "_", simple).lower()
+
+          ability_builder_rows = []
+          for cls in sorted(relic_class_names):
+              cp = subprocess.run(
+                  ["javap", "-c", "-p", "-classpath", str(jar), cls],
+                  text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+              )
+              lines = cp.stdout.splitlines()
+              for idx, line in enumerate(lines):
+                  if "AbilityData.builder:(Ljava/lang/String;)" not in line:
+                      continue
+                  ability_id = None
+                  for prev in reversed(lines[max(0, idx - 5):idx]):
+                      m = re.search(r"// String ([A-Za-z0-9_]+)\\s*$", prev)
+                      if m:
+                          ability_id = m.group(1)
+                          break
+                  if ability_id is None:
+                      raise SystemExit(f"Could not resolve AbilityData.builder string for {cls}")
+                  ability_builder_rows.append({
+                      "owner": owner_from_relic_class(cls),
+                      "ability_id": ability_id,
+                      "class": cls,
+                  })
+
+          lang_pairs = {
+              (row["owner"], row["ability_id"])
+              for row in report["ability_roots_from_exact_lang_keys"]
+          }
+          builder_pairs = {
+              (row["owner"], row["ability_id"])
+              for row in ability_builder_rows
+          }
+          if len(ability_builder_rows) != 7:
+              raise SystemExit(f"Expected exactly 7 AbilityData.builder calls, got {len(ability_builder_rows)}")
+          if builder_pairs != lang_pairs:
+              raise SystemExit(
+                  f"Ability builder/lang mismatch: builders={sorted(builder_pairs)} lang={sorted(lang_pairs)}"
+              )
+          report["ability_builder_declarations"] = ability_builder_rows
+          report["ability_builder_declaration_count"] = len(ability_builder_rows)
+
+          registry_class = "it.hurts.octostudios.reliquified_lenders_cataclysm.init.ItemRegistry"
+          cp = subprocess.run(
+              ["javap", "-c", "-p", "-classpath", str(jar), registry_class],
+              text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+          )
+          registry_lines = cp.stdout.splitlines()
+          registry_item_ids = []
+          for idx, line in enumerate(registry_lines):
+              if "DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)" not in line:
+                  continue
+              item_id = None
+              for prev in reversed(registry_lines[max(0, idx - 8):idx]):
+                  m = re.search(r"// String ([A-Za-z0-9_]+)\\s*$", prev)
+                  if m:
+                      item_id = m.group(1)
+                      break
+              if item_id is None:
+                  raise SystemExit("Could not resolve ItemRegistry register string")
+              registry_item_ids.append(item_id)
+
+          registry_item_ids = sorted(registry_item_ids)
+          if registry_item_ids != sorted(report["item_ids_from_lang"]):
+              raise SystemExit(
+                  f"Item registry/lang mismatch: registry={registry_item_ids} lang={report['item_ids_from_lang']}"
+              )
+          report["item_registry_ids"] = registry_item_ids
+          report["item_registry_count"] = len(registry_item_ids)
+
           report_path.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
 
           print(json.dumps({
@@ -168,6 +246,10 @@ jobs:
               "ability_root_count_from_exact_lang_keys": report["ability_root_count_from_exact_lang_keys"],
               "ability_roots_from_exact_lang_keys": report["ability_roots_from_exact_lang_keys"],
               "ability_string_constant_signatures": report["ability_string_constant_signatures"],
+              "ability_builder_declaration_count": report["ability_builder_declaration_count"],
+              "ability_builder_declarations": report["ability_builder_declarations"],
+              "item_registry_count": report["item_registry_count"],
+              "item_registry_ids": report["item_registry_ids"],
               "relic_invocation_signatures": report["relic_invocation_signatures"],
               "provider_data_resource_paths": report["provider_data_resource_paths"],
               "metadata": {
