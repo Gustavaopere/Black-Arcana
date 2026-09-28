@@ -445,7 +445,7 @@ jobs:
               "shadow_summoner_methods":method_signatures("com.pumpking.shadowsz.shadow.ShadowSummoner"),
               "candidate_effect_facts":bounded_method_effect_facts(
                   "com.pumpking.shadowsz.shadow.ShadowSummoner",
-                  ["summon","dismiss","dismissAll","summonAll","summonGroup","dismissGroup","toggleShadowEyes","teleportSwap","attackTarget","fuseShadows","tryAuraConvert","bindGuardian","grantPowers","revokePowers"]
+                  ["summon","dismiss","dismissInternal","dismissAll","summonAll","summonGroup","summonGroupMembers","dismissGroup","dismissGroupMembers","toggleGroupByHotkey","toggleShadowEyes","teleportSwap","attackTarget","fuseShadows","tryAuraConvert","bindGuardian","grantPowers","revokePowers"]
               ),
               "shadow_event_effect_facts":bounded_method_effect_facts(
                   "com.pumpking.shadowsz.shadow.ShadowEvents",
