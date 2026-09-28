@@ -24,7 +24,7 @@ Capture the effective NeoForge STARTUP config state corresponding to the exact s
 | Accursed Rage | `accursedRageChance` | zero => disabled; non-zero => active candidate |
 | Blazing Brand | `blazingBrandChance` | zero => disabled; non-zero => active candidate |
 | Mecha Pulse | `mechaPulseChargeChance` | zero => no normal charge progression; non-zero => active candidate |
-| Mecha Smite | `mechaSmiteHarmfulEffectsChance`, `mechaSmiteRegenChance`, `mechaSmiteRegenUsesPercentage`, `mechaSmiteRegenPercentage`, `mechaSmiteRegenThreshold` | classify active if provider behavior remains causally reachable; do not collapse harmful and regenerative branches |
+| Mecha Smite | `mechaSmiteHarmfulEffectsChance`, `mechaSmiteFireDuration`, `mechaSmiteWitherDuration`, `mechaSmiteRegenChance`, `mechaSmiteRegenUsesPercentage`, `mechaSmiteRegenPercentage`, `mechaSmiteRegenThreshold` | harmful branch requires non-zero chance plus at least one non-zero harmful duration; regenerative branch is classified independently from chance + selected threshold mode/value |
 
 Also retain the exact source-config context for other durations/amplifiers/cooldowns as runtime/balance evidence. `mechaSmiteFireDuration` and `mechaSmiteWitherDuration` are catalog gates because the provider explicitly documents zero as disabling those harmful effects; they do not create extra semantic identities.
 
@@ -42,7 +42,7 @@ The repository read-only collector now has a bounded route for this provider:
 python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack-instance"
 ```
 
-It reads only `config/simplycataclysm-startup.toml`, retains only the eight closure keys above, and fingerprints the exact physical JAR. A missing/incomplete key stays fail-closed; the collector never substitutes source defaults.
+It reads only `config/simplycataclysm-startup.toml`, retains only the ten closure keys above, and fingerprints the exact physical JAR. A missing/incomplete key stays fail-closed; the collector never substitutes source defaults.
 
 Current archived instance logs confirm that NeoForge loaded and watched `config/simplycataclysm-startup.toml`; those logs do **not** expose the values and therefore do not close this checklist by themselves.
 
