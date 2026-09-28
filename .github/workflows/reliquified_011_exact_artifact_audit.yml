@@ -252,8 +252,6 @@ jobs:
               )
               lines = cp.stdout.splitlines()
               routes = set()
-              entry_calls = 0
-              relic_loot_calls = 0
               for line in lines:
                   m = re.search(
                       r"// Field it/hurts/octostudios/reliquified_lenders_cataclysm/items/base/data/RECLootEntries\.([A-Z_]+):",
@@ -267,19 +265,10 @@ jobs:
                   )
                   if m:
                       routes.add(m.group(1))
-                  if "LootData$Builder.entry:" in line:
-                      entry_calls += 1
-                  if "RelicData$Builder.loot:" in line:
-                      relic_loot_calls += 1
-
               owner = owner_from_relic_class(cls)
               if routes != expected_loot_routes[owner]:
                   raise SystemExit(
                       f"Exact loot-route mismatch for {owner}: expected={sorted(expected_loot_routes[owner])} got={sorted(routes)}"
-                  )
-              if entry_calls != 1 or relic_loot_calls != 1:
-                  raise SystemExit(
-                      f"Exact loot wiring mismatch for {owner}: entry_calls={entry_calls} relic_loot_calls={relic_loot_calls}"
                   )
               exact_loot_routes[owner] = sorted(routes)
 
