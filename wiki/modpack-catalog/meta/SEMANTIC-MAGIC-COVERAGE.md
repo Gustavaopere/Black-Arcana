@@ -411,7 +411,7 @@ These providers remain **outside the 1677 strict sum** because the current physi
 | [Reliquified L_Ender's Cataclysm](../providers/⚠️-reliquified-l-enders-cataclysm/README.md) | exact physical 0.1.1 identity; public 0.1 release-day source proves 5 baseline relic owners / 7 ability roots; current-pack compatibility-transform log corroborates the same 5 loaded relic classes | `LOWER_BOUND 7 / +0 STRICT` | changelog and transform coverage do not prove complete 0.1.1 registry/root cardinality; exact-current denominator remains open |
 | [ShadowsZ](../providers/⚠️-shadowsz/README.md) | exact physical 1.1.9 identity; current publisher docs establish Shadow Eyes, Shadow Arising, Position Swap plus Miasma, Umbral Bond and Aura of the Monarch | `LOWER_BOUND 6 / +0 STRICT` | six player-facing supernatural actions are confirmed, but complete 1.1.9 cardinality, army-control classification and effective config remain open |
 | [Simply Swords: Cataclysm](../providers/⚠️-simply-swords-cataclysm/README.md) | exact physical 1.0.2 identity + release-correlated exact-version source pin close four and only four provider supernatural weapon abilities | `INVENTORY_SOURCE_PINNED 4 / ACTIVE_CONFIG_OPEN / +0 STRICT` | exact source registers STARTUP config whose chance/gate values can suppress abilities; deployed effective values are not captured |
-| [Simply More](../providers/⚠️-simply-more/README.md) | exact Alpha-5 physical/publisher reconciliation; active/passive ability behavior exists | `OPEN / +0 STRICT` | 10 weapon types / 33 Unique items are not action counts and the Alpha explicitly contains rework/incomplete functionality |
+| [Simply More](../providers/⚠️-simply-more/README.md) | exact Alpha-5 physical/publisher reconciliation + release-correlated source; 18 roots across 9 explicitly reworked Unique families plus 4 provider-owned implicits are positively established | `LOWER_BOUND 22 / +0 STRICT` | legacy/rework/no-function uniques and Mimicry remain unclassified; 10 weapon types / 33 Unique items are not semantic-action counts |
 | [Simply Swords](../providers/⚠️-simply-swords/README.md) | exact physical 1.70.2 identity; provider owns Runic/Unique/implicit systems | `OPEN / +0 STRICT` | exact installed discrete-action inventory is not reconstructed; items, tablets, gems and UI/processes are excluded by themselves |
 | [Waystones](../providers/⚠️-waystones/README.md) | exact physical 21.1.45 identity; provider owns persistent teleport network | `OPEN CLASSIFICATION / +0 STRICT` | sibling `Magic` category membership alone does not prove a semantic spell/ritual/action identity |
 
@@ -434,7 +434,7 @@ To converge on a final denominator efficiently, prioritize:
 1. Reliquified L_Ender's Cataclysm 0.1.1 — complete relic/action inventory;
 2. ShadowsZ 1.1.9 — exact spell/action registry and action classification;
 3. Simply Swords: Cataclysm 1.0.2 — deployed STARTUP config classification for the four source-pinned abilities;
-4. Simply More Alpha 5 — complete live unique/implicit ability inventory;
+4. Simply More Alpha 5 — close the remaining legacy/rework/no-function Unique and Mimicry inventory beyond the 22-root lower bound;
 5. Simply Swords 1.70.2 — exact Runic/Unique/implicit semantic inventory;
 6. Waystones 21.1.45 — exact semantic classification of its teleport network;
 7. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.2 and Gaze 1.1.7.1 Rites when such evidence becomes available;
