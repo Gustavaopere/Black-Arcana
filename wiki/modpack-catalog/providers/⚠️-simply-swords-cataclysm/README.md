@@ -4,7 +4,7 @@ Status: `⚠️ PARTIAL / PHYSICAL IDENTITY CLOSED / EXACT-VERSION SOURCE-PINNED
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@c0bade33095b31752c310b19636346f5b0505ee0`;
+- sibling checkpoint: `neoforge-rpg-skilltree@64f8aad50596bc83b45bf6e99ff356331f2432d6`;
 - physical row: `#501`;
 - JAR: `simplycataclysm-1.0.2+1.21.1+neoforge.jar`;
 - mod id: `simplycataclysm`;
@@ -65,7 +65,7 @@ Relevant exact source keys include:
 
 - `accursedRageChance` — source comment explicitly says setting 0 disables the trait;
 - `blazingBrandChance` — source comment explicitly says setting 0 disables the trait;
-- `mechaPulseChargeChance` — range includes 0;
+- `mechaPulseChargeChance` — source comment explicitly says setting 0 disables the trait;
 - `mechaSmiteHarmfulEffectsChance` — source comment explicitly says setting 0 disables the harmful proc;
 - `mechaSmiteFireDuration` — source comment explicitly says setting 0 disables fire;
 - `mechaSmiteWitherDuration` — source comment explicitly says setting 0 disables Wither;
