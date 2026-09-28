@@ -349,6 +349,50 @@ jobs:
                               default=True; break
               return {"key":key,"default":default}
 
+          def bounded_method_effect_facts(cls, method_names):
+              dis=javap(cls, "-c", "-p")
+              lines=dis.splitlines()
+              facts={}
+              for name in method_names:
+                  starts=[]
+                  for i,line in enumerate(lines):
+                      if re.match(rf"^  (public|private|protected).*\\b{re.escape(name)}\\(", line):
+                          starts.append(i)
+                  entries=[]
+                  for start in starts:
+                      header=lines[start].strip()
+                      block=[]
+                      for line in lines[start+1:]:
+                          if re.match(r"^  (public|private|protected|static)", line) and block:
+                              break
+                          block.append(line)
+                      calls=set()
+                      fields=set()
+                      strings=[]
+                      news=set()
+                      for line in block:
+                          mm=re.search(r"// (?:InterfaceMethod|Method) ([^:]+)\\.(\\w+):", line)
+                          if mm:
+                              calls.add(mm.group(1).replace("/",".")+"."+mm.group(2))
+                          fm=re.search(r"// Field ([^:]+):", line)
+                          if fm:
+                              fields.add(fm.group(1).replace("/","."))
+                          sm=re.search(r"// String (.+)$", line)
+                          if sm:
+                              strings.append(sm.group(1))
+                          nm=re.search(r"// class ([^ ]+)$", line)
+                          if nm:
+                              news.add(nm.group(1).replace("/","."))
+                      entries.append({
+                          "header":header,
+                          "calls":sorted(calls),
+                          "fields":sorted(fields),
+                          "strings":strings,
+                          "classes":sorted(news),
+                      })
+                  facts[name]=entries
+              return facts
+
           action_cls="com.pumpking.shadowsz.network.ShadowActionC2S"
           group_cls="com.pumpking.shadowsz.network.ShadowGroupC2S"
           action_constants=int_constants(action_cls)
@@ -399,6 +443,14 @@ jobs:
               "restrict_powers_gamerule":gamerule_default(),
               "shadow_events_methods":method_signatures("com.pumpking.shadowsz.shadow.ShadowEvents"),
               "shadow_summoner_methods":method_signatures("com.pumpking.shadowsz.shadow.ShadowSummoner"),
+              "candidate_effect_facts":bounded_method_effect_facts(
+                  "com.pumpking.shadowsz.shadow.ShadowSummoner",
+                  ["summon","dismiss","dismissAll","summonAll","summonGroup","dismissGroup","toggleShadowEyes","teleportSwap","attackTarget","fuseShadows","tryAuraConvert","bindGuardian","grantPowers","revokePowers"]
+              ),
+              "shadow_event_effect_facts":bounded_method_effect_facts(
+                  "com.pumpking.shadowsz.shadow.ShadowEvents",
+                  ["tryAbsorb","maybeOfferAttunement"]
+              ),
               "attunement_methods":method_signatures("com.pumpking.shadowsz.network.AttunementChoiceC2S"),
           }
 
