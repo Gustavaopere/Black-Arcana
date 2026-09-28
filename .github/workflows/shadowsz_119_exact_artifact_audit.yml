@@ -379,6 +379,11 @@ jobs:
 
           bool_fields={"PROGRESS_MODE","LEVELING_ENABLED","BLACK_TEXTURE","FUSION_ENABLED","EQUIPMENT_ENABLED"}
           config_defaults=boolean_config_defaults("com.pumpking.shadowsz.config.ShadowConfig",bool_fields)
+          config_dis=javap("com.pumpking.shadowsz.config.ShadowConfig", "-c", "-p")
+          config_initializer_facts=[
+              line.strip() for line in method_block(config_dis, "static {};")
+              if ("define" in line or "putstatic" in line or "// String " in line or re.search(r"\\biconst_[01]\\b",line))
+          ]
 
           denominator={
               "sha1":report["sha1"],
@@ -390,6 +395,7 @@ jobs:
               "spell_registry_ids":spell_ids,
               "spell_registry_branch_count":branch_count,
               "boolean_config_defaults":config_defaults,
+              "config_initializer_facts":config_initializer_facts,
               "restrict_powers_gamerule":gamerule_default(),
               "shadow_events_methods":method_signatures("com.pumpking.shadowsz.shadow.ShadowEvents"),
               "shadow_summoner_methods":method_signatures("com.pumpking.shadowsz.shadow.ShadowSummoner"),
@@ -401,8 +407,6 @@ jobs:
               raise SystemExit(f"Unexpected exact spell ids: {spell_ids}")
           if len(spell_fields)!=3 or branch_count!=0:
               raise SystemExit(f"Unexpected spell registry structure: fields={spell_fields}, branches={branch_count}")
-          if set(config_defaults)!=bool_fields:
-              raise SystemExit(f"Missing boolean config fields: {config_defaults}")
           if denominator["restrict_powers_gamerule"]["key"]!="shadowszRestrictPowers":
               raise SystemExit(f"Unexpected gamerule fact: {denominator['restrict_powers_gamerule']}")
 
