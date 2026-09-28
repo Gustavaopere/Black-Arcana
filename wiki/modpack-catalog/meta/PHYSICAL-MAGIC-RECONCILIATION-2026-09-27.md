@@ -1,11 +1,11 @@
 # Physical Magic Reconciliation — 2026-09-27
 
-Status: `84/84 CURRENT PHYSICAL MAGIC ROWS MAPPED / 71 ✅ + 13 ⚠️ / STRICT SEMANTIC MINIMUM 1684`
+Status: `84/84 CURRENT PHYSICAL MAGIC ROWS MAPPED / 71 ✅ + 13 ⚠️ / STRICT SEMANTIC MINIMUM 1693`
 
 ## Authority
 
-- Black Arcana base before this closure: `main@49873930b2948b7d5ddf8f0417138dcebffec6ca`
-- sibling physical/modlist authority: `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`
+- Black Arcana base before this closure: `main@e20d1644938cc9c0eb515aa88ad8d84b872a067d`
+- sibling physical/modlist authority: `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7`
 - source table: `PROJECT-INSTRUCTIONS/modlist/modlist.md`
 - category rule: a row belongs to this subtotal only when the **category field** contains the exact category `Magic`; the word "Magic" in a display name is not sufficient.
 
@@ -27,7 +27,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 477 | Reliquified Artifacts | ✅ existing canonical provider; +52 strict already owned in ledger |
 | 478 | Reliquified Iron's Spells 'n Spellbooks | ✅ existing canonical provider; +25 strict already owned in ledger |
 | 479 | Reliquified L_Ender's Cataclysm | ✅ exact publisher/physical SHA-1 equality plus bounded exact-artifact audit close 5 registered relic owners / 7 owner-scoped ability roots and exact-current loot routes for all five owners; `COUNTED_EXACT +7` |
-| 500 | ShadowsZ | ⚠️ current publisher lower bound 6: Shadow Eyes, Shadow Arising, Position Swap + 3 Umbral spells; complete action inventory open |
+| 500 | ShadowsZ | ⚠️ exact physical=publisher artifact closes denominator 10 = 9 `COUNTED_EXACT` + 1 conditional Shadow Fusion; deployed `fusionEnabled` remains open |
 | 501 | Simply Swords: Cataclysm | ⚠️ exact-version source inventory closed at 4 abilities; deployed STARTUP config decides current active subset |
 | 502 | Simply More | ⚠️ Alpha-5 semantic lower bound 9 player-invoked active roots; passive/proc surfaces and implicits excluded; legacy active inventory open |
 | 503 | Simply Swords | ⚠️ release-correlated source lower bound 66: 62 ACTIVE Unique roots + 4 player-use Runic actions; passive/proc/implicit surfaces excluded; legacy/reachability open |
@@ -49,21 +49,21 @@ The thirteen ⚠️ rows in this physical-category subtotal are the previous eig
 
 ## Semantic effect
 
-This reconciliation now adds **+7 strict semantic objects** from the exact-current Reliquified L_Ender's Cataclysm 0.1.1 closure.
+This reconciliation now includes **+16 strict semantic objects** from exact-current closures: Reliquified L_Ender's Cataclysm 0.1.1 contributes +7 and ShadowsZ 1.1.9 contributes +9.
 
 The eleven reclassified rows with existing provider catalogs were already represented in the semantic ledger, so their movement into the sibling `Magic` category cannot be counted again.
 
 Reliquified L_Ender's Cataclysm is no longer fail-closed at the catalog denominator: exact publisher bytes match the physical SHA-1, and bounded audit run `36416011761` closes exactly five registered relic owners and seven owner-scoped `AbilityData.builder(...)` roots. It contributes **+7 `COUNTED_EXACT`**.
 
-The remaining five newly mapped providers stay fail-closed:
+The five newly mapped providers remain ⚠️, but only four remain wholly outside the strict sum:
 
-- ShadowsZ: current publisher documentation confirms six supernatural player actions, but the complete current spell/action/control inventory and active config surface are not closed;
+- ShadowsZ: exact hash-matched artifact audit closes a 10-root denominator and contributes 9 `COUNTED_EXACT`; Shadow Fusion alone remains `CONDITIONAL` on deployed `fusionEnabled`;
 - Simply Swords: Cataclysm: exact-version release-correlated source closes four semantic abilities, but deployed STARTUP config can suppress their active surface and remains uncaptured;
 - Simply More: release-correlated Alpha-5 source establishes a 9-action semantic lower bound from player-invoked active roots; passive/proc surfaces and implicits are excluded while legacy/rework/no-function active uniques and Mimicry remain unclassified;
 - Simply Swords: release-correlated source establishes a 66-action semantic lower bound from 62 registered ACTIVE Unique roots plus 4 player-use Runic action families; passive definitions, 17 implicits and trigger-only Gem Powers are excluded while legacy/non-opted active paths and deployed reachability remain open;
 - Waystones: exact 21.1.45 source establishes a 3-action lower bound from one provider-native Warp/Teleport root, Warp Portal Conjuration and Twinbound Link; activation, Blank Scroll binding and Warp Plate shard attunement remain classification-open, while passive/downstream/bridge infrastructure is excluded;
 
-Therefore the strict reconstructible minimum is now **1684**.
+Therefore the strict reconstructible minimum is now **1693**.
 
 ## Structural provider-tree effect
 
@@ -78,7 +78,7 @@ This is a structural count, not a global semantic denominator.
 
 The five still-partial new providers remain in the closure queue and should be closed in physical order unless stronger current evidence appears elsewhere:
 
-1. ShadowsZ 1.1.9;
+1. ShadowsZ 1.1.9 deployed `fusionEnabled`;
 2. Simply Swords: Cataclysm 1.0.2 deployed config;
 3. Simply More 1.3.0 Alpha 5;
 4. Simply Swords 1.70.2;
