@@ -14,6 +14,7 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 - Corail Tombstone 9.5.6;
 - Somake Spells 1.0.9;
 - Mowzie's Mobs 1.8.2;
+- Simply Swords: Cataclysm 1.0.2+1.21.1+neoforge;
 - T.O Magic n' Extras / Traveloptics 4.4.0.1 — current physical override/provider blocker even though it is absent from the sibling status-prefixed taxonomy;
 - bounded deployed customization references relevant to those same closure gates.
 - exact current KubeJS startup/server/client/data text-file inventory by relative path, SHA-256, byte size and surface label, without copying file bodies.
@@ -137,7 +138,8 @@ Special comparisons:
 - Gaze 1.1.7.1 is compared against exact known artifact SHA-1 `a8cb3190bde157f78160ce65c202ce2d47fb2041`;
 - Not Enough Glyphs 4.6.2 is compared against exact publisher-release SHA-1 `32eea2c478a346ee7499f6a0db156241116f73e9`;
 - Corail Tombstone 9.5.6 is compared against exact publisher-release SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`;
-- Mowzie's Mobs 1.8.2 is compared against the exact current physical/publisher SHA-1 `d64475cd77444b056ece6472c79d40293dc63c6c`.
+- Mowzie's Mobs 1.8.2 is compared against the exact current physical/publisher SHA-1 `d64475cd77444b056ece6472c79d40293dc63c6c`;
+- Simply Swords: Cataclysm 1.0.2 is compared against current physical SHA-1 `a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`.
 
 A missing file is not converted into a replacement identity.
 
@@ -268,6 +270,38 @@ The report emits the relative path, exact key path, a bounded status and the boo
 This evidence can promote Ghost Sword only when it comes from the actual current instance, the physical JAR matches 2.1.2, the observed value is `true`, and no overriding runtime gate is found. Dread Lich Staff acquisition is already closed separately by current-pack NeoForge 21.1.250 runtime audit `36327488231`; this collector is not its evidence path.
 
 See [`wiki/modpack-catalog/providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md).
+
+### Simply Swords: Cataclysm
+
+The collector hashes the exact current filename:
+
+`simplycataclysm-1.0.2+1.21.1+neoforge.jar`
+
+and emits `current_physical_1_0_2_equality` against canonical physical SHA-1 `a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`.
+
+It then reads only the exact NeoForge STARTUP file:
+
+`config/simplycataclysm-startup.toml`
+
+and retains only these catalog-closure keys:
+
+- `accursedRageChance`;
+- `blazingBrandChance`;
+- `mechaPulseChargeChance`;
+- `mechaSmiteHarmfulEffectsChance`;
+- `mechaSmiteFireDuration`;
+- `mechaSmiteWitherDuration`;
+- `mechaSmiteRegenChance`;
+- `mechaSmiteRegenUsesPercentage`;
+- `mechaSmiteRegenPercentage`;
+- `mechaSmiteRegenThreshold`.
+
+For every key the report retains only the bounded status, TOML key path and value. Missing files, parse failures, missing keys or ambiguous duplicate keys stay explicit fail-closed states. No other Simply Cataclysm config values or file body are copied, and source defaults are never substituted.
+
+This evidence is sufficient only for the provider's deployed activation/config gate when paired with the matching physical fingerprint. Runtime combat behavior remains separate QA.
+
+See [`wiki/modpack-catalog/providers/⚠️-simply-swords-cataclysm/DEPLOYED-CONFIG-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-simply-swords-cataclysm/DEPLOYED-CONFIG-CHECKLIST.md).
+
 ### Somake Spells
 
 Searches for the provider-level progression key:
@@ -389,6 +423,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Somake: physical equality and 83/83 registration composition are already closed canonically; the collector can corroborate the installed hash and reduce the remaining deployed `enableSpellLockSystem` plus Iron's per-spell/global/datapack `enabled` / `school` / `allow_crafting` gates;
 - Mowzie's Mobs: current physical 1.8.2 equality plus effective deployed `enable_tunneling`;
 - Ice And Fire CE: current physical 2.1.2 equality plus deployed `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility` for the sole remaining Ghost Sword gate; Dread Lich Staff acquisition is already closed by provider-specific runtime audit `36327488231`;
+- Simply Swords: Cataclysm: current physical 1.0.2 equality plus the ten exact STARTUP values needed to classify all four source-pinned abilities;
 - Traveloptics: current physical override/provider blocker — classify the actual installed JAR and discover bounded deployed `traveloptics:blackout` references; exact-current registry/loot/acquisition review remains provider-specific.
 - Iron's Spellbooks KubeJS / KubeJS Ars Nouveau: use `kubejs_script_inventory` to bind the review to the exact current script/data tree; inspect non-empty files separately according to each provider checklist.
 

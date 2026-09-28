@@ -405,5 +405,145 @@ enable_tunneling = false
             self.assertNotIn("secret", serialized)
 
 
+    def test_collects_simply_cataclysm_startup_gates_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config = instance / "config"
+            config.mkdir(parents=True)
+
+            (config / "simplycataclysm-startup.toml").write_text(
+                """
+["Accursed Rage Options"]
+accursedRageChance = 0.5
+
+["Blazing Brand Options"]
+blazingBrandChance = 0.75
+
+["Mecha Pulse Options"]
+mechaPulseChargeChance = 0.75
+
+["Mecha Smite Options"]
+mechaSmiteHarmfulEffectsChance = 1.0
+mechaSmiteFireDuration = 5
+mechaSmiteWitherDuration = 100
+mechaSmiteRegenChance = 0.5
+mechaSmiteRegenUsesPercentage = true
+mechaSmiteRegenPercentage = 0.5
+mechaSmiteRegenThreshold = 10
+unrelatedSecret = "do-not-collect"
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+
+            result = collector.collect_simply_cataclysm(instance)
+            startup = result["startup_config"]
+
+            self.assertEqual("OBSERVED", startup["status"])
+            self.assertEqual("config/simplycataclysm-startup.toml", startup["path"])
+            self.assertEqual(
+                {
+                    "accursedRageChance": 0.5,
+                    "blazingBrandChance": 0.75,
+                    "mechaPulseChargeChance": 0.75,
+                    "mechaSmiteHarmfulEffectsChance": 1.0,
+                    "mechaSmiteFireDuration": 5,
+                    "mechaSmiteWitherDuration": 100,
+                    "mechaSmiteRegenChance": 0.5,
+                    "mechaSmiteRegenUsesPercentage": True,
+                    "mechaSmiteRegenPercentage": 0.5,
+                    "mechaSmiteRegenThreshold": 10,
+                },
+                {
+                    key: row["value"]
+                    for key, row in startup["selected"].items()
+                },
+            )
+            serialized = json.dumps(result)
+            self.assertNotIn("unrelatedSecret", serialized)
+            self.assertNotIn("do-not-collect", serialized)
+
+    def test_hash_inventory_checks_simply_cataclysm_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            jar = mods / "simplycataclysm-1.0.2+1.21.1+neoforge.jar"
+            jar.write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("simply_swords_cataclysm", result)
+            self.assertEqual(1, len(result["simply_swords_cataclysm"]))
+            entry = result["simply_swords_cataclysm"][0]
+            self.assertEqual(
+                "simplycataclysm-1.0.2+1.21.1+neoforge.jar",
+                entry["filename"],
+            )
+            self.assertIn("current_physical_1_0_2_equality", entry)
+            self.assertFalse(entry["current_physical_1_0_2_equality"])
+
+    def test_main_report_includes_simply_cataclysm_startup_gate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            (instance / "mods").mkdir(parents=True)
+            config = instance / "config"
+            config.mkdir(parents=True)
+            (config / "simplycataclysm-startup.toml").write_text(
+                """
+["Accursed Rage Options"]
+accursedRageChance = 0.0
+
+["Blazing Brand Options"]
+blazingBrandChance = 0.75
+
+["Mecha Pulse Options"]
+mechaPulseChargeChance = 0.75
+
+["Mecha Smite Options"]
+mechaSmiteHarmfulEffectsChance = 1.0
+mechaSmiteFireDuration = 0
+mechaSmiteWitherDuration = 100
+mechaSmiteRegenChance = 0.5
+mechaSmiteRegenUsesPercentage = false
+mechaSmiteRegenPercentage = 0.5
+mechaSmiteRegenThreshold = 10
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            output = instance / "evidence.json"
+
+            with patch(
+                "sys.argv",
+                [
+                    "provider-catalog-deployed-evidence-collector.py",
+                    str(instance),
+                    "--output",
+                    str(output),
+                ],
+            ):
+                self.assertEqual(0, collector.main())
+
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertIn("simply_swords_cataclysm", report)
+            self.assertEqual(
+                0.0,
+                report["simply_swords_cataclysm"]["startup_config"]["selected"]["accursedRageChance"]["value"],
+            )
+            self.assertEqual(
+                0,
+                report["simply_swords_cataclysm"]["startup_config"]["selected"]["mechaSmiteFireDuration"]["value"],
+            )
+            self.assertEqual(
+                100,
+                report["simply_swords_cataclysm"]["startup_config"]["selected"]["mechaSmiteWitherDuration"]["value"],
+            )
+            self.assertFalse(
+                report["simply_swords_cataclysm"]["startup_config"]["selected"]["mechaSmiteRegenUsesPercentage"]["value"]
+            )
+
+
+
 if __name__ == "__main__":
     unittest.main()

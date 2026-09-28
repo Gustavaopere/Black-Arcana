@@ -34,6 +34,20 @@ NEG_462_RELEASE_SHA1 = "32eea2c478a346ee7499f6a0db156241116f73e9"
 TOMBSTONE_956_RELEASE_SHA1 = "d830d16caa20b0d23a44ed6b1d339bc22afc2460"
 MOWZIES_MOBS_182_PHYSICAL_SHA1 = "d64475cd77444b056ece6472c79d40293dc63c6c"
 ICE_AND_FIRE_CE_212_RELEASE_SHA1 = "0786f4142b7cabd958688f68beef3e63e9c0ae8b"
+SIMPLY_CATACLYSM_102_PHYSICAL_SHA1 = "a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469"
+
+SIMPLY_CATACLYSM_STARTUP_CONFIG_KEYS = [
+    "accursedRageChance",
+    "blazingBrandChance",
+    "mechaPulseChargeChance",
+    "mechaSmiteHarmfulEffectsChance",
+    "mechaSmiteFireDuration",
+    "mechaSmiteWitherDuration",
+    "mechaSmiteRegenChance",
+    "mechaSmiteRegenUsesPercentage",
+    "mechaSmiteRegenPercentage",
+    "mechaSmiteRegenThreshold",
+]
 
 TOMBSTONE_ALLOWED_MAGIC_ITEM_KEYS = [
     "allow_tablet_of_assistance",
@@ -100,6 +114,7 @@ MOD_PATTERNS = {
     "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
     "mowzies_mobs": ["mowziesmobs-1.21.1-1.8.2.jar"],
     "somake_spells": ["somakespells-1.0.9-1.21.1.jar"],
+    "simply_swords_cataclysm": ["simplycataclysm-1.0.2+1.21.1+neoforge.jar"],
     "traveloptics": [
         "traveloptics-4.4.0.1-1.21.1.jar",
         "traveloptics-4.4.0.1.1-1.21.1-patched.jar",
@@ -503,6 +518,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["current_physical_1_8_2_equality"] = entry["sha1"] == MOWZIES_MOBS_182_PHYSICAL_SHA1
                 elif provider == "ice_and_fire_ce":
                     entry["release_2_1_2_equality"] = entry["sha1"] == ICE_AND_FIRE_CE_212_RELEASE_SHA1
+                elif provider == "simply_swords_cataclysm":
+                    entry["current_physical_1_0_2_equality"] = entry["sha1"] == SIMPLY_CATACLYSM_102_PHYSICAL_SHA1
                 entries.append(entry)
         result[provider] = entries
     return result
@@ -792,6 +809,50 @@ def collect_ice_and_fire_ce(instance: Path) -> dict[str, Any]:
     return {"phantasmal_blade_ability": evidence}
 
 
+def collect_simply_cataclysm(instance: Path) -> dict[str, Any]:
+    path = instance / "config" / "simplycataclysm-startup.toml"
+    evidence: dict[str, Any] = {
+        "path": rel(path, instance),
+        "status": "NOT_FOUND",
+        "selected": {},
+    }
+    if not path.is_file():
+        return {"startup_config": evidence}
+
+    try:
+        with path.open("rb") as handle:
+            data = tomllib.load(handle)
+    except Exception as exc:
+        evidence["status"] = "PARSE_ERROR"
+        evidence["error"] = type(exc).__name__
+        return {"startup_config": evidence}
+
+    selected: dict[str, Any] = {}
+    complete = True
+    for key in SIMPLY_CATACLYSM_STARTUP_CONFIG_KEYS:
+        matches = _find_key_recursive(data, key)
+        if len(matches) == 1:
+            key_path, value = matches[0]
+            selected[key] = {
+                "status": "OBSERVED",
+                "key_path": key_path,
+                "value": value,
+            }
+        elif not matches:
+            complete = False
+            selected[key] = {"status": "KEY_NOT_FOUND"}
+        else:
+            complete = False
+            selected[key] = {
+                "status": "AMBIGUOUS",
+                "match_count": len(matches),
+            }
+
+    evidence["selected"] = selected
+    evidence["status"] = "OBSERVED" if complete else "INCOMPLETE"
+    return {"startup_config": evidence}
+
+
 def collect_gaze(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
@@ -1074,6 +1135,7 @@ def main() -> int:
         "ice_and_fire_ce": collect_ice_and_fire_ce(instance),
         "mowzies_mobs": collect_mowzies_mobs(instance, worlds),
         "not_enough_glyphs": collect_neg(instance, worlds),
+        "simply_swords_cataclysm": collect_simply_cataclysm(instance),
         "somake_spells": collect_somake(instance, worlds),
         "traveloptics": collect_traveloptics(instance, worlds),
         "notes": [
@@ -1087,6 +1149,7 @@ def main() -> int:
             "Observed Somake Iron's spell-config files are override evidence only; file presence is not treated as proof of registration or reachability.",
             "Observed Tombstone AllowedMagicItems values are eligibility evidence only; they do not by themselves prove semantic deduplication, acquisition, or runtime reachability.",
             "Observed Ice And Fire CE tools.phantasmalBladeAbility is deployed gate evidence only; missing/invalid values never fall back to the source default.",
+            "Observed Simply Swords: Cataclysm STARTUP values come only from config/simplycataclysm-startup.toml; missing or incomplete keys never fall back to source defaults.",
         ],
     }
 
