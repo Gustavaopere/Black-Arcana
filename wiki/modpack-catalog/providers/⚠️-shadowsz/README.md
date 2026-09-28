@@ -1,160 +1,142 @@
 # ShadowsZ — 1.1.9
 
-Status: `⚠️ PARTIAL / PHYSICAL IDENTITY CLOSED / PUBLISHER LOWER BOUND 6 / COMPLETE ACTION INVENTORY OPEN / +0 STRICT`
+Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / EXACT SEMANTIC DENOMINATOR 10 / 9 COUNTED_EXACT + 1 CONDITIONAL FUSION`
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@27b79d8f494db868ea5a674f9d818f5ea62fd444`;
+- sibling checkpoint: `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7`;
 - physical row: `#500`;
 - JAR: `shadowsz-1.1.9.jar`;
 - mod id: `shadowsz`;
 - runtime: `1.1.9`;
 - physical SHA-1: `f946eb3a8181e1964279f163f430ccbba6c4edcd`;
+- sibling category: `Addons + Magic + Mobs`;
 - required host: Iron's Spells 'n Spellbooks `3.16.3`.
 
-Physical revalidation at the newer sibling head confirms the same #500 JAR/version/category tuple and the physical `Magic` subtotal remains 84; no ShadowsZ drift was introduced by the later #512–#521 sibling batch.
+The latest sibling revalidation preserves the same #500 filename/version/category tuple. No physical ShadowsZ drift is present.
 
-## Exact publisher release line
+## Exact artifact closure
 
-Current official CurseForge project:
+NON-MERGE audit PR `#443` materialized the official Modrinth 1.1.9 artifact and hard-gated it against the physical SHA-1.
 
-- project: `ShadowsZ`;
-- project ID: `1582485`;
-- license: All Rights Reserved;
-- environment: Client & Server;
-- current NeoForge 1.21.1 file: `shadowsz-1.1.9.jar`;
-- current NeoForge file ID: `8626238`;
-- upload date: 2026-08-11;
-- publisher size: 247.9 KB;
-- release type: Release.
+Final exact evidence:
 
-Official project:
-`https://www.curseforge.com/minecraft/mc-mods/shadowsz`
+- audit branch HEAD: `9628dc7d90f17afbac94372a52cd704740473e86`;
+- exact audit run: `36422402267` — GREEN;
+- bounded audit artifact: `10970337207`;
+- artifact digest: `sha256:aebc421c6f4855e84abb5be6e5442d9cb3f4089093fe7fdbf1595b075bfeba3c`;
+- publisher source: Modrinth version `Z5VFhs8D`;
+- downloaded SHA-1: `f946eb3a8181e1964279f163f430ccbba6c4edcd`;
+- exact equality: **publisher artifact SHA-1 = physical SHA-1**;
+- metadata: `modId=shadowsz`, `version=1.1.9`, display name `Shadowsz`;
+- provider class count: **86**.
 
-Exact NeoForge 1.21.1 file:
-`https://www.curseforge.com/minecraft/mc-mods/shadowsz/files/8626238`
+CurseForge independently identifies the current NeoForge 1.21.1 release as File `8626238`, uploaded 2026-08-11. The provider is All Rights Reserved, so the audit retains only hashes, metadata, class/resource identities, localization keys, bounded action-routing facts and bounded method-effect call sets. It does not retain the JAR, protected assets, full disassembly or decompiled method bodies.
 
-The physical filename/runtime line matches the publisher release line, but this audit has not established physical-JAR ↔ publisher-JAR byte equality. No matching public source repository was identified during this audit. Therefore no `COUNTED_EXACT` or source-pinned completeness claim is made.
+## Exact semantic denominator
 
-## Confirmed publisher lower-bound actions
+The exact artifact closes **10 provider-owned semantic roots** under the Black Arcana metric.
 
-The current official project description documents six player-facing supernatural actions with distinct causal identities:
-
-| # | Provider action | Surface | Semantic disposition |
+| # | Semantic root | Exact artifact evidence | State |
 |---:|---|---|---|
-| 1 | Shadow Eyes | keybind reveals nearby fallen-entity shadows | confirmed lower-bound action |
-| 2 | Shadow Arising | player attempts to raise/claim a fallen shadow, using current Mana/target difficulty | confirmed lower-bound action |
-| 3 | Position Swap | player instantly exchanges position with one owned shadow, subject to cooldown | confirmed lower-bound action |
-| 4 | Miasma | Umbral spell | confirmed lower-bound spell |
-| 5 | Umbral Bond | Umbral spell binding a shadow as guardian to another creature | confirmed lower-bound spell |
-| 6 | Aura of the Monarch | Umbral spell | confirmed lower-bound spell |
+| 1 | Shadow Eyes | dedicated keybind + `toggleShadowEyes`; toggles provider state with provider feedback | `COUNTED_EXACT` |
+| 2 | Shadow Arising | player interaction reaches `tryAbsorb`; mana/difficulty chance converts a fallen shadow into owned shadow data | `COUNTED_EXACT` |
+| 3 | Position Swap | dedicated action route reaches `teleportSwap`; swaps player/shadow positions with portal/teleport effects and cooldown | `COUNTED_EXACT` |
+| 4 | Summon Shadow | dedicated action route reaches `summon`; spends Iron's mana and manifests the stored shadow with portal/teleport effects | `COUNTED_EXACT` |
+| 5 | Dismiss Shadow | dedicated action route reaches `dismiss` / `dismissInternal`; persists shadow state and demanifests the entity with portal/teleport effects | `COUNTED_EXACT` |
+| 6 | Banish Wild Shadows | dedicated `DESPAWN_WILD` route reaches `despawnWildShadows`; player-invoked portal banishment of wild shadow entities | `COUNTED_EXACT` |
+| 7 | Miasma | exact `ModSpells` registration `miasma` | `COUNTED_EXACT` |
+| 8 | Umbral Bond | exact `ModSpells` registration `umbral_bond` | `COUNTED_EXACT` |
+| 9 | Aura of the Monarch | exact `ModSpells` registration `aura_of_the_monarch` | `COUNTED_EXACT` |
+| 10 | Shadow Fusion | dedicated `FUSE` route reaches `fuseShadows`; implementation reads `ShadowConfig.FUSION_ENABLED` | `CONDITIONAL` |
 
-The Umbral school and its spell-power/resistance attributes are taxonomy/stat infrastructure and are not counted as additional actions.
+The exact spell registry contains exactly those **3** provider spell IDs and its initializer has **0 conditional branches**.
 
-Current semantic evidence therefore establishes:
+Therefore the provider contributes:
 
-- **3 named provider-owned Umbral spells**;
-- **3 additional publisher-documented supernatural player actions**;
-- **lower bound = 6**;
-- **strict contribution = +0** until the complete current 1.1.9 inventory and active-surface gates are closed.
+- **9 `COUNTED_EXACT` semantic objects**;
+- **1 `CONDITIONAL` semantic object** — Shadow Fusion;
+- strict global delta: **+9**.
 
-## Controls intentionally not promoted yet
+## Deduplication and exclusions
 
-The same publisher documentation exposes additional player controls/systems, but this catalog does not currently promote them into the semantic lower bound without implementation-level classification:
+The exact C2S surface contains **20 individual action codes** plus **5 group action codes**. They are not 25 additional magic objects.
 
-- attack-order hotkey;
-- Summon All;
-- Dismiss All;
-- Despawn Wild Shadows;
-- individual summon hotkeys;
-- group summon/dismiss hotkeys;
-- army behavior/stance controls;
-- permanent release;
-- Shadow Fusion;
-- Shadow Equipment;
-- Progress Mode/title progression;
-- Claiming/accepting the power itself.
+Aliases and management surfaces are reconciled as follows:
 
-Reasons differ by surface:
+- `SUMMON_ALL`, group summon and group hotkeys reuse the Summon Shadow causal root;
+- `DISMISS_ALL`, group dismiss and group hotkeys reuse the Dismiss Shadow causal root;
+- attack-order/stand-down changes mob targeting and is army command, not a new supernatural action;
+- rename, behavior, aggro stance, item pickup, hotkey slot assignment, group save/delete and party controls are roster/AI organization;
+- shared storage, mount inventory and equipment screens are inventory/UI surfaces;
+- permanent release removes owned roster state and has no separate supernatural effect root;
+- player/shadow level-point spending, titles and Progress Mode are progression/stat systems;
+- accepting/claiming the power is a one-time attunement/consent gate, not a reusable magical action identity;
+- administrative grant/revoke/level commands are excluded;
+- `bindGuardian` is downstream implementation of Umbral Bond and does not mint a second root;
+- `tryAuraConvert` is downstream implementation of Aura of the Monarch and does not mint a second root;
+- school, attributes, effects, particles, sounds and downstream shadow AI are not standalone semantic actions.
 
-- some are roster/army-management controls rather than independent supernatural abilities;
-- some are progression/config state;
-- Fusion, Equipment and Progress Mode are documented as optional/off by default;
-- the publisher states that major systems can be switched on/off through config;
-- exact implementation/registry ownership is not available from a matching public source.
+## Exact config facts
 
-Admin commands such as `/shadowsz grant`, `revoke`, `levelplayer` and `levelshadows` are administrative tooling and excluded from semantic action counting.
+The exact artifact exposes these Boolean config fields/defaults:
 
-## 1.1.9 release delta
+- `progressMode = true`;
+- `levelingEnabled = true`;
+- `blackTexture = true`;
+- `fusionEnabled = false`;
+- `equipmentEnabled = false`.
 
-The exact 1.1.9 publisher changelog documents fixes/compatibility for:
+The exact gamerule default is:
 
-- shadow texture/rank coloration;
-- max shadow count config;
-- semi-compatibility with Bosses Rise, Monster Expansion, Mowzie's Mobs and L_Ender's Cataclysm;
-- optimization;
-- inventory-button incompatibility;
-- Tyros;
-- RestrictPowers/revoke tools;
-- vanilla mob transforms;
-- Maledictus grab;
-- Frostmaw friendly freeze.
+- `shadowszRestrictPowers = false`.
 
-That changelog does **not** provide a complete semantic registry. It cannot be used to prove that the six confirmed actions are the only actions in 1.1.9.
+The publisher description currently characterizes Progress Mode as optional/off by default, but the exact 1.1.9 artifact encodes `progressMode=true`. For exact runtime defaults, the artifact is authoritative.
+
+No provider Boolean enable/disable field exists for Shadow Eyes, Arising, Position Swap, Summon, Dismiss, Banish Wild Shadows or the three spell registrations. Numerical config still tunes conversion chance, mana difficulty/cost, teleport cooldown, attack range and related balance without minting/removing semantic identities.
+
+## Why the provider remains ⚠️
+
+The semantic inventory itself is closed. The only remaining catalog blocker is the **effective deployed value of `fusionEnabled`**:
+
+- exact artifact default: `false`;
+- deployed pack/world config: not authoritatively captured;
+- if effective `fusionEnabled=false`, Fusion remains inactive/excluded from strict count;
+- if effective `fusionEnabled=true`, Fusion promotes to `COUNTED_EXACT` and contributes +1.
+
+Therefore ShadowsZ remains **⚠️ partial/conditioned**, but no longer has an open action denominator.
+
+See:
+
+- [EXACT-1.1.9-SEMANTIC-INVENTORY.md](./EXACT-1.1.9-SEMANTIC-INVENTORY.md)
+- [DEPLOYED-FUSION-CONFIG-CHECKLIST.md](./DEPLOYED-FUSION-CONFIG-CHECKLIST.md)
 
 ## Ownership boundary
 
-- ShadowsZ owns Shadow Eyes/Arising, its army/roster/storage/progression state, Position Swap, Umbral integration and provider-native actions.
-- Iron's Spells owns host mana, spell infrastructure and generic spell-runtime contracts.
+- ShadowsZ owns Shadow Eyes/Arising, shadow manifestation/recall/banishment, Position Swap, Fusion, its army/roster/storage/progression state and its Umbral spell identities.
+- Iron's Spells owns host mana and generic spell-runtime infrastructure.
 - External mob mods retain authority for their own entity/boss semantics.
 - Black Arcana must not duplicate ShadowsZ roster, shadow lifecycle, mana settlement, teleport execution or Umbral spell execution.
 - RPG Skill Tree remains sibling authority only for progression/attributes/Mastery/perks/gates exposed through verified contracts.
 
-## Current config uncertainty
-
-The official description states that major systems are configurable and specifically documents toggles/options for progression, fusion, equipment and Progress Mode plus numerical settings for arising, mana difficulty/cost, teleport cooldown and related surfaces.
-
-The deployed pack config has not been authoritatively read in this catalog closure. Therefore the current **active** semantic surface remains fail-closed even for documented actions where config can alter reachability/availability.
-
-## Closure gate
-
-Promote ShadowsZ beyond `LOWER_BOUND 6 / +0 STRICT` only after authoritative evidence closes both:
-
-1. **complete 1.1.9 action inventory**
-   - exact matching public source;
-   - exact legally inspectable physical/publisher artifact facts;
-   - or deterministic complete assembled registry/action evidence;
-
-2. **effective active-surface state**
-   - deployed config/gamerules where they can disable or materially gate provider actions.
-
-The closure must separately classify:
-
-- Umbral spells;
-- supernatural keybind/actions;
-- army-management controls;
-- optional progression systems;
-- admin commands;
-- passive/stat/title effects;
-- downstream shadow/entity behavior.
-
 ## Runtime QA remains separate
 
-Catalog evidence does not certify:
+Catalog closure does not certify:
 
-- dedicated-server compatibility with Iron's 3.16.3;
+- dedicated-server interoperability with Iron's 3.16.3;
 - roster/storage persistence;
 - chunk-ticket cleanup;
 - Position Swap safety;
 - multiplayer ownership isolation;
 - modded-boss conversion;
 - exactly-once loot/XP/state settlement;
-- performance with large shadow armies.
+- large-army performance.
 
 ## Result
 
-**⚠️ Partial — publisher-bounded lower bound 6.**
+**⚠️ Partial / conditioned — exact denominator closed at 10.**
 
-Confirmed current-version semantic lower bound: **6 provider-owned supernatural player actions**, including three Umbral spells.
-
-Strict global delta: **+0** until exact-current completeness and active-state gates are closed.
+- **9 `COUNTED_EXACT`**
+- **1 `CONDITIONAL` — Shadow Fusion**
+- **strict global delta: +9**
+- **remaining catalog evidence: deployed `fusionEnabled` only**
