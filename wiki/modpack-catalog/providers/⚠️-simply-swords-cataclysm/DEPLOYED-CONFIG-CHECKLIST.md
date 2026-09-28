@@ -24,7 +24,7 @@ Capture the effective NeoForge STARTUP config state corresponding to the exact s
 | Accursed Rage | `accursedRageChance` | zero => disabled; non-zero => active candidate |
 | Blazing Brand | `blazingBrandChance` | zero => disabled; non-zero => active candidate |
 | Mecha Pulse | `mechaPulseChargeChance` | zero => no normal charge progression; non-zero => active candidate |
-| Mecha Smite | `mechaSmiteHarmfulEffectsChance`, `mechaSmiteRegenChance`, regeneration threshold mode/value | classify active if provider behavior remains causally reachable; do not collapse harmful and regenerative branches |
+| Mecha Smite | `mechaSmiteHarmfulEffectsChance`, `mechaSmiteRegenChance`, `mechaSmiteRegenUsesPercentage`, `mechaSmiteRegenPercentage`, `mechaSmiteRegenThreshold` | classify active if provider behavior remains causally reachable; do not collapse harmful and regenerative branches |
 
 Also retain the exact source-config context for durations/amplifiers/cooldown as runtime/balance evidence, but those values do not create extra semantic identities.
 
@@ -35,6 +35,16 @@ Use one of:
 1. exact deployed config file captured from the current instance;
 2. deterministic read-only runtime/config probe reporting the effective values;
 3. equivalent authoritative assembled-pack evidence tied to the physical SHA-1 above.
+
+The repository read-only collector now has a bounded route for this provider:
+
+```bash
+python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack-instance"
+```
+
+It reads only `config/simplycataclysm-startup.toml`, retains only the eight closure keys above, and fingerprints the exact physical JAR. A missing/incomplete key stays fail-closed; the collector never substitutes source defaults.
+
+Current archived instance logs confirm that NeoForge loaded and watched `config/simplycataclysm-startup.toml`; those logs do **not** expose the values and therefore do not close this checklist by themselves.
 
 Do not use:
 
