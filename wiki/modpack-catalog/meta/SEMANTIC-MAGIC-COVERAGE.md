@@ -160,9 +160,9 @@ Iron's Apothic is consequently a source-pinned magic bridge/support closure with
 
 ## Current 27/09/2026 reconciliation
 
-Current presence/version authority is the newest physical Project Library evidence plus newer sibling physical dossiers where they supersede that snapshot. At `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`, the modlist contains **84 rows whose category field includes `Magic`**. All **84/84** now map to Black Arcana provider directories (**70 ✅ + 14 ⚠️**). The prior 67-row snapshot is historical.
+Current presence/version authority is the newest physical Project Library evidence plus newer sibling physical dossiers where they supersede that snapshot. At `neoforge-rpg-skilltree@fcd2e239ad70c955e47df390d4c74d49dd3b7079`, the modlist contains **84 rows whose category field includes `Magic`**. All **84/84** now map to Black Arcana provider directories (**71 ✅ + 13 ⚠️**). The prior 67-row snapshot is historical.
 
-The +17 category delta does not itself alter the semantic ledger. Eleven providers were already represented. Six newly mapped providers remain outside the strict sum pending exact inventory/classification closure: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
+The +17 category delta does not itself alter ownership. Eleven providers were already represented. Reliquified L_Ender's Cataclysm 0.1.1 is now exact-counted at +7 after hash-matched artifact closure; the other five newly mapped providers remain outside the strict sum pending inventory/config/classification closure: ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
 
 Current semantic deltas since the 1382 checkpoint:
 
@@ -179,6 +179,7 @@ Current semantic deltas since the 1382 checkpoint:
 - Reliquified Ars Nouveau 0.8.1: **+19 `COUNTED_SOURCE_PINNED`** owner-scoped Relics ability roots.
 - Reliquified Artifacts 1.0.8: **+52 `COUNTED_SOURCE_PINNED`** owner-scoped Relics ability roots.
 - Reliquified Iron's Spells 'n Spellbooks 0.2.7: **+25 `COUNTED_SOURCE_PINNED`** provider-owned relic ability roots.
+- Reliquified L_Ender's Cataclysm 0.1.1: **+7 `COUNTED_EXACT`** — exact publisher artifact SHA-1 equals the physical JAR; exact `ItemRegistry` closes five relic owners and a bounded exact-artifact audit closes exactly seven owner-scoped `AbilityData.builder(...)` roots.
 - More Relics 1.7.7-forRelics-0.12.8-1.0: **+61 `COUNTED_EXACT`** — exact hash-matched File `8859015` closes 29 relic owners and 61 owner-scoped `AbilityTemplate` roots; 56 unique root strings are not globally deduplicated across distinct owners.
 - Ozymandias Sundries physical 0.0.5 / embedded metadata 0.0.1: **+2 `COUNTED_EXACT`** — exact hash-matched File `6978561` closes exactly two unconditional provider-owned Iron's registrations, `ozymandias_sundries:levitate` and `ozymandias_sundries:lightning_warp`; six additional spell-named classes and the `solar_ray` localization residue are unregistered and excluded.
 - Mowzie's Mobs 1.8.2: **+10 `COUNTED_EXACT` strict + 1 `CONDITIONAL`** — exact hash-matched File `7760267` closes 13 current `PLAYER_ABILITIES` slots; semantic reconciliation counts 10 independent player powers, keeps `tunneling` conditional on deployed `enableTunneling`, excludes `hit_boulder` and `backstab` as technical/subaction slots, and excludes four declared ids absent from the active array.
@@ -194,11 +195,11 @@ Current semantic deltas since the 1382 checkpoint:
 - Somake 1.0.9 remains **CONDITIONAL / +0 strict**; exact 83-ID registry/current-composition admission is closed, while effective deployed host/provider config and survival reachability remain open.
 - Iron's Spellbooks KubeJS 4.0.3 and KubeJS Ars Nouveau 1.3.2 contribute **+0 fixed built-in identities**, but their current pack-script mutation/registration surfaces remain unverified and therefore stay denominator-open.
 
-Therefore the strict reconstructible minimum is **1677**. This is a minimum, not a final denominator or coverage percentage.
+Therefore the strict reconstructible minimum is **1684**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1677 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict) and Ice And Fire CE (+8 strict).**
+**1684 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict) and Reliquified L_Ender's Cataclysm (+7 exact).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -214,6 +215,7 @@ Arithmetic cross-check by provider family:
 - Reliquified Ars Nouveau owner-scoped ability layer: **19**;
 - Reliquified Artifacts owner-scoped ability layer: **52**;
 - Reliquified Iron's Spells 'n Spellbooks ability layer: **25**;
+- Reliquified L_Ender's Cataclysm ability layer: **7**;
 - Corail Tombstone counted prayer/Ritual-Flute layer: **10**;
 - Eidolon: Repraised: **42**;
 - Vampirism/Bloodlines/Werewolves supernatural action layer: **55**;
@@ -222,7 +224,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `199 + 664 + 9 + 41 + 61 + 10 + 8 + 19 + 52 + 25 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1677`.
+- total: `199 + 664 + 9 + 41 + 61 + 10 + 8 + 19 + 52 + 25 + 7 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1684`.
 
 ### Counted ledger
 
@@ -271,6 +273,7 @@ Arithmetic cross-check by provider family:
 | [Reliquified Ars Nouveau](../providers/✅-reliquified-ars-nouveau/README.md) | 0.8.1 | 19 | `COUNTED_SOURCE_PINNED` | exact-version source closes 19 registered relic owners and 19 owner-scoped `AbilityTemplate` roots with provider-native Ars loot routes |
 | [Reliquified Artifacts](../providers/✅-reliquified-artifacts/README.md) | 1.0.8 | 52 | `COUNTED_SOURCE_PINNED` | 48 Artifact owners map to 52 owner-scoped ability roots; source-level loot/conversion routes close acquisition for all owners |
 | [Reliquified Iron's Spells 'n Spellbooks](../providers/✅-reliquified-irons-spells-n-spellbooks/README.md) | 0.2.7 | 25 | `COUNTED_SOURCE_PINNED` | exact-version source closes 25 provider-owned relic ability roots in 23 ability-bearing relic classes; each counted class has the provider `ANY_STRUCTURE` Iron's chest-loot route |
+| [Reliquified L_Ender's Cataclysm](../providers/✅-reliquified-l-enders-cataclysm/README.md) | 0.1.1 | 7 | `COUNTED_EXACT` | exact publisher/physical SHA-1 equality plus exact artifact audit run `36380842145` close five registered relic owners and exactly seven owner-scoped `AbilityData.builder(...)` roots; release-line source closes provider loot routes |
 | [Corail Tombstone](../providers/⚠️-corail-tombstone/README.md) | 9.5.6 | 10 | `COUNTED_EXACT` | Project Library physical SHA-1 equals audited publisher File `8842741`; exact artifact closes 6 prayer + 4 Ritual Flute action identities; publisher `Silent Bound` wording is provenance-only while exact artifact identity is `Silent Bond`; 12 config-sensitive castable magic-item actions remain conditional |
 | [Goety](../providers/✅-goety/README.md) | 3.1.4 | 361 | `COUNTED_EXACT` | exact hash-matched JAR closes 123 active/acquirable Focus actions + 238 available distinct non-Focus ritual actions after semantic deduplication and physical-provider condition filtering; runtime/API/balance QA remains separate |
 | [Goety Iron](../providers/✅-goety-iron/README.md) | 3.1 | 14 | `COUNTED_EXACT` | exact hash-matched JAR closes 2 unconditional addon-owned Focus identities + 12 distinct non-Focus rituals; 2 Focus-acquisition rituals deduplicated; no base-Goety semantic duplicates |
@@ -281,7 +284,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1677** |  |  |
+| **Strict total** |  | **1684** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -401,14 +404,14 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These providers remain **outside the 1677 strict sum** because the current physical semantic inventory is not yet closed object-by-object:
+These providers remain **outside the 1684 strict sum** because the current physical semantic inventory is not yet closed object-by-object:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
 | [Traveloptics](../providers/⚠️-traveloptics/README.md) | current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; audited publisher baseline has 33 spells | `OPEN / OTHER_VERIFIED / +0 STRICT` | installed bytes differ from both the audited publisher alpha and known patch artifact, so the 33-ID baseline is not promoted as the exact current physical registry |
 | [Iron's Spellbooks KubeJS](../providers/⚠️-irons-spellbooks-kubejs/README.md) | base addon has 0 fixed built-in spell identities; exact 4.0.3 builder/framework source is known | `OPEN SCRIPT INVENTORY / +0 FIXED BUILT-IN` | current physical `kubejs/` script set is not captured; scripts may register Iron's spells/schools under arbitrary namespaces |
 | [KubeJS Ars Nouveau](../providers/⚠️-kubejs-ars-nouveau/README.md) | recipe-schema bridge has 0 provider-owned fixed glyph/spell identities | `OPEN SCRIPT MUTATIONS / +0 FIXED BUILT-IN` | current server/startup scripts can mutate Ars recipes/content and are not authoritatively captured for this pack |
-| [Reliquified L_Ender's Cataclysm](../providers/⚠️-reliquified-l-enders-cataclysm/README.md) | exact physical 0.1.1 identity; public 0.1 release-day source proves 5 baseline relic owners / 7 ability roots; current-pack compatibility-transform log corroborates the same 5 loaded relic classes | `LOWER_BOUND 7 / +0 STRICT` | changelog and transform coverage do not prove complete 0.1.1 registry/root cardinality; exact-current denominator remains open |
+
 | [ShadowsZ](../providers/⚠️-shadowsz/README.md) | exact physical 1.1.9 identity; current publisher docs establish Shadow Eyes, Shadow Arising, Position Swap plus Miasma, Umbral Bond and Aura of the Monarch | `LOWER_BOUND 6 / +0 STRICT` | six player-facing supernatural actions are confirmed, but complete 1.1.9 cardinality, army-control classification and effective config remain open |
 | [Simply Swords: Cataclysm](../providers/⚠️-simply-swords-cataclysm/README.md) | exact physical 1.0.2 identity + release-correlated exact-version source pin close four and only four provider supernatural weapon abilities | `INVENTORY_SOURCE_PINNED 4 / ACTIVE_CONFIG_OPEN / +0 STRICT` | exact source registers STARTUP config whose chance/gate values can suppress abilities; deployed effective values are not captured |
 | [Simply More](../providers/⚠️-simply-more/README.md) | exact Alpha-5 physical/publisher reconciliation + release-correlated source positively establish 9 player-invoked active roots across 9 explicitly reworked Unique families; passive/proc surfaces and weapon implicits are excluded under this ledger metric | `LOWER_BOUND 9 / +0 STRICT` | legacy/rework/no-function active uniques and Mimicry remain unclassified; 10 weapon types / 33 Unique items are not semantic-action counts |
@@ -419,9 +422,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1677 is not “1677 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1677 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1677 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1684 is not “1684 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1684 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1684 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
@@ -431,13 +434,12 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 To converge on a final denominator efficiently, prioritize:
 
-1. Reliquified L_Ender's Cataclysm 0.1.1 — complete relic/action inventory;
-2. ShadowsZ 1.1.9 — exact spell/action registry and action classification;
-3. Simply Swords: Cataclysm 1.0.2 — deployed STARTUP config classification for the four source-pinned abilities;
-4. Simply More Alpha 5 — close the remaining legacy/rework/no-function player-action and Mimicry inventory beyond the 9-action lower bound;
-5. Simply Swords 1.70.2 — close legacy/non-opted active Unique paths and deployed reachability beyond the 66-action lower bound;
-6. Waystones 21.1.45 — close activation/binding/attunement classification beyond the 3-action lower bound;
-7. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.2 and Gaze 1.1.7.1 Rites when such evidence becomes available;
-8. obtain deployed host/provider config evidence and close Somake 1.0.9 survival reachability; physical↔publisher equality, exact 83-ID registry, exact 67+16 registration-gate mapping, current-composition 83/83 admission and current 83-card materialization are already closed and must not be re-audited as open.
+1. ShadowsZ 1.1.9 — exact spell/action registry and action classification;
+2. Simply Swords: Cataclysm 1.0.2 — deployed STARTUP config classification for the four source-pinned abilities;
+3. Simply More Alpha 5 — close the remaining legacy/rework/no-function player-action and Mimicry inventory beyond the 9-action lower bound;
+4. Simply Swords 1.70.2 — close legacy/non-opted active Unique paths and deployed reachability beyond the 66-action lower bound;
+5. Waystones 21.1.45 — close activation/binding/attunement classification beyond the 3-action lower bound;
+6. obtain deployed config evidence for input-blocked conditional rows, especially Not Enough Glyphs 4.6.2 and Gaze 1.1.7.1 Rites when such evidence becomes available;
+7. obtain deployed host/provider config evidence and close Somake 1.0.9 survival reachability; physical↔publisher equality, exact 83-ID registry, exact 67+16 registration-gate mapping, current-composition 83/83 admission and current 83-card materialization are already closed and must not be re-audited as open.
 
 Phase 3 remains blocked until the semantic denominator is reconstructible and provider/capability deduplication proves real Black Arcana gaps.
