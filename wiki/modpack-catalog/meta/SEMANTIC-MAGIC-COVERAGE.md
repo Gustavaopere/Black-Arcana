@@ -144,7 +144,7 @@ Hazen therefore contributes **+38 `COUNTED_SOURCE_PINNED`** semantic spell ident
 
 ## Create: Wizardry 1.21.1-0.5.1-pre1 source-pinned zero-semantic closure
 
-Current sibling physical authority `neoforge-rpg-skilltree@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b` certifies `create_wizardry-1.21.1-0.5.1-pre1.jar` at physical row #166. Official source pin `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declares the same provider version.
+Current sibling physical authority `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` certifies `create_wizardry-1.21.1-0.5.1-pre1.jar` at physical row #166. Official source pin `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declares the same provider version.
 
 The source pin has 75 Java files and 328 resource files, but no provider-owned spell resource namespace and no `registerSpell`, `SpellRegistry`, `DeferredRegister<AbstractSpell>`, `Registries.SPELL`, `SPELLS.register` or `spell.create_wizardry` identity surface. Blaze Caster reads host `SpellData`/`AbstractSpell` and invokes existing Iron's spell casts; Mana Siphon and the provider's two mob effects modify mana/casting conditions. These are automation/resource/policy surfaces, not new provider-owned spell identities.
 
@@ -152,7 +152,7 @@ Create: Wizardry is therefore `ZERO_SEMANTIC_HOST_SPELL_AUTOMATION` and contribu
 
 ## Iron's Apothic 2.2.2 source-pinned zero-semantic closure
 
-Current sibling authority `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` certifies `irons_apothic-2.2.2.jar` at row #339. Exact official source `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declares the same provider version.
+Current sibling authority `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` certifies `irons_apothic-2.2.2.jar` at row #339. Exact official source `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declares the same provider version.
 
 The exact source registers seven custom Apotheosis affix codecs and contains 140 affix JSON definitions, including 48 explicit spell/imbued-spell trigger definitions, plus 24 gem definitions. Those resources consume Iron's `SpellRegistry`, `SchoolRegistry`, `AbstractSpell` and casting state; no independent provider-owned spell registrar is present. The 48 spell-oriented affixes therefore reference, trigger or modify spells owned by Iron's or its addons instead of minting 48 new spell identities.
 
@@ -160,9 +160,9 @@ Iron's Apothic is consequently a source-pinned magic bridge/support closure with
 
 ## Current 27/09/2026 reconciliation
 
-Current presence/version authority is the newest physical Project Library evidence plus newer sibling physical dossiers where they supersede that snapshot. At `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`, the modlist contains **84 rows whose category field includes `Magic`**. All **84/84** now map to Black Arcana provider directories (**71 ✅ + 13 ⚠️**). The prior 67-row snapshot is historical.
+Current presence/version authority is the newest physical Project Library evidence plus newer sibling physical dossiers where they supersede that snapshot. At `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7`, the modlist contains **84 rows whose category field includes `Magic`**. All **84/84** now map to Black Arcana provider directories (**71 ✅ + 13 ⚠️**). The prior 67-row snapshot is historical.
 
-The +17 category delta does not itself alter ownership. Eleven providers were already represented. Reliquified L_Ender's Cataclysm 0.1.1 is now exact-counted at +7 after hash-matched artifact closure; the other five newly mapped providers remain outside the strict sum pending inventory/config/classification closure: ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
+The +17 category delta does not itself alter ownership. Eleven providers were already represented. Reliquified L_Ender's Cataclysm 0.1.1 is now exact-counted at +7 after hash-matched artifact closure. ShadowsZ 1.1.9 now has an exact hash-matched semantic denominator of 10, but remains outside the strict sum because all power surfaces are attunement-gated by the effective `shadowszRestrictPowers` world rule and Fusion additionally depends on deployed `fusionEnabled`. Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones retain their existing inventory/config/classification blockers. See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
 
 Current semantic deltas since the 1382 checkpoint:
 
@@ -411,7 +411,7 @@ These providers remain **outside the 1684 strict sum** because the current physi
 | [Traveloptics](../providers/⚠️-traveloptics/README.md) | current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; audited publisher baseline has 33 spells | `OPEN / OTHER_VERIFIED / +0 STRICT` | installed bytes differ from both the audited publisher alpha and known patch artifact, so the 33-ID baseline is not promoted as the exact current physical registry |
 | [Iron's Spellbooks KubeJS](../providers/⚠️-irons-spellbooks-kubejs/README.md) | base addon has 0 fixed built-in spell identities; exact 4.0.3 builder/framework source is known | `OPEN SCRIPT INVENTORY / +0 FIXED BUILT-IN` | current physical `kubejs/` script set is not captured; scripts may register Iron's spells/schools under arbitrary namespaces |
 | [KubeJS Ars Nouveau](../providers/⚠️-kubejs-ars-nouveau/README.md) | recipe-schema bridge has 0 provider-owned fixed glyph/spell identities | `OPEN SCRIPT MUTATIONS / +0 FIXED BUILT-IN` | current server/startup scripts can mutate Ars recipes/content and are not authoritatively captured for this pack |
-| [ShadowsZ](../providers/⚠️-shadowsz/README.md) | exact physical 1.1.9 identity; current publisher docs establish Shadow Eyes, Shadow Arising, Position Swap plus Miasma, Umbral Bond and Aura of the Monarch | `LOWER_BOUND 6 / +0 STRICT` | six player-facing supernatural actions are confirmed, but complete 1.1.9 cardinality, army-control classification and effective config remain open |
+| [ShadowsZ](../providers/⚠️-shadowsz/README.md) | exact physical/publisher SHA-1 equality + exact-artifact audit close **10** semantic identities: 3 registered Umbral spells + Shadow Eyes + Shadow Arising + Summon + Dismiss + Position Swap + Despawn Wild + Fusion; group/all summon/dismiss are aliases and management/progression surfaces are excluded | `CONDITIONAL 10 / +0 STRICT` | every player power is attunement-gated; effective current-world `shadowszRestrictPowers` is unavailable, and Fusion additionally depends on deployed `fusionEnabled` |
 | [Simply Swords: Cataclysm](../providers/⚠️-simply-swords-cataclysm/README.md) | exact physical 1.0.2 identity + release-correlated exact-version source pin close four and only four provider supernatural weapon abilities | `INVENTORY_SOURCE_PINNED 4 / ACTIVE_CONFIG_OPEN / +0 STRICT` | exact source registers STARTUP config whose chance/gate values can suppress abilities; deployed effective values are not captured |
 | [Simply More](../providers/⚠️-simply-more/README.md) | exact Alpha-5 physical/publisher reconciliation + release-correlated source positively establish 9 player-invoked active roots across 9 explicitly reworked Unique families; passive/proc surfaces and weapon implicits are excluded under this ledger metric | `LOWER_BOUND 9 / +0 STRICT` | legacy/rework/no-function active uniques and Mimicry remain unclassified; 10 weapon types / 33 Unique items are not semantic-action counts |
 | [Simply Swords](../providers/⚠️-simply-swords/README.md) | exact physical 1.70.2 identity + release-correlated publisher-fix source checkpoint; 62 ACTIVE Unique roots and 4 player-use Runic action families are positively established; passive definitions and 17 implicits are excluded | `LOWER_BOUND 66 / +0 STRICT` | legacy/non-opted active Unique paths and deployed Awakening/config reachability remain open; source docs explicitly allow existing abilities outside the modifier-definition registry |
@@ -433,7 +433,7 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 To converge on a final denominator efficiently, prioritize:
 
-1. ShadowsZ 1.1.9 — exact spell/action registry and action classification;
+1. ShadowsZ 1.1.9 — capture effective current-world `shadowszRestrictPowers` and deployed `fusionEnabled`; exact 10-root action inventory and classification are already closed;
 2. Simply Swords: Cataclysm 1.0.2 — deployed STARTUP config classification for the four source-pinned abilities;
 3. Simply More Alpha 5 — close the remaining legacy/rework/no-function player-action and Mimicry inventory beyond the 9-action lower bound;
 4. Simply Swords 1.70.2 — close legacy/non-opted active Unique paths and deployed reachability beyond the 66-action lower bound;
