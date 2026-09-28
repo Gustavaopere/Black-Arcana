@@ -66,7 +66,9 @@ Relevant exact source keys include:
 - `accursedRageChance` — source comment explicitly says setting 0 disables the trait;
 - `blazingBrandChance` — source comment explicitly says setting 0 disables the trait;
 - `mechaPulseChargeChance` — range includes 0;
-- `mechaSmiteHarmfulEffectsChance` — range includes 0;
+- `mechaSmiteHarmfulEffectsChance` — source comment explicitly says setting 0 disables the harmful proc;
+- `mechaSmiteFireDuration` — source comment explicitly says setting 0 disables fire;
+- `mechaSmiteWitherDuration` — source comment explicitly says setting 0 disables Wither;
 - `mechaSmiteRegenChance`, `mechaSmiteRegenUsesPercentage`, `mechaSmiteRegenPercentage` and `mechaSmiteRegenThreshold` — jointly determine whether the restorative branch is causally reachable.
 
 The deployed pack's effective STARTUP values have not been authoritatively captured. Archived current-instance debug logs do confirm that NeoForge loaded and watched `config/simplycataclysm-startup.toml`, but those logs do not expose the values. Source defaults are not substituted for deployed state.
@@ -100,11 +102,13 @@ Minimum required evidence:
 3. effective `blazingBrandChance`;
 4. effective `mechaPulseChargeChance`;
 5. effective `mechaSmiteHarmfulEffectsChance`;
-6. effective `mechaSmiteRegenChance`;
-7. effective `mechaSmiteRegenUsesPercentage`;
-8. effective `mechaSmiteRegenPercentage` and `mechaSmiteRegenThreshold` so the selected threshold mode can be evaluated.
+6. effective `mechaSmiteFireDuration`;
+7. effective `mechaSmiteWitherDuration`;
+8. effective `mechaSmiteRegenChance`;
+9. effective `mechaSmiteRegenUsesPercentage`;
+10. effective `mechaSmiteRegenPercentage` and `mechaSmiteRegenThreshold` so the selected threshold mode can be evaluated.
 
-Do not infer those values from upstream defaults. The read-only deployed-evidence collector has a bounded route that fingerprints the physical JAR and reads only these eight keys from `config/simplycataclysm-startup.toml`.
+Do not infer those values from upstream defaults. The read-only deployed-evidence collector has a bounded route that fingerprints the physical JAR and reads only these ten keys from `config/simplycataclysm-startup.toml`.
 
 ## Runtime QA remains separate
 
