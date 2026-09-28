@@ -270,6 +270,7 @@ The report emits the relative path, exact key path, a bounded status and the boo
 This evidence can promote Ghost Sword only when it comes from the actual current instance, the physical JAR matches 2.1.2, the observed value is `true`, and no overriding runtime gate is found. Dread Lich Staff acquisition is already closed separately by current-pack NeoForge 21.1.250 runtime audit `36327488231`; this collector is not its evidence path.
 
 See [`wiki/modpack-catalog/providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md).
+
 ### Simply Swords: Cataclysm
 
 The collector hashes the exact current filename:
@@ -288,6 +289,8 @@ and retains only these catalog-closure keys:
 - `blazingBrandChance`;
 - `mechaPulseChargeChance`;
 - `mechaSmiteHarmfulEffectsChance`;
+- `mechaSmiteFireDuration`;
+- `mechaSmiteWitherDuration`;
 - `mechaSmiteRegenChance`;
 - `mechaSmiteRegenUsesPercentage`;
 - `mechaSmiteRegenPercentage`;
@@ -420,7 +423,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Somake: physical equality and 83/83 registration composition are already closed canonically; the collector can corroborate the installed hash and reduce the remaining deployed `enableSpellLockSystem` plus Iron's per-spell/global/datapack `enabled` / `school` / `allow_crafting` gates;
 - Mowzie's Mobs: current physical 1.8.2 equality plus effective deployed `enable_tunneling`;
 - Ice And Fire CE: current physical 2.1.2 equality plus deployed `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility` for the sole remaining Ghost Sword gate; Dread Lich Staff acquisition is already closed by provider-specific runtime audit `36327488231`;
-- Simply Swords: Cataclysm: current physical 1.0.2 equality plus the eight exact STARTUP values needed to classify all four source-pinned abilities;
+- Simply Swords: Cataclysm: current physical 1.0.2 equality plus the ten exact STARTUP values needed to classify all four source-pinned abilities;
 - Traveloptics: current physical override/provider blocker — classify the actual installed JAR and discover bounded deployed `traveloptics:blackout` references; exact-current registry/loot/acquisition review remains provider-specific.
 - Iron's Spellbooks KubeJS / KubeJS Ars Nouveau: use `kubejs_script_inventory` to bind the review to the exact current script/data tree; inspect non-empty files separately according to each provider checklist.
 
