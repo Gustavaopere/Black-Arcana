@@ -26,7 +26,7 @@ Capture the effective NeoForge STARTUP config state corresponding to the exact s
 | Mecha Pulse | `mechaPulseChargeChance` | zero => no normal charge progression; non-zero => active candidate |
 | Mecha Smite | `mechaSmiteHarmfulEffectsChance`, `mechaSmiteRegenChance`, `mechaSmiteRegenUsesPercentage`, `mechaSmiteRegenPercentage`, `mechaSmiteRegenThreshold` | classify active if provider behavior remains causally reachable; do not collapse harmful and regenerative branches |
 
-Also retain the exact source-config context for durations/amplifiers/cooldown as runtime/balance evidence, but those values do not create extra semantic identities.
+Also retain the exact source-config context for other durations/amplifiers/cooldowns as runtime/balance evidence. `mechaSmiteFireDuration` and `mechaSmiteWitherDuration` are catalog gates because the provider explicitly documents zero as disabling those harmful effects; they do not create extra semantic identities.
 
 ## Accepted evidence
 
