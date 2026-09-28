@@ -219,10 +219,205 @@ jobs:
           }, indent=2, sort_keys=True))
           PY
 
+      - name: Extract narrow action and config denominator facts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, re, subprocess
+          from pathlib import Path
+
+          jar = Path("build/shadowsz-audit/shadowsz-1.1.9.jar")
+          report = json.loads(Path("build/shadowsz-audit/report.json").read_text(encoding="utf-8"))
+
+          def javap(cls, *opts):
+              cp = subprocess.run(
+                  ["javap", *opts, "-classpath", str(jar), cls],
+                  text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False
+              )
+              if cp.returncode != 0:
+                  raise SystemExit(f"javap failed for {cls}: {cp.stderr}")
+              return cp.stdout
+
+          def int_constants(cls):
+              txt = javap(cls, "-p", "-constants")
+              return {
+                  name:int(value)
+                  for name,value in re.findall(r"public static final int ([A-Z0-9_]+) = (-?\\d+);", txt)
+              }
+
+          def method_signatures(cls):
+              txt=javap(cls, "-p")
+              return [
+                  line.strip() for line in txt.splitlines()
+                  if line.strip().endswith(";") and "(" in line and not line.strip().startswith("Compiled from")
+              ]
+
+          def method_block(disasm, method_header):
+              lines=disasm.splitlines()
+              start=None
+              for i,line in enumerate(lines):
+                  if method_header in line:
+                      start=i
+                      break
+              if start is None:
+                  return []
+              out=[]
+              for line in lines[start+1:]:
+                  if re.match(r"^  (public|private|protected|static)", line) and out:
+                      break
+                  out.append(line)
+              return out
+
+          def switch_calls(cls, method_header):
+              block=method_block(javap(cls, "-c", "-p"), method_header)
+              cases={}
+              in_switch=False
+              for line in block:
+                  if "tableswitch" in line or "lookupswitch" in line:
+                      in_switch=True
+                      continue
+                  if in_switch:
+                      m=re.match(r"\\s*(-?\\d+):\\s+(\\d+)", line)
+                      if m:
+                          cases[int(m.group(1))]=int(m.group(2))
+                          continue
+                      if "}" in line:
+                          in_switch=False
+              inst=[]
+              for line in block:
+                  m=re.match(r"\\s*(\\d+):\\s+(.*)", line)
+                  if m:
+                      inst.append((int(m.group(1)),m.group(2)))
+              targets=sorted(set(cases.values()))
+              by_case={}
+              for case,target in sorted(cases.items()):
+                  later=[x for x in targets if x>target]
+                  stop=min(later) if later else 10**9
+                  calls=[]
+                  strings=[]
+                  for off,body in inst:
+                      if not (target<=off<stop):
+                          continue
+                      mm=re.search(r"// Method ([^:]+)\\.(\\w+):", body)
+                      if mm:
+                          calls.append(mm.group(1).replace("/",".")+"."+mm.group(2))
+                      sm=re.search(r"// String (.+)$",body)
+                      if sm:
+                          strings.append(sm.group(1))
+                  by_case[str(case)]={"target":target,"calls":sorted(set(calls)),"strings":strings}
+              return by_case
+
+          def boolean_config_defaults(cls, field_names):
+              lines=javap(cls, "-c", "-p").splitlines()
+              found={}
+              for i,line in enumerate(lines):
+                  m=re.search(r"putstatic\\s+.*// Field ([A-Z0-9_]+):Lnet/neoforged/neoforge/common/ModConfigSpec\\$BooleanValue;", line)
+                  if not m or m.group(1) not in field_names:
+                      continue
+                  field=m.group(1)
+                  window=lines[max(0,i-16):i+1]
+                  key=None
+                  default=None
+                  for w in window:
+                      sm=re.search(r"// String ([A-Za-z0-9_.-]+)$", w)
+                      if sm:
+                          key=sm.group(1)
+                  for w in reversed(window):
+                      if re.search(r"\\biconst_0\\b",w):
+                          default=False; break
+                      if re.search(r"\\biconst_1\\b",w):
+                          default=True; break
+                  found[field]={"key":key,"default":default}
+              return found
+
+          def gamerule_default():
+              cls="com.pumpking.shadowsz.ModGameRules"
+              lines=javap(cls, "-c", "-p").splitlines()
+              key=None
+              default=None
+              for i,line in enumerate(lines):
+                  if "putstatic" in line and "RESTRICT_POWERS" in line:
+                      window=lines[max(0,i-20):i+1]
+                      for w in window:
+                          sm=re.search(r"// String (shadowszRestrictPowers)$",w)
+                          if sm: key=sm.group(1)
+                      for w in reversed(window):
+                          if re.search(r"\\biconst_0\\b",w):
+                              default=False; break
+                          if re.search(r"\\biconst_1\\b",w):
+                              default=True; break
+              return {"key":key,"default":default}
+
+          action_cls="com.pumpking.shadowsz.network.ShadowActionC2S"
+          group_cls="com.pumpking.shadowsz.network.ShadowGroupC2S"
+          action_constants=int_constants(action_cls)
+          group_constants=int_constants(group_cls)
+          action_routes=switch_calls(action_cls, "public static void handle(")
+          group_routes=switch_calls(group_cls, "public static void handle(")
+
+          spell_cls="com.pumpking.shadowsz.spell.ModSpells"
+          spell_sig=javap(spell_cls, "-p", "-constants")
+          spell_fields=sorted(re.findall(
+              r"public static final .*DeferredHolder<.*> ([A-Z0-9_]+);", spell_sig
+          ))
+          spell_dis=javap(spell_cls, "-c", "-p")
+          spell_ids=[]
+          lines=spell_dis.splitlines()
+          for i,line in enumerate(lines):
+              if "DeferredRegister.register:" not in line:
+                  continue
+              for prev in reversed(lines[max(0,i-8):i]):
+                  sm=re.search(r"// String ([a-z0-9_]+)$",prev)
+                  if sm:
+                      spell_ids.append(sm.group(1)); break
+          spell_ids=sorted(set(spell_ids))
+          branch_count=sum(
+              1 for line in method_block(spell_dis, "static {};")
+              if re.search(r"\\b(if[a-z_]*|goto|tableswitch|lookupswitch)\\b",line)
+          )
+
+          bool_fields={"PROGRESS_MODE","LEVELING_ENABLED","BLACK_TEXTURE","FUSION_ENABLED","EQUIPMENT_ENABLED"}
+          config_defaults=boolean_config_defaults("com.pumpking.shadowsz.config.ShadowConfig",bool_fields)
+
+          denominator={
+              "sha1":report["sha1"],
+              "action_constants":action_constants,
+              "group_action_constants":group_constants,
+              "action_case_routes":action_routes,
+              "group_case_routes":group_routes,
+              "spell_registry_fields":spell_fields,
+              "spell_registry_ids":spell_ids,
+              "spell_registry_branch_count":branch_count,
+              "boolean_config_defaults":config_defaults,
+              "restrict_powers_gamerule":gamerule_default(),
+              "shadow_events_methods":method_signatures("com.pumpking.shadowsz.shadow.ShadowEvents"),
+              "shadow_summoner_methods":method_signatures("com.pumpking.shadowsz.shadow.ShadowSummoner"),
+              "attunement_methods":method_signatures("com.pumpking.shadowsz.network.AttunementChoiceC2S"),
+          }
+
+          expected_spells={"miasma","umbral_bond","aura_of_the_monarch"}
+          if set(spell_ids)!=expected_spells:
+              raise SystemExit(f"Unexpected exact spell ids: {spell_ids}")
+          if len(spell_fields)!=3 or branch_count!=0:
+              raise SystemExit(f"Unexpected spell registry structure: fields={spell_fields}, branches={branch_count}")
+          if set(config_defaults)!=bool_fields:
+              raise SystemExit(f"Missing boolean config fields: {config_defaults}")
+          if denominator["restrict_powers_gamerule"]["key"]!="shadowszRestrictPowers":
+              raise SystemExit(f"Unexpected gamerule fact: {denominator['restrict_powers_gamerule']}")
+
+          Path("build/shadowsz-audit/denominator.json").write_text(
+              json.dumps(denominator,indent=2,sort_keys=True),encoding="utf-8"
+          )
+          print(json.dumps(denominator,indent=2,sort_keys=True))
+          PY
+
       - name: Upload bounded audit report
         uses: actions/upload-artifact@v4
         with:
           name: shadowsz-1.1.9-exact-artifact-audit
-          path: build/shadowsz-audit/report.json
+          path: |
+            build/shadowsz-audit/report.json
+            build/shadowsz-audit/denominator.json
           if-no-files-found: error
           retention-days: 3
