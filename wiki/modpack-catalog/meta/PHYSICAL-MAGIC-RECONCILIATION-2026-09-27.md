@@ -29,7 +29,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 479 | Reliquified L_Ender's Cataclysm | ⚠️ lower bound improved to 7 ability roots across 5 baseline relic owners; complete current 0.1.1 denominator open |
 | 500 | ShadowsZ | ⚠️ current publisher lower bound 6: Shadow Eyes, Shadow Arising, Position Swap + 3 Umbral spells; complete action inventory open |
 | 501 | Simply Swords: Cataclysm | ⚠️ exact-version source inventory closed at 4 abilities; deployed STARTUP config decides current active subset |
-| 502 | Simply More | ⚠️ new canonical mapping; Alpha-5 unique/implicit ability inventory open |
+| 502 | Simply More | ⚠️ Alpha-5 semantic lower bound 9 player-invoked active roots; passive/proc surfaces and implicits excluded; legacy active inventory open |
 | 503 | Simply Swords | ⚠️ new canonical mapping; Runic/Unique/implicit action inventory open |
 | 564 | Waystones | ⚠️ new canonical mapping; semantic classification of provider teleport network remains open |
 
@@ -58,7 +58,7 @@ The six newly mapped providers are deliberately fail-closed:
 - Reliquified L_Ender's Cataclysm: public 0.1 release-day source proves 5 baseline relic owners / 7 ability roots and the current-pack compatibility-transform log corroborates the same 5 loaded classes; complete 0.1.1 discrete-action cardinality is still not proven;
 - ShadowsZ: current publisher documentation confirms six supernatural player actions, but the complete current spell/action/control inventory and active config surface are not closed;
 - Simply Swords: Cataclysm: exact-version release-correlated source closes four semantic abilities, but deployed STARTUP config can suppress their active surface and remains uncaptured;
-- Simply More: item/Unique totals do not equal action totals, and the installed Alpha line explicitly contains rework/incomplete functionality;
+- Simply More: release-correlated Alpha-5 source establishes a 9-action semantic lower bound from player-invoked active roots; passive/proc surfaces and implicits are excluded while legacy/rework/no-function active uniques and Mimicry remain unclassified;
 - Simply Swords: weapon/item/Runic infrastructure does not itself prove the count of discrete supernatural player actions;
 - Waystones: physical `Magic` classification does not by itself establish a countable spell/ritual/action identity.
 
