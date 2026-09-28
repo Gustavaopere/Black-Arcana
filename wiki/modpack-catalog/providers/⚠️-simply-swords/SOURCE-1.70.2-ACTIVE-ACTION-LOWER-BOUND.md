@@ -1,10 +1,10 @@
-# Simply Swords 1.70.2 — exact-version active-action lower bound
+# Simply Swords 1.70.2 — release-correlated active-action lower bound
 
 Checkpoint: 2026-09-27
 
 ## Evidence class
 
-`EXACT_PHYSICAL_IDENTITY / EXACT_VERSION_SOURCE / LOWER_BOUND 66 PLAYER_ACTIONS / NON_OPTED_LEGACY + DEPLOYED_REACHABILITY OPEN`
+`EXACT_PHYSICAL_IDENTITY / RELEASE_CORRELATED_SOURCE / VERSION_DECLARED_CROSSCHECK / LOWER_BOUND 66 PLAYER_ACTIONS / NON_OPTED_LEGACY + DEPLOYED_REACHABILITY OPEN`
 
 ## Physical authority
 
@@ -17,21 +17,47 @@ Sibling physical row #503 at
 - SHA-1: `05b074ff774467f1fe9fb5592151b7845c321cbc`;
 - sibling dossier publisher file: CurseForge `8746001`.
 
-## Exact-version source pin
+Publisher file:
+`https://www.curseforge.com/minecraft/mc-mods/simply-swords/files/8746001`
+
+The publisher changelog names:
+
+- Epic Fight crash fix;
+- Lootr loot-injection/pity fix;
+- Simplified Chinese localization update.
+
+## Release-correlated source chain
+
+Primary checkpoint:
+
+`Sweenus/SimplySwords@c82eeaf4479543a728340b9763ab445c9c9d4c0d`
+
+This is the source commit whose message is the Epic Fight crash fix explicitly named in the 1.70.2 publisher changelog.
+
+Its history already contains:
+
+- `91edb6eb3a2f58def74fac5b035a8bc21df1fdbf` — Lootr injection/pity fix;
+- the Simplified Chinese localization update/merge.
+
+Therefore `c82eeaf...` is used as the primary **release-correlated content checkpoint**.
+
+Later same-day cross-check:
 
 `Sweenus/SimplySwords@359a8031b1a3243d1a3b013dbaa0cbba70ea8278`
 
-`gradle.properties` at this commit declares:
+At that revision `gradle.properties` declares:
 
 - Minecraft `1.21.1`;
 - mod version `1.70.2-1.21.1`;
-- Fabric and NeoForge enabled.
+- NeoForge enabled.
 
-No source-build ↔ physical-JAR byte-equality claim is made.
+The later checkpoint retains the exact same 62 ACTIVE root IDs and the same four player-use Runic action families. It adds one passive companion definition only.
+
+No source checkpoint is asserted to be byte-identical to the CurseForge JAR.
 
 ## Unique ability registration chain
 
-`SimplySwords.init()` calls `BuiltinUniqueAbilities.register()`.
+At the primary release-correlated checkpoint, `SimplySwords.init()` calls `BuiltinUniqueAbilities.register()`.
 
 That method registers its own definitions and then invokes:
 
@@ -45,7 +71,9 @@ That method registers its own definitions and then invokes:
 - `Phase9UniqueAbilities.register()`;
 - `Phase10UniqueAbilities.register()`.
 
-The source defines **122 root definitions = 62 ACTIVE + 60 PASSIVE**.
+At `c82eeaf...` the source defines **121 roots = 62 ACTIVE + 59 PASSIVE**.
+
+At `359a8031...`, the ACTIVE set remains exactly **62** while PASSIVE becomes 60.
 
 The provider documentation describes each definition as an identifier plus active/passive kind, tuning keys and child lifecycle events. Child HIT/FINISH/event IDs are not separate roots.
 
@@ -145,13 +173,15 @@ The provider documentation describes each definition as an identifier plus activ
 
 Subtotal: **62**.
 
-## 60 PASSIVE definitions — excluded
+## PASSIVE definitions — excluded
 
-The same registration chain contains **60 `PASSIVE` definitions**.
+The primary release-correlated checkpoint contains **59 PASSIVE definitions**.
 
-They are provider-owned behavior but remain outside the semantic-magic count because the current metric excludes passive gear/proc mechanics unless they form a discrete player-invoked action.
+The later version-declared cross-check contains **60**, due to one additional passive companion definition.
 
-Subtotal contribution: **+0**.
+The semantic-magic metric excludes these passive gear/proc identities unless they form a distinct player-invoked action.
+
+Contribution: **+0**.
 
 ## Runic/Gem Power classification
 
@@ -163,43 +193,34 @@ Subtotal contribution: **+0**.
 - `use`;
 - held-use ticks/release.
 
-`GemPowerComponent.use(...)` delegates to registered powers, and `RunicSwordItem.use(...)` invokes that component path for player input.
+At `c82eeaf...`, `GemPowerComponent.use(...)` delegates to the selected power and `RunicSwordItem.use(...)` invokes that path from player input.
 
-At the exact-version source pin, four causal power families implement a real player `use(...)` action:
+Four causal power families implement a real player `use(...)` action:
 
 | Semantic root | Registry IDs | Evidence |
 |---|---|---|
-| Immolation | `simplyswords:immolation` | `ImmolationPower.use(...)` applies the active effect and cooldown |
-| Momentum | `simplyswords:momentum`, `simplyswords:greater_momentum` | one shared `MomentumPower` action family; greater is a tier, not a second root |
-| Throwing | `simplyswords:throwing` | `ThrowingPower.use(...)` launches the weapon entity |
-| Ward | `simplyswords:ward` | `WardPower.use(...)` applies Ward and cooldown |
+| Immolation | `simplyswords:immolation` | active `ImmolationPower.use(...)` |
+| Momentum | `simplyswords:momentum`, `simplyswords:greater_momentum` | one shared `MomentumPower` action family; greater is a tier |
+| Throwing | `simplyswords:throwing` | active `ThrowingPower.use(...)` |
+| Ward | `simplyswords:ward` | active `WardPower.use(...)` |
 
 Subtotal: **4 semantic player actions**.
 
-Other registered Gem Power implementations observed at this source pin use trigger/passive hooks such as `postHit`, `onSwing` or `inventoryTick` and are excluded from the current semantic count.
+Other power implementations use trigger/passive hooks such as `postHit`, `onSwing` or `inventoryTick` and are excluded from the current semantic count.
 
 ## Weapon implicit classification
 
-`WeaponImplicitRegistry.registerBuiltins()` installs 17 built-in implicit identities:
+At `c82eeaf...`, `WeaponImplicitRegistry.registerBuiltins()` installs **17** built-in implicit identities.
 
-- armor pierce / spear armor pierce;
-- cutlass plunder;
-- glaive bleed;
-- backstab / dagger backstab;
-- claymore / longsword deflect;
-- greathammer / hammer sunder;
-- katana double damage;
-- chakram haste;
-- scythe execute;
-- greataxe / halberd bleed;
-- twinblade haste;
-- warglaive double strike.
+`WeaponImplicitDefinition` exposes only:
 
-`WeaponImplicitDefinition` exposes only damage-modification, on-hit and incoming-damage handlers.
+- damage modification;
+- on-hit handling;
+- incoming-damage cancellation.
 
 These are equipment/proc identities, not player-invoked semantic actions.
 
-Subtotal contribution: **+0**.
+Contribution: **+0**.
 
 ## Lower-bound arithmetic
 
@@ -207,17 +228,14 @@ Subtotal contribution: **+0**.
 
 ## Why this remains a lower bound
 
-The exact-version developer docs explicitly say:
-
-- abilities can opt into the definition/modifier system;
-- **existing abilities that do not opt in continue using the unchanged `UniqueWeaponActiveAbility` contract**.
+The exact-line developer docs explicitly say that abilities may opt into the modifier-definition system while **existing abilities that do not opt in continue using the unchanged `UniqueWeaponActiveAbility` contract**.
 
 Therefore the 62 active registered definitions do not prove completeness of all 1.70.2 player-invoked Unique actions.
 
-The remaining closure work is:
+Remaining closure work:
 
 1. enumerate legacy/non-opted `UniqueWeaponActiveAbility` actions;
-2. reconcile any secondary-action inputs;
+2. reconcile secondary-action inputs;
 3. deduplicate them against the 62 registered active roots;
 4. classify disabled/config-gated actions;
 5. settle deployed Awakening/reachability where it changes the current active subset;
@@ -227,7 +245,7 @@ The remaining closure work is:
 
 Normal `UniqueWeaponActiveAbility` player use checks `AwakeningApi.isAbilityUnlocked(stack)`.
 
-Source identity therefore does not establish the deployed pack's currently reachable subset by itself.
+Release-line identity therefore does not establish the deployed pack's currently reachable subset by itself.
 
 The 1.70.x line is also config-breaking/save-sensitive. Effective pack config is required before strict promotion.
 
@@ -240,11 +258,12 @@ It permits library/integration use but forbids bundling/publishing/distributing 
 ## Result
 
 - exact physical identity: **closed**;
-- exact-version source pin: **closed**;
+- primary release-correlated source checkpoint: **closed**;
+- later version-declared source cross-check: **closed**;
 - registered active Unique roots: **62**;
 - player-use Runic action families: **4**;
 - semantic lower bound: **66**;
-- passive Unique definitions excluded: **60**;
+- PASSIVE definitions excluded: **59 at release-correlated checkpoint / 60 at later cross-check**;
 - weapon implicits excluded: **17**;
 - legacy/non-opted active-action denominator: **open**;
 - deployed active reachability/config: **open**;
