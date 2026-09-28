@@ -9,7 +9,7 @@ Checkpoint: 2026-09-27
 ## Physical authority
 
 Sibling physical row #503 at
-`neoforge-rpg-skilltree@51d590653d927538f23ba6f1643576dc6cc49859`:
+`neoforge-rpg-skilltree@7c9d0e9552e33531d0d6b46b86c9de86d3b233bf`:
 
 - JAR: `simplyswords-neoforge-1.70.2-1.21.1.jar`;
 - mod id: `simplyswords`;
