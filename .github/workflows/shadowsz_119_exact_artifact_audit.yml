@@ -452,6 +452,32 @@ jobs:
                   ["tryAbsorb","maybeOfferAttunement"]
               ),
               "attunement_methods":method_signatures("com.pumpking.shadowsz.network.AttunementChoiceC2S"),
+              "action_handle_effect_facts":bounded_method_effect_facts(
+                  "com.pumpking.shadowsz.network.ShadowActionC2S",
+                  ["handle"]
+              ),
+              "attunement_handle_effect_facts":bounded_method_effect_facts(
+                  "com.pumpking.shadowsz.network.AttunementChoiceC2S",
+                  ["handle"]
+              ),
+              "gamerule_guard_effect_facts":bounded_method_effect_facts(
+                  "com.pumpking.shadowsz.ModGameRules",
+                  ["canAttune"]
+              ),
+              "spell_effect_facts":{
+                  "miasma": bounded_method_effect_facts(
+                      "com.pumpking.shadowsz.spell.MiasmaSpell",
+                      ["checkPreCastConditions","onServerCastTick"]
+                  ),
+                  "umbral_bond": bounded_method_effect_facts(
+                      "com.pumpking.shadowsz.spell.UmbralBondSpell",
+                      ["checkPreCastConditions","onCast"]
+                  ),
+                  "aura_of_the_monarch": bounded_method_effect_facts(
+                      "com.pumpking.shadowsz.spell.AuraOfTheMonarchSpell",
+                      ["checkPreCastConditions","onCast"]
+                  ),
+              },
           }
 
           expected_spells={"miasma","umbral_bond","aura_of_the_monarch"}
