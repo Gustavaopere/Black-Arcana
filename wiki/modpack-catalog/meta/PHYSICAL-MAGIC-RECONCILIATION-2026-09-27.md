@@ -31,7 +31,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 501 | Simply Swords: Cataclysm | ⚠️ exact-version source inventory closed at 4 abilities; deployed STARTUP config decides current active subset |
 | 502 | Simply More | ⚠️ Alpha-5 semantic lower bound 9 player-invoked active roots; passive/proc surfaces and implicits excluded; legacy active inventory open |
 | 503 | Simply Swords | ⚠️ release-correlated source lower bound 66: 62 ACTIVE Unique roots + 4 player-use Runic actions; passive/proc/implicit surfaces excluded; legacy/reachability open |
-| 564 | Waystones | ⚠️ new canonical mapping; semantic classification of provider teleport network remains open |
+| 564 | Waystones | ⚠️ exact-version source lower bound 3: one deduplicated Warp/Teleport root + Warp Portal Conjuration + Twinbound Link; setup-action classification remains open |
 
 ## Current physical-Magic status
 
@@ -60,7 +60,7 @@ The six newly mapped providers are deliberately fail-closed:
 - Simply Swords: Cataclysm: exact-version release-correlated source closes four semantic abilities, but deployed STARTUP config can suppress their active surface and remains uncaptured;
 - Simply More: release-correlated Alpha-5 source establishes a 9-action semantic lower bound from player-invoked active roots; passive/proc surfaces and implicits are excluded while legacy/rework/no-function active uniques and Mimicry remain unclassified;
 - Simply Swords: release-correlated source establishes a 66-action semantic lower bound from 62 registered ACTIVE Unique roots plus 4 player-use Runic action families; passive definitions, 17 implicits and trigger-only Gem Powers are excluded while legacy/non-opted active paths and deployed reachability remain open;
-- Waystones: physical `Magic` classification does not by itself establish a countable spell/ritual/action identity.
+- Waystones: exact 21.1.45 source establishes a 3-action lower bound from one provider-native Warp/Teleport root, Warp Portal Conjuration and Twinbound Link; activation, Blank Scroll binding and Warp Plate shard attunement remain classification-open, while passive/downstream/bridge infrastructure is excluded;
 
 Therefore the strict reconstructible minimum remains **1677**.
 
