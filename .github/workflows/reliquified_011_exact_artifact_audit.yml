@@ -136,10 +136,11 @@ jobs:
 
           # Declared-method signature inspection only; still no bytecode bodies.
           invocation_signatures = []
-          trigger_rx = re.compile(
-              r"\\b(castActiveAbility|use|useOn|finishUsingItem|onUseTick|releaseUsing|curioTick|"
-              r"on[A-Za-z]*(Death|Kill|Hurt|Damage))\\s*\\("
+          direct_tokens = (
+              " castActiveAbility(", " use(", " useOn(", " finishUsingItem(",
+              " onUseTick(", " releaseUsing(", " curioTick("
           )
+          event_rx = re.compile(r"\\bon[A-Za-z]*(?:Death|Kill|Hurt|Damage)\\(")
           relic_class_names = [
               n[:-6].replace("/", ".")
               for n in report["relic_item_classes"]
@@ -151,7 +152,7 @@ jobs:
               )
               for line in cp.stdout.splitlines():
                   stripped = line.strip()
-                  if trigger_rx.search(stripped):
+                  if any(token in stripped for token in direct_tokens) or event_rx.search(stripped):
                       invocation_signatures.append({"class": cls, "signature": stripped})
 
           report["relic_invocation_signatures"] = invocation_signatures
