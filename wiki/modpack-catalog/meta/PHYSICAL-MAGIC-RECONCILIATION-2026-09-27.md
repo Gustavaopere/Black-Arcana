@@ -27,7 +27,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 477 | Reliquified Artifacts | ✅ existing canonical provider; +52 strict already owned in ledger |
 | 478 | Reliquified Iron's Spells 'n Spellbooks | ✅ existing canonical provider; +25 strict already owned in ledger |
 | 479 | Reliquified L_Ender's Cataclysm | ⚠️ lower bound improved to 7 ability roots across 5 baseline relic owners; complete current 0.1.1 denominator open |
-| 500 | ShadowsZ | ⚠️ new canonical mapping; 3 named Umbral spells are a lower bound, complete action inventory open |
+| 500 | ShadowsZ | ⚠️ current publisher lower bound 6: Shadow Eyes, Shadow Arising, Position Swap + 3 Umbral spells; complete action inventory open |
 | 501 | Simply Swords: Cataclysm | ⚠️ new canonical mapping; 4 documented current-release ability families, exact-current completeness open |
 | 502 | Simply More | ⚠️ new canonical mapping; Alpha-5 unique/implicit ability inventory open |
 | 503 | Simply Swords | ⚠️ new canonical mapping; Runic/Unique/implicit action inventory open |
@@ -56,7 +56,7 @@ The eleven reclassified rows with existing provider catalogs were already repres
 The six newly mapped providers are deliberately fail-closed:
 
 - Reliquified L_Ender's Cataclysm: public 0.1 release-day source proves 5 baseline relic owners / 7 ability roots and the current-pack compatibility-transform log corroborates the same 5 loaded classes; complete 0.1.1 discrete-action cardinality is still not proven;
-- ShadowsZ: at least three Umbral spells are named, but the complete current spell/action inventory is not closed;
+- ShadowsZ: current publisher documentation confirms six supernatural player actions, but the complete current spell/action/control inventory and active config surface are not closed;
 - Simply Swords: Cataclysm: four current-release ability families are documented, but exact installed completeness is not yet proven;
 - Simply More: item/Unique totals do not equal action totals, and the installed Alpha line explicitly contains rework/incomplete functionality;
 - Simply Swords: weapon/item/Runic infrastructure does not itself prove the count of discrete supernatural player actions;
