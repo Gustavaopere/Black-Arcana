@@ -6,7 +6,7 @@ Status: `✅ CATALOGED / CURRENT PHYSICAL 0.1.1 / COUNTED_EXACT / 5 RELIC OWNERS
 
 Current sibling physical authority records:
 
-- sibling checkpoint: `neoforge-rpg-skilltree@fcd2e239ad70c955e47df390d4c74d49dd3b7079`;
+- sibling checkpoint: `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`;
 - physical row: **#479**;
 - JAR: `reliquified_lenders_cataclysm-1.21.1-0.1.1.jar`;
 - mod id: `reliquified_lenders_cataclysm`;
@@ -24,8 +24,8 @@ Publisher version `ZHAIRSeF` supplies the exact NeoForge 1.21.1 file `reliquifie
 
 Isolated NON-MERGE audit PR **#441** materialized that publisher artifact and hard-gated its SHA-1 against the current physical digest. Final exact-artifact audit:
 
-- audit HEAD: `1484b00834d7aa070a401f76716e8448d01654be`;
-- workflow run: `36380842145`;
+- audit HEAD: `096c74db131ecffa95e4f2c22162b311c1c62db5`;
+- workflow run: `36416011761`;
 - result: **GREEN**;
 - publisher SHA-1: `be89d697455f04a1531ed81b45bcc038354430c8`;
 - physical SHA-1: `be89d697455f04a1531ed81b45bcc038354430c8`;
@@ -70,17 +70,17 @@ Release-day source checkpoint `291f066c0471e44f50fe78ea8e7d786f6775446e` on bran
 
 The source is All Rights Reserved. It is used only for factual interoperability/catalog corroboration, not code/assets/text reuse.
 
-## Acquisition evidence
+## Exact-current acquisition evidence
 
-At the release-day source checkpoint all five exact-current owners have Relics loot routes:
+The final hash-matched 0.1.1 audit closes the same Relics loot routes directly from the exact artifact:
 
-- Scouring Eye — Cursed Pyramid / The End;
-- Void Vortex in Bottle — Frosted Prison / The End;
-- Void Cloak — Cursed Pyramid / Frosted Prison / The End;
-- Vacuum Glove — Cursed Pyramid / The End;
-- Void Bubble — The End.
+- Scouring Eye — `CURSED_PYRAMID` / `THE_END`;
+- Void Vortex in Bottle — `FROSTED_PRISON` / `THE_END`;
+- Void Cloak — `CURSED_PYRAMID` / `FROSTED_PRISON` / `THE_END`;
+- Vacuum Glove — `CURSED_PYRAMID` / `THE_END`;
+- Void Bubble — `THE_END`.
 
-`RECLootEntries` supplies the Cataclysm-specific Cursed Pyramid and Frosted Prison targets. This closes source-level provider acquisition for all seven ability roots. Final assembled-world loot mutation remains runtime QA rather than semantic-inventory evidence.
+The exact artifact also exposes exactly two provider-specific `LootEntry` fields, `CURSED_PYRAMID` and `FROSTED_PRISON`, with the Cataclysm Cursed Pyramid and Frosted Prison table identifiers. These exact-current routes reconcile all five registered relic owners and close provider-level survival reachability for all seven ability roots. Final assembled-world loot mutation and observed drop generation remain runtime QA rather than semantic-inventory evidence.
 
 ## Semantic disposition
 
