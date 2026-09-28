@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - audit/reliquified-011-exact-artifact-2026-09-28
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
