@@ -243,7 +243,7 @@ jobs:
               txt = javap(cls, "-p", "-constants")
               return {
                   name:int(value)
-                  for name,value in re.findall(r"public static final int ([A-Z0-9_]+) = (-?\\d+);", txt)
+                  for name,value in re.findall(r"public static final int ([A-Z0-9_]+) = (-?\d+);", txt)
               }
 
           def method_signatures(cls):
@@ -278,7 +278,7 @@ jobs:
                       in_switch=True
                       continue
                   if in_switch:
-                      m=re.match(r"\\s*(-?\\d+):\\s+(\\d+)", line)
+                      m=re.match(r"\s*(-?\d+):\s+(\d+)", line)
                       if m:
                           cases[int(m.group(1))]=int(m.group(2))
                           continue
@@ -286,7 +286,7 @@ jobs:
                           in_switch=False
               inst=[]
               for line in block:
-                  m=re.match(r"\\s*(\\d+):\\s+(.*)", line)
+                  m=re.match(r"\s*(\d+):\s+(.*)", line)
                   if m:
                       inst.append((int(m.group(1)),m.group(2)))
               targets=sorted(set(cases.values()))
@@ -312,7 +312,7 @@ jobs:
               lines=javap(cls, "-c", "-p").splitlines()
               found={}
               for i,line in enumerate(lines):
-                  m=re.search(r"putstatic\\s+.*// Field ([A-Z0-9_]+):Lnet/neoforged/neoforge/common/ModConfigSpec\\$BooleanValue;", line)
+                  m=re.search(r"putstatic\s+.*// Field ([A-Z0-9_]+):Lnet/neoforged/neoforge/common/ModConfigSpec\$BooleanValue;", line)
                   if not m or m.group(1) not in field_names:
                       continue
                   field=m.group(1)
@@ -324,9 +324,9 @@ jobs:
                       if sm:
                           key=sm.group(1)
                   for w in reversed(window):
-                      if re.search(r"\\biconst_0\\b",w):
+                      if re.search(r"\biconst_0\b",w):
                           default=False; break
-                      if re.search(r"\\biconst_1\\b",w):
+                      if re.search(r"\biconst_1\b",w):
                           default=True; break
                   found[field]={"key":key,"default":default}
               return found
@@ -343,9 +343,9 @@ jobs:
                           sm=re.search(r"// String (shadowszRestrictPowers)$",w)
                           if sm: key=sm.group(1)
                       for w in reversed(window):
-                          if re.search(r"\\biconst_0\\b",w):
+                          if re.search(r"\biconst_0\b",w):
                               default=False; break
-                          if re.search(r"\\biconst_1\\b",w):
+                          if re.search(r"\biconst_1\b",w):
                               default=True; break
               return {"key":key,"default":default}
 
@@ -374,7 +374,7 @@ jobs:
           spell_ids=sorted(set(spell_ids))
           branch_count=sum(
               1 for line in method_block(spell_dis, "static {};")
-              if re.search(r"\\b(if[a-z_]*|goto|tableswitch|lookupswitch)\\b",line)
+              if re.search(r"\b(if[a-z_]*|goto|tableswitch|lookupswitch)\b",line)
           )
 
           bool_fields={"PROGRESS_MODE","LEVELING_ENABLED","BLACK_TEXTURE","FUSION_ENABLED","EQUIPMENT_ENABLED"}
@@ -382,7 +382,7 @@ jobs:
           config_dis=javap("com.pumpking.shadowsz.config.ShadowConfig", "-c", "-p")
           config_initializer_facts=[
               line.strip() for line in method_block(config_dis, "static {};")
-              if ("define" in line or "putstatic" in line or "// String " in line or re.search(r"\\biconst_[01]\\b",line))
+              if ("define" in line or "putstatic" in line or "// String " in line or re.search(r"\biconst_[01]\b",line))
           ]
 
           denominator={
