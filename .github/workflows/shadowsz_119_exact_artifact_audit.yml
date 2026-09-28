@@ -299,7 +299,7 @@ jobs:
                   for off,body in inst:
                       if not (target<=off<stop):
                           continue
-                      mm=re.search(r"// Method ([^:]+)\\.(\\w+):", body)
+                      mm=re.search(r"// Method ([^:]+)\.(\w+):", body)
                       if mm:
                           calls.append(mm.group(1).replace("/",".")+"."+mm.group(2))
                       sm=re.search(r"// String (.+)$",body)
