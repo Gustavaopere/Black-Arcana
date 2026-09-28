@@ -1,4 +1,4 @@
-# Release-bounded lower-bound audit — Reliquified L_Ender's Cataclysm 0.1.1
+# Historical pre-closure evidence — Release-bounded lower-bound audit — Reliquified L_Ender's Cataclysm 0.1.1
 
 Checkpoint: 2026-09-27
 
