@@ -18,7 +18,7 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — snapshot sibling atual
 
-A autoridade física corrente é `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`. Aplicando o critério ao **campo de categoria** da modlist, existem **84 linhas cuja categoria contém `Magic`**. O nome do mod não é usado como atalho de classificação.
+A autoridade física corrente é `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7`. Aplicando o critério ao **campo de categoria** da modlist, existem **84 linhas cuja categoria contém `Magic`**. O nome do mod não é usado como atalho de classificação.
 
 Após normalização de ownership/aliases e a reconciliação de 27/09:
 
@@ -30,7 +30,7 @@ Após normalização de ownership/aliases e a reconciliação de 27/09:
 
 Assim, **84/84** linhas da categoria física `Magic` estão mapeadas em Black Arcana (**71 ✅ + 13 ⚠️**). Isso é um subtotal físico/categorial, não o denominador semântico global.
 
-O delta contra o snapshot anterior de 67 linhas é **+17**. Onze dessas linhas já possuíam provider canônico e não geram nova contagem. Seis foram inicialmente materializadas como ⚠️: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords e Waystones. Reliquified L_Ender's Cataclysm 0.1.1 agora está ✅ `COUNTED_EXACT 7`: o artefato publisher tem SHA-1 idêntico ao físico, o audit exato fecha 5 owners / 7 ability roots e as rotas de loot exact-current dos cinco owners. Os outros cinco permanecem ⚠️; o delta estrito desta closure é **+7**. Ver [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
+O delta contra o snapshot anterior de 67 linhas é **+17**. Onze dessas linhas já possuíam provider canônico e não geram nova contagem. Seis foram inicialmente materializadas como ⚠️: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords e Waystones. Reliquified L_Ender's Cataclysm 0.1.1 agora está ✅ `COUNTED_EXACT 7`: o artefato publisher tem SHA-1 idêntico ao físico, o audit exato fecha 5 owners / 7 ability roots e as rotas de loot exact-current dos cinco owners. Os outros cinco permanecem ⚠️. ShadowsZ 1.1.9 já tem denominador exato de **10** ações semânticas, mas segue `+0 strict` até capturar `shadowszRestrictPowers` efetivo e `fusionEnabled`; o delta estrito desta reconciliation continua **+7**. Ver [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
 
 **Cross-domain note:** o subtotal físico `Magic` continua sem representar o universo global. Gaze permanece ⚠️ com um spell contado + 26 rites config-condicionais; Ender's Spells and Stuff: Requiem é ✅ com 53 ações strict; Reliquified Ars Nouveau, Reliquified Artifacts e Reliquified Iron's são ✅ com 19, 52 e 25 ability roots source-pinned; Reliquified L_Ender's Cataclysm 0.1.1 é ✅ com 7 ability roots exact-current; Iron's Spellbooks KubeJS agora também aparece nessa categoria sibling e permanece ⚠️ por inventário mutável de scripts; More Relics é ✅ com 61 ability roots exatas; Ozymandias Sundries agora é ✅ com 2 spells exatos; Mowzie's Mobs é ⚠️ com 10 poderes strict + 1 Tunneling config-condicional; Traveloptics permanece ⚠️ +0 strict pendente de fechamento exato-current. Spell Actionbar, Specs, Recolor e Immersive Portal estão ✅ catalogados com +0 identidades independentes; QA técnico/runtime permanece separado.
 **Traveloptics current-physical override:** Project Library physical evidence directly records `traveloptics-4.4.0.1-1.21.1.jar` / SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This outranks the absence of a status-prefixed sibling row for presence/version. The installed digest differs from the audited publisher alpha and known patch artifact, so Traveloptics is a current **⚠️ `OTHER_VERIFIED` / +0 strict** provider blocker until its installed-byte registry and reachability are closed.
@@ -75,7 +75,7 @@ O mínimo semântico estrito corrente é **1684**. O denominador semântico fina
 
 ## Provider freshness override — Ars Controle 1.6.16
 
-O sibling revalidado em `neoforge-rpg-skilltree@ee08513c9e8992418c508bae485f3a181deb7f9c` confirma a posição física **#41** como `ars_controle-1.21.1-1.6.16.jar`, mod id `ars_controle`, runtime `1.21.1-1.6.16` e SHA-1 físico `795567371450debec83fe634fd0114c295f7da5a`.
+O sibling revalidado em `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` confirma a posição física **#41** como `ars_controle-1.21.1-1.6.16.jar`, mod id `ars_controle`, runtime `1.21.1-1.6.16` e SHA-1 físico `795567371450debec83fe634fd0114c295f7da5a`.
 
 O source oficial exato `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` declara `mod_version=1.6.16` e Ars Nouveau `5.13.1.1403`. A comparação contra o checkpoint canônico anterior `ecbb83ba512bc9ca7a025556fb9c62dbd32b6430` (1.6.15) contém seis commits; o único Java de gameplay alterado é `WarpingSpellPrismBlock.java`. O arquivo autoritativo de registro `ACRegistry.java` permanece exatamente no mesmo Git blob `b38959053740605768a8945ed40c012c6bef5953` nos dois checkpoints.
 
@@ -83,7 +83,7 @@ Consequência naquele checkpoint: **✅ Ars Controle 1.6.16 — 9/9 spell parts 
 
 ## Provider freshness override — Hazen N Stuff 1.4.0.14
 
-O sibling revalidado em `neoforge-rpg-skilltree@278b427023136d7c43d85dc188d0eac1ac85ef3a` confirma `hazennstuff-1.4.0.14.jar`, mod id `hazennstuff`, runtime `1.4.0.14` e SHA-1 físico `3be20bacb44c1923348ab6f61b685eec6aacfdcd`.
+O sibling revalidado em `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` confirma `hazennstuff-1.4.0.14.jar`, mod id `hazennstuff`, runtime `1.4.0.14` e SHA-1 físico `3be20bacb44c1923348ab6f61b685eec6aacfdcd`.
 
 O source oficial release-correlated `Hazentouvel/Hazen_N_Stuff@5fcaf39cf399609f6c1c87d14f8d4807098c9cce` declara 1.4.0.14 e fecha **38 active spell registrations**. O `en_us` do mesmo pin contém 41 root spell keys; `brimstone_hellblast` e `supernova` ficam excluídos por não possuírem active registry entry, e `reign_of_tyros` fica excluído porque sua linha `registerSpell(...)` está comentada no pin exato apesar da classe/localization existente. O registry source-pinned não contém branch de registration por config/mod-presence em torno das 38 identidades ativas. Os três `canBeCraftedBy` especiais — Golden Shower, Night's Edge Strike e Scorching Slash — possuem acquisition path provider-owned no mesmo release; custom focus routes Cosmic/Radiance/Shadow/Hydro também foram reconciliadas com HazentouveLib 1.0.9/Ace's Spell Utils.
 
@@ -91,7 +91,7 @@ Consequência naquele checkpoint: **✅ Hazen N Stuff — 38/38 source-pinned sp
 
 ## Provider freshness override — Create: Wizardry 1.21.1-0.5.1-pre1
 
-O sibling atual em `neoforge-rpg-skilltree@4767f5c637c02c6d91ccb43a86ea1539f42a2e9b` reconcilia Create: Wizardry na posição física **#166** como `create_wizardry-1.21.1-0.5.1-pre1.jar`, mod id `create_wizardry`, runtime `1.21.1-0.5.1-pre1`.
+O sibling atual em `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` reconcilia Create: Wizardry na posição física **#166** como `create_wizardry-1.21.1-0.5.1-pre1.jar`, mod id `create_wizardry`, runtime `1.21.1-0.5.1-pre1`.
 
 O source oficial version-correlated `TTZPlayz/Create-Wizardry@9c4e53aad0ee9477187487443b597b77ef06f323` declara a mesma versão. A auditoria estrutural encontra 75 Java files, 328 resources e **zero** superfície provider-owned de spell registry/resource: sem `registerSpell`, `SpellRegistry`, `DeferredRegister<AbstractSpell>`, `Registries.SPELL`, `SPELLS.register` ou namespace `spell.create_wizardry`. Blaze Caster e Mana Siphon consomem `SpellData`/`AbstractSpell` do Iron's e alteram/automatizam o pipeline host; isso não transfere ownership dos spells. A blacklist explícita do Blaze Caster contém 31 host spell path names e também não cria identidades novas.
 
@@ -99,7 +99,7 @@ Consequência naquele checkpoint: **✅ Create: Wizardry — componente mágico/
 
 ## Provider freshness override — Iron's Apothic 2.2.2
 
-O sibling certificado em `neoforge-rpg-skilltree@c3de5878d69a7a6b4441606ef2b9e96a61a8f2e9` preserva a linha física **#339** como `irons_apothic-2.2.2.jar`, mod id `irons_apothic`, runtime `2.2.2`. O dossiê físico atual não preserva digest independente do JAR, portanto igualdade binária não é inferida.
+O sibling certificado em `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` preserva a linha física **#339** como `irons_apothic-2.2.2.jar`, mod id `irons_apothic`, runtime `2.2.2`. O dossiê físico atual não preserva digest independente do JAR, portanto igualdade binária não é inferida.
 
 O source oficial exato `muon-rw/Apotheosis-Irons-Spells@c5d501219cc9bbbfb8c69acc08bebac76983d1c1` declara `mod_version=2.2.2`. Nesse pin, o provider registra **7 codecs próprios de affix** no registry de Apotheosis, possui **140 definições JSON de affix**, das quais **48** ficam explicitamente em superfícies `spell`/`imbued`, e **24 definições de gem**. `SpellTriggerAffix` resolve spells pelo `SpellRegistry` de Iron's e `SpellCastUtil` executa o `AbstractSpell` externo pelo pipeline de casting do host; não há registry próprio de spell do provider no source exato.
 
@@ -107,7 +107,7 @@ Consequência naquele checkpoint: **✅ Iron's Apothic 2.2.2 — bridge mágico/
 
 ## Provider freshness override — Somake 1.0.9
 
-Current sibling authority rechecked at `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8` retains the certified physical dossier `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic/✅-somake v1.0.9.md` for `somakespells-1.0.9-1.21.1.jar` / mod id `somakespells` / runtime `1.0.9`.
+Current sibling authority rechecked at `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` retains the certified physical dossier `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic/✅-somake v1.0.9.md` for `somakespells-1.0.9-1.21.1.jar` / mod id `somakespells` / runtime `1.0.9`.
 
 The current Black Arcana evidence is materially beyond the earlier resource-only checkpoint:
 
@@ -137,7 +137,7 @@ Consequence: Somake remains **⚠️ partial/conditioned / +0 strict**, but **re
 
 ## Provider freshness override — Not Enough Glyphs 4.6.2
 
-A modlist sibling atual, verificada em `neoforge-rpg-skilltree@64ce655d5d42a7ae39fc2c077b93b612ce88afbf`, identifica `not_enough_glyphs-1.21.1-4.6.2.jar` / mod id `not_enough_glyphs` / runtime `4.6.2` como a linha física instalada. Isso supersede apenas a antiga afirmação física 4.6.1; o snapshot global de 595 entradas acima continua sendo checkpoint histórico e não é silenciosamente renomeado.
+A modlist sibling atual, verificada em `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7`, identifica `not_enough_glyphs-1.21.1-4.6.2.jar` / mod id `not_enough_glyphs` / runtime `4.6.2` como a linha física instalada. Isso supersede apenas a antiga afirmação física 4.6.1; o snapshot global de 595 entradas acima continua sendo checkpoint histórico e não é silenciosamente renomeado.
 
 A release oficial atual é CurseForge project/file `1023517 / 8880291`. O audit exato retido fecha SHA-1 de release `32eea2c478a346ee7499f6a0db156241116f73e9`, SHA-256 `efd90f8ed292fd1b6b08fc33330f4344b70ed1661ffbe3684a64b1b485856c12` e Sauce JarJar `0.0.50.97`. O hash independente do JAR físico instalado ainda não está preservado, então igualdade byte-for-byte com a release não é inventada.
 
