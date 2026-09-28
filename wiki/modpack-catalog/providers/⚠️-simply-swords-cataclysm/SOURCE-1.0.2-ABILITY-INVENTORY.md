@@ -12,7 +12,7 @@ Checkpoint: 2026-09-27
 - runtime: `1.0.2+1.21.1+neoforge`;
 - mod id: `simplycataclysm`;
 - SHA-1: `a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`;
-- sibling row: #501 at `neoforge-rpg-skilltree@27b79d8f494db868ea5a674f9d818f5ea62fd444`.
+- sibling row: #501 at `neoforge-rpg-skilltree@107ce395d9b37f908ad0ba39ef6ea6a01e5f27b2`.
 
 ## Publisher release correlation
 
