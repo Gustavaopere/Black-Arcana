@@ -278,23 +278,34 @@ jobs:
               text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
           )
           loot_text = cp.stdout
+          normalized_loot_text = loot_text.replace("\\\\", "").replace("\\", "")
           expected_provider_loot_tokens = [
               "minecraft:overworld",
-              "cataclysm:archaeology\\/cursed_pyramid(_necklace)?",
+              "cataclysm:archaeology/cursed_pyramid(_necklace)?",
               "cataclysm:chests/frosted_prison_treasure",
           ]
           missing_loot_tokens = [
               token for token in expected_provider_loot_tokens
-              if token not in loot_text
+              if token not in normalized_loot_text
           ]
           if missing_loot_tokens:
               raise SystemExit(f"Missing exact provider loot-entry tokens: {missing_loot_tokens}")
-          if loot_text.count("LootEntry.builder:") != 2:
+
+          signature_cp = subprocess.run(
+              ["javap", "-p", "-classpath", str(jar), loot_entry_class],
+              text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+          )
+          provider_loot_fields = sorted(set(re.findall(
+              r"public static final .*LootEntry ([A-Z_]+);",
+              signature_cp.stdout,
+          )))
+          if provider_loot_fields != ["CURSED_PYRAMID", "FROSTED_PRISON"]:
               raise SystemExit(
-                  f"Expected exactly 2 provider LootEntry.builder calls, got {loot_text.count('LootEntry.builder:')}"
+                  f"Unexpected provider LootEntry fields: {provider_loot_fields}"
               )
           report["exact_loot_routes"] = exact_loot_routes
-          report["provider_loot_entry_count"] = 2
+          report["provider_loot_entry_count"] = len(provider_loot_fields)
+          report["provider_loot_entry_fields"] = provider_loot_fields
           report["provider_loot_entry_tokens"] = expected_provider_loot_tokens
 
           report_path.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
@@ -313,6 +324,7 @@ jobs:
               "item_registry_ids": report["item_registry_ids"],
               "exact_loot_routes": report["exact_loot_routes"],
               "provider_loot_entry_count": report["provider_loot_entry_count"],
+              "provider_loot_entry_fields": report["provider_loot_entry_fields"],
               "provider_loot_entry_tokens": report["provider_loot_entry_tokens"],
               "relic_invocation_signatures": report["relic_invocation_signatures"],
               "provider_data_resource_paths": report["provider_data_resource_paths"],
