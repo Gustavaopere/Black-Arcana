@@ -1,0 +1,156 @@
+name: Reliquified 0.1.1 exact artifact audit
+
+on:
+  push:
+    branches:
+      - audit/reliquified-011-exact-artifact-2026-09-28
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download and inspect exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/reliquified-audit
+          python3 - <<'PY'
+          import hashlib, json, os, re, struct, subprocess, urllib.request, zipfile
+          from pathlib import Path
+
+          url = "https://cdn.modrinth.com/data/rBEndPUc/versions/ZHAIRSeF/reliquified_lenders_cataclysm-1.21.1-0.1.1.jar"
+          expected_sha1 = "be89d697455f04a1531ed81b45bcc038354430c8"
+          jar = Path("build/reliquified-audit/reliquified_lenders_cataclysm-1.21.1-0.1.1.jar")
+          report_path = Path("build/reliquified-audit/report.json")
+          urllib.request.urlretrieve(url, jar)
+
+          sha1 = hashlib.sha1(jar.read_bytes()).hexdigest()
+          if sha1 != expected_sha1:
+              raise SystemExit(f"SHA-1 mismatch: expected {expected_sha1}, got {sha1}")
+
+          report = {
+              "source_url": url,
+              "sha1": sha1,
+              "expected_sha1": expected_sha1,
+          }
+
+          with zipfile.ZipFile(jar) as zf:
+              names = sorted(zf.namelist())
+
+              provider_classes = [
+                  n for n in names
+                  if n.startswith("it/hurts/octostudios/reliquified_lenders_cataclysm/")
+                  and n.endswith(".class")
+              ]
+              relic_item_classes = [
+                  n for n in provider_classes
+                  if "/items/relics/" in n and "$" not in n
+              ]
+              report["provider_class_count"] = len(provider_classes)
+              report["relic_item_classes"] = relic_item_classes
+              report["relic_item_class_count"] = len(relic_item_classes)
+
+              item_ids = []
+              lang_path = "assets/reliquified_lenders_cataclysm/lang/en_us.json"
+              lang_keys = []
+              ability_roots = []
+              if lang_path in names:
+                  lang = json.loads(zf.read(lang_path).decode("utf-8"))
+                  lang_keys = sorted(lang.keys())
+                  item_prefix = "item.reliquified_lenders_cataclysm."
+                  item_ids = sorted(
+                      k[len(item_prefix):]
+                      for k in lang_keys
+                      if k.startswith(item_prefix) and "." not in k[len(item_prefix):]
+                  )
+                  rx = re.compile(r"^tooltip\.relics\.([^.]+)\.ability\.([^.]+)$")
+                  roots = set()
+                  for key in lang_keys:
+                      m = rx.match(key)
+                      if m:
+                          roots.add((m.group(1), m.group(2)))
+                  ability_roots = [
+                      {"owner": owner, "ability_id": ability_id}
+                      for owner, ability_id in sorted(roots)
+                  ]
+
+              report["item_ids_from_lang"] = item_ids
+              report["ability_roots_from_exact_lang_keys"] = ability_roots
+              report["ability_root_count_from_exact_lang_keys"] = len(ability_roots)
+
+              resource_paths = [
+                  n for n in names
+                  if n.startswith("data/reliquified_lenders_cataclysm/")
+                  and not n.endswith("/")
+              ]
+              report["provider_data_resource_paths"] = resource_paths
+
+              metadata_candidates = [
+                  "META-INF/neoforge.mods.toml",
+                  "META-INF/mods.toml"
+              ]
+              for mp in metadata_candidates:
+                  if mp in names:
+                      text = zf.read(mp).decode("utf-8", "replace")
+                      report["metadata_path"] = mp
+                      for key in ("modId", "version", "displayName"):
+                          m = re.search(rf"(?m)^\s*{key}\s*=\s*['\"]([^'\"]+)['\"]", text)
+                          if m:
+                              report[f"metadata_{key}"] = m.group(1)
+                      break
+
+          # Signature/constant-only inspection: no bytecode bodies (-c is intentionally absent).
+          ability_constant_lines = []
+          with zipfile.ZipFile(jar) as zf:
+              class_names = [
+                  n[:-6].replace("/", ".")
+                  for n in zf.namelist()
+                  if n.startswith("it/hurts/octostudios/reliquified_lenders_cataclysm/")
+                  and n.endswith(".class") and "$" not in n
+              ]
+
+          for cls in sorted(class_names):
+              cp = subprocess.run(
+                  ["javap", "-p", "-constants", "-classpath", str(jar), cls],
+                  text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+              )
+              for line in cp.stdout.splitlines():
+                  if "ABILITY" in line.upper() and "java.lang.String" in line:
+                      ability_constant_lines.append({"class": cls, "signature": line.strip()})
+
+          report["ability_string_constant_signatures"] = ability_constant_lines
+
+          report_path.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
+
+          print(json.dumps({
+              "sha1": sha1,
+              "relic_item_class_count": report["relic_item_class_count"],
+              "relic_item_classes": report["relic_item_classes"],
+              "item_ids_from_lang": report["item_ids_from_lang"],
+              "ability_root_count_from_exact_lang_keys": report["ability_root_count_from_exact_lang_keys"],
+              "ability_roots_from_exact_lang_keys": report["ability_roots_from_exact_lang_keys"],
+              "ability_string_constant_signatures": report["ability_string_constant_signatures"],
+              "provider_data_resource_paths": report["provider_data_resource_paths"],
+              "metadata": {
+                  k: v for k, v in report.items() if k.startswith("metadata_")
+              }
+          }, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload bounded audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: reliquified-011-exact-artifact-audit
+          path: build/reliquified-audit/report.json
+          if-no-files-found: error
