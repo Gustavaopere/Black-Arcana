@@ -5,7 +5,7 @@ Status: `84/84 CURRENT PHYSICAL MAGIC ROWS MAPPED / 71 ✅ + 13 ⚠️ / STRICT 
 ## Authority
 
 - Black Arcana base before this closure: `main@49873930b2948b7d5ddf8f0417138dcebffec6ca`
-- sibling physical/modlist authority: `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`
+- sibling physical/modlist authority: `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7`
 - source table: `PROJECT-INSTRUCTIONS/modlist/modlist.md`
 - category rule: a row belongs to this subtotal only when the **category field** contains the exact category `Magic`; the word "Magic" in a display name is not sufficient.
 
@@ -27,7 +27,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 477 | Reliquified Artifacts | ✅ existing canonical provider; +52 strict already owned in ledger |
 | 478 | Reliquified Iron's Spells 'n Spellbooks | ✅ existing canonical provider; +25 strict already owned in ledger |
 | 479 | Reliquified L_Ender's Cataclysm | ✅ exact publisher/physical SHA-1 equality plus bounded exact-artifact audit close 5 registered relic owners / 7 owner-scoped ability roots and exact-current loot routes for all five owners; `COUNTED_EXACT +7` |
-| 500 | ShadowsZ | ⚠️ current publisher lower bound 6: Shadow Eyes, Shadow Arising, Position Swap + 3 Umbral spells; complete action inventory open |
+| 500 | ShadowsZ | ⚠️ exact physical/publisher SHA-1 equality + exact-artifact audit close **10 semantic identities**; all player powers remain attunement-gated by effective `shadowszRestrictPowers`, and Fusion additionally depends on deployed `fusionEnabled`; +0 strict until those values are captured |
 | 501 | Simply Swords: Cataclysm | ⚠️ exact-version source inventory closed at 4 abilities; deployed STARTUP config decides current active subset |
 | 502 | Simply More | ⚠️ Alpha-5 semantic lower bound 9 player-invoked active roots; passive/proc surfaces and implicits excluded; legacy active inventory open |
 | 503 | Simply Swords | ⚠️ release-correlated source lower bound 66: 62 ACTIVE Unique roots + 4 player-use Runic actions; passive/proc/implicit surfaces excluded; legacy/reachability open |
@@ -57,7 +57,7 @@ Reliquified L_Ender's Cataclysm is no longer fail-closed at the catalog denomina
 
 The remaining five newly mapped providers stay fail-closed:
 
-- ShadowsZ: current publisher documentation confirms six supernatural player actions, but the complete current spell/action/control inventory and active config surface are not closed;
+- ShadowsZ: exact hash-matched 1.1.9 artifact evidence closes the complete semantic inventory at 10 identities; strict remains +0 because all powers are attunement-gated by the effective `shadowszRestrictPowers` world rule and Fusion additionally depends on deployed `fusionEnabled`;
 - Simply Swords: Cataclysm: exact-version release-correlated source closes four semantic abilities, but deployed STARTUP config can suppress their active surface and remains uncaptured;
 - Simply More: release-correlated Alpha-5 source establishes a 9-action semantic lower bound from player-invoked active roots; passive/proc surfaces and implicits are excluded while legacy/rework/no-function active uniques and Mimicry remain unclassified;
 - Simply Swords: release-correlated source establishes a 66-action semantic lower bound from 62 registered ACTIVE Unique roots plus 4 player-use Runic action families; passive definitions, 17 implicits and trigger-only Gem Powers are excluded while legacy/non-opted active paths and deployed reachability remain open;
@@ -78,7 +78,7 @@ This is a structural count, not a global semantic denominator.
 
 The five still-partial new providers remain in the closure queue and should be closed in physical order unless stronger current evidence appears elsewhere:
 
-1. ShadowsZ 1.1.9;
+1. ShadowsZ 1.1.9 — capture effective `shadowszRestrictPowers` and deployed `fusionEnabled`; exact 10-root inventory is already closed;
 2. Simply Swords: Cataclysm 1.0.2 deployed config;
 3. Simply More 1.3.0 Alpha 5;
 4. Simply Swords 1.70.2;
