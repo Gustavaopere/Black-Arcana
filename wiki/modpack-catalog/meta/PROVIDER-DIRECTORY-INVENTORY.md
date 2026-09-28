@@ -2,7 +2,7 @@
 
 Checkpoint: 2026-09-27
 
-Authority base for this reconciliation: `main@aee952cf8acb618212c17e506fe6e7272e209fc1`.
+Black Arcana base before this closure: `main@49873930b2948b7d5ddf8f0417138dcebffec6ca`.
 Current sibling physical authority: `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`.
 
 ## Current structural count
