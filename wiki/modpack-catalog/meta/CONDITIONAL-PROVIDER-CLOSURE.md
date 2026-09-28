@@ -10,7 +10,7 @@ This index routes the providers whose current Black Arcana catalog state remains
 
 It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
+Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@6f027bd31eaa040dd2e713ff841be0fd2de684f7`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
 
 - **15** provider directories carry the ⚠️ prefix;
 - all **15** still have a catalog/config/script/effective-state/semantic-classification closure gate listed below;
@@ -60,6 +60,7 @@ The read-only collector in [`docs/qa/provider-catalog-deployed-evidence.md`](../
 - Somake physical fingerprint + spell-lock and Iron's override evidence;
 - Mowzie's physical fingerprint + `enable_tunneling`;
 - Ice And Fire CE physical 2.1.2 fingerprint + exact Jupiter `tools.phantasmalBladeAbility` gate;
+- Simply Swords: Cataclysm physical 1.0.2 fingerprint + exact `config/simplycataclysm-startup.toml` eight-key activation gate;
 - Traveloptics physical classification + bounded `traveloptics:blackout` references.
 
 Ice And Fire CE is now covered for the bounded Ghost Sword Jupiter gate. The collector reads only `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility`. Dread Lich Staff acquisition is separately closed by exact provider/runtime audit `36327488231` and no longer needs collector evidence.
