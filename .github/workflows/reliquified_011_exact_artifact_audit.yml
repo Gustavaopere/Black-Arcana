@@ -134,6 +134,28 @@ jobs:
 
           report["ability_string_constant_signatures"] = ability_constant_lines
 
+          # Declared-method signature inspection only; still no bytecode bodies.
+          invocation_signatures = []
+          trigger_rx = re.compile(
+              r"\\b(castActiveAbility|use|useOn|finishUsingItem|onUseTick|releaseUsing|curioTick|"
+              r"on[A-Za-z]*(Death|Kill|Hurt|Damage))\\s*\\("
+          )
+          relic_class_names = [
+              n[:-6].replace("/", ".")
+              for n in report["relic_item_classes"]
+          ]
+          for cls in sorted(relic_class_names):
+              cp = subprocess.run(
+                  ["javap", "-p", "-classpath", str(jar), cls],
+                  text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+              )
+              for line in cp.stdout.splitlines():
+                  stripped = line.strip()
+                  if trigger_rx.search(stripped):
+                      invocation_signatures.append({"class": cls, "signature": stripped})
+
+          report["relic_invocation_signatures"] = invocation_signatures
+
           report_path.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
 
           print(json.dumps({
@@ -144,6 +166,7 @@ jobs:
               "ability_root_count_from_exact_lang_keys": report["ability_root_count_from_exact_lang_keys"],
               "ability_roots_from_exact_lang_keys": report["ability_roots_from_exact_lang_keys"],
               "ability_string_constant_signatures": report["ability_string_constant_signatures"],
+              "relic_invocation_signatures": report["relic_invocation_signatures"],
               "provider_data_resource_paths": report["provider_data_resource_paths"],
               "metadata": {
                   k: v for k, v in report.items() if k.startswith("metadata_")
