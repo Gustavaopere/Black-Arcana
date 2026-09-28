@@ -4,13 +4,15 @@ Status: `⚠️ PARTIAL / PHYSICAL IDENTITY CLOSED / PUBLISHER LOWER BOUND 6 / C
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@ac23fc1c67937deeffe982ae971c21d4f3561bc5`;
+- sibling checkpoint: `neoforge-rpg-skilltree@27b79d8f494db868ea5a674f9d818f5ea62fd444`;
 - physical row: `#500`;
 - JAR: `shadowsz-1.1.9.jar`;
 - mod id: `shadowsz`;
 - runtime: `1.1.9`;
 - physical SHA-1: `f946eb3a8181e1964279f163f430ccbba6c4edcd`;
 - required host: Iron's Spells 'n Spellbooks `3.16.3`.
+
+Physical revalidation at the newer sibling head confirms the same #500 JAR/version/category tuple and the physical `Magic` subtotal remains 84; no ShadowsZ drift was introduced by the later #512–#521 sibling batch.
 
 ## Exact publisher release line
 
