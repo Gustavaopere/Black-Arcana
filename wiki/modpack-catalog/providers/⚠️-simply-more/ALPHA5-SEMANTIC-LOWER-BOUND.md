@@ -4,7 +4,15 @@ Checkpoint: 2026-09-27
 
 ## Evidence class
 
-`EXACT_PHYSICAL_PUBLISHER_FILE / RELEASE_CORRELATED_SOURCE / LOWER_BOUND 22 / LEGACY_INVENTORY_OPEN`
+`EXACT_PHYSICAL_PUBLISHER_FILE / RELEASE_CORRELATED_SOURCE / LOWER_BOUND 9 PLAYER_ACTIONS / LEGACY_INVENTORY_OPEN`
+
+## Metric boundary
+
+The canonical semantic-magic ledger counts one discrete provider-owned magical action identity only when it is a standalone spell, glyph primitive, ritual/rite, or equivalent **player-invoked supernatural action**.
+
+It excludes items, gear, equipment proc frameworks, passive gear effects, status/effect machinery and downstream consequences.
+
+This boundary is decisive for Simply More: passive on-hit mechanics and weapon implicits are documented provider behavior, but they are not added to the semantic action count.
 
 ## Physical / publisher authority
 
@@ -24,7 +32,7 @@ The sibling dossier reconciles that SHA-1 to CurseForge File `8736778`:
 - embedded/file name reported by publisher: `simplymore-forge-1.3.0_alpha.jar`;
 - upload date: 2026-08-26.
 
-Alpha 5 itself contains three crash fixes and does not claim a wholesale ability rewrite relative to Alpha 4.
+Alpha 5 contains crash fixes and does not claim a wholesale ability rewrite relative to the initial 1.3 Alpha line.
 
 ## Initial Alpha semantic boundary
 
@@ -34,8 +42,9 @@ Consequently:
 
 - 10 weapon types are not 10 semantic actions;
 - 33 Unique Weapons are not 33 semantic actions;
-- item registry presence cannot prove live ability identity;
-- reworked/current surfaces can provide a positive lower bound without implying completeness.
+- item registry presence cannot prove a live player action;
+- passive/proc behavior is not counted by the semantic-magic metric;
+- reworked/current active surfaces can provide a positive lower bound without implying completeness.
 
 ## Release-correlated source
 
@@ -52,59 +61,58 @@ Reason for correlation:
 
 No physical-JAR ↔ source-build byte-equality claim is made.
 
-## Four provider-owned implicits
+## Nine confirmed player-invoked roots
 
-`ImplicitRegistry` defines four Simply More-owned implicit definitions:
+Publisher Alpha notes and release-correlated source positively establish player-invoked active ability surfaces for these nine current/reworked families:
 
-| ID | Owner/type | Causal identity |
-|---|---|---|
-| `simplymore:grandsword_sunder` | Grandsword | armor sunder / shield interaction |
-| `simplymore:friendship` | Lance | mounted damage bonus |
-| `simplymore:disarm` | Khopesh | attack-speed reduction chance |
-| `simplymore:stun` | Pernach | stun chance |
+| # | Unique | Countable player action |
+|---:|---|---|
+| 1 | Magmaseep | Volcanic Vent |
+| 2 | Moundshifter | excavation/drill activation |
+| 3 | Grandfrost | Snow Prison |
+| 4 | Lustrous Moxie | Heavensent Ray |
+| 5 | Soulfracture | fragment-control activation |
+| 6 | Black Pearl | cannonball activation |
+| 7 | The Blood Harvester | Harvest activation |
+| 8 | Ruyi Jingu Bang | charged enlarged strike |
+| 9 | Blade of the Grotesque | statue transformation |
 
-Other Simply More weapon types route to existing Simply Swords weapon-type definitions or reuse one of the roots above. They do not increase the provider-owned implicit count.
+Conservative rule: multiple consequences or follow-up modes inside one activation remain one causal action root unless a separate player invocation is independently established.
 
-Subtotal: **4**.
+Semantic lower bound: **9**.
 
-## Nine reworked Unique families
+## Provider behavior documented but excluded
 
-The initial Alpha changelog and release-correlated source positively establish active/passive ability surfaces for these nine current/reworked families:
+### Reworked-Unique passive/proc surfaces
 
-| Unique | Passive causal root | Active causal root |
-|---|---|---|
-| Magmaseep | Hellfire hit eruption | Volcanic Vent |
-| Moundshifter | pressure → earthquake / carried-block combat state | excavation/drill |
-| Grandfrost | hit freeze | Snow Prison |
-| Lustrous Moxie | light-orb accumulation/detonation | Heavensent Ray |
-| Soulfracture | soul-fragment fracture/harvest | fragment-control activation |
-| Black Pearl | effect theft | cannonball |
-| The Blood Harvester | lifesteal | Harvest |
-| Ruyi Jingu Bang | weapon growth | charged enlarged strike |
-| Blade of the Grotesque | hostile aura/held passive | statue transformation |
+The same nine families also expose passive/on-hit/aura behavior. These are equipment/passive proc mechanics rather than player-selected supernatural actions and are excluded from the semantic count.
 
-Each row contributes two distinct causal roots. Downstream projectiles/entities/effects or multiple consequences inside one activation are not separately counted.
+### Weapon implicits
 
-Subtotal: **18**.
+`ImplicitRegistry` defines four Simply More-owned implicits:
 
-## Lower-bound arithmetic
+- `simplymore:grandsword_sunder`;
+- `simplymore:friendship`;
+- `simplymore:disarm`;
+- `simplymore:stun`.
 
-`18 reworked-Unique roots + 4 provider-owned implicits = 22`.
+Other Simply More weapon types route to existing Simply Swords definitions or reuse the same Simply More implicit root.
 
-This is a **lower bound**, not a final denominator.
+All four remain **+0 semantic** under the current metric because they are weapon/equipment proc mechanics.
 
 ## Explicit non-promotions
 
 Not counted yet:
 
-- older/legacy uniques not included in the positive rework set;
+- older/legacy active uniques not included in the positive rework set;
 - incomplete/rework placeholders;
 - deprecated/removed redirect items;
 - Mimicry forms as separate actions;
+- passive/proc behavior;
 - effects, entities, HUD states, cooldowns and components;
 - Simply Swords-owned implicits reused by Simply More;
 - Iron's Spellbooks scaling/compatibility as separate provider actions;
-- Reforming Remnant as a magic-action root without further semantic classification.
+- Reforming Remnant without further player-action classification.
 
 The source contains examples of unfinished/inert surfaces, so the remaining inventory must be classified object-by-object.
 
@@ -118,7 +126,8 @@ Only public factual metadata, names/IDs, behavior-level semantics, source struct
 
 - physical/publisher artifact identity: **closed**;
 - release-correlated source checkpoint: **established**;
-- confirmed semantic lower bound: **22**;
-- complete Alpha-5 denominator: **open**;
+- confirmed semantic lower bound: **9 player-invoked actions**;
+- documented excluded provider surfaces: **9 passive/proc surfaces + 4 implicits**;
+- complete Alpha-5 active-action denominator: **open**;
 - strict contribution: **+0**;
 - provider status: **⚠️**.
