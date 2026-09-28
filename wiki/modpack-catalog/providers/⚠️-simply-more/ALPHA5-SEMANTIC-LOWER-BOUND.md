@@ -17,7 +17,7 @@ This boundary is decisive for Simply More: passive on-hit mechanics and weapon i
 ## Physical / publisher authority
 
 Sibling physical row #502 at
-`neoforge-rpg-skilltree@107ce395d9b37f908ad0ba39ef6ea6a01e5f27b2`:
+`neoforge-rpg-skilltree@51d590653d927538f23ba6f1643576dc6cc49859`:
 
 - physical JAR: `simplymore-forge-1.3.0_alpha.jar`;
 - mod id: `simplymore`;
