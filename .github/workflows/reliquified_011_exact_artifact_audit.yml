@@ -234,6 +234,80 @@ jobs:
           report["item_registry_ids"] = registry_item_ids
           report["item_registry_count"] = len(registry_item_ids)
 
+          # Exact-current reachability audit. Retain only provider/host loot-entry
+          # identifiers referenced by each relic's RelicData construction plus
+          # the provider-specific loot-table identifiers from RECLootEntries.
+          expected_loot_routes = {
+              "void_cloak": {"CURSED_PYRAMID", "FROSTED_PRISON", "THE_END"},
+              "scouring_eye": {"CURSED_PYRAMID", "THE_END"},
+              "void_vortex_in_bottle": {"FROSTED_PRISON", "THE_END"},
+              "vacuum_glove": {"CURSED_PYRAMID", "THE_END"},
+              "void_bubble": {"THE_END"},
+          }
+          exact_loot_routes = {}
+          for cls in sorted(relic_class_names):
+              cp = subprocess.run(
+                  ["javap", "-c", "-p", "-classpath", str(jar), cls],
+                  text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+              )
+              lines = cp.stdout.splitlines()
+              routes = set()
+              entry_calls = 0
+              relic_loot_calls = 0
+              for line in lines:
+                  m = re.search(
+                      r"// Field it/hurts/octostudios/reliquified_lenders_cataclysm/items/base/data/RECLootEntries\.([A-Z_]+):",
+                      line,
+                  )
+                  if m:
+                      routes.add(m.group(1))
+                  m = re.search(
+                      r"// Field it/hurts/sskirillss/relics/items/relics/base/data/loot/misc/LootEntries\.([A-Z_]+):",
+                      line,
+                  )
+                  if m:
+                      routes.add(m.group(1))
+                  if "LootData$Builder.entry:" in line:
+                      entry_calls += 1
+                  if "RelicData$Builder.loot:" in line:
+                      relic_loot_calls += 1
+
+              owner = owner_from_relic_class(cls)
+              if routes != expected_loot_routes[owner]:
+                  raise SystemExit(
+                      f"Exact loot-route mismatch for {owner}: expected={sorted(expected_loot_routes[owner])} got={sorted(routes)}"
+                  )
+              if entry_calls != 1 or relic_loot_calls != 1:
+                  raise SystemExit(
+                      f"Exact loot wiring mismatch for {owner}: entry_calls={entry_calls} relic_loot_calls={relic_loot_calls}"
+                  )
+              exact_loot_routes[owner] = sorted(routes)
+
+          loot_entry_class = "it.hurts.octostudios.reliquified_lenders_cataclysm.items.base.data.RECLootEntries"
+          cp = subprocess.run(
+              ["javap", "-c", "-p", "-constants", "-classpath", str(jar), loot_entry_class],
+              text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+          )
+          loot_text = cp.stdout
+          expected_provider_loot_tokens = [
+              "minecraft:overworld",
+              "cataclysm:archaeology\\/cursed_pyramid(_necklace)?",
+              "cataclysm:chests/frosted_prison_treasure",
+          ]
+          missing_loot_tokens = [
+              token for token in expected_provider_loot_tokens
+              if token not in loot_text
+          ]
+          if missing_loot_tokens:
+              raise SystemExit(f"Missing exact provider loot-entry tokens: {missing_loot_tokens}")
+          if loot_text.count("LootEntry.builder:") != 2:
+              raise SystemExit(
+                  f"Expected exactly 2 provider LootEntry.builder calls, got {loot_text.count('LootEntry.builder:')}"
+              )
+          report["exact_loot_routes"] = exact_loot_routes
+          report["provider_loot_entry_count"] = 2
+          report["provider_loot_entry_tokens"] = expected_provider_loot_tokens
+
           report_path.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
 
           print(json.dumps({
@@ -248,6 +322,9 @@ jobs:
               "ability_builder_declarations": report["ability_builder_declarations"],
               "item_registry_count": report["item_registry_count"],
               "item_registry_ids": report["item_registry_ids"],
+              "exact_loot_routes": report["exact_loot_routes"],
+              "provider_loot_entry_count": report["provider_loot_entry_count"],
+              "provider_loot_entry_tokens": report["provider_loot_entry_tokens"],
               "relic_invocation_signatures": report["relic_invocation_signatures"],
               "provider_data_resource_paths": report["provider_data_resource_paths"],
               "metadata": {
