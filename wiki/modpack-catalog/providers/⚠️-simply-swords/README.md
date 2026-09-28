@@ -4,7 +4,7 @@ Status: `⚠️ PARTIAL / PHYSICAL IDENTITY CLOSED / RELEASE-CORRELATED SOURCE C
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@51d590653d927538f23ba6f1643576dc6cc49859`;
+- sibling checkpoint: `neoforge-rpg-skilltree@7c9d0e9552e33531d0d6b46b86c9de86d3b233bf`;
 - physical row: `#503`;
 - JAR: `simplyswords-neoforge-1.70.2-1.21.1.jar`;
 - mod id: `simplyswords`;
