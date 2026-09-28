@@ -217,7 +217,7 @@ jobs:
           ACTION_METHODS = {
               "use", "startPlayerAbility", "usageTick", "stop", "activate", "canActivate",
               "getActivationCooldownTicks", "getMaxUseTime", "finishUsing", "finishUsingItem",
-              "releaseUsing", "onStoppedUsing"
+              "releaseUsing", "onStoppedUsing", "onUseTick", "getUseDuration"
           }
 
           def provider_chain(cls_name):
@@ -290,6 +290,21 @@ jobs:
               if ACTIVE_IFACE in row["direct_interfaces"]
           ]
           report["direct_active_interface_class_count"] = len(report["direct_active_interface_classes"])
+          report["active_classes_declaring_activate"] = [
+              row["class"] for row in unique_rows
+              if not row["abstract"]
+              and row["active_interface_in_provider_chain"]
+              and "activate" in row["declared_action_method_names"]
+          ]
+          report["active_classes_declaring_activate_count"] = len(report["active_classes_declaring_activate"])
+          report["legacy_concrete_nonactive_declared_use_classes"] = [
+              row["class"] for row in unique_rows
+              if not row["abstract"]
+              and not row["active_interface_in_provider_chain"]
+              and row["package_group"] not in ("mimicry", "TO_REMOVE")
+              and "use" in row["declared_action_method_names"]
+          ]
+          report["legacy_concrete_nonactive_declared_use_count"] = len(report["legacy_concrete_nonactive_declared_use_classes"])
           report["mimicry_classes"] = [
               row["class"] for row in unique_rows
               if row["package_group"] == "mimicry"
@@ -345,6 +360,60 @@ jobs:
               if ACTIVE_IFACE in info["interfaces"] or ACTIVE_IFACE in info["class_refs"]
           )
 
+          # Narrow exact call-graph facts for selected player-action methods only.
+          # Persist invocation targets, never instruction streams or method bodies.
+          action_call_targets = {}
+          method_needles = (
+              " use(", " startPlayerAbility(", " activate(", " releaseUsing(",
+              " onUseTick(", " usageTick(", " stop("
+          )
+          for row in unique_rows:
+              if row["abstract"]:
+                  continue
+              cls_name = row["class"]
+              cp = subprocess.run(
+                  ["javap", "-c", "-p", "-classpath", str(JAR), cls_name.replace("/", ".")],
+                  text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+              )
+              if cp.returncode != 0:
+                  continue
+              current = None
+              calls = {}
+              for line in cp.stdout.splitlines():
+                  stripped = line.strip()
+                  if stripped.endswith(";") and any(needle in (" " + stripped) for needle in method_needles):
+                      current = next(
+                          needle.strip().split("(")[0]
+                          for needle in method_needles
+                          if needle in (" " + stripped)
+                      )
+                      calls.setdefault(current, [])
+                      continue
+                  if current is not None and stripped and not line.startswith(" ") and stripped.endswith(";"):
+                      current = None
+                  if current is None:
+                      continue
+                  if "invoke" in stripped and "//" in stripped:
+                      target = stripped.split("//", 1)[1].strip()
+                      calls[current].append(target)
+              compact = {
+                  method: sorted(set(targets))
+                  for method, targets in calls.items()
+                  if targets
+              }
+              if compact:
+                  action_call_targets[cls_name] = compact
+
+          report["action_method_call_targets"] = action_call_targets
+          hold_target = "net/rosemarythyme/simplymore/util/AttackUtils.holdToUse:"
+          report["nonactive_use_classes_calling_hold_to_use"] = sorted(
+              cls for cls in report["legacy_concrete_nonactive_declared_use_classes"]
+              if any(
+                  hold_target in target
+                  for target in action_call_targets.get(cls, {}).get("use", [])
+              )
+          )
+
           REPORT.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
 
           print(json.dumps({
@@ -354,6 +423,11 @@ jobs:
               "unique_top_level_class_count": report["unique_top_level_class_count"],
               "direct_active_interface_class_count": report["direct_active_interface_class_count"],
               "concrete_unique_active_class_count": report["concrete_unique_active_class_count"],
+              "active_classes_declaring_activate_count": report["active_classes_declaring_activate_count"],
+              "active_classes_declaring_activate": report["active_classes_declaring_activate"],
+              "legacy_concrete_nonactive_declared_use_count": report["legacy_concrete_nonactive_declared_use_count"],
+              "legacy_concrete_nonactive_declared_use_classes": report["legacy_concrete_nonactive_declared_use_classes"],
+              "nonactive_use_classes_calling_hold_to_use": report["nonactive_use_classes_calling_hold_to_use"],
               "direct_active_interface_classes": report["direct_active_interface_classes"],
               "concrete_unique_classes_with_active_interface": report["concrete_unique_classes_with_active_interface"],
               "mimicry_classes": report["mimicry_classes"],
