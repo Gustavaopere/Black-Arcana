@@ -174,22 +174,21 @@ jobs:
                   text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
               )
               lines = cp.stdout.splitlines()
-              for idx, line in enumerate(lines):
+              last_string = None
+              for line in lines:
+                  m = re.search(r"// String ([A-Za-z0-9_]+)\\s*$", line)
+                  if m:
+                      last_string = m.group(1)
                   if "AbilityData.builder:(Ljava/lang/String;)" not in line:
                       continue
-                  ability_id = None
-                  for prev in reversed(lines[max(0, idx - 5):idx]):
-                      m = re.search(r"// String ([A-Za-z0-9_]+)\\s*$", prev)
-                      if m:
-                          ability_id = m.group(1)
-                          break
-                  if ability_id is None:
+                  if last_string is None:
                       raise SystemExit(f"Could not resolve AbilityData.builder string for {cls}")
                   ability_builder_rows.append({
                       "owner": owner_from_relic_class(cls),
-                      "ability_id": ability_id,
+                      "ability_id": last_string,
                       "class": cls,
                   })
+                  last_string = None
 
           lang_pairs = {
               (row["owner"], row["ability_id"])
@@ -215,18 +214,17 @@ jobs:
           )
           registry_lines = cp.stdout.splitlines()
           registry_item_ids = []
-          for idx, line in enumerate(registry_lines):
+          last_string = None
+          for line in registry_lines:
+              m = re.search(r"// String ([A-Za-z0-9_]+)\\s*$", line)
+              if m:
+                  last_string = m.group(1)
               if "DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)" not in line:
                   continue
-              item_id = None
-              for prev in reversed(registry_lines[max(0, idx - 8):idx]):
-                  m = re.search(r"// String ([A-Za-z0-9_]+)\\s*$", prev)
-                  if m:
-                      item_id = m.group(1)
-                      break
-              if item_id is None:
+              if last_string is None:
                   raise SystemExit("Could not resolve ItemRegistry register string")
-              registry_item_ids.append(item_id)
+              registry_item_ids.append(last_string)
+              last_string = None
 
           registry_item_ids = sorted(registry_item_ids)
           if registry_item_ids != sorted(report["item_ids_from_lang"]):
