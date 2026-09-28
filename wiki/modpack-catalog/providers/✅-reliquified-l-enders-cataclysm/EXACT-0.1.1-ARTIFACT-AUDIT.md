@@ -15,9 +15,9 @@ The artifact is All Rights Reserved. This audit is clean-room factual inspection
 ## Isolated audit
 
 - NON-MERGE PR: **#441**
-- final audit HEAD: `1484b00834d7aa070a401f76716e8448d01654be`
+- final audit HEAD: `096c74db131ecffa95e4f2c22162b311c1c62db5`
 - workflow: `Reliquified 0.1.1 exact artifact audit`
-- final run: **36380842145**
+- final run: **36416011761**
 - result: **GREEN**
 - publisher source: Modrinth project `rBEndPUc`, version `ZHAIRSeF`
 - exact publisher filename: `reliquified_lenders_cataclysm-1.21.1-0.1.1.jar`
@@ -79,6 +79,18 @@ The audit hard-asserts:
 
 It also found no provider data resource under `data/reliquified_lenders_cataclysm/` that would provide a separate data-defined ability inventory.
 
+## Exact-current acquisition route evidence
+
+The same hash-matched audit retains only factual loot-route identifiers from the five exact relic classes and proves:
+
+- `scouring_eye` -> `CURSED_PYRAMID`, `THE_END`;
+- `void_vortex_in_bottle` -> `FROSTED_PRISON`, `THE_END`;
+- `void_cloak` -> `CURSED_PYRAMID`, `FROSTED_PRISON`, `THE_END`;
+- `vacuum_glove` -> `CURSED_PYRAMID`, `THE_END`;
+- `void_bubble` -> `THE_END`.
+
+The provider loot-entry class exposes exactly the two provider-specific fields `CURSED_PYRAMID` and `FROSTED_PRISON`. The bounded audit additionally reconciles their exact factual table tokens with the Cursed Pyramid and Frosted Prison Cataclysm targets. This closes exact-current provider-level acquisition for all five relic owners; assembled-world loot-table mutation and observed drops remain runtime QA.
+
 ## Clean-room boundary
 
 Permitted evidence retained by the audit:
@@ -89,7 +101,8 @@ Permitted evidence retained by the audit:
 - localization **keys only**, not values;
 - method signatures/string constants;
 - exact registration identifiers;
-- exact `AbilityData.builder(String)` argument identities.
+- exact `AbilityData.builder(String)` argument identities;
+- exact loot-route and provider `LootEntry` identifiers.
 
 The workflow does not preserve or upload full `javap -c` output and does not copy implementation bodies, localization prose, textures, models, sounds or other protected assets.
 
