@@ -41,6 +41,8 @@ SIMPLY_CATACLYSM_STARTUP_CONFIG_KEYS = [
     "blazingBrandChance",
     "mechaPulseChargeChance",
     "mechaSmiteHarmfulEffectsChance",
+    "mechaSmiteFireDuration",
+    "mechaSmiteWitherDuration",
     "mechaSmiteRegenChance",
     "mechaSmiteRegenUsesPercentage",
     "mechaSmiteRegenPercentage",
