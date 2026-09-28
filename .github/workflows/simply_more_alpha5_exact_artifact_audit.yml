@@ -1,0 +1,372 @@
+name: Simply More Alpha 5 exact artifact audit
+
+on:
+  push:
+    branches:
+      - audit/simply-more-alpha5-exact-artifact-2026-09-28
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    if: github.head_ref == 'audit/simply-more-alpha5-exact-artifact-2026-09-28' || github.ref_name == 'audit/simply-more-alpha5-exact-artifact-2026-09-28'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download and inspect exact Alpha 5 artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/simply-more-alpha5-audit
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import re
+          import struct
+          import subprocess
+          import urllib.request
+          import zipfile
+          from pathlib import Path
+
+          URL = "https://cursemaven.com/curse/maven/simply-more-1095252/8736778/simply-more-1095252-8736778.jar"
+          EXPECTED_SHA1 = "51636477cd5c378f42d9700e1fe35cd952c8f4f1"
+          JAR = Path("build/simply-more-alpha5-audit/simply-more-alpha5.jar")
+          REPORT = Path("build/simply-more-alpha5-audit/report.json")
+
+          urllib.request.urlretrieve(URL, JAR)
+          actual_sha1 = hashlib.sha1(JAR.read_bytes()).hexdigest()
+          if actual_sha1 != EXPECTED_SHA1:
+              raise SystemExit(f"SHA-1 mismatch: expected {EXPECTED_SHA1}, got {actual_sha1}")
+
+          def parse_class(data: bytes):
+              pos = 0
+              def u1():
+                  nonlocal pos
+                  v = data[pos]
+                  pos += 1
+                  return v
+              def u2():
+                  nonlocal pos
+                  v = struct.unpack_from(">H", data, pos)[0]
+                  pos += 2
+                  return v
+              def u4():
+                  nonlocal pos
+                  v = struct.unpack_from(">I", data, pos)[0]
+                  pos += 4
+                  return v
+              if u4() != 0xCAFEBABE:
+                  raise ValueError("not a class file")
+              minor, major = u2(), u2()
+              cp_count = u2()
+              cp = [None] * cp_count
+              i = 1
+              while i < cp_count:
+                  tag = u1()
+                  if tag == 1:
+                      ln = u2()
+                      raw = data[pos:pos+ln]
+                      pos += ln
+                      cp[i] = (tag, raw.decode("utf-8", "replace"))
+                  elif tag in (3, 4):
+                      cp[i] = (tag, data[pos:pos+4])
+                      pos += 4
+                  elif tag in (5, 6):
+                      cp[i] = (tag, data[pos:pos+8])
+                      pos += 8
+                      i += 1
+                  elif tag in (7, 8, 16, 19, 20):
+                      cp[i] = (tag, u2())
+                  elif tag in (9, 10, 11, 12, 17, 18):
+                      cp[i] = (tag, u2(), u2())
+                  elif tag == 15:
+                      cp[i] = (tag, u1(), u2())
+                  else:
+                      raise ValueError(f"unsupported constant-pool tag {tag}")
+                  i += 1
+
+              def utf8(idx):
+                  if idx == 0 or cp[idx] is None or cp[idx][0] != 1:
+                      return None
+                  return cp[idx][1]
+
+              def cls_name(idx):
+                  if idx == 0 or cp[idx] is None or cp[idx][0] != 7:
+                      return None
+                  return utf8(cp[idx][1])
+
+              access = u2()
+              this_class = u2()
+              super_class = u2()
+              interfaces = [cls_name(u2()) for _ in range(u2())]
+
+              def skip_attrs():
+                  nonlocal pos
+                  for _ in range(u2()):
+                      _name_idx = u2()
+                      ln = u4()
+                      pos += ln
+
+              fields = []
+              for _ in range(u2()):
+                  f_access, f_name, f_desc = u2(), u2(), u2()
+                  fields.append({"access": f_access, "name": utf8(f_name), "descriptor": utf8(f_desc)})
+                  skip_attrs()
+
+              methods = []
+              for _ in range(u2()):
+                  m_access, m_name, m_desc = u2(), u2(), u2()
+                  methods.append({"access": m_access, "name": utf8(m_name), "descriptor": utf8(m_desc)})
+                  skip_attrs()
+
+              class_refs = sorted({
+                  cls_name(idx)
+                  for idx, entry in enumerate(cp)
+                  if idx and entry is not None and entry[0] == 7 and cls_name(idx)
+              })
+              string_literals = sorted({
+                  utf8(entry[1])
+                  for entry in cp
+                  if entry is not None and entry[0] == 8 and utf8(entry[1]) is not None
+              })
+              return {
+                  "major": major,
+                  "minor": minor,
+                  "access": access,
+                  "class": cls_name(this_class),
+                  "super": cls_name(super_class),
+                  "interfaces": sorted(x for x in interfaces if x),
+                  "fields": fields,
+                  "methods": methods,
+                  "class_refs": class_refs,
+                  "string_literals": string_literals,
+              }
+
+          report = {
+              "source_url": URL,
+              "sha1": actual_sha1,
+              "expected_sha1": EXPECTED_SHA1,
+          }
+
+          with zipfile.ZipFile(JAR) as zf:
+              names = sorted(zf.namelist())
+              provider_prefix = "net/rosemarythyme/simplymore/"
+              class_paths = [
+                  n for n in names
+                  if n.startswith(provider_prefix) and n.endswith(".class") and "$" not in n
+              ]
+              classes = {}
+              for path in class_paths:
+                  parsed = parse_class(zf.read(path))
+                  classes[parsed["class"]] = parsed
+
+              report["provider_top_level_class_count"] = len(classes)
+
+              lang_path = "assets/simplymore/lang/en_us.json"
+              item_ids = []
+              tooltip_keys = []
+              if lang_path in names:
+                  lang = json.loads(zf.read(lang_path).decode("utf-8"))
+                  for key in sorted(lang):
+                      if key.startswith("item.simplymore."):
+                          tail = key[len("item.simplymore."):]
+                          if "." not in tail:
+                              item_ids.append(tail)
+                      if key.startswith("item.simplymore.") or key.startswith("tooltip.simplymore."):
+                          tooltip_keys.append(key)
+              report["item_ids_from_exact_lang_keys"] = sorted(set(item_ids))
+              report["provider_item_or_tooltip_key_count"] = len(set(tooltip_keys))
+
+              for metadata_path in ("META-INF/neoforge.mods.toml", "META-INF/mods.toml", "fabric.mod.json"):
+                  if metadata_path not in names:
+                      continue
+                  text = zf.read(metadata_path).decode("utf-8", "replace")
+                  report["metadata_path"] = metadata_path
+                  if metadata_path.endswith(".json"):
+                      try:
+                          meta = json.loads(text)
+                          report["metadata_id"] = meta.get("id")
+                          report["metadata_version"] = meta.get("version")
+                          report["metadata_name"] = meta.get("name")
+                      except Exception:
+                          pass
+                  else:
+                      for key, out_key in (("modId", "metadata_id"), ("version", "metadata_version"), ("displayName", "metadata_name")):
+                          m = re.search(rf"(?m)^\s*{key}\s*=\s*['\"]([^'\"]+)['\"]", text)
+                          if m:
+                              report[out_key] = m.group(1)
+                  break
+
+          ACTIVE_IFACE = "net/sweenus/simplyswords/item/interfaces/UniqueWeaponActiveAbility"
+          STOPPABLE_IFACE = "net/rosemarythyme/simplymore/item/interfaces/StoppableAbilityItem"
+          UNIQUE_PREFIX = "net/rosemarythyme/simplymore/item/uniques/"
+          ACTION_METHODS = {
+              "use", "startPlayerAbility", "usageTick", "stop", "activate", "canActivate",
+              "getActivationCooldownTicks", "getMaxUseTime", "finishUsing", "finishUsingItem",
+              "releaseUsing", "onStoppedUsing"
+          }
+
+          def provider_chain(cls_name):
+              chain = []
+              seen = set()
+              cur = cls_name
+              while cur and cur not in seen:
+                  seen.add(cur)
+                  info = classes.get(cur)
+                  if info is None:
+                      break
+                  chain.append(cur)
+                  cur = info.get("super")
+              return chain
+
+          unique_rows = []
+          for cls_name, info in sorted(classes.items()):
+              if not cls_name.startswith(UNIQUE_PREFIX):
+                  continue
+              chain = provider_chain(cls_name)
+              all_provider_interfaces = set()
+              inherited_methods = set()
+              active_intro = None
+              stoppable_intro = None
+              for ancestor in chain:
+                  a = classes[ancestor]
+                  if ACTIVE_IFACE in a["interfaces"] and active_intro is None:
+                      active_intro = ancestor
+                  if STOPPABLE_IFACE in a["interfaces"] and stoppable_intro is None:
+                      stoppable_intro = ancestor
+                  all_provider_interfaces.update(a["interfaces"])
+                  inherited_methods.update(
+                      m["name"] for m in a["methods"]
+                      if m["name"] in ACTION_METHODS
+                  )
+
+              rel = cls_name[len(UNIQUE_PREFIX):]
+              package_group = "base"
+              if "/" in rel:
+                  package_group = rel.split("/", 1)[0]
+
+              declared = sorted({
+                  m["name"] for m in info["methods"]
+                  if m["name"] in ACTION_METHODS
+              })
+              unique_rows.append({
+                  "class": cls_name,
+                  "simple_name": cls_name.rsplit("/", 1)[-1],
+                  "package_group": package_group,
+                  "abstract": bool(info["access"] & 0x0400),
+                  "super": info["super"],
+                  "direct_interfaces": info["interfaces"],
+                  "active_interface_in_provider_chain": active_intro is not None,
+                  "active_interface_introduced_by": active_intro,
+                  "stoppable_interface_in_provider_chain": stoppable_intro is not None,
+                  "stoppable_interface_introduced_by": stoppable_intro,
+                  "declared_action_method_names": declared,
+                  "provider_chain_action_method_names": sorted(inherited_methods),
+              })
+
+          report["unique_top_level_classes"] = unique_rows
+          report["unique_top_level_class_count"] = len(unique_rows)
+          report["concrete_unique_classes_with_active_interface"] = [
+              row["class"] for row in unique_rows
+              if not row["abstract"] and row["active_interface_in_provider_chain"]
+          ]
+          report["concrete_unique_active_class_count"] = len(report["concrete_unique_classes_with_active_interface"])
+          report["direct_active_interface_classes"] = [
+              row["class"] for row in unique_rows
+              if ACTIVE_IFACE in row["direct_interfaces"]
+          ]
+          report["direct_active_interface_class_count"] = len(report["direct_active_interface_classes"])
+          report["mimicry_classes"] = [
+              row["class"] for row in unique_rows
+              if row["package_group"] == "mimicry"
+          ]
+          report["to_remove_classes"] = [
+              row["class"] for row in unique_rows
+              if row["package_group"] == "TO_REMOVE"
+          ]
+          report["joke_unique_classes"] = [
+              row["class"] for row in unique_rows
+              if row["package_group"] == "joke"
+          ]
+
+          item_registry_name = "net/rosemarythyme/simplymore/registry/item/ItemRegistry"
+          item_registry = classes.get(item_registry_name)
+          if item_registry is None:
+              raise SystemExit("Exact ItemRegistry class not found")
+          report["item_registry_unique_class_refs"] = sorted(
+              ref for ref in item_registry["class_refs"]
+              if ref.startswith(UNIQUE_PREFIX)
+          )
+          lang_ids = set(report["item_ids_from_exact_lang_keys"])
+          report["item_registry_string_literals_matching_lang_item_ids"] = sorted(
+              s for s in item_registry["string_literals"] if s in lang_ids
+          )
+
+          # Narrow factual disassembly of ItemRegistry only. Full javap text is not retained.
+          cp = subprocess.run(
+              ["javap", "-c", "-p", "-classpath", str(JAR), item_registry_name.replace("/", ".")],
+              text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+          )
+          if cp.returncode != 0:
+              raise SystemExit("javap failed for exact ItemRegistry")
+          direct_register_ids = []
+          last_string = None
+          for line in cp.stdout.splitlines():
+              m = re.search(r"// String ([a-z0-9_]+)\s*$", line)
+              if m:
+                  last_string = m.group(1)
+              if "DeferredRegister.register:" in line and last_string is not None:
+                  if last_string in lang_ids:
+                      direct_register_ids.append(last_string)
+                  last_string = None
+          report["direct_register_ids_intersecting_lang_items"] = sorted(set(direct_register_ids))
+          report["direct_register_id_count_intersecting_lang_items"] = len(set(direct_register_ids))
+
+          # Exact provider class references to RemovedItem and active API, useful for proxy/live separation.
+          report["item_registry_references_removed_item"] = (
+              "net/rosemarythyme/simplymore/item/RemovedItem" in item_registry["class_refs"]
+          )
+          report["provider_classes_referencing_active_interface"] = sorted(
+              name for name, info in classes.items()
+              if ACTIVE_IFACE in info["interfaces"] or ACTIVE_IFACE in info["class_refs"]
+          )
+
+          REPORT.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
+
+          print(json.dumps({
+              "sha1": report["sha1"],
+              "metadata_id": report.get("metadata_id"),
+              "metadata_version": report.get("metadata_version"),
+              "unique_top_level_class_count": report["unique_top_level_class_count"],
+              "direct_active_interface_class_count": report["direct_active_interface_class_count"],
+              "concrete_unique_active_class_count": report["concrete_unique_active_class_count"],
+              "direct_active_interface_classes": report["direct_active_interface_classes"],
+              "concrete_unique_classes_with_active_interface": report["concrete_unique_classes_with_active_interface"],
+              "mimicry_classes": report["mimicry_classes"],
+              "to_remove_classes": report["to_remove_classes"],
+              "item_registry_unique_class_refs": report["item_registry_unique_class_refs"],
+              "direct_register_ids_intersecting_lang_items": report["direct_register_ids_intersecting_lang_items"],
+          }, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload bounded audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: simply-more-alpha5-exact-artifact-audit
+          path: build/simply-more-alpha5-audit/report.json
+          if-no-files-found: error
+          retention-days: 3
