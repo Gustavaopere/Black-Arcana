@@ -4,7 +4,7 @@ Status: `⚠️ PARTIAL / PHYSICAL IDENTITY CLOSED / EXACT-VERSION SOURCE-PINNED
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@64f8aad50596bc83b45bf6e99ff356331f2432d6`;
+- sibling checkpoint: `neoforge-rpg-skilltree@9f24bf2f02a02f4a0ad067ed2c43b4eeb8a8b532`;
 - physical row: `#501`;
 - JAR: `simplycataclysm-1.0.2+1.21.1+neoforge.jar`;
 - mod id: `simplycataclysm`;
