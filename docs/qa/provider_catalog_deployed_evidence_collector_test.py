@@ -424,6 +424,8 @@ mechaPulseChargeChance = 0.75
 
 ["Mecha Smite Options"]
 mechaSmiteHarmfulEffectsChance = 1.0
+mechaSmiteFireDuration = 5
+mechaSmiteWitherDuration = 100
 mechaSmiteRegenChance = 0.5
 mechaSmiteRegenUsesPercentage = true
 mechaSmiteRegenPercentage = 0.5
@@ -445,6 +447,8 @@ unrelatedSecret = "do-not-collect"
                     "blazingBrandChance": 0.75,
                     "mechaPulseChargeChance": 0.75,
                     "mechaSmiteHarmfulEffectsChance": 1.0,
+                    "mechaSmiteFireDuration": 5,
+                    "mechaSmiteWitherDuration": 100,
                     "mechaSmiteRegenChance": 0.5,
                     "mechaSmiteRegenUsesPercentage": True,
                     "mechaSmiteRegenPercentage": 0.5,
@@ -498,6 +502,8 @@ mechaPulseChargeChance = 0.75
 
 ["Mecha Smite Options"]
 mechaSmiteHarmfulEffectsChance = 1.0
+mechaSmiteFireDuration = 0
+mechaSmiteWitherDuration = 100
 mechaSmiteRegenChance = 0.5
 mechaSmiteRegenUsesPercentage = false
 mechaSmiteRegenPercentage = 0.5
@@ -524,6 +530,14 @@ mechaSmiteRegenThreshold = 10
             self.assertEqual(
                 0.0,
                 report["simply_swords_cataclysm"]["startup_config"]["selected"]["accursedRageChance"]["value"],
+            )
+            self.assertEqual(
+                0,
+                report["simply_swords_cataclysm"]["startup_config"]["selected"]["mechaSmiteFireDuration"]["value"],
+            )
+            self.assertEqual(
+                100,
+                report["simply_swords_cataclysm"]["startup_config"]["selected"]["mechaSmiteWitherDuration"]["value"],
             )
             self.assertFalse(
                 report["simply_swords_cataclysm"]["startup_config"]["selected"]["mechaSmiteRegenUsesPercentage"]["value"]
