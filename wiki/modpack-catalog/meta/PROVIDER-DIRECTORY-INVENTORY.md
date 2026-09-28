@@ -3,7 +3,7 @@
 Checkpoint: 2026-09-27
 
 Authority base for this reconciliation: `main@aee952cf8acb618212c17e506fe6e7272e209fc1`.
-Current sibling physical authority: `neoforge-rpg-skilltree@fcd2e239ad70c955e47df390d4c74d49dd3b7079`.
+Current sibling physical authority: `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`.
 
 ## Current structural count
 
@@ -59,7 +59,7 @@ Likewise, **115 is not a semantic-magic denominator**. The current strict semant
 
 See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md).
 
-At sibling `neoforge-rpg-skilltree@fcd2e239ad70c955e47df390d4c74d49dd3b7079`:
+At sibling `neoforge-rpg-skilltree@f5508b496e4a607e1b0b53dde7e9242cf6d98d20`:
 
 - physical rows whose **category field** contains `Magic`: **84**;
 - mapped into Black Arcana: **84/84**;
