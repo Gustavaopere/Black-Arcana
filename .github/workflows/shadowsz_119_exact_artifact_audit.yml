@@ -356,7 +356,7 @@ jobs:
               for name in method_names:
                   starts=[]
                   for i,line in enumerate(lines):
-                      if re.match(rf"^  (public|private|protected).*\\b{re.escape(name)}\\(", line):
+                      if re.match(rf"^  (public|private|protected).*\b{re.escape(name)}\(", line):
                           starts.append(i)
                   entries=[]
                   for start in starts:
@@ -371,7 +371,7 @@ jobs:
                       strings=[]
                       news=set()
                       for line in block:
-                          mm=re.search(r"// (?:InterfaceMethod|Method) ([^:]+)\\.(\\w+):", line)
+                          mm=re.search(r"// (?:InterfaceMethod|Method) ([^:]+)\.(\w+):", line)
                           if mm:
                               calls.add(mm.group(1).replace("/",".")+"."+mm.group(2))
                           fm=re.search(r"// Field ([^:]+):", line)
