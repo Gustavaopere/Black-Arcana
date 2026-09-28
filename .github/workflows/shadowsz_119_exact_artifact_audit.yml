@@ -1,0 +1,228 @@
+name: ShadowsZ 1.1.9 exact artifact audit
+
+on:
+  push:
+    branches:
+      - audit/shadowsz-119-exact-artifact-2026-09-28
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    if: github.ref_name == 'audit/shadowsz-119-exact-artifact-2026-09-28' || github.head_ref == 'audit/shadowsz-119-exact-artifact-2026-09-28'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download and inspect exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/shadowsz-audit
+          python3 - <<'PY'
+          import hashlib, json, re, subprocess, urllib.request, zipfile
+          from pathlib import Path
+
+          expected_sha1 = "f946eb3a8181e1964279f163f430ccbba6c4edcd"
+          urls = [
+              "https://cdn.modrinth.com/data/MQQV5K0S/versions/Z5VFhs8D/shadowsz-1.1.9.jar",
+              "https://cursemaven.com/curse/maven/shadowsz-1582485/8626238/shadowsz-1582485-8626238.jar",
+          ]
+          jar = Path("build/shadowsz-audit/shadowsz-1.1.9.jar")
+          source_url = None
+          errors = []
+          for url in urls:
+              try:
+                  urllib.request.urlretrieve(url, jar)
+                  source_url = url
+                  break
+              except Exception as exc:
+                  errors.append(f"{url}: {exc}")
+          if source_url is None:
+              raise SystemExit("Could not download exact publisher artifact: " + " | ".join(errors))
+
+          sha1 = hashlib.sha1(jar.read_bytes()).hexdigest()
+          if sha1 != expected_sha1:
+              raise SystemExit(f"SHA-1 mismatch: expected {expected_sha1}, got {sha1}")
+
+          report = {
+              "source_url": source_url,
+              "sha1": sha1,
+              "expected_sha1": expected_sha1,
+          }
+
+          def class_utf8_constants(data: bytes):
+              # Parse only CONSTANT_Utf8 entries from the class constant pool.
+              if data[:4] != b"\xca\xfe\xba\xbe":
+                  return []
+              cp_count = int.from_bytes(data[8:10], "big")
+              i = 10
+              idx = 1
+              out = []
+              while idx < cp_count:
+                  tag = data[i]
+                  i += 1
+                  if tag == 1:
+                      n = int.from_bytes(data[i:i+2], "big")
+                      i += 2
+                      out.append(data[i:i+n].decode("utf-8", "replace"))
+                      i += n
+                  elif tag in (3,4):
+                      i += 4
+                  elif tag in (5,6):
+                      i += 8
+                      idx += 1
+                  elif tag in (7,8,16,19,20):
+                      i += 2
+                  elif tag in (9,10,11,12,17,18):
+                      i += 4
+                  elif tag == 15:
+                      i += 3
+                  else:
+                      raise ValueError(f"unknown constant-pool tag {tag}")
+                  idx += 1
+              return out
+
+          with zipfile.ZipFile(jar) as zf:
+              names = sorted(zf.namelist())
+              class_paths = [n for n in names if n.endswith(".class") and not n.startswith("META-INF/versions/")]
+              provider_classes = [
+                  n for n in class_paths
+                  if "shadowsz" in n.lower() or "/shadow" in n.lower()
+              ]
+              if not provider_classes:
+                  provider_classes = class_paths
+
+              report["class_count"] = len(class_paths)
+              report["provider_class_count"] = len(provider_classes)
+
+              semantic_name_rx = re.compile(
+                  r"(spell|config|network|packet|command|key|shadow|umbral|power|ability|menu|screen|event|handler|capabil|data|storage|group|party|swap|fusion|equipment)",
+                  re.I,
+              )
+              report["semantic_class_paths"] = [n for n in provider_classes if semantic_name_rx.search(n)]
+
+              namespace_paths = [
+                  n for n in names
+                  if (n.startswith("assets/shadowsz/") or n.startswith("data/shadowsz/")) and not n.endswith("/")
+              ]
+              report["namespace_resource_paths"] = namespace_paths
+
+              metadata_path = None
+              for mp in ("META-INF/neoforge.mods.toml", "META-INF/mods.toml"):
+                  if mp in names:
+                      metadata_path = mp
+                      txt = zf.read(mp).decode("utf-8", "replace")
+                      report["metadata_path"] = mp
+                      for key in ("modId", "version", "displayName"):
+                          m = re.search(rf"(?m)^\s*{key}\s*=\s*['\"]([^'\"]+)['\"]", txt)
+                          if m:
+                              report[f"metadata_{key}"] = m.group(1)
+                      break
+
+              lang_path = "assets/shadowsz/lang/en_us.json"
+              lang_keys = []
+              if lang_path in names:
+                  obj = json.loads(zf.read(lang_path).decode("utf-8"))
+                  if isinstance(obj, dict):
+                      lang_keys = sorted(obj.keys())
+              report["lang_key_count"] = len(lang_keys)
+              report["spell_lang_keys"] = [
+                  k for k in lang_keys
+                  if k.startswith("spell.shadowsz.") and not k.endswith(".description")
+              ]
+              report["keybind_lang_keys"] = [
+                  k for k in lang_keys
+                  if k.startswith("key.") or ".key." in k or "keybind" in k.lower()
+              ]
+              report["action_like_lang_keys"] = [
+                  k for k in lang_keys
+                  if re.search(r"(arising|eyes|swap|summon|dismiss|despawn|attack|release|fusion|equipment|group|stance|behavior|power|claim|miasma|umbral|monarch)", k, re.I)
+              ]
+
+              filtered_constants = {}
+              interesting = re.compile(
+                  r"(shadowsz|arising|shadow.?eyes|position.?swap|summon.?all|dismiss.?all|despawn|attack.?order|release|fusion|equipment|progress.?mode|restrict.?powers|miasma|umbral|monarch|gamerule|key\.|config)",
+                  re.I,
+              )
+              for path in provider_classes:
+                  try:
+                      constants = class_utf8_constants(zf.read(path))
+                  except Exception:
+                      continue
+                  hits = sorted({
+                      s for s in constants
+                      if 2 <= len(s) <= 240 and interesting.search(s)
+                  })
+                  if hits:
+                      filtered_constants[path] = hits
+              report["filtered_utf8_constants_by_class"] = filtered_constants
+
+          # Signature-only inspection. No -c bytecode output is generated or retained.
+          candidate_classes = [
+              p[:-6].replace("/", ".")
+              for p in report["semantic_class_paths"]
+              if "$" not in p
+          ]
+          signature_facts = {}
+          signature_terms = re.compile(
+              r"(spell|config|packet|payload|command|key|shadow|power|ability|summon|dismiss|despawn|attack|release|swap|fusion|equipment|progress|gamerule|group|party|storage|menu|screen|event|handler)",
+              re.I,
+          )
+          for cls in sorted(candidate_classes):
+              cp = subprocess.run(
+                  ["javap", "-p", "-constants", "-classpath", str(jar), cls],
+                  text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+              )
+              kept = []
+              for line in cp.stdout.splitlines():
+                  stripped = line.strip()
+                  if not stripped:
+                      continue
+                  if stripped.startswith(("public class ", "public final class ", "public abstract class ", "class ", "interface ", "public interface ")):
+                      kept.append(stripped)
+                  elif signature_terms.search(stripped):
+                      kept.append(stripped)
+              if kept:
+                  signature_facts[cls] = kept
+          report["signature_facts"] = signature_facts
+
+          out = Path("build/shadowsz-audit/report.json")
+          out.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
+
+          print(json.dumps({
+              "source_url": source_url,
+              "sha1": sha1,
+              "metadata": {k:v for k,v in report.items() if k.startswith("metadata_")},
+              "class_count": report["class_count"],
+              "provider_class_count": report["provider_class_count"],
+              "semantic_class_paths": report["semantic_class_paths"],
+              "namespace_resource_paths": report["namespace_resource_paths"],
+              "spell_lang_keys": report["spell_lang_keys"],
+              "keybind_lang_keys": report["keybind_lang_keys"],
+              "action_like_lang_keys": report["action_like_lang_keys"],
+              "filtered_utf8_constants_by_class": report["filtered_utf8_constants_by_class"],
+              "signature_facts": report["signature_facts"],
+          }, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload bounded audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: shadowsz-1.1.9-exact-artifact-audit
+          path: build/shadowsz-audit/report.json
+          if-no-files-found: error
+          retention-days: 3
