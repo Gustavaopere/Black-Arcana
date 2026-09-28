@@ -176,7 +176,7 @@ jobs:
               lines = cp.stdout.splitlines()
               last_string = None
               for line in lines:
-                  m = re.search(r"// String ([A-Za-z0-9_]+)\\s*$", line)
+                  m = re.search(r"// String ([A-Za-z0-9_]+)\s*$", line)
                   if m:
                       last_string = m.group(1)
                   if "AbilityData.builder:(Ljava/lang/String;)" not in line:
@@ -216,7 +216,7 @@ jobs:
           registry_item_ids = []
           last_string = None
           for line in registry_lines:
-              m = re.search(r"// String ([A-Za-z0-9_]+)\\s*$", line)
+              m = re.search(r"// String ([A-Za-z0-9_]+)\s*$", line)
               if m:
                   last_string = m.group(1)
               if "DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)" not in line:
