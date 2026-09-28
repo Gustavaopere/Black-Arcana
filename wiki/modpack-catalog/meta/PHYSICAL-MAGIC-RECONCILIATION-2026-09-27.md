@@ -30,7 +30,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 500 | ShadowsZ | ⚠️ current publisher lower bound 6: Shadow Eyes, Shadow Arising, Position Swap + 3 Umbral spells; complete action inventory open |
 | 501 | Simply Swords: Cataclysm | ⚠️ exact-version source inventory closed at 4 abilities; deployed STARTUP config decides current active subset |
 | 502 | Simply More | ⚠️ Alpha-5 semantic lower bound 9 player-invoked active roots; passive/proc surfaces and implicits excluded; legacy active inventory open |
-| 503 | Simply Swords | ⚠️ new canonical mapping; Runic/Unique/implicit action inventory open |
+| 503 | Simply Swords | ⚠️ release-correlated source lower bound 66: 62 ACTIVE Unique roots + 4 player-use Runic actions; passive/proc/implicit surfaces excluded; legacy/reachability open |
 | 564 | Waystones | ⚠️ new canonical mapping; semantic classification of provider teleport network remains open |
 
 ## Current physical-Magic status
@@ -59,7 +59,7 @@ The six newly mapped providers are deliberately fail-closed:
 - ShadowsZ: current publisher documentation confirms six supernatural player actions, but the complete current spell/action/control inventory and active config surface are not closed;
 - Simply Swords: Cataclysm: exact-version release-correlated source closes four semantic abilities, but deployed STARTUP config can suppress their active surface and remains uncaptured;
 - Simply More: release-correlated Alpha-5 source establishes a 9-action semantic lower bound from player-invoked active roots; passive/proc surfaces and implicits are excluded while legacy/rework/no-function active uniques and Mimicry remain unclassified;
-- Simply Swords: weapon/item/Runic infrastructure does not itself prove the count of discrete supernatural player actions;
+- Simply Swords: release-correlated source establishes a 66-action semantic lower bound from 62 registered ACTIVE Unique roots plus 4 player-use Runic action families; passive definitions, 17 implicits and trigger-only Gem Powers are excluded while legacy/non-opted active paths and deployed reachability remain open;
 - Waystones: physical `Magic` classification does not by itself establish a countable spell/ritual/action identity.
 
 Therefore the strict reconstructible minimum remains **1677**.
