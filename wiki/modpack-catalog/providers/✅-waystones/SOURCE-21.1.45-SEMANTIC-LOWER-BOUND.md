@@ -1,3 +1,5 @@
+> **HISTORICAL / SUPERSEDED.** This lower-bound checkpoint is preserved for provenance only. The complete semantic closure is now [SOURCE-21.1.45-SEMANTIC-CLOSURE.md](SOURCE-21.1.45-SEMANTIC-CLOSURE.md), which classifies the remaining setup surfaces at +0 and closes Waystones 21.1.45 at three `COUNTED_SOURCE_PINNED` actions.
+
 # Waystones 21.1.45 — exact-source semantic lower bound
 
 Checkpoint: 2026-09-28

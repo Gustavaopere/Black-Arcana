@@ -2,7 +2,7 @@
 
 Checkpoint: 2026-09-27
 
-Status: `15 PROVIDER DIRECTORIES ⚠️ / 15 CATALOG-CLOSURE ROUTES / CURRENT PHYSICAL MAGIC TAXONOMY 84/84 MAPPED / STRICT MINIMUM 1684`
+Status: `14 PROVIDER DIRECTORIES ⚠️ / 14 CATALOG-CLOSURE ROUTES / CURRENT PHYSICAL MAGIC TAXONOMY 84/84 MAPPED / STRICT MINIMUM 1687`
 
 ## Purpose
 
@@ -10,10 +10,10 @@ This index routes the providers whose current Black Arcana catalog state remains
 
 It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@51751e6c77530a7d8825ec42493ffccedf978d1a`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
+Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@1bb7c7d6e2e6878248b0c178bdae55e84697acd2`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
 
-- **15** provider directories carry the ⚠️ prefix;
-- all **15** still have a catalog/config/script/effective-state/semantic-classification closure gate listed below;
+- **14** provider directories carry the ⚠️ prefix;
+- all **14** still have a catalog/config/script/effective-state/semantic-classification closure gate listed below;
 - Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Spell Codex Specs are now **✅ cataloged at +0 independent semantic identities**; their remaining interoperability/runtime QA stays separate.
 
 A provider leaves this index only when its own acceptance rule is satisfied by authoritative current-pack evidence and the canonical provider status is updated accordingly.
@@ -36,7 +36,6 @@ A provider leaves this index only when its own acceptance rule is satisfied by a
 | Simply Swords: Cataclysm `1.0.2+1.21.1+neoforge` | Exact physical identity plus release-correlated `1.21.1-neo@a81158e...` source close exactly four semantic abilities: Blazing Brand, Accursed Rage, Mecha Pulse, Mecha Smite | Effective deployed STARTUP config for the four action gates/chances; source defaults cannot establish current active subset | [DEPLOYED-CONFIG-CHECKLIST.md](../providers/⚠️-simply-swords-cataclysm/DEPLOYED-CONFIG-CHECKLIST.md) |
 | Simply More `1.3.0 Alpha 5` | Exact physical/publisher File 8736778 audit closes the current-pack semantic denominator at 24 player actions: 10 active-API roots + 13 legacy direct-use roots + 1 shared Mimicry transformation; Idol/TO_REMOVE, Reforming Remnant, passive/proc/implicit surfaces and absent Mythic Metals Tidesinger compat are excluded | Deployed reachability only: Simply Swords Awakening/unlock state, current acquisition/reformation paths, effective Mimicry form-disable state, and any deployed config/datapack/script suppression | [EXACT-ALPHA5-ARTIFACT-AUDIT.md](../providers/⚠️-simply-more/EXACT-ALPHA5-ARTIFACT-AUDIT.md) |
 | Simply Swords `1.70.2-1.21.1` | Exact hash-matched File 8746001 audit plus release-correlated/version-declared source close the player-action denominator at exactly 66: 62 ACTIVE Unique roots + 4 player-use Runic families; the exact artifact narrows the residual surface to two Secondary continuations and two direct-use pass-through overrides, all +0 additional roots | Deployed reachability only: authoritative Awakening/unlock state, current acquisition/reformation paths, effective config/datapack/script suppression, compat-dependent materialization where applicable, and final deployed addon ownership reconciliation | [EXACT-1.70.2-ARTIFACT-ACTION-AUDIT.md](../providers/⚠️-simply-swords/EXACT-1.70.2-ARTIFACT-ACTION-AUDIT.md) |
-| Waystones `21.1.45` | Exact-version source pin establishes a 3-action semantic lower bound: one deduplicated provider Warp/Teleport root, Warp Portal Conjuration, and Twinbound Link | Classify Waystone activation, Blank Scroll binding and Warp Plate shard attunement; recheck remaining player-action surface and capture deployed reachability if strict promotion requires it | [SOURCE-21.1.45-SEMANTIC-LOWER-BOUND.md](../providers/⚠️-waystones/SOURCE-21.1.45-SEMANTIC-LOWER-BOUND.md) |
 
 ## Catalog-closed zero-semantic technical providers
 
@@ -112,4 +111,4 @@ When one checklist closes:
 5. keep runtime/integration QA separate;
 6. recheck the latest physical modlist/provider version immediately before merge.
 
-This index is a routing document. It adds no semantic objects itself; after the separately evidenced Reliquified L_Ender's Cataclysm 0.1.1 exact closure, the current strict minimum is **1684**.
+This index is a routing document. It adds no semantic objects itself. After the separately evidenced Reliquified L_Ender's Cataclysm 0.1.1 exact closure and Waystones 21.1.45 source-pinned closure, the current strict minimum is **1687**.
