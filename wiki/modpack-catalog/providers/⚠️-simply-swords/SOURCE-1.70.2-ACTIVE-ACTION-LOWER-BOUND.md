@@ -267,7 +267,8 @@ It permits library/integration use but forbids bundling/publishing/distributing 
 - semantic lower bound: **66**;
 - PASSIVE definitions excluded: **59 at release-correlated checkpoint / 60 at later cross-check**;
 - weapon implicits excluded: **17**;
-- legacy/non-opted active-action denominator: **open**;
+- legacy/non-opted active-action denominator: **historical blocker; closed by exact artifact audit PR #448 / run `36524073819` with +0 additional roots**;
+- current exact action denominator: **66**;
 - deployed active reachability/config: **open**;
 - strict contribution: **+0**;
 - status: **⚠️**.
