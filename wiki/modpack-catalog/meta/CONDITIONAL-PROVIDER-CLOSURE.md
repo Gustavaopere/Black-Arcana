@@ -10,7 +10,7 @@ This index routes the providers whose current Black Arcana catalog state remains
 
 It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@82d0d551f34d20363201f5b71f0ad91a141cbe56`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
+Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@1bb7c7d6e2e6878248b0c178bdae55e84697acd2`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
 
 - **14** provider directories carry the ⚠️ prefix;
 - all **14** still have a catalog/config/script/effective-state/semantic-classification closure gate listed below;
