@@ -152,6 +152,29 @@ jobs:
                   if entry is not None and entry[0] == 8 and utf8(entry[1]) is not None
               })
 
+              def name_and_type(index):
+                  entry = cp[index] if index else None
+                  if entry is None or entry[0] != 12:
+                      return (None, None)
+                  return (utf8(entry[1]), utf8(entry[2]))
+
+              field_refs = []
+              method_refs = []
+              for entry in cp:
+                  if entry is None or entry[0] not in (9, 10, 11):
+                      continue
+                  owner = class_name(entry[1])
+                  name, descriptor = name_and_type(entry[2])
+                  row = {
+                      "owner": owner,
+                      "name": name,
+                      "descriptor": descriptor,
+                  }
+                  if entry[0] == 9:
+                      field_refs.append(row)
+                  else:
+                      method_refs.append(row)
+
               return {
                   "major": major,
                   "minor": minor,
@@ -163,6 +186,8 @@ jobs:
                   "methods": methods,
                   "class_refs": class_refs,
                   "string_literals": string_literals,
+                  "field_refs": field_refs,
+                  "method_refs": method_refs,
               }
 
           PROVIDER_PREFIX = "net/sweenus/simplyswords/"
@@ -424,6 +449,217 @@ jobs:
           )
           report["provider_packet_like_classes"] = packet_like
 
+          # Exact UniqueAbilityDefinition registry closure. Only definition field
+          # names, root paths and ACTIVE/PASSIVE kind are retained.
+          ability_registry_classes = [
+              PROVIDER_PREFIX + "api/ability/BuiltinUniqueAbilities",
+              *[
+                  PROVIDER_PREFIX + f"api/ability/Phase{phase}UniqueAbilities"
+                  for phase in range(2, 11)
+              ],
+          ]
+          definition_rows = []
+          for registry_class in ability_registry_classes:
+              if registry_class not in classes:
+                  raise SystemExit(f"Missing exact ability registry class: {registry_class}")
+              cp = subprocess.run(
+                  ["javap", "-c", "-p", "-classpath", str(JAR), registry_class.replace("/", ".")],
+                  text=True,
+                  stdout=subprocess.PIPE,
+                  stderr=subprocess.DEVNULL,
+                  check=False,
+              )
+              if cp.returncode != 0:
+                  raise SystemExit(f"javap failed for {registry_class}")
+
+              id_paths = {}
+              last_string = None
+              last_id_field = None
+              last_kind = None
+              pending_definition = None
+
+              for line in cp.stdout.splitlines():
+                  stripped = line.strip()
+                  string_match = re.search(r"// String ([a-z0-9_\\/]+)\\s*$", stripped)
+                  if string_match:
+                      last_string = string_match.group(1)
+
+                  put_id = re.search(
+                      r"// Field ([A-Z0-9_]+_ID):Lnet/minecraft/resources/ResourceLocation;",
+                      stripped,
+                  )
+                  if put_id and last_string is not None:
+                      id_paths[put_id.group(1)] = last_string
+                      last_string = None
+
+                  get_id = re.search(
+                      r"// Field ([A-Z0-9_]+_ID):Lnet/minecraft/resources/ResourceLocation;",
+                      stripped,
+                  )
+                  if "getstatic" in stripped and get_id:
+                      last_id_field = get_id.group(1)
+
+                  if "UniqueAbilityKind.ACTIVE" in stripped:
+                      last_kind = "ACTIVE"
+                  elif "UniqueAbilityKind.PASSIVE" in stripped:
+                      last_kind = "PASSIVE"
+
+                  if "UniqueAbilityDefinition.builder:" in stripped:
+                      if last_id_field is not None and last_kind is not None:
+                          pending_definition = (last_id_field, last_kind)
+                  elif re.search(r"// Method active:\(Lnet/minecraft/resources/ResourceLocation;\)Lnet/sweenus/simplyswords/api/ability/UniqueAbilityDefinition;", stripped):
+                      if last_id_field is not None:
+                          pending_definition = (last_id_field, "ACTIVE")
+                  elif re.search(r"// Method passive:\(Lnet/minecraft/resources/ResourceLocation;\)Lnet/sweenus/simplyswords/api/ability/UniqueAbilityDefinition;", stripped):
+                      if last_id_field is not None:
+                          pending_definition = (last_id_field, "PASSIVE")
+
+                  put_definition = re.search(
+                      r"// Field ([A-Z0-9_]+):Lnet/sweenus/simplyswords/api/ability/UniqueAbilityDefinition;",
+                      stripped,
+                  )
+                  if "putstatic" in stripped and put_definition and pending_definition is not None:
+                      id_field, kind = pending_definition
+                      root_path = id_paths.get(id_field)
+                      if root_path is None:
+                          raise SystemExit(
+                              f"Missing root path for {registry_class} {put_definition.group(1)} via {id_field}"
+                          )
+                      definition_rows.append({
+                          "registry_class": registry_class,
+                          "definition_field": put_definition.group(1),
+                          "id_field": id_field,
+                          "root_path": root_path,
+                          "kind": kind,
+                      })
+                      pending_definition = None
+
+          active_definitions = [row for row in definition_rows if row["kind"] == "ACTIVE"]
+          passive_definitions = [row for row in definition_rows if row["kind"] == "PASSIVE"]
+          active_owner_families = sorted({
+              row["root_path"].split("/", 1)[0]
+              for row in active_definitions
+          })
+          if len(active_definitions) != 62:
+              raise SystemExit(f"Expected exact 62 ACTIVE definitions, got {len(active_definitions)}")
+          if len(active_owner_families) != 51:
+              raise SystemExit(
+                  f"Expected exact 51 ACTIVE owner families, got {len(active_owner_families)}"
+              )
+          report["exact_unique_ability_definitions"] = definition_rows
+          report["exact_active_definition_count"] = len(active_definitions)
+          report["exact_passive_definition_count"] = len(passive_definitions)
+          report["exact_active_owner_families"] = active_owner_families
+          report["exact_active_owner_family_count"] = len(active_owner_families)
+
+          definition_lookup = {
+              (row["registry_class"], row["definition_field"]): row
+              for row in definition_rows
+          }
+
+          def direct_definition_rows(class_id):
+              info = classes.get(class_id)
+              if info is None:
+                  return []
+              found = {}
+              for ref in info["field_refs"]:
+                  key = (ref["owner"], ref["name"])
+                  row = definition_lookup.get(key)
+                  if row is not None:
+                      found[(row["registry_class"], row["definition_field"])] = row
+              return list(found.values())
+
+          # Map each exact registered Active item to definitions directly or
+          # through dedicated *Manager call targets. This is structural
+          # association only; no implementation body is persisted.
+          active_class_definition_map = {}
+          for item_row in active_rows:
+              support = set(provider_chain(item_row["class"]))
+              for chain_class in list(support):
+                  info = classes.get(chain_class)
+                  if info is None:
+                      continue
+                  for ref in info["method_refs"]:
+                      owner = ref.get("owner")
+                      if owner and owner.startswith(PROVIDER_PREFIX) and owner.endswith("Manager"):
+                          support.add(owner)
+
+              roots = {}
+              for support_class in sorted(support):
+                  for row in direct_definition_rows(support_class):
+                      if row["kind"] == "ACTIVE":
+                          roots[row["root_path"]] = {
+                              "root_path": row["root_path"],
+                              "registry_class": row["registry_class"],
+                              "definition_field": row["definition_field"],
+                              "support_class": support_class,
+                          }
+              active_class_definition_map[item_row["class"]] = sorted(
+                  roots.values(),
+                  key=lambda row: row["root_path"],
+              )
+
+          report["active_class_definition_map"] = active_class_definition_map
+          report["active_classes_without_exact_active_definition_reference"] = sorted(
+              class_id
+              for class_id, roots in active_class_definition_map.items()
+              if not roots
+          )
+          mapped_active_roots = sorted({
+              row["root_path"]
+              for roots in active_class_definition_map.values()
+              for row in roots
+          })
+          exact_active_roots = sorted(row["root_path"] for row in active_definitions)
+          report["mapped_active_root_count"] = len(mapped_active_roots)
+          report["mapped_active_roots"] = mapped_active_roots
+          report["unmapped_exact_active_roots"] = sorted(
+              set(exact_active_roots) - set(mapped_active_roots)
+          )
+
+          # Bounded call-target evidence for the only two exact secondary
+          # action classes and the two non-Active classes that merely expose
+          # use(). This retains invocation targets only.
+          def selected_method_call_targets(class_id, method_name):
+              cp = subprocess.run(
+                  ["javap", "-c", "-p", "-classpath", str(JAR), class_id.replace("/", ".")],
+                  text=True,
+                  stdout=subprocess.PIPE,
+                  stderr=subprocess.DEVNULL,
+                  check=False,
+              )
+              if cp.returncode != 0:
+                  raise SystemExit(f"javap failed for {class_id}")
+              targets = []
+              current = False
+              declaration = re.compile(
+                  rf"^\\s*(public|protected|private).*\\b{re.escape(method_name)}\\(.*\\);\\s*$"
+              )
+              any_declaration = re.compile(
+                  r"^\\s*(public|protected|private).*\\b[A-Za-z0-9_$]+\\(.*\\);\\s*$"
+              )
+              for line in cp.stdout.splitlines():
+                  if declaration.match(line):
+                      current = True
+                      continue
+                  if current and any_declaration.match(line):
+                      current = False
+                  if current and "invoke" in line and "//" in line:
+                      targets.append(line.split("//", 1)[1].strip())
+              return sorted(set(targets))
+
+          bounded_call_targets = {}
+          for class_id, method_name in (
+              (CUSTOM_PREFIX + "StormscaleSwordItem", "startPlayerSecondaryAbility"),
+              (CUSTOM_PREFIX + "WraithmawSwordItem", "startPlayerSecondaryAbility"),
+              (CUSTOM_PREFIX + "RighteousRelicSwordItem", "use"),
+              (CUSTOM_PREFIX + "TaintedRelicSwordItem", "use"),
+          ):
+              bounded_call_targets[class_id + "#" + method_name] = selected_method_call_targets(
+                  class_id, method_name
+              )
+          report["bounded_selected_action_call_targets"] = bounded_call_targets
+
           REPORT.write_text(
               json.dumps(report, indent=2, sort_keys=True),
               encoding="utf-8",
@@ -439,6 +675,13 @@ jobs:
               "items_registry_custom_class_ref_count": report["items_registry_custom_class_ref_count"],
               "registered_concrete_custom_class_count": report["registered_concrete_custom_class_count"],
               "registered_active_class_count": report["registered_active_class_count"],
+              "exact_active_definition_count": report["exact_active_definition_count"],
+              "exact_passive_definition_count": report["exact_passive_definition_count"],
+              "exact_active_owner_family_count": report["exact_active_owner_family_count"],
+              "active_classes_without_exact_active_definition_reference": report["active_classes_without_exact_active_definition_reference"],
+              "mapped_active_root_count": report["mapped_active_root_count"],
+              "unmapped_exact_active_roots": report["unmapped_exact_active_roots"],
+              "bounded_selected_action_call_targets": report["bounded_selected_action_call_targets"],
               "registered_active_classes": [
                   {
                       "class": row["class"],
