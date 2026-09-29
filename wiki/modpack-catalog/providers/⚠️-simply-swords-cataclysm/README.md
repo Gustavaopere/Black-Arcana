@@ -57,6 +57,8 @@ Status effects, particles, sounds, individual weapon items, recipes, material fa
 
 Therefore the **complete exact-version source inventory is four provider-owned supernatural weapon abilities**.
 
+Object-level catalog: [ACTION-CARDS-1.0.2.md](ACTION-CARDS-1.0.2.md).
+
 ## Why the strict contribution remains +0
 
 The same exact source registers `SCConfig.SPEC` as a NeoForge `ModConfig.Type.STARTUP` configuration and exposes numerical gates that can suppress the action surface.
