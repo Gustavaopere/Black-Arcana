@@ -685,5 +685,113 @@ unrelatedSecret = "do-not-collect"
 
 
 
+
+
+    def test_collects_only_exact_simply_more_mimicry_disabled_flags(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config_dir = instance / "config" / "simplymore"
+            config_dir.mkdir(parents=True)
+
+            forms = list(collector.SIMPLY_MORE_MIMICRY_FORMS)
+            sections = []
+            for index, form in enumerate(forms):
+                sections.append(
+                    f"[mimicry.config.{form}]\n"
+                    f"disabled = {'true' if index == 0 else 'false'}\n"
+                    f"unrelatedSecret = \"sentinel-{form}\"\n"
+                )
+            (config_dir / "unique_effect.toml").write_text(
+                "\n".join(sections),
+                encoding="utf-8",
+            )
+
+            result = collector.collect_simply_more(instance)
+
+            self.assertEqual("OBSERVED", result["mimicry_form_disable_config"]["status"])
+            self.assertEqual(
+                "config/simplymore/unique_effect.toml",
+                result["mimicry_form_disable_config"]["path"],
+            )
+            self.assertEqual(25, result["expected_form_count"])
+            rows = {row["form"]: row for row in result["mimicry_form_disable_config"]["forms"]}
+            self.assertEqual(set(forms), set(rows))
+            self.assertIs(True, rows[forms[0]]["disabled"])
+            self.assertIs(False, rows[forms[1]]["disabled"])
+            self.assertTrue(all(row["status"] == "OBSERVED" for row in rows.values()))
+            serialized = json.dumps(result)
+            self.assertNotIn("unrelatedSecret", serialized)
+            self.assertNotIn("sentinel-", serialized)
+
+    def test_simply_more_mimicry_missing_flags_stay_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config_dir = instance / "config" / "simplymore"
+            config_dir.mkdir(parents=True)
+            (config_dir / "unique_effect.toml").write_text(
+                "[mimicry.config.longsword]\ndisabled = false\n",
+                encoding="utf-8",
+            )
+
+            result = collector.collect_simply_more(instance)
+
+            self.assertEqual("INCOMPLETE", result["mimicry_form_disable_config"]["status"])
+            rows = {row["form"]: row for row in result["mimicry_form_disable_config"]["forms"]}
+            self.assertEqual("OBSERVED", rows["longsword"]["status"])
+            self.assertEqual("KEY_NOT_FOUND", rows["great_katana"]["status"])
+
+    def test_hash_inventory_checks_simply_more_alpha5_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            (mods / "simplymore-forge-1.3.0_alpha.jar").write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("simply_more", result)
+            self.assertEqual(1, len(result["simply_more"]))
+            entry = result["simply_more"][0]
+            self.assertEqual("simplymore-forge-1.3.0_alpha.jar", entry["filename"])
+            self.assertIn("current_physical_alpha5_equality", entry)
+            self.assertFalse(entry["current_physical_alpha5_equality"])
+
+    def test_main_report_includes_simply_more_mimicry_state(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            (instance / "mods").mkdir(parents=True)
+            config_dir = instance / "config" / "simplymore"
+            config_dir.mkdir(parents=True)
+
+            sections = []
+            for form in collector.SIMPLY_MORE_MIMICRY_FORMS:
+                sections.append(f"[mimicry.config.{form}]\ndisabled = false\n")
+            (config_dir / "unique_effect.toml").write_text(
+                "\n".join(sections),
+                encoding="utf-8",
+            )
+
+            output = instance / "evidence.json"
+            with patch(
+                "sys.argv",
+                [
+                    "provider-catalog-deployed-evidence-collector.py",
+                    str(instance),
+                    "--output",
+                    str(output),
+                ],
+            ):
+                self.assertEqual(0, collector.main())
+
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(
+                "OBSERVED",
+                report["simply_more"]["mimicry_form_disable_config"]["status"],
+            )
+            self.assertEqual(
+                25,
+                len(report["simply_more"]["mimicry_form_disable_config"]["forms"]),
+            )
+
 if __name__ == "__main__":
     unittest.main()
