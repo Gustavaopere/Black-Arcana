@@ -133,6 +133,12 @@ It also records:
 
 Catalog closure does not promote any of those surfaces to runtime-stable contracts.
 
+## Canonical object-level catalog
+
+The complete **1/1** provider-owned spell set is materialized in [`SPELL-CARDS-0.1.3-alpha.md`](SPELL-CARDS-0.1.3-alpha.md) and [`spells/prismatic-portal.md`](spells/prismatic-portal.md).
+
+The folder remains correctly named **`✅-crystal-chronicles`** because the current source-pinned provider spell denominator, Prismatic school/focus route, host-spell deduplication and explicit non-counts are closed. The project's Alpha/WIP runtime QA remains separate and does not downgrade catalog completeness.
+
 ## Runtime state — fail-closed
 
 Still unverified in the exact assembled pack:

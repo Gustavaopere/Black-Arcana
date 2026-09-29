@@ -123,6 +123,12 @@ The source metadata declares PolyForm Shield. This catalog uses the public sourc
 
 No provider implementation body, assets, recipes, localization prose or formulas are copied into Black Arcana. The source pin is catalog evidence, not implementation authority.
 
+## Canonical object-level catalog
+
+All **38/38 active 1.4.0.14 spell registrations** are materialized in [`SPELL-CARDS-1.4.0.14.md`](SPELL-CARDS-1.4.0.14.md) and the individual files under `spells/`.
+
+The folder remains correctly named **`✅-hazen-n-stuff`** because the release-pinned registry denominator, three special acquisition gates, custom-school focus routes, inactive-root exclusions and authority boundaries are closed at catalog level. Runtime/provider integration QA remains separate and does not downgrade catalog completeness.
+
 ## Runtime state — fail-closed
 
 Still unverified in the exact assembled modpack:
