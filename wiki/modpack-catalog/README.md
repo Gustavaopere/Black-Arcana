@@ -15,7 +15,7 @@ This directory is the canonical Phase 2 inventory for every magic-relevant top-l
 - Phase 2L Apprentice's Codex checkpoint — merged through PR #80 at `main@4f45a0a1a3442d75fc11b2d5e6186848870377a5`; exact installed `0.9.7.1` identity and exact source pin `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`, with 83/83 spell pages and provider-wide registry/acquisition/compat coverage complete at source-catalog level; full runtime QA remains separately pending.
 - Phase 2M Cataclysm: Spellbooks checkpoint — exact installed `1.1.13-1.21` Beta identity and current publisher 65-spell scale are pinned; the official public repository remains `1.1.11-1.21`, so a 34-registration source baseline is cataloged separately and the exact current 65-entry registry remains fail-closed pending an inspectable 1.1.13 artifact or matching source.
 - 25/09 current physical-Magic reconciliation — sibling `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` has **50 current status-prefixed rows whose physical category path contains `Magic`**, all mapped to provider directories after ownership-name normalization. Effective state is **46 ✅ cataloged / 4 ⚠️ partial-conditioned**: Tombstone contributes 10 actions that are now `COUNTED_EXACT` after physical↔publisher SHA-1 equality was closed; it remains partial because additional config-sensitive castables are unresolved. Gaze remains a separate ⚠️ magic provider because its current sibling dossier is categorized under `Addons/`, outside this physical-category count. **Traveloptics is absent from the current sibling modlist/dossier tree and is retained only as historical Phase 2BS evidence; it is not a current provider blocker.** Companions +9, Crystal Chronicles +1, Relics +41 and Tombstone +10 keep the strict reconstructible minimum at **1443**. The technical denominator remains `PENDING REBASE`.
-- 27/09 current physical-Magic reconciliation — sibling `neoforge-rpg-skilltree@8aa9b92197c2a6eed5b67b16fa6b6a4adb88fd35` has **84 rows whose category field contains `Magic`**, all **84/84 mapped** into Black Arcana as **71 ✅ + 13 ⚠️**. The +17 delta from the prior 67-row snapshot contains 11 already-cataloged providers plus six newly mapped providers: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. Reliquified L_Ender's Cataclysm 0.1.1 is ✅ `COUNTED_EXACT 7`. ShadowsZ 1.1.9 has an exact 10-root semantic inventory but remains +0 strict until deployed attunement/Fusion state is captured. Simply More Alpha 5 now has an exact hash-matched **24-action current-pack denominator** (10 active API + 13 legacy direct-use + 1 shared Mimicry), but remains +0 strict until deployed Awakening/acquisition/Mimicry/config reachability is closed. The reconstructible strict minimum remains **1684**. Canonical structural tree: **115 = 100 ✅ + 15 ⚠️**. See `meta/PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md`.
+- 27/09 current physical-Magic reconciliation — sibling `neoforge-rpg-skilltree@82d0d551f34d20363201f5b71f0ad91a141cbe56` has **84 rows whose category field contains `Magic`**, all **84/84 mapped** into Black Arcana as **72 ✅ + 12 ⚠️**. The +17 delta from the prior 67-row snapshot contains 11 already-cataloged providers plus six newly mapped providers: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. Reliquified L_Ender's Cataclysm 0.1.1 is ✅ `COUNTED_EXACT 7`, and Waystones 21.1.45 is ✅ `COUNTED_SOURCE_PINNED 3` after complete exact-version source action-surface reconciliation. ShadowsZ 1.1.9 has an exact 10-root semantic inventory but remains +0 strict until deployed attunement/Fusion state is captured. Simply More Alpha 5 now has an exact hash-matched **24-action current-pack denominator** (10 active API + 13 legacy direct-use + 1 shared Mimicry), but remains +0 strict until deployed Awakening/acquisition/Mimicry/config reachability is closed. The reconstructible strict minimum is now **1687**. Canonical structural tree: **115 = 101 ✅ + 14 ⚠️**. See `meta/PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md`.
 - Subsequent Phase 2 documentation is merged incrementally when coherent and CI-green; an incremental merge does not mean the complete catalog is finished.
 
 The Phase 2 baseline established the magic-relevant registry and a first set of provider pages, while multiple exact spell/glyph/ritual/power inventories remain explicitly incomplete.
@@ -66,7 +66,7 @@ Capability-matrix deltas follow the same narrow-overlay rule:
 
 ## Authority order
 
-1. Current physical modlist evidence is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. The former **595 top-level / NeoForge `21.1.248`** snapshot is now historical. The current sibling authority at `neoforge-rpg-skilltree@8aa9b92197c2a6eed5b67b16fa6b6a4adb88fd35` contains both status-prefixed current physical dossiers and uncategorized legacy/export Markdown files. Legacy files and their older top-level counts are not silently promoted into the current physical denominator. Until the integral magic-provider queue is regenerated, each newly certified dossier is a provider-specific physical override; internal `jarjar` dependencies do not count as top-level providers.
+1. Current physical modlist evidence is authoritative for **presence, JAR identity, mod id, runtime name and runtime version**. The former **595 top-level / NeoForge `21.1.248`** snapshot is now historical. The current sibling authority at `neoforge-rpg-skilltree@82d0d551f34d20363201f5b71f0ad91a141cbe56` contains both status-prefixed current physical dossiers and uncategorized legacy/export Markdown files. Legacy files and their older top-level counts are not silently promoted into the current physical denominator. Until the integral magic-provider queue is regenerated, each newly certified dossier is a provider-specific physical override; internal `jarjar` dependencies do not count as top-level providers.
 2. Current Notion pages and project guides provide ecosystem classification, gameplay context and known compatibility notes.
 3. Official/public documentation, public APIs, changelogs and clean-room observable behavior provide granular spell/glyph/ritual/power facts.
 4. External source code may only inform an implementable specification when the exact license permits that use and the provenance ledger requirement has already been satisfied.
@@ -138,66 +138,3 @@ Existing content remains mandatory even when Black Arcana will not modify it. `J
 ## Ars Nouveau rule
 
 Ars Nouveau is compositional. Phase 2 catalogs forms, effects, augments, rituals and other finite primitives, then maps the capabilities they can compose. It does **not** enumerate every possible player-authored spell recipe.
-
-## Current school decisions affecting the catalog
-
-- Celestial/Divine is not a separate school: approved future celestial content belongs to Iron's **Holy** unless another existing provider is the actual authority.
-- Blood Binding is not a separate school: the existing Iron's **Blood** school is the target of the planned blood-resource reform.
-- Chaos and Order remain candidate Iron's schools pending complete semantic deduplication.
-- Infernal remains candidate pending full audit of Fire, Goety, Cataclysm/Ignis, Soul Fire and related providers.
-
-## High-value providers already advanced
-
-The granular queue plus explicit overlays remain authoritative for exact per-row status. Major audits currently include:
-
-- Iron's base spell registry/catalog;
-- Ypsilon's Fundamentalism, Asterism Arcanum, Dreamless and other audited Iron's addons;
-- Eidolon: Repraised `0.5.0.2` — spells/chants/conversions/ritual recipes/research inventoried in source, runtime QA pending;
-- Vampirism `1.10.13` + Bloodlines `3.0.9` + Vampiric Ageing `1.4.21` + Vampire Spells Addon `0.0.9` — provider authority/resources/actions/progression cataloged in source, runtime/inter-addon QA pending;
-- Vampirism Integrations `1.10.2` — Cold Sweat eligibility and Jade discovery cataloged without inferring runtime activation;
-- Werewolves `2.0.3.3` — faction/forms/actions/skills/effects/leveling/Lord/minions/refinements cataloged in source, runtime/Epic Fight QA pending;
-- Goety `3.1.4` — exact installed artifact/runtime identity is pinned; the public `Vivideru/Goety-3` 1.21.1 source line is audited at 3.1.0/3.1.1 with a stable `ModItems.java` blob and **123 active Focus item registrations**, while the official Wiki's 110 named base Focuses remain a documentary subset alongside 12 Wands/Staffs, 13 ritual types and 10 Research lines. Exact 3.1.4 JAR↔source equivalence, semantic reachability/deduplication, mechanics and API/runtime seams remain unverified and fail-closed;
-- Goety Cataclysm `1.21.1-1.8.2` — exact installed artifact/File ID/hash pinned and public semantic surface audited; matching 1.21.1 source revision not located and project is ARR, so granular internals remain unverified/fail-closed;
-- Goety Iron `3.1` — exact installed artifact/File ID/hash and release changelog pinned; eight public servant names cataloged while source/API internals remain unverified/fail-closed;
-- Malum `1.8.2` — exact version-line metadata/publisher changelog advanced Spirit Rite/Geas/spirit-resource coverage, but source-internal completion remains blocked by licensing conflict and runtime QA;
-- Hexalia — public 1.3.6 source pin with MIT provenance; 8/8 brews, 19/19 player-facing Nature's Ritual recipes, 6/6 Celestial Infusions, 21/21 mutations, 12/12 Mortar recipes, 10/10 Censer combinations and major capability-bearing items audited; installed filename/runtime-version mismatch and API/runtime QA remain;
-- Toxony `0.10.7` — exact installed artifact + exact public source-version pin; 5/5 harmful effects, 9/9 Oils, 7/7 Mutagen effect IDs, 11/11 Affinities, threshold selection, major Mutagen mechanics, processing and external compat overlaps audited factually; GPLv3/LGPLv3 provenance conflict, supported-API and runtime gates remain fail-closed;
-- Mobstein `5.4.4` — exact installed artifact + exact CurseForge File ID 8040734 and publisher current guide/release lineage; corporeal resurrection, ten resurrected creature families, anatomy/organ extraction, Surgery Stretch + four internal modifiers, Subject Assembly, Igor + seven failed experiments, syringe family, three structures, Dr. Mobstenio and three-stage Witherstein cataloged; ARR means no source/bytecode decompilation, internal registries/API and exact Sable 2.0.5 seam remain fail-closed;
-- Apprentice's Codex `0.9.7.1` — exact installed artifact + exact source pin `305ea6a...`; **83/83** spell registry IDs across nine Iron's schools have source-pinned pages, with exact **167/167 item IDs**, **20/20 block IDs**, static/dynamic effect and provider-attribute inventories, 25-slot School Affinity, acquisition surfaces and optional-compat inventory cataloged. Full 612-mod runtime/config QA remains explicit rather than inferred;
-- Hazen N Stuff `1.4.0.14` — current physical JAR/SHA-1 certified by the sibling 22/09 re-audit; exact release-correlated source pin `5fcaf39c...` closes 38 active Iron's spell registrations; `brimstone_hellblast` and `supernova` are localization-only while `reign_of_tyros` has a commented registration and is excluded; custom focus/special craft gates reconciled, runtime QA still fail-closed;
-- Iron's Apothic `2.2.2` — current sibling row #339 plus exact official source pin `c5d5012...`; 7 custom affix codecs, 140 affix definitions, 48 explicit spell/imbued-spell affix definitions and 24 gems cataloged; the bridge consumes Iron's `SpellRegistry` rather than owning an independent spell registry, so semantic delta is +0 and assembled-pack runtime QA remains fail-closed;
-- Companions! `1.3.4` — exact physical SHA plus version-correlated official source closes **9 provider-owned Magic Book action identities** with source-level survival routes; Soul Mage reuse is deduplicated; assembled-pack behavior remains runtime QA.
-- Crystal Chronicles `0.1.3-alpha` — physical SHA is pinned and the release-correlated official source closes exactly **1 provider-owned spell**, `crystal_chronicles:prismatic_portal`; source-build byte equality and Alpha portal/dimension runtime remain fail-closed.
-- Cataclysm: Spellbooks `1.1.14-1.21` — current physical SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5` exactly matches audited publisher File `8847070`; its spell-registry class is byte-identical to the exact 1.1.13 control, preserving **59/59 registered spell identities** as `COUNTED_EXACT`. The generic publisher 65-spell scale is not substituted for the registry.
-- Relics `0.12.8` — exact physical SHA-1 equals audited publisher File `8158315`; exact artifact inventory closes **20 base relics, 39 base abilities and 2 distinct owner-scoped synergies = 41 `COUNTED_EXACT` provider powers**. Rank/mode variants add zero identities; runtime/config/integration QA remains separate.
-
-Source-pinned means the source catalog is tied to an exact revision. Release/artifact-pinned is weaker and is stated separately. Neither state means runtime validation unless that gate is separately recorded.
-
-## Known Phase 2 work still open
-
-Examples include:
-
-- remaining Malum registry details that cannot be promoted safely under the current provenance conflict;
-- exact runtime/API reconciliation for Hexalia, Toxony, Mobstein and Apprentice's Codex after their factual/source catalogs;
-- Cataclysm: Spellbooks 1.1.14 registry identity is closed at 59 exact entries; current numerical mechanics, acquisition/brewing behavior, summons/entities and assembled-pack runtime remain QA rather than catalog-identity blockers;
-- exact current Goety `3.1.4` JAR↔source reconciliation plus semantic reachability/deduplication for source-only Focus identities;
-- exact current inventories/numbers for providers such as Leyline and Somake where exact installed internals remain incomplete;
-- remaining Ars base/addon primitives not yet normalized to the same confidence level;
-- pending Iron's ecosystem content/gear/compat providers listed in `meta/PROVIDER-AUDIT-QUEUE.md`;
-- provider-specific acquisition, IDs, costs and formulas wherever public evidence is still incomplete;
-- exact runtime/config/client QA for source-cataloged providers where explicitly recorded;
-- final semantic disposition of every row in `CAPABILITY-MATRIX.md` plus its current narrow deltas.
-
-### Next high-value provider checkpoint
-
-Phase 2M does **not** preselect its successor. After this checkpoint is merged, the next provider checkpoint must be chosen only after a fresh read of the then-current `main`, physical modlist, Notion context and provider audit queue, preserving any newer parallel catalog work already merged into `main`.
-
-The physical `Magic` category is fully mapped to provider directories; **four** rows in that physical category remain partial/conditioned. Gaze remains one additional cross-domain global partial outside that subtotal. Traveloptics is a historical Phase 2BS checkpoint and is absent from the current sibling modlist/dossier tree, so it is **not** part of the current unresolved provider queue. Future checkpoints must be selected from the current unresolved queue rather than from stale historical blockers.
-
-## Output
-
-The final Phase 2 product is:
-
-`capability → provider(s) → current coverage → semantic overlap → real gap`
-
-That matrix is the gate for Phase 3. No new Black Arcana spell is approved merely because its presentation differs from an existing provider capability.
