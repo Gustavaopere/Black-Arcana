@@ -135,7 +135,7 @@ Result: **+0 semantic roots**.
 
 The exact artifact contains `TidesingerSwordItem` with a use/release surface and an exact `MythicMetalsCompatRegistry` reference.
 
-Release-correlated source gates that compat registry behind `Platform.isModLoaded("mythicmetals")`. The current physical sibling modlist at `8c6da384...` contains no Mythic Metals top-level mod.
+Release-correlated source gates that compat registry behind `Platform.isModLoaded("mythicmetals")`. The current physical sibling modlist at `e3cafb33ea28515216fda8f1d298d1c400923008` contains no Mythic Metals top-level mod.
 
 Therefore Tidesinger is an optional-dependency action surface that is **not present in the current assembled pack denominator**.
 
