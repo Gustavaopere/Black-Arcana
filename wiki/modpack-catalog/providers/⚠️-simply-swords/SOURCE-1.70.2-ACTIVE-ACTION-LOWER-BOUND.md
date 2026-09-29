@@ -1,5 +1,7 @@
 # Simply Swords 1.70.2 — release-correlated active-action lower bound
 
+> **Superseded denominator state — 2026-09-29:** this file preserves the release-correlated source inventory that originally established `LOWER_BOUND 66`. Exact hash-matched artifact audit PR #448 / run `36524073819` subsequently closed the residual legacy/secondary action surface with **0 additional roots**, so the current provider denominator is **EXACT 66**. See [`EXACT-1.70.2-ARTIFACT-ACTION-AUDIT.md`](EXACT-1.70.2-ARTIFACT-ACTION-AUDIT.md). Deployed reachability remains open and strict contribution remains +0.
+
 Checkpoint: 2026-09-27
 
 ## Evidence class
