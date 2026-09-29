@@ -450,10 +450,11 @@ jobs:
           )
           report["provider_packet_like_classes"] = packet_like
 
-          # Exact UniqueAbilityDefinition registry closure. Retain only
-          # definition field, ID field and ACTIVE/PASSIVE kind. Textual root
-          # paths are already source-pinned in the canonical catalog and are
-          # deliberately not reconstructed from helper-call bytecode here.
+          # Exact artifact structural cross-check for the ability registries.
+          # The canonical 62 ACTIVE / passive classification remains sourced
+          # from the release-correlated source audit; the binary audit records
+          # only declared UniqueAbilityDefinition field identities and does
+          # not infer kind from implementation bytecode.
           ability_registry_classes = [
               PROVIDER_PREFIX + "api/ability/BuiltinUniqueAbilities",
               *[
@@ -461,147 +462,27 @@ jobs:
                   for phase in range(2, 11)
               ],
           ]
-          definition_rows = []
+          definition_field_rows = []
+          definition_descriptor = "Lnet/sweenus/simplyswords/api/ability/UniqueAbilityDefinition;"
           for registry_class in ability_registry_classes:
-              if registry_class not in classes:
-                  raise SystemExit(f"Missing exact ability registry class: {registry_class}")
-              cp = subprocess.run(
-                  ["javap", "-c", "-p", "-classpath", str(JAR), registry_class.replace("/", ".")],
-                  text=True,
-                  stdout=subprocess.PIPE,
-                  stderr=subprocess.DEVNULL,
-                  check=False,
-              )
-              if cp.returncode != 0:
-                  raise SystemExit(f"javap failed for {registry_class}")
-
-              last_id_field = None
-              last_kind = None
-              pending_definition = None
-
-              for line in cp.stdout.splitlines():
-                  stripped = line.strip()
-
-                  get_id = re.search(
-                      r"// Field ([A-Z0-9_]+_ID):Lnet/minecraft/resources/ResourceLocation;",
-                      stripped,
-                  )
-                  if "getstatic" in stripped and get_id:
-                      last_id_field = get_id.group(1)
-
-                  if "UniqueAbilityKind.ACTIVE" in stripped:
-                      last_kind = "ACTIVE"
-                  elif "UniqueAbilityKind.PASSIVE" in stripped:
-                      last_kind = "PASSIVE"
-
-                  if "UniqueAbilityDefinition.builder:" in stripped:
-                      if last_id_field is not None and last_kind is not None:
-                          pending_definition = (last_id_field, last_kind)
-                  elif re.search(r"// Method active:\(Lnet/minecraft/resources/ResourceLocation;\)Lnet/sweenus/simplyswords/api/ability/UniqueAbilityDefinition;", stripped):
-                      if last_id_field is not None:
-                          pending_definition = (last_id_field, "ACTIVE")
-                  elif re.search(r"// Method passive:\(Lnet/minecraft/resources/ResourceLocation;\)Lnet/sweenus/simplyswords/api/ability/UniqueAbilityDefinition;", stripped):
-                      if last_id_field is not None:
-                          pending_definition = (last_id_field, "PASSIVE")
-
-                  put_definition = re.search(
-                      r"// Field ([A-Z0-9_]+):Lnet/sweenus/simplyswords/api/ability/UniqueAbilityDefinition;",
-                      stripped,
-                  )
-                  if "putstatic" in stripped and put_definition and pending_definition is not None:
-                      id_field, kind = pending_definition
-                      definition_rows.append({
-                          "registry_class": registry_class,
-                          "definition_field": put_definition.group(1),
-                          "id_field": id_field,
-                          "kind": kind,
-                      })
-                      pending_definition = None
-
-          active_definitions = [row for row in definition_rows if row["kind"] == "ACTIVE"]
-          passive_definitions = [row for row in definition_rows if row["kind"] == "PASSIVE"]
-          if len(active_definitions) != 62:
-              raise SystemExit(f"Expected exact 62 ACTIVE definitions, got {len(active_definitions)}")
-          if len({(row["registry_class"], row["definition_field"]) for row in definition_rows}) != len(definition_rows):
-              raise SystemExit("Duplicate UniqueAbilityDefinition field identity in exact artifact")
-          report["exact_unique_ability_definitions"] = definition_rows
-          report["exact_active_definition_count"] = len(active_definitions)
-          report["exact_passive_definition_count"] = len(passive_definitions)
-
-          definition_lookup = {
-              (row["registry_class"], row["definition_field"]): row
-              for row in definition_rows
-          }
-
-          def direct_definition_rows(class_id):
-              info = classes.get(class_id)
+              info = classes.get(registry_class)
               if info is None:
-                  return []
-              found = {}
-              for ref in info["field_refs"]:
-                  key = (ref["owner"], ref["name"])
-                  row = definition_lookup.get(key)
-                  if row is not None:
-                      found[(row["registry_class"], row["definition_field"])] = row
-              return list(found.values())
+                  raise SystemExit(f"Missing exact ability registry class: {registry_class}")
+              for field in info["fields"]:
+                  if field["descriptor"] == definition_descriptor:
+                      definition_field_rows.append({
+                          "registry_class": registry_class,
+                          "definition_field": field["name"],
+                      })
 
-          # Map each exact registered Active item to definitions directly or
-          # through dedicated *Manager call targets. This is structural
-          # association only; no implementation body is persisted.
-          active_class_definition_map = {}
-          for item_row in active_rows:
-              support = set(provider_chain(item_row["class"]))
-              for chain_class in list(support):
-                  info = classes.get(chain_class)
-                  if info is None:
-                      continue
-                  for ref in info["method_refs"]:
-                      owner = ref.get("owner")
-                      if owner and owner.startswith(PROVIDER_PREFIX) and owner.endswith("Manager"):
-                          support.add(owner)
-
-              definitions = {}
-              for support_class in sorted(support):
-                  for row in direct_definition_rows(support_class):
-                      if row["kind"] == "ACTIVE":
-                          identity = (row["registry_class"], row["definition_field"])
-                          definitions[identity] = {
-                              "registry_class": row["registry_class"],
-                              "definition_field": row["definition_field"],
-                              "id_field": row["id_field"],
-                              "support_class": support_class,
-                          }
-              active_class_definition_map[item_row["class"]] = sorted(
-                  definitions.values(),
-                  key=lambda row: (row["registry_class"], row["definition_field"]),
-              )
-
-          report["active_class_definition_map"] = active_class_definition_map
-          report["active_classes_without_exact_active_definition_reference"] = sorted(
-              class_id
-              for class_id, rows in active_class_definition_map.items()
-              if not rows
-          )
-          mapped_active_definition_fields = sorted({
+          identities = {
               (row["registry_class"], row["definition_field"])
-              for rows in active_class_definition_map.values()
-              for row in rows
-          })
-          exact_active_definition_fields = sorted({
-              (row["registry_class"], row["definition_field"])
-              for row in active_definitions
-          })
-          report["mapped_active_definition_count"] = len(mapped_active_definition_fields)
-          report["mapped_active_definition_fields"] = [
-              {"registry_class": registry_class, "definition_field": definition_field}
-              for registry_class, definition_field in mapped_active_definition_fields
-          ]
-          report["unmapped_exact_active_definition_fields"] = [
-              {"registry_class": registry_class, "definition_field": definition_field}
-              for registry_class, definition_field in sorted(
-                  set(exact_active_definition_fields) - set(mapped_active_definition_fields)
-              )
-          ]
+              for row in definition_field_rows
+          }
+          if len(identities) != len(definition_field_rows):
+              raise SystemExit("Duplicate UniqueAbilityDefinition field identity in exact artifact")
+          report["exact_unique_ability_definition_fields"] = definition_field_rows
+          report["exact_unique_ability_definition_field_count"] = len(definition_field_rows)
 
           # Bounded call-target evidence for the only two exact secondary
           # action classes and the two non-Active classes that merely expose
@@ -661,12 +542,7 @@ jobs:
               "items_registry_custom_class_ref_count": report["items_registry_custom_class_ref_count"],
               "registered_concrete_custom_class_count": report["registered_concrete_custom_class_count"],
               "registered_active_class_count": report["registered_active_class_count"],
-              "exact_active_definition_count": report["exact_active_definition_count"],
-              "exact_passive_definition_count": report["exact_passive_definition_count"],
-              "exact_active_owner_family_count": report["exact_active_owner_family_count"],
-              "active_classes_without_exact_active_definition_reference": report["active_classes_without_exact_active_definition_reference"],
-              "mapped_active_root_count": report["mapped_active_root_count"],
-              "unmapped_exact_active_roots": report["unmapped_exact_active_roots"],
+              "exact_unique_ability_definition_field_count": report["exact_unique_ability_definition_field_count"],
               "bounded_selected_action_call_targets": report["bounded_selected_action_call_targets"],
               "registered_active_classes": [
                   {
