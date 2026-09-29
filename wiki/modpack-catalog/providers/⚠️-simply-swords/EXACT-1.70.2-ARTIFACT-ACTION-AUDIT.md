@@ -19,7 +19,7 @@ Result: **no**.
 ## Physical artifact identity
 
 Current sibling authority at
-`neoforge-rpg-skilltree@8aa9b92197c2a6eed5b67b16fa6b6a4adb88fd35`
+`neoforge-rpg-skilltree@51751e6c77530a7d8825ec42493ffccedf978d1a`
 records row #503:
 
 - JAR: `simplyswords-neoforge-1.70.2-1.21.1.jar`;
