@@ -142,6 +142,7 @@ Special comparisons:
 - Mowzie's Mobs 1.8.2 is compared against the exact current physical/publisher SHA-1 `d64475cd77444b056ece6472c79d40293dc63c6c`;
 - ShadowsZ 1.1.9 is compared against the exact current physical/publisher SHA-1 `f946eb3a8181e1964279f163f430ccbba6c4edcd`;
 - Simply Swords: Cataclysm 1.0.2 is compared against current physical SHA-1 `a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`.
+- Simply Swords 1.70.2 is compared against the exact current physical/publisher SHA-1 `05b074ff774467f1fe9fb5592151b7845c321cbc`.
 
 A missing file is not converted into a replacement identity.
 
@@ -359,6 +360,58 @@ suppression still require provider-specific evidence.
 
 See [`wiki/modpack-catalog/providers/⚠️-simply-more/README.md`](../../wiki/modpack-catalog/providers/⚠️-simply-more/README.md).
 
+### Simply Swords
+
+The collector hashes the exact current filename:
+
+`simplyswords-neoforge-1.70.2-1.21.1.jar`
+
+and emits `current_physical_1_70_2_equality` against canonical physical/publisher
+SHA-1 `05b074ff774467f1fe9fb5592151b7845c321cbc`.
+
+The release-line source checkpoint
+`Sweenus/SimplySwords@359a8031b1a3243d1a3b013dbaa0cbba70ea8278`
+declares Fzzy Config `0.7.6+1.21`. At that checkpoint,
+`GeneralConfig` uses id `simplyswords:general` and `LootConfig` uses id
+`simplyswords:loot`. Fzzy Config 0.7.6 uses the identifier namespace as the
+default config folder, identifier path as the default filename, and TOML as the
+default file type. The bounded paths are therefore:
+
+- `config/simplyswords/general.toml`;
+- `config/simplyswords/loot.toml`.
+
+From `general.toml` the report retains only:
+
+- `enableUniqueWeaponAwakening`.
+
+From `loot.toml` it retains only:
+
+- `enableLootDrops`;
+- `runicLootTableWeight`;
+- `uniqueLootTableWeight`;
+- `enableContainedRemnants`;
+- `disabledUniqueWeaponLoot`;
+- `uniqueLootTableOptions`.
+
+Resource IDs in the set/map surfaces are validated before retention. Missing
+files/keys, duplicate key matches, malformed TOML, non-boolean/non-numeric
+values and invalid resource locations remain explicit fail-closed states.
+Unrelated config values are never copied into the report.
+
+Important semantic caveat: `enableUniqueWeaponAwakening=false` is **not** a
+provider-wide ability disable switch. The 1.70.x provider semantics make
+ordinary Unique weapons operate at maximum Awakening when that system is
+disabled; Lichblade/Dormant Relic progression is separately preserved.
+Therefore the value must be interpreted through the provider checklist rather
+than translated directly into a strict-count delta.
+
+This route closes only bounded deployed config/fingerprint evidence. Per-stack
+Awakening/unlock state, complete acquisition/reformation, compat-dependent
+materialization and addon ownership remain separate closure gates.
+
+See
+[`wiki/modpack-catalog/providers/⚠️-simply-swords/DEPLOYED-REACHABILITY-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-simply-swords/DEPLOYED-REACHABILITY-CHECKLIST.md).
+
 ### Somake Spells
 
 Searches for the provider-level progression key:
@@ -481,6 +534,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Mowzie's Mobs: current physical 1.8.2 equality plus effective deployed `enable_tunneling`;
 - Ice And Fire CE: current physical 2.1.2 equality plus deployed `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility` for the sole remaining Ghost Sword gate; Dread Lich Staff acquisition is already closed by provider-specific runtime audit `36327488231`;
 - Simply Swords: Cataclysm: current physical 1.0.2 equality plus the ten exact STARTUP values needed to classify all four source-pinned abilities;
+- Simply Swords: current physical 1.70.2 equality plus bounded Awakening and loot/remnant config evidence; per-stack Awakening/unlock, complete acquisition/reformation, compat materialization and addon ownership remain provider-specific;
 - Traveloptics: current physical override/provider blocker — classify the actual installed JAR and discover bounded deployed `traveloptics:blackout` references; exact-current registry/loot/acquisition review remains provider-specific.
 - Iron's Spellbooks KubeJS / KubeJS Ars Nouveau: use `kubejs_script_inventory` to bind the review to the exact current script/data tree; inspect non-empty files separately according to each provider checklist.
 

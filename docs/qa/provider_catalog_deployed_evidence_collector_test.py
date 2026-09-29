@@ -790,5 +790,177 @@ unrelatedSecret = "do-not-collect"
                 len(report["simply_more"]["mimicry_form_disable_config"]["forms"]),
             )
 
+
+    def test_collects_bounded_simply_swords_reachability_config(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config_dir = instance / "config" / "simplyswords"
+            config_dir.mkdir(parents=True)
+
+            (config_dir / "general.toml").write_text(
+                "enableUniqueWeaponAwakening = false\n"
+                "unrelatedSecret = \"general-sentinel\"\n",
+                encoding="utf-8",
+            )
+            (config_dir / "loot.toml").write_text(
+                "enableLootDrops = true\n"
+                "runicLootTableWeight = 0.7\n"
+                "uniqueLootTableWeight = 0.05\n"
+                "enableContainedRemnants = false\n"
+                "disabledUniqueWeaponLoot = [\"simplyswords:emberblade\"]\n"
+                "unrelatedSecret = \"loot-sentinel\"\n"
+                "\n"
+                "[uniqueLootTableOptions]\n"
+                "\"minecraft:chests/end_city_treasure\" = 0.25\n"
+                "\"minecraft:entities/ender_dragon\" = 5.0\n",
+                encoding="utf-8",
+            )
+
+            result = collector.collect_simply_swords(instance)
+
+            self.assertEqual("OBSERVED", result["awakening_config"]["status"])
+            self.assertEqual(
+                "config/simplyswords/general.toml",
+                result["awakening_config"]["path"],
+            )
+            self.assertIs(
+                False,
+                result["awakening_config"]["enableUniqueWeaponAwakening"]["value"],
+            )
+
+            loot = result["loot_config"]
+            self.assertEqual("OBSERVED", loot["status"])
+            self.assertEqual("config/simplyswords/loot.toml", loot["path"])
+            self.assertIs(True, loot["enableLootDrops"]["value"])
+            self.assertEqual(0.7, loot["runicLootTableWeight"]["value"])
+            self.assertEqual(0.05, loot["uniqueLootTableWeight"]["value"])
+            self.assertIs(False, loot["enableContainedRemnants"]["value"])
+            self.assertEqual(
+                ["simplyswords:emberblade"],
+                loot["disabledUniqueWeaponLoot"]["values"],
+            )
+            self.assertEqual(
+                [
+                    {"id": "minecraft:chests/end_city_treasure", "value": 0.25},
+                    {"id": "minecraft:entities/ender_dragon", "value": 5.0},
+                ],
+                loot["uniqueLootTableOptions"]["entries"],
+            )
+
+            serialized = json.dumps(result)
+            self.assertNotIn("unrelatedSecret", serialized)
+            self.assertNotIn("general-sentinel", serialized)
+            self.assertNotIn("loot-sentinel", serialized)
+
+    def test_simply_swords_missing_or_invalid_reachability_values_stay_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config_dir = instance / "config" / "simplyswords"
+            config_dir.mkdir(parents=True)
+
+            (config_dir / "general.toml").write_text(
+                "enableUniqueWeaponAwakening = \"yes\"\n",
+                encoding="utf-8",
+            )
+            (config_dir / "loot.toml").write_text(
+                "enableLootDrops = true\n"
+                "uniqueLootTableWeight = 0.05\n"
+                "disabledUniqueWeaponLoot = [\"not a resource id\"]\n"
+                "\n"
+                "[uniqueLootTableOptions]\n"
+                "\"not a resource id\" = 1.0\n",
+                encoding="utf-8",
+            )
+
+            result = collector.collect_simply_swords(instance)
+
+            self.assertEqual("INVALID_VALUE", result["awakening_config"]["status"])
+            self.assertEqual(
+                "INVALID_VALUE",
+                result["awakening_config"]["enableUniqueWeaponAwakening"]["status"],
+            )
+            self.assertEqual("INCOMPLETE", result["loot_config"]["status"])
+            self.assertEqual(
+                "KEY_NOT_FOUND",
+                result["loot_config"]["runicLootTableWeight"]["status"],
+            )
+            self.assertEqual(
+                "KEY_NOT_FOUND",
+                result["loot_config"]["enableContainedRemnants"]["status"],
+            )
+            self.assertEqual(
+                1,
+                result["loot_config"]["disabledUniqueWeaponLoot"]["invalid_entry_count"],
+            )
+            self.assertEqual(
+                1,
+                result["loot_config"]["uniqueLootTableOptions"]["invalid_entry_count"],
+            )
+            serialized = json.dumps(result)
+            self.assertNotIn("not a resource id", serialized)
+
+    def test_hash_inventory_checks_simply_swords_1702_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            (mods / "simplyswords-neoforge-1.70.2-1.21.1.jar").write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("simply_swords", result)
+            self.assertEqual(1, len(result["simply_swords"]))
+            entry = result["simply_swords"][0]
+            self.assertEqual(
+                "simplyswords-neoforge-1.70.2-1.21.1.jar",
+                entry["filename"],
+            )
+            self.assertIn("current_physical_1_70_2_equality", entry)
+            self.assertFalse(entry["current_physical_1_70_2_equality"])
+
+    def test_main_report_includes_simply_swords_reachability_config(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            (instance / "mods").mkdir(parents=True)
+            config_dir = instance / "config" / "simplyswords"
+            config_dir.mkdir(parents=True)
+            (config_dir / "general.toml").write_text(
+                "enableUniqueWeaponAwakening = true\n",
+                encoding="utf-8",
+            )
+            (config_dir / "loot.toml").write_text(
+                "enableLootDrops = true\n"
+                "runicLootTableWeight = 0.7\n"
+                "uniqueLootTableWeight = 0.05\n"
+                "enableContainedRemnants = true\n"
+                "disabledUniqueWeaponLoot = []\n"
+                "\n"
+                "[uniqueLootTableOptions]\n"
+                "\"minecraft:entities/ender_dragon\" = 5.0\n",
+                encoding="utf-8",
+            )
+
+            output = instance / "evidence.json"
+            with patch(
+                "sys.argv",
+                [
+                    "provider-catalog-deployed-evidence-collector.py",
+                    str(instance),
+                    "--output",
+                    str(output),
+                ],
+            ):
+                self.assertEqual(0, collector.main())
+
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertIs(
+                True,
+                report["simply_swords"]["awakening_config"]["enableUniqueWeaponAwakening"]["value"],
+            )
+            self.assertEqual(
+                5.0,
+                report["simply_swords"]["loot_config"]["uniqueLootTableOptions"]["entries"][0]["value"],
+            )
+
 if __name__ == "__main__":
     unittest.main()
