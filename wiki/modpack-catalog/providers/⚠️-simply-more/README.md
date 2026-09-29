@@ -4,7 +4,7 @@ Status: `⚠️ PARTIAL / EXACT PHYSICAL-PUBLISHER FILE / EXACT CURRENT ACTION D
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@e3cafb33ea28515216fda8f1d298d1c400923008`;
+- sibling checkpoint: `neoforge-rpg-skilltree@8aa9b92197c2a6eed5b67b16fa6b6a4adb88fd35`;
 - physical row: `#502`;
 - JAR: `simplymore-forge-1.3.0_alpha.jar`;
 - mod id: `simplymore`;
