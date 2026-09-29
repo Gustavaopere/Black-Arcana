@@ -59,6 +59,7 @@ The read-only collector in [`docs/qa/provider-catalog-deployed-evidence.md`](../
 - Somake physical fingerprint + spell-lock and Iron's override evidence;
 - Mowzie's physical fingerprint + `enable_tunneling`;
 - Ice And Fire CE physical 2.1.2 fingerprint + exact Jupiter `tools.phantasmalBladeAbility` gate;
+- ShadowsZ physical 1.1.9 fingerprint + bounded `fusionEnabled` config observations + saved-world `shadowszRestrictPowers` gamerule;
 - Simply Swords: Cataclysm physical 1.0.2 fingerprint + exact `config/simplycataclysm-startup.toml` ten-key activation gate;
 - Traveloptics physical classification + bounded `traveloptics:blackout` references.
 
