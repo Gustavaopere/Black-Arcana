@@ -4,7 +4,7 @@ Status: `✅ CATALOGED / CURRENT PHYSICAL 21.1.45 / COUNTED_SOURCE_PINNED / EXAC
 
 ## Current physical authority
 
-Current sibling physical authority at `neoforge-rpg-skilltree@82d0d551f34d20363201f5b71f0ad91a141cbe56` records:
+Current sibling physical authority at `neoforge-rpg-skilltree@1bb7c7d6e2e6878248b0c178bdae55e84697acd2` records:
 
 - physical row: `#564`;
 - JAR: `waystones-neoforge-1.21.1-21.1.45.jar`;
