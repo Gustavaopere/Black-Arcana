@@ -39,6 +39,7 @@ ICE_AND_FIRE_CE_212_RELEASE_SHA1 = "0786f4142b7cabd958688f68beef3e63e9c0ae8b"
 SIMPLY_CATACLYSM_102_PHYSICAL_SHA1 = "a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469"
 SHADOWSZ_119_PHYSICAL_SHA1 = "f946eb3a8181e1964279f163f430ccbba6c4edcd"
 SIMPLY_MORE_ALPHA5_PHYSICAL_SHA1 = "51636477cd5c378f42d9700e1fe35cd952c8f4f1"
+SIMPLY_SWORDS_1702_PHYSICAL_SHA1 = "05b074ff774467f1fe9fb5592151b7845c321cbc"
 
 SIMPLY_MORE_MIMICRY_FORMS = [
     "longsword",
@@ -149,6 +150,7 @@ MOD_PATTERNS = {
     "shadowsz": ["shadowsz-1.1.9.jar"],
     "simply_swords_cataclysm": ["simplycataclysm-1.0.2+1.21.1+neoforge.jar"],
     "simply_more": ["simplymore-forge-1.3.0_alpha.jar"],
+    "simply_swords": ["simplyswords-neoforge-1.70.2-1.21.1.jar"],
     "traveloptics": [
         "traveloptics-4.4.0.1-1.21.1.jar",
         "traveloptics-4.4.0.1.1-1.21.1-patched.jar",
@@ -558,6 +560,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["current_physical_1_0_2_equality"] = entry["sha1"] == SIMPLY_CATACLYSM_102_PHYSICAL_SHA1
                 elif provider == "simply_more":
                     entry["current_physical_alpha5_equality"] = entry["sha1"] == SIMPLY_MORE_ALPHA5_PHYSICAL_SHA1
+                elif provider == "simply_swords":
+                    entry["current_physical_1_70_2_equality"] = entry["sha1"] == SIMPLY_SWORDS_1702_PHYSICAL_SHA1
                 entries.append(entry)
         result[provider] = entries
     return result
@@ -1075,6 +1079,229 @@ def collect_simply_more(instance: Path) -> dict[str, Any]:
     return result
 
 
+def collect_simply_swords(instance: Path) -> dict[str, Any]:
+    general_path = instance / "config" / "simplyswords" / "general.toml"
+    loot_path = instance / "config" / "simplyswords" / "loot.toml"
+
+    awakening: dict[str, Any] = {
+        "path": rel(general_path, instance),
+        "status": "NOT_FOUND",
+        "enableUniqueWeaponAwakening": {"status": "FILE_NOT_FOUND"},
+    }
+
+    if general_path.is_file():
+        try:
+            with general_path.open("rb") as handle:
+                general_data = tomllib.load(handle)
+        except Exception as exc:
+            awakening["status"] = "PARSE_ERROR"
+            awakening["error"] = type(exc).__name__
+            awakening["enableUniqueWeaponAwakening"] = {"status": "PARSE_ERROR"}
+        else:
+            matches = _find_key_recursive(general_data, "enableUniqueWeaponAwakening")
+            if len(matches) == 1:
+                key_path, value = matches[0]
+                if isinstance(value, bool):
+                    awakening["status"] = "OBSERVED"
+                    awakening["enableUniqueWeaponAwakening"] = {
+                        "status": "OBSERVED",
+                        "key_path": key_path,
+                        "value": value,
+                    }
+                else:
+                    awakening["status"] = "INVALID_VALUE"
+                    awakening["enableUniqueWeaponAwakening"] = {
+                        "status": "INVALID_VALUE",
+                        "key_path": key_path,
+                        "value_type": type(value).__name__,
+                    }
+            elif not matches:
+                awakening["status"] = "INCOMPLETE"
+                awakening["enableUniqueWeaponAwakening"] = {"status": "KEY_NOT_FOUND"}
+            else:
+                awakening["status"] = "INCOMPLETE"
+                awakening["enableUniqueWeaponAwakening"] = {
+                    "status": "AMBIGUOUS",
+                    "match_count": len(matches),
+                }
+
+    loot: dict[str, Any] = {
+        "path": rel(loot_path, instance),
+        "status": "NOT_FOUND",
+    }
+    scalar_specs = {
+        "enableLootDrops": "bool",
+        "runicLootTableWeight": "number",
+        "uniqueLootTableWeight": "number",
+        "enableContainedRemnants": "bool",
+    }
+    for key in scalar_specs:
+        loot[key] = {"status": "FILE_NOT_FOUND"}
+    loot["disabledUniqueWeaponLoot"] = {
+        "status": "FILE_NOT_FOUND",
+        "values": [],
+        "invalid_entry_count": 0,
+    }
+    loot["uniqueLootTableOptions"] = {
+        "status": "FILE_NOT_FOUND",
+        "entries": [],
+        "invalid_entry_count": 0,
+    }
+
+    if loot_path.is_file():
+        try:
+            with loot_path.open("rb") as handle:
+                loot_data = tomllib.load(handle)
+        except Exception as exc:
+            loot["status"] = "PARSE_ERROR"
+            loot["error"] = type(exc).__name__
+            for key in scalar_specs:
+                loot[key] = {"status": "PARSE_ERROR"}
+            loot["disabledUniqueWeaponLoot"] = {
+                "status": "PARSE_ERROR",
+                "values": [],
+                "invalid_entry_count": 0,
+            }
+            loot["uniqueLootTableOptions"] = {
+                "status": "PARSE_ERROR",
+                "entries": [],
+                "invalid_entry_count": 0,
+            }
+        else:
+            complete = True
+
+            for key, expected in scalar_specs.items():
+                matches = _find_key_recursive(loot_data, key)
+                if len(matches) == 1:
+                    key_path, value = matches[0]
+                    valid = (
+                        isinstance(value, bool)
+                        if expected == "bool"
+                        else isinstance(value, (int, float)) and not isinstance(value, bool)
+                    )
+                    if valid:
+                        loot[key] = {
+                            "status": "OBSERVED",
+                            "key_path": key_path,
+                            "value": value,
+                        }
+                    else:
+                        complete = False
+                        loot[key] = {
+                            "status": "INVALID_VALUE",
+                            "key_path": key_path,
+                            "value_type": type(value).__name__,
+                        }
+                elif not matches:
+                    complete = False
+                    loot[key] = {"status": "KEY_NOT_FOUND"}
+                else:
+                    complete = False
+                    loot[key] = {
+                        "status": "AMBIGUOUS",
+                        "match_count": len(matches),
+                    }
+
+            disabled_matches = _find_key_recursive(loot_data, "disabledUniqueWeaponLoot")
+            if len(disabled_matches) == 1:
+                key_path, value = disabled_matches[0]
+                if isinstance(value, list):
+                    valid_ids = sorted(
+                        item for item in value
+                        if isinstance(item, str) and RESOURCE_LOCATION_RE.fullmatch(item)
+                    )
+                    invalid_count = len(value) - len(valid_ids)
+                    loot["disabledUniqueWeaponLoot"] = {
+                        "status": "OBSERVED" if invalid_count == 0 else "INVALID_VALUE",
+                        "key_path": key_path,
+                        "values": valid_ids,
+                        "invalid_entry_count": invalid_count,
+                    }
+                    if invalid_count:
+                        complete = False
+                else:
+                    complete = False
+                    loot["disabledUniqueWeaponLoot"] = {
+                        "status": "INVALID_VALUE",
+                        "key_path": key_path,
+                        "values": [],
+                        "invalid_entry_count": 1,
+                        "value_type": type(value).__name__,
+                    }
+            elif not disabled_matches:
+                complete = False
+                loot["disabledUniqueWeaponLoot"] = {
+                    "status": "KEY_NOT_FOUND",
+                    "values": [],
+                    "invalid_entry_count": 0,
+                }
+            else:
+                complete = False
+                loot["disabledUniqueWeaponLoot"] = {
+                    "status": "AMBIGUOUS",
+                    "values": [],
+                    "invalid_entry_count": 0,
+                    "match_count": len(disabled_matches),
+                }
+
+            option_matches = _find_key_recursive(loot_data, "uniqueLootTableOptions")
+            if len(option_matches) == 1:
+                key_path, value = option_matches[0]
+                if isinstance(value, dict):
+                    entries: list[dict[str, Any]] = []
+                    invalid_count = 0
+                    for raw_id, raw_value in value.items():
+                        if (
+                            isinstance(raw_id, str)
+                            and RESOURCE_LOCATION_RE.fullmatch(raw_id)
+                            and isinstance(raw_value, (int, float))
+                            and not isinstance(raw_value, bool)
+                        ):
+                            entries.append({"id": raw_id, "value": raw_value})
+                        else:
+                            invalid_count += 1
+                    entries.sort(key=lambda row: row["id"])
+                    loot["uniqueLootTableOptions"] = {
+                        "status": "OBSERVED" if invalid_count == 0 else "INVALID_VALUE",
+                        "key_path": key_path,
+                        "entries": entries,
+                        "invalid_entry_count": invalid_count,
+                    }
+                    if invalid_count:
+                        complete = False
+                else:
+                    complete = False
+                    loot["uniqueLootTableOptions"] = {
+                        "status": "INVALID_VALUE",
+                        "key_path": key_path,
+                        "entries": [],
+                        "invalid_entry_count": 1,
+                        "value_type": type(value).__name__,
+                    }
+            elif not option_matches:
+                complete = False
+                loot["uniqueLootTableOptions"] = {
+                    "status": "KEY_NOT_FOUND",
+                    "entries": [],
+                    "invalid_entry_count": 0,
+                }
+            else:
+                complete = False
+                loot["uniqueLootTableOptions"] = {
+                    "status": "AMBIGUOUS",
+                    "entries": [],
+                    "invalid_entry_count": 0,
+                    "match_count": len(option_matches),
+                }
+
+            loot["status"] = "OBSERVED" if complete else "INCOMPLETE"
+
+    return {
+        "awakening_config": awakening,
+        "loot_config": loot,
+    }
+
+
 def collect_gaze(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
@@ -1360,6 +1587,7 @@ def main() -> int:
         "shadowsz": collect_shadowsz(instance, worlds),
         "simply_swords_cataclysm": collect_simply_cataclysm(instance),
         "simply_more": collect_simply_more(instance),
+        "simply_swords": collect_simply_swords(instance),
         "somake_spells": collect_somake(instance, worlds),
         "traveloptics": collect_traveloptics(instance, worlds),
         "notes": [
@@ -1376,6 +1604,7 @@ def main() -> int:
             "Observed ShadowsZ fusionEnabled values are bounded config evidence; effective shadowszRestrictPowers is read only from the saved world level.dat GameRules compound and missing/invalid values remain fail-closed.",
             "Observed Simply Swords: Cataclysm STARTUP values come only from config/simplycataclysm-startup.toml; missing or incomplete keys never fall back to source defaults.",
             "Observed Simply More Mimicry state comes only from config/simplymore/unique_effect.toml at mimicry.config.<form>.disabled for the exact 25 Alpha-5 forms; missing, malformed, or non-boolean values remain fail-closed.",
+            "Observed Simply Swords reachability config comes only from config/simplyswords/general.toml and loot.toml; it records the Awakening gate and bounded loot/remnant fields but never infers per-stack Awakening level or ability unlock state.",
         ],
     }
 
