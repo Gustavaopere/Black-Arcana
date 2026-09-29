@@ -38,6 +38,35 @@ MOWZIES_MOBS_182_PHYSICAL_SHA1 = "d64475cd77444b056ece6472c79d40293dc63c6c"
 ICE_AND_FIRE_CE_212_RELEASE_SHA1 = "0786f4142b7cabd958688f68beef3e63e9c0ae8b"
 SIMPLY_CATACLYSM_102_PHYSICAL_SHA1 = "a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469"
 SHADOWSZ_119_PHYSICAL_SHA1 = "f946eb3a8181e1964279f163f430ccbba6c4edcd"
+SIMPLY_MORE_ALPHA5_PHYSICAL_SHA1 = "51636477cd5c378f42d9700e1fe35cd952c8f4f1"
+
+SIMPLY_MORE_MIMICRY_FORMS = [
+    "longsword",
+    "twinblade",
+    "rapier",
+    "sai",
+    "cutlass",
+    "chakram",
+    "warglaive",
+    "spear",
+    "glaive",
+    "claymore",
+    "scythe",
+    "greataxe",
+    "greathammer",
+    "dagger",
+    "khopesh",
+    "katana",
+    "grandsword",
+    "pernach",
+    "lance",
+    "great_spear",
+    "quarterstaff",
+    "halberd",
+    "backhand_blade",
+    "deer_horns",
+    "great_katana",
+]
 
 SIMPLY_CATACLYSM_STARTUP_CONFIG_KEYS = [
     "accursedRageChance",
@@ -119,6 +148,7 @@ MOD_PATTERNS = {
     "somake_spells": ["somakespells-1.0.9-1.21.1.jar"],
     "shadowsz": ["shadowsz-1.1.9.jar"],
     "simply_swords_cataclysm": ["simplycataclysm-1.0.2+1.21.1+neoforge.jar"],
+    "simply_more": ["simplymore-forge-1.3.0_alpha.jar"],
     "traveloptics": [
         "traveloptics-4.4.0.1-1.21.1.jar",
         "traveloptics-4.4.0.1.1-1.21.1-patched.jar",
@@ -526,6 +556,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["current_physical_1_1_9_equality"] = entry["sha1"] == SHADOWSZ_119_PHYSICAL_SHA1
                 elif provider == "simply_swords_cataclysm":
                     entry["current_physical_1_0_2_equality"] = entry["sha1"] == SIMPLY_CATACLYSM_102_PHYSICAL_SHA1
+                elif provider == "simply_more":
+                    entry["current_physical_alpha5_equality"] = entry["sha1"] == SIMPLY_MORE_ALPHA5_PHYSICAL_SHA1
                 entries.append(entry)
         result[provider] = entries
     return result
@@ -990,6 +1022,59 @@ def collect_simply_cataclysm(instance: Path) -> dict[str, Any]:
     return {"startup_config": evidence}
 
 
+def collect_simply_more(instance: Path) -> dict[str, Any]:
+    path = instance / "config" / "simplymore" / "unique_effect.toml"
+    evidence: dict[str, Any] = {
+        "path": rel(path, instance),
+        "status": "NOT_FOUND",
+        "forms": [],
+    }
+    result: dict[str, Any] = {
+        "expected_form_count": len(SIMPLY_MORE_MIMICRY_FORMS),
+        "mimicry_form_disable_config": evidence,
+    }
+    if not path.is_file():
+        return result
+
+    try:
+        with path.open("rb") as handle:
+            data = tomllib.load(handle)
+    except Exception as exc:
+        evidence["status"] = "PARSE_ERROR"
+        evidence["error"] = type(exc).__name__
+        return result
+
+    mimicry = data.get("mimicry")
+    config = mimicry.get("config") if isinstance(mimicry, dict) else None
+    complete = True
+    rows: list[dict[str, Any]] = []
+    for form in SIMPLY_MORE_MIMICRY_FORMS:
+        row: dict[str, Any] = {"form": form, "status": "KEY_NOT_FOUND"}
+        section = config.get(form) if isinstance(config, dict) else None
+        if isinstance(section, dict) and "disabled" in section:
+            value = section["disabled"]
+            if isinstance(value, bool):
+                row = {
+                    "form": form,
+                    "status": "OBSERVED",
+                    "disabled": value,
+                }
+            else:
+                row = {
+                    "form": form,
+                    "status": "INVALID_VALUE",
+                    "value_type": type(value).__name__,
+                }
+                complete = False
+        else:
+            complete = False
+        rows.append(row)
+
+    evidence["forms"] = rows
+    evidence["status"] = "OBSERVED" if complete else "INCOMPLETE"
+    return result
+
+
 def collect_gaze(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots = [instance / "config", instance / "defaultconfigs"]
     roots.extend(world / "serverconfig" for world in worlds)
@@ -1274,6 +1359,7 @@ def main() -> int:
         "not_enough_glyphs": collect_neg(instance, worlds),
         "shadowsz": collect_shadowsz(instance, worlds),
         "simply_swords_cataclysm": collect_simply_cataclysm(instance),
+        "simply_more": collect_simply_more(instance),
         "somake_spells": collect_somake(instance, worlds),
         "traveloptics": collect_traveloptics(instance, worlds),
         "notes": [
@@ -1289,6 +1375,7 @@ def main() -> int:
             "Observed Ice And Fire CE tools.phantasmalBladeAbility is deployed gate evidence only; missing/invalid values never fall back to the source default.",
             "Observed ShadowsZ fusionEnabled values are bounded config evidence; effective shadowszRestrictPowers is read only from the saved world level.dat GameRules compound and missing/invalid values remain fail-closed.",
             "Observed Simply Swords: Cataclysm STARTUP values come only from config/simplycataclysm-startup.toml; missing or incomplete keys never fall back to source defaults.",
+            "Observed Simply More Mimicry state comes only from config/simplymore/unique_effect.toml at mimicry.config.<form>.disabled for the exact 25 Alpha-5 forms; missing, malformed, or non-boolean values remain fail-closed.",
         ],
     }
 

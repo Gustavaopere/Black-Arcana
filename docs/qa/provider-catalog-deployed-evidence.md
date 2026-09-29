@@ -329,6 +329,36 @@ This evidence is sufficient only for the provider's deployed activation/config g
 
 See [`wiki/modpack-catalog/providers/⚠️-simply-swords-cataclysm/DEPLOYED-CONFIG-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-simply-swords-cataclysm/DEPLOYED-CONFIG-CHECKLIST.md).
 
+### Simply More
+
+The collector hashes the exact current filename:
+
+`simplymore-forge-1.3.0_alpha.jar`
+
+and emits `current_physical_alpha5_equality` against canonical physical/publisher SHA-1
+`51636477cd5c378f42d9700e1fe35cd952c8f4f1`.
+
+For the bounded Mimicry subgate it reads only the Fzzy Config file derived from the exact
+Alpha-5 config id `simplymore:unique_effect`:
+
+`config/simplymore/unique_effect.toml`
+
+and only the 25 exact paths:
+
+`mimicry.config.<form>.disabled`
+
+for the forms declared by Alpha-5 `MimicryConfig`. The report retains only form id,
+bounded status and boolean `disabled` value. Missing files, parse failures, missing
+forms and non-boolean values remain fail-closed. Unrelated values from the config are
+not copied.
+
+This closes only the deployed Mimicry form-disable evidence surface. It does **not**
+by itself close Simply More's full reachability blocker: host Simply Swords
+Awakening/unlock state, acquisition/reformation routes, and any other deployed
+suppression still require provider-specific evidence.
+
+See [`wiki/modpack-catalog/providers/⚠️-simply-more/README.md`](../../wiki/modpack-catalog/providers/⚠️-simply-more/README.md).
+
 ### Somake Spells
 
 Searches for the provider-level progression key:
