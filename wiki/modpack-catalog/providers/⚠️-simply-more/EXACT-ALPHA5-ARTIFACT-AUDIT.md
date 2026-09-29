@@ -22,7 +22,7 @@ The first three are closed here. Deployed reachability remains separate and keep
 - physical SHA-1: `51636477cd5c378f42d9700e1fe35cd952c8f4f1`;
 - publisher CurseForge File: `8736778`;
 - publisher file name: `simplymore-neoforge-1.3.0_alpha5+1.21.1.jar`;
-- current sibling checkpoint used for pack-presence classification: `neoforge-rpg-skilltree@8c6da384c68a557240522486f070b38edc87eca2`;
+- current sibling checkpoint used for pack-presence classification: `neoforge-rpg-skilltree@e3cafb33ea28515216fda8f1d298d1c400923008`;
 - NON-MERGE exact audit PR: #446;
 - final audit HEAD: `53155432f050554cd2dec4e5bd1125c1cffaf72f`;
 - exact audit run: `36516484341` — GREEN;
