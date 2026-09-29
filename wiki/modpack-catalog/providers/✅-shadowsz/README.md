@@ -1,6 +1,8 @@
 # ShadowsZ — 1.1.9
 
-Status: `⚠️ PARTIAL / EXACT 1.1.9 SEMANTIC INVENTORY 10 / 9 CORE + 1 FUSION-CONDITIONAL / DEPLOYED ATTUNEMENT POLICY OPEN / +0 STRICT`
+Status: `✅ CATALOGED / EXACT 1.1.9 SEMANTIC INVENTORY 10 / COMPLETE 10-ROOT OBJECT CATALOG / 9 CORE + 1 FUSION-CONDITIONAL / DEPLOYED ATTUNEMENT POLICY OPEN / +0 STRICT`
+
+> Folder-prefix rule (2026-09-29): **✅ means the current semantic/action denominator is fully cataloged and materialized.** Deployed config, reachability or runtime QA may still keep individual identities conditional or outside the strict numerator; those conditions remain documented here and do not make the folder structurally partial.
 
 ## Current physical authority
 
@@ -119,7 +121,7 @@ Therefore:
 
 - exact semantic inventory: **10**;
 - current strict contribution: **+0**;
-- provider state: **⚠️ conditioned**, not ✅;
+- provider catalog state: **✅ cataloged**; deployed reachability remains conditioned;
 - closure requires the effective current-world `shadowszRestrictPowers` value and deployed `fusionEnabled` value.
 
 See [DEPLOYED-STATE-CHECKLIST.md](DEPLOYED-STATE-CHECKLIST.md).
@@ -148,7 +150,7 @@ Catalog denominator closure does not certify:
 
 ## Result
 
-**⚠️ Partial / conditioned — exact inventory closed.**
+**✅ Catalog complete — exact 10-root inventory closed; deployed attunement/Fusion state remains conditional.**
 
 Current exact semantic inventory: **10 provider-owned supernatural action identities**.
 

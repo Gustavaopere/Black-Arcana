@@ -1,6 +1,8 @@
 # Asterism Arcanum
 
-Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER 0.1.0 ARTIFACT / 10 COUNTED_EXACT SURVIVAL SPELLS / 1 EXACT REGISTERED CREATIVE-ONLY GATEWAY CONDITIONAL / RUNTIME QA FAIL-CLOSED`
+Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER 0.1.0 ARTIFACT / COMPLETE 11-IDENTITY CATALOG / 10 COUNTED_EXACT SURVIVAL SPELLS / 1 EXACT REGISTERED CREATIVE-ONLY GATEWAY CONDITIONAL / RUNTIME QA FAIL-CLOSED`
+
+> Folder-prefix rule (2026-09-29): **✅ means the current semantic/action denominator is fully cataloged and materialized.** Deployed config, reachability or runtime QA may still keep individual identities conditional or outside the strict numerator; those conditions remain documented here and do not make the folder structurally partial.
 
 ## Current physical identity
 
@@ -143,7 +145,7 @@ Exact catalog identity does not establish assembled-pack runtime PASS for:
 
 ## Result
 
-**⚠️ Partial / conditioned remains correct.**
+**✅ Catalog complete; Astral Gateway remains deployment-conditioned and outside the strict survival count.**
 
 The ten normal Asterism spell identities are now **COUNTED_EXACT**. The only catalog-level unresolved action identity is the exact registered but publisher-marked creative-only/unfinished **Astral Gateway**, whose effective deployed survival state remains unavailable.
 

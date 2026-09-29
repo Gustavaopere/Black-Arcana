@@ -1,6 +1,8 @@
 # Not Enough Glyphs
 
-Status: `⚠️ CURRENT PHYSICAL 4.6.2 / PHYSICAL SHA-1 = EXACT PUBLISHER RELEASE / SOURCE-PINNED REGISTRATION MATRIX REVALIDATED / 40 REGISTERED PRIMITIVES, 39 SOURCE-ENABLED / DEPLOYED EFFECTIVE ENABLED STATE UNVERIFIED / SCHEMA-3 RUNTIME PROBE ROUTE AVAILABLE / FAIL-CLOSED`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 4.6.2 / PHYSICAL SHA-1 = EXACT PUBLISHER RELEASE / COMPLETE 40-PRIMITIVE OBJECT CATALOG / SOURCE-PINNED REGISTRATION MATRIX REVALIDATED / 39 SOURCE-ENABLED / DEPLOYED EFFECTIVE ENABLED STATE UNVERIFIED / SCHEMA-3 RUNTIME PROBE ROUTE AVAILABLE / FAIL-CLOSED`
+
+> Folder-prefix rule (2026-09-29): **✅ means the current semantic/action denominator is fully cataloged and materialized.** Deployed config, reachability or runtime QA may still keep individual identities conditional or outside the strict numerator; those conditions remain documented here and do not make the folder structurally partial.
 
 ## Runtime identity
 
