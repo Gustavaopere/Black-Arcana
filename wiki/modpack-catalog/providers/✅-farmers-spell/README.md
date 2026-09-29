@@ -28,6 +28,10 @@ The current 1.21.1 public source is pinned to:
 
 The exact source declares Minecraft `1.21.1`, NeoForge build `21.1.238`, Java 21 and `ARR`. Its runtime metadata requires Iron's `[3.16.0,)`, Farmer's Delight `[1.2.8,)` and GeckoLib `[4.7.5.1,)`.
 
+## Fichas por spell
+
+As **6 identidades registradas** de Farmer's Spell 1.0.5.1 estão materializadas em [`SPELL-CARDS-1.0.5.1.md`](SPELL-CARDS-1.0.5.1.md) e nas fichas individuais em `spells/`. A pasta permanece corretamente marcada como **✅**, porque o inventário semântico está fechado; runtime QA continua separado e não rebaixa a catalogação.
+
 ## Provider role
 
 Farmer's Spell is not only a bridge. It owns a dedicated Gluttony spell school and six Iron's spell registrations while also adding magical cooking, food, gear, effects, Foodgeist progression and related support content. Under the canonical taxonomy this is a `MIXED` provider.
