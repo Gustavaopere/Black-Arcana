@@ -358,6 +358,7 @@ Awakening/unlock state, acquisition/reformation routes, and any other deployed
 suppression still require provider-specific evidence.
 
 See [`wiki/modpack-catalog/providers/⚠️-simply-more/README.md`](../../wiki/modpack-catalog/providers/⚠️-simply-more/README.md).
+
 ### Somake Spells
 
 Searches for the provider-level progression key:
