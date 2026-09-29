@@ -71,6 +71,10 @@ The exact `ShadowActionC2S` router exposes 20 individual action codes and `Shado
 
 Together with the three registered spells, the complete current 1.1.9 semantic denominator is therefore **10 distinct provider-owned supernatural actions**.
 
+## Fichas canônicas
+
+As 10 raízes exatas estão materializadas objeto-a-objeto em [ACTION-CARDS-1.1.9.md](ACTION-CARDS-1.1.9.md). As fichas preservam a distinção entre identidade semântica já fechada e reachability implantado ainda condicionado; nenhuma delas promove o strict sem a evidência exigida em [DEPLOYED-STATE-CHECKLIST.md](DEPLOYED-STATE-CHECKLIST.md).
+
 ## Exact exclusions and aliases
 
 The following exact router/control surfaces do **not** mint additional semantic roots under the Black Arcana metric:
