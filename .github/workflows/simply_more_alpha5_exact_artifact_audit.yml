@@ -425,7 +425,7 @@ jobs:
               m["name"] for m in mimicry_info["methods"]
               if m["name"] in ACTION_METHODS
           })
-          required_mimicry_methods = {"use", "usageTick", "getMaxUseTime"}
+          required_mimicry_methods = {"use", "onUseTick", "getUseDuration"}
           if not required_mimicry_methods.issubset(set(mimicry_action_methods)):
               raise SystemExit(
                   f"Mimicry base missing required action methods: {mimicry_action_methods}"
@@ -463,7 +463,7 @@ jobs:
           mimicry_call_targets = {}
           current = None
           mimicry_method_needles = (
-              " use(", " usageTick(", " swapForm(", " onClicked("
+              " use(", " usageTick(", " onUseTick(", " swapForm(", " onClicked("
           )
           for line in cp.stdout.splitlines():
               stripped = line.strip()
