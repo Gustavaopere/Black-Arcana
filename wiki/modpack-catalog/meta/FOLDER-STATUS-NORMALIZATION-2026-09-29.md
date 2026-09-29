@@ -91,6 +91,6 @@ The three intentionally catalog-open folders are:
 
 - `⚠️-irons-spellbooks-kubejs` — current-pack script-defined Iron's inventory remains unavailable;
 - `⚠️-kubejs-ars-nouveau` — current-pack KubeJS Ars mutation inventory remains unavailable;
-- `⚠️-traveloptics` — current physical artifact/provenance and current registry delta remain unresolved in the provider dossier.
+- `⚠️-traveloptics` — current physical row #550 and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` are confirmed by the current sibling dossier; that physical hash differs from the audited publisher baseline, so exact-current provenance/registry delta remain unresolved.
 
 This is a folder-status normalization only. It does not change registry IDs, spell/action counts, strict semantic totals, runtime compatibility claims or Black Arcana provider authority.
