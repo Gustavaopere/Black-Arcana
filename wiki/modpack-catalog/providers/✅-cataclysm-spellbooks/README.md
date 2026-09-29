@@ -20,6 +20,12 @@ Status: `✅ CURRENT PHYSICAL VERSION 1.1.14 BETA / PHYSICAL SHA-1 568d798862a61
 
 The current sibling physical authority identifies the installed filename/version as 1.1.14 and preserves SHA-1 `568d798862a61a374ab1e55dcddf5b2e3326b8b5`. Exact publisher File `8847070` was independently materialized with the same SHA-1, then compared against the previously hash-matched 1.1.13 physical control. Installed-pack ↔ publisher-file equality is therefore closed and current spell identity evidence is `COUNTED_EXACT`. See [`EXACT-1.1.14-RELEASE-REVALIDATION.md`](EXACT-1.1.14-RELEASE-REVALIDATION.md); the older [`EXACT-1.1.13-ARTIFACT-AUDIT.md`](EXACT-1.1.13-ARTIFACT-AUDIT.md) remains the exact prior-release control.
 
+## Catálogo objeto-a-objeto
+
+As **59/59 identidades registradas** da release física atual estão materializadas em [`SPELL-CARDS-1.1.14.md`](SPELL-CARDS-1.1.14.md) e nas 59 fichas individuais em `spells/`.
+
+A cobertura catalogal do provider está completa no escopo semântico atual, por isso a pasta permanece **`✅-cataclysm-spellbooks`**. Os 10 root keys translation-only continuam explicitamente excluídos; QA de runtime, balance e compatibilidade é uma camada separada e não reabre o status de catalogação.
+
 ## Exact current spell inventory — 59
 
 The exact publisher 1.1.14 JAR contains a `SpellRegistries.class` byte-for-byte identical to the hash-matched 1.1.13 control. Therefore the current release closes at the same **59 provider-owned `AbstractSpell` registrations**:

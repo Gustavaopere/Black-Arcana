@@ -10,6 +10,10 @@ Physical CurseForge hash: `3079423735`
 Exact public source: `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`
 Exact source tree: `fcee08e613fbfa030f034268a0240c8693ab7f45` (`truncated=false`)
 
+## Fichas por spell
+
+As **10 identidades registradas** de Aeromancy Additions 1.2.8 estão materializadas em [`SPELL-CARDS-1.2.8.md`](SPELL-CARDS-1.2.8.md) e nas fichas individuais em `spells/`. A camada preserva `COUNTED_SOURCE_PINNED 10 / +10 strict` e mantém os cinco registros comentados fora do catálogo ativo.
+
 ## Provider identity
 
 Aeromancy Additions is a mixed Iron's Spells content provider. It owns a Wind school, ten active Iron's `AbstractSpell` registrations, spell-support effects/entities, school gear/items and acquisition support. It is not a UI-only, library-only or compatibility-only component.

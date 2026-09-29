@@ -16,9 +16,28 @@ This directory is the canonical Phase 2 inventory for every magic-relevant top-l
 - Phase 2M Cataclysm: Spellbooks checkpoint — exact installed `1.1.13-1.21` Beta identity and current publisher 65-spell scale are pinned; the official public repository remains `1.1.11-1.21`, so a 34-registration source baseline is cataloged separately and the exact current 65-entry registry remains fail-closed pending an inspectable 1.1.13 artifact or matching source.
 - 25/09 current physical-Magic reconciliation — sibling `neoforge-rpg-skilltree@7028524829b5589ee377cd980aa8298cf95cf5c7` has **50 current status-prefixed rows whose physical category path contains `Magic`**, all mapped to provider directories after ownership-name normalization. Effective state is **46 ✅ cataloged / 4 ⚠️ partial-conditioned**: Tombstone contributes 10 actions that are now `COUNTED_EXACT` after physical↔publisher SHA-1 equality was closed; it remains partial because additional config-sensitive castables are unresolved. Gaze remains a separate ⚠️ magic provider because its current sibling dossier is categorized under `Addons/`, outside this physical-category count. **Traveloptics is absent from the current sibling modlist/dossier tree and is retained only as historical Phase 2BS evidence; it is not a current provider blocker.** Companions +9, Crystal Chronicles +1, Relics +41 and Tombstone +10 keep the strict reconstructible minimum at **1443**. The technical denominator remains `PENDING REBASE`.
 - 27/09 current physical-Magic reconciliation — sibling `neoforge-rpg-skilltree@1bb7c7d6e2e6878248b0c178bdae55e84697acd2` has **84 rows whose category field contains `Magic`**, all **84/84 mapped** into Black Arcana as **72 ✅ + 12 ⚠️**. The +17 delta from the prior 67-row snapshot contains 11 already-cataloged providers plus six newly mapped providers: Reliquified L_Ender's Cataclysm, ShadowsZ, Simply Swords: Cataclysm, Simply More, Simply Swords and Waystones. Reliquified L_Ender's Cataclysm 0.1.1 is ✅ `COUNTED_EXACT 7`, and Waystones 21.1.45 is ✅ `COUNTED_SOURCE_PINNED 3` after complete exact-version source action-surface reconciliation. ShadowsZ 1.1.9 has an exact 10-root semantic inventory but remains +0 strict until deployed attunement/Fusion state is captured. Simply More Alpha 5 now has an exact hash-matched **24-action current-pack denominator** (10 active API + 13 legacy direct-use + 1 shared Mimicry), but remains +0 strict until deployed Awakening/acquisition/Mimicry/config reachability is closed. The reconstructible strict minimum is now **1687**. Canonical structural tree: **115 = 101 ✅ + 14 ⚠️**. See `meta/PHYSICAL-MAGIC-RECONCILIATION-2026-09-27.md`.
+- **29/09/2026 folder-prefix normalization** — provider folder prefixes now represent **catalog coverage**, not strict-runtime activation. Nine providers with closed denominators and complete object-level materialization were promoted from `⚠️-` to `✅-`: Asterism Arcanum, Corail Tombstone, Gaze, Mowzie's Mobs, Not Enough Glyphs, ShadowsZ, Simply More, Simply Swords: Cataclysm and Somake Spells. Runtime/config/reachability conditions remain documented inside each provider and may still keep identities conditional or outside the strict numerator. Structural tree after this normalization: **115 = 110 ✅ + 5 ⚠️**. See [`meta/FOLDER-STATUS-NORMALIZATION-2026-09-29.md`](meta/FOLDER-STATUS-NORMALIZATION-2026-09-29.md).
 - Subsequent Phase 2 documentation is merged incrementally when coherent and CI-green; an incremental merge does not mean the complete catalog is finished.
 
 The Phase 2 baseline established the magic-relevant registry and a first set of provider pages, while multiple exact spell/glyph/ritual/power inventories remain explicitly incomplete.
+
+## Provider folder-prefix semantics
+
+Folder prefixes under `wiki/modpack-catalog/providers/` describe **catalog completeness**:
+
+- `✅-` — the current provider denominator is closed and every identified semantic object is materialized or explicitly dispositioned as counted, conditional or excluded;
+- `⚠️-` — the catalog itself is still incomplete for the current physical provider, for example because current scripts/artifact provenance/registry denominator/object-level materialization remains unresolved;
+- `🟡-`, `❌-` and `⛔-` retain their project-wide meanings for active implementation, not cataloged and blocked states.
+
+A deployed config, gamerule, reachability or runtime-QA gate does **not by itself** force a complete provider folder back to `⚠️-`. Those gates remain fail-closed in the provider documents and can keep a semantic identity outside the strict numerator without making the catalog structurally incomplete.
+
+At the 29/09/2026 normalization checkpoint, the five remaining `⚠️-` directories are intentionally unresolved at catalog level:
+
+- `⚠️-ice-and-fire-ce` — object-level action-card work is still in open PR #458;
+- `⚠️-irons-spellbooks-kubejs` — current-pack script-defined Iron's inventory is unavailable;
+- `⚠️-kubejs-ars-nouveau` — current-pack KubeJS Ars mutation inventory is unavailable;
+- `⚠️-simply-swords` — object-level action-card work is still in open PR #456;
+- `⚠️-traveloptics` — current physical artifact/provenance and current registry delta remain unresolved.
 
 ## Single canonical provider tree
 

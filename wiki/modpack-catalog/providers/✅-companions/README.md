@@ -42,6 +42,12 @@ Each item has its own concrete Magic Book class and its own provider-owned cast/
 
 The nine identities are cataloged in [SOURCE-1.3.4-MAGIC-BOOK-INVENTORY.md](./SOURCE-1.3.4-MAGIC-BOOK-INVENTORY.md).
 
+## Canonical object-level catalog
+
+All **9/9** provider-owned Magic Book actions are materialized in [`MAGIC-BOOK-CARDS-1.3.4.md`](MAGIC-BOOK-CARDS-1.3.4.md) and the individual files under `magic-books/`.
+
+The folder remains correctly named **`✅-companions`** because the semantic Magic Book inventory, registration boundary, source-level survival acquisition and Soul Mage deduplication are closed. Runtime/config QA remains separate and does not downgrade catalog completeness.
+
 ## Registration/config closure
 
 The nine books are registered directly and unconditionally in `CompanionsItems`; no mod-presence or config branch wraps those registrations in the pinned source.
