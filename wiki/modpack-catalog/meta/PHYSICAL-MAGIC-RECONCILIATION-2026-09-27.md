@@ -30,7 +30,7 @@ The prior Black Arcana snapshot had 67 physical `Magic` rows. The current siblin
 | 500 | ShadowsZ | ⚠️ exact physical/publisher SHA-1 equality + exact-artifact audit close **10 semantic identities**; all player powers remain attunement-gated by effective `shadowszRestrictPowers`, and Fusion additionally depends on deployed `fusionEnabled`; +0 strict until those values are captured |
 | 501 | Simply Swords: Cataclysm | ⚠️ exact-version source inventory closed at 4 abilities; deployed STARTUP config decides current active subset |
 | 502 | Simply More | ⚠️ exact Alpha-5 current-pack denominator 24: 10 active-API actions + 13 legacy direct-use actions + 1 shared Mimicry transformation; deployed reachability/config remains open |
-| 503 | Simply Swords | ⚠️ release-correlated source lower bound 66: 62 ACTIVE Unique roots + 4 player-use Runic actions; passive/proc/implicit surfaces excluded; legacy/reachability open |
+| 503 | Simply Swords | ⚠️ exact hash-matched action denominator 66: 62 ACTIVE Unique roots + 4 player-use Runic actions; exact residual artifact audit adds 0 legacy/secondary roots; deployed Awakening/config/acquisition/compat reachability remains open |
 | 564 | Waystones | ⚠️ exact-version source lower bound 3: one deduplicated Warp/Teleport root + Warp Portal Conjuration + Twinbound Link; setup-action classification remains open |
 
 ## Current physical-Magic status
@@ -81,7 +81,7 @@ The five still-partial new providers remain in the closure queue and should be c
 1. ShadowsZ 1.1.9 — capture effective `shadowszRestrictPowers` and deployed `fusionEnabled`; exact 10-root inventory is already closed;
 2. Simply Swords: Cataclysm 1.0.2 deployed config;
 3. Simply More 1.3.0 Alpha 5 — exact 24-action denominator closed; deployed reachability/config remains open;
-4. Simply Swords 1.70.2;
+4. Simply Swords 1.70.2 — exact 66-action denominator closed; deployed reachability/config remains open;
 5. Waystones 21.1.45.
 
 Do not re-audit the eleven already-cataloged reclassified providers unless their physical/source line changes.
