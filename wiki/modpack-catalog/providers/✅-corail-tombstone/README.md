@@ -1,6 +1,8 @@
 # Corail Tombstone — 9.5.6
 
-Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / 10 COUNTED_EXACT PRAYER-RITE ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL CASTABLE ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING / RUNTIME QA FAIL-CLOSED`
+Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / COMPLETE 22-ACTION-FAMILY CATALOG / 10 COUNTED_EXACT PRAYER-RITE ACTIONS / 12 EXACT DEDUPED CONFIG-CONDITIONAL CASTABLE ACTION FAMILIES / DEPLOYED ALLOW_* VALUES MISSING / RUNTIME QA FAIL-CLOSED`
+
+> Folder-prefix rule (2026-09-29): **✅ means the current semantic/action denominator is fully cataloged and materialized.** Deployed config, reachability or runtime QA may still keep individual identities conditional or outside the strict numerator; those conditions remain documented here and do not make the folder structurally partial.
 
 ## Current physical identity
 
@@ -217,7 +219,7 @@ Black Arcana must not duplicate those runtimes. RPG Skill Tree remains progressi
 
 ## Result
 
-**⚠️ Partially cataloged, materially advanced.**
+**✅ Catalog complete at the known 9.5.6 action-family level; deployed `allow_*` values remain conditional.**
 
 The exact physical=publisher 9.5.6 artifact closes **10 `COUNTED_EXACT` semantic prayer/rite actions** and multiple explicit zero-semantic families. The remaining magic-item surface is exactly deduplicated to **12 config-gated action families**; provider config, not semantic identity ambiguity, is now the catalog blocker.
 

@@ -1,6 +1,8 @@
 # Mowzie's Mobs — 1.8.2
 
-Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / 10 STRICT DISCRETE PLAYER POWERS + 1 CONFIG-CONDITIONAL POWER / 13 ACTIVE PLAYER-ABILITY SLOTS / RUNTIME QA SEPARATE`
+Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / COMPLETE 11-POWER CATALOG / 10 STRICT DISCRETE PLAYER POWERS + 1 CONFIG-CONDITIONAL POWER / 13 ACTIVE PLAYER-ABILITY SLOTS / RUNTIME QA SEPARATE`
+
+> Folder-prefix rule (2026-09-29): **✅ means the current semantic/action denominator is fully cataloged and materialized.** Deployed config, reachability or runtime QA may still keep individual identities conditional or outside the strict numerator; those conditions remain documented here and do not make the folder structurally partial.
 
 ## Current physical authority
 
@@ -93,7 +95,7 @@ Canonical closure procedure: [`DEPLOYED-CONFIG-CHECKLIST.md`](DEPLOYED-CONFIG-CH
 
 **Strict semantic delta: +10 `COUNTED_EXACT`.**
 
-Provider status remains **⚠️ Partial / conditioned** because one current player-facing magical power is controlled by unresolved deployed config.
+Provider catalog status is **✅ Cataloged** because all 11 semantic roots are materialized. Tunneling remains deployment-conditioned and outside the strict numerator until its deployed config is evidenced.
 
 ## Runtime QA remains separate
 
@@ -108,6 +110,6 @@ Still fail-closed:
 
 ## Result
 
-**⚠️ Partial / conditioned.**
+**✅ Catalog complete; Tunneling remains deployment-conditioned.**
 
 Current strict semantic contribution: **10 provider-owned discrete player powers**, plus **1 config-conditional Tunneling power**.

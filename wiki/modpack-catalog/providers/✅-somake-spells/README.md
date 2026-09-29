@@ -1,6 +1,8 @@
 # Somake Spells — current physical 1.0.9 / historical exact 1.0.8-fix audit
 
-Status: `⚠️ CURRENT PHYSICAL 1.0.9 / PHYSICAL SHA-1 = EXACT PUBLISHER FILE 8867079 / EXACT 83-ID REGISTRY / CURRENT MOD-COMPOSITION REGISTRATION OUTCOME 83/83 / SPELL-LOCK DEFAULT FALSE / DEPLOYED HOST+LOCK CONFIG + SURVIVAL REACHABILITY OPEN / CONDITIONAL +0 / FAIL-CLOSED`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 1.0.9 / PHYSICAL SHA-1 = EXACT PUBLISHER FILE 8867079 / COMPLETE 83-ID OBJECT CATALOG / EXACT 83-ID REGISTRY / CURRENT MOD-COMPOSITION REGISTRATION OUTCOME 83/83 / SPELL-LOCK DEFAULT FALSE / DEPLOYED HOST+LOCK CONFIG + SURVIVAL REACHABILITY OPEN / CONDITIONAL +0 / FAIL-CLOSED`
+
+> Folder-prefix rule (2026-09-29): **✅ means the current semantic/action denominator is fully cataloged and materialized.** Deployed config, reachability or runtime QA may still keep individual identities conditional or outside the strict numerator; those conditions remain documented here and do not make the folder structurally partial.
 
 ## Current installed identity — 1.0.9
 

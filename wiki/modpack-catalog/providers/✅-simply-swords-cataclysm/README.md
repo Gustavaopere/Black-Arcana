@@ -1,6 +1,8 @@
 # Simply Swords: Cataclysm — 1.0.2+1.21.1+neoforge
 
-Status: `⚠️ PARTIAL / PHYSICAL IDENTITY CLOSED / EXACT-VERSION SOURCE-PINNED INVENTORY 4 / ACTIVE CONFIG SURFACE OPEN / +0 STRICT`
+Status: `✅ CATALOGED / PHYSICAL IDENTITY CLOSED / COMPLETE 4-ACTION OBJECT CATALOG / EXACT-VERSION SOURCE-PINNED INVENTORY 4 / ACTIVE CONFIG SURFACE OPEN / +0 STRICT`
+
+> Folder-prefix rule (2026-09-29): **✅ means the current semantic/action denominator is fully cataloged and materialized.** Deployed config, reachability or runtime QA may still keep individual identities conditional or outside the strict numerator; those conditions remain documented here and do not make the folder structurally partial.
 
 ## Current physical authority
 
@@ -128,7 +130,7 @@ Even after config closure, assembled runtime QA remains separate for:
 
 ## Result
 
-**⚠️ Partial — exact-version source inventory closed at 4; active config surface open.**
+**✅ Catalog complete — exact-version source inventory closed at 4; deployed STARTUP config remains open.**
 
 Inventory: **4 provider-owned supernatural weapon abilities**.
 

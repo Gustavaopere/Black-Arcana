@@ -2,7 +2,9 @@
 
 ## Status
 
-`EXACT PHYSICAL 1.1.7.1 / EXACT HASH-MATCHED MODRINTH ARTIFACT / ARR / 1 COUNTED IRON'S SPELL / 26 CONFIG-CONDITIONAL SPIRIT RITES / 2 GEAS + 8 RUNES METRIC-EXCLUDED / COMPONENT OPEN / RUNTIME FAIL-CLOSED`
+`✅ CATALOGED / EXACT PHYSICAL 1.1.7.1 / EXACT HASH-MATCHED MODRINTH ARTIFACT / ARR / COMPLETE 27-OBJECT ACTION CATALOG / 1 COUNTED IRON'S SPELL / 26 CONFIG-CONDITIONAL SPIRIT RITES / 2 GEAS + 8 RUNES METRIC-EXCLUDED / DEPLOYED RITE STATE OPEN / RUNTIME FAIL-CLOSED`
+
+> Folder-prefix rule (2026-09-29): **✅ means the current semantic/action denominator is fully cataloged and materialized.** Deployed config, reachability or runtime QA may still keep individual identities conditional or outside the strict numerator; those conditions remain documented here and do not make the folder structurally partial.
 
 ## Installed authority
 
@@ -75,7 +77,7 @@ Phase 2BJ disposition:
 - 2 Geas types: **`EXCLUDED`** by metric definition;
 - 8 rune items: **`EXCLUDED`** by metric definition.
 
-The strict reconstructible semantic minimum therefore moves from **1249 to 1250**. Gaze does **not** close another provider component because the 26 rite identities remain configuration-conditional, so provider-component closure stays **57/100**. The global semantic denominator remains incomplete and no final magic-coverage percentage is declared.
+The strict reconstructible semantic minimum therefore moves from **1249 to 1250**. The 26 rite identities remain configuration-conditional for strict activation, but all 26 are explicitly cataloged object-by-object. Folder status is therefore **✅ cataloged**; the historical provider-component closure figures remain checkpoint-only, and no final magic-coverage percentage is declared.
 
 ## Publisher lineage retained for context
 
