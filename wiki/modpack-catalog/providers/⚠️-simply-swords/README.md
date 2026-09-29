@@ -136,6 +136,40 @@ The following are still required before strict promotion:
 
 Source defaults are not substituted for deployed state.
 
+### Bounded deployed-evidence route
+
+The read-only provider catalog collector now has a bounded Simply Swords 1.70.2 route.
+
+It first fingerprints:
+
+`simplyswords-neoforge-1.70.2-1.21.1.jar`
+
+against the canonical physical/publisher SHA-1:
+
+`05b074ff774467f1fe9fb5592151b7845c321cbc`.
+
+The release-line source checkpoint `359a8031b1a3243d1a3b013dbaa0cbba70ea8278`
+declares Fzzy Config `0.7.6+1.21`, `GeneralConfig` id
+`simplyswords:general` and `LootConfig` id `simplyswords:loot`.
+Fzzy Config 0.7.6 derives the default folder/name from the config identifier and
+uses TOML by default, so the collector is bounded to:
+
+- `config/simplyswords/general.toml` → `enableUniqueWeaponAwakening`;
+- `config/simplyswords/loot.toml` → `enableLootDrops`,
+  `runicLootTableWeight`, `uniqueLootTableWeight`,
+  `enableContainedRemnants`, `disabledUniqueWeaponLoot` and
+  `uniqueLootTableOptions`.
+
+Missing files/keys, duplicate observations, invalid booleans/numbers and invalid
+resource locations remain explicit fail-closed states. No unrelated config values
+are retained.
+
+This route closes only a bounded part of deployed reachability. It does **not**
+prove per-stack Awakening level/unlock state, complete acquisition/reformation,
+compat-dependent materialization, or addon ownership.
+
+See [DEPLOYED-REACHABILITY-CHECKLIST.md](DEPLOYED-REACHABILITY-CHECKLIST.md).
+
 ## Ownership / integration boundary
 
 Simply Swords remains authority for Unique abilities, Runic Powers, Weapon Implicits, Runic Forge, Awakening, gem/tablet components and loot/pity state.
