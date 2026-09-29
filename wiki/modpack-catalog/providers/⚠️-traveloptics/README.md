@@ -2,7 +2,7 @@
 
 ## Status
 
-`⚠️ CURRENT PHYSICAL PROVIDER / PHYSICAL SHA-1 OTHER_VERIFIED / 33-ID PUBLISHER-BASELINE REGISTRY MATERIALIZED / CURRENT PHYSICAL REGISTRY UNVERIFIED / STRICT +0 / FAIL-CLOSED`
+`⚠️ CURRENT PHYSICAL PROVIDER / PHYSICAL SHA-1 OTHER_VERIFIED / 33-ID PUBLISHER BASELINE + HISTORICAL MODIFIED-RUNTIME 33/33 OBSERVED / CURRENT PHYSICAL REGISTRY UNVERIFIED / STRICT +0 / FAIL-CLOSED`
 
 Current physical status: **INSTALLED / CURRENT PROVIDER BLOCKER**. Current sibling authority rechecked at `neoforge-rpg-skilltree@2b0c72b68fc7abf49eede694f7e3f22b2b3d0e04`: `PROJECT-INSTRUCTIONS/modlist/modlist.md` row **#550** and the status-prefixed T.O Magic n' Extras dossier both record `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This current 27/09 physical authority supersedes older claims that Traveloptics was absent; the 16/09 Project Library fingerprint remains corroborating provenance.
 
@@ -25,6 +25,8 @@ The Phase 2BS publisher-artifact audit remains canonical evidence for File `6342
 Current sibling physical authority dated 2026-09-27 fingerprints the installed filename at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, independently matching the earlier 2026-09-16 Project Library checkpoint. This differs from both exact publisher File `6342780` SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8` and known patch File `8861368` SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Physical disposition remains **`OTHER_VERIFIED`** and current provenance remains unidentified. The older 2026-08-18 `minecraftinstance.json` snapshot records a File-6342780 slot with `isModified=true`, but cannot prove that the later September bytes descend from that earlier state. The 33-ID File-6342780 inventory therefore remains an exact publisher baseline, **not** an exact-current-physical registry claim. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
 
 The current sibling T.O Magic n' Extras dossier now independently confirms the physical row and the same SHA-1. It is therefore current presence/fingerprint evidence, while Black Arcana remains authority for the unresolved exact-current semantic delta.
+
+A Project Library assembled-runtime checkpoint from **2026-08-19** further narrows that delta: NeoForge discovered the same nominal `traveloptics-4.4.0.1-1.21.1.jar`, and a bounded runtime-analyzer extraction produced exactly the same **33 unique spell IDs** as the publisher baseline, including `traveloptics:blackout`, with no additional Traveloptics spell identity before the analyzer advanced to the next provider namespace. The log does not record the JAR SHA-1, so this is **historical modified-runtime 33/33 evidence**, not proof that September SHA-1 `7b74816e...` is registry-identical.
 
 ## Publisher release boundary
 
@@ -189,6 +191,7 @@ Somake 1.0.9 and Traveloptics 4.4.0.1 are both physically present in the current
 ## Evidence ceiling
 
 - current physical presence/version/hash from Project modlist: `HIGH`;
+- 2026-08-19 modified assembled-runtime 33/33 spell-ID set: `HIGH FOR THAT HISTORICAL SNAPSHOT / HASH-UNBOUND TO CURRENT PHYSICAL`;
 - sibling status-prefix/categorization absence: `NON-AUTHORITATIVE FOR PHYSICAL PRESENCE`;
 - exact publisher file identity/hashes: `HIGH`;
 - exact 33 registration identities: `HIGH`;
