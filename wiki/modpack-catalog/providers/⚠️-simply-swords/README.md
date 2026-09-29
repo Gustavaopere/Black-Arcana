@@ -4,7 +4,7 @@ Status: `⚠️ PARTIAL / EXACT HASH-MATCHED ACTION DENOMINATOR 66 / DEPLOYED AW
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@51751e6c77530a7d8825ec42493ffccedf978d1a`;
+- sibling checkpoint: `neoforge-rpg-skilltree@a826e7773c79fd07d9afe40ace224ff83923c76e`;
 - physical row: `#503`;
 - JAR: `simplyswords-neoforge-1.70.2-1.21.1.jar`;
 - mod id: `simplyswords`;
