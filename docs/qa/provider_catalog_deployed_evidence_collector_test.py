@@ -684,9 +684,6 @@ unrelatedSecret = "do-not-collect"
             )
 
 
-
-
-
     def test_collects_only_exact_simply_more_mimicry_disabled_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
