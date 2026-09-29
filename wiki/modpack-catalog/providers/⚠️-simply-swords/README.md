@@ -1,211 +1,158 @@
 # Simply Swords — 1.70.2-1.21.1
 
-Status: `⚠️ PARTIAL / PHYSICAL IDENTITY CLOSED / RELEASE-CORRELATED SOURCE CHECKPOINT / LOWER_BOUND 66 PLAYER-INVOKED ACTION ROOTS / LEGACY NON-OPTED INVENTORY + DEPLOYED REACHABILITY OPEN / +0 STRICT`
+Status: `⚠️ PARTIAL / EXACT HASH-MATCHED ACTION DENOMINATOR 66 / DEPLOYED AWAKENING-CONFIG-REACHABILITY OPEN / +0 STRICT`
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@7c9d0e9552e33531d0d6b46b86c9de86d3b233bf`;
+- sibling checkpoint: `neoforge-rpg-skilltree@8aa9b92197c2a6eed5b67b16fa6b6a4adb88fd35`;
 - physical row: `#503`;
 - JAR: `simplyswords-neoforge-1.70.2-1.21.1.jar`;
 - mod id: `simplyswords`;
 - runtime: `1.70.2-1.21.1`;
 - physical SHA-1: `05b074ff774467f1fe9fb5592151b7845c321cbc`;
-- sibling dossier publisher anchor: CurseForge File `8746001`, Simply Swords `1.70.2-1.21.1`.
+- publisher file: CurseForge File `8746001`.
 
-Official file:
-`https://www.curseforge.com/minecraft/mc-mods/simply-swords/files/8746001`
+The current sibling still records row #503 with the same JAR/version and `Magic` category.
 
-The publisher changelog for 1.70.2 names three changes:
+## Exact artifact evidence
 
-- Epic Fight crash fix;
-- Lootr loot-injection/pity fix;
-- Simplified Chinese localization update.
+Non-merge evidence PR #448 materializes CurseForge File `8746001` through the exact Curse Maven coordinate and hard-gates SHA-1 equality against the current physical artifact.
 
-Those runtime regression concerns are separate from semantic action counting.
+Final bounded audit:
+
+- audit PR: `#448`;
+- audit branch SHA: `dd7f5450b93f4f6004a3f73b53b121898349d459`;
+- audit workflow run: `36524073819` — **SUCCESS**;
+- exact downloaded SHA-1: `05b074ff774467f1fe9fb5592151b7845c321cbc`;
+- exact metadata: `simplyswords` / `1.70.2-1.21.1`;
+- provider top-level classes: **666**;
+- exact `UniqueAbilityDefinition` fields: **121**;
+- exact registered concrete custom-item classes referenced by `ItemsRegistry`: **54**;
+- exact registered classes whose provider inheritance chain implements `UniqueWeaponActiveAbility`: **51**;
+- exact registered Secondary classes: **2**;
+- unregistered concrete Active classes: **0**;
+- unregistered concrete Secondary classes: **0**.
+
+The audit retains only factual archive/class/interface/member/call-target facts required for denominator closure. Full disassembly and implementation bodies are not retained.
+
+See [`EXACT-1.70.2-ARTIFACT-ACTION-AUDIT.md`](EXACT-1.70.2-ARTIFACT-ACTION-AUDIT.md).
 
 ## Release-correlated source authority
 
-Official repository:
+Official source repository: `Sweenus/SimplySwords`.
 
-`https://github.com/Sweenus/SimplySwords`
+Two source checkpoints remain controlling for semantic classification:
 
-Primary release-correlated checkpoint:
+- `c82eeaf4479543a728340b9763ab445c9c9d4c0d` — the Epic Fight crash fix named by the publisher's 1.70.2 changelog, after the listed Lootr fix and localization update;
+- `359a8031b1a3243d1a3b013dbaa0cbba70ea8278` — later same-day cross-check explicitly declaring `mod_version=1.70.2-1.21.1`.
 
-`Sweenus/SimplySwords@c82eeaf4479543a728340b9763ab445c9c9d4c0d`
+The later checkpoint preserves the same **62 ACTIVE** root IDs and the same four player-use Runic action families. It adds only one passive companion definition relative to the primary release-correlated checkpoint.
 
-This commit is the **Epic Fight crash fix named by the 1.70.2 publisher changelog**. It follows the source commit for the Lootr injection/pity fix (`91edb6e...`) and the localization update/merge already present on the branch. Therefore it is a stronger release-line anchor than an arbitrary moving-branch snapshot.
+## Exact semantic denominator
 
-A later same-day cross-check:
+The Black Arcana semantic metric counts discrete provider-owned supernatural **player actions**. It excludes passive/proc behavior, equipment containers, downstream lifecycle events/entities/effects, Awakening levels by themselves and infrastructure.
 
-`Sweenus/SimplySwords@359a8031b1a3243d1a3b013dbaa0cbba70ea8278`
+### 62 ACTIVE Unique roots
 
-declares `mod_version=1.70.2-1.21.1` and retains the **same 62 ACTIVE root IDs and the same four player-use Runic action families**. It adds one passive companion definition relative to the release-correlated fix checkpoint; that passive delta does not affect the semantic lower bound.
+The release-correlated source closes **121** `UniqueAbilityDefinition` roots at the primary checkpoint:
 
-Neither checkpoint is claimed to be byte-identical to the physical CurseForge JAR.
+- **62 ACTIVE**;
+- **59 PASSIVE**.
 
-## Canonical semantic metric boundary
+The version-declared cross-check preserves the same 62 ACTIVE roots and has 60 PASSIVE roots.
 
-The semantic ledger counts discrete provider-owned supernatural **player actions**. It does not count:
+The exact JAR independently contains **121 `UniqueAbilityDefinition` fields**, while the exact registered Active class set matches the version-declared source class set used for the 1.70.2 line. This removes the prior concern that an unenumerated legacy Active class existed outside the audited surface.
 
-- items or weapon totals;
-- passive gear/proc frameworks;
-- status effects;
-- weapon implicits triggered by hit/damage;
-- Forge/UI/processes;
-- loot/pity state;
-- Awakening levels by themselves;
-- downstream entities/projectiles/effects/events of one action.
+### Four player-use Runic action families
 
-That boundary is applied before arithmetic.
-
-## 62 release-line registered active Unique ability roots
-
-At the release-correlated checkpoint, `SimplySwords.init()` calls `BuiltinUniqueAbilities.register()`.
-
-That registration path installs the built-in block and then `Phase2UniqueAbilities` through `Phase10UniqueAbilities`.
-
-At `c82eeaf...` the source registers:
-
-- **121 total `UniqueAbilityDefinition` roots**;
-- **62 `ACTIVE` roots**;
-- **59 `PASSIVE` roots**.
-
-At the later version-declared cross-check `359a8031...`, the ACTIVE set remains exactly **62** while one additional passive companion brings PASSIVE to 60.
-
-The provider's modifier API treats a `UniqueAbilityDefinition` as the root identity and lifecycle/events as children of that root. Therefore downstream HIT/FINISH/event identifiers do not create extra semantic objects.
-
-ACTIVE subtotal by block at the release-correlated checkpoint:
-
-| Block | ACTIVE | PASSIVE |
-|---|---:|---:|
-| Builtin | 2 | 3 |
-| Phase 2 | 6 | 4 |
-| Phase 3 | 7 | 5 |
-| Phase 4 | 3 | 3 |
-| Phase 5 | 6 | 5 |
-| Phase 6 | 7 | 6 |
-| Phase 7 | 4 | 6 |
-| Phase 8 | 7 | 11 |
-| Phase 9 | 13 | 8 |
-| Phase 10 | 7 | 8 |
-| **Total** | **62** | **59** |
-
-The passive definitions are provider behavior but are **excluded** from the semantic-magic action count.
-
-## Four countable Runic action families
-
-`GemPowerRegistry` contains many Runic/Runefused/Nether power IDs, but the semantic metric does not count trigger-only powers.
-
-At the same release-correlated checkpoint, only four causal power families implement the explicit player input hook `use(...)` and are reached through `GemPowerComponent.use(...)` from `RunicSwordItem.use(...)`:
+Exactly four Runic/Gem Power families have a causal player `use(...)` action on the audited release line:
 
 1. `simplyswords:immolation`;
-2. `simplyswords:momentum`;
+2. `simplyswords:momentum` — `greater_momentum` is the same action family at a stronger tier;
 3. `simplyswords:throwing`;
 4. `simplyswords:ward`.
 
-`greater_momentum` uses the same `MomentumPower` causal action with a stronger tier and is not counted as a second semantic action.
+Trigger-only/proc Runic powers remain excluded.
 
-Runic action subtotal: **4**.
+### Residual legacy/secondary surfaces add zero roots
 
-Other power classes observed at this release-line checkpoint are driven by `postHit`, `onSwing` or `inventoryTick` and are treated as equipment/proc/passive mechanics under the current metric.
+The exact artifact narrows every residual registered player-action-shaped surface to four cases:
 
-## Weapon implicits are excluded
+- `StormscaleSwordItem#startPlayerSecondaryAbility`;
+- `WraithmawSwordItem#startPlayerSecondaryAbility`;
+- `RighteousRelicSwordItem#use`;
+- `TaintedRelicSwordItem#use`.
 
-`WeaponImplicitRegistry.registerBuiltins()` registers **17** built-in implicit identities at the release-correlated checkpoint.
+The exact JAR call-target audit closes them:
 
-Their contract is limited to:
+- Stormscale Secondary calls `StormscaleLightningRodManager.tryReactivate(...)` — a continuation/reactivation of the already-counted Stormscale Active root;
+- Wraithmaw Secondary calls `WraithmawAbilityManager.tryDetonate(...)` — a continuation/detonation of the already-counted Wraithmaw Active root;
+- Righteous Relic `use` delegates directly to `UniqueSwordItem.use(...)`;
+- Tainted Relic `use` delegates directly to `UniqueSwordItem.use(...)`.
 
-- damage modification;
-- on-hit handling;
-- incoming-damage cancellation.
+Therefore these four surfaces create **0 additional semantic roots**.
 
-They are equipment/proc behavior, not discrete player-invoked supernatural actions, and contribute **+0 semantic objects**.
+The exact artifact also proves:
 
-## Current lower bound
+- the registered Active class set matches the version-declared source set;
+- the registered Secondary class set is exactly Stormscale + Wraithmaw;
+- the registered non-Active direct-`use` set is exactly Righteous Relic + Tainted Relic;
+- there are no unregistered concrete Active or Secondary classes in the exact artifact.
 
-`62 active Unique roots + 4 player-use Runic action families = 66`.
+## Denominator arithmetic
 
-Therefore the current provider state is:
+`62 ACTIVE Unique roots + 4 player-use Runic roots + 0 residual legacy/secondary roots = 66`.
 
-**LOWER_BOUND 66 / +0 STRICT**.
+Current provider semantic inventory:
 
-## Why 66 is not the final denominator
+**EXACT ACTION DENOMINATOR 66 / +0 STRICT**.
 
-The provider's exact-line developer documentation states that existing abilities which do not opt into the `UniqueAbilityApi` continue to use the older `UniqueWeaponActiveAbility` contract.
+The former `LOWER_BOUND 66` state is superseded. The identity/action denominator is closed; only deployed reachability remains open.
 
-Therefore the 62 registered `ACTIVE` definitions are a strong positive inventory, but **not proof that every player-invoked Unique ability in 1.70.2 is represented in that registry**.
+## Passive and non-action surfaces excluded
 
-The complete denominator remains open for:
+These remain provider behavior but do not add player-action identities:
 
-- legacy/non-opted `UniqueWeaponActiveAbility` actions;
-- any secondary-action path not represented by a registered active definition;
-- disabled/config-gated content;
-- Awakening unlock/reachability;
-- exact current loot/survival acquisition where it changes practical reachability;
-- direct-stack versus natural-drop Awakening state;
-- addon deduplication against Simply More, Simply Swords: Cataclysm and other consumers.
+- 59 PASSIVE definitions at the primary release-correlated checkpoint;
+- one additional passive companion at the later version-declared checkpoint;
+- 17 Weapon Implicits;
+- trigger-only/proc Gem Powers;
+- hit/incoming-damage hooks;
+- Awakening progression state;
+- Runic Forge/loot/pity/config UI infrastructure;
+- downstream projectiles/entities/effects of one counted action.
 
-## Config / Awakening boundary
+## Deployed reachability remains open
 
-`UniqueWeaponActiveAbility` checks `AwakeningApi.isAbilityUnlocked(stack)` before normal player activation.
+`UniqueWeaponActiveAbility` activation is gated by `AwakeningApi.isAbilityUnlocked(stack)`, and the 1.70.x line is config/save-sensitive.
 
-The 1.70.x line is also config-breaking/save-sensitive. Source defaults are not treated as proof of the deployed pack's effective ability subset.
+The following are still required before strict promotion:
 
-For that reason the 66 identities remain outside the strict global sum until complete active-action inventory and deployed reachability are closed.
+1. authoritative deployed Awakening/unlock state for current obtainable stacks/forms;
+2. current survival acquisition/reformation paths where they affect which of the 66 identities are practically reachable;
+3. effective deployed config/datapack/script suppression affecting player availability;
+4. exact compat-provider presence/gates where a source-defined root is conditionally materialized, including Dreadtide/Eldritch End if applicable;
+5. final addon ownership/reachability reconciliation where base-provider and addon surfaces can overlap operationally.
+
+Source defaults are not substituted for deployed state.
 
 ## Ownership / integration boundary
 
-Simply Swords remains authority for:
+Simply Swords remains authority for Unique abilities, Runic Powers, Weapon Implicits, Runic Forge, Awakening, gem/tablet components and loot/pity state.
 
-- base weapon types;
-- Unique ability state;
-- Runic Powers;
-- weapon implicits;
-- Runic Forge;
-- Awakening;
-- gem/tablet components;
-- loot/pity state.
-
-Addons may extend these systems but must not duplicate base-provider action identities or state.
-
-Black Arcana must not duplicate provider damage/proc settlement, active ability lifecycle, cooldown/resource charging, Awakening, Runic state or loot/pity authority.
+Black Arcana must not duplicate provider activation, cooldown/resource charging, Awakening, proc settlement, Runic state or loot/pity authority.
 
 RPG Skill Tree remains sibling authority only for progression, attributes, Mastery, perks and gates through verified contracts.
 
-## Clean-room / license note
+## Clean-room / license
 
-Source license on the audited line: **Timefall Development License 1.2**.
-
-The license permits use as a library/integration but prohibits bundling/publishing/distributing copies absent the stated permissions. Black Arcana retains only factual version/registry/behavior/contract information needed for cataloging and interoperability; no upstream implementation body or asset is copied.
-
-## Closure gate
-
-Promote Simply Swords beyond `LOWER_BOUND 66 / +0 STRICT` only after:
-
-1. every legacy/non-opted player-invoked Unique action is enumerated and deduplicated;
-2. secondary input paths are reconciled with registered active definitions;
-3. disabled/config-gated active actions are classified;
-4. deployed Awakening/reachability evidence is captured where it changes the active subset;
-5. Runic powers remain separated into player-use actions versus proc/passive mechanics;
-6. addon identities are deduplicated against the base provider;
-7. the physical SHA-1 remains the cataloged 1.70.2 artifact.
-
-Runtime Epic Fight/Lootr regression QA, Runic Forge transactions, persistence and save migration remain separate from semantic inventory closure.
+The audited source line declares the Timefall Development License 1.2. Black Arcana retains only factual metadata, IDs, class/interface/member structure, bounded call-target facts and behavior-level semantics needed for cataloging/interoperability. No upstream implementation body or protected asset is copied.
 
 ## Result
 
-**⚠️ Partial — release-correlated lower bound 66.**
+**⚠️ Partial / conditioned — exact action denominator closed at 66.**
 
-Countable lower bound:
-
-- **62** release-line registered `ACTIVE` Unique ability roots;
-- **4** player-invoked Runic action families.
-
-Documented but excluded:
-
-- **59** PASSIVE definitions at the release-correlated fix checkpoint;
-- one additional passive companion at the later version-declared cross-check;
-- **17** weapon implicits;
-- trigger-only/proc Gem Powers.
-
-Strict global delta: **+0** until remaining legacy/non-opted active actions and deployed reachability are closed.
+- exact current action denominator: **66**;
+- strict semantic contribution: **+0**;
+- remaining blocker: deployed Awakening/config/acquisition/compat reachability;
+- runtime Epic Fight/Lootr regression QA, persistence, Runic Forge transactions and save migration remain separate from semantic inventory closure.
