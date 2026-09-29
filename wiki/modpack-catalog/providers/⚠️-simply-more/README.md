@@ -119,6 +119,16 @@ Strict counting remains fail-closed until current assembled-pack evidence establ
 - effective Mimicry form-disable state where it changes usable transformation outcomes;
 - any deployed config/datapack/script state that suppresses otherwise present roots.
 
+The read-only deployed-evidence collector now has a bounded Alpha-5 route for the
+Mimicry portion of this gate. It hashes `simplymore-forge-1.3.0_alpha.jar`, compares
+against physical/publisher SHA-1 `51636477cd5c378f42d9700e1fe35cd952c8f4f1`,
+then reads only `config/simplymore/unique_effect.toml` and the exact 25
+`mimicry.config.<form>.disabled` booleans. Missing/malformed values remain
+fail-closed and no unrelated config body is retained.
+
+That collector evidence does not promote the provider by itself. Awakening/unlock,
+acquisition/reformation and other deployed suppression surfaces remain open.
+
 Source or artifact defaults are not substituted for deployed state.
 
 Therefore current disposition remains:
