@@ -397,6 +397,49 @@ jobs:
           report["registered_secondary_classes"] = secondary_rows
           report["registered_secondary_class_count"] = len(secondary_rows)
 
+          expected_registered_active_classes = {
+              CUSTOM_PREFIX + name
+              for name in (
+                  "ArcanethystSwordItem", "BloodwakeSwordItem", "BrambleSwordItem",
+                  "BrimstoneClaymoreItem", "CaelestisSwordItem", "ChompolotlSwordItem",
+                  "DawnquiverSwordItem", "DevourerClaymoreItem", "DormantRelicSwordItem",
+                  "DreadwhisperSwordItem", "EmberIreSwordItem", "EmberlashSwordItem",
+                  "EnigmaSwordItem", "FlamewindSwordItem", "FrostfallSwordItem",
+                  "GloampiercerSwordItem", "HarbingerSwordItem", "HearthflameSwordItem",
+                  "HiveheartSwordItem", "IcewhisperSwordItem", "IonboundStormscaleSwordItem",
+                  "LichbladeSwordItem", "LivyatanSwordItem", "MagibladeSwordItem",
+                  "MagiscytheSwordItem", "MagispearSwordItem", "MoltenEdgeSwordItem",
+                  "RibboncleaverSwordItem", "RiftmaneSwordItem", "ShadowstingSwordItem",
+                  "SoulPyreSwordItem", "SoulkeeperSwordItem", "SoulrenderSwordItem",
+                  "SoulstalkerSwordItem", "StarsEdgeSwordItem", "StealSwordItem",
+                  "StormSwordItem", "StormbringerSwordItem", "StormsEdgeSwordItem",
+                  "StormscaleSwordItem", "SunfireSwordItem", "TempestSwordItem",
+                  "ThunderbrandSwordItem", "TwistedBladeItem", "WatcherClaymoreItem",
+                  "WatchingWarglaiveItem", "WaxweaverSwordItem", "WhisperwindSwordItem",
+                  "WickpiercerSwordItem", "WraithfangSwordItem", "WraithmawSwordItem",
+              )
+          }
+          exact_registered_active_classes = {row["class"] for row in active_rows}
+          if exact_registered_active_classes != expected_registered_active_classes:
+              raise SystemExit(
+                  "Exact registered Active class set drift: "
+                  f"missing={sorted(expected_registered_active_classes - exact_registered_active_classes)} "
+                  f"extra={sorted(exact_registered_active_classes - expected_registered_active_classes)}"
+              )
+          report["registered_active_class_set_matches_version_declared_source"] = True
+
+          expected_secondary_classes = {
+              CUSTOM_PREFIX + "StormscaleSwordItem",
+              CUSTOM_PREFIX + "WraithmawSwordItem",
+          }
+          exact_secondary_classes = {row["class"] for row in secondary_rows}
+          if exact_secondary_classes != expected_secondary_classes:
+              raise SystemExit(
+                  "Exact Secondary class set drift: "
+                  f"expected={sorted(expected_secondary_classes)} got={sorted(exact_secondary_classes)}"
+              )
+          report["registered_secondary_class_set_matches_version_declared_source"] = True
+
           report["registered_active_classes_without_declared_action_methods"] = [
               row["class"]
               for row in active_rows
@@ -414,6 +457,20 @@ jobs:
               if not row["active_interface_in_provider_chain"]
               and "use" in row["declared_action_method_names"]
           ]
+
+          expected_non_active_use_classes = {
+              CUSTOM_PREFIX + "RighteousRelicSwordItem",
+              CUSTOM_PREFIX + "TaintedRelicSwordItem",
+          }
+          exact_non_active_use_classes = set(
+              report["registered_custom_classes_declaring_use_without_active_interface"]
+          )
+          if exact_non_active_use_classes != expected_non_active_use_classes:
+              raise SystemExit(
+                  "Exact non-Active use class set drift: "
+                  f"expected={sorted(expected_non_active_use_classes)} got={sorted(exact_non_active_use_classes)}"
+              )
+          report["registered_non_active_use_class_set_matches_version_declared_source"] = True
 
           report["registered_custom_classes_with_action_methods_but_no_active_or_secondary_interface"] = [
               {
@@ -499,19 +556,19 @@ jobs:
                   raise SystemExit(f"javap failed for {class_id}")
               targets = []
               current = False
-              declaration = re.compile(
-                  rf"^\\s*(public|protected|private).*\\b{re.escape(method_name)}\\(.*\\);\\s*$"
+              method_decl = re.compile(
+                  rf"^\s*(public|protected|private).*\b{re.escape(method_name)}\(.*"
               )
-              any_declaration = re.compile(
-                  r"^\\s*(public|protected|private).*\\b[A-Za-z0-9_$]+\\(.*\\);\\s*$"
+              any_method_decl = re.compile(
+                  r"^\s*(public|protected|private).*\b[A-Za-z0-9_$]+\(.*"
               )
               for line in cp.stdout.splitlines():
-                  if declaration.match(line):
+                  if method_decl.match(line):
                       current = True
                       continue
-                  if current and any_declaration.match(line):
+                  if current and any_method_decl.match(line):
                       current = False
-                  if current and "invoke" in line and "//" in line:
+                  if current and re.search(r"\binvoke(?:virtual|special|static|interface|dynamic)\b", line) and "//" in line:
                       targets.append(line.split("//", 1)[1].strip())
               return sorted(set(targets))
 
@@ -526,6 +583,28 @@ jobs:
                   class_id, method_name
               )
           report["bounded_selected_action_call_targets"] = bounded_call_targets
+
+          stormscale_targets = bounded_call_targets[
+              CUSTOM_PREFIX + "StormscaleSwordItem#startPlayerSecondaryAbility"
+          ]
+          wraithmaw_targets = bounded_call_targets[
+              CUSTOM_PREFIX + "WraithmawSwordItem#startPlayerSecondaryAbility"
+          ]
+          righteous_targets = bounded_call_targets[
+              CUSTOM_PREFIX + "RighteousRelicSwordItem#use"
+          ]
+          tainted_targets = bounded_call_targets[
+              CUSTOM_PREFIX + "TaintedRelicSwordItem#use"
+          ]
+          if not any("StormscaleLightningRodManager.tryReactivate" in target for target in stormscale_targets):
+              raise SystemExit(f"Stormscale secondary target not proven: {stormscale_targets}")
+          if not any("WraithmawAbilityManager.tryDetonate" in target for target in wraithmaw_targets):
+              raise SystemExit(f"Wraithmaw secondary target not proven: {wraithmaw_targets}")
+          if not any("UniqueSwordItem.use" in target for target in righteous_targets):
+              raise SystemExit(f"RighteousRelic use delegation not proven: {righteous_targets}")
+          if not any("UniqueSwordItem.use" in target for target in tainted_targets):
+              raise SystemExit(f"TaintedRelic use delegation not proven: {tainted_targets}")
+          report["bounded_residual_action_targets_match_version_declared_source"] = True
 
           REPORT.write_text(
               json.dumps(report, indent=2, sort_keys=True),
@@ -553,6 +632,10 @@ jobs:
                   for row in report["registered_active_classes"]
               ],
               "registered_secondary_class_count": report["registered_secondary_class_count"],
+              "registered_active_class_set_matches_version_declared_source": report["registered_active_class_set_matches_version_declared_source"],
+              "registered_secondary_class_set_matches_version_declared_source": report["registered_secondary_class_set_matches_version_declared_source"],
+              "registered_non_active_use_class_set_matches_version_declared_source": report["registered_non_active_use_class_set_matches_version_declared_source"],
+              "bounded_residual_action_targets_match_version_declared_source": report["bounded_residual_action_targets_match_version_declared_source"],
               "registered_secondary_classes": [
                   {
                       "class": row["class"],
