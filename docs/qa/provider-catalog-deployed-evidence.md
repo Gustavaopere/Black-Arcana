@@ -14,6 +14,7 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 - Corail Tombstone 9.5.6;
 - Somake Spells 1.0.9;
 - Mowzie's Mobs 1.8.2;
+- ShadowsZ 1.1.9;
 - Simply Swords: Cataclysm 1.0.2+1.21.1+neoforge;
 - T.O Magic n' Extras / Traveloptics 4.4.0.1 — current physical override/provider blocker even though it is absent from the sibling status-prefixed taxonomy;
 - bounded deployed customization references relevant to those same closure gates.
@@ -139,6 +140,7 @@ Special comparisons:
 - Not Enough Glyphs 4.6.2 is compared against exact publisher-release SHA-1 `32eea2c478a346ee7499f6a0db156241116f73e9`;
 - Corail Tombstone 9.5.6 is compared against exact publisher-release SHA-1 `d830d16caa20b0d23a44ed6b1d339bc22afc2460`;
 - Mowzie's Mobs 1.8.2 is compared against the exact current physical/publisher SHA-1 `d64475cd77444b056ece6472c79d40293dc63c6c`;
+- ShadowsZ 1.1.9 is compared against the exact current physical/publisher SHA-1 `f946eb3a8181e1964279f163f430ccbba6c4edcd`;
 - Simply Swords: Cataclysm 1.0.2 is compared against current physical SHA-1 `a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`.
 
 A missing file is not converted into a replacement identity.
@@ -270,6 +272,31 @@ The report emits the relative path, exact key path, a bounded status and the boo
 This evidence can promote Ghost Sword only when it comes from the actual current instance, the physical JAR matches 2.1.2, the observed value is `true`, and no overriding runtime gate is found. Dread Lich Staff acquisition is already closed separately by current-pack NeoForge 21.1.250 runtime audit `36327488231`; this collector is not its evidence path.
 
 See [`wiki/modpack-catalog/providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md).
+
+### ShadowsZ
+
+The collector hashes the exact current filename:
+
+`shadowsz-1.1.9.jar`
+
+and emits `current_physical_1_1_9_equality` against canonical physical/publisher SHA-1 `f946eb3a8181e1964279f163f430ccbba6c4edcd`.
+
+For the semantic reachability gate it records only:
+
+- exact-key observations for `fusionEnabled` under bounded `config/`, `defaultconfigs/`, and discovered/explicit world `serverconfig/` roots;
+- the saved-world boolean gamerule `shadowszRestrictPowers` from `level.dat -> Data -> GameRules`.
+
+The NBT reader is read-only and emits only the target gamerule's bounded status/value plus relative world/file labels. It does not retain the rest of `level.dat`, world seed, player data, coordinates, or unrelated gamerules.
+
+A `defaultconfigs` observation is template evidence only. For the gamerule, missing world files, missing keys, malformed NBT, or non-boolean string values stay explicit fail-closed states. Capture should be taken from the authoritative current world after its state has been saved; do not substitute the exact-artifact defaults.
+
+Acceptance remains provider-specific:
+
+- matching 1.1.9 fingerprint + effective `shadowszRestrictPowers=false` allows the nine non-Fusion roots to become normally reachable;
+- `fusionEnabled=true` admits Fusion as the tenth root, while `false` closes Fusion as deployed-disabled;
+- `shadowszRestrictPowers=true` keeps normal-player strict contribution at +0 unless a separate authoritative non-operator grant route is deployed and evidenced.
+
+See [`wiki/modpack-catalog/providers/⚠️-shadowsz/DEPLOYED-STATE-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-shadowsz/DEPLOYED-STATE-CHECKLIST.md).
 
 ### Simply Swords: Cataclysm
 

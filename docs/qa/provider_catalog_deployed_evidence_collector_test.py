@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import gzip
 import importlib.util
 import json
+import struct
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -541,6 +543,144 @@ mechaSmiteRegenThreshold = 10
             )
             self.assertFalse(
                 report["simply_swords_cataclysm"]["startup_config"]["selected"]["mechaSmiteRegenUsesPercentage"]["value"]
+            )
+
+
+    def test_collects_shadowsz_deployed_fusion_and_gamerule_state(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            config = instance / "config"
+            world = instance / "world"
+            mods.mkdir(parents=True)
+            config.mkdir(parents=True)
+            world.mkdir(parents=True)
+
+            (mods / "shadowsz-1.1.9.jar").write_bytes(b"fixture")
+            (config / "shadowsz-common.toml").write_text(
+                """
+[gameplay]
+fusionEnabled = true
+unrelatedSecret = "do-not-collect"
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+
+            def nbt_name(value: str) -> bytes:
+                raw = value.encode("utf-8")
+                return struct.pack(">H", len(raw)) + raw
+
+            def nbt_string(value: str) -> bytes:
+                raw = value.encode("utf-8")
+                return struct.pack(">H", len(raw)) + raw
+
+            level_dat = (
+                b"\x0a" + nbt_name("")
+                + b"\x0a" + nbt_name("Data")
+                + b"\x0a" + nbt_name("GameRules")
+                + b"\x08" + nbt_name("shadowszRestrictPowers") + nbt_string("false")
+                + b"\x00"
+                + b"\x00"
+                + b"\x00"
+            )
+            with gzip.open(world / "level.dat", "wb") as handle:
+                handle.write(level_dat)
+
+            worlds = collector.candidate_worlds(instance, [])
+            result = collector.collect_shadowsz(instance, worlds)
+
+            self.assertEqual(
+                [("config/shadowsz-common.toml", True)],
+                [
+                    (obs["path"], obs["value"])
+                    for obs in result["fusion_enabled_matches"]
+                ],
+            )
+            self.assertEqual(
+                [
+                    {
+                        "world": "world",
+                        "path": "world/level.dat",
+                        "status": "OBSERVED",
+                        "value": False,
+                    }
+                ],
+                result["restrict_powers_gamerules"],
+            )
+            self.assertNotIn("unrelatedSecret", json.dumps(result))
+            self.assertNotIn("do-not-collect", json.dumps(result))
+
+    def test_hash_inventory_checks_shadowsz_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            (mods / "shadowsz-1.1.9.jar").write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("shadowsz", result)
+            self.assertEqual(1, len(result["shadowsz"]))
+            entry = result["shadowsz"][0]
+            self.assertEqual("shadowsz-1.1.9.jar", entry["filename"])
+            self.assertIn("current_physical_1_1_9_equality", entry)
+            self.assertFalse(entry["current_physical_1_1_9_equality"])
+
+    def test_main_report_includes_shadowsz_deployed_state(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            (instance / "mods").mkdir(parents=True)
+            config = instance / "config"
+            world = instance / "world"
+            config.mkdir(parents=True)
+            world.mkdir(parents=True)
+
+            (config / "shadowsz-common.toml").write_text(
+                "[gameplay]\nfusionEnabled = false\n",
+                encoding="utf-8",
+            )
+
+            def nbt_name(value: str) -> bytes:
+                raw = value.encode("utf-8")
+                return struct.pack(">H", len(raw)) + raw
+
+            def nbt_string(value: str) -> bytes:
+                raw = value.encode("utf-8")
+                return struct.pack(">H", len(raw)) + raw
+
+            level_dat = (
+                b"\x0a" + nbt_name("")
+                + b"\x0a" + nbt_name("Data")
+                + b"\x0a" + nbt_name("GameRules")
+                + b"\x08" + nbt_name("shadowszRestrictPowers") + nbt_string("true")
+                + b"\x00"
+                + b"\x00"
+                + b"\x00"
+            )
+            with gzip.open(world / "level.dat", "wb") as handle:
+                handle.write(level_dat)
+
+            output = instance / "evidence.json"
+            with patch(
+                "sys.argv",
+                [
+                    "provider-catalog-deployed-evidence-collector.py",
+                    str(instance),
+                    "--output",
+                    str(output),
+                ],
+            ):
+                self.assertEqual(0, collector.main())
+
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(
+                False,
+                report["shadowsz"]["fusion_enabled_matches"][0]["value"],
+            )
+            self.assertEqual(
+                True,
+                report["shadowsz"]["restrict_powers_gamerules"][0]["value"],
             )
 
 

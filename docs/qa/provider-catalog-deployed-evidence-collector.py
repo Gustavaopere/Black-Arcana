@@ -16,9 +16,11 @@ strictly whitelisted structured fields from the last complete probe block.
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import re
+import struct
 import sys
 import tomllib
 import zipfile
@@ -35,6 +37,7 @@ TOMBSTONE_956_RELEASE_SHA1 = "d830d16caa20b0d23a44ed6b1d339bc22afc2460"
 MOWZIES_MOBS_182_PHYSICAL_SHA1 = "d64475cd77444b056ece6472c79d40293dc63c6c"
 ICE_AND_FIRE_CE_212_RELEASE_SHA1 = "0786f4142b7cabd958688f68beef3e63e9c0ae8b"
 SIMPLY_CATACLYSM_102_PHYSICAL_SHA1 = "a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469"
+SHADOWSZ_119_PHYSICAL_SHA1 = "f946eb3a8181e1964279f163f430ccbba6c4edcd"
 
 SIMPLY_CATACLYSM_STARTUP_CONFIG_KEYS = [
     "accursedRageChance",
@@ -114,6 +117,7 @@ MOD_PATTERNS = {
     "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
     "mowzies_mobs": ["mowziesmobs-1.21.1-1.8.2.jar"],
     "somake_spells": ["somakespells-1.0.9-1.21.1.jar"],
+    "shadowsz": ["shadowsz-1.1.9.jar"],
     "simply_swords_cataclysm": ["simplycataclysm-1.0.2+1.21.1+neoforge.jar"],
     "traveloptics": [
         "traveloptics-4.4.0.1-1.21.1.jar",
@@ -518,6 +522,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["current_physical_1_8_2_equality"] = entry["sha1"] == MOWZIES_MOBS_182_PHYSICAL_SHA1
                 elif provider == "ice_and_fire_ce":
                     entry["release_2_1_2_equality"] = entry["sha1"] == ICE_AND_FIRE_CE_212_RELEASE_SHA1
+                elif provider == "shadowsz":
+                    entry["current_physical_1_1_9_equality"] = entry["sha1"] == SHADOWSZ_119_PHYSICAL_SHA1
                 elif provider == "simply_swords_cataclysm":
                     entry["current_physical_1_0_2_equality"] = entry["sha1"] == SIMPLY_CATACLYSM_102_PHYSICAL_SHA1
                 entries.append(entry)
@@ -808,6 +814,137 @@ def collect_ice_and_fire_ce(instance: Path) -> dict[str, Any]:
     evidence["value"] = value
     return {"phantasmal_blade_ability": evidence}
 
+
+
+class _NbtReader:
+    """Minimal big-endian NBT reader for saved-world level.dat evidence."""
+
+    MAX_COLLECTION_LENGTH = 10_000_000
+
+    def __init__(self, handle):
+        self.handle = handle
+
+    def _read_exact(self, size: int) -> bytes:
+        data = self.handle.read(size)
+        if len(data) != size:
+            raise ValueError("Unexpected end of NBT payload")
+        return data
+
+    def _unpack(self, fmt: str):
+        size = struct.calcsize(fmt)
+        return struct.unpack(fmt, self._read_exact(size))[0]
+
+    def read_u8(self) -> int:
+        return self._unpack(">B")
+
+    def read_string(self) -> str:
+        length = self._unpack(">H")
+        return self._read_exact(length).decode("utf-8")
+
+    def read_length(self) -> int:
+        length = self._unpack(">i")
+        if length < 0 or length > self.MAX_COLLECTION_LENGTH:
+            raise ValueError(f"Invalid NBT collection length: {length}")
+        return length
+
+    def read_payload(self, tag_id: int):
+        if tag_id == 0:
+            return None
+        if tag_id == 1:
+            return self._unpack(">b")
+        if tag_id == 2:
+            return self._unpack(">h")
+        if tag_id == 3:
+            return self._unpack(">i")
+        if tag_id == 4:
+            return self._unpack(">q")
+        if tag_id == 5:
+            return self._unpack(">f")
+        if tag_id == 6:
+            return self._unpack(">d")
+        if tag_id == 7:
+            return self._read_exact(self.read_length())
+        if tag_id == 8:
+            return self.read_string()
+        if tag_id == 9:
+            child_tag = self.read_u8()
+            length = self.read_length()
+            return [self.read_payload(child_tag) for _ in range(length)]
+        if tag_id == 10:
+            out: dict[str, Any] = {}
+            while True:
+                child_tag = self.read_u8()
+                if child_tag == 0:
+                    return out
+                name = self.read_string()
+                out[name] = self.read_payload(child_tag)
+        if tag_id == 11:
+            return [self._unpack(">i") for _ in range(self.read_length())]
+        if tag_id == 12:
+            return [self._unpack(">q") for _ in range(self.read_length())]
+        raise ValueError(f"Unsupported NBT tag id: {tag_id}")
+
+
+def read_level_dat_gamerule(path: Path, key: str) -> dict[str, Any]:
+    """Read exactly one boolean gamerule from a saved level.dat, fail-closed."""
+
+    try:
+        with gzip.open(path, "rb") as handle:
+            reader = _NbtReader(handle)
+            root_tag = reader.read_u8()
+            if root_tag != 10:
+                return {"status": "INVALID_ROOT_TAG"}
+            reader.read_string()
+            root = reader.read_payload(root_tag)
+    except (OSError, EOFError, UnicodeDecodeError, ValueError, struct.error) as exc:
+        return {"status": "READ_ERROR", "error": type(exc).__name__}
+
+    if not isinstance(root, dict):
+        return {"status": "INVALID_ROOT"}
+
+    data = root.get("Data")
+    if not isinstance(data, dict):
+        return {"status": "DATA_NOT_FOUND"}
+
+    gamerules = data.get("GameRules")
+    if not isinstance(gamerules, dict):
+        return {"status": "GAMERULES_NOT_FOUND"}
+
+    value = gamerules.get(key)
+    if value == "true":
+        return {"status": "OBSERVED", "value": True}
+    if value == "false":
+        return {"status": "OBSERVED", "value": False}
+    if value is None:
+        return {"status": "KEY_NOT_FOUND"}
+    return {"status": "INVALID_VALUE", "value_type": type(value).__name__}
+
+
+def collect_shadowsz(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    roots = [instance / "config", instance / "defaultconfigs"]
+    roots.extend(world / "serverconfig" for world in worlds)
+
+    gamerules: list[dict[str, Any]] = []
+    for world in worlds:
+        path = world / "level.dat"
+        row: dict[str, Any] = {
+            "world": rel(world, instance),
+            "path": rel(path, instance),
+            "status": "NOT_FOUND",
+        }
+        if path.is_file():
+            observed = read_level_dat_gamerule(path, "shadowszRestrictPowers")
+            row.update(observed)
+        gamerules.append(row)
+
+    return {
+        "fusion_enabled_matches": collect_selected_key(
+            instance,
+            roots,
+            "fusionEnabled",
+        ),
+        "restrict_powers_gamerules": gamerules,
+    }
 
 def collect_simply_cataclysm(instance: Path) -> dict[str, Any]:
     path = instance / "config" / "simplycataclysm-startup.toml"
@@ -1135,6 +1272,7 @@ def main() -> int:
         "ice_and_fire_ce": collect_ice_and_fire_ce(instance),
         "mowzies_mobs": collect_mowzies_mobs(instance, worlds),
         "not_enough_glyphs": collect_neg(instance, worlds),
+        "shadowsz": collect_shadowsz(instance, worlds),
         "simply_swords_cataclysm": collect_simply_cataclysm(instance),
         "somake_spells": collect_somake(instance, worlds),
         "traveloptics": collect_traveloptics(instance, worlds),
@@ -1149,6 +1287,7 @@ def main() -> int:
             "Observed Somake Iron's spell-config files are override evidence only; file presence is not treated as proof of registration or reachability.",
             "Observed Tombstone AllowedMagicItems values are eligibility evidence only; they do not by themselves prove semantic deduplication, acquisition, or runtime reachability.",
             "Observed Ice And Fire CE tools.phantasmalBladeAbility is deployed gate evidence only; missing/invalid values never fall back to the source default.",
+            "Observed ShadowsZ fusionEnabled values are bounded config evidence; effective shadowszRestrictPowers is read only from the saved world level.dat GameRules compound and missing/invalid values remain fail-closed.",
             "Observed Simply Swords: Cataclysm STARTUP values come only from config/simplycataclysm-startup.toml; missing or incomplete keys never fall back to source defaults.",
         ],
     }

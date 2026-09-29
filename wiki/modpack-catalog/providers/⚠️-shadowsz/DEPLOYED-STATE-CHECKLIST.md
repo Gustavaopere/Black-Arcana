@@ -56,6 +56,23 @@ The following exact config booleans do not create additional semantic roots and 
 
 They remain relevant to runtime/progression QA but not to the 10-root semantic inventory.
 
+## Collector route
+
+The canonical read-only collector now captures both remaining deployed-state inputs:
+
+```bash
+python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack-instance" \
+  --world "/path/to/authoritative/world"
+```
+
+Review:
+
+- `mods.shadowsz[0].current_physical_1_1_9_equality`;
+- `shadowsz.fusion_enabled_matches`;
+- `shadowsz.restrict_powers_gamerules`.
+
+The collector never substitutes the artifact defaults. `defaultconfigs` is template evidence only, and the gamerule row must come from the authoritative saved world. If the server is running, save/flush world state before collection so `level.dat` represents the intended deployed state.
+
 ## Evidence format
 
 Record:
