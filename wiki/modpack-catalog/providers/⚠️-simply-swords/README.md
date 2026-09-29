@@ -109,6 +109,10 @@ Current provider semantic inventory:
 
 The former `LOWER_BOUND 66` state is superseded. The identity/action denominator is closed; only deployed reachability remains open.
 
+## Fichas canônicas
+
+As 66 raízes exatas estão materializadas objeto-a-objeto em [ACTION-CARDS-1.70.2.md](ACTION-CARDS-1.70.2.md): 62 ACTIVE Unique roots e 4 famílias Runic de uso explícito. As fichas preservam o denominador e mantêm o strict fail-closed até a evidência implantada de reachability.
+
 ## Passive and non-action surfaces excluded
 
 These remain provider behavior but do not add player-action identities:
