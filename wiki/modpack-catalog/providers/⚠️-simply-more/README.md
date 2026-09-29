@@ -1,155 +1,154 @@
 # Simply More — 1.3.0 Alpha 5 physical line
 
-Status: `⚠️ PARTIAL / EXACT PHYSICAL-PUBLISHER FILE RECONCILED / RELEASE-CORRELATED ALPHA5 SOURCE / LOWER_BOUND 9 PLAYER-INVOKED ACTION ROOTS / LEGACY INVENTORY OPEN / +0 STRICT`
+Status: `⚠️ PARTIAL / EXACT PHYSICAL-PUBLISHER FILE / EXACT CURRENT ACTION DENOMINATOR 24 / DEPLOYED REACHABILITY OPEN / +0 STRICT`
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@51d590653d927538f23ba6f1643576dc6cc49859`;
+- sibling checkpoint: `neoforge-rpg-skilltree@8c6da384c68a557240522486f070b38edc87eca2`;
 - physical row: `#502`;
 - JAR: `simplymore-forge-1.3.0_alpha.jar`;
 - mod id: `simplymore`;
 - runtime: `1.3.0_alpha`;
 - physical SHA-1: `51636477cd5c378f42d9700e1fe35cd952c8f4f1`;
-- sibling physical digest reconciliation: CurseForge File `8736778`, `simplymore-neoforge-1.3.0_alpha5+1.21.1.jar`;
+- publisher CurseForge File: `8736778`;
+- publisher Alpha-5 filename: `simplymore-neoforge-1.3.0_alpha5+1.21.1.jar`;
 - required host: Simply Swords `1.70.2-1.21.1`.
 
-Official Alpha 5:
-`https://www.curseforge.com/minecraft/mc-mods/simply-more/files/8736778`
+The exact publisher artifact downloaded by NON-MERGE audit PR #446 hash-matches the physical pack JAR.
 
-Official initial 1.3 Alpha changelog:
-`https://www.curseforge.com/minecraft/mc-mods/simply-more/files/8721021`
+Final exact audit evidence:
 
-Official source:
-`https://github.com/jay-jay0101/Simply-More`
+- audit HEAD: `53155432f050554cd2dec4e5bd1125c1cffaf72f`;
+- run: `36516484341` — GREEN;
+- artifact: `11011476182`;
+- artifact digest: `sha256:e2d668d43f80663370e6ddcf03feab090e8de432e70ab13a5cfbb329cfeab859`.
 
-## Release-correlated source checkpoint
+See [EXACT-ALPHA5-ARTIFACT-AUDIT.md](EXACT-ALPHA5-ARTIFACT-AUDIT.md).
 
-The public `v1.21.1` source line is moving and therefore its current head is not used as the installed artifact authority.
+## Release-correlated source
 
-For the installed Alpha-5 line, the strongest release-correlated source checkpoint identified is:
+Official repository:
 
-`jay-jay0101/Simply-More@55977c5e6a4fdaf4281781d9c4475a52286b3184`
+`jay-jay0101/Simply-More`
 
-This commit is dated 2026-08-26, immediately after the Alpha 4 dedicated-server registration fix and before the later September development series. Its changes include client/server separation and entity/HUD cleanup aligned with the Alpha-5 crash-fix line, including Soulfracture and Blade of the Grotesque-adjacent surfaces.
+Release-correlated Alpha-5 checkpoint:
 
-At this checkpoint:
+`55977c5e6a4fdaf4281781d9c4475a52286b3184`
 
-- `minecraft_version = 1.21.1`;
-- `mod_version = 1.3.0_alpha`;
-- NeoForge is an enabled platform.
+The source declares Minecraft 1.21.1 and `mod_version=1.3.0_alpha`. It is used for semantic classification and provider/host gating, not as a byte-equality substitute for the exact JAR.
 
-This is **release-correlated source evidence**, not a claim that the publisher JAR is byte-identical to a locally built artifact from this commit.
+Upstream is All Rights Reserved. Black Arcana retains only factual catalog/interoperability evidence.
 
-## Semantic lower bound: 9 player-invoked actions
+## Exact current semantic inventory — 24 player actions
 
-The canonical semantic-magic metric counts discrete provider-owned supernatural **player actions**. It does not count gear/passive proc frameworks, status effects or ordinary downstream consequences.
+The exact artifact plus release-correlated semantic classification close the current-pack action denominator at **24**.
 
-The initial 1.3 Alpha publisher notes explicitly establish a rework boundary: some older uniques marked for rework had functionality removed and could currently do nothing. Therefore the 33-Unique headline is not a safe semantic denominator.
+### 10 active-API actions
 
-The same release line explicitly identifies nine reworked/current unique families with active ability surfaces, and the release-correlated source confirms those player-invoked roots:
+The exact JAR has 11 concrete `UniqueWeaponActiveAbility` classes, but only 10 declare a provider activation implementation:
 
-| Unique | Player-invoked active root |
-|---|---|
-| Magmaseep | Volcanic Vent |
-| Moundshifter | underground excavation/drill release |
-| Grandfrost | Snow Prison / ice-wall storm |
-| Lustrous Moxie | Heavensent Ray / beam activation |
-| Soulfracture | fragment-control activation |
-| Black Pearl | explosive cannonball |
-| The Blood Harvester | Harvest state |
-| Ruyi Jingu Bang | charged enlarged strike |
-| Blade of the Grotesque | statue transformation and breakout |
+1. Black Pearl;
+2. Blade of the Grotesque;
+3. Grandfrost;
+4. Lustrous Moxie;
+5. Magmaseep;
+6. Moundshifter;
+7. Ruyi Jingu Bang;
+8. Soulfracture;
+9. Stasis;
+10. The Blood Harvester.
 
-Each row contributes **one conservative player-invoked action root**. Multiple downstream modes, targets, entities or follow-up consequences inside one activation are not counted separately.
+`IdolItem` / Ruptured Idol is excluded: it implements the interface but declares no provider player-action method, and the exact host interface fallback does not manufacture an activation when the item supplies none.
 
-Therefore the current semantic lower bound is **9**.
+### 13 legacy direct-use actions
 
-## Documented provider surfaces excluded from the semantic count
+The exact JAR contains 13 registered non-active-interface Unique classes with their own player `use(...)` surface:
 
-The same evidence also establishes passive/proc mechanics and weapon implicits. They remain important for provider ownership and interoperability, but they are **not semantic-magic objects under the current ledger metric**.
+1. Boa's Fang;
+2. Culterex;
+3. Death's Eyrie;
+4. Glimmerstep;
+5. Great Slither;
+6. Matterbane;
+7. Myrmedge;
+8. Perforiscus;
+9. Revvengine;
+10. Serpentine Valour;
+11. Smouldering Ruin;
+12. The Vessel Breach;
+13. Tidebreaker.
 
-### Nine reworked-Unique passive/proc surfaces
+Bounded exact call-target inspection proves these are functional provider action routes rather than inert `super.use` placeholders.
 
-- Magmaseep hit-triggered Hellfire eruption / smoke-knockback behavior;
-- Moundshifter pressure/earthquake and carried-block combat state;
-- Grandfrost hit-triggered freezing;
-- Lustrous Moxie light-orb accumulation/detonation;
-- Soulfracture soul-fragment fracture/harvest state;
-- Black Pearl positive-effect theft on hit;
-- The Blood Harvester baseline lifesteal;
-- Ruyi Jingu Bang hit-triggered weapon growth/range state;
-- Blade of the Grotesque hostile aura / held passive state.
+### 1 shared Mimicry action
 
-These are equipment/passive proc behavior rather than player-selected casts/actions and contribute **+0 semantic objects**.
+The exact artifact contains one abstract `MimicryItem` action implementation and 25 registered concrete forms.
 
-### Four Simply More-owned implicits
+All 25 inherit the same `use` / held-use path and none overrides a separate action method. They therefore contribute **one shared Mimicry transformation root**, not 25.
 
-At the same source checkpoint, `ImplicitRegistry` defines four provider-owned `WeaponImplicitDefinition` roots:
+Semantic total:
 
-1. `simplymore:grandsword_sunder`;
-2. `simplymore:friendship`;
-3. `simplymore:disarm`;
-4. `simplymore:stun`.
+`10 + 13 + 1 = 24`.
 
-Other Simply More weapon types are mapped to existing Simply Swords weapon-type/implicit definitions. Deer Horns reuses the same Simply More Khopesh implicit identity.
+## Explicit exclusions
 
-These four are weapon/equipment proc mechanics, not discrete player-invoked supernatural actions under the canonical semantic-magic metric, and contribute **+0**.
+- **Ruptured Idol** — interface participant without provider action implementation: +0.
+- **Ascended Idol / Tarnished Idol / Holylight / Darksent** — old `TO_REMOVE` implementations are not referenced by exact ItemRegistry; current IDs route through `RemovedItem` proxies: +0.
+- **Reforming Remnant** — player use opens a selection/reformation workflow and the only exact C2S packet is its transformation packet. Classified as upgrade/item preparation, not a standalone magical action: +0.
+- **Tidesinger compatibility** — exact JAR contains a Mythic Metals riptide-use class, but release-correlated source gates its registry behind `Platform.isModLoaded("mythicmetals")`. The current sibling modlist contains no Mythic Metals provider, so this optional action is outside the current assembled denominator.
+- **passive/on-hit/aura behavior** — equipment/proc mechanics: +0.
+- **four Simply More weapon implicits** — equipment proc identities, not player-selected magical actions: +0.
+- **effects, entities/projectiles, HUD state, cooldowns and downstream consequences** — deduplicated under their root action.
 
-## Why this is not a complete Alpha-5 denominator
+The prior [ALPHA5-SEMANTIC-LOWER-BOUND.md](ALPHA5-SEMANTIC-LOWER-BOUND.md) is retained as historical evidence for the earlier 9-action checkpoint and is superseded for denominator purposes by the exact audit.
 
-The exact complete current action inventory remains open because the Alpha publisher warning and source tree contain a mixed state:
+## Packet/input completeness
 
-- some older uniques retain implemented behavior;
-- some rework placeholders are visibly inert or incomplete;
-- some removed/deprecated item IDs redirect to replacements;
-- Mimicry exposes many item forms but those forms do not automatically imply distinct causal action identities;
-- partial Iron's Spells compatibility applies only to reworked uniques and may change scaling/integration without creating a new provider-owned action root.
+The exact artifact has exactly one provider C2S packet class: `C2STransformRemnantPacket`.
 
-Examples such as Timekeeper and Ruptured Idol demonstrate why item presence/interface declaration cannot be promoted blindly.
-
-The lower bound is intentionally restricted to the **nine positively established player-invoked active roots**.
+That packet belongs to the already excluded Reforming Remnant reformation workflow. No second provider keybind/C2S action family remains outside the 24-root inventory.
 
 ## Config / reachability boundary
 
-The Alpha line is explicitly config-breaking, and the project contains configurable unique-effect values. This audit does not assume that every upstream default equals the deployed pack state.
+The **denominator is closed; deployed reachability is not**.
 
-Because the **complete legacy/rework inventory is already open**, deployed config is not yet the sole blocker. First close all remaining live/inert/removed unique roots object-by-object; then classify any feature/config gates that can suppress surviving player-invoked roots.
+Strict counting remains fail-closed until current assembled-pack evidence establishes which of the 24 roots are normally player-reachable, including:
 
-No strict global objects are added in this checkpoint.
+- Simply Swords Awakening/unlock behavior for the active-API uniques;
+- normal acquisition/reformation routes for the surviving action-bearing uniques;
+- effective Mimicry form-disable state where it changes usable transformation outcomes;
+- any deployed config/datapack/script state that suppresses otherwise present roots.
+
+Source or artifact defaults are not substituted for deployed state.
+
+Therefore current disposition remains:
+
+**`EXACT DENOMINATOR 24 / +0 STRICT`**.
 
 ## Ownership and deduplication
 
-- Simply Swords owns its base weapon ecosystem and any reused base implicit definitions.
-- Simply More owns its provider-native active roots and equipment/passive mechanics, but only player-invoked supernatural actions enter the semantic ledger.
-- Effects, summons/projectiles, HUD counters, status effects, transformed item forms and downstream damage are not counted separately from their root action.
-- Reusing Simply Swords APIs does not transfer ownership of Simply More's provider-native actions.
-- Black Arcana must not duplicate provider activation, active-state lifecycle, projectile/entity settlement, cooldowns, effect application or transformation logic.
+- Simply Swords owns its base weapon ecosystem, active-ability substrate and reused base implicits.
+- Simply More owns the 24 current provider action identities and its provider-native passive/equipment behavior.
+- Optional Mythic Metals behavior remains owned by that compatibility surface and is absent from the current pack while Mythic Metals is absent.
+- Black Arcana must not duplicate provider activation, cooldown/state lifecycle, projectile/entity settlement, effect application, transformation or upgrade logic.
 - RPG Skill Tree remains sibling authority only for progression/attributes/Mastery/perks/gates through verified contracts.
 
-## Clean-room note
+## Runtime QA remains separate
 
-The upstream project is All Rights Reserved. This catalog records only factual release/version correlation, registry identifiers, public behavior descriptions, source structure and causal ownership needed for interoperability/cataloging. No upstream implementation body or asset is copied into Black Arcana.
+Catalog closure of the 24-root denominator is not an assembled-runtime PASS. Relevant later QA includes:
 
-## Closure gate
-
-Promote Simply More beyond `LOWER_BOUND 9 / +0 STRICT` only after:
-
-1. every non-deprecated Alpha-5 Unique/current replacement is classified as live, inert/rework, removed/proxy or non-semantic;
-2. every live **player-invoked** active root is deduplicated object-by-object;
-3. passive/proc and implicit surfaces remain excluded unless the semantic metric itself is explicitly changed;
-4. Mimicry forms are proven either aliases/forms or distinct player-invoked action roots;
-5. partial Iron's Spellbooks integration is separated from provider-owned action identity;
-6. any deployed config/feature gate that changes active-action reachability is captured;
-7. physical fingerprint remains the cataloged Alpha-5 SHA-1.
-
-Runtime QA for prerelease crashes, multiplayer state, once-per-swing settlement, cleanup and config migration remains separate from semantic inventory closure.
+- client/dedicated-server boot on the exact prerelease stack;
+- active and legacy use paths in remote multiplayer;
+- held-use cancellation/cleanup;
+- once-per-activation/cooldown settlement;
+- Awakening/reformation persistence;
+- Mimicry transformation and disabled-form behavior;
+- no duplicate Simply Swords/Simply More action settlement.
 
 ## Result
 
-**⚠️ Partial — release-correlated lower bound 9.**
+**⚠️ Partial / conditioned — exact current semantic denominator 24.**
 
-Confirmed provider-owned semantic objects under the current ledger metric: **9 player-invoked active Unique roots**.
+Current exact inventory: **24 provider-owned player-invoked supernatural action roots**.
 
-Documented but excluded: **9 passive/proc Unique surfaces + 4 weapon implicits**.
-
-Strict global delta: **+0** until the remaining Alpha-5 legacy/rework active-action inventory and reachability gates are closed.
+Strict global delta: **+0** until deployed reachability/config evidence is closed.
