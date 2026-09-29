@@ -94,3 +94,23 @@ The three intentionally catalog-open folders are:
 - `⚠️-traveloptics` — current physical row #550 and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` are confirmed by the current sibling dossier; that physical hash differs from the audited publisher baseline, so exact-current provenance/registry delta remain unresolved.
 
 This is a folder-status normalization only. It does not change registry IDs, spell/action counts, strict semantic totals, runtime compatibility claims or Black Arcana provider authority.
+
+
+## Zero-semantic bridge follow-up — KubeJS Ars Nouveau 1.3.2
+
+KubeJS Ars Nouveau is promoted from `⚠️-` to `✅-` under the same folder-prefix rule.
+
+The bridge's catalog denominator is already closed at **0 provider-owned standalone spell identities + 0 provider-owned standalone glyph identities**. Its documented 1.3.2 surface is recipe-schema customization for existing Ars Nouveau content: Enchanting Apparatus, enchantment, Crush, Imbuement, glyph recipe replacement and Caster Tome recipes. Concrete pack scripts can alter acquisition, Source/XP cost and other reachability/economy details, but they do not add an unknown provider-owned spell/glyph denominator on the established surface.
+
+Accordingly, the unavailable current `kubejs/server_scripts/**` inventory remains an explicit deployed recipe/reachability gate inside the provider dossier and checklist rather than a reason to keep the provider folder catalog-open.
+
+Current structural result:
+
+`115 providers = 113 ✅ + 2 ⚠️`
+
+The two intentionally catalog-open folders are now:
+
+- `⚠️-irons-spellbooks-kubejs` — scripts can register arbitrary custom Iron's spell/school objects, so the current semantic denominator genuinely remains unknown until the exact current startup/script set is captured;
+- `⚠️-traveloptics` — current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` differs from the audited publisher baseline, so exact-current provenance and registry delta remain unresolved.
+
+This promotion changes no strict semantic total and does not claim deployed Ars recipe/reachability QA.

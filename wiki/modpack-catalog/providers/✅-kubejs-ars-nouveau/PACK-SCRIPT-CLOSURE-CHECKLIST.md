@@ -1,6 +1,6 @@
 # KubeJS Ars Nouveau 1.3.2 — pack-script closure checklist
 
-Status: `CURRENT PHYSICAL FRAMEWORK IDENTIFIED / SIX RECIPE SCHEMAS BOUNDED / CURRENT SERVER-SCRIPT MUTATIONS REQUIRED`
+Status: `SEMANTIC DENOMINATOR CLOSED AT ZERO / SIX RECIPE SCHEMAS BOUNDED / CURRENT SERVER-SCRIPT MUTATIONS STILL REQUIRED FOR DEPLOYED REACHABILITY QA`
 
 ## Purpose
 
@@ -92,4 +92,5 @@ If an exact 1.3.2 JAR audit later exposes a registration API beyond the document
 
 - provider-owned spell/glyph semantic contribution: **+0**;
 - current recipe/tome mutation inventory: **UNVERIFIED**;
-- state: **⚠️ partial / conditioned**.
+- catalog state: **✅ cataloged**;
+- deployed recipe/reachability state: **⚠️ unverified / fail-closed where exact mutation state matters**.
