@@ -6,12 +6,12 @@ Checkpoint: 2026-09-27
 
 ## Evidence class
 
-`EXACT_PHYSICAL_IDENTITY / RELEASE_CORRELATED_SOURCE / VERSION_DECLARED_CROSSCHECK / LOWER_BOUND 66 PLAYER_ACTIONS / NON_OPTED_LEGACY + DEPLOYED_REACHABILITY OPEN`
+`HISTORICAL RELEASE_CORRELATED_SOURCE / ORIGINAL LOWER_BOUND 66 PLAYER_ACTIONS / SUPERSEDED BY EXACT HASH-MATCHED DENOMINATOR 66 / DEPLOYED REACHABILITY OPEN`
 
 ## Physical authority
 
 Sibling physical row #503 at
-`neoforge-rpg-skilltree@7c9d0e9552e33531d0d6b46b86c9de86d3b233bf`:
+`neoforge-rpg-skilltree@51751e6c77530a7d8825ec42493ffccedf978d1a`:
 
 - JAR: `simplyswords-neoforge-1.70.2-1.21.1.jar`;
 - mod id: `simplyswords`;
@@ -228,20 +228,15 @@ Contribution: **+0**.
 
 `62 ACTIVE Unique roots + 4 player-use Runic roots = 66`.
 
-## Why this remains a lower bound
+## Why this source-only checkpoint was a lower bound
 
-The exact-line developer docs explicitly say that abilities may opt into the modifier-definition system while **existing abilities that do not opt in continue using the unchanged `UniqueWeaponActiveAbility` contract**.
+The release-line developer docs explicitly say that abilities may opt into the modifier-definition system while **existing abilities that do not opt in continue using the unchanged `UniqueWeaponActiveAbility` contract**.
 
-Therefore the 62 active registered definitions do not prove completeness of all 1.70.2 player-invoked Unique actions.
+At the source-only checkpoint, that meant the 62 registered active definitions could not prove completeness of all 1.70.2 player-invoked Unique actions.
 
-Remaining closure work:
+That historical denominator blocker is now closed by exact hash-matched artifact audit PR #448 / run `36524073819`: the residual registered action-shaped surface is limited to two Secondary continuations and two direct-use pass-through overrides, all deduplicated at **+0 additional roots**. The current denominator is therefore **EXACT 66**.
 
-1. enumerate legacy/non-opted `UniqueWeaponActiveAbility` actions;
-2. reconcile secondary-action inputs;
-3. deduplicate them against the 62 registered active roots;
-4. classify disabled/config-gated actions;
-5. settle deployed Awakening/reachability where it changes the current active subset;
-6. deduplicate addon-owned actions from the base provider.
+Only deployed reachability remains open: Awakening/unlock state, acquisition/reformation, effective config/datapack/script suppression, compat-dependent materialization and final addon ownership reconciliation.
 
 ## Reachability boundary
 
@@ -264,7 +259,7 @@ It permits library/integration use but forbids bundling/publishing/distributing 
 - later version-declared source cross-check: **closed**;
 - registered active Unique roots: **62**;
 - player-use Runic action families: **4**;
-- semantic lower bound: **66**;
+- original source-only semantic lower bound: **66**;
 - PASSIVE definitions excluded: **59 at release-correlated checkpoint / 60 at later cross-check**;
 - weapon implicits excluded: **17**;
 - legacy/non-opted active-action denominator: **historical blocker; closed by exact artifact audit PR #448 / run `36524073819` with +0 additional roots**;
