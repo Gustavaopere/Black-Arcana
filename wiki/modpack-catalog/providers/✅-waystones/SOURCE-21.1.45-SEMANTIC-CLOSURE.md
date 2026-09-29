@@ -8,7 +8,7 @@ Evidence class:
 
 ## Authority
 
-- sibling: `neoforge-rpg-skilltree@51751e6c77530a7d8825ec42493ffccedf978d1a`;
+- sibling: `neoforge-rpg-skilltree@82d0d551f34d20363201f5b71f0ad91a141cbe56`;
 - physical row: `#564`;
 - JAR: `waystones-neoforge-1.21.1-21.1.45.jar`;
 - runtime: `21.1.45`;
