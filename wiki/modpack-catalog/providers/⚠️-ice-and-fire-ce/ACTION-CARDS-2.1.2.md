@@ -31,7 +31,7 @@ O provider permanece **⚠️ parcial/condicionado** porque Ghost Sword / Phanta
 
 ## Reachability
 
-As oito famílias strict já têm aquisição/reachability fechada por evidência exata. Não reabrir essas rotas sem drift do artefato físico.
+As oito famílias strict já têm aquisição/reachability fechada por evidência exata. Para sete delas, drift do artefato físico reabre a rota. Para **Dread Lich Staff**, a prova também depende da runtime NeoForge `21.1.250`; drift do provider **ou do loader/runtime** reabre especificamente essa aquisição e exige nova auditoria antes de preservar `COUNTED_EXACT`.
 
 Ghost Sword possui recipe/advancement exatos, mas sua ação só pode entrar no strict após evidência implantada de:
 
