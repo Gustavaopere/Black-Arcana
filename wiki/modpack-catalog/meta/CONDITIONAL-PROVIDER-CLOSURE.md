@@ -61,6 +61,7 @@ The read-only collector in [`docs/qa/provider-catalog-deployed-evidence.md`](../
 - Ice And Fire CE physical 2.1.2 fingerprint + exact Jupiter `tools.phantasmalBladeAbility` gate;
 - ShadowsZ physical 1.1.9 fingerprint + bounded `fusionEnabled` config observations + saved-world `shadowszRestrictPowers` gamerule;
 - Simply Swords: Cataclysm physical 1.0.2 fingerprint + exact `config/simplycataclysm-startup.toml` ten-key activation gate;
+- Simply More Alpha-5 physical fingerprint + exact 25-form `config/simplymore/unique_effect.toml -> mimicry.config.<form>.disabled` subgate; Awakening/acquisition/reformation remain outside this bounded collector route;
 - Traveloptics physical classification + bounded `traveloptics:blackout` references.
 
 Ice And Fire CE is now covered for the bounded Ghost Sword Jupiter gate. The collector reads only `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility`. Dread Lich Staff acquisition is separately closed by exact provider/runtime audit `36327488231` and no longer needs collector evidence.
