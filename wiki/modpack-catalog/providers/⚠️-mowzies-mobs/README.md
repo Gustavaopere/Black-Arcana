@@ -55,6 +55,8 @@ Under the canonical semantic-magic metric, Mowzie's contributes **11 provider-ow
 
 See [`PLAYER-MAGIC-INVENTORY.md`](PLAYER-MAGIC-INVENTORY.md).
 
+Object-level catalog: [ACTION-CARDS-1.8.2.md](ACTION-CARDS-1.8.2.md).
+
 ## Exact acquisition/reachability evidence
 
 The exact artifact packages or references current provider-native routes for the counted families:
