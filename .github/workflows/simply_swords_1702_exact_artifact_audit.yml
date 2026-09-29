@@ -1,0 +1,472 @@
+name: Simply Swords 1.70.2 exact artifact audit
+
+on:
+  push:
+    branches:
+      - audit/simply-swords-1702-exact-artifact-2026-09-29
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    if: github.head_ref == 'audit/simply-swords-1702-exact-artifact-2026-09-29' || github.ref_name == 'audit/simply-swords-1702-exact-artifact-2026-09-29'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download and inspect exact Simply Swords 1.70.2 artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/simply-swords-1702-audit
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import re
+          import struct
+          import urllib.request
+          import zipfile
+          from pathlib import Path
+
+          URL = "https://cursemaven.com/curse/maven/simply-swords-659887/8746001/simply-swords-659887-8746001.jar"
+          EXPECTED_SHA1 = "05b074ff774467f1fe9fb5592151b7845c321cbc"
+          JAR = Path("build/simply-swords-1702-audit/simply-swords-1.70.2.jar")
+          REPORT = Path("build/simply-swords-1702-audit/report.json")
+
+          urllib.request.urlretrieve(URL, JAR)
+          actual_sha1 = hashlib.sha1(JAR.read_bytes()).hexdigest()
+          if actual_sha1 != EXPECTED_SHA1:
+              raise SystemExit(f"SHA-1 mismatch: expected {EXPECTED_SHA1}, got {actual_sha1}")
+
+          def parse_class(data: bytes):
+              pos = 0
+              def u1():
+                  nonlocal pos
+                  value = data[pos]
+                  pos += 1
+                  return value
+              def u2():
+                  nonlocal pos
+                  value = struct.unpack_from(">H", data, pos)[0]
+                  pos += 2
+                  return value
+              def u4():
+                  nonlocal pos
+                  value = struct.unpack_from(">I", data, pos)[0]
+                  pos += 4
+                  return value
+
+              if u4() != 0xCAFEBABE:
+                  raise ValueError("not a class file")
+              minor, major = u2(), u2()
+              cp_count = u2()
+              cp = [None] * cp_count
+              i = 1
+              while i < cp_count:
+                  tag = u1()
+                  if tag == 1:
+                      size = u2()
+                      raw = data[pos:pos + size]
+                      pos += size
+                      cp[i] = (tag, raw.decode("utf-8", "replace"))
+                  elif tag in (3, 4):
+                      cp[i] = (tag, data[pos:pos + 4])
+                      pos += 4
+                  elif tag in (5, 6):
+                      cp[i] = (tag, data[pos:pos + 8])
+                      pos += 8
+                      i += 1
+                  elif tag in (7, 8, 16, 19, 20):
+                      cp[i] = (tag, u2())
+                  elif tag in (9, 10, 11, 12, 17, 18):
+                      cp[i] = (tag, u2(), u2())
+                  elif tag == 15:
+                      cp[i] = (tag, u1(), u2())
+                  else:
+                      raise ValueError(f"unsupported constant-pool tag {tag}")
+                  i += 1
+
+              def utf8(index):
+                  if index == 0 or cp[index] is None or cp[index][0] != 1:
+                      return None
+                  return cp[index][1]
+
+              def class_name(index):
+                  if index == 0 or cp[index] is None or cp[index][0] != 7:
+                      return None
+                  return utf8(cp[index][1])
+
+              access = u2()
+              this_class = u2()
+              super_class = u2()
+              interfaces = [class_name(u2()) for _ in range(u2())]
+
+              def skip_attributes():
+                  nonlocal pos
+                  for _ in range(u2()):
+                      _name = u2()
+                      length = u4()
+                      pos += length
+
+              fields = []
+              for _ in range(u2()):
+                  f_access, f_name, f_desc = u2(), u2(), u2()
+                  fields.append({
+                      "access": f_access,
+                      "name": utf8(f_name),
+                      "descriptor": utf8(f_desc),
+                  })
+                  skip_attributes()
+
+              methods = []
+              for _ in range(u2()):
+                  m_access, m_name, m_desc = u2(), u2(), u2()
+                  methods.append({
+                      "access": m_access,
+                      "name": utf8(m_name),
+                      "descriptor": utf8(m_desc),
+                  })
+                  skip_attributes()
+
+              class_refs = sorted({
+                  class_name(index)
+                  for index, entry in enumerate(cp)
+                  if index and entry is not None and entry[0] == 7 and class_name(index)
+              })
+              string_literals = sorted({
+                  utf8(entry[1])
+                  for entry in cp
+                  if entry is not None and entry[0] == 8 and utf8(entry[1]) is not None
+              })
+
+              return {
+                  "major": major,
+                  "minor": minor,
+                  "access": access,
+                  "class": class_name(this_class),
+                  "super": class_name(super_class),
+                  "interfaces": sorted(x for x in interfaces if x),
+                  "fields": fields,
+                  "methods": methods,
+                  "class_refs": class_refs,
+                  "string_literals": string_literals,
+              }
+
+          PROVIDER_PREFIX = "net/sweenus/simplyswords/"
+          CUSTOM_PREFIX = PROVIDER_PREFIX + "item/custom/"
+          ACTIVE_IFACE = PROVIDER_PREFIX + "item/interfaces/UniqueWeaponActiveAbility"
+          SECONDARY_IFACE = PROVIDER_PREFIX + "item/interfaces/UniqueWeaponSecondaryAction"
+          ITEMS_REGISTRY = PROVIDER_PREFIX + "registry/ItemsRegistry"
+
+          ACTION_NAMES = {
+              "useFromDefaultInput",
+              "chargesManaOnRelease",
+              "startPlayerAbility",
+              "canActivate",
+              "activate",
+              "getActivationCooldownTicks",
+              "usesSpellCooldownReduction",
+              "canActivateFromEntity",
+              "activateFromEntity",
+              "getEntityActivationCooldownTicks",
+              "startPlayerSecondaryAbility",
+              "use",
+              "usageTick",
+              "onStoppedUsing",
+              "releaseUsing",
+              "finishUsing",
+              "finishUsingItem",
+              "onUseTick",
+              "getMaxUseTime",
+              "getUseDuration",
+          }
+
+          report = {
+              "source_url": URL,
+              "sha1": actual_sha1,
+              "expected_sha1": EXPECTED_SHA1,
+          }
+
+          with zipfile.ZipFile(JAR) as zf:
+              names = sorted(zf.namelist())
+              class_paths = [
+                  name for name in names
+                  if name.startswith(PROVIDER_PREFIX)
+                  and name.endswith(".class")
+                  and "$" not in name
+              ]
+              classes = {}
+              for path in class_paths:
+                  parsed = parse_class(zf.read(path))
+                  classes[parsed["class"]] = parsed
+
+              report["provider_top_level_class_count"] = len(classes)
+
+              for metadata_path in (
+                  "META-INF/neoforge.mods.toml",
+                  "META-INF/mods.toml",
+                  "fabric.mod.json",
+              ):
+                  if metadata_path not in names:
+                      continue
+                  text = zf.read(metadata_path).decode("utf-8", "replace")
+                  report["metadata_path"] = metadata_path
+                  if metadata_path.endswith(".json"):
+                      try:
+                          meta = json.loads(text)
+                          report["metadata_id"] = meta.get("id")
+                          report["metadata_version"] = meta.get("version")
+                          report["metadata_name"] = meta.get("name")
+                      except Exception:
+                          pass
+                  else:
+                      for key, out_key in (
+                          ("modId", "metadata_id"),
+                          ("version", "metadata_version"),
+                          ("displayName", "metadata_name"),
+                      ):
+                          match = re.search(
+                              rf"(?m)^\s*{key}\s*=\s*['\"]([^'\"]+)['\"]",
+                              text,
+                          )
+                          if match:
+                              report[out_key] = match.group(1)
+                  break
+
+              lang_path = "assets/simplyswords/lang/en_us.json"
+              item_ids = []
+              if lang_path in names:
+                  lang = json.loads(zf.read(lang_path).decode("utf-8"))
+                  prefix = "item.simplyswords."
+                  item_ids = sorted({
+                      key[len(prefix):]
+                      for key in lang
+                      if key.startswith(prefix)
+                      and "." not in key[len(prefix):]
+                  })
+              report["item_ids_from_exact_lang_keys"] = item_ids
+
+          if ACTIVE_IFACE not in classes:
+              raise SystemExit("Exact UniqueWeaponActiveAbility interface not found")
+          if SECONDARY_IFACE not in classes:
+              raise SystemExit("Exact UniqueWeaponSecondaryAction interface not found")
+          if ITEMS_REGISTRY not in classes:
+              raise SystemExit("Exact ItemsRegistry class not found")
+
+          def provider_chain(class_id):
+              chain = []
+              seen = set()
+              current = class_id
+              while current and current not in seen:
+                  seen.add(current)
+                  info = classes.get(current)
+                  if info is None:
+                      break
+                  chain.append(current)
+                  current = info.get("super")
+              return chain
+
+          def interface_in_chain(class_id, interface_id):
+              for ancestor in provider_chain(class_id):
+                  info = classes[ancestor]
+                  if interface_id in info["interfaces"]:
+                      return ancestor
+              return None
+
+          active_interface = classes[ACTIVE_IFACE]
+          secondary_interface = classes[SECONDARY_IFACE]
+          report["active_interface_declared_methods"] = sorted(
+              {
+                  (method["name"], method["descriptor"])
+                  for method in active_interface["methods"]
+                  if method["name"] not in ("<init>", "<clinit>")
+              }
+          )
+          report["secondary_interface_declared_methods"] = sorted(
+              {
+                  (method["name"], method["descriptor"])
+                  for method in secondary_interface["methods"]
+                  if method["name"] not in ("<init>", "<clinit>")
+              }
+          )
+
+          registry = classes[ITEMS_REGISTRY]
+          registered_custom_refs = sorted(
+              ref
+              for ref in registry["class_refs"]
+              if ref.startswith(CUSTOM_PREFIX)
+          )
+          report["items_registry_custom_class_refs"] = registered_custom_refs
+          report["items_registry_custom_class_ref_count"] = len(registered_custom_refs)
+
+          custom_rows = []
+          for class_id, info in sorted(classes.items()):
+              if not class_id.startswith(CUSTOM_PREFIX):
+                  continue
+              if "$" in class_id:
+                  continue
+
+              active_intro = interface_in_chain(class_id, ACTIVE_IFACE)
+              secondary_intro = interface_in_chain(class_id, SECONDARY_IFACE)
+              declared_action_methods = sorted({
+                  method["name"]
+                  for method in info["methods"]
+                  if method["name"] in ACTION_NAMES
+              })
+              inherited_action_methods = set()
+              for ancestor in provider_chain(class_id):
+                  inherited_action_methods.update(
+                      method["name"]
+                      for method in classes[ancestor]["methods"]
+                      if method["name"] in ACTION_NAMES
+                  )
+
+              custom_rows.append({
+                  "class": class_id,
+                  "simple_name": class_id.rsplit("/", 1)[-1],
+                  "abstract": bool(info["access"] & 0x0400),
+                  "super": info["super"],
+                  "direct_interfaces": info["interfaces"],
+                  "registered_by_items_registry": class_id in registered_custom_refs,
+                  "active_interface_in_provider_chain": active_intro is not None,
+                  "active_interface_introduced_by": active_intro,
+                  "secondary_interface_in_provider_chain": secondary_intro is not None,
+                  "secondary_interface_introduced_by": secondary_intro,
+                  "declared_action_method_names": declared_action_methods,
+                  "provider_chain_action_method_names": sorted(inherited_action_methods),
+              })
+
+          report["custom_item_classes"] = custom_rows
+          report["custom_item_class_count"] = len(custom_rows)
+
+          concrete_registered = [
+              row for row in custom_rows
+              if not row["abstract"] and row["registered_by_items_registry"]
+          ]
+          report["registered_concrete_custom_class_count"] = len(concrete_registered)
+
+          active_rows = [
+              row for row in concrete_registered
+              if row["active_interface_in_provider_chain"]
+          ]
+          secondary_rows = [
+              row for row in concrete_registered
+              if row["secondary_interface_in_provider_chain"]
+          ]
+          report["registered_active_classes"] = active_rows
+          report["registered_active_class_count"] = len(active_rows)
+          report["registered_secondary_classes"] = secondary_rows
+          report["registered_secondary_class_count"] = len(secondary_rows)
+
+          report["registered_active_classes_without_declared_action_methods"] = [
+              row["class"]
+              for row in active_rows
+              if not row["declared_action_method_names"]
+          ]
+          report["registered_secondary_classes_without_declared_secondary_method"] = [
+              row["class"]
+              for row in secondary_rows
+              if "startPlayerSecondaryAbility" not in row["declared_action_method_names"]
+          ]
+
+          report["registered_custom_classes_declaring_use_without_active_interface"] = [
+              row["class"]
+              for row in concrete_registered
+              if not row["active_interface_in_provider_chain"]
+              and "use" in row["declared_action_method_names"]
+          ]
+
+          report["registered_custom_classes_with_action_methods_but_no_active_or_secondary_interface"] = [
+              {
+                  "class": row["class"],
+                  "declared_action_method_names": row["declared_action_method_names"],
+              }
+              for row in concrete_registered
+              if not row["active_interface_in_provider_chain"]
+              and not row["secondary_interface_in_provider_chain"]
+              and row["declared_action_method_names"]
+          ]
+
+          report["unregistered_concrete_active_classes"] = [
+              row["class"]
+              for row in custom_rows
+              if not row["abstract"]
+              and row["active_interface_in_provider_chain"]
+              and not row["registered_by_items_registry"]
+          ]
+          report["unregistered_concrete_secondary_classes"] = [
+              row["class"]
+              for row in custom_rows
+              if not row["abstract"]
+              and row["secondary_interface_in_provider_chain"]
+              and not row["registered_by_items_registry"]
+          ]
+
+          packet_like = sorted(
+              class_id
+              for class_id in classes
+              if "/network" in class_id.lower()
+              or "/packet" in class_id.lower()
+              or class_id.lower().endswith("packet")
+          )
+          report["provider_packet_like_classes"] = packet_like
+
+          REPORT.write_text(
+              json.dumps(report, indent=2, sort_keys=True),
+              encoding="utf-8",
+          )
+
+          print(json.dumps({
+              "sha1": report["sha1"],
+              "metadata_id": report.get("metadata_id"),
+              "metadata_version": report.get("metadata_version"),
+              "provider_top_level_class_count": report["provider_top_level_class_count"],
+              "active_interface_declared_methods": report["active_interface_declared_methods"],
+              "secondary_interface_declared_methods": report["secondary_interface_declared_methods"],
+              "items_registry_custom_class_ref_count": report["items_registry_custom_class_ref_count"],
+              "registered_concrete_custom_class_count": report["registered_concrete_custom_class_count"],
+              "registered_active_class_count": report["registered_active_class_count"],
+              "registered_active_classes": [
+                  {
+                      "class": row["class"],
+                      "declared_action_method_names": row["declared_action_method_names"],
+                      "secondary": row["secondary_interface_in_provider_chain"],
+                  }
+                  for row in report["registered_active_classes"]
+              ],
+              "registered_secondary_class_count": report["registered_secondary_class_count"],
+              "registered_secondary_classes": [
+                  {
+                      "class": row["class"],
+                      "declared_action_method_names": row["declared_action_method_names"],
+                  }
+                  for row in report["registered_secondary_classes"]
+              ],
+              "registered_custom_classes_declaring_use_without_active_interface": report["registered_custom_classes_declaring_use_without_active_interface"],
+              "registered_custom_classes_with_action_methods_but_no_active_or_secondary_interface": report["registered_custom_classes_with_action_methods_but_no_active_or_secondary_interface"],
+              "unregistered_concrete_active_classes": report["unregistered_concrete_active_classes"],
+              "unregistered_concrete_secondary_classes": report["unregistered_concrete_secondary_classes"],
+              "provider_packet_like_classes": report["provider_packet_like_classes"],
+          }, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload bounded audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: simply-swords-1702-exact-artifact-audit
+          path: build/simply-swords-1702-audit/report.json
+          if-no-files-found: error
+          retention-days: 3
