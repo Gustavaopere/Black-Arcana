@@ -218,3 +218,170 @@ Durable PR #195 clean HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed Bla
 ## Internal provider-component closure metric
 
 **Historical provider-component checkpoint after the Mobstein 5.4.4 shared reconciliation: 68/100 = 68%. The current denominator is `PENDING REBASE` and this fraction must not be published as current coverage.**
+
+Mobstein 5.4.4 / PR #318 was squash-merged as `73cd692ac0f6aa96ee1a6c422f09d0fcc648c8f4`; exact-SHA post-merge Black Arcana CI **#3217** / run `35293505012` completed GREEN. The provider contributes semantic **+0 `ZERO_SEMANTIC_ACTIONS`** and this shared reconciliation closes technical component **#68**. This is catalog closure, not a runtime/API compatibility PASS.
+
+Phase 2BT / PR #239 was merged as `1c5091807a8773d378c34ffac2e737b5f08b545c`; that exact durable merge SHA passed Black Arcana CI run `34795795283`. The provider contributes semantic **+0 `ZERO_BRIDGE_INFRA`** and this reconciliation closes technical component **#67**. This is catalog closure, not a runtime compatibility PASS.
+
+Phase 2BR / PR #226 was squash-merged as `4ab4ad990d453938e67f3d2b7cfa878bbe031ef0`; that exact durable merge SHA passed post-merge Black Arcana CI **#2654** / run `34738972649`, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA artifact `10311522907` (`sha256:c815f684a7a6dec192dd995bb6fbd6784c35faa0b0d21ae39bb9de89b93cec16`). The provider contributes semantic **+12 `COUNTED_RELEASE_BOUNDED`** and this reconciliation closes technical component **#66**.
+
+Phase 2BQ / PR #223 was squash-merged as `bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; that exact merge SHA passed post-merge Black Arcana CI **#2622** / run `34735586680`, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA artifact `10310957237` (`sha256:de930eaba7f0f5730810747050ec500b4d72ed793cfbdce0c8603e3af8d8cc9d`). The provider contributes semantic **+0** and closes technical component **#65** only.
+
+Phase 2BF is now a **historical 1.0.8-fix checkpoint**: its exact-artifact reconciliation closed 67 registrations for that artifact under the then-current optional-provider set, but the current physical provider line has advanced to 1.0.9. The 67-ID result must not be read as the current registry. At the historical checkpoint, the provider remained `CONDITIONAL` because deployed COMMON spell-lock configuration and complete survival reachability were not authoritative; Phase 2BF changed neither metric: **874** strict semantic objects and **55/100** closed provider components.
+
+Phase 2BF / PR #192 was audited at exact clean HEAD `85b15aec9faf395cef5460d06a17be58ccd16af8`, which passed Black Arcana CI **#2490**. It was squash-merged as `cc4cfc1d740f7714188e25a3586d8b43bb5eb969`; that exact merge SHA passed post-merge Black Arcana CI **#2491**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest, dedicated-server smoke and canonical QA-JAR publication.
+
+Phase 2BE / PR #189 was audited at exact HEAD `e787699d25b283b8040cd179f605143e8ee396de`, which passed Black Arcana CI **#2483**. It was squash-merged to `main` as `cce7f51794e4e65b0d97511eb55f710afc6e02f0`. Black Arcana CI **#2484 attempt 1** ended before compilation/tests on a transient external read timeout fetching Iron's API from `code.redspace.io`; rerunning the same job on the unchanged merge SHA produced **#2484 attempt 2 GREEN**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
+
+Phase 2BD / PR #186 was audited at exact HEAD `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0`, which passed Black Arcana CI **#2464**. It was squash-merged to `main` as `95ec538ff1c34766450393522ce3affe1039d0dd`; that exact merge SHA passed post-merge Black Arcana CI **#2465**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
+
+Phase 2AY / PR #175 merged to `main` as `9a4e1cd6a462a278083ab946b5ed054864c3315e` after exact audited HEAD `2260c46261ac9ab99d839f307fd7b4519d38eef2` passed Black Arcana CI **#2420**. The exact merge SHA then passed post-merge Black Arcana CI **#2421**, including unit tests, diff sanity, NeoForge build, built-JAR verification, Foundation GameTest server, dedicated-server smoke and canonical QA-JAR publication.
+
+The historical Phase 2AW nuance remains recorded: its immediate post-merge workflow #2308 failed at Foundation GameTest after unit tests, diff sanity, NeoForge build and JAR verification had passed, while later current-main validation #2334 completed the full gate successfully. This does not change the canonical #51 status of Apotheotic Creation.
+
+The complete pre-Phase-2AX coverage text is preserved byte-for-byte in [`CATALOG-COVERAGE-CURRENT-PRE-PHASE2AX.md`](./CATALOG-COVERAGE-CURRENT-PRE-PHASE2AX.md). Provider-specific evidence lives under `wiki/modpack-catalog/providers/**` plus the corresponding phase checkpoint/capability files.
+
+## Physical anchor
+
+- Minecraft: 1.21.1
+- NeoForge: `21.1.248`
+- historical Black Arcana physical snapshot: **595 top-level entries**
+- historical snapshot SHA-1: `7aaece7acbfb07ba4d0c66029042f36c50d046f0`
+- current sibling certified index: **587 top-level entries including the modloader** at ``neoforge-rpg-skilltree` current `main` with Tombstone dossier blob `7b99ee63892e9bd3711e27a651c0b62c0d71ba47``
+- jarjar/internal dependencies are not counted as top-level providers
+
+## Current working component denominator
+
+The historical internal operational denominator was **100 magic/cross-domain component units** under the older physical reconciliation. The current denominator is **`PENDING REBASE`** after the sibling physical re-audit surfaced additional magic/cross-domain components:
+
+- 103 historical candidate IDs;
+- 5 historically listed candidates now absent: `ars_morph`, `morerelics`, `reliquary`, `vestis`, `woodwalkers_spellbooks`;
+- 2 current candidates added beyond the historical baseline: `soul_fire_d`, `reliquified_lenders_cataclysm_new_relics_fix`;
+- therefore `103 - 5 + 2 = 100`.
+
+GTBC's SpellLib, GTBC's Geomancy Plus, FamiliarsLib, Farmer's Spell, Aeromancy Additions, Ars Nouveau: Two-Way Portals and Vampire Spells Addon were already members of those 100 component units, so their closure changes the numerator only. The denominator must be reconciled whenever the physical provider set changes.
+
+## Canonical recent closure sequence
+
+| Component | Phase / PR | Provider | Result |
+|---:|---|---|---|
+| 47 | Phase 2AS / PR #155 | `apothic_compats` | canonical |
+| 48 | Phase 2AT / PR #156 | `apothic_spawners` | canonical |
+| 49 | Phase 2AU / PR #158 | `apothic_enchanting` | canonical |
+| 50 | Phase 2AV / PR #160 | `apotheosis` | canonical |
+| 51 | Phase 2AW / PR #161 | `apotheoticcreation` | canonical; historical immediate post-merge GameTest failure superseded by later full current-main GREEN validation |
+| 52 | Phase 2AX / PR #166 | `familiarslib` | canonical at `main@4238275d2086a00c6f31960114733d74b8cdb1d8`; post-merge CI #2337 GREEN |
+| 53 | Phase 2AY / PR #175 | `gtbcs_spell_lib` | canonical at `main@9a4e1cd6a462a278083ab946b5ed054864c3315e`; post-merge CI #2421 GREEN |
+| 54 | Phase 2BD / PR #186 | `alshanex_familiars` | canonical at `main@95ec538ff1c34766450393522ce3affe1039d0dd`; audited HEAD `acfcff0fca09b3c2f7b4fcf082618a970e1d19c0` CI #2464 GREEN; post-merge CI #2465 GREEN |
+| 55 | Phase 2BE / PR #189 | `cataclysm_spellbooks` | canonical at `main@cce7f51794e4e65b0d97511eb55f710afc6e02f0`; audited HEAD `e787699d25b283b8040cd179f605143e8ee396de` CI #2483 GREEN; post-merge CI #2484 attempt 2 GREEN |
+| 56 | Phase 2BG / PR #195 | `leylines` | canonical at `main@88f042f68429ff920314a7ec3a6923369edc93fd`; audited HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` CI #2503 GREEN; post-merge CI #2504 GREEN |
+| 57 | Phase 2BH / PR #198 | `goety` | canonical at `main@4fcc40aaf8149b5511dbd882a5616ee5240cd640`; audited HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` CI #2523 GREEN; post-merge CI #2524 GREEN; QA artifact `10291461067` |
+| 58 | Phase 2BK | `ignissoulfires_spellbooks` | exact hash-matched 1.1.0 gear/bridge closure; `ZERO_BRIDGE_INFRA`; semantic +0; evidence PR #203 / run `34688273425` |
+| 59 | Phase 2BL / PR #207 | `goetyiron` | canonical; exact-artifact semantic +14 closure |
+| 60 | Phase 2BL / PR #207 | `goety_cataclysm` | canonical; exact-artifact semantic +52 closure |
+| 61 | Phase 2BM / PR #210 | `ars_polymorphia` | canonical at `main@f2cdfe7b79d500540c281d70a76e8b6e3a77d311`; source-pinned `ZERO_SEMANTIC_BRIDGE`; semantic +0; post-merge CI #2544 GREEN |
+| 62 | Phase 2BN / PR #212 | `ars_sable` | canonical at `main@c1c422b5ec72fe4308104f04282732d6c2f2bbc1`; source-pinned zero-semantic spatial/compat bridge; post-merge CI #2554 GREEN; runtime host QA fail-closed |
+| 63 | Phase 2BO / PR #214 | `farmers_spell` | source-pinned +6 semantic closure; evidence merge `main@34a5fd495da744800b32b051e38c6473c6f5ea15`; post-merge CI #2565 GREEN; runtime host QA fail-closed |
+| 64 | Phase 2BP / PR #219 | `aero_additions` | source-pinned +10 semantic closure; evidence merge `main@84e9635b446b605140ab349fa2edc51f3462d518`; post-merge CI #2578 GREEN; runtime host QA fail-closed; promoted by the separate shared-ledger reconciliation |
+| 65 | Phase 2BQ / PR #223 | `ars_two_way_portals` | exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA`; semantic +0; durable merge `main@bc5428b5855e4d5821d5bd901fb591a62ecf3cbe`; post-merge CI #2622 GREEN; QA artifact `10310957237`; runtime host QA fail-closed; canonical |
+| 66 | Phase 2BR / PR #226 | `gtbcs_geomancy_plus` | `COUNTED_RELEASE_BOUNDED`; exact publisher file `7041615` closes 12 registrations (10 Geo + 2 Holy); Geo host-gate inheritance and focus reachability audited; Holy Umvuthi acquisition evidenced; durable merge `main@4ab4ad990d453938e67f3d2b7cfa878bbe031ef0`; post-merge CI #2654 GREEN; QA artifact `10311522907`; runtime host QA fail-closed; canonical |
+| 67 | Phase 2BT / PR #239 + shared reconciliation | `vampire_spells_addon` | source-pinned `ZERO_BRIDGE_INFRA`; semantic +0; durable audit merge `main@1c5091807a8773d378c34ffac2e737b5f08b545c`; exact post-merge CI run `34795795283` GREEN; runtime bridge QA fail-closed; promoted by this shared-ledger reconciliation |
+| 68 | Mobstein closure / PR #318 + shared reconciliation | `mobstein` | exact physical SHA-1 `3672d88f940ddd474a5429d7066b099cd0ce0c29`; resource-only clean-room closure `ZERO_SEMANTIC_ACTIONS`; semantic +0; durable merge `main@73cd692ac0f6aa96ee1a6c422f09d0fcc648c8f4`; exact post-merge CI #3217 / run `35293505012` GREEN; runtime/API/Sable integration fail-closed |
+
+Components #1–#46 remain part of the same canonical numerator and are preserved by prior cumulative snapshots/provider records.
+
+## Phase 2BE — Cataclysm: Spellbooks 1.1.13 component #55, canonical
+
+Phase 2BE closes the physically installed spell identity inventory to exact artifact evidence:
+
+- exact JAR `cataclysm_spellbooks-1.1.13-1.21.jar` / SHA-1 `4af8348cc77bbff2ab7057c1fac26a5ab0a5b6a2`;
+- isolated non-merge PR #188 materialized exact File ID `8792628` and hash-matched the physical artifact;
+- 59 `Supplier<AbstractSpell>` fields, 59 `registerSpell(...)` calls, 59 spell-class instantiations and 0 conditional branches in the exact registry initializer;
+- exact group distribution: 7 Abyssal + 4 Ender + 1 Evocation + 5 Holy + 11 Fire + 5 Ice + 4 Nature + 22 Technomancy = **59**;
+- ten additional root localization keys have no current registered spell identity and remain excluded;
+- semantic delta: **+59**, yielding strict counted minimum **874** and Iron ecosystem subtotal **527**;
+- the generic/current publisher scale of 65 spells is not substituted for the installed 1.1.13 registry;
+- numerical mechanics, acquisition, runtime QA and future integration seams remain separate/fail-closed;
+- clean-room audit retained only factual identity/registry/resource evidence and copied no upstream implementation or assets.
+
+See [`PHASE2BE-CATACLYSM-SPELLBOOKS-1.1.13-EXACT-CHECKPOINT.md`](./PHASE2BE-CATACLYSM-SPELLBOOKS-1.1.13-EXACT-CHECKPOINT.md).
+
+## Phase 2BD — Alshanex's Familiars 4.0.3 component #54
+
+Phase 2BD closes the current provider identity inventory against the exact physical artifact:
+
+- exact JAR `alshanex_familiars-1.21.1_v4.0.3.jar` / SHA-1 `e5051c2385a426d05bf203ba8081a23d891f6686`;
+- isolated Curse Maven download of exact File ID `8675568` hash-matched the physical artifact;
+- 7 provider-owned spell registrations closed from exact registry/member/literal evidence;
+- 11 packaged custom `alshanex_familiars:ritual_recipe` identities closed from exact structured resources;
+- semantic delta: **+18**, strict counted minimum **815**;
+- Sound/Melodic content remains owned/counted under Tunes n' Tomes and is not duplicated;
+- runtime QA, numerical mechanics and future familiar adapter seams remain separately pending/fail-closed;
+- clean-room audit retained only factual identity/registry/resource evidence and copied no upstream implementation or assets.
+
+See [`PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md`](./PHASE2BD-ALSHANEX-4.0.3-EXACT-CHECKPOINT.md).
+
+## Phase 2AY — GTBC's SpellLib 2.2.0 component #53, canonical
+
+Phase 2AY closes the physically installed shared spell/addon library to the strongest current publisher evidence:
+
+- physical artifact `gtbcs_spell_lib-2.2.0-1.21.1.jar`, mod id `gtbcs_spell_lib`, version `2.2.0`, physical SHA-1 `36cce8ab3117e89ae992a84a566d596709db2ffe`;
+- exact CurseForge project/file `1194714 / 8824651` for the installed 2.2.0 line;
+- publisher documentation defines SpellLib as reusable library/API infrastructure rather than standalone gameplay content;
+- exact 2.2.0 release notes add Healing Received, Damage Taken and Summon Health attributes;
+- reusable `AdvancedSpell`, imbuement, Curio, trade, particle and summon facilities are infrastructure consumed by addons and do not prove independent spell identities;
+- semantic magic delta: **0**;
+- no JAR decompilation or source copying was used; unsupported internal/API signatures remain fail-closed.
+
+Iron's and consuming addons retain authority for their concrete spell/casting identities. Black Arcana retains authority for its own canonical casting, costs, targeting/effects, cooldowns/charges, hazards, rituals, Corruption, Strain, Arcane Danger, Backlash and WorldEffectPolicy.
+
+## Phase 2AX — FamiliarsLib 1.7.1 component #52, canonical
+
+Phase 2AX closes the installed familiar-framework library to the strongest currently available evidence:
+
+- physical artifact `familiarslib-1.21.1-1.7.1.jar`, mod id `familiarslib`, runtime `1.21.1-1.7`, SHA-1 `7fa3f3116e35c12456425ae195924ced33fcc2eb`;
+- CurseForge project/file `1316458 / 8059464`, release 2026-05-08 for NeoForge / Minecraft 1.21.1;
+- official source repository `Alshanex/FamiliarsLib`;
+- strongest release-correlated source commit `56561e7fd474fbd5c5166c1ac96f235faae156ab`, same date and same familiar-bed bug-fix intent as the 1.7.1 publisher changelog;
+- correlated source tree `9d39b4751b9e52874f66cf2187afab239d00b251`, recursive `truncated=false`;
+- source metadata declares Minecraft 1.21.1, NeoForge development baseline 21.1.90, Iron's `1.21.1-3.15.5`, Curios 9.2.2, mod version `1.21.1-1.7`;
+- source owns serializable player-familiar attachment state and familiar lifecycle/storage/summon transport;
+- `PayloadHandler` registers 17 optional payload handlers, split 9 play-to-server and 8 play-to-client;
+- the tree contains spellcasting-familiar abstractions and Iron's spell classification tags, but no provider-owned spell registry or `data/familiarslib/spells/**` content;
+- the 1.7 publisher changelog states that Sound-school content was removed and moved to Tunes n' Tomes;
+- consequently FamiliarsLib contributes **0 independent semantic spell/magic objects** to the user-facing metric.
+
+## Exactness and license boundary
+
+FamiliarsLib's source commit is release-correlated, not cryptographically tied to the installed binary: no matching release tag or reproducible-build proof was established. Do not call it an exact source-to-JAR pin. Its observed license surfaces disagree, so no reuse conclusion is inferred. GTBC's SpellLib is treated conservatively as publisher/physical factual evidence only. Clean-room policy remains read-only factual inspection: no provider code/assets/text are copied or adapted.
+
+## Black Arcana integration disposition
+
+FamiliarsLib remains authority for its own familiar attachment/lifecycle/networking framework. Iron's remains authority for the external spells referenced by FamiliarsLib tags and casting interoperability. GTBC's SpellLib remains authority for its library facilities. Black Arcana remains authority for its own canonical magic runtime.
+
+Stage 07.07 Borrowed Sight must not accept FamiliarsLib entities by thematic inference or generic tameable detection. A future bridge requires a verified provider-native ownership seam behind a dedicated adapter, with server-side revalidation and fail-closed behavior. Phase 2AX does **not** add that adapter, and Phase 2AY adds no runtime integration.
+
+## Partial providers still receive zero component points
+
+Examples remain:
+
+- `not_enough_glyphs` — current physical line is 4.6.2; exact 4.6.2 source preserves the 4.6.1 registration and Momentum blobs byte-for-byte, so the existing 40-registration / 39-source-enabled matrix remains current. Those 39 candidates remain config-conditional because deployed SERVER overrides are unavailable;
+- `somakespells` — current physical line is 1.0.9; the exact 1.0.8-fix 67-ID registry audit is historical only. Exact release/resource evidence for 1.0.9 is bounded, but physical byte equality, current registry, optional registration gates and survival/config reachability remain open;
+- `gaze` — exact registry identity is closed, but 26 Spirit Rites remain conditional on the unavailable deployed COMMON `disableGazeRites` value.
+
+These partials are also reasons the global semantic spell/magic denominator remains open. Their current conditional/open evidence is tracked explicitly in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md) rather than being silently added to the strict semantic count.
+
+## Update rule
+
+After each provider closure:
+
+1. re-read physical modlist and current `main`;
+2. reconcile concurrent PR/branch ownership;
+3. close the provider to the strongest exact evidence available;
+4. preserve physical/publisher/source/license evidence layers when they differ;
+5. keep semantic magic-object coverage separate from provider-component closure;
+6. merge only after latest-main reconciliation and CI GREEN on the exact reconciled HEAD;
+7. increment the canonical component numerator only after merge and post-merge main confirmation;
+8. change either denominator only when evidence for that metric changes.
+
+Phase 3 remains blocked until provider catalog/deduplication establishes real Black Arcana gaps and the semantic magic denominator is reconstructible.
