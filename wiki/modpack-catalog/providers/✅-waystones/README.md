@@ -40,6 +40,10 @@ Black Arcana counts one provider-owned semantic magic object for one discrete su
 
 Aliases and alternate trigger surfaces are deduplicated when they settle through the same provider-native causal action. Setup/discovery state, item preparation, automated infrastructure processing, GUI/management state, passive procs and downstream consequences are excluded unless they form an independent supernatural player action.
 
+## Fichas por ação
+
+As **3 identidades semânticas** fechadas para Waystones 21.1.45 estão materializadas em fichas individuais em [`ACTION-CARDS-21.1.45.md`](ACTION-CARDS-21.1.45.md). A camada de cards preserva `COUNTED_SOURCE_PINNED 3 / +3 strict` e não altera runtime QA.
+
 ## Exact current semantic inventory
 
 ### 1. Waystone Warp / Teleport
