@@ -90,6 +90,10 @@ Semantic total:
 
 `10 + 13 + 1 = 24`.
 
+## Fichas canônicas
+
+As 24 raízes exatas estão materializadas objeto-a-objeto em [ACTION-CARDS-ALPHA5.md](ACTION-CARDS-ALPHA5.md). As fichas preservam o denominador exato e os gates implantados de reachability; nenhuma promove o strict sem a evidência atual exigida abaixo.
+
 ## Explicit exclusions
 
 - **Ruptured Idol** — interface participant without provider action implementation: +0.
