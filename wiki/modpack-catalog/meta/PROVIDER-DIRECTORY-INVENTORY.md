@@ -10,8 +10,8 @@ Current sibling physical authority: `neoforge-rpg-skilltree@f5508b496e4a607e1b0b
 The canonical tree `wiki/modpack-catalog/providers/` now contains:
 
 - **115** top-level provider directories;
-- **100 ✅ cataloged**;
-- **15 ⚠️ partial / conditioned**;
+- **101 ✅ cataloged**;
+- **14 ⚠️ partial / conditioned**;
 - **0 ❌**;
 - **0 🟡**;
 - **0 ⛔**.
@@ -32,7 +32,6 @@ The fifteen current ⚠️ directories are:
 12. Simply Swords: Cataclysm;
 13. Simply More;
 14. Simply Swords;
-15. Waystones.
 
 The 27/09 physical-`Magic` reconciliation originally added six provider directories. Reliquified L_Ender's Cataclysm 0.1.1 has since closed exact and moved to ✅ with seven strict owner-scoped ability roots; the five entries 11–15 above remain ⚠️ because their remaining inventory/config/classification gates are still open.
 
@@ -53,7 +52,7 @@ The hyphenated directory remains canonical; the second document set is preserved
 
 It is a structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical. A current technical denominator still requires full physical/provider reconciliation across sibling dossiers, Project Library physical evidence and cross-domain/root-level providers.
 
-Likewise, **115 is not a semantic-magic denominator**. The current strict semantic minimum is **1684**, while the final semantic denominator is still open.
+Likewise, **115 is not a semantic-magic denominator**. The current strict semantic minimum is **1687**, while the final semantic denominator is still open.
 
 ## Current physical Magic taxonomy
 
