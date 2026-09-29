@@ -42,6 +42,8 @@ These eight contribute **+8 `COUNTED_EXACT`** semantic objects.
 
 See [`ACTIVE-MAGIC-INVENTORY.md`](ACTIVE-MAGIC-INVENTORY.md) and [`DREAD-LICH-STAFF-EXACT-RUNTIME-REACHABILITY.md`](DREAD-LICH-STAFF-EXACT-RUNTIME-REACHABILITY.md).
 
+Object-level catalog: [ACTION-CARDS-2.1.2.md](ACTION-CARDS-2.1.2.md).
+
 ## Explicit exclusions
 
 - Dread Queen Staff — exact 2.1.2 source says it currently has no usage;
