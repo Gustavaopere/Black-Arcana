@@ -1,6 +1,6 @@
 # KubeJS Ars Nouveau — 1.3.2
 
-Status: `⚠️ PARTIAL / CURRENT PHYSICAL 1.3.2 / RECIPE-SCHEMA BRIDGE / 0 PROVIDER-OWNED SPELL OR GLYPH IDENTITIES / PACK SERVER-SCRIPT MUTATIONS UNVERIFIED / +0 STRICT`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 1.3.2 / RECIPE-SCHEMA BRIDGE / 0 PROVIDER-OWNED SPELL OR GLYPH IDENTITIES / PACK SERVER-SCRIPT MUTATIONS UNVERIFIED / +0 STRICT`
 
 ## Current physical identity
 
@@ -87,7 +87,7 @@ Therefore:
 - base framework semantic delta: **+0 strict**;
 - current pack recipe/tome mutation inventory: **UNVERIFIED**;
 - semantic identity count is not blocked by those scripts, but exact reachability/economy of affected Ars objects is;
-- provider state: **⚠️ partial / conditioned** until the current `kubejs/server_scripts/**` set is audited.
+- catalog state: **✅ cataloged** because the provider-owned spell/glyph denominator is closed at zero; the current `kubejs/server_scripts/**` mutation set remains a separate deployed reachability/economy gate.
 
 ## Historical pack-script evidence
 
@@ -99,7 +99,7 @@ Current physical authority now records KubeJS build 377, so historical script ev
 
 See [`PACK-SCRIPT-CLOSURE-CHECKLIST.md`](PACK-SCRIPT-CLOSURE-CHECKLIST.md).
 
-Current closure requires the exact present `kubejs/server_scripts/**` tree, or an equivalent bounded recipe-manager/runtime dump tied to the current pack.
+Current deployed recipe/reachability closure still requires the exact present `kubejs/server_scripts/**` tree, or an equivalent bounded recipe-manager/runtime dump tied to the current pack. That missing deployment evidence does not reopen the already-closed zero spell/glyph denominator.
 
 ## Authority boundary
 
@@ -125,6 +125,6 @@ Separate assembled checks include:
 
 ## Result
 
-**⚠️ Partial / conditioned.**
+**✅ Cataloged.**
 
-KubeJS Ars Nouveau is cataloged as a recipe-schema bridge with **+0 provider-owned semantic spell/glyph identities**. The current pack's concrete recipe/tome mutations remain unverified and can affect Ars magic reachability/economy, but not the semantic numerator absent evidence of a separate registration API.
+KubeJS Ars Nouveau is cataloged as a recipe-schema bridge with **+0 provider-owned semantic spell/glyph identities**. The current pack's concrete recipe/tome mutations remain unverified and can affect Ars magic reachability/economy, but they are deployment/reachability evidence rather than an open semantic denominator absent evidence of a separate registration API.
