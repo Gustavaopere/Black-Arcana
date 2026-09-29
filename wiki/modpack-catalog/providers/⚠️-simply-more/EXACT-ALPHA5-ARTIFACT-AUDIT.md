@@ -22,7 +22,7 @@ The first three are closed here. Deployed reachability remains separate and keep
 - physical SHA-1: `51636477cd5c378f42d9700e1fe35cd952c8f4f1`;
 - publisher CurseForge File: `8736778`;
 - publisher file name: `simplymore-neoforge-1.3.0_alpha5+1.21.1.jar`;
-- current sibling checkpoint used for pack-presence classification: `neoforge-rpg-skilltree@e3cafb33ea28515216fda8f1d298d1c400923008`;
+- current sibling checkpoint used for pack-presence classification: `neoforge-rpg-skilltree@8aa9b92197c2a6eed5b67b16fa6b6a4adb88fd35`;
 - NON-MERGE exact audit PR: #446;
 - final audit HEAD: `53155432f050554cd2dec4e5bd1125c1cffaf72f`;
 - exact audit run: `36516484341` — GREEN;
@@ -135,7 +135,7 @@ Result: **+0 semantic roots**.
 
 The exact artifact contains `TidesingerSwordItem` with a use/release surface and an exact `MythicMetalsCompatRegistry` reference.
 
-Release-correlated source gates that compat registry behind `Platform.isModLoaded("mythicmetals")`. The current physical sibling modlist at `e3cafb33ea28515216fda8f1d298d1c400923008` contains no Mythic Metals top-level mod.
+Release-correlated source gates that compat registry behind `Platform.isModLoaded("mythicmetals")`. The current physical sibling modlist at `8aa9b92197c2a6eed5b67b16fa6b6a4adb88fd35` contains no Mythic Metals top-level mod.
 
 Therefore Tidesinger is an optional-dependency action surface that is **not present in the current assembled pack denominator**.
 
