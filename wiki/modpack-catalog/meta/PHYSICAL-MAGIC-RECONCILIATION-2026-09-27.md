@@ -5,7 +5,7 @@ Status: `84/84 CURRENT PHYSICAL MAGIC ROWS MAPPED / 71 ✅ + 13 ⚠️ / STRICT 
 ## Authority
 
 - Black Arcana base before this closure: `main@49873930b2948b7d5ddf8f0417138dcebffec6ca`
-- sibling physical/modlist authority: `neoforge-rpg-skilltree@8aa9b92197c2a6eed5b67b16fa6b6a4adb88fd35`
+- sibling physical/modlist authority: `neoforge-rpg-skilltree@51751e6c77530a7d8825ec42493ffccedf978d1a`
 - source table: `PROJECT-INSTRUCTIONS/modlist/modlist.md`
 - category rule: a row belongs to this subtotal only when the **category field** contains the exact category `Magic`; the word "Magic" in a display name is not sufficient.
 
@@ -60,7 +60,7 @@ The remaining five newly mapped providers stay fail-closed:
 - ShadowsZ: exact hash-matched 1.1.9 artifact evidence closes the complete semantic inventory at 10 identities; strict remains +0 because all powers are attunement-gated by the effective `shadowszRestrictPowers` world rule and Fusion additionally depends on deployed `fusionEnabled`;
 - Simply Swords: Cataclysm: exact-version release-correlated source closes four semantic abilities, but deployed STARTUP config can suppress their active surface and remains uncaptured;
 - Simply More: exact hash-matched Alpha-5 artifact audit closes 24 current-pack player actions (10 active API + 13 legacy direct-use + 1 shared Mimicry); Idol/TO_REMOVE, Reforming Remnant, passive/proc/implicit surfaces and optional Mythic Metals Tidesinger are excluded, while deployed Awakening/acquisition/Mimicry/config reachability remains open;
-- Simply Swords: release-correlated source establishes a 66-action semantic lower bound from 62 registered ACTIVE Unique roots plus 4 player-use Runic action families; passive definitions, 17 implicits and trigger-only Gem Powers are excluded while legacy/non-opted active paths and deployed reachability remain open;
+- Simply Swords: exact hash-matched File `8746001` plus release-correlated/version-declared source close the semantic player-action denominator at exactly **66**: 62 ACTIVE Unique roots + 4 player-use Runic families; the exact residual artifact audit adds **0** legacy/secondary roots, while deployed Awakening/acquisition/config/compat reachability remains open;
 - Waystones: exact 21.1.45 source establishes a 3-action lower bound from one provider-native Warp/Teleport root, Warp Portal Conjuration and Twinbound Link; activation, Blank Scroll binding and Warp Plate shard attunement remain classification-open, while passive/downstream/bridge infrastructure is excluded;
 
 Therefore the strict reconstructible minimum is now **1684**.
