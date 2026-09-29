@@ -560,6 +560,31 @@ jobs:
               raise SystemExit("Exact ItemRegistry no longer references RemovedItem")
           report["item_registry_to_remove_class_refs"] = to_remove_refs
 
+          # Exact packet/optional-compat closure. Current release-correlated
+          # source is used later only to classify the already-observed facts.
+          c2s_prefix = "net/rosemarythyme/simplymore/networking/c2s/"
+          c2s_classes = sorted(
+              name for name in classes
+              if name.startswith(c2s_prefix)
+          )
+          expected_c2s = [c2s_prefix + "C2STransformRemnantPacket"]
+          if c2s_classes != expected_c2s:
+              raise SystemExit(f"Unexpected C2S packet surface: {c2s_classes}")
+
+          packet_registry_name = "net/rosemarythyme/simplymore/registry/PacketRegistry"
+          packet_registry = classes.get(packet_registry_name)
+          if packet_registry is None or expected_c2s[0] not in packet_registry["class_refs"]:
+              raise SystemExit("Exact PacketRegistry does not reference the sole C2S transform packet")
+          report["c2s_packet_classes"] = c2s_classes
+
+          mythic_registry_name = "net/rosemarythyme/simplymore/registry/item/compat/MythicMetalsCompatRegistry"
+          tidesinger_name = "net/rosemarythyme/simplymore/item/compat/mythicmetals/TidesingerSwordItem"
+          mythic_registry = classes.get(mythic_registry_name)
+          if mythic_registry is None or tidesinger_name not in mythic_registry["class_refs"]:
+              raise SystemExit("Exact Mythic Metals compat registry does not reference TidesingerSwordItem")
+          report["optional_mythicmetals_tidesinger_class"] = tidesinger_name
+          report["optional_mythicmetals_registry"] = mythic_registry_name
+
           REPORT.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
 
           print(json.dumps({
@@ -582,6 +607,8 @@ jobs:
               "outside_unique_concrete_item_action_classes": report["outside_unique_concrete_item_action_classes"],
               "to_remove_classes": report["to_remove_classes"],
               "item_registry_to_remove_class_refs": report["item_registry_to_remove_class_refs"],
+              "c2s_packet_classes": report["c2s_packet_classes"],
+              "optional_mythicmetals_tidesinger_class": report["optional_mythicmetals_tidesinger_class"],
               "item_registry_unique_class_refs": report["item_registry_unique_class_refs"],
               "direct_register_ids_intersecting_lang_items": report["direct_register_ids_intersecting_lang_items"],
           }, indent=2, sort_keys=True))
