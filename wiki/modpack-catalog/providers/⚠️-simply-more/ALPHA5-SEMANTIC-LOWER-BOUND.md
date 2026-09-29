@@ -1,10 +1,12 @@
-# Simply More 1.3.0 Alpha 5 — release-correlated semantic lower bound
+# Simply More 1.3.0 Alpha 5 — historical release-correlated semantic lower bound
 
 Checkpoint: 2026-09-27
 
+> **SUPERSEDED FOR CURRENT DENOMINATOR PURPOSES.** The exact physical-artifact audit in [EXACT-ALPHA5-ARTIFACT-AUDIT.md](EXACT-ALPHA5-ARTIFACT-AUDIT.md) closes the current Simply More action denominator at **24** while deployed reachability remains open. This file is retained as provenance for the earlier conservative 9-action lower bound.
+
 ## Evidence class
 
-`EXACT_PHYSICAL_PUBLISHER_FILE / RELEASE_CORRELATED_SOURCE / LOWER_BOUND 9 PLAYER_ACTIONS / LEGACY_INVENTORY_OPEN`
+`HISTORICAL / EXACT_PHYSICAL_PUBLISHER_FILE / RELEASE_CORRELATED_SOURCE / LOWER_BOUND 9 PLAYER_ACTIONS / SUPERSEDED BY EXACT CURRENT DENOMINATOR 24`
 
 ## Metric boundary
 
