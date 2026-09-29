@@ -5,7 +5,7 @@ Status: `84/84 CURRENT PHYSICAL MAGIC ROWS MAPPED / 72 ✅ + 12 ⚠️ / STRICT 
 ## Authority
 
 - Black Arcana base before this closure: `main@49873930b2948b7d5ddf8f0417138dcebffec6ca`
-- sibling physical/modlist authority: `neoforge-rpg-skilltree@82d0d551f34d20363201f5b71f0ad91a141cbe56`
+- sibling physical/modlist authority: `neoforge-rpg-skilltree@1bb7c7d6e2e6878248b0c178bdae55e84697acd2`
 - source table: `PROJECT-INSTRUCTIONS/modlist/modlist.md`
 - category rule: a row belongs to this subtotal only when the **category field** contains the exact category `Magic`; the word "Magic" in a display name is not sufficient.
 
