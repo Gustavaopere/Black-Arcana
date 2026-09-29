@@ -450,8 +450,10 @@ jobs:
           )
           report["provider_packet_like_classes"] = packet_like
 
-          # Exact UniqueAbilityDefinition registry closure. Only definition field
-          # names, root paths and ACTIVE/PASSIVE kind are retained.
+          # Exact UniqueAbilityDefinition registry closure. Retain only
+          # definition field, ID field and ACTIVE/PASSIVE kind. Textual root
+          # paths are already source-pinned in the canonical catalog and are
+          # deliberately not reconstructed from helper-call bytecode here.
           ability_registry_classes = [
               PROVIDER_PREFIX + "api/ability/BuiltinUniqueAbilities",
               *[
@@ -473,25 +475,12 @@ jobs:
               if cp.returncode != 0:
                   raise SystemExit(f"javap failed for {registry_class}")
 
-              id_paths = {}
-              last_string = None
               last_id_field = None
               last_kind = None
               pending_definition = None
 
               for line in cp.stdout.splitlines():
                   stripped = line.strip()
-                  string_match = re.search(r"// String ([a-z0-9_\\/]+)\\s*$", stripped)
-                  if string_match:
-                      last_string = string_match.group(1)
-
-                  put_id = re.search(
-                      r"// Field ([A-Z0-9_]+_ID):Lnet/minecraft/resources/ResourceLocation;",
-                      stripped,
-                  )
-                  if put_id and last_string is not None:
-                      id_paths[put_id.group(1)] = last_string
-                      last_string = None
 
                   get_id = re.search(
                       r"// Field ([A-Z0-9_]+_ID):Lnet/minecraft/resources/ResourceLocation;",
@@ -521,37 +510,23 @@ jobs:
                   )
                   if "putstatic" in stripped and put_definition and pending_definition is not None:
                       id_field, kind = pending_definition
-                      root_path = id_paths.get(id_field)
-                      if root_path is None:
-                          raise SystemExit(
-                              f"Missing root path for {registry_class} {put_definition.group(1)} via {id_field}"
-                          )
                       definition_rows.append({
                           "registry_class": registry_class,
                           "definition_field": put_definition.group(1),
                           "id_field": id_field,
-                          "root_path": root_path,
                           "kind": kind,
                       })
                       pending_definition = None
 
           active_definitions = [row for row in definition_rows if row["kind"] == "ACTIVE"]
           passive_definitions = [row for row in definition_rows if row["kind"] == "PASSIVE"]
-          active_owner_families = sorted({
-              row["root_path"].split("/", 1)[0]
-              for row in active_definitions
-          })
           if len(active_definitions) != 62:
               raise SystemExit(f"Expected exact 62 ACTIVE definitions, got {len(active_definitions)}")
-          if len(active_owner_families) != 51:
-              raise SystemExit(
-                  f"Expected exact 51 ACTIVE owner families, got {len(active_owner_families)}"
-              )
+          if len({(row["registry_class"], row["definition_field"]) for row in definition_rows}) != len(definition_rows):
+              raise SystemExit("Duplicate UniqueAbilityDefinition field identity in exact artifact")
           report["exact_unique_ability_definitions"] = definition_rows
           report["exact_active_definition_count"] = len(active_definitions)
           report["exact_passive_definition_count"] = len(passive_definitions)
-          report["exact_active_owner_families"] = active_owner_families
-          report["exact_active_owner_family_count"] = len(active_owner_families)
 
           definition_lookup = {
               (row["registry_class"], row["definition_field"]): row
@@ -585,38 +560,48 @@ jobs:
                       if owner and owner.startswith(PROVIDER_PREFIX) and owner.endswith("Manager"):
                           support.add(owner)
 
-              roots = {}
+              definitions = {}
               for support_class in sorted(support):
                   for row in direct_definition_rows(support_class):
                       if row["kind"] == "ACTIVE":
-                          roots[row["root_path"]] = {
-                              "root_path": row["root_path"],
+                          identity = (row["registry_class"], row["definition_field"])
+                          definitions[identity] = {
                               "registry_class": row["registry_class"],
                               "definition_field": row["definition_field"],
+                              "id_field": row["id_field"],
                               "support_class": support_class,
                           }
               active_class_definition_map[item_row["class"]] = sorted(
-                  roots.values(),
-                  key=lambda row: row["root_path"],
+                  definitions.values(),
+                  key=lambda row: (row["registry_class"], row["definition_field"]),
               )
 
           report["active_class_definition_map"] = active_class_definition_map
           report["active_classes_without_exact_active_definition_reference"] = sorted(
               class_id
-              for class_id, roots in active_class_definition_map.items()
-              if not roots
+              for class_id, rows in active_class_definition_map.items()
+              if not rows
           )
-          mapped_active_roots = sorted({
-              row["root_path"]
-              for roots in active_class_definition_map.values()
-              for row in roots
+          mapped_active_definition_fields = sorted({
+              (row["registry_class"], row["definition_field"])
+              for rows in active_class_definition_map.values()
+              for row in rows
           })
-          exact_active_roots = sorted(row["root_path"] for row in active_definitions)
-          report["mapped_active_root_count"] = len(mapped_active_roots)
-          report["mapped_active_roots"] = mapped_active_roots
-          report["unmapped_exact_active_roots"] = sorted(
-              set(exact_active_roots) - set(mapped_active_roots)
-          )
+          exact_active_definition_fields = sorted({
+              (row["registry_class"], row["definition_field"])
+              for row in active_definitions
+          })
+          report["mapped_active_definition_count"] = len(mapped_active_definition_fields)
+          report["mapped_active_definition_fields"] = [
+              {"registry_class": registry_class, "definition_field": definition_field}
+              for registry_class, definition_field in mapped_active_definition_fields
+          ]
+          report["unmapped_exact_active_definition_fields"] = [
+              {"registry_class": registry_class, "definition_field": definition_field}
+              for registry_class, definition_field in sorted(
+                  set(exact_active_definition_fields) - set(mapped_active_definition_fields)
+              )
+          ]
 
           # Bounded call-target evidence for the only two exact secondary
           # action classes and the two non-Active classes that merely expose
