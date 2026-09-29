@@ -414,6 +414,152 @@ jobs:
               )
           )
 
+          # Exact inherited Mimicry action closure. The abstract base owns the
+          # shared transformation input; concrete forms must not mint separate
+          # action roots unless they override an action method themselves.
+          mimicry_base = UNIQUE_PREFIX + "mimicry/MimicryItem"
+          mimicry_info = classes.get(mimicry_base)
+          if mimicry_info is None or not (mimicry_info["access"] & 0x0400):
+              raise SystemExit("Expected abstract MimicryItem base not found")
+          mimicry_action_methods = sorted({
+              m["name"] for m in mimicry_info["methods"]
+              if m["name"] in ACTION_METHODS
+          })
+          required_mimicry_methods = {"use", "usageTick", "getMaxUseTime"}
+          if not required_mimicry_methods.issubset(set(mimicry_action_methods)):
+              raise SystemExit(
+                  f"Mimicry base missing required action methods: {mimicry_action_methods}"
+              )
+
+          mimicry_concrete = sorted(
+              row["class"] for row in unique_rows
+              if row["package_group"] == "mimicry" and not row["abstract"]
+          )
+          mimicry_registered = sorted(
+              cls for cls in mimicry_concrete
+              if cls in report["item_registry_unique_class_refs"]
+          )
+          mimicry_overrides = sorted(
+              row["class"] for row in unique_rows
+              if row["package_group"] == "mimicry"
+              and not row["abstract"]
+              and row["declared_action_method_names"]
+          )
+          if len(mimicry_concrete) != 25:
+              raise SystemExit(f"Expected 25 concrete Mimicry forms, got {len(mimicry_concrete)}")
+          if mimicry_registered != mimicry_concrete:
+              raise SystemExit(
+                  f"Not every concrete Mimicry form is registered: registered={len(mimicry_registered)} concrete={len(mimicry_concrete)}"
+              )
+          if mimicry_overrides:
+              raise SystemExit(f"Concrete Mimicry forms override action methods: {mimicry_overrides}")
+
+          cp = subprocess.run(
+              ["javap", "-c", "-p", "-classpath", str(JAR), mimicry_base.replace("/", ".")],
+              text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False
+          )
+          if cp.returncode != 0:
+              raise SystemExit("javap failed for exact MimicryItem")
+          mimicry_call_targets = {}
+          current = None
+          mimicry_method_needles = (
+              " use(", " usageTick(", " swapForm(", " onClicked("
+          )
+          for line in cp.stdout.splitlines():
+              stripped = line.strip()
+              if stripped.endswith(";") and any(needle in (" " + stripped) for needle in mimicry_method_needles):
+                  current = next(
+                      needle.strip().split("(")[0]
+                      for needle in mimicry_method_needles
+                      if needle in (" " + stripped)
+                  )
+                  mimicry_call_targets.setdefault(current, [])
+                  continue
+              if current is not None and stripped and not line.startswith(" ") and stripped.endswith(";"):
+                  current = None
+              if current is None:
+                  continue
+              if "invoke" in stripped and "//" in stripped:
+                  mimicry_call_targets[current].append(stripped.split("//", 1)[1].strip())
+          mimicry_call_targets = {
+              method: sorted(set(targets))
+              for method, targets in mimicry_call_targets.items()
+              if targets
+          }
+          if not any(
+              hold_target in target
+              for target in mimicry_call_targets.get("use", [])
+          ):
+              raise SystemExit("Exact MimicryItem use() does not route through AttackUtils.holdToUse")
+          report["mimicry_shared_action"] = {
+              "base_class": mimicry_base,
+              "declared_action_method_names": mimicry_action_methods,
+              "concrete_form_count": len(mimicry_concrete),
+              "registered_concrete_form_count": len(mimicry_registered),
+              "concrete_action_override_count": len(mimicry_overrides),
+              "bounded_call_targets": mimicry_call_targets,
+          }
+
+          # Active-interface exact separation: Idol participates in the host
+          # interface but declares no provider action method; every other exact
+          # concrete active class declares activate().
+          active_without_activate = sorted(
+              row["class"] for row in unique_rows
+              if not row["abstract"]
+              and row["active_interface_in_provider_chain"]
+              and "activate" not in row["declared_action_method_names"]
+          )
+          expected_inert_active = [UNIQUE_PREFIX + "IdolItem"]
+          if active_without_activate != expected_inert_active:
+              raise SystemExit(
+                  f"Unexpected active-interface classes without activate(): {active_without_activate}"
+              )
+          idol_row = next(
+              row for row in unique_rows
+              if row["class"] == expected_inert_active[0]
+          )
+          if idol_row["declared_action_method_names"]:
+              raise SystemExit(
+                  f"IdolItem unexpectedly declares action methods: {idol_row['declared_action_method_names']}"
+              )
+          report["active_interface_without_activate"] = active_without_activate
+          report["idol_declared_action_method_names"] = idol_row["declared_action_method_names"]
+
+          # Completeness scan outside item/uniques. This prevents an exact
+          # denominator from silently missing provider-owned player-use items.
+          ITEM_PREFIX = "net/rosemarythyme/simplymore/item/"
+          outside_item_action_rows = []
+          for cls_name, info in sorted(classes.items()):
+              if not cls_name.startswith(ITEM_PREFIX) or cls_name.startswith(UNIQUE_PREFIX):
+                  continue
+              if info["access"] & 0x0400:
+                  continue
+              declared = sorted({
+                  m["name"] for m in info["methods"]
+                  if m["name"] in ACTION_METHODS
+              })
+              if declared:
+                  outside_item_action_rows.append({
+                      "class": cls_name,
+                      "declared_action_method_names": declared,
+                      "referenced_by_item_registry": cls_name in item_registry["class_refs"],
+                  })
+          report["outside_unique_concrete_item_action_classes"] = outside_item_action_rows
+          report["outside_unique_concrete_item_action_class_count"] = len(outside_item_action_rows)
+
+          # Removed/rework proxy separation must stay explicit in the exact
+          # artifact: TO_REMOVE implementations are present but not referenced
+          # by ItemRegistry, while RemovedItem is referenced for compatibility.
+          to_remove_refs = sorted(
+              cls for cls in report["to_remove_classes"]
+              if cls in report["item_registry_unique_class_refs"]
+          )
+          if to_remove_refs:
+              raise SystemExit(f"TO_REMOVE classes unexpectedly referenced by ItemRegistry: {to_remove_refs}")
+          if not report["item_registry_references_removed_item"]:
+              raise SystemExit("Exact ItemRegistry no longer references RemovedItem")
+          report["item_registry_to_remove_class_refs"] = to_remove_refs
+
           REPORT.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
 
           print(json.dumps({
@@ -431,7 +577,11 @@ jobs:
               "direct_active_interface_classes": report["direct_active_interface_classes"],
               "concrete_unique_classes_with_active_interface": report["concrete_unique_classes_with_active_interface"],
               "mimicry_classes": report["mimicry_classes"],
+              "mimicry_shared_action": report["mimicry_shared_action"],
+              "active_interface_without_activate": report["active_interface_without_activate"],
+              "outside_unique_concrete_item_action_classes": report["outside_unique_concrete_item_action_classes"],
               "to_remove_classes": report["to_remove_classes"],
+              "item_registry_to_remove_class_refs": report["item_registry_to_remove_class_refs"],
               "item_registry_unique_class_refs": report["item_registry_unique_class_refs"],
               "direct_register_ids_intersecting_lang_items": report["direct_register_ids_intersecting_lang_items"],
           }, indent=2, sort_keys=True))
