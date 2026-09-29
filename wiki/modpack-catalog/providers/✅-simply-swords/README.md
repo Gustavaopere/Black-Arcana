@@ -1,6 +1,6 @@
 # Simply Swords — 1.70.2-1.21.1
 
-Status: `⚠️ PARTIAL / EXACT HASH-MATCHED ACTION DENOMINATOR 66 / DEPLOYED AWAKENING-CONFIG-REACHABILITY OPEN / +0 STRICT`
+Status: `✅ CATALOGED / EXACT HASH-MATCHED ACTION DENOMINATOR 66 / DEPLOYED AWAKENING-CONFIG-REACHABILITY OPEN / +0 STRICT`
 
 ## Current physical authority
 
@@ -188,9 +188,9 @@ The audited source line declares the Timefall Development License 1.2. Black Arc
 
 ## Result
 
-**⚠️ Partial / conditioned — exact action denominator closed at 66.**
+**✅ Cataloged — exact action denominator closed at 66 and all 66 roots are materialized object-by-object.**
 
 - exact current action denominator: **66**;
 - strict semantic contribution: **+0**;
-- remaining blocker: deployed Awakening/config/acquisition/compat reachability;
+- remaining runtime/reachability gate: deployed Awakening/config/acquisition/compat reachability;
 - runtime Epic Fight/Lootr regression QA, persistence, Runic Forge transactions and save migration remain separate from semantic inventory closure.

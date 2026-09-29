@@ -69,4 +69,28 @@ After normalization:
 
 `115 providers = 110 ✅ + 5 ⚠️`
 
+## Post-materialization follow-up — PRs #456 and #458
+
+The two remaining providers whose only catalog blocker was missing object-level materialization are now closed on `main`:
+
+| Provider | Object coverage now materialized | Folder result | Remaining non-catalog gate |
+|---|---:|---|---|
+| Simply Swords 1.70.2 | 66/66 action roots | `✅-simply-swords` | deployed Awakening/config/acquisition/compat reachability |
+| Ice And Fire CE 2.1.2 | 9/9 magic-action families | `✅-ice-and-fire-ce` | deployed `tools.phantasmalBladeAbility` for Ghost Sword plus runtime QA |
+
+Evidence:
+
+- PR #456 merged after synchronization to the then-current `main`; post-sync Black Arcana CI run `36638143201` completed successfully;
+- PR #458 was then synchronized to the new `main`; post-sync Black Arcana CI run `36638910371` completed successfully.
+
+Current structural result after these two promotions:
+
+`115 providers = 112 ✅ + 3 ⚠️`
+
+The three intentionally catalog-open folders are:
+
+- `⚠️-irons-spellbooks-kubejs` — current-pack script-defined Iron's inventory remains unavailable;
+- `⚠️-kubejs-ars-nouveau` — current-pack KubeJS Ars mutation inventory remains unavailable;
+- `⚠️-traveloptics` — current physical artifact/provenance and current registry delta remain unresolved in the provider dossier.
+
 This is a folder-status normalization only. It does not change registry IDs, spell/action counts, strict semantic totals, runtime compatibility claims or Black Arcana provider authority.

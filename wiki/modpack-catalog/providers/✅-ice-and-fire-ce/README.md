@@ -1,6 +1,6 @@
 # Ice And Fire Community Edition — 2.1.2
 
-Status: `⚠️ PARTIAL / EXACT PHYSICAL=PUBLISHER ARTIFACT / EXACT 2.1.2 SOURCE-SEMVER PIN / 8 COUNTED_EXACT ACTION FAMILIES + 1 CONDITIONAL / +8 STRICT / RUNTIME QA SEPARATE`
+Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / EXACT 2.1.2 SOURCE-SEMVER PIN / 9/9 ACTION FAMILIES MATERIALIZED / 8 COUNTED_EXACT + 1 CONDITIONAL / +8 STRICT / RUNTIME QA SEPARATE`
 
 ## Current physical authority
 
@@ -69,4 +69,4 @@ Strict semantic inventory closure does not certify:
 
 ## Result
 
-**⚠️ Partial / conditioned.** Eight exact, provider-reachable magic-action families are strict-counted; **1** action family remains fail-closed. Current strict contribution: **+8**.
+**✅ Cataloged.** All **9/9** independent magic-action families are materialized object-by-object. Eight exact, provider-reachable families are strict-counted; Ghost Sword / Phantasmal Blade remains deployment-config conditional. Current strict contribution: **+8**.
