@@ -18,7 +18,7 @@ Capítulos e tabelas históricas abaixo continuam úteis para rastrear deltas, m
 
 ## Reconciliação física Magic — snapshot sibling atual
 
-A autoridade física corrente é `neoforge-rpg-skilltree@82d0d551f34d20363201f5b71f0ad91a141cbe56`. Aplicando o critério ao **campo de categoria** da modlist, existem **84 linhas cuja categoria contém `Magic`**. O nome do mod não é usado como atalho de classificação.
+A autoridade física corrente é `neoforge-rpg-skilltree@1bb7c7d6e2e6878248b0c178bdae55e84697acd2`. Aplicando o critério ao **campo de categoria** da modlist, existem **84 linhas cuja categoria contém `Magic`**. O nome do mod não é usado como atalho de classificação.
 
 Após normalização de ownership/aliases e a reconciliação de 27/09:
 
