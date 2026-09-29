@@ -20,6 +20,10 @@ Exact NON-MERGE audit branch `audit/ozymandias-sundries-0.0.5-exact-artifact-202
 
 Ozymandias Sundries is an Iron's Spells 'n Spellbooks addon with equipment/spellbook content plus two provider-owned spell registrations. Iron's remains authority for casting, mana, cooldown infrastructure, schools and generic spell configuration. Black Arcana must not duplicate that runtime.
 
+## Fichas por spell
+
+As **2 identidades registradas exatas** deste provider estão materializadas em [`ACTION-CARDS-0.0.5.md`](ACTION-CARDS-0.0.5.md) e nas fichas individuais de `levitate` e `lightning_warp`. Esta camada editorial preserva `COUNTED_EXACT / +2 strict` e não promove classes/localization residuais.
+
 ## Exact semantic inventory
 
 The hash-matched current artifact contains one `SpellRegistries` registrar whose static initializer has:
