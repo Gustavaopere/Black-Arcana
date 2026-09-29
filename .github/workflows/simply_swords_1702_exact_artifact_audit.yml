@@ -37,6 +37,7 @@ jobs:
           import json
           import re
           import struct
+          import subprocess
           import urllib.request
           import zipfile
           from pathlib import Path
