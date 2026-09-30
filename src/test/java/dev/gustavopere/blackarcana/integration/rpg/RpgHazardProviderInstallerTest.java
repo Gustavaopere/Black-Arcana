@@ -39,6 +39,9 @@ class RpgHazardProviderInstallerTest {
             @Override public String integrationId() { return "black_arcana:test_rpg"; }
             @Override public boolean available() { return false; }
             @Override public String implementationVersion() { return "test"; }
+            @Override public RpgProgressionQuery queryHazardProgression(UUID playerId) {
+                return RpgProgressionQuery.denied("missing", "test bridge unavailable");
+            }
             @Override public RpgProgressionQuery query(UUID playerId) {
                 return RpgProgressionQuery.denied("missing", "test bridge unavailable");
             }
