@@ -17,6 +17,7 @@ class ArcanaServerRuntimeHazardStateTest {
     void runtimeOwnsIndependentCorruptionStrainAndEmergencyProtectionState() {
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
         assertNotNull(runtime.corruption());
+        assertNotNull(runtime.strainProfiles());
         assertNotNull(runtime.strain());
         assertNotNull(runtime.strain().recoveryProviders());
         assertNotNull(runtime.emergencyProtection());

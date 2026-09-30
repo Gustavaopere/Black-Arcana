@@ -72,6 +72,107 @@ class ArcaneHazardStateSettlementTest {
     }
 
     @Test
+    void declaredStrainProfileMakesRepeatedCastingMoreDangerousAndEventuallyGates() {
+        ArcaneDangerProfileRegistry profiles = profiles(profile(10.0D, 100.0D));
+        ArcaneResistanceProviderRegistry arcane = ArcaneResistanceProviderRegistry.canonical(4);
+        CorruptionResistanceProviderRegistry corruptionResistance = CorruptionResistanceProviderRegistry.canonical(4);
+        CorruptionStateService corruption = CorruptionStateService.canonical(16);
+        ArcaneStrainStateService strain = new ArcaneStrainStateService(
+            16,
+            1_000.0D,
+            0.0D,
+            ArcaneStrainRecoveryProviderRegistry.canonical());
+        ArcaneStrainProfileRegistry strainProfiles = new ArcaneStrainProfileRegistry();
+        strainProfiles.replaceAll(Map.of(
+            SPELL_ID,
+            new ArcaneStrainProfile(100.0D, 0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 250.0D)));
+
+        AtomicReference<ArcaneHazardSnapshot> activated = new AtomicReference<>();
+        ArcaneHazardCastGate gate = new ArcaneHazardCastGate(
+            profiles,
+            arcane,
+            corruptionResistance,
+            corruption,
+            strain,
+            strainProfiles,
+            16,
+            capturingActivator(activated));
+
+        var first = gate.preflight(
+            request(CASTER_ID, "21111111-aaaa-bbbb-cccc-222222222221"),
+            TargetResolution.resolved("target"));
+        assertTrue(first.decision().allowed());
+        assertTrue(first.activate().allowed());
+        assertEquals(1.0D, activated.get().profile().backlashMultiplier(), 1.0E-9D);
+        first.commit();
+        assertEquals(100.0D, strain.snapshot(CASTER_ID, 100L).units(), 1.0E-9D);
+        assertEquals(10.0D, corruption.snapshot(CASTER_ID).units(), 1.0E-9D);
+
+        var second = gate.preflight(
+            request(CASTER_ID, "21111111-aaaa-bbbb-cccc-222222222222"),
+            TargetResolution.resolved("target"));
+        assertTrue(second.decision().allowed());
+        assertTrue(second.activate().allowed());
+        assertEquals(1.1D, activated.get().profile().backlashMultiplier(), 1.0E-9D);
+        second.commit();
+        assertEquals(200.0D, strain.snapshot(CASTER_ID, 100L).units(), 1.0E-9D);
+        assertEquals(21.0D, corruption.snapshot(CASTER_ID).units(), 1.0E-9D);
+
+        var third = gate.preflight(
+            request(CASTER_ID, "21111111-aaaa-bbbb-cccc-222222222223"),
+            TargetResolution.resolved("target"));
+        assertFalse(third.decision().allowed());
+        assertEquals(
+            dev.gustavopere.blackarcana.api.hazard.ArcaneHazardPreflightCode.STRAIN_GATE.code(),
+            third.decision().code());
+        assertEquals(200.0D, strain.snapshot(CASTER_ID, 100L).units(), 1.0E-9D);
+    }
+
+    @Test
+    void schemaV1StrainCoefficientIsNotReducedByArcaneResistance() {
+        ArcaneDangerProfileRegistry profiles = profiles(profile(0.0D, 100.0D));
+        ArcaneResistanceProviderRegistry arcane = ArcaneResistanceProviderRegistry.canonical(4);
+        arcane.register(new dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceProvider() {
+            @Override public String providerId() { return "test:strain_d030_guard"; }
+
+            @Override
+            public List<dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceContribution> contributions(
+                dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceQuery query
+            ) {
+                return List.of(new dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceContribution(
+                    "test:ward",
+                    dev.gustavopere.blackarcana.api.hazard.ArcaneResistanceSourceCategory.RITUAL,
+                    40.0D));
+            }
+        });
+        CorruptionResistanceProviderRegistry corruptionResistance = CorruptionResistanceProviderRegistry.canonical(4);
+        CorruptionStateService corruption = CorruptionStateService.canonical(16);
+        ArcaneStrainStateService strain = new ArcaneStrainStateService(
+            16,
+            1_000.0D,
+            0.0D,
+            ArcaneStrainRecoveryProviderRegistry.canonical());
+
+        ArcaneHazardCastGate gate = new ArcaneHazardCastGate(
+            profiles,
+            arcane,
+            corruptionResistance,
+            corruption,
+            strain,
+            16,
+            successfulActivator());
+
+        var cast = gate.preflight(
+            request(CASTER_ID, "31111111-aaaa-bbbb-cccc-222222222221"),
+            TargetResolution.resolved("target"));
+        assertTrue(cast.decision().allowed());
+        assertTrue(cast.activate().allowed());
+        cast.commit();
+
+        assertEquals(100.0D, strain.snapshot(CASTER_ID, 100L).units(), 1.0E-9D);
+    }
+
+    @Test
     void sequentialSameTickCastsAccumulateDeterministically() {
         ArcaneDangerProfileRegistry profiles = profiles(profile(0.0D, 12.0D));
         ArcaneResistanceProviderRegistry arcane = ArcaneResistanceProviderRegistry.canonical(4);
@@ -263,6 +364,24 @@ class ArcaneHazardStateSettlementTest {
                     CorruptionResistanceSourceCategory.RITUAL,
                     amount.get()));
             }
+        };
+    }
+
+    private static ArcaneHazardCastGate.HazardSessionActivator capturingActivator(
+        AtomicReference<ArcaneHazardSnapshot> activated
+    ) {
+        return new ArcaneHazardCastGate.HazardSessionActivator() {
+            @Override
+            public ArcaneHazardRuntime.ActivationResult activate(
+                ArcaneHazardSnapshot snapshot,
+                ArcaneResistanceSnapshot resistance,
+                ArcaneBacklashPolicy policy
+            ) {
+                activated.set(snapshot);
+                return ArcaneHazardRuntime.ActivationResult.success(true);
+            }
+
+            @Override public boolean close(ArcanaCastId castId) { return true; }
         };
     }
 
