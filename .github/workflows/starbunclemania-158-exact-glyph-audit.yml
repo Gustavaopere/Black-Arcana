@@ -1,0 +1,172 @@
+name: StarbuncleMania 1.5.8 Exact Glyph Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Audit exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/starbunclemania-746215/8778598/starbunclemania-746215-8778598.jar'
+          EXPECTED_PHYSICAL_SHA1='6af8bc4f9dc24c9ff4d49367ca37fd914822ceb6'
+
+          mkdir -p audit
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o exact.jar
+
+          SHA1="$(sha1sum exact.jar | awk '{print $1}')"
+          SHA256="$(sha256sum exact.jar | awk '{print $1}')"
+          SIZE="$(stat -c%s exact.jar)"
+
+          test "$SHA1" = "$EXPECTED_PHYSICAL_SHA1"
+
+          javap -classpath exact.jar -c alexthw.starbunclemania.ArsNouveauRegistry > audit/registry.javap
+          javap -classpath exact.jar -p alexthw.starbunclemania.glyph.PlaceFluidEffect > audit/place.javap
+          javap -classpath exact.jar -p alexthw.starbunclemania.glyph.PickupFluidEffect > audit/pickup.javap
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, json, re, zipfile
+
+          jar=Path('exact.jar')
+          physical='6af8bc4f9dc24c9ff4d49367ca37fd914822ceb6'
+          sha1=hashlib.sha1(jar.read_bytes()).hexdigest()
+          sha256=hashlib.sha256(jar.read_bytes()).hexdigest()
+          assert sha1 == physical
+
+          with zipfile.ZipFile(jar) as z:
+              names=z.namelist()
+              glyph_classes=sorted(
+                  n for n in names
+                  if n.startswith('alexthw/starbunclemania/glyph/')
+                  and n.endswith('.class')
+                  and '$' not in n
+              )
+              glyph_recipes=sorted(
+                  n for n in names
+                  if n.startswith('data/starbunclemania/recipe/glyph_')
+                  and n.endswith('.json')
+              )
+              recipe_outputs=[]
+              for n in glyph_recipes:
+                  data=json.loads(z.read(n))
+                  out=data.get('output')
+                  if isinstance(out,dict):
+                      oid=out.get('id')
+                  else:
+                      oid=None
+                  recipe_outputs.append((n,oid,data.get('type')))
+              notebook_entries=sorted(
+                  n for n in names
+                  if n.startswith('assets/ars_nouveau/patchouli_books/')
+                  and '/glyphs_' in n
+                  and n.endswith('.json')
+                  and ('glyph_place_fluid' in n or 'glyph_pickup_fluid' in n)
+              )
+
+          reg=Path('audit/registry.javap').read_text(errors='replace')
+          place=Path('audit/place.javap').read_text(errors='replace')
+          pickup=Path('audit/pickup.javap').read_text(errors='replace')
+
+          def method_block(text, signature):
+              idx=text.find(signature)
+              assert idx >= 0, signature
+              tail=text[idx:]
+              m=re.search(r'\n\s*(public|private|protected)\s', tail[len(signature):])
+              if m:
+                  return tail[:len(signature)+m.start()]
+              return tail
+
+          register_block=method_block(reg, 'public static void register();')
+          helper_block=method_block(reg, 'public static void register(com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart);')
+
+          place_ref=register_block.find('PlaceFluidEffect.INSTANCE')
+          pickup_ref=register_block.find('PickupFluidEffect.INSTANCE')
+          assert place_ref >= 0 and pickup_ref >= 0
+
+          # branch opcodes in javap disassembly. The exact two spell-part references
+          # must occur before the first conditional branch in register().
+          branch_positions=[]
+          for m in re.finditer(r'\b(if(?:eq|ne|lt|le|gt|ge|null|nonnull|_icmp\w+|_acmp\w+)?|goto|tableswitch|lookupswitch)\b', register_block):
+              branch_positions.append(m.start())
+          first_branch=min(branch_positions) if branch_positions else 10**9
+          assert place_ref < first_branch
+          assert pickup_ref < first_branch
+
+          helper_register_count=len(re.findall(r'GlyphRegistry\.registerSpell', helper_block))
+          list_add_count=len(re.findall(r'List\.add', helper_block))
+          assert helper_register_count == 1
+          assert list_add_count == 1
+
+          # Exact class-shape facts only; do not retain implementation bodies.
+          assert 'extends com.hollingsworth.arsnouveau.api.spell.AbstractEffect' in place
+          assert 'extends com.hollingsworth.arsnouveau.api.spell.AbstractEffect' in pickup
+
+          expected_classes={
+              'alexthw/starbunclemania/glyph/PlaceFluidEffect.class',
+              'alexthw/starbunclemania/glyph/PickupFluidEffect.class',
+          }
+          assert set(glyph_classes) == expected_classes, glyph_classes
+
+          outputs={oid for _,oid,_ in recipe_outputs if oid}
+          expected_ids={
+              'starbunclemania:glyph_place_fluid',
+              'starbunclemania:glyph_pickup_fluid',
+          }
+          assert outputs == expected_ids, recipe_outputs
+
+          report=Path('audit/report.txt')
+          with report.open('w',encoding='utf-8') as f:
+              f.write('StarbuncleMania 1.5.8 exact-artifact clean-room audit\n')
+              f.write('scope=hash+registry-shape+resource-ids only; no method bodies retained\n')
+              f.write('curseforge_project=746215\n')
+              f.write('curseforge_file=8778598\n')
+              f.write(f'jar_sha1={sha1}\n')
+              f.write(f'jar_sha256={sha256}\n')
+              f.write(f'jar_size={jar.stat().st_size}\n')
+              f.write('physical_sha1_match=true\n')
+              f.write(f'top_level_glyph_class_count={len(glyph_classes)}\n')
+              for n in glyph_classes:
+                  f.write(f'glyph_class={n}\n')
+              f.write(f'glyph_recipe_count={len(glyph_recipes)}\n')
+              for n,oid,rtype in recipe_outputs:
+                  f.write(f'glyph_recipe={n} output_id={oid} recipe_type={rtype}\n')
+              f.write(f'ars_notebook_exact_glyph_entry_count={len(notebook_entries)}\n')
+              for n in notebook_entries:
+                  f.write(f'ars_notebook_entry={n}\n')
+              f.write('registry_unconditional_before_first_branch=starbunclemania:glyph_place_fluid,starbunclemania:glyph_pickup_fluid\n')
+              f.write(f'helper_glyphregistry_registerspell_calls={helper_register_count}\n')
+              f.write(f'helper_registeredspells_list_add_calls={list_add_count}\n')
+              f.write('place_fluid_class_extends=AbstractEffect\n')
+              f.write('pickup_fluid_class_extends=AbstractEffect\n')
+              f.write('semantic_denominator=2\n')
+
+          print(report.read_text())
+          PY
+
+      - name: Upload text-only exact-artifact evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: starbunclemania-158-exact-glyph-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
