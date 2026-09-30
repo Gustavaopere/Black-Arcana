@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,6 +30,47 @@ class RpgHazardResistanceProviderTest {
         assertEquals(22.0D, provider.contributions(arcaneQuery(player)).getFirst().amount());
         assertEquals(35.0D, provider.contributions(corruptionQuery(player)).getFirst().amount());
         assertEquals(0, bridge.masteryAwards);
+    }
+
+    @Test
+    void hazardResistanceUsesDedicatedReadOnlyProgressionQuery() {
+        UUID player = UUID.randomUUID();
+        AtomicInteger genericQueries = new AtomicInteger();
+        AtomicInteger hazardQueries = new AtomicInteger();
+        RpgSkillTreeBridge bridge = new RpgSkillTreeBridge() {
+            @Override public String integrationId() { return MOD_ID; }
+            @Override public boolean available() { return true; }
+            @Override public String implementationVersion() { return "test"; }
+
+            @Override
+            public RpgProgressionQuery queryHazardProgression(UUID playerId) {
+                hazardQueries.incrementAndGet();
+                return RpgProgressionQuery.success(new RpgProgressionSnapshot(
+                    10L,
+                    Map.of("determination", 12L),
+                    Map.of()));
+            }
+
+            @Override
+            public RpgProgressionQuery query(UUID playerId) {
+                genericQueries.incrementAndGet();
+                return RpgProgressionQuery.denied(
+                    "generic_query_forbidden",
+                    "hazard resistance must not query mastery or mutating progression state");
+            }
+
+            @Override
+            public ArcanaDecision awardMastery(UUID playerId, RpgMasteryAwardSpec award) {
+                return ArcanaDecision.deny("not_required", "hazard fixture");
+            }
+        };
+        RpgHazardResistanceProvider provider = new RpgHazardResistanceProvider(
+            bridge,
+            RpgHazardResistanceConfig.canonical());
+
+        assertEquals(12.0D, provider.contributions(arcaneQuery(player)).getFirst().amount());
+        assertEquals(1, hazardQueries.get());
+        assertEquals(0, genericQueries.get());
     }
 
     @Test
