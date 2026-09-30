@@ -13,7 +13,7 @@ This checklist does not promote the provider, does not treat a third-party patch
 Current physical evidence establishes the installed version line and filename:
 
 - observed installed filename: `traveloptics-4.4.0.1-1.21.1.jar`;
-- latest sibling dossier rechecked at `neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96`: `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md` still marks that filename/version as physically installed; the dossier carries no physical cryptographic hash;
+- latest sibling authority rechecked at `neoforge-rpg-skilltree@0af78cba557fe1f6e984888981ef0c6366ec0f79`: `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic + Mobs/✅-to-magic-n-extras v4.4.0.1-1.21.1.md` records physical row #550 with that filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - physical version line: `4.4.0.1-1.21.1`;
 - exact publisher file: CurseForge project/file `1046916 / 6342780`;
 - exact publisher-release SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
@@ -32,6 +32,8 @@ Required authoritative result:
 | What is the `OTHER_VERIFIED` replacement? | exact physical hash + contemporaneous provenance/content audit | `ABERTO` — the August launcher snapshot cannot identify the September `7b74816e...` artifact; exact current provenance/content delta remains unknown |
 
 Physical disposition remains **`OTHER_VERIFIED`**. Current provenance remains **unidentified beyond filename/version/hash**; the August CurseForge metadata cannot be projected onto the September bytes. Do not infer registry equality, File-6342780 ancestry, or the known patch fix from the unchanged nominal filename/version. The next gate is to materialize/audit the exact `7b74816e...` bytes or obtain equivalent contemporaneous exact-content provenance.
+
+Temporary NON-MERGE PR **#474** further tested whether the current SHA-1 can be reproduced by common one-entry repacks of publisher File `6342780` using the exact changed `TOLootModifiers.class` from patch File `8861368`. Run `36649716927` succeeded, and none of the tested Info-ZIP, `jar uf`, or Python `zipfile` variants matched `7b74816e...`. The recorded Aug-17 Library `fixed-keyloot.jar` size also matched none of those candidates. This is negative lineage evidence only: it excludes those exact repack outputs but does not identify the installed replacement or its registry/content delta.
 
 A separate Project Library runtime checkpoint from **2026-08-19** now proves that the assembled pack discovered the same nominal filename/version and that its runtime spell analyzer emitted exactly **33 unique `traveloptics:` spell IDs**, equal as a set to the File-6342780 33-ID baseline, including `traveloptics:blackout`. This is strong historical semantic evidence, but the log carries no JAR SHA-1. It therefore does **not** identify the September `7b74816e...` bytes and does not close Gate 1.
 
