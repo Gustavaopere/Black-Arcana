@@ -32,6 +32,11 @@ public record ArcaneStrainProfile(
         return new ArcaneStrainProfile(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
     }
 
+    /** D030-compatible fallback: schema-v1 contributes committed-cast base units only. */
+    public static ArcaneStrainProfile committedCastOnly(double baseUnits) {
+        return new ArcaneStrainProfile(baseUnits, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+    }
+
     public double rawStrain(double confirmedDamage, long channelTicks) {
         if (!Double.isFinite(confirmedDamage) || confirmedDamage < 0.0D) {
             throw new IllegalArgumentException("confirmedDamage must be finite and non-negative");
