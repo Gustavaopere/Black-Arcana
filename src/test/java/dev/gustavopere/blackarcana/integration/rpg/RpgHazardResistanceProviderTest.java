@@ -123,6 +123,11 @@ class RpgHazardResistanceProviderTest {
         @Override public String integrationId() { return MOD_ID; }
         @Override public boolean available() { return available; }
         @Override public String implementationVersion() { return "test"; }
+        @Override public RpgProgressionQuery queryHazardProgression(UUID playerId) {
+            return snapshot == null
+                ? RpgProgressionQuery.denied("test_denied", "synthetic denial")
+                : RpgProgressionQuery.success(snapshot);
+        }
         @Override public RpgProgressionQuery query(UUID playerId) {
             return snapshot == null
                 ? RpgProgressionQuery.denied("test_denied", "synthetic denial")
