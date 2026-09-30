@@ -20,6 +20,16 @@ class CuriosEquipmentSnapshotAdapterTest {
     }
 
     @Test
+    void installedFirst951ProfileMatchesReflectedSnapshotContract() {
+        assertEquals(
+            "9.5.1+1.21.1",
+            CuriosServerIntegrationBootstrap.INSTALLED_FIRST_BASELINE);
+        assertEquals(
+            CuriosEquipmentSnapshotAdapter.Availability.AVAILABLE,
+            CuriosEquipmentSnapshotAdapter.probe(true, getClass().getClassLoader()).availability());
+    }
+
+    @Test
     void duplicateTraversalOfSameStackIdentityCannotDoubleCount() {
         ItemStack shared = new ItemStack(Items.DIAMOND);
         var normalized = CuriosEquipmentSnapshotAdapter.normalizeStacks(List.of(shared, shared));
