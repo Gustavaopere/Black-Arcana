@@ -45,6 +45,7 @@ public final class NeoForgeHazardRuntimeInstaller {
             runtime.corruptionResistanceProviders(),
             runtime.corruption(),
             runtime.strain(),
+            runtime.strainProfiles(),
             ArcanaServerRuntime.DEFAULT_MAX_TRACKED_HAZARD_PLAYERS,
             createActivator(
                 (snapshot, resistance, policy, emergencyProtectionSnapshot) ->
