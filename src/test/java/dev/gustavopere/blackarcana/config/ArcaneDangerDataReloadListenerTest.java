@@ -2,10 +2,13 @@ package dev.gustavopere.blackarcana.config;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneInsufficientResistancePolicy;
 import net.minecraft.resources.ResourceLocation;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,6 +24,84 @@ class ArcaneDangerDataReloadListenerTest {
         assertEquals(1.0D, definition.backlashMultiplier());
         assertEquals(25.0D, definition.minimumArcaneResistance());
         assertEquals(ArcaneInsufficientResistancePolicy.ALLOW_WITH_RISK, definition.belowMinimumPolicy());
+    }
+
+    @Test
+    void canonicalDefinitionRoundTripsThroughStrictJson() {
+        var definition = ArcaneDangerDataReloadListener.parseDefinition(ID, JsonParser.parseString(validJson()));
+
+        var reparsed = ArcaneDangerDataReloadListener.parseDefinition(ID, definition.toJson());
+
+        assertEquals(definition, reparsed);
+    }
+
+    @Test
+    void deterministicChainedSpellIdMigrationRewritesProfileIdentityBeforePublication() {
+        ArcanaSpellId legacy = ArcanaSpellId.parse("black_arcana:legacy_dangerous");
+        ArcanaSpellId intermediate = ArcanaSpellId.parse("black_arcana:intermediate_dangerous");
+        ArcanaSpellId canonical = ArcanaSpellId.parse("black_arcana:canonical_dangerous");
+        ResourceLocation resource = ResourceLocation.fromNamespaceAndPath("black_arcana", "legacy_dangerous");
+        var definition = ArcaneDangerDataReloadListener.parseDefinition(
+            resource,
+            JsonParser.parseString(validJsonFor(legacy.canonical())));
+        var migrations = new SpellIdMigrations(
+            Map.of(legacy, intermediate, intermediate, canonical),
+            Map.of());
+
+        var migrated = ArcaneDangerDataReloadListener.migrateDefinitions(
+            Map.of(legacy, definition),
+            migrations);
+
+        assertEquals(1, migrated.size());
+        assertEquals(canonical.canonical(), migrated.get(canonical).id());
+        assertEquals(definition.profileVersion(), migrated.get(canonical).profileVersion());
+        assertEquals(definition.belowMinimumPolicy(), migrated.get(canonical).belowMinimumPolicy());
+    }
+
+    @Test
+    void explicitRemovalOmitsRetiredDangerProfile() {
+        ArcanaSpellId legacy = ArcanaSpellId.parse("black_arcana:legacy_removed");
+        ResourceLocation resource = ResourceLocation.fromNamespaceAndPath("black_arcana", "legacy_removed");
+        var definition = ArcaneDangerDataReloadListener.parseDefinition(
+            resource,
+            JsonParser.parseString(validJsonFor(legacy.canonical())));
+        var migrations = new SpellIdMigrations(
+            Map.of(),
+            Map.of(legacy, "removed spell"));
+
+        assertEquals(
+            Map.of(),
+            ArcaneDangerDataReloadListener.migrateDefinitions(Map.of(legacy, definition), migrations));
+    }
+
+    @Test
+    void convergingMigrationsFailClosedInsteadOfOverwritingProfiles() {
+        ArcanaSpellId first = ArcanaSpellId.parse("black_arcana:legacy_first");
+        ArcanaSpellId second = ArcanaSpellId.parse("black_arcana:legacy_second");
+        ArcanaSpellId canonical = ArcanaSpellId.parse("black_arcana:canonical");
+        var firstDefinition = ArcaneDangerDataReloadListener.parseDefinition(
+            ResourceLocation.fromNamespaceAndPath("black_arcana", "legacy_first"),
+            JsonParser.parseString(validJsonFor(first.canonical())));
+        var secondDefinition = ArcaneDangerDataReloadListener.parseDefinition(
+            ResourceLocation.fromNamespaceAndPath("black_arcana", "legacy_second"),
+            JsonParser.parseString(validJsonFor(second.canonical())));
+        var migrations = new SpellIdMigrations(
+            Map.of(first, canonical, second, canonical),
+            Map.of());
+
+        assertThrows(JsonParseException.class, () ->
+            ArcaneDangerDataReloadListener.migrateDefinitions(
+                Map.of(first, firstDefinition, second, secondDefinition),
+                migrations));
+    }
+
+    @Test
+    void cyclicProfileMigrationIsRejectedByCanonicalMigrationContract() {
+        ArcanaSpellId first = ArcanaSpellId.parse("black_arcana:first");
+        ArcanaSpellId second = ArcanaSpellId.parse("black_arcana:second");
+
+        assertThrows(IllegalArgumentException.class, () ->
+            new SpellIdMigrations(Map.of(first, second, second, first), Map.of()));
     }
 
     @Test
@@ -90,11 +171,15 @@ class ArcaneDangerDataReloadListenerTest {
     }
 
     private static String validJson() {
+        return validJsonFor("black_arcana:test_dangerous");
+    }
+
+    private static String validJsonFor(String id) {
         return """
             {
               "schemaVersion": 1,
               "profileVersion": 1,
-              "id": "black_arcana:test_dangerous",
+              "id": "%s",
               "tier": "DANGEROUS",
               "backlashMultiplier": 1.0,
               "corruptionCoefficient": 2.0,
@@ -106,6 +191,6 @@ class ArcaneDangerDataReloadListenerTest {
               "belowMinimumPolicy": "ALLOW_WITH_RISK",
               "emergencyProtectionAllowed": true
             }
-            """;
+            """.formatted(id);
     }
 }
