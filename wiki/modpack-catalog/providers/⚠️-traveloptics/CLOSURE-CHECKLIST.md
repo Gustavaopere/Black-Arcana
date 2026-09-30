@@ -33,6 +33,8 @@ Required authoritative result:
 
 Physical disposition remains **`OTHER_VERIFIED`**. Current provenance remains **unidentified beyond filename/version/hash**; the August CurseForge metadata cannot be projected onto the September bytes. Do not infer registry equality, File-6342780 ancestry, or the known patch fix from the unchanged nominal filename/version. The next gate is to materialize/audit the exact `7b74816e...` bytes or obtain equivalent contemporaneous exact-content provenance.
 
+A separate Project Library runtime checkpoint from **2026-08-19** now proves that the assembled pack discovered the same nominal filename/version and that its runtime spell analyzer emitted exactly **33 unique `traveloptics:` spell IDs**, equal as a set to the File-6342780 33-ID baseline, including `traveloptics:blackout`. This is strong historical semantic evidence, but the log carries no JAR SHA-1. It therefore does **not** identify the September `7b74816e...` bytes and does not close Gate 1.
+
 ## Gate 2 — Loot-modifier registry initialization
 
 Exact clean-room structure of publisher File `6342780` established:
@@ -63,6 +65,12 @@ Required:
 The exact patch candidate is now cryptographically fingerprinted and independently proven to differ from the original in only `TOLootModifiers.class`. The patch publisher states that this class delta corrects the universal codec registration. That still does not prove the user's pack deploys SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`, nor that the assembled modpack completes registry initialization with the actual deployed artifact.
 
 Current state: `RUNTIME INITIALIZATION UNVERIFIED / FAIL-CLOSED`.
+
+### Historical assembled-runtime observation — bounded
+
+The 2026-08-19 Project Library runtime log reaches NeoForge mod discovery/resource reload with `traveloptics-4.4.0.1-1.21.1.jar` present and exposes the complete 33-ID Traveloptics spell block to the runtime analyzer. That narrows the historical startup risk: the observed August modified artifact progressed far enough for all 33 spell classes/IDs to be analyzed.
+
+This remains **historical / hash-unbound evidence**. It neither proves the exact `TOLootModifiers` serializer objects nor ties the run to September SHA-1 `7b74816e...`; consequently Gate 2 remains open for the current physical artifact.
 
 ### Bounded runtime observation now available
 

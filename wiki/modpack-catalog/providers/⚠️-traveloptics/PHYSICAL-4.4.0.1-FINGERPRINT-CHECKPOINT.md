@@ -50,13 +50,30 @@ The September bytes also do not equal known patch File `8861368`. Therefore curr
 
 An exact-hash web lookup rechecked on 2026-09-27 returned no indexed public match for `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; absence of a search hit is not content/provenance proof.
 
+## Historical modified-runtime registry checkpoint — 2026-08-19
+
+Project Library runtime log `stdout-logs(9).txt`, captured on **2026-08-19**, records NeoForge discovering `traveloptics-4.4.0.1-1.21.1.jar` from the assembled pack's `mods` directory and reports runtime `4.4.0.1-1.21.1`.
+
+In the same captured run, the Fundamental Principles registry analyzer emits one contiguous `traveloptics:` spell block. Bounded extraction of the analyzer rows yields:
+
+- **33 unique `traveloptics:<id>` spell identities**;
+- the set starts at `traveloptics:blood_howl` and ends at `traveloptics:stele_cascade`;
+- `traveloptics:blackout` is present;
+- the extracted 33-ID set is exactly equal to the already-audited File-6342780 33-ID release baseline;
+- no additional `traveloptics:` spell ID appears before the analyzer advances to the next provider namespace.
+
+This is direct runtime evidence that an **August assembled-pack modified-runtime snapshot** exposed the same 33 spell identities as the publisher baseline and progressed into resource reload/analyzer execution.
+
+It is **not** contemporaneous hash evidence for the September physical artifact. The runtime log does not record the JAR SHA-1, and the August `minecraftinstance.json` only proves that the launcher considered the same filename modified at that time. Therefore the August 33/33 runtime observation must not be projected onto September SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` without a binary/hash bridge.
+
 ## Catalog consequence
 
 The clean-room File-6342780 audit remains valid for that publisher artifact and provides a **33-ID release baseline**. It can no longer be presented as byte-exact evidence for the currently fingerprinted physical JAR.
 
-The older launcher metadata does not narrow provenance of the September `7b74816e...` artifact. Until those bytes or equivalent contemporaneous exact-content evidence are available:
+The older launcher metadata does not identify provenance of the September `7b74816e...` artifact. The 2026-08-19 runtime checkpoint materially narrows the semantic history by proving a modified assembled-pack snapshot with exactly the same 33 spell IDs, but it still lacks the hash bridge required to identify the September bytes. Until those bytes or equivalent contemporaneous exact-content evidence are available:
 
-- current physical spell-registry equality to the 33-ID baseline is **unverified**;
+- August modified-runtime spell-registry equality to the 33-ID baseline is **observed 33/33**;
+- current physical spell-registry equality to that 33-ID set is **unverified**;
 - current physical `TOLootModifiers` wiring is **unverified**;
 - known patch deployment is **disproved by hash**;
 - `traveloptics:blackout` reachability remains unresolved;
