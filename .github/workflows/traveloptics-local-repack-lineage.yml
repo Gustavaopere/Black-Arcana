@@ -1,0 +1,192 @@
+name: Traveloptics Local Repack Lineage Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Reconstruct bounded one-entry repack candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ORIGINAL_URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          PATCH_URL='https://www.cursemaven.com/curse/maven/t-o-magic-n-extras-irons-spells-addon-patch-1690333/8861368/t-o-magic-n-extras-irons-spells-addon-patch-1690333-8861368.jar'
+          ORIGINAL_EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+          PATCH_EXPECTED_SHA1='680fa679d8ea2419a79571f455436367222f6f9d'
+          OLD_PHYSICAL_SHA1='fb37ae0a35e8bb9340e61007275121f02cf7a8bc'
+          CURRENT_PHYSICAL_SHA1='7b74816e89cc15dd0b5a31d9ea1e456024e8fae4'
+          LIBRARY_ORIGINAL_SIZE='18393445'
+          LIBRARY_FIXED_SIZE='18393641'
+          ENTRY='com/gametechbc/traveloptics/loot/TOLootModifiers.class'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$ORIGINAL_URL" -o original.jar
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$PATCH_URL" -o patched.jar
+
+          test "$(sha1sum original.jar | awk '{print $1}')" = "$ORIGINAL_EXPECTED_SHA1"
+          test "$(sha1sum patched.jar | awk '{print $1}')" = "$PATCH_EXPECTED_SHA1"
+
+          mkdir -p audit replacement/com/gametechbc/traveloptics/loot
+          unzip -p patched.jar "$ENTRY" > "replacement/$ENTRY"
+
+          # Candidate 1: common Info-ZIP delete + add, with filesystem timestamp normalized
+          # to the patched member's ZIP timestamp.
+          cp original.jar candidate-infozip.jar
+          zip -q -d candidate-infozip.jar "$ENTRY"
+          python3 - <<'PY'
+          import os, time, zipfile
+          entry='com/gametechbc/traveloptics/loot/TOLootModifiers.class'
+          with zipfile.ZipFile('patched.jar') as z:
+              dt=z.getinfo(entry).date_time
+          ts=time.mktime((*dt,0,0,-1))
+          os.utime('replacement/'+entry,(ts,ts))
+          PY
+          (cd replacement && zip -q "../candidate-infozip.jar" "$ENTRY")
+
+          # Candidate 2: JDK jar update over a byte-for-byte copy of the original archive.
+          cp original.jar candidate-jaruf.jar
+          (cd replacement && jar uf "../candidate-jaruf.jar" "$ENTRY")
+
+          # Candidates 3-5: Python ZipFile rebuilds, varying which ZipInfo metadata is
+          # used for the replacement entry. No class parsing or implementation inspection.
+          python3 - <<'PY'
+          import copy
+          import zipfile
+
+          target='com/gametechbc/traveloptics/loot/TOLootModifiers.class'
+          with zipfile.ZipFile('original.jar','r') as oz, zipfile.ZipFile('patched.jar','r') as pz:
+              patch_bytes=pz.read(target)
+              patch_info=pz.getinfo(target)
+              original_info=oz.getinfo(target)
+
+              def rebuild(path, target_info_mode, compresslevel=None):
+                  kwargs={}
+                  if compresslevel is not None:
+                      kwargs['compresslevel']=compresslevel
+                  with zipfile.ZipFile(path,'w',allowZip64=True,**kwargs) as out:
+                      for info in oz.infolist():
+                          data=patch_bytes if info.filename==target else oz.read(info.filename)
+                          if info.filename==target:
+                              src = patch_info if target_info_mode=='patch' else original_info
+                              zi=copy.copy(src)
+                          else:
+                              zi=copy.copy(info)
+                          out.writestr(zi,data)
+
+              rebuild('candidate-python-originalinfo.jar','original')
+              rebuild('candidate-python-patchinfo.jar','patch')
+
+              # Fully deterministic deflate rebuild while preserving per-entry metadata.
+              with zipfile.ZipFile('candidate-python-deflate9.jar','w',allowZip64=True,compresslevel=9) as out:
+                  for info in oz.infolist():
+                      data=patch_bytes if info.filename==target else oz.read(info.filename)
+                      zi=copy.copy(patch_info if info.filename==target else info)
+                      if zi.compress_type == zipfile.ZIP_DEFLATED:
+                          zi.compress_type=zipfile.ZIP_DEFLATED
+                      out.writestr(zi,data,compresslevel=9 if zi.compress_type==zipfile.ZIP_DEFLATED else None)
+          PY
+
+          python3 - <<'PY'
+          import hashlib
+          import os
+          import zipfile
+          from pathlib import Path
+
+          expected_old='fb37ae0a35e8bb9340e61007275121f02cf7a8bc'
+          expected_current='7b74816e89cc15dd0b5a31d9ea1e456024e8fae4'
+          library_original_size=18393445
+          library_fixed_size=18393641
+          target='com/gametechbc/traveloptics/loot/TOLootModifiers.class'
+
+          names=[
+              'original.jar',
+              'patched.jar',
+              'candidate-infozip.jar',
+              'candidate-jaruf.jar',
+              'candidate-python-originalinfo.jar',
+              'candidate-python-patchinfo.jar',
+              'candidate-python-deflate9.jar',
+          ]
+
+          def hashes(path):
+              h1=hashlib.sha1()
+              h256=hashlib.sha256()
+              with open(path,'rb') as f:
+                  for chunk in iter(lambda:f.read(1024*1024),b''):
+                      h1.update(chunk); h256.update(chunk)
+              return h1.hexdigest(), h256.hexdigest()
+
+          rows=[]
+          for name in names:
+              sha1,sha256=hashes(name)
+              rows.append((name,os.path.getsize(name),sha1,sha256))
+
+          with zipfile.ZipFile('original.jar') as oz, zipfile.ZipFile('patched.jar') as pz:
+              o=oz.getinfo(target); p=pz.getinfo(target)
+              member = {
+                  'original_crc': f'{o.CRC:08x}',
+                  'patched_crc': f'{p.CRC:08x}',
+                  'original_file_size': o.file_size,
+                  'patched_file_size': p.file_size,
+                  'original_compress_size': o.compress_size,
+                  'patched_compress_size': p.compress_size,
+                  'original_compress_type': o.compress_type,
+                  'patched_compress_type': p.compress_type,
+                  'original_date_time': o.date_time,
+                  'patched_date_time': p.date_time,
+              }
+
+          report=Path('audit/report.txt')
+          with report.open('w',encoding='utf-8') as f:
+              f.write('Traveloptics local repack lineage clean-room audit\n')
+              f.write('scope=hash-size-zip-metadata-only; no class parsing/decompilation\n')
+              f.write(f'expected_old_physical_sha1={expected_old}\n')
+              f.write(f'expected_current_physical_sha1={expected_current}\n')
+              f.write(f'library_aug17_original_recorded_size={library_original_size}\n')
+              f.write(f'library_aug17_fixed_keyloot_recorded_size={library_fixed_size}\n')
+              f.write('\n== target member metadata ==\n')
+              for k,v in member.items():
+                  f.write(f'{k}={v}\n')
+              f.write('\n== archive fingerprints ==\n')
+              for name,size,sha1,sha256 in rows:
+                  f.write(f'{name} size={size} sha1={sha1} sha256={sha256}')
+                  tags=[]
+                  if sha1==expected_old: tags.append('MATCH_OLD_PHYSICAL')
+                  if sha1==expected_current: tags.append('MATCH_CURRENT_PHYSICAL')
+                  if size==library_original_size: tags.append('MATCH_LIBRARY_ORIGINAL_SIZE')
+                  if size==library_fixed_size: tags.append('MATCH_LIBRARY_FIXED_SIZE')
+                  if tags: f.write(' tags='+','.join(tags))
+                  f.write('\n')
+              f.write('\n== exact hash match summary ==\n')
+              old=[n for n,_,h,_ in rows if h==expected_old]
+              current=[n for n,_,h,_ in rows if h==expected_current]
+              f.write('old_physical_matches='+(','.join(old) if old else 'NONE')+'\n')
+              f.write('current_physical_matches='+(','.join(current) if current else 'NONE')+'\n')
+          PY
+
+          cat audit/report.txt
+
+      - name: Upload text-only lineage evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-local-repack-lineage-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
