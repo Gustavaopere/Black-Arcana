@@ -48,7 +48,7 @@ Read before beginning the campaign:
 - `plans/05a-arcane-danger/✅-04-arcane-strain.md`
 - `plans/05a-arcane-danger/✅-05-backlash-pipeline.md`
 - `plans/05a-arcane-danger/✅-06-equipment.md`
-- `plans/05a-arcane-danger/07-curios.md`
+- `plans/05a-arcane-danger/✅-07-curios.md`
 - `plans/05a-arcane-danger/08-spell-profiles.md`
 - `plans/05a-arcane-danger/09-public-api.md`
 - `plans/05a-arcane-danger/10-rpg-skilltree-integration.md`
