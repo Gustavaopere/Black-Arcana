@@ -12,7 +12,7 @@ A Project Library physical modlist checkpoint, `modlist(1).txt`, captured on **2
 - SHA-1: `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - package/fingerprint column: `4254006126`.
 
-The current sibling was rechecked at `neoforge-rpg-skilltree@0af78cba557fe1f6e984888981ef0c6366ec0f79`. Its certified T.O Magic n' Extras dossier still records physical row **#550** as the same filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
+The current sibling was rechecked at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`. Its certified T.O Magic n' Extras dossier still records physical row **#550** as the same filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
 ## Known comparison artifacts
 

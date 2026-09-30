@@ -4,7 +4,7 @@
 
 `⚠️ CURRENT PHYSICAL PROVIDER / PHYSICAL SHA-1 OTHER_VERIFIED / 33-ID PUBLISHER BASELINE + HISTORICAL MODIFIED-RUNTIME 33/33 OBSERVED / CURRENT PHYSICAL REGISTRY UNVERIFIED / STRICT +0 / FAIL-CLOSED`
 
-Current physical status: **INSTALLED / CURRENT PROVIDER BLOCKER**. Current sibling authority rechecked at `neoforge-rpg-skilltree@0af78cba557fe1f6e984888981ef0c6366ec0f79`: `PROJECT-INSTRUCTIONS/modlist/modlist.md` row **#550** and `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic + Mobs/✅-to-magic-n-extras v4.4.0.1-1.21.1.md` both record `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This current physical authority supersedes older claims that Traveloptics was absent; the 16/09 Project Library fingerprint remains corroborating provenance.
+Current physical status: **INSTALLED / CURRENT PROVIDER BLOCKER**. Current sibling authority rechecked at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`: `PROJECT-INSTRUCTIONS/modlist/modlist.md` row **#550** and `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic + Mobs/✅-to-magic-n-extras v4.4.0.1-1.21.1.md` both record `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This current physical authority supersedes older claims that Traveloptics was absent; the 16/09 Project Library fingerprint remains corroborating provenance.
 
 The Phase 2BS publisher-artifact audit remains canonical evidence for File `6342780`. A later physical-fingerprint checkpoint proves the 2026-09-16 on-disk bytes differ (`OTHER_VERIFIED`). A separate 2026-08-18 Project Library CurseForge snapshot records the same filename in project/file `1046916 / 6342780`, publisher SHA-1 `380849...`, with `isModified=true`; because that metadata predates the later physical SHA-1, it is historical context and **does not identify the provenance of the September `7b74816e...` artifact**. Traveloptics remains an active **⚠️ partial/conditioned provider**, not historical-only.
 
@@ -177,8 +177,8 @@ Phase 2BS disposition:
 - exact publisher artifact: structural `TOLootModifiers` codec-wiring risk unresolved at runtime;
 - semantic contribution to strict global minimum: **+0**;
 - provider component closure: **no new component**;
-- strict minimum at the historical Phase 2BS checkpoint remained **1344**; the current catalog-wide strict reconstructible minimum is **1687**;
-- technical component closure remains **66/100**.
+- strict minimum at the historical Phase 2BS checkpoint remained **1344**; the current catalog-wide strict reconstructible minimum is **1689**;
+- technical component closure at the historical Phase 2BS checkpoint remained **66/100**; the current cross-domain technical denominator is **`PENDING REBASE`**.
 
 `66/100` is a technical component metric, not a spell-coverage percentage.
 
