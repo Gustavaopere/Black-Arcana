@@ -1,6 +1,6 @@
 # T.O Magic n' Extras 4.4.0.1 — physical fingerprint checkpoint
 
-Status: `PHYSICAL SHA-1 CAPTURED / OTHER_VERIFIED / CURRENT PROVENANCE UNIDENTIFIED / OLDER FILE-6342780 LAUNCHER SNAPSHOT IS NON-CONTEMPORANEOUS / NOT KNOWN PATCH 8861368 / CURRENT PHYSICAL BYTES REQUIRE AUDIT`
+Status: `PHYSICAL SHA-1 CAPTURED / OTHER_VERIFIED / CURRENT PROVENANCE UNIDENTIFIED / NOT ORIGINAL / NOT PATCH 8861368 / COMMON ONE-ENTRY REPACKS DO NOT MATCH / CURRENT PHYSICAL BYTES REQUIRE AUDIT`
 
 ## Physical evidence
 
@@ -12,7 +12,7 @@ A Project Library physical modlist checkpoint, `modlist(1).txt`, captured on **2
 - SHA-1: `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - package/fingerprint column: `4254006126`.
 
-The current sibling at `neoforge-rpg-skilltree@1211ebfef1bd6af46705250f2acd54da8f090c96` still preserves the same installed filename/version.
+The current sibling was rechecked at `neoforge-rpg-skilltree@0af78cba557fe1f6e984888981ef0c6366ec0f79`. Its certified T.O Magic n' Extras dossier still records physical row **#550** as the same filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
 ## Known comparison artifacts
 
@@ -30,6 +30,35 @@ Physical comparison:
 - physical == known patch: **false**.
 
 Disposition: **`OTHER_VERIFIED`**.
+
+## Common-repack lineage audit — 2026-09-30
+
+Temporary NON-MERGE PR **#474** ran a bounded clean-room lineage test against the exact publisher File `6342780` and exact patch File `8861368`.
+
+The audit downloaded both already-fingerprinted public artifacts and reconstructed several common one-entry replacement strategies for only:
+
+`com/gametechbc/traveloptics/loot/TOLootModifiers.class`
+
+Tested archive strategies:
+
+- Info-ZIP delete + add;
+- JDK `jar uf`;
+- Python `zipfile` rebuild preserving original target metadata;
+- Python `zipfile` rebuild using patch target metadata;
+- deterministic high-compression Python rebuild.
+
+Run `36649716927` / job `109680786266` completed successfully. Text-only artifact `11070325102` has artifact digest `sha256:ec77f6a9b0782af9fb9961ac1a3d919871b6aad8b4f7f0f1b0e11645657d6ff7`.
+
+Results:
+
+- none of the tested candidates has SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
+- the archived Project Library record `traveloptics-4.4.0.1-1.21.1-fixed-keyloot.jar` has recorded size **18,393,641 bytes**;
+- none of the tested candidate archive sizes equals **18,393,641 bytes**;
+- exact publisher File `6342780` is **18,393,445 bytes**, matching the recorded size of the separate Aug-17 Library file named `traveloptics-4.4.0.1-1.21.1.jar`; size equality alone is not cryptographic identity and is not promoted as such.
+
+This is **negative lineage evidence only**. It narrows the hypothesis space but does not prove what `7b74816e...` contains, does not prove how the Library `fixed-keyloot` file was produced, and does not establish current spell-registry equality.
+
+The initial #474 workflow label also carried `fb37ae0...` as an assumed older Traveloptics hash. Post-run row-boundary verification against the sibling physical dossiers proved that `fb37ae0...` belongs to neighboring **Transmog row #549**, not Traveloptics. That comparison is explicitly discarded and is not catalog evidence.
 
 ## Older CurseForge instance metadata — historical context only
 
@@ -76,6 +105,7 @@ The older launcher metadata does not identify provenance of the September `7b748
 - current physical spell-registry equality to that 33-ID set is **unverified**;
 - current physical `TOLootModifiers` wiring is **unverified**;
 - known patch deployment is **disproved by hash**;
+- tested common one-entry repacks of the known patch class are **disproved as byte-identical matches** for the current physical hash;
 - `traveloptics:blackout` reachability remains unresolved;
 - strict semantic contribution remains **+0**.
 
