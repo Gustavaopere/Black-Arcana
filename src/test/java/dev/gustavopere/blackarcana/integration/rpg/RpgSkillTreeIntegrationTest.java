@@ -133,6 +133,9 @@ class RpgSkillTreeIntegrationTest {
                 ArcanaIntegrationCapability.PROGRESSION_QUERY,
                 ArcanaIntegrationCapability.MASTERY_AWARD);
         }
+        @Override public RpgProgressionQuery queryHazardProgression(UUID playerId) {
+            return RpgProgressionQuery.success(snapshot);
+        }
         @Override public RpgProgressionQuery query(UUID playerId) {
             return RpgProgressionQuery.success(snapshot);
         }
