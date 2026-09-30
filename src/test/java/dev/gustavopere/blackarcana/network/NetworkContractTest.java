@@ -51,6 +51,15 @@ class NetworkContractTest {
     }
 
     @Test
+    void castIntentHasNoClientWritableDangerProfileFields() {
+        assertEquals(
+                List.of("protocolVersion", "castId", "spellId", "loadoutSlot", "targetHint"),
+                java.util.Arrays.stream(CastIntentPayload.class.getRecordComponents())
+                        .map(java.lang.reflect.RecordComponent::getName)
+                        .toList());
+    }
+
+    @Test
     void resultAndSnapshotsAreBounded() {
         CastResultPayload result = CastResultPayload.from(
                 ArcanaCastId.parse("11111111-1111-1111-1111-111111111111"),
