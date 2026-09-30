@@ -6,9 +6,11 @@ import dev.gustavopere.blackarcana.config.ArcaneDangerDataDefinition;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ArcaneDangerProfileRuntimeStoreTest {
     @Test
@@ -29,6 +31,23 @@ class ArcaneDangerProfileRuntimeStoreTest {
             ArcaneDangerProfileRuntimeStore.reload(Map.of());
             ArcaneDangerProfileRuntimeStore.remove(first);
             if (second != null) ArcaneDangerProfileRuntimeStore.remove(second);
+        }
+    }
+
+    @Test
+    void invalidReloadPreservesPreviouslyPublishedSnapshot() {
+        ArcanaSpellId stable = ArcanaSpellId.parse("black_arcana:stable_hazard");
+        try {
+            ArcaneDangerProfileRuntimeStore.reload(Map.of(stable, definition(stable)));
+            Map<ArcanaSpellId, ?> before = ArcaneDangerProfileRuntimeStore.currentSnapshot();
+
+            LinkedHashMap<ArcanaSpellId, ArcaneDangerDataDefinition> invalid = new LinkedHashMap<>();
+            invalid.put(ArcanaSpellId.parse("black_arcana:broken_hazard"), null);
+
+            assertThrows(NullPointerException.class, () -> ArcaneDangerProfileRuntimeStore.reload(invalid));
+            assertEquals(before, ArcaneDangerProfileRuntimeStore.currentSnapshot());
+        } finally {
+            ArcaneDangerProfileRuntimeStore.reload(Map.of());
         }
     }
 

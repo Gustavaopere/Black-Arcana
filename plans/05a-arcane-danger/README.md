@@ -85,7 +85,7 @@ Installed-first baseline is Curios NeoForge `9.5.1+1.21.1`. Curios integration i
 5. [Backlash Pipeline](✅-05-backlash-pipeline.md)
 6. [Equipment & Containment Items](✅-06-equipment.md)
 7. [Curios Integration](✅-07-curios.md)
-8. [Spell Danger Profiles](08-spell-profiles.md)
+8. [Spell Danger Profiles](✅-08-spell-profiles.md)
 9. [Public Hazard API](09-public-api.md)
 10. [RPG Skill Tree Integration](10-rpg-skilltree-integration.md)
 11. [HUD, Tooltip & Preflight](11-hud-tooltip-preflight.md)

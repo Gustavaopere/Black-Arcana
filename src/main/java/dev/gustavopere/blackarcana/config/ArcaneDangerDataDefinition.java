@@ -1,5 +1,6 @@
 package dev.gustavopere.blackarcana.config;
 
+import com.google.gson.JsonObject;
 import dev.gustavopere.blackarcana.api.ArcanaSpellId;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerProfile;
 import dev.gustavopere.blackarcana.api.hazard.ArcaneDangerTier;
@@ -82,6 +83,43 @@ public record ArcaneDangerDataDefinition(
 
     public ArcaneDangerProfile toRuntimeProfile() {
         return new ArcaneDangerProfile(
+            tier,
+            backlashMultiplier,
+            corruptionCoefficient,
+            strainCoefficient,
+            damageLeaseTicks,
+            maxDamageInstances,
+            minimumArcaneResistance,
+            recommendedArcaneResistance,
+            belowMinimumPolicy,
+            emergencyProtectionAllowed);
+    }
+
+    /** Canonical strict JSON representation for deterministic tests/tooling and migration-safe rewrites. */
+    public JsonObject toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("schemaVersion", schemaVersion);
+        object.addProperty("profileVersion", profileVersion);
+        object.addProperty("id", id);
+        object.addProperty("tier", tier.name());
+        object.addProperty("backlashMultiplier", backlashMultiplier);
+        object.addProperty("corruptionCoefficient", corruptionCoefficient);
+        object.addProperty("strainCoefficient", strainCoefficient);
+        object.addProperty("damageLeaseTicks", damageLeaseTicks);
+        object.addProperty("maxDamageInstances", maxDamageInstances);
+        object.addProperty("minimumArcaneResistance", minimumArcaneResistance);
+        object.addProperty("recommendedArcaneResistance", recommendedArcaneResistance);
+        object.addProperty("belowMinimumPolicy", belowMinimumPolicy.name());
+        object.addProperty("emergencyProtectionAllowed", emergencyProtectionAllowed);
+        return object;
+    }
+
+    ArcaneDangerDataDefinition withId(ArcanaSpellId migratedId) {
+        Objects.requireNonNull(migratedId, "migratedId");
+        return new ArcaneDangerDataDefinition(
+            schemaVersion,
+            profileVersion,
+            migratedId.canonical(),
             tier,
             backlashMultiplier,
             corruptionCoefficient,
