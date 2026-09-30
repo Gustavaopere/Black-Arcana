@@ -7,6 +7,7 @@ import dev.gustavopere.blackarcana.api.hazard.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -113,6 +114,42 @@ public final class ArcaneBacklashGameTests {
         helper.assertTrue(ledger.confirmedEligibleDamage() == 0.0D, "unattributed Backlash must not create offensive eligible damage");
         helper.assertTrue(ledger.backlashSettled() == 0.0D, "unattributed Backlash must not settle recursive Backlash");
         helper.assertTrue(session.seenDamageInstances() == 0, "unattributed Backlash must not claim a damage-instance id");
+        helper.succeed();
+    }
+
+    @SuppressWarnings("removal")
+    @GameTest(template = "foundation_empty", timeoutTicks = 60)
+    public static void lethalBacklashUsesDedicatedDeathMessage(GameTestHelper helper) {
+        ServerPlayer caster = helper.makeMockServerPlayerInLevel();
+        caster.setGameMode(GameType.SURVIVAL);
+        caster.getAbilities().invulnerable = false;
+        caster.getAbilities().instabuild = false;
+        caster.onUpdateAbilities();
+        caster.setHealth(1.0F);
+
+        DamageSource source = caster.damageSources().source(ArcaneBacklashDamageTypes.ARCANE_BACKLASH);
+        helper.assertTrue(source.is(ArcaneBacklashDamageTypes.ARCANE_BACKLASH), "lethal source must remain dedicated Arcane Backlash");
+
+        var directMessage = source.getLocalizedDeathMessage(caster);
+        helper.assertTrue(
+            directMessage.getContents() instanceof TranslatableContents,
+            "Arcane Backlash death message must be translatable");
+        var directContents = (TranslatableContents) directMessage.getContents();
+        helper.assertTrue(
+            "death.attack.black_arcana.arcane_backlash".equals(directContents.getKey()),
+            "Arcane Backlash must use its dedicated death-message key");
+
+        helper.assertTrue(caster.hurt(source, 2.0F), "lethal Arcane Backlash must be accepted by Minecraft damage");
+        helper.assertTrue(caster.isDeadOrDying(), "lethal Arcane Backlash must kill the vulnerable caster");
+
+        var recordedMessage = caster.getCombatTracker().getDeathMessage();
+        helper.assertTrue(
+            recordedMessage.getContents() instanceof TranslatableContents,
+            "combat tracker must retain a translatable Arcane Backlash death message");
+        var recordedContents = (TranslatableContents) recordedMessage.getContents();
+        helper.assertTrue(
+            "death.attack.black_arcana.arcane_backlash".equals(recordedContents.getKey()),
+            "combat tracker must retain the dedicated Arcane Backlash death-message key");
         helper.succeed();
     }
 
