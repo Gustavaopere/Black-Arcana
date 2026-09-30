@@ -178,7 +178,7 @@ Phase 2BS disposition:
 - semantic contribution to strict global minimum: **+0**;
 - provider component closure: **no new component**;
 - strict minimum at the historical Phase 2BS checkpoint remained **1344**; the current catalog-wide strict reconstructible minimum is **1689**;
-- technical component closure remains **66/100**.
+- technical component closure at the historical Phase 2BS checkpoint remained **66/100**; the current cross-domain technical denominator is **`PENDING REBASE`**.
 
 `66/100` is a technical component metric, not a spell-coverage percentage.
 
