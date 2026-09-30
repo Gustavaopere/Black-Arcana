@@ -114,3 +114,22 @@ The two intentionally catalog-open folders are now:
 - `⚠️-traveloptics` — current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` differs from the audited publisher baseline, so exact-current provenance and registry delta remain unresolved.
 
 This promotion changes no strict semantic total and does not claim deployed Ars recipe/reachability QA.
+
+## 30/09 physical-Magic coverage follow-up — StarbuncleMania
+
+A fresh sibling audit at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`, using the **category directory** rather than matching the word `Magic` in filenames, yields **97 current physical Magic-category dossiers**. Ownership/alias normalization mapped 96/97 to the existing Black Arcana provider tree; StarbuncleMania 1.5.8 was the sole unmapped row.
+
+NON-MERGE clean-room PR #476 materialized exact CurseForge File `746215 / 8778598` and hard-matched it to physical row #527 SHA-1 `6af8bc4f9dc24c9ff4d49367ca37fd914822ceb6`. The exact artifact closes two unconditional Ars glyph identities and their two packaged `ars_nouveau:glyph` recipes.
+
+StarbuncleMania is therefore added directly as `✅-starbunclemania`; there is no intermediate partial folder because the current semantic denominator is exact and both objects are materialized.
+
+Current structural result after this coverage correction:
+
+`116 providers = 114 ✅ + 2 ⚠️`
+
+The two intentionally catalog-open folders remain:
+
+- `⚠️-irons-spellbooks-kubejs` — current pack scripts can register arbitrary custom Iron's spell/school identities and the authoritative script tree is still unavailable;
+- `⚠️-traveloptics` — current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` remains provenance/content-unresolved against the audited publisher baseline.
+
+The historical 115-provider checkpoints above are not rewritten; this +1 is a later physical-coverage discovery.

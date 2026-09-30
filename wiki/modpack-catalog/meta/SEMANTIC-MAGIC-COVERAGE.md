@@ -196,18 +196,19 @@ Current semantic deltas since the 1382 checkpoint:
 - Somake 1.0.9 remains **CONDITIONAL / +0 strict**; exact 83-ID registry/current-composition admission is closed, while effective deployed host/provider config and survival reachability remain open.
 - Iron's Spellbooks KubeJS 4.0.3 contributes **+0 fixed built-in identities**, but its current pack script-defined spell/school registration surface remains denominator-open.
 - KubeJS Ars Nouveau 1.3.2 contributes **+0 provider-owned spell/glyph identities** with a closed **0 + 0** semantic denominator; uncaptured scripts may still mutate Ars recipes/tomes/reachability and therefore remain a deployment/economy gate rather than a provider-owned identity blocker.
+- StarbuncleMania 1.5.8 contributes **+2 `COUNTED_EXACT` Ars glyph identities**. Exact CurseForge File `8778598` is SHA-1-identical to physical row #527; the exact JAR contains only `PlaceFluidEffect` and `PickupFluidEffect` as top-level provider glyph classes, registers both before the first branch in the provider registry path, and packages exactly two `ars_nouveau:glyph` recipes for their exact IDs.
 
-Therefore the strict reconstructible minimum is **1687**. This is a minimum, not a final denominator or coverage percentage.
+Therefore the strict reconstructible minimum is **1689**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1687 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact) and Waystones (+3 source-pinned).**
+**1689 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned) and StarbuncleMania (+2 exact).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
-- Ars ecosystem: **199**;
+- Ars ecosystem: **201**;
 - Iron's ecosystem and spell-content addons: **664**;
 - Companions provider-owned Magic Books: **9**;
 - Relics provider-owned ability/synergy layer: **41**;
@@ -227,13 +228,14 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `199 + 664 + 9 + 41 + 61 + 10 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1687`.
+- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1689`.
 
 ### Counted ledger
 
 | Provider | Installed/current line | Count | State | Semantic basis |
 |---|---|---:|---|---|
 | [Ars Nouveau](../providers/✅-ars-nouveau/README.md) | 5.13.1 | 109 | `COUNTED_SOURCE_PINNED` | 5 Forms + 13 Augments + 67 Effects + 24 rituals; arbitrary composed chains excluded |
+| [StarbuncleMania](../providers/✅-starbunclemania/README.md) | 1.5.8 | 2 | `COUNTED_EXACT` | physical SHA-1 equals exact publisher File `8778598`; exact artifact closes two unconditional Ars `AbstractEffect` glyphs plus their two packaged `ars_nouveau:glyph` acquisition recipes |
 | [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | `COUNTED_SOURCE_PINNED` | 3 glyphs + 2 rituals |
 | [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts; 1.6.15→1.6.16 registry source is blob-identical |
 | [Ars Technica](../providers/✅-ars-technica/README.md) | 2.7.6 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 registered spell parts |
@@ -288,7 +290,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1687** |  |  |
+| **Strict total** |  | **1689** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -409,7 +411,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows remain **outside the 1687 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
+These rows remain **outside the 1689 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -424,9 +426,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1687 is not “1687 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1687 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1687 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1689 is not “1689 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1689 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1689 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
