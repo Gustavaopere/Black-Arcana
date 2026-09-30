@@ -4,7 +4,7 @@
 
 `⚠️ CURRENT PHYSICAL PROVIDER / PHYSICAL SHA-1 OTHER_VERIFIED / 33-ID PUBLISHER BASELINE + HISTORICAL MODIFIED-RUNTIME 33/33 OBSERVED / CURRENT PHYSICAL REGISTRY UNVERIFIED / STRICT +0 / FAIL-CLOSED`
 
-Current physical status: **INSTALLED / CURRENT PROVIDER BLOCKER**. Current sibling authority rechecked at `neoforge-rpg-skilltree@2b0c72b68fc7abf49eede694f7e3f22b2b3d0e04`: `PROJECT-INSTRUCTIONS/modlist/modlist.md` row **#550** and the status-prefixed T.O Magic n' Extras dossier both record `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This current 27/09 physical authority supersedes older claims that Traveloptics was absent; the 16/09 Project Library fingerprint remains corroborating provenance.
+Current physical status: **INSTALLED / CURRENT PROVIDER BLOCKER**. Current sibling authority rechecked at `neoforge-rpg-skilltree@0af78cba557fe1f6e984888981ef0c6366ec0f79`: `PROJECT-INSTRUCTIONS/modlist/modlist.md` row **#550** and `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic + Mobs/✅-to-magic-n-extras v4.4.0.1-1.21.1.md` both record `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This current physical authority supersedes older claims that Traveloptics was absent; the 16/09 Project Library fingerprint remains corroborating provenance.
 
 The Phase 2BS publisher-artifact audit remains canonical evidence for File `6342780`. A later physical-fingerprint checkpoint proves the 2026-09-16 on-disk bytes differ (`OTHER_VERIFIED`). A separate 2026-08-18 Project Library CurseForge snapshot records the same filename in project/file `1046916 / 6342780`, publisher SHA-1 `380849...`, with `isModified=true`; because that metadata predates the later physical SHA-1, it is historical context and **does not identify the provenance of the September `7b74816e...` artifact**. Traveloptics remains an active **⚠️ partial/conditioned provider**, not historical-only.
 
@@ -27,6 +27,8 @@ Current sibling physical authority dated 2026-09-27 fingerprints the installed f
 The current sibling T.O Magic n' Extras dossier now independently confirms the physical row and the same SHA-1. It is therefore current presence/fingerprint evidence, while Black Arcana remains authority for the unresolved exact-current semantic delta.
 
 A Project Library assembled-runtime checkpoint from **2026-08-19** further narrows that delta: NeoForge discovered the same nominal `traveloptics-4.4.0.1-1.21.1.jar`, and a bounded runtime-analyzer extraction produced exactly the same **33 unique spell IDs** as the publisher baseline, including `traveloptics:blackout`, with no additional Traveloptics spell identity before the analyzer advanced to the next provider namespace. The log does not record the JAR SHA-1, so this is **historical modified-runtime 33/33 evidence**, not proof that September SHA-1 `7b74816e...` is registry-identical.
+
+Temporary NON-MERGE PR **#474** adds another bounded negative result. Its clean-room run `36649716927` reconstructed common one-entry archive replacements using the known patch's changed `TOLootModifiers.class`; none matched current SHA-1 `7b74816e...`, and none matched the recorded size of the Aug-17 Library `fixed-keyloot.jar`. This makes “the current JAR is merely one of those straightforward repacks” unsupported, but still does not identify the current bytes. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
 
 ## Publisher release boundary
 
@@ -175,7 +177,7 @@ Phase 2BS disposition:
 - exact publisher artifact: structural `TOLootModifiers` codec-wiring risk unresolved at runtime;
 - semantic contribution to strict global minimum: **+0**;
 - provider component closure: **no new component**;
-- global strict minimum remains **1344**;
+- strict minimum at the historical Phase 2BS checkpoint remained **1344**; the current catalog-wide strict reconstructible minimum is **1687**;
 - technical component closure remains **66/100**.
 
 `66/100` is a technical component metric, not a spell-coverage percentage.
@@ -201,7 +203,9 @@ Somake 1.0.9 and Traveloptics 4.4.0.1 are both physically present in the current
 - `blackout` object-level survival route: `UNVERIFIED / FAIL-CLOSED`;
 - `TOLootModifiers` codec reference wiring: `HIGH` structural fact;
 - actual registry-startup failure in the assembled pack: `NOT REPRODUCED`;
-- physical deployment of any third-party patch: `UNVERIFIED`;
+- physical deployment of exact patch File `8861368`: `DISPROVED BY HASH`;
+- byte identity with the common one-entry repack variants tested in PR #474: `DISPROVED`;
+- provenance/content of the actual `7b74816e...` replacement: `UNVERIFIED`;
 - complete-modpack runtime compatibility: `UNVERIFIED / FAIL-CLOSED`.
 
 ## Clean-room boundary
