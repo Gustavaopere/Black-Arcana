@@ -4,9 +4,9 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / EXACT OFFICIAL SOURCE VERSION
 
 ## Current physical identity
 
-Current sibling authority rechecked at `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8`.
+Current sibling authority rechecked at `neoforge-rpg-skilltree@0af78cba557fe1f6e984888981ef0c6366ec0f79`.
 
-Certified dossier: `PROJECT-INSTRUCTIONS/modlist/✅-irons-spellbooks-kubejs.md`.
+Certified dossier: `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + KubeJS + Magic + Utility & QoL/✅-irons-spellbooks-kubejs v4.0.3.md`.
 
 - JAR: `irons_spells_js-4.0.3.jar`;
 - mod id: `irons_spells_js`;
@@ -72,6 +72,8 @@ This does not mean the current modpack has zero KubeJS-defined Iron's spells.
 The current pack's script-defined semantic inventory is **UNVERIFIED**.
 
 Repository and Project-file searches performed on 2026-09-26 did not locate the exact current instance's `kubejs/startup_scripts` or relevant `server_scripts`. Absence from those available sources is not treated as proof that the physical CurseForge instance contains no such scripts.
+
+A fresh revalidation on 2026-09-30 against sibling `0af78cba557fe1f6e984888981ef0c6366ec0f79` preserves the same conclusion: the certified physical dossier explicitly states that the effective pack scripts were not audited and that no custom spell/item should be attributed to runtime without locating the corresponding script. No newer authoritative Project Library script tree or runtime dump was found. This is continuity of the blocker, not zero-content evidence.
 
 A KubeJS script can register a custom Iron's spell under an arbitrary namespace, so filtering only namespace `irons_spells_js` cannot close this provider.
 
