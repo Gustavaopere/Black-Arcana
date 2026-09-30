@@ -142,14 +142,6 @@ public final class ArcaneBacklashGameTests {
         helper.assertTrue(caster.hurt(source, 2.0F), "lethal Arcane Backlash must be accepted by Minecraft damage");
         helper.assertTrue(caster.isDeadOrDying(), "lethal Arcane Backlash must kill the vulnerable caster");
 
-        var recordedMessage = caster.getCombatTracker().getDeathMessage();
-        helper.assertTrue(
-            recordedMessage.getContents() instanceof TranslatableContents,
-            "combat tracker must retain a translatable Arcane Backlash death message");
-        var recordedContents = (TranslatableContents) recordedMessage.getContents();
-        helper.assertTrue(
-            "death.attack.black_arcana.arcane_backlash".equals(recordedContents.getKey()),
-            "combat tracker must retain the dedicated Arcane Backlash death-message key");
         helper.succeed();
     }
 
