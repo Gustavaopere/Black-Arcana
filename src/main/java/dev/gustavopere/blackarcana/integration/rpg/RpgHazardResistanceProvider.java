@@ -45,7 +45,7 @@ public final class RpgHazardResistanceProvider implements ArcaneResistanceProvid
 
     private double mapped(UUID playerId, Map<String, Double> coefficients, double cap) {
         if (!bridge.available()) return 0.0D;
-        RpgProgressionQuery query = bridge.query(playerId);
+        RpgProgressionQuery query = bridge.queryHazardProgression(playerId);
         if (!query.decision().allowed() || query.snapshot().isEmpty()) return 0.0D;
         double total = 0.0D;
         Map<String, Long> ranks = query.snapshot().orElseThrow().attributeRanks();
