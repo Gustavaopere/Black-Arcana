@@ -13,7 +13,7 @@ This checklist does not promote the provider, does not treat a third-party patch
 Current physical evidence establishes the installed version line and filename:
 
 - observed installed filename: `traveloptics-4.4.0.1-1.21.1.jar`;
-- latest sibling authority rechecked at `neoforge-rpg-skilltree@0af78cba557fe1f6e984888981ef0c6366ec0f79`: `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic + Mobs/✅-to-magic-n-extras v4.4.0.1-1.21.1.md` records physical row #550 with that filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
+- latest sibling authority rechecked at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`: `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic + Mobs/✅-to-magic-n-extras v4.4.0.1-1.21.1.md` records physical row #550 with that filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - physical version line: `4.4.0.1-1.21.1`;
 - exact publisher file: CurseForge project/file `1046916 / 6342780`;
 - exact publisher-release SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
