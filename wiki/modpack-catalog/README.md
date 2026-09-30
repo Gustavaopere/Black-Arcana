@@ -33,13 +33,12 @@ Folder prefixes under `wiki/modpack-catalog/providers/` describe **catalog compl
 
 A deployed config, gamerule, reachability or runtime-QA gate does **not by itself** force a complete provider folder back to `⚠️-`. Those gates remain fail-closed in the provider documents and can keep a semantic identity outside the strict numerator without making the catalog structurally incomplete.
 
-At the 29/09/2026 normalization checkpoint, the five remaining `⚠️-` directories are intentionally unresolved at catalog level:
+At the current 29/09/2026 catalog checkpoint, the two remaining `⚠️-` directories are intentionally unresolved at catalog level:
 
-- `⚠️-ice-and-fire-ce` — object-level action-card work is still in open PR #458;
-- `⚠️-irons-spellbooks-kubejs` — current-pack script-defined Iron's inventory is unavailable;
-- `⚠️-kubejs-ars-nouveau` — current-pack KubeJS Ars mutation inventory is unavailable;
-- `⚠️-simply-swords` — object-level action-card work is still in open PR #456;
+- `⚠️-irons-spellbooks-kubejs` — current-pack script-defined Iron's spell/school inventory is unavailable;
 - `⚠️-traveloptics` — current physical artifact/provenance and current registry delta remain unresolved.
+
+Ice And Fire CE and Simply Swords were promoted after their object-level action cards were materialized, and KubeJS Ars Nouveau was promoted after its provider-owned spell/glyph denominator closed at zero. Their deployment/config conditions remain documented inside the respective provider dossiers and do not reopen catalog completeness.
 
 ## Single canonical provider tree
 
