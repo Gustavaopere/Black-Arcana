@@ -20,6 +20,7 @@ class ReflectiveRpgSkillTreeBridgeTest {
         assertFalse(bridge.available());
         assertEquals(ArcanaIntegrationAvailability.MISSING_MOD, bridge.availability());
         assertTrue(bridge.capabilities().isEmpty());
+        assertFalse(bridge.queryHazardProgression(UUID.randomUUID()).decision().allowed());
         assertFalse(bridge.query(UUID.randomUUID()).decision().allowed());
     }
 
@@ -33,6 +34,9 @@ class ReflectiveRpgSkillTreeBridgeTest {
         assertFalse(bridge.available());
         assertEquals(ArcanaIntegrationAvailability.API_INCOMPATIBLE, bridge.availability());
         assertFalse(bridge.capabilities().contains(ArcanaIntegrationCapability.PROGRESSION_QUERY));
+        assertEquals(
+            "rpg_integration_unavailable",
+            bridge.queryHazardProgression(UUID.randomUUID()).decision().code());
         assertEquals("rpg_integration_unavailable", bridge.query(UUID.randomUUID()).decision().code());
     }
 }
