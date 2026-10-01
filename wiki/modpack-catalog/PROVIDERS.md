@@ -113,6 +113,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 106 | Born in Chaos | `born_in_chaos_v1` | `born_in_chaos_[Neoforge]_1.21.1_1.7.6.jar` | `1.7.6` | SUPERNATURAL ARTIFACT / STAFF / RITUAL-ACTION PROVIDER | YES |
 | 107 | Bosses'Rise | `block_factorys_bosses` | `block_factorys_bosses-2.1.2-neo-1.21.1.jar` | `2.1.2` | SUPERNATURAL BOSS-REWARD / SUMMON / WEAPON-ACTION PROVIDER | YES |
 | 108 | Portable Hole | `portablehole` | `PortableHole-v21.1.0-1.21.1-NeoForge.jar` | `21.1.0` | MAGICAL TRAVERSAL / TEMPORARY PASSAGE PROVIDER | YES |
+| 109 | Legendary Monsters | `legendary_monsters` | `legendary_monsters-2.2.2 MC 1.21.1.jar` | `2.2.2` | SUPERNATURAL EQUIPMENT / SUMMON / PLAYER-ACTION PROVIDER | YES |
 
 ## Current version drifts already reconciled
 
