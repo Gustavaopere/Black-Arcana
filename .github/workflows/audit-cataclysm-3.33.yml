@@ -73,6 +73,22 @@ jobs:
               pathlib.Path("provider-data.txt").write_text("\n".join(provider_data)+"\n",encoding="utf-8")
           PY
 
+      - name: Dump all exact item classes and activation surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          : > javap-all-items.txt
+          : > activation-surfaces.txt
+          while IFS= read -r path; do
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all-items.txt
+            javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-all-items.txt 2>&1 || true
+          done < item-classes.txt
+          grep -E '(^===== | use\\(|releaseUsing\\(|onUseTick\\(|finishUsingItem\\(|onLeftClick\\(|useOn\\(|inventoryTick\\(|hurtEnemy\\(|onArmorTick\\(|Keybind|keybind|Cooldown|cooldown|addFreshEntity|shootFromRotation|spawn[A-Z]|launch[A-Z])' \
+            javap-all-items.txt > activation-surfaces.txt || true
+
       - name: Dump item registry and active-action candidates
         shell: bash
         run: |
@@ -131,6 +147,8 @@ jobs:
             build/audit/cataclysm/combat-entity-classes.txt
             build/audit/cataclysm/provider-data.txt
             build/audit/cataclysm/javap-actions.txt
+            build/audit/cataclysm/javap-all-items.txt
+            build/audit/cataclysm/activation-surfaces.txt
             build/audit/cataclysm/acquisition-paths.txt
             build/audit/cataclysm/action-seam-lines.txt
           if-no-files-found: error
