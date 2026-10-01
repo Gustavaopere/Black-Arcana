@@ -8,7 +8,7 @@ Close Stage 05A engineering through implementation/integration/deterministic acc
 
 ## Current canonical state
 
-- Baseline used to prepare this handoff: `main@71c9b6bd6ba11b52f24be2d14c03c45207ee6b1c`.
+- Engineering closeout audit baseline: `main@dc98f0fc07a4017309dfeb998572b7d2cf3ef320`; current physical-modlist authority rechecked at sibling `neoforge-rpg-skilltree@6830865ec4d3fc4a778aa99293a8e232d2097981`.
 - Minecraft: `1.21.1`.
 - NeoForge in the current physical modlist: `21.1.248`.
 - Java: `21`.
@@ -18,6 +18,7 @@ Close Stage 05A engineering through implementation/integration/deterministic acc
 - `05A.12` automated hardening is already closed by explicit tests and full runtime gates. This handoff must not repeat those tests merely to manufacture activity.
 - `05A.11` real-client presentation acceptance shares the Stage 05 manual campaign in `docs/qa/casting-ux-manual-matrix.md` and `docs/qa/casting-ux-real-client-runbook.md`.
 - Deterministic forecast/preflight automated evidence is recorded in `docs/qa/stage05a11-resistance-forecast.md`.
+- Stage 09 physical/manual result template is `docs/qa/arcane-danger-final-validation-evidence.md`; all transferred rows start as `PENDING / DEFERRED TO STAGE 09` and automation never promotes them to PASS.
 - The removable Stage 05/05A fixture under `docs/qa/fixtures/stage05-real-client/` is QA data only and must not ship as production gameplay content.
 
 ## Frozen authority and causal invariants
