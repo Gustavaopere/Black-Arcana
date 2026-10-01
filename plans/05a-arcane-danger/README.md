@@ -90,11 +90,11 @@ Installed-first baseline is Curios NeoForge `9.5.1+1.21.1`. Curios integration i
 10. [RPG Skill Tree Integration](✅-10-rpg-skilltree-integration.md)
 11. [HUD, Tooltip & Preflight](✅-11-hud-tooltip-preflight.md)
 12. [Tests & Hardening](✅-12-tests-hardening.md)
-13. [Final Validation Handoff](13-final-validation-handoff.md)
+13. [Final Validation Handoff](✅-13-final-validation-handoff.md)
 
 ## Final validation handoff
 
-`05A.12` closes the explicit automated hardening matrix, but it does not by itself validate real-client presentation or physically loaded optional providers. The executable closeout plan is `plans/05a-arcane-danger/13-final-validation-handoff.md`.
+`05A.12` closes the explicit automated hardening matrix, but it does not by itself validate real-client presentation or physically loaded optional providers. The executable closeout plan is `plans/05a-arcane-danger/✅-13-final-validation-handoff.md`.
 
 That handoff separates deterministic engineering evidence from real-client and real-provider/modpack acceptance. Under D035, unresolved physical/provider observations are transferred to Stage 09 rather than blocking implementation-stage progression; they remain release-blocking and may never be inferred as PASS.
 
