@@ -126,6 +126,50 @@ jobs:
           done < linked-procedure-classes.txt
           grep -nEi 'storm|snow|frost|ice|nightmare|magic|spell|summon|teleport|projectile|explosion|lightning|soul|spirit|curse|ritual|barrier|freeze|cooldown|entity|level|effect' javap-linked-procedures.txt > linked-procedure-seams.txt || true
 
+      - name: Extract bounded global item-procedure seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          : > all-procedure-seams.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            tmp="$(mktemp)"
+            javap -classpath born_in_chaos_1.7.6.jar -p -c -constants "$cls" > "$tmp" 2>&1 || true
+            if grep -qE 'BornInChaosV1ModItems\.|PlayerInteractEvent|EntityInteract|RightClick|UseOnContext|InteractionHand' "$tmp"; then
+              echo "===== $cls =====" >> all-procedure-seams.txt
+              grep -E 'BornInChaosV1Mod(Items|Entities|MobEffects|Blocks)\.|PlayerInteractEvent|EntityInteract|RightClick|UseOnContext|InteractionHand|addCooldown|addEffect|addFreshEntity|shrink|hurtAndBreak|discard|heal\(|setHealth\(|teleport|setPos|explode|sendParticles' "$tmp" >> all-procedure-seams.txt || true
+            fi
+            rm -f "$tmp"
+          done < procedure-classes.txt
+
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('all-procedure-seams.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'(?m)^===== (.+?) =====\n',text)[1:]
+          rows=[]
+          for i in range(0,len(sections),2):
+              cls,body=sections[i],sections[i+1]
+              items=[]
+              for m in re.finditer(r'BornInChaosV1ModItems\.([A-Z0-9_]+)',body):
+                  if m.group(1) not in items: items.append(m.group(1))
+              entities=[]
+              for m in re.finditer(r'BornInChaosV1ModEntities\.([A-Z0-9_]+)',body):
+                  if m.group(1) not in entities: entities.append(m.group(1))
+              effects=[]
+              for m in re.finditer(r'BornInChaosV1ModMobEffects\.([A-Z0-9_]+)',body):
+                  if m.group(1) not in effects: effects.append(m.group(1))
+              triggers=[]
+              for token in ('PlayerInteractEvent','EntityInteract','RightClick','UseOnContext','InteractionHand','addCooldown','addEffect','addFreshEntity','shrink','heal','setHealth','teleport','explode'):
+                  if token in body: triggers.append(token)
+              if items:
+                  rows.append(f'{cls}\titems={",".join(items)}\tentities={",".join(entities)}\teffects={",".join(effects)}\tseams={",".join(triggers)}')
+          pathlib.Path('global-item-procedure-index.txt').write_text('\n'.join(rows)+'\n',encoding='utf-8')
+          pathlib.Path('global-item-procedure-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
       - name: Extract localization and acquisition resources
         shell: bash
         run: |
@@ -184,6 +228,9 @@ jobs:
             build/audit/bic/linked-procedure-classes.txt
             build/audit/bic/javap-linked-procedures.txt
             build/audit/bic/linked-procedure-seams.txt
+            build/audit/bic/all-procedure-seams.txt
+            build/audit/bic/global-item-procedure-index.txt
+            build/audit/bic/global-item-procedure-count.txt
             build/audit/bic/item-localization.txt
             build/audit/bic/magic-acquisition-resources.txt
             build/audit/bic/magic-acquisition-resource-count.txt
