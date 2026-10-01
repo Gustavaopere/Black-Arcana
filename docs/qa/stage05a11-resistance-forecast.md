@@ -18,7 +18,7 @@ A runtime-scoped preview registry mirrors only Arcane Resistance providers with 
 Current mirrored providers:
 
 - standard equipment;
-- RPG Skill Tree hazard attributes through the existing read-only progression query;
+- RPG Skill Tree hazard attributes through the dedicated read-only `RpgSkillTreeBridge.queryHazardProgression(...)` boundary;
 - Curios equipment snapshots when the optional integration is available.
 
 An unknown future gameplay provider therefore makes the forecast unavailable until it also installs a safe preview provider. Partial resistance is never presented as complete.
