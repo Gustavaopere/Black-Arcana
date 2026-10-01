@@ -218,6 +218,82 @@ jobs:
           grep -E 'data/cataclysm/(recipe|loot_table|advancement)/' provider-data.txt > acquisition-paths.txt || true
           grep -E 'Bulwark|Gauntlet|Incinerator|Immolator|Annihilator|Soul_Render|void_forge|infernal_forge|void_core|Tidal_Claws|Wrath_of_the_desert|Laser_Gatling|Assault_SHoulder|Astrape|Ceraunus|Brontes|Ancient_Spear|Coral_Spear|Coral_Bardiche|Cursed_bow|Meat_Shredder|Sandstorm_In_A_Bottle|Necklace_Of_The_Desert' javap-actions.txt > action-seam-lines.txt || true
 
+      - name: Prove exact ritual surfaces and reachability
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          : > javap-rituals.txt
+          for cls in \
+            com.github.L_Ender.cataclysm.blocks.Altar_Of_Fire_Block \
+            com.github.L_Ender.cataclysm.blockentities.AltarOfFire_Block_Entity \
+            com.github.L_Ender.cataclysm.blocks.Altar_Of_Abyss_Block \
+            com.github.L_Ender.cataclysm.blockentities.AltarOfAbyss_Block_Entity \
+            com.github.L_Ender.cataclysm.blocks.Cursed_Tombstone_Block \
+            com.github.L_Ender.cataclysm.blockentities.Cursed_tombstone_Entity \
+            com.github.L_Ender.cataclysm.blocks.Altar_Of_Void_Block \
+            com.github.L_Ender.cataclysm.blockentities.AltarOfVoid_Block_Entity \
+            com.github.L_Ender.cataclysm.blocks.Boss_Respawn_Spawner_Block \
+            com.github.L_Ender.cataclysm.blockentities.Boss_Respawn_Spawner_Block_Entity \
+            com.github.L_Ender.cataclysm.blocks.Altar_Of_Amethyst_Block \
+            com.github.L_Ender.cataclysm.blockentities.AltarOfAmethyst_Block_Entity; do
+              echo "===== $cls =====" >> javap-rituals.txt
+              javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-rituals.txt 2>&1 || true
+          done
+
+          python3 - <<'PY'
+          import gzip, json, zipfile
+          ritual_blocks={
+              "altar_of_fire": b"cataclysm:altar_of_fire",
+              "altar_of_abyss": b"cataclysm:altar_of_abyss",
+              "cursed_tombstone": b"cataclysm:cursed_tombstone",
+          }
+          item_targets={
+              "burning_ashes":"cataclysm:burning_ashes",
+              "abyssal_sacrifice":"cataclysm:abyssal_sacrifice",
+          }
+          structure_hits={k:[] for k in ritual_blocks}
+          item_hits={k:[] for k in item_targets}
+
+          def walk(v,path="$"):
+              if isinstance(v,dict):
+                  for k,x in v.items(): yield from walk(x,f"{path}.{k}")
+              elif isinstance(v,list):
+                  for i,x in enumerate(v): yield from walk(x,f"{path}[{i}]")
+              elif isinstance(v,str):
+                  yield path,v
+
+          with zipfile.ZipFile("cataclysm-1.21.1-3.33.jar") as z:
+              for name in sorted(z.namelist()):
+                  if name.endswith(".nbt") and name.startswith("data/cataclysm/"):
+                      raw=z.read(name)
+                      try:
+                          raw=gzip.decompress(raw)
+                      except Exception:
+                          pass
+                      for key,needle in ritual_blocks.items():
+                          if needle in raw:
+                              structure_hits[key].append(name)
+                  if name.startswith("data/cataclysm/") and name.endswith(".json"):
+                      try: data=json.loads(z.read(name))
+                      except Exception: continue
+                      typ=data.get("type","") if isinstance(data,dict) else ""
+                      for path,val in walk(data):
+                          for key,target in item_targets.items():
+                              if val==target:
+                                  item_hits[key].append((name,path,typ))
+
+          with open("ritual-reachability.txt","w",encoding="utf-8") as f:
+              for key in ritual_blocks:
+                  f.write(f"[structure:{key}]\n")
+                  for name in structure_hits[key]: f.write(name+"\n")
+                  if not structure_hits[key]: f.write("NO_STRUCTURE_NBT_HIT\n")
+              for key in item_targets:
+                  f.write(f"[item:{key}]\n")
+                  for name,path,typ in item_hits[key]: f.write(f"{name}\t{path}\ttype={typ}\n")
+                  if not item_hits[key]: f.write("NO_PROVIDER_DATA_REFERENCE\n")
+          PY
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -236,4 +312,6 @@ jobs:
             build/audit/cataclysm/action-seam-lines.txt
             build/audit/cataclysm/candidate-acquisition-map.txt
             build/audit/cataclysm/candidate-acquisition-jsonpaths.txt
+            build/audit/cataclysm/javap-rituals.txt
+            build/audit/cataclysm/ritual-reachability.txt
           if-no-files-found: error
