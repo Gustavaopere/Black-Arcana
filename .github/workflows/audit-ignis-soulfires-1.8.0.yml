@@ -85,6 +85,42 @@ jobs:
                       if re.search(r"(item|ability|tooltip|key|effect|advancement|entity|block)\.", k, re.I):
                           out.append(f"{k} = {v}")
               pathlib.Path("lang-keys.txt").write_text("\n".join(out)+"\n", encoding="utf-8")
+              targets = [
+                  "data/ignissoulfires/recipe/shape/bulwark_of_the_soul_flame.json",
+                  "data/ignissoulfires/recipe/smithing/bulwark_of_the_soul_flame.json",
+                  "data/ignissoulfires/recipe/weapon_infusion/souled_gauntlet_of_bulwark.json",
+                  "data/ignissoulfires/recipe/weapon_infusion/the_souled_immolator.json",
+                  "data/ignissoulfires/recipe/smithing/the_souled_incinerator.json",
+              ]
+              recipe_lines = []
+              def collect_ids(v):
+                  ids = []
+                  if isinstance(v, dict):
+                      for k, vv in v.items():
+                          if k in ("item", "tag", "id") and isinstance(vv, str):
+                              ids.append(f"{k}:{vv}")
+                          else:
+                              ids.extend(collect_ids(vv))
+                  elif isinstance(v, list):
+                      for vv in v:
+                          ids.extend(collect_ids(vv))
+                  return ids
+              for n in targets:
+                  if n not in names:
+                      recipe_lines.append(f"{n} | MISSING")
+                      continue
+                  obj = json.loads(z.read(n))
+                  rtype = obj.get("type", "")
+                  result = obj.get("result", {})
+                  if isinstance(result, str):
+                      result_id = result
+                  elif isinstance(result, dict):
+                      result_id = result.get("id") or result.get("item") or ""
+                  else:
+                      result_id = ""
+                  ids = sorted(set(collect_ids(obj)))
+                  recipe_lines.append(f"{n} | type={rtype} | result={result_id} | refs={';'.join(ids)}")
+              pathlib.Path("selected-recipes.txt").write_text("\n".join(recipe_lines)+"\n", encoding="utf-8")
           PY
 
       - name: Dump relevant Java signatures and bytecode
