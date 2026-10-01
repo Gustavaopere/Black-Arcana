@@ -117,7 +117,7 @@ jobs:
         run: |
           set -euo pipefail
           cd build/audit/bic
-          grep -oE 'born_in_chaos_v1/procedures/[A-Za-z0-9_$]+' javap-items.txt | sort -u | sed 's#/#.#g' > linked-procedure-classes.txt || true
+          grep -oE 'net/mcreator/borninchaosv/procedures/[A-Za-z0-9_$]+' javap-items.txt | sort -u | sed 's#/#.#g' > linked-procedure-classes.txt || true
           : > javap-linked-procedures.txt
           while IFS= read -r cls; do
             [ -n "$cls" ] || continue
