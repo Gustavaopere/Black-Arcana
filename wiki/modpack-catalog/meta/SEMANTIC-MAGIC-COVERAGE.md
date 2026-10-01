@@ -201,12 +201,13 @@ Current semantic deltas since the 1382 checkpoint:
 - StarbuncleMania 1.5.8 contributes **+2 `COUNTED_EXACT` Ars glyph identities**. Exact CurseForge File `8778598` is SHA-1-identical to physical row #527; the exact JAR contains only `PlaceFluidEffect` and `PickupFluidEffect` as top-level provider glyph classes, registers both before the first branch in the provider registry path, and packages exactly two `ars_nouveau:glyph` recipes for their exact IDs.
 - Cataclysm: Ignis Soulfires 1.8.0 contributes **+8 `COUNTED_EXACT` discrete supernatural player actions**. Exact physical SHA-1 equals the audited official artifact; two Bulwark actions, two Souled Gauntlet actions, two Immolator actions and two Incinerator actions are closed by exact binary control/settlement seams and packaged owner-acquisition recipes. Tool modes, armor/horse-armor passives and on-hit procs are metric-excluded.
 - L_Ender's Cataclysm 3.33 contributes **+27 `COUNTED_EXACT`**: 24 discrete supernatural item/equipment actions plus 3 deliberate summoning rituals. Exact physical SHA-1 equals CurseForge File `8706841`; the exhaustive audit covers all 67 exact item classes, provider input/network seams, acquisition data and ritual/world reachability. Ordinary primary weapon modes, pets/locators, passive gear, recipe machinery, proximity auto-spawn and the generic five-variant post-defeat Boss Respawner are metric-excluded.
+- BetterEnd: New Dawn 21.0.34 contributes **+49 `COUNTED_EXACT`** ritual identities: 48 unique exact `betterend:infusion` recipe identities plus 1 Eternal Portal Ritual. Exact physical SHA-1 equals CurseForge File `8610367`; the provider ritual engine selects and settles each infusion recipe, while Eternal Pedestal/Eternal Ritual control closes the separate portal-activation identity. Ordinary processing recipes, passive effects, portal aftermath and worldgen are metric-excluded.
 
-Therefore the strict reconstructible minimum is **1724**. This is a minimum, not a final denominator or coverage percentage.
+Therefore the strict reconstructible minimum is **1773**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1724 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact) and L_Ender's Cataclysm (+27 exact).**
+**1773 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact) and BetterEnd: New Dawn (+49 exact).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -220,6 +221,7 @@ Arithmetic cross-check by provider family:
 - Mowzie's Mobs discrete player-power layer: **10**;
 - Ice And Fire CE active magic-action layer: **8**;
 - L_Ender's Cataclysm base supernatural action/ritual layer: **27**;
+- BetterEnd: New Dawn ritual/infusion layer: **49**;
 - Cataclysm: Ignis Soulfires discrete supernatural weapon-action layer: **8**;
 - Reliquified Ars Nouveau owner-scoped ability layer: **19**;
 - Reliquified Artifacts owner-scoped ability layer: **52**;
@@ -234,7 +236,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 27 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1724`.
+- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1773`.
 
 ### Counted ledger
 
@@ -282,6 +284,7 @@ Arithmetic cross-check by provider family:
 | [Mowzie's Mobs](../providers/✅-mowzies-mobs/README.md) | 1.8.2 | 10 | `COUNTED_EXACT` + 1 `CONDITIONAL` | exact physical/publisher File `7760267` closes 13 active player-ability slots; 10 independent powers are strict-counted, `tunneling` is held conditional by deployed `enableTunneling`, `hit_boulder`/`backstab` are technical-subaction slots, and four declared ids are absent from the active array |
 | [Ice And Fire CE](../providers/✅-ice-and-fire-ce/README.md) | 2.1.2 | 8 | `COUNTED_EXACT` + 1 `CONDITIONAL` | exact physical/publisher File `8757837` plus current-JAR data close seven families; current-pack NeoForge 21.1.250 runtime audit closes Dread Lich Staff inherited equipment-drop reachability; only Ghost Sword remains gated by deployed `tools.phantasmalBladeAbility` |
 | [L_Ender's Cataclysm](../providers/✅-cataclysm/README.md) | 3.33 | 27 | `COUNTED_EXACT` | exact physical/publisher File `8706841` equality plus exhaustive 67-item-class and ritual audit closes 24 supernatural item/equipment actions + 3 deliberate summoning rituals; ordinary weapon modes, pets/locators, passive gear, processing, auto-spawn and generic boss-respawn infrastructure are excluded |
+| [BetterEnd: New Dawn](../providers/✅-betterend/README.md) | 21.0.34 | 49 | `COUNTED_EXACT` | exact physical/publisher File `8610367` equality closes 48 unique `betterend:infusion` ritual recipe identities plus 1 Eternal Portal Ritual; ordinary processing, passive effects, portal aftermath and worldgen are excluded |
 | [Cataclysm: Ignis Soulfires](../providers/✅-ignis-soulfires/README.md) | 1.8.0 | 8 | `COUNTED_EXACT` | exact physical/publisher SHA-1 equality closes eight distinct player-invoked supernatural weapon actions across Bulwark, Souled Gauntlet, Immolator and Incinerator; packaged crafting/smithing/weapon-fusion routes close catalog-level acquisition; tool modes and passive gear/procs are excluded |
 | [Reliquified Ars Nouveau](../providers/✅-reliquified-ars-nouveau/README.md) | 0.8.1 | 19 | `COUNTED_SOURCE_PINNED` | exact-version source closes 19 registered relic owners and 19 owner-scoped `AbilityTemplate` roots with provider-native Ars loot routes |
 | [Reliquified Artifacts](../providers/✅-reliquified-artifacts/README.md) | 1.0.8 | 52 | `COUNTED_SOURCE_PINNED` | 48 Artifact owners map to 52 owner-scoped ability roots; source-level loot/conversion routes close acquisition for all owners |
@@ -298,7 +301,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1724** |  |  |
+| **Strict total** |  | **1773** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -420,7 +423,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows remain **outside the 1724 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
+These rows remain **outside the 1773 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -435,9 +438,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1724 is not “1724 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1724 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1724 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1773 is not “1773 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1773 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1773 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
