@@ -127,6 +127,42 @@ jobs:
               javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-actions.txt 2>&1 || true
           done
 
+      - name: Map candidate owner acquisition references
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          owners = [
+              "ancient_spear", "astrape", "bulwark_of_the_flame", "ceraunus",
+              "gauntlet_of_bulwark", "gauntlet_of_guard", "gauntlet_of_maelstrom",
+              "infernal_forge", "sandstorm_in_a_bottle", "soul_render",
+              "the_annihilator", "the_immolator", "the_incinerator", "tidal_claws",
+              "void_core", "void_forge", "wrath_of_the_desert", "ignitium_helmet",
+              "cursium_helmet", "cursium_boots", "bloom_stone_pauldrons"
+          ]
+          hits = {x: [] for x in owners}
+          with zipfile.ZipFile("cataclysm-1.21.1-3.33.jar") as z:
+              for name in sorted(z.namelist()):
+                  if not (name.startswith("data/cataclysm/") and name.endswith(".json")):
+                      continue
+                  try:
+                      raw=z.read(name).decode("utf-8")
+                  except UnicodeDecodeError:
+                      continue
+                  for owner in owners:
+                      if f"cataclysm:{owner}" in raw:
+                          hits[owner].append(name)
+          with open("candidate-acquisition-map.txt","w",encoding="utf-8") as f:
+              for owner in owners:
+                  f.write(f"[{owner}]\\n")
+                  if hits[owner]:
+                      for p in hits[owner]: f.write(p+"\\n")
+                  else:
+                      f.write("NO_PROVIDER_DATA_REFERENCE\\n")
+          PY
+
       - name: Extract acquisition and localization candidates
         shell: bash
         run: |
@@ -151,4 +187,5 @@ jobs:
             build/audit/cataclysm/activation-surfaces.txt
             build/audit/cataclysm/acquisition-paths.txt
             build/audit/cataclysm/action-seam-lines.txt
+            build/audit/cataclysm/candidate-acquisition-map.txt
           if-no-files-found: error
