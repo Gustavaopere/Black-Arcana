@@ -21,10 +21,10 @@ NON-MERGE evidence PR **#499** audits CurseForge project/file `918614 / 8829395`
 
 Final semantic evidence checkpoint used by this catalog:
 
-- audit HEAD: `542e5a350c39531794ce340b39952d25aa1e65f4`;
-- exact-artifact run: `36905999133` — **SUCCESS**;
-- evidence artifact: `11184480812`;
-- artifact digest: `sha256:9bb3c7c94092c79cd394bf4a9c51518d38225c0ef013a7072dfade22b5d1b75e`;
+- audit HEAD: `1e63f962843d740beb93e4949f8d7efa19124059`;
+- exact-artifact run: `36907520048` — **SUCCESS**;
+- evidence artifact: `11186035998`;
+- artifact digest: `sha256:425ff719514fa7a1d226c5967b0889712f666fe05cc65b0e2aae8dcde4b29ba8`;
 - publisher SHA-1: `b507eb376778cfd1cbecec2841c38891b26a7349`;
 - publisher SHA-256: `0c36ba17bc812c65f5e37f9227d8b6a5185aac70b82a88d1bf52ee13103592cc`;
 - bytes: `20,941,584`.
