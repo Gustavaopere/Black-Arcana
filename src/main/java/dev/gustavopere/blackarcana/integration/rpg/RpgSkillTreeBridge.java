@@ -8,6 +8,14 @@ import java.util.UUID;
 public interface RpgSkillTreeBridge extends ArcanaIntegration {
     String MOD_ID = "rpgskilltree";
 
+    /**
+     * Read-only progression projection for hazard resistance.
+     *
+     * <p>Implementations must not bootstrap, persist, migrate, synchronize or award progression
+     * while serving this query. Mastery is not required by the hazard resistance adapter.</p>
+     */
+    RpgProgressionQuery queryHazardProgression(UUID playerId);
+
     RpgProgressionQuery query(UUID playerId);
 
     ArcanaDecision awardMastery(UUID playerId, RpgMasteryAwardSpec award);

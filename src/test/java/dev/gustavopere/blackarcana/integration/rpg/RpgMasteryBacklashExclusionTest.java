@@ -121,6 +121,9 @@ class RpgMasteryBacklashExclusionTest {
         @Override public Set<ArcanaIntegrationCapability> capabilities() {
             return Set.of(ArcanaIntegrationCapability.MASTERY_AWARD);
         }
+        @Override public RpgProgressionQuery queryHazardProgression(UUID playerId) {
+            return RpgProgressionQuery.denied("not_required", "mastery exclusion fixture does not query hazard progression");
+        }
         @Override public RpgProgressionQuery query(UUID playerId) {
             return RpgProgressionQuery.denied("not_required", "mastery exclusion fixture does not query progression");
         }

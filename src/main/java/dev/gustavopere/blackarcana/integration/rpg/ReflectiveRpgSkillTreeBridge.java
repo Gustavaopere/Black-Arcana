@@ -141,6 +141,30 @@ public final class ReflectiveRpgSkillTreeBridge implements RpgSkillTreeBridge {
     }
 
     @Override
+    public RpgProgressionQuery queryHazardProgression(UUID playerId) {
+        Objects.requireNonNull(playerId, "playerId");
+        if (!available() || access == null) {
+            return RpgProgressionQuery.denied("rpg_integration_unavailable", diagnostic);
+        }
+        ServerPlayer player = playerResolver.apply(playerId);
+        if (player == null) {
+            return RpgProgressionQuery.denied("rpg_player_unavailable", "RPG player is not online on this server");
+        }
+
+        try {
+            CoreProjection core = queryCoreProjection(player);
+            return RpgProgressionQuery.success(new RpgProgressionSnapshot(
+                core.level(),
+                core.attributes(),
+                Map.of()));
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
+            return RpgProgressionQuery.denied(
+                "rpg_hazard_query_failed",
+                "RPG hazard progression query failed: " + failure.getClass().getSimpleName());
+        }
+    }
+
+    @Override
     public RpgProgressionQuery query(UUID playerId) {
         Objects.requireNonNull(playerId, "playerId");
         if (!available() || access == null) {
@@ -152,18 +176,7 @@ public final class ReflectiveRpgSkillTreeBridge implements RpgSkillTreeBridge {
         }
 
         try {
-            Object querySnapshot = access.queryProgression().invoke(null, player);
-            long level = ((Number) access.level().invoke(querySnapshot)).longValue();
-            Object ranks = access.attributeRanks().invoke(querySnapshot);
-
-            Map<String, Long> attributes = new HashMap<>();
-            Object[] attributeIds = access.attributeIdClass().getEnumConstants();
-            if (attributeIds == null) throw new IllegalStateException("RPG AttributeId is no longer an enum");
-            for (Object attributeId : attributeIds) {
-                String id = (String) access.attributeSerializedId().invoke(attributeId);
-                long rank = ((Number) access.attributeRank().invoke(ranks, attributeId)).longValue();
-                if (rank != 0L) attributes.put(id, rank);
-            }
+            CoreProjection core = queryCoreProjection(player);
 
             Object progression = access.playerProgressionGet().invoke(null, player);
             Object mastery = access.progressionMastery().invoke(progression);
@@ -179,12 +192,31 @@ public final class ReflectiveRpgSkillTreeBridge implements RpgSkillTreeBridge {
                 masteryExperience.put(lane, xp.intValue());
             }
 
-            return RpgProgressionQuery.success(new RpgProgressionSnapshot(level, attributes, masteryExperience));
+            return RpgProgressionQuery.success(new RpgProgressionSnapshot(
+                core.level(),
+                core.attributes(),
+                masteryExperience));
         } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
             return RpgProgressionQuery.denied(
                 "rpg_query_failed",
                 "RPG progression query failed: " + failure.getClass().getSimpleName());
         }
+    }
+
+    private CoreProjection queryCoreProjection(ServerPlayer player) throws ReflectiveOperationException {
+        Object querySnapshot = access.queryProgression().invoke(null, player);
+        long level = ((Number) access.level().invoke(querySnapshot)).longValue();
+        Object ranks = access.attributeRanks().invoke(querySnapshot);
+
+        Map<String, Long> attributes = new HashMap<>();
+        Object[] attributeIds = access.attributeIdClass().getEnumConstants();
+        if (attributeIds == null) throw new IllegalStateException("RPG AttributeId is no longer an enum");
+        for (Object attributeId : attributeIds) {
+            String id = (String) access.attributeSerializedId().invoke(attributeId);
+            long rank = ((Number) access.attributeRank().invoke(ranks, attributeId)).longValue();
+            if (rank != 0L) attributes.put(id, rank);
+        }
+        return new CoreProjection(level, Map.copyOf(attributes));
     }
 
     @Override
@@ -218,6 +250,12 @@ public final class ReflectiveRpgSkillTreeBridge implements RpgSkillTreeBridge {
     private static String normalizeVersion(String version) {
         if (version == null || version.isBlank()) return "unknown";
         return version.length() > 96 ? version.substring(0, 96) : version;
+    }
+
+    private record CoreProjection(long level, Map<String, Long> attributes) {
+        private CoreProjection {
+            attributes = Map.copyOf(Objects.requireNonNull(attributes, "attributes"));
+        }
     }
 
     private record Access(
