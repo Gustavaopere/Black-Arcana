@@ -8,9 +8,9 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Structural provider-directory inventory — current 01/10/2026 cross-domain rebase
 
-The canonical provider tree now contains **117 top-level provider directories = 115 ✅ + 2 ⚠️**. The 27/09 `115 = 101 ✅ + 14 ⚠️` snapshot, the 29/09 normalization checkpoints and the 30/09 `116 = 114 ✅ + 2 ⚠️` StarbuncleMania closure remain historical. The 01/10 cross-domain rebase adds `✅-ignis-soulfires`: exact physical↔publisher artifact equality closes eight discrete supernatural player actions.
+The canonical provider tree now contains **118 top-level provider directories = 116 ✅ + 2 ⚠️**. The 27/09 `115 = 101 ✅ + 14 ⚠️` snapshot, the 29/09 normalization checkpoints, the 30/09 `116 = 114 ✅ + 2 ⚠️` StarbuncleMania closure and the first 01/10 `117 = 115 ✅ + 2 ⚠️` Ignis Soulfires tranche remain historical. The current 01/10 cross-domain rebase additionally closes `✅-artifacts`: exact physical↔publisher artifact equality closes 49 item entries and the base item-ability component surface as +0 independent semantic identities under current-stack deduplication with Reliquified Artifacts.
 
-This is a **repository catalog-structure metric only**. It does not regenerate the historical cross-domain component denominator, does not prove that 117 is the unique current physical-provider denominator, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
+This is a **repository catalog-structure metric only**. It does not regenerate the historical cross-domain component denominator, does not prove that 118 is the unique current physical-provider denominator, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
 
 See [PROVIDER-DIRECTORY-INVENTORY.md](./PROVIDER-DIRECTORY-INVENTORY.md).
 
@@ -44,6 +44,7 @@ Semantic effect of the current reconciliation:
 - Mowzie's Mobs 1.8.2 is now **⚠️ / +10 `COUNTED_EXACT` strict + 1 `CONDITIONAL`** after exact-artifact run `36288758348` hash-matched File `7760267`; the exact active array has 13 player-ability slots. Ten independent powers are strict-counted, `tunneling` remains config-conditional on deployed `enableTunneling`, `hit_boulder` and `backstab` are technical/subaction slots, and four declared ids are inactive.
 - Ice And Fire Community Edition 2.1.2 is now **⚠️ / +8 `COUNTED_EXACT` strict + 1 `CONDITIONAL`**. Exact reachability run `36323035696` closes seven provider-data routes; exact current-pack NeoForge 21.1.250 runtime audit `36327488231` closes Dread Lich Staff inherited equipment-drop reachability. Ghost Sword has exact acquisition but deployed `tools.phantasmalBladeAbility` remains unresolved.
 - Cataclysm: Ignis Soulfires 1.8.0 is now **✅ / +8 `COUNTED_EXACT` strict**. NON-MERGE exact-artifact audit #491 proves current physical SHA-1 equals the official 1.8.0 artifact; exact control/settlement branches close two Bulwark, two Souled Gauntlet, two Immolator and two Incinerator actions, and packaged crafting/smithing/weapon-fusion routes close catalog-level acquisition. Tool modes and passive gear/procs remain metric-excluded.
+- Artifacts 13.2.5 is now **✅ / +0 strict**. NON-MERGE exact-artifact audit #493 proves physical SHA-1 equals CurseForge File `8791899`; exact `ModItems` closes 49 entries and the provider item-ability component layer. The base item containers/components do not expose an independent spell/focus/action identity roster, and current named Artifact-owner abilities are already counted once under Reliquified Artifacts 1.0.8.
 - Mowzie's Cataclysm 1.2.2, Pickable Orbs 1.21.1-1.0.0, IronSable X Wind's Spellbooks 1.0.0, Iron's Gems 'n Jewelry 1.21.1-2.0.2 and Integrated Villages 1.3.3+1.21.1-neoforge are now **✅ exact zero-semantic closures / +0 strict each**. Their exact artifacts respectively close locator Eyes, pickup-effect entities, an existing-spell physics bridge, equipment proc payloads and worldgen/structure integration without minting independent player magic identities.
 - Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
 - Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
@@ -141,6 +142,7 @@ Therefore:
 - semantic numerator delta from Mowzie's Mobs 1.8.2 exact-artifact closure: **+10 `COUNTED_EXACT`**; one additional Tunneling power remains conditional;
 - semantic numerator delta from Ice And Fire CE 2.1.2 exact-artifact/current-runtime reachability closure: **+8 `COUNTED_EXACT`**; only Ghost Sword remains conditional;
 - semantic numerator delta from Cataclysm: Ignis Soulfires 1.8.0 exact-artifact action closure: **+8 `COUNTED_EXACT`**;
+- semantic numerator delta from Artifacts 13.2.5 exact-artifact base-provider closure: **+0** (`ZERO_SEMANTIC_BASE_GEAR`; 49 item entries, current-stack deduplication against Reliquified Artifacts);
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
 - semantic numerator delta from Reliquified L_Ender's Cataclysm 0.1.1 exact-artifact closure: **+7 `COUNTED_EXACT`**;
 - strict reconstructible semantic minimum: **1697**;
