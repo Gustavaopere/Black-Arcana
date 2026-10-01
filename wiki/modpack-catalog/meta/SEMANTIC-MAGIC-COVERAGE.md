@@ -203,12 +203,13 @@ Current semantic deltas since the 1382 checkpoint:
 - L_Ender's Cataclysm 3.33 contributes **+27 `COUNTED_EXACT`**: 24 discrete supernatural item/equipment actions plus 3 deliberate summoning rituals. Exact physical SHA-1 equals CurseForge File `8706841`; the exhaustive audit covers all 67 exact item classes, provider input/network seams, acquisition data and ritual/world reachability. Ordinary primary weapon modes, pets/locators, passive gear, recipe machinery, proximity auto-spawn and the generic five-variant post-defeat Boss Respawner are metric-excluded.
 - BetterEnd: New Dawn 21.0.34 contributes **+49 `COUNTED_EXACT`** ritual identities: 48 unique exact `betterend:infusion` recipe identities plus 1 Eternal Portal Ritual. Exact physical SHA-1 equals CurseForge File `8610367`; the provider ritual engine selects and settles each infusion recipe, while Eternal Pedestal/Eternal Ritual control closes the separate portal-activation identity. Ordinary processing recipes, passive effects, portal aftermath and worldgen are metric-excluded.
 - Weapons of Miracles 2.0.178 contributes **+12 `COUNTED_EXACT` strict + 1 `CONDITIONAL`** supernatural player-action identity. Exact physical SHA-1 equals CurseForge File `8829395`; exact `WOMSkills` closes 64 registered skill IDs. Semantic reconciliation promotes six exact WOM Epic-Skills-tree supernatural actions plus six normally reachable weapon-bound supernatural actions. `wom:flash_mutilation` is exact-current but remains conditional because its `wom:nova` owner lacks a closed normal acquisition route in the audited exact recipe/chest/drop surfaces. The other 51 martial/passive/mover/technological/support IDs are metric-excluded.
+- Born in Chaos 1.7.6 contributes **+17 `COUNTED_EXACT`** deliberate supernatural player actions. Exact physical SHA-1 equals CurseForge File `8268280`; bounded inspection covers 212 item classes, 514 provider procedures, 74 item-linked/global interaction procedure rows and 202 provider item IDs with acquisition evidence. Shared-owner/branch surfaces are semantically deduplicated, while passive/on-hit equipment, ordinary consumables, primary projectile weapon modes, loot/debug surfaces and mob-native magic are excluded.
 
-Therefore the strict reconstructible minimum is **1785**. This is a minimum, not a final denominator or coverage percentage.
+Therefore the strict reconstructible minimum is **1802**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1785 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact) and Weapons of Miracles (+12 exact).**
+**1802 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact), Weapons of Miracles (+12 exact) and Born in Chaos (+17 exact).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -224,6 +225,7 @@ Arithmetic cross-check by provider family:
 - L_Ender's Cataclysm base supernatural action/ritual layer: **27**;
 - BetterEnd: New Dawn ritual/infusion layer: **49**;
 - Weapons of Miracles discrete supernatural skill/action layer: **12**;
+- Born in Chaos supernatural artifact/staff/ritual-action layer: **17**;
 - Cataclysm: Ignis Soulfires discrete supernatural weapon-action layer: **8**;
 - Reliquified Ars Nouveau owner-scoped ability layer: **19**;
 - Reliquified Artifacts owner-scoped ability layer: **52**;
@@ -238,7 +240,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1785`.
+- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 17 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1802`.
 
 ### Counted ledger
 
@@ -288,6 +290,7 @@ Arithmetic cross-check by provider family:
 | [L_Ender's Cataclysm](../providers/✅-cataclysm/README.md) | 3.33 | 27 | `COUNTED_EXACT` | exact physical/publisher File `8706841` equality plus exhaustive 67-item-class and ritual audit closes 24 supernatural item/equipment actions + 3 deliberate summoning rituals; ordinary weapon modes, pets/locators, passive gear, processing, auto-spawn and generic boss-respawn infrastructure are excluded |
 | [BetterEnd: New Dawn](../providers/✅-betterend/README.md) | 21.0.34 | 49 | `COUNTED_EXACT` | exact physical/publisher File `8610367` equality closes 48 unique `betterend:infusion` ritual recipe identities plus 1 Eternal Portal Ritual; ordinary processing, passive effects, portal aftermath and worldgen are excluded |
 | [Weapons of Miracles](../providers/✅-weapons-of-miracles/README.md) | 2.0.178 | 12 | `COUNTED_EXACT` + 1 `CONDITIONAL` | exact physical/publisher File `8829395` equality closes all 64 registered WOM skill IDs; semantic reconciliation yields 13 supernatural roots, with 12 strict-counted and `flash_mutilation` conditional on current normal acquisition; 51 martial/passive/mover/technological/support IDs are excluded |
+| [Born in Chaos](../providers/✅-born-in-chaos/README.md) | 1.7.6 | 17 | `COUNTED_EXACT` | exact physical/publisher File `8268280` equality plus bounded item/procedure/acquisition audit closes 17 deliberate supernatural player actions; shared Icy Splash and target/result branches are deduplicated, while passive/on-hit gear, ordinary consumables, primary projectile modes, loot/debug surfaces and mob-native magic are excluded |
 | [Cataclysm: Ignis Soulfires](../providers/✅-ignis-soulfires/README.md) | 1.8.0 | 8 | `COUNTED_EXACT` | exact physical/publisher SHA-1 equality closes eight distinct player-invoked supernatural weapon actions across Bulwark, Souled Gauntlet, Immolator and Incinerator; packaged crafting/smithing/weapon-fusion routes close catalog-level acquisition; tool modes and passive gear/procs are excluded |
 | [Reliquified Ars Nouveau](../providers/✅-reliquified-ars-nouveau/README.md) | 0.8.1 | 19 | `COUNTED_SOURCE_PINNED` | exact-version source closes 19 registered relic owners and 19 owner-scoped `AbilityTemplate` roots with provider-native Ars loot routes |
 | [Reliquified Artifacts](../providers/✅-reliquified-artifacts/README.md) | 1.0.8 | 52 | `COUNTED_SOURCE_PINNED` | 48 Artifact owners map to 52 owner-scoped ability roots; source-level loot/conversion routes close acquisition for all owners |
@@ -304,7 +307,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1785** |  |  |
+| **Strict total** |  | **1802** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -426,7 +429,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows remain **outside the 1785 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
+These rows remain **outside the 1802 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -442,9 +445,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1785 is not “1785 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1785 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1785 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1802 is not “1802 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1802 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1802 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
