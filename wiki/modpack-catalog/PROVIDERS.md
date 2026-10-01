@@ -106,6 +106,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 99 | kubejsarsnouveau | `kubejsarsnouveau` | `kubejsarsnouveau-1.3.2.jar` | `1.3.2` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 100 | Dynamic RPG Resource Bars | `dynamic_resource_bars` | `dynamic_resource_bars-neoforge-0.7.1-1.21.1.jar` | `0.7.1` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 101 | EMF Compat: Iron's Spells | `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | `2.0.0` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
+| 102 | Artifacts | `artifacts` | `artifacts-neoforge-13.2.5.jar` | `13.2.5` | GEAR / ENCHANT / SUPPORT CONTENT | YES / ZERO_SEMANTIC_BASE_GEAR |
 
 ## Current version drifts already reconciled
 
