@@ -109,6 +109,9 @@ jobs:
           for cls in \
             org.betterx.betterend.rituals.InfusionRitual \
             org.betterx.betterend.rituals.EternalRitual \
+            org.betterx.betterend.blocks.EternalPedestal \
+            org.betterx.betterend.blocks.entities.EternalPedestalEntity \
+            org.betterx.betterend.registry.EndPortals \
             org.betterx.betterend.blocks.InfusionPedestal \
             org.betterx.betterend.blocks.entities.InfusionPedestalEntity \
             org.betterx.betterend.recipe.builders.InfusionRecipe \
@@ -117,6 +120,14 @@ jobs:
               echo "===== $cls =====" >> javap-rituals.txt
               javap -classpath BetterEnd-21.0.34.jar -p -c -constants "$cls" >> javap-rituals.txt 2>&1 || true
           done
+
+      - name: Summarize exact eternal ritual seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betterend
+          grep -E 'EternalPedestal|EternalRitual|EndPortals|getPortalIdByItem|checkStructure|activatePortal|useItemOn|setItem|ItemInteractionResult' javap-rituals.txt \
+            > eternal-ritual-seams.txt || true
 
       - name: Extract exact ritual reachability paths
         shell: bash
@@ -161,6 +172,7 @@ jobs:
             build/audit/betterend/infusion-results.txt
             build/audit/betterend/invalid-recipe-json.txt
             build/audit/betterend/javap-rituals.txt
+            build/audit/betterend/eternal-ritual-seams.txt
             build/audit/betterend/ritual-reachability-paths.txt
             build/audit/betterend/infusion-summary.txt
           if-no-files-found: error
