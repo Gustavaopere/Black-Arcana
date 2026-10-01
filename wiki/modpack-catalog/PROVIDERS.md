@@ -108,6 +108,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 101 | EMF Compat: Iron's Spells | `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | `2.0.0` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 102 | Artifacts | `artifacts` | `artifacts-neoforge-13.2.5.jar` | `13.2.5` | GEAR / ENCHANT / SUPPORT CONTENT | YES / ZERO_SEMANTIC_BASE_GEAR |
 | 103 | L_Ender's Cataclysm | `cataclysm` | `L_Ender's Cataclysm 1.21.1-3.33.jar` | `3.33` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
+| 104 | BetterEnd: New Dawn | `betterend` | `BetterEnd-21.0.34.jar` | `21.0.34` | RITUAL / INFUSION / PORTAL PROVIDER | YES |
 
 ## Current version drifts already reconciled
 
