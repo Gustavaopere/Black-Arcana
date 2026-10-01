@@ -22,5 +22,7 @@ Stage 06 is canonical on `main` as `IMPLEMENTED / FINAL VALIDATION DEFERRED` via
 
 Creating or merging the handoff does **not** validate Stage 06, does not alter `plans/STATUS.md`, and does not convert automated provider tests into real-provider acceptance.
 
+Current deterministic audit evidence is tracked in `docs/qa/rituals-final-validation-evidence.md`. On `main@44dfac8683a013e147f678e1016e91ed0ac128d8`, the canonical JAR has no external caller of `RitualEngine.start(...)`; the representative native grand ritual therefore remains blocked for real-player validation until a separately reviewed production activation surface exists. This blocker does not erase the implemented/tested ritual core.
+
 ## Exit criteria
 At least one integrated ritual and one Black Arcana grand ritual execute transactionally, respect progression/world safety and recover safely from interruption/restart as designed.
