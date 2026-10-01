@@ -111,6 +111,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 104 | BetterEnd: New Dawn | `betterend` | `BetterEnd-21.0.34.jar` | `21.0.34` | RITUAL / INFUSION / PORTAL PROVIDER | YES |
 | 105 | Weapons of Miracles | `wom` | `WeaponsOfMiracles-2.0.178.jar` | `2.0.178` | SUPERNATURAL ACTION / EPIC FIGHT SKILL PROVIDER | YES |
 | 106 | Born in Chaos | `born_in_chaos_v1` | `born_in_chaos_[Neoforge]_1.21.1_1.7.6.jar` | `1.7.6` | SUPERNATURAL ARTIFACT / STAFF / RITUAL-ACTION PROVIDER | YES |
+| 107 | Bosses'Rise | `block_factorys_bosses` | `block_factorys_bosses-2.1.2-neo-1.21.1.jar` | `2.1.2` | SUPERNATURAL BOSS-REWARD / SUMMON / WEAPON-ACTION PROVIDER | YES |
 
 ## Current version drifts already reconciled
 
