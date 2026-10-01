@@ -95,6 +95,79 @@ jobs:
           grep -Ei 'register|skill|guard|dodge|passive|identity|mover|weapon|cooldown|stamina|execute|activate|animation|particle|damage|projectile|summon|teleport|heal|shield' javap-skills.txt > skill-seams.txt || true
           grep -Ei 'skill|skills|weapon|artefact|artifact' wom-data.txt > provider-semantic-paths.txt || true
 
+      - name: Extract exact skill metadata and acquisition trees
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/wom
+          python3 - <<'PY'
+          import json, pathlib, re, zipfile
+          jar='WeaponsOfMiracles-2.0.178.jar'
+          with zipfile.ZipFile(jar) as z:
+              names=set(z.namelist())
+              # English localization entries whose key/value identifies WOM skill presentation.
+              lang={}
+              for candidate in ('assets/wom/lang/en_us.json','assets/wom/lang/en_us.json5'):
+                  if candidate in names:
+                      try: lang=json.loads(z.read(candidate))
+                      except Exception: pass
+              with open('skill-localization.txt','w',encoding='utf-8') as f:
+                  for k,v in sorted(lang.items()):
+                      lk=k.lower()
+                      if 'skill' in lk or any(tok in lk for tok in ('ender_step','voodoo','orbital','solar_arc','lunar_eclipse','demonic_ascension')):
+                          f.write(f'{k}\t{v}\n')
+
+              def dump_group(prefix, outname):
+                  rows=[]
+                  for name in sorted(names):
+                      if name.startswith(prefix) and name.endswith('.json'):
+                          try:
+                              data=json.loads(z.read(name))
+                              compact=json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                          except Exception as e:
+                              compact='INVALID_JSON:'+type(e).__name__
+                          rows.append((name,compact))
+                  pathlib.Path(outname).write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+                  return len(rows)
+
+              counts={
+                  'skill_parameters':dump_group('data/wom/skill_parameters/','skill-parameters-json.txt'),
+                  'epicskills':dump_group('data/wom/epicskills/','epicskills-json.txt'),
+                  'weapon_capabilities':dump_group('data/wom/capabilities/weapons/','weapon-capabilities-json.txt'),
+              }
+
+              loot=[]
+              for name in sorted(names):
+                  low=name.lower()
+                  if name.startswith('data/') and ('loot_table' in low or '/loot/' in low or '/loot_tables/' in low):
+                      if name.endswith('.json'):
+                          try: raw=z.read(name).decode('utf-8')
+                          except Exception: continue
+                          if 'wom:' in raw or 'weapons_of_miracles' in raw.lower(): loot.append(name)
+              pathlib.Path('wom-loot-references.txt').write_text('\n'.join(loot)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-json-counts.txt').write_text('\n'.join(f'{k}={v}' for k,v in counts.items())+'\n',encoding='utf-8')
+          PY
+
+      - name: Extract exact registry IDs
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/wom
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-skills.txt').read_text(encoding='utf-8',errors='replace')
+          start=text.find('===== reascer.wom.gameasset.WOMSkills =====')
+          end=text.find('\n===== ',start+10)
+          sec=text[start:end if end!=-1 else None]
+          names=[]
+          for m in re.finditer(r'// String ([^\n]+)',sec):
+              name=m.group(1).strip()
+              if 'DeferredRegister.register:' in sec[m.end():m.end()+450] and name not in names:
+                  names.append(name)
+          pathlib.Path('exact-skill-registry-ids.txt').write_text('\n'.join(names)+'\n',encoding='utf-8')
+          pathlib.Path('exact-skill-registry-count.txt').write_text(f'count={len(names)}\n',encoding='utf-8')
+          PY
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -109,4 +182,12 @@ jobs:
             build/audit/wom/javap-skills.txt
             build/audit/wom/skill-seams.txt
             build/audit/wom/provider-semantic-paths.txt
+            build/audit/wom/skill-localization.txt
+            build/audit/wom/skill-parameters-json.txt
+            build/audit/wom/epicskills-json.txt
+            build/audit/wom/weapon-capabilities-json.txt
+            build/audit/wom/wom-loot-references.txt
+            build/audit/wom/semantic-json-counts.txt
+            build/audit/wom/exact-skill-registry-ids.txt
+            build/audit/wom/exact-skill-registry-count.txt
           if-no-files-found: error
