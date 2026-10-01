@@ -168,6 +168,39 @@ jobs:
           pathlib.Path('exact-skill-registry-count.txt').write_text(f'count={len(names)}\n',encoding='utf-8')
           PY
 
+      - name: Prove exact WOM item bindings and acquisition surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/wom
+          : > javap-owner-acquisition.txt
+          for cls in \
+            reascer.wom.world.item.WOMItems \
+            reascer.wom.world.capabilities.item.WOMWeaponCapabilityPresets \
+            reascer.wom.world.loot.WOMChestLootTables \
+            reascer.wom.world.loot.WOMLootDropTables; do
+              echo "===== $cls =====" >> javap-owner-acquisition.txt
+              javap -classpath WeaponsOfMiracles-2.0.178.jar -p -c -constants "$cls" >> javap-owner-acquisition.txt 2>&1 || true
+          done
+          grep -Ei 'WOMSkills|WEAPON_INNATE|WEAPON_PASSIVE|register|loot|drop|chest|recipe|antitheus|agony|blackstar|ender_blaster|evil_tachi|gesetz|herrscher|jabberwocky|moonless|napoleon|nova|orbit|ruine|satsujin|solar|tormented_mind' \
+            javap-owner-acquisition.txt > owner-acquisition-seams.txt || true
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          with zipfile.ZipFile('WeaponsOfMiracles-2.0.178.jar') as z:
+              names=set(z.namelist())
+              rows=[]
+              for name in sorted(names):
+                  if name.startswith('data/wom/recipe/') and name.endswith('.json'):
+                      try:
+                          data=json.loads(z.read(name))
+                          compact=json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                      except Exception as e:
+                          compact='INVALID_JSON:'+type(e).__name__
+                      rows.append((name,compact))
+              pathlib.Path('recipes-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+              pathlib.Path('recipe-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -190,4 +223,8 @@ jobs:
             build/audit/wom/semantic-json-counts.txt
             build/audit/wom/exact-skill-registry-ids.txt
             build/audit/wom/exact-skill-registry-count.txt
+            build/audit/wom/javap-owner-acquisition.txt
+            build/audit/wom/owner-acquisition-seams.txt
+            build/audit/wom/recipes-json.txt
+            build/audit/wom/recipe-count.txt
           if-no-files-found: error
