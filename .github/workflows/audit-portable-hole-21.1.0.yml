@@ -1,0 +1,151 @@
+name: audit-portable-hole-21.1.0
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/portablehole
+          cd build/audit/portablehole
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/portable-hole-682568/5733788/portable-hole-682568-5733788.jar" \
+            -o PortableHole-v21.1.0-1.21.1-NeoForge.jar
+          test -s PortableHole-v21.1.0-1.21.1-NeoForge.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/portablehole
+          EXPECTED_SHA1="dd651e3c3b15496112ba2bcc3cdce7bf89d3ed85"
+          ACTUAL_SHA1="$(sha1sum PortableHole-v21.1.0-1.21.1-NeoForge.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum PortableHole-v21.1.0-1.21.1-NeoForge.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s PortableHole-v21.1.0-1.21.1-NeoForge.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=682568/5733788"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded provider inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/portablehole
+          jar tf PortableHole-v21.1.0-1.21.1-NeoForge.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib,re,zipfile
+          jar='PortableHole-v21.1.0-1.21.1-NeoForge.jar'
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              candidate_classes=[n for n in classes if re.search(r'(Hole|Item|Block|Temporary|Restore|Config|Registry|Content)\w*\.class$',n,re.I)]
+              data=[n for n in names if n.startswith('data/portablehole/')]
+              assets=[n for n in names if n.startswith('assets/portablehole/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'candidate_classes={len(candidate_classes)}\ndata_paths={len(data)}\nassets_paths={len(assets)}\n',encoding='utf-8')
+              pathlib.Path('candidate-classes.txt').write_text('\n'.join(candidate_classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data-paths.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              pathlib.Path('provider-asset-paths.txt').write_text('\n'.join(assets)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump candidate and full provider class surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/portablehole
+          : > javap-candidates.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"; cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-candidates.txt
+            javap -classpath PortableHole-v21.1.0-1.21.1-NeoForge.jar -p -c -constants "$cls" >> javap-candidates.txt 2>&1 || true
+          done < candidate-classes.txt
+          : > javap-provider.txt
+          grep '\.class$' jar-entries.txt | while IFS= read -r path; do
+            cls="${path%.class}"; cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-provider.txt
+            javap -classpath PortableHole-v21.1.0-1.21.1-NeoForge.jar -p -c -constants "$cls" >> javap-provider.txt 2>&1 || true
+          done
+
+      - name: Isolate player action and restoration seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/portablehole
+          grep -nE '(^| )use\(|useOn\(|releaseUsing\(|finishUsingItem\(|onUseTick\(|interactLivingEntity\(' javap-provider.txt > player-action-methods.txt || true
+          grep -nEi 'portable.?hole|temporary|restore|restor|scheduled|tick|cooldown|useOn|InteractionResult|UseOnContext|BlockPos|setBlock|removeBlock|destroyBlock|hardness|destroySpeed|particle|spark' javap-provider.txt > action-restoration-seams.txt || true
+
+      - name: Extract exact localization and acquisition
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/portablehole
+          python3 - <<'PY'
+          import collections,json,pathlib,zipfile
+          jar='PortableHole-v21.1.0-1.21.1-NeoForge.jar'
+          rows=[]
+          with zipfile.ZipFile(jar) as z:
+              names=set(z.namelist())
+              lang={}
+              for p in ('assets/portablehole/lang/en_us.json','assets/portablehole/lang/en_us.json5'):
+                  if p in names:
+                      try: lang=json.loads(z.read(p))
+                      except Exception: pass
+              pathlib.Path('localization.txt').write_text(
+                  '\n'.join(f'{k}\t{v}' for k,v in sorted(lang.items()))+'\n',encoding='utf-8')
+              for name in sorted(names):
+                  if not name.startswith('data/portablehole/') or not name.endswith('.json'): continue
+                  try: obj=json.loads(z.read(name))
+                  except Exception: continue
+                  if '/recipe/' in name:
+                      result=obj.get('result') if isinstance(obj,dict) else None
+                      item=None
+                      if isinstance(result,str): item=result
+                      elif isinstance(result,dict): item=result.get('id') or result.get('item')
+                      if item: rows.append((item,'RECIPE_RESULT',name,json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))))
+              pathlib.Path('acquisition.txt').write_text(
+                  '\n'.join(f'{item}\t{kind}\t{path}\t{raw}' for item,kind,path,raw in rows)+'\n',encoding='utf-8')
+              pathlib.Path('acquisition-count.txt').write_text(f'rows={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: portable-hole-21.1.0-exact-artifact-audit
+          path: |
+            build/audit/portablehole/hashes.txt
+            build/audit/portablehole/inventory.txt
+            build/audit/portablehole/jar-entries.txt
+            build/audit/portablehole/candidate-classes.txt
+            build/audit/portablehole/provider-data-paths.txt
+            build/audit/portablehole/provider-asset-paths.txt
+            build/audit/portablehole/javap-candidates.txt
+            build/audit/portablehole/player-action-methods.txt
+            build/audit/portablehole/action-restoration-seams.txt
+            build/audit/portablehole/localization.txt
+            build/audit/portablehole/acquisition.txt
+            build/audit/portablehole/acquisition-count.txt
+          if-no-files-found: warn
