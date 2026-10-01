@@ -110,5 +110,6 @@ jobs:
             build/audit/ignis-soulfires/relevant-paths.txt
             build/audit/ignis-soulfires/data-resources.txt
             build/audit/ignis-soulfires/lang-keys.txt
+            build/audit/ignis-soulfires/selected-recipes.txt
             build/audit/ignis-soulfires/javap-relevant.txt
           if-no-files-found: error
