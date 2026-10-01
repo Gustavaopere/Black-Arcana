@@ -93,20 +93,39 @@ jobs:
             javap -classpath "$JAR" -p -c -constants "$cls" >> javap-player-candidates.txt 2>&1 || true
           done < player-candidate-classes.txt
 
-      - name: Dump complete provider bytecode and item-reference seams
+      - name: Exhaust provider interaction seams
         shell: bash
         run: |
           set -euo pipefail
           cd build/audit/legendary
           JAR='legendary_monsters-2.2.2 MC 1.21.1.jar'
-          : > javap-all-provider.txt
+          python3 - <<'PY'
+          import pathlib, zipfile
+          tokens=[
+              b'PlayerInteractEvent', b'UseOnContext', b'InteractionResultHolder',
+              b'onKeyPacket', b'MessageArmorKey', b'RightClick', b'interactLivingEntity',
+              b'releaseUsing', b'onUseTick', b'finishUsingItem', b'useOn'
+          ]
+          hits=[]
+          with zipfile.ZipFile(JAR) as z:
+              for name in sorted(z.namelist()):
+                  if not name.endswith('.class') or 'legendary_monsters' not in name.lower(): continue
+                  raw=z.read(name)
+                  matched=[t.decode() for t in tokens if t in raw]
+                  if matched: hits.append((name,matched))
+          pathlib.Path('interaction-reference-classes.txt').write_text(
+              '\n'.join(f'{name}\t{",".join(matched)}' for name,matched in hits)+'\n',encoding='utf-8')
+          pathlib.Path('interaction-reference-count.txt').write_text(f'count={len(hits)}\n',encoding='utf-8')
+          PY
+          cut -f1 interaction-reference-classes.txt | sort -u > interaction-class-paths.txt
+          : > javap-interaction-classes.txt
           while IFS= read -r path; do
             [ -n "$path" ] || continue
             cls="${path%.class}"; cls="${cls//\//.}"
-            echo "===== $cls =====" >> javap-all-provider.txt
-            javap -classpath "$JAR" -p -c -constants "$cls" >> javap-all-provider.txt 2>&1 || true
-          done < provider-classes.txt
-          grep -nEi 'PlayerInteractEvent|RightClick|useOn|InteractionResultHolder|onKeyPacket|KeybindArmor|HEART_OF_TORNADO|SAND_CANNON|TOTEM_OF_MOSS|WAND_OF_CLOUDS|ENTITY_WARPER|VOID_ENTITY_WARPER|ATOM_SPLITTER|AXE_OF_LIGHTNING|THE_TESSERACT|FIERY_JAW|GREAT_FROST|MOSSY_HAMMER|GUARD_SUMMONER|KNIGHT_SUMMONER|SOUL_GREAT_SWORD|WITHERED_SCYTHE|MONSTROUS_ANCHOR|ANNIHILATOR' javap-all-provider.txt > provider-action-reference-seams.txt || true
+            echo "===== $cls =====" >> javap-interaction-classes.txt
+            javap -classpath "$JAR" -p -c -constants "$cls" >> javap-interaction-classes.txt 2>&1 || true
+          done < interaction-class-paths.txt
+          grep -nEi 'HEART_OF_TORNADO|heart_of_tornado|SAND_CANNON|sand_cannon|TOTEM_OF_MOSS|totem_of_moss|WAND_OF_CLOUDS|ENTITY_WARPER|VOID_ENTITY_WARPER|ATOM_SPLITTER|AXE_OF_LIGHTNING|THE_TESSERACT|FIERY_JAW|GREAT_FROST|MOSSY_HAMMER|GUARD_SUMMONER|KNIGHT_SUMMONER|SOUL_GREAT_SWORD|WITHERED_SCYTHE|MONSTROUS_ANCHOR|ANNIHILATOR' javap-interaction-classes.txt > provider-action-reference-seams.txt || true
 
       - name: Extract player-facing ability localization candidates
         shell: bash
@@ -178,7 +197,10 @@ jobs:
             build/audit/legendary/action-classes.txt
             build/audit/legendary/player-candidate-classes.txt
             build/audit/legendary/javap-player-candidates.txt
-            build/audit/legendary/javap-all-provider.txt
+            build/audit/legendary/interaction-reference-classes.txt
+            build/audit/legendary/interaction-reference-count.txt
+            build/audit/legendary/interaction-class-paths.txt
+            build/audit/legendary/javap-interaction-classes.txt
             build/audit/legendary/provider-action-reference-seams.txt
             build/audit/legendary/player-ability-localization.txt
             build/audit/legendary/activation-index.txt
