@@ -1,0 +1,166 @@
+name: audit-legendary-monsters-2.2.2
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/legendary
+          cd build/audit/legendary
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/legendary-monsters-944035/8715533/legendary-monsters-944035-8715533.jar" \
+            -o 'legendary_monsters-2.2.2 MC 1.21.1.jar'
+          test -s 'legendary_monsters-2.2.2 MC 1.21.1.jar'
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/legendary
+          JAR='legendary_monsters-2.2.2 MC 1.21.1.jar'
+          EXPECTED_SHA1='8910859ba94190dd8cbc8c2c1e2f07562db729b4'
+          ACTUAL_SHA1="$(sha1sum "$JAR" | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum "$JAR" | awk '{print $1}')"
+          BYTES="$(stat -c %s "$JAR")"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=944035/8715533"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded provider inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/legendary
+          JAR='legendary_monsters-2.2.2 MC 1.21.1.jar'
+          jar tf "$JAR" | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib,re,zipfile
+          jar='legendary_monsters-2.2.2 MC 1.21.1.jar'
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              provider=[n for n in classes if 'legendary_monsters' in n.lower()]
+              item_classes=[n for n in provider if '/item/' in n.lower() and '$' not in n]
+              action_classes=[n for n in provider if re.search(r'(RightClick|Clicked|Summon|Warper|Tesseract|Wand|Hammer|Jaw|Cannon|Javelin|Sword|Scythe|Shield|Armor|Keybind|Attack|Hurt|Use)', pathlib.PurePosixPath(n).name, re.I) and '$' not in n]
+              data=[n for n in names if n.startswith('data/legendary_monsters/')]
+              assets=[n for n in names if n.startswith('assets/legendary_monsters/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'provider_classes={len(provider)}\nitem_classes={len(item_classes)}\naction_classes={len(action_classes)}\n'
+                  f'data_paths={len(data)}\nassets_paths={len(assets)}\n',encoding='utf-8')
+              pathlib.Path('provider-classes.txt').write_text('\n'.join(provider)+'\n',encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(item_classes)+'\n',encoding='utf-8')
+              pathlib.Path('action-classes.txt').write_text('\n'.join(action_classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data-paths.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump exact player-facing candidate classes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/legendary
+          JAR='legendary_monsters-2.2.2 MC 1.21.1.jar'
+          cat item-classes.txt action-classes.txt | sort -u > player-candidate-classes.txt
+          : > javap-player-candidates.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"; cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-player-candidates.txt
+            javap -classpath "$JAR" -p -c -constants "$cls" >> javap-player-candidates.txt 2>&1 || true
+          done < player-candidate-classes.txt
+
+      - name: Index activation and semantic seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/legendary
+          grep -nE '(^| )use\(|useOn\(|releaseUsing\(|finishUsingItem\(|onUseTick\(|interactLivingEntity\(|hurtEnemy\(|inventoryTick\(|onKey|keybind|RightClick' javap-player-candidates.txt > activation-index.txt || true
+          grep -nEi 'summon|teleport|warp|cloud|lightning|thunder|freeze|frost|fire|flame|soul|void|chorus|tesseract|projectile|spawn|addFreshEntity|cooldown|effect|levitat|explosion|shield|anchor|javelin|wave|particle|ray|beam|heal|pull|push' javap-player-candidates.txt > semantic-seams.txt || true
+
+      - name: Extract exact registry localization and acquisition
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/legendary
+          JAR='legendary_monsters-2.2.2 MC 1.21.1.jar'
+          python3 - <<'PY'
+          import json,pathlib,re,zipfile
+          jar='legendary_monsters-2.2.2 MC 1.21.1.jar'
+          with zipfile.ZipFile(jar) as z:
+              names=set(z.namelist())
+              lang={}
+              for p in ('assets/legendary_monsters/lang/en_us.json','assets/legendary_monsters/lang/en_us.json5'):
+                  if p in names:
+                      try: lang=json.loads(z.read(p))
+                      except Exception: pass
+              pathlib.Path('localization.txt').write_text(
+                  '\n'.join(f'{k}\t{v}' for k,v in sorted(lang.items()))+'\n',encoding='utf-8')
+              rows=[]
+              for name in sorted(names):
+                  if not name.startswith('data/legendary_monsters/') or not name.endswith('.json'): continue
+                  try:
+                      obj=json.loads(z.read(name))
+                      raw=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception: continue
+                  low=name.lower()
+                  if '/recipe/' in low or '/recipes/' in low:
+                      result=obj.get('result') if isinstance(obj,dict) else None
+                      item=None
+                      if isinstance(result,str): item=result
+                      elif isinstance(result,dict): item=result.get('id') or result.get('item')
+                      if item: rows.append((item,'RECIPE_RESULT',name,raw))
+                  if '/loot_table/' in low or '/loot_tables/' in low or '/loot/' in low:
+                      for m in re.findall(r'"name":"(legendary_monsters:[^"]+)"',raw):
+                          rows.append((m,'LOOT_REFERENCE',name,raw))
+              pathlib.Path('acquisition.txt').write_text(
+                  '\n'.join(f'{item}\t{kind}\t{path}' for item,kind,path,_ in rows)+'\n',encoding='utf-8')
+              pathlib.Path('acquisition-detail.txt').write_text(
+                  '\n'.join(f'===== {item}\t{kind}\t{path} =====\n{raw}' for item,kind,path,raw in rows)+'\n',encoding='utf-8')
+              pathlib.Path('acquisition-count.txt').write_text(f'rows={len(rows)}\nunique_items={len({r[0] for r in rows})}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: legendary-monsters-2.2.2-exact-artifact-audit
+          path: |
+            build/audit/legendary/hashes.txt
+            build/audit/legendary/inventory.txt
+            build/audit/legendary/jar-entries.txt
+            build/audit/legendary/provider-classes.txt
+            build/audit/legendary/item-classes.txt
+            build/audit/legendary/action-classes.txt
+            build/audit/legendary/player-candidate-classes.txt
+            build/audit/legendary/javap-player-candidates.txt
+            build/audit/legendary/activation-index.txt
+            build/audit/legendary/semantic-seams.txt
+            build/audit/legendary/provider-data-paths.txt
+            build/audit/legendary/localization.txt
+            build/audit/legendary/acquisition.txt
+            build/audit/legendary/acquisition-detail.txt
+            build/audit/legendary/acquisition-count.txt
+          if-no-files-found: error
