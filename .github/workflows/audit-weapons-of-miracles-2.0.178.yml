@@ -1,0 +1,112 @@
+name: audit-weapons-of-miracles-2.0.178
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/wom
+          cd build/audit/wom
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/weapons-of-miracles-epicfight-918614/8829395/weapons-of-miracles-epicfight-918614-8829395.jar" \
+            -o WeaponsOfMiracles-2.0.178.jar
+          test -s WeaponsOfMiracles-2.0.178.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/wom
+          EXPECTED_SHA1="b507eb376778cfd1cbecec2841c38891b26a7349"
+          ACTUAL_SHA1="$(sha1sum WeaponsOfMiracles-2.0.178.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum WeaponsOfMiracles-2.0.178.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s WeaponsOfMiracles-2.0.178.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=918614/8829395"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded skill inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/wom
+          jar tf WeaponsOfMiracles-2.0.178.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib, re, zipfile
+          jar=pathlib.Path('WeaponsOfMiracles-2.0.178.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              skill_classes=[n for n in classes if re.search(r'/(skill|skills)/', n, re.I) or re.search(r'Skill[^/]*\.class$', n)]
+              skill_resources=[n for n in resources if re.search(r'(^|/)(skill|skills)(/|_)', n, re.I) or 'skill' in pathlib.PurePosixPath(n).name.lower()]
+              wom_data=[n for n in names if n.startswith('data/wom/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'skill_classes={len(skill_classes)}\nskill_resources={len(skill_resources)}\nwom_data={len(wom_data)}\n',
+                  encoding='utf-8')
+              pathlib.Path('skill-classes.txt').write_text('\n'.join(skill_classes)+'\n',encoding='utf-8')
+              pathlib.Path('skill-resources.txt').write_text('\n'.join(skill_resources)+'\n',encoding='utf-8')
+              pathlib.Path('wom-data.txt').write_text('\n'.join(wom_data)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump all skill-like classes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/wom
+          : > javap-skills.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-skills.txt
+            javap -classpath WeaponsOfMiracles-2.0.178.jar -p -c -constants "$cls" >> javap-skills.txt 2>&1 || true
+          done < skill-classes.txt
+
+      - name: Extract registry and player-action seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/wom
+          grep -Ei 'register|skill|guard|dodge|passive|identity|mover|weapon|cooldown|stamina|execute|activate|animation|particle|damage|projectile|summon|teleport|heal|shield' javap-skills.txt > skill-seams.txt || true
+          grep -Ei 'skill|skills|weapon|artefact|artifact' wom-data.txt > provider-semantic-paths.txt || true
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: weapons-of-miracles-2.0.178-exact-artifact-audit
+          path: |
+            build/audit/wom/hashes.txt
+            build/audit/wom/inventory.txt
+            build/audit/wom/jar-entries.txt
+            build/audit/wom/skill-classes.txt
+            build/audit/wom/skill-resources.txt
+            build/audit/wom/wom-data.txt
+            build/audit/wom/javap-skills.txt
+            build/audit/wom/skill-seams.txt
+            build/audit/wom/provider-semantic-paths.txt
+          if-no-files-found: error
