@@ -1,0 +1,176 @@
+name: audit-alexs-caves-1.0.10
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/alexscaves
+          cd build/audit/alexscaves
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/alexs-caves-continued-1645389/8856293/alexs-caves-continued-1645389-8856293.jar" \
+            -o alexscaves-1.0.10-neoforge+1.21.1.jar
+          test -s alexscaves-1.0.10-neoforge+1.21.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexscaves
+          EXPECTED_SHA1="6960b299a39a039ac8a5eb9b07be4ad0e3e0a570"
+          ACTUAL_SHA1="$(sha1sum alexscaves-1.0.10-neoforge+1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum alexscaves-1.0.10-neoforge+1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s alexscaves-1.0.10-neoforge+1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1645389/8856293"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded provider inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexscaves
+          JAR='alexscaves-1.0.10-neoforge+1.21.1.jar'
+          jar tf "$JAR" | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib, re, zipfile
+          jar=pathlib.Path('alexscaves-1.0.10-neoforge+1.21.1.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              item_classes=[n for n in classes if '/server/item/' in n and '$' not in n]
+              block_classes=[n for n in classes if '/server/block/' in n and '$' not in n]
+              message_classes=[n for n in classes if '/server/message/' in n and '$' not in n]
+              provider_data=[n for n in names if n.startswith('data/alexscaves/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'item_classes={len(item_classes)}\nblock_classes={len(block_classes)}\n'
+                  f'message_classes={len(message_classes)}\nprovider_data={len(provider_data)}\n',encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(item_classes)+'\n',encoding='utf-8')
+              pathlib.Path('block-classes.txt').write_text('\n'.join(block_classes)+'\n',encoding='utf-8')
+              pathlib.Path('message-classes.txt').write_text('\n'.join(message_classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(provider_data)+'\n',encoding='utf-8')
+          PY
+
+      - name: Exhaust exact item interaction signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexscaves
+          JAR='alexscaves-1.0.10-neoforge+1.21.1.jar'
+          : > javap-item-signatures.txt
+          : > javap-item-bytecode.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-item-signatures.txt
+            javap -classpath "$JAR" -p -s "$cls" >> javap-item-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-item-bytecode.txt
+            javap -classpath "$JAR" -p -c -constants "$cls" >> javap-item-bytecode.txt 2>&1 || true
+          done < item-classes.txt
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-item-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          pats=[' use(', ' useOn(', ' releaseUsing(', ' onUseTick(', ' finishUsingItem(', ' interactLivingEntity(', ' hurtEnemy(', ' inventoryTick(', ' onKeyPacket(']
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls=sections[i]; body=sections[i+1]
+              found=[p.strip(' (') for p in pats if p in body]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('activation-index.txt').write_text('\n'.join(f'{c}\t{m}' for c,m in rows)+'\n',encoding='utf-8')
+          pathlib.Path('activation-count.txt').write_text(f'classes={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Dump known supernatural and input seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexscaves
+          JAR='alexscaves-1.0.10-neoforge+1.21.1.jar'
+          : > javap-action-seams.txt
+          for cls in \
+            com.github.alexmodguy.alexscaves.server.item.SeaStaffItem \
+            com.github.alexmodguy.alexscaves.server.item.SugarStaffItem \
+            com.github.alexmodguy.alexscaves.server.item.TotemOfPossessionItem \
+            com.github.alexmodguy.alexscaves.server.item.OccultGemItem \
+            com.github.alexmodguy.alexscaves.server.item.GalenaGauntletItem \
+            com.github.alexmodguy.alexscaves.server.item.DarknessArmorItem \
+            com.github.alexmodguy.alexscaves.server.item.ACItemRegistry \
+            com.github.alexmodguy.alexscaves.server.message.ArmorKeyMessage; do
+              echo "===== $cls =====" >> javap-action-seams.txt
+              javap -classpath "$JAR" -p -c -constants "$cls" >> javap-action-seams.txt 2>&1 || true
+          done
+          grep -nEi 'addFreshEntity|SugarStaffHex|Possess|TotemPossessed|MagneticWeapon|onKeyPacket|teleport|cooldown|useOn|releaseUsing|onUseTick|controlled|bind|target|darkness|summon|hex|bolt' javap-action-seams.txt > action-seam-lines.txt || true
+
+      - name: Extract exact acquisition references
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexscaves
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          jar='alexscaves-1.0.10-neoforge+1.21.1.jar'
+          rows=[]
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              for name in names:
+                  if not name.startswith('data/alexscaves/') or not name.endswith('.json'): continue
+                  if '/recipe/' not in name and '/recipes/' not in name and '/loot_table/' not in name and '/loot_tables/' not in name: continue
+                  try:
+                      obj=json.loads(z.read(name))
+                      raw=json.dumps(obj,ensure_ascii=False,sort_keys=True)
+                  except Exception:
+                      continue
+                  ids=sorted(set(tok.strip('"{},[]: ') for tok in raw.replace('\\',' ').split() if 'alexscaves:' in tok))
+                  rows.append((name,','.join(ids)))
+          pathlib.Path('acquisition.txt').write_text('\n'.join(f'{n}\t{ids}' for n,ids in rows)+'\n',encoding='utf-8')
+          pathlib.Path('acquisition-count.txt').write_text(f'files={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: alexs-caves-1.0.10-exact-artifact-audit
+          path: |
+            build/audit/alexscaves/hashes.txt
+            build/audit/alexscaves/inventory.txt
+            build/audit/alexscaves/jar-entries.txt
+            build/audit/alexscaves/item-classes.txt
+            build/audit/alexscaves/block-classes.txt
+            build/audit/alexscaves/message-classes.txt
+            build/audit/alexscaves/provider-data.txt
+            build/audit/alexscaves/javap-item-signatures.txt
+            build/audit/alexscaves/javap-item-bytecode.txt
+            build/audit/alexscaves/activation-index.txt
+            build/audit/alexscaves/activation-count.txt
+            build/audit/alexscaves/javap-action-seams.txt
+            build/audit/alexscaves/action-seam-lines.txt
+            build/audit/alexscaves/acquisition.txt
+            build/audit/alexscaves/acquisition-count.txt
+          if-no-files-found: error
