@@ -18,7 +18,7 @@ Stage 09 is the consolidated exact-release-candidate validation campaign and rem
 
 ## Current active stage
 
-**Stage 06 — Rituals is the current numbered audit target. 06.01–06.04 are ✅ complete; 06.05 — Rituals Final Validation Handoff is the next required audit target.**
+**Stage 06 — Rituals is the current numbered audit target. 06.01–06.04 are ✅ complete; 06.05 — Rituals Final Validation Handoff is active and ⛔ blocked by the missing canonical player activation surface for `black_arcana:veil_anchor_consecration`. Real Eidolon/Malum provider acceptance remains pending.**
 
 Stage 05 — Casting & UX is `COMPLETE / ENGINEERING CLOSED / REAL-CLIENT RELEASE VALIDATION CARRIED TO STAGE 09`.
 
@@ -42,7 +42,7 @@ The manual rows themselves remain unresolved:
 | 04 World Safety | ✅ COMPLETE | historical completed predecessor |
 | 05 Casting & UX | ✅ ENGINEERING COMPLETE | real-client/provider-real rows transferred to Stage 09 under D035 |
 | 05A Arcane Danger | ✅ ENGINEERING COMPLETE | 05A.01–05A.13 ✅; real-client/real-modpack/provider rows transferred to Stage 09 under D035 |
-| 06 Rituals | 🟡 ACTIVE AUDIT TARGET | 06.01–06.04 ✅ complete; audit 06.05 next, then continue strictly in order |
+| 06 Rituals | 🟡 ACTIVE AUDIT TARGET | 06.01–06.04 ✅; 06.05 active — ⛔ grand-ritual validation blocked by missing canonical player activation surface; real-provider QA pending |
 | 07 Spell Domains | ⛔ BLOCKED BY 05A -> 06 | historical domain work remains reusable but is not the active target |
 | 07A Arcane Polarity, Fusion & Metamagic | ⛔ BLOCKED BY 07 | do not start until Stage 07 engineering closes |
 | 08 Progression & Balance | ⛔ BLOCKED BY 07A | RPG Skill Tree remains progression/attributes/Mastery/perks/gates authority |
