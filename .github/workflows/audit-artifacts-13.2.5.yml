@@ -1,0 +1,122 @@
+name: audit-artifacts-13.2.5
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/artifacts
+          cd build/audit/artifacts
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/artifacts-312353/8791899/artifacts-312353-8791899.jar" \
+            -o artifacts-neoforge-13.2.5.jar
+          test -s artifacts-neoforge-13.2.5.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/artifacts
+          EXPECTED_SHA1="fb6cd3be2d034dde369ffd7558c95c6daa44189e"
+          ACTUAL_SHA1="$(sha1sum artifacts-neoforge-13.2.5.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum artifacts-neoforge-13.2.5.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s artifacts-neoforge-13.2.5.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded semantic inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/artifacts
+          jar tf artifacts-neoforge-13.2.5.jar | sort > jar-entries.txt
+
+          python3 - <<'PY'
+          import pathlib, re, zipfile
+          jar = pathlib.Path("artifacts-neoforge-13.2.5.jar")
+          with zipfile.ZipFile(jar) as z:
+              names = sorted(z.namelist())
+              classes = [n for n in names if n.endswith(".class")]
+              resources = [n for n in names if not n.endswith(".class")]
+              ability = [n for n in classes if "/component/ability/" in n]
+              item_related = [n for n in classes if re.search(r"(ModItems|ArtifactItem|Umbrella|Chorus|Cloud|Flamingo|Warp|Scarf|Attractor|Charm|Pendant|Glove|Shoes|Boots|Totem)", n, re.I)]
+              with open("inventory.txt","w",encoding="utf-8") as f:
+                  f.write(f"entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nability_classes={len(ability)}\nitem_related_classes={len(item_related)}\n")
+              pathlib.Path("ability-classes.txt").write_text("\n".join(ability)+"\n", encoding="utf-8")
+              pathlib.Path("item-related-classes.txt").write_text("\n".join(item_related)+"\n", encoding="utf-8")
+              provider_data=[n for n in names if n.startswith("data/artifacts/")]
+              pathlib.Path("provider-data.txt").write_text("\n".join(provider_data)+"\n", encoding="utf-8")
+          PY
+
+      - name: Dump exact item/ability signatures and bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/artifacts
+          : > javap-semantic.txt
+          for cls in \
+            artifacts.registry.ModItems \
+            artifacts.registry.ModDataComponents \
+            artifacts.component.ability.DoubleJump \
+            artifacts.component.ability.SwimInAir \
+            artifacts.component.ability.DeathProtectionTeleport \
+            artifacts.component.ability.EnderPearlHungerCost \
+            artifacts.component.ability.CureEffects \
+            artifacts.component.ability.DamageAbsorption \
+            artifacts.component.ability.FluidCollision \
+            artifacts.component.ability.ReplenishHungerOnGrass \
+            artifacts.component.ability.mobeffect.AttackEffects \
+            artifacts.component.ability.mobeffect.PostDamageEffects \
+            artifacts.component.ability.retaliation.RetaliationEffects; do
+              echo "===== $cls =====" >> javap-semantic.txt
+              javap -classpath artifacts-neoforge-13.2.5.jar -p -c -constants "$cls" >> javap-semantic.txt 2>&1 || true
+          done
+
+      - name: Extract item registry constants
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/artifacts
+          javap -classpath artifacts-neoforge-13.2.5.jar -p -constants artifacts.registry.ModItems \
+            > moditems-signatures.txt
+          grep -E 'Holder<net.minecraft.world.item.Item>|Holder<.*Item' moditems-signatures.txt \
+            > moditems-fields.txt || true
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts-13.2.5-exact-artifact-audit
+          path: |
+            build/audit/artifacts/hashes.txt
+            build/audit/artifacts/inventory.txt
+            build/audit/artifacts/jar-entries.txt
+            build/audit/artifacts/ability-classes.txt
+            build/audit/artifacts/item-related-classes.txt
+            build/audit/artifacts/provider-data.txt
+            build/audit/artifacts/javap-semantic.txt
+            build/audit/artifacts/moditems-signatures.txt
+            build/audit/artifacts/moditems-fields.txt
+          if-no-files-found: error
