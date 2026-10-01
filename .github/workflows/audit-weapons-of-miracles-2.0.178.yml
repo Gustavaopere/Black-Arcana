@@ -201,6 +201,63 @@ jobs:
               pathlib.Path('recipe-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
           PY
 
+      - name: Prove Nova reachability across exact provider
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/wom
+          : > javap-all-provider.txt
+          grep '\.class        uses: actions/upload-artifact@v4
+        with:
+          name: weapons-of-miracles-2.0.178-exact-artifact-audit
+          path: |
+            build/audit/wom/hashes.txt
+            build/audit/wom/inventory.txt
+            build/audit/wom/jar-entries.txt
+            build/audit/wom/skill-classes.txt
+            build/audit/wom/skill-resources.txt
+            build/audit/wom/wom-data.txt
+            build/audit/wom/javap-skills.txt
+            build/audit/wom/skill-seams.txt
+            build/audit/wom/provider-semantic-paths.txt
+            build/audit/wom/skill-localization.txt
+            build/audit/wom/skill-parameters-json.txt
+            build/audit/wom/epicskills-json.txt
+            build/audit/wom/weapon-capabilities-json.txt
+            build/audit/wom/wom-loot-references.txt
+            build/audit/wom/semantic-json-counts.txt
+            build/audit/wom/exact-skill-registry-ids.txt
+            build/audit/wom/exact-skill-registry-count.txt
+            build/audit/wom/javap-owner-acquisition.txt
+            build/audit/wom/owner-acquisition-seams.txt
+            build/audit/wom/recipes-json.txt
+            build/audit/wom/recipe-count.txt
+            build/audit/wom/nova-class-references.txt
+            build/audit/wom/nova-data-references.txt
+            build/audit/wom/nova-data-reference-count.txt
+          if-no-files-found: error
+ jar-entries.txt | while IFS= read -r path; do
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all-provider.txt
+            javap -classpath WeaponsOfMiracles-2.0.178.jar -p -c -constants "$cls" >> javap-all-provider.txt 2>&1 || true
+          done
+          grep -nEi 'WOMItems\.NOVA|String nova|wom:nova|NOVA:' javap-all-provider.txt > nova-class-references.txt || true
+          python3 - <<'PY'
+          import pathlib, zipfile
+          hits=[]
+          with zipfile.ZipFile('WeaponsOfMiracles-2.0.178.jar') as z:
+              for name in sorted(z.namelist()):
+                  if not name.startswith('data/wom/') or name.endswith('/'): continue
+                  try: raw=z.read(name).decode('utf-8')
+                  except Exception: continue
+                  if 'wom:nova' in raw or '"nova"' in raw or ':nova' in raw:
+                      hits.append((name, raw[:20000]))
+          pathlib.Path('nova-data-references.txt').write_text(
+              '\n'.join(f'===== {n} =====\n{raw}' for n,raw in hits)+'\n', encoding='utf-8')
+          pathlib.Path('nova-data-reference-count.txt').write_text(f'count={len(hits)}\n',encoding='utf-8')
+          PY
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
