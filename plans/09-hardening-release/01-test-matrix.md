@@ -23,4 +23,16 @@ Under D035, Stage 09 is the release-blocking owner of physical/manual observatio
 - Epic Fight/EFIS coexistence without cast-legality authority transfer;
 - optional-provider absent/incompatible fail-closed behavior and provider-free core input.
 
+For Stage 05A Arcane Danger, the executable transfer contract is
+`plans/05a-arcane-danger/13-final-validation-handoff.md` and the evidence ledger is
+`docs/qa/arcane-danger-final-validation-evidence.md`. Release-blocking transferred rows include:
+
+- dangerous-profile reload/preflight convergence and stale forecast rejection;
+- baseline/equipment/Curios/RPG resistance-provider snapshots and post-activation swap safety;
+- real loaded-provider classification, including the currently absent top-level RPG Skill Tree artifact;
+- Corruption and Arcane Strain reconnect/death/restart/recovery behavior;
+- representative Backlash 1:1/reduced/delayed/terminal causal behavior in the assembled modpack;
+- 05A.11 real-client forecast thresholds, bounded gate presentation, reconnect/reload staleness, readability and accessibility;
+- optional-provider fail-closed behavior and dedicated-server isolation.
+
 These rows remain `PENDING / DEFERRED TO STAGE 09` until observed on an exact release candidate. Automated evidence may support setup but never converts a manual row to PASS. Any FAIL reopens the originating plan for correction before release.
