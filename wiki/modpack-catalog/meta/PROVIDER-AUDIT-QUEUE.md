@@ -20,7 +20,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, Phase 2BN fecha Ars Sable 1.1.2 como bridge/infra espacial Ars Nouveau ↔ Sable com **+0**, Phase 2BO fecha Farmer's Spell 'n Spellbooks 1.0.5.1 com **+6 `COUNTED_SOURCE_PINNED`**, Phase 2BP fecha SnackPirate's Aeromancy Additions 1.2.8 com **+10 `COUNTED_SOURCE_PINNED`**, Phase 2BQ fecha Ars Nouveau: Two-Way Portals 2.0.0 como `ZERO_SEMANTIC_PORTAL_INFRA` com **+0**, Phase 2BR fecha GTBC's Geomancy Plus 1.1.0-1.21.1 com **+12 `COUNTED_RELEASE_BOUNDED`**, e Phase 2BT fecha Vampire Spells Addon 0.0.9 como `ZERO_BRIDGE_INFRA` com **+0**. O mínimo corrente permanece **1344**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, Phase 2BN fecha Ars Sable 1.1.2 como bridge/infra espacial Ars Nouveau ↔ Sable com **+0**, Phase 2BO fecha Farmer's Spell 'n Spellbooks 1.0.5.1 com **+6 `COUNTED_SOURCE_PINNED`**, Phase 2BP fecha SnackPirate's Aeromancy Additions 1.2.8 com **+10 `COUNTED_SOURCE_PINNED`**, Phase 2BQ fecha Ars Nouveau: Two-Way Portals 2.0.0 como `ZERO_SEMANTIC_PORTAL_INFRA` com **+0**, Phase 2BR fecha GTBC's Geomancy Plus 1.1.0-1.21.1 com **+12 `COUNTED_RELEASE_BOUNDED`**, e Phase 2BT fecha Vampire Spells Addon 0.0.9 como `ZERO_BRIDGE_INFRA` com **+0**. Naquele checkpoint o mínimo permanecia **1344**. Reconciliações posteriores, incluindo o fechamento exato de Cataclysm: Ignis Soulfires 1.8.0 em **+8 `COUNTED_EXACT`**, elevam o mínimo estrito corrente para **1697**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -31,6 +31,7 @@ A Phase 2BJ substitui a reconciliação publisher-only anterior: o JAR exato Gaz
 - delta semântico Werewolves: **+1**;
 - delta semântico GTBC SpellLib: **+0**;
 - delta semântico Ignis Soulfires: Spellbooks 1.1.0 Phase 2BK: **+0** (`ZERO_BRIDGE_INFRA` exact-artifact);
+- delta semântico Cataclysm: Ignis Soulfires 1.8.0 — rebase cross-domain 01/10: **+8 `COUNTED_EXACT`**; physical SHA-1 = official publisher artifact; 8 active action roots with packaged owner-acquisition routes; tool modes/passive gear excluded;
 - delta semântico Ars Polymorphia 1.0.3 Phase 2BM: **+0** (`ZERO_SEMANTIC_BRIDGE`; exact source-pinned; current-host runtime QA fail-closed);
 - delta semântico Ars Sable 1.1.2 Phase 2BN: **+0** (`ZERO_SEMANTIC_BRIDGE`; exact source-pinned; spatial/compat infrastructure; current-host runtime QA fail-closed);
 - delta semântico Farmer's Spell 1.0.5.1 Phase 2BO: **+6** (`COUNTED_SOURCE_PINNED`; seis Gluttony spells; Scroll Forge focus route fechada em nível de catálogo; current-host runtime QA fail-closed);
@@ -414,7 +415,7 @@ Blockers atualmente **PARKED até existir input novo**:
 
 A próxima seleção deve escolher **outro componente ainda aberto** para o qual exista evidência current/exact capaz de reduzir incerteza de inventário ou de classificação. Defaults de provider, publisher prose ou branches preparatórias não substituem estado implantado. Se um candidato só puder avançar com navegação/material externo indisponível, registrar a pendência e passar ao próximo blocker seguro em vez de fabricar fechamento.
 
-Os estados correntes desta reconciliação passam a **1344 objetos semânticos mínimos / 67 de 100 componentes**. A promoção só se torna canônica na `main` após merge desta reconciliação e exact-SHA post-merge CI GREEN.
+O checkpoint histórico desta seção fechou em **1344 objetos semânticos mínimos / 67 de 100 componentes**. A autoridade corrente é o ledger reconstruído: **1697 objetos semânticos mínimos**, enquanto o antigo denominador `100` permanece histórico e o denominador técnico global continua `PENDING REBASE`. Cataclysm: Ignis Soulfires 1.8.0 entra no rebase como provider cross-domain exato; a promoção só é canônica após merge da tranche durável e exact-SHA post-merge CI GREEN.
 
 ## Regras
 
