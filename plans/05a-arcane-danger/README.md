@@ -88,7 +88,7 @@ Installed-first baseline is Curios NeoForge `9.5.1+1.21.1`. Curios integration i
 8. [Spell Danger Profiles](✅-08-spell-profiles.md)
 9. [Public Hazard API](✅-09-public-api.md)
 10. [RPG Skill Tree Integration](✅-10-rpg-skilltree-integration.md)
-11. [HUD, Tooltip & Preflight](11-hud-tooltip-preflight.md)
+11. [HUD, Tooltip & Preflight](✅-11-hud-tooltip-preflight.md)
 12. [Tests & Hardening](12-tests-hardening.md)
 13. [Final Validation Handoff](13-final-validation-handoff.md)
 
