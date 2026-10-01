@@ -9,8 +9,8 @@ Current sibling physical authority used for the cross-domain pass: `neoforge-rpg
 
 The canonical tree `wiki/modpack-catalog/providers/` now contains:
 
-- **117** top-level provider directories;
-- **115 ✅ cataloged**;
+- **118** top-level provider directories;
+- **116 ✅ cataloged**;
 - **2 ⚠️ partial / conditioned**;
 - **0 ❌**;
 - **0 🟡**;
@@ -23,7 +23,7 @@ The two current ⚠️ directories are:
 
 Folder prefixes track **catalog completeness**, not whether every deployed config/reachability/runtime gate has passed. A ✅ provider can therefore retain explicit runtime/config conditions inside its dossier.
 
-The 01/10 structural delta is `✅-ignis-soulfires`. It is cross-domain rather than a new row in the physical `Magic` category subtotal: the sibling dossier is filed under `Addons + Armor, Tools, and Weapons + Cosmetic + Ores and Resources`. Exact-artifact PR #491 / run `36832733575` proves physical↔publisher SHA-1 equality and closes eight discrete supernatural player actions.
+The 01/10 cross-domain structural deltas are `✅-ignis-soulfires` and `✅-artifacts`. Neither is a new row in the physical `Magic` category subtotal. Ignis exact-artifact PR #491 / run `36832733575` closes eight discrete supernatural player actions. Artifacts exact-artifact PR #493 / run `36834282003` closes 49 item entries and the base item-ability component surface as +0 independent semantic identities under current-stack deduplication with Reliquified Artifacts.
 
 ## 30/09 physical-Magic coverage correction
 
@@ -48,12 +48,12 @@ The historical duplicate Vampiric Ageing records remain consolidated:
 - canonical: `✅-vampiric-ageing`;
 - legacy material: `✅-vampiric-ageing/legacy-vampiricageing/`.
 
-Both identify mod id `vampiricageing`, installed JAR `vampiricageing-1.21-1.4.21.jar`, and the same source lineage. The current **117** count does not reintroduce that duplicate.
+Both identify mod id `vampiricageing`, installed JAR `vampiricageing-1.21-1.4.21.jar`, and the same source lineage. The current **118** count does not reintroduce that duplicate.
 
 ## Metric boundary
 
-**117 is not the current technical cross-domain denominator.** It is a structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical; the current technical denominator is still `PENDING REBASE`.
+**118 is not the current technical cross-domain denominator.** It is a structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical; the current technical denominator is still `PENDING REBASE`.
 
-Likewise, **117 is not the semantic-magic denominator**. After StarbuncleMania's exact +2 closure and Cataclysm: Ignis Soulfires 1.8.0's exact +8 cross-domain closure, the current strict reconstructible semantic minimum is **1697**, while the final semantic denominator remains open because Iron's Spellbooks KubeJS and Traveloptics still have genuine denominator/provenance blockers.
+Likewise, **118 is not the semantic-magic denominator**. After StarbuncleMania's exact +2 closure, Cataclysm: Ignis Soulfires 1.8.0's exact +8 cross-domain closure and Artifacts 13.2.5's exact +0 base-provider closure, the current strict reconstructible semantic minimum remains **1697**, while the final semantic denominator remains open because Iron's Spellbooks KubeJS and Traveloptics still have genuine denominator/provenance blockers.
 
 See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-30.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-30.md).
