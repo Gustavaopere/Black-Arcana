@@ -19,14 +19,14 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Download exact publisher artifact candidate
+      - name: Download exact physical-matching publisher artifact
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p build/audit/cataclysm
           cd build/audit/cataclysm
           curl -fL --retry 3 --retry-all-errors \
-            "https://cursemaven.com/curse/maven/lendercataclysm-551586/8931182/lendercataclysm-551586-8931182.jar" \
+            "https://cursemaven.com/curse/maven/lendercataclysm-551586/8706841/lendercataclysm-551586-8706841.jar" \
             -o cataclysm-1.21.1-3.33.jar
           test -s cataclysm-1.21.1-3.33.jar
 
@@ -41,7 +41,7 @@ jobs:
           BYTES="$(stat -c %s cataclysm-1.21.1-3.33.jar)"
           {
             echo "expected_physical_sha1=$EXPECTED_SHA1"
-            echo "publisher_file=551586/8931182"
+            echo "publisher_file=551586/8706841"
             echo "publisher_sha1=$ACTUAL_SHA1"
             echo "publisher_sha256=$ACTUAL_SHA256"
             echo "bytes=$BYTES"
