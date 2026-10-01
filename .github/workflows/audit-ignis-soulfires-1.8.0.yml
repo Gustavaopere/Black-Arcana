@@ -1,0 +1,151 @@
+name: audit-ignis-soulfires-1.8.0
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/ignis-soulfires
+          cd build/audit/ignis-soulfires
+          MODRINTH_URL="https://api.modrinth.com/maven/maven/modrinth/JqZc84xy/c8OxPdHE/JqZc84xy-c8OxPdHE.jar"
+          CURSEMAVEN_URL="https://cursemaven.com/curse/maven/cataclysm-ignis-soulfires-1390751/8620535/cataclysm-ignis-soulfires-1390751-8620535.jar"
+          if ! curl -fL --retry 3 --retry-all-errors "$MODRINTH_URL" -o ignissoulfires-1.8.0.jar; then
+            curl -fL --retry 3 --retry-all-errors "$CURSEMAVEN_URL" -o ignissoulfires-1.8.0.jar
+          fi
+          test -s ignissoulfires-1.8.0.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/ignis-soulfires
+          EXPECTED_SHA1="a6f1c8cfe673aaff17f081ee9546e3600b4c72f1"
+          ACTUAL_SHA1="$(sha1sum ignissoulfires-1.8.0.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum ignissoulfires-1.8.0.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s ignissoulfires-1.8.0.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded structural evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/ignis-soulfires
+          rm -rf extracted
+          mkdir extracted
+          cd extracted
+          jar xf ../ignissoulfires-1.8.0.jar
+          cd ..
+          jar tf ignissoulfires-1.8.0.jar | sort > jar-entries.txt
+
+          python3 - <<'PY'
+          import json, pathlib, zipfile, hashlib, re
+          root = pathlib.Path(".")
+          jar = root / "ignissoulfires-1.8.0.jar"
+          with zipfile.ZipFile(jar) as z:
+              names = sorted(z.namelist())
+              classes = [n for n in names if n.endswith(".class")]
+              resources = [n for n in names if not n.endswith(".class")]
+              provider = [n for n in names if "ignissoulfires" in n.lower()]
+              relevant = [n for n in names if re.search(r"(ability|bulwark|weapon|tool|armor|soul|ignit|prospect|tree|shield|immolat|grip|item|registry|register)", n, re.I)]
+              with open("inventory.txt","w",encoding="utf-8") as f:
+                  f.write(f"entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nprovider_paths={len(provider)}\nrelevant_paths={len(relevant)}\n")
+              pathlib.Path("provider-paths.txt").write_text("\n".join(provider)+"\n", encoding="utf-8")
+              pathlib.Path("relevant-paths.txt").write_text("\n".join(relevant)+"\n", encoding="utf-8")
+              data = [n for n in names if n.startswith("data/ignissoulfires/")]
+              pathlib.Path("data-resources.txt").write_text("\n".join(data)+"\n", encoding="utf-8")
+              lang_candidates = [n for n in names if n.endswith("/lang/en_us.json") and "ignissoulfires" in n]
+              out = []
+              for n in lang_candidates:
+                  obj = json.loads(z.read(n))
+                  for k,v in sorted(obj.items()):
+                      if re.search(r"(item|ability|tooltip|key|effect|advancement|entity|block)\.", k, re.I):
+                          out.append(f"{k} = {v}")
+              pathlib.Path("lang-keys.txt").write_text("\n".join(out)+"\n", encoding="utf-8")
+              targets = [
+                  "data/ignissoulfires/recipe/shape/bulwark_of_the_soul_flame.json",
+                  "data/ignissoulfires/recipe/smithing/bulwark_of_the_soul_flame.json",
+                  "data/ignissoulfires/recipe/weapon_infusion/souled_gauntlet_of_bulwark.json",
+                  "data/ignissoulfires/recipe/weapon_infusion/the_souled_immolator.json",
+                  "data/ignissoulfires/recipe/smithing/the_souled_incinerator.json",
+              ]
+              recipe_lines = []
+              def collect_ids(v):
+                  ids = []
+                  if isinstance(v, dict):
+                      for k, vv in v.items():
+                          if k in ("item", "tag", "id") and isinstance(vv, str):
+                              ids.append(f"{k}:{vv}")
+                          else:
+                              ids.extend(collect_ids(vv))
+                  elif isinstance(v, list):
+                      for vv in v:
+                          ids.extend(collect_ids(vv))
+                  return ids
+              for n in targets:
+                  if n not in names:
+                      recipe_lines.append(f"{n} | MISSING")
+                      continue
+                  obj = json.loads(z.read(n))
+                  rtype = obj.get("type", "")
+                  result = obj.get("result", {})
+                  if isinstance(result, str):
+                      result_id = result
+                  elif isinstance(result, dict):
+                      result_id = result.get("id") or result.get("item") or ""
+                  else:
+                      result_id = ""
+                  ids = sorted(set(collect_ids(obj)))
+                  recipe_lines.append(f"{n} | type={rtype} | result={result_id} | refs={';'.join(ids)}")
+              pathlib.Path("selected-recipes.txt").write_text("\n".join(recipe_lines)+"\n", encoding="utf-8")
+          PY
+
+      - name: Dump relevant Java signatures and bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/ignis-soulfires
+          : > javap-relevant.txt
+          jar tf ignissoulfires-1.8.0.jar             | grep '\.class$'             | grep -Ei '(ability|bulwark|weapon|tool|armor|soul|ignit|prospect|tree|shield|immolat|grip|item|registry|register|handler)'             | grep -v '\$[0-9][0-9]*\.class$'             | sed 's#/#.#g;s#\.class$##'             | sort -u             | while read -r cls; do
+                echo "===== $cls =====" >> javap-relevant.txt
+                javap -classpath ignissoulfires-1.8.0.jar -p -c -constants "$cls" >> javap-relevant.txt 2>&1 || true
+              done
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ignis-soulfires-1.8.0-exact-artifact-audit
+          path: |
+            build/audit/ignis-soulfires/hashes.txt
+            build/audit/ignis-soulfires/inventory.txt
+            build/audit/ignis-soulfires/jar-entries.txt
+            build/audit/ignis-soulfires/provider-paths.txt
+            build/audit/ignis-soulfires/relevant-paths.txt
+            build/audit/ignis-soulfires/data-resources.txt
+            build/audit/ignis-soulfires/lang-keys.txt
+            build/audit/ignis-soulfires/selected-recipes.txt
+            build/audit/ignis-soulfires/javap-relevant.txt
+          if-no-files-found: error
