@@ -4,13 +4,13 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. At the Phase 2BT checkpoint the strict minimum remained **1344**. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. At the Phase 2BT checkpoint the strict minimum remained **1344**. Subsequent current reconciliations recorded below now raise the strict reconstructible minimum to **1697**. The global denominator is still incomplete and no semantic percentage is declared.
 
-## Structural provider-directory inventory — current 30/09/2026 correction
+## Structural provider-directory inventory — current 01/10/2026 cross-domain rebase
 
-The canonical provider tree now contains **116 top-level provider directories = 114 ✅ + 2 ⚠️**. The 27/09 `115 = 101 ✅ + 14 ⚠️` snapshot and the later 29/09 normalization checkpoints remain historical. The +1 current structural delta is StarbuncleMania 1.5.8, discovered by the 30/09 physical-Magic category-directory re-audit and materialized as a complete exact provider catalog.
+The canonical provider tree now contains **117 top-level provider directories = 115 ✅ + 2 ⚠️**. The 27/09 `115 = 101 ✅ + 14 ⚠️` snapshot, the 29/09 normalization checkpoints and the 30/09 `116 = 114 ✅ + 2 ⚠️` StarbuncleMania closure remain historical. The 01/10 cross-domain rebase adds `✅-ignis-soulfires`: exact physical↔publisher artifact equality closes eight discrete supernatural player actions.
 
-This is a **repository catalog-structure metric only**. It does not regenerate the historical cross-domain component denominator, does not prove that 116 is the unique current physical-provider denominator, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
+This is a **repository catalog-structure metric only**. It does not regenerate the historical cross-domain component denominator, does not prove that 117 is the unique current physical-provider denominator, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
 
 See [PROVIDER-DIRECTORY-INVENTORY.md](./PROVIDER-DIRECTORY-INVENTORY.md).
 
@@ -43,11 +43,12 @@ Semantic effect of the current reconciliation:
 - Ozymandias Sundries physical 0.0.5 / embedded metadata 0.0.1 is now **✅ `COUNTED_EXACT` / +2 strict** after exact-artifact run `36286741917` hash-matched File `6978561`; the exact registrar has two unconditional registrations (`levitate`, `lightning_warp`), zero initializer branches and zero packaged Iron's spell-config override paths. Unregistered spell classes/localization residue are excluded.
 - Mowzie's Mobs 1.8.2 is now **⚠️ / +10 `COUNTED_EXACT` strict + 1 `CONDITIONAL`** after exact-artifact run `36288758348` hash-matched File `7760267`; the exact active array has 13 player-ability slots. Ten independent powers are strict-counted, `tunneling` remains config-conditional on deployed `enableTunneling`, `hit_boulder` and `backstab` are technical/subaction slots, and four declared ids are inactive.
 - Ice And Fire Community Edition 2.1.2 is now **⚠️ / +8 `COUNTED_EXACT` strict + 1 `CONDITIONAL`**. Exact reachability run `36323035696` closes seven provider-data routes; exact current-pack NeoForge 21.1.250 runtime audit `36327488231` closes Dread Lich Staff inherited equipment-drop reachability. Ghost Sword has exact acquisition but deployed `tools.phantasmalBladeAbility` remains unresolved.
+- Cataclysm: Ignis Soulfires 1.8.0 is now **✅ / +8 `COUNTED_EXACT` strict**. NON-MERGE exact-artifact audit #491 proves current physical SHA-1 equals the official 1.8.0 artifact; exact control/settlement branches close two Bulwark, two Souled Gauntlet, two Immolator and two Incinerator actions, and packaged crafting/smithing/weapon-fusion routes close catalog-level acquisition. Tool modes and passive gear/procs remain metric-excluded.
 - Mowzie's Cataclysm 1.2.2, Pickable Orbs 1.21.1-1.0.0, IronSable X Wind's Spellbooks 1.0.0, Iron's Gems 'n Jewelry 1.21.1-2.0.2 and Integrated Villages 1.3.3+1.21.1-neoforge are now **✅ exact zero-semantic closures / +0 strict each**. Their exact artifacts respectively close locator Eyes, pickup-effect entities, an existing-spell physics bridge, equipment proc payloads and worldgen/structure integration without minting independent player magic identities.
 - Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
 - Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
 
-The strict reconstructible semantic minimum is therefore **1689**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1697**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -139,9 +140,10 @@ Therefore:
 - semantic numerator delta from Ozymandias Sundries physical 0.0.5 exact-artifact closure: **+2 `COUNTED_EXACT`**;
 - semantic numerator delta from Mowzie's Mobs 1.8.2 exact-artifact closure: **+10 `COUNTED_EXACT`**; one additional Tunneling power remains conditional;
 - semantic numerator delta from Ice And Fire CE 2.1.2 exact-artifact/current-runtime reachability closure: **+8 `COUNTED_EXACT`**; only Ghost Sword remains conditional;
+- semantic numerator delta from Cataclysm: Ignis Soulfires 1.8.0 exact-artifact action closure: **+8 `COUNTED_EXACT`**;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
 - semantic numerator delta from Reliquified L_Ender's Cataclysm 0.1.1 exact-artifact closure: **+7 `COUNTED_EXACT`**;
-- strict reconstructible semantic minimum: **1689**;
+- strict reconstructible semantic minimum: **1697**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
