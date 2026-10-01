@@ -53,7 +53,7 @@ Read before beginning the campaign:
 - `plans/05a-arcane-danger/✅-09-public-api.md`
 - `plans/05a-arcane-danger/✅-10-rpg-skilltree-integration.md`
 - `plans/05a-arcane-danger/✅-11-hud-tooltip-preflight.md`
-- `plans/05a-arcane-danger/12-tests-hardening.md`
+- `plans/05a-arcane-danger/✅-12-tests-hardening.md`
 - `plans/DECISIONS.md`
 - `plans/STATUS.md`
 - `docs/qa/casting-ux-manual-matrix.md`

@@ -61,7 +61,7 @@ The exclusion is enforced by existing server-side boundaries rather than by four
 
 RPG mastery is a concrete integration and is checked separately. `RpgMasteryAwardObserver` is a `CastSuccessObserver`, not a damage observer. `RpgMasteryBacklashExclusionTest` proves a terminal Backlash settlement produces zero mastery awards while an explicit committed-cast success callback remains able to award exactly once. Together with the existing live non-recursion GameTest, these regressions close the explicit Backlash recursion/crit/lifesteal/proc/mastery exclusion row for Black Arcana-owned behavior.
 
-With this checkpoint, every row listed under `Required automated coverage` has explicit automated evidence. 05A.12's automated hardening matrix is therefore closed once the full runtime gates below are green. This does not close 05A.11 presentation, does not satisfy the Stage 05 real-client matrix, does not mark Stage 05A complete, and does not authorize promotion of Stage 06/07.
+With this checkpoint, every row listed under `Required automated coverage` has explicit automated evidence. 05A.12's automated hardening matrix is therefore closed once the full runtime gates below are green. 05A.11 presentation engineering is independently complete; its real-client perceptual rows and the shared Stage 05 real-client matrix remain deferred physical evidence under D035. This hardening task does not by itself mark Stage 05A complete or authorize promotion of Stage 06/07.
 
 ## Runtime gates
 Full CI must pass JUnit, diff sanity, NeoForge build, JAR inspection, GameTest server and dedicated-server smoke. Optional-provider profiles are tested separately where practical.
