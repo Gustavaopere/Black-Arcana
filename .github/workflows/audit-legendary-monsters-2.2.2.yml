@@ -93,6 +93,28 @@ jobs:
             javap -classpath "$JAR" -p -c -constants "$cls" >> javap-player-candidates.txt 2>&1 || true
           done < player-candidate-classes.txt
 
+      - name: Dump complete provider bytecode and item-reference seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/legendary
+          JAR='legendary_monsters-2.2.2 MC 1.21.1.jar'
+          : > javap-all-provider.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"; cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all-provider.txt
+            javap -classpath "$JAR" -p -c -constants "$cls" >> javap-all-provider.txt 2>&1 || true
+          done < provider-classes.txt
+          grep -nEi 'PlayerInteractEvent|RightClick|useOn|InteractionResultHolder|onKeyPacket|KeybindArmor|HEART_OF_TORNADO|SAND_CANNON|TOTEM_OF_MOSS|WAND_OF_CLOUDS|ENTITY_WARPER|VOID_ENTITY_WARPER|ATOM_SPLITTER|AXE_OF_LIGHTNING|THE_TESSERACT|FIERY_JAW|GREAT_FROST|MOSSY_HAMMER|GUARD_SUMMONER|KNIGHT_SUMMONER|SOUL_GREAT_SWORD|WITHERED_SCYTHE|MONSTROUS_ANCHOR|ANNIHILATOR' javap-all-provider.txt > provider-action-reference-seams.txt || true
+
+      - name: Extract player-facing ability localization candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/legendary
+          grep -Ei 'special ability|right.?click|hold .*click|press .*[crx]|summon|teleport|parry|charge forward|ability still wip' localization.txt > player-ability-localization.txt || true
+
       - name: Index activation and semantic seams
         shell: bash
         run: |
@@ -156,6 +178,9 @@ jobs:
             build/audit/legendary/action-classes.txt
             build/audit/legendary/player-candidate-classes.txt
             build/audit/legendary/javap-player-candidates.txt
+            build/audit/legendary/javap-all-provider.txt
+            build/audit/legendary/provider-action-reference-seams.txt
+            build/audit/legendary/player-ability-localization.txt
             build/audit/legendary/activation-index.txt
             build/audit/legendary/semantic-seams.txt
             build/audit/legendary/provider-data-paths.txt
