@@ -107,7 +107,7 @@ jobs:
               b'releaseUsing', b'onUseTick', b'finishUsingItem', b'useOn'
           ]
           hits=[]
-          with zipfile.ZipFile(JAR) as z:
+          with zipfile.ZipFile('legendary_monsters-2.2.2 MC 1.21.1.jar') as z:
               for name in sorted(z.namelist()):
                   if not name.endswith('.class') or 'legendary_monsters' not in name.lower(): continue
                   raw=z.read(name)
