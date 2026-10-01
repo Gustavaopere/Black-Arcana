@@ -131,6 +131,21 @@ jobs:
               pathlib.Path('acquisition-count.txt').write_text(f'rows={len(rows)}\n',encoding='utf-8')
           PY
 
+      - name: Prove exact stronghold acquisition
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/portablehole
+          python3 - <<'PY'
+          import pathlib,zipfile
+          jar='PortableHole-v21.1.0-1.21.1-NeoForge.jar'
+          path='data/portablehole/loot_table/chests/inject/stronghold_corridor.json'
+          with zipfile.ZipFile(jar) as z:
+              raw=z.read(path).decode('utf-8')
+          pathlib.Path('stronghold-corridor-loot.json').write_text(raw,encoding='utf-8')
+          PY
+          grep -E 'portablehole:portable_hole|minecraft:stronghold_corridor|entries|weight|chance' stronghold-corridor-loot.json > stronghold-corridor-seams.txt || true
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -148,4 +163,6 @@ jobs:
             build/audit/portablehole/localization.txt
             build/audit/portablehole/acquisition.txt
             build/audit/portablehole/acquisition-count.txt
+            build/audit/portablehole/stronghold-corridor-loot.json
+            build/audit/portablehole/stronghold-corridor-seams.txt
           if-no-files-found: warn
