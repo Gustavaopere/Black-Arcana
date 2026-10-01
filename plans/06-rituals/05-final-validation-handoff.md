@@ -18,6 +18,7 @@ Close the remaining Stage 06 real-modpack/provider acceptance surface with repro
 - Current physical Malum artifact: `malum-1.21.1-1.8.2.jar`, mod id `malum`, version `1.8.2`.
 - PR #43's post-merge workflow `33561613644` already passed the complete automated gate and published the canonical Stage 06 artifact for that historical merge SHA. That evidence proves the implemented contracts; it is not real-modpack/manual provider acceptance.
 - The current `main` contains later Stages and documentation. Final Stage 06 acceptance must therefore test a fresh exact candidate from the latest reconciled `main`, not reuse the historical PR #43 artifact as if it represented the current release candidate.
+- Deterministic closeout checkpoint (2026-10-01): `main@44dfac8683a013e147f678e1016e91ed0ac128d8` passed post-merge CI #4003. Source and canonical-JAR bytecode audit found no production caller of `RitualEngine.start(...)`; therefore `black_arcana:veil_anchor_consecration` is currently `BLOCKED — NO CANONICAL PLAYER ACTIVATION SURFACE` for real-player validation. The evidence ledger is `docs/qa/rituals-final-validation-evidence.md`.
 
 ## Frozen runtime facts
 
