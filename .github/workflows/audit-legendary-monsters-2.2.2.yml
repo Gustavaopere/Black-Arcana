@@ -184,6 +184,22 @@ jobs:
               pathlib.Path('acquisition-count.txt').write_text(f'rows={len(rows)}\nunique_items={len({r[0] for r in rows})}\n',encoding='utf-8')
           PY
 
+      - name: Prove exact Teleport Machine boss-summon surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/legendary
+          JAR='legendary_monsters-2.2.2 MC 1.21.1.jar'
+          : > javap-teleport-machine.txt
+          for cls in \
+            net.miauczel.legendary_monsters.block.custom.TeleportMachineBlock \
+            net.miauczel.legendary_monsters.block.blockentity.TeleportMachineBlockEntity; do
+              echo "===== $cls =====" >> javap-teleport-machine.txt
+              javap -classpath "$JAR" -p -c -constants "$cls" >> javap-teleport-machine.txt 2>&1 || true
+          done
+          grep -nEi 'EYE_CRYSTAL|eye_crystal|useItemOn|active|spawn|addFreshEntity|ModEntities|boss|teleport_machine|shrink|cooldown|tick' javap-teleport-machine.txt > teleport-machine-seams.txt || true
+          grep -E '^legendary_monsters:eye_crystal[[:space:]]' acquisition.txt > eye-crystal-acquisition.txt || true
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -210,4 +226,7 @@ jobs:
             build/audit/legendary/acquisition.txt
             build/audit/legendary/acquisition-detail.txt
             build/audit/legendary/acquisition-count.txt
+            build/audit/legendary/javap-teleport-machine.txt
+            build/audit/legendary/teleport-machine-seams.txt
+            build/audit/legendary/eye-crystal-acquisition.txt
           if-no-files-found: error
