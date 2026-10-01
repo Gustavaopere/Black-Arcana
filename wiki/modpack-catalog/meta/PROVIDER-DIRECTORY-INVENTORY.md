@@ -9,8 +9,8 @@ Current sibling physical authority used for the cross-domain pass: `neoforge-rpg
 
 The canonical tree `wiki/modpack-catalog/providers/` now contains:
 
-- **121** top-level provider directories;
-- **119 ✅ cataloged**;
+- **122** top-level provider directories;
+- **120 ✅ cataloged**;
 - **2 ⚠️ partial / conditioned**;
 - **0 ❌**;
 - **0 🟡**;
@@ -23,7 +23,7 @@ The two current ⚠️ directories are:
 
 Folder prefixes track **catalog completeness**, not whether every deployed config/reachability/runtime gate has passed. A ✅ provider can therefore retain explicit runtime/config conditions inside its dossier.
 
-The 01/10 cross-domain structural deltas are `✅-ignis-soulfires`, `✅-artifacts`, `✅-cataclysm`, `✅-betterend` and `✅-weapons-of-miracles`. None is a new row in the physical `Magic` category subtotal. Ignis exact-artifact PR #491 / run `36832733575` closes eight discrete supernatural player actions. Artifacts exact-artifact PR #493 / run `36834282003` closes 49 item entries and the base item-ability component surface as +0 independent semantic identities under current-stack deduplication with Reliquified Artifacts. L_Ender's Cataclysm exact-artifact PR #495 / run `36893767327` closes 24 discrete supernatural item/equipment actions plus 3 deliberate summoning rituals = **+27 `COUNTED_EXACT`**. BetterEnd exact-artifact PR #497 / run `36901757754` closes 48 `betterend:infusion` ritual identities plus one Eternal Portal Ritual = **+49 `COUNTED_EXACT`**. Weapons of Miracles exact-artifact PR #499 / run `36905999133` closes the exact 64-ID skill registry and dispositions it to **12 `COUNTED_EXACT` supernatural actions + 1 `CONDITIONAL` + 51 excluded**.
+The 01/10 cross-domain structural deltas are `✅-ignis-soulfires`, `✅-artifacts`, `✅-cataclysm`, `✅-betterend`, `✅-weapons-of-miracles` and `✅-born-in-chaos`. None is a new row in the physical `Magic` category subtotal. Ignis exact-artifact PR #491 / run `36832733575` closes eight discrete supernatural player actions. Artifacts exact-artifact PR #493 / run `36834282003` closes 49 item entries and the base item-ability component surface as +0 independent semantic identities under current-stack deduplication with Reliquified Artifacts. L_Ender's Cataclysm exact-artifact PR #495 / run `36893767327` closes 24 discrete supernatural item/equipment actions plus 3 deliberate summoning rituals = **+27 `COUNTED_EXACT`**. BetterEnd exact-artifact PR #497 / run `36901757754` closes 48 `betterend:infusion` ritual identities plus one Eternal Portal Ritual = **+49 `COUNTED_EXACT`**. Weapons of Miracles exact-artifact PR #499 / run `36905999133` closes the exact 64-ID skill registry and dispositions it to **12 `COUNTED_EXACT` supernatural actions + 1 `CONDITIONAL` + 51 excluded**. Born in Chaos exact-artifact PR #501 / run `36919074090` closes **17 deliberate supernatural player actions = +17 `COUNTED_EXACT`**, with passive/on-hit gear, ordinary consumables, primary projectile modes, loot/debug surfaces and mob-native magic excluded.
 
 ## 30/09 physical-Magic coverage correction
 
@@ -48,12 +48,12 @@ The historical duplicate Vampiric Ageing records remain consolidated:
 - canonical: `✅-vampiric-ageing`;
 - legacy material: `✅-vampiric-ageing/legacy-vampiricageing/`.
 
-Both identify mod id `vampiricageing`, installed JAR `vampiricageing-1.21-1.4.21.jar`, and the same source lineage. The current **121** count does not reintroduce that duplicate.
+Both identify mod id `vampiricageing`, installed JAR `vampiricageing-1.21-1.4.21.jar`, and the same source lineage. The current **122** count does not reintroduce that duplicate.
 
 ## Metric boundary
 
-**121 is not the current technical cross-domain denominator.** It is a structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical; the current technical denominator is still `PENDING REBASE`.
+**122 is not the current technical cross-domain denominator.** It is a structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical; the current technical denominator is still `PENDING REBASE`.
 
-Likewise, **121 is not the semantic-magic denominator**. After StarbuncleMania's exact +2 closure, Cataclysm: Ignis Soulfires 1.8.0's exact +8 cross-domain closure, Artifacts 13.2.5's exact +0 base-provider closure, L_Ender's Cataclysm 3.33's exact +27 closure, BetterEnd: New Dawn 21.0.34's exact +49 ritual closure and Weapons of Miracles 2.0.178's exact +12 supernatural-action closure, the current strict reconstructible semantic minimum is **1785**, while the final semantic denominator remains open because Iron's Spellbooks KubeJS and Traveloptics still have genuine denominator/provenance blockers.
+Likewise, **122 is not the semantic-magic denominator**. After StarbuncleMania's exact +2 closure, Cataclysm: Ignis Soulfires 1.8.0's exact +8 cross-domain closure, Artifacts 13.2.5's exact +0 base-provider closure, L_Ender's Cataclysm 3.33's exact +27 closure, BetterEnd: New Dawn 21.0.34's exact +49 ritual closure Weapons of Miracles 2.0.178's exact +12 supernatural-action closure and Born in Chaos 1.7.6's exact +17 player-magic closure, the current strict reconstructible semantic minimum is **1802**, while the final semantic denominator remains open because Iron's Spellbooks KubeJS and Traveloptics still have genuine denominator/provenance blockers.
 
 See [PHYSICAL-MAGIC-RECONCILIATION-2026-09-30.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-30.md).
