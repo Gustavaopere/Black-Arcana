@@ -1,0 +1,184 @@
+name: audit-ice-and-fire-dread-land-0.1.2
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/dreadland
+          cd build/audit/dreadland
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/iceandfire-dreadland-1664091/8708824/iceandfire-dreadland-1664091-8708824.jar" \
+            -o iceandfire_dreadland-0.1.2.jar
+          test -s iceandfire_dreadland-0.1.2.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dreadland
+          EXPECTED_SHA1="1790b22e21c69485d582b9da50174339a9dc994c"
+          ACTUAL_SHA1="$(sha1sum iceandfire_dreadland-0.1.2.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum iceandfire_dreadland-0.1.2.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s iceandfire_dreadland-0.1.2.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1664091/8708824"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded archive inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dreadland
+          jar tf iceandfire_dreadland-0.1.2.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib, re, zipfile
+          jar=pathlib.Path('iceandfire_dreadland-0.1.2.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              item_classes=[n for n in classes if re.search(r'/(item|items)/',n,re.I) and '$' not in n]
+              block_classes=[n for n in classes if re.search(r'/(block|blocks)/',n,re.I) and '$' not in n]
+              portalish=[n for n in names if re.search(r'portal|key|dreadland|dimension|teleport|realm',n,re.I)]
+              data=[n for n in names if n.startswith('data/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'item_classes={len(item_classes)}\nblock_classes={len(block_classes)}\n'
+                  f'portalish_paths={len(portalish)}\ndata_paths={len(data)}\n',encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(item_classes)+'\n',encoding='utf-8')
+              pathlib.Path('block-classes.txt').write_text('\n'.join(block_classes)+'\n',encoding='utf-8')
+              pathlib.Path('portalish-paths.txt').write_text('\n'.join(portalish)+'\n',encoding='utf-8')
+              pathlib.Path('data-paths.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              for meta in ('META-INF/neoforge.mods.toml','META-INF/mods.toml'):
+                  if meta in names:
+                      pathlib.Path('mod-metadata.txt').write_bytes(z.read(meta))
+                      break
+          PY
+
+      - name: Dump all provider class signatures and bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dreadland
+          : > javap-all-signatures.txt
+          : > javap-all-bytecode.txt
+          grep '\.class$' jar-entries.txt | while IFS= read -r path; do
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all-signatures.txt
+            javap -classpath iceandfire_dreadland-0.1.2.jar -p -s "$cls" >> javap-all-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-all-bytecode.txt
+            javap -classpath iceandfire_dreadland-0.1.2.jar -p -c -constants "$cls" >> javap-all-bytecode.txt 2>&1 || true
+          done
+
+      - name: Index exact player activation and portal seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dreadland
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-all-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          pats={
+            'use':re.compile(r'\buse\s*\('),
+            'useOn':re.compile(r'\buseOn\s*\('),
+            'releaseUsing':re.compile(r'\breleaseUsing\s*\('),
+            'onUseTick':re.compile(r'\bonUseTick\s*\('),
+            'finishUsingItem':re.compile(r'\bfinishUsingItem\s*\('),
+            'interactLivingEntity':re.compile(r'\binteractLivingEntity\s*\('),
+            'entityInside':re.compile(r'\bentityInside\s*\('),
+            'stepOn':re.compile(r'\bstepOn\s*\('),
+            'setPlacedBy':re.compile(r'\bsetPlacedBy\s*\('),
+            'onRemove':re.compile(r'\bonRemove\s*\('),
+          }
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls,body=sections[i],sections[i+1]
+              found=[n for n,p in pats.items() if p.search(body)]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('activation-index.txt').write_text(
+              '\n'.join(f'{cls}\t{methods}' for cls,methods in rows)+'\n',encoding='utf-8')
+          PY
+          grep -nEi 'portal|dreadland|dread_land|gravemaster|realm.?key|dimension|teleport|changeDimension|ServerPlayer|useOn|InteractionResult|key' \
+            javap-all-bytecode.txt > portal-key-seams.txt || true
+
+      - name: Extract exact data, recipes, loot and localization candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dreadland
+          python3 - <<'PY'
+          import json,pathlib,re,zipfile
+          with zipfile.ZipFile('iceandfire_dreadland-0.1.2.jar') as z:
+              names=sorted(z.namelist())
+              rows=[]
+              for name in names:
+                  if not name.startswith('data/') or not name.endswith('.json'): continue
+                  if any(x in name for x in ('/recipe/','/recipes/','/loot_table/','/loot_tables/','/dimension/','/worldgen/')):
+                      try:
+                          data=json.loads(z.read(name))
+                          compact=json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                      except Exception as e:
+                          compact='INVALID_JSON:'+type(e).__name__
+                      rows.append((name,compact))
+              pathlib.Path('provider-data-json.txt').write_text(
+                  '\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+              portal_rows=[(n,j) for n,j in rows if re.search(r'portal|key|dread|realm|dimension',n+' '+j,re.I)]
+              pathlib.Path('portal-data-json.txt').write_text(
+                  '\n'.join(f'===== {n} =====\n{j}' for n,j in portal_rows)+'\n',encoding='utf-8')
+              for name in names:
+                  if name.endswith('/lang/en_us.json') or name.endswith('/lang/en_us.json5'):
+                      try:
+                          raw=z.read(name).decode('utf-8')
+                      except Exception:
+                          continue
+                      pathlib.Path('en-us.txt').write_text(raw,encoding='utf-8')
+                      break
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ice-and-fire-dread-land-0.1.2-exact-artifact-audit
+          path: |
+            build/audit/dreadland/hashes.txt
+            build/audit/dreadland/inventory.txt
+            build/audit/dreadland/mod-metadata.txt
+            build/audit/dreadland/jar-entries.txt
+            build/audit/dreadland/item-classes.txt
+            build/audit/dreadland/block-classes.txt
+            build/audit/dreadland/portalish-paths.txt
+            build/audit/dreadland/data-paths.txt
+            build/audit/dreadland/javap-all-signatures.txt
+            build/audit/dreadland/javap-all-bytecode.txt
+            build/audit/dreadland/activation-index.txt
+            build/audit/dreadland/portal-key-seams.txt
+            build/audit/dreadland/provider-data-json.txt
+            build/audit/dreadland/portal-data-json.txt
+            build/audit/dreadland/en-us.txt
+          if-no-files-found: warn
