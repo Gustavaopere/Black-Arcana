@@ -117,6 +117,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 110 | Alex's Caves Continued | `alexscaves` | `alexscaves-1.0.10-neoforge+1.21.1.jar` | `1.0.10` | STAFF / POSSESSION / OBSERVATION / SUMMON / BIOME-RITUAL PROVIDER | YES |
 | 111 | Alex's Mobs Continued | `alexsmobs` | `alexsmobs-2.1.13-neoforge+1.21.1.jar` | `2.1.13` | TRANSMUTATION / BOSS-SUMMON / DIMENSIONAL-PORTAL PROVIDER | YES |
 | 112 | Ice And Fire: Dread Land | `iceandfire_dreadland` | `iceandfire_dreadland-0.1.2.jar` | `0.1.2` | DIMENSIONAL-PORTAL / SUPERNATURAL TRAVERSAL PROVIDER | YES |
+| 113 | Bosses of Mass Destruction | `bosses_of_mass_destruction` | `BOMD-NeoForge-1.21-1.3.3.jar` | `1.3.3` | BOSS-SUMMON / SUPERNATURAL TRAVERSAL / STRUCTURE-RESTORATION PROVIDER | YES |
 
 ## Current version drifts already reconciled
 
