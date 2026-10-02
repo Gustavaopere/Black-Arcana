@@ -212,19 +212,50 @@ Current semantic deltas since the 1382 checkpoint:
 - Ice And Fire: Dread Land 0.1.2 contributes **+1 `COUNTED_EXACT`** supernatural dimensional-portal action. Exact physical SHA-1 equals CurseForge File `8708824`; exhaustive activation inspection closes one Dreadland Key → Dread Portal Activation root, while exact trial rewards plus the exact Dreadland Key recipe close normal acquisition. Realm keys, portrait placement, portal infrastructure and delayed dimension-transfer lifecycle are excluded.
 - Bosses of Mass Destruction 1.3.3 contributes **+3 `COUNTED_EXACT` strict + 2 `CONDITIONAL`** supernatural roots. Exact physical SHA-1 equals CurseForge File `8448640`; exhaustive whole-artifact activation inspection closes Obsidilith Summoning, Earthdive Wall Teleport and Brimstone Structure Restoration as strict. Night Lich Summoning is conditional on deployed `lichConfig.summonMechanic.isEnabled`; Charged Ender Pearl Teleport is exact-current but its normal acquisition requires Ancient Anima from Lich loot and therefore inherits that gate. Soul Star locator use, automatic Void Blossom spawn and passive environmental blocks are excluded.
 - Deeper and Darker 1.4.1 contributes **+0 strict current** with a **3-root public publisher baseline**. Physical SHA-1 is `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`, while GitHub release `v1.4.1`, Modrinth `TuD0Zvi3` and CurseForge File `8201775` are byte-identical at SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f`. Publisher-baseline run `36959073485` closes Otherside Portal Activation, Sonorous Staff Sonic Boom and Soul Elytra Boost, but the installed JAR denominator is not projected from those differing bytes.
+### 02/10 current-provider semantic normalization
 
-Therefore the strict reconstructible minimum is **1846**. This is a minimum, not a final denominator or coverage percentage.
+The current provider tree also contained catalog-complete directories whose semantic disposition had not yet been projected into this shared ledger. This normalization changes no provider folder status and creates no new provider identity; it only reconciles already-canonical provider records.
+
+- [Ars Morph](../providers/✅-ars-morph/README.md) 2.0.0 contributes **+8 `COUNTED_SOURCE_PINNED`**: one registered Ars glyph (`ars_morph:glyph_morph`) plus seven player-invoked Identity2 ability adapter roots (Weald Walker, Wilden Hunter, Wilden Stalker, Starbuncle, Whirlisprig, Wixie and the currently eligible Ars Elemental Firenando). Internal Ars resolver/projectile/effect executions are descendants of those provider actions and are not recounted.
+- [Woodwalkers SpellBooks](../providers/✅-woodwalkers-spellbooks/README.md) 0.3.1-BETA contributes **+1 `COUNTED_SOURCE_PINNED`**: the exact-version source contains exactly one active Iron's spell registration, `woodwalkers_spellbooks:shapeshifting`, while Woodwalkers remains authority for morph state and the addon owns the transformation timer/XP/cast-gate overlay.
+- [Vampiric Ageing](../providers/✅-vampiric-ageing/README.md) 1.4.21 closes **9 registered provider-owned supernatural actions** but contributes **+0 strict** here. The exact source/action catalog proves the identities and their age/faction gates, while the current deployed provider configuration is not captured; source defaults are not substituted. All nine remain `CONDITIONAL` until deployed enable/gate state is authoritatively captured.
+
+Explicit zero-semantic dispositions are also projected for cataloged bridge/support providers that were previously absent from the shared ledger:
+
+- [Ace's Spell Utils](../providers/✅-aces-spell-utils/README.md): **+0** — API/library/runtime helpers and three SchoolTypes, with zero standalone registered spells.
+- [Apotheosis](../providers/✅-apotheosis/README.md): **+0** — affix/gem/loot/progression provider with no standalone spell/mana/ritual/casting registry.
+- [Apotheotic Creation](../providers/✅-apotheotic-creation/README.md): **+0** — Create↔Apotheosis item-attribute bridge only.
+- [Apothic Attributes](../providers/✅-apothic-attributes/README.md): **+0** — combat/attribute/effect support, zero standalone spells/glyphs/rituals.
+- [Apothic Compat](../providers/✅-apothic-compat/README.md): **+0** — loot-category/data-map/affix-blacklist compatibility, zero spell identities.
+- [Apothic Compats](../providers/✅-apothic-compats/README.md): **+0** — compatibility affix/gem/proc data over external providers, zero provider-owned spells/glyphs/rituals.
+- [Apothic Enchanting](../providers/✅-apothic-enchanting/README.md): **+0** — enchanting/infusion recipe authority; provider Eterna/Quanta/Arcana are enchanting statistics, not Black Arcana spell identities.
+- [Apothic Spawners](../providers/✅-apothic-spawners/README.md): **+0** — spawner lifecycle/modifier provider, zero spells/glyphs/rituals.
+- [Ars Sophisticated Compat](../providers/✅-ars-sophisticated-compat/README.md): **+0** — Ars↔Sophisticated Backpacks compatibility bridge, no provider-owned spell/glyph/ritual identity.
+- [Ars Nouveau: Two-Way Portals](../providers/✅-ars-two-way-portals/README.md): **+0 `ZERO_SEMANTIC_PORTAL_INFRA`** — exact portal infrastructure with zero spell/glyph/ritual/rite/ability surface.
+- [Ars Delight](../providers/✅-arsdelight/README.md): **+0 independent** — crossover items/effects/caster-tool/recipe behavior reuses Ars and Farmer's Delight identities rather than registering a new spell roster.
+- [Create Enchantment Industry Plus](../providers/✅-create-enchantment-industry-plus/README.md): **+0** — recipe/content extension with zero spells/glyphs/rituals.
+- [Dis-Enchanting Table](../providers/✅-dis-enchanting-table/README.md): **+0** — enchantment-economy utility; extracted enchantments retain original provider ownership.
+- [Dynamic RPG Resource Bars](../providers/✅-dynamic-rpg-resource-bars/README.md): **+0** — HUD/resource presentation over external mana/resource authorities.
+- [Epic Fight x Iron's Spells: Enhanced Animations](../providers/✅-efiscompat/README.md): **+0** — casting interaction/animation compatibility, zero standalone spells.
+- [EMF Compat: Iron's Spells](../providers/✅-emf-compat-iron-spells/README.md): **+0** — client casting-pose presentation only.
+- [Ignis Soulfires: Spellbooks](../providers/✅-ignis-soulfires-spellbooks/README.md): **+0 `ZERO_BRIDGE_INFRA`** — exact gear/loot compatibility bridge with zero provider-owned spell/ritual/equivalent-action registry.
+- [Iron's Apothic](../providers/✅-irons-apothic/README.md): **+0 independent** — 48 spell-oriented affix definitions resolve/trigger external Iron's spell holders; provider-owned spell registrations are zero.
+- [Reliquified L'Ender's Cataclysm New Relics Fix](../providers/✅-reliquified-lenders-cataclysm-new-relics-fix/README.md): **+0** — compatibility fix over five existing Reliquified relic identities, with no new semantic identities.
+- [Vampirism Integrations](../providers/✅-vampirism-integrations/README.md): **+0** — compatibility adapters such as Cold Sweat/Jade do not create new faction/action identities.
+
+
+Therefore the strict reconstructible minimum is **1855**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1846 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact), Weapons of Miracles (+12 exact), Born in Chaos (+17 exact), Bosses'Rise (+8 exact), Portable Hole (+1 exact), Legendary Monsters (+22 exact), Alex's Caves Continued (+8 exact), Alex's Mobs Continued (+1 exact), Ice And Fire: Dread Land (+1 exact) and Bosses of Mass Destruction (+3 exact).**
+**1855 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact), Weapons of Miracles (+12 exact), Born in Chaos (+17 exact), Bosses'Rise (+8 exact), Portable Hole (+1 exact), Legendary Monsters (+22 exact), Alex's Caves Continued (+8 exact), Alex's Mobs Continued (+1 exact), Ice And Fire: Dread Land (+1 exact) and Bosses of Mass Destruction (+3 exact), Ars Morph (+8 source-pinned) and Woodwalkers SpellBooks (+1 source-pinned).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
-- Ars ecosystem: **201**;
-- Iron's ecosystem and spell-content addons: **664**;
+- Ars ecosystem: **209**;
+- Iron's ecosystem and spell-content addons: **665**;
 - Companions provider-owned Magic Books: **9**;
 - Relics provider-owned ability/synergy layer: **41**;
 - More Relics owner-scoped ability layer: **61**;
@@ -255,7 +286,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 17 + 8 + 1 + 22 + 8 + 1 + 1 + 3 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1846`.
+- total: `209 + 665 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 17 + 8 + 1 + 22 + 8 + 1 + 1 + 3 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1855`.
 
 ### Counted ledger
 
@@ -269,6 +300,7 @@ Arithmetic cross-check by provider family:
 | [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | `COUNTED_SOURCE_PINNED` | one current Malum-backed registered glyph under the physical provider set |
 | [Ars Zero](../providers/✅-ars-zero/README.md) | 2.0.2 | 12 | `COUNTED_RELEASE_BOUNDED` | 12 current unique glyph capabilities; disabled copied AOE/Amplifier variants excluded |
 | [Ars Elemental](../providers/✅-ars-elemental/README.md) | 0.7.10.1 | 47 | `COUNTED_SOURCE_PINNED` | 39 production spell parts + 8 rituals |
+| [Ars Morph](../providers/✅-ars-morph/README.md) | 2.0.0 | 8 | `COUNTED_SOURCE_PINNED` | release-aligned exact-version source closes 1 registered Morph glyph + 7 player-invoked Identity2 ability adapter roots; internal Ars resolver/effect descendants are deduplicated |
 | [Ars 'n' Spells](../providers/✅-ars-n-spells/README.md) | 3.3.4 | 5 | `COUNTED_RELEASE_BOUNDED` | current 3.3.4 physical/publisher release preserves the five-ritual provider model; public NeoForge source is current through 3.3.3; eight `ars_cross_*` proxy slots contribute zero standalone identities |
 | [Iron's Spells 'n Spellbooks](../providers/✅-irons-spells/README.md) | 3.16.3 | 110 | `COUNTED_EXACT` | 110/110 active spell registry entries; deprecated Cloud of Regeneration excluded |
 | [Apprentice's Codex](../providers/✅-apprentice-codex/README.md) | 0.9.7.1 | 83 | `COUNTED_SOURCE_PINNED` | exact 83-spell registry inventory |
@@ -290,6 +322,7 @@ Arithmetic cross-check by provider family:
 | [Paladin Spells](../providers/✅-paladin-spells/README.md) | 1.1.1 | 5 | `COUNTED_SOURCE_PINNED` | 5/5 Holy spells |
 | [Wind's Spellbooks](../providers/✅-winds-spellbooks/README.md) | 1.0.5 | 7 | `COUNTED_RELEASE_BOUNDED` | 7/7 publisher/runtime-observed Wind spells; canonical provider-tree link restored |
 | [Ypsilon's Fundamentalism](../providers/✅-ypsilons-fundamentalism/README.md) | 1.1.7.1 | 15 | `COUNTED_SOURCE_PINNED` | 15/15 active spell registrations; commented prototypes excluded |
+| [Woodwalkers SpellBooks](../providers/✅-woodwalkers-spellbooks/README.md) | 0.3.1-BETA | 1 | `COUNTED_SOURCE_PINNED` | exact-version source closes exactly one active Iron's spell registration, `woodwalkers_spellbooks:shapeshifting`; Woodwalkers remains authority for morph state |
 | [Tunes n' Tomes](../providers/✅-tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | `COUNTED_RELEASE_BOUNDED` | current publisher Melodic roster enumerates 16 spells; migrated Sound ownership is not duplicated under Alshanex/FamiliarsLib |
 | [Alshanex's Familiars](../providers/✅-alshanex-familiars/README.md) | 4.0.3 | 18 | `COUNTED_EXACT` | exact hash-matched JAR closes 7 provider-owned spell registrations + 11 packaged `alshanex_familiars:ritual_recipe` identities; migrated Sound/Tunes content and external familiar casts are excluded |
 | [Companions!](../providers/✅-companions/README.md) | 1.3.4 | 9 | `COUNTED_SOURCE_PINNED` | nine direct/unconditional Magic Book action identities; source-level survival routes closed; Soul Mage reuse deduplicated |
@@ -329,7 +362,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1846** |  |  |
+| **Strict total** |  | **1855** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -451,11 +484,12 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows remain **outside the 1846 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
+These rows remain **outside the 1855 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
 | [Bosses of Mass Destruction](../providers/✅-bosses-of-mass-destruction/README.md) | exact File `8448640` closes five supernatural roots | `3 COUNTED_EXACT + 2 CONDITIONAL` | Night Lich Summoning depends on effective `lichConfig.summonMechanic.isEnabled`; Charged Ender Pearl normal acquisition requires Ancient Anima from Lich loot and inherits that gate |
+| [Vampiric Ageing](../providers/✅-vampiric-ageing/README.md) | exact source pin closes 9 registered provider-owned actions across Vampire, Hunter and Werewolf ageing trees | `CONDITIONAL 9 / +0 STRICT` | deployed provider configuration is unavailable; source defaults and default-enabled comments are not substituted for current enable/gate state |
 | [Traveloptics](../providers/⚠️-traveloptics/README.md) | current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; audited publisher baseline has 33 spells | `OPEN / OTHER_VERIFIED / +0 STRICT` | installed bytes differ from both the audited publisher alpha and known patch artifact, so the 33-ID baseline is not promoted as the exact current physical registry |
 | [Deeper and Darker](../providers/⚠️-deeper-and-darker/README.md) | current physical SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`; byte-identical official GitHub/Modrinth/CurseForge baseline closes 3 supernatural roots | `PUBLIC_BASELINE_3 / OTHER_VERIFIED / +0 STRICT` | installed bytes differ from all official 1.4.1 publisher artifacts tested, so portal/staff/Soul Elytra baseline actions are not promoted as exact-current until the physical JAR is inspected |
 | [Iron's Spellbooks KubeJS](../providers/⚠️-irons-spellbooks-kubejs/README.md) | base addon has 0 fixed built-in spell identities; exact 4.0.3 builder/framework source is known | `OPEN SCRIPT INVENTORY / +0 FIXED BUILT-IN` | current physical `kubejs/` script set is not captured; scripts may register Iron's spells/schools under arbitrary namespaces |
@@ -470,9 +504,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1846 is not “1846 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1846 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1846 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1855 is not “1855 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1855 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1855 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
