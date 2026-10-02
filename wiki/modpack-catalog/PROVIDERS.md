@@ -124,6 +124,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 117 | Grappling Hook Mod: Skybound | `grapplemod` | `grapplemod-1.1+1.21.1.neoforge.jar` | `1.1+1.21.1.neoforge` | TRAVERSAL / ROPE / PHYSICS / EQUIPMENT PROVIDER | ZERO_SEMANTIC_TRAVERSAL_PHYSICS |
 | 118 | Dimensional Sable | `dimensional_sable` | `dimensional_sable-1.0.5.jar` | `1.0.5` | CROSS-DIMENSION SUBLEVEL TRANSFER / MODPACK-TOOL PROVIDER | ZERO_SEMANTIC_DIMENSION_TRANSFER_INFRA |
 | 119 | Create Teleporters Remastered | `createteleporters` | `createteleporters-remastered-2.0.2b-neoforge-1.21.1.jar` | `2.0.2` (publisher `2.0.2b`) | CREATE TELEPORT / PORTAL / POCKET-DIMENSION INFRA | ZERO_SEMANTIC_TECH_TELEPORT_INFRA |
+| 120 | Create: Chromatic Return | `createchromaticreturn` | `createchromaticreturn-1.0.4-neoforge-1.21.1.jar` | `1.0.0` metadata / publisher `1.0.4` | ENCHANTMENT / CHARM / CREATE GEAR PROVIDER | ZERO_SEMANTIC_ENCHANT_GEAR_INFRA |
 
 ## Current version drifts already reconciled
 
