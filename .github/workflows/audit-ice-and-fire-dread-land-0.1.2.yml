@@ -161,6 +161,30 @@ jobs:
                       break
           PY
 
+      - name: Extract exact portal frame and key progression resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dreadland
+          python3 - <<'PY'
+          import pathlib, zipfile
+          wanted=[
+              'data/iceandfire_dreadland/tags/block/dreadland_portal_frame.json',
+              'data/iceandfire_dreadland/recipe/dreadland_key.json',
+              'data/iceandfire_dreadland/loot_table/spawners/trial_chamber/fire_dragon.json',
+              'data/iceandfire_dreadland/loot_table/spawners/trial_chamber/ice_dragon.json',
+              'data/iceandfire_dreadland/loot_table/spawners/trial_chamber/lightning_dragon.json',
+              'data/iceandfire_dreadland/loot_table/spawners/ominous/trial_chamber/fire_dragon.json',
+              'data/iceandfire_dreadland/loot_table/spawners/ominous/trial_chamber/ice_dragon.json',
+              'data/iceandfire_dreadland/loot_table/spawners/ominous/trial_chamber/lightning_dragon.json',
+          ]
+          with zipfile.ZipFile('iceandfire_dreadland-0.1.2.jar') as z:
+              rows=[]
+              for name in wanted:
+                  rows.append('===== '+name+' =====\n'+z.read(name).decode('utf-8'))
+              pathlib.Path('portal-progression-resources.txt').write_text('\n'.join(rows)+'\n',encoding='utf-8')
+          PY
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -181,4 +205,5 @@ jobs:
             build/audit/dreadland/provider-data-json.txt
             build/audit/dreadland/portal-data-json.txt
             build/audit/dreadland/en-us.txt
+            build/audit/dreadland/portal-progression-resources.txt
           if-no-files-found: warn
