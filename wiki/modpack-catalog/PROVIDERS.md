@@ -126,6 +126,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 119 | Create Teleporters Remastered | `createteleporters` | `createteleporters-remastered-2.0.2b-neoforge-1.21.1.jar` | `2.0.2` (publisher `2.0.2b`) | CREATE TELEPORT / PORTAL / POCKET-DIMENSION INFRA | ZERO_SEMANTIC_TECH_TELEPORT_INFRA |
 | 120 | Create: Chromatic Return | `createchromaticreturn` | `createchromaticreturn-1.0.4-neoforge-1.21.1.jar` | `1.0.0` metadata / publisher `1.0.4` | ENCHANTMENT / CHARM / CREATE GEAR PROVIDER | ZERO_SEMANTIC_ENCHANT_GEAR_INFRA |
 | 121 | Create: Deep Dark | `create_deep_dark` | `create_deep_dark-3.0.2-neoforge-1.21.1.jar` | `3.0.2` | ECHO GEAR / EFFECT / PROCESSING PROVIDER | ZERO_SEMANTIC_PASSIVE_ECHO_GEAR_PROCESSING |
+| 122 | Create: Mechanical Spawner | `create_mechanical_spawner` | `create_mechanical_spawner-1.21.1-1.3.2-6.0.10.jar` | publisher `1.3.2-6.0.10` / metadata `1.3.1-6.0.10` | KINETIC MOB-SPAWN / LOOT / RECIPE INFRA | ZERO_SEMANTIC_KINETIC_MOB_SPAWN_INFRA |
 
 ## Current version drifts already reconciled
 
