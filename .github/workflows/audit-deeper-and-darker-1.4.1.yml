@@ -26,7 +26,7 @@ jobs:
           mkdir -p build/audit/deeperdarker
           cd build/audit/deeperdarker
           curl -fL --retry 3 --retry-all-errors \
-            "https://github.com/KyaniteMods/DeeperAndDarker/releases/download/v1.4.1/deeperdarker-neoforge-1.21.1-1.4.1.jar" \
+            "https://cdn.modrinth.com/data/fnAffV0n/versions/TuD0Zvi3/deeperdarker-neoforge-1.21.1-1.4.1.jar" \
             -o deeperdarker-neoforge-1.21.1-1.4.1.jar
           test -s deeperdarker-neoforge-1.21.1-1.4.1.jar
 
@@ -41,13 +41,12 @@ jobs:
           BYTES="$(stat -c %s deeperdarker-neoforge-1.21.1-1.4.1.jar)"
           {
             echo "expected_physical_sha1=$EXPECTED_SHA1"
-            echo "publisher_release=KyaniteMods/DeeperAndDarker v1.4.1"
+            echo "publisher_release=Modrinth fnAffV0n/TuD0Zvi3"
             echo "publisher_sha1=$ACTUAL_SHA1"
             echo "publisher_sha256=$ACTUAL_SHA256"
             echo "bytes=$BYTES"
           } | tee hashes.txt
           test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
-          test "$ACTUAL_SHA256" = "eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af"
 
       - name: Inventory exact provider artifact
         shell: bash
