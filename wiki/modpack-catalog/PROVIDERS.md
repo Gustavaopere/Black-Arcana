@@ -115,6 +115,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 108 | Portable Hole | `portablehole` | `PortableHole-v21.1.0-1.21.1-NeoForge.jar` | `21.1.0` | MAGICAL TRAVERSAL / TEMPORARY PASSAGE PROVIDER | YES |
 | 109 | Legendary Monsters | `legendary_monsters` | `legendary_monsters-2.2.2 MC 1.21.1.jar` | `2.2.2` | SUPERNATURAL EQUIPMENT / SUMMON / PLAYER-ACTION PROVIDER | YES |
 | 110 | Alex's Caves Continued | `alexscaves` | `alexscaves-1.0.10-neoforge+1.21.1.jar` | `1.0.10` | STAFF / POSSESSION / OBSERVATION / SUMMON / BIOME-RITUAL PROVIDER | YES |
+| 111 | Alex's Mobs Continued | `alexsmobs` | `alexsmobs-2.1.13-neoforge+1.21.1.jar` | `2.1.13` | TRANSMUTATION / BOSS-SUMMON / DIMENSIONAL-PORTAL PROVIDER | YES |
 
 ## Current version drifts already reconciled
 
