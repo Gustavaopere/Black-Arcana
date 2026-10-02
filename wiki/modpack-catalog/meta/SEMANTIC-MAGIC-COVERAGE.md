@@ -493,6 +493,7 @@ The following audited providers add **0** independent semantic objects under thi
 - [Fantasy Armor](../providers/✅-fantasy-armor/README.md) — 1.2.4 source-pinned passive gear/effect magic; **+0**.
 - [Enchantment Descriptions](../providers/✅-enchantment-descriptions/README.md) — 21.1.11 client tooltip/localization presentation; **+0**.
 - [A Good Place](../providers/✅-a-good-place/README.md) — 1.2.5 client placement-animation presentation; **+0**.
+- [Ice And Fire: Dragon Care](../providers/✅-dragon-care/README.md) — current physical 1.3.1 identity plus official version-declared 1.21.1 source close husbandry/care/items/effects/tracking/loot/data/config support with no provider-owned spell/glyph/ritual/rite/action roster; bond rewards are passive buffs and syringe/shears/brush-QTE/Dragon Phone/Ash Sensor/tablets remain item/support interactions; `ZERO_SEMANTIC_HUSBANDRY_SUPPORT`, **+0**.
 - [Create: Apokinetics](../providers/✅-apokinetics/README.md) — exact hash-matched 1.0.6 machine-augmentation/support closure; bounded binary audit observes no spell/glyph/ritual semantic registry/resource/API surface; **+0**.
 - Bloodlines `gravebound_crit_action` / Sorcerous Strike — registered implementation, but exact 3.0.9 configured tree and rank defaults provide no normal survival acquisition path;
 - IronSable's ten physicalized base Iron's spells — already owned/countable under Iron's;
