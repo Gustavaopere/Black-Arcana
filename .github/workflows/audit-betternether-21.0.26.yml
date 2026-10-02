@@ -1,0 +1,159 @@
+name: audit-betternether-21.0.26
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/betternether
+          cd build/audit/betternether
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/betternether-neoforge-1422293/8615740/betternether-neoforge-1422293-8615740.jar" \
+            -o BetterNether-21.0.26.jar
+          test -s BetterNether-21.0.26.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betternether
+          EXPECTED_SHA1="69bb15fd21d3ffe6bf18fed83c17d7cdd85b7c85"
+          ACTUAL_SHA1="$(sha1sum BetterNether-21.0.26.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum BetterNether-21.0.26.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s BetterNether-21.0.26.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1422293/8615740"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded provider inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betternether
+          jar tf BetterNether-21.0.26.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib, re, zipfile
+          jar=pathlib.Path('BetterNether-21.0.26.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              provider_classes=[n for n in classes if 'betternether' in n.lower()]
+              data=[n for n in names if n.startswith('data/betternether/')]
+              semantic_re=re.compile(r'(spell|ritual|rite|magic|mana|arcane|glyph|sorcer|wizard|witch|occult|summon|teleport|portal|altar|pedestal|ability)',re.I)
+              semantic_paths=[n for n in names if semantic_re.search(n)]
+              item_classes=[n for n in provider_classes if re.search(r'/(item|items)/',n,re.I) and '$' not in n]
+              block_classes=[n for n in provider_classes if re.search(r'/(block|blocks)/',n,re.I) and '$' not in n]
+              pathlib.Path('inventory.txt').write_text(
+                f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                f'provider_classes={len(provider_classes)}\nprovider_data={len(data)}\n'
+                f'item_classes={len(item_classes)}\nblock_classes={len(block_classes)}\nsemantic_like_paths={len(semantic_paths)}\n',encoding='utf-8')
+              pathlib.Path('provider-classes.txt').write_text('\n'.join(provider_classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(item_classes)+'\n',encoding='utf-8')
+              pathlib.Path('block-classes.txt').write_text('\n'.join(block_classes)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-like-paths.txt').write_text('\n'.join(semantic_paths)+'\n',encoding='utf-8')
+          PY
+
+      - name: Index exact class signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betternether
+          : > javap-signatures.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-signatures.txt
+            javap -classpath BetterNether-21.0.26.jar -p -s "$cls" >> javap-signatures.txt 2>&1 || true
+          done < provider-classes.txt
+          grep -nEi ' use\(|useOn|releaseUsing|finishUsingItem|interactLivingEntity|right|left|click|activate|summon|teleport|portal|ritual|spell|magic|mana|arcane|glyph|ability|effect' javap-signatures.txt > interaction-semantic-signatures.txt || true
+
+      - name: Dump semantic-like candidate bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betternether
+          python3 - <<'PY'
+          import pathlib,re
+          classes=pathlib.Path('provider-classes.txt').read_text().splitlines()
+          rx=re.compile(r'(spell|ritual|rite|magic|mana|arcane|glyph|sorcer|wizard|witch|occult|summon|teleport|portal|altar|pedestal|ability)',re.I)
+          cand=[c for c in classes if rx.search(c)]
+          pathlib.Path('semantic-candidate-classes.txt').write_text('\n'.join(cand)+'\n',encoding='utf-8')
+          PY
+          : > javap-semantic-candidates.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-semantic-candidates.txt
+            javap -classpath BetterNether-21.0.26.jar -p -c -constants "$cls" >> javap-semantic-candidates.txt 2>&1 || true
+          done < semantic-candidate-classes.txt
+
+      - name: Extract recipe and brewing surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betternether
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          rows=[]
+          with zipfile.ZipFile('BetterNether-21.0.26.jar') as z:
+              for name in sorted(z.namelist()):
+                  low=name.lower()
+                  if not name.startswith('data/betternether/') or not name.endswith('.json'): continue
+                  if not any(t in low for t in ('recipe','loot','advancement','brewing','potion')): continue
+                  try:
+                      obj=json.loads(z.read(name))
+                      compact=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception as e:
+                      compact='INVALID_JSON:'+type(e).__name__
+                  rows.append((name,compact))
+          pathlib.Path('semantic-data-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+          pathlib.Path('semantic-data-json-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: betternether-21.0.26-exact-artifact-audit
+          path: |
+            build/audit/betternether/hashes.txt
+            build/audit/betternether/inventory.txt
+            build/audit/betternether/jar-entries.txt
+            build/audit/betternether/provider-classes.txt
+            build/audit/betternether/provider-data.txt
+            build/audit/betternether/item-classes.txt
+            build/audit/betternether/block-classes.txt
+            build/audit/betternether/semantic-like-paths.txt
+            build/audit/betternether/javap-signatures.txt
+            build/audit/betternether/interaction-semantic-signatures.txt
+            build/audit/betternether/semantic-candidate-classes.txt
+            build/audit/betternether/javap-semantic-candidates.txt
+            build/audit/betternether/semantic-data-json.txt
+            build/audit/betternether/semantic-data-json-count.txt
+          if-no-files-found: error
