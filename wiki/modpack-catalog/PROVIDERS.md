@@ -123,6 +123,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 116 | BetterNether: New Dawn | `betternether` | `BetterNether-21.0.26.jar` | `21.0.26` | WORLDGEN / PORTAL-FRAME / BREWING / EQUIPMENT PROVIDER | ZERO_SEMANTIC_WORLDGEN_BREWING_EQUIPMENT |
 | 117 | Grappling Hook Mod: Skybound | `grapplemod` | `grapplemod-1.1+1.21.1.neoforge.jar` | `1.1+1.21.1.neoforge` | TRAVERSAL / ROPE / PHYSICS / EQUIPMENT PROVIDER | ZERO_SEMANTIC_TRAVERSAL_PHYSICS |
 | 118 | Dimensional Sable | `dimensional_sable` | `dimensional_sable-1.0.5.jar` | `1.0.5` | CROSS-DIMENSION SUBLEVEL TRANSFER / MODPACK-TOOL PROVIDER | ZERO_SEMANTIC_DIMENSION_TRANSFER_INFRA |
+| 119 | Create Teleporters Remastered | `createteleporters` | `createteleporters-remastered-2.0.2b-neoforge-1.21.1.jar` | `2.0.2` (publisher `2.0.2b`) | CREATE TELEPORT / PORTAL / POCKET-DIMENSION INFRA | ZERO_SEMANTIC_TECH_TELEPORT_INFRA |
 
 ## Current version drifts already reconciled
 
