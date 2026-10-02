@@ -166,6 +166,24 @@ jobs:
           grep -nEi 'portal|worm|summon|capsid|transmut|soul|spectre|voidWormSummonable|voidWormSpawnDimensions|DIMENSIONAL_CARVER|MYSTERIOUS_WORM|SOUL_HEART|CAPSID|TRANSMUTATION_TABLE' \
             javap-semantic-seams.txt > semantic-seam-lines.txt || true
 
+      - name: Close exact transmutation and Void Worm gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexsmobs
+          JAR='alexsmobs-2.1.13-neoforge+1.21.1.jar'
+          : > javap-control-seams.txt
+          for cls in \
+            com.github.alexthe666.alexsmobs.inventory.MenuTransmutationTable \
+            com.github.alexthe666.alexsmobs.message.MessageTransmuteFromMenu \
+            com.github.alexthe666.alexsmobs.config.CommonConfig \
+            com.github.alexthe666.alexsmobs.config.AMConfig; do
+              echo "===== $cls =====" >> javap-control-seams.txt
+              javap -classpath "$JAR" -p -c -constants "$cls" >> javap-control-seams.txt 2>&1 || true
+          done
+          grep -nEi 'clickMenuButton|transmute|MessageTransmuteFromMenu|voidWormSummonable|voidWormSpawnWeight|voidWormSpawnDimensions|limitTransmutingToLootTables|transmutingExperienceCost|buildBoolean|buildInt' \
+            javap-control-seams.txt > control-seam-lines.txt || true
+
       - name: Extract exact acquisition and transformation resources
         shell: bash
         run: |
@@ -212,6 +230,8 @@ jobs:
             build/audit/alexsmobs/block-activation-count.txt
             build/audit/alexsmobs/javap-semantic-seams.txt
             build/audit/alexsmobs/semantic-seam-lines.txt
+            build/audit/alexsmobs/javap-control-seams.txt
+            build/audit/alexsmobs/control-seam-lines.txt
             build/audit/alexsmobs/recipes-json.txt
             build/audit/alexsmobs/recipes-count.txt
             build/audit/alexsmobs/loot-json.txt
