@@ -120,6 +120,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 113 | Bosses of Mass Destruction | `bosses_of_mass_destruction` | `BOMD-NeoForge-1.21-1.3.3.jar` | `1.3.3` | BOSS-SUMMON / SUPERNATURAL TRAVERSAL / STRUCTURE-RESTORATION PROVIDER | YES |
 | 114 | Deeper and Darker | `deeperdarker` | `deeperdarker-neoforge-1.21.1-1.4.1.jar` | `1.4.1` | PORTAL / STAFF / SUPERNATURAL EQUIPMENT PROVIDER | PARTIAL / OTHER_VERIFIED |
 | 115 | Protection Pixel | `protection_pixel` | `protection_pixel-2.2.1-neoforge-1.21.1.jar` | `2.2.1` | TECHNOLOGICAL EQUIPMENT / DEVICE PROVIDER | ZERO_SEMANTIC_TECH_GEAR |
+| 116 | BetterNether: New Dawn | `betternether` | `BetterNether-21.0.26.jar` | `21.0.26` | WORLDGEN / PORTAL-FRAME / BREWING / EQUIPMENT PROVIDER | ZERO_SEMANTIC_WORLDGEN_BREWING_EQUIPMENT |
 
 ## Current version drifts already reconciled
 
