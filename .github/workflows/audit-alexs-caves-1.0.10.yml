@@ -153,6 +153,25 @@ jobs:
           pathlib.Path('acquisition-count.txt').write_text(f'files={len(rows)}\n',encoding='utf-8')
           PY
 
+      - name: Dump exact block ritual and observation seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexscaves
+          JAR='alexscaves-1.0.10-neoforge+1.21.1.jar'
+          : > javap-block-action-seams.txt
+          for cls in \
+            com.github.alexmodguy.alexscaves.server.block.ConversionCrucibleBlock \
+            com.github.alexmodguy.alexscaves.server.block.blockentity.ConversionCrucibleBlockEntity \
+            com.github.alexmodguy.alexscaves.server.block.BeholderBlock \
+            com.github.alexmodguy.alexscaves.server.block.blockentity.BeholderBlockEntity \
+            com.github.alexmodguy.alexscaves.server.block.ForsakenIdolBlock; do
+              echo "===== $cls =====" >> javap-block-action-seams.txt
+              javap -classpath "$JAR" -p -c -constants "$cls" >> javap-block-action-seams.txt 2>&1 || true
+          done
+          grep -nEi 'acUse|useItemOn|convertBiome|setConvertingToBiome|getFinalSacrificeForBiome|startObserving|BEHOLDER|CONVERSION_CRUCIBLE|BIOME_TREAT|FORSAKEN_IDOL|addFreshEntity|forceChunk' \
+            javap-block-action-seams.txt > block-action-seam-lines.txt || true
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -173,4 +192,6 @@ jobs:
             build/audit/alexscaves/action-seam-lines.txt
             build/audit/alexscaves/acquisition.txt
             build/audit/alexscaves/acquisition-count.txt
+            build/audit/alexscaves/javap-block-action-seams.txt
+            build/audit/alexscaves/block-action-seam-lines.txt
           if-no-files-found: error
