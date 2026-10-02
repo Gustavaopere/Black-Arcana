@@ -1,0 +1,221 @@
+name: audit-alexs-mobs-2.1.13
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/alexsmobs
+          cd build/audit/alexsmobs
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/alexs-mobs-continued-1635121/8856498/alexs-mobs-continued-1635121-8856498.jar" \
+            -o alexsmobs-2.1.13-neoforge+1.21.1.jar
+          test -s alexsmobs-2.1.13-neoforge+1.21.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexsmobs
+          EXPECTED_SHA1="50ddafdf3d12b33331e4eecb4ab514ae451baadd"
+          ACTUAL_SHA1="$(sha1sum alexsmobs-2.1.13-neoforge+1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum alexsmobs-2.1.13-neoforge+1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s alexsmobs-2.1.13-neoforge+1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1635121/8856498"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded provider inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexsmobs
+          JAR='alexsmobs-2.1.13-neoforge+1.21.1.jar'
+          jar tf "$JAR" | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib, zipfile
+          jar=pathlib.Path('alexsmobs-2.1.13-neoforge+1.21.1.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              item_classes=[n for n in classes if '/alexsmobs/item/' in n and '$' not in pathlib.PurePosixPath(n).name]
+              block_classes=[n for n in classes if '/alexsmobs/block/' in n and '$' not in pathlib.PurePosixPath(n).name]
+              tile_classes=[n for n in classes if '/alexsmobs/tileentity/' in n and '$' not in pathlib.PurePosixPath(n).name]
+              message_classes=[n for n in classes if '/alexsmobs/message/' in n and '$' not in pathlib.PurePosixPath(n).name]
+              provider_data=[n for n in names if n.startswith('data/alexsmobs/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'item_classes={len(item_classes)}\nblock_classes={len(block_classes)}\n'
+                  f'tile_classes={len(tile_classes)}\nmessage_classes={len(message_classes)}\n'
+                  f'provider_data={len(provider_data)}\n', encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(item_classes)+'\n',encoding='utf-8')
+              pathlib.Path('block-classes.txt').write_text('\n'.join(block_classes)+'\n',encoding='utf-8')
+              pathlib.Path('tile-classes.txt').write_text('\n'.join(tile_classes)+'\n',encoding='utf-8')
+              pathlib.Path('message-classes.txt').write_text('\n'.join(message_classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(provider_data)+'\n',encoding='utf-8')
+          PY
+
+      - name: Exhaust exact item interaction signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexsmobs
+          JAR='alexsmobs-2.1.13-neoforge+1.21.1.jar'
+          : > javap-all-item-signatures.txt
+          : > javap-all-item-bytecode.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all-item-signatures.txt
+            javap -classpath "$JAR" -p -s "$cls" >> javap-all-item-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-all-item-bytecode.txt
+            javap -classpath "$JAR" -p -c -constants "$cls" >> javap-all-item-bytecode.txt 2>&1 || true
+          done < item-classes.txt
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-all-item-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          pats={
+            'use':r'\buse\s*\(', 'releaseUsing':r'\breleaseUsing\s*\(', 'onUseTick':r'\bonUseTick\s*\(',
+            'finishUsingItem':r'\bfinishUsingItem\s*\(', 'useOn':r'\buseOn\s*\(',
+            'interactLivingEntity':r'\binteractLivingEntity\s*\(', 'onEntityItemUpdate':r'\bonEntityItemUpdate\s*\(',
+            'hurtEnemy':r'\bhurtEnemy\s*\(', 'inventoryTick':r'\binventoryTick\s*\(', 'onKeyPacket':r'\bonKeyPacket\s*\('
+          }
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls,body=sections[i],sections[i+1]
+              found=[k for k,p in pats.items() if re.search(p,body)]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('item-activation-index.txt').write_text('\n'.join(f'{a}\t{b}' for a,b in rows)+'\n',encoding='utf-8')
+          pathlib.Path('item-activation-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Exhaust exact block interaction signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexsmobs
+          JAR='alexsmobs-2.1.13-neoforge+1.21.1.jar'
+          : > javap-all-block-signatures.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all-block-signatures.txt
+            javap -classpath "$JAR" -p -s "$cls" >> javap-all-block-signatures.txt 2>&1 || true
+          done < block-classes.txt
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-all-block-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          pats={'use':r'\buse\s*\(','useItemOn':r'\buseItemOn\s*\(','entityInside':r'\bentityInside\s*\('}
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls,body=sections[i],sections[i+1]
+              found=[k for k,p in pats.items() if re.search(p,body)]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('block-activation-index.txt').write_text('\n'.join(f'{a}\t{b}' for a,b in rows)+'\n',encoding='utf-8')
+          pathlib.Path('block-activation-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Dump known supernatural and transmutation seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexsmobs
+          JAR='alexsmobs-2.1.13-neoforge+1.21.1.jar'
+          : > javap-semantic-seams.txt
+          for cls in \
+            com.github.alexthe666.alexsmobs.item.ItemDimensionalCarver \
+            com.github.alexthe666.alexsmobs.item.ItemMysteriousWorm \
+            com.github.alexthe666.alexsmobs.block.BlockCapsid \
+            com.github.alexthe666.alexsmobs.tileentity.TileEntityCapsid \
+            com.github.alexthe666.alexsmobs.block.BlockTransmutationTable \
+            com.github.alexthe666.alexsmobs.tileentity.TileEntityTransmutationTable \
+            com.github.alexthe666.alexsmobs.item.AMItemRegistry \
+            com.github.alexthe666.alexsmobs.block.AMBlockRegistry \
+            com.github.alexthe666.alexsmobs.config.AMConfig; do
+              echo "===== $cls =====" >> javap-semantic-seams.txt
+              javap -classpath "$JAR" -p -c -constants "$cls" >> javap-semantic-seams.txt 2>&1 || true
+          done
+          grep -nEi 'portal|worm|summon|capsid|transmut|soul|spectre|voidWormSummonable|voidWormSpawnDimensions|DIMENSIONAL_CARVER|MYSTERIOUS_WORM|SOUL_HEART|CAPSID|TRANSMUTATION_TABLE' \
+            javap-semantic-seams.txt > semantic-seam-lines.txt || true
+
+      - name: Extract exact acquisition and transformation resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/alexsmobs
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          jar='alexsmobs-2.1.13-neoforge+1.21.1.jar'
+          groups={k:[] for k in ('recipes','loot','capsid')}
+          with zipfile.ZipFile(jar) as z:
+              for name in sorted(z.namelist()):
+                  if not name.startswith('data/alexsmobs/') or not name.endswith('.json'): continue
+                  if '/recipes/' in name or '/recipe/' in name: key='recipes'
+                  elif '/loot_tables/' in name or '/loot_table/' in name: key='loot'
+                  elif '/capsid_recipes/' in name: key='capsid'
+                  else: continue
+                  try: data=json.loads(z.read(name))
+                  except Exception as e: data={'_invalid':type(e).__name__}
+                  groups[key].append((name,json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':'))))
+          for key,rows in groups.items():
+              pathlib.Path(f'{key}-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+              pathlib.Path(f'{key}-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: alexs-mobs-2.1.13-exact-artifact-audit
+          path: |
+            build/audit/alexsmobs/hashes.txt
+            build/audit/alexsmobs/inventory.txt
+            build/audit/alexsmobs/jar-entries.txt
+            build/audit/alexsmobs/item-classes.txt
+            build/audit/alexsmobs/block-classes.txt
+            build/audit/alexsmobs/tile-classes.txt
+            build/audit/alexsmobs/message-classes.txt
+            build/audit/alexsmobs/provider-data.txt
+            build/audit/alexsmobs/javap-all-item-signatures.txt
+            build/audit/alexsmobs/javap-all-item-bytecode.txt
+            build/audit/alexsmobs/item-activation-index.txt
+            build/audit/alexsmobs/item-activation-count.txt
+            build/audit/alexsmobs/javap-all-block-signatures.txt
+            build/audit/alexsmobs/block-activation-index.txt
+            build/audit/alexsmobs/block-activation-count.txt
+            build/audit/alexsmobs/javap-semantic-seams.txt
+            build/audit/alexsmobs/semantic-seam-lines.txt
+            build/audit/alexsmobs/recipes-json.txt
+            build/audit/alexsmobs/recipes-count.txt
+            build/audit/alexsmobs/loot-json.txt
+            build/audit/alexsmobs/loot-count.txt
+            build/audit/alexsmobs/capsid-json.txt
+            build/audit/alexsmobs/capsid-count.txt
+          if-no-files-found: error
