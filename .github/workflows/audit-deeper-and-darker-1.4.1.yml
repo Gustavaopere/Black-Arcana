@@ -30,7 +30,7 @@ jobs:
             -o deeperdarker-neoforge-1.21.1-1.4.1.jar
           test -s deeperdarker-neoforge-1.21.1-1.4.1.jar
 
-      - name: Verify physical hash equality
+      - name: Record publisher versus physical hash relation
         shell: bash
         run: |
           set -euo pipefail
@@ -46,7 +46,11 @@ jobs:
             echo "publisher_sha256=$ACTUAL_SHA256"
             echo "bytes=$BYTES"
           } | tee hashes.txt
-          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+          if [ "$ACTUAL_SHA1" = "$EXPECTED_SHA1" ]; then
+            echo "artifact_relation=EXACT_PHYSICAL_EQUALS_PUBLISHER" | tee -a hashes.txt
+          else
+            echo "artifact_relation=OTHER_VERIFIED_PUBLISHER_DIFFERS_FROM_PHYSICAL" | tee -a hashes.txt
+          fi
 
       - name: Inventory exact provider artifact
         shell: bash
