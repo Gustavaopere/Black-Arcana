@@ -26,7 +26,7 @@ jobs:
           mkdir -p build/audit/deeperdarker
           cd build/audit/deeperdarker
           curl -fL --retry 3 --retry-all-errors \
-            "https://cdn.modrinth.com/data/fnAffV0n/versions/TuD0Zvi3/deeperdarker-neoforge-1.21.1-1.4.1.jar" \
+            "https://cursemaven.com/curse/maven/deeperdarker-659011/8201775/deeperdarker-659011-8201775.jar" \
             -o deeperdarker-neoforge-1.21.1-1.4.1.jar
           test -s deeperdarker-neoforge-1.21.1-1.4.1.jar
 
@@ -41,7 +41,7 @@ jobs:
           BYTES="$(stat -c %s deeperdarker-neoforge-1.21.1-1.4.1.jar)"
           {
             echo "expected_physical_sha1=$EXPECTED_SHA1"
-            echo "publisher_release=Modrinth fnAffV0n/TuD0Zvi3"
+            echo "publisher_release=CurseForge 659011/8201775"
             echo "publisher_sha1=$ACTUAL_SHA1"
             echo "publisher_sha256=$ACTUAL_SHA256"
             echo "bytes=$BYTES"
