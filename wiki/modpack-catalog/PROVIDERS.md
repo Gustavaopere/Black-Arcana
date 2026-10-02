@@ -121,6 +121,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 114 | Deeper and Darker | `deeperdarker` | `deeperdarker-neoforge-1.21.1-1.4.1.jar` | `1.4.1` | PORTAL / STAFF / SUPERNATURAL EQUIPMENT PROVIDER | PARTIAL / OTHER_VERIFIED |
 | 115 | Protection Pixel | `protection_pixel` | `protection_pixel-2.2.1-neoforge-1.21.1.jar` | `2.2.1` | TECHNOLOGICAL EQUIPMENT / DEVICE PROVIDER | ZERO_SEMANTIC_TECH_GEAR |
 | 116 | BetterNether: New Dawn | `betternether` | `BetterNether-21.0.26.jar` | `21.0.26` | WORLDGEN / PORTAL-FRAME / BREWING / EQUIPMENT PROVIDER | ZERO_SEMANTIC_WORLDGEN_BREWING_EQUIPMENT |
+| 117 | Grappling Hook Mod: Skybound | `grapplemod` | `grapplemod-1.1+1.21.1.neoforge.jar` | `1.1+1.21.1.neoforge` | TRAVERSAL / ROPE / PHYSICS / EQUIPMENT PROVIDER | ZERO_SEMANTIC_TRAVERSAL_PHYSICS |
 
 ## Current version drifts already reconciled
 
