@@ -215,6 +215,7 @@ Current semantic deltas since the 1382 checkpoint:
 - Protection Pixel 2.2.1 contributes **+0 `ZERO_SEMANTIC_TECH_GEAR`**. Exact physical SHA-1 equals CurseForge File `7549821`; complete provider inspection finds 222 procedures, 104 item classes and 13 input/network classes centered on technological equipment/device behavior, with no provider-owned spell/ritual/glyph/mana/arcane registry or resource surface.
 - BetterNether: New Dawn 21.0.26 contributes **+0 `ZERO_SEMANTIC_WORLDGEN_BREWING_EQUIPMENT`**. Exact physical SHA-1 equals CurseForge File `8615740`; exhaustive class/resource inspection resolves altar/portal/pedestal hits to worldgen structures and portal-frame infrastructure, while brewing/consumables/equipment remain processing or gear. No provider-owned spell/ritual/glyph/ability roster is present.
 - Grappling Hook Mod: Skybound 1.1 contributes **+0 `ZERO_SEMANTIC_TRAVERSAL_PHYSICS`**. Exact physical SHA-1 equals CurseForge File `8176552`; exact inspection resolves Grappling Hook/rope, motor, rocket, magnet, dual-hook, forcefield, Ender Staff and Long Fall Boots to traversal physics/equipment. The Ender Staff action is a look-vector launch through the provider physics controller rather than teleportation, portal or spell settlement.
+- Dimensional Sable 1.0.5 contributes **+0 `ZERO_SEMANTIC_DIMENSION_TRANSFER_INFRA`**. Exact physical SHA-1 equals Modrinth version `l9l5j4Zh`; the 38-entry/21-class artifact exposes a Brigadier `/sable dimension_set` command and structural `SubLevelWarper` transaction over Sable state, with zero provider data JSON and no player-owned spell/ritual/glyph/ability roster.
 ### 02/10 current-provider semantic normalization
 
 The current provider tree also contained catalog-complete directories whose semantic disposition had not yet been projected into this shared ledger. This normalization changes no provider folder status and creates no new provider identity; it only reconciles already-canonical provider records.
@@ -246,6 +247,7 @@ Explicit zero-semantic dispositions are also projected for cataloged bridge/supp
 - [Reliquified L'Ender's Cataclysm New Relics Fix](../providers/✅-reliquified-lenders-cataclysm-new-relics-fix/README.md): **+0** — compatibility fix over five existing Reliquified relic identities, with no new semantic identities.
 - [Vampirism Integrations](../providers/✅-vampirism-integrations/README.md): **+0** — compatibility adapters such as Cold Sweat/Jade do not create new faction/action identities.
 - [Grappling Hook Mod: Skybound](../providers/✅-grapplemod-skybound/README.md): **+0 `ZERO_SEMANTIC_TRAVERSAL_PHYSICS`** — exact Ender/forcefield/rocket/motor/magnet/hook surfaces are traversal physics/equipment; no independent spell/ritual/glyph/ability roster.
+- [Dimensional Sable](../providers/✅-dimensional-sable/README.md): **+0 `ZERO_SEMANTIC_DIMENSION_TRANSFER_INFRA`** — exact command/API surface transfers Sable structural state between dimensions; it is not a player-acquired supernatural action.
 
 
 Therefore the strict reconstructible minimum is **1855**. This is a minimum, not a final denominator or coverage percentage.
