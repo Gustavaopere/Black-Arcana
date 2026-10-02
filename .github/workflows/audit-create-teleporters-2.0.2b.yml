@@ -136,10 +136,12 @@ jobs:
         run: |
           set -euo pipefail
           cd build/audit/create-teleporters
-          for term in spell magic ritual ability mana arcane glyph; do
-            count="$(grep -Ei "$term" jar-entries.txt | wc -l | tr -d ' ')"
-            echo "$term=$count"
-          done | tee magic-keyword-counts.txt
+          python3 - <<'PY' | tee magic-keyword-counts.txt
+          import pathlib,re
+          text=pathlib.Path('jar-entries.txt').read_text(encoding='utf-8',errors='replace')
+          for term in ('spell','magic','ritual','ability','mana','arcane','glyph'):
+              print(f'{term}={len(re.findall(term,text,re.I))}')
+          PY
 
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
