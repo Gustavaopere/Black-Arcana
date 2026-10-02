@@ -109,6 +109,38 @@ jobs:
           pathlib.Path('provider-data-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
           PY
 
+      - name: Close exact player-facing transfer surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create-teleporters
+          : > javap-player-transfer.txt
+          for cls in \
+            net.createteleporters.item.PocketDimensionRemoteItem \
+            net.createteleporters.item.TpLinkItem \
+            net.createteleporters.item.ADVTplinkItem \
+            net.createteleporters.procedures.PocketDimensionRemoteRightclickedProcedure \
+            net.createteleporters.procedures.TpLinkRightclickedProcedure \
+            net.createteleporters.procedures.AdvTpLinkRightclickedProcedure \
+            net.createteleporters.procedures.BindCustomPortalProcedure \
+            net.createteleporters.procedures.PocketGenProcedure \
+            net.createteleporters.util.PocketDimensionTracker; do
+              echo "===== $cls =====" >> javap-player-transfer.txt
+              javap -classpath createteleporters-remastered-2.0.2b-neoforge-1.21.1.jar -p -c -constants "$cls" >> javap-player-transfer.txt 2>&1 || true
+          done
+          grep -nEi 'use\(|right|teleport|dimension|changeDimension|setPos|moveTo|portal|link|pocket|ServerLevel|cooldown|item|player' \
+            javap-player-transfer.txt > player-transfer-seams.txt || true
+
+      - name: Prove absence of magic registries/resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create-teleporters
+          for term in spell magic ritual ability mana arcane glyph; do
+            count="$(grep -Ei "$term" jar-entries.txt | wc -l | tr -d ' ')"
+            echo "$term=$count"
+          done | tee magic-keyword-counts.txt
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -122,4 +154,7 @@ jobs:
             build/audit/create-teleporters/teleport-portal-seams.txt
             build/audit/create-teleporters/provider-data-json.txt
             build/audit/create-teleporters/provider-data-count.txt
+            build/audit/create-teleporters/javap-player-transfer.txt
+            build/audit/create-teleporters/player-transfer-seams.txt
+            build/audit/create-teleporters/magic-keyword-counts.txt
           if-no-files-found: error
