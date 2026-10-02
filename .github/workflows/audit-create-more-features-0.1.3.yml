@@ -1,0 +1,140 @@
+name: audit-create-more-features-0.1.3
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/create_mf
+          cd build/audit/create_mf
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/create-more-features-1091960/8325313/create-more-features-1091960-8325313.jar" \
+            -o create_mf-0.1.3-neoforge-1.21.1.jar
+          test -s create_mf-0.1.3-neoforge-1.21.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_mf
+          EXPECTED_SHA1="09c4b6ab3ca3c372e2a0b405e75ae19876aebdc4"
+          ACTUAL_SHA1="$(sha1sum create_mf-0.1.3-neoforge-1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum create_mf-0.1.3-neoforge-1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s create_mf-0.1.3-neoforge-1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1091960/8325313"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract exact archive and semantic inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_mf
+          jar tf create_mf-0.1.3-neoforge-1.21.1.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          jar=pathlib.Path('create_mf-0.1.3-neoforge-1.21.1.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              data=[n for n in names if n.startswith('data/create_mf/')]
+              keywords=('spell','magic','ritual','ability','mana','arcane','glyph','summon','soul','teleport','portal','enchant','potion','curse','villager','profession','farm','mechanism')
+              counts={k:sum(k in n.lower() for n in names) for k in keywords}
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nprovider_data={len(data)}\n' +
+                  '\n'.join(f'{k}={v}' for k,v in counts.items())+'\n',encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              rows=[]
+              for name in data:
+                  if not name.endswith('.json'): continue
+                  try:
+                      obj=json.loads(z.read(name))
+                      compact=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception as e:
+                      compact='INVALID_JSON:'+type(e).__name__
+                  low=(name+' '+compact).lower()
+                  if any(k in low for k in keywords): rows.append((name,compact[:30000]))
+              pathlib.Path('semantic-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-json-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Dump every provider class and activation signature
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_mf
+          : > javap-all.txt
+          : > javap-signatures.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-signatures.txt
+            javap -classpath create_mf-0.1.3-neoforge-1.21.1.jar -p -s "$cls" >> javap-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-all.txt
+            javap -classpath create_mf-0.1.3-neoforge-1.21.1.jar -p -c -constants "$cls" >> javap-all.txt 2>&1 || true
+          done < classes.txt
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          methods=['use','useOn','useWithoutItem','releaseUsing','onUseTick','finishUsingItem','interactLivingEntity','hurtEnemy','inventoryTick','onArmorTick','onItemUseFirst','mineBlock']
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls=sections[i]; body=sections[i+1]
+              found=[m for m in methods if re.search(r'\b'+re.escape(m)+r'\s*\(',body)]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('activation-index.txt').write_text('\n'.join(f'{c}\t{m}' for c,m in rows)+'\n',encoding='utf-8')
+          PY
+
+      - name: Extract semantic and progression seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_mf
+          grep -nEi 'spell|magic|ritual|ability|mana|arcane|glyph|summon|soul|teleport|portal|enchant|potion|curse|villager|profession|farm|mechanism|use\(|useOn|interactLivingEntity|hurtEnemy|mineBlock' javap-all.txt > semantic-seams.txt || true
+          grep -nEi 'spell|magic|ritual|ability|mana|arcane|glyph|summon|soul|teleport|portal|enchant|potion|curse|villager|profession|farm|mechanism' semantic-json.txt > semantic-data-seams.txt || true
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: create-more-features-0.1.3-exact-artifact-audit
+          path: |
+            build/audit/create_mf/hashes.txt
+            build/audit/create_mf/inventory.txt
+            build/audit/create_mf/jar-entries.txt
+            build/audit/create_mf/classes.txt
+            build/audit/create_mf/provider-data.txt
+            build/audit/create_mf/semantic-json.txt
+            build/audit/create_mf/semantic-json-count.txt
+            build/audit/create_mf/javap-signatures.txt
+            build/audit/create_mf/javap-all.txt
+            build/audit/create_mf/activation-index.txt
+            build/audit/create_mf/semantic-seams.txt
+            build/audit/create_mf/semantic-data-seams.txt
+          if-no-files-found: error
