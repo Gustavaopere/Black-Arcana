@@ -130,6 +130,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 123 | Create: Fantasizing Again | `create_fantasizing` | `create_fantasizing-1.21.1-1.2.0-b3.jar` | `1.2.0-b3` | CREATE AUTOMATION / TOOLS / STORAGE / PROCESSING | ZERO_SEMANTIC_CREATE_AUTOMATION_TOOLS_INFRA |
 | 124 | Create: More Features | `create_mf` | `create_mf-0.1.3-neoforge-1.21.1.jar` | `0.1.3` | CREATE AUTOMATION / VILLAGER / STORAGE / MECHANISM PROVIDER | ZERO_SEMANTIC_CREATE_AUTOMATION_VILLAGER_INFRA |
 | 125 | Create: Mobile Packages | `create_mobile_packages` | `create_mobile_packages-1.21.1-0.7.7.jar` | `0.7.7` | CREATE LOGISTICS / PACKAGE / ROBO-BEE NETWORK PROVIDER | ZERO_SEMANTIC_CREATE_LOGISTICS_INFRA |
+| 126 | Ice And Fire: Dragon Care | `dragoncare` | `Ice and Fire - Dragon Care-1.3.1 - 1.21.1v.jar` | `1.3.1 - 1.21.1v` | DRAGON HUSBANDRY / CARE / TRACKING SUPPORT | ZERO_SEMANTIC_HUSBANDRY_SUPPORT |
 
 ## Current version drifts already reconciled
 
