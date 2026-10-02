@@ -210,12 +210,13 @@ Current semantic deltas since the 1382 checkpoint:
 - Alex's Caves Continued 1.0.10 contributes **+8 `COUNTED_EXACT`** supernatural/magical player actions. Exact physical SHA-1 equals CurseForge File `8856293`; exhaustive inspection of 42 item-interaction classes plus exact Conversion Crucible/Beholder/Forsaken-Idol block seams closes Sea Staff Water Bolt, two Sugar Staff casts, Magic Conch summon, Totem possession/control, Occult Gem/Beholder observation, Darkness Incarnate activation and one parameterized Conversion Crucible biome-conversion action. Primary weapons, technology, consumables, vehicles, setup items and mob-native magic are excluded.
 - Alex's Mobs Continued 2.1.13 contributes **+1 `COUNTED_EXACT` strict + 2 `CONDITIONAL`** supernatural roots. Exact physical SHA-1 equals CurseForge File `8856498`; exhaustive interaction inspection closes 26 item + 11 block interaction classes. Transmutation Table Item Transmutation is strict-counted. Mysterious Worm Void Worm Summoning and Dimensional Carver Dimensional Passage are exact-current identities but remain conditional because deployed `voidWormSummonable` / `voidWormSpawnDimensions` are not captured, and Carver normal acquisition depends on config-gated Void Worm loot. Capsid processing plus weapons, locators, utilities, vehicles, consumables and setup interactions are metric-excluded.
 - Ice And Fire: Dread Land 0.1.2 contributes **+1 `COUNTED_EXACT`** supernatural dimensional-portal action. Exact physical SHA-1 equals CurseForge File `8708824`; exhaustive activation inspection closes one Dreadland Key → Dread Portal Activation root, while exact trial rewards plus the exact Dreadland Key recipe close normal acquisition. Realm keys, portrait placement, portal infrastructure and delayed dimension-transfer lifecycle are excluded.
+- Bosses of Mass Destruction 1.3.3 contributes **+3 `COUNTED_EXACT` strict + 2 `CONDITIONAL`** supernatural roots. Exact physical SHA-1 equals CurseForge File `8448640`; exhaustive whole-artifact activation inspection closes Obsidilith Summoning, Earthdive Wall Teleport and Brimstone Structure Restoration as strict. Night Lich Summoning is conditional on deployed `lichConfig.summonMechanic.isEnabled`; Charged Ender Pearl Teleport is exact-current but its normal acquisition requires Ancient Anima from Lich loot and therefore inherits that gate. Soul Star locator use, automatic Void Blossom spawn and passive environmental blocks are excluded.
 
-Therefore the strict reconstructible minimum is **1843**. This is a minimum, not a final denominator or coverage percentage.
+Therefore the strict reconstructible minimum is **1846**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1843 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact), Weapons of Miracles (+12 exact), Born in Chaos (+17 exact), Bosses'Rise (+8 exact), Portable Hole (+1 exact), Legendary Monsters (+22 exact), Alex's Caves Continued (+8 exact), Alex's Mobs Continued (+1 exact) and Ice And Fire: Dread Land (+1 exact).**
+**1846 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact), Weapons of Miracles (+12 exact), Born in Chaos (+17 exact), Bosses'Rise (+8 exact), Portable Hole (+1 exact), Legendary Monsters (+22 exact), Alex's Caves Continued (+8 exact), Alex's Mobs Continued (+1 exact), Ice And Fire: Dread Land (+1 exact) and Bosses of Mass Destruction (+3 exact).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -238,6 +239,7 @@ Arithmetic cross-check by provider family:
 - Alex's Caves Continued staff/possession/observation/summon/biome-ritual layer: **8**;
 - Alex's Mobs Continued transmutation layer: **1**;
 - Ice And Fire: Dread Land dimensional-portal activation layer: **1**;
+- Bosses of Mass Destruction supernatural summon/traversal/restoration layer: **3**;
 - Cataclysm: Ignis Soulfires discrete supernatural weapon-action layer: **8**;
 - Reliquified Ars Nouveau owner-scoped ability layer: **19**;
 - Reliquified Artifacts owner-scoped ability layer: **52**;
@@ -252,7 +254,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 17 + 8 + 1 + 22 + 8 + 1 + 1 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1843`.
+- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 17 + 8 + 1 + 22 + 8 + 1 + 1 + 3 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1846`.
 
 ### Counted ledger
 
@@ -309,6 +311,7 @@ Arithmetic cross-check by provider family:
 | [Alex's Caves Continued](../providers/✅-alexs-caves-continued/README.md) | 1.0.10 | 8 | `COUNTED_EXACT` | exact physical/publisher File `8856293` equality plus exhaustive 42-item interaction audit and exact block-action seams close 8 supernatural/magical player actions; primary weapons, technology, consumables, vehicles, setup items and mob-native magic are excluded |
 | [Alex's Mobs Continued](../providers/✅-alexs-mobs-continued/README.md) | 2.1.13 | 1 | `COUNTED_EXACT` + 2 `CONDITIONAL` | exact physical/publisher File `8856498` equality plus exhaustive 26-item + 11-block interaction audit closes 3 supernatural roots; Item Transmutation is strict, while Void Worm Summoning and Dimensional Carver remain conditional on deployed summon/dimension config and current boss-loot reachability |
 | [Ice And Fire: Dread Land](../providers/✅-ice-and-fire-dread-land/README.md) | 0.1.2 | 1 | `COUNTED_EXACT` | exact physical/publisher File `8708824` equality plus exhaustive activation/progression audit closes one Dreadland Key → Dread Portal Activation root; realm keys are progression-only and portal travel is downstream lifecycle |
+| [Bosses of Mass Destruction](../providers/✅-bosses-of-mass-destruction/README.md) | 1.3.3 | 3 | `COUNTED_EXACT` + 2 `CONDITIONAL` | exact physical/publisher File `8448640` equality plus exhaustive activation/summon/data audit closes five supernatural roots; Obsidilith Summoning, Earthdive Wall Teleport and Brimstone Structure Restoration are strict, while Night Lich Summoning and Charged Ender Pearl remain conditional on Lich summon/reachability state |
 | [Cataclysm: Ignis Soulfires](../providers/✅-ignis-soulfires/README.md) | 1.8.0 | 8 | `COUNTED_EXACT` | exact physical/publisher SHA-1 equality closes eight distinct player-invoked supernatural weapon actions across Bulwark, Souled Gauntlet, Immolator and Incinerator; packaged crafting/smithing/weapon-fusion routes close catalog-level acquisition; tool modes and passive gear/procs are excluded |
 | [Reliquified Ars Nouveau](../providers/✅-reliquified-ars-nouveau/README.md) | 0.8.1 | 19 | `COUNTED_SOURCE_PINNED` | exact-version source closes 19 registered relic owners and 19 owner-scoped `AbilityTemplate` roots with provider-native Ars loot routes |
 | [Reliquified Artifacts](../providers/✅-reliquified-artifacts/README.md) | 1.0.8 | 52 | `COUNTED_SOURCE_PINNED` | 48 Artifact owners map to 52 owner-scoped ability roots; source-level loot/conversion routes close acquisition for all owners |
@@ -325,7 +328,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1843** |  |  |
+| **Strict total** |  | **1846** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -447,10 +450,11 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows remain **outside the 1843 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
+These rows remain **outside the 1846 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
+| [Bosses of Mass Destruction](../providers/✅-bosses-of-mass-destruction/README.md) | exact File `8448640` closes five supernatural roots | `3 COUNTED_EXACT + 2 CONDITIONAL` | Night Lich Summoning depends on effective `lichConfig.summonMechanic.isEnabled`; Charged Ender Pearl normal acquisition requires Ancient Anima from Lich loot and inherits that gate |
 | [Traveloptics](../providers/⚠️-traveloptics/README.md) | current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; audited publisher baseline has 33 spells | `OPEN / OTHER_VERIFIED / +0 STRICT` | installed bytes differ from both the audited publisher alpha and known patch artifact, so the 33-ID baseline is not promoted as the exact current physical registry |
 | [Iron's Spellbooks KubeJS](../providers/⚠️-irons-spellbooks-kubejs/README.md) | base addon has 0 fixed built-in spell identities; exact 4.0.3 builder/framework source is known | `OPEN SCRIPT INVENTORY / +0 FIXED BUILT-IN` | current physical `kubejs/` script set is not captured; scripts may register Iron's spells/schools under arbitrary namespaces |
 | [ShadowsZ](../providers/✅-shadowsz/README.md) | exact physical/publisher SHA-1 equality + exact-artifact audit close **10** semantic identities: 3 registered Umbral spells + Shadow Eyes + Shadow Arising + Summon + Dismiss + Position Swap + Despawn Wild + Fusion; group/all summon/dismiss are aliases and management/progression surfaces are excluded | `CONDITIONAL 10 / +0 STRICT` | every player power is attunement-gated; effective current-world `shadowszRestrictPowers` is unavailable, and Fusion additionally depends on deployed `fusionEnabled` |
@@ -464,9 +468,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1843 is not “1843 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1843 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1843 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1846 is not “1846 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1846 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1846 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
