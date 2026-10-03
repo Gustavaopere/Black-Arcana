@@ -1,0 +1,178 @@
+name: audit-bosses-rise-2.1.2
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/bossesrise
+          cd build/audit/bossesrise
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/bossesrise-1314084/8123167/bossesrise-1314084-8123167.jar" \
+            -o block_factorys_bosses-2.1.2-neo-1.21.1.jar
+          test -s block_factorys_bosses-2.1.2-neo-1.21.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bossesrise
+          EXPECTED_SHA1="249a5f2ba43fd341d4a2831691c154d92aa5a12d"
+          ACTUAL_SHA1="$(sha1sum block_factorys_bosses-2.1.2-neo-1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum block_factorys_bosses-2.1.2-neo-1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s block_factorys_bosses-2.1.2-neo-1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1314084/8123167"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded archive and item inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bossesrise
+          jar tf block_factorys_bosses-2.1.2-neo-1.21.1.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib,re,zipfile
+          jar='block_factorys_bosses-2.1.2-neo-1.21.1.jar'
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              item_classes=[n for n in classes if '/item/' in n.lower() or '/items/' in n.lower() or re.search(r'(Item|Gauntlet|Tentacle|Staff|Horn|Trident|Weapon)\.class$',n,re.I)]
+              semantic_classes=[n for n in classes if re.search(r'(Ability|Skill|Power|Gauntlet|Tentacle|Staff|Magic|Spell|Summon|Projectile|Item)\.class$',n,re.I)]
+              data=[n for n in names if n.startswith('data/block_factorys_bosses/')]
+              assets=[n for n in names if n.startswith('assets/block_factorys_bosses/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'item_classes={len(item_classes)}\nsemantic_classes={len(semantic_classes)}\n'
+                  f'data_paths={len(data)}\nassets_paths={len(assets)}\n',encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(item_classes)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-classes.txt').write_text('\n'.join(semantic_classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data-paths.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              pathlib.Path('provider-asset-paths.txt').write_text('\n'.join(assets)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump item and semantic class surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bossesrise
+          : > javap-items.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"; cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-items.txt
+            javap -classpath block_factorys_bosses-2.1.2-neo-1.21.1.jar -p -c -constants "$cls" >> javap-items.txt 2>&1 || true
+          done < item-classes.txt
+          : > javap-semantic.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"; cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-semantic.txt
+            javap -classpath block_factorys_bosses-2.1.2-neo-1.21.1.jar -p -c -constants "$cls" >> javap-semantic.txt 2>&1 || true
+          done < semantic-classes.txt
+
+      - name: Index player-action and ability seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bossesrise
+          grep -nE '(^| )use\(|useOn\(|releaseUsing\(|finishUsingItem\(|onUseTick\(|inventoryTick\(|hurtEnemy\(|interactLivingEntity\(|onLeftClickEntity\(' javap-items.txt > player-action-methods.txt || true
+          grep -nEi 'ability|gauntlet|tentacle|summon|teleport|projectile|push|pull|cooldown|addCooldown|spawn|addFreshEntity|effect|charge|roll|kraken|skor|sirok|sandworm|undying' javap-items.txt > item-action-seams.txt || true
+          grep -nEi 'ability|gauntlet|tentacle|summon|teleport|projectile|push|pull|cooldown|spawn|effect|charge|roll|kraken|skor|sirok|sandworm|undying' javap-semantic.txt > semantic-action-seams.txt || true
+
+      - name: Extract exact localization and acquisition index
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bossesrise
+          python3 - <<'PY'
+          import collections,json,pathlib,zipfile
+          jar='block_factorys_bosses-2.1.2-neo-1.21.1.jar'
+          ns='block_factorys_bosses:'
+          rows=set()
+          def add(item,kind,path):
+              if isinstance(item,str) and item.startswith(ns): rows.add((item,kind,path))
+          def walk(obj,path):
+              if isinstance(obj,dict):
+                  typ=obj.get('type'); name=obj.get('name')
+                  if typ in ('minecraft:item','neoforge:item') and isinstance(name,str): add(name,'LOOT_ITEM',path)
+                  for v in obj.values(): walk(v,path)
+              elif isinstance(obj,list):
+                  for v in obj: walk(v,path)
+          with zipfile.ZipFile(jar) as z:
+              names=set(z.namelist())
+              lang={}
+              for lp in ('assets/block_factorys_bosses/lang/en_us.json','assets/block_factorys_bosses/lang/en_us.json5'):
+                  if lp in names:
+                      try: lang=json.loads(z.read(lp))
+                      except Exception: pass
+              pathlib.Path('item-localization.txt').write_text(
+                  '\n'.join(f'{k}\t{v}' for k,v in sorted(lang.items()) if k.startswith('item.block_factorys_bosses.'))+'\n',encoding='utf-8')
+              for name in sorted(names):
+                  if not name.startswith('data/block_factorys_bosses/') or not name.endswith('.json'): continue
+                  try: obj=json.loads(z.read(name))
+                  except Exception: continue
+                  low=name.lower()
+                  if '/recipe/' in low:
+                      result=obj.get('result') if isinstance(obj,dict) else None
+                      if isinstance(result,str): add(result,'RECIPE_RESULT',name)
+                      elif isinstance(result,dict): add(result.get('id') or result.get('item'),'RECIPE_RESULT',name)
+                  if '/loot_table/' in low: walk(obj,name)
+                  if '/tags/item/' in low or '/tags/items/' in low:
+                      vals=obj.get('values',[]) if isinstance(obj,dict) else []
+                      for v in vals:
+                          if isinstance(v,str): add(v,'ITEM_TAG_MEMBER',name)
+                          elif isinstance(v,dict): add(v.get('id'),'ITEM_TAG_MEMBER',name)
+              by=collections.defaultdict(list)
+              for item,kind,path in sorted(rows): by[item].append((kind,path))
+              with open('provider-acquisition-index.txt','w',encoding='utf-8') as f:
+                  for item in sorted(by):
+                      f.write(f'## {item}\n')
+                      for kind,path in by[item]: f.write(f'{kind}\t{path}\n')
+              pathlib.Path('provider-acquisition-count.txt').write_text(f'items={len(by)}\nrows={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: bosses-rise-2.1.2-exact-artifact-audit
+          path: |
+            build/audit/bossesrise/hashes.txt
+            build/audit/bossesrise/inventory.txt
+            build/audit/bossesrise/jar-entries.txt
+            build/audit/bossesrise/item-classes.txt
+            build/audit/bossesrise/semantic-classes.txt
+            build/audit/bossesrise/provider-data-paths.txt
+            build/audit/bossesrise/provider-asset-paths.txt
+            build/audit/bossesrise/javap-items.txt
+            build/audit/bossesrise/javap-semantic.txt
+            build/audit/bossesrise/player-action-methods.txt
+            build/audit/bossesrise/item-action-seams.txt
+            build/audit/bossesrise/semantic-action-seams.txt
+            build/audit/bossesrise/item-localization.txt
+            build/audit/bossesrise/provider-acquisition-index.txt
+            build/audit/bossesrise/provider-acquisition-count.txt
+          if-no-files-found: warn
