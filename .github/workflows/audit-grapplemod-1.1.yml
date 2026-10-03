@@ -1,0 +1,148 @@
+name: audit-grapplemod-1.1
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/grapplemod
+          cd build/audit/grapplemod
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/grapplemod-skybound-1559979/8176552/grapplemod-skybound-1559979-8176552.jar" \
+            -o grapplemod-1.1+1.21.1.neoforge.jar
+          test -s grapplemod-1.1+1.21.1.neoforge.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/grapplemod
+          EXPECTED_SHA1="2b6060de273f721857d715db9a811ddaa5422683"
+          ACTUAL_SHA1="$(sha1sum grapplemod-1.1+1.21.1.neoforge.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum grapplemod-1.1+1.21.1.neoforge.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s grapplemod-1.1+1.21.1.neoforge.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1559979/8176552"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract exact archive inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/grapplemod
+          jar tf grapplemod-1.1+1.21.1.neoforge.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib,re,zipfile
+          jar='grapplemod-1.1+1.21.1.neoforge.jar'
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              nested=[n for n in names if n.endswith('.jar')]
+              sem=re.compile(r'(ender|teleport|forcefield|rocket|motor|magnet|grapple|hook|rope|upgrade|key|input|ability|power|magic|spell|ritual)',re.I)
+              candidates=[n for n in names if sem.search(n)]
+              pathlib.Path('inventory.txt').write_text(
+                f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nnested_jars={len(nested)}\nsemantic_like_paths={len(candidates)}\n',encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('nested-jars.txt').write_text('\n'.join(nested)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-like-paths.txt').write_text('\n'.join(candidates)+'\n',encoding='utf-8')
+          PY
+
+      - name: Index all exact class signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/grapplemod
+          : > javap-signatures.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-signatures.txt
+            javap -classpath grapplemod-1.1+1.21.1.neoforge.jar -p -s "$cls" >> javap-signatures.txt 2>&1 || true
+          done < classes.txt
+          grep -nEi 'ender|teleport|forcefield|rocket|motor|magnet|upgrade|key|input|use\(|useOn|releaseUsing|tick|activate|launch|detach|attach|hook|rope' javap-signatures.txt > action-signatures.txt || true
+
+      - name: Dump exact candidate bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/grapplemod
+          python3 - <<'PY'
+          import pathlib,re
+          classes=pathlib.Path('classes.txt').read_text().splitlines()
+          rx=re.compile(r'(ender|teleport|forcefield|rocket|motor|magnet|upgrade|key|input|grapple|hook|rope)',re.I)
+          cand=[c for c in classes if rx.search(c)]
+          pathlib.Path('candidate-classes.txt').write_text('\n'.join(cand)+'\n',encoding='utf-8')
+          PY
+          : > javap-candidates.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-candidates.txt
+            javap -classpath grapplemod-1.1+1.21.1.neoforge.jar -p -c -constants "$cls" >> javap-candidates.txt 2>&1 || true
+          done < candidate-classes.txt
+
+      - name: Extract exact provider data
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/grapplemod
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          rows=[]
+          with zipfile.ZipFile('grapplemod-1.1+1.21.1.neoforge.jar') as z:
+              for name in sorted(z.namelist()):
+                  if not name.startswith('data/') or not name.endswith('.json'): continue
+                  try:
+                      obj=json.loads(z.read(name))
+                      raw=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception as e:
+                      raw='INVALID_JSON:'+type(e).__name__
+                  if any(t in (name+' '+raw).lower() for t in ('ender','teleport','forcefield','rocket','motor','magnet','grapple','hook','upgrade')):
+                      rows.append((name,raw))
+          pathlib.Path('semantic-data-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+          pathlib.Path('semantic-data-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: grapplemod-1.1-exact-artifact-audit
+          path: |
+            build/audit/grapplemod/hashes.txt
+            build/audit/grapplemod/inventory.txt
+            build/audit/grapplemod/jar-entries.txt
+            build/audit/grapplemod/classes.txt
+            build/audit/grapplemod/nested-jars.txt
+            build/audit/grapplemod/semantic-like-paths.txt
+            build/audit/grapplemod/javap-signatures.txt
+            build/audit/grapplemod/action-signatures.txt
+            build/audit/grapplemod/candidate-classes.txt
+            build/audit/grapplemod/javap-candidates.txt
+            build/audit/grapplemod/semantic-data-json.txt
+            build/audit/grapplemod/semantic-data-count.txt
+          if-no-files-found: error
