@@ -1,0 +1,178 @@
+name: audit-betterend-21.0.34
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/betterend
+          cd build/audit/betterend
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/betterend-neoforge-1422294/8610367/betterend-neoforge-1422294-8610367.jar" \
+            -o BetterEnd-21.0.34.jar
+          test -s BetterEnd-21.0.34.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betterend
+          EXPECTED_SHA1="149b73179ea63bf777315a7c850b2eba65c554bd"
+          ACTUAL_SHA1="$(sha1sum BetterEnd-21.0.34.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum BetterEnd-21.0.34.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s BetterEnd-21.0.34.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1422294/8610367"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded archive and ritual inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betterend
+          jar tf BetterEnd-21.0.34.jar | sort > jar-entries.txt
+
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          jar=pathlib.Path("BetterEnd-21.0.34.jar")
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith(".class")]
+              resources=[n for n in names if not n.endswith(".class")]
+              provider_data=[n for n in names if n.startswith("data/betterend/")]
+              ritual_paths=[n for n in names if any(k in n.lower() for k in ("ritual","infusion","eternal_portal"))]
+
+              recipes=[]
+              bad=[]
+              for n in provider_data:
+                  if not n.endswith(".json") or "/recipe/" not in n:
+                      continue
+                  try:
+                      obj=json.loads(z.read(n))
+                  except Exception as e:
+                      bad.append((n,str(e)))
+                      continue
+                  typ=obj.get("type")
+                  if isinstance(typ,str) and "infusion" in typ.lower():
+                      rid=n.split("data/betterend/recipe/",1)[1][:-5]
+                      result=obj.get("result")
+                      if isinstance(result,dict):
+                          result_id=result.get("id") or result.get("item") or ""
+                      else:
+                          result_id=str(result or "")
+                      recipes.append((rid,typ,result_id,n))
+
+              pathlib.Path("inventory.txt").write_text(
+                  f"entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n"
+                  f"provider_data={len(provider_data)}\nritual_like_paths={len(ritual_paths)}\n"
+                  f"infusion_recipe_count={len(recipes)}\ninvalid_recipe_json={len(bad)}\n",
+                  encoding="utf-8")
+              pathlib.Path("ritual-paths.txt").write_text("\n".join(ritual_paths)+"\n",encoding="utf-8")
+              pathlib.Path("infusion-recipes.tsv").write_text(
+                  "recipe_id\ttype\tresult_id\tpath\n"+
+                  "\n".join("\t".join(row) for row in recipes)+"\n",encoding="utf-8")
+              pathlib.Path("infusion-results.txt").write_text(
+                  "\n".join(sorted({row[2] for row in recipes if row[2]}))+"\n",encoding="utf-8")
+              pathlib.Path("invalid-recipe-json.txt").write_text(
+                  "\n".join(f"{n}\t{e}" for n,e in bad)+"\n",encoding="utf-8")
+          PY
+
+      - name: Dump exact ritual and recipe control seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betterend
+          : > javap-rituals.txt
+          for cls in \
+            org.betterx.betterend.rituals.InfusionRitual \
+            org.betterx.betterend.rituals.EternalRitual \
+            org.betterx.betterend.blocks.EternalPedestal \
+            org.betterx.betterend.blocks.entities.EternalPedestalEntity \
+            org.betterx.betterend.registry.EndPortals \
+            org.betterx.betterend.blocks.InfusionPedestal \
+            org.betterx.betterend.blocks.entities.InfusionPedestalEntity \
+            org.betterx.betterend.recipe.builders.InfusionRecipe \
+            org.betterx.betterend.world.structures.features.EternalPortalStructure \
+            org.betterx.betterend.network.RitualUpdate; do
+              echo "===== $cls =====" >> javap-rituals.txt
+              javap -classpath BetterEnd-21.0.34.jar -p -c -constants "$cls" >> javap-rituals.txt 2>&1 || true
+          done
+
+      - name: Summarize exact eternal ritual seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betterend
+          grep -E 'EternalPedestal|EternalRitual|EndPortals|getPortalIdByItem|checkStructure|activatePortal|useItemOn|setItem|ItemInteractionResult' javap-rituals.txt \
+            > eternal-ritual-seams.txt || true
+
+      - name: Extract exact ritual reachability paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betterend
+          grep -Ei 'data/betterend/.+(infusion_pedestal|eternal_portal|eternal_crystal|infusion)' jar-entries.txt \
+            > ritual-reachability-paths.txt || true
+
+      - name: Summarize recipe identity invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/betterend
+          python3 - <<'PY'
+          import csv, pathlib
+          p=pathlib.Path("infusion-recipes.tsv")
+          rows=list(csv.DictReader(p.open(encoding="utf-8"),delimiter="\t"))
+          ids=[r["recipe_id"] for r in rows]
+          results=[r["result_id"] for r in rows if r["result_id"]]
+          dup_ids=sorted({x for x in ids if ids.count(x)>1})
+          dup_results=sorted({x for x in results if results.count(x)>1})
+          pathlib.Path("infusion-summary.txt").write_text(
+              f"count={len(rows)}\nunique_ids={len(set(ids))}\n"
+              f"unique_results={len(set(results))}\n"
+              f"duplicate_ids={','.join(dup_ids)}\n"
+              f"duplicate_results={','.join(dup_results)}\n",
+              encoding="utf-8")
+          assert len(rows)==len(set(ids))
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: betterend-21.0.34-exact-artifact-audit
+          path: |
+            build/audit/betterend/hashes.txt
+            build/audit/betterend/inventory.txt
+            build/audit/betterend/jar-entries.txt
+            build/audit/betterend/ritual-paths.txt
+            build/audit/betterend/infusion-recipes.tsv
+            build/audit/betterend/infusion-results.txt
+            build/audit/betterend/invalid-recipe-json.txt
+            build/audit/betterend/javap-rituals.txt
+            build/audit/betterend/eternal-ritual-seams.txt
+            build/audit/betterend/ritual-reachability-paths.txt
+            build/audit/betterend/infusion-summary.txt
+          if-no-files-found: error
