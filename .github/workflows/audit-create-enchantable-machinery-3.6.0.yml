@@ -1,0 +1,159 @@
+name: audit-create-enchantable-machinery-3.6.0
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact Modrinth artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/enchantable_machinery
+          cd build/audit/enchantable_machinery
+          curl -fL --retry 3 --retry-all-errors 'https://api.modrinth.com/v2/version/Cw5k6c0a' -o version.json
+          python3 - <<'PY'
+          import json, pathlib
+          o=json.loads(pathlib.Path('version.json').read_text())
+          fs=o.get('files',[])
+          f=next((x for x in fs if x.get('primary')), fs[0] if fs else None)
+          if not f: raise SystemExit('no version file')
+          pathlib.Path('download-url.txt').write_text(f['url'])
+          pathlib.Path('publisher-file-name.txt').write_text(f['filename'])
+          PY
+          curl -fL --retry 3 --retry-all-errors "$(cat download-url.txt)" -o createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar
+          test -s createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/enchantable_machinery
+          EXPECTED_SHA1='ed9a5cf654235f54a3c5aced27ac654d5258e393'
+          ACTUAL_SHA1="$(sha1sum createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo 'publisher=modrinth/Cw5k6c0a'
+            echo "publisher_file_name=$(cat publisher-file-name.txt)"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract exact archive and enchantment inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/enchantable_machinery
+          jar tf createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          jar=pathlib.Path('createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              data=[n for n in names if n.startswith('data/createenchantablemachinery/')]
+              keywords=('spell','magic','ritual','ability','mana','arcane','glyph','summon','soul','teleport','portal','enchant','curse')
+              counts={k:sum(k in n.lower() for n in names) for k in keywords}
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nprovider_data={len(data)}\n' +
+                  '\n'.join(f'{k}={v}' for k,v in counts.items())+'\n', encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              rows=[]
+              for name in data:
+                  if not name.endswith('.json'): continue
+                  try:
+                      obj=json.loads(z.read(name)); compact=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception as e: compact='INVALID_JSON:'+type(e).__name__
+                  rows.append((name,compact[:40000]))
+              pathlib.Path('provider-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+              pathlib.Path('provider-json-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+              ench=[n for n in names if 'enchant' in n.lower()]
+              pathlib.Path('enchantment-paths.txt').write_text('\n'.join(ench)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump every provider class and activation signature
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/enchantable_machinery
+          : > javap-all.txt
+          : > javap-signatures.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-signatures.txt
+            javap -classpath createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar -p -s "$cls" >> javap-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-all.txt
+            javap -classpath createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar -p -c -constants "$cls" >> javap-all.txt 2>&1 || true
+          done < classes.txt
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          methods=['use','useOn','useWithoutItem','releaseUsing','onUseTick','finishUsingItem','interactLivingEntity','hurtEnemy','inventoryTick','onArmorTick','onItemUseFirst','mineBlock','playerWillDestroy','getDrops','setPlacedBy','onRemove']
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls=sections[i]; body=sections[i+1]
+              found=[m for m in methods if re.search(r'\b'+re.escape(m)+r'\s*\(',body)]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('activation-index.txt').write_text('\n'.join(f'{c}\t{m}' for c,m in rows)+'\n',encoding='utf-8')
+          PY
+
+      - name: Extract enchantment ownership and machine hooks
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/enchantable_machinery
+          grep -nEi 'enchant|enchantment|EnchantingTable|EnchantmentHelper|silk_touch|fortune|efficiency|unbreaking|mending|smelting|drill|saw|harvester|plough|mixer|spout|deployer|block entity|BlockEntity|registry|register' javap-all.txt > enchant-machine-seams.txt || true
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-all.txt').read_text(encoding='utf-8',errors='replace')
+          # Keep only provider registration string constants potentially denoting new enchantment IDs.
+          vals=[]
+          for m in re.finditer(r'// String ([^\n]+)',text):
+              s=m.group(1).strip()
+              if any(k in s.lower() for k in ('enchant','silk','fortune','efficien','unbreak','mending','smelt')):
+                  vals.append(s)
+          pathlib.Path('enchantment-string-constants.txt').write_text('\n'.join(dict.fromkeys(vals))+'\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: create-enchantable-machinery-3.6.0-exact-artifact-audit
+          path: |
+            build/audit/enchantable_machinery/hashes.txt
+            build/audit/enchantable_machinery/inventory.txt
+            build/audit/enchantable_machinery/jar-entries.txt
+            build/audit/enchantable_machinery/classes.txt
+            build/audit/enchantable_machinery/provider-data.txt
+            build/audit/enchantable_machinery/provider-json.txt
+            build/audit/enchantable_machinery/provider-json-count.txt
+            build/audit/enchantable_machinery/enchantment-paths.txt
+            build/audit/enchantable_machinery/javap-signatures.txt
+            build/audit/enchantable_machinery/javap-all.txt
+            build/audit/enchantable_machinery/activation-index.txt
+            build/audit/enchantable_machinery/enchant-machine-seams.txt
+            build/audit/enchantable_machinery/enchantment-string-constants.txt
+          if-no-files-found: error
