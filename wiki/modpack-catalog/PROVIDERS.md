@@ -137,6 +137,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 130 | Create: More Automation | `create_more_automation` | `create_more_automation-0.5.2-neoforge-1.21.1.jar` | `0.5.2` | CREATE RECIPE / PROCESSING AUTOMATION | ZERO_SEMANTIC_CREATE_RECIPE_AUTOMATION |
 | 131 | Create: Ender Transmission | `createendertransmission` | `createendertransmission-2.1.1-1.21.1.jar` | `2.1.1-1.21.1` | REMOTE ITEM / FLUID / ENERGY TRANSFER + CHUNK INFRA | ZERO_SEMANTIC_REMOTE_TRANSFER_CHUNK_INFRA |
 | 132 | Create Mechanical Companion | `createmechanicalcompanion` | `createmechanicalcompanion-1.9-neoforge-1.21.1.jar` | physical runtime metadata empty / publication 1.9 | MECHANICAL COMPANION / MODULE / CURIOS INFRA | ZERO_SEMANTIC_MECHANICAL_COMPANION_INFRA |
+| 133 | Create: Enchantable Machinery | `createenchantablemachinery` | `createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar` | `3.6.0` | CREATE MACHINE ENCHANTMENT APPLICATION / PERSISTENCE | ZERO_SEMANTIC_MACHINE_ENCHANTMENT_APPLICATION |
 
 ## Current version drifts already reconciled
 
