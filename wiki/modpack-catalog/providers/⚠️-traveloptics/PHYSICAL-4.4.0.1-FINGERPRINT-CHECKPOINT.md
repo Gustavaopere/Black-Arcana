@@ -4,7 +4,7 @@ Status: `PHYSICAL SHA-1 CAPTURED / OTHER_VERIFIED / CURRENT PROVENANCE UNIDENTIF
 
 ## Physical evidence
 
-A Project Library physical modlist checkpoint, `modlist(1).txt`, captured on **2026-09-16**, records:
+Project Library physical modlist checkpoints captured on **2026-09-08** and **2026-09-16** independently record the same installed artifact:
 
 - JAR: `traveloptics-4.4.0.1-1.21.1.jar`;
 - mod id: `traveloptics`;
@@ -12,7 +12,7 @@ A Project Library physical modlist checkpoint, `modlist(1).txt`, captured on **2
 - SHA-1: `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - package/fingerprint column: `4254006126`.
 
-The current sibling was rechecked at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`. Its certified T.O Magic n' Extras dossier still records physical row **#550** as the same filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
+Both Project Library checkpoints record fingerprint column `4254006126`. The current sibling was rechecked at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`; its certified T.O Magic n' Extras dossier still records physical row **#550** as the same filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
 ## Known comparison artifacts
 
@@ -30,6 +30,10 @@ Physical comparison:
 - physical == known patch: **false**.
 
 Disposition: **`OTHER_VERIFIED`**.
+
+### Chronology consequence
+
+The earliest direct physical SHA-1 capture now available is **2026-09-08**, not 2026-09-16. The public third-party patch File `8861368` was uploaded on **2026-09-12**. Therefore the already-present `7b74816e...` physical artifact cannot be explained as a later download/rename of that public patch file. It may still represent an independent local modification touching similar code, but no such lineage is inferred without the physical bytes.
 
 ## Common-repack lineage audit — 2026-09-30
 
@@ -73,7 +77,7 @@ A Project Library `minecraftinstance.json` snapshot stored on 2026-08-18 preserv
 - `isFuzzyMatch=false`;
 - `latestFile.id=6342780`.
 
-This snapshot predates the 2026-09-16 physical SHA-1 capture. It proves only that **on 2026-08-18** the launcher tracked that filename as File `6342780` and considered the then-current bytes modified relative to the publisher hash. It does **not** establish temporal continuity to the later `7b74816e...` bytes; the JAR could have been replaced under the same filename in the intervening period.
+This snapshot predates the earliest direct **2026-09-08** physical SHA-1 capture. It proves only that **on 2026-08-18** the launcher tracked that filename as File `6342780` and considered the then-current bytes modified relative to the publisher hash. It does **not** establish temporal continuity to the later `7b74816e...` bytes; the JAR could have been replaced under the same filename in the intervening period.
 
 The September bytes also do not equal known patch File `8861368`. Therefore current provenance remains unidentified and the exact `7b74816e...` bytes/content must still be materialized or otherwise contemporaneously evidenced before registry or loot-modifier semantics can be promoted.
 
@@ -99,7 +103,7 @@ It is **not** contemporaneous hash evidence for the September physical artifact.
 
 The clean-room File-6342780 audit remains valid for that publisher artifact and provides a **33-ID release baseline**. It can no longer be presented as byte-exact evidence for the currently fingerprinted physical JAR.
 
-The older launcher metadata does not identify provenance of the September `7b74816e...` artifact. The 2026-08-19 runtime checkpoint materially narrows the semantic history by proving a modified assembled-pack snapshot with exactly the same 33 spell IDs, but it still lacks the hash bridge required to identify the September bytes. Until those bytes or equivalent contemporaneous exact-content evidence are available:
+The older launcher metadata does not identify provenance of the September `7b74816e...` artifact. The 2026-08-19 runtime checkpoint materially narrows the semantic history by proving a modified assembled-pack snapshot with exactly the same 33 spell IDs; the 08/09 and 16/09 physical inventories then prove stable `7b74816e...` bytes across that later interval. The missing link is still a hash bridge from the August runtime snapshot to those September bytes. Until those bytes or equivalent contemporaneous exact-content evidence are available:
 
 - August modified-runtime spell-registry equality to the 33-ID baseline is **observed 33/33**;
 - current physical spell-registry equality to that 33-ID set is **unverified**;
