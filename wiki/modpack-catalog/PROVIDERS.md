@@ -133,6 +133,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 126 | Ice And Fire: Dragon Care | `dragoncare` | `Ice and Fire - Dragon Care-1.3.1 - 1.21.1v.jar` | `1.3.1 - 1.21.1v` | DRAGON HUSBANDRY / CARE / TRACKING SUPPORT | ZERO_SEMANTIC_HUSBANDRY_SUPPORT |
 | 127 | Pufferfish's Skills | `puffish_skills` | `puffish_skills-0.19.0-1.21-neoforge.jar` | `0.19.0` | SKILL TREE / XP / REWARD / PROGRESSION FRAMEWORK | ZERO_SEMANTIC_SKILL_TREE_FRAMEWORK |
 | 128 | Pufferfish's Attributes | `puffish_attributes` | `puffish_attributes-0.8.3-1.21-neoforge.jar` | `0.8.3` | DYNAMIC ATTRIBUTE / STAT FRAMEWORK | ZERO_SEMANTIC_ATTRIBUTE_FRAMEWORK |
+| 129 | Pufferfish's Unofficial Additions | `pufferfish_unofficial_additions` | `pufferfish_unofficial_additions-1.21.1-2.2.8.jar` | `2.2.8` | SKILL XP SOURCE / REWARD / IRON'S BRIDGE | ZERO_SEMANTIC_SKILL_XP_REWARD_BRIDGE |
 
 ## Current version drifts already reconciled
 
