@@ -1,0 +1,405 @@
+name: audit-cataclysm-3.33
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact physical-matching publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/cataclysm
+          cd build/audit/cataclysm
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/lendercataclysm-551586/8706841/lendercataclysm-551586-8706841.jar" \
+            -o cataclysm-1.21.1-3.33.jar
+          test -s cataclysm-1.21.1-3.33.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          EXPECTED_SHA1="5ff39c0eddfa08ea0e921bdcb17da7f32f0b00ce"
+          ACTUAL_SHA1="$(sha1sum cataclysm-1.21.1-3.33.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum cataclysm-1.21.1-3.33.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s cataclysm-1.21.1-3.33.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=551586/8706841"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded provider inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          jar tf cataclysm-1.21.1-3.33.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib, zipfile
+          jar=pathlib.Path("cataclysm-1.21.1-3.33.jar")
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith(".class")]
+              resources=[n for n in names if not n.endswith(".class")]
+              item_classes=[n for n in classes if "/cataclysm/items/" in n and "$" not in n]
+              combat_entities=[n for n in classes if "/entity/projectile/" in n or "/entity/effect/" in n]
+              provider_data=[n for n in names if n.startswith("data/cataclysm/")]
+              pathlib.Path("inventory.txt").write_text(
+                  f"entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n"
+                  f"item_classes={len(item_classes)}\ncombat_entity_classes={len(combat_entities)}\n"
+                  f"provider_data={len(provider_data)}\n", encoding="utf-8")
+              pathlib.Path("item-classes.txt").write_text("\n".join(item_classes)+"\n",encoding="utf-8")
+              pathlib.Path("combat-entity-classes.txt").write_text("\n".join(combat_entities)+"\n",encoding="utf-8")
+              pathlib.Path("provider-data.txt").write_text("\n".join(provider_data)+"\n",encoding="utf-8")
+          PY
+
+      - name: Dump all exact item classes and activation surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          : > javap-all-items.txt
+          : > activation-surfaces.txt
+          while IFS= read -r path; do
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all-items.txt
+            javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-all-items.txt 2>&1 || true
+          done < item-classes.txt
+          grep -E '(^===== | use\\(|releaseUsing\\(|onUseTick\\(|finishUsingItem\\(|onLeftClick\\(|useOn\\(|inventoryTick\\(|hurtEnemy\\(|onArmorTick\\(|Keybind|keybind|Cooldown|cooldown|addFreshEntity|shootFromRotation|spawn[A-Z]|launch[A-Z])' \
+            javap-all-items.txt > activation-surfaces.txt || true
+
+      - name: Dump every exact item class and activation signature
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          : > javap-all-item-signatures.txt
+          : > javap-all-item-bytecode.txt
+          while IFS= read -r path; do
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all-item-signatures.txt
+            javap -classpath cataclysm-1.21.1-3.33.jar -p -s "$cls" >> javap-all-item-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-all-item-bytecode.txt
+            javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-all-item-bytecode.txt 2>&1 || true
+          done < item-classes.txt
+
+          python3 - <<'PY'
+          import pathlib, re
+          text = pathlib.Path("javap-all-item-signatures.txt").read_text(encoding="utf-8", errors="replace")
+          sections = re.split(r"^===== (.+?) =====$", text, flags=re.M)
+          patterns = {
+              "use": re.compile(r"\buse\s*\("),
+              "releaseUsing": re.compile(r"\breleaseUsing\s*\("),
+              "onUseTick": re.compile(r"\bonUseTick\s*\("),
+              "finishUsingItem": re.compile(r"\bfinishUsingItem\s*\("),
+              "useOn": re.compile(r"\buseOn\s*\("),
+              "interactLivingEntity": re.compile(r"\binteractLivingEntity\s*\("),
+              "onLeftClick": re.compile(r"\bonLeftClick\s*\("),
+              "hurtEnemy": re.compile(r"\bhurtEnemy\s*\("),
+              "inventoryTick": re.compile(r"\binventoryTick\s*\("),
+              "onArmorTick": re.compile(r"\bonArmorTick\s*\("),
+          }
+          rows=[]
+          for i in range(1, len(sections), 2):
+              cls=sections[i]
+              body=sections[i+1]
+              found=[]
+              for name, pat in patterns.items():
+                  if pat.search(body):
+                      found.append(name)
+              if found:
+                  rows.append((cls, ",".join(found)))
+          pathlib.Path("activation-index.txt").write_text(
+              "\n".join(f"{cls}\t{methods}" for cls,methods in rows)+"\n", encoding="utf-8")
+          PY
+
+      - name: Dump exact input and packet seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          : > javap-input-seams.txt
+          for cls in \
+            com.github.L_Ender.cataclysm.init.ModKeybind \
+            com.github.L_Ender.cataclysm.items.KeybindUsingArmor \
+            com.github.L_Ender.cataclysm.message.MessageArmorKey \
+            com.github.L_Ender.cataclysm.message.MessageCharge \
+            com.github.L_Ender.cataclysm.message.MessageMeatShredder \
+            com.github.L_Ender.cataclysm.message.MessageTidalTentacle; do
+              echo "===== $cls =====" >> javap-input-seams.txt
+              javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-input-seams.txt 2>&1 || true
+          done
+
+      - name: Dump item registry and active-action candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          : > javap-actions.txt
+          for cls in \
+            com.github.L_Ender.cataclysm.init.ModItems \
+            com.github.L_Ender.cataclysm.items.Bulwark_of_the_flame \
+            com.github.L_Ender.cataclysm.items.Gauntlet_of_Guard \
+            com.github.L_Ender.cataclysm.items.Gauntlet_of_Bulwark \
+            com.github.L_Ender.cataclysm.items.Gauntlet_of_Maelstrom \
+            com.github.L_Ender.cataclysm.items.The_Incinerator \
+            com.github.L_Ender.cataclysm.items.The_Immolator \
+            com.github.L_Ender.cataclysm.items.The_Annihilator \
+            com.github.L_Ender.cataclysm.items.Soul_Render \
+            com.github.L_Ender.cataclysm.items.void_forge \
+            com.github.L_Ender.cataclysm.items.infernal_forge \
+            com.github.L_Ender.cataclysm.items.void_core \
+            com.github.L_Ender.cataclysm.items.Tidal_Claws \
+            com.github.L_Ender.cataclysm.items.Wrath_of_the_desert \
+            com.github.L_Ender.cataclysm.items.Laser_Gatling \
+            com.github.L_Ender.cataclysm.items.Wither_Assault_SHoulder_Weapon \
+            com.github.L_Ender.cataclysm.items.Void_Assault_SHoulder_Weapon \
+            com.github.L_Ender.cataclysm.items.Astrape \
+            com.github.L_Ender.cataclysm.items.Ceraunus \
+            com.github.L_Ender.cataclysm.items.Brontes \
+            com.github.L_Ender.cataclysm.items.Ancient_Spear \
+            com.github.L_Ender.cataclysm.items.Coral_Spear \
+            com.github.L_Ender.cataclysm.items.Coral_Bardiche \
+            com.github.L_Ender.cataclysm.items.Cursed_bow \
+            com.github.L_Ender.cataclysm.items.Meat_Shredder \
+            com.github.L_Ender.cataclysm.items.Sandstorm_In_A_Bottle \
+            com.github.L_Ender.cataclysm.items.Necklace_Of_The_Desert; do
+              echo "===== $cls =====" >> javap-actions.txt
+              javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-actions.txt 2>&1 || true
+          done
+
+      - name: Map candidate owner acquisition references
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          owners = [
+              "ancient_spear", "astrape", "brontes", "bulwark_of_the_flame", "ceraunus", "cursed_bow",
+              "gauntlet_of_bulwark", "gauntlet_of_guard", "gauntlet_of_maelstrom",
+              "infernal_forge", "sandstorm_in_a_bottle", "soul_render",
+              "the_annihilator", "the_immolator", "the_incinerator", "tidal_claws",
+              "void_assault_shoulder_weapon", "void_core", "void_forge", "wither_assault_shoulder_weapon", "wrath_of_the_desert", "ignitium_helmet",
+              "cursium_helmet", "cursium_boots", "bloom_stone_pauldrons"
+          ]
+          hits = {x: [] for x in owners}
+          with zipfile.ZipFile("cataclysm-1.21.1-3.33.jar") as z:
+              for name in sorted(z.namelist()):
+                  if not (name.startswith("data/cataclysm/") and name.endswith(".json")):
+                      continue
+                  try:
+                      raw=z.read(name).decode("utf-8")
+                  except UnicodeDecodeError:
+                      continue
+                  for owner in owners:
+                      if f"cataclysm:{owner}" in raw:
+                          hits[owner].append(name)
+          with open("candidate-acquisition-map.txt","w",encoding="utf-8") as f:
+              for owner in owners:
+                  f.write(f"[{owner}]\\n")
+                  if hits[owner]:
+                      for p in hits[owner]: f.write(p+"\\n")
+                  else:
+                      f.write("NO_PROVIDER_DATA_REFERENCE\\n")
+          PY
+
+      - name: Extract structural acquisition JSON paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          python3 - <<'PY'
+          import json, zipfile
+          owners = [
+              "ancient_spear", "astrape", "brontes", "bulwark_of_the_flame", "ceraunus", "cursed_bow",
+              "gauntlet_of_bulwark", "gauntlet_of_guard", "gauntlet_of_maelstrom",
+              "infernal_forge", "sandstorm_in_a_bottle", "soul_render",
+              "the_annihilator", "the_immolator", "the_incinerator", "tidal_claws",
+              "void_assault_shoulder_weapon", "void_core", "void_forge", "wither_assault_shoulder_weapon", "wrath_of_the_desert", "ignitium_helmet",
+              "cursium_helmet", "cursium_boots", "bloom_stone_pauldrons"
+          ]
+          targets={f"cataclysm:{x}":x for x in owners}
+          rows=[]
+          def walk(v,path="$"):
+              if isinstance(v,dict):
+                  for k,x in v.items():
+                      yield from walk(x, f"{path}.{k}")
+              elif isinstance(v,list):
+                  for i,x in enumerate(v):
+                      yield from walk(x, f"{path}[{i}]")
+              elif isinstance(v,str) and v in targets:
+                  yield targets[v], path
+          with zipfile.ZipFile("cataclysm-1.21.1-3.33.jar") as z:
+              for name in sorted(z.namelist()):
+                  if not (name.startswith("data/cataclysm/") and name.endswith(".json")):
+                      continue
+                  try:
+                      data=json.loads(z.read(name))
+                  except Exception:
+                      continue
+                  typ=data.get("type") if isinstance(data,dict) else None
+                  for owner,path in walk(data):
+                      rows.append((owner,name,path,typ or ""))
+          with open("candidate-acquisition-jsonpaths.txt","w",encoding="utf-8") as f:
+              for owner in owners:
+                  f.write(f"[{owner}]\n")
+                  found=[r for r in rows if r[0]==owner]
+                  if not found:
+                      f.write("NO_PROVIDER_DATA_REFERENCE\n")
+                  for _,name,path,typ in found:
+                      f.write(f"{name}\t{path}\ttype={typ}\n")
+          PY
+
+      - name: Extract acquisition and localization candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          grep -E 'data/cataclysm/(recipe|loot_table|advancement)/' provider-data.txt > acquisition-paths.txt || true
+          grep -E 'Bulwark|Gauntlet|Incinerator|Immolator|Annihilator|Soul_Render|void_forge|infernal_forge|void_core|Tidal_Claws|Wrath_of_the_desert|Laser_Gatling|Assault_SHoulder|Astrape|Ceraunus|Brontes|Ancient_Spear|Coral_Spear|Coral_Bardiche|Cursed_bow|Meat_Shredder|Sandstorm_In_A_Bottle|Necklace_Of_The_Desert' javap-actions.txt > action-seam-lines.txt || true
+
+      - name: Prove exact ritual surfaces and reachability
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          : > javap-rituals.txt
+          for cls in \
+            com.github.L_Ender.cataclysm.blocks.Altar_Of_Fire_Block \
+            com.github.L_Ender.cataclysm.blockentities.AltarOfFire_Block_Entity \
+            com.github.L_Ender.cataclysm.blocks.Altar_Of_Abyss_Block \
+            com.github.L_Ender.cataclysm.blockentities.AltarOfAbyss_Block_Entity \
+            com.github.L_Ender.cataclysm.blocks.Cursed_Tombstone_Block \
+            com.github.L_Ender.cataclysm.blockentities.Cursed_tombstone_Entity \
+            com.github.L_Ender.cataclysm.blocks.Altar_Of_Void_Block \
+            com.github.L_Ender.cataclysm.blockentities.AltarOfVoid_Block_Entity \
+            com.github.L_Ender.cataclysm.blocks.Boss_Respawn_Spawner_Block \
+            com.github.L_Ender.cataclysm.blockentities.Boss_Respawn_Spawner_Block_Entity \
+            com.github.L_Ender.cataclysm.blocks.Altar_Of_Amethyst_Block \
+            com.github.L_Ender.cataclysm.blockentities.AltarOfAmethyst_Block_Entity; do
+              echo "===== $cls =====" >> javap-rituals.txt
+              javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-rituals.txt 2>&1 || true
+          done
+
+          python3 - <<'PY'
+          import gzip, json, zipfile
+          ritual_blocks={
+              "altar_of_fire": b"cataclysm:altar_of_fire",
+              "altar_of_abyss": b"cataclysm:altar_of_abyss",
+              "cursed_tombstone": b"cataclysm:cursed_tombstone",
+          }
+          item_targets={
+              "burning_ashes":"cataclysm:burning_ashes",
+              "abyssal_sacrifice":"cataclysm:abyssal_sacrifice",
+          }
+          structure_hits={k:[] for k in ritual_blocks}
+          item_hits={k:[] for k in item_targets}
+
+          def walk(v,path="$"):
+              if isinstance(v,dict):
+                  for k,x in v.items(): yield from walk(x,f"{path}.{k}")
+              elif isinstance(v,list):
+                  for i,x in enumerate(v): yield from walk(x,f"{path}[{i}]")
+              elif isinstance(v,str):
+                  yield path,v
+
+          with zipfile.ZipFile("cataclysm-1.21.1-3.33.jar") as z:
+              for name in sorted(z.namelist()):
+                  if name.endswith(".nbt") and name.startswith("data/cataclysm/"):
+                      raw=z.read(name)
+                      try:
+                          raw=gzip.decompress(raw)
+                      except Exception:
+                          pass
+                      for key,needle in ritual_blocks.items():
+                          if needle in raw:
+                              structure_hits[key].append(name)
+                  if name.startswith("data/cataclysm/") and name.endswith(".json"):
+                      try: data=json.loads(z.read(name))
+                      except Exception: continue
+                      typ=data.get("type","") if isinstance(data,dict) else ""
+                      for path,val in walk(data):
+                          for key,target in item_targets.items():
+                              if val==target:
+                                  item_hits[key].append((name,path,typ))
+
+          with open("ritual-reachability.txt","w",encoding="utf-8") as f:
+              for key in ritual_blocks:
+                  f.write(f"[structure:{key}]\n")
+                  for name in structure_hits[key]: f.write(name+"\n")
+                  if not structure_hits[key]: f.write("NO_STRUCTURE_NBT_HIT\n")
+              for key in item_targets:
+                  f.write(f"[item:{key}]\n")
+                  for name,path,typ in item_hits[key]: f.write(f"{name}\t{path}\ttype={typ}\n")
+                  if not item_hits[key]: f.write("NO_PROVIDER_DATA_REFERENCE\n")
+          PY
+
+      - name: Prove exact boss-respawner producers
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/cataclysm
+          : > javap-respawners.txt
+          for cls in \
+            com.github.L_Ender.cataclysm.entity.AnimationMonster.BossMonsters.The_Harbinger_Entity \
+            com.github.L_Ender.cataclysm.entity.AnimationMonster.BossMonsters.Ender_Guardian_Entity \
+            com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.IABossMonsters.Scylla.Scylla_Entity \
+            com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.IABossMonsters.Ancient_Remnant.Ancient_Remnant_Entity \
+            com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.IABossMonsters.NewNetherite_Monstrosity.Netherite_Monstrosity_Entity \
+            com.github.L_Ender.cataclysm.blockentities.Boss_Respawn_Spawner_Block_Entity; do
+              echo "===== $cls =====" >> javap-respawners.txt
+              javap -classpath cataclysm-1.21.1-3.33.jar -p -c -constants "$cls" >> javap-respawners.txt 2>&1 || true
+          done
+          grep -E 'respawner|setEntityId|setTheItem|MECH_EYE|VOID_EYE|STORM_EYE|DESERT_EYE|MONSTROUS_EYE|THE_HARBINGER|ENDER_GUARDIAN|SCYLLA|ANCIENT_REMNANT|NETHERITE_MONSTROSITY' \
+            javap-respawners.txt > respawner-seams.txt || true
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: cataclysm-3.33-exact-artifact-audit
+          path: |
+            build/audit/cataclysm/hashes.txt
+            build/audit/cataclysm/inventory.txt
+            build/audit/cataclysm/jar-entries.txt
+            build/audit/cataclysm/item-classes.txt
+            build/audit/cataclysm/combat-entity-classes.txt
+            build/audit/cataclysm/provider-data.txt
+            build/audit/cataclysm/javap-actions.txt
+            build/audit/cataclysm/javap-all-items.txt
+            build/audit/cataclysm/activation-surfaces.txt
+            build/audit/cataclysm/acquisition-paths.txt
+            build/audit/cataclysm/action-seam-lines.txt
+            build/audit/cataclysm/javap-all-item-signatures.txt
+            build/audit/cataclysm/javap-all-item-bytecode.txt
+            build/audit/cataclysm/activation-index.txt
+            build/audit/cataclysm/javap-input-seams.txt
+            build/audit/cataclysm/candidate-acquisition-map.txt
+            build/audit/cataclysm/candidate-acquisition-jsonpaths.txt
+            build/audit/cataclysm/javap-rituals.txt
+            build/audit/cataclysm/ritual-reachability.txt
+            build/audit/cataclysm/javap-respawners.txt
+            build/audit/cataclysm/respawner-seams.txt
+          if-no-files-found: error
