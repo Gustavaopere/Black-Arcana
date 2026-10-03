@@ -1,0 +1,160 @@
+name: audit-protection-pixel-2.2.1
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/protection-pixel
+          cd build/audit/protection-pixel
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/protection-pixel-1023409/7549821/protection-pixel-1023409-7549821.jar" \
+            -o protection_pixel-2.2.1-neoforge-1.21.1.jar
+          test -s protection_pixel-2.2.1-neoforge-1.21.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/protection-pixel
+          EXPECTED_SHA1="c35da610425f735eea4d027ad159c88de6ec6e3f"
+          ACTUAL_SHA1="$(sha1sum protection_pixel-2.2.1-neoforge-1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum protection_pixel-2.2.1-neoforge-1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s protection_pixel-2.2.1-neoforge-1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1023409/7549821"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded provider inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/protection-pixel
+          jar tf protection_pixel-2.2.1-neoforge-1.21.1.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json, pathlib, re, zipfile
+          jar=pathlib.Path('protection_pixel-2.2.1-neoforge-1.21.1.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              provider_classes=[n for n in classes if 'protectionpixel' in n.lower() or 'protection_pixel' in n.lower()]
+              procedures=[n for n in provider_classes if '/procedures/' in n.lower() and '$' not in n]
+              items=[n for n in provider_classes if re.search(r'/(item|items)/', n, re.I) and '$' not in n]
+              input_network=[n for n in provider_classes if re.search(r'(key|packet|network|message|input)', pathlib.PurePosixPath(n).name, re.I) and '$' not in n]
+              data=[n for n in names if n.startswith('data/protection_pixel/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'provider_classes={len(provider_classes)}\nprocedures={len(procedures)}\nitem_classes={len(items)}\n'
+                  f'input_network_classes={len(input_network)}\nprovider_data={len(data)}\n', encoding='utf-8')
+              pathlib.Path('provider-classes.txt').write_text('\n'.join(provider_classes)+'\n',encoding='utf-8')
+              pathlib.Path('procedures.txt').write_text('\n'.join(procedures)+'\n',encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(items)+'\n',encoding='utf-8')
+              pathlib.Path('input-network-classes.txt').write_text('\n'.join(input_network)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+
+              lang={}
+              if 'assets/protection_pixel/lang/en_us.json' in names:
+                  try: lang=json.loads(z.read('assets/protection_pixel/lang/en_us.json'))
+                  except Exception: pass
+              pathlib.Path('localization-identities.txt').write_text(
+                  '\n'.join(f'{k}\t{v}' for k,v in sorted(lang.items()) if any(t in k.lower() for t in ('item.','key.','gui.','effect.','block.')))+'\n',
+                  encoding='utf-8')
+
+              semantic_data=[]
+              for name in data:
+                  low=name.lower()
+                  if any(t in low for t in ('recipe','loot','advancement','tag','damage_type')):
+                      semantic_data.append(name)
+              pathlib.Path('semantic-data-paths.txt').write_text('\n'.join(semantic_data)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump exact provider bytecode surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/protection-pixel
+          : > javap-provider.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-provider.txt
+            javap -classpath protection_pixel-2.2.1-neoforge-1.21.1.jar -p -c -constants "$cls" >> javap-provider.txt 2>&1 || true
+          done < provider-classes.txt
+
+      - name: Index player-action and passive seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/protection-pixel
+          grep -nEi 'use\(|useOn|interact|right.?click|left.?click|key|input|inventoryTick|onArmorTick|hurtEnemy|onHit|LivingDamage|LivingIncomingDamage|PlayerTick|addEffect|removeEffect|knockback|push|teleport|setDeltaMovement|cooldown|sneak|shift|reactor|magnet|shield|plague|hunter|lancer|float|ability' javap-provider.txt > action-seams.txt || true
+          grep -nEi 'SubscribeEvent|EventBusSubscriber|TickEvent|Living.*Event|Player.*Event|Item.*Event|Key.*Event' javap-provider.txt > event-seams.txt || true
+
+      - name: Extract acquisition JSON summaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/protection-pixel
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          rows=[]
+          with zipfile.ZipFile('protection_pixel-2.2.1-neoforge-1.21.1.jar') as z:
+              for name in sorted(z.namelist()):
+                  low=name.lower()
+                  if not name.startswith('data/protection_pixel/') or not name.endswith('.json'): continue
+                  if not any(t in low for t in ('recipe','loot_table','loot_tables','advancement')): continue
+                  try:
+                      obj=json.loads(z.read(name))
+                      compact=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception as e:
+                      compact='INVALID_JSON:'+type(e).__name__
+                  rows.append((name,compact))
+          pathlib.Path('acquisition-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+          pathlib.Path('acquisition-json-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: protection-pixel-2.2.1-exact-artifact-audit
+          path: |
+            build/audit/protection-pixel/hashes.txt
+            build/audit/protection-pixel/inventory.txt
+            build/audit/protection-pixel/jar-entries.txt
+            build/audit/protection-pixel/provider-classes.txt
+            build/audit/protection-pixel/procedures.txt
+            build/audit/protection-pixel/item-classes.txt
+            build/audit/protection-pixel/input-network-classes.txt
+            build/audit/protection-pixel/provider-data.txt
+            build/audit/protection-pixel/localization-identities.txt
+            build/audit/protection-pixel/semantic-data-paths.txt
+            build/audit/protection-pixel/javap-provider.txt
+            build/audit/protection-pixel/action-seams.txt
+            build/audit/protection-pixel/event-seams.txt
+            build/audit/protection-pixel/acquisition-json.txt
+            build/audit/protection-pixel/acquisition-json-count.txt
+          if-no-files-found: error
