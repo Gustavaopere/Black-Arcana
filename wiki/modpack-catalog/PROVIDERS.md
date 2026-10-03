@@ -131,6 +131,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 124 | Create: More Features | `create_mf` | `create_mf-0.1.3-neoforge-1.21.1.jar` | `0.1.3` | CREATE AUTOMATION / VILLAGER / STORAGE / MECHANISM PROVIDER | ZERO_SEMANTIC_CREATE_AUTOMATION_VILLAGER_INFRA |
 | 125 | Create: Mobile Packages | `create_mobile_packages` | `create_mobile_packages-1.21.1-0.7.7.jar` | `0.7.7` | CREATE LOGISTICS / PACKAGE / ROBO-BEE NETWORK PROVIDER | ZERO_SEMANTIC_CREATE_LOGISTICS_INFRA |
 | 126 | Ice And Fire: Dragon Care | `dragoncare` | `Ice and Fire - Dragon Care-1.3.1 - 1.21.1v.jar` | `1.3.1 - 1.21.1v` | DRAGON HUSBANDRY / CARE / TRACKING SUPPORT | ZERO_SEMANTIC_HUSBANDRY_SUPPORT |
+| 127 | Pufferfish's Skills | `puffish_skills` | `puffish_skills-0.19.0-1.21-neoforge.jar` | `0.19.0` | SKILL TREE / XP / REWARD / PROGRESSION FRAMEWORK | ZERO_SEMANTIC_SKILL_TREE_FRAMEWORK |
 
 ## Current version drifts already reconciled
 
