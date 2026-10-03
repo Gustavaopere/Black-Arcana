@@ -1,0 +1,144 @@
+name: audit-create-deep-dark-3.0.2
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/create_deep_dark
+          cd build/audit/create_deep_dark
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/create-deep-dark-1020173/7624342/create-deep-dark-1020173-7624342.jar" \
+            -o create_deep_dark-3.0.2-neoforge-1.21.1.jar
+          test -s create_deep_dark-3.0.2-neoforge-1.21.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_deep_dark
+          EXPECTED_SHA1="41a8c7f2f096555355214c55031ade1a84ef4058"
+          ACTUAL_SHA1="$(sha1sum create_deep_dark-3.0.2-neoforge-1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum create_deep_dark-3.0.2-neoforge-1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s create_deep_dark-3.0.2-neoforge-1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1020173/7624342"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract exact archive and semantic inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_deep_dark
+          jar tf create_deep_dark-3.0.2-neoforge-1.21.1.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json, pathlib, re, zipfile
+          jar=pathlib.Path('create_deep_dark-3.0.2-neoforge-1.21.1.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              provider_data=[n for n in names if n.startswith('data/create_deep_dark/')]
+              keywords=('spell','magic','ritual','ability','mana','arcane','glyph','teleport','summon','portal','effect','enchant','echo','sculk','warden')
+              counts={k:sum(k in n.lower() for n in names) for k in keywords}
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nprovider_data={len(provider_data)}\n' +
+                  '\n'.join(f'{k}={v}' for k,v in counts.items())+'\n', encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(provider_data)+'\n',encoding='utf-8')
+
+              # Parse provider JSONs and retain bounded semantic/equipment/progression surfaces.
+              rows=[]
+              for name in provider_data:
+                  if not name.endswith('.json'): continue
+                  try:
+                      data=json.loads(z.read(name))
+                      compact=json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception as e:
+                      compact='INVALID_JSON:'+type(e).__name__
+                  if any(k in name.lower() or k in compact.lower() for k in keywords):
+                      rows.append((name,compact[:30000]))
+              pathlib.Path('semantic-json.txt').write_text(
+                  '\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-json-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Dump every provider class and activation signature
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_deep_dark
+          : > javap-all.txt
+          : > javap-signatures.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-signatures.txt
+            javap -classpath create_deep_dark-3.0.2-neoforge-1.21.1.jar -p -s "$cls" >> javap-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-all.txt
+            javap -classpath create_deep_dark-3.0.2-neoforge-1.21.1.jar -p -c -constants "$cls" >> javap-all.txt 2>&1 || true
+          done < classes.txt
+
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          methods=['use','useOn','releaseUsing','onUseTick','finishUsingItem','interactLivingEntity','hurtEnemy','inventoryTick','onArmorTick','onItemUseFirst']
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls=sections[i]; body=sections[i+1]
+              found=[m for m in methods if re.search(r'\b'+re.escape(m)+r'\s*\(',body)]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('activation-index.txt').write_text('\n'.join(f'{c}\t{m}' for c,m in rows)+'\n',encoding='utf-8')
+          PY
+
+      - name: Extract exact Echo equipment and action seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_deep_dark
+          grep -nEi 'echo|warden|darkness|weakness|resistance|strength|creative.?flight|teleport|summon|portal|use\(|useOn|releaseUsing|onUseTick|hurtEnemy|inventoryTick|armor' javap-all.txt > semantic-seams.txt || true
+          grep -nEi 'Echo|Warden|Darkness|Weakness|Resistance|Strength|Sculk|Cake|Superheat' semantic-json.txt > semantic-data-seams.txt || true
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: create-deep-dark-3.0.2-exact-artifact-audit
+          path: |
+            build/audit/create_deep_dark/hashes.txt
+            build/audit/create_deep_dark/inventory.txt
+            build/audit/create_deep_dark/jar-entries.txt
+            build/audit/create_deep_dark/classes.txt
+            build/audit/create_deep_dark/provider-data.txt
+            build/audit/create_deep_dark/semantic-json.txt
+            build/audit/create_deep_dark/semantic-json-count.txt
+            build/audit/create_deep_dark/javap-signatures.txt
+            build/audit/create_deep_dark/javap-all.txt
+            build/audit/create_deep_dark/activation-index.txt
+            build/audit/create_deep_dark/semantic-seams.txt
+            build/audit/create_deep_dark/semantic-data-seams.txt
+          if-no-files-found: error
