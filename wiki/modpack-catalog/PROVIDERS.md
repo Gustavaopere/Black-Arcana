@@ -135,6 +135,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 128 | Pufferfish's Attributes | `puffish_attributes` | `puffish_attributes-0.8.3-1.21-neoforge.jar` | `0.8.3` | DYNAMIC ATTRIBUTE / STAT FRAMEWORK | ZERO_SEMANTIC_ATTRIBUTE_FRAMEWORK |
 | 129 | Pufferfish's Unofficial Additions | `pufferfish_unofficial_additions` | `pufferfish_unofficial_additions-1.21.1-2.2.8.jar` | `2.2.8` | SKILL XP SOURCE / REWARD / IRON'S BRIDGE | ZERO_SEMANTIC_SKILL_XP_REWARD_BRIDGE |
 | 130 | Create: More Automation | `create_more_automation` | `create_more_automation-0.5.2-neoforge-1.21.1.jar` | `0.5.2` | CREATE RECIPE / PROCESSING AUTOMATION | ZERO_SEMANTIC_CREATE_RECIPE_AUTOMATION |
+| 131 | Create: Ender Transmission | `createendertransmission` | `createendertransmission-2.1.1-1.21.1.jar` | `2.1.1-1.21.1` | REMOTE ITEM / FLUID / ENERGY TRANSFER + CHUNK INFRA | ZERO_SEMANTIC_REMOTE_TRANSFER_CHUNK_INFRA |
 
 ## Current version drifts already reconciled
 
