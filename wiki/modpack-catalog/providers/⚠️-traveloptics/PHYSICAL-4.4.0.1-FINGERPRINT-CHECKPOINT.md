@@ -93,7 +93,7 @@ A Project Library `minecraftinstance.json` snapshot stored on 2026-08-18 preserv
 
 This snapshot predates the earliest direct **2026-08-22** physical SHA-1 capture by four days. It proves that **on 2026-08-18** the launcher tracked that filename as File `6342780` and considered the then-current bytes modified relative to the publisher hash. The new Aug-22 capture substantially narrows the interval, but still does **not** cryptographically establish continuity from the Aug-18 modified state or Aug-19 runtime to `7b74816e...`; the JAR could have been replaced under the same filename before the Aug-22 inventory.
 
-The September bytes also do not equal known patch File `8861368`. Therefore current provenance remains unidentified and the exact `7b74816e...` bytes/content must still be materialized or otherwise contemporaneously evidenced before registry or loot-modifier semantics can be promoted.
+The Aug-22-and-later `7b74816e...` bytes also do not equal known patch File `8861368`. Therefore entry-level provenance remains unidentified and the exact `7b74816e...` bytes/content must still be materialized or otherwise contemporaneously evidenced before registry or loot-modifier semantics can be promoted.
 
 An exact-hash web lookup rechecked on 2026-09-27 returned no indexed public match for `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; absence of a search hit is not content/provenance proof.
 
@@ -111,7 +111,7 @@ In the same captured run, the Fundamental Principles registry analyzer emits one
 
 This is direct runtime evidence that an **August assembled-pack modified-runtime snapshot** exposed the same 33 spell identities as the publisher baseline and progressed into resource reload/analyzer execution.
 
-It is **not** contemporaneous hash evidence for the September physical artifact. The runtime log does not record the JAR SHA-1, and the August `minecraftinstance.json` only proves that the launcher considered the same filename modified at that time. Therefore the August 33/33 runtime observation must not be projected onto September SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` without a binary/hash bridge.
+It is **not** contemporaneous hash evidence for the exact Aug-22-and-later physical artifact. The runtime log does not record the JAR SHA-1, and the August `minecraftinstance.json` only proves that the launcher considered the same filename modified at that time. Therefore the Aug-19 33/33 runtime observation must not be projected onto SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` without a binary/hash bridge.
 
 ## September physical/runtime correlation — 2026-10-04 reconciliation
 
