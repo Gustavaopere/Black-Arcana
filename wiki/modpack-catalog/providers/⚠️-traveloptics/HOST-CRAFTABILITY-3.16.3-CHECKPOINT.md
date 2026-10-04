@@ -66,23 +66,24 @@ Relevant host facts at that pin:
 
 For the **21** exact registrations covered by this probe:
 
-**default Scroll Forge eligibility = true under the current Iron's 3.16.3 host contract**, because the provider concrete classes do not set a different `DefaultConfig.allowCrafting` value and are outside the two provider base classes with hard craftability gates.
+**host-default craftability = true under the current Iron's 3.16.3 contract**, because the provider concrete classes do not set a different `DefaultConfig.allowCrafting` value and are outside the two provider base classes with hard craftability gates. This statement covers only the `allowCrafting` default.
 
 This is deliberately narrower than “survival obtainable”:
 
 - effective server/datapack spell config may override `allow_crafting`;
-- player-specific learning may still make `canBeCraftedBy(player)` false;
-- `isEnabled()` remains independently config-resolved;
-- a craftable/default-eligible spell may still require resources/progression not audited here;
+- `isEnabled()` remains independently config-resolved and Scroll Forge recipe generation requires both `isEnabled()` and `allowCrafting()`;
+- the Scroll Forge menu additionally depends on a compatible focus/school path;
+- player-specific learning may still make `canBeCraftedBy(player)` false where applicable;
+- a host-default-craftable spell may still require resources/progression not audited here;
 - current physical Traveloptics SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` is not proven byte-equal to File `6342780`.
 
-Therefore the catalog may promote these 21 cards from “host gate unknown” to **`HOST-DEFAULT CRAFTABLE / CONFIG+LEARNING CONDITIONAL`**, but it must not promote them to unconditional survival reachability.
+Therefore the catalog may promote these 21 cards from “host craftability unknown” to **`HOST-DEFAULT CRAFTABLE / EFFECTIVE ELIGIBILITY CONDITIONAL`**. This does not establish effective Scroll Forge eligibility or unconditional survival reachability.
 
 ## Aggregate gate classification
 
 Across the 33 exact publisher-baseline registrations:
 
-- **21** — host-default craftable under current Iron's 3.16.3, config/learning conditional;
+- **21** — host-default craftable under current Iron's 3.16.3; effective Scroll Forge eligibility remains conditioned by enabled/config/focus/player gates;
 - **2** — provider Weapon gate explicitly `allowCrafting=true`;
 - **10** — provider Unique gate explicitly `allowCrafting=false`;
   - **9** of those 10 have exact structured loot anchors;
