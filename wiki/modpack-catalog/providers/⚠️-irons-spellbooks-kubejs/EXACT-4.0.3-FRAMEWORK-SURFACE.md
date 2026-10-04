@@ -136,7 +136,7 @@ This establishes optional EntityJS interoperability. It does not prove that the 
 
 `IronsSpellsJSMod.runIronSpellsConfig` iterates KubeJS `RegistryObjectStorage` for Iron's spell registry and asks Iron's server-config builder to create spell config entries for the registered script-built spell objects before registering the resulting Iron's server config.
 
-Separately, the exact source contains the spell-config integration used to inject custom spell entries into Iron's config-management path. Therefore script-defined spells participate in Iron's host config rather than forming a second independent spell-state system.
+This exact 4.0.3 path is sufficient to establish bridge-to-host server-config participation. Do **not** backport later-upstream `SpellConfigManagerMixin` / `CustomSpellConfigEntriesJS` behavior into this pin: those files were not present at the exact 4.0.3 checkpoint audited here.
 
 ## 10. Catalog disposition
 
