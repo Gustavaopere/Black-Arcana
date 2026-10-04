@@ -64,7 +64,8 @@ This proves those charge surfaces for the 1.0.8-fix artifact only. It does not e
 - [SPELL-CATALOG-1.0.9.md](SPELL-CATALOG-1.0.9.md) — current 83-ID registry inventory; active by current mod composition but not yet strict-counted;
 - [MAGIC-CARDS-1.0.9.md](MAGIC-CARDS-1.0.9.md) — 83 current exact registry identities materialized as individual cards under `registry-1.0.9/`; registration admitted 83/83 by current composition, strict count still conditional;
 - [EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md](EXACT-1.0.8-FIX-ARTIFACT-AUDIT.md) — historical 1.0.8-fix hash-matched registry/gate/config facts;
-- [INTEGRATION-RULES.md](INTEGRATION-RULES.md) — Black Arcana authority and fail-closed rules.
+- [INTEGRATION-RULES.md](INTEGRATION-RULES.md) — Black Arcana authority and fail-closed rules;
+- [AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md](AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md) — current dual-installed Somake↔Traveloptics Aqua authority boundary.
 
 School directories already present in this provider tree remain organizational placeholders until exact current membership can be proven. Historical changelog school labels do not justify manufacturing a complete school-first registry.
 
@@ -83,7 +84,7 @@ The 1.0.8 changelog explicitly says Magic From the East and Born in Chaos are **
 
 ### Latest explicit provider-stack physical checkpoint
 
-The following presence list is preserved from the earlier complete provider-stack physical checkpoint used by this dossier. Current sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589` now independently confirms the three exact Somake registration-gate providers — Mowzie's Mobs, ISS: Magic From The East and Legendary Monsters — while containing no Traveloptics dossier/path/mod-id/filename reference.
+The following presence list originated from the earlier complete provider-stack physical checkpoint used by this dossier. Current sibling authority `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` now confirms both Somake row #513 and Traveloptics row #550, while also preserving the three exact Somake registration-gate providers — Mowzie's Mobs, ISS: Magic From The East and Legendary Monsters.
 
 Present at that checkpoint:
 
@@ -105,13 +106,13 @@ Exact 1.0.9 clean-room registration-gate audit now closes the current predicate 
 
 The current pack contains all three required providers — Mowzie's Mobs, ISS: Magic From The East and Legendary Monsters — so the current mod-composition registration outcome is **83/83 declared Somake spell IDs active by registration predicate**. This closes registration composition only. It does not establish effective Iron's `enabled` / `allow_crafting`, deployed Somake spell-lock state or survival acquisition.
 
-## Aqua authority / historical T.O Magic coexistence
+## Aqua authority / current T.O Magic coexistence
 
 Somake states that Aqua was created to cover the absence of Aqua/T.O Magic on 1.21.1 and that its Aqua content would migrate if T.O Magic officially updated.
 
-At that historical physical checkpoint, the pack also contained `traveloptics-4.4.0.1-1.21.1.jar`; the T.O Magic publisher labels that 1.21.1 build **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**. That coexistence remains historical provenance only.
+Current physical authority confirms `traveloptics-4.4.0.1-1.21.1.jar` is still installed at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; the T.O Magic publisher labels that 1.21.1 build **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**.
 
-Current sibling `neoforge-rpg-skilltree@d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics entry, so duplicate Somake↔T.O Aqua runtime interaction is **not a current blocker**. Somake's own Aqua focus/acquisition/reachability still requires provider/host evidence, and Black Arcana must not create another generic Aqua pipeline by assumption.
+The exact publisher File `6342780` Traveloptics registry contains 33 active spell IDs and **no Aqua spell registration**. Its Aqua focus tag and residual localization are not active-registry proof. The current physical Traveloptics bytes are nevertheless `OTHER_VERIFIED`, so their exact-current registry delta remains unmaterialized. Duplicate Somake↔T.O Aqua behavior is therefore a **current conditional coexistence question, not a proven collision and not a resolved non-issue**. See [`AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md`](AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md).
 
 ## Publicly named current-line spell evidence
 
@@ -139,6 +140,6 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 - deployed value of the relevant current COMMON config — `UNVERIFIED`;
 - complete object-level survival acquisition/reachability — `UNVERIFIED / CONDITIONAL`;
 - values/formulas/stable integration API/hooks/networking/persistence — `UNVERIFIED / FAIL-CLOSED` except for narrow facts explicitly recorded by the artifact audit;
-- Somake Aqua focus/acquisition/reachability — `UNVERIFIED / CONDITIONAL`; historical T.O coexistence is not current at sibling `d809c7c2e617f5ee14f6867af618c52922d85589`.
+- Somake Aqua focus/acquisition/reachability — `UNVERIFIED / CONDITIONAL`; Traveloptics is currently installed, while its publisher baseline has no active Aqua spell IDs and its exact-current `7b74816e...` registry delta remains unverified. Aqua coexistence/authority therefore stays `CURRENT CONDITIONAL / FAIL-CLOSED`.
 
 The ARR artifact was inspected only to retain factual hash/metadata, resource/registry identities, class/member signatures and narrow control-flow/config predicates needed for catalog interoperability. No implementation body, source reconstruction, asset, model, sound or upstream prose is copied/adapted or treated as reusable material.
