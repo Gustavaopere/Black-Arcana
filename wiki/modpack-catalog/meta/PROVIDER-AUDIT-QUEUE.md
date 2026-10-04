@@ -313,6 +313,7 @@ Gaze therefore contributes **+1** to the strict semantic numerator, producing **
 ### Evidence boundary
 
 - physical version `2.2.0`, SHA-1 `36cce8ab3117e89ae992a84a566d596709db2ffe`;
+- clean-room hash-only PR #568, HEAD `5c80949df8b0fb0a2a0075296e3fcde6389f4718`, run `37175197430` proves CurseForge File `8824651` exactly matches the physical SHA-1; publisher SHA-256 `a2a020b85abe9e5ad2ce9e760db57e9c79aa57cf6dae56bbfd4eb0ed5d5928f9`, `308,353` bytes; superseded run #1 archive/bytecode inspection is inadmissible and not used;
 - CurseForge project/file `1194714 / 8824651`;
 - publisher defines SpellLib as shared library/API infrastructure with no standalone gameplay of its own;
 - 2.2.0 publisher delta adds Healing Received, Damage Taken and Summon Health attributes;

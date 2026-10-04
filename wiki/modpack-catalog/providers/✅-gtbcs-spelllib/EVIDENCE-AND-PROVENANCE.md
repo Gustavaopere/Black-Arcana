@@ -26,6 +26,25 @@ The exact 2.2.0 changelog records three added attributes:
 
 The project page classifies the mod as API/Library and describes it as shared code for the author's Iron's Spellbooks add-ons. It explicitly says that the library does not provide standalone gameplay on its own.
 
+
+### Clean-room hash-only equality proof
+
+NON-MERGE PR **#568** was corrected to a hash-only workflow after an earlier superseded run attempted archive/bytecode inspection that is not admissible under this provider's All Rights Reserved clean-room boundary.
+
+Accepted evidence:
+
+- audit HEAD: `5c80949df8b0fb0a2a0075296e3fcde6389f4718`;
+- run: `37175197430` — **SUCCESS**;
+- artifact: `11293470240` (`gtbcs-spelllib-2.2.0-hash-only-audit`);
+- artifact digest: `sha256:dab6a5a128289284f5839c796df376ad91243c6772319fbaac92c078717a9927`;
+- expected physical SHA-1: `36cce8ab3117e89ae992a84a566d596709db2ffe`;
+- publisher SHA-1: `36cce8ab3117e89ae992a84a566d596709db2ffe`;
+- publisher SHA-256: `a2a020b85abe9e5ad2ce9e760db57e9c79aa57cf6dae56bbfd4eb0ed5d5928f9`;
+- bytes: `308,353`;
+- inspection policy: `hash-only-clean-room`.
+
+This proves exact physical↔publisher artifact identity without inspecting JAR contents. The semantic +0 conclusion still comes only from publisher-authored public role/release documentation.
+
 ### Public API-role description
 
 Publisher prose documents reusable infrastructure such as attributes, particle helpers, trade helpers, Curio/armor abstractions, an advanced spell base abstraction and summon checks. These descriptions prove library responsibility at a semantic level but do not establish exact Java signatures or runtime contracts for Black Arcana.
@@ -46,7 +65,7 @@ Black Arcana posture:
 
 - `REFERENCE_ONLY / COMPATIBILITY_TARGET / CLOSED_SOURCE ARR`;
 - public factual behavior/API-role descriptions may be cataloged;
-- no JAR decompilation;
+- no JAR decompilation or archive-content inspection in the accepted evidence path;
 - no copying/adapting code or assets;
 - no inferred method/class signatures beyond publisher-named conceptual surfaces;
 - provider-specific runtime/API claims remain fail-closed without an exact documented seam.
