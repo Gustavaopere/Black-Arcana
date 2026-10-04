@@ -23,7 +23,7 @@ Retained CurseForge instance metadata identifies the original installed artifact
 
 The physical mismatch is therefore best classified as a **local post-install byte change/repack of an artifact originally sourced from File 8201775**, not an unidentified second publisher release.
 
-This provenance result still does not expose the physical entry-level diff. A contemporaneous NeoVitae compatibility-work sequence and Deeper and Darker container-validity mixin conflicts are known, but no causal identity between those generated compatibility artifacts and the current physical `83f7...` bytes is asserted.
+This provenance result still does not expose the physical entry-level diff. Retained logs first show Deeper and Darker player/server-player `stillValid(...)` redirect conflicts with NeoVitae and later show Deeper and Darker `ContainerMenuMixin` `stillValid(...)` injections on vanilla container menus. That establishes a compatibility-change signal in the deployed history, but no claim is made that this observed mixin change fully explains the current physical `83f7...` bytes.
 
 ## Exact upstream source pin
 
