@@ -17,6 +17,14 @@ Current sibling physical authority records:
 
 That fingerprint remains the installed-byte authority.
 
+### Installation lineage now narrowed
+
+Retained CurseForge instance metadata identifies the original installed artifact as official project/file **659011 / 8201775**, with SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f` and length **3,906,057 bytes**. A later physical snapshot keeps the same filename/runtime/byte length but measures `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+
+The physical mismatch is therefore best classified as a **local post-install byte change/repack of an artifact originally sourced from File 8201775**, not an unidentified second publisher release.
+
+This provenance result still does not expose the physical entry-level diff. A contemporaneous NeoVitae compatibility-work sequence and Deeper and Darker container-validity mixin conflicts are known, but no causal identity between those generated compatibility artifacts and the current physical `83f7...` bytes is asserted.
+
 ## Exact upstream source pin
 
 Official upstream tag `v1.4.1` resolves to:
@@ -134,7 +142,7 @@ The source reproduction closes a provenance question, not the installed artifact
 
 Promotion to `✅ Catalogado` requires direct evidence for the installed physical bytes, such as:
 
-- direct inspection of the physical `deeperdarker-neoforge-1.21.1-1.4.1.jar`; or
+- direct raw-byte inspection of the physical `deeperdarker-neoforge-1.21.1-1.4.1.jar`; or
 - a repository/publisher artifact whose SHA-1 exactly equals `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
 
 Until that occurs, Black Arcana must not project the public/source three-root denominator onto the physical pack.
