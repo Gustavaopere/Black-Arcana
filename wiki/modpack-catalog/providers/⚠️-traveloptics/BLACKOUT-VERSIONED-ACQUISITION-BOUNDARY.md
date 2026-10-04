@@ -57,7 +57,7 @@ The relationship is therefore publisher-documented, but the projects remain sepa
 
 Official GTBC File `5927811` (`2.0.0-1.21`) introduced Blackout and reworked Call Forth The Dead King around the Enraged Dead King / exclusive-Blackout route. File `6167362` (`2.6.5-1.21.1`) still documents the Dead King spell/entity line and Blackout fixes. The final GTBC release is File `6312018`, `gametechbcs_spellbooks-3.0.0-1.21.1.jar`.
 
-Retained Project Library runtime evidence from 2026-08-16 contains that 3.0.0 JAR and runtime registrations for both `gametechbcs_spellbooks:call_forth_the_dead_king` and `gametechbcs_spellbooks:blackout`. Later retained runtime evidence observes `traveloptics:blackout`.
+Retained Project Library runtime evidence from 2026-08-16 contains that 3.0.0 JAR and Additional Attributes debug registrations for the `spell/` and `innate_spell/` forms of both `gametechbcs_spellbooks:call_forth_the_dead_king` and `gametechbcs_spellbooks:blackout`. Later retained runtime evidence exposes `traveloptics:blackout` through the same integration. These are runtime-visible identifier observations, not independent Survival-acquisition or provider-registry-implementation proofs.
 
 This historical GTBC evidence **does not** become a Traveloptics acquisition proof. Registry/acquisition authority is namespace- and artifact-specific. See [`BLACKOUT-GTBC-SPELLBOOKS-LINEAGE.md`](BLACKOUT-GTBC-SPELLBOOKS-LINEAGE.md).
 
