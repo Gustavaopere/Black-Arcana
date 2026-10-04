@@ -80,7 +80,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 75 | RunicLib | `runiclib` | `neoforge-runiclib-1.21.1-5.0.7.jar` | `5.0.7` | LIBRARY / API / VFX / SCRIPTING | YES |
 | 76 | Ace's Spell Utils | `aces_spell_utils` | `aces_spell_utils-1.2.7.2-1.21.1.jar` | `1.2.7.2-1.21.1` | LIBRARY / API / VFX / SCRIPTING | YES |
 | 77 | GTBC's SpellLib | `gtbcs_spell_lib` | `gtbcs_spell_lib-2.2.0-1.21.1.jar` | `2.2.0-1.21.1` | LIBRARY / API / VFX / SCRIPTING | YES |
-| 78 | HazentouveLib | `hazentouvelib` | `hazentouvelib-1.0.9.jar` | `1.0.9` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
+| 78 | HazentouveLib | `hazentouvelib` | `hazentouvelib-1.0.9.jar` | `1.0.9` | LIBRARY / API / VFX / SCRIPTING | YES / MAGIC_INFRA_ZERO_CONCRETE_SPELLS |
 | 79 | FamiliarsLib | `familiarslib` | `familiarslib-1.21.1-1.7.1.jar` | `1.21.1-1.7` | LIBRARY / API / VFX / SCRIPTING | YES |
 | 80 | Iron's Lib | `irons_lib` | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 81 | Apprentice's Codex | `apprenticecodex` | `apprentice_codex-0.9.7.1+mc1.21.1.jar` | `0.9.7.1` | SPELL PROVIDER / CONTENT ADDON | YES |
@@ -198,7 +198,6 @@ Rows #15, #17, #18, #19, #21, #22, #23, #45, #46, #47, #49, #50, #51, #52, #53, 
 
 After this reconciliation, the only `NO / CONDITIONAL` rows without a canonical `✅` Black Arcana provider tree are:
 
-- **#78 HazentouveLib** (`hazentouvelib`);
 - **#80 Iron's Lib** (`irons_lib`).
 
 Existing partial rows remain partial, including Traveloptics (#42), Iron's Spellbooks KubeJS (#98), and Deeper and Darker (#114).
