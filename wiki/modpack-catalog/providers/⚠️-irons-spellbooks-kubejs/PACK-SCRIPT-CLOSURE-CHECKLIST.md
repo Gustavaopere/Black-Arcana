@@ -17,6 +17,17 @@ Close the only semantic question that the base-addon audit cannot answer: whethe
 - exact official source pin `sentwayfarer/irons_spells_js@f3c05a102707a87ac3b8f0d2df5d2ffa5ae5b6c7`;
 - base framework exposes spell/school builders rather than a fixed provider spell roster.
 
+## Current freshness checkpoint — 2026-10-04
+
+- Black Arcana main considered: `dec859ccf38fe2e51e343cd59a6304057dacbb81`;
+- sibling modlist authority: `neoforge-rpg-skilltree@fa47288bd99e1166880a8fb0ee00cab06697a88a`;
+- current physical row remains `irons_spells_js-4.0.3.jar` / mod id `irons_spells_js` / runtime `4.0.3`;
+- current host stack remains Iron's `1.21.1-3.16.3` + KubeJS `2101.7.2-build.377`;
+- current sibling default-branch searches did not expose a committed `kubejs/startup_scripts` or `kubejs/server_scripts` tree;
+- available Project/Library retrieval did not expose an authoritative current script tree; only historical 2026-09-08 KubeJS build-374 boot evidence and later physical modlist metadata were found;
+- therefore the pack-script semantic contribution remains **UNKNOWN / NOT ADDITIVE**.
+
+This is documented in [`CURRENT-EVIDENCE-2026-10-04.md`](CURRENT-EVIDENCE-2026-10-04.md). Do not promote from this checkpoint alone.
 ## Collector-assisted evidence
 
 Run the current deployed-evidence collector on the authoritative instance first. Its `kubejs_script_inventory` section records the exact bounded `startup_scripts`, `server_scripts`, `client_scripts` and `data` files by relative path, SHA-256 and byte size without copying bodies.
