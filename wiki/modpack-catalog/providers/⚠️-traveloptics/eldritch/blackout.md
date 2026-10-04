@@ -17,7 +17,7 @@ This is **publisher context only** from the living project page; it does not pro
 
 ## Reachability
 
-`UNIQUE / allowCrafting=false`; no direct exact acquisition anchor found — survival reachability `UNVERIFIED`.
+`UNIQUE / allowCrafting=false`; no direct exact Traveloptics-alpha acquisition anchor found — survival reachability `UNVERIFIED`. A Dead King → Blackout route is publisher-confirmed for the full T.O line and the related GTBC's Spellbooks cut-down line, but those separate artifact/namespace facts are versioned context only. See `../BLACKOUT-GTBC-SPELLBOOKS-LINEAGE.md`.
 
 ## Evidence boundary
 
@@ -25,4 +25,4 @@ Identity + school are cataloged from the exact-version audit. Mana, cooldown, ca
 
 Iron's owns host casting/resource settlement; T.O Magic owns this spell. Provider stays **⚠️** because current-physical registry equality/provenance and full runtime closure are not proven.
 
-Source: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`.
+Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`, `../BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`, `../BLACKOUT-GTBC-SPELLBOOKS-LINEAGE.md`.
