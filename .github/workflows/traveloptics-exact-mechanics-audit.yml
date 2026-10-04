@@ -1,5 +1,5 @@
 name: Traveloptics Exact Mechanics Clean-room Audit
-# synchronization trigger v5
+# synchronization trigger v6
 
 on:
   pull_request:
@@ -217,7 +217,7 @@ jobs:
                   "baseManaCost", "manaCostPerLevel", "baseSpellPower",
                   "spellPowerPerLevel", "castTime", "setMaxLevel",
                   "setMinRarity", "SpellRarity", "setCooldownSeconds",
-                  "DefaultConfig"
+                  "DefaultConfig", "CastType", "getCastType"
               )):
                   print(line.strip())
           PY
