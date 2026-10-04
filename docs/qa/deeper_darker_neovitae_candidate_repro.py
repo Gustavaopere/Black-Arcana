@@ -104,19 +104,27 @@ def transform_json(raw: bytes, remove: tuple[str, ...]) -> bytes:
     parsed = json.loads(text)
     parsed["mixins"] = [x for x in parsed["mixins"] if x not in set(remove)]
 
-    # Preserve the official publisher formatting exactly, deleting only the
-    # corresponding indented list lines. This is deliberately narrower than
-    # json.dumps(), because the historical local artifacts differ by only a
-    # handful of bytes.
+    # Preserve the publisher's actual newline convention and all untouched
+    # formatting. Remove only the full list lines whose normalized content is
+    # the requested mixin name. This supports both LF and CRLF release JARs.
+    lines = text.splitlines(keepends=True)
     for name in remove:
-        needle = f'    "{name}",\n'
-        if needle not in text:
-            raise AssertionError(f"expected exact mixin line not found: {needle!r}")
-        text = text.replace(needle, "")
+        targets = {f'"{name}",', f'"{name}"'}
+        matches = [
+            index
+            for index, line in enumerate(lines)
+            if line.strip() in targets
+        ]
+        if len(matches) != 1:
+            raise AssertionError(
+                f"expected exactly one mixin line for {name!r}, found {len(matches)}"
+            )
+        del lines[matches[0]]
+
+    text = "".join(lines)
     roundtrip = json.loads(text)
     assert roundtrip["mixins"] == parsed["mixins"]
     return text.encode("utf-8")
-
 
 def rewrite_zipfile(
     jar_path: Path,
