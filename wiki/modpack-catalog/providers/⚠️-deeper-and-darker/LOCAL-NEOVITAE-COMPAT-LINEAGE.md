@@ -93,12 +93,26 @@ Retained `debug(20260818-125153).log`, captured after the v2 artifact set was ge
 
 Later retained logs on 2026-08-18/19 and 2026-09-08 also positively record the same Deeper and Darker `ContainerMenuMixin` `stillValid(...)` injection surface. However, retained logs from **before** the 2026-08-18 compatibility-artifact generation also show `ContainerMenuMixin` being applied. Therefore this surface is **not** a unique v2 deployment fingerprint and does not prove that the v2 artifact caused a runtime transition.
 
+### Post-v2 operational checkpoint under canonical filenames
+
+The retained 2026-08-18 12:51 boot, captured after the v2 artifact set was generated, lists the loaded mods under the canonical filenames:
+
+- `deeperdarker-neoforge-1.21.1-1.4.1.jar` -> `deeperdarker` 1.4.1;
+- `neovitae-1.21.1-1.1.10.jar` -> `neovitae` 1.1.10.
+
+That boot advances far beyond the earlier Deeper/NeoVitae redirect-conflict failure point: it reaches client/resource-render processing and finally crashes for an unrelated Photon config lifecycle error (`Cannot get config value before config is loaded` in `PostFXTargetPool.enforceBudget`).
+
+This proves an **operational checkpoint** in which the earlier fatal Deeper/NeoVitae redirect conflict is no longer the terminating failure and both mods are loaded under canonical names.
+
+It still does **not** prove which bytes occupied those canonical filenames. In particular, it does not prove that either generated compatibility JAR was copied/renamed into the canonical slot, and it does not bind that boot to physical SHA-1 `83f7edd0...`.
+
 It does **not** prove:
 
 - that `deeperdarker-neoforge-1.21.1-1.4.1-neovitae-compat-v2.jar` was the artifact loaded by that boot;
 - that the generated v2 JAR was renamed to the canonical filename;
 - that the physical SHA-1 `83f7edd0...` equals either generated compatibility JAR;
 - that the mixin change is the only archive-level delta in the physical artifact.
+
 
 ## Bounded candidate-repack reproduction
 
@@ -123,7 +137,6 @@ Results:
 The first-size match is not byte identity and is not treated as proof of the first local patch contents. The no-match result only excludes this bounded candidate family; it does not identify the actual local transformation.
 
 See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md).
-
 ## Raw-byte limitation
 
 The retained generated JARs are visible through Project Library metadata, but this audit does not have an authorized raw-byte materialization path for them. Their SHA-1/SHA-256 values could therefore not be computed here.
@@ -138,7 +151,7 @@ The evidence now supports a more specific bounded history:
 2. a Deeper and Darker ↔ NeoVitae `stillValid(...)` mixin conflict was reproduced;
 3. two local compatibility artifact sets were generated;
 4. the first set did not correspond to an operationally closed state in the next retained bootstrap checkpoint;
-5. after the v2 generation, a retained boot positively shows the `ContainerMenuMixin` injection surface; because pre-v2 logs also expose that surface, it is not treated as evidence that v2 was deployed or caused the observed mixin shape;
+5. after the v2 generation, a retained boot loads Deeper and Darker and NeoVitae under their canonical filenames, progresses beyond the earlier redirect-conflict failure point, and later crashes for an unrelated Photon config lifecycle error; because pre-v2 logs also expose `ContainerMenuMixin`, this does not identify which compatibility bytes were deployed;
 6. a later physical inventory fingerprints the canonical Deeper and Darker JAR as `83f7edd0...`.
 
 The missing step is still a **cryptographic or exact-content bridge** from one retained generated artifact to the deployed `83f7edd0...` bytes.

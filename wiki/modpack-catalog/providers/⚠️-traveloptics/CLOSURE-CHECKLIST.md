@@ -1,10 +1,10 @@
 # T.O Magic n' Extras 4.4.0.1-1.21.1 — Closure Checklist
 
-Status: `33 REGISTERED SPELL IDS CATALOGED / STRICT PROMOTION BLOCKED / RUNTIME FAIL-CLOSED`
+Status: `33 REGISTERED SPELL IDS + EXACT PUBLISHER MECHANICS CATALOGED / CURRENT PHYSICAL PROMOTION BLOCKED / RUNTIME FAIL-CLOSED`
 
 ## Purpose
 
-The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities** and excludes **32 residual localization-only spell IDs**. The remaining work is not another spell enumeration. It is a finite set of evidence gates required before strict semantic/runtime promotion can be considered.
+The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, and now closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown. The remaining work is not another spell or default-stat enumeration. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
 
 This checklist does not promote the provider, does not treat a third-party patch as upstream authority, and does not infer survival acquisition or assembled-pack runtime from publisher marketing language.
 
@@ -31,7 +31,9 @@ Required authoritative result:
 | Is the known patch File `8861368` physically installed? | compare physical SHA-1 with `680fa679d8ea2419a79571f455436367222f6f9d` | `NÃO` |
 | What is the `OTHER_VERIFIED` replacement? | exact physical hash + contemporaneous provenance/content audit | `ABERTO` — direct `7b74816e...` capture now reaches 22/08, but entry-level provenance/content delta remains unknown |
 
-Physical disposition remains **`OTHER_VERIFIED`**. Current provenance is now bounded to an August local-modification window but remains **unidentified at entry level**. Do not infer registry equality, File-6342780 ancestry, identity with the retained Aug-17 `fixed-keyloot.jar`, or the known later patch fix from the unchanged nominal filename/version. The next gate is still to materialize/audit the exact `7b74816e...` bytes or obtain equivalent contemporaneous exact-content provenance.
+Physical disposition remains **`OTHER_VERIFIED`**. Current provenance is now bounded to an August local-modification window but remains **unidentified at entry level**.
+
+**Gate 1 disposition checkpoint:** physical identity classification itself is closed at `OTHER_VERIFIED` (current SHA-1 `7b74816e...` is neither publisher original nor known patch). What remains open is the **provenance/content delta** of those verified replacement bytes and an exact-current registry/stat bridge. The retained Aug-17 JAR metadata provides two local candidate artifacts by name/size, but current inventories do not preserve a physical file-size field for `7b74816e...`; size therefore cannot identify the current replacement. Do not infer registry equality, File-6342780 ancestry, identity with the retained Aug-17 `fixed-keyloot.jar`, or the known later patch fix from the unchanged nominal filename/version. The next gate is still to materialize/audit the exact `7b74816e...` bytes or obtain equivalent contemporaneous exact-content provenance.
 
 Temporary NON-MERGE PR **#474** further tested whether the current SHA-1 can be reproduced by common one-entry repacks of publisher File `6342780` using the exact changed `TOLootModifiers.class` from patch File `8861368`. Run `36649716927` succeeded, and none of the tested Info-ZIP, `jar uf`, or Python `zipfile` variants matched `7b74816e...`. The recorded Aug-17 Library `fixed-keyloot.jar` size also matched none of those candidates. This is negative lineage evidence only: it excludes those exact repack outputs but does not identify the installed replacement or its registry/content delta.
 
@@ -146,24 +148,24 @@ Creative access, commands, registry presence, translation keys, generic publishe
 
 ## Gate 4 — Somake Aqua ↔ T.O Aqua coexistence
 
-The physical pack contains both:
+Current physical authority confirms both providers are installed:
 
-- Somake Spells `1.0.9`;
-- T.O Magic n' Extras `4.4.0.1-1.21.1`.
+- Somake Spells `1.0.9`, with its current 83-ID registry closed;
+- T.O Magic n' Extras `4.4.0.1-1.21.1`, physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
-Somake historical publisher text described Aqua as covering T.O's absence on 1.21.1 and discussed future migration if T.O returned. The installed T.O 1.21.1 line is a deprecated partial alpha. Those facts do **not** establish current authority migration or safe deduplication.
+The exact publisher Traveloptics File `6342780` registers 33 spells and **zero Aqua spell IDs**. Its `aqua_focus.json` resource and residual Aqua localization are not active-registry proof. The installed Traveloptics bytes are nevertheless `OTHER_VERIFIED`, so exact-current Aqua absence cannot be projected from the publisher baseline.
 
-Required evidence before any Black Arcana integration chooses an Aqua authority:
+Canonical authority boundary is now documented in Somake's [AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md](../✅-somake-spells/AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md):
 
-- authoritative runtime/provider observation of both addons loaded together;
-- exact school/registry identities that coexist or conflict;
-- whether either provider suppresses, aliases, replaces or delegates Aqua content under this stack;
-- no double registration/duplicate settlement assumptions;
-- no Black Arcana-created fallback school/resource pipeline.
+- dual-installed coexistence: **PROVEN**;
+- publisher-baseline Traveloptics Aqua registrations: **0 PROVEN**;
+- duplicate current Aqua collision: **NOT PROVEN**;
+- exact-current Traveloptics Aqua absence: **NOT PROVEN**;
+- authority transfer/suppression/aliasing: **NOT AUTHORIZED BY ASSUMPTION**.
 
-Current state: `COEXISTENCE / AUTHORITY UNVERIFIED`.
+Current state: `CURRENT COEXISTENCE CONFIRMED / AQUA COLLISION+EXACT-CURRENT ABSENCE CONDITIONAL / FAIL-CLOSED`.
 
-This gate is primarily an integration/authority blocker. It does not erase the 33 Traveloptics spell identities already structurally cataloged.
+This remains an integration/authority gate only. It does not erase or add any of the 33 Traveloptics spell identities, and it does not justify a Black Arcana-created fallback Aqua school.
 
 ## Already closed — do not redo
 
@@ -188,6 +190,7 @@ No future checkpoint may claim strict semantic promotion or runtime compatibilit
 - a third-party patch exists on the internet;
 - the publisher says spells are generally survival-obtainable;
 - a build without the actual provider stack is green;
+- exact File-6342780 default mechanics are known;
 - the version string matches the publisher release.
 
 Any promotion must cite the exact physical artifact/runtime evidence and preserve Iron's/Traveloptics provider authority. Black Arcana must not silently repair the provider registry, invent a `blackout` acquisition route, or select an Aqua authority by assumption.
