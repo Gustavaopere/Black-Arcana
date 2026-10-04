@@ -406,6 +406,30 @@ enable_tunneling = false
             for row in rows.values():
                 self.assertNotIn("content", row)
 
+
+    def test_kubejs_inventory_marks_official_403_builder_shorthand_literals(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            startup = instance / "kubejs" / "startup_scripts"
+            startup.mkdir(parents=True)
+
+            (startup / "official_fixture_syntax.js").write_text(
+                "event.create('test_spell_power', 'spell')\n"
+                "event.create('test_spellbook', 'spellbook')\n"
+                "event.create('test_staff', 'staff')\n"
+                "event.create('test_magic_sword', 'magic_sword')\n"
+                "event.create('ordinary_item', 'basic')\n",
+                encoding="utf-8",
+            )
+
+            result = collector.collect_kubejs_script_inventory(instance)
+            row = result["files"][0]
+
+            self.assertEqual(
+                [1, 2, 3, 4],
+                row["irons_spellbooks_kubejs_markers"]["irons_spells_js_builder_literal"],
+            )
+
     def test_kubejs_irons_marker_lines_are_bounded_and_flag_truncation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
