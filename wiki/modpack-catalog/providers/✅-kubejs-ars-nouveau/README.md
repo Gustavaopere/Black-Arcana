@@ -4,7 +4,7 @@ Status: `✅ CATALOGED / CURRENT PHYSICAL 1.3.2 / RECIPE-SCHEMA BRIDGE / 0 PROVI
 
 ## Current physical identity
 
-Current sibling authority: `neoforge-rpg-skilltree@a0bf15c16f7e22eb42c4665bbe7a9dace8b8fda8`, revalidated against the current physical modlist on 2026-09-25.
+Current sibling authority rechecked at `neoforge-rpg-skilltree@b9edb403c06567423d6c101d136b73a1065f2ad4`; its canonical dossier remains `PROJECT-INSTRUCTIONS/modlist/KubeJS + Magic/✅-kubejs-ars-nouveau v1.3.2.md`, with the same physical identity and zero standalone-magic role.
 
 - JAR: `kubejsarsnouveau-1.3.2.jar`;
 - mod id: `kubejsarsnouveau`;
@@ -49,7 +49,7 @@ No public commit/tag declaring `1.3.2` was located in the repository search used
 
 ## Exact framework role established by source/docs
 
-The public source plugin registers **recipe schemas**, not spell/glyph registries. The source baseline registers these six Ars Nouveau recipe types:
+The public source plugin registers **3 custom recipe component types** (`ars_nouveau:crush_item`, `ars_nouveau:color`, `ars_nouveau:sound`) and **6 recipe schemas**, not spell/glyph registries. At the inspected release-line checkpoint it exposes **0 active bindings**, **0 registry-builder registrations** and **0 provider KubeJS event groups/handlers**. The six Ars Nouveau recipe types are:
 
 1. `ars_nouveau:enchanting_apparatus`;
 2. `ars_nouveau:enchantment`;
@@ -95,9 +95,11 @@ Project Library logs from a physical boot on 2026-09-08 show KubeJS loading one 
 
 Current physical authority now records KubeJS build 377, so historical script evidence is retained only as provenance.
 
-## Closure path
+## Evidence and closure path
 
-See [`PACK-SCRIPT-CLOSURE-CHECKLIST.md`](PACK-SCRIPT-CLOSURE-CHECKLIST.md).
+- [`RELEASE-LINE-1.3.2-FRAMEWORK-SURFACE.md`](RELEASE-LINE-1.3.2-FRAMEWORK-SURFACE.md) — bounded publisher release-line source surface;
+- [`CURRENT-EVIDENCE-2026-10-04.md`](CURRENT-EVIDENCE-2026-10-04.md) — current physical/hash/collector checkpoint;
+- [`PACK-SCRIPT-CLOSURE-CHECKLIST.md`](PACK-SCRIPT-CLOSURE-CHECKLIST.md) — deployed script/reachability audit.
 
 Current deployed recipe/reachability closure still requires the exact present `kubejs/server_scripts/**` tree, or an equivalent bounded recipe-manager/runtime dump tied to the current pack. That missing deployment evidence does not reopen the already-closed zero spell/glyph denominator.
 
