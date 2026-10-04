@@ -111,9 +111,11 @@ Semantic disposition: one deliberate supernatural staff attack.
 
 The client exposes a dedicated BOOST keybind. `SoulElytraBoostPacket` is the provider payload for `deeperdarker:soul_elytra_boost`; the server-side handler checks configured enablement, fall-flying state, equipped Soul Elytra and cooldown, then creates the boost and applies cooldown.
 
-The exact source default for `soulElytraCooldown` is **600 ticks** and `-1` disables the boost. The deployed pack value is not versioned in the sibling repository and is therefore not inferred.
+Direct inspection of the exact `f7ba235d...` source commit confirms that `DeeperDarker.java` registers `DeeperDarkerConfig.CONFIG_SPEC` as `ModConfig.Type.COMMON`. `DeeperDarkerConfig.java` defines `soulElytraCooldown` with default **600 ticks**, accepted range **-1..12000**, and `-1` as the disable value. The exact `SoulElytraBoostPacket` handler returns when the value is `-1`; otherwise it applies the configured value as the Soul Elytra item cooldown.
 
-Semantic disposition: one deliberate supernatural equipment/flight action in the public/source baseline, with an additional deployed-config condition.
+Retained runtime logs independently confirm that the deployed 1.4.1 instance loads `config/deeperdarker-common.toml`. The TOML bytes/effective key value are not retained, so the deployed value is not inferred from the source default or successful loading. See [`DEPLOYED-CONFIG-CHECKPOINT.md`](DEPLOYED-CONFIG-CHECKPOINT.md).
+
+Semantic disposition: one deliberate supernatural equipment/flight action in the public/source baseline, with an unresolved deployed-config condition.
 
 ## Explicit non-identities
 
