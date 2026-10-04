@@ -90,9 +90,9 @@ The fixed marker vocabulary is:
 - `spell_registry_key_binding` — `SpellRegistry.SPELL_REGISTRY_KEY`;
 - `school_registry_key_binding` — `SchoolRegistry.SCHOOL_REGISTRY_KEY`;
 - `iss_event_bridge` — `ISSEvents.*` bridge usage;
-- `irons_spells_js_builder_literal` — exact addon builder literals for `spell`, `magic_sword`, `staff`, `spellbook`, `spellcasting` or `spell_projectile`.
+- `irons_spells_js_builder_literal` — quoted addon builder literals for core `spell`, `magic_sword`, `staff`, `spellbook` in either the official short form or `irons_spells_js:`-prefixed form, plus namespaced EntityJS `spellcasting` / `spell_projectile`.
 
-The spell/school literals are grounded in Iron's Spells 3.11.0 source (`216d675627004562bc540b618b77600009cd6ee1`), which is the host baseline declared by the exact Iron's Spellbooks KubeJS 4.0.3 source pin. Marker rows contain no script bodies or matched text.
+The spell/school literals are grounded in Iron's Spells 3.11.0 source (`216d675627004562bc540b618b77600009cd6ee1`), which is the host baseline declared by the exact Iron's Spellbooks KubeJS 4.0.3 source pin. Marker rows contain no script bodies or matched text. The exact addon checkpoint `f3c05a102707a87ac3b8f0d2df5d2ffa5ae5b6c7` also ships development fixtures under `run/kubejs/` that exercise the short core builder literals; those fixture scripts validate syntax only and are not modpack content.
 
 These markers are **triage only**. Comments, dead branches and lookup-only references may produce markers; aliases/dynamic construction may evade them. Presence is not proof of a live registration, and absence is not zero-content proof. The hashed source file or assembled-registry provenance still requires review under the provider checklist.
 
