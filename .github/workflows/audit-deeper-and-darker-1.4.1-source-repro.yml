@@ -1,0 +1,154 @@
+name: audit-deeper-and-darker-1.4.1-source-repro
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-reproduction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Black Arcana
+        uses: actions/checkout@v4
+
+      - name: Checkout exact upstream source
+        uses: actions/checkout@v4
+        with:
+          repository: KyaniteMods/DeeperAndDarker
+          ref: f7ba235d078411a1165a8cac184adfe0ccc8cebe
+          path: build/upstream
+          persist-credentials: false
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Rebuild exact v1.4.1 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/upstream
+          chmod +x gradlew
+          ./gradlew --no-daemon clean build
+          test -s build/libs/deeperdarker-neoforge-1.21.1-1.4.1.jar
+
+      - name: Compare source build, publisher release and physical fingerprint
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/deeperdarker-source-repro
+          SOURCE_JAR="build/upstream/build/libs/deeperdarker-neoforge-1.21.1-1.4.1.jar"
+          PUBLISHER_JAR="build/audit/deeperdarker-source-repro/publisher.jar"
+          OUT="build/audit/deeperdarker-source-repro"
+
+          curl -fL --retry 3 --retry-all-errors             "https://github.com/KyaniteMods/DeeperAndDarker/releases/download/v1.4.1/deeperdarker-neoforge-1.21.1-1.4.1.jar"             -o "$PUBLISHER_JAR"
+
+          PHYSICAL_SHA1="83f7edd0a8516b2767c2cda7a3b2402f9e290d88"
+          SOURCE_SHA1="$(sha1sum "$SOURCE_JAR" | awk '{print $1}')"
+          SOURCE_SHA256="$(sha256sum "$SOURCE_JAR" | awk '{print $1}')"
+          SOURCE_BYTES="$(stat -c %s "$SOURCE_JAR")"
+          PUBLISHER_SHA1="$(sha1sum "$PUBLISHER_JAR" | awk '{print $1}')"
+          PUBLISHER_SHA256="$(sha256sum "$PUBLISHER_JAR" | awk '{print $1}')"
+          PUBLISHER_BYTES="$(stat -c %s "$PUBLISHER_JAR")"
+
+          {
+            echo "upstream_commit=f7ba235d078411a1165a8cac184adfe0ccc8cebe"
+            echo "upstream_tag=v1.4.1"
+            echo "physical_sha1=$PHYSICAL_SHA1"
+            echo "source_build_sha1=$SOURCE_SHA1"
+            echo "source_build_sha256=$SOURCE_SHA256"
+            echo "source_build_bytes=$SOURCE_BYTES"
+            echo "publisher_sha1=$PUBLISHER_SHA1"
+            echo "publisher_sha256=$PUBLISHER_SHA256"
+            echo "publisher_bytes=$PUBLISHER_BYTES"
+            if [ "$SOURCE_SHA1" = "$PHYSICAL_SHA1" ]; then
+              echo "source_relation=EXACT_SOURCE_BUILD_EQUALS_PHYSICAL"
+            else
+              echo "source_relation=SOURCE_BUILD_DIFFERS_FROM_PHYSICAL"
+            fi
+            if [ "$SOURCE_SHA1" = "$PUBLISHER_SHA1" ]; then
+              echo "publisher_relation=SOURCE_BUILD_EQUALS_PUBLISHER"
+            else
+              echo "publisher_relation=SOURCE_BUILD_DIFFERS_FROM_PUBLISHER"
+            fi
+          } | tee "$OUT/hashes.txt"
+
+          python3 - "$SOURCE_JAR" "$PUBLISHER_JAR" "$OUT" <<'PY'
+          import hashlib, pathlib, sys, zipfile
+          source, publisher, out = map(pathlib.Path, sys.argv[1:])
+          def map_entries(path):
+              with zipfile.ZipFile(path) as z:
+                  return {
+                      n: hashlib.sha256(z.read(n)).hexdigest()
+                      for n in sorted(z.namelist())
+                      if not n.endswith("/")
+                  }
+          s = map_entries(source)
+          p = map_entries(publisher)
+          only_s = sorted(set(s)-set(p))
+          only_p = sorted(set(p)-set(s))
+          changed = sorted(k for k in set(s)&set(p) if s[k] != p[k])
+          same = sorted(k for k in set(s)&set(p) if s[k] == p[k])
+          lines = [
+              f"source_entries={len(s)}",
+              f"publisher_entries={len(p)}",
+              f"same_content_entries={len(same)}",
+              f"changed_content_entries={len(changed)}",
+              f"source_only_entries={len(only_s)}",
+              f"publisher_only_entries={len(only_p)}",
+          ]
+          (out/"normalized-entry-summary.txt").write_text("\n".join(lines)+"\n", encoding="utf-8")
+          (out/"changed-entry-paths.txt").write_text("\n".join(changed)+"\n", encoding="utf-8")
+          (out/"source-only-paths.txt").write_text("\n".join(only_s)+"\n", encoding="utf-8")
+          (out/"publisher-only-paths.txt").write_text("\n".join(only_p)+"\n", encoding="utf-8")
+
+          semantic_terms = ("sonorous","soul_elytra","wardenheart","heart_of_the_deep","otherside_portal",
+                            "enchantment","catalysis","reverberation","sculk_smite","volume","transmitter")
+          semantic_changed = [k for k in changed if any(t in k.lower() for t in semantic_terms)]
+          semantic_only_s = [k for k in only_s if any(t in k.lower() for t in semantic_terms)]
+          semantic_only_p = [k for k in only_p if any(t in k.lower() for t in semantic_terms)]
+          (out/"semantic-diff-paths.txt").write_text(
+              "\n".join(
+                  ["[changed]"] + semantic_changed +
+                  ["", "[source-only]"] + semantic_only_s +
+                  ["", "[publisher-only]"] + semantic_only_p
+              ) + "\n",
+              encoding="utf-8"
+          )
+          PY
+
+      - name: Record source semantic surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-source-repro"
+          SRC="build/upstream"
+          {
+            echo "SOURCE PIN: KyaniteMods/DeeperAndDarker@f7ba235d078411a1165a8cac184adfe0ccc8cebe"
+            echo
+            echo "PLAYER ACTION FILES"
+            find "$SRC/src/main/java" -type f \(               -name 'WardenHeartItem.java' -o               -name 'SonorousStaffItem.java' -o               -name 'SoulElytraBoostPacket.java' -o               -name 'SoulElytraItem.java' -o               -name 'SculkTransmitterItem.java'             \) -print | sort
+            echo
+            echo "PROVIDER ENCHANTMENTS"
+            find "$SRC/src/generated/resources/data/deeperdarker/enchantment" -maxdepth 1 -type f -name '*.json' -print | sort
+          } > "$OUT/source-semantic-surface.txt"
+
+      - name: Upload text-only evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: deeper-and-darker-1.4.1-source-repro-evidence
+          path: |
+            build/audit/deeperdarker-source-repro/hashes.txt
+            build/audit/deeperdarker-source-repro/normalized-entry-summary.txt
+            build/audit/deeperdarker-source-repro/changed-entry-paths.txt
+            build/audit/deeperdarker-source-repro/source-only-paths.txt
+            build/audit/deeperdarker-source-repro/publisher-only-paths.txt
+            build/audit/deeperdarker-source-repro/semantic-diff-paths.txt
+            build/audit/deeperdarker-source-repro/source-semantic-surface.txt
+          if-no-files-found: error
