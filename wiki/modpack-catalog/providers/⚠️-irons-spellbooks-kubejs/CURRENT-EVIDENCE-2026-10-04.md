@@ -6,6 +6,7 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / BASE FRAMEWORK +0 / CURRENT S
 
 - Black Arcana main considered at branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`.
 - latest Black Arcana main reconciled before final validation: `21ae73850eb75b35ff09b6f0eada640cc2a1bf23`.
+- Black Arcana main confirmed after exact source-coverage closure: `04633ea786869045f8959e942dd348aff6258033`.
 - Current sibling/modlist authority: `Gustavaopere/neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 - Current registry row: Black Arcana `wiki/modpack-catalog/PROVIDERS.md` row 98.
 - Certified sibling dossier:
@@ -64,6 +65,19 @@ No authoritative current `kubejs/startup_scripts/**`, `kubejs/server_scripts/**`
 
 The build-374 boot cannot be propagated to the later build-377 physical checkpoint.
 
+### Additional closure search refresh — 2026-10-04
+
+Further read-only checks performed after provider-source closure found no authoritative build-377 script tree:
+
+- a recursive Library browse found no recent modpack/instance export carrying a current `kubejs/` directory;
+- Library semantic search after 2026-09-15 for `startup_scripts`, `server_scripts`, `client_scripts`, `kubejs/data`, `irons_spells_js` and `2101.7.2-build.377` returned the physical modlist but no current script-tree artifact;
+- three later pasted text artifacts dated 2026-09-15 through 2026-09-17 contained no exact `kubejs` matches;
+- same-day Library image search produced no indexed screenshot evidencing a current KubeJS script tree;
+- Desktop Commander reported no connected authorized device, so the physical instance filesystem could not be inspected through that route;
+- broad GitHub code search located provider documentation, public examples and unrelated third-party packs only; no source attributable to this pack's current script tree was established.
+
+These negative searches reduce duplicate work but are **not zero-content proof**. Only the authoritative assembled instance or equivalent exact provenance can close the script-content question.
+
 ## Current collector physical fingerprint
 
 The canonical deployed-evidence collector now recognizes only the exact physical filename:
@@ -85,6 +99,7 @@ This closes physical artifact identity when run on the authoritative assembled i
 The exact 4.0.3 source checkpoint now has an explicit **30 / 30 Java-file coverage ledger** in `EXACT-4.0.3-FRAMEWORK-SURFACE.md`, plus review of the structural resources that declare metadata/dependencies, required mixins, KubeJS plugin loading and the official `run/kubejs` development fixtures.
 
 Therefore the remaining `⚠️ PARTIAL / CONDITIONAL` state is not caused by unknown provider-source behavior. The unresolved variable is current assembled-pack content: the authoritative build-377 KubeJS script/provenance tree has still not been captured.
+
 ## Decisive closure route
 
 Run the canonical read-only collector against the actual current assembled instance:
