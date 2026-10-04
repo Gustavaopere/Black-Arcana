@@ -159,6 +159,9 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 157 | Simply Swords: Cataclysm | `simplycataclysm` | `simplycataclysm-1.0.2+1.21.1+neoforge.jar` | `1.0.2+1.21.1+neoforge` | SUPERNATURAL WEAPON-ACTION PROVIDER | YES |
 | 158 | Simply Swords | `simplyswords` | `simplyswords-neoforge-1.70.2-1.21.1.jar` | `1.70.2-1.21.1` | SUPERNATURAL WEAPON-ACTION PROVIDER | YES |
 | 159 | Waystones | `waystones` | `waystones-neoforge-1.21.1-21.1.45.jar` | `21.1.45` | TELEPORT / PORTAL / LINK PROVIDER | YES |
+| 160 | More Relics | `morerelics` | `morerelics-1.7.7-forRelics-0.12.8-1.0-1.21.1.jar` | `1.7.7-forRelics-0.12.8-1.0` | RELIC / OWNER-SCOPED ABILITY PROVIDER | YES |
+| 161 | IronSable X Wind's Spellbooks | `ironsable_wind` | `ironsable-wind-1.0.0.jar` | `1.0.0` | BRIDGE / COMPAT / SPELL-PHYSICS | ZERO_SEMANTIC_EXISTING_SPELL_PHYSICS_BRIDGE |
+| 162 | Reliquified L_Ender's Cataclysm — New Relics Fix | `reliquified_lenders_cataclysm_new_relics_fix` | `reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar` | `1.0.2` | BRIDGE / COMPAT / RELIC FIX | ZERO_NEW_SEMANTIC_IDENTITIES |
 
 ## Current version drifts already reconciled
 
@@ -179,7 +182,7 @@ Rows **#56, #61, #65, #82, #96 and #97** are now omitted as retired physical row
 
 Historical row **#42** is active again: current physical authority records T.O Magic n' Extras / `traveloptics` at `traveloptics-4.4.0.1-1.21.1.jar`. The provider remains `PARTIAL / OTHER_VERIFIED` because the installed SHA-1 differs from the audited public artifacts and its exact-current registry is not yet closed.
 
-Rows **#139–#159** are registry-reconciliation additions for already-cataloged providers that are physically current but were never appended to the older numbered baseline. Their addition changes registry indexing only; it does not add new semantic objects beyond the provider dossiers/semantic ledger already in `main`.
+Rows **#139–#162** are registry-reconciliation additions for already-cataloged providers that are physically current but were never appended to the older numbered baseline. Their addition changes registry indexing only; it does not add new semantic objects beyond the provider dossiers/semantic ledger already in `main`.
 
 ## Registry caveat
 
