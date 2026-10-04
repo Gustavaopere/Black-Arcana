@@ -162,6 +162,12 @@ The 33 registrations split as follows:
 - **10** inherit provider `AbstractUniqueSpell.allowCrafting() = false`;
 - **2** inherit provider `AbstractWeaponSpell.allowCrafting() = true`.
 
+A follow-up clean-room probe on exact File `6342780` (temporary NON-MERGE PR **#588**, HEAD `992d798b2edeb0861655f19dd5cda65b7cb13905`, run `37211319887` SUCCESS, text artifact `11306413411`, digest `sha256:2d8f4c16d4a315b52fea0a571c551d3ee6a8dedee472fbced3a44331938edab8`) checked only the 21 concrete classes in the first group for direct `DefaultConfig.setAllowCrafting(boolean)` calls. Result: **21 ABSENT / 0 FALSE / 0 TRUE / 0 UNKNOWN**.
+
+Current physical Iron's Spellbooks is `1.21.1-3.16.3` (SHA-1 `017fd8140c477f9ae602cf95594f1c23bef1d6e3`). Its exact public source pin `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252` identifies the same `mod_version=1.21.1-3.16.3` and establishes: `DefaultConfig.allowCrafting = true`; generic `SpellConfigParameter.ALLOW_CRAFTING = true`; `AbstractSpell.allowCrafting()` resolves the configured parameter; and `canBeCraftedBy(player)` independently applies the learning gate.
+
+Therefore those **21** exact-alpha registrations are **host-default Scroll Forge eligible under the current Iron's 3.16.3 contract**, while effective deployed craftability remains config/learning-conditioned. This does not by itself close object-level survival reachability. See `HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`.
+
 The ten Unique registrations are:
 
 `abyssal_blast`, `axe_of_the_doomed`, `blackout`, `burning_judgment`, `eternal_sentinel`, `halberd_horizon`, `ignited_onslaught`, `mechanized_predator`, `summon_desert_dwellers`, `sword_of_the_ancients`.
