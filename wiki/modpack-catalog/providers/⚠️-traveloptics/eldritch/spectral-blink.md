@@ -23,7 +23,7 @@ This is **publisher-only context**, not exact-alpha/current-physical proof. The 
 
 ## Reachability
 
-No provider-owned crafting/enable override found; Iron's host gates remain authoritative; individual survival reachability not closed.
+`HOST-DEFAULT CRAFTABLE / EFFECTIVE ELIGIBILITY CONDITIONAL`: exact File `6342780` class has no direct craftability mutator; current Iron's `1.21.1-3.16.3` host defaults `allowCrafting` to `true`. This closes only the host-default craftability gate. Effective Scroll Forge eligibility still depends on `isEnabled()`, effective `allow_crafting` configuration, a compatible focus/school path, and player-specific learning where applicable; unconditional survival acquisition is not established.
 
 ## Evidence boundary
 
@@ -31,4 +31,4 @@ Identity + school are cataloged from the exact-version audit. Mana, cooldown, ca
 
 Iron's owns host casting/resource settlement; T.O Magic owns this spell. Provider stays **⚠️** because current-physical registry equality/provenance and full runtime closure are not proven.
 
-Source: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`.
+Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`.

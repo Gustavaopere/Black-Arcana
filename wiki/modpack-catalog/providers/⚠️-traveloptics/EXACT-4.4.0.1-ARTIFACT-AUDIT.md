@@ -162,6 +162,12 @@ The 33 registrations split as follows:
 - **10** inherit provider `AbstractUniqueSpell.allowCrafting() = false`;
 - **2** inherit provider `AbstractWeaponSpell.allowCrafting() = true`.
 
+A follow-up clean-room probe on exact File `6342780` (temporary NON-MERGE PR **#588**, HEAD `e88a3dd0b5b432419b5d5ab4ab1cbb58e505aa2a`, run `37211969636` SUCCESS, text artifact `11306474344`, digest `sha256:68603e34a3cc337f08d2dc7d490ac1b5b16f5683704ea720375278b2e40f5ce1`) checked the 21 concrete classes in the first group for both direct `DefaultConfig.setAllowCrafting(boolean)` calls and direct `DefaultConfig.allowCrafting` field writes, then scanned 223 top-level provider-owned classes for any direct craftability mutator reference. Result: **21 setter ABSENT / 0 FALSE / 0 TRUE / 0 UNKNOWN / 0 target field writes / 0 provider classes with direct mutator references**.
+
+Current physical Iron's Spellbooks is `1.21.1-3.16.3` (SHA-1 `017fd8140c477f9ae602cf95594f1c23bef1d6e3`). Its exact public source pin `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252` identifies the same `mod_version=1.21.1-3.16.3` and establishes: `DefaultConfig.allowCrafting = true`; generic `SpellConfigParameter.ALLOW_CRAFTING = true`; `AbstractSpell.allowCrafting()` resolves the configured parameter; and `canBeCraftedBy(player)` independently applies the learning gate.
+
+Therefore those **21** exact-alpha registrations are **host-default craftable under the current Iron's 3.16.3 contract**. This proves only the default `allowCrafting` disposition: `isEnabled()` remains separately config-resolved, Scroll Forge recipe generation requires both enabled and craftable states, menu eligibility also depends on a compatible focus/school path, and player-specific learning can add a further gate. Effective Scroll Forge eligibility and object-level survival reachability therefore remain unclosed. See `HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`.
+
 The ten Unique registrations are:
 
 `abyssal_blast`, `axe_of_the_doomed`, `blackout`, `burning_judgment`, `eternal_sentinel`, `halberd_horizon`, `ignited_onslaught`, `mechanized_predator`, `summon_desert_dwellers`, `sword_of_the_ancients`.
