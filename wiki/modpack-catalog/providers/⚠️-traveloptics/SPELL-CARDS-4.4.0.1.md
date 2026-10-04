@@ -4,6 +4,12 @@ Este índice materializa em fichas individuais as **33 identidades de spell** j�
 
 O provider permanece **⚠️ parcial/condicionado**: o repositório não preserva hash independente do JAR físico atual, `traveloptics:blackout` continua sem rota survival objeto-a-objeto fechada e o risco estrutural de `TOLootModifiers` permanece sem validação runtime conclusiva.
 
+## Contexto semântico público condicionado
+
+As 33 fichas agora têm uma camada complementar de contexto comportamental em [`PUBLISHER-SEMANTIC-CONTEXT.md`](PUBLISHER-SEMANTIC-CONTEXT.md). Ela correlaciona **somente as 33 identidades exatas registradas** com descrições curtas, parafraseadas da página oficial atual do publisher.
+
+Essa camada é deliberadamente **não-estrita e version-conditioned**: a página do projeto é viva e não é um snapshot versionado do alpha `4.4.0.1-1.21.1`. Ela não altera registry, reachability, números mecânicos, `blackout`, status do provider nem `+0 strict`. A autoridade exata continua sendo a auditoria do File `6342780` e, para o pack atual, a evidência física/runtimes registrada no `README.md`.
+
 ## Inventário por escola
 
 ### Blood — 1
