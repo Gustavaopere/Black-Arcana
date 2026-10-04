@@ -6,9 +6,7 @@ Status: `PUBLIC 1.4.1 BASELINE ENUMERATED / EXACT SOURCE TAG CORROBORATED / PHYS
 
 - physical JAR: `deeperdarker-neoforge-1.21.1-1.4.1.jar`;
 - mod id: `deeperdarker`;
-- last correctly row-bound physical SHA-1: `783123ae86c91c01527c10f338679caaef42eb42` (fingerprint `1828555691`; retained physical inventories 2026-09-07 through 2026-09-16).
-
-The previously recorded `83f7edd0...` value belongs to the adjacent Delightful Backport row and is discarded as Deeper and Darker evidence. See [`PHYSICAL-HASH-BOUNDARY-CORRECTION.md`](PHYSICAL-HASH-BOUNDARY-CORRECTION.md).
+- physical SHA-1: `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
 
 ## Official publisher artifacts tested
 
@@ -24,11 +22,11 @@ Therefore `publisher_sha1 != physical_sha1`. Relation: **`OTHER_VERIFIED_PUBLISH
 
 A retained CurseForge instance-metadata snapshot records the original installation as project **659011**, File **8201775**, filename `deeperdarker-neoforge-1.21.1-1.4.1.jar`, SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f`, and length **3,906,057 bytes**. At the snapshot point CurseForge reports the entry as unmodified/non-working-copy/non-fuzzy.
 
-Later physical inventories measure the same filename/runtime as SHA-1 `783123ae86c91c01527c10f338679caaef42eb42`, fingerprint `1828555691`. Those inventory rows do not establish JAR byte length, so no same-size claim is retained.
+The later physical modlist measures the same filename/runtime/byte-length lineage as SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
 
 Disposition: **the current physical artifact is locally byte-different from the originally installed official File 8201775**. This rules out treating the mismatch as an alternate official publisher artifact, but it does not reveal the changed archive entries and therefore does not close the exact-current semantic denominator.
 
-Local logs from the associated compatibility-work window record Deeper and Darker / NeoVitae `stillValid(...)` interaction, including `PlayerMixin` / `ServerPlayerMixin` redirect conflicts and retained runs exposing Deeper and Darker `ContainerMenuMixin` injections. Project Library retains two generated compatibility JAR variants from 2026-08-18, but their raw bytes cannot currently be materialized for hashing. This is concrete local-modification provenance, but it is not equated with the physical JAR's complete byte delta without a hash bridge.
+Local logs from the associated compatibility-work window record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling. Later retained logs show Deeper and Darker applying `ContainerMenuMixin` `stillValid(...)` injections to vanilla container menus instead of those conflicting player redirects. This is a concrete compatibility-change signal, but it is not equated with the current physical JAR's complete byte delta without raw-byte comparison.
 
 ## Successful publisher-baseline audit
 
@@ -58,7 +56,7 @@ NON-MERGE PR #573 rebuilt that exact pin with Java 21:
 - rebuilt SHA-256: `8d9dd572306c2e3dc1d1a4508ed599547c423df65f6558915d42360fb76e2f29`;
 - rebuilt size: `3,904,543` bytes.
 
-The rebuilt artifact differs from both the corrected physical SHA-1 `783123ae...` and publisher SHA-1 `b609...`.
+The rebuilt artifact differs from both the physical SHA-1 `83f7...` and publisher SHA-1 `b609...`.
 
 Normalized file-content comparison between rebuilt source and publisher artifact, excluding ZIP directory entries:
 
@@ -135,4 +133,4 @@ These routes describe the **public/source baseline only**. They are not promoted
 
 `PUBLIC_SOURCE_BASELINE_3 / PHYSICAL_DENOMINATOR_OPEN / +0 STRICT`.
 
-The public release and exact source tag mutually corroborate the three action families, but Black Arcana must not claim `3/3 exact-current` until the physical `783123ae...` lineage is directly inspected or matched to an artifact with the same hash and a bounded entry-level delta.
+The public release and exact source tag now mutually corroborate the three action families, but Black Arcana must not claim `3/3 exact-current` until the physical `83f7...` artifact is directly inspected or matched to an artifact with the same fingerprint.
