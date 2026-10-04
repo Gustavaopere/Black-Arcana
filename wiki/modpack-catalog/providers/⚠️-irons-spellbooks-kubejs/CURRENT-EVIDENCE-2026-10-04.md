@@ -80,6 +80,11 @@ against canonical current-pack SHA-1:
 
 This closes physical artifact identity when run on the authoritative assembled instance. It does not prove source-build byte equality and it does not close script-defined content.
 
+## Exact provider-source closure
+
+The exact 4.0.3 source checkpoint now has an explicit **30 / 30 Java-file coverage ledger** in `EXACT-4.0.3-FRAMEWORK-SURFACE.md`, plus review of the structural resources that declare metadata/dependencies, required mixins, KubeJS plugin loading and the official `run/kubejs` development fixtures.
+
+Therefore the remaining `⚠️ PARTIAL / CONDITIONAL` state is not caused by unknown provider-source behavior. The unresolved variable is current assembled-pack content: the authoritative build-377 KubeJS script/provenance tree has still not been captured.
 ## Decisive closure route
 
 Run the canonical read-only collector against the actual current assembled instance:
