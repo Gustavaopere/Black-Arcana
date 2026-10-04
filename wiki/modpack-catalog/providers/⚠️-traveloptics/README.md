@@ -52,7 +52,7 @@ The current official CurseForge project page also publishes behavioral descripti
 
 This is an editorial/catalog layer, not exact-version runtime evidence: the project page is living documentation and also describes content absent from File `6342780`. Registry IDs, schools, provider gates and exact loot anchors therefore remain controlled by the exact-artifact audit. Display-label drift on the living page is never allowed to rename or add registry identities. Seven explicitly stated thresholds/timings/conditions are retained only as publisher-only version-conditioned context; they are not promoted to exact-alpha/current-physical balance facts.
 
-The semantic layer does **not** change the provider disposition: current physical bytes remain `OTHER_VERIFIED`, `blackout` reachability remains unresolved, runtime closure remains fail-closed and strict contribution remains **+0**.
+The semantic/mechanics layers do **not** change the provider disposition: current physical bytes remain `OTHER_VERIFIED`, exact-current registry/stat equality is unverified, `blackout` reachability remains unresolved, runtime closure remains fail-closed and strict contribution remains **+0**.
 
 ## Exact registry closure
 
@@ -139,6 +139,26 @@ The following 32 root localization IDs exist in the exact alpha but are absent f
 
 This exclusion is important because the publisher itself describes the 1.21.1 line as only partially ported.
 
+## Exact publisher mechanics baseline
+
+A bounded clean-room audit of exact CurseForge File `6342780` now closes the default/raw host-input mechanics baseline for all **33/33** registered spell classes:
+
+- base mana;
+- mana per level;
+- base spell-power input;
+- spell-power per level input;
+- cast-time field in ticks;
+- cast type;
+- max level;
+- minimum rarity;
+- default cooldown seconds.
+
+Authority: temporary NON-MERGE PR **#599**, authoritative HEAD `6789b859c3b617e1174e9b0e5ff6df48d2a993b3`, workflow run `37236187715` **SUCCESS**, artifact `11315159450`, digest `sha256:7001221a307d3a81ba8ef8b41a0dba29a059a2fbaf6b756fc2db0edb26996eb9`.
+
+These values are exact for publisher File `6342780` only. They are not projected to current physical SHA-1 `7b74816e...`. Spell-power fields are host inputs, not final damage formulas; effective config/multipliers and spell-specific range/radius/duration/PvP/boss behavior remain separate evidence questions.
+
+See [`EXACT-4.4.0.1-MECHANICS-BASELINE.md`](EXACT-4.4.0.1-MECHANICS-BASELINE.md).
+
 ## Craftability and acquisition evidence
 
 Provider-owned ancestry divides the 33 registrations into three relevant groups:
@@ -194,6 +214,7 @@ Phase 2BS disposition:
 - 33 exact registered spell identities in publisher File `6342780`: **cataloged as release baseline**; current physical `OTHER_VERIFIED` bytes require re-audit before those 33 are claimed exact for the installed artifact;
 - 32 residual localization-only IDs: **excluded +0**;
 - `traveloptics:blackout`: survival reachability unresolved under its non-craftable Unique gate;
+- exact publisher mechanics baseline: 33/33 registered spells closed for raw/default host inputs; current-physical stat equality unverified;
 - exact publisher artifact: structural `TOLootModifiers` codec-wiring risk unresolved at runtime;
 - semantic contribution to strict global minimum: **+0**;
 - provider component closure: **no new component**;
