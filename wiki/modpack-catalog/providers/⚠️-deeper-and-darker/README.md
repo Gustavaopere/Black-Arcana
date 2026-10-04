@@ -55,9 +55,13 @@ It does **not** identify which archive entries changed. Therefore it does not au
 
 ### Known local compatibility signal
 
-Logs from the local compatibility-work window record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling. Later retained logs show Deeper and Darker applying `ContainerMenuMixin` `stillValid(...)` injections to vanilla container menus instead of those conflicting player redirects.
+Logs from the local compatibility-work window record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling. Project Library metadata also retains two generated Deeper and Darker compatibility JARs from 2026-08-18: a first variant at **3,906,052 bytes** and a `v2` variant at **3,906,044 bytes**.
 
-This is a concrete compatibility-change signal in the deployed history, but it is **not** an entry-level diff of the physical `83f7...` JAR. Without raw-byte access, Black Arcana does not infer that this observed mixin change is the only physical delta or that every semantic action class is byte-identical to the official publisher artifact.
+The retained boot after the first generated set still records the Deeper/NeoVitae `ServerPlayerMixin` redirect conflict. A later boot captured after the `v2` generation positively records Deeper and Darker applying `ContainerMenuMixin` `stillValid(...)` injections to vanilla container menus. However, retained pre-v2 logs also expose `ContainerMenuMixin`, so that surface is not treated as a v2 deployment fingerprint or as proof that v2 caused a runtime transition.
+
+This narrows the local modification chronology but does **not** identify the deployed bytes. The generated JARs are not raw-byte accessible in the current audit, so their hashes cannot be compared to physical SHA-1 `83f7edd0...`. Black Arcana therefore does not infer that `v2` was renamed/deployed, that the mixin change is the only archive-level delta, or that every semantic action class is byte-identical to the official publisher artifact.
+
+See [`LOCAL-NEOVITAE-COMPAT-LINEAGE.md`](LOCAL-NEOVITAE-COMPAT-LINEAGE.md).
 
 ## Exact source reproduction — corroboration, not closure
 

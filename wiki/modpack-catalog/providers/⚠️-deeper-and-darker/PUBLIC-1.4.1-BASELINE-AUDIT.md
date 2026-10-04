@@ -26,7 +26,7 @@ The later physical modlist measures the same filename/runtime/byte-length lineag
 
 Disposition: **the current physical artifact is locally byte-different from the originally installed official File 8201775**. This rules out treating the mismatch as an alternate official publisher artifact, but it does not reveal the changed archive entries and therefore does not close the exact-current semantic denominator.
 
-Local logs from the associated compatibility-work window record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling. Later retained logs show Deeper and Darker applying `ContainerMenuMixin` `stillValid(...)` injections to vanilla container menus instead of those conflicting player redirects. This is a concrete compatibility-change signal, but it is not equated with the current physical JAR's complete byte delta without raw-byte comparison.
+Local compatibility provenance is now bounded more tightly. Project Library retains two generated Deeper and Darker compatibility JAR variants from 2026-08-18 at **3,906,052** and **3,906,044** bytes. A retained boot after the first generated set still records the Deeper/NeoVitae `ServerPlayerMixin` `@Redirect` conflict; a later boot after the `v2` generation positively records Deeper and Darker `ContainerMenuMixin` `stillValid(...)` injections. Because retained pre-v2 logs also expose `ContainerMenuMixin`, that observation is chronology only and is not a v2 deployment fingerprint. Raw-byte access to the generated JARs is unavailable and no hash bridge to physical `83f7edd0...` exists. See [`LOCAL-NEOVITAE-COMPAT-LINEAGE.md`](LOCAL-NEOVITAE-COMPAT-LINEAGE.md).
 
 ## Successful publisher-baseline audit
 
