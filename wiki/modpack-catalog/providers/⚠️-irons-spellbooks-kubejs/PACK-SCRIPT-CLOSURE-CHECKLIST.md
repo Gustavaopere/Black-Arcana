@@ -32,6 +32,16 @@ This is documented in [`CURRENT-EVIDENCE-2026-10-04.md`](CURRENT-EVIDENCE-2026-1
 
 Run the current deployed-evidence collector on the authoritative instance first. Require the exact JAR fingerprint from `mods.irons_spells_js[*].current_physical_4_0_3_equality` **and** the `kubejs_script_inventory` from the same assembled instance. The inventory records the exact bounded `startup_scripts`, `server_scripts`, `client_scripts` and `data` files by relative path, SHA-256 and byte size without copying bodies.
 
+
+Read `irons_spellbooks_kubejs_closure.status` as a routing aid only:
+
+- `ARTIFACT_NOT_OBSERVED` -> stop; no certified provider artifact was captured;
+- `ARTIFACT_HASH_MISMATCH` -> stop; the captured artifact is not the certified current 4.0.3 binary;
+- `ZERO_CONTENT_REVIEW_CANDIDATE` -> review provenance/current-instance scope before considering zero-content closure;
+- `SCRIPT_REVIEW_REQUIRED` -> inspect the exact hashed bounded files, regardless of whether marker count is zero.
+
+None of these values changes row #98 automatically. Only the catalog review can promote `⚠️` to `✅`.
+
 - If `current_physical_4_0_3_equality` is not `true`, stop: the collector is not observing the certified physical 4.0.3 artifact.
 - If the authoritative current `kubejs/` root is absent or all four bounded surfaces are empty, that is acceptable zero-content evidence for the script-tree part of this checklist.
 - If any relevant files exist, inspect those exact hashed files for Iron's spell/school builder registrations and continue with the provenance rules below.
