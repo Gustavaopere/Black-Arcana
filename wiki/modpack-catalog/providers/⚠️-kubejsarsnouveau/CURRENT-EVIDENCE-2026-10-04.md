@@ -5,6 +5,7 @@ Status: `⚠️ PARTIAL / PHYSICAL 1.3.2 IDENTIFIED / RECIPE BRIDGE +0 / CURRENT
 ## Current authority
 
 - Black Arcana main at branch creation: `a03dd2773373d81c704f665ebdc69cb1c3e15677`;
+- latest Black Arcana main reconciled before final validation: `906b6d9cf44441ca8a43ed85570e0726c675a527`;
 - sibling authority rechecked: `neoforge-rpg-skilltree@8fd5997c5dab1e038794009712e77271fa3cb0aa`;
 - Black Arcana provider registry row #99: `kubejsarsnouveau-1.3.2.jar`, mod id `kubejsarsnouveau`, runtime `1.3.2`, class `LIBRARY / API / VFX / SCRIPTING`, catalog state `NO / CONDITIONAL`.
 
