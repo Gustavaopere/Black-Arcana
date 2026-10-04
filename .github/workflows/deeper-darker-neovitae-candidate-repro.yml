@@ -1,0 +1,44 @@
+name: Deeper and Darker NeoVitae candidate repro
+
+on:
+  pull_request:
+    paths:
+      - "docs/qa/deeper_darker_neovitae_candidate_repro.py"
+      - ".github/workflows/deeper-darker-neovitae-candidate-repro.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Reproduce bounded candidates
+        run: |
+          mkdir -p evidence
+          python docs/qa/deeper_darker_neovitae_candidate_repro.py \
+            --out-json evidence/deeper-darker-neovitae-candidate-repro.json \
+            --out-md evidence/deeper-darker-neovitae-candidate-repro.md
+
+      - name: Print evidence summary
+        run: cat evidence/deeper-darker-neovitae-candidate-repro.md
+
+      - name: Upload text evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: deeper-darker-neovitae-candidate-repro-evidence
+          path: |
+            evidence/deeper-darker-neovitae-candidate-repro.json
+            evidence/deeper-darker-neovitae-candidate-repro.md
+          if-no-files-found: error
+          retention-days: 30
