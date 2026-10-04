@@ -62,6 +62,8 @@ Together, these surfaces establish a spell-construction framework rather than a 
 ## Exact 4.0.3 framework surface catalog
 
 See [`EXACT-4.0.3-FRAMEWORK-SURFACE.md`](EXACT-4.0.3-FRAMEWORK-SURFACE.md) for the source-pinned inventory of spell/school/item builders, synchronized magic-attribute construction, 21 KubeJS bindings, event bridge, Alchemist Cauldron schemas, conditional EntityJS magic mobs/projectiles and client support for script-built spellbooks/staves. Those are framework capabilities, not pack spell identities.
+
+Per-file source coverage is recorded in [`SOURCE-COVERAGE-MATRIX.md`](SOURCE-COVERAGE-MATRIX.md), covering all 30 Java files, 5 runtime resources and 3 bundled KubeJS development fixtures at the exact 4.0.3 pin.
 ## Semantic disposition
 
 ### Base addon
