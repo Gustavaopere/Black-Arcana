@@ -83,6 +83,20 @@ Only files under those four roots whose suffix is already in the collector's bou
 
 This inventory is evidence input for the Iron's Spellbooks KubeJS and KubeJS Ars Nouveau closure checklists. An explicitly absent/empty authoritative current `kubejs/` tree can support zero-content closure where the provider checklist allows it. A non-empty inventory still requires targeted script/provenance review; hashes and paths alone do not prove semantic registrations or recipe mutations.
 
+### Iron's Spellbooks KubeJS 4.0.3 physical fingerprint
+
+The collector hashes only the exact current filename:
+
+`irons_spells_js-4.0.3.jar`
+
+and emits `current_physical_4_0_3_equality` against canonical current-pack SHA-1:
+
+`0481395c5847e2920d1425e77833bef87df63139`.
+
+This proves only that the assembled instance contains the certified current physical bridge artifact. It does not prove source-build byte equivalence and it does not establish whether pack scripts register custom Iron's spells, schools or items.
+
+Pair this fingerprint with `kubejs_script_inventory` and the provider checklist at `wiki/modpack-catalog/providers/⚠️-irons-spellbooks-kubejs/`. Zero-content closure requires both the certified artifact and authoritative current script/provenance evidence.
+
 ### KubeJS Ars Nouveau 1.3.2 physical fingerprint
 
 The collector hashes only the exact current filename:
