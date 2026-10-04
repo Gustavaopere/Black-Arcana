@@ -76,6 +76,8 @@ Essa camada é deliberadamente **não-estrita e version-conditioned**: a página
 
 - 33 fichas individuais materializadas;
 - 33/33 correspondem a registros reais do exact publisher artifact;
+- 33/33 registram explicitamente `Registry field` + `Concrete class` do mapping exato field -> class -> ID;
+- 33/33 incluem contexto semântico público condicionado, sem promovê-lo a comportamento versionado do alpha/current physical;
 - 32 localization-only IDs residuais continuam excluídos;
 - nenhum número de mana/cooldown/dano/nível foi inferido;
 - status global do provider permanece ⚠️.
