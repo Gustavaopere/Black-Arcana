@@ -112,6 +112,9 @@ The deployed-evidence collector now fingerprints the exact current `irons_spells
 
 The same inventory now emits bounded per-file `irons_spellbooks_kubejs_markers` for exact spell/school registry literals, exact registry-key binding names, `ISSEvents.*` references and known 4.0.3 builder literals. This is review acceleration only: it never copies script bodies and never promotes marker presence/absence into semantic-count evidence without reviewing the exact hashed file/provenance.
 
+
+The collector also emits a machine-readable `irons_spellbooks_kubejs_closure` evidence state. `ARTIFACT_NOT_OBSERVED` and `ARTIFACT_HASH_MISMATCH` are hard stops; `ZERO_CONTENT_REVIEW_CANDIDATE` means only that the certified binary plus an empty bounded script inventory were observed; `SCRIPT_REVIEW_REQUIRED` means bounded files exist and must be inspected. These are routing states, not automatic catalog promotion.
+
 Promotion to a closed zero-semantic framework requires authoritative current-instance evidence that no relevant Iron's spell/school registration exists. If scripts do register objects, they must be enumerated, deduplicated and evaluated for effective host config and survival reachability.
 
 ## Authority boundary
