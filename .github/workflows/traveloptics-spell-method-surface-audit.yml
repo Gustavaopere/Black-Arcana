@@ -1,0 +1,124 @@
+name: Traveloptics Spell Method Surface Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Extract declared spell method signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar = "traveloptics.jar"
+          simple_names = [
+              "BloodHowlSpell","AbyssalBlastSpell","BlackoutSpell","PsychicBoltSpell",
+              "ReversalSpell","SpectralBlinkSpell","EternalSentinelSpell","OrbitalVoidSpell",
+              "CursedMinefieldSpell","VoidEruptionSpell","VortexPunchSpell","AstralSenseSpell",
+              "AshenBreathSpell","LingeringStrainSpell","IgnitedOnslaughtSpell",
+              "BurningJudgmentSpell","MeteorStormSpell","LavaBombSpell","GyroSlashSpell",
+              "NullflareSpell","SummonDesertDwellers","SwordOfTheAncientsSpell",
+              "AxeOfTheDoomedSpell","CursedRevenantsSpell","DespairSpell",
+              "HalberdHorizonSpell","CursedBlastSpell","MechanizedPredatorSpell",
+              "RapidLaserSpell","DeathLaserSpell","EmPulse","AerialCollapseSpell",
+              "SteleCascadeSpell",
+          ]
+
+          with zipfile.ZipFile(jar) as z:
+              entries = z.namelist()
+
+          def fqcn_for(simple):
+              suffix = "/" + simple + ".class"
+              matches = [e for e in entries if e.endswith(suffix)]
+              if len(matches) != 1:
+                  raise SystemExit(f"{simple}: expected one class entry, found {len(matches)}: {matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          rows = []
+          for simple in simple_names:
+              fqcn = fqcn_for(simple)
+              p = subprocess.run(
+                  ["javap", "-classpath", jar, "-p", "-s", fqcn],
+                  check=True, text=True, capture_output=True
+              )
+              lines = p.stdout.splitlines()
+              pending = None
+              for raw in lines:
+                  line = raw.strip()
+                  if not line or line.startswith("Compiled from") or line in ("{", "}"):
+                      continue
+                  if line.startswith(("public class ","protected class ","private class ","class ","public abstract class ")):
+                      continue
+                  if line.startswith("descriptor:"):
+                      if pending is not None:
+                          descriptor = line.split("descriptor:",1)[1].strip()
+                          rows.append((simple, fqcn, pending, descriptor))
+                          pending = None
+                      continue
+                  if "(" in line and line.endswith(";"):
+                      # Declared method/constructor signature only. Constructors retained explicitly.
+                      pending = line
+                  else:
+                      pending = None
+
+          report = Path("audit/report.txt")
+          with report.open("w", encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha declared spell method surface clean-room audit\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("scope=33 exact registered concrete spell classes\n")
+              f.write("retention=declared method/constructor signature + JVM descriptor only; no method bodies\n")
+              f.write("\n")
+              f.write("simple|fqcn|signature|descriptor\n")
+              for row in rows:
+                  f.write("|".join(row) + "\n")
+              f.write("\nsummary\n")
+              f.write(f"classes={len(simple_names)}\n")
+              f.write(f"signature_rows={len(rows)}\n")
+
+              keywords = ("damage","range","radius","duration","count","recast","cast","power","mana","cooldown","level","tick","speed","chance","summon","target")
+              interesting = [r for r in rows if any(k in r[2].lower() for k in keywords)]
+              f.write(f"keyword_candidate_rows={len(interesting)}\n")
+              for row in interesting:
+                  f.write("candidate|" + "|".join(row) + "\n")
+
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-spell-method-surface-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
