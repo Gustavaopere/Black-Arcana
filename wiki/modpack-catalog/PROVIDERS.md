@@ -141,6 +141,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 134 | Creating Space | `creatingspace` | `creatingspace-1.21.1-1.7.22.jar` | `1.7.22` | CREATE AEROSPACE / ROCKET / DIMENSION TRANSPORT | ZERO_SEMANTIC_SPACE_ROCKET_DIMENSION_TRANSPORT |
 | 135 | Create: Dreams n' Desires | `dndesires` | `DnDesires-1.21.1-2.3a-BETA.jar` | `2.3a-BETA` | CREATE AUTOMATION / TOOLS / SENTRY / FOOD / LOGISTICS | ZERO_SEMANTIC_CREATE_AUTOMATION_TOOLS_CONTENT |
 | 136 | Epic Fight | `epicfight` | `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar` | `21.17.3.1` | COMBAT FRAMEWORK / SUPERNATURAL TRIDENT INNATE PROVIDER | YES |
+| 137 | Cold Sweat | `cold_sweat` | `ColdSweat-2.4.3.1.jar` | `2.4.3.1` | TEMPERATURE / SURVIVAL / THERMAL DEVICE PROVIDER | ZERO_SEMANTIC_TEMPERATURE_SURVIVAL_INFRA |
 
 ## Current version drifts already reconciled
 
