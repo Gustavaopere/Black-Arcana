@@ -14,9 +14,9 @@ The first two facts strengthen historical lineage. They do not establish Surviva
 
 ## Official project relationship
 
-GameTechBC's official GTBC's Spellbooks project describes itself as a **cut-down version of T.O Tweaks**, retaining unique spells without the full project's extra dependency surface.
+GameTechBC's official GTBC's Spellbooks project describes itself as a **cut-down version of T.O Tweaks**, retaining unique spells without the full project's extra dependency surface: `https://www.curseforge.com/minecraft/mc-mods/gtbcs-spellbooks`.
 
-The current official T.O Magic 'n Extras page states that the project was formerly named **T.O Tweaks**.
+The current official T.O Magic 'n Extras page states that the project was formerly named **T.O Tweaks**: `https://www.curseforge.com/minecraft/mc-mods/to-tweaks-irons-spells`.
 
 Therefore these are related publisher-owned lines, but they remain **separate projects / namespaces / artifacts** for catalog authority:
 
@@ -27,29 +27,29 @@ Black Arcana does not transfer registry or acquisition facts between those names
 
 ## GTBC's Spellbooks route
 
-Official GTBC's Spellbooks File `5927811` (`gametechbcs_spellbooks-2.0.0-1.21`) introduced **Blackout** and reworked **Call Forth The Dead King** so that the summoned Enraged Dead King could yield the exclusive Blackout spell.
+Official GTBC's Spellbooks File `5927811` (`gametechbcs_spellbooks-2.0.0-1.21`) introduced **Blackout** and reworked **Call Forth The Dead King** so that the summoned Enraged Dead King could yield the exclusive Blackout spell: `https://www.curseforge.com/minecraft/mc-mods/gtbcs-spellbooks/files/5927811`.
 
-Official File `6167362` (`2.6.5-1.21.1`) still documents Call Forth The Dead King / Enraged Dead King behavior and Blackout fixes, showing that this route remained part of the GTBC line before the final 3.0.0 release.
+Official File `6167362` (`2.6.5-1.21.1`) still documents Call Forth The Dead King / Enraged Dead King behavior and Blackout fixes, showing that these surfaces remained part of the GTBC line before the final 3.0.0 release: `https://www.curseforge.com/minecraft/mc-mods/gtbcs-spellbooks/files/6167362`.
 
-Official File `6312018` is the final `gametechbcs_spellbooks-3.0.0-1.21.1.jar` release.
+Official File `6312018` is the final `gametechbcs_spellbooks-3.0.0-1.21.1.jar` release: `https://www.curseforge.com/minecraft/mc-mods/gtbcs-spellbooks/files/6312018`.
 
 ## Retained pack runtime evidence
 
 Project Library runtime evidence from **2026-08-16** contains:
 
 - `gametechbcs_spellbooks-3.0.0-1.21.1.jar` in the loaded mod list;
-- runtime attribute registration for `gametechbcs_spellbooks:call_forth_the_dead_king`;
-- runtime attribute registration for `gametechbcs_spellbooks:blackout`.
+- Additional Attributes debug registration for `spell/gametechbcs_spellbooks/call_forth_the_dead_king` and its `innate_spell` companion;
+- Additional Attributes debug registration for `spell/gametechbcs_spellbooks/blackout` and its `innate_spell` companion.
 
-This is historical evidence for the **GTBC namespace** only. It does not prove how Blackout was obtained in that particular session, and it does not become a `traveloptics:blackout` acquisition route.
+This proves those GTBC identifiers were runtime-visible to the Additional Attributes integration at that checkpoint. It is **not** an independent proof of a Survival acquisition event or of the exact provider registry implementation, and it does not become a `traveloptics:blackout` acquisition route.
 
 Later retained runtime evidence from **2026-08-18 / 2026-08-19** observes `traveloptics:blackout` in the Traveloptics namespace.
 
-Those observations prove registry presence at those historical runtime checkpoints, not Survival acquisition.
+Those later observations likewise establish runtime-visible Traveloptics identifiers at those historical checkpoints, not Survival acquisition.
 
 ## Full T.O line
 
-Official T.O File `6010839` (`Release-v3.0.1-1.20.1`) records the T.O 3.0.0 content tranche as adding together:
+Official T.O File `6010839` (`Release-v3.0.1-1.20.1`) records the T.O 3.0.0 content tranche as adding together (`https://www.curseforge.com/minecraft/mc-mods/to-tweaks-irons-spells/files/6010839`):
 
 - Blackout;
 - Call Forth The Dead King;
