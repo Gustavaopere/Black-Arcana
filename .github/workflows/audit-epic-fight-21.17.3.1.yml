@@ -217,6 +217,22 @@ jobs:
                   '\n'.join(f'===== {n} =====\n{raw}' for n,raw in out)+'\n',encoding='utf-8')
           PY
 
+      - name: Prove exact weapon preset ownership for candidate skills
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/epicfight
+          : > javap-weapon-presets.txt
+          for cls in \
+            yesman.epicfight.registry.entries.EpicFightItemCapabilityPresets \
+            yesman.epicfight.world.capabilities.item.WeaponCapabilityPresets \
+            yesman.epicfight.api.ex_cap.provider.CoreWeaponCapabilityProvider; do
+              echo "===== $cls =====" >> javap-weapon-presets.txt
+              javap -classpath epic-fight-21.17.3.1-mc1.21.1-neoforge.jar -p -c -constants "$cls" >> javap-weapon-presets.txt 2>&1 || true
+          done
+          grep -nEi 'wrathful|tsunami|everlasting|EpicFightSkills|innate|trident|spear|greatsword|longsword|tachi|axe|sword|dagger' \
+            javap-weapon-presets.txt > weapon-preset-seams.txt || true
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -245,4 +261,6 @@ jobs:
             build/audit/epicfight/exact-skill-registry-ids.txt
             build/audit/epicfight/exact-skill-registry-count.txt
             build/audit/epicfight/skillbook-reachability-resources.txt
+            build/audit/epicfight/javap-weapon-presets.txt
+            build/audit/epicfight/weapon-preset-seams.txt
           if-no-files-found: error
