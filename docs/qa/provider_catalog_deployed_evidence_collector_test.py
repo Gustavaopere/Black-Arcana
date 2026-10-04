@@ -318,7 +318,7 @@ enable_tunneling = false
             )
 
 
-def test_collects_bounded_kubejs_script_inventory_without_copying_bodies(self) -> None:
+    def test_collects_bounded_kubejs_script_inventory_without_copying_bodies(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
             startup = instance / "kubejs" / "startup_scripts"
