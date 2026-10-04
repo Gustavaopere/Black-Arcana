@@ -1,0 +1,167 @@
+name: audit-cold-sweat-2.4.3.1
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/coldsweat
+          cd build/audit/coldsweat
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/cold-sweat-506194/8888797/cold-sweat-506194-8888797.jar" \
+            -o ColdSweat-2.4.3.1.jar
+          test -s ColdSweat-2.4.3.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/coldsweat
+          EXPECTED_SHA1="9605a2053e771110591da43d7e689be693f73948"
+          ACTUAL_SHA1="$(sha1sum ColdSweat-2.4.3.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum ColdSweat-2.4.3.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s ColdSweat-2.4.3.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=506194/8888797"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded archive and semantic-path inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/coldsweat
+          jar tf ColdSweat-2.4.3.1.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib,re,zipfile
+          jar=pathlib.Path('ColdSweat-2.4.3.1.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              item_classes=[n for n in classes if '/item/' in n.lower() or pathlib.PurePosixPath(n).name.lower().endswith('item.class')]
+              provider_data=[n for n in names if n.startswith('data/cold_sweat/')]
+              toks=('spell','magic','ritual','rite','ability','mana','arcane','glyph','summon','teleport','portal','soul','soulspring','curse','enchant')
+              semantic=[n for n in names if any(t in n.lower() for t in toks)]
+              candidate=[n for n in classes if any(t in n.lower() for t in ('soulspring','lamp','hearth','boiler','icebox','waterskin','thermometer','temperature'))]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'item_classes={len(item_classes)}\nprovider_data={len(provider_data)}\n'
+                  f'semantic_paths={len(semantic)}\ncandidate_classes={len(candidate)}\n',encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(item_classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(provider_data)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-paths.txt').write_text('\n'.join(semantic)+'\n',encoding='utf-8')
+              pathlib.Path('candidate-classes.txt').write_text('\n'.join(candidate)+'\n',encoding='utf-8')
+          PY
+
+      - name: Exhaustively index item activation surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/coldsweat
+          : > javap-item-signatures.txt
+          : > javap-item-bytecode.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-item-signatures.txt
+            javap -classpath ColdSweat-2.4.3.1.jar -p -s "$cls" >> javap-item-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-item-bytecode.txt
+            javap -classpath ColdSweat-2.4.3.1.jar -p -c -constants "$cls" >> javap-item-bytecode.txt 2>&1 || true
+          done < item-classes.txt
+
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-item-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          methods=('use','useOn','releaseUsing','onUseTick','finishUsingItem','interactLivingEntity','inventoryTick','hurtEnemy','mineBlock')
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls,body=sections[i],sections[i+1]
+              found=[]
+              for m in methods:
+                  if re.search(r'\b'+re.escape(m)+r'\s*\(',body): found.append(m)
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('activation-index.txt').write_text('\n'.join(f'{c}\t{m}' for c,m in rows)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump thermal and soul candidate classes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/coldsweat
+          : > javap-candidates.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-candidates.txt
+            javap -classpath ColdSweat-2.4.3.1.jar -p -c -constants "$cls" >> javap-candidates.txt 2>&1 || true
+          done < candidate-classes.txt
+          grep -nEi 'use\(|useOn|finishUsing|releaseUsing|right|click|soul|lamp|hearth|boiler|icebox|waterskin|thermometer|temperature|fuel|effect|addFreshEntity|teleport|summon|particle' javap-candidates.txt > candidate-seams.txt || true
+
+      - name: Extract exact recipes loot and tags for bounded owners
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/coldsweat
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          needles=('soulspring','lamp','hearth','boiler','icebox','waterskin','thermometer')
+          rows=[]
+          with zipfile.ZipFile('ColdSweat-2.4.3.1.jar') as z:
+              for name in sorted(z.namelist()):
+                  low=name.lower()
+                  if not name.startswith('data/') or not name.endswith('.json'): continue
+                  try: raw=z.read(name).decode('utf-8')
+                  except Exception: continue
+                  if any(n in low or n in raw.lower() for n in needles):
+                      rows.append((name,raw[:30000]))
+          pathlib.Path('candidate-data-references.txt').write_text(
+              '\n'.join(f'===== {n} =====\n{raw}' for n,raw in rows)+'\n',encoding='utf-8')
+          pathlib.Path('candidate-data-reference-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: cold-sweat-2.4.3.1-exact-artifact-audit
+          path: |
+            build/audit/coldsweat/hashes.txt
+            build/audit/coldsweat/inventory.txt
+            build/audit/coldsweat/jar-entries.txt
+            build/audit/coldsweat/item-classes.txt
+            build/audit/coldsweat/provider-data.txt
+            build/audit/coldsweat/semantic-paths.txt
+            build/audit/coldsweat/candidate-classes.txt
+            build/audit/coldsweat/javap-item-signatures.txt
+            build/audit/coldsweat/javap-item-bytecode.txt
+            build/audit/coldsweat/activation-index.txt
+            build/audit/coldsweat/javap-candidates.txt
+            build/audit/coldsweat/candidate-seams.txt
+            build/audit/coldsweat/candidate-data-references.txt
+            build/audit/coldsweat/candidate-data-reference-count.txt
+          if-no-files-found: error
