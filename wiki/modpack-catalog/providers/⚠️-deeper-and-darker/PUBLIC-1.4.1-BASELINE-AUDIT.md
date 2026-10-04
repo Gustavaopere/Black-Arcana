@@ -18,6 +18,16 @@ NON-MERGE PR #517 tested GitHub release `v1.4.1`, Modrinth `TuD0Zvi3`, and Curse
 
 Therefore `publisher_sha1 != physical_sha1`. Relation: **`OTHER_VERIFIED_PUBLISHER_DIFFERS_FROM_PHYSICAL`**.
 
+### Retained installation-origin evidence
+
+A retained CurseForge instance-metadata snapshot records the original installation as project **659011**, File **8201775**, filename `deeperdarker-neoforge-1.21.1-1.4.1.jar`, SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f`, and length **3,906,057 bytes**. At the snapshot point CurseForge reports the entry as unmodified/non-working-copy/non-fuzzy.
+
+The later physical modlist measures the same filename/runtime/byte-length lineage as SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+
+Disposition: **the current physical artifact is locally byte-different from the originally installed official File 8201775**. This rules out treating the mismatch as an alternate official publisher artifact, but it does not reveal the changed archive entries and therefore does not close the exact-current semantic denominator.
+
+Local logs from the associated compatibility-work window also record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling, followed by separately named generated compatibility artifacts. Those artifacts are not equated with the current physical JAR without a raw-byte comparison.
+
 ## Successful publisher-baseline audit
 
 - branch/head: `audit/deeper-and-darker-1.4.1-exact-artifact-2026-10-02@8b4cd6b1f60805397f29af9d9d660abf508a7df6`;
