@@ -66,8 +66,19 @@ Required:
 
 The exact patch candidate is now cryptographically fingerprinted and independently proven to differ from the original in only `TOLootModifiers.class`. The patch publisher states that this class delta corrects the universal codec registration. That still does not prove the user's pack deploys SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`, nor that the assembled modpack completes registry initialization with the actual deployed artifact.
 
-Current state: `RUNTIME INITIALIZATION UNVERIFIED / FAIL-CLOSED`.
+Current state: `CONTEMPORANEOUS PHYSICAL-RUNTIME INITIALIZATION OBSERVED / PROCESS HASH NOT EMBEDDED / DISTINCT-CODEC PROBE STILL OPEN`.
 
+### 2026-09-08 physical/runtime correlation — current physical line
+
+Project Library now supplies a bounded same-instance/same-day pair:
+
+- physical dump `modlist 08.09.2026.txt` at ~12:05 UTC: `traveloptics-4.4.0.1-1.21.1.jar`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, fingerprint `4254006126`;
+- assembled `debug(9).log` boot at ~12:19 UTC: Traveloptics container creation, config loading and event-handler subscription progress with no occurrence of the earlier `Adding duplicate value` / `Mod loading issue for:` path;
+- later boot failure: `shine.mixins.json:ProgramMixin` shader injection, not a Traveloptics registration failure.
+
+This materially closes the **existence of contemporaneous runtime initialization evidence** for the September physical line. It does **not** close process-embedded hash attestation, current exact spell-registry equality, exact serializer object identity, provenance or Blackout reachability.
+
+Canonical detail: [`RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md`](RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md).
 ### Historical assembled-runtime observation — bounded
 
 The 2026-08-19 Project Library runtime log reaches NeoForge mod discovery/resource reload with `traveloptics-4.4.0.1-1.21.1.jar` present and exposes the complete 33-ID Traveloptics spell block to the runtime analyzer. That narrows the historical startup risk: the observed August modified artifact progressed far enough for all 33 spell classes/IDs to be analyzed.

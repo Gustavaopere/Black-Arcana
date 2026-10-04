@@ -99,6 +99,18 @@ This is direct runtime evidence that an **August assembled-pack modified-runtime
 
 It is **not** contemporaneous hash evidence for the September physical artifact. The runtime log does not record the JAR SHA-1, and the August `minecraftinstance.json` only proves that the launcher considered the same filename modified at that time. Therefore the August 33/33 runtime observation must not be projected onto September SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` without a binary/hash bridge.
 
+## September physical/runtime correlation — 2026-10-04 reconciliation
+
+A newly reconciled Project Library pair materially narrows runtime uncertainty for the September physical line:
+
+- `modlist 08.09.2026.txt` at ~12:05 UTC records the exact Traveloptics row as SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, fingerprint `4254006126`;
+- `debug(9).log` from the same CurseForge instance begins the relevant boot at ~12:19 UTC, creates `TravelopticsMod`, loads both Traveloptics config files and subscribes multiple provider handlers;
+- complete-log bounded search contains no `Mod loading issue for:` and no `Adding duplicate value`;
+- the later crash is instead an unrelated `shine.mixins.json:ProgramMixin` injection failure during shader initialization.
+
+This is **strong contemporaneous physical-runtime correlation**, not process-embedded hash attestation. It proves that a boot temporally adjacent to the `7b74816e...` physical dump progressed beyond the earlier duplicate-codec registration failure, but it does not identify provenance, spell-registry equality or exact serializer-object identity.
+
+See [`RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md`](RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md).
 ## Catalog consequence
 
 The clean-room File-6342780 audit remains valid for that publisher artifact and provides a **33-ID release baseline**. It can no longer be presented as byte-exact evidence for the currently fingerprinted physical JAR.
@@ -107,7 +119,7 @@ The older launcher metadata does not identify provenance of the September `7b748
 
 - August modified-runtime spell-registry equality to the 33-ID baseline is **observed 33/33**;
 - current physical spell-registry equality to that 33-ID set is **unverified**;
-- current physical `TOLootModifiers` wiring is **unverified**;
+- current physical `TOLootModifiers` exact serializer-object wiring remains **unverified**, but a 2026-09-08 boot contemporaneous with the `7b74816e...` physical dump progressed beyond the historical duplicate-registry failure path;
 - known patch deployment is **disproved by hash**;
 - tested common one-entry repacks of the known patch class are **disproved as byte-identical matches** for the current physical hash;
 - `traveloptics:blackout` reachability remains unresolved;
