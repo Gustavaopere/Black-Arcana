@@ -236,8 +236,15 @@ Current semantic deltas since the 1382 checkpoint:
 
 The current provider tree also contained catalog-complete directories whose semantic disposition had not yet been projected into this shared ledger. This normalization changes no provider folder status and creates no new provider identity; it only reconciles already-canonical provider records.
 
-- [Ars Morph](../providers/✅-ars-morph/README.md) 2.0.0 contributes **+8 `COUNTED_SOURCE_PINNED`**: one registered Ars glyph (`ars_morph:glyph_morph`) plus seven player-invoked Identity2 ability adapter roots (Weald Walker, Wilden Hunter, Wilden Stalker, Starbuncle, Whirlisprig, Wixie and the currently eligible Ars Elemental Firenando). Internal Ars resolver/projectile/effect executions are descendants of those provider actions and are not recounted.
-- [Woodwalkers SpellBooks](../providers/✅-woodwalkers-spellbooks/README.md) 0.3.1-BETA contributes **+1 `COUNTED_SOURCE_PINNED`**: the exact-version source contains exactly one active Iron's spell registration, `woodwalkers_spellbooks:shapeshifting`, while Woodwalkers remains authority for morph state and the addon owns the transformation timer/XP/cast-gate overlay.
+- [Ars Morph](../providers/✅-ars-morph/README.md) 2.0.0 has a **historical +8 source-pinned catalog** (1 Morph glyph + 7 Identity2 ability adapter roots), but contributes **+0 to the current strict sum** because `ars_morph` / `ars_morph-1.21.1-2.0.0.jar` is absent from the current sibling physical snapshot.
+- [Woodwalkers SpellBooks](../providers/✅-woodwalkers-spellbooks/README.md) 0.3.1-BETA has a **historical +1 source-pinned catalog** (`woodwalkers_spellbooks:shapeshifting`), but contributes **+0 to the current strict sum** because `woodwalkers_spellbooks` / `woodwalkers_spellbooks-0.3.1-BETA.jar` is absent from the current sibling physical snapshot.
+
+### Current physical-presence correction — 04/10/2026
+
+Current physical authority is sibling `neoforge-rpg-skilltree@fa47288bd99e1166880a8fb0ee00cab06697a88a`, whose certified 587-entry snapshot contains neither Ars Morph nor Woodwalkers SpellBooks. Direct searches for the previous filenames/mod IDs return no current physical row. Their ✅ provider folders remain valid historical catalogs, but catalog completeness does not override physical absence.
+
+Therefore the 02/10 normalization that temporarily added Ars Morph **+8** and Woodwalkers SpellBooks **+1** is superseded for the current numerator. Current semantic delta: **−9**. No spell identities are deleted from historical documentation; they are simply excluded from the current-pack strict sum while the mods are absent.
+
 - [Vampiric Ageing](../providers/✅-vampiric-ageing/README.md) 1.4.21 closes **9 registered provider-owned supernatural actions** but contributes **+0 strict** here. The exact source/action catalog proves the identities and their age/faction gates, while the current deployed provider configuration is not captured; source defaults are not substituted. All nine remain `CONDITIONAL` until deployed enable/gate state is authoritatively captured.
 
 Explicit zero-semantic dispositions are also projected for cataloged bridge/support providers that were previously absent from the shared ledger:
@@ -285,18 +292,18 @@ Explicit zero-semantic dispositions are also projected for cataloged bridge/supp
 - [Pufferfish's Unofficial Additions](../providers/✅-pufferfishs-unofficial-additions/README.md): **+0 `ZERO_SEMANTIC_SKILL_XP_REWARD_BRIDGE`** — exact physical/publisher File `7389968` equality closes `harvest_crops`, `fishing` and `spell_casting` as experience sources plus the configurable `effect` reward and Iron's spell/school filter/prototype bridge; existing Iron's spells remain externally owned and no concrete provider tree JSON is packaged.
 
 
-Therefore the strict reconstructible minimum is **1858**. This is a minimum, not a final denominator or coverage percentage.
+Therefore the strict reconstructible minimum is **1849**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1858 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact), Weapons of Miracles (+12 exact), Epic Fight (+3 exact), Born in Chaos (+17 exact), Bosses'Rise (+8 exact), Portable Hole (+1 exact), Legendary Monsters (+22 exact), Alex's Caves Continued (+8 exact), Alex's Mobs Continued (+1 exact), Ice And Fire: Dread Land (+1 exact) and Bosses of Mass Destruction (+3 exact), Ars Morph (+8 source-pinned) and Woodwalkers SpellBooks (+1 source-pinned).**
+**1849 semantic magic objects are currently reconstructible from canonical current-provider records. The prior 1849 checkpoint is reduced by 9 because Ars Morph (+8 historical source-pinned) and Woodwalkers SpellBooks (+1 historical source-pinned) are absent from the current physical snapshot.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
 Arithmetic cross-check by provider family:
 
-- Ars ecosystem: **209**;
-- Iron's ecosystem and spell-content addons: **665**;
+- Ars ecosystem: **201**;
+- Iron's ecosystem and spell-content addons: **664**;
 - Companions provider-owned Magic Books: **9**;
 - Relics provider-owned ability/synergy layer: **41**;
 - More Relics owner-scoped ability layer: **61**;
@@ -328,7 +335,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `209 + 665 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 3 + 17 + 8 + 1 + 22 + 8 + 1 + 1 + 3 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1858`.
+- total: `201 + 664 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 3 + 17 + 8 + 1 + 22 + 8 + 1 + 1 + 3 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1849`.
 
 ### Counted ledger
 
@@ -342,7 +349,7 @@ Arithmetic cross-check by provider family:
 | [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | `COUNTED_SOURCE_PINNED` | one current Malum-backed registered glyph under the physical provider set |
 | [Ars Zero](../providers/✅-ars-zero/README.md) | 2.0.2 | 12 | `COUNTED_RELEASE_BOUNDED` | 12 current unique glyph capabilities; disabled copied AOE/Amplifier variants excluded |
 | [Ars Elemental](../providers/✅-ars-elemental/README.md) | 0.7.10.1 | 47 | `COUNTED_SOURCE_PINNED` | 39 production spell parts + 8 rituals |
-| [Ars Morph](../providers/✅-ars-morph/README.md) | 2.0.0 | 8 | `COUNTED_SOURCE_PINNED` | release-aligned exact-version source closes 1 registered Morph glyph + 7 player-invoked Identity2 ability adapter roots; internal Ars resolver/effect descendants are deduplicated |
+| [Ars Morph](../providers/✅-ars-morph/README.md) | 2.0.0 | 0 | `CURRENT_PHYSICAL_ABSENT` | historical source catalog closes 8 identities, but the current physical snapshot contains no `ars_morph` JAR; +0 current strict |
 | [Ars 'n' Spells](../providers/✅-ars-n-spells/README.md) | 3.3.4 | 5 | `COUNTED_RELEASE_BOUNDED` | current 3.3.4 physical/publisher release preserves the five-ritual provider model; public NeoForge source is current through 3.3.3; eight `ars_cross_*` proxy slots contribute zero standalone identities |
 | [Iron's Spells 'n Spellbooks](../providers/✅-irons-spells/README.md) | 3.16.3 | 110 | `COUNTED_EXACT` | 110/110 active spell registry entries; deprecated Cloud of Regeneration excluded |
 | [Apprentice's Codex](../providers/✅-apprentice-codex/README.md) | 0.9.7.1 | 83 | `COUNTED_SOURCE_PINNED` | exact 83-spell registry inventory |
@@ -364,7 +371,7 @@ Arithmetic cross-check by provider family:
 | [Paladin Spells](../providers/✅-paladin-spells/README.md) | 1.1.1 | 5 | `COUNTED_SOURCE_PINNED` | 5/5 Holy spells |
 | [Wind's Spellbooks](../providers/✅-winds-spellbooks/README.md) | 1.0.5 | 7 | `COUNTED_RELEASE_BOUNDED` | 7/7 publisher/runtime-observed Wind spells; canonical provider-tree link restored |
 | [Ypsilon's Fundamentalism](../providers/✅-ypsilons-fundamentalism/README.md) | 1.1.7.1 | 15 | `COUNTED_SOURCE_PINNED` | 15/15 active spell registrations; commented prototypes excluded |
-| [Woodwalkers SpellBooks](../providers/✅-woodwalkers-spellbooks/README.md) | 0.3.1-BETA | 1 | `COUNTED_SOURCE_PINNED` | exact-version source closes exactly one active Iron's spell registration, `woodwalkers_spellbooks:shapeshifting`; Woodwalkers remains authority for morph state |
+| [Woodwalkers SpellBooks](../providers/✅-woodwalkers-spellbooks/README.md) | 0.3.1-BETA | 0 | `CURRENT_PHYSICAL_ABSENT` | historical source catalog closes `woodwalkers_spellbooks:shapeshifting`, but the current physical snapshot contains no Woodwalkers SpellBooks JAR; +0 current strict |
 | [Tunes n' Tomes](../providers/✅-tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | `COUNTED_RELEASE_BOUNDED` | current publisher Melodic roster enumerates 16 spells; migrated Sound ownership is not duplicated under Alshanex/FamiliarsLib |
 | [Alshanex's Familiars](../providers/✅-alshanex-familiars/README.md) | 4.0.3 | 18 | `COUNTED_EXACT` | exact hash-matched JAR closes 7 provider-owned spell registrations + 11 packaged `alshanex_familiars:ritual_recipe` identities; migrated Sound/Tunes content and external familiar casts are excluded |
 | [Companions!](../providers/✅-companions/README.md) | 1.3.4 | 9 | `COUNTED_SOURCE_PINNED` | nine direct/unconditional Magic Book action identities; source-level survival routes closed; Soul Mage reuse deduplicated |
@@ -405,7 +412,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1858** |  |  |
+| **Strict total** |  | **1849** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -527,7 +534,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows remain **outside the 1858 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
+These rows remain **outside the 1849 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -547,9 +554,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1858 is not “1858 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1858 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1858 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1849 is not “1849 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1849 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1849 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.
