@@ -166,11 +166,11 @@ KUBEJS_IRONS_MARKER_LINE_LIMIT = 64
 KUBEJS_IRONS_MARKER_PATTERNS = {
     "spell_registry_literal": re.compile(r"irons_spellbooks:spells"),
     "school_registry_literal": re.compile(r"irons_spellbooks:schools"),
-    "spell_registry_key_binding": re.compile(r"\\bSpellRegistry\\.SPELL_REGISTRY_KEY\\b"),
-    "school_registry_key_binding": re.compile(r"\\bSchoolRegistry\\.SCHOOL_REGISTRY_KEY\\b"),
-    "iss_event_bridge": re.compile(r"\\bISSEvents\\."),
+    "spell_registry_key_binding": re.compile(r"\bSpellRegistry\.SPELL_REGISTRY_KEY\b"),
+    "school_registry_key_binding": re.compile(r"\bSchoolRegistry\.SCHOOL_REGISTRY_KEY\b"),
+    "iss_event_bridge": re.compile(r"\bISSEvents\."),
     "irons_spells_js_builder_literal": re.compile(
-        r"irons_spells_js:(?:spell|magic_sword|staff|spellbook|spellcasting|spell_projectile)\\b"
+        r"irons_spells_js:(?:spell|magic_sword|staff|spellbook|spellcasting|spell_projectile)\b"
     ),
 }
 ASTERISM_DATA_RELATIVE = "asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json"
