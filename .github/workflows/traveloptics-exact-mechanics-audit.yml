@@ -1,0 +1,206 @@
+name: Traveloptics Exact Mechanics Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Extract bounded exact-alpha mechanic constants
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar = "traveloptics.jar"
+          simple_names = [
+              "BloodHowlSpell",
+              "AbyssalBlastSpell",
+              "BlackoutSpell",
+              "PsychicBoltSpell",
+              "ReversalSpell",
+              "SpectralBlinkSpell",
+              "EternalSentinelSpell",
+              "OrbitalVoidSpell",
+              "CursedMinefieldSpell",
+              "VoidEruptionSpell",
+              "VortexPunchSpell",
+              "AstralSenseSpell",
+              "AshenBreathSpell",
+              "LingeringStrainSpell",
+              "IgnitedOnslaughtSpell",
+              "BurningJudgmentSpell",
+              "MeteorStormSpell",
+              "LavaBombSpell",
+              "GyroSlashSpell",
+              "NullflareSpell",
+              "SummonDesertDwellers",
+              "SwordOfTheAncientsSpell",
+              "AxeOfTheDoomedSpell",
+              "CursedRevenantsSpell",
+              "DespairSpell",
+              "HalberdHorizonSpell",
+              "CursedBlastSpell",
+              "MechanizedPredatorSpell",
+              "RapidLaserSpell",
+              "DeathLaserSpell",
+              "EmPulse",
+              "AerialCollapseSpell",
+              "SteleCascadeSpell",
+          ]
+
+          with zipfile.ZipFile(jar) as z:
+              entries = z.namelist()
+
+          def fqcn_for(simple):
+              suffix = "/" + simple + ".class"
+              matches = [e for e in entries if e.endswith(suffix)]
+              if len(matches) != 1:
+                  raise SystemExit(f"{simple}: expected exactly one class entry, found {len(matches)}: {matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          insn_re = re.compile(r"^\s*(\d+):\s+(\S+)(?:\s+(.*))?$")
+          field_re = re.compile(r"Field io/redspace/ironsspellbooks/api/spells/AbstractSpell\.(baseManaCost|manaCostPerLevel|baseSpellPower|spellPowerPerLevel|castTime):I")
+          setter_re = re.compile(r"Method io/redspace/ironsspellbooks/api/config/DefaultConfig\.(setMaxLevel|setCooldownSeconds|setAllowCrafting|setMinRarity):")
+          rarity_re = re.compile(r"Field io/redspace/ironsspellbooks/api/registry/SpellRarity\.(\w+):Lio/redspace/ironsspellbooks/api/registry/SpellRarity;")
+
+          def javap(fqcn):
+              return subprocess.run(
+                  ["javap", "-classpath", jar, "-c", "-p", fqcn],
+                  check=True, text=True, capture_output=True
+              ).stdout.splitlines()
+
+          def const_value(op, arg):
+              if op.startswith("iconst_"):
+                  tail = op.split("_", 1)[1]
+                  return "-1" if tail == "m1" else tail
+              if op in ("bipush", "sipush"):
+                  return (arg or "").split()[0]
+              if op in ("ldc", "ldc_w", "ldc2_w"):
+                  a = arg or ""
+                  m = re.search(r"//\s+(?:int|float|double|long)\s+([^\s]+)", a)
+                  if m:
+                      return m.group(1).rstrip("fdlFDL")
+              return None
+
+          rows = []
+          unresolved = []
+
+          for simple in simple_names:
+              fqcn = fqcn_for(simple)
+              lines = javap(fqcn)
+              instructions = []
+              for line in lines:
+                  m = insn_re.match(line)
+                  if m:
+                      instructions.append((int(m.group(1)), m.group(2), m.group(3) or "", line))
+
+              field_values = {k: [] for k in ["baseManaCost","manaCostPerLevel","baseSpellPower","spellPowerPerLevel","castTime"]}
+              setter_values = {k: [] for k in ["setMaxLevel","setCooldownSeconds","setAllowCrafting","setMinRarity"]}
+
+              for idx, (_, op, arg, raw) in enumerate(instructions):
+                  fm = field_re.search(raw)
+                  if fm and op == "putfield":
+                      val = None
+                      for j in range(idx - 1, max(-1, idx - 5), -1):
+                          _, pop, parg, _ = instructions[j]
+                          val = const_value(pop, parg)
+                          if val is not None:
+                              break
+                      field_values[fm.group(1)].append(val if val is not None else "UNKNOWN")
+
+                  sm = setter_re.search(raw)
+                  if sm and op.startswith("invokevirtual"):
+                      setter = sm.group(1)
+                      val = None
+                      if setter == "setMinRarity":
+                          for j in range(idx - 1, max(-1, idx - 6), -1):
+                              rm = rarity_re.search(instructions[j][3])
+                              if rm and instructions[j][1] == "getstatic":
+                                  val = rm.group(1)
+                                  break
+                      else:
+                          for j in range(idx - 1, max(-1, idx - 6), -1):
+                              _, pop, parg, _ = instructions[j]
+                              val = const_value(pop, parg)
+                              if val is not None:
+                                  break
+                      setter_values[setter].append(val if val is not None else "UNKNOWN")
+
+              def collapse(values):
+                  if not values:
+                      return "ABSENT"
+                  return ",".join(values)
+
+              row = {
+                  "simple": simple,
+                  "fqcn": fqcn,
+                  **{k: collapse(v) for k,v in field_values.items()},
+                  **{k: collapse(v) for k,v in setter_values.items()},
+              }
+              rows.append(row)
+              for key, value in row.items():
+                  if value == "UNKNOWN" or (isinstance(value, str) and "UNKNOWN" in value):
+                      unresolved.append((simple,key,value))
+
+          report = Path("audit/report.txt")
+          with report.open("w", encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha mechanic constants clean-room audit\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("scope=33 exact registered concrete spell classes\n")
+              f.write("retention=class identity + direct constant field/setter facts only; no method bodies\n")
+              f.write("\n")
+              cols = [
+                  "simple","fqcn","baseManaCost","manaCostPerLevel","baseSpellPower",
+                  "spellPowerPerLevel","castTime","setMaxLevel","setMinRarity",
+                  "setCooldownSeconds","setAllowCrafting"
+              ]
+              f.write("|".join(cols) + "\n")
+              for row in rows:
+                  f.write("|".join(row[c] for c in cols) + "\n")
+
+              f.write("\nsummary\n")
+              f.write(f"rows={len(rows)}\n")
+              f.write(f"unresolved_fields={len(unresolved)}\n")
+              for simple,key,value in unresolved:
+                  f.write(f"unresolved|{simple}|{key}|{value}\n")
+
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-exact-mechanics-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
