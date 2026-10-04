@@ -75,14 +75,27 @@ A inspeção técnica do JAR não autoriza cópia da implementação e não cria
 
 ### Coexistência com T.O Magic n' Extras
 
-A autoridade física atual do sibling `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` confirma coexistência real dos dois providers:
+A modlist física usada por aquele checkpoint também continha:
+
+- `traveloptics-4.4.0.1-1.21.1.jar`;
+- mod id `traveloptics`;
+- runtime `4.4.0.1-1.21.1`;
+- nome runtime `T.O Magic n' Extras`.
+
+A página oficial atual de T.O Magic classifica essa build 1.21.1 como **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**. Ao mesmo tempo, Somake diz que Aqua foi criado para suprir a ausência de T.O Magic 1.21.1 e que conteúdo Aqua seria migrado se T.O Magic atualizasse oficialmente.
+
+Portanto aquele checkpoint tinha uma coexistência física real, mas isso **não** prova que a build alpha/deprecated de T.O Magic seja o destino de migração mencionado pelo Somake. A compatibilidade/ownership exata Aqua entre esses dois artefatos deve permanecer QA-blocked/fail-closed, não automaticamente transferida.
+
+### Current 1.0.9 coexistence override
+
+Current sibling authority `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` independently confirms that coexistence remains current after Somake advanced to 1.0.9:
 
 - Somake row #513 — `somakespells-1.0.9-1.21.1.jar`, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`;
-- Traveloptics row #550 — `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
+- Traveloptics row #550 — `traveloptics-4.4.0.1-1.21.1.jar`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
-A página oficial de T.O Magic classifica essa build 1.21.1 como **`DEPRECATED DONT USE Alpha-4.4.0.1-1.21.1`**. Ao mesmo tempo, Somake diz que Aqua foi criado para suprir a ausência de T.O Magic 1.21.1 e que conteúdo Aqua seria migrado se T.O Magic atualizasse oficialmente.
+For exact publisher File `6342780`, Traveloptics registers 33 spells and no Aqua spell ID; `aqua_focus.json` and residual localization are not active-registry proof. The installed Traveloptics bytes are nevertheless `OTHER_VERIFIED`, so their exact-current registry delta remains open.
 
-O exact publisher File `6342780` do Traveloptics registra 33 spells e nenhum Aqua spell ID; o `aqua_focus.json` e localization residual não provam registros Aqua ativos. Porém o JAR físico atual `7b74816e...` é `OTHER_VERIFIED`, então seu delta exato de registry continua aberto. Assim, coexistência Aqua é **current conditional / fail-closed**: não há colisão duplicada provada, mas também não há base para descartá-la como problema atual nem para transferir ownership automaticamente. Ver [`AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md`](AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md).
+Therefore the current 1.0.9 disposition is **current conditional / fail-closed**: no duplicate Aqua collision is proven, absence of an exact-current Traveloptics Aqua registration is not proven, and ownership is not transferred automatically. See [`AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md`](AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md).
 
 ## CurseForge relation inconsistency
 
