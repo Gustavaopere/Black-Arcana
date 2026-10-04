@@ -50,7 +50,7 @@ Those publisher statements are release-line context, not a registry inventory. T
 
 The current official CurseForge project page also publishes behavioral descriptions for entries that correlate with all **33** exact-alpha registry identities. Those descriptions are now captured only as short clean-room paraphrases in [`PUBLISHER-SEMANTIC-CONTEXT.md`](PUBLISHER-SEMANTIC-CONTEXT.md).
 
-This is an editorial/catalog layer, not exact-version runtime evidence: the project page is living documentation and also describes content absent from File `6342780`. Registry IDs, schools, provider gates and exact loot anchors therefore remain controlled by the exact-artifact audit. Display-label drift on the living page is never allowed to rename or add registry identities. No mana/cooldown/damage/level/range/duration values are imported from that page.
+This is an editorial/catalog layer, not exact-version runtime evidence: the project page is living documentation and also describes content absent from File `6342780`. Registry IDs, schools, provider gates and exact loot anchors therefore remain controlled by the exact-artifact audit. Display-label drift on the living page is never allowed to rename or add registry identities. Seven explicitly stated thresholds/timings/conditions are retained only as publisher-only version-conditioned context; they are not promoted to exact-alpha/current-physical balance facts.
 
 The semantic layer does **not** change the provider disposition: current physical bytes remain `OTHER_VERIFIED`, `blackout` reachability remains unresolved, runtime closure remains fail-closed and strict contribution remains **+0**.
 
@@ -143,9 +143,11 @@ This exclusion is important because the publisher itself describes the 1.21.1 li
 
 Provider-owned ancestry divides the 33 registrations into three relevant groups:
 
-- 21 registrations do not declare a provider-owned `allowCrafting`, `isEnabled` or `canBeCraftedBy` override and inherit Iron's host gates;
+- 21 registrations are outside the Unique/Weapon provider bases and do not declare provider-owned `allowCrafting`, `isEnabled` or `canBeCraftedBy` overrides. A focused exact-alpha probe additionally found **0/21** direct `DefaultConfig.setAllowCrafting(...)` calls in those concrete classes. Under the current physical Iron's `1.21.1-3.16.3` host contract, whose `DefaultConfig.allowCrafting` and generic `ALLOW_CRAFTING` defaults are `true`, these 21 are **host-default craftable**, still subject to effective config and the player-learning gate;
 - 10 registrations inherit `AbstractUniqueSpell.allowCrafting() = false`;
 - 2 registrations inherit `AbstractWeaponSpell.allowCrafting() = true`: `cursed_blast` and `gyro_slash`.
+
+See [`HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`](HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md). Default Scroll Forge eligibility is not equivalent to unconditional survival acquisition.
 
 Nine of the ten non-craftable Unique spells have direct exact structured loot references in the JAR:
 
@@ -216,7 +218,10 @@ Somake 1.0.9 and Traveloptics 4.4.0.1 are both physically present in the current
 - exact publisher file identity/hashes: `HIGH`;
 - exact 33 registration identities: `HIGH`;
 - exclusion of 32 residual localization roots: `HIGH`;
-- provider `allowCrafting` constants: `HIGH`;
+- provider Unique/Weapon `allowCrafting` constants: `HIGH`;
+- 21 remaining exact-alpha concrete classes with no direct `DefaultConfig.setAllowCrafting(...)`: `HIGH`;
+- current Iron's 3.16.3 host default craftability contract: `HIGH / SOURCE-PINNED`;
+- effective deployed craftability for those 21 after server/datapack config + player learning: `CONDITIONAL`;
 - nine exact Unique-spell loot routes: `HIGH`;
 - `blackout` object-level survival route: `UNVERIFIED / FAIL-CLOSED`;
 - `TOLootModifiers` codec reference wiring: `HIGH` structural fact;
