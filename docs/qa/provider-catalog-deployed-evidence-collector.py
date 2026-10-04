@@ -162,7 +162,7 @@ MOD_PATTERNS = {
 }
 
 TEXT_EXTENSIONS = {".toml", ".json", ".cfg", ".conf", ".txt", ".js", ".snbt", ".zs"}
-KUBEJS_IRONS_MARKER_LINE_LIMIT = 65
+KUBEJS_IRONS_MARKER_LINE_LIMIT = 64
 KUBEJS_IRONS_MARKER_PATTERNS = {
     "spell_registry_literal": re.compile(r"irons_spellbooks:spells"),
     "school_registry_literal": re.compile(r"irons_spellbooks:schools"),
