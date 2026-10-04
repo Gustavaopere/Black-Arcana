@@ -2,7 +2,7 @@
 
 ## Status
 
-`⚠️ CURRENT PHYSICAL PROVIDER / PHYSICAL SHA-1 OTHER_VERIFIED / 33-ID PUBLISHER BASELINE + HISTORICAL MODIFIED-RUNTIME 33/33 OBSERVED / CURRENT PHYSICAL REGISTRY UNVERIFIED / STRICT +0 / FAIL-CLOSED`
+`⚠️ CURRENT PHYSICAL PROVIDER / PHYSICAL SHA-1 OTHER_VERIFIED / 33-ID PUBLISHER BASELINE + HISTORICAL MODIFIED-RUNTIME 33/33 OBSERVED / SEPT-08 PHYSICAL-LINE RUNTIME INIT CORRELATED / CURRENT PHYSICAL REGISTRY UNVERIFIED / STRICT +0 / FAIL-CLOSED`
 
 Current physical status: **INSTALLED / CURRENT PROVIDER BLOCKER**. Current sibling authority rechecked at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`: `PROJECT-INSTRUCTIONS/modlist/modlist.md` row **#550** and `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic + Mobs/✅-to-magic-n-extras v4.4.0.1-1.21.1.md` both record `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This current physical authority supersedes older claims that Traveloptics was absent. Project Library physical inventories now provide direct SHA-1 corroboration on both **08/09/2026** and **16/09/2026**, each recording the same `7b74816e...` bytes under the same filename.
 
@@ -35,6 +35,8 @@ This chronology rules out “the pack simply downloaded File `8861368` and later
 A Project Library assembled-runtime checkpoint from **2026-08-19** further narrows that delta: NeoForge discovered the same nominal `traveloptics-4.4.0.1-1.21.1.jar`, and a bounded runtime-analyzer extraction produced exactly the same **33 unique spell IDs** as the publisher baseline, including `traveloptics:blackout`, with no additional Traveloptics spell identity before the analyzer advanced to the next provider namespace. The log does not record the JAR SHA-1, so this is **historical modified-runtime 33/33 evidence**, not proof that September SHA-1 `7b74816e...` is registry-identical.
 
 Temporary NON-MERGE PR **#474** adds another bounded negative result. Its clean-room run `36649716927` reconstructed common one-entry archive replacements using the known patch's changed `TOLootModifiers.class`; none matched current SHA-1 `7b74816e...`, and none matched the recorded size of the Aug-17 Library `fixed-keyloot.jar`. This makes “the current JAR is merely one of those straightforward repacks” unsupported, but still does not identify the current bytes. See [`PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-4.4.0.1-FINGERPRINT-CHECKPOINT.md).
+
+A second September correlation is now canonical: the 08/09 physical dump at ~12:05 UTC records SHA-1 `7b74816e...`, and `debug(9).log` from the same CurseForge instance starts the relevant assembled boot roughly 14 minutes later. That boot creates `TravelopticsMod`, loads both Traveloptics configs and subscribes provider handlers; bounded full-log search finds no `Adding duplicate value` and no `Mod loading issue for:`. The later crash is a `shine.mixins.json:ProgramMixin` shader-injection failure, not Traveloptics registration. This is strong contemporaneous runtime-init evidence for the September physical line, but the process does not embed the JAR SHA and does not enumerate the spell registry. See [`RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md`](RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md).
 
 ## Publisher release boundary
 
