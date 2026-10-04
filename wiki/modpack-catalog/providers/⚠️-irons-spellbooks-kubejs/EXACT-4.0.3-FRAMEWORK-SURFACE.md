@@ -8,6 +8,8 @@ Exact source checkpoint:
 
 This file catalogs the bridge-owned surfaces established by that exact 4.0.3 source. It deliberately does **not** attribute any custom spell, school, item, entity or recipe to the current modpack unless a pack script or assembled-runtime provenance establishes it.
 
+The file-by-file completeness audit is in [`SOURCE-COVERAGE-MATRIX.md`](SOURCE-COVERAGE-MATRIX.md).
+
 ## 1. KubeJS registry builders
 
 `IronsSpellsJSPlugin.registerBuilderTypes` registers six core builder entries:
