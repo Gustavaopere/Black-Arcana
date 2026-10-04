@@ -4,7 +4,7 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / EXACT OFFICIAL SOURCE VERSION
 
 ## Current physical identity
 
-Current sibling authority rechecked at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`.
+Current sibling authority rechecked at `neoforge-rpg-skilltree@fa47288bd99e1166880a8fb0ee00cab06697a88a`.
 
 Certified dossier: `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + KubeJS + Magic + Utility & QoL/✅-irons-spellbooks-kubejs v4.0.3.md`.
 
@@ -73,7 +73,9 @@ The current pack's script-defined semantic inventory is **UNVERIFIED**.
 
 Repository and Project-file searches performed on 2026-09-26 did not locate the exact current instance's `kubejs/startup_scripts` or relevant `server_scripts`. Absence from those available sources is not treated as proof that the physical CurseForge instance contains no such scripts.
 
-A fresh revalidation on 2026-09-30 against sibling `d1659e7abadcf03c386d17b1886a473dc6541195` preserves the same conclusion: the certified physical dossier explicitly states that the effective pack scripts were not audited and that no custom spell/item should be attributed to runtime without locating the corresponding script. No newer authoritative Project Library script tree or runtime dump was found. This is continuity of the blocker, not zero-content evidence.
+A fresh revalidation on 2026-10-04 against sibling `fa47288bd99e1166880a8fb0ee00cab06697a88a` preserves the same conclusion. The certified physical dossier still states that the effective pack scripts were not audited and that no custom spell/item should be attributed to runtime without locating the corresponding script. Default-branch searches of the current sibling for `startup_scripts`, `server_scripts`, `SpellRegistry.SPELL_REGISTRY_KEY` and `irons_spells_js` returned no script/registering source. Project/Library retrieval found the current KubeJS build metadata (`2101.7.2-build.377`) but no authoritative current `kubejs/` script tree; the available boot logs remain the historical 2026-09-08 build-374 instance. These negative searches are continuity evidence only and are not zero-content proof.
+
+See [`CURRENT-EVIDENCE-2026-10-04.md`](CURRENT-EVIDENCE-2026-10-04.md) for the bounded freshness checkpoint.
 
 A KubeJS script can register a custom Iron's spell under an arbitrary namespace, so filtering only namespace `irons_spells_js` cannot close this provider.
 
