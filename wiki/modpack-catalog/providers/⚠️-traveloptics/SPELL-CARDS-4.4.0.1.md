@@ -2,7 +2,7 @@
 
 Este índice materializa em fichas individuais as **33 identidades de spell** já fechadas pela auditoria clean-room do publisher artifact exato CurseForge `6342780` para a versão física `4.4.0.1-1.21.1`.
 
-O provider permanece **⚠️ parcial/condicionado**: o repositório não preserva hash independente do JAR físico atual, `traveloptics:blackout` continua sem rota survival objeto-a-objeto fechada e o risco estrutural de `TOLootModifiers` permanece sem validação runtime conclusiva.
+O provider permanece **⚠️ parcial/condicionado**: o JAR físico atual está fingerprintado como `OTHER_VERIFIED` no SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, mas seus bytes/proveniência e o delta exato do registry atual continuam não materializados; `traveloptics:blackout` segue sem rota survival objeto-a-objeto fechada e o runtime atual ainda não fecha todos os gates do provider.
 
 ## Contexto semântico público condicionado
 
