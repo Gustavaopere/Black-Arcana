@@ -113,6 +113,23 @@ allow_lost_tablet = false
             self.assertFalse(entry["release_9_5_6_equality"])
 
 
+    def test_hash_inventory_checks_kubejsarsnouveau_132_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            (mods / "kubejsarsnouveau-1.3.2.jar").write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("kubejsarsnouveau", result)
+            self.assertEqual(1, len(result["kubejsarsnouveau"]))
+            entry = result["kubejsarsnouveau"][0]
+            self.assertEqual("kubejsarsnouveau-1.3.2.jar", entry["filename"])
+            self.assertIn("current_physical_1_3_2_equality", entry)
+            self.assertFalse(entry["current_physical_1_3_2_equality"])
+
+
     def test_hash_inventory_checks_current_mowzies_physical_fingerprint(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
