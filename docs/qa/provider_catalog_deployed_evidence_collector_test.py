@@ -360,6 +360,71 @@ enable_tunneling = false
                 self.assertIn("sha256", row)
                 self.assertIn("size_bytes", row)
                 self.assertNotIn("content", row)
+                self.assertNotIn("irons_spellbooks_kubejs_markers", row)
+
+    def test_kubejs_inventory_marks_irons_spellbooks_candidate_lines_without_copying_bodies(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            startup = instance / "kubejs" / "startup_scripts"
+            server = instance / "kubejs" / "server_scripts"
+            client = instance / "kubejs" / "client_scripts"
+            for root in (startup, server, client):
+                root.mkdir(parents=True)
+
+            (startup / "spells.js").write_text(
+                "StartupEvents.registry('irons_spellbooks:spells', event => {})\n"
+                "StartupEvents.registry('irons_spellbooks:schools', event => {})\n"
+                "const spellKey = SpellRegistry.SPELL_REGISTRY_KEY\n"
+                "const schoolKey = SchoolRegistry.SCHOOL_REGISTRY_KEY\n"
+                "event.create('codex', 'irons_spells_js:spellbook')\n",
+                encoding="utf-8",
+            )
+            (server / "events.js").write_text(
+                "ISSEvents.spellOnCast(event => {})\n",
+                encoding="utf-8",
+            )
+            (client / "hud.js").write_text("ClientEvents.tick(event => {})\n", encoding="utf-8")
+
+            result = collector.collect_kubejs_script_inventory(instance)
+            rows = {row["path"]: row for row in result["files"]}
+
+            self.assertEqual(
+                {
+                    "spell_registry_literal": [1],
+                    "school_registry_literal": [2],
+                    "spell_registry_key_binding": [3],
+                    "school_registry_key_binding": [4],
+                    "irons_spells_js_builder_literal": [5],
+                },
+                rows["kubejs/startup_scripts/spells.js"]["irons_spellbooks_kubejs_markers"],
+            )
+            self.assertEqual(
+                {"iss_event_bridge": [1]},
+                rows["kubejs/server_scripts/events.js"]["irons_spellbooks_kubejs_markers"],
+            )
+            self.assertNotIn("irons_spellbooks_kubejs_markers", rows["kubejs/client_scripts/hud.js"])
+            for row in rows.values():
+                self.assertNotIn("content", row)
+
+    def test_kubejs_irons_marker_lines_are_bounded_and_flag_truncation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            startup = instance / "kubejs" / "startup_scripts"
+            startup.mkdir(parents=True)
+            (startup / "events.js").write_text(
+                "".join("ISSEvents.spellOnCast(event => {})\n" for _ in range(65)),
+                encoding="utf-8",
+            )
+
+            result = collector.collect_kubejs_script_inventory(instance)
+            row = result["files"][0]
+
+            self.assertEqual(
+                list(range(1, 65)),
+                row["irons_spellbooks_kubejs_markers"]["iss_event_bridge"],
+            )
+            self.assertTrue(row["irons_spellbooks_kubejs_markers_truncated"])
+
 
     def test_main_report_includes_empty_kubejs_inventory_as_explicit_absence(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

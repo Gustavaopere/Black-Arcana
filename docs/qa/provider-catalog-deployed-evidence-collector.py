@@ -162,6 +162,17 @@ MOD_PATTERNS = {
 }
 
 TEXT_EXTENSIONS = {".toml", ".json", ".cfg", ".conf", ".txt", ".js", ".snbt", ".zs"}
+KUBEJS_IRONS_MARKER_LINE_LIMIT = 64
+KUBEJS_IRONS_MARKER_PATTERNS = {
+    "spell_registry_literal": re.compile(r"irons_spellbooks:spells"),
+    "school_registry_literal": re.compile(r"irons_spellbooks:schools"),
+    "spell_registry_key_binding": re.compile(r"\bSpellRegistry\.SPELL_REGISTRY_KEY\b"),
+    "school_registry_key_binding": re.compile(r"\bSchoolRegistry\.SCHOOL_REGISTRY_KEY\b"),
+    "iss_event_bridge": re.compile(r"\bISSEvents\."),
+    "irons_spells_js_builder_literal": re.compile(
+        r"irons_spells_js:(?:spell|magic_sword|staff|spellbook|spellcasting|spell_projectile)\b"
+    ),
+}
 ASTERISM_DATA_RELATIVE = "asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json"
 ASTERISM_DATAPACK_PATH = f"data/{ASTERISM_DATA_RELATIVE}"
 TRAVELOPTICS_BLACKOUT_LITERAL = "traveloptics:blackout"
@@ -461,6 +472,25 @@ def rel(path: Path, root: Path) -> str:
         return path.name
 
 
+def collect_irons_spellbooks_kubejs_markers(path: Path) -> tuple[dict[str, list[int]], bool]:
+    try:
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return {}, False
+
+    markers: dict[str, list[int]] = {}
+    truncated = False
+    for line_number, line in enumerate(lines, start=1):
+        for marker_type, pattern in KUBEJS_IRONS_MARKER_PATTERNS.items():
+            if pattern.search(line) is None:
+                continue
+            marker_lines = markers.setdefault(marker_type, [])
+            if len(marker_lines) < KUBEJS_IRONS_MARKER_LINE_LIMIT:
+                marker_lines.append(line_number)
+            else:
+                truncated = True
+    return markers, truncated
+
 def collect_kubejs_script_inventory(instance: Path) -> dict[str, Any]:
     root = instance / "kubejs"
     surfaces = {
@@ -479,14 +509,18 @@ def collect_kubejs_script_inventory(instance: Path) -> dict[str, Any]:
             if not path.is_file() or path.suffix.lower() not in TEXT_EXTENSIONS:
                 continue
             digest = digest_file(path)
-            rows.append(
-                {
-                    "surface": surface,
-                    "path": rel(path, instance),
-                    "sha256": digest["sha256"],
-                    "size_bytes": digest["size_bytes"],
-                }
-            )
+            row = {
+                "surface": surface,
+                "path": rel(path, instance),
+                "sha256": digest["sha256"],
+                "size_bytes": digest["size_bytes"],
+            }
+            markers, markers_truncated = collect_irons_spellbooks_kubejs_markers(path)
+            if markers:
+                row["irons_spellbooks_kubejs_markers"] = markers
+                if markers_truncated:
+                    row["irons_spellbooks_kubejs_markers_truncated"] = True
+            rows.append(row)
             counts[surface] += 1
 
     rows.sort(key=lambda row: row["path"])
