@@ -112,7 +112,7 @@ The startup fixture demonstrates the provider's intended KubeJS invocation forms
 - `StartupEvents.registry("irons_spellbooks:spells", ...)` with default custom-spell builder creation;
 - `StartupEvents.registry("item", ...)` with `event.create(..., "spellbook")`, `"staff"` and `"magic_sword"`.
 
-The server fixture exercises all five declared `ISSEvents` names, including `spellPostCast`, plus the three Alchemist Cauldron recipe schemas.
+The startup fixture exercises `ISSEvents.spellSelection`; the server fixture exercises the other four declared handlers (`changeMana`, `spellPreCast`, `spellOnCast`, `spellPostCast`) plus the three Alchemist Cauldron recipe schemas. Together the bundled fixtures touch all five declared event names.
 
 These fixtures validate exact 4.0.3 scripting syntax and informed the bounded deployed-evidence marker tests. They do not establish any semantic object in the user's assembled pack.
 
