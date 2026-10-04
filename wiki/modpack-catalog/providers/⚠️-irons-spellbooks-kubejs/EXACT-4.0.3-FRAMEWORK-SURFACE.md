@@ -104,14 +104,35 @@ Bindings are scripting access surfaces; they do not add semantic objects on thei
 - targeted server `spellPostCast`;
 - startup `spellSelection`.
 
-Verified bridge behavior in the exact event class:
+Verified bridge behavior across the exact event class **and required mixins**:
 
 - `changeMana` subscribes to Iron's `ChangeManaEvent`; its wrapper exposes old/new mana, `setNewMana(...)` and `MagicData`;
-- `spellPreCast` subscribes to Iron's `SpellPreCastEvent`, is targeted to player entity type and propagates cancellation; its wrapper exposes entity, spell ID, level, school and cast source;
+- `spellPreCast` subscribes to Iron's `SpellPreCastEvent` for player casts, is targeted to player entity type and propagates cancellation; `AbstractSpellMixin` separately injects at `AbstractSpell.checkPreCastConditions` for non-player living entities, posts the same targeted KubeJS handler by entity type and can force the pre-cast check to `false` when cancelled;
 - `spellOnCast` subscribes to Iron's `SpellOnCastEvent`; its wrapper exposes and can mutate spell level and mana cost while retaining original values plus school/cast source;
+- `spellPostCast` is targeted by entity type and **does have a verified emission path**: `AbstractSpellMixin` injects at the head of `AbstractSpell.onServerCastComplete`, builds `SpellPostCastEventJS` and posts the KubeJS handler when listeners exist for that entity type;
 - `spellSelection` subscribes to `SpellSelectionManager.SpellSelectionEvent` and can append selection options.
 
-Important fail-closed nuance: although `spellPostCast` and `SpellPostCastEventJS` are declared in the exact 4.0.3 source, the inspected `IronsSpellsJSEvents` class contains no corresponding `@SubscribeEvent`/`post(...)` path for that handler. It must therefore **not** be treated as a verified emitted KubeJS runtime event without additional provider evidence.
+The previous event-class-only audit incorrectly left `spellPostCast` fail-closed because its emission does not live in `IronsSpellsJSEvents`; it lives in the required `AbstractSpellMixin`. At the exact 4.0.3 pin, all **5 declared handlers now have a verified subscription or posting path**.
+
+## 6A. Required host mixin surfaces
+
+`irons_spells_js.mixins.json` is required and lists exactly five common mixins with no client-only mixins:
+
+1. `AbstractSpellMixin`;
+2. `IronsSpellbooksMixin`;
+3. `LivingEntityMixin`;
+4. `PathfinderMobMixin`;
+5. `ServerConfigsAccessor`.
+
+Magic-relevant behavior established by those mixins:
+
+- `AbstractSpellMixin` provides the non-player targeted `spellPreCast` bridge and the targeted `spellPostCast` emission described above;
+- `LivingEntityMixin` makes `LivingEntity` implement `MagicEntityKJS`, exposing `irons_spells_js$getMagicData()` as a script-facing route to Iron's `MagicData`;
+- `PathfinderMobMixin` targets `PathfinderMob` and implements Iron's `IMagicEntity`. For mobs that are not already `AbstractSpellCastingMob`, it initializes/synchronizes `MagicData`/`SyncedSpellData`, persists casting state, supports cancel/complete/tick cast lifecycle and potion-drinking state, and performs host-specific cast-data setup for Iron's Teleport/Frost Step/Blood Step/Burning Dash behaviors. This expands which mobs can participate in Iron's casting; it does **not** register new spell identities;
+- `IronsSpellbooksMixin` redirects the host server-config registration during Iron's initialization so the bridge can postpone it;
+- `ServerConfigsAccessor` exposes Iron's server-config builder/create-spell-config internals to `IronsSpellsJSMod.runIronSpellsConfig`, which later creates config entries for KubeJS-registered spell objects and registers the rebuilt server config.
+
+These mixins are runtime bridge capabilities, not semantic spell/school objects. They must not be added to the global magic denominator, but they are relevant to exactly-once casting/event/config interoperability.
 
 ## 7. Alchemist Cauldron recipe schemas
 
@@ -145,7 +166,7 @@ This exact 4.0.3 path is sufficient to establish bridge-to-host server-config pa
 - core builder types: **6 established**;
 - conditional EntityJS builder types: **2 established**;
 - named KubeJS bindings: **21 established**;
-- declared KubeJS event handlers: **5**, of which **4 have a verified posting/subscription path in the inspected exact event class** and `spellPostCast` remains fail-closed;
+- declared KubeJS event handlers: **5**, with **5 verified subscription/posting paths when the required exact mixins are included**;
 - Alchemist Cauldron schemas: **3 established**;
 - current pack script-defined semantic objects: **UNKNOWN until current assembled scripts/provenance are audited**.
 
