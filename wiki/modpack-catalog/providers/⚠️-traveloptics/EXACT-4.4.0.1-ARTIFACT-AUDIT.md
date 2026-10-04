@@ -14,7 +14,7 @@ Status: `NON-SOURCE CLEAN-ROOM EVIDENCE / EXACT CURSEFORGE FILE 6342780 / 33 REG
 - exact release SHA-256: `0372b4b8593288726fb0d6e8cdb86202a87677d0c2dafeb96cab50bf057ec298`
 - Curse Maven: `curse.maven:to-tweaks-irons-spells-1046916:6342780`
 
-No independent current physical-JAR hash is preserved by the repository. The artifact is therefore an exact publisher-release witness aligned to the installed physical version line, not a hash-matched physical witness.
+The current physical-JAR SHA-1 is independently preserved by the sibling modlist and Project Library evidence as `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, and it differs from the exact publisher release SHA-1 `3808493ce45cdfeb6408e85578adecf13df698e8`. This artifact is therefore an exact publisher-release witness aligned to the installed version line, not a hash-matched current-physical witness; the exact current bytes/provenance and registry delta remain unavailable.
 
 ## Declared dependency facts
 

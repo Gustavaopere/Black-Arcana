@@ -44,6 +44,14 @@ The exact CurseForge file is explicitly published as a deprecated alpha for 1.21
 
 Those publisher statements are release-line context, not a registry inventory. The exact JAR still carries localization roots for content not registered by this 1.21.1 alpha, so marketing text and translation keys are never projected backward into the current registry.
 
+### Publisher semantic context — non-strict
+
+The current official CurseForge project page also publishes behavioral descriptions for entries that correlate with all **33** exact-alpha registry identities. Those descriptions are now captured only as short clean-room paraphrases in [`PUBLISHER-SEMANTIC-CONTEXT.md`](PUBLISHER-SEMANTIC-CONTEXT.md).
+
+This is an editorial/catalog layer, not exact-version runtime evidence: the project page is living documentation and also describes content absent from File `6342780`. Registry IDs, schools, provider gates and exact loot anchors therefore remain controlled by the exact-artifact audit. Display-label drift on the living page is never allowed to rename or add registry identities. No mana/cooldown/damage/level/range/duration values are imported from that page.
+
+The semantic layer does **not** change the provider disposition: current physical bytes remain `OTHER_VERIFIED`, `blackout` reachability remains unresolved, runtime closure remains fail-closed and strict contribution remains **+0**.
+
 ## Exact registry closure
 
 Clean-room inspection of exact file `6342780` closes `com.gametechbc.traveloptics.init.TOSpells` at:
