@@ -233,6 +233,21 @@ jobs:
           grep -nEi 'wrathful|tsunami|everlasting|EpicFightSkills|innate|trident|spear|greatsword|longsword|tachi|axe|sword|dagger' \
             javap-weapon-presets.txt > weapon-preset-seams.txt || true
 
+      - name: Prove exact moveset to innate-skill bindings
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/epicfight
+          : > javap-movesets.txt
+          for cls in \
+            yesman.epicfight.registry.entries.EpicFightMovesets \
+            yesman.epicfight.registry.entries.EpicFightProviderConditionals; do
+              echo "===== $cls =====" >> javap-movesets.txt
+              javap -classpath epic-fight-21.17.3.1-mc1.21.1-neoforge.jar -p -c -constants "$cls" >> javap-movesets.txt 2>&1 || true
+          done
+          grep -nEi 'wrathful|tsunami|everlasting|EpicFightSkills|trident|spear|greatsword|longsword|tachi|axe|sword|dagger|innate' \
+            javap-movesets.txt > moveset-skill-seams.txt || true
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -263,4 +278,6 @@ jobs:
             build/audit/epicfight/skillbook-reachability-resources.txt
             build/audit/epicfight/javap-weapon-presets.txt
             build/audit/epicfight/weapon-preset-seams.txt
+            build/audit/epicfight/javap-movesets.txt
+            build/audit/epicfight/moveset-skill-seams.txt
           if-no-files-found: error
