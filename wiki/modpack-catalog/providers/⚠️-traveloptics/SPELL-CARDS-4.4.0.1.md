@@ -79,7 +79,7 @@ Essa camada é deliberadamente **não-estrita e version-conditioned**: a página
 - 33/33 registram explicitamente `Registry field` + `Concrete class` do mapping exato field -> class -> ID;
 - 33/33 incluem contexto semântico público condicionado, sem promovê-lo a comportamento versionado do alpha/current physical;
 - 7/33 carry explicit publisher-only quantitative/conditional notes where the living official page states a concrete threshold, timing, partition count, trajectory angle or equipment-evolution gate; these remain non-strict and non-version-pinned;
-- 21/33 are now classified `HOST-DEFAULT CRAFTABLE / CONFIG+LEARNING CONDITIONAL` after exact File `6342780` showed no direct `DefaultConfig.setAllowCrafting(...)` in those classes and current Iron's 3.16.3 source establishes the host default as `true`;
+- 21/33 are now classified `HOST-DEFAULT CRAFTABLE / EFFECTIVE ELIGIBILITY CONDITIONAL` after exact File `6342780` showed no direct craftability mutator in those classes and current Iron's 3.16.3 source establishes the `allowCrafting` default as `true`; this does not establish effective Scroll Forge eligibility, which still depends on enabled/config/focus/player gates;
 - 2/33 retain provider Weapon `allowCrafting=true`; 10/33 retain provider Unique `allowCrafting=false` (9 with exact loot anchors, `blackout` still acquisition-unresolved);
 - 32 localization-only IDs residuais continuam excluídos;
 - nenhum número de mana/cooldown/dano/nível foi inferido;
