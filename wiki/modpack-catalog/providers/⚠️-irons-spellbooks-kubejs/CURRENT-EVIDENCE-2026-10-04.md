@@ -4,8 +4,8 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / BASE FRAMEWORK +0 / CURRENT S
 
 ## Authority checkpoints
 
-- Black Arcana main considered: `dec859ccf38fe2e51e343cd59a6304057dacbb81`.
-- Current sibling/modlist authority: `Gustavaopere/neoforge-rpg-skilltree@fa47288bd99e1166880a8fb0ee00cab06697a88a`.
+- Black Arcana main considered at branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`.
+- Current sibling/modlist authority: `Gustavaopere/neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 - Current registry row: Black Arcana `wiki/modpack-catalog/PROVIDERS.md` row 98.
 - Certified sibling dossier:
   `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + KubeJS + Magic + Utility & QoL/✅-irons-spellbooks-kubejs v4.0.3.md`.
@@ -57,6 +57,22 @@ Available retrieval surfaces expose:
 No authoritative current `kubejs/startup_scripts/**`, `kubejs/server_scripts/**`, `kubejs/client_scripts/**` or `kubejs/data/**` tree was available in the current Project/Library retrieval.
 
 The build-374 boot cannot be propagated to the later build-377 physical checkpoint.
+
+## Current collector physical fingerprint
+
+The canonical deployed-evidence collector now recognizes only the exact physical filename:
+
+`irons_spells_js-4.0.3.jar`
+
+and emits:
+
+`mods.irons_spells_js[*].current_physical_4_0_3_equality`
+
+against canonical current-pack SHA-1:
+
+`0481395c5847e2920d1425e77833bef87df63139`.
+
+This closes physical artifact identity when run on the authoritative assembled instance. It does not prove source-build byte equality and it does not close script-defined content.
 
 ## Decisive closure route
 
