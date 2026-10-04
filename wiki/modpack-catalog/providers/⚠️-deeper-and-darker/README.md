@@ -55,9 +55,9 @@ It does **not** identify which archive entries changed. Therefore it does not au
 
 ### Known local compatibility signal
 
-Logs from the same local compatibility-work window record Deeper and Darker mixin redirect conflicts with NeoVitae around container `stillValid(...)` handling for player/server-player surfaces. Separate generated DeeperDarker↔NeoVitae compatibility artifacts were created afterward.
+Logs from the local compatibility-work window record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling. Later retained logs show Deeper and Darker applying `ContainerMenuMixin` `stillValid(...)` injections to vanilla container menus instead of those conflicting player redirects.
 
-Those compatibility artifacts have distinct filenames/sizes from the current physical row. Without raw-byte access to the physical `83f7...` JAR, Black Arcana does **not** infer that the current physical delta is exactly that compatibility patch, nor that the patch leaves all semantic action code unchanged.
+This is a concrete compatibility-change signal in the deployed history, but it is **not** an entry-level diff of the physical `83f7...` JAR. Without raw-byte access, Black Arcana does not infer that this observed mixin change is the only physical delta or that every semantic action class is byte-identical to the official publisher artifact.
 
 ## Exact source reproduction — corroboration, not closure
 
