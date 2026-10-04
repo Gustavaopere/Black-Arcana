@@ -1,0 +1,143 @@
+name: audit-epic-fight-21.17.3.1
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/epicfight
+          cd build/audit/epicfight
+          curl -fL --retry 3 --retry-all-errors \
+            'https://cursemaven.com/curse/maven/epic-fight-mod-405076/8175609/epic-fight-mod-405076-8175609.jar' \
+            -o epic-fight-21.17.3.1-mc1.21.1-neoforge.jar
+          test -s epic-fight-21.17.3.1-mc1.21.1-neoforge.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/epicfight
+          EXPECTED_SHA1='fb199b7bbea2fc402da28ab586e73f47e32f8fc0'
+          ACTUAL_SHA1="$(sha1sum epic-fight-21.17.3.1-mc1.21.1-neoforge.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum epic-fight-21.17.3.1-mc1.21.1-neoforge.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s epic-fight-21.17.3.1-mc1.21.1-neoforge.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo 'publisher_file=405076/8175609'
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract exact skill inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/epicfight
+          jar tf epic-fight-21.17.3.1-mc1.21.1-neoforge.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json,pathlib,re,zipfile
+          jar=pathlib.Path('epic-fight-21.17.3.1-mc1.21.1-neoforge.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              skill_classes=[n for n in classes if '/skill/' in n.lower() or re.search(r'(^|/)\w*Skill\w*\.class$',n,re.I)]
+              skill_resources=[n for n in resources if 'skill' in n.lower()]
+              data=[n for n in names if n.startswith('data/epicfight/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'skill_classes={len(skill_classes)}\nskill_resources={len(skill_resources)}\nprovider_data={len(data)}\n',
+                  encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('skill-classes.txt').write_text('\n'.join(skill_classes)+'\n',encoding='utf-8')
+              pathlib.Path('skill-resources.txt').write_text('\n'.join(skill_resources)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+
+              for prefix,out in [
+                  ('data/epicfight/skill/','skill-json.txt'),
+                  ('data/epicfight/skills/','skills-json.txt'),
+                  ('data/epicfight/item_capability/','item-capability-json.txt'),
+                  ('data/epicfight/weapon_type/','weapon-type-json.txt')]:
+                  rows=[]
+                  for name in names:
+                      if name.startswith(prefix) and name.endswith('.json'):
+                          try: obj=json.loads(z.read(name)); raw=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                          except Exception as e: raw='INVALID_JSON:'+type(e).__name__
+                          rows.append((name,raw))
+                  pathlib.Path(out).write_text('\n'.join(f'===== {n} =====\n{raw}' for n,raw in rows)+'\n',encoding='utf-8')
+
+              lang={}
+              if 'assets/epicfight/lang/en_us.json' in names:
+                  try: lang=json.loads(z.read('assets/epicfight/lang/en_us.json'))
+                  except Exception: lang={}
+              with open('skill-localization.txt','w',encoding='utf-8') as f:
+                  for k,v in sorted(lang.items()):
+                      if 'skill' in k.lower():
+                          f.write(f'{k}\t{v}\n')
+          PY
+
+      - name: Dump every skill-like class
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/epicfight
+          : > javap-skills.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-skills.txt
+            javap -classpath epic-fight-21.17.3.1-mc1.21.1-neoforge.jar -p -c -constants "$cls" >> javap-skills.txt 2>&1 || true
+          done < skill-classes.txt
+
+      - name: Extract registry, category and activation seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/epicfight
+          grep -nEi 'register|skill|dodge|guard|passive|weapon.?innate|mover|identity|executeOnServer|executeOnClient|onInitiate|onRemoved|cooldown|stamina|teleport|summon|magic|spell|particle|effect|damage|projectile|invulner|heal|health' \
+            javap-skills.txt > skill-seams.txt || true
+          grep -Ei 'skill|skills|weapon|innate|special' provider-data.txt > semantic-data-paths.txt || true
+          grep -Ei 'skill|skills|weapon|innate|special' skill-localization.txt > semantic-localization.txt || true
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: epic-fight-21.17.3.1-exact-artifact-audit
+          path: |
+            build/audit/epicfight/hashes.txt
+            build/audit/epicfight/inventory.txt
+            build/audit/epicfight/jar-entries.txt
+            build/audit/epicfight/skill-classes.txt
+            build/audit/epicfight/skill-resources.txt
+            build/audit/epicfight/provider-data.txt
+            build/audit/epicfight/skill-json.txt
+            build/audit/epicfight/skills-json.txt
+            build/audit/epicfight/item-capability-json.txt
+            build/audit/epicfight/weapon-type-json.txt
+            build/audit/epicfight/skill-localization.txt
+            build/audit/epicfight/javap-skills.txt
+            build/audit/epicfight/skill-seams.txt
+            build/audit/epicfight/semantic-data-paths.txt
+            build/audit/epicfight/semantic-localization.txt
+          if-no-files-found: error
