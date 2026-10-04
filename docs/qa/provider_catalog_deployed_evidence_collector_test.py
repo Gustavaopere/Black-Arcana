@@ -318,7 +318,7 @@ enable_tunneling = false
             )
 
 
-    def test_collects_bounded_kubejs_script_inventory_without_copying_bodies(self) -> None:
+def test_collects_bounded_kubejs_script_inventory_without_copying_bodies(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
             startup = instance / "kubejs" / "startup_scripts"
@@ -326,6 +326,49 @@ enable_tunneling = false
             client = instance / "kubejs" / "client_scripts"
             data = instance / "kubejs" / "data" / "pack"
             for root in (startup, server, client, data):
+                root.mkdir(parents=True)
+
+            (startup / "spells.js").write_text("StartupEvents.registry('example', e => {})\n", encoding="utf-8")
+            (server / "recipes.js").write_text("ServerEvents.recipes(e => {})\n", encoding="utf-8")
+            (client / "hud.js").write_text("ClientEvents.tick(e => {})\n", encoding="utf-8")
+            (data / "payload.json").write_text('{"value": 1}\n', encoding="utf-8")
+            (instance / "kubejs" / "notes.md").write_text("do not collect\n", encoding="utf-8")
+
+            result = collector.collect_kubejs_script_inventory(instance)
+
+            self.assertTrue(result["kubejs_root_present"])
+            self.assertEqual(4, result["file_count"])
+            self.assertEqual(
+                {
+                    "startup_scripts": 1,
+                    "server_scripts": 1,
+                    "client_scripts": 1,
+                    "data": 1,
+                },
+                result["surface_counts"],
+            )
+            self.assertEqual(
+                [
+                    "kubejs/client_scripts/hud.js",
+                    "kubejs/data/pack/payload.json",
+                    "kubejs/server_scripts/recipes.js",
+                    "kubejs/startup_scripts/spells.js",
+                ],
+                [row["path"] for row in result["files"]],
+            )
+            for row in result["files"]:
+                self.assertIn("sha256", row)
+                self.assertIn("size_bytes", row)
+                self.assertNotIn("content", row)
+                self.assertNotIn("irons_spellbooks_kubejs_markers", row)
+
+    def test_kubejs_inventory_marks_irons_spellbooks_candidate_lines_without_copying_bodies(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            startup = instance / "kubejs" / "startup_scripts"
+            server = instance / "kubejs" / "server_scripts"
+            client = instance / "kubejs" / "client_scripts"
+            for root in (startup, server, client):
                 root.mkdir(parents=True)
 
             (startup / "spells.js").write_text(
@@ -362,7 +405,6 @@ enable_tunneling = false
             self.assertNotIn("irons_spellbooks_kubejs_markers", rows["kubejs/client_scripts/hud.js"])
             for row in rows.values():
                 self.assertNotIn("content", row)
-
     def test_main_report_includes_empty_kubejs_inventory_as_explicit_absence(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
