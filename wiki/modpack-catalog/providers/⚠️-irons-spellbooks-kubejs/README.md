@@ -51,6 +51,8 @@ Exact `IronsSpellsJSPlugin` source registers KubeJS builder types for:
 
 The same plugin exposes Iron's spell/school/casting bindings, cast/mana/selection events, EntityJS spell-casting helpers and Alchemist Cauldron recipe schemas.
 
+The remaining exact framework surfaces are also source-closed: `SpellAttributeBuilderJS` creates Iron's ranged magic attributes from KubeJS numeric ranges; conditional EntityJS support provides an `IMagicEntity` spell-casting mob plus an `AbstractMagicProjectile`/anti-magic projectile surface; and the client bootstrap reuses Iron's native Curios spellbook renderer and staff arm pose for matching KubeJS-built item instances.
+
 The exact required mixin set also matters to that surface: `AbstractSpellMixin` supplies non-player targeted pre-cast and targeted post-cast posting, `LivingEntityMixin` exposes Iron's `MagicData` through `MagicEntityKJS`, and `PathfinderMobMixin` supplies Iron's `IMagicEntity` casting machinery to generic pathfinder mobs. With those required mixins included, all **5 declared `ISSEvents` handlers have a verified subscription/posting path** at the exact 4.0.3 pin.
 
 Exact `IronsSpellsJSMod` does not define a fixed gameplay spell roster. During inter-mod enqueue it iterates KubeJS `RegistryObjectStorage` for the Iron's spell registry and creates Iron's server-config entries for objects built there.
@@ -61,7 +63,7 @@ Together, these surfaces establish a spell-construction framework rather than a 
 
 ## Exact 4.0.3 framework surface catalog
 
-See [`EXACT-4.0.3-FRAMEWORK-SURFACE.md`](EXACT-4.0.3-FRAMEWORK-SURFACE.md) for the source-pinned inventory of spell/school/item builders, 21 KubeJS bindings, event bridge, Alchemist Cauldron schemas and conditional EntityJS builders. Those are framework capabilities, not pack spell identities.
+See [`EXACT-4.0.3-FRAMEWORK-SURFACE.md`](EXACT-4.0.3-FRAMEWORK-SURFACE.md) for the source-pinned inventory of spell/school/item/attribute builders, 21 KubeJS bindings, the five-handler event bridge, required mixins, Alchemist Cauldron schemas, conditional EntityJS runtime surfaces and native client presentation reuse. Those are framework capabilities, not pack spell identities.
 ## Semantic disposition
 
 ### Base addon
