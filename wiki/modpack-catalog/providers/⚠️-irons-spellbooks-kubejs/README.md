@@ -4,7 +4,7 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / EXACT OFFICIAL SOURCE VERSION
 
 ## Current physical identity
 
-Current sibling authority rechecked at `neoforge-rpg-skilltree@fa47288bd99e1166880a8fb0ee00cab06697a88a`.
+Current sibling authority rechecked at `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 
 Certified dossier: `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + KubeJS + Magic + Utility & QoL/✅-irons-spellbooks-kubejs v4.0.3.md`.
 
@@ -107,6 +107,8 @@ Accordingly the current script-defined inventory remains `UNVERIFIED / NOT ADDIT
 ## Closure path
 
 See [`PACK-SCRIPT-CLOSURE-CHECKLIST.md`](PACK-SCRIPT-CLOSURE-CHECKLIST.md).
+
+The deployed-evidence collector now fingerprints the exact current `irons_spells_js-4.0.3.jar` and emits `current_physical_4_0_3_equality` against SHA-1 `0481395c5847e2920d1425e77833bef87df63139`. Pair that physical identity with `kubejs_script_inventory` from the **same assembled instance**; neither result alone closes script-defined spell/school content.
 
 Promotion to a closed zero-semantic framework requires authoritative current-instance evidence that no relevant Iron's spell/school registration exists. If scripts do register objects, they must be enumerated, deduplicated and evaluated for effective host config and survival reachability.
 
