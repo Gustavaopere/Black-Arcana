@@ -81,6 +81,22 @@ The report includes `kubejs_script_inventory` with:
 
 Only files under those four roots whose suffix is already in the collector's bounded text-extension allowlist are included. Script/data bodies are never copied.
 
+For files that contain high-confidence **Iron's Spellbooks KubeJS review markers**, the per-file row may additionally include `irons_spellbooks_kubejs_markers`. The value is a fixed marker-type → 1-based line-number-list map; at most 64 line numbers are retained per marker type, with `irons_spellbooks_kubejs_markers_truncated=true` when that cap is exceeded.
+
+The fixed marker vocabulary is:
+
+- `spell_registry_literal` — exact `irons_spellbooks:spells` registry literal;
+- `school_registry_literal` — exact `irons_spellbooks:schools` registry literal;
+- `spell_registry_key_binding` — `SpellRegistry.SPELL_REGISTRY_KEY`;
+- `school_registry_key_binding` — `SchoolRegistry.SCHOOL_REGISTRY_KEY`;
+- `iss_event_bridge` — `ISSEvents.*` bridge usage;
+- `irons_spells_js_builder_literal` — exact addon builder literals for `spell`, `magic_sword`, `staff`, `spellbook`, `spellcasting` or `spell_projectile`.
+
+The spell/school literals are grounded in Iron's Spells 3.11.0 source (`216d675627004562bc540b618b77600009cd6ee1`), which is the host baseline declared by the exact Iron's Spellbooks KubeJS 4.0.3 source pin. Marker rows contain no script bodies or matched text.
+
+These markers are **triage only**. Comments, dead branches and lookup-only references may produce markers; aliases/dynamic construction may evade them. Presence is not proof of a live registration, and absence is not zero-content proof. The hashed source file or assembled-registry provenance still requires review under the provider checklist.
+
+
 This inventory is evidence input for the Iron's Spellbooks KubeJS and KubeJS Ars Nouveau closure checklists. An explicitly absent/empty authoritative current `kubejs/` tree can support zero-content closure where the provider checklist allows it. A non-empty inventory still requires targeted script/provenance review; hashes and paths alone do not prove semantic registrations or recipe mutations.
 
 ### Iron's Spellbooks KubeJS 4.0.3 physical fingerprint

@@ -35,6 +35,8 @@ Run the current deployed-evidence collector on the authoritative instance first.
 - If `current_physical_4_0_3_equality` is not `true`, stop: the collector is not observing the certified physical 4.0.3 artifact.
 - If the authoritative current `kubejs/` root is absent or all four bounded surfaces are empty, that is acceptable zero-content evidence for the script-tree part of this checklist.
 - If any relevant files exist, inspect those exact hashed files for Iron's spell/school builder registrations and continue with the provenance rules below.
+- Use any `irons_spellbooks_kubejs_markers` only to prioritize that inspection. Marker presence is a candidate, not a registration verdict; marker absence is not zero-content proof because scripts may alias registry keys or construct values dynamically.
+- The literal spell/school markers are version-grounded to Iron's 3.11.0 (`216d675627004562bc540b618b77600009cd6ee1`), matching the host baseline declared by exact addon source 4.0.3.
 - Do not infer zero content from repository search; the collector must be run against the assembled instance.
 
 ## Required physical script inputs
