@@ -1,10 +1,10 @@
 # T.O Magic n' Extras 4.4.0.1 — physical fingerprint checkpoint
 
-Status: `PHYSICAL SHA-1 CAPTURED / OTHER_VERIFIED / CURRENT PROVENANCE UNIDENTIFIED / NOT ORIGINAL / NOT PATCH 8861368 / COMMON ONE-ENTRY REPACKS DO NOT MATCH / CURRENT PHYSICAL BYTES REQUIRE AUDIT`
+Status: `PHYSICAL SHA-1 CAPTURED BY 2026-08-22 / OTHER_VERIFIED / CURRENT PROVENANCE UNIDENTIFIED / NOT ORIGINAL / NOT PATCH 8861368 / COMMON ONE-ENTRY REPACKS DO NOT MATCH / CURRENT PHYSICAL BYTES REQUIRE AUDIT`
 
 ## Physical evidence
 
-Project Library physical modlist checkpoints captured on **2026-09-08** and **2026-09-16** independently record the same installed artifact:
+Project Library physical inventories captured on **2026-08-22**, **2026-09-08** and **2026-09-16** independently record the same installed artifact:
 
 - JAR: `traveloptics-4.4.0.1-1.21.1.jar`;
 - mod id: `traveloptics`;
@@ -12,7 +12,7 @@ Project Library physical modlist checkpoints captured on **2026-09-08** and **20
 - SHA-1: `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - package/fingerprint column: `4254006126`.
 
-Both Project Library checkpoints record fingerprint column `4254006126`. The current sibling was rechecked at `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`; its certified T.O Magic n' Extras dossier still records physical row **#550** as the same filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
+All three Project Library physical captures record SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; the 2026-08-22 inventory and later modlists also expose fingerprint column `4254006126`. The current sibling was rechecked at `neoforge-rpg-skilltree@b9edb403c06567423d6c101d136b73a1065f2ad4`; its certified T.O Magic n' Extras dossier is Git-blob-identical to the previously cited checkpoint and still records physical row **#550** as the same filename/version/mod id and SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
 ## Known comparison artifacts
 
@@ -33,7 +33,21 @@ Disposition: **`OTHER_VERIFIED`**.
 
 ### Chronology consequence
 
-The earliest direct physical SHA-1 capture now available is **2026-09-08**, not 2026-09-16. The public third-party patch File `8861368` was uploaded on **2026-09-12**. Therefore the already-present `7b74816e...` physical artifact cannot be explained as a later download/rename of that public patch file. It may still represent an independent local modification touching similar code, but no such lineage is inferred without the physical bytes.
+The earliest direct physical SHA-1 capture now available is **2026-08-22**, moving the cryptographic boundary more than two weeks earlier than the previous 2026-09-08 checkpoint. The public third-party patch File `8861368` was uploaded on **2026-09-12**. Therefore the already-present `7b74816e...` physical artifact cannot be explained as a later download/rename of that public patch file. It may still represent an independent local modification touching similar code, but no such lineage is inferred without the physical bytes.
+
+## August local-modification chronology — narrowed 2026-10-04
+
+Retained Project Library evidence now establishes this bounded sequence:
+
+1. **2026-08-17** — a non-generated Library copy named `traveloptics-4.4.0.1-1.21.1.jar` is retained at **18,393,445 bytes**, the same byte length as publisher File `6342780`; size equality is not hash equality.
+2. **2026-08-17**, roughly two minutes later — a model-generated `traveloptics-4.4.0.1-1.21.1-fixed-keyloot.jar` is retained at **18,393,641 bytes**.
+3. **2026-08-18** — CurseForge instance metadata still tracks project/file `1046916 / 6342780` under the canonical filename but reports `isModified=true`.
+4. **2026-08-19** — the assembled runtime analyzer observes exactly the same **33 Traveloptics spell IDs** as the publisher baseline, including `traveloptics:blackout`; that log does not embed the JAR hash.
+5. **2026-08-22** — physical inventory `fcb79de3-0e3e-41af-8136-cd524859f71c.txt` records the canonical Traveloptics row at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` and fingerprint `4254006126`.
+
+This materially narrows the provenance interval: the currently fingerprinted `7b74816e...` bytes were already present by **2026-08-22**, only days after the retained local repair workflow.
+
+It does **not** prove that the Aug-17 `fixed-keyloot.jar` was renamed into the canonical file, does not prove that the Aug-19 runtime used SHA-1 `7b74816e...`, and does not identify the entry-level delta. The three-day gap between the hash-unbound Aug-19 runtime observation and the first direct Aug-22 hash capture remains a real evidentiary boundary.
 
 ## Common-repack lineage audit — 2026-09-30
 
@@ -77,7 +91,7 @@ A Project Library `minecraftinstance.json` snapshot stored on 2026-08-18 preserv
 - `isFuzzyMatch=false`;
 - `latestFile.id=6342780`.
 
-This snapshot predates the earliest direct **2026-09-08** physical SHA-1 capture. It proves only that **on 2026-08-18** the launcher tracked that filename as File `6342780` and considered the then-current bytes modified relative to the publisher hash. It does **not** establish temporal continuity to the later `7b74816e...` bytes; the JAR could have been replaced under the same filename in the intervening period.
+This snapshot predates the earliest direct **2026-08-22** physical SHA-1 capture by four days. It proves that **on 2026-08-18** the launcher tracked that filename as File `6342780` and considered the then-current bytes modified relative to the publisher hash. The new Aug-22 capture substantially narrows the interval, but still does **not** cryptographically establish continuity from the Aug-18 modified state or Aug-19 runtime to `7b74816e...`; the JAR could have been replaced under the same filename before the Aug-22 inventory.
 
 The September bytes also do not equal known patch File `8861368`. Therefore current provenance remains unidentified and the exact `7b74816e...` bytes/content must still be materialized or otherwise contemporaneously evidenced before registry or loot-modifier semantics can be promoted.
 
@@ -115,7 +129,7 @@ See [`RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md`](RUNTIME-2026-09-08-PHYSICAL-C
 
 The clean-room File-6342780 audit remains valid for that publisher artifact and provides a **33-ID release baseline**. It can no longer be presented as byte-exact evidence for the currently fingerprinted physical JAR.
 
-The older launcher metadata does not identify provenance of the September `7b74816e...` artifact. The 2026-08-19 runtime checkpoint materially narrows the semantic history by proving a modified assembled-pack snapshot with exactly the same 33 spell IDs; the 08/09 and 16/09 physical inventories then prove stable `7b74816e...` bytes across that later interval. The missing link is still a hash bridge from the August runtime snapshot to those September bytes. Until those bytes or equivalent contemporaneous exact-content evidence are available:
+The older launcher metadata does not identify the entry-level provenance of the `7b74816e...` artifact. The 2026-08-19 runtime checkpoint proves a modified assembled-pack snapshot with exactly the same 33 spell IDs, and the 2026-08-22 physical inventory proves that the current `7b74816e...` hash existed three days later; 08/09 and 16/09 then prove that hash remained stable across the later interval. The missing link is now narrower but unchanged in kind: there is still no process-embedded/hash bridge proving that the Aug-19 33-ID runtime used the exact Aug-22 `7b74816e...` bytes. Until those bytes or equivalent contemporaneous exact-content evidence are available:
 
 - August modified-runtime spell-registry equality to the 33-ID baseline is **observed 33/33**;
 - current physical spell-registry equality to that 33-ID set is **unverified**;
