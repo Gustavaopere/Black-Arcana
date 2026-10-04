@@ -166,7 +166,7 @@ A follow-up clean-room probe on exact File `6342780` (temporary NON-MERGE PR **#
 
 Current physical Iron's Spellbooks is `1.21.1-3.16.3` (SHA-1 `017fd8140c477f9ae602cf95594f1c23bef1d6e3`). Its exact public source pin `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252` identifies the same `mod_version=1.21.1-3.16.3` and establishes: `DefaultConfig.allowCrafting = true`; generic `SpellConfigParameter.ALLOW_CRAFTING = true`; `AbstractSpell.allowCrafting()` resolves the configured parameter; and `canBeCraftedBy(player)` independently applies the learning gate.
 
-Therefore those **21** exact-alpha registrations are **host-default Scroll Forge eligible under the current Iron's 3.16.3 contract**, while effective deployed craftability remains config/learning-conditioned. This does not by itself close object-level survival reachability. See `HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`.
+Therefore those **21** exact-alpha registrations are **host-default craftable under the current Iron's 3.16.3 contract**. This proves only the default `allowCrafting` disposition: `isEnabled()` remains separately config-resolved, Scroll Forge recipe generation requires both enabled and craftable states, menu eligibility also depends on a compatible focus/school path, and player-specific learning can add a further gate. Effective Scroll Forge eligibility and object-level survival reachability therefore remain unclosed. See `HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`.
 
 The ten Unique registrations are:
 
