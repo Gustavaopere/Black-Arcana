@@ -1,5 +1,5 @@
 name: Traveloptics Exact Mechanics Clean-room Audit
-# synchronization trigger v2
+# synchronization trigger v3
 
 on:
   pull_request:
@@ -196,6 +196,19 @@ jobs:
                   f.write(f"unresolved|{simple}|{key}|{value}\n")
 
           print(report.read_text(encoding="utf-8"))
+          print("\nBOUNDED_DIAGNOSTIC_LavaBombSpell")
+          diag = subprocess.run(
+              ["javap", "-classpath", jar, "-c", "-p", fqcn_for("LavaBombSpell")],
+              check=True, text=True, capture_output=True
+          ).stdout.splitlines()
+          for line in diag:
+              if any(token in line for token in (
+                  "baseManaCost", "manaCostPerLevel", "baseSpellPower",
+                  "spellPowerPerLevel", "castTime", "setMaxLevel",
+                  "setMinRarity", "SpellRarity", "setCooldownSeconds",
+                  "DefaultConfig"
+              )):
+                  print(line.strip())
           PY
 
       - name: Upload text-only audit
