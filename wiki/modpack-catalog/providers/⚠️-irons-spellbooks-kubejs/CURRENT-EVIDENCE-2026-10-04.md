@@ -31,6 +31,8 @@ At that pin:
 - `IronsSpellsJSPlugin.registerBuilderTypes` installs default builders for Iron's spell and school registry keys;
 - `CustomSpell.Builder` creates script-defined `AbstractSpell` instances with script-owned IDs and configurable school/cost/cast callbacks/gates;
 - `IronsSpellsJSMod.runIronSpellsConfig` iterates KubeJS `RegistryObjectStorage` for the Iron's spell registry to create corresponding Iron's server-config entries;
+- required exact mixins extend the bridge into host runtime: non-player pre-cast, targeted post-cast, living-entity `MagicData`, generic `PathfinderMob` Iron's casting machinery and postponed/rebuilt Iron's server config;
+- all **5 declared `ISSEvents` handlers** have a verified subscription/posting path when the required exact mixins are included;
 - the provider itself does not define a fixed gameplay spell roster.
 
 Therefore the base bridge remains a **scriptable framework**, with strict base semantic delta **+0**.

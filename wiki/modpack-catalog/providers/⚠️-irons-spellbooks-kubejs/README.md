@@ -51,6 +51,8 @@ Exact `IronsSpellsJSPlugin` source registers KubeJS builder types for:
 
 The same plugin exposes Iron's spell/school/casting bindings, cast/mana/selection events, EntityJS spell-casting helpers and Alchemist Cauldron recipe schemas.
 
+The exact required mixin set also matters to that surface: `AbstractSpellMixin` supplies non-player targeted pre-cast and targeted post-cast posting, `LivingEntityMixin` exposes Iron's `MagicData` through `MagicEntityKJS`, and `PathfinderMobMixin` supplies Iron's `IMagicEntity` casting machinery to generic pathfinder mobs. With those required mixins included, all **5 declared `ISSEvents` handlers have a verified subscription/posting path** at the exact 4.0.3 pin.
+
 Exact `IronsSpellsJSMod` does not define a fixed gameplay spell roster. During inter-mod enqueue it iterates KubeJS `RegistryObjectStorage` for the Iron's spell registry and creates Iron's server-config entries for objects built there.
 
 Exact `CustomSpell` is a generic script-configurable `AbstractSpell` implementation whose builder exposes resource ID, school, rarity, max level, cooldown, mana/power fields, cast type/timing, callbacks, looting/learning/crafting gates, animations and pre-cast conditions.
