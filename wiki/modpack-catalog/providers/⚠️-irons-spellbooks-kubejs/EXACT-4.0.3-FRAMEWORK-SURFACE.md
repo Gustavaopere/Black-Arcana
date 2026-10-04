@@ -224,3 +224,65 @@ This exact 4.0.3 path is sufficient to establish bridge-to-host server-config pa
 - current pack script-defined semantic objects: **UNKNOWN until current assembled scripts/provenance are audited**.
 
 These framework counts are capability counts and must not be added to the global magic semantic denominator.
+
+
+## Appendix A. Exact 4.0.3 source coverage ledger
+
+The exact checkpoint `f3c05a102707a87ac3b8f0d2df5d2ffa5ae5b6c7` contains **30 Java source files under `src/main/java`**. All 30 are mapped below.
+
+“Covered” here means the file was reviewed and assigned to a catalog surface/disposition. It does **not** mean the file contributes a semantic spell, school, item, entity or recipe identity to the current pack.
+
+| Exact Java source | Catalog surface | Disposition |
+| --- | --- | --- |
+| `IronsSpellsJSMod.java` | bootstrap + deferred Iron's server-config rebuild | framework/config capability |
+| `IronsSpellsJSModClient.java` | spellbook Curios renderer + staff arm pose | client presentation capability |
+| `IronsSpellsJSPlugin.java` | core builders, bindings, events and schemas | plugin/bootstrap capability |
+| `compat/entityjs/EntityJSPlugin.java` | conditional `spellcasting` + `spell_projectile` builders | optional EntityJS capability |
+| `compat/entityjs/entity/SpellCastingMobJS.java` | script-built `IMagicEntity` mob runtime | optional EntityJS runtime |
+| `compat/entityjs/entity/SpellProjectileJS.java` | script-built spell projectile runtime | optional EntityJS runtime |
+| `compat/entityjs/entity/builder/SpellCastingMobBuilder.java` | `isCasting` / `onCancelledCast` callbacks | optional EntityJS builder |
+| `compat/entityjs/entity/builder/SpellCastingMobJSBuilder.java` | concrete spellcasting-mob builder/factory | optional EntityJS builder |
+| `compat/entityjs/entity/builder/SpellProjectileJSBuilder.java` | anti-magic/particle/impact hooks | optional EntityJS builder |
+| `entity/attribute/SpellAttributeBuilderJS.java` | syncable Iron's `MagicRangedAttribute` construction | attribute builder capability |
+| `event/ChangeManaEventJS.java` | mana event payload/mutation wrapper | event bridge payload |
+| `event/IronsSpellsJSEvents.java` | `ISSEvents` registration/subscriptions | event bridge |
+| `event/SpellOnCastEventJS.java` | spell level/mana mutation payload | event bridge payload |
+| `event/SpellPostCastEventJS.java` | post-cast entity/spell payload | event bridge payload |
+| `event/SpellPreCastEventJS.java` | cancellable pre-cast payload | event bridge payload |
+| `event/SpellSelectionEventJS.java` | spell-selection option payload | event bridge payload |
+| `item/CustomMagicSwordItem.java` | script-built magic sword + embedded spell entries | item builder/runtime |
+| `item/CustomSpellBook.java` | script-built spellbook/container/affinity behavior | item builder/runtime |
+| `item/CustomStaff.java` | script-built staff/tier behavior | item builder/runtime |
+| `mixin/AbstractSpellMixin.java` | builder callbacks + non-player pre-cast + post-cast posting | required host bridge mixin |
+| `mixin/IronsSpellbooksMixin.java` | host server-config registration deferral | required host bridge mixin |
+| `mixin/LivingEntityMixin.java` | `MagicEntityKJS` / `MagicData` exposure | required host bridge mixin |
+| `mixin/PathfinderMobMixin.java` | generic PathfinderMob `IMagicEntity` casting lifecycle | required host bridge mixin |
+| `mixin/ServerConfigsAccessor.java` | Iron's server-config builder access | required host bridge mixin/accessor |
+| `recipe/ISSSchemas.java` | three Alchemist Cauldron recipe schemas | recipe schema capability |
+| `spell/AbstractSpellWrapper.java` | spell lookup/existence/status helper | script binding/helper |
+| `spell/CustomSpell.java` | generic script-defined `AbstractSpell` implementation | spell builder/runtime |
+| `spell/MagicEntityKJS.java` | script-facing `MagicData` route for living entities | script binding/helper |
+| `spell/school/SchoolTypeJSBuilder.java` | custom Iron's school construction + focus-tag generation | school builder/data-generation capability |
+| `util/ISSKJSUtils.java` | guarded callback execution/logging | internal bridge utility |
+
+Coverage result: **30 / 30 Java files reviewed and mapped**.
+
+### Structural non-Java evidence also reviewed
+
+The source-closure audit additionally uses these exact-tree resources:
+
+- `gradle.properties` — exact 4.0.3 version/dependency/license/build baseline;
+- `src/main/resources/META-INF/neoforge.mods.toml` — required NeoForge/Minecraft/Iron's/KubeJS dependency metadata and mixin config declaration;
+- `src/main/resources/irons_spells_js.mixins.json` — required five-common-mixin set, zero client-only mixins;
+- `src/main/resources/kubejs.plugins.txt` — core plugin plus EntityJS-conditional plugin declaration;
+- `run/kubejs/startup_scripts/test/test.js` — official 4.0.3 startup syntax fixture;
+- `run/kubejs/server_scripts/test/test.js` — official 4.0.3 event/recipe syntax fixture;
+- `run/kubejs/client_scripts/test/test.js` — official client-side development fixture.
+
+These development fixtures are source evidence only. They are **not** current modpack scripts and contribute **0** current-pack semantic identities by themselves.
+
+### Source-closure conclusion
+
+For the provider code itself, the exact 4.0.3 Java/framework surface is now **source-covered 30/30** with the critical structural resources above also reviewed.
+
+The remaining `⚠️ PARTIAL / CONDITIONAL` state is therefore **not a provider-source coverage gap**. It is exclusively the unresolved current-pack content question: whether the authoritative assembled instance's KubeJS script/provenance layer registers any custom Iron's spells, schools, attributes, items, entities or recipes.
