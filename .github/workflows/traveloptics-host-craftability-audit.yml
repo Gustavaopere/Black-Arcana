@@ -1,4 +1,5 @@
 name: Traveloptics Host Craftability Clean-room Audit
+# synchronization trigger
 
 on:
   pull_request:
