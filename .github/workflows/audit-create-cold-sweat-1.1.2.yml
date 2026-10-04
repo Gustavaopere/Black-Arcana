@@ -1,0 +1,129 @@
+name: audit-create-cold-sweat-1.1.2
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/create_cold_sweat
+          cd build/audit/create_cold_sweat
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/create-cold-sweat-1184450/7214552/create-cold-sweat-1184450-7214552.jar" \
+            -o create_cold_sweat-1.1.2.jar
+          test -s create_cold_sweat-1.1.2.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_cold_sweat
+          EXPECTED_SHA1="58326378dac966d664ae827dcc76e4b3a284d747"
+          ACTUAL_SHA1="$(sha1sum create_cold_sweat-1.1.2.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum create_cold_sweat-1.1.2.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s create_cold_sweat-1.1.2.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1184450/7214552"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract archive and semantic inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_cold_sweat
+          jar tf create_cold_sweat-1.1.2.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib,re,zipfile
+          jar=pathlib.Path('create_cold_sweat-1.1.2.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              data=[n for n in names if n.startswith('data/create_cold_sweat/')]
+              semantic=[n for n in names if any(t in n.lower() for t in ('spell','magic','ritual','rite','ability','mana','arcane','glyph','summon','teleport','portal','soul','curse'))]
+              thermal=[n for n in names if any(t in n.lower() for t in ('temperature','fluid','boiler','pipe','fan','heat','cold','blocktemp','config'))]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'provider_data={len(data)}\nsemantic_paths={len(semantic)}\nthermal_paths={len(thermal)}\n',
+                  encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-paths.txt').write_text('\n'.join(semantic)+'\n',encoding='utf-8')
+              pathlib.Path('thermal-paths.txt').write_text('\n'.join(thermal)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump complete provider bytecode surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_cold_sweat
+          : > javap-all.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all.txt
+            javap -classpath create_cold_sweat-1.1.2.jar -p -c -constants "$cls" >> javap-all.txt 2>&1 || true
+          done < classes.txt
+          grep -nEi 'spell|magic|ritual|rite|ability|mana|arcane|glyph|summon|teleport|portal|temperature|blocktemp|fluid|boiler|pipe|fan|heat|cold|register|use\(|useOn|interact|tick' javap-all.txt > semantic-and-thermal-seams.txt || true
+
+      - name: Extract exact provider JSON surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_cold_sweat
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          rows=[]
+          with zipfile.ZipFile('create_cold_sweat-1.1.2.jar') as z:
+              for name in sorted(z.namelist()):
+                  if not name.startswith('data/create_cold_sweat/') or not name.endswith('.json'): continue
+                  try:
+                      data=json.loads(z.read(name))
+                      compact=json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception as e:
+                      compact='INVALID_JSON:'+type(e).__name__
+                  rows.append((name,compact))
+          pathlib.Path('provider-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+          pathlib.Path('provider-json-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: create-cold-sweat-1.1.2-exact-artifact-audit
+          path: |
+            build/audit/create_cold_sweat/hashes.txt
+            build/audit/create_cold_sweat/inventory.txt
+            build/audit/create_cold_sweat/jar-entries.txt
+            build/audit/create_cold_sweat/classes.txt
+            build/audit/create_cold_sweat/provider-data.txt
+            build/audit/create_cold_sweat/semantic-paths.txt
+            build/audit/create_cold_sweat/thermal-paths.txt
+            build/audit/create_cold_sweat/javap-all.txt
+            build/audit/create_cold_sweat/semantic-and-thermal-seams.txt
+            build/audit/create_cold_sweat/provider-json.txt
+            build/audit/create_cold_sweat/provider-json-count.txt
+          if-no-files-found: error
