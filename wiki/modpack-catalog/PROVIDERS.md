@@ -82,7 +82,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 77 | GTBC's SpellLib | `gtbcs_spell_lib` | `gtbcs_spell_lib-2.2.0-1.21.1.jar` | `2.2.0-1.21.1` | LIBRARY / API / VFX / SCRIPTING | YES |
 | 78 | HazentouveLib | `hazentouvelib` | `hazentouvelib-1.0.9.jar` | `1.0.9` | LIBRARY / API / VFX / SCRIPTING | YES / MAGIC_INFRA_ZERO_CONCRETE_SPELLS |
 | 79 | FamiliarsLib | `familiarslib` | `familiarslib-1.21.1-1.7.1.jar` | `1.21.1-1.7` | LIBRARY / API / VFX / SCRIPTING | YES |
-| 80 | Iron's Lib | `irons_lib` | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
+| 80 | Iron's Lib | `irons_lib` | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | LIBRARY / API / VFX / SCRIPTING | YES / ZERO_SEMANTIC_LIBRARY_INFRA |
 | 81 | Apprentice's Codex | `apprenticecodex` | `apprentice_codex-0.9.7.1+mc1.21.1.jar` | `0.9.7.1` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 83 | CrystalChronicles | `crystal_chronicles` | `crystal_chronicles-0.1.3-alpha.jar` | `0.1.3-alpha` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 84 | Legendary Spellbooks | `legendary_spellbooks` | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | SPELL PROVIDER / CONTENT ADDON | YES |
@@ -196,8 +196,6 @@ The `Granular capability catalog` column is reconciled to the canonical status-p
 
 Rows #15, #17, #18, #19, #21, #22, #23, #45, #46, #47, #49, #50, #51, #52, #53, #54, #55, #57, #58, #59, #62, #63, #64, #66, #67, #68, #70, #71, #72, #73, #74, #75, #76, #77, #79, #90, #92, #93, #100, #101 were changed from `NO / CONDITIONAL` to `YES` because each has a matching canonical `✅-*` provider directory and `README.md`. No spell/glyph counts or runtime PASS claims were changed by this reconciliation.
 
-After this reconciliation, the only `NO / CONDITIONAL` rows without a canonical `✅` Black Arcana provider tree are:
+After the subsequent catalog closures for Create: Enchantment Industry (#69), HazentouveLib (#78) and Iron's Lib (#80), **no `NO / CONDITIONAL` rows remain** in this registry. This is a catalog-state statement only; it does not convert conditional runtime/integration/reachability QA into PASS.
 
-- **#80 Iron's Lib** (`irons_lib`).
-
-Existing partial rows remain partial, including Traveloptics (#42), Iron's Spellbooks KubeJS (#98), and Deeper and Darker (#114).
+Existing partial rows remain partial: Traveloptics (#42), Iron's Spellbooks KubeJS (#98), and Deeper and Darker (#114).
