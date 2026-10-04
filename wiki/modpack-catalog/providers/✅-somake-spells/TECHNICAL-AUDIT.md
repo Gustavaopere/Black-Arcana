@@ -86,6 +86,17 @@ A página oficial atual de T.O Magic classifica essa build 1.21.1 como **`DEPREC
 
 Portanto aquele checkpoint tinha uma coexistência física real, mas isso **não** prova que a build alpha/deprecated de T.O Magic seja o destino de migração mencionado pelo Somake. A compatibilidade/ownership exata Aqua entre esses dois artefatos deve permanecer QA-blocked/fail-closed, não automaticamente transferida.
 
+### Current 1.0.9 coexistence override
+
+Current sibling authority `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` independently confirms that coexistence remains current after Somake advanced to 1.0.9:
+
+- Somake row #513 — `somakespells-1.0.9-1.21.1.jar`, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`;
+- Traveloptics row #550 — `traveloptics-4.4.0.1-1.21.1.jar`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
+
+For exact publisher File `6342780`, Traveloptics registers 33 spells and no Aqua spell ID; `aqua_focus.json` and residual localization are not active-registry proof. The installed Traveloptics bytes are nevertheless `OTHER_VERIFIED`, so their exact-current registry delta remains open.
+
+Therefore the current 1.0.9 disposition is **current conditional / fail-closed**: no duplicate Aqua collision is proven, absence of an exact-current Traveloptics Aqua registration is not proven, and ownership is not transferred automatically. See [`AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md`](AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md).
+
 ## CurseForge relation inconsistency
 
 A página corrente do Somake descreve 1.21.1 assim:

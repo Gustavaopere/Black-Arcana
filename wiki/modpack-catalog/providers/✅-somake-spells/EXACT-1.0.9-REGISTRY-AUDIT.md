@@ -157,7 +157,8 @@ Reason: the current counting rule still requires deployed/usable semantic reacha
 - effective `enableSpellLockSystem` state where it affects use/progression;
 - school-focus/acquisition paths;
 - object-level or bounded-set survival reachability;
-- Somake Aqua current focus/acquisition/reachability. Historical Traveloptics coexistence is not a current blocker because sibling `d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics entry.
+- Somake Aqua current focus/acquisition/reachability;
+- current Somake↔Traveloptics Aqua coexistence/authority remains conditional: Traveloptics is physically installed, exact publisher File `6342780` has no active Aqua spell registration, but current physical SHA-1 `7b74816e...` is `OTHER_VERIFIED` and its exact-current registry delta is unmaterialized. See [`AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md`](AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md).
 
 ## Result
 

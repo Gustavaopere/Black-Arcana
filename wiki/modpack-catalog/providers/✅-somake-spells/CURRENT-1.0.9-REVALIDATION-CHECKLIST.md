@@ -171,10 +171,12 @@ Canonical runbook: [`docs/qa/provider-catalog-runtime-registry-probe.md`](../../
 
 Registration composition is now closed structurally for the current pack, so the runtime probe is no longer required merely to identify the 83/83 Somake registration subset. It remains the preferred read-only path for observing effective Iron's school / `enabled` / `allow_crafting` values on the exact assembled server. It does not by itself establish survival reachability, deployed `enableSpellLockSystem`, or Aqua authority.
 
-6. **Aqua authority / historical T.O coexistence**
+6. **Aqua authority / current T.O coexistence**
    - current Somake Aqua focus/acquisition/reachability remains to be proven object-by-object;
-   - historical Traveloptics coexistence is no longer a current-pack blocker because sibling `d809c7c2e617f5ee14f6867af618c52922d85589` contains no Traveloptics entry; re-audit only if T.O Magic is reintroduced;
-   - no authority migration inferred from historical publisher statements.
+   - current sibling authority confirms Traveloptics is installed at row #550 / `traveloptics-4.4.0.1-1.21.1.jar`;
+   - exact publisher File `6342780` has no active Aqua spell registration, but current physical SHA-1 `7b74816e...` is `OTHER_VERIFIED`, so exact-current Traveloptics Aqua absence is not proven;
+   - classify coexistence as `CURRENT CONDITIONAL / FAIL-CLOSED`: no duplicate collision is asserted and no authority migration is inferred from historical publisher statements;
+   - see [`AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md`](AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md).
 
 7. **Survival reachability**
    - object-level or bounded-set acquisition/use proof sufficient for the semantic ledger.
