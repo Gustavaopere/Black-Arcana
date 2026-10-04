@@ -71,7 +71,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 66 | Reliquified L_Ender's Cataclysm | `reliquified_lenders_cataclysm` | `reliquified_lenders_cataclysm-1.21.1-0.1.1.jar` | `0.1.1` | BRIDGE / COMPAT / PROGRESSION | YES |
 | 67 | reliquified_artifacts | `reliquified_artifacts` | `reliquified_artifacts-1.21.1-1.0.8.jar` | `1.0.8` | BRIDGE / COMPAT / PROGRESSION | YES |
 | 68 | Iron's Gems 'n Jewelry | `irons_jewelry` | `irons_jewelry-1.21.1-2.0.2.jar` | `1.21.1-2.0.2` | GEAR / ENCHANT / SUPPORT CONTENT | YES |
-| 69 | Create: Enchantment Industry | `create_enchantment_industry` | `create-enchantment-industry-2.5.3b.jar` | `2.5.3b` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
+| 69 | Create: Enchantment Industry | `create_enchantment_industry` | `create-enchantment-industry-2.5.3b.jar` | `2.5.3b` | GEAR / ENCHANT / SUPPORT CONTENT | YES / ZERO_SEMANTIC_ENCHANTMENT_SYSTEM |
 | 70 | Create Enchantment Industry Plus | `create_enchantment_industry_plus` | `create_enchantment_industry_plus-1.1.1-1.21.1.jar` | `1.1.1` | BRIDGE / COMPAT / PROGRESSION | YES |
 | 71 | Create: Enchantable Machinery | `createenchantablemachinery` | `createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar` | `3.6.0` | GEAR / ENCHANT / SUPPORT CONTENT | YES |
 | 72 | Apotheosis/Create Addon | `apotheoticcreation` | `apotheoticcreation-2.0.0.jar` | `2.0.0` | BRIDGE / COMPAT / PROGRESSION | YES |
@@ -198,7 +198,6 @@ Rows #15, #17, #18, #19, #21, #22, #23, #45, #46, #47, #49, #50, #51, #52, #53, 
 
 After this reconciliation, the only `NO / CONDITIONAL` rows without a canonical `✅` Black Arcana provider tree are:
 
-- **#69 Create: Enchantment Industry** (`create_enchantment_industry`);
 - **#78 HazentouveLib** (`hazentouvelib`);
 - **#80 Iron's Lib** (`irons_lib`).
 
