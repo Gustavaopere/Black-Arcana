@@ -1,6 +1,6 @@
 # Deeper and Darker 1.4.1 — local NeoVitae compatibility lineage
 
-Status: `LOCAL COMPATIBILITY WORK BOUNDED / GENERATED ARTIFACTS RETAINED / RUNTIME TRANSITION OBSERVED / NO HASH BRIDGE TO 83F7EDD0... / FAIL-CLOSED`
+Status: `LOCAL COMPATIBILITY WORK BOUNDED / GENERATED ARTIFACTS RETAINED / MULTIPLE MIXIN SURFACES OBSERVED / NO DEPLOYMENT OR HASH BRIDGE TO 83F7EDD0... / FAIL-CLOSED`
 
 ## Purpose
 
@@ -91,9 +91,7 @@ Retained `debug(20260818-125153).log`, captured after the v2 artifact set was ge
 - `deeperdarker.mixins.json:ContainerMenuMixin` mixing into vanilla container menus;
 - its `@Inject::stillValid(Player, CallbackInfoReturnable)` handler being applied.
 
-Later retained logs on 2026-08-18/19 and 2026-09-08 also positively record the same Deeper and Darker `ContainerMenuMixin` `stillValid(...)` injection surface.
-
-This establishes a real runtime transition in the local compatibility-work history.
+Later retained logs on 2026-08-18/19 and 2026-09-08 also positively record the same Deeper and Darker `ContainerMenuMixin` `stillValid(...)` injection surface. However, retained logs from **before** the 2026-08-18 compatibility-artifact generation also show `ContainerMenuMixin` being applied. Therefore this surface is **not** a unique v2 deployment fingerprint and does not prove that the v2 artifact caused a runtime transition.
 
 It does **not** prove:
 
@@ -116,7 +114,7 @@ The evidence now supports a more specific bounded history:
 2. a Deeper and Darker ↔ NeoVitae `stillValid(...)` mixin conflict was reproduced;
 3. two local compatibility artifact sets were generated;
 4. the first set did not correspond to an operationally closed state in the next retained bootstrap checkpoint;
-5. after the v2 generation, retained runtime logs positively show the `ContainerMenuMixin` injection surface that remains visible in later boots;
+5. after the v2 generation, a retained boot positively shows the `ContainerMenuMixin` injection surface; because pre-v2 logs also expose that surface, it is not treated as evidence that v2 was deployed or caused the observed mixin shape;
 6. a later physical inventory fingerprints the canonical Deeper and Darker JAR as `83f7edd0...`.
 
 The missing step is still a **cryptographic or exact-content bridge** from one retained generated artifact to the deployed `83f7edd0...` bytes.
