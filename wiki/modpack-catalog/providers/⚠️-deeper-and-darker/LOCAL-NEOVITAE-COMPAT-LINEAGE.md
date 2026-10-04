@@ -100,6 +100,30 @@ It does **not** prove:
 - that the physical SHA-1 `83f7edd0...` equals either generated compatibility JAR;
 - that the mixin change is the only archive-level delta in the physical artifact.
 
+## Bounded candidate-repack reproduction
+
+NON-MERGE audit PR **#604** tested whether the local compatibility artifacts or the physical `83f7edd0...` JAR could be reproduced from the official release by changing only the two conflicting redirect-mixin registrations.
+
+The bounded matrix generated **57 candidates**:
+
+- remove `PlayerMixin` only;
+- remove `ServerPlayerMixin` only;
+- remove both;
+- Python `zipfile` rewrite using default compression and levels 1–9;
+- surgical single-entry replacement using levels 1–9 while preserving all other archive bytes/metadata.
+
+Successful audit run **37238826068** produced text evidence artifact **11316632886**, digest `sha256:4a1e20380caba07e25cef8487135c6ff693e0638e47c86b32fc6189d31b38006`.
+
+Results:
+
+- exact physical SHA-1 `83f7edd0...` matches: **0/57**;
+- retained first local size **3,906,052 bytes**: one size-only match — remove `ServerPlayerMixin`, surgical replacement, DEFLATE level 4, candidate SHA-1 `304eebbbf9c36e04003158903ba619513dddad72`;
+- retained `v2` size **3,906,044 bytes**: **0/57** matches.
+
+The first-size match is not byte identity and is not treated as proof of the first local patch contents. The no-match result only excludes this bounded candidate family; it does not identify the actual local transformation.
+
+See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md).
+
 ## Raw-byte limitation
 
 The retained generated JARs are visible through Project Library metadata, but this audit does not have an authorized raw-byte materialization path for them. Their SHA-1/SHA-256 values could therefore not be computed here.
