@@ -83,11 +83,15 @@ Run the canonical read-only collector against the actual current assembled insta
 python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack-instance"
 ```
 
-The `kubejs_script_inventory` result is the first decisive artifact for this provider:
+The collector now combines the certified physical fingerprint and bounded script inventory into `irons_spellbooks_kubejs_closure.status`:
 
-1. absent/empty authoritative current bounded script/data tree -> eligible for zero-content closure review;
-2. non-empty tree -> inspect the exact hashed files for Iron's spell/school builder registrations;
-3. every surviving custom spell must then be traced through ID, source file/range, registration condition, school, effective Iron's config and survival reachability.
+1. `ARTIFACT_NOT_OBSERVED` -> current certified JAR was not captured; stop;
+2. `ARTIFACT_HASH_MISMATCH` -> observed provider binary differs from the certified 4.0.3 SHA-1; stop;
+3. `ZERO_CONTENT_REVIEW_CANDIDATE` -> certified JAR plus zero bounded KubeJS files; review current-instance provenance before zero-content closure;
+4. `SCRIPT_REVIEW_REQUIRED` -> certified JAR plus one or more bounded KubeJS files; inspect the exact hashes/files even if no bounded Iron's marker fired;
+5. every surviving custom spell must then be traced through ID, source file/range, registration condition, school, effective Iron's config and survival reachability.
+
+The machine-readable state never promotes the provider automatically; row #98 remains fail-closed until catalog review.
 
 A repository search alone is insufficient.
 
