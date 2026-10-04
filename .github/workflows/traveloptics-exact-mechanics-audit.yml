@@ -1,5 +1,5 @@
 name: Traveloptics Exact Mechanics Clean-room Audit
-# synchronization trigger v3
+# synchronization trigger v4
 
 on:
   pull_request:
@@ -89,9 +89,9 @@ jobs:
               return matches[0][:-6].replace("/", ".")
 
           insn_re = re.compile(r"^\s*(\d+):\s+(\S+)(?:\s+(.*))?$")
-          field_re = re.compile(r"Field io/redspace/ironsspellbooks/api/spells/AbstractSpell\.(baseManaCost|manaCostPerLevel|baseSpellPower|spellPowerPerLevel|castTime):I")
+          field_re = re.compile(r"Field (?:[\w/$]+\.)?(baseManaCost|manaCostPerLevel|baseSpellPower|spellPowerPerLevel|castTime):I")
           setter_re = re.compile(r"Method io/redspace/ironsspellbooks/api/config/DefaultConfig\.(setMaxLevel|setCooldownSeconds|setAllowCrafting|setMinRarity):")
-          rarity_re = re.compile(r"Field io/redspace/ironsspellbooks/api/registry/SpellRarity\.(\w+):Lio/redspace/ironsspellbooks/api/registry/SpellRarity;")
+          rarity_re = re.compile(r"Field io/redspace/ironsspellbooks/api/spells/SpellRarity\.(\w+):Lio/redspace/ironsspellbooks/api/spells/SpellRarity;")
 
           def javap(fqcn):
               return subprocess.run(
