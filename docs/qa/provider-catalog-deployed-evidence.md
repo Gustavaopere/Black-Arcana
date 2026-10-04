@@ -18,6 +18,7 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 - Simply Swords: Cataclysm 1.0.2+1.21.1+neoforge;
 - T.O Magic n' Extras / Traveloptics 4.4.0.1 — current physical override/provider blocker even though it is absent from the sibling status-prefixed taxonomy;
 - bounded deployed customization references relevant to those same closure gates.
+- kubejsarsnouveau 1.3.2 physical JAR fingerprint against the current pack SHA-1;
 - exact current KubeJS startup/server/client/data text-file inventory by relative path, SHA-256, byte size and surface label, without copying file bodies.
 
 It does not alter the instance, generate provider configs, enable content, create datapacks, or infer defaults from absent files.
@@ -81,6 +82,20 @@ The report includes `kubejs_script_inventory` with:
 Only files under those four roots whose suffix is already in the collector's bounded text-extension allowlist are included. Script/data bodies are never copied.
 
 This inventory is evidence input for the Iron's Spellbooks KubeJS and KubeJS Ars Nouveau closure checklists. An explicitly absent/empty authoritative current `kubejs/` tree can support zero-content closure where the provider checklist allows it. A non-empty inventory still requires targeted script/provenance review; hashes and paths alone do not prove semantic registrations or recipe mutations.
+
+### KubeJS Ars Nouveau 1.3.2 physical fingerprint
+
+The collector hashes only the exact current filename:
+
+`kubejsarsnouveau-1.3.2.jar`
+
+and emits `current_physical_1_3_2_equality` against canonical current-pack SHA-1:
+
+`f39f4f409e628731be551fd961fac2964768d358`.
+
+This closes physical artifact identity only when run against the authoritative assembled instance. It does not prove source-build byte equivalence, because the publisher's public 1.3.x repository line does not expose a commit whose Gradle metadata declares 1.3.2.
+
+Pair the fingerprint with `kubejs_script_inventory` and the provider checklist at `wiki/modpack-catalog/providers/⚠️-kubejsarsnouveau/`. The audited bridge is a recipe-schema adapter: script inventory is used to close recipe/acquisition mutations, not to manufacture ownership of glyph implementations.
 
 
 ### Catalog runtime probe bundle
@@ -536,6 +551,6 @@ Do not convert missing files into source-default values unless the actual runtim
 - Simply Swords: Cataclysm: current physical 1.0.2 equality plus the ten exact STARTUP values needed to classify all four source-pinned abilities;
 - Simply Swords: current physical 1.70.2 equality plus bounded Awakening and loot/remnant config evidence; per-stack Awakening/unlock, complete acquisition/reformation, compat materialization and addon ownership remain provider-specific;
 - Traveloptics: current physical override/provider blocker — classify the actual installed JAR and discover bounded deployed `traveloptics:blackout` references; exact-current registry/loot/acquisition review remains provider-specific.
-- Iron's Spellbooks KubeJS / KubeJS Ars Nouveau: use `kubejs_script_inventory` to bind the review to the exact current script/data tree; inspect non-empty files separately according to each provider checklist.
+- Iron's Spellbooks KubeJS / KubeJS Ars Nouveau: use `kubejs_script_inventory` to bind the review to the exact current script/data tree; for KubeJS Ars Nouveau also require the exact 1.3.2 physical fingerprint, then inspect non-empty files for recipe/acquisition mutations according to its provider checklist.
 
 Somake's exact 1.0.9 registry and current 83/83 registration composition are already closed by canonical provider evidence; the collector is used for deployed config/host/reachability evidence, not to redo that registry. Pair it with [`provider-catalog-runtime-registry-probe.md`](provider-catalog-runtime-registry-probe.md) when exact assembled-server Iron's registry identity and effective host `school` / `enabled` / `allow_crafting` observations are required. For the current physical pack, those runtime rows may close the deployed registration outcome when paired with physical identity/mod-presence evidence; they do not establish a universal predicate contract. The runtime probe is separate QA evidence and still does not prove survival acquisition, provider-owned progression gates, Traveloptics Blackout reachability or Somake↔Traveloptics Aqua authority.
