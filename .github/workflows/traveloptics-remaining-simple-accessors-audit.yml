@@ -1,0 +1,248 @@
+name: Traveloptics Remaining Simple Accessors Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Evaluate remaining bounded scalar accessors
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import math
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar = "traveloptics.jar"
+          targets = [
+              ("IgnitedOnslaughtSpell","getBerserkerHealth","(I)F",5),
+              ("IgnitedOnslaughtSpell","getRevenantHealth","(I)F",5),
+              ("BurningJudgmentSpell","getFlameStrikeCount","(I)F",6),
+              ("LavaBombSpell","getMotionScale","()D",None),
+              ("SummonDesertDwellers","getKoboletonCount","(I)F",5),
+              ("SummonDesertDwellers","getKoboletonHealth","(I)F",5),
+              ("SummonDesertDwellers","getWadjetHealth","(I)F",5),
+              ("SwordOfTheAncientsSpell","getKobolediatorHealth","(I)F",3),
+              ("AxeOfTheDoomedSpell","getAptrgangrHealth","(I)F",3),
+              ("CursedRevenantsSpell","getDraugrCount","(I)F",5),
+              ("CursedRevenantsSpell","getDraugrHealth","(I)F",5),
+              ("HalberdHorizonSpell","getRingCount","(I)I",6),
+              ("MechanizedPredatorSpell","getWatcherHealth","(I)F",5),
+              ("MechanizedPredatorSpell","getProwlerHealth","(I)F",5),
+              ("SteleCascadeSpell","getRingsAndRows","(I)I",6),
+          ]
+
+          with zipfile.ZipFile(jar) as z:
+              entries = z.namelist()
+
+          def fqcn_for(simple):
+              suffix = "/" + simple + ".class"
+              matches = [e for e in entries if e.endswith(suffix)]
+              if len(matches) != 1:
+                  raise RuntimeError(f"{simple}: class matches={matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          def parse_num(s):
+              s=s.strip()
+              s=re.sub(r'[fFdDlL]$','',s)
+              if s in ("NaN","Infinity","-Infinity"):
+                  return float(s)
+              return float(s) if any(ch in s for ch in ".eE") else int(s)
+
+          def class_constants(fqcn):
+              p=subprocess.run(["javap","-classpath",jar,"-p","-constants",fqcn],check=True,text=True,capture_output=True)
+              out={}
+              for raw in p.stdout.splitlines():
+                  line=raw.strip()
+                  m=re.match(r'.*\b([A-Za-z_$][\w$]*)\s*=\s*(-?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?[fFdDlL]?)\s*;',line)
+                  if m:
+                      out[m.group(1)]=parse_num(m.group(2))
+              return out
+
+          insn_re=re.compile(r'^\s*(\d+):\s+(\S+)(?:\s+(.*))?$')
+
+          def method_instructions(fqcn, method_name, descriptor):
+              p=subprocess.run(["javap","-classpath",jar,"-c","-p","-s",fqcn],check=True,text=True,capture_output=True)
+              lines=p.stdout.splitlines()
+              for i,raw in enumerate(lines):
+                  sig=raw.strip()
+                  if not (sig.endswith(";") and re.search(r'\b'+re.escape(method_name)+r'\s*\(',sig)):
+                      continue
+                  desc=None
+                  code_idx=None
+                  for j in range(i+1,min(len(lines),i+8)):
+                      s=lines[j].strip()
+                      if s.startswith("descriptor:"):
+                          desc=s.split("descriptor:",1)[1].strip()
+                      if s=="Code:":
+                          code_idx=j
+                          break
+                  if desc != descriptor or code_idx is None:
+                      continue
+                  instr=[]
+                  for raw2 in lines[code_idx+1:]:
+                      m=insn_re.match(raw2)
+                      if m:
+                          instr.append((int(m.group(1)),m.group(2),m.group(3) or ""))
+                          continue
+                      if instr:
+                          break
+                  if instr:
+                      return instr
+              raise RuntimeError(f"{fqcn}.{method_name}{descriptor}: instructions not found")
+
+          def eval_method(instr, constants, level=None):
+              stack=[]
+              locals_={0:"THIS"}
+              if level is not None:
+                  locals_[1]=level
+              unsupported=None
+              for _,op,arg in instr:
+                  if op.startswith(("if","goto","tableswitch","lookupswitch","jsr","ret","athrow")):
+                      return None,f"CONTROL_FLOW:{op}"
+                  if op in ("nop",):
+                      continue
+                  if op.startswith("iconst_"):
+                      tail=op[len("iconst_"):]
+                      stack.append(-1 if tail=="m1" else int(tail)); continue
+                  if op.startswith("fconst_"):
+                      stack.append(float(op[-1])); continue
+                  if op.startswith("dconst_"):
+                      stack.append(float(op[-1])); continue
+                  if op in ("bipush","sipush"):
+                      stack.append(int(arg.split()[0])); continue
+                  if op in ("ldc","ldc_w","ldc2_w"):
+                      comment=arg.split("//",1)[1].strip() if "//" in arg else ""
+                      m=re.search(r'\b(?:int|float|double|long)\s+(-?[^\s]+)',comment)
+                      if not m: return None,f"UNSUPPORTED_CONST:{arg}"
+                      stack.append(parse_num(m.group(1))); continue
+                  m=re.fullmatch(r'iload_(\d+)',op)
+                  if m:
+                      idx=int(m.group(1))
+                      if idx not in locals_: return None,f"UNKNOWN_LOCAL:{idx}"
+                      stack.append(locals_[idx]); continue
+                  if op=="iload":
+                      idx=int(arg.split()[0])
+                      if idx not in locals_: return None,f"UNKNOWN_LOCAL:{idx}"
+                      stack.append(locals_[idx]); continue
+                  if op in ("i2f","i2d","i2l","f2d","f2i","d2f","d2i"):
+                      if not stack:return None,"STACK_UNDERFLOW"
+                      v=stack.pop()
+                      if op.endswith("i"): v=int(v)
+                      else: v=float(v)
+                      stack.append(v); continue
+                  if op in ("iadd","isub","imul","idiv","irem","fadd","fsub","fmul","fdiv","dadd","dsub","dmul","ddiv","ladd","lsub","lmul","ldiv"):
+                      if len(stack)<2:return None,"STACK_UNDERFLOW"
+                      b=stack.pop(); a=stack.pop()
+                      if op.endswith("add"): v=a+b
+                      elif op.endswith("sub"): v=a-b
+                      elif op.endswith("mul"): v=a*b
+                      elif op.endswith("div"): v=a/b
+                      else: v=a%b
+                      if op.startswith(("i","l")): v=int(v)
+                      stack.append(v); continue
+                  if op in ("ineg","fneg","dneg","lneg"):
+                      if not stack:return None,"STACK_UNDERFLOW"
+                      stack[-1]=-stack[-1]; continue
+                  if op=="getstatic":
+                      comment=arg.split("//",1)[1].strip() if "//" in arg else ""
+                      m=re.search(r'Field\s+(?:[\w/$]+\.)?([\w$]+):',comment)
+                      if not m or m.group(1) not in constants:
+                          return None,f"UNKNOWN_GETSTATIC:{comment}"
+                      stack.append(constants[m.group(1)]); continue
+                  if op in ("dup","dup2"):
+                      if not stack:return None,"STACK_UNDERFLOW"
+                      stack.append(stack[-1]); continue
+                  if op=="pop":
+                      if not stack:return None,"STACK_UNDERFLOW"
+                      stack.pop(); continue
+                  if op=="iinc":
+                      parts=arg.replace(","," ").split()
+                      idx=int(parts[0]); inc=int(parts[1])
+                      if idx not in locals_: return None,f"UNKNOWN_LOCAL:{idx}"
+                      locals_[idx]+=inc; continue
+                  if op in ("ireturn","freturn","dreturn","lreturn"):
+                      if not stack:return None,"EMPTY_RETURN"
+                      return stack.pop(),None
+                  if op=="return":
+                      return None,"VOID_RETURN"
+                  return None,f"UNSUPPORTED:{op}"
+              return None,"NO_RETURN"
+
+          rows=[]
+          for simple,method,desc,max_level in targets:
+              fqcn=fqcn_for(simple)
+              consts=class_constants(fqcn)
+              instr=method_instructions(fqcn,method,desc)
+              if max_level is None:
+                  value,err=eval_method(instr,consts,None)
+                  rows.append((simple,method,desc,"scalar",value,err))
+              else:
+                  vals=[]
+                  err=None
+                  for level in range(1,max_level+1):
+                      value,e=eval_method(instr,consts,level)
+                      if e:
+                          err=e
+                          break
+                      vals.append((level,value))
+                  rows.append((simple,method,desc,"levels",vals if err is None else None,err))
+
+          report=Path("audit/report.txt")
+          with report.open("w",encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha bounded scalar accessor clean-room audit\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("scope=15 remaining numeric accessors with no LivingEntity parameter from the exact #608 signature surface\n")
+              f.write("retention=method identity + exact evaluated return values by valid spell level when straight-line supported; no bytecode/method bodies\n\n")
+              ok=0
+              for simple,method,desc,kind,value,err in rows:
+                  if err is None:
+                      ok+=1
+                      if kind=="scalar":
+                          f.write(f"{simple}|{method}|{desc}|OK|value={value}\n")
+                      else:
+                          s=",".join(f"L{lvl}={val}" for lvl,val in value)
+                          f.write(f"{simple}|{method}|{desc}|OK|{s}\n")
+                  else:
+                      f.write(f"{simple}|{method}|{desc}|UNKNOWN|reason={err}\n")
+              f.write("\nsummary\n")
+              f.write(f"targets={len(rows)}\n")
+              f.write(f"ok={ok}\n")
+              f.write(f"unknown={len(rows)-ok}\n")
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-remaining-simple-accessors-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
