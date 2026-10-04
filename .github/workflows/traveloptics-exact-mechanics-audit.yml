@@ -1,4 +1,5 @@
 name: Traveloptics Exact Mechanics Clean-room Audit
+# synchronization trigger
 
 on:
   pull_request:
