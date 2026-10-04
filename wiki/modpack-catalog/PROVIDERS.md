@@ -2,7 +2,7 @@
 
 Status: `PHASE 2 — INVENTORY BASELINE ESTABLISHED`
 
-This registry began from an older 607-entry snapshot and preserves stable row numbers for provenance. Current presence is reconciled against sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1`; status-prefixed current physical rows are authoritative, while uncategorized legacy/export Markdown files are provenance only. Retired rows are omitted rather than renumbering later historical row identifiers.
+This registry began from an older 607-entry snapshot and preserves stable row numbers for provenance. Current presence is reconciled against sibling `neoforge-rpg-skilltree@fa47288bd99e1166880a8fb0ee00cab06697a88a`; status-prefixed current physical rows are authoritative, while uncategorized legacy/export Markdown files are provenance only. Retired rows are omitted rather than renumbering later historical row identifiers.
 
 | # | Current mod | Mod id | Current JAR | Runtime version | Phase 2 class | Granular capability catalog |
 |---:|---|---|---|---|---|---|
@@ -11,17 +11,17 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 3 | Goety | `goety` | `goety-3.1.4.jar` | `3.1.4` | ENGINE / PRIMARY PROVIDER | YES |
 | 4 | Malum | `malum` | `malum-1.21.1-1.8.2.jar` | `1.8.2` | ENGINE / PRIMARY PROVIDER | YES |
 | 5 | Eidolon:Repraised | `eidolon_repraised` | `eidolon_repraised-1.21.1-0.5.0.2.jar` | `0.5.0.2` | ENGINE / PRIMARY PROVIDER | YES |
-| 6 | Hexalia | `hexalia` | `hexalia-neoforge-1.3.6.jar` | `1.3.5` | ENGINE / PRIMARY PROVIDER | YES |
+| 6 | Hexalia | `hexalia` | `hexalia-neoforge-1.3.7.jar` | `1.3.7` | ENGINE / PRIMARY PROVIDER | YES |
 | 7 | Ars Additions | `ars_additions` | `ars_additions-1.21.1-21.3.0.jar` | `1.21.1-21.3.0` | ARS GLYPH / SYSTEM PROVIDER | YES |
-| 8 | Ars Controle | `ars_controle` | `ars_controle-1.21.1-1.6.15.jar` | `1.21.1-1.6.15` | ARS GLYPH / SYSTEM PROVIDER | YES |
+| 8 | Ars Controle | `ars_controle` | `ars_controle-1.21.1-1.6.16.jar` | `1.21.1-1.6.16` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 9 | Ars Creo | `ars_creo` | `ars_creo-1.21.1-5.4.0.jar` | `5.4.0` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 10 | Ars Technica | `ars_technica` | `ars_technica-1.21.1-2.7.6.jar` | `2.7.6` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 11 | Ars Elemental | `ars_elemental` | `ars_elemental-1.21.1-0.7.10.1.jar` | `0.7.10.1` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 12 | Ars Elemancy | `ars_elemancy` | `ars_elemancy-1.21.1-1.18.3.jar` | `1.18.3` | ARS GLYPH / SYSTEM PROVIDER | YES |
-| 13 | Not Enough Glyphs | `not_enough_glyphs` | `not_enough_glyphs-1.21.1-4.6.1.jar` | `4.6.1` | ARS GLYPH / SYSTEM PROVIDER | YES |
+| 13 | Not Enough Glyphs | `not_enough_glyphs` | `not_enough_glyphs-1.21.1-4.6.2.jar` | `4.6.2` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 14 | Ars Zero | `ars_zero` | `ars_zero-1.21.1-2.0.2.jar` | `2.0.2` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 15 | Starbunclemania | `starbunclemania` | `starbunclemania-1.21.1-1.5.8.jar` | `1.5.8` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
-| 16 | Ars 'n' Spells | `ars_n_spells` | `ars_n_spells-3.2.4.jar` | `3.2.4` | ARS GLYPH / SYSTEM PROVIDER | YES |
+| 16 | Ars 'n' Spells | `ars_n_spells` | `ars_n_spells-3.3.4.jar` | `3.3.4` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 17 | Ars Nouveau: Two-Way Portals | `ars_two_way_portals` | `ars_two_way_portals-2.0.0.jar` | `2.0.0` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 18 | Ars Sable | `ars_sable` | `ars_sable-1.21.1-1.1.2.jar` | `1.1.2` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 19 | Ars Sophisticated Compatibility | `arssophisticatedcompat` | `arssophisticatedcompat-0.3.0.jar` | `0.3.0` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
@@ -47,11 +47,12 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 39 | Leyline Spellbooks | `leylines` | `leylines-1.0.3.jar` | `1.0.3` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 40 | Monsters & Spellbooks | `monsterspellbooks` | `monsterspellbooks-0.0.16.3.jar` | `0.0.16.3` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 41 | Paladin Spells - Iron's Spells 'n Spellbooks Addon | `paladin_spells` | `paladin_spells-1.21.1-1.1.1.jar` | `1.21.1-1.1.1` | SPELL PROVIDER / CONTENT ADDON | YES |
+| 42 | T.O Magic n' Extras | `traveloptics` | `traveloptics-4.4.0.1-1.21.1.jar` | `4.4.0.1-1.21.1` | SPELL PROVIDER / CONTENT ADDON | PARTIAL / OTHER_VERIFIED |
 | 43 | Tunes 'n Tomes Mod | `tunes_n_tomes` | `tunes_n_tomes-1.1.0-HOTFIX.jar` | `1.1.0-HOTFIX` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 44 | Wind's Spellbooks : Iron's Spells 'n Spellbooks Addon | `wind_spellbooks` | `wind_spellbooks-1.0.5.jar` | `1.0.5` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 45 | Alshanex's Familiars Mod | `alshanex_familiars` | `alshanex_familiars-1.21.1_v4.0.3.jar` | `1.21.1_v4.0.3` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 46 | Acolyte | `acolyte` | `acolyte-1.0.3.jar` | `1.0.3` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
-| 47 | Iron's Spells 'n Spellbooks: Recolor | `recolor_tablet` | `recolor_tablet-1.3.2+1.21.1.jar` | `1.3.2+1.21.1` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
+| 47 | Iron's Spells 'n Spellbooks: Recolor | `recolor_tablet` | `recolor_tablet-1.3.3+1.21.1.jar` | `1.3.3+1.21.1` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 48 | Ypsilon's Fundamentalism | `ypfundamentals` | `ypfundamentals-1.1.7.1.jar` | `1.1.7.1` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 49 | Specs: Iron's Spells 'n Spellbooks Addon | `specs_irons_spellbooks` | `specs_irons_spellbooks-1.6.5.jar` | `1.6.5` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 50 | Spell Actionbar | `spell_actionbar` | `spell_actionbar-1.1.4.jar` | `1.1.4` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
@@ -60,16 +61,13 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 53 | Ironsable | `ironsable` | `ironsable-1.2.0.jar` | `1.2.0` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 54 | Immersive Portal - Iron's Spells 'n Spellbooks Addon | `immersive_portal_irons_spells_n_spellbooks_addon` | `immersive_portal_irons_spells_n_spellbooks_addon-1.0.1.jar` | `1.0.1` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 55 | Epic Fight & Iron's Spellbook animation compat | `efiscompat` | `efiscompat-3.1.0.jar` | `3.1.0` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
-| 56 | Woodwalkers SpellBooks | `woodwalkers_spellbooks` | `woodwalkers_spellbooks-0.3.1-BETA.jar` | `0.3.1-BETA` | SPELL PROVIDER / CONTENT ADDON | YES |
-| 57 | Iron's Apothic | `irons_apothic` | `irons_apothic-2.2.1.jar` | `2.2.1` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
+| 57 | Iron's Apothic | `irons_apothic` | `irons_apothic-2.2.2.jar` | `2.2.2` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 58 | Reliquified Iron's Spells 'n Spellbooks | `reliquified_irons_spells_and_spellbooks` | `reliquified_irons_spells_and_spellbooks-1.21.1-0.2.7.jar` | `0.2.7` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 59 | Goety Cataclysm | `goety_cataclysm` | `goety_cataclysm-1.21.1-1.8.2.jar` | `1.21.1-1.8.2` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 60 | Gaze | `gaze` | `gaze-1.1.7.1.jar` | `1.1.7.1` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
-| 61 | Malum: Vestis | `vestis` | `vestis-1.1.0.jar` | `1.1.0` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
 | 62 | Apothic Enchanting | `apothic_enchanting` | `ApothicEnchanting-1.21.1-1.6.2.jar` | `1.6.2` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
-| 63 | Apotheosis | `apotheosis` | `Apotheosis-1.21.1-8.7.0.jar` | `8.7.0` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
+| 63 | Apotheosis | `apotheosis` | `Apotheosis-1.21.1-8.8.0.jar` | `8.8.0` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
 | 64 | Relics | `relics` | `relics-1.21.1-0.12.8.jar` | `0.12.8` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
-| 65 | Reliquary Reincarnations | `reliquary` | `reliquary-1.21.1-2.0.80.1570.jar` | `2.0.80` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
 | 66 | Reliquified L_Ender's Cataclysm | `reliquified_lenders_cataclysm` | `reliquified_lenders_cataclysm-1.21.1-0.1.1.jar` | `0.1.1` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 67 | reliquified_artifacts | `reliquified_artifacts` | `reliquified_artifacts-1.21.1-1.0.8.jar` | `1.0.8` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 68 | Iron's Gems 'n Jewelry | `irons_jewelry` | `irons_jewelry-1.21.1-2.0.2.jar` | `1.21.1-2.0.2` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
@@ -81,18 +79,17 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 74 | Ozymandias Sundries | `ozymandias_sundries` | `ozymandias_sundries-0.0.5.jar` | `0.0.1` | GEAR / ENCHANT / SUPPORT CONTENT | NO / CONDITIONAL |
 | 75 | RunicLib | `runiclib` | `neoforge-runiclib-1.21.1-5.0.7.jar` | `5.0.7` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 76 | Ace's Spell Utils | `aces_spell_utils` | `aces_spell_utils-1.2.7.2-1.21.1.jar` | `1.2.7.2-1.21.1` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
-| 77 | GTBC's SpellLib | `gtbcs_spell_lib` | `gtbcs_spell_lib-2.1.0-1.21.1.jar` | `2.1.0-1.21.1` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
+| 77 | GTBC's SpellLib | `gtbcs_spell_lib` | `gtbcs_spell_lib-2.2.0-1.21.1.jar` | `2.2.0-1.21.1` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 78 | HazentouveLib | `hazentouvelib` | `hazentouvelib-1.0.9.jar` | `1.0.9` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 79 | FamiliarsLib | `familiarslib` | `familiarslib-1.21.1-1.7.1.jar` | `1.21.1-1.7` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 80 | Iron's Lib | `irons_lib` | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 81 | Apprentice's Codex | `apprenticecodex` | `apprentice_codex-0.9.7.1+mc1.21.1.jar` | `0.9.7.1` | SPELL PROVIDER / CONTENT ADDON | YES |
-| 82 | Ars Morph | `ars_morph` | `ars_morph-1.21.1-2.0.0.jar` | `2.0.0` | ARS GLYPH / SYSTEM PROVIDER | YES |
 | 83 | CrystalChronicles | `crystal_chronicles` | `crystal_chronicles-0.1.3-alpha.jar` | `0.1.3-alpha` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 84 | Legendary Spellbooks | `legendary_spellbooks` | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | SPELL PROVIDER / CONTENT ADDON | YES |
-| 85 | Somake | `somakespells` | `somakespells-1.0.8-1.21.1-fix.jar` | `1.0.8` | SPELL PROVIDER / CONTENT ADDON | YES |
+| 85 | Somake | `somakespells` | `somakespells-1.0.9-1.21.1.jar` | `1.0.9` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 86 | Shadowsz | `shadowsz` | `shadowsz-1.1.9.jar` | `1.1.9` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 87 | Toxony | `toxony` | `toxony-0.10.7.jar` | `0.10.7` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
-| 88 | Vampirism | `vampirism` | `Vampirism-1.21-1.10.12.jar` | `1.10.12` | ENGINE / PRIMARY PROVIDER | YES |
+| 88 | Vampirism | `vampirism` | `Vampirism-1.21-1.10.13.jar` | `1.10.13` | ENGINE / PRIMARY PROVIDER | YES |
 | 89 | Bloodlines | `bloodlines` | `bloodlines-1.21-3.0.9.jar` | `1.21-3.0.9` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
 | 90 | Vampiric Ageing | `vampiricageing` | `vampiricageing-1.21-1.4.21.jar` | `1.21-1.4.21` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 91 | Werewolves | `werewolves` | `Werewolves-1.21-2.0.3.3.jar` | `2.0.3.3` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
@@ -100,8 +97,6 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 93 | Vampire Spells Addon | `vampire_spells_addon` | `vampire_spells_addon-neoforge-1.21.1-0.0.9.jar` | `1.21.1-0.0.9` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 94 | Mobstein | `mobstein` | `mobstein-5.4.4-neoforge-1.21.1.jar` | `5.4.4` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
 | 95 | Soul Fire'd | `soul_fire_d` | `soul-fire-d-neoforge-1.21-6.1.0.jar` | `6.1.0` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
-| 96 | AAA Particles | `aaa_particles` | `aaa_particles-neoforge-1.21.1-2.2.3.jar` | `2.2.3` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
-| 97 | AAA Particles: World | `aaa_particles_world` | `aaa_particles_world-neoforge-1.21.1-2.0.0.jar` | `2.0.0` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 98 | Iron's Spellbooks KubeJS | `irons_spells_js` | `irons_spells_js-4.0.3.jar` | `4.0.3` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 99 | kubejsarsnouveau | `kubejsarsnouveau` | `kubejsarsnouveau-1.3.2.jar` | `1.3.2` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 100 | Dynamic RPG Resource Bars | `dynamic_resource_bars` | `dynamic_resource_bars-neoforge-0.7.1-1.21.1.jar` | `0.7.1` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
@@ -143,27 +138,48 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 136 | Epic Fight | `epicfight` | `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar` | `21.17.3.1` | COMBAT FRAMEWORK / SUPERNATURAL TRIDENT INNATE PROVIDER | YES |
 | 137 | Cold Sweat | `cold_sweat` | `ColdSweat-2.4.3.1.jar` | `2.4.3.1` | TEMPERATURE / SURVIVAL / THERMAL DEVICE PROVIDER | ZERO_SEMANTIC_TEMPERATURE_SURVIVAL_INFRA |
 | 138 | Create: Cold Sweat | `create_cold_sweat` | `create_cold_sweat-1.1.2.jar` | `1.1.2` | CREATE ↔ COLD SWEAT THERMAL BRIDGE | ZERO_SEMANTIC_CREATE_THERMAL_BRIDGE |
+| 139 | A Good Place | `a_good_place` | `a_good_place-1.21-1.2.5-neoforge.jar` | `1.21-1.2.5` | CLIENT PRESENTATION / PLACEMENT ANIMATION | ZERO_SEMANTIC_CLIENT_PRESENTATION |
+| 140 | Create: Apokinetics | `apokinetics` | `apokinetics-1.0.6.jar` | `1.0.6` | CREATE MACHINE AUGMENTATION / SUPPORT | ZERO_SEMANTIC_MACHINE_AUGMENTATION |
+| 141 | Apothic Attributes | `apothic_attributes` | `ApothicAttributes-1.21.1-2.10.1.jar` | `2.10.1` | ATTRIBUTE / COMBAT SUPPORT FRAMEWORK | ZERO_SEMANTIC_ATTRIBUTE_COMBAT_SUPPORT |
+| 142 | Apothic Compat | `apothic_compat` | `apothic_compat-2.0.2.jar` | `2.0.2` | BRIDGE / COMPAT / PROGRESSION | ZERO_SEMANTIC_COMPAT_DATA_MAP |
+| 143 | Apothic Compats | `apothic_compats` | `apothic_compats-0.2.4.2.jar` | `0.2.4.2` | BRIDGE / COMPAT / PROGRESSION | ZERO_SEMANTIC_COMPAT_INFRA |
+| 144 | Apothic Spawners | `apothic_spawners` | `ApothicSpawners-1.21.1-1.4.0.jar` | `1.4.0` | SPAWNER / SUPPORT SYSTEM | ZERO_SEMANTIC_SPAWNER_INFRA |
+| 145 | Companions! | `companions` | `companions-neoforge-1.21.1-1.3.4.jar` | `1.3.4` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
+| 146 | Corail Tombstone | `tombstone` | `tombstone-neoforge-1.21.1-9.5.6.jar` | `9.5.6` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
+| 147 | Dungeon's Delight | `dungeonsdelight` | `neoforge-dungeonsdelight-1.21.1-1.5.1.jar` | `1.5.1` | EFFECT / ENCHANT / FOOD SUPPORT CONTENT | ZERO_SEMANTIC_EFFECT_ENCHANT_FOOD |
+| 148 | Enchantment Descriptions | `enchdesc` | `enchdesc-neoforge-1.21.1-21.1.11.jar` | `21.1.11` | CLIENT PRESENTATION / TOOLTIP SUPPORT | ZERO_SEMANTIC_CLIENT_PRESENTATION |
+| 149 | Fantasy Armor | `fantasy_armor` | `fantasy_armor-neoforge-1.2.4-1.21.1.jar` | `1.2.4-1.21.1` | GEAR / ENCHANT / SUPPORT CONTENT | ZERO_SEMANTIC_PASSIVE_GEAR |
+| 150 | Ice And Fire Community Edition | `iceandfire` | `iceandfire-2.1.2.jar` | `2.1.2` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
+| 151 | Integrated Villages | `integrated_villages` | `integrated_villages-1.3.3+1.21.1-neoforge.jar` | `1.3.3+1.21.1-neoforge` | WORLDGEN / INTEGRATION | ZERO_SEMANTIC_WORLDGEN_INTEGRATION |
+| 152 | Mowzie's Cataclysm | `mowzies_cataclysm` | `mowzies_cataclysm-1.2.2.jar` | `1.2.2` | BRIDGE / LOCATOR / COMPAT | ZERO_SEMANTIC_LOCATOR_BRIDGE |
+| 153 | Mowzie's Mobs | `mowziesmobs` | `mowziesmobs-1.21.1-1.8.2.jar` | `1.8.2` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
+| 154 | Photon | `photon` | `photon-neoforge-1.21.1-2.2.6.a-all.jar` | `2.2.6.a` | LIBRARY / API / VFX / SCRIPTING | ZERO_SEMANTIC_VFX_INFRA |
+| 155 | Pickable Orbs | `pickable_orbs` | `pickable_orbs-1.21.1-1.0.0.jar` | `1.21.1-1.0.0` | EFFECT / PICKUP SUPPORT | ZERO_SEMANTIC_PICKUP_EFFECT_INFRA |
+| 156 | Simply More | `simplymore` | `simplymore-forge-1.3.0_alpha.jar` | `1.3.0_alpha` | SUPERNATURAL WEAPON-ACTION PROVIDER | YES |
+| 157 | Simply Swords: Cataclysm | `simplycataclysm` | `simplycataclysm-1.0.2+1.21.1+neoforge.jar` | `1.0.2+1.21.1+neoforge` | SUPERNATURAL WEAPON-ACTION PROVIDER | YES |
+| 158 | Simply Swords | `simplyswords` | `simplyswords-neoforge-1.70.2-1.21.1.jar` | `1.70.2-1.21.1` | SUPERNATURAL WEAPON-ACTION PROVIDER | YES |
+| 159 | Waystones | `waystones` | `waystones-neoforge-1.21.1-21.1.45.jar` | `21.1.45` | TELEPORT / PORTAL / LINK PROVIDER | YES |
 
 ## Current version drifts already reconciled
 
-The current modlist supersedes older guide text. Confirmed examples include:
+The current sibling modlist supersedes older registry values. This 04/10 reconciliation updates the current rows for:
 
-- Apprentice's Codex `0.9.7.1`;
-- Ars 'n' Spells `3.2.4`;
-- Starbunclemania `1.5.8`;
-- Cataclysm: Spellbooks `1.1.14-1.21`;
-- Discerning The Eldritch `1.4.4-1.21`;
-- Ender's Spells and Stuff: Requiem `0.1.7`;
-- Farmer's Spell 'n Spellbooks `1.0.5.1-1.21.1`;
-- Monsters & Spellbooks `0.0.16.3`;
-- Iron's Spells 'n Spellbooks: Recolor `1.3.2+1.21.1`;
-- Immersive Portal Iron's addon `1.0.1`;
-- Ace's Spell Utils `1.2.7.2-1.21.1`;
-- GTBC's SpellLib `2.1.0-1.21.1`;
-- Apothic Enchanting `1.6.2`;
-- Create: Enchantment Industry `2.5.3b`.
+- Hexalia `1.3.7`;
+- Ars Controle `1.6.16`;
+- Not Enough Glyphs `4.6.2`;
+- Ars 'n' Spells `3.3.4`;
+- Iron's Spells 'n Spellbooks: Recolor `1.3.3+1.21.1`;
+- Iron's Apothic `2.2.2`;
+- Apotheosis `8.8.0`;
+- GTBC's SpellLib/API `2.2.0-1.21.1`;
+- Somake Spells `1.0.9`;
+- Vampirism `1.10.13`.
 
-Historical row **#42** was T.O Magic n' Extras / `traveloptics`. It was present in earlier physical snapshots, and sibling `neoforge-rpg-skilltree@76cf13e7d1110116f67c290eaa15891888279fc1` contains no current status-prefixed/categorized Traveloptics physical row. It does retain legacy `PROJECT-INSTRUCTIONS/modlist/to-magic-n-extras.md`, whose own authority is the older 595-mod export. Row #42 is therefore retired from the **current** registry while historical Phase 2BS evidence remains preserved.
+Rows **#56, #61, #65, #82, #96 and #97** are now omitted as retired physical rows: Woodwalkers SpellBooks, Malum: Vestis, Reliquary Reincarnations, Ars Morph, AAA Particles and AAA Particles: World are absent from the current physical snapshot. Their historical catalog material may remain in provider folders/provenance records, but absence from this current registry is intentional.
+
+Historical row **#42** is active again: current physical authority records T.O Magic n' Extras / `traveloptics` at `traveloptics-4.4.0.1-1.21.1.jar`. The provider remains `PARTIAL / OTHER_VERIFIED` because the installed SHA-1 differs from the audited public artifacts and its exact-current registry is not yet closed.
+
+Rows **#139–#159** are registry-reconciliation additions for already-cataloged providers that are physically current but were never appended to the older numbered baseline. Their addition changes registry indexing only; it does not add new semantic objects beyond the provider dossiers/semantic ledger already in `main`.
 
 ## Registry caveat
 
