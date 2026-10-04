@@ -1,6 +1,6 @@
 # Traveloptics 4.4.0.1 — Blackout versioned acquisition boundary
 
-Status: `PUBLISHER ROUTE EXISTS ON FULL PROJECT / 1.20.1 INTRODUCTION CONFIRMED / EXACT 1.21.1 ALPHA ROUTE NOT PRESENT IN AUDITED STRUCTURED SURFACE / SURVIVAL REACHABILITY STILL UNVERIFIED`
+Status: `PUBLISHER ROUTE EXISTS ON FULL T.O + GTBC CUTDOWN LINES / HISTORICAL GTBC 1.21.1 RUNTIME REGISTRY CONFIRMED / EXACT TRAVELOPTICS 1.21.1 ALPHA ROUTE NOT PRESENT IN AUDITED STRUCTURED SURFACE / SURVIVAL REACHABILITY STILL UNVERIFIED`
 
 ## Purpose
 
@@ -46,6 +46,21 @@ Official CurseForge sources:
 
 The generic project page therefore cannot be projected onto File `6342780` without artifact/runtime evidence that the relevant boss/acquisition chain exists in this alpha.
 
+## Related GTBC's Spellbooks line
+
+GameTechBC's official **GTBC's Spellbooks** page describes that separate project as a **cut-down version of T.O Tweaks**. The current T.O Magic page identifies T.O Magic 'n Extras as the project formerly known as **T.O Tweaks**.
+
+The relationship is therefore publisher-documented, but the projects remain separate authority surfaces:
+
+- T.O / Traveloptics: CurseForge project `1046916`, namespace `traveloptics`;
+- GTBC's Spellbooks: CurseForge project `1125198`, namespace `gametechbcs_spellbooks`.
+
+Official GTBC File `5927811` (`2.0.0-1.21`) introduced Blackout and reworked Call Forth The Dead King around the Enraged Dead King / exclusive-Blackout route. File `6167362` (`2.6.5-1.21.1`) still documents the Dead King spell/entity line and Blackout fixes. The final GTBC release is File `6312018`, `gametechbcs_spellbooks-3.0.0-1.21.1.jar`.
+
+Retained Project Library runtime evidence from 2026-08-16 contains that 3.0.0 JAR and runtime registrations for both `gametechbcs_spellbooks:call_forth_the_dead_king` and `gametechbcs_spellbooks:blackout`. Later retained runtime evidence observes `traveloptics:blackout`.
+
+This historical GTBC evidence **does not** become a Traveloptics acquisition proof. Registry/acquisition authority is namespace- and artifact-specific. See [`BLACKOUT-GTBC-SPELLBOOKS-LINEAGE.md`](BLACKOUT-GTBC-SPELLBOOKS-LINEAGE.md).
+
 ## Exact 1.21.1 artifact evidence
 
 The existing exact clean-room audit of File `6342780` already proves:
@@ -90,6 +105,6 @@ Traveloptics remains **⚠️ Parcial / condicionado**.
 - registered inventory remains 33 exact publisher-release identities;
 - strict semantic delta remains `+0` while current-pack reachability/runtime gates remain open;
 - Blackout remains an exact registered but reachability-unresolved identity;
-- the Dead King route is retained as **versioned historical/publisher context**, not current-alpha acquisition proof.
+- the Dead King route is retained as **versioned historical/publisher context** across the full T.O line and related GTBC cut-down line, not current-alpha acquisition proof.
 
 Black Arcana must not synthesize a Dead King route, inject a Blackout scroll, or repair missing provider progression.
