@@ -21,6 +21,16 @@ This file catalogs the bridge-owned surfaces established by that exact 4.0.3 sou
 
 These are construction surfaces. Their presence is not a provider-owned content roster.
 
+### 1A. Magic attribute builder
+
+`irons_spells_js:spell` is the addon builder type registered under the vanilla attribute registry. `SpellAttributeBuilderJS` specializes KubeJS `AttributeBuilder` for Iron's `MagicRangedAttribute`:
+
+- boolean attribute mode is explicitly unsupported;
+- a ranged/default numeric definition is required before object creation;
+- successful construction returns an Iron's `MagicRangedAttribute` using the configured default/min/max range.
+
+This lets scripts define spell-related power/resistance-style attributes, but the builder itself contributes no fixed attribute identity to the pack.
+
 ## 2. Custom spell builder
 
 `CustomSpell` is a generic script-defined `AbstractSpell`. Its builder can configure:
@@ -166,7 +176,33 @@ These schemas permit scripts to define recipes; the schemas themselves do not pr
 - `irons_spells_js:spellcasting` -> `SpellCastingMobJSBuilder`;
 - `irons_spells_js:spell_projectile` -> `SpellProjectileJSBuilder`.
 
-This establishes optional EntityJS interoperability. It does not prove that the current pack defines any such custom entity.
+### Spell-casting mob
+
+`SpellCastingMobBuilder` adds addon-specific `isCasting(...)` and `onCancelledCast(...)` script callbacks on top of EntityJS pathfinder-mob construction.
+
+The resulting `SpellCastingMobJS` extends `PathfinderMob` and implements Iron's `IMagicEntity`. It owns `MagicData` plus `SyncedSpellData`, persists/reloads casting state, supports cancel/complete/initiate cast lifecycle, advances cast duration server-side, calls Iron's `onServerCastTick` / `onCast` with `CastSource.MOB`, and carries the same host-specific teleport/dash cast-data handling needed by several Iron's spells.
+
+### Spell projectile
+
+`SpellProjectileJSBuilder` adds addon-specific callbacks/configuration for:
+
+- `onAntiMagic(...)`;
+- trail particles;
+- impact particles;
+- impact sound.
+
+`SpellProjectileJS` extends Iron's `AbstractMagicProjectile`, implements EntityJS projectile integration plus Iron's `AntiMagicSusceptible`, exposes mutable projectile damage, and persists that damage through entity save/load.
+
+These are optional scripted-entity construction/runtime surfaces. They do not prove that the current pack defines any such custom entity or projectile.
+
+### 8A. Client presentation integration
+
+`IronsSpellsJSModClient` is a client-only event subscriber that reuses Iron's native presentation for KubeJS-built magic items:
+
+- during client setup, KubeJS item objects that are `SpellBook` instances receive Iron's `SpellBookCurioRenderer` through Curios;
+- during client-extension registration, KubeJS item objects that are `StaffItem` instances receive an `IClientItemExtensions` arm-pose implementation returning Iron's native `StaffArmPose`.
+
+This is presentation interoperability only. It does not create spell/item semantic identities and does not grant client authority over casting.
 
 ## 9. Config integration
 
@@ -180,6 +216,8 @@ This exact 4.0.3 path is sufficient to establish bridge-to-host server-config pa
 - provider-owned fixed school identities: **0 established**;
 - core builder types: **6 established**;
 - conditional EntityJS builder types: **2 established**;
+- conditional EntityJS runtime capabilities: spell-casting mob lifecycle and anti-magic-capable spell projectile surfaces **verified**;
+- client presentation reuse: native Iron's spellbook Curios renderer and staff arm pose **verified for matching script-built item instances**;
 - named KubeJS bindings: **21 established**;
 - declared KubeJS event handlers: **5**, with **5 verified subscription/posting paths when the required exact mixins are included**;
 - Alchemist Cauldron schemas: **3 established**;
