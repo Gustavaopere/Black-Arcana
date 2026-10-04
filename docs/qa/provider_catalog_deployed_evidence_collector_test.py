@@ -405,6 +405,27 @@ def test_collects_bounded_kubejs_script_inventory_without_copying_bodies(self) -
             self.assertNotIn("irons_spellbooks_kubejs_markers", rows["kubejs/client_scripts/hud.js"])
             for row in rows.values():
                 self.assertNotIn("content", row)
+
+    def test_kubejs_irons_marker_lines_are_bounded_and_flag_truncation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            startup = instance / "kubejs" / "startup_scripts"
+            startup.mkdir(parents=True)
+            (startup / "events.js").write_text(
+                "".join("ISSEvents.spellOnCast(event => {})\n" for _ in range(65)),
+                encoding="utf-8",
+            )
+
+            result = collector.collect_kubejs_script_inventory(instance)
+            row = result["files"][0]
+
+            self.assertEqual(
+                list(range(1, 65)),
+                row["irons_spellbooks_kubejs_markers"]["iss_event_bridge"],
+            )
+            self.assertTrue(row["irons_spellbooks_kubejs_markers_truncated"])
+
+
     def test_main_report_includes_empty_kubejs_inventory_as_explicit_absence(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
