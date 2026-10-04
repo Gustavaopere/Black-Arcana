@@ -19,12 +19,12 @@ Authority:
 - CurseForge project/file: `1046916 / 6342780`;
 - exact alpha SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
 - temporary NON-MERGE audit PR: **#588**;
-- audit HEAD: `992d798b2edeb0861655f19dd5cda65b7cb13905`;
-- workflow run: `37211319887` — **SUCCESS**;
-- text-only artifact: `11306413411`;
-- artifact digest: `sha256:2d8f4c16d4a315b52fea0a571c551d3ee6a8dedee472fbced3a44331938edab8`.
+- audit HEAD: `e88a3dd0b5b432419b5d5ab4ab1cbb58e505aa2a`;
+- workflow run: `37211969636` — **SUCCESS**;
+- text-only artifact: `11306474344`;
+- artifact digest: `sha256:68603e34a3cc337f08d2dc7d490ac1b5b16f5683704ea720375278b2e40f5ce1`.
 
-The audit located each of the 21 concrete classes by exact class entry name, inspected bytecode transiently and retained only whether a direct `DefaultConfig.setAllowCrafting(boolean)` call receives a constant `true`, constant `false`, is absent, or cannot be resolved.
+The audit located each of the 21 concrete classes by exact class entry name and inspected bytecode transiently for both direct `DefaultConfig.setAllowCrafting(boolean)` calls and direct writes to `DefaultConfig.allowCrafting`. It also scanned the 223 top-level provider-owned classes for any direct setter reference or direct field write. Only class identity and bounded mutator counts were retained.
 
 Result:
 
@@ -32,7 +32,10 @@ Result:
 - direct `setAllowCrafting(false)`: **0**;
 - direct `setAllowCrafting(true)`: **0**;
 - direct setter absent: **21**;
-- unresolved/dynamic setter arguments: **0**.
+- unresolved/dynamic setter arguments: **0**;
+- direct `DefaultConfig.allowCrafting` field writes in the 21 target classes: **0**;
+- provider-owned top-level classes scanned: **223**;
+- provider classes with any direct craftability setter reference or direct field write: **0**.
 
 No method bodies, source reconstruction, assets, localization prose or binary content are retained.
 
