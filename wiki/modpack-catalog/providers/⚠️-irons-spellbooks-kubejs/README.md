@@ -110,6 +110,8 @@ See [`PACK-SCRIPT-CLOSURE-CHECKLIST.md`](PACK-SCRIPT-CLOSURE-CHECKLIST.md).
 
 The deployed-evidence collector now fingerprints the exact current `irons_spells_js-4.0.3.jar` and emits `current_physical_4_0_3_equality` against SHA-1 `0481395c5847e2920d1425e77833bef87df63139`. Pair that physical identity with `kubejs_script_inventory` from the **same assembled instance**; neither result alone closes script-defined spell/school content.
 
+The same inventory now emits bounded per-file `irons_spellbooks_kubejs_markers` for exact spell/school registry literals, exact registry-key binding names, `ISSEvents.*` references and known 4.0.3 builder literals. This is review acceleration only: it never copies script bodies and never promotes marker presence/absence into semantic-count evidence without reviewing the exact hashed file/provenance.
+
 Promotion to a closed zero-semantic framework requires authoritative current-instance evidence that no relevant Iron's spell/school registration exists. If scripts do register objects, they must be enumerated, deduplicated and evaluated for effective host config and survival reachability.
 
 ## Authority boundary
