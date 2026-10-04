@@ -170,7 +170,8 @@ KUBEJS_IRONS_MARKER_PATTERNS = {
     "school_registry_key_binding": re.compile(r"\bSchoolRegistry\.SCHOOL_REGISTRY_KEY\b"),
     "iss_event_bridge": re.compile(r"\bISSEvents\."),
     "irons_spells_js_builder_literal": re.compile(
-        r"irons_spells_js:(?:spell|magic_sword|staff|spellbook|spellcasting|spell_projectile)\b"
+        r"[\"\'](?:(?:irons_spells_js:)?(?:spell|magic_sword|staff|spellbook)|"
+        r"irons_spells_js:(?:spellcasting|spell_projectile))[\"\']"
     ),
 }
 ASTERISM_DATA_RELATIVE = "asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json"

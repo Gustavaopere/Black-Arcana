@@ -86,6 +86,21 @@ The exact 4.0.3 builder constructor automatically adds the `curios:spellbook` ta
 
 `CustomMagicSwordItem.Builder` supports a custom/derived extended weapon tier plus explicit spell+level entries. Its tier builder exposes uses, damage, speed, enchantment value, incorrect-block tag, repair ingredient and additional attributes, with optional inheritance from Iron's weapon tiers.
 
+### Official source development fixtures — syntax evidence only
+
+The exact 4.0.3 source checkpoint contains three development scripts under `run/kubejs/*/test/test.js`. They are **not packaged modpack definitions** and must never be counted as current-pack content.
+
+The startup fixture demonstrates the provider's intended KubeJS invocation forms:
+
+- `StartupEvents.registry("attribute", ...)` with `event.create(..., "spell")`;
+- `StartupEvents.registry("irons_spellbooks:schools", ...)` with default school builder creation;
+- `StartupEvents.registry("irons_spellbooks:spells", ...)` with default custom-spell builder creation;
+- `StartupEvents.registry("item", ...)` with `event.create(..., "spellbook")`, `"staff"` and `"magic_sword"`.
+
+The server fixture exercises all five declared `ISSEvents` names, including `spellPostCast`, plus the three Alchemist Cauldron recipe schemas.
+
+These fixtures validate exact 4.0.3 scripting syntax and informed the bounded deployed-evidence marker tests. They do not establish any semantic object in the user's assembled pack.
+
 ## 5. KubeJS bindings
 
 The exact plugin exposes 21 named bindings:
