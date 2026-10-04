@@ -115,9 +115,11 @@ Explicit exclusions:
 
 ## Soul Elytra config condition
 
-The exact source defines `soulElytraCooldown` with default **600 ticks** and permits `-1` to disable the boost.
+Exact upstream 1.4.1 registers `DeeperDarkerConfig.CONFIG_SPEC` as a NeoForge `COMMON` config. Its `soulElytraCooldown` key defaults to **600 ticks**, accepts **-1..12000**, and uses `-1` to disable Soul Elytra Boost.
 
-The deployed pack config value is not versioned in the sibling repository, so that eligibility remains unresolved independently of the larger physical-JAR blocker.
+Retained deployed-runtime logs confirm `config/deeperdarker-common.toml` is tracked, loaded and watched across multiple pack boots. The effective value remains unresolved because the standalone TOML is not retained and the logs do not print the key. Successful loading or lack of a correction warning is not treated as proof of the `600` default.
+
+See [`DEPLOYED-CONFIG-CHECKPOINT.md`](DEPLOYED-CONFIG-CHECKPOINT.md).
 
 ## Public acquisition evidence
 
