@@ -59,8 +59,8 @@ Coverage here means the file's role has been inspected and assigned a catalog di
 
 | Fixture | Evidence role |
 |---|---|
-| `run/kubejs/startup_scripts/test/test.js` | validates exact 4.0.3 registration syntax for attributes, schools, spells and magic items; **not current-pack content** |
-| `run/kubejs/server_scripts/test/test.js` | exercises the five `ISSEvents` names and Alchemist Cauldron schemas; **not current-pack content** |
+| `run/kubejs/startup_scripts/test/test.js` | validates exact 4.0.3 registration syntax for attributes, schools, spells and magic items; also exercises `ISSEvents.spellSelection` and `Spell` lookup helpers; **not current-pack content** |
+| `run/kubejs/server_scripts/test/test.js` | exercises `changeMana`, `spellPreCast`, `spellOnCast`, `spellPostCast` and all three Alchemist Cauldron schemas; **not current-pack content** |
 | `run/kubejs/client_scripts/test/test.js` | development/client scripting fixture; **not current-pack content** |
 
 ## Coverage conclusion
