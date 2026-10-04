@@ -15,6 +15,12 @@ lift then slam; health-percentage damage.
 
 This is **publisher context only** from the living project page; it does not prove exact-alpha or current-physical runtime behavior. See `../PUBLISHER-SEMANTIC-CONTEXT.md`.
 
+## Publisher quantitative / conditional note — version-conditioned
+
+Lift timing: **2.5 seconds** before the slam. The same current page describes the slam as percentage-health damage that ignores damage caps.
+
+This is **publisher-only context**, not exact-alpha/current-physical proof. The corresponding runtime value or rule remains unverified for File `6342780` and SHA-1 `7b74816e...` unless independently proven.
+
 ## Reachability
 
 No provider-owned crafting/enable override found; Iron's host gates remain authoritative; individual survival reachability not closed.

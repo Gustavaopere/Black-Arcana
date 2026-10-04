@@ -11,7 +11,8 @@ The semantic descriptions below are paraphrased from the **current official Curs
 - the exact registry ID, class mapping, school, provider gate and exact structured acquisition evidence remain authoritative from `EXACT-4.4.0.1-ARTIFACT-AUDIT.md`;
 - the short behavioral phrases below are **publisher context only** and do not prove exact-alpha or current-physical runtime behavior;
 - current publisher descriptions do not promote unregistered/residual IDs into the 1.21.1 alpha registry;
-- no mana cost, cooldown, cast time, level, rarity, formula, range, radius, duration, PvP rule or boss rule is imported from the living page;
+- no host/balance stat such as mana cost, cooldown, spell level, rarity, damage formula, generic range/radius or PvP/boss policy is imported from the living page;
+- a small set of explicitly stated behavioral constants/thresholds is retained below only as **publisher-only / version-conditioned** context and is never treated as exact-alpha or current-physical runtime evidence;
 - `traveloptics:blackout` remains acquisition-unresolved for the exact alpha/current physical provider despite the broader project documentation describing a Dead King route;
 - the provider remains **⚠️ partial/conditioned** and contributes **+0 strict** until the current physical gates in `README.md` close.
 
@@ -59,6 +60,22 @@ The exact file notes independently establish that the 1.21.1 build is an incompl
 | Lightning | `traveloptics:em_pulse` | short-area stun | `EXACT REGISTRY` |
 | Nature | `traveloptics:aerial_collapse` | lift then slam; health-percentage damage | `EXACT REGISTRY` |
 | Nature | `traveloptics:stele_cascade` | radial falling Ancient Desert Steles | `EXACT REGISTRY` |
+
+## Explicit publisher quantitative / conditional notes — version-conditioned
+
+The current official project page states a few concrete behavioral constants or gates for spell identities that are already part of the exact 33-ID alpha registry. These notes are retained because they sharpen catalog semantics, but they are **not version-pinned evidence for File `6342780` and not current-physical evidence for SHA-1 `7b74816e...`**.
+
+| Exact registry ID | Current publisher-only note | Catalog treatment |
+| --- | --- | --- |
+| `traveloptics:spectral_blink` | activation/teleport decision window reported as **3 seconds** | version-conditioned duration context only |
+| `traveloptics:lingering_strain` | burst damage is described as split into **4** delayed portions | version-conditioned partition-count context only |
+| `traveloptics:burning_judgment` | soul-fire variant is described as activating below **50% caster health** | version-conditioned threshold context only |
+| `traveloptics:lava_bomb` | projectiles are described as launched at a **45°** forward angle | version-conditioned trajectory context only |
+| `traveloptics:meteor_storm` | soul-fire projectile variant is described as activating below **50% caster health** | version-conditioned threshold context only |
+| `traveloptics:gyro_slash` | the projectile/pull/fire-jet extension is described for **Infernal Devastator Evo 2 or higher** | version-conditioned equipment-evolution gate only |
+| `traveloptics:aerial_collapse` | targets are described as lifted for **2.5 seconds** before the slam; the slam is described as percentage-health damage that ignores damage caps | version-conditioned timing/damage-rule context only |
+
+Exact-alpha/current-physical mana, cooldown, cast time, numeric damage coefficients, level scaling, rarity, generic range/radius and all other balance fields remain unverified unless independently proven.
 
 ## Display-label drift
 

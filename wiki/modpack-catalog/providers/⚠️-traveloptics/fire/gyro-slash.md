@@ -15,6 +15,12 @@ weapon slash; evolved pull-projectile/fire jets.
 
 This is **publisher context only** from the living project page; it does not prove exact-alpha or current-physical runtime behavior. See `../PUBLISHER-SEMANTIC-CONTEXT.md`.
 
+## Publisher quantitative / conditional note — version-conditioned
+
+Extended projectile/pull/fire-jet behavior is described for **Infernal Devastator Evo 2 or higher** on the current official project page.
+
+This is **publisher-only context**, not exact-alpha/current-physical proof. The corresponding runtime value or rule remains unverified for File `6342780` and SHA-1 `7b74816e...` unless independently proven.
+
 ## Reachability
 
 `WEAPON / allowCrafting=true`; provider item references exist; assembled-pack runtime still unverified.
