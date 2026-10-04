@@ -1,5 +1,5 @@
 name: Traveloptics Exact Mechanics Clean-room Audit
-# synchronization trigger v6
+# synchronization trigger v7
 
 on:
   pull_request:
@@ -165,7 +165,7 @@ jobs:
               for i, line in enumerate(lines):
                   if " getCastType();" in line:
                       for j in range(i + 1, min(len(lines), i + 20)):
-                          m = re.search(r"Field io/redspace/ironsspellbooks/api/spells/CastType\\.(\\w+):Lio/redspace/ironsspellbooks/api/spells/CastType;", lines[j])
+                          m = re.search(r"Field io/redspace/ironsspellbooks/api/spells/CastType\.(\w+):Lio/redspace/ironsspellbooks/api/spells/CastType;", lines[j])
                           if m:
                               cast_type = m.group(1)
                               break
