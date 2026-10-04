@@ -1,6 +1,6 @@
 # GTBC's SpellLib/API 2.2.0 — provider catalog
 
-Status: `EXACT INSTALLED ARTIFACT / PUBLISHER-BOUNDED LIBRARY SURFACE / 0 INDEPENDENT SEMANTIC MAGICS / INTERNALS FAIL-CLOSED`
+Status: `EXACT PHYSICAL=PUBLISHER HASH / PUBLISHER-BOUNDED LIBRARY SURFACE / 0 INDEPENDENT SEMANTIC MAGICS / INTERNALS FAIL-CLOSED`
 
 ## Installed authority
 
@@ -16,7 +16,7 @@ Status: `EXACT INSTALLED ARTIFACT / PUBLISHER-BOUNDED LIBRARY SURFACE / 0 INDEPE
 - License: `All Rights Reserved`
 - Provider class: `LIBRARY / API / SHARED IRON'S-ADDON INFRASTRUCTURE`
 
-The physical Black Arcana modlist is authority for installed identity. The exact current CurseForge file independently matches GTBC's SpellLib `2.2.0` for NeoForge / Minecraft 1.21.1.
+The physical Black Arcana modlist is authority for installed identity. Clean-room hash-only audit PR **#568**, HEAD `5c80949df8b0fb0a2a0075296e3fcde6389f4718`, run `37175197430` proves CurseForge File `8824651` is byte-identical to the installed artifact by SHA-1. The publisher artifact SHA-256 is `a2a020b85abe9e5ad2ce9e760db57e9c79aa57cf6dae56bbfd4eb0ed5d5928f9` and size is `308,353` bytes.
 
 ## Publisher-defined role
 
@@ -69,7 +69,7 @@ The publisher explicitly describes the project as closed-source / All Rights Res
 - publisher-authored public feature/API descriptions;
 - publisher-authored release notes.
 
-No JAR decompilation, copied implementation, copied assets or source-derived signatures are used. Registry internals, exact API signatures and binary implementation details remain `FAIL-CLOSED`.
+No JAR decompilation, archive-content inspection, copied implementation, copied assets or source-derived signatures are used by the accepted evidence path. PR #568 run #1 is explicitly **not used** because that superseded workflow performed bytecode/archive inspection inconsistent with this provider's clean-room boundary; run #2 replaces it with hash-only evidence. Registry internals, exact API signatures and binary implementation details remain `FAIL-CLOSED`.
 
 ## Sources
 
