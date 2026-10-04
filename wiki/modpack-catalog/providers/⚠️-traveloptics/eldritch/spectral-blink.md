@@ -23,7 +23,7 @@ This is **publisher-only context**, not exact-alpha/current-physical proof. The 
 
 ## Reachability
 
-`HOST-DEFAULT CRAFTABLE / CONFIG+LEARNING CONDITIONAL`: exact File `6342780` class has no direct `DefaultConfig.setAllowCrafting(...)`; current Iron's `1.21.1-3.16.3` host defaults craftability to `true`. Effective spell config and `canBeCraftedBy(player)` learning gates remain authoritative. This closes default Scroll Forge eligibility only, not unconditional survival acquisition.
+`HOST-DEFAULT CRAFTABLE / EFFECTIVE ELIGIBILITY CONDITIONAL`: exact File `6342780` class has no direct craftability mutator; current Iron's `1.21.1-3.16.3` host defaults `allowCrafting` to `true`. This closes only the host-default craftability gate. Effective Scroll Forge eligibility still depends on `isEnabled()`, effective `allow_crafting` configuration, a compatible focus/school path, and player-specific learning where applicable; unconditional survival acquisition is not established.
 
 ## Evidence boundary
 
