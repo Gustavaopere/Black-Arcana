@@ -113,6 +113,18 @@ This proves only that the assembled instance contains the certified current phys
 
 Pair this fingerprint with `kubejs_script_inventory` and the provider checklist at `wiki/modpack-catalog/providers/⚠️-irons-spellbooks-kubejs/`. Zero-content closure requires both the certified artifact and authoritative current script/provenance evidence.
 
+
+The report also emits `irons_spellbooks_kubejs_closure`, a **fail-closed evidence classification**, with these states:
+
+- `ARTIFACT_NOT_OBSERVED` — the exact provider JAR was not observed by the bounded mod inventory;
+- `ARTIFACT_HASH_MISMATCH` — an `irons_spells_js` artifact was observed but did not match the certified current 4.0.3 SHA-1;
+- `ZERO_CONTENT_REVIEW_CANDIDATE` — the certified artifact was observed and the bounded current KubeJS inventory contains zero files;
+- `SCRIPT_REVIEW_REQUIRED` — the certified artifact was observed and the bounded current KubeJS inventory contains one or more files.
+
+The classification also records the certified-artifact boolean, whether the KubeJS root is present, bounded file count, count of files carrying Iron's review markers and the sorted marker-type set.
+
+These are **evidence workflow states, not catalog statuses**. In particular, `ZERO_CONTENT_REVIEW_CANDIDATE` is not automatic `✅ Cataloged`; provenance still must establish that the collector ran against the authoritative current assembled instance and that no generated/indirect script source sits outside the bounded capture. `SCRIPT_REVIEW_REQUIRED` applies whenever bounded files exist, even when marker count is zero, because aliases/dynamic construction can evade the marker scanner.
+
 ### KubeJS Ars Nouveau 1.3.2 physical fingerprint
 
 The collector hashes only the exact current filename:
