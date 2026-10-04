@@ -118,9 +118,13 @@ Public 1.4.1 provider data closes baseline acquisition:
 
 ## Soul Elytra config condition
 
-The exact source defines `soulElytraCooldown` with a default of **600 ticks** and allows `-1` to disable the boost.
+The exact 1.4.1 source registers a NeoForge `COMMON` config and defines `soulElytraCooldown` with a default of **600 ticks**, valid range **-1..12000**, with `-1` disabling Soul Elytra Boost.
 
-The deployed pack value is not versioned in the current sibling repository. Therefore even after physical-byte closure, the Soul Elytra action would still require deployed-config evidence before any strict eligibility claim that depends on the boost being enabled.
+Retained runtime logs positively show the deployed instance tracking, loading and watching `config/deeperdarker-common.toml` across multiple boots. This closes the deployed config **path**, but not the effective value: the standalone TOML bytes are not retained in the current Project Library and the logs do not print `soulElytraCooldown`.
+
+Therefore Black Arcana does not infer `600` from the source default or from successful config loading. Soul Elytra Boost remains independently conditioned on deployed-config evidence even after any future physical-JAR closure.
+
+See [`DEPLOYED-CONFIG-CHECKPOINT.md`](DEPLOYED-CONFIG-CHECKPOINT.md).
 
 ## Strict accounting
 
