@@ -63,6 +63,10 @@ This narrows the local modification chronology but does **not** identify the dep
 
 See [`LOCAL-NEOVITAE-COMPAT-LINEAGE.md`](LOCAL-NEOVITAE-COMPAT-LINEAGE.md).
 
+A bounded reproduction audit in NON-MERGE PR **#604** then generated **57** candidate repacks by removing `PlayerMixin`, `ServerPlayerMixin`, or both from the official mixin config under common and surgical archive strategies. **0/57** candidates matched physical SHA-1 `83f7edd0...`. One candidate matched only the first local JAR's byte length (**3,906,052 bytes**) but had SHA-1 `304eebbb...`; no candidate reproduced the retained `v2` size (**3,906,044 bytes**). This rules out that bounded family as the physical reconstruction but still does not identify the real byte delta.
+
+See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md).
+
 ## Exact source reproduction — corroboration, not closure
 
 The official upstream tag `v1.4.1` resolves to `KyaniteMods/DeeperAndDarker@f7ba235d078411a1165a8cac184adfe0ccc8cebe`.
