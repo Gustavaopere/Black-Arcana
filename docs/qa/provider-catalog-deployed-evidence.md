@@ -95,7 +95,7 @@ and emits `current_physical_1_3_2_equality` against canonical current-pack SHA-1
 
 This closes physical artifact identity only when run against the authoritative assembled instance. It does not prove source-build byte equivalence, because the publisher's public 1.3.x repository line does not expose a commit whose Gradle metadata declares 1.3.2.
 
-Pair the fingerprint with `kubejs_script_inventory` and the provider checklist at `wiki/modpack-catalog/providers/⚠️-kubejsarsnouveau/`. The audited bridge is a recipe-schema adapter: script inventory is used to close recipe/acquisition mutations, not to manufacture ownership of glyph implementations.
+Pair the fingerprint with `kubejs_script_inventory` and the provider checklist at `wiki/modpack-catalog/providers/✅-kubejs-ars-nouveau/`. The audited bridge is a recipe-schema adapter: script inventory is used to close recipe/acquisition mutations, not to manufacture ownership of glyph implementations.
 
 
 ### Catalog runtime probe bundle

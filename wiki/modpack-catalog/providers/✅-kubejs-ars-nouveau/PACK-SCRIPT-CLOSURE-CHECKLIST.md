@@ -16,11 +16,17 @@ Close the current pack's concrete Ars Nouveau recipe mutations without confusing
 - current Ars Nouveau `5.13.1`;
 - official CurseForge file `7181937`;
 - public source is only versioned through 1.3.1 at inspected HEAD `18278a05d27def7200158a6d08516d5f22318e44`;
-- framework exposes six Ars recipe schemas rather than a new glyph/spell registry.
+- framework exposes **3 custom recipe component types** and **6 Ars recipe schemas** rather than a new glyph/spell registry;
+- active KubeJS bindings established at the release-line checkpoint: **0**;
+- KubeJS registry-builder registrations established: **0**;
+- provider KubeJS event groups/handlers established: **0**.
 
 ## Collector-assisted evidence
 
-Run the current deployed-evidence collector on the authoritative assembled instance. Its `kubejs_script_inventory` section binds the audit to the exact startup/server/client/data text-file tree by relative path, SHA-256 and byte size without copying script bodies.
+Run the current deployed-evidence collector on the authoritative assembled instance. Require both:
+
+1. `mods.kubejsarsnouveau[*].current_physical_1_3_2_equality=true` for the exact physical JAR;
+2. `kubejs_script_inventory` from the same instance, binding startup/server/client/data text files by relative path, SHA-256 and byte size without copying script bodies.
 
 For this recipe-only framework, an absent/empty authoritative `server_scripts` + relevant `data` surface closes the current recipe-mutation inventory at zero. Non-empty surfaces must be reviewed against the exact hashes and paths recorded by the collector.
 
