@@ -19,8 +19,8 @@ Close the only semantic question that the base-addon audit cannot answer: whethe
 
 ## Current freshness checkpoint — 2026-10-04
 
-- Black Arcana main considered: `dec859ccf38fe2e51e343cd59a6304057dacbb81`;
-- sibling modlist authority: `neoforge-rpg-skilltree@fa47288bd99e1166880a8fb0ee00cab06697a88a`;
+- Black Arcana main considered at branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`;
+- sibling modlist authority: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`;
 - current physical row remains `irons_spells_js-4.0.3.jar` / mod id `irons_spells_js` / runtime `4.0.3`;
 - current host stack remains Iron's `1.21.1-3.16.3` + KubeJS `2101.7.2-build.377`;
 - current sibling default-branch searches did not expose a committed `kubejs/startup_scripts` or `kubejs/server_scripts` tree;
@@ -30,8 +30,9 @@ Close the only semantic question that the base-addon audit cannot answer: whethe
 This is documented in [`CURRENT-EVIDENCE-2026-10-04.md`](CURRENT-EVIDENCE-2026-10-04.md). Do not promote from this checkpoint alone.
 ## Collector-assisted evidence
 
-Run the current deployed-evidence collector on the authoritative instance first. Its `kubejs_script_inventory` section records the exact bounded `startup_scripts`, `server_scripts`, `client_scripts` and `data` files by relative path, SHA-256 and byte size without copying bodies.
+Run the current deployed-evidence collector on the authoritative instance first. Require the exact JAR fingerprint from `mods.irons_spells_js[*].current_physical_4_0_3_equality` **and** the `kubejs_script_inventory` from the same assembled instance. The inventory records the exact bounded `startup_scripts`, `server_scripts`, `client_scripts` and `data` files by relative path, SHA-256 and byte size without copying bodies.
 
+- If `current_physical_4_0_3_equality` is not `true`, stop: the collector is not observing the certified physical 4.0.3 artifact.
 - If the authoritative current `kubejs/` root is absent or all four bounded surfaces are empty, that is acceptable zero-content evidence for the script-tree part of this checklist.
 - If any relevant files exist, inspect those exact hashed files for Iron's spell/school builder registrations and continue with the provenance rules below.
 - Do not infer zero content from repository search; the collector must be run against the assembled instance.
