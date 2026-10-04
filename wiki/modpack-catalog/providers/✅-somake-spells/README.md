@@ -6,7 +6,7 @@ Status: `✅ CATALOGED / CURRENT PHYSICAL 1.0.9 / PHYSICAL SHA-1 = EXACT PUBLISH
 
 ## Current installed identity — 1.0.9
 
-Current sibling modlist authority rechecked at `Gustavaopere/neoforge-rpg-skilltree@af648d441441dde929cd49c5e18509347f06f09a` preserves the 1.0.9 physical line and supersedes the former 1.0.8-fix physical-line claim:
+Current sibling modlist authority rechecked at `Gustavaopere/neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` preserves the 1.0.9 physical line and supersedes the former 1.0.8-fix physical-line claim:
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`
 - Mod id: `somakespells`
