@@ -26,7 +26,7 @@ The later physical modlist measures the same filename/runtime/byte-length lineag
 
 Disposition: **the current physical artifact is locally byte-different from the originally installed official File 8201775**. This rules out treating the mismatch as an alternate official publisher artifact, but it does not reveal the changed archive entries and therefore does not close the exact-current semantic denominator.
 
-Local logs from the associated compatibility-work window also record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling, followed by separately named generated compatibility artifacts. Those artifacts are not equated with the current physical JAR without a raw-byte comparison.
+Local logs from the associated compatibility-work window record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling. Later retained logs show Deeper and Darker applying `ContainerMenuMixin` `stillValid(...)` injections to vanilla container menus instead of those conflicting player redirects. This is a concrete compatibility-change signal, but it is not equated with the current physical JAR's complete byte delta without raw-byte comparison.
 
 ## Successful publisher-baseline audit
 
