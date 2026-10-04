@@ -35,7 +35,7 @@ jobs:
         run: |
           set -euo pipefail
           cd build/audit/deeperdarker
-          EXPECTED_SHA1="83f7edd0a8516b2767c2cda7a3b2402f9e290d88"
+          EXPECTED_SHA1="b6094adde68bd4b909bc75c64901e1f3fb99ad8f"
           ACTUAL_SHA1="$(sha1sum deeperdarker-neoforge-1.21.1-1.4.1.jar | awk '{print $1}')"
           ACTUAL_SHA256="$(sha256sum deeperdarker-neoforge-1.21.1-1.4.1.jar | awk '{print $1}')"
           BYTES="$(stat -c %s deeperdarker-neoforge-1.21.1-1.4.1.jar)"
