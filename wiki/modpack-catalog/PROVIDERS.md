@@ -98,7 +98,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 94 | Mobstein | `mobstein` | `mobstein-5.4.4-neoforge-1.21.1.jar` | `5.4.4` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
 | 95 | Soul Fire'd | `soul_fire_d` | `soul-fire-d-neoforge-1.21-6.1.0.jar` | `6.1.0` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
 | 98 | Iron's Spellbooks KubeJS | `irons_spells_js` | `irons_spells_js-4.0.3.jar` | `4.0.3` | LIBRARY / API / VFX / SCRIPTING | PARTIAL / CONDITIONAL |
-| 99 | kubejsarsnouveau | `kubejsarsnouveau` | `kubejsarsnouveau-1.3.2.jar` | `1.3.2` | LIBRARY / API / VFX / SCRIPTING | PARTIAL / CONDITIONAL |
+| 99 | kubejsarsnouveau | `kubejsarsnouveau` | `kubejsarsnouveau-1.3.2.jar` | `1.3.2` | LIBRARY / API / VFX / SCRIPTING | YES / ZERO_SEMANTIC_RECIPE_BRIDGE |
 | 100 | Dynamic RPG Resource Bars | `dynamic_resource_bars` | `dynamic_resource_bars-neoforge-0.7.1-1.21.1.jar` | `0.7.1` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
 | 101 | EMF Compat: Iron's Spells | `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | `2.0.0` | BRIDGE / COMPAT / PROGRESSION | NO / CONDITIONAL |
 | 102 | Artifacts | `artifacts` | `artifacts-neoforge-13.2.5.jar` | `13.2.5` | GEAR / ENCHANT / SUPPORT CONTENT | YES / ZERO_SEMANTIC_BASE_GEAR |
@@ -182,7 +182,7 @@ Rows **#56, #61, #65, #82, #96 and #97** are now omitted as retired physical row
 
 Historical row **#42** is active again: current physical authority records T.O Magic n' Extras / `traveloptics` at `traveloptics-4.4.0.1-1.21.1.jar`. The provider remains `PARTIAL / OTHER_VERIFIED` because the installed SHA-1 differs from the audited public artifacts and its exact-current registry is not yet closed.
 
-Rows **#98–#99** are scripting bridges whose base framework surfaces are now cataloged. They remain `PARTIAL / CONDITIONAL` because the authoritative current assembled KubeJS script/data tree has not yet been captured; framework capability counts do not add semantic spell/glyph objects by themselves.
+Row **#98** (Iron's Spellbooks KubeJS) remains `PARTIAL / CONDITIONAL` because scripts can register semantic spell/school objects and the authoritative current assembled KubeJS script tree has not yet been captured. Row **#99** (KubeJS Ars Nouveau) is catalog-closed at `+0` provider-owned spell/glyph identities because its established surface is recipe-only; its exact deployed recipe/reachability state remains separate QA.
 
 Rows **#139–#162** are registry-reconciliation additions for already-cataloged providers that are physically current but were never appended to the older numbered baseline. Their addition changes registry indexing only; it does not add new semantic objects beyond the provider dossiers/semantic ledger already in `main`.
 
