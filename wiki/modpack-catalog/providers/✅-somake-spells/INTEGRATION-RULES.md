@@ -36,7 +36,7 @@ Any perk that wishes to react to Somake charges must wait for a real read-only p
 
 ## Aqua School and T.O Magic coexistence
 
-The historical physical checkpoint used by this audit included Somake 1.0.8-fix and the deprecated T.O Magic 1.21.1 alpha (`traveloptics` 4.4.0.1). Somake has since advanced to 1.0.9, so Aqua/T.O coexistence must be revalidated on the current line.
+Current physical authority confirms Somake 1.0.9 and the deprecated T.O Magic 1.21.1 alpha (`traveloptics` 4.4.0.1) are both installed. Somake's exact current registry is closed; Traveloptics exact publisher File `6342780` has no active Aqua spell registrations, but the installed `7b74816e...` bytes are `OTHER_VERIFIED`, so current Aqua/T.O coexistence remains fail-closed rather than resolved. See [`AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md`](AQUA-TRAVELOPTICS-CURRENT-COEXISTENCE-CHECKPOINT.md).
 
 Rules:
 
@@ -46,7 +46,7 @@ Rules:
 - do not bridge by display-name matching;
 - if duplicate schools/IDs are observed, stop and document exact runtime evidence before writing compatibility code.
 
-A future adapter needs explicit registry identity and runtime tests with both artifacts loaded.
+A future adapter needs explicit exact-current registry identity and runtime tests with both artifacts loaded. Absence of Aqua IDs in the Traveloptics publisher baseline is useful negative evidence, but it is not projected onto the modified physical JAR without an exact-current bridge.
 
 ## Ritual progression
 
