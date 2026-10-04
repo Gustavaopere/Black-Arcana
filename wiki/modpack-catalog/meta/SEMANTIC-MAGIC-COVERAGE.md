@@ -229,6 +229,7 @@ Current semantic deltas since the 1382 checkpoint:
 - Create: Enchantable Machinery 3.6.0 contributes **+0 `ZERO_SEMANTIC_MACHINE_ENCHANTMENT_APPLICATION`**. Exact physical SHA-1 equals Modrinth `Cw5k6c0a`; exhaustive inspection closes 282 entries, 142 classes, 17 provider-data paths and 11 enchantable Create machine mappings. No provider-owned enchantment datapack definitions or enchantment registry exists; machine variants read/persist existing `minecraft:enchantments` or external enchantment holders, so machine/enchantment combinations are not standalone semantic magic objects.
 - Creating Space 1.7.22 contributes **+0 `ZERO_SEMANTIC_SPACE_ROCKET_DIMENSION_TRANSPORT`**. Exact physical SHA-1 equals CurseForge File `8882869`; exhaustive inspection closes 1,986 entries, 354 classes, 690 provider-data paths, six dimensions and six rocket-accessible-dimension definitions. Cross-dimension settlement uses rocket/vehicle `DimensionTransition` infrastructure; no provider-owned spell/ritual/glyph/ability/summon roster exists.
 - Create: Dreams n' Desires 2.3a-BETA contributes **+0 `ZERO_SEMANTIC_CREATE_AUTOMATION_TOOLS_CONTENT`**. Exact physical SHA-1 equals Modrinth `bqMxf6Ua`; exhaustive inspection closes 1,363 entries, 227 classes, 457 provider-data paths, 233 recipes and eight bounded player-interaction classes. Sentry/engine/hopper/tools/milkshake/package/dispenser surfaces are automation, logistics, food or equipment; no provider-owned spell/ritual/glyph/mana/arcane/teleport/portal roster exists.
+- Epic Fight 21.17.3.1 contributes **+3 `COUNTED_EXACT`** supernatural player-action identities. Exact physical SHA-1 equals CurseForge File `8175609`; the exact 43-ID core skill registry is fully dispositioned. The exact trident moveset selects Tsunami for Riptide, Wrathful Lightning for Channeling and Everlasting Allegiance for Loyalty; their provider settlement closes tide/lightning/damaging-recall actions, while the remaining 40 core skill IDs are technical, martial, passive/reactive or mobility and remain metric-excluded.
 ### 02/10 current-provider semantic normalization
 
 The current provider tree also contained catalog-complete directories whose semantic disposition had not yet been projected into this shared ledger. This normalization changes no provider folder status and creates no new provider identity; it only reconciles already-canonical provider records.
@@ -280,11 +281,11 @@ Explicit zero-semantic dispositions are also projected for cataloged bridge/supp
 - [Pufferfish's Unofficial Additions](../providers/✅-pufferfishs-unofficial-additions/README.md): **+0 `ZERO_SEMANTIC_SKILL_XP_REWARD_BRIDGE`** — exact physical/publisher File `7389968` equality closes `harvest_crops`, `fishing` and `spell_casting` as experience sources plus the configurable `effect` reward and Iron's spell/school filter/prototype bridge; existing Iron's spells remain externally owned and no concrete provider tree JSON is packaged.
 
 
-Therefore the strict reconstructible minimum is **1855**. This is a minimum, not a final denominator or coverage percentage.
+Therefore the strict reconstructible minimum is **1858**. This is a minimum, not a final denominator or coverage percentage.
 
 ## Strict reconstructible counted minimum
 
-**1855 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact), Weapons of Miracles (+12 exact), Born in Chaos (+17 exact), Bosses'Rise (+8 exact), Portable Hole (+1 exact), Legendary Monsters (+22 exact), Alex's Caves Continued (+8 exact), Alex's Mobs Continued (+1 exact), Ice And Fire: Dread Land (+1 exact) and Bosses of Mass Destruction (+3 exact), Ars Morph (+8 source-pinned) and Woodwalkers SpellBooks (+1 source-pinned).**
+**1858 semantic magic objects are currently reconstructible from canonical provider records after the previous 1596 checkpoint plus More Relics (+61), Ozymandias Sundries (+2), Mowzie's Mobs (+10 strict), Ice And Fire CE (+8 strict), Reliquified L_Ender's Cataclysm (+7 exact), Waystones (+3 source-pinned), StarbuncleMania (+2 exact), Cataclysm: Ignis Soulfires (+8 exact), L_Ender's Cataclysm (+27 exact), BetterEnd: New Dawn (+49 exact), Weapons of Miracles (+12 exact), Epic Fight (+3 exact), Born in Chaos (+17 exact), Bosses'Rise (+8 exact), Portable Hole (+1 exact), Legendary Monsters (+22 exact), Alex's Caves Continued (+8 exact), Alex's Mobs Continued (+1 exact), Ice And Fire: Dread Land (+1 exact) and Bosses of Mass Destruction (+3 exact), Ars Morph (+8 source-pinned) and Woodwalkers SpellBooks (+1 source-pinned).**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
@@ -300,6 +301,7 @@ Arithmetic cross-check by provider family:
 - L_Ender's Cataclysm base supernatural action/ritual layer: **27**;
 - BetterEnd: New Dawn ritual/infusion layer: **49**;
 - Weapons of Miracles discrete supernatural skill/action layer: **12**;
+- Epic Fight core supernatural trident-innate layer: **3**;
 - Born in Chaos supernatural artifact/staff/ritual-action layer: **17**;
 - Bosses'Rise supernatural boss-reward/action layer: **8**;
 - Portable Hole magical traversal layer: **1**;
@@ -322,7 +324,7 @@ Arithmetic cross-check by provider family:
 - Goety base Focus + ritual layer: **361**;
 - Goety Iron Focus + ritual layer: **14**;
 - Goety Cataclysm Focus + ritual layer: **52**;
-- total: `209 + 665 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 17 + 8 + 1 + 22 + 8 + 1 + 1 + 3 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1855`.
+- total: `209 + 665 + 9 + 41 + 61 + 10 + 8 + 27 + 49 + 12 + 3 + 17 + 8 + 1 + 22 + 8 + 1 + 1 + 3 + 8 + 19 + 52 + 25 + 7 + 3 + 10 + 42 + 55 + 29 + 26 + 361 + 14 + 52 = 1858`.
 
 ### Counted ledger
 
@@ -374,6 +376,7 @@ Arithmetic cross-check by provider family:
 | [L_Ender's Cataclysm](../providers/✅-cataclysm/README.md) | 3.33 | 27 | `COUNTED_EXACT` | exact physical/publisher File `8706841` equality plus exhaustive 67-item-class and ritual audit closes 24 supernatural item/equipment actions + 3 deliberate summoning rituals; ordinary weapon modes, pets/locators, passive gear, processing, auto-spawn and generic boss-respawn infrastructure are excluded |
 | [BetterEnd: New Dawn](../providers/✅-betterend/README.md) | 21.0.34 | 49 | `COUNTED_EXACT` | exact physical/publisher File `8610367` equality closes 48 unique `betterend:infusion` ritual recipe identities plus 1 Eternal Portal Ritual; ordinary processing, passive effects, portal aftermath and worldgen are excluded |
 | [Weapons of Miracles](../providers/✅-weapons-of-miracles/README.md) | 2.0.178 | 12 | `COUNTED_EXACT` + 1 `CONDITIONAL` | exact physical/publisher File `8829395` equality closes all 64 registered WOM skill IDs; semantic reconciliation yields 13 supernatural roots, with 12 strict-counted and `flash_mutilation` conditional on current normal acquisition; 51 martial/passive/mover/technological/support IDs are excluded |
+| [Epic Fight](../providers/✅-epic-fight/README.md) | 21.17.3.1 | 3 | `COUNTED_EXACT` | exact physical/publisher File `8175609` equality closes all 43 core skill IDs; the exact trident moveset exposes Tsunami via Riptide, Wrathful Lightning via Channeling and Everlasting Allegiance via Loyalty, while the other 40 core skills are technical/martial/passive/mobility and excluded |
 | [Born in Chaos](../providers/✅-born-in-chaos/README.md) | 1.7.6 | 17 | `COUNTED_EXACT` | exact physical/publisher File `8268280` equality plus bounded item/procedure/acquisition audit closes 17 deliberate supernatural player actions; shared Icy Splash and target/result branches are deduplicated, while passive/on-hit gear, ordinary consumables, primary projectile modes, loot/debug surfaces and mob-native magic are excluded |
 | [Bosses'Rise](../providers/✅-bosses-rise/README.md) | 2.1.2 | 8 | `COUNTED_EXACT` | exact physical/publisher File `8123167` equality plus bounded item/action/acquisition audit closes 8 deliberate supernatural player actions across five owner items; reactive/on-hit effects, primary collision/firing modes, roll, passive gear, boss-native attacks and decor/debug surfaces are excluded |
 | [Portable Hole](../providers/✅-portable-hole/README.md) | 21.1.0 | 1 | `COUNTED_EXACT` | exact physical/publisher File `5733788` equality closes one magical `useOn` traversal action; exact Stronghold Corridor loot closes normal acquisition; tunnel depth, temporary blocks, restoration lifecycle and feedback are consequences/parameters rather than separate identities |
@@ -398,7 +401,7 @@ Arithmetic cross-check by provider family:
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_SOURCE_PINNED` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
-| **Strict total** |  | **1855** |  |  |
+| **Strict total** |  | **1858** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
 
@@ -520,7 +523,7 @@ The following audited providers add **0** independent semantic objects under thi
 
 ## Lower bounds and open denominator blockers
 
-These rows remain **outside the 1855 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
+These rows remain **outside the 1858 strict sum** because one or more strict-counting gates are still open. A provider can appear here with a `✅-` folder because folder prefixes track catalog completeness, not deployed config/reachability/runtime activation:
 
 | Provider | Current evidence | State | Why excluded from strict sum |
 |---|---|---|---|
@@ -540,9 +543,9 @@ Other provider directories that have not yet been normalized into a semantic-obj
 
 ## Important interpretation rules
 
-1. **1855 is not “1855 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
-2. Do not divide 1855 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
-3. Do not add public lower bounds to 1855 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
+1. **1858 is not “1858 / unknown”.** It is a reconstructible counted minimum while the denominator remains open.
+2. Do not divide 1858 by the historical 100-provider-component denominator. The former `68/100` checkpoint predates the 22/09 physical re-audit and is now `PENDING REBASE`; provider-component coverage and semantic-magic coverage answer different questions.
+3. Do not add public lower bounds to 1858 and call the result complete. Lower-bound providers can contain unenumerated objects, aliases, removed entries or cross-provider proxies that require object-level reconciliation.
 4. A registered technical slot can still be excluded when the provider itself proves it is dummy, presentation-only, disabled, proxy-only or unreachable in the current survival path.
 5. Runtime/config QA remains distinct from semantic inventory closure. A source-pinned or release-bounded object may be countable while numerical settlement or compatibility remains fail-closed.
 6. Semantic similarity does not transfer authority. Two different provider spells may overlap mechanically and still remain distinct provider-owned objects; deduplication prevents double ownership/processing, not factual erasure of existing content.

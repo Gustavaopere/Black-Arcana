@@ -140,6 +140,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 133 | Create: Enchantable Machinery | `createenchantablemachinery` | `createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar` | `3.6.0` | CREATE MACHINE ENCHANTMENT APPLICATION / PERSISTENCE | ZERO_SEMANTIC_MACHINE_ENCHANTMENT_APPLICATION |
 | 134 | Creating Space | `creatingspace` | `creatingspace-1.21.1-1.7.22.jar` | `1.7.22` | CREATE AEROSPACE / ROCKET / DIMENSION TRANSPORT | ZERO_SEMANTIC_SPACE_ROCKET_DIMENSION_TRANSPORT |
 | 135 | Create: Dreams n' Desires | `dndesires` | `DnDesires-1.21.1-2.3a-BETA.jar` | `2.3a-BETA` | CREATE AUTOMATION / TOOLS / SENTRY / FOOD / LOGISTICS | ZERO_SEMANTIC_CREATE_AUTOMATION_TOOLS_CONTENT |
+| 136 | Epic Fight | `epicfight` | `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar` | `21.17.3.1` | COMBAT FRAMEWORK / SUPERNATURAL TRIDENT INNATE PROVIDER | YES |
 
 ## Current version drifts already reconciled
 
