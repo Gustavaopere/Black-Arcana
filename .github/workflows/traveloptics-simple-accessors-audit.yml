@@ -89,38 +89,32 @@ jobs:
           def method_instructions(fqcn, method_name, descriptor):
               p=subprocess.run(["javap","-classpath",jar,"-c","-p","-s",fqcn],check=True,text=True,capture_output=True)
               lines=p.stdout.splitlines()
-              current_sig=None
-              current_desc=None
-              collecting=False
-              instr=[]
-              for raw in lines:
-                  stripped=raw.strip()
-                  if stripped.endswith(";") and "(" in stripped and not stripped.startswith("descriptor:"):
-                      current_sig=stripped
-                      current_desc=None
-                      collecting=False
-                      instr=[]
+              for i,raw in enumerate(lines):
+                  sig=raw.strip()
+                  if not (sig.endswith(";") and re.search(r'\b'+re.escape(method_name)+r'\s*\(',sig)):
                       continue
-                  if stripped.startswith("descriptor:"):
-                      current_desc=stripped.split("descriptor:",1)[1].strip()
+                  desc=None
+                  code_idx=None
+                  for j in range(i+1,min(len(lines),i+8)):
+                      s=lines[j].strip()
+                      if s.startswith("descriptor:"):
+                          desc=s.split("descriptor:",1)[1].strip()
+                      if s=="Code:":
+                          code_idx=j
+                          break
+                  if desc != descriptor or code_idx is None:
                       continue
-                  if stripped=="Code:":
-                      if current_sig and re.search(r'\b'+re.escape(method_name)+r'\s*\(',current_sig) and current_desc==descriptor:
-                          collecting=True
-                          instr=[]
-                      else:
-                          collecting=False
-                      continue
-                  if collecting:
-                      m=insn_re.match(raw)
+                  instr=[]
+                  for raw2 in lines[code_idx+1:]:
+                      m=insn_re.match(raw2)
                       if m:
                           instr.append((int(m.group(1)),m.group(2),m.group(3) or ""))
                           continue
-                      if instr and stripped and not stripped.startswith(("LineNumberTable:","LocalVariableTable:","StackMapTable:")):
+                      if instr:
                           break
-              if not instr:
-                  raise RuntimeError(f"{fqcn}.{method_name}{descriptor}: instructions not found")
-              return instr
+                  if instr:
+                      return instr
+              raise RuntimeError(f"{fqcn}.{method_name}{descriptor}: instructions not found")
 
           def eval_method(instr, constants, level=None):
               stack=[]
