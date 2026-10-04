@@ -8,22 +8,23 @@ This audit is limited to the base provider **Deeper and Darker**. It does not au
 
 ## Physical authority
 
-Current sibling physical authority records:
+Current sibling authority confirms the JAR, mod id, runtime and row #215. Direct retained physical inventories provide the correctly row-bound hash checkpoint:
 
 - JAR: `deeperdarker-neoforge-1.21.1-1.4.1.jar`;
 - mod id: `deeperdarker`;
 - runtime: `1.4.1`;
-- physical SHA-1: `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+- last correctly row-bound SHA-1: `783123ae86c91c01527c10f338679caaef42eb42`;
+- fingerprint column: `1828555691`.
 
-That fingerprint remains the installed-byte authority.
+The previously cited `83f7edd0...` value belongs to Delightful Backport and is discarded for Deeper and Darker. See [`PHYSICAL-HASH-BOUNDARY-CORRECTION.md`](PHYSICAL-HASH-BOUNDARY-CORRECTION.md).
 
 ### Installation lineage now narrowed
 
-Retained CurseForge instance metadata identifies the original installed artifact as official project/file **659011 / 8201775**, with SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f` and length **3,906,057 bytes**. A later physical snapshot keeps the same filename/runtime/byte length but measures `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+Retained CurseForge instance metadata identifies the original installed artifact as official project/file **659011 / 8201775**, with SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f` and length **3,906,057 bytes**. Later physical inventories keep the same filename/runtime but measure `783123ae86c91c01527c10f338679caaef42eb42`. The physical inventory row does not establish byte length, so no same-size claim is made.
 
 The physical mismatch is therefore best classified as a **local post-install byte change/repack of an artifact originally sourced from File 8201775**, not an unidentified second publisher release.
 
-This provenance result still does not expose the physical entry-level diff. Retained logs first show Deeper and Darker player/server-player `stillValid(...)` redirect conflicts with NeoVitae and later show Deeper and Darker `ContainerMenuMixin` `stillValid(...)` injections on vanilla container menus. That establishes a compatibility-change signal in the deployed history, but no claim is made that this observed mixin change fully explains the current physical `83f7...` bytes.
+This provenance result still does not expose the physical entry-level diff. Retained logs document Deeper and Darker / NeoVitae `stillValid(...)` interaction, including player/server-player redirect conflicts and runs exposing Deeper and Darker `ContainerMenuMixin` injections on vanilla container menus. Project Library also retains two generated Deeper and Darker compatibility JAR variants from 2026-08-18, but raw-byte materialization is unavailable. No claim is made that either generated artifact has SHA-1 `783123ae...` or that the observed mixin work fully explains the physical delta.
 
 ## Exact upstream source pin
 
@@ -143,6 +144,6 @@ The source reproduction closes a provenance question, not the installed artifact
 Promotion to `✅ Catalogado` requires direct evidence for the installed physical bytes, such as:
 
 - direct raw-byte inspection of the physical `deeperdarker-neoforge-1.21.1-1.4.1.jar`; or
-- a repository/publisher artifact whose SHA-1 exactly equals `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+- an artifact/provenance bridge whose SHA-1 exactly equals `783123ae86c91c01527c10f338679caaef42eb42` and exposes the entry-level delta.
 
 Until that occurs, Black Arcana must not project the public/source three-root denominator onto the physical pack.
