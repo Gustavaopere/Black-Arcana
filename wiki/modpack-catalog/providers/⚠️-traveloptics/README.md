@@ -143,11 +143,11 @@ This exclusion is important because the publisher itself describes the 1.21.1 li
 
 Provider-owned ancestry divides the 33 registrations into three relevant groups:
 
-- 21 registrations are outside the Unique/Weapon provider bases and do not declare provider-owned `allowCrafting`, `isEnabled` or `canBeCraftedBy` overrides. A focused exact-alpha probe additionally found **0/21** direct `DefaultConfig.setAllowCrafting(...)` calls in those concrete classes. Under the current physical Iron's `1.21.1-3.16.3` host contract, whose `DefaultConfig.allowCrafting` and generic `ALLOW_CRAFTING` defaults are `true`, these 21 are **host-default craftable**, still subject to effective config and the player-learning gate;
+- 21 registrations are outside the Unique/Weapon provider bases and do not declare provider-owned `allowCrafting`, `isEnabled` or `canBeCraftedBy` overrides. A focused exact-alpha probe additionally found **0/21** direct `DefaultConfig.setAllowCrafting(...)` calls in those concrete classes. Under the current physical Iron's `1.21.1-3.16.3` host contract, whose `DefaultConfig.allowCrafting` and generic `ALLOW_CRAFTING` defaults are `true`, these 21 are **host-default craftable**, while effective Scroll Forge eligibility remains conditioned by `isEnabled()`, effective config, compatible focus/school selection and player-specific learning where applicable;
 - 10 registrations inherit `AbstractUniqueSpell.allowCrafting() = false`;
 - 2 registrations inherit `AbstractWeaponSpell.allowCrafting() = true`: `cursed_blast` and `gyro_slash`.
 
-See [`HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`](HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md). Default Scroll Forge eligibility is not equivalent to unconditional survival acquisition.
+See [`HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`](HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md). Host-default craftability is narrower than effective Scroll Forge eligibility and does not establish unconditional survival acquisition.
 
 Nine of the ten non-craftable Unique spells have direct exact structured loot references in the JAR:
 
