@@ -116,6 +116,25 @@ Exact `TOLootModifiers` structural facts:
 
 This audit records wiring facts only. It does not claim a reproduced NeoForge registry crash.
 
+### Exact mechanics baseline reconciliation
+
+Temporary NON-MERGE PR **#599** performed a separate bounded clean-room pass over the same exact File `6342780`.
+
+Only authoritative run #8 is retained:
+
+- audit HEAD: `6789b859c3b617e1174e9b0e5ff6df48d2a993b3`;
+- workflow run: `37236187715` — **SUCCESS**;
+- artifact: `11315159450`;
+- digest: `sha256:7001221a307d3a81ba8ef8b41a0dba29a059a2fbaf6b756fc2db0edb26996eb9`;
+- rows: **33**;
+- unresolved retained mechanic fields: **0**.
+
+The audit closed direct constant/default facts for `baseManaCost`, `manaCostPerLevel`, `baseSpellPower`, `spellPowerPerLevel`, `castTime`, `CastType`, max level, minimum rarity and cooldown seconds for every exact registered spell class.
+
+The object-by-object table is in [`EXACT-4.4.0.1-MECHANICS-BASELINE.md`](EXACT-4.4.0.1-MECHANICS-BASELINE.md).
+
+This is exact publisher-alpha evidence only. It does not bridge these defaults to the current physical `7b74816e...` bytes, and spell-power inputs are not final damage formulas.
+
 ## Exact field -> class -> ID inventory
 
 | Registry field | Concrete class | Exact registry ID |
@@ -213,6 +232,7 @@ Therefore runtime remains fail-closed.
 ## Metric disposition
 
 - exact registry identities reconstructed: `33`;
+- exact publisher mechanics baseline rows resolved: `33/33` with `0 UNKNOWN` for the retained default/raw host-input fields;
 - residual localization roots excluded: `32`;
 - strict semantic delta: `+0` while reachability/runtime blockers remain;
 - component delta: `+0`;
