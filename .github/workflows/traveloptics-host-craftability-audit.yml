@@ -1,0 +1,139 @@
+name: Traveloptics Host Craftability Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Extract bounded Traveloptics craftability facts
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar = "traveloptics.jar"
+          simple_names = [
+              "BloodHowlSpell",
+              "PsychicBoltSpell",
+              "ReversalSpell",
+              "SpectralBlinkSpell",
+              "OrbitalVoidSpell",
+              "CursedMinefieldSpell",
+              "VoidEruptionSpell",
+              "VortexPunchSpell",
+              "AstralSenseSpell",
+              "AshenBreathSpell",
+              "LingeringStrainSpell",
+              "MeteorStormSpell",
+              "LavaBombSpell",
+              "NullflareSpell",
+              "CursedRevenantsSpell",
+              "DespairSpell",
+              "RapidLaserSpell",
+              "DeathLaserSpell",
+              "EmPulse",
+              "AerialCollapseSpell",
+              "SteleCascadeSpell",
+          ]
+
+          with zipfile.ZipFile(jar) as z:
+              entries = z.namelist()
+
+          def fqcn_for(simple):
+              suffix = "/" + simple + ".class"
+              matches = [e for e in entries if e.endswith(suffix)]
+              if len(matches) != 1:
+                  raise SystemExit(f"{simple}: expected exactly one class entry, found {len(matches)}: {matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          insn_re = re.compile(r"^\s*\d+:\s+(\S+)(?:\s+(.*))?$")
+          setter_re = re.compile(r"DefaultConfig\.setAllowCrafting:\(Z\)")
+
+          rows = []
+          for simple in simple_names:
+              fqcn = fqcn_for(simple)
+              p = subprocess.run(
+                  ["javap", "-classpath", jar, "-c", "-p", fqcn],
+                  check=True, text=True, capture_output=True
+              )
+              lines = p.stdout.splitlines()
+              calls = []
+              for i, line in enumerate(lines):
+                  if not setter_re.search(line):
+                      continue
+                  prev = None
+                  for j in range(i - 1, max(-1, i - 8), -1):
+                      m = insn_re.match(lines[j])
+                      if m:
+                          prev = m.group(1)
+                          break
+                  if prev == "iconst_0":
+                      calls.append("FALSE")
+                  elif prev == "iconst_1":
+                      calls.append("TRUE")
+                  else:
+                      calls.append("UNKNOWN")
+              direct = "ABSENT" if not calls else ",".join(calls)
+              rows.append((simple, fqcn, direct, len(calls)))
+
+          report = Path("audit/report.txt")
+          with report.open("w", encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha host-craftability clean-room audit\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("scope=21 exact registrations outside AbstractUniqueSpell/AbstractWeaponSpell groups\n")
+              f.write("retention=class identity + direct DefaultConfig.setAllowCrafting constant only; no method bodies\n")
+              f.write("\n")
+              for simple, fqcn, direct, count in rows:
+                  f.write(f"{simple}|{fqcn}|direct_set_allow_crafting={direct}|call_count={count}\n")
+
+              false_n = sum("FALSE" in r[2].split(",") for r in rows)
+              true_n = sum("TRUE" in r[2].split(",") for r in rows)
+              absent_n = sum(r[2] == "ABSENT" for r in rows)
+              unknown_n = sum("UNKNOWN" in r[2].split(",") for r in rows)
+              f.write("\nsummary\n")
+              f.write(f"rows={len(rows)}\n")
+              f.write(f"classes_with_false={false_n}\n")
+              f.write(f"classes_with_true={true_n}\n")
+              f.write(f"classes_with_absent={absent_n}\n")
+              f.write(f"classes_with_unknown={unknown_n}\n")
+
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-host-craftability-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
