@@ -4,13 +4,13 @@ Status: `⚠️ PARTIAL / PUBLIC 1.4.1 BASELINE + EXACT SOURCE TAG CORROBORATED 
 
 ## Current physical identity
 
-Current sibling physical authority records:
+Current sibling authority confirms physical row **#215**, JAR `deeperdarker-neoforge-1.21.1-1.4.1.jar`, mod id `deeperdarker` and runtime `1.4.1`. Direct Project Library physical inventories provide the correctly row-bound hash evidence:
 
-- row: **#215**;
-- JAR: `deeperdarker-neoforge-1.21.1-1.4.1.jar`;
-- mod id: `deeperdarker`;
-- runtime: `1.4.1`;
-- physical SHA-1: `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+- last directly supported Deeper and Darker SHA-1: `783123ae86c91c01527c10f338679caaef42eb42`;
+- physical fingerprint column: `1828555691`;
+- repeated in retained physical inventories from 2026-09-07 through 2026-09-16.
+
+The sibling dossier's SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88` is a row-boundary misattribution: direct physical inventories associate that hash with the following `Delightful-Backport-1.0-1.21.1-neoforge.jar` row. See [`PHYSICAL-HASH-BOUNDARY-CORRECTION.md`](PHYSICAL-HASH-BOUNDARY-CORRECTION.md).
 
 The mod is cross-domain: its sibling category is dimension/worldgen/mobs rather than `Magic`, but its player-facing surface includes supernatural portal, staff and Soul Elytra actions.
 
@@ -30,7 +30,7 @@ All three official paths resolve to the same public artifact:
 - SHA-256: `eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af`;
 - bytes: `3,906,057`.
 
-That artifact does **not** equal the physical pack fingerprint `83f7edd0...`. The pack JAR is therefore `OTHER_VERIFIED` relative to the official public release and cannot inherit the public semantic denominator as exact-current.
+That artifact does **not** equal the last correctly row-bound physical SHA-1 `783123ae...`. The observed pack JAR is therefore `OTHER_VERIFIED` relative to the official public release and cannot inherit the public semantic denominator as exact-current.
 
 Publisher-baseline audit run `36959073485` completed successfully and produced evidence artifact `11206937200` with digest `sha256:b103afe2dd4b52780acf54682ddcca4b6df484df9ad9cf7accd218e443fb8b1f`.
 
@@ -47,7 +47,7 @@ A retained CurseForge instance-metadata snapshot narrows the origin of the curre
 - original File length: **3,906,057 bytes**;
 - the snapshot records `isModified=false`, `isWorkingCopy=false` and `isFuzzyMatch=false` at that capture point.
 
-The later physical modlist records the **same filename, mod id, runtime and byte length lineage**, but measures SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+Later physical inventories record the **same filename, mod id and runtime**, but measure SHA-1 `783123ae86c91c01527c10f338679caaef42eb42` with fingerprint `1828555691`. The physical inventory format used for this hash checkpoint does not establish JAR byte length, so no same-size claim is made.
 
 This closes an important provenance question: the current physical fingerprint is **not evidence of a second official 1.4.1 release**. The retained installation history points to the official File 8201775 as the original installed artifact, followed by a local byte-level change/repack before the later physical hash snapshot.
 
@@ -55,9 +55,9 @@ It does **not** identify which archive entries changed. Therefore it does not au
 
 ### Known local compatibility signal
 
-Logs from the local compatibility-work window record Deeper and Darker `PlayerMixin` / `ServerPlayerMixin` redirect conflicts with NeoVitae around container `stillValid(...)` handling. Later retained logs show Deeper and Darker applying `ContainerMenuMixin` `stillValid(...)` injections to vanilla container menus instead of those conflicting player redirects.
+Logs from the local compatibility-work window record Deeper and Darker / NeoVitae `stillValid(...)` interaction, including `PlayerMixin` / `ServerPlayerMixin` redirect conflicts and retained runs exposing Deeper and Darker `ContainerMenuMixin` injections on vanilla container menus. Project Library also retains two generated Deeper and Darker compatibility JAR variants from 2026-08-18, but their raw bytes cannot currently be materialized for hashing.
 
-This is a concrete compatibility-change signal in the deployed history, but it is **not** an entry-level diff of the physical `83f7...` JAR. Without raw-byte access, Black Arcana does not infer that this observed mixin change is the only physical delta or that every semantic action class is byte-identical to the official publisher artifact.
+This is concrete local compatibility-work provenance, but it is **not** an entry-level diff of the physical `783123ae...` JAR. Without a hash bridge, Black Arcana does not infer that either generated compatibility JAR is the deployed artifact, that the observed mixin change is the only physical delta, or that every semantic action class is byte-identical to the official publisher artifact.
 
 ## Exact source reproduction — corroboration, not closure
 
@@ -74,7 +74,7 @@ NON-MERGE PR **#573** rebuilt that exact source pin with Java 21:
 
 The rebuilt source artifact differs from both:
 
-- physical pack SHA-1 `83f7edd0...`;
+- last correctly row-bound physical SHA-1 `783123ae...`;
 - official publisher SHA-1 `b6094add...`.
 
 A normalized source-build↔publisher comparison has the same **2,668 file paths** in both artifacts, with **2,408 identical-content entries** and **260 changed-content entries**. The semantic-path filter over those differences finds only three Otherside portal asset resources and no source-only/publisher-only semantic path. This corroborates the public action-family inventory but does **not** reveal the unmatched physical JAR.
@@ -132,7 +132,7 @@ Because the physical JAR is not byte-equivalent to any official public 1.4.1 art
 Promote this provider only after one of these evidence paths closes the installed bytes:
 
 - direct raw-byte inspection of the physical `deeperdarker-neoforge-1.21.1-1.4.1.jar`; or
-- a publisher/repository artifact whose SHA-1 exactly equals `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+- an artifact/provenance bridge whose SHA-1 exactly equals `783123ae86c91c01527c10f338679caaef42eb42` and exposes the entry-level delta.
 
 The exact official source tag is now audited and is **not** a hash match, so version/source-label agreement alone is not sufficient.
 
