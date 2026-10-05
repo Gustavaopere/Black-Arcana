@@ -42,6 +42,7 @@ SIMPLY_MORE_ALPHA5_PHYSICAL_SHA1 = "51636477cd5c378f42d9700e1fe35cd952c8f4f1"
 SIMPLY_SWORDS_1702_PHYSICAL_SHA1 = "05b074ff774467f1fe9fb5592151b7845c321cbc"
 KUBEJSARSNOUVEAU_132_PHYSICAL_SHA1 = "f39f4f409e628731be551fd961fac2964768d358"
 IRONS_SPELLS_JS_403_PHYSICAL_SHA1 = "0481395c5847e2920d1425e77833bef87df63139"
+KUBEJS_2101_7_2_BUILD_377_PHYSICAL_SHA1 = "150c5d6efc09b969ac350ea205128dff832e0850"
 
 SIMPLY_MORE_MIMICRY_FORMS = [
     "longsword",
@@ -146,6 +147,7 @@ MOD_PATTERNS = {
     "corail_tombstone": ["tombstone-neoforge-1.21.1-9.5.6.jar"],
     "gaze": ["gaze-1.1.7.1.jar"],
     "ice_and_fire_ce": ["iceandfire-2.1.2.jar"],
+    "kubejs": ["kubejs-neoforge-2101.7.2-build.377.jar"],
     "kubejsarsnouveau": ["kubejsarsnouveau-1.3.2.jar"],
     "irons_spells_js": ["irons_spells_js-4.0.3.jar"],
     "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
@@ -585,6 +587,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["release_1_0_9_equality"] = entry["sha1"] == SOMAKE_109_RELEASE_SHA1
                 elif provider == "gaze":
                     entry["known_1_1_7_1_equality"] = entry["sha1"] == GAZE_1171_SHA1
+                elif provider == "kubejs":
+                    entry["current_physical_build_377_equality"] = entry["sha1"] == KUBEJS_2101_7_2_BUILD_377_PHYSICAL_SHA1
                 elif provider == "kubejsarsnouveau":
                     entry["current_physical_1_3_2_equality"] = entry["sha1"] == KUBEJSARSNOUVEAU_132_PHYSICAL_SHA1
                 elif provider == "irons_spells_js":
