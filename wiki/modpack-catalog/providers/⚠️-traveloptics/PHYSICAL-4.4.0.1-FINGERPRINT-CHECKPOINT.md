@@ -125,6 +125,16 @@ A newly reconciled Project Library pair materially narrows runtime uncertainty f
 This is **strong contemporaneous physical-runtime correlation**, not process-embedded hash attestation. It proves that a boot temporally adjacent to the `7b74816e...` physical dump progressed beyond the earlier duplicate-codec registration failure, but it does not identify provenance, spell-registry equality or exact serializer-object identity.
 
 See [`RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md`](RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md).
+## Public provenance search boundary — 2026-10-05
+
+A bounded current search for the exact physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, fingerprint `4254006126`, the retained `fixed-keyloot` filename, and public user-repository provenance did not identify an indexed origin for the current replacement.
+
+The only related public artifact surfaced by the current search remains patch File `8861368`, which is already excluded as the current physical artifact by both chronology and SHA-1. The two retained Aug-17 candidate JAR records expose filename/size/timestamp metadata in the auditable Library surface, but no candidate checksum/content bridge to `7b74816e...`.
+
+This is negative discovery evidence only. It does not establish that the artifact has no public origin or that either Aug-17 candidate is/is not the current JAR. Repeating the same general public SHA/fingerprint/name search is no longer a closure path without new indexed evidence.
+
+Canonical detail: [`PUBLIC-PROVENANCE-SEARCH-BOUNDARY-2026-10-05.md`](PUBLIC-PROVENANCE-SEARCH-BOUNDARY-2026-10-05.md).
+
 ## Catalog consequence
 
 The clean-room File-6342780 audit remains valid for that publisher artifact and provides a **33-ID release baseline**. It can no longer be presented as byte-exact evidence for the currently fingerprinted physical JAR.
