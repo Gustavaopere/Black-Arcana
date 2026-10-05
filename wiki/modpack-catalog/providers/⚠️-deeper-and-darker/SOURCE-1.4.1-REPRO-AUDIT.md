@@ -19,7 +19,7 @@ That fingerprint remains the installed-byte authority.
 
 ### Installation lineage now narrowed
 
-Retained CurseForge instance metadata identifies the original installed artifact as official project/file **659011 / 8201775**, with SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f` and length **3,906,057 bytes**. A later physical snapshot keeps the same filename/runtime/byte length but measures `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+Retained CurseForge instance metadata identifies the original installed artifact as official project/file **659011 / 8201775**, with SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f` and length **3,906,057 bytes**. A later physical snapshot keeps the same filename/runtime and measures `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`; that physical table does not expose JAR byte size, so size continuity is not inferred.
 
 The physical mismatch is therefore best classified as a **local post-install byte change/repack of an artifact originally sourced from File 8201775**, not an unidentified second publisher release.
 
