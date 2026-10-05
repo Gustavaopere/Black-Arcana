@@ -61,7 +61,7 @@ The retained boot after the first generated set still records the Deeper/NeoVita
 
 This narrows the local modification chronology but does **not** identify the deployed bytes. The generated JARs are not raw-byte accessible in the current audit, so their hashes cannot be compared to physical SHA-1 `83f7edd0...`. Black Arcana therefore does not infer that `v2` was renamed/deployed, that the mixin change is the only archive-level delta, or that every semantic action class is byte-identical to the official publisher artifact.
 
-A retained physical inventory from **2026-08-22** now directly binds the canonical `deeperdarker-neoforge-1.21.1-1.4.1.jar` row to SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88` / fingerprint `1917446721`. The current physical artifact was therefore present in the canonical pack slot by four days after the 2026-08-18 compatibility-work window. This narrows chronology only; it does not prove that either generated compatibility JAR became those bytes.
+A retained physical inventory from **2026-08-22** now directly binds the canonical `deeperdarker-neoforge-1.21.1-1.4.1.jar` row to SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88` / fingerprint `1917446721`. The current physical artifact was therefore present in the canonical pack slot no later than 2026-08-22, roughly four days after the 2026-08-18 compatibility-work window. This narrows chronology only; it does not prove that either generated compatibility JAR became those bytes.
 
 See [`LOCAL-NEOVITAE-COMPAT-LINEAGE.md`](LOCAL-NEOVITAE-COMPAT-LINEAGE.md) and [`PHYSICAL-83F7-AUG22-CHECKPOINT.md`](PHYSICAL-83F7-AUG22-CHECKPOINT.md).
 
