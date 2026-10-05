@@ -207,7 +207,9 @@ The evidence now supports a more specific bounded history:
 3. two local compatibility artifact sets were generated;
 4. the first set did not correspond to an operationally closed state in the next retained bootstrap checkpoint;
 5. after the v2 generation, a retained boot loads Deeper and Darker and NeoVitae under their canonical filenames, progresses beyond the earlier redirect-conflict failure point, and later crashes for an unrelated Photon config lifecycle error; because pre-v2 logs also expose `ContainerMenuMixin`, this does not identify which compatibility bytes were deployed;
-6. a later physical inventory fingerprints the canonical Deeper and Darker JAR as `83f7edd0...`.
+6. a retained physical inventory from **2026-08-22** directly fingerprints the canonical Deeper and Darker JAR as SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88` / fingerprint `1917446721`, proving that the current physical line occupied the canonical pack slot by four days after the local compatibility-work window.
+
+See [`PHYSICAL-83F7-AUG22-CHECKPOINT.md`](PHYSICAL-83F7-AUG22-CHECKPOINT.md).
 
 The missing step is still a **cryptographic or exact-content bridge** from one retained generated artifact to the deployed `83f7edd0...` bytes.
 
