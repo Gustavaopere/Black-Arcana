@@ -1,0 +1,288 @@
+name: audit-deeper-darker-noop-repack
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  noop-repack-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Black Arcana
+        uses: actions/checkout@v4
+
+      - name: Download and verify official Deeper and Darker 1.4.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+          mkdir -p "$OUT"
+
+          curl -fL --retry 3 --retry-all-errors \
+            "https://github.com/KyaniteMods/DeeperAndDarker/releases/download/v1.4.1/deeperdarker-neoforge-1.21.1-1.4.1.jar" \
+            -o "$OUT/publisher.jar"
+
+          test "$(stat -c %s "$OUT/publisher.jar")" = "3906057"
+          test "$(sha1sum "$OUT/publisher.jar" | awk '{print $1}')" = "b6094adde68bd4b909bc75c64901e1f3fb99ad8f"
+          test "$(sha256sum "$OUT/publisher.jar" | awk '{print $1}')" = "eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af"
+
+      - name: Generate content-identical no-op repacks
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+
+          python3 - "$OUT" <<'PY'
+          import datetime
+          import os
+          import pathlib
+          import stat
+          import sys
+          import zipfile
+
+          out = pathlib.Path(sys.argv[1])
+          publisher = out / "publisher.jar"
+          extracted = out / "extracted"
+          extracted.mkdir(parents=True, exist_ok=True)
+
+          with zipfile.ZipFile(publisher, "r") as zin:
+              infos = zin.infolist()
+              file_infos = [i for i in infos if not i.is_dir()]
+              publisher_comment = zin.comment
+
+              order_publisher = []
+              for info in file_infos:
+                  data = zin.read(info.filename)
+                  target = extracted / info.filename
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(data)
+                  order_publisher.append(info.filename)
+
+                  dt = datetime.datetime(*info.date_time, tzinfo=datetime.timezone.utc)
+                  ts = dt.timestamp()
+                  os.utime(target, (ts, ts))
+
+                  mode = (info.external_attr >> 16) & 0xFFFF
+                  if mode:
+                      try:
+                          os.chmod(target, stat.S_IMODE(mode))
+                      except OSError:
+                          pass
+
+              levels = ["default"] + list(range(0, 10))
+              for level in levels:
+                  dst = out / f"python-preserve-l{level}.jar"
+                  with zipfile.ZipFile(dst, "w") as zout:
+                      zout.comment = publisher_comment
+                      for info in infos:
+                          if info.is_dir():
+                              zout.writestr(info, b"")
+                              continue
+                          data = zin.read(info.filename)
+                          kwargs = {}
+                          if info.compress_type == zipfile.ZIP_DEFLATED and level != "default":
+                              kwargs["compresslevel"] = int(level)
+                          zout.writestr(info, data, **kwargs)
+
+          (out / "order-publisher.txt").write_text("\n".join(order_publisher) + "\n", encoding="utf-8")
+          (out / "order-sorted.txt").write_text("\n".join(sorted(order_publisher)) + "\n", encoding="utf-8")
+          PY
+
+          command -v zip >/dev/null
+
+          for order in publisher sorted; do
+            order_file="$(realpath "$OUT/order-$order.txt")"
+            for extras in keep strip; do
+              for level in 0 1 2 3 4 5 6 7 8 9; do
+                candidate="$(realpath -m "$OUT/infozip-$order-$extras-l$level.jar")"
+                rm -f "$candidate"
+                if [ "$extras" = "strip" ]; then
+                  (cd "$OUT/extracted" && zip -q -X "-$level" "$candidate" -@ < "$order_file")
+                else
+                  (cd "$OUT/extracted" && zip -q "-$level" "$candidate" -@ < "$order_file")
+                fi
+              done
+            done
+          done
+
+      - name: Verify content identity and measure candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+
+          python3 - "$OUT" <<'PY'
+          import csv
+          import hashlib
+          import pathlib
+          import sys
+          import zipfile
+
+          out = pathlib.Path(sys.argv[1])
+          publisher = out / "publisher.jar"
+
+          PHYSICAL_SHA1 = "83f7edd0a8516b2767c2cda7a3b2402f9e290d88"
+          PHYSICAL_CF_FP = 1917446721
+          OFFICIAL_CF_FP = 1323964125
+
+          def murmur2(data: bytes, seed: int = 1) -> int:
+              m = 0x5BD1E995
+              r = 24
+              h = (seed ^ len(data)) & 0xFFFFFFFF
+              i = 0
+              remaining = len(data)
+              while remaining >= 4:
+                  k = data[i] | (data[i+1] << 8) | (data[i+2] << 16) | (data[i+3] << 24)
+                  k = (k * m) & 0xFFFFFFFF
+                  k ^= k >> r
+                  k = (k * m) & 0xFFFFFFFF
+                  h = (h * m) & 0xFFFFFFFF
+                  h ^= k
+                  i += 4
+                  remaining -= 4
+              if remaining == 3:
+                  h ^= data[i+2] << 16
+              if remaining >= 2:
+                  h ^= data[i+1] << 8
+              if remaining >= 1:
+                  h ^= data[i]
+                  h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 13
+              h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 15
+              return h & 0xFFFFFFFF
+
+          def fingerprint(path: pathlib.Path) -> int:
+              raw = path.read_bytes()
+              filtered = bytes(b for b in raw if b not in (9, 10, 13, 32))
+              return murmur2(filtered, 1)
+
+          def digest(path: pathlib.Path, alg: str) -> str:
+              h = hashlib.new(alg)
+              h.update(path.read_bytes())
+              return h.hexdigest()
+
+          def entry_map(path: pathlib.Path):
+              with zipfile.ZipFile(path) as z:
+                  return {
+                      n: hashlib.sha256(z.read(n)).hexdigest()
+                      for n in z.namelist()
+                      if not n.endswith("/")
+                  }
+
+          publisher_fp = fingerprint(publisher)
+          if publisher_fp != OFFICIAL_CF_FP:
+              raise SystemExit(
+                  f"CurseForge fingerprint implementation mismatch: expected {OFFICIAL_CF_FP}, got {publisher_fp}"
+              )
+
+          pub_entries = entry_map(publisher)
+          rows = []
+
+          for path in sorted(out.glob("*.jar")):
+              if path.name == "publisher.jar":
+                  continue
+
+              entries = entry_map(path)
+              changed = sorted(
+                  k for k in set(pub_entries) & set(entries)
+                  if pub_entries[k] != entries[k]
+              )
+              only_candidate = sorted(set(entries) - set(pub_entries))
+              only_publisher = sorted(set(pub_entries) - set(entries))
+
+              if changed or only_candidate or only_publisher:
+                  raise SystemExit(
+                      f"candidate {path.name} is not file-content identical: "
+                      f"changed={changed[:5]} candidate_only={only_candidate[:5]} "
+                      f"publisher_only={only_publisher[:5]}"
+                  )
+
+              sha1 = digest(path, "sha1")
+              sha256 = digest(path, "sha256")
+              fp = fingerprint(path)
+              rows.append({
+                  "candidate": path.name,
+                  "bytes": path.stat().st_size,
+                  "sha1": sha1,
+                  "sha256": sha256,
+                  "curseforge_fingerprint": fp,
+                  "file_entry_count": len(entries),
+                  "sha1_matches_physical": sha1 == PHYSICAL_SHA1,
+                  "fingerprint_matches_physical": fp == PHYSICAL_CF_FP,
+              })
+
+          if not rows:
+              raise SystemExit("no candidates were generated")
+
+          with (out / "noop-results.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.DictWriter(f, fieldnames=rows[0].keys(), delimiter="\t")
+              w.writeheader()
+              w.writerows(rows)
+
+          matches = [
+              r for r in rows
+              if r["sha1_matches_physical"] or r["fingerprint_matches_physical"]
+          ]
+
+          with (out / "noop-summary.txt").open("w", encoding="utf-8") as f:
+              f.write(f"publisher_sha1={digest(publisher, 'sha1')}\n")
+              f.write(f"publisher_cf_fingerprint={publisher_fp}\n")
+              f.write(f"publisher_cf_expected={OFFICIAL_CF_FP}\n")
+              f.write(f"physical_sha1={PHYSICAL_SHA1}\n")
+              f.write(f"physical_cf_fingerprint={PHYSICAL_CF_FP}\n")
+              f.write(f"candidate_count={len(rows)}\n")
+              f.write(f"content_identical_candidate_count={len(rows)}\n")
+              f.write(f"physical_hash_or_fp_match_count={len(matches)}\n")
+              for r in matches:
+                  f.write(
+                      "physical_match="
+                      + r["candidate"]
+                      + f" bytes={r['bytes']} sha1={r['sha1']} cf={r['curseforge_fingerprint']}\n"
+                  )
+
+          print((out / "noop-summary.txt").read_text())
+          PY
+
+      - name: Record evidence boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+          cat > "$OUT/hypothesis.txt" <<'EOF'
+          HYPOTHESIS UNDER TEST
+          - The physical Deeper and Darker JAR may differ from official File 8201775
+            only because the ZIP/JAR archive was reserialized/recompressed.
+          - Every tested candidate must expose exactly the same non-directory
+            file-entry path set and the same SHA-256 for every entry as the
+            official publisher JAR.
+          - Candidate archive order/compression/extra metadata may differ.
+
+          BOUNDED MATRIX
+          - Python ZipFile rewrite preserving publisher ZipInfo metadata/order,
+            at default and DEFLATE levels 0-9.
+          - Info-ZIP full rebuild from identical file contents:
+            publisher order or sorted order;
+            extra attributes retained or stripped with -X;
+            compression levels 0-9.
+
+          FAIL-CLOSED BOUNDARY
+          - A physical SHA-1 or validated CurseForge fingerprint match would
+            establish an exact archive bridge for that candidate.
+          - No match only rules out this bounded no-op repack family.
+          - No third-party JAR bytes are committed or uploaded.
+          EOF
+
+      - name: Upload text-only evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: deeper-darker-noop-repack-evidence
+          path: |
+            build/audit/deeperdarker-noop-repack/noop-summary.txt
+            build/audit/deeperdarker-noop-repack/noop-results.tsv
+            build/audit/deeperdarker-noop-repack/hypothesis.txt
+          if-no-files-found: error
