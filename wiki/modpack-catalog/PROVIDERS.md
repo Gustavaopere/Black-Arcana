@@ -82,7 +82,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 77 | GTBC's SpellLib | `gtbcs_spell_lib` | `gtbcs_spell_lib-2.2.0-1.21.1.jar` | `2.2.0-1.21.1` | LIBRARY / API / VFX / SCRIPTING | YES |
 | 78 | HazentouveLib | `hazentouvelib` | `hazentouvelib-1.0.9.jar` | `1.0.9` | LIBRARY / API / VFX / SCRIPTING | YES / MAGIC_INFRA_ZERO_CONCRETE_SPELLS |
 | 79 | FamiliarsLib | `familiarslib` | `familiarslib-1.21.1-1.7.1.jar` | `1.21.1-1.7` | LIBRARY / API / VFX / SCRIPTING | YES |
-| 80 | Iron's Lib | `irons_lib` | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | LIBRARY / API / VFX / SCRIPTING | NO / CONDITIONAL |
+| 80 | Iron's Lib | `irons_lib` | `irons_lib-1.21.1-2.1.0.jar` | `1.21.1-2.1.0` | LIBRARY / API / VFX / SCRIPTING | YES / ZERO_SEMANTIC_LIBRARY_INFRA |
 | 81 | Apprentice's Codex | `apprenticecodex` | `apprentice_codex-0.9.7.1+mc1.21.1.jar` | `0.9.7.1` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 83 | CrystalChronicles | `crystal_chronicles` | `crystal_chronicles-0.1.3-alpha.jar` | `0.1.3-alpha` | SPELL PROVIDER / CONTENT ADDON | YES |
 | 84 | Legendary Spellbooks | `legendary_spellbooks` | `legendary_spellbooks-1.21.1+neo-0.3.2.jar` | `0.3.2` | SPELL PROVIDER / CONTENT ADDON | YES |
@@ -97,7 +97,7 @@ This registry began from an older 607-entry snapshot and preserves stable row nu
 | 93 | Vampire Spells Addon | `vampire_spells_addon` | `vampire_spells_addon-neoforge-1.21.1-0.0.9.jar` | `1.21.1-0.0.9` | BRIDGE / COMPAT / PROGRESSION | YES |
 | 94 | Mobstein | `mobstein` | `mobstein-5.4.4-neoforge-1.21.1.jar` | `5.4.4` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
 | 95 | Soul Fire'd | `soul_fire_d` | `soul-fire-d-neoforge-1.21-6.1.0.jar` | `6.1.0` | RITUAL / POWER / SUPERNATURAL PROVIDER | YES |
-| 98 | Iron's Spellbooks KubeJS | `irons_spells_js` | `irons_spells_js-4.0.3.jar` | `4.0.3` | LIBRARY / API / VFX / SCRIPTING | PARTIAL / CONDITIONAL |
+| 98 | Iron's Spellbooks KubeJS | `irons_spells_js` | `irons_spells_js-4.0.3.jar` | `4.0.3` | LIBRARY / API / VFX / SCRIPTING | YES / ZERO_SEMANTIC_SCRIPTING_FRAMEWORK |
 | 99 | kubejsarsnouveau | `kubejsarsnouveau` | `kubejsarsnouveau-1.3.2.jar` | `1.3.2` | LIBRARY / API / VFX / SCRIPTING | YES / ZERO_SEMANTIC_RECIPE_BRIDGE |
 | 100 | Dynamic RPG Resource Bars | `dynamic_resource_bars` | `dynamic_resource_bars-neoforge-0.7.1-1.21.1.jar` | `0.7.1` | LIBRARY / API / VFX / SCRIPTING | YES |
 | 101 | EMF Compat: Iron's Spells | `emf_compat_iron_spells` | `emf_compat_iron_spells_1.21.1_2.0.0.jar` | `2.0.0` | BRIDGE / COMPAT / PROGRESSION | YES |
@@ -182,7 +182,7 @@ Rows **#56, #61, #65, #82, #96 and #97** are now omitted as retired physical row
 
 Historical row **#42** is active again: current physical authority records T.O Magic n' Extras / `traveloptics` at `traveloptics-4.4.0.1-1.21.1.jar`. The provider remains `PARTIAL / OTHER_VERIFIED` because the installed SHA-1 differs from the audited public artifacts and its exact-current registry is not yet closed.
 
-Row **#98** (Iron's Spellbooks KubeJS) remains `PARTIAL / CONDITIONAL` because scripts can register semantic spell/school objects and the authoritative current assembled KubeJS script tree has not yet been captured. Row **#99** (KubeJS Ars Nouveau) is catalog-closed at `+0` provider-owned spell/glyph identities because its established surface is recipe-only; its exact deployed recipe/reachability state remains separate QA.
+Row **#98** (Iron's Spellbooks KubeJS) is catalog-closed at `+0` as `YES / ZERO_SEMANTIC_SCRIPTING_FRAMEWORK`: exact provider source establishes zero fixed built-in spells/schools, and on 2026-10-05 the project owner explicitly attested that no custom Iron's spell/school definitions were authored through KubeJS and that the addon was included as future creation infrastructure. The exact current assembled `kubejs/` tree remains a separate deployed-instance parity QA surface; any contradictory physical registration reopens the provider. Row **#99** (KubeJS Ars Nouveau) is catalog-closed at `+0` provider-owned spell/glyph identities because its established surface is recipe-only; its exact deployed recipe/reachability state remains separate QA.
 
 Rows **#139–#162** are registry-reconciliation additions for already-cataloged providers that are physically current but were never appended to the older numbered baseline. Their addition changes registry indexing only; it does not add new semantic objects beyond the provider dossiers/semantic ledger already in `main`.
 
@@ -196,8 +196,6 @@ The `Granular capability catalog` column is reconciled to the canonical status-p
 
 Rows #15, #17, #18, #19, #21, #22, #23, #45, #46, #47, #49, #50, #51, #52, #53, #54, #55, #57, #58, #59, #62, #63, #64, #66, #67, #68, #70, #71, #72, #73, #74, #75, #76, #77, #79, #90, #92, #93, #100, #101 were changed from `NO / CONDITIONAL` to `YES` because each has a matching canonical `✅-*` provider directory and `README.md`. No spell/glyph counts or runtime PASS claims were changed by this reconciliation.
 
-After this reconciliation, the only `NO / CONDITIONAL` rows without a canonical `✅` Black Arcana provider tree are:
+After the 2026-10-05 Iron's Lib 2.1.0 closure, **no `NO / CONDITIONAL` rows remain** in this registry. Iron's Lib (#80) is catalog-closed at `YES / ZERO_SEMANTIC_LIBRARY_INFRA` with strict semantic delta `+0`; its closed-source internals and runtime/compatibility QA remain fail-closed.
 
-- **#80 Iron's Lib** (`irons_lib`).
-
-Existing partial rows remain partial, including Traveloptics (#42), Iron's Spellbooks KubeJS (#98), and Deeper and Darker (#114).
+Existing partial rows remain partial, including Traveloptics (#42) and Deeper and Darker (#114). Iron's Spellbooks KubeJS (#98) is catalog-closed at `+0`; deployed-instance KubeJS parity remains separate QA.

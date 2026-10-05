@@ -1,10 +1,14 @@
-# Iron's Spellbooks KubeJS 4.0.3 — pack-script closure checklist
+# Iron's Spellbooks KubeJS 4.0.3 — deployed-instance parity checklist
 
-Status: `CURRENT PHYSICAL FRAMEWORK IDENTIFIED / EXACT 4.0.3 SOURCE PINNED / PACK STARTUP SCRIPT INVENTORY REQUIRED`
+Status: `✅ CATALOG CLOSED +0 / OWNER-ATTESTED ZERO AUTHORED SPELL-SCHOOL CONTENT / PHYSICAL SCRIPT-TREE PARITY CHECK PENDING`
 
 ## Purpose
 
-Close the only semantic question that the base-addon audit cannot answer: whether the exact current modpack uses Iron's Spellbooks KubeJS to register additional spells, schools or other semantic magic objects, and which ones.
+Verify that the deployed current modpack instance still matches the cataloged authored-content state for Iron's Spellbooks KubeJS.
+
+The catalog itself is already closed at **✅ / +0** based on the exact 4.0.3 source audit plus the project owner's 2026-10-05 attestation that no custom Iron's spells or schools were authored through KubeJS. This checklist is therefore a **deployment-parity/reopen trigger**, not a prerequisite for the current ✅ catalog state.
+
+If physical inspection finds a relevant registration script, the provider must be reopened and the exact objects cataloged before further semantic accounting.
 
 ## Already closed — do not redo
 
@@ -31,7 +35,8 @@ Close the only semantic question that the base-addon audit cannot answer: whethe
 - current host stack remains Iron's `1.21.1-3.16.3` + KubeJS `2101.7.2-build.377`;
 - current sibling default-branch searches did not expose a committed `kubejs/startup_scripts` or `kubejs/server_scripts` tree;
 - available Project/Library retrieval did not expose an authoritative current script tree; only historical 2026-09-08 KubeJS build-374 boot evidence and later physical modlist metadata were found;
-- therefore the pack-script semantic contribution remains **UNKNOWN / NOT ADDITIVE**.
+- on 2026-10-05 the project owner attested that no custom Iron's spells/schools were authored through KubeJS and that this addon was added as future creation infrastructure;
+- catalog contribution is therefore closed at **+0** at the accepted authored-content evidence ceiling; exact deployed-instance script parity remains unverified.
 
 This is documented in [`CURRENT-EVIDENCE-2026-10-04.md`](CURRENT-EVIDENCE-2026-10-04.md). Do not promote from this checkpoint alone.
 ## Collector-assisted evidence
@@ -53,7 +58,7 @@ Read `irons_spellbooks_kubejs_closure.status` as a routing aid only:
 - `ZERO_CONTENT_REVIEW_CANDIDATE` -> provider + both hosts are current-certified and the bounded tree is empty; review provenance/current-instance scope before closure;
 - `SCRIPT_REVIEW_REQUIRED` -> provider + both hosts are current-certified and bounded files exist; inspect the exact hashes/files regardless of marker count.
 
-None of these values changes row #98 automatically. Only catalog review can promote `⚠️` to `✅`.
+These values are deployment-parity routing states, not catalog statuses. Row #98 is already catalog-closed at `✅ / +0`; a `SCRIPT_REVIEW_REQUIRED` result that reveals an actual Iron's spell/school registration is a mandatory **catalog reopen trigger**.
 
 - If `current_physical_4_0_3_equality` is not `true`, stop: the collector is not observing the certified physical 4.0.3 artifact.
 - If `current_physical_3_16_3_equality` is not `true`, stop: the collector is not observing the certified current Iron's host.
@@ -112,16 +117,18 @@ For each surviving script-defined spell, close:
 
 Registered debug/admin-only or normally unreachable objects remain outside the strict numerator.
 
-## Zero-content closure
+## Zero-content parity confirmation
 
-Promote this provider to a closed zero-semantic framework only if authoritative current-instance evidence establishes that no relevant script registration exists.
+An authoritative current-instance inventory with no relevant Iron's spell/school registration corroborates the owner-attested catalog state and closes deployed-instance parity.
 
-Acceptable evidence includes an exact current `kubejs/` tree audited with no Iron's spell/school registrations, or a bounded assembled-registry provenance audit paired with the current script inventory.
+A repository search returning no scripts is insufficient for physical parity.
 
-A repository search returning no scripts is insufficient.
+If relevant scripts are found, do not preserve the `+0` catalog result by assumption: reopen the provider, enumerate the exact registered objects, deduplicate ownership, evaluate effective host config/acquisition/reachability, and then recompute the semantic contribution.
 
 ## Current result
 
 - base framework semantic contribution: **+0**;
-- current pack script-defined semantic contribution: **UNKNOWN / NOT ADDITIVE**;
-- provider state: **⚠️ partial / conditioned**.
+- project-authored custom Iron's spell/school contribution: **+0, owner-attested 2026-10-05**;
+- provider catalog state: **✅ cataloged**;
+- exact deployed-instance script parity: **PENDING QA**;
+- any contradictory physical registration: **REOPEN CATALOG**.
