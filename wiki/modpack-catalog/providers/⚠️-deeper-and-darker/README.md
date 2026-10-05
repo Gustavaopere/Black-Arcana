@@ -69,7 +69,9 @@ The expanded NON-MERGE audit **#622** then tested **80** candidates, validated t
 
 NON-MERGE audit **#632** separately tested the narrower hypothesis that the physical JAR is only a full repack/recompression of the publisher **effective extracted file tree**, with no extracted file-content changes. The successful run validated the publisher fingerprint and measured **61** effective-content-identical Info-ZIP/JDK rebuilds; **0/61** matched physical SHA-1 `83f7edd0...` or fingerprint `1917446721`. This rules out the bounded no-op full-repack family tested there, but it does not prove that every archive serializer/metadata layout has been excluded or that semantic file content necessarily changed.
 
-See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md), [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md), and [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md).
+Follow-up NON-MERGE audit **#635** re-downloaded the verified publisher artifact and inspected its central-directory/local-header/span structure directly. It found **2,900 unique entries**, **0** duplicate names, **0** duplicate local-header offsets, **0** CPython-style overlap-span violations, **0** full-entry `zipfile` read errors, `ZipFile.testzip() == NONE`, and **0** local-vs-central metadata mismatches. That result supersedes only the earlier explanatory note that publisher ZIP overlap forced #632's extraction boundary; the measured **0/61** #632 no-match remains valid.
+
+See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md), [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md), [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md), and [`PUBLISHER-ZIP-STRUCTURE-AUDIT.md`](PUBLISHER-ZIP-STRUCTURE-AUDIT.md).
 
 ## Exact source reproduction — corroboration, not closure
 

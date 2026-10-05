@@ -57,9 +57,11 @@ Result:
 
 ## Effective-content boundary
 
-The publisher JAR contains ZIP structure that Python 3.12 `zipfile` reports as overlapping when attempting ordinary direct per-entry reads.
+The #632 workflow used standard Info-ZIP extraction as its **effective extracted file-tree boundary** after its own Python 3.12 direct-read path reported overlapping ZIP entries.
 
-The audit therefore used the standard Info-ZIP extraction result as its **effective extracted file-tree boundary** and recorded duplicate entry names separately.
+A dedicated follow-up structural audit in NON-MERGE **#635** did **not** reproduce that overlap condition on an independently re-downloaded and verified publisher artifact: it found **0** duplicate names, **0** duplicate local-header offsets, **0** CPython-style span-overlap violations, **0** full-entry `zipfile` read errors, `ZipFile.testzip() == NONE`, and **0** local-header/central-directory mismatches.
+
+Therefore the overlap explanation is superseded. The #632 extracted-tree comparison remains a valid operational equivalence boundary for the 61 candidates it actually measured; only the reason for selecting that boundary is corrected.
 
 A candidate was retained only if:
 
@@ -68,7 +70,9 @@ A candidate was retained only if:
 
 Accordingly, all **61** measured candidates were effective-content-identical under that boundary.
 
-This is an operational extracted-tree equivalence test. It is not a claim that all low-level ZIP records, duplicate-entry layout, offsets, timestamps, extra fields, central-directory records or other archive metadata were identical.
+This is an operational extracted-tree equivalence test. It is not a claim that all low-level ZIP records, timestamps, extra fields, central-directory ordering or every possible archive serializer were identical.
+
+See [`PUBLISHER-ZIP-STRUCTURE-AUDIT.md`](PUBLISHER-ZIP-STRUCTURE-AUDIT.md).
 
 ## Bounded full-repack matrix
 
@@ -133,7 +137,7 @@ It does **not** prove:
 - that every possible ZIP/JAR serializer or archive-update strategy has been tested;
 - that the physical artifact necessarily changes semantic code/content;
 - that the physical artifact necessarily changes any of the three public/source supernatural action roots;
-- that duplicate-entry structure or untested low-level archive metadata cannot explain the mismatch;
+- that every untested low-level archive metadata/serialization form cannot explain the mismatch;
 - that the retained NeoVitae compatibility JARs are or are not the deployed artifact.
 
 The negative result is therefore bounded to the enumerated no-op full-repack family.
