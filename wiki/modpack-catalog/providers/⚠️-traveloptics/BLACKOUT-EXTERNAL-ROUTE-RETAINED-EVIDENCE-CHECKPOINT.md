@@ -25,7 +25,7 @@ Black Arcana does contain Traveloptics references in `src/catalogQaProbe/java/de
 
 After excluding that observational QA surface, no **literal/object-specific acquisition route** for `traveloptics:blackout` was identified in the versioned Black Arcana or sibling project surfaces checked.
 
-This is intentionally narrower than “no external route exists”. A generic external Iron's loot path could use school/global `SpellFilter` / `RandomizeSpellFunction` semantics, including a forced Eldritch/global filter, without mentioning `blackout` or `traveloptics` literally. Because the authoritative current assembled KubeJS/datapack/progression tree is not captured, those generic external filters remain **UNRESOLVED**.
+A follow-up current-tree audit now closes that exception for the **versioned project-owned repositories**. At Black Arcana `4749aac3...` and sibling `de80b186...`, no `SpellFilter`, `RandomizeSpellFunction`, `spell_filter` or `randomize_spell` route is versioned. The sibling's only runtime GLM is `rpgskilltree:reward_risk`, which scales already-generated loot and does not create spell/scroll identities; its Iron's progression adapter gates casting/inscription and awards mastery but does not grant spells. The sibling has no `server_scripts` tree and only two duplicated Volcanoes integration-template `.js` files; Black Arcana has zero versioned `.js` files and zero server/startup-script paths. This excludes the **current versioned project-owned generic route**, while the actual assembled external KubeJS/datapack/mod route remains unresolved because those physical surfaces are not captured. See [`BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md`](BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md).
 
 ## Project / Library retained-source search
 
@@ -67,7 +67,8 @@ Retained evidence now supports the following bounded statement:
 - exact File `6342780` provider built-in generic random-spell route: **EXCLUDED**;
 - Black Arcana literal/object-specific external route: **NOT FOUND AFTER EXCLUDING THE OBSERVATIONAL QA PROBE**;
 - sibling literal/object-specific external route: **NOT FOUND IN THE SEARCHED VERSIONED SURFACES**;
-- generic external school/global filter route: **UNRESOLVED — may exist without literal Blackout/Traveloptics references**;
+- current versioned project-owned generic school/global filter route: **EXCLUDED IN AUDITED REPOSITORY SURFACES**;
+- assembled-pack external school/global filter route: **UNRESOLVED — physical KubeJS/datapack/other-mod surfaces are not captured**;
 - retained Library KubeJS/datapack source route: **NOT PRESERVED / NOT FOUND**;
 - actual assembled current-pack external route: **UNVERIFIED**;
 - current physical Traveloptics-only delta route: **UNVERIFIED**.
