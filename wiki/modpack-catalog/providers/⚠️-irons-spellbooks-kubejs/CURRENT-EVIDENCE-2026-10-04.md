@@ -11,6 +11,7 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / BASE FRAMEWORK +0 / CURRENT S
 - Black Arcana main reconciled for the Iron's-3.16.3 same-instance host hardening in PR #627: `969771099e8e04758f29b8aa09835b467967d3c7`.
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Deeper audit #629: `3c8f5163ea7985bdf5ed667b804d0f663c676798`.
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Traveloptics #628: `d1cffe8068d16fcf6c61876e14133bf966c8d387`.
+- Black Arcana main reconciled again before final PR #627 validation after concurrent Deeper summary #630: `59fc2ead8443ecdb2cb652047fa948952baa7fec`.
 - Current sibling/modlist authority: `Gustavaopere/neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 - Current registry row: Black Arcana `wiki/modpack-catalog/PROVIDERS.md` row 98.
 - Certified sibling dossier:
