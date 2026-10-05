@@ -1,0 +1,233 @@
+name: Traveloptics Blackout Generic Loot Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Audit exact-alpha Blackout generic-loot exceptions
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import json
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar = "traveloptics.jar"
+          provider_prefix = "com/gametechbc/traveloptics/"
+          provider_pkg = "com.gametechbc.traveloptics."
+          blackout_id = "traveloptics:blackout"
+
+          with zipfile.ZipFile(jar) as z:
+              entries = z.namelist()
+
+              json_entries = [
+                  e for e in entries
+                  if e.startswith("data/traveloptics/") and e.endswith(".json")
+              ]
+
+              structured_blackout_refs = []
+              spell_filters = []
+              randomize_spell_nodes = []
+
+              def walk(node, path, loc="$"):
+                  if isinstance(node, dict):
+                      for k, v in node.items():
+                          here = f"{loc}.{k}"
+                          if k == "spell_filter" and isinstance(v, dict):
+                              force = bool(v.get("force", False))
+                              school = v.get("school")
+                              spells = v.get("spells")
+                              if not isinstance(spells, list):
+                                  spells = []
+                              row = {
+                                  "path": path,
+                                  "location": here,
+                                  "force": force,
+                                  "school": school,
+                                  "spells": [s for s in spells if isinstance(s, str)],
+                              }
+                              spell_filters.append(row)
+
+                          if isinstance(v, str) and "randomize_spell" in v:
+                              randomize_spell_nodes.append({
+                                  "path": path,
+                                  "location": here,
+                                  "value": v,
+                              })
+
+                          walk(v, path, here)
+                  elif isinstance(node, list):
+                      for idx, item in enumerate(node):
+                          walk(item, path, f"{loc}[{idx}]")
+                  elif isinstance(node, str):
+                      if node == blackout_id:
+                          structured_blackout_refs.append({
+                              "path": path,
+                              "location": loc,
+                          })
+
+              for e in json_entries:
+                  try:
+                      data = json.loads(z.read(e))
+                  except Exception:
+                      continue
+                  walk(data, e)
+
+              provider_class_entries = [
+                  e for e in entries
+                  if e.startswith(provider_prefix) and e.endswith(".class")
+              ]
+
+              class_spellfilter_refs = []
+              class_randomizer_refs = []
+              class_blackout_symbol_refs = []
+
+              sf_needle = b"io/redspace/ironsspellbooks/loot/SpellFilter"
+              rf_needle = b"io/redspace/ironsspellbooks/loot/RandomizeSpellFunction"
+              blackout_symbol = b"BLACKOUT_SPELL"
+
+              for e in provider_class_entries:
+                  raw = z.read(e)
+                  if sf_needle in raw:
+                      class_spellfilter_refs.append(e[:-6].replace("/", "."))
+                  if rf_needle in raw:
+                      class_randomizer_refs.append(e[:-6].replace("/", "."))
+                  if blackout_symbol in raw:
+                      class_blackout_symbol_refs.append(e[:-6].replace("/", "."))
+
+          def fqcn_for_suffix(simple):
+              suffix = "/" + simple + ".class"
+              matches = [e for e in entries if e.endswith(suffix)]
+              if len(matches) != 1:
+                  raise SystemExit(f"{simple}: expected exactly one class entry, found {len(matches)}: {matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          def javap_signatures(fqcn):
+              p = subprocess.run(
+                  ["javap", "-classpath", jar, "-p", fqcn],
+                  check=True, text=True, capture_output=True
+              )
+              lines = [line.rstrip() for line in p.stdout.splitlines()]
+              decl = next((line.strip() for line in lines if line.strip().startswith(("public class ", "protected class ", "class ", "public abstract class ", "abstract class "))), "")
+              declared_allow_looting = any(re.search(r"\bboolean\s+allowLooting\s*\(\s*\)", line) for line in lines)
+              superclass = None
+              m = re.search(r"\bextends\s+([\w.$]+)", decl)
+              if m:
+                  superclass = m.group(1)
+              return superclass, declared_allow_looting
+
+          blackout_fqcn = fqcn_for_suffix("BlackoutSpell")
+          chain = []
+          current = blackout_fqcn
+          seen = set()
+          while current and current not in seen:
+              seen.add(current)
+              superclass, declares = javap_signatures(current)
+              chain.append({
+                  "class": current,
+                  "declares_allowLooting": declares,
+                  "superclass": superclass,
+              })
+              if not superclass or not superclass.startswith(provider_pkg):
+                  break
+              current = superclass
+
+          forced_eldritch = [
+              r for r in spell_filters
+              if r["force"] and r["school"] in ("irons_spellbooks:eldritch", "traveloptics:eldritch")
+          ]
+          explicit_blackout_filter = [
+              r for r in spell_filters
+              if blackout_id in r["spells"]
+          ]
+
+          report = Path("audit/report.txt")
+          with report.open("w", encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha Blackout generic-loot clean-room audit\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("retention=structured filter summaries + provider class identity refs + allowLooting declaration chain only\n")
+              f.write("\n")
+
+              f.write("blackout_provider_chain\n")
+              for row in chain:
+                  f.write(
+                      f"{row['class']}|declares_allowLooting={str(row['declares_allowLooting']).upper()}|"
+                      f"superclass={row['superclass']}\n"
+                  )
+
+              f.write("\nstructured_summary\n")
+              f.write(f"provider_json_files={len(json_entries)}\n")
+              f.write(f"structured_blackout_refs={len(structured_blackout_refs)}\n")
+              f.write(f"spell_filter_nodes={len(spell_filters)}\n")
+              f.write(f"randomize_spell_nodes={len(randomize_spell_nodes)}\n")
+              f.write(f"forced_eldritch_filters={len(forced_eldritch)}\n")
+              f.write(f"explicit_blackout_filters={len(explicit_blackout_filter)}\n")
+
+              for row in spell_filters:
+                  f.write(
+                      "spell_filter|"
+                      f"path={row['path']}|location={row['location']}|"
+                      f"force={str(row['force']).lower()}|school={row['school']}|"
+                      f"spells={','.join(row['spells'])}\n"
+                  )
+
+              f.write("\nprovider_class_reference_summary\n")
+              f.write(f"provider_classes={len(provider_class_entries)}\n")
+              f.write(f"classes_ref_SpellFilter={len(class_spellfilter_refs)}\n")
+              for name in class_spellfilter_refs:
+                  f.write(f"SpellFilter_ref|{name}\n")
+              f.write(f"classes_ref_RandomizeSpellFunction={len(class_randomizer_refs)}\n")
+              for name in class_randomizer_refs:
+                  f.write(f"RandomizeSpellFunction_ref|{name}\n")
+              f.write(f"classes_ref_BLACKOUT_SPELL_symbol={len(class_blackout_symbol_refs)}\n")
+              for name in class_blackout_symbol_refs:
+                  f.write(f"BLACKOUT_SPELL_ref|{name}\n")
+
+              f.write("\nstructured_blackout_reference_rows\n")
+              for row in structured_blackout_refs:
+                  f.write(f"{row['path']}|{row['location']}\n")
+
+              f.write("\nrandomize_spell_rows\n")
+              for row in randomize_spell_nodes:
+                  f.write(f"{row['path']}|{row['location']}|{row['value']}\n")
+
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-blackout-generic-loot-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
