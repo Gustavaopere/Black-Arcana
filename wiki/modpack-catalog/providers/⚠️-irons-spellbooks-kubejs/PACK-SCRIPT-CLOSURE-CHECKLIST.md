@@ -19,7 +19,8 @@ Close the only semantic question that the base-addon audit cannot answer: whethe
 
 ## Current freshness checkpoint — 2026-10-04
 
-- Black Arcana main considered at branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`;
+- historical Black Arcana main at the original evidence-branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`;
+- Black Arcana main reconciled for the current host-377 collector hardening in PR #624: `3b386df50d3db3a8e5606529f97c7413dbf6ab32`;
 - sibling modlist authority: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`;
 - current physical row remains `irons_spells_js-4.0.3.jar` / mod id `irons_spells_js` / runtime `4.0.3`;
 - current host stack remains Iron's `1.21.1-3.16.3` + KubeJS `2101.7.2-build.377`;
