@@ -137,6 +137,25 @@ Results:
 The first-size match is not byte identity and is not treated as proof of the first local patch contents. The no-match result only excludes this bounded candidate family; it does not identify the actual local transformation.
 
 See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md).
+
+## Extended patch-reproduction matrix
+
+NON-MERGE audit PR **#622** expands the candidate space to **80** artifacts and first validates the CurseForge fingerprint implementation against the official publisher artifact (**1323964125 == 1323964125**).
+
+Measured result:
+
+- candidates tested: **80**;
+- retained-size matches: **14**;
+- physical SHA-1 or physical fingerprint matches: **0**.
+
+A coherent `json + final newline / Info-ZIP -X / DEFLATE 5–7` family reproduces both retained local sizes:
+
+- stage 1, remove `PlayerMixin`: **3,906,052 bytes**, SHA-1 `286581c0a2dcaf0bfd9de457b3bc720723b899f2`, fingerprint **2334698443**;
+- stage 2, remove `PlayerMixin` + `ServerPlayerMixin`: **3,906,044 bytes**, SHA-1 `f59297201d7510cd45005451fed9ed7f539b5db5`, fingerprint **3888303024**.
+
+Those candidates reproduce retained **sizes only**. Neither stage matches physical SHA-1 `83f7edd0...` or physical fingerprint **1917446721**.
+
+See [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md).
 ## Raw-byte limitation
 
 The retained generated JARs are visible through Project Library metadata, but this audit does not have an authorized raw-byte materialization path for them. Their SHA-1/SHA-256 values could therefore not be computed here.
