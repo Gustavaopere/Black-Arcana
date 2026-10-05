@@ -35,6 +35,7 @@ These are direct constants from exact publisher File `6342780`; they are **not**
 - `getEffectDuration()`: **200.0**
 
 These are exact **raw accessor outputs** from File `6342780`. Counts are counts; no unit is assigned to the other numeric values unless independently established. They are not projected to current physical SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-SCALAR-ACCESSORS.md`.
+- `getRecastCount(int, LivingEntity)`: **L1 5 / L2 5 / L3 5 / L4 5 / L5 5**
 
 ## Reachability
 
@@ -46,4 +47,4 @@ Identity, school and the File-`6342780` default mechanics baseline above are exa
 
 Iron's owns host casting/resource settlement; T.O Magic owns this spell. Provider stays **⚠️** because current-physical registry equality/provenance and full runtime closure are not proven.
 
-Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`; `../HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`.
+Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`; `../HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`; `../EXACT-4.4.0.1-LIVINGENTITY-ACCESSORS.md`.
