@@ -87,11 +87,13 @@ The audit does not exclude:
 
 The current physical Traveloptics artifact remains `OTHER_VERIFIED` relative to File `6342780`; exact-current registry/content equality is not proven.
 
+A separate retained-evidence search additionally found no versioned Black Arcana/sibling code-script-data route and no preserved Library KubeJS/datapack source resolving to Blackout. That is **negative retained-evidence only**, not proof that the assembled current pack has no external route. See [`BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md`](BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md).
+
 ## Catalog consequence
 
 Blackout remains:
 
-`REGISTERED / UNIQUE / allowCrafting=false / allowLooting=false / EXACT-ALPHA BUILT-IN LOOT EXCLUDED / CURRENT-PACK SURVIVAL REACHABILITY UNVERIFIED`.
+`REGISTERED / UNIQUE / allowCrafting=false / allowLooting=false / EXACT-ALPHA BUILT-IN LOOT EXCLUDED / NO PRESERVED EXTERNAL ROUTE FOUND / CURRENT-PACK SURVIVAL REACHABILITY UNVERIFIED`.
 
 To close current-pack acquisition, require a concrete external/current route resolving specifically to `traveloptics:blackout`, or an exact-current physical/runtime attestation proving such a route.
 
