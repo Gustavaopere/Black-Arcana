@@ -42,6 +42,7 @@ SIMPLY_MORE_ALPHA5_PHYSICAL_SHA1 = "51636477cd5c378f42d9700e1fe35cd952c8f4f1"
 SIMPLY_SWORDS_1702_PHYSICAL_SHA1 = "05b074ff774467f1fe9fb5592151b7845c321cbc"
 KUBEJSARSNOUVEAU_132_PHYSICAL_SHA1 = "f39f4f409e628731be551fd961fac2964768d358"
 IRONS_SPELLS_JS_403_PHYSICAL_SHA1 = "0481395c5847e2920d1425e77833bef87df63139"
+IRONS_SPELLBOOKS_3163_PHYSICAL_SHA1 = "017fd8140c477f9ae602cf95594f1c23bef1d6e3"
 KUBEJS_2101_7_2_BUILD_377_PHYSICAL_SHA1 = "150c5d6efc09b969ac350ea205128dff832e0850"
 
 SIMPLY_MORE_MIMICRY_FORMS = [
@@ -149,6 +150,7 @@ MOD_PATTERNS = {
     "ice_and_fire_ce": ["iceandfire-2.1.2.jar"],
     "kubejs": ["kubejs-neoforge-2101.7.2-build.377.jar"],
     "kubejsarsnouveau": ["kubejsarsnouveau-1.3.2.jar"],
+    "irons_spellbooks": ["irons_spellbooks-1.21.1-3.16.3.jar"],
     "irons_spells_js": ["irons_spells_js-4.0.3.jar"],
     "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
     "mowzies_mobs": ["mowziesmobs-1.21.1-1.8.2.jar"],
@@ -650,6 +652,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["current_physical_build_377_equality"] = entry["sha1"] == KUBEJS_2101_7_2_BUILD_377_PHYSICAL_SHA1
                 elif provider == "kubejsarsnouveau":
                     entry["current_physical_1_3_2_equality"] = entry["sha1"] == KUBEJSARSNOUVEAU_132_PHYSICAL_SHA1
+                elif provider == "irons_spellbooks":
+                    entry["current_physical_3_16_3_equality"] = entry["sha1"] == IRONS_SPELLBOOKS_3163_PHYSICAL_SHA1
                 elif provider == "irons_spells_js":
                     entry["current_physical_4_0_3_equality"] = entry["sha1"] == IRONS_SPELLS_JS_403_PHYSICAL_SHA1
                 elif provider == "not_enough_glyphs":
