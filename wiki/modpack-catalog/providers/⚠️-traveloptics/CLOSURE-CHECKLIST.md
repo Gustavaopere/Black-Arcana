@@ -166,6 +166,21 @@ Required closure evidence must establish an actual current-pack player path, suc
 
 Creative access, commands, registry presence, translation keys, generic publisher language, or the 1.20.1 Dead King acquisition loop do not close this 1.21.1 gate.
 
+### Retained external-route search — negative preservation evidence
+
+A 2026-10-05 bounded search checked the currently retained external acquisition surfaces outside Traveloptics itself:
+
+- Black Arcana repository code/script/data paths (`kubejs`, `src`, `data`, `scripts`) for both `blackout` and `traveloptics`: **0 route hits**;
+- sibling `neoforge-rpg-skilltree` equivalent code/script/data paths: **0 route hits**;
+- Project/Library semantic search for `traveloptics:blackout`, Blackout+Traveloptics, server scripts, global loot modifiers and datapack surfaces: matches are logs/modlists/catalog docs only;
+- retained Library `.js` / `.json` / `.toml` inventory dated 2026-08-15 through 2026-10-05 with KubeJS/server/startup-script/datapack/data/loot/Traveloptics/Blackout path-name markers: **0 preserved source artifacts**.
+
+This narrows the evidence corpus but does **not** prove assembled-pack absence: the authoritative current KubeJS/datapack/progression tree is not preserved/captured here, and current physical Traveloptics `7b74816e...` content remains unmaterialized.
+
+Canonical detail: [`BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md`](BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md).
+
+Gate 3 therefore remains open, but repeated generic searches of the same retained corpus are no longer useful. The next valid evidence must be an authoritative current assembled script/datapack/progression capture, exact-current Traveloptics content, or a concrete runtime/world acquisition checkpoint.
+
 ## Gate 4 — Somake Aqua ↔ T.O Aqua coexistence
 
 Current physical authority confirms both providers are installed:
