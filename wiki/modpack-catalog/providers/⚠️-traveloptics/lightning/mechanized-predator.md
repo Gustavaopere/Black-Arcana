@@ -34,6 +34,8 @@ These are direct constants from exact publisher File `6342780`; they are **not**
 - `getWatcherCount(int)`: **L1 1.0 / L2 2.0 / L3 3.0 / L4 4.0 / L5 5.0**
 
 These are exact **raw accessor outputs** from File `6342780`. Counts are counts; no unit is assigned to the other numeric values unless independently established. They are not projected to current physical SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-SCALAR-ACCESSORS.md`.
+- `getWatcherHealth(int)`: **L1 5.0 / L2 10.0 / L3 15.0 / L4 20.0 / L5 25.0**
+- `getProwlerHealth(int)`: **L1 80.0 / L2 100.0 / L3 120.0 / L4 140.0 / L5 160.0**
 
 ## Reachability
 
