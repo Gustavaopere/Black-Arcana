@@ -39,7 +39,7 @@ Temporary NON-MERGE PR **#474** further tested whether the current SHA-1 can be 
 
 A separate Project Library runtime checkpoint from **2026-08-19** proves that the assembled pack discovered the same nominal filename/version and that its runtime spell analyzer emitted exactly **33 unique `traveloptics:` spell IDs**, equal as a set to the File-6342780 33-ID baseline, including `traveloptics:blackout`. A direct physical inventory only three days later, on **2026-08-22**, records SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
-The retained chronology is therefore: Aug-17 local repair artifacts -> Aug-18 launcher `isModified=true` -> Aug-19 33-ID runtime observation -> Aug-22 first direct `7b74816e...` hash capture. This is substantially stronger lineage evidence than the previous September-only boundary, but the Aug-19 log still carries no JAR SHA-1. It does **not** prove that the 33-ID runtime observation used the exact Aug-22 bytes and does not close Gate 1.
+The retained chronology is therefore: Aug-16 repeated duplicate-codec assembled-runtime crashes -> Aug-17 local repair artifacts -> Aug-18 launcher `isModified=true` -> Aug-19 33-ID runtime observation -> Aug-22 first direct `7b74816e...` hash capture. This is substantially stronger lineage evidence than the previous September-only boundary, but the Aug-19 log still carries no JAR SHA-1. It does **not** prove that the 33-ID runtime observation used the exact Aug-22 bytes and does not close Gate 1.
 
 ## Gate 2 — Loot-modifier registry initialization
 
@@ -70,7 +70,15 @@ Required:
 
 The exact patch candidate is now cryptographically fingerprinted and independently proven to differ from the original in only `TOLootModifiers.class`. The patch publisher states that this class delta corrects the universal codec registration. That still does not prove the user's pack deploys SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`, nor that the assembled modpack completes registry initialization with the actual deployed artifact.
 
-Current state: `CONTEMPORANEOUS PHYSICAL-RUNTIME INITIALIZATION OBSERVED / PROCESS HASH NOT EMBEDDED / DISTINCT-CODEC PROBE STILL OPEN`.
+Current state: `HISTORICAL DUPLICATE-CODEC FAILURE REPRODUCED / CONTEMPORANEOUS CURRENT-LINE INIT OBSERVED / PROCESS HASH NOT EMBEDDED / DISTINCT-CODEC PROBE STILL OPEN`.
+
+### 2026-08-16 assembled-runtime failure reproduction — historical pre-repair state
+
+Project Library preserves four independent 2026-08-16 crash reports under the canonical filename `traveloptics-4.4.0.1-1.21.1.jar`. Each attributes the Traveloptics mod-loading failure to `RegisterEvent` and records `IllegalStateException: Adding duplicate value ... to registry`, where the duplicated codec is a `KeyLootModifier` `RecordCodec`.
+
+This is direct assembled-pack reproduction of the failure mode predicted by the exact File-6342780 `TOLootModifiers` structure. The crash reports do not embed a JAR SHA-1, so they are **historical / process-hash-unbound** evidence and cannot be projected onto current `7b74816e...` bytes.
+
+Canonical detail: [`RUNTIME-2026-08-16-LOOT-CODEC-CRASH.md`](RUNTIME-2026-08-16-LOOT-CODEC-CRASH.md).
 
 ### 2026-09-08 physical/runtime correlation — current physical line
 
