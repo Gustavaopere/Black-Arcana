@@ -112,9 +112,17 @@ Nothing here is projected to current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1
 | `traveloptics:em_pulse` | `EmPulse.getRadius(int, LivingEntity)` | L1=4.0, L2=6.0, L3=8.0, L4=10.0, L5=12.0 |
 | `traveloptics:aerial_collapse` | `AerialCollapseSpell.getRadius(int, LivingEntity)` | L1=4.0, L2=6.0, L3=8.0, L4=10.0, L5=12.0 |
 
+## Current-host effective-cast bridge — not part of the 37 File-only outputs
+
+A separate exact-provider/current-host bridge closes seven `getEffectiveCastTime(int, LivingEntity)` results for Abyssal Blast, Blackout, Cursed Minefield, Vortex Punch, Gyro Slash, Death Laser and Aerial Collapse. Audit #619 proves all seven exact File-`6342780` provider methods are direct delegates to `getCastTime(level)`; current Iron's 3.16.3 source resolves that host accessor to the raw `castTime` field for these `LONG` spells.
+
+Results: **50 / 39 / 45 / 15 / 25 / 20 / 10 ticks**, respectively.
+
+These are intentionally excluded from the 37 File-only count because the numeric bridge depends on the current Iron's host contract. See `EXACT-4.4.0.1-CURRENT-HOST-EFFECTIVE-CAST-BRIDGE.md`.
+
 ## Catalog consequence
 
-This checkpoint now carries **37 exact resolved bounded accessor outputs across 24/33 spell cards**: 29 no-`LivingEntity` values plus 8 LivingEntity-signature values proven entity-unused before evaluation. The remaining LivingEntity-bearing surface is bounded in `EXACT-4.4.0.1-LIVINGENTITY-ACCESSORS.md`.
+This checkpoint carries **37 exact File-only resolved bounded accessor outputs across 24/33 spell cards**: 29 no-`LivingEntity` values plus 8 LivingEntity-signature values proven entity-unused before evaluation. A separate current-host bridge closes seven effective-cast-time results and expands combined documented accessor/bridge coverage to **28/33 spell identities**, without changing the 37-row File-only count. The remaining entity-reading surface is bounded in `EXACT-4.4.0.1-LIVINGENTITY-ACCESSORS.md`.
 
 It does not:
 
