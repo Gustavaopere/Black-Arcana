@@ -166,20 +166,20 @@ Required closure evidence must establish an actual current-pack player path, suc
 
 Creative access, commands, registry presence, translation keys, generic publisher language, or the 1.20.1 Dead King acquisition loop do not close this 1.21.1 gate.
 
-### Retained external-route search — negative preservation evidence
+### Retained literal/object-specific route search — negative preservation evidence
 
-A 2026-10-05 bounded search checked the currently retained external acquisition surfaces outside Traveloptics itself:
+A 2026-10-05 bounded search checked the currently retained external acquisition surfaces outside Traveloptics itself for literal/object-specific Blackout routes.
 
-- Black Arcana repository code/script/data paths (`kubejs`, `src`, `data`, `scripts`) for both `blackout` and `traveloptics`: **0 route hits**;
-- sibling `neoforge-rpg-skilltree` equivalent code/script/data paths: **0 route hits**;
-- Project/Library semantic search for `traveloptics:blackout`, Blackout+Traveloptics, server scripts, global loot modifiers and datapack surfaces: matches are logs/modlists/catalog docs only;
-- retained Library `.js` / `.json` / `.toml` inventory dated 2026-08-15 through 2026-10-05 with KubeJS/server/startup-script/datapack/data/loot/Traveloptics/Blackout path-name markers: **0 preserved source artifacts**.
+- Black Arcana contains Traveloptics references in the isolated `src/catalogQaProbe` runtime evidence source. That code was inspected and is observational only: it reports mod presence and the bounded `traveloptics:key_loot` / `traveloptics:universal_loot` serializer registry targets; it does not grant spells, build loot tables, add recipes or implement acquisition.
+- After excluding that QA-only surface, no literal/object-specific Blackout acquisition route was identified in the searched Black Arcana/sibling versioned surfaces.
+- Project/Library semantic search for `traveloptics:blackout`, Blackout+Traveloptics, server scripts, global loot modifiers and datapack surfaces returns runtime logs, modlists or catalog/project documentation rather than a retained acquisition source.
+- Retained Library `.js` / `.json` / `.toml` inventory dated 2026-08-15 through 2026-10-05 with KubeJS/server/startup-script/datapack/data/loot/Traveloptics/Blackout path-name markers contains **0 preserved source artifacts**.
 
-This narrows the evidence corpus but does **not** prove assembled-pack absence: the authoritative current KubeJS/datapack/progression tree is not preserved/captured here, and current physical Traveloptics `7b74816e...` content remains unmaterialized.
+This does **not** exclude a generic external Iron's route. A forced school/global `SpellFilter` / `RandomizeSpellFunction` path could admit an Eldritch spell without containing either `blackout` or `traveloptics` literally. Because the authoritative current assembled KubeJS/datapack/progression tree is not preserved/captured here, generic external filters remain **UNRESOLVED**. Current physical Traveloptics `7b74816e...` content also remains unmaterialized.
 
 Canonical detail: [`BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md`](BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md).
 
-Gate 3 therefore remains open, but repeated generic searches of the same retained corpus are no longer useful. The next valid evidence must be an authoritative current assembled script/datapack/progression capture, exact-current Traveloptics content, or a concrete runtime/world acquisition checkpoint.
+Gate 3 therefore remains open. Repeating literal-ID searches of the same retained corpus is no longer useful; the next valid evidence must be an authoritative current assembled script/datapack/progression capture, exact-current Traveloptics content, or a concrete runtime/world acquisition checkpoint.
 
 ## Gate 4 — Somake Aqua ↔ T.O Aqua coexistence
 
