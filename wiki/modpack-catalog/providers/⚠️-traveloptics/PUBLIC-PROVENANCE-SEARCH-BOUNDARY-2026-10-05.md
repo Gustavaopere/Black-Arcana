@@ -60,7 +60,7 @@ Project/Library metadata preserves two candidate files from **2026-08-17**:
 
 The first size equals publisher File `6342780`'s recorded length; size equality is not hash equality.
 
-The currently auditable retained-file surface exposes name, size and timestamps for these two records but no cryptographic checksum for either candidate. Their raw bytes are not available through the present retained-evidence path used by this catalog audit. Consequently:
+The currently auditable retained-evidence corpus preserves name, size and timestamps for these two records but no cryptographic checksum or exact-content bridge for either candidate. Consequently:
 
 - neither Aug-17 candidate can be identified as SHA-1 `7b74816e...`;
 - neither can be excluded by direct candidate hashing here;
