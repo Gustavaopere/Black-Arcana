@@ -43,6 +43,19 @@ A separate Project Library runtime checkpoint from **2026-08-19** proves that th
 
 The retained chronology is therefore: Aug-16 repeated duplicate-codec assembled-runtime crashes -> Aug-17 local repair artifacts -> immediate post-repair NeoForge process discovers the canonical `traveloptics-4.4.0.1-1.21.1.jar` from the real instance `mods` directory and progresses past the former fatal registration stage into Traveloptics resource reload -> Aug-18 launcher `isModified=true` -> Aug-19 33-ID runtime observation -> Aug-22 first direct `7b74816e...` hash capture. The canonical-slot discovery occurs approximately 73 seconds after the retained Library timestamp for `traveloptics-4.4.0.1-1.21.1-fixed-keyloot.jar`; this strongly narrows the repair episode but does **not** prove that the candidate was copied/renamed into the canonical slot or that either Aug-17/Aug-19 process used the exact Aug-22 bytes. See [`RUNTIME-2026-08-17-POST-REPAIR-CORRELATION.md`](RUNTIME-2026-08-17-POST-REPAIR-CORRELATION.md). Gate 1 remains open.
 
+### 2026-08-22 first-hash-day runtime registry correlation — current physical line
+
+Project Library now provides a second current-line temporal bridge on the date of the **first direct** `7b74816e...` physical capture:
+
+- physical inventory `fcb79de3-0e3e-41af-8136-cd524859f71c.txt` records the canonical JAR at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` / fingerprint `4254006126`;
+- two same-day assembled debug logs, `debug(20260822-184009).log` and `debug(20260822-185838).log`, expose Traveloptics spell registrations to the runtime attribute layer shortly afterward;
+- a bounded Library-index audit positively confirms **at least 25/33** exact publisher-baseline Traveloptics IDs in those two logs, including `traveloptics:blackout`;
+- the eight IDs not independently surfaced by the bounded index are **not** treated as absent because the raw log bytes are not currently readable/exportable through the available Project file path.
+
+This materially strengthens the current-line registry correlation because it occurs on the first hash-capture day. It remains **process-hash-unbound**: neither Java process reports the SHA-1, no immutability between inventory and process is proven, and exact-current 33/33 set equality is still open.
+
+Canonical detail: [`RUNTIME-2026-08-22-FIRST-HASH-REGISTRY-CORRELATION.md`](RUNTIME-2026-08-22-FIRST-HASH-REGISTRY-CORRELATION.md).
+
 ## Gate 2 — Loot-modifier registry initialization
 
 Exact clean-room structure of publisher File `6342780` established:
