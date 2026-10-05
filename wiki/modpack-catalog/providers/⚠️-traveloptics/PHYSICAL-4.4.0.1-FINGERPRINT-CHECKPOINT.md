@@ -78,6 +78,23 @@ This is **negative lineage evidence only**. It narrows the hypothesis space but 
 
 The initial #474 workflow label also carried `fb37ae0...` as an assumed older Traveloptics hash. Post-run row-boundary verification against the sibling physical dossiers proved that `fb37ae0...` belongs to neighboring **Transmog row #549**, not Traveloptics. That comparison is explicitly discarded and is not catalog evidence.
 
+## Expanded surgical repack lineage audit — 2026-10-05
+
+Temporary NON-MERGE PR **#648** expanded the one-entry lineage matrix to **164** surgical candidates using the same verified publisher File `6342780` and public patch replacement `TOLootModifiers.class`.
+
+Successful dedicated run `37317446376` / job `111787652542` produced text-only artifact `11348308934`, digest `sha256:811beda99b541c7018dbabafe39ecc1100868b3d8558015bc6e2f9ef0637dcd9`.
+
+Measured result:
+
+- physical SHA-1 `7b74816e...` matches: **0/164**;
+- physical fingerprint `4254006126` matches: **0/164**;
+- retained `fixed-keyloot.jar` size **18,393,641** matches: **0/164**;
+- closest candidate family: **18,393,560 bytes**, only **81 bytes below** the retained candidate size, but with different SHA-1/fingerprint values.
+
+The matrix varies Info-ZIP delete/add vs direct update, default vs `-X` extra fields, compression levels 0–9, four bounded replacement-member timestamps, and JDK `jar uf`. This excludes those exact outputs only; it does not identify the retained candidate or current physical transformation.
+
+Canonical detail: [`EXPANDED-SURGICAL-REPACK-AUDIT.md`](EXPANDED-SURGICAL-REPACK-AUDIT.md).
+
 ## Older CurseForge instance metadata — historical context only
 
 A Project Library `minecraftinstance.json` snapshot stored on 2026-08-18 preserves the CurseForge-managed install metadata for the same on-disk filename:
