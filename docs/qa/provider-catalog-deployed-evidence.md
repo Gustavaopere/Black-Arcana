@@ -111,7 +111,19 @@ and emits `current_physical_4_0_3_equality` against canonical current-pack SHA-1
 
 This proves only that the assembled instance contains the certified current physical bridge artifact. It does not prove source-build byte equivalence and it does not establish whether pack scripts register custom Iron's spells, schools or items.
 
-Pair this fingerprint with the exact current KubeJS host fingerprint and `kubejs_script_inventory` from the same assembled instance. Provider-binary equality alone is not sufficient for current-pack closure.
+Pair this fingerprint with both exact current host fingerprints — Iron's Spellbooks 3.16.3 and KubeJS build 377 — plus `kubejs_script_inventory` from the same assembled instance. Provider-binary equality alone is not sufficient for current-pack closure.
+
+### Current Iron's Spellbooks host 1.21.1-3.16.3 physical fingerprint
+
+The collector hashes only the exact current filename:
+
+`irons_spellbooks-1.21.1-3.16.3.jar`
+
+and emits `current_physical_3_16_3_equality` against canonical current-pack SHA-1:
+
+`017fd8140c477f9ae602cf95594f1c23bef1d6e3`.
+
+This is a same-instance host-identity gate for Iron's Spellbooks KubeJS closure. The addon executes against Iron's registries, config and casting semantics, so current-pack zero-content/script-review routing is not valid when the assembled instance carries a different or unverified Iron's host.
 
 ### Current KubeJS host 2101.7.2-build.377 physical fingerprint
 
@@ -129,12 +141,14 @@ The report also emits `irons_spellbooks_kubejs_closure`, a fail-closed evidence-
 
 - `ARTIFACT_NOT_OBSERVED` — the exact Iron's Spellbooks KubeJS artifact was not captured;
 - `ARTIFACT_HASH_MISMATCH` — the provider artifact was captured but does not match the certified 4.0.3 SHA-1;
-- `KUBEJS_HOST_NOT_OBSERVED` — the certified provider artifact was captured but the exact current KubeJS build 377 artifact was not;
+- `IRONS_HOST_NOT_OBSERVED` — the certified provider artifact was captured but the exact current Iron's 3.16.3 host artifact was not;
+- `IRONS_HOST_HASH_MISMATCH` — the Iron's 3.16.3 filename was captured but its SHA-1 does not match the current physical checkpoint;
+- `KUBEJS_HOST_NOT_OBSERVED` — the certified provider and Iron's host were captured but the exact current KubeJS build 377 artifact was not;
 - `KUBEJS_HOST_HASH_MISMATCH` — the build-377 filename was captured but its SHA-1 does not match the current physical checkpoint;
-- `ZERO_CONTENT_REVIEW_CANDIDATE` — both binaries are certified and the bounded KubeJS inventory contains zero files;
-- `SCRIPT_REVIEW_REQUIRED` — both binaries are certified and the bounded KubeJS inventory contains one or more files.
+- `ZERO_CONTENT_REVIEW_CANDIDATE` — provider + both hosts are certified and the bounded KubeJS inventory contains zero files;
+- `SCRIPT_REVIEW_REQUIRED` — provider + both hosts are certified and the bounded KubeJS inventory contains one or more files.
 
-The closure object also records `artifact_certified`, `kubejs_host_certified`, KubeJS-root presence, bounded file count, marker-file count and sorted marker types. These are evidence workflow states, not catalog statuses. `ZERO_CONTENT_REVIEW_CANDIDATE` never means automatic ✅; authoritative-instance provenance and the provider checklist still control promotion.
+The closure object also records `artifact_certified`, `irons_host_certified`, `kubejs_host_certified`, KubeJS-root presence, bounded file count, marker-file count and sorted marker types. These are evidence workflow states, not catalog statuses. `ZERO_CONTENT_REVIEW_CANDIDATE` never means automatic ✅; authoritative-instance provenance and the provider checklist still control promotion.
 
 ### KubeJS Ars Nouveau 1.3.2 physical fingerprint
 

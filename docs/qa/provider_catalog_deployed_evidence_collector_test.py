@@ -130,6 +130,23 @@ allow_lost_tablet = false
             self.assertFalse(entry["current_physical_4_0_3_equality"])
 
 
+    def test_hash_inventory_checks_current_irons_spellbooks_3163_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            (mods / "irons_spellbooks-1.21.1-3.16.3.jar").write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("irons_spellbooks", result)
+            self.assertEqual(1, len(result["irons_spellbooks"]))
+            entry = result["irons_spellbooks"][0]
+            self.assertEqual("irons_spellbooks-1.21.1-3.16.3.jar", entry["filename"])
+            self.assertIn("current_physical_3_16_3_equality", entry)
+            self.assertFalse(entry["current_physical_3_16_3_equality"])
+
+
     def test_hash_inventory_checks_current_kubejs_build_377_physical_fingerprint(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
@@ -469,6 +486,25 @@ enable_tunneling = false
             self.assertTrue(row["irons_spellbooks_kubejs_markers_truncated"])
 
 
+    def test_classifies_irons_spellbooks_kubejs_closure_fail_closed_without_current_irons_host(self) -> None:
+        result = collector.classify_irons_spellbooks_kubejs_closure(
+            {
+                "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                "kubejs": [{"current_physical_build_377_equality": True}],
+                "irons_spellbooks": [],
+            },
+            {
+                "kubejs_root_present": False,
+                "file_count": 0,
+                "surface_counts": {},
+                "files": [],
+            },
+        )
+
+        self.assertEqual("IRONS_HOST_NOT_OBSERVED", result["status"])
+        self.assertFalse(result.get("irons_host_certified", False))
+
+
     def test_classifies_irons_spellbooks_kubejs_closure_evidence_fail_closed(self) -> None:
         empty_inventory = {
             "kubejs_root_present": False,
@@ -476,7 +512,10 @@ enable_tunneling = false
             "surface_counts": {},
             "files": [],
         }
-        current_host = {"kubejs": [{"current_physical_build_377_equality": True}]}
+        current_host = {
+            "irons_spellbooks": [{"current_physical_3_16_3_equality": True}],
+            "kubejs": [{"current_physical_build_377_equality": True}],
+        }
 
         self.assertEqual(
             "ARTIFACT_NOT_OBSERVED",
@@ -496,10 +535,22 @@ enable_tunneling = false
             )["status"],
         )
         self.assertEqual(
+            "IRONS_HOST_HASH_MISMATCH",
+            collector.classify_irons_spellbooks_kubejs_closure(
+                {
+                    "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                    "irons_spellbooks": [{"current_physical_3_16_3_equality": False}],
+                    "kubejs": [{"current_physical_build_377_equality": True}],
+                },
+                empty_inventory,
+            )["status"],
+        )
+        self.assertEqual(
             "KUBEJS_HOST_HASH_MISMATCH",
             collector.classify_irons_spellbooks_kubejs_closure(
                 {
                     "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                    "irons_spellbooks": [{"current_physical_3_16_3_equality": True}],
                     "kubejs": [{"current_physical_build_377_equality": False}],
                 },
                 empty_inventory,
@@ -583,6 +634,7 @@ enable_tunneling = false
                 "collect_mod_hashes",
                 return_value={
                     "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                    "irons_spellbooks": [{"current_physical_3_16_3_equality": True}],
                     "kubejs": [],
                 },
             ), patch(
