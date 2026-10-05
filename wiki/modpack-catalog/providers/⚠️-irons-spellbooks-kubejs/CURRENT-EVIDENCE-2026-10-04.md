@@ -12,6 +12,7 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / BASE FRAMEWORK +0 / CURRENT S
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Deeper audit #629: `3c8f5163ea7985bdf5ed667b804d0f663c676798`.
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Traveloptics #628: `d1cffe8068d16fcf6c61876e14133bf966c8d387`.
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Deeper summary #630: `59fc2ead8443ecdb2cb652047fa948952baa7fec`.
+- Black Arcana main reconciled again before final PR #627 validation after concurrent Traveloptics runtime evidence #631: `285499cb762173a1b1079cc4a72bbd6d02d0274e`.
 - Current sibling/modlist authority: `Gustavaopere/neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 - Current registry row: Black Arcana `wiki/modpack-catalog/PROVIDERS.md` row 98.
 - Certified sibling dossier:
