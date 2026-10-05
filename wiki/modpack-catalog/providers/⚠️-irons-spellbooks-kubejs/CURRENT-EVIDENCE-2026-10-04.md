@@ -100,6 +100,8 @@ The exact 4.0.3 source checkpoint now has an explicit **30 / 30 Java-file covera
 
 Therefore the remaining `⚠️ PARTIAL / CONDITIONAL` state is not caused by unknown provider-source behavior. The unresolved variable is current assembled-pack content: the authoritative build-377 KubeJS script/provenance tree has still not been captured.
 
+Whole-tree follow-up: the exact source repository contains **49 file paths total**, all classified; `src/generated/resources/**` is absent, and no packaged provider `data/**` or semantic `assets/**` roster exists. This reinforces that the unresolved content is pack-owned KubeJS state, not hidden fixed provider data.
+
 ## Decisive closure route
 
 Run the canonical read-only collector against the actual current assembled instance:
