@@ -25,7 +25,7 @@ Black Arcana does contain Traveloptics references in `src/catalogQaProbe/java/de
 
 After excluding that observational QA surface, no **literal/object-specific acquisition route** for `traveloptics:blackout` was identified in the versioned Black Arcana or sibling project surfaces checked.
 
-A follow-up current-tree audit closes only the specifically named **`SpellFilter` / `RandomizeSpellFunction` surfaces and inspected GLM/progression/script/resource paths** in Black Arcana `4749aac3...` and sibling `de80b186...`: those named filter APIs are not versioned, the sibling's only inspected runtime GLM scales already-generated loot, its inspected Iron's progression adapter does not grant spells, and neither repository contains an assembled `server_scripts` tree. Other acquisition-capable versioned Java/data paths were not exhaustively audited, so a broader project-owned generic route remains **UNRESOLVED** alongside physical external surfaces. See [`BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md`](BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md).
+A follow-up current-tree audit first closed the specifically named **`SpellFilter` / `RandomizeSpellFunction` surfaces and inspected GLM/progression/script/resource paths**. A subsequent reproducible full-`src/main` audit at Black Arcana `da8a5c18...` + sibling `de80b186...` additionally found zero uses of the audited direct Iron's scroll/spell-container construction/lookup APIs, zero Traveloptics/Blackout/scroll/container resource tokens, and no Blackout route among the reviewed generic item/reward candidates. See [`BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md`](BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md) and [`BLACKOUT-VERSIONED-ACQUISITION-SURFACE-AUDIT.md`](BLACKOUT-VERSIONED-ACQUISITION-SURFACE-AUDIT.md). Reflection/encoded or otherwise dynamic project-owned paths remain outside that bounded negative claim, alongside physical external surfaces.
 
 ## Project / Library retained-source search
 
@@ -68,7 +68,8 @@ Retained evidence now supports the following bounded statement:
 - Black Arcana literal/object-specific external route: **NOT FOUND AFTER EXCLUDING THE OBSERVATIONAL QA PROBE**;
 - sibling literal/object-specific external route: **NOT FOUND IN THE SEARCHED VERSIONED SURFACES**;
 - named `SpellFilter` / `RandomizeSpellFunction` route in the audited versioned trees: **NOT FOUND**;
-- other versioned project-owned generic acquisition paths: **UNRESOLVED — not exhaustively audited**;
+- direct versioned project-owned Iron's construction/lookup APIs and reviewed generic item/reward candidates: **NEGATIVE FOR THE AUDITED SURFACES**;
+- dynamic/encoded or otherwise unenumerated versioned project-owned acquisition paths: **UNRESOLVED — bounded token/path audit is not universal semantic proof**;
 - assembled-pack external school/global filter route: **UNRESOLVED — physical KubeJS/datapack/other-mod surfaces are not captured**;
 - retained Library KubeJS/datapack source route: **NOT PRESERVED / NOT FOUND**;
 - actual assembled current-pack external route: **UNVERIFIED**;
