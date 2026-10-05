@@ -1,0 +1,394 @@
+name: audit-deeper-darker-zip-structure
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  zip-structure-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Black Arcana
+        uses: actions/checkout@v4
+
+      - name: Download and verify official Deeper and Darker 1.4.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-zip-structure"
+          mkdir -p "$OUT"
+
+          curl -fL --retry 3 --retry-all-errors \
+            "https://github.com/KyaniteMods/DeeperAndDarker/releases/download/v1.4.1/deeperdarker-neoforge-1.21.1-1.4.1.jar" \
+            -o "$OUT/publisher.jar"
+
+          test "$(stat -c %s "$OUT/publisher.jar")" = "3906057"
+          test "$(sha1sum "$OUT/publisher.jar" | awk '{print $1}')" = "b6094adde68bd4b909bc75c64901e1f3fb99ad8f"
+          test "$(sha256sum "$OUT/publisher.jar" | awk '{print $1}')" = "eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af"
+
+      - name: Inspect ZIP central-directory and local-header spans
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-zip-structure"
+
+          python3 - "$OUT/publisher.jar" "$OUT" <<'PY'
+          import collections
+          import csv
+          import pathlib
+          import struct
+          import sys
+          import zipfile
+
+          jar = pathlib.Path(sys.argv[1])
+          out = pathlib.Path(sys.argv[2])
+          raw = jar.read_bytes()
+
+          EOCD_SIG = b"PK\x05\x06"
+          CEN_SIG = b"PK\x01\x02"
+          LOC_SIG = b"PK\x03\x04"
+
+          eocd = raw.rfind(EOCD_SIG)
+          if eocd < 0:
+              raise SystemExit("EOCD not found")
+          if eocd + 22 > len(raw):
+              raise SystemExit("truncated EOCD")
+
+          (
+              sig,
+              disk_no,
+              cd_disk,
+              disk_entries,
+              total_entries,
+              cd_size,
+              cd_offset_stored,
+              comment_len,
+          ) = struct.unpack_from("<4s4H2IH", raw, eocd)
+
+          if sig != EOCD_SIG:
+              raise SystemExit("bad EOCD signature")
+          if any(v == 0xFFFF for v in (disk_entries, total_entries)) or any(
+              v == 0xFFFFFFFF for v in (cd_size, cd_offset_stored)
+          ):
+              raise SystemExit("ZIP64 sentinel detected; bounded parser intentionally stops")
+          if disk_no != 0 or cd_disk != 0 or disk_entries != total_entries:
+              raise SystemExit("multi-disk ZIP not supported by bounded audit")
+          if eocd + 22 + comment_len > len(raw):
+              raise SystemExit("EOCD comment extends beyond file")
+
+          # CPython zipfile computes an archive-prefix correction ("concat")
+          # from the EOCD location and central-directory fields, then adds it
+          # to every stored local-header offset.
+          concat = eocd - cd_size - cd_offset_stored
+          cd_offset_actual = cd_offset_stored + concat
+
+          entries = []
+          pos = cd_offset_actual
+          for index in range(total_entries):
+              if raw[pos:pos+4] != CEN_SIG:
+                  raise SystemExit(
+                      f"central directory signature mismatch at index={index} offset={pos}"
+                  )
+              fields = struct.unpack_from("<4s6H3I5H2I", raw, pos)
+              (
+                  _sig,
+                  version_made,
+                  version_needed,
+                  flags,
+                  method,
+                  mod_time,
+                  mod_date,
+                  crc32,
+                  comp_size,
+                  uncomp_size,
+                  name_len,
+                  extra_len,
+                  cen_comment_len,
+                  disk_start,
+                  internal_attr,
+                  external_attr,
+                  local_offset_stored,
+              ) = fields
+              name_beg = pos + 46
+              name_end = name_beg + name_len
+              extra_end = name_end + extra_len
+              comment_end = extra_end + cen_comment_len
+              if comment_end > len(raw):
+                  raise SystemExit(f"central entry {index} extends beyond file")
+              name_raw = raw[name_beg:name_end]
+              encoding = "utf-8" if flags & 0x800 else "cp437"
+              name = name_raw.decode(encoding, errors="replace")
+
+              local_offset_actual = local_offset_stored + concat
+              entries.append({
+                  "index": index,
+                  "name": name,
+                  "flags": flags,
+                  "method": method,
+                  "crc32": crc32,
+                  "compressed_size": comp_size,
+                  "uncompressed_size": uncomp_size,
+                  "central_offset": pos,
+                  "central_name_len": name_len,
+                  "central_extra_len": extra_len,
+                  "central_comment_len": cen_comment_len,
+                  "local_offset_stored": local_offset_stored,
+                  "local_offset_actual": local_offset_actual,
+              })
+              pos = comment_end
+
+          if pos != cd_offset_actual + cd_size:
+              raise SystemExit(
+                  f"central directory span mismatch parsed_end={pos} expected={cd_offset_actual + cd_size}"
+              )
+
+          # Match CPython zipfile's end-offset model: sort local header offsets,
+          # and treat the next local header (or central directory) as the bound
+          # for the previous entry.
+          by_offset = sorted(entries, key=lambda e: e["local_offset_actual"])
+          next_bound = {}
+          for i, entry in enumerate(by_offset):
+              next_offset = (
+                  by_offset[i + 1]["local_offset_actual"]
+                  if i + 1 < len(by_offset)
+                  else cd_offset_actual
+              )
+              next_bound[entry["index"]] = next_offset
+
+          overlap_rows = []
+          mismatch_rows = []
+
+          for entry in entries:
+              off = entry["local_offset_actual"]
+              if off < 0 or off + 30 > len(raw):
+                  entry["local_parse_error"] = "local header outside file"
+                  mismatch_rows.append((entry["index"], entry["name"], entry["local_parse_error"]))
+                  continue
+              if raw[off:off+4] != LOC_SIG:
+                  entry["local_parse_error"] = "local signature mismatch"
+                  mismatch_rows.append((entry["index"], entry["name"], entry["local_parse_error"]))
+                  continue
+
+              (
+                  _lsig,
+                  local_version,
+                  local_flags,
+                  local_method,
+                  local_time,
+                  local_date,
+                  local_crc32,
+                  local_comp_size,
+                  local_uncomp_size,
+                  local_name_len,
+                  local_extra_len,
+              ) = struct.unpack_from("<4s5H3I2H", raw, off)
+
+              local_name_beg = off + 30
+              local_name_end = local_name_beg + local_name_len
+              local_extra_end = local_name_end + local_extra_len
+              local_name_raw = raw[local_name_beg:local_name_end]
+              encoding = "utf-8" if local_flags & 0x800 else "cp437"
+              local_name = local_name_raw.decode(encoding, errors="replace")
+              data_start = local_extra_end
+              compressed_data_end = data_start + entry["compressed_size"]
+              bound = next_bound[entry["index"]]
+              margin = bound - compressed_data_end
+
+              entry.update({
+                  "local_flags": local_flags,
+                  "local_method": local_method,
+                  "local_crc32": local_crc32,
+                  "local_compressed_size": local_comp_size,
+                  "local_uncompressed_size": local_uncomp_size,
+                  "local_name": local_name,
+                  "local_name_len": local_name_len,
+                  "local_extra_len": local_extra_len,
+                  "data_start": data_start,
+                  "compressed_data_end_by_central_size": compressed_data_end,
+                  "next_local_or_cd_offset": bound,
+                  "margin_to_next_bound": margin,
+                  "overlap_by_zipfile_model": margin < 0,
+              })
+
+              reasons = []
+              if local_name != entry["name"]:
+                  reasons.append("name")
+              if local_flags != entry["flags"]:
+                  reasons.append("flags")
+              if local_method != entry["method"]:
+                  reasons.append("method")
+              # If bit 3 is set, zero local CRC/sizes are legal data-descriptor form.
+              descriptor = bool(entry["flags"] & 0x08)
+              if not descriptor:
+                  if local_crc32 != entry["crc32"]:
+                      reasons.append("crc32")
+                  if local_comp_size != entry["compressed_size"]:
+                      reasons.append("compressed_size")
+                  if local_uncomp_size != entry["uncompressed_size"]:
+                      reasons.append("uncompressed_size")
+              if reasons:
+                  mismatch_rows.append((entry["index"], entry["name"], ",".join(reasons)))
+              if margin < 0:
+                  overlap_rows.append(entry)
+
+          names = [e["name"] for e in entries]
+          counts = collections.Counter(names)
+          duplicate_names = sorted((name, n) for name, n in counts.items() if n > 1)
+          duplicate_local_offsets = []
+          offset_groups = collections.defaultdict(list)
+          for e in entries:
+              offset_groups[e["local_offset_actual"]].append(e["name"])
+          for off, group in sorted(offset_groups.items()):
+              if len(group) > 1:
+                  duplicate_local_offsets.append((off, group))
+
+          zipfile_errors = []
+          try:
+              with zipfile.ZipFile(jar, "r") as zf:
+                  infos = zf.infolist()
+                  for i, info in enumerate(infos):
+                      try:
+                          with zf.open(info, "r") as src:
+                              # Read one byte: CPython performs its overlap bound
+                              # validation before/while opening the stream.
+                              src.read(1)
+                      except Exception as exc:
+                          zipfile_errors.append((
+                              i,
+                              info.filename,
+                              type(exc).__name__,
+                              str(exc),
+                              getattr(info, "header_offset", None),
+                              getattr(info, "_end_offset", None),
+                              info.compress_size,
+                          ))
+          except Exception as exc:
+              zipfile_errors.append((-1, "<ZipFile-open>", type(exc).__name__, str(exc), "", "", ""))
+
+          fieldnames = [
+              "index","name","flags","method","crc32","compressed_size","uncompressed_size",
+              "central_offset","central_name_len","central_extra_len","central_comment_len",
+              "local_offset_stored","local_offset_actual","local_flags","local_method",
+              "local_crc32","local_compressed_size","local_uncompressed_size","local_name",
+              "local_name_len","local_extra_len","data_start",
+              "compressed_data_end_by_central_size","next_local_or_cd_offset",
+              "margin_to_next_bound","overlap_by_zipfile_model","local_parse_error"
+          ]
+          with (out / "zip-entry-layout.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.DictWriter(f, fieldnames=fieldnames, delimiter="\t", extrasaction="ignore")
+              w.writeheader()
+              for e in entries:
+                  w.writerow(e)
+
+          with (out / "zipfile-read-errors.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.writer(f, delimiter="\t")
+              w.writerow(["index","name","exception","message","header_offset","end_offset","compress_size"])
+              w.writerows(zipfile_errors)
+
+          with (out / "duplicate-entry-names.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.writer(f, delimiter="\t")
+              w.writerow(["name","count"])
+              w.writerows(duplicate_names)
+
+          with (out / "duplicate-local-offsets.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.writer(f, delimiter="\t")
+              w.writerow(["local_offset","names"])
+              for off, group in duplicate_local_offsets:
+                  w.writerow([off, " | ".join(group)])
+
+          with (out / "local-central-mismatches.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.writer(f, delimiter="\t")
+              w.writerow(["index","name","mismatch"])
+              w.writerows(mismatch_rows)
+
+          min_margin = min(
+              (e.get("margin_to_next_bound") for e in entries if "margin_to_next_bound" in e),
+              default=None,
+          )
+
+          summary_lines = [
+              f"file_size={len(raw)}",
+              f"eocd_offset={eocd}",
+              f"eocd_comment_len={comment_len}",
+              f"central_directory_offset_stored={cd_offset_stored}",
+              f"central_directory_offset_actual={cd_offset_actual}",
+              f"central_directory_size={cd_size}",
+              f"concat_prefix_adjustment={concat}",
+              f"total_entries={total_entries}",
+              f"unique_names={len(counts)}",
+              f"duplicate_name_count={len(duplicate_names)}",
+              f"duplicate_local_offset_count={len(duplicate_local_offsets)}",
+              f"zipfile_overlap_model_count={len(overlap_rows)}",
+              f"zipfile_read_error_count={len(zipfile_errors)}",
+              f"local_central_mismatch_count={len(mismatch_rows)}",
+              f"minimum_margin_to_next_bound={min_margin}",
+          ]
+          if overlap_rows:
+              for e in sorted(overlap_rows, key=lambda x: x["margin_to_next_bound"]):
+                  summary_lines.append(
+                      "overlap="
+                      + e["name"]
+                      + f" index={e['index']}"
+                      + f" local={e['local_offset_actual']}"
+                      + f" data_start={e['data_start']}"
+                      + f" comp={e['compressed_size']}"
+                      + f" data_end={e['compressed_data_end_by_central_size']}"
+                      + f" next_bound={e['next_local_or_cd_offset']}"
+                      + f" margin={e['margin_to_next_bound']}"
+                  )
+          for row in zipfile_errors:
+              summary_lines.append(
+                  "zipfile_error="
+                  + str(row[1])
+                  + f" exception={row[2]}"
+                  + f" message={row[3]}"
+                  + f" header_offset={row[4]}"
+                  + f" end_offset={row[5]}"
+                  + f" compress_size={row[6]}"
+              )
+
+          summary = "\n".join(summary_lines) + "\n"
+          (out / "zip-structure-summary.txt").write_text(summary, encoding="utf-8")
+          print(summary)
+          PY
+
+      - name: Record audit boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-zip-structure"
+          cat > "$OUT/audit-boundary.txt" <<'EOF'
+          PURPOSE
+          - Identify the exact ZIP layout condition behind Python zipfile's
+            "Overlapped entries" behavior on official Deeper and Darker 1.4.1.
+          - Measure central-directory offsets, local-header offsets, compressed
+            spans, and the same next-header bound model used by CPython zipfile.
+          - This audit does not generate a physical-match candidate.
+
+          CLEAN-ROOM / ARTIFACT BOUNDARY
+          - The official publisher JAR is downloaded only at CI runtime.
+          - No third-party JAR bytes are committed or uploaded.
+          - Uploaded artifacts contain text metadata only.
+
+          FAIL-CLOSED
+          - Structural observations do not establish the physical JAR contents.
+          - Provider state and semantic accounting are unchanged.
+          EOF
+
+      - name: Upload text-only ZIP structure evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: deeper-darker-zip-structure-evidence
+          path: |
+            build/audit/deeperdarker-zip-structure/zip-structure-summary.txt
+            build/audit/deeperdarker-zip-structure/zip-entry-layout.tsv
+            build/audit/deeperdarker-zip-structure/zipfile-read-errors.tsv
+            build/audit/deeperdarker-zip-structure/duplicate-entry-names.tsv
+            build/audit/deeperdarker-zip-structure/duplicate-local-offsets.tsv
+            build/audit/deeperdarker-zip-structure/local-central-mismatches.tsv
+            build/audit/deeperdarker-zip-structure/audit-boundary.txt
+          if-no-files-found: error
