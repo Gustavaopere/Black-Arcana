@@ -171,9 +171,9 @@ Measured physical SHA-1/fingerprint matches:
 
 **0 / 61**
 
-The publisher JAR contains overlapping ZIP structure as observed by Python 3.12 `zipfile`, so the audit uses standard Info-ZIP extraction as the effective file-tree boundary. This result therefore rules out the enumerated ordinary full-repack-only family, not every possible low-level ZIP serialization/duplicate-entry layout.
+The #632 workflow used Info-ZIP extraction as its effective file-tree boundary after its own Python direct-read path reported overlap. Follow-up NON-MERGE **#635** did not reproduce that structural condition on a freshly verified publisher artifact: duplicate names, duplicate local offsets, overlap-span violations, direct `zipfile` read errors, `testzip()` failures and local-vs-central mismatches were all **0**. The #632 **0/61** candidate result remains valid; only the overlap explanation is superseded.
 
-See [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md).
+See [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md) and [`PUBLISHER-ZIP-STRUCTURE-AUDIT.md`](PUBLISHER-ZIP-STRUCTURE-AUDIT.md).
 
 ## Raw-byte limitation
 
