@@ -1,4 +1,5 @@
 name: Traveloptics Entity-Unused Scalar Evaluation
+# synchronize trigger
 
 on:
   pull_request:
