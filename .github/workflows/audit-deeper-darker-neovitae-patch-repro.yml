@@ -96,6 +96,8 @@ jobs:
               original_json = zin.read(target).decode("utf-8")
               target_info = zin.getinfo(target)
 
+          print("publisher_mixins_json_repr=" + repr(original_json))
+
           import re
 
           def remove_mixin_line(text: str, name: str) -> str:
