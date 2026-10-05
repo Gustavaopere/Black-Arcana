@@ -114,11 +114,14 @@ For `ORIGINAL_EXACT`, successful startup and observed serializer rows are eviden
 
 ## Gate 3 — `traveloptics:blackout` survival reachability
 
-`traveloptics:blackout` is an exact registered spell identity in the audited publisher artifact and inherits `AbstractUniqueSpell.allowCrafting() = false`.
+`traveloptics:blackout` is an exact registered spell identity in the audited publisher artifact and inherits `AbstractUniqueSpell.allowCrafting() = false`. Audit #626 additionally classifies exact provider `AbstractUniqueSpell.allowLooting() = false`.
 
-Unlike the other nine non-craftable Unique spells, the exact artifact audit found:
+Unlike the other nine non-craftable Unique spells, the exact artifact/audit surface now establishes:
 
 - no direct structured loot reference for `blackout`;
+- 23 `randomize_spell` / `spell_filter` nodes, all explicit spell lists and none containing Blackout;
+- no forced Eldritch school filter;
+- no provider-owned class reference to host `SpellFilter` or `RandomizeSpellFunction`;
 - no provider-owned reference to `TOSpells.BLACKOUT_SPELL` outside `TOSpells` itself.
 
 The publisher's generic 1.21.1 statement that ported spells are obtainable in survival is not object-level evidence for this spell.
@@ -131,7 +134,9 @@ Exact File `6342780` evidence instead shows:
 - the exact artifact's 41 loot/loot-modifier JSON resources expose no Enraged Dead King loot route;
 - `blackout` remains registered, but no object-level structured acquisition route is present in the audited artifact.
 
-See [`BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`](BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md).
+Under current Iron's 3.16.3 host semantics, ordinary random-loot admission honors `allowLooting()`, while explicit spell lists or `force=true` school filters are the relevant bypasses. File `6342780` provides neither bypass for Blackout. Therefore exact-alpha **provider-owned generic/randomized loot is closed negative**. This does not close another provider/pack route or the current physical `7b74816e...` artifact.
+
+See [`BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`](BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md) and [`BLACKOUT-GENERIC-LOOT-EXCLUSION-CHECKPOINT.md`](BLACKOUT-GENERIC-LOOT-EXCLUSION-CHECKPOINT.md).
 
 Therefore the broader Dead King route must not be projected into the installed alpha. This does not prove impossibility; it preserves the requirement for File-6342780-specific or actual-pack evidence.
 
@@ -139,7 +144,8 @@ Required closure evidence must establish an actual current-pack player path, suc
 
 | Required field | Current state |
 |---|---|
-| exact acquisition mechanism | `NÃO VERIFICADO` |
+| exact provider-owned generic/randomized loot | `NEGATIVE / CLOSED` for File `6342780` + current Iron's 3.16.3 semantics |
+| other exact/current-pack acquisition mechanism | `NÃO VERIFICADO` |
 | authoritative source/runtime evidence | `NÃO VERIFICADO` |
 | prerequisite entity/structure/item/config | `NÃO VERIFICADO` |
 | actual pack/world checkpoint | `NÃO VERIFICADO` |
@@ -178,6 +184,7 @@ The following work is already canonical and should not be repeated:
 - 2 `AbstractWeaponSpell` craftable registrations identified (`cursed_blast`, `gyro_slash`);
 - nine non-craftable Unique spell structured loot routes identified;
 - `blackout` isolated as the unresolved Unique reachability exception;
+- exact-alpha Blackout provider-owned generic/randomized loot subgate closed negative by audit #626;
 - structural `TOLootModifiers` codec mismatch recorded clean-room;
 - 33/33 exact default mechanics baseline closed for File `6342780`;
 - 29/29 selected numeric no-`LivingEntity` accessors closed across 18 spells with 0 UNKNOWN;
