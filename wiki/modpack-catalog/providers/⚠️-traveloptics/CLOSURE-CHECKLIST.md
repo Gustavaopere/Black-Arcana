@@ -200,13 +200,13 @@ A 2026-10-05 bounded search checked the currently retained external acquisition 
 - Project/Library semantic search for `traveloptics:blackout`, Blackout+Traveloptics, server scripts, global loot modifiers and datapack surfaces returns runtime logs, modlists or catalog/project documentation rather than a retained acquisition source.
 - Retained Library `.js` / `.json` / `.toml` inventory dated 2026-08-15 through 2026-10-05 with KubeJS/server/startup-script/datapack/data/loot/Traveloptics/Blackout path-name markers contains **0 preserved source artifacts**.
 
-A current-tree follow-up now excludes that generic exception for the **versioned project-owned repositories**: Black Arcana `4749aac3...` and sibling `de80b186...` contain no versioned `SpellFilter` / `RandomizeSpellFunction` route, the sibling's only runtime global loot modifier scales already-generated loot, its Iron's progression adapter does not grant spells, and neither repository contains a current assembled `server_scripts` tree. See [`BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md`](BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md).
+A current-tree follow-up excludes the specifically named `SpellFilter` / `RandomizeSpellFunction` route and the inspected GLM/progression/script/resource surfaces in Black Arcana `4749aac3...` and sibling `de80b186...`. It does **not** exhaust every acquisition-capable versioned Java/data path; alternative project-owned routes using other Iron's APIs, spell-container construction, commands, rewards/events or other code remain unexcluded unless separately audited. See [`BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md`](BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md).
 
 This still does **not** exclude a generic route in the actual assembled instance. External physical KubeJS folders, user/world datapacks, other installed mods and current physical Traveloptics `7b74816e...` content are not authoritatively captured here. Those assembled-pack surfaces remain **UNRESOLVED**.
 
 Canonical detail: [`BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md`](BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md).
 
-Gate 3 therefore remains open. Literal-ID searches and generic-route searches of the same current versioned repositories are now exhausted; the next valid evidence must come from an authoritative **assembled physical** script/datapack/other-mod capture, exact-current Traveloptics content, or a concrete runtime/world acquisition checkpoint.
+Gate 3 therefore remains open. Literal-ID searches plus the specifically audited named filter/GLM/progression/script/resource surfaces need not be repeated, but the current versioned repositories are **not exhaustively cleared of every possible generic Java/data acquisition route**. Strong next evidence remains an authoritative assembled physical script/datapack/other-mod capture, exact-current Traveloptics content, a broader exhaustive acquisition-surface audit, or a concrete runtime/world acquisition checkpoint.
 
 ## Gate 4 — Somake Aqua ↔ T.O Aqua coexistence
 
