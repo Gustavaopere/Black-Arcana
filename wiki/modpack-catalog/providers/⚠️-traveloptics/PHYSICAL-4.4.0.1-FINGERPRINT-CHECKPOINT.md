@@ -125,13 +125,13 @@ A newly reconciled Project Library pair materially narrows runtime uncertainty f
 This is **strong contemporaneous physical-runtime correlation**, not process-embedded hash attestation. It proves that a boot temporally adjacent to the `7b74816e...` physical dump progressed beyond the earlier duplicate-codec registration failure, but it does not identify provenance, spell-registry equality or exact serializer-object identity.
 
 See [`RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md`](RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md).
-## Public provenance search boundary — 2026-10-05
+## Bounded public provenance surfaces — 2026-10-05
 
-A bounded current search for the exact physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, fingerprint `4254006126`, the retained `fixed-keyloot` filename, and public user-repository provenance did not identify an indexed origin for the current replacement.
+Temporary NON-MERGE PR **#641** replaced the earlier informal search with a reproducible text-only audit. Run `37263841885` succeeded; artifact `11324569430` has digest `sha256:6ad7373adb0e8c1b7b5555c87c4dfec3e06858f134f478694f51402a7aa96501`.
 
-The only related public artifact surfaced by the current search remains patch File `8861368`, which is already excluded as the current physical artifact by both chronology and SHA-1. The two retained Aug-17 candidate JAR records expose filename/size/timestamp metadata in the auditable Library surface, but no candidate checksum/content bridge to `7b74816e...`.
+The retained audit names exact Git revisions, the GitHub public code-search endpoint and the Modrinth SHA-1 lookup endpoint. It finds no provenance source for `7b74816e...` on those bounded surfaces. The numeric fingerprint query has 12 unrelated external code-index hits, all retained by repository/path/URL rather than treated as matches.
 
-This is negative discovery evidence only. It does not establish that the artifact has no public origin or that either Aug-17 candidate is/is not the current JAR. Repeating the same general public SHA/fingerprint/name search is no longer a closure path without new indexed evidence.
+This is negative discovery evidence only for the named surfaces. It does not establish that the artifact has no public origin or identify either Aug-17 candidate. Repeating the same queries against the same revisions/endpoints is no longer a closure path without new evidence.
 
 Canonical detail: [`PUBLIC-PROVENANCE-SEARCH-BOUNDARY-2026-10-05.md`](PUBLIC-PROVENANCE-SEARCH-BOUNDARY-2026-10-05.md).
 
