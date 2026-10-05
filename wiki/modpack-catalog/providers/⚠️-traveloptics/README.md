@@ -30,7 +30,7 @@ The current sibling T.O Magic n' Extras dossier now independently confirms the p
 
 The earliest direct physical hash capture is now **2026-08-22**: Project Library inventory `fcb79de3-0e3e-41af-8136-cd524859f71c.txt` records `traveloptics-4.4.0.1-1.21.1.jar` at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` and fingerprint `4254006126`. The 2026-09-08 and 2026-09-16 inventories repeat the same values. Therefore this custom/repacked artifact was present in the assembled instance **well before** public patch File `8861368` was uploaded on 2026-09-12.
 
-The retained August sequence is now bounded more tightly: a canonical-name JAR and a separately named generated `fixed-keyloot.jar` are retained on 17/08; CurseForge reports the canonical slot `isModified=true` on 18/08; the runtime analyzer observes the same 33 spell IDs on 19/08; and the current `7b74816e...` hash is directly captured on 22/08. This is strong local-modification lineage evidence but **not** a byte bridge: it does not prove that the generated `fixed-keyloot.jar` became the canonical JAR or that the hash-unbound 19/08 runtime used the exact 22/08 bytes.
+The retained August sequence is now bounded more tightly: repeated assembled boots on 16/08 fail inside Traveloptics `RegisterEvent` with duplicate `KeyLootModifier` codec registration; a canonical-name JAR and a separately named generated `fixed-keyloot.jar` are retained on 17/08; CurseForge reports the canonical slot `isModified=true` on 18/08; the runtime analyzer observes the same 33 spell IDs on 19/08; and the current `7b74816e...` hash is directly captured on 22/08. This is strong local-modification lineage evidence but **not** a byte bridge: it does not prove that the generated `fixed-keyloot.jar` became the canonical JAR or that the hash-unbound 19/08 runtime used the exact 22/08 bytes.
 
 This chronology rules out “the pack simply downloaded File `8861368` and later renamed it” as provenance for `7b74816e...`. It does **not** prove what code change produced the custom bytes, and it does not prove exact-current registry equality to either the publisher alpha or the later patch. The exact-current registry remains fail-closed.
 
@@ -198,7 +198,7 @@ A focused clean-room audit independently inspected `com.gametechbc.traveloptics.
 - `KeyLootModifier.CODEC`: referenced **twice** by the registry setup;
 - `UniversalLootModifier.CODEC`: referenced **zero** times by that setup.
 
-This is an exact structural fact from the publisher JAR. A third-party compatibility patch published later describes the same wiring as a registry-startup defect and changes the universal entry to `UniversalLootModifier.CODEC`; that external patch is not treated as upstream authority and Phase 2BS does **not** claim to have reproduced its reported crash.
+This is an exact structural fact from the publisher JAR. Project Library crash reports from 2026-08-16 independently reproduce the matching assembled-pack failure under the canonical Traveloptics filename: `RegisterEvent` aborts with `Adding duplicate value ... to registry` for a `KeyLootModifier` codec. Those processes are hash-unbound and therefore do not prove exact publisher-byte identity or current `7b74816e...` behavior. A third-party compatibility patch published later describes the same wiring as a registry-startup defect and changes the universal entry to `UniversalLootModifier.CODEC`; that external patch is not treated as upstream authority. See [`RUNTIME-2026-08-16-LOOT-CODEC-CRASH.md`](RUNTIME-2026-08-16-LOOT-CODEC-CRASH.md).
 
 A later clean-room binary-diff checkpoint fingerprints exact patch File `1690333 / 8861368` at SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Original and patch both contain 1339 ZIP entries; the patch adds/removes none and changes exactly one entry, `com/gametechbc/traveloptics/loot/TOLootModifiers.class`, with zero non-class resource changes. This independently proves the patch's binary scope, while the specific codec semantic fix remains attributed to the patch publisher. Physical deployment and assembled-pack startup remain unverified. See [`PATCH-8861368-BINARY-DIFF.md`](PATCH-8861368-BINARY-DIFF.md).
 
@@ -218,7 +218,7 @@ Phase 2BS disposition:
 - `traveloptics:blackout`: exact-alpha provider direct/generic loot routes excluded; current-pack survival reachability remains unresolved;
 - exact publisher mechanics baseline: 33/33 registered spells closed for raw/default host inputs; current-physical stat equality unverified;
 - exact publisher File-only bounded scalar accessors: 37 resolved outputs across 24 spells; LivingEntity-bearing surface classified at 15 ENTITY_UNUSED / 34 ENTITY_SLOT_READ, with 8 File-only values plus 7 exact direct-delegate relations; current Iron's 3.16.3 host resolves those seven effective-cast delegates, bringing numeric accessor/bridge coverage to 28/33 spell identities; five remaining identities have selected entity-reading accessors dependency-classified to host `getSpellPower`, so identity-level accessor/bridge/dependency coverage is 33/33 while numeric closure stays 28/33; current-physical equality remains unverified;
-- exact publisher artifact: structural `TOLootModifiers` codec-wiring risk unresolved at runtime;
+- exact publisher artifact: structural `TOLootModifiers` defect is corroborated by historical assembled-runtime reproduction; current physical `7b74816e...` serializer wiring remains unresolved;
 - semantic contribution to strict global minimum: **+0**;
 - provider component closure: **no new component**;
 - strict minimum at the historical Phase 2BS checkpoint remained **1344**; the current catalog-wide strict reconstructible minimum is **1689**;
@@ -253,7 +253,7 @@ Somake 1.0.9 and Traveloptics 4.4.0.1 are both physically present in the current
 - `blackout` File-6342780 provider loot route: `EXCLUDED — DIRECT + GENERIC`;
 - `blackout` actual current-pack survival route: `UNVERIFIED / FAIL-CLOSED`;
 - `TOLootModifiers` codec reference wiring: `HIGH` structural fact;
-- actual registry-startup failure in the assembled pack: `NOT REPRODUCED`;
+- actual registry-startup failure in the assembled pack: `REPRODUCED HISTORICALLY / 2026-08-16 / PROCESS HASH UNBOUND`; current `7b74816e...` serializer-object state remains unverified;
 - physical deployment of exact patch File `8861368`: `DISPROVED BY HASH`;
 - byte identity with the common one-entry repack variants tested in PR #474: `DISPROVED`;
 - provenance/content of the actual `7b74816e...` replacement: `AUGUST LINEAGE NARROWED / ENTRY-LEVEL DELTA UNVERIFIED`;
