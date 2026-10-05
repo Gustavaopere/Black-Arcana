@@ -244,7 +244,7 @@ Cada JAR mágico deve ser classificado antes da extração spell-by-spell:
 - Iron's Spells 'n Spellbooks;
 - Cataclysm: Spellbooks;
 - Monsters & Spellbooks;
-- T.O Magic n' Extras — **histórico Phase 2BS; ausente da modlist física atual**;
+- T.O Magic n' Extras — **current physical ⚠️ / `OTHER_VERIFIED` / +0 strict**; Phase 2BS permanece como baseline publisher histórico, enquanto o JAR instalado `7b74816e...` segue sem registry exact-current fechado;
 - Hazen N Stuff;
 - Create: Wizardry;
 - ISS: Magic From The East;
