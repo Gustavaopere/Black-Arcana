@@ -1,0 +1,217 @@
+name: Traveloptics LivingEntity Accessor Classification
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Classify LivingEntity parameter use
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar = "traveloptics.jar"
+
+          targets = [
+              ("BloodHowlSpell","getRecastCount","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("BloodHowlSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("AbyssalBlastSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("AbyssalBlastSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("BlackoutSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("PsychicBoltSpell","getRecastCount","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("PsychicBoltSpell","getEffectDuration","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("ReversalSpell","calculateDamageMultiplier","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("SpectralBlinkSpell","getEffectLevel","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("EternalSentinelSpell","getGolemDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("OrbitalVoidSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("CursedMinefieldSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("VoidEruptionSpell","getRecastCount","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("VoidEruptionSpell","getRange","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("VoidEruptionSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("VortexPunchSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("VortexPunchSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("AstralSenseSpell","getDuration","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("AshenBreathSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("LingeringStrainSpell","getDuration","(Lnet/minecraft/world/entity/LivingEntity;I)I"),
+              ("IgnitedOnslaughtSpell","getBerserkerDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("IgnitedOnslaughtSpell","getRevenantDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("BurningJudgmentSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("MeteorStormSpell","getDamage","(Lnet/minecraft/world/entity/LivingEntity;I)I"),
+              ("LavaBombSpell","getProjectileCount","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("GyroSlashSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("GyroSlashSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("GyroSlashSpell","getFlameJetDamage","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("NullflareSpell","getRecastCount","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("NullflareSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("SummonDesertDwellers","getKoboletonDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("SummonDesertDwellers","getWadjetDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("SwordOfTheAncientsSpell","getKobolediatorDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("AxeOfTheDoomedSpell","getAptrgangrDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("CursedRevenantsSpell","getDraugrDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("DespairSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("DespairSpell","getRecastCount","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("HalberdHorizonSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("MechanizedPredatorSpell","getWatcherDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("MechanizedPredatorSpell","getProwlerDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("RapidLaserSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("DeathLaserSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("DeathLaserSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("EmPulse","getDuration","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("EmPulse","getRadius","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("AerialCollapseSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("AerialCollapseSpell","getRadius","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("AerialCollapseSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+              ("SteleCascadeSpell","getDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
+          ]
+
+          ENTITY = "Lnet/minecraft/world/entity/LivingEntity;"
+
+          with zipfile.ZipFile(jar) as z:
+              entries = z.namelist()
+
+          def fqcn_for(simple):
+              suffix = "/" + simple + ".class"
+              matches = [e for e in entries if e.endswith(suffix)]
+              if len(matches) != 1:
+                  raise RuntimeError(f"{simple}: class matches={matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          def parse_args(desc):
+              assert desc.startswith("(")
+              i = 1
+              args = []
+              while desc[i] != ")":
+                  start = i
+                  while desc[i] == "[":
+                      i += 1
+                  if desc[i] == "L":
+                      i = desc.index(";", i) + 1
+                  else:
+                      i += 1
+                  args.append(desc[start:i])
+              return args
+
+          def entity_slot(desc, is_static):
+              slot = 0 if is_static else 1
+              found = []
+              for arg in parse_args(desc):
+                  if arg == ENTITY:
+                      found.append(slot)
+                  if arg in ("J","D"):
+                      slot += 2
+                  else:
+                      slot += 1
+              if len(found) != 1:
+                  raise RuntimeError(f"{desc}: expected one LivingEntity arg, found {found}")
+              return found[0]
+
+          insn_re = re.compile(r"^\s*(\d+):\s+(\S+)(?:\s+(.*))?$")
+
+          def method_info(fqcn, method_name, descriptor):
+              p = subprocess.run(
+                  ["javap","-classpath",jar,"-c","-p","-s",fqcn],
+                  check=True,text=True,capture_output=True
+              )
+              lines = p.stdout.splitlines()
+              for i, raw in enumerate(lines):
+                  sig = raw.strip()
+                  if not (sig.endswith(";") and re.search(r"\b"+re.escape(method_name)+r"\s*\(", sig)):
+                      continue
+                  desc = None
+                  code_idx = None
+                  for j in range(i+1, min(len(lines), i+10)):
+                      s = lines[j].strip()
+                      if s.startswith("descriptor:"):
+                          desc = s.split("descriptor:",1)[1].strip()
+                      if s == "Code:":
+                          code_idx = j
+                          break
+                  if desc != descriptor or code_idx is None:
+                      continue
+                  instr = []
+                  for raw2 in lines[code_idx+1:]:
+                      m = insn_re.match(raw2)
+                      if m:
+                          instr.append((m.group(2), m.group(3) or ""))
+                          continue
+                      if instr:
+                          break
+                  return (" static " in (" "+sig+" ")), instr
+              raise RuntimeError(f"{fqcn}.{method_name}{descriptor}: method not found")
+
+          def aload_slot(op, arg):
+              m = re.fullmatch(r"aload_(\d+)", op)
+              if m:
+                  return int(m.group(1))
+              if op == "aload":
+                  return int(arg.split()[0])
+              return None
+
+          rows = []
+          for simple, method, desc in targets:
+              fqcn = fqcn_for(simple)
+              is_static, instr = method_info(fqcn, method, desc)
+              eslot = entity_slot(desc, is_static)
+              loads = sum(1 for op,arg in instr if aload_slot(op,arg) == eslot)
+              state = "ENTITY_UNUSED" if loads == 0 else "ENTITY_SLOT_READ"
+              rows.append((simple, method, desc, eslot, loads, state))
+
+          report = Path("audit/report.txt")
+          with report.open("w", encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha LivingEntity accessor classification\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("scope=49 numeric accessor signatures carrying exactly one LivingEntity parameter from audit #608\n")
+              f.write("retention=method identity + descriptor + LivingEntity local slot + load count + classification only; no bytecode/method bodies\n")
+              f.write("classification=ENTITY_UNUSED only when the LivingEntity parameter local slot is never loaded; ENTITY_SLOT_READ is conservative and is not a formula claim\n\n")
+              for simple,method,desc,slot,loads,state in rows:
+                  f.write(f"{simple}|{method}|{desc}|entity_slot={slot}|entity_loads={loads}|{state}\n")
+              unused = sum(1 for r in rows if r[-1] == "ENTITY_UNUSED")
+              used = len(rows) - unused
+              f.write("\nsummary\n")
+              f.write(f"targets={len(rows)}\n")
+              f.write(f"entity_unused={unused}\n")
+              f.write(f"entity_slot_read={used}\n")
+
+          if len(rows) != 49:
+              raise RuntimeError(f"expected 49 rows, got {len(rows)}")
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-livingentity-accessor-classification
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
