@@ -48,7 +48,7 @@ This is **not** counted as a File-6342780-alone scalar result and is **not** pro
 
 ## Reachability
 
-`UNIQUE / allowCrafting=false`; no direct exact acquisition anchor found — survival reachability `UNVERIFIED`.
+`UNIQUE / allowCrafting=false / allowLooting=false`. Exact File `6342780` plus current Iron's 3.16.3 host semantics close provider-owned generic/randomized loot as **NEGATIVE**: no explicit Blackout filter, no forced Eldritch filter, and no provider-owned `SpellFilter`/`RandomizeSpellFunction` code path was found. Other exact-alpha acquisition mechanisms, external pack scripts/datapacks and current-physical SHA-1 `7b74816e...` reachability remain `UNVERIFIED`.
 
 ## Evidence boundary
 
@@ -56,4 +56,4 @@ Identity, school and the File-`6342780` default mechanics baseline above are exa
 
 Iron's owns host casting/resource settlement; T.O Magic owns this spell. Provider stays **⚠️** because current-physical registry equality/provenance and full runtime closure are not proven.
 
-Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`.
+Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`; `../BLACKOUT-GENERIC-LOOT-EXCLUSION-CHECKPOINT.md`; `../BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`.
