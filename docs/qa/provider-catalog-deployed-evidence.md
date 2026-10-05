@@ -111,7 +111,30 @@ and emits `current_physical_4_0_3_equality` against canonical current-pack SHA-1
 
 This proves only that the assembled instance contains the certified current physical bridge artifact. It does not prove source-build byte equivalence and it does not establish whether pack scripts register custom Iron's spells, schools or items.
 
-Pair this fingerprint with `kubejs_script_inventory` and the provider checklist at `wiki/modpack-catalog/providers/⚠️-irons-spellbooks-kubejs/`. Zero-content closure requires both the certified artifact and authoritative current script/provenance evidence.
+Pair this fingerprint with the exact current KubeJS host fingerprint and `kubejs_script_inventory` from the same assembled instance. Provider-binary equality alone is not sufficient for current-pack closure.
+
+### Current KubeJS host 2101.7.2-build.377 physical fingerprint
+
+The collector hashes only the exact current filename:
+
+`kubejs-neoforge-2101.7.2-build.377.jar`
+
+and emits `current_physical_build_377_equality` against canonical current-pack SHA-1:
+
+`150c5d6efc09b969ac350ea205128dff832e0850`.
+
+This is a same-instance freshness gate for Iron's Spellbooks KubeJS closure. It prevents a historical or otherwise different KubeJS host — including the previously observed build 374 instance — from being routed as a current zero-content review candidate merely because `irons_spells_js-4.0.3.jar` also exists there.
+
+The report also emits `irons_spellbooks_kubejs_closure`, a fail-closed evidence-routing state:
+
+- `ARTIFACT_NOT_OBSERVED` — the exact Iron's Spellbooks KubeJS artifact was not captured;
+- `ARTIFACT_HASH_MISMATCH` — the provider artifact was captured but does not match the certified 4.0.3 SHA-1;
+- `KUBEJS_HOST_NOT_OBSERVED` — the certified provider artifact was captured but the exact current KubeJS build 377 artifact was not;
+- `KUBEJS_HOST_HASH_MISMATCH` — the build-377 filename was captured but its SHA-1 does not match the current physical checkpoint;
+- `ZERO_CONTENT_REVIEW_CANDIDATE` — both binaries are certified and the bounded KubeJS inventory contains zero files;
+- `SCRIPT_REVIEW_REQUIRED` — both binaries are certified and the bounded KubeJS inventory contains one or more files.
+
+The closure object also records `artifact_certified`, `kubejs_host_certified`, KubeJS-root presence, bounded file count, marker-file count and sorted marker types. These are evidence workflow states, not catalog statuses. `ZERO_CONTENT_REVIEW_CANDIDATE` never means automatic ✅; authoritative-instance provenance and the provider checklist still control promotion.
 
 ### KubeJS Ars Nouveau 1.3.2 physical fingerprint
 

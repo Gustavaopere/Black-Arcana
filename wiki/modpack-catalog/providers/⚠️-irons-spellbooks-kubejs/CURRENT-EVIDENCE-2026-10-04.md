@@ -4,9 +4,10 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / BASE FRAMEWORK +0 / CURRENT S
 
 ## Authority checkpoints
 
-- Black Arcana main considered at branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`.
-- latest Black Arcana main reconciled before final validation: `21ae73850eb75b35ff09b6f0eada640cc2a1bf23`.
-- Black Arcana main confirmed after exact source-coverage closure: `04633ea786869045f8959e942dd348aff6258033`.
+- Historical Black Arcana main at the original evidence-branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`.
+- Historical Black Arcana main reconciled during the earlier evidence checkpoint: `21ae73850eb75b35ff09b6f0eada640cc2a1bf23`.
+- Black Arcana main confirmed after the exact source-coverage closure: `04633ea786869045f8959e942dd348aff6258033`.
+- Black Arcana main reconciled for the current host-377 closure hardening in PR #624: `3b386df50d3db3a8e5606529f97c7413dbf6ab32`.
 - Current sibling/modlist authority: `Gustavaopere/neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 - Current registry row: Black Arcana `wiki/modpack-catalog/PROVIDERS.md` row 98.
 - Certified sibling dossier:
@@ -78,21 +79,14 @@ Further read-only checks performed after provider-source closure found no author
 
 These negative searches reduce duplicate work but are **not zero-content proof**. Only the authoritative assembled instance or equivalent exact provenance can close the script-content question.
 
-## Current collector physical fingerprint
+## Current collector physical fingerprints
 
-The canonical deployed-evidence collector now recognizes only the exact physical filename:
+The canonical deployed-evidence collector now binds closure to both exact current binaries from the same assembled instance:
 
-`irons_spells_js-4.0.3.jar`
+- `irons_spells_js-4.0.3.jar` -> `mods.irons_spells_js[*].current_physical_4_0_3_equality` against SHA-1 `0481395c5847e2920d1425e77833bef87df63139`;
+- `kubejs-neoforge-2101.7.2-build.377.jar` -> `mods.kubejs[*].current_physical_build_377_equality` against SHA-1 `150c5d6efc09b969ac350ea205128dff832e0850`.
 
-and emits:
-
-`mods.irons_spells_js[*].current_physical_4_0_3_equality`
-
-against canonical current-pack SHA-1:
-
-`0481395c5847e2920d1425e77833bef87df63139`.
-
-This closes physical artifact identity when run on the authoritative assembled instance. It does not prove source-build byte equality and it does not close script-defined content.
+This closes binary identity/freshness only when the collector is run on the authoritative assembled instance. It does not prove source-build byte equality and it does not close script-defined content. Historical build-374 evidence cannot satisfy the build-377 gate.
 
 ## Exact provider-source closure
 
@@ -110,11 +104,17 @@ Run the canonical read-only collector against the actual current assembled insta
 python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack-instance"
 ```
 
-The `kubejs_script_inventory` result is the first decisive artifact for this provider:
+The collector now emits `irons_spellbooks_kubejs_closure.status` as the first routing decision:
 
-1. absent/empty authoritative current bounded script/data tree -> eligible for zero-content closure review;
-2. non-empty tree -> inspect the exact hashed files for Iron's spell/school builder registrations;
-3. every surviving custom spell must then be traced through ID, source file/range, registration condition, school, effective Iron's config and survival reachability.
+1. `ARTIFACT_NOT_OBSERVED` -> certified 4.0.3 provider JAR not captured; stop;
+2. `ARTIFACT_HASH_MISMATCH` -> provider JAR differs from the certified current artifact; stop;
+3. `KUBEJS_HOST_NOT_OBSERVED` -> current KubeJS build 377 JAR not captured from the same instance; stop;
+4. `KUBEJS_HOST_HASH_MISMATCH` -> build-377 filename exists but does not match the current physical SHA-1; stop;
+5. `ZERO_CONTENT_REVIEW_CANDIDATE` -> both binaries certified + zero bounded KubeJS files; review authoritative-instance provenance before zero-content closure;
+6. `SCRIPT_REVIEW_REQUIRED` -> both binaries certified + one or more bounded KubeJS files; inspect the exact hashed files even if no marker fired;
+7. every surviving custom spell must then be traced through ID, source file/range, registration condition, school, effective Iron's config and survival reachability.
+
+The machine-readable state never promotes row #98 automatically.
 
 A repository search alone is insufficient.
 

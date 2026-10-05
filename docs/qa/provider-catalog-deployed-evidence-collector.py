@@ -42,6 +42,7 @@ SIMPLY_MORE_ALPHA5_PHYSICAL_SHA1 = "51636477cd5c378f42d9700e1fe35cd952c8f4f1"
 SIMPLY_SWORDS_1702_PHYSICAL_SHA1 = "05b074ff774467f1fe9fb5592151b7845c321cbc"
 KUBEJSARSNOUVEAU_132_PHYSICAL_SHA1 = "f39f4f409e628731be551fd961fac2964768d358"
 IRONS_SPELLS_JS_403_PHYSICAL_SHA1 = "0481395c5847e2920d1425e77833bef87df63139"
+KUBEJS_2101_7_2_BUILD_377_PHYSICAL_SHA1 = "150c5d6efc09b969ac350ea205128dff832e0850"
 
 SIMPLY_MORE_MIMICRY_FORMS = [
     "longsword",
@@ -146,6 +147,7 @@ MOD_PATTERNS = {
     "corail_tombstone": ["tombstone-neoforge-1.21.1-9.5.6.jar"],
     "gaze": ["gaze-1.1.7.1.jar"],
     "ice_and_fire_ce": ["iceandfire-2.1.2.jar"],
+    "kubejs": ["kubejs-neoforge-2101.7.2-build.377.jar"],
     "kubejsarsnouveau": ["kubejsarsnouveau-1.3.2.jar"],
     "irons_spells_js": ["irons_spells_js-4.0.3.jar"],
     "not_enough_glyphs": ["not_enough_glyphs-1.21.1-4.6.2.jar"],
@@ -533,6 +535,65 @@ def collect_kubejs_script_inventory(instance: Path) -> dict[str, Any]:
     }
 
 
+def classify_irons_spellbooks_kubejs_closure(
+    mods: dict[str, Any],
+    kubejs_inventory: dict[str, Any],
+) -> dict[str, Any]:
+    provider_entries = mods.get("irons_spells_js", [])
+    artifact_observed = bool(provider_entries)
+    artifact_certified = any(
+        entry.get("current_physical_4_0_3_equality") is True
+        for entry in provider_entries
+        if isinstance(entry, dict)
+    )
+
+    host_entries = mods.get("kubejs", [])
+    kubejs_host_observed = bool(host_entries)
+    kubejs_host_certified = any(
+        entry.get("current_physical_build_377_equality") is True
+        for entry in host_entries
+        if isinstance(entry, dict)
+    )
+
+    files = kubejs_inventory.get("files", [])
+    marker_files = [
+        row
+        for row in files
+        if isinstance(row, dict) and row.get("irons_spellbooks_kubejs_markers")
+    ]
+    marker_types = sorted(
+        {
+            marker_type
+            for row in marker_files
+            for marker_type in row.get("irons_spellbooks_kubejs_markers", {})
+        }
+    )
+    bounded_file_count = int(kubejs_inventory.get("file_count", 0))
+
+    if not artifact_observed:
+        status = "ARTIFACT_NOT_OBSERVED"
+    elif not artifact_certified:
+        status = "ARTIFACT_HASH_MISMATCH"
+    elif not kubejs_host_observed:
+        status = "KUBEJS_HOST_NOT_OBSERVED"
+    elif not kubejs_host_certified:
+        status = "KUBEJS_HOST_HASH_MISMATCH"
+    elif bounded_file_count == 0:
+        status = "ZERO_CONTENT_REVIEW_CANDIDATE"
+    else:
+        status = "SCRIPT_REVIEW_REQUIRED"
+
+    return {
+        "status": status,
+        "artifact_certified": artifact_certified,
+        "kubejs_host_certified": kubejs_host_certified,
+        "kubejs_root_present": bool(kubejs_inventory.get("kubejs_root_present")),
+        "bounded_file_count": bounded_file_count,
+        "marker_file_count": len(marker_files),
+        "marker_types": marker_types,
+    }
+
+
 def candidate_worlds(instance: Path, explicit: list[Path]) -> list[Path]:
     out: list[Path] = []
     seen: set[Path] = set()
@@ -585,6 +646,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                     entry["release_1_0_9_equality"] = entry["sha1"] == SOMAKE_109_RELEASE_SHA1
                 elif provider == "gaze":
                     entry["known_1_1_7_1_equality"] = entry["sha1"] == GAZE_1171_SHA1
+                elif provider == "kubejs":
+                    entry["current_physical_build_377_equality"] = entry["sha1"] == KUBEJS_2101_7_2_BUILD_377_PHYSICAL_SHA1
                 elif provider == "kubejsarsnouveau":
                     entry["current_physical_1_3_2_equality"] = entry["sha1"] == KUBEJSARSNOUVEAU_132_PHYSICAL_SHA1
                 elif provider == "irons_spells_js":
@@ -1609,18 +1672,24 @@ def main() -> int:
         return 2
 
     worlds = candidate_worlds(instance, [p.expanduser() for p in args.world])
+    mods = collect_mod_hashes(instance)
+    kubejs_inventory = collect_kubejs_script_inventory(instance)
 
     report = {
         "schema": 3,
         "collector": "Black Arcana provider catalog deployed evidence",
         "instance_root_redacted": True,
         "worlds_scanned": [rel(w, instance) for w in worlds],
-        "mods": collect_mod_hashes(instance),
+        "mods": mods,
         "runtime_probe": collect_catalog_runtime_probe(
             instance,
             args.probe_log.expanduser() if args.probe_log is not None else None,
         ),
-        "kubejs_script_inventory": collect_kubejs_script_inventory(instance),
+        "kubejs_script_inventory": kubejs_inventory,
+        "irons_spellbooks_kubejs_closure": classify_irons_spellbooks_kubejs_closure(
+            mods,
+            kubejs_inventory,
+        ),
         "asterism_arcanum": collect_asterism(instance, worlds),
         "corail_tombstone": collect_tombstone(instance, worlds),
         "gaze": collect_gaze(instance, worlds),
