@@ -120,7 +120,7 @@ Fechamentos recentes relevantes:
 - ✅ Woodwalkers SpellBooks 0.3.1-BETA — exact-version source closes exactly **1 active Iron's spell registration = +1 `COUNTED_SOURCE_PINNED`**, `woodwalkers_spellbooks:shapeshifting`; Woodwalkers remains morph-state authority.
 - ✅ Vampiric Ageing 1.4.21 — exact source/action catalog closes **9 provider-owned supernatural actions**, all retained as `CONDITIONAL / +0 strict` because deployed provider configuration is not captured; source defaults are not substituted.
 - ⚠️ Traveloptics 4.4.0.1-1.21.1 — current physical provider; installed artifact is `OTHER_VERIFIED`; publisher-baseline 33 spells are not promoted as exact-current; **+0 strict**.
-- ⚠️ Iron's Spellbooks KubeJS 4.0.3 — **+0 fixed built-in identities**; current pack script-defined spell/school inventory remains open.
+- ✅ Iron's Spellbooks KubeJS 4.0.3 — **+0 fixed built-in identities + 0 project-authored custom spell/school definitions at the accepted catalog evidence ceiling**; exact deployed-instance `kubejs/` filesystem parity remains separate QA and contradictory current scripts would reopen the provider.
 - ✅ KubeJS Ars Nouveau 1.3.2 — provider-owned semantic denominator closed at **0 spell IDs + 0 glyph IDs**; uncaptured current scripts remain a recipe/reachability/economy gate, not an open provider-owned semantic denominator.
 - ✅ Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Specs — semantic catalogs closed at **+0 independent identities**; runtime/interop QA remains separate and fail-closed.
 
