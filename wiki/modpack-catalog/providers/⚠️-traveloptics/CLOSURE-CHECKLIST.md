@@ -145,6 +145,8 @@ For an exact patched/replacement artifact, a strong closure packet for this gate
 
 For `ORIGINAL_EXACT`, successful startup and observed serializer rows are evidence to retain, but any result that conflicts with the already-audited duplicate-codec structure must be investigated rather than silently reclassified as fixed. The probe does not identify codec classes and does not prove loot-modifier behavior or Blackout acquisition.
 
+A bounded 2026-10-05 Project Library indexed-log search did **not** surface preserved post-repair rows directly observing both serializer IDs or `distinct_codec_instances=true`; it did resurface the historical duplicate-`KeyLootModifier` failure. Because indexed-search misses are not raw-log absence evidence, this does not close Gate 2. It does close repeated generic preserved-log keyword searching as a productive path: the next authoritative evidence is the canonical physical-pack registry probe. See [`GATE2-PRESERVED-LOG-SEARCH-BOUNDARY-2026-10-05.md`](GATE2-PRESERVED-LOG-SEARCH-BOUNDARY-2026-10-05.md).
+
 ## Gate 3 — `traveloptics:blackout` survival reachability
 
 `traveloptics:blackout` is an exact registered spell identity in the audited publisher artifact and inherits `AbstractUniqueSpell.allowCrafting() = false`.
