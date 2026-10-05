@@ -35,6 +35,13 @@ This is **publisher-only context**, not exact-alpha/current-physical proof. The 
 
 These are direct constants from exact publisher File `6342780`; they are **not** projected to current physical SHA-1 `7b74816e...`. Spell-power inputs are not final damage formulas, and effective host config/multipliers remain separate. See `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`.
 
+## Exact alpha scalar accessors — File `6342780` only
+
+- `getDuration(int)`: **L1 40.0 / L2 80.0 / L3 120.0 / L4 160.0 / L5 200.0 / L6 240.0**
+
+These are exact **raw accessor outputs** from File `6342780`. Counts are counts; no unit is assigned to the other numeric values unless independently established. They are not projected to current physical SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-SCALAR-ACCESSORS.md`.
+- `getFlameStrikeCount(int)`: **L1 2.0 / L2 3.0 / L3 4.0 / L4 5.0 / L5 6.0 / L6 7.0**
+
 ## Reachability
 
 `UNIQUE / allowCrafting=false`; exact loot anchor: Ignis loot.

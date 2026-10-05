@@ -79,6 +79,7 @@ Essa camada é deliberadamente **não-estrita e version-conditioned**: a página
 - 33/33 registram explicitamente `Registry field` + `Concrete class` do mapping exato field -> class -> ID;
 - 33/33 incluem contexto semântico público condicionado, sem promovê-lo a comportamento versionado do alpha/current physical;
 - 33/33 include an exact File-`6342780` mechanics baseline for base/per-level mana, base/per-level spell-power inputs, cast type/time, max level, minimum rarity and default cooldown; these values are not projected to current physical SHA-1 `7b74816e...`;
+- 18/33 now also carry **29 exact bounded scalar-accessor outputs** from File `6342780`, with **29/29 resolved and 0 UNKNOWN**; non-count units/final formulas are not inferred;
 - 7/33 carry explicit publisher-only quantitative/conditional notes where the living official page states a concrete threshold, timing, partition count, trajectory angle or equipment-evolution gate; these remain non-strict and non-version-pinned;
 - 21/33 are now classified `HOST-DEFAULT CRAFTABLE / EFFECTIVE ELIGIBILITY CONDITIONAL` after exact File `6342780` showed no direct craftability mutator in those classes and current Iron's 3.16.3 source establishes the `allowCrafting` default as `true`; this does not establish effective Scroll Forge eligibility, which still depends on enabled/config/focus/player gates;
 - 2/33 retain provider Weapon `allowCrafting=true`; 10/33 retain provider Unique `allowCrafting=false` (9 with exact loot anchors, `blackout` still acquisition-unresolved);
@@ -88,4 +89,4 @@ Essa camada é deliberadamente **não-estrita e version-conditioned**: a página
 
 ## Autoridade
 
-`EXACT-4.4.0.1-ARTIFACT-AUDIT.md` continua sendo a evidência técnica primária. O baseline mecânico exato está em [`EXACT-4.4.0.1-MECHANICS-BASELINE.md`](EXACT-4.4.0.1-MECHANICS-BASELINE.md), e o refinamento de craftability herdada está em [`HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`](HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md). Estas fichas são a projeção editorial objeto-a-objeto para o catálogo canônico.
+`EXACT-4.4.0.1-ARTIFACT-AUDIT.md` continua sendo a evidência técnica primária. O baseline mecânico exato está em [`EXACT-4.4.0.1-MECHANICS-BASELINE.md`](EXACT-4.4.0.1-MECHANICS-BASELINE.md), os 29 accessors escalares exatos estão em [`EXACT-4.4.0.1-SCALAR-ACCESSORS.md`](EXACT-4.4.0.1-SCALAR-ACCESSORS.md), e o refinamento de craftability herdada está em [`HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`](HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md). Estas fichas são a projeção editorial objeto-a-objeto para o catálogo canônico.

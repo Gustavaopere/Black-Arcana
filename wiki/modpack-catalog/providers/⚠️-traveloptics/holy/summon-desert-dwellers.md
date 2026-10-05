@@ -29,6 +29,14 @@ This is **publisher context only** from the living project page; it does not pro
 
 These are direct constants from exact publisher File `6342780`; they are **not** projected to current physical SHA-1 `7b74816e...`. Spell-power inputs are not final damage formulas, and effective host config/multipliers remain separate. See `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`.
 
+## Exact alpha scalar accessors — File `6342780` only
+
+- `getKoboletonCount(int)`: **L1 1.0 / L2 2.0 / L3 3.0 / L4 4.0 / L5 5.0**
+- `getKoboletonHealth(int)`: **L1 5.0 / L2 10.0 / L3 15.0 / L4 20.0 / L5 25.0**
+- `getWadjetHealth(int)`: **L1 70.0 / L2 90.0 / L3 110.0 / L4 130.0 / L5 150.0**
+
+These are exact **raw accessor outputs** from File `6342780`. Count-named values are retained as counts. Health/motion-scale outputs are not converted into final entity health, physical units or final formulas. They are not projected to current physical SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-SCALAR-ACCESSORS.md`.
+
 ## Reachability
 
 `UNIQUE / allowCrafting=false`; exact loot anchor: Koboleton / Wadjet loot.

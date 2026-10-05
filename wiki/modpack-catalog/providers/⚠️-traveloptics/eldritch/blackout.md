@@ -29,6 +29,14 @@ This is **publisher context only** from the living project page; it does not pro
 
 These are direct constants from exact publisher File `6342780`; they are **not** projected to current physical SHA-1 `7b74816e...`. Spell-power inputs are not final damage formulas, and effective host config/multipliers remain separate. See `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`.
 
+## Exact alpha scalar accessors — File `6342780` only
+
+- `getRadius(int)`: **L1 8.0 / L2 10.0 / L3 12.0**
+- `getEffectDuration(int)`: **L1 30.0 / L2 30.0 / L3 30.0**
+- `getAntiMagicZoneDuration(int)`: **L1 160.0 / L2 200.0 / L3 240.0**
+
+These are exact **raw accessor outputs** from File `6342780`. Counts are counts; no unit is assigned to the other numeric values unless independently established. They are not projected to current physical SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-SCALAR-ACCESSORS.md`.
+
 ## Reachability
 
 `UNIQUE / allowCrafting=false`; no direct exact acquisition anchor found — survival reachability `UNVERIFIED`.
