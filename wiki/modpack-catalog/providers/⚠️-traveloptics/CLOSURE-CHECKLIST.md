@@ -4,7 +4,7 @@ Status: `33 REGISTERED SPELL IDS + EXACT PUBLISHER MECHANICS CATALOGED / CURRENT
 
 ## Purpose
 
-The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown, and now additionally closes **29 bounded scalar accessors across 18 spells** with 29/29 exact File-`6342780` results. The remaining work is not another spell/default-stat enumeration or another generic scalar sweep. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
+The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown, and now additionally closes **37 File-only bounded scalar accessor results across 24 spells**: 29 no-`LivingEntity` accessors plus 8 LivingEntity-signature methods proven entity-unused before strict evaluation. A separate provider/current-host bridge closes seven effective-cast-time delegates and expands combined documented accessor/bridge coverage to **28/33** spell identities. The remaining work is not another spell/default-stat enumeration or another generic scalar sweep. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
 
 This checklist does not promote the provider, does not treat a third-party patch as upstream authority, and does not infer survival acquisition or assembled-pack runtime from publisher marketing language.
 
@@ -180,7 +180,11 @@ The following work is already canonical and should not be repeated:
 - `blackout` isolated as the unresolved Unique reachability exception;
 - structural `TOLootModifiers` codec mismatch recorded clean-room;
 - 33/33 exact default mechanics baseline closed for File `6342780`;
-- 29/29 selected numeric no-`LivingEntity` accessors closed across 18 spells with 0 UNKNOWN; raw non-count units/final formulas remain intentionally unassigned.
+- 29/29 selected numeric no-`LivingEntity` accessors closed across 18 spells with 0 UNKNOWN;
+- 49 numeric LivingEntity-bearing methods classified: 15 ENTITY_UNUSED / 34 ENTITY_SLOT_READ;
+- of the 15 ENTITY_UNUSED methods, 8 resolve as File-only scalars and the remaining 7 are proven direct delegates to host `getCastTime(level)` by audit #619;
+- the seven direct delegates resolve under the current Iron's 3.16.3 host contract to 50/39/45/15/25/20/10 ticks, but remain separate from the File-only scalar denominator;
+- File-only exact resolved bounded accessor outputs remain 37 across 24/33 spell cards; combined accessor/host-bridge coverage touches 28/33; no value is assigned to the 34 entity-reading methods.
 
 ## Acceptance boundary
 

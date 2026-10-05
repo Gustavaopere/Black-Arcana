@@ -1,6 +1,6 @@
 # T.O Magic n' Extras 4.4.0.1 — exact publisher scalar-accessor checkpoint
 
-Status: `EXACT FILE 6342780 / 29 BOUNDED ACCESSORS / 29 OK / CURRENT PHYSICAL NOT PROJECTED`
+Status: `EXACT FILE 6342780 / 37 RESOLVED BOUNDED ACCESSORS / CURRENT PHYSICAL NOT PROJECTED`
 
 ## Authority
 
@@ -24,10 +24,22 @@ This checkpoint derives from two temporary NON-MERGE clean-room audits against t
   - artifact: `11317109960`;
   - digest: `sha256:ac3b0b8a7e6ac8137094defe89d21d73263e50cf5cd4a4c8d07a599eebb64726`;
   - 15 targets / 15 OK / 0 UNKNOWN.
+- LivingEntity classifier PR **#616**:
+  - authoritative HEAD: `294e6441475bbc8e7a61ebf22423bd4638ebe177`;
+  - workflow run: `37246922722` — **SUCCESS**;
+  - artifact: `11319870514`;
+  - digest: `sha256:9b6b47ae19b0d2288d13b6d1a124376e0fba9e460107ba93b1d7083e41b2d3ce`;
+  - 49 numeric LivingEntity-bearing targets / 15 ENTITY_UNUSED / 34 ENTITY_SLOT_READ;
+- ENTITY_UNUSED scalar evaluator PR **#617**:
+  - authoritative HEAD: `54bbb4d91e336e8a8b865ed1855dd616dda954e8`;
+  - workflow run: `37247139145` — **SUCCESS**;
+  - artifact: `11319088574`;
+  - digest: `sha256:2223139cf8d43acff7c3841d1de322e6e8c0b2064b2e461826ab5449a29eebef`;
+  - 15 targets / 8 OK / 7 UNKNOWN.
 
 The method-surface audit established the declared accessors. Audits #609 and #613 then evaluated the full selected set of 29 numeric `()` / `(int)` no-`LivingEntity` accessors through the same strict straight-line JVM subset. Unsupported control flow, invocation, unresolved fields/locals or unsupported opcodes would have returned `UNKNOWN`.
 
-Combined result: **29 targets / 29 OK / 0 UNKNOWN**.
+No-LivingEntity result: **29 targets / 29 OK / 0 UNKNOWN**. A separate LivingEntity-bearing surface adds **8 exact resolved values** after #616 proved those methods do not read their LivingEntity parameter; 34 entity-reading methods and 7 strict-evaluator UNKNOWN methods remain unresolved. Canonical detail: [`EXACT-4.4.0.1-LIVINGENTITY-ACCESSORS.md`](EXACT-4.4.0.1-LIVINGENTITY-ACCESSORS.md).
 
 ## Retention boundary
 
@@ -91,10 +103,26 @@ Nothing here is projected to current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1
 | `traveloptics:mechanized_predator` | `MechanizedPredatorSpell.getWatcherHealth(int)` | L1=5.0, L2=10.0, L3=15.0, L4=20.0, L5=25.0 |
 | `traveloptics:mechanized_predator` | `MechanizedPredatorSpell.getProwlerHealth(int)` | L1=80.0, L2=100.0, L3=120.0, L4=140.0, L5=160.0 |
 | `traveloptics:stele_cascade` | `SteleCascadeSpell.getRingsAndRows(int)` | L1=1, L2=2, L3=3, L4=4, L5=5, L6=6 |
+| `traveloptics:blood_howl` | `BloodHowlSpell.getRecastCount(int, LivingEntity)` | L1=2, L2=3, L3=4, L4=5, L5=6 |
+| `traveloptics:psychic_bolt` | `PsychicBoltSpell.getRecastCount(int, LivingEntity)` | L1=5, L2=5, L3=5 |
+| `traveloptics:void_eruption` | `VoidEruptionSpell.getRecastCount(int, LivingEntity)` | L1=1, L2=2, L3=3 |
+| `traveloptics:void_eruption` | `VoidEruptionSpell.getRange(int, LivingEntity)` | L1=20.0, L2=20.0, L3=20.0 |
+| `traveloptics:nullflare` | `NullflareSpell.getRecastCount(int, LivingEntity)` | L1=5, L2=5, L3=5, L4=5, L5=5 |
+| `traveloptics:despair` | `DespairSpell.getRecastCount(int, LivingEntity)` | L1=2, L2=3, L3=3, L4=4, L5=4, L6=5, L7=5, L8=6, L9=6, L10=7 |
+| `traveloptics:em_pulse` | `EmPulse.getRadius(int, LivingEntity)` | L1=4.0, L2=6.0, L3=8.0, L4=10.0, L5=12.0 |
+| `traveloptics:aerial_collapse` | `AerialCollapseSpell.getRadius(int, LivingEntity)` | L1=4.0, L2=6.0, L3=8.0, L4=10.0, L5=12.0 |
+
+## Current-host effective-cast bridge — not part of the 37 File-only outputs
+
+A separate exact-provider/current-host bridge closes seven `getEffectiveCastTime(int, LivingEntity)` results for Abyssal Blast, Blackout, Cursed Minefield, Vortex Punch, Gyro Slash, Death Laser and Aerial Collapse. Audit #619 proves all seven exact File-`6342780` provider methods are direct delegates to `getCastTime(level)`; current Iron's 3.16.3 source resolves that host accessor to the raw `castTime` field for these `LONG` spells.
+
+Results: **50 / 39 / 45 / 15 / 25 / 20 / 10 ticks**, respectively.
+
+These are intentionally excluded from the 37 File-only count because the numeric bridge depends on the current Iron's host contract. See `EXACT-4.4.0.1-CURRENT-HOST-EFFECTIVE-CAST-BRIDGE.md`.
 
 ## Catalog consequence
 
-This checkpoint deepens **18/33** spell cards and closes all **29** selected numeric `()` / `(int)` no-`LivingEntity` accessors from the #608 method surface.
+This checkpoint carries **37 exact File-only resolved bounded accessor outputs across 24/33 spell cards**: 29 no-`LivingEntity` values plus 8 LivingEntity-signature values proven entity-unused before evaluation. A separate current-host bridge closes seven effective-cast-time results and expands combined documented accessor/bridge coverage to **28/33 spell identities**, without changing the 37-row File-only count. The remaining entity-reading surface is bounded in `EXACT-4.4.0.1-LIVINGENTITY-ACCESSORS.md`.
 
 It does not:
 
