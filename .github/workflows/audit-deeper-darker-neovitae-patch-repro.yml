@@ -1,0 +1,341 @@
+name: audit-deeper-darker-neovitae-patch-repro
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate-reproduction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Black Arcana
+        uses: actions/checkout@v4
+
+      - name: Download and verify official Deeper and Darker 1.4.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-neovitae-repro"
+          mkdir -p "$OUT"
+
+          curl -fL --retry 3 --retry-all-errors \
+            "https://github.com/KyaniteMods/DeeperAndDarker/releases/download/v1.4.1/deeperdarker-neoforge-1.21.1-1.4.1.jar" \
+            -o "$OUT/publisher.jar"
+
+          test "$(stat -c %s "$OUT/publisher.jar")" = "3906057"
+          test "$(sha1sum "$OUT/publisher.jar" | awk '{print $1}')" = "b6094adde68bd4b909bc75c64901e1f3fb99ad8f"
+          test "$(sha256sum "$OUT/publisher.jar" | awk '{print $1}')" = "eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af"
+
+      - name: Generate candidate compatibility JARs
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-neovitae-repro"
+
+          python3 - "$OUT" <<'PY'
+          import datetime
+          import hashlib
+          import os
+          import pathlib
+          import sys
+          import zipfile
+
+          out = pathlib.Path(sys.argv[1])
+          publisher = out / "publisher.jar"
+          target = "deeperdarker.mixins.json"
+
+          ORIGINAL_SHA1 = "b6094adde68bd4b909bc75c64901e1f3fb99ad8f"
+          OFFICIAL_CF_FP = 1323964125
+
+          def murmur2(data: bytes, seed: int = 1) -> int:
+              m = 0x5BD1E995
+              r = 24
+              h = (seed ^ len(data)) & 0xFFFFFFFF
+              i = 0
+              remaining = len(data)
+              while remaining >= 4:
+                  k = data[i] | (data[i+1] << 8) | (data[i+2] << 16) | (data[i+3] << 24)
+                  k = (k * m) & 0xFFFFFFFF
+                  k ^= k >> r
+                  k = (k * m) & 0xFFFFFFFF
+                  h = (h * m) & 0xFFFFFFFF
+                  h ^= k
+                  i += 4
+                  remaining -= 4
+              if remaining == 3:
+                  h ^= data[i+2] << 16
+              if remaining >= 2:
+                  h ^= data[i+1] << 8
+              if remaining >= 1:
+                  h ^= data[i]
+                  h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 13
+              h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 15
+              return h & 0xFFFFFFFF
+
+          def curseforge_fingerprint(path: pathlib.Path) -> int:
+              raw = path.read_bytes()
+              filtered = bytes(b for b in raw if b not in (9, 10, 13, 32))
+              return murmur2(filtered, 1)
+
+          if hashlib.sha1(publisher.read_bytes()).hexdigest() != ORIGINAL_SHA1:
+              raise SystemExit("publisher SHA-1 changed unexpectedly")
+
+          publisher_fp = curseforge_fingerprint(publisher)
+          if publisher_fp != OFFICIAL_CF_FP:
+              raise SystemExit(
+                  f"CurseForge fingerprint implementation mismatch: expected {OFFICIAL_CF_FP}, got {publisher_fp}"
+              )
+
+          with zipfile.ZipFile(publisher, "r") as zin:
+              original_json = zin.read(target).decode("utf-8")
+              target_info = zin.getinfo(target)
+
+          player_line = '    "PlayerMixin",\n'
+          server_line = '    "ServerPlayerMixin",\n'
+          if original_json.count(player_line) != 1:
+              raise SystemExit("PlayerMixin line not uniquely found")
+          if original_json.count(server_line) != 1:
+              raise SystemExit("ServerPlayerMixin line not uniquely found")
+
+          variants = {
+              "stage1-remove-player": original_json.replace(player_line, ""),
+              "stage2-remove-player-server": original_json.replace(player_line, "").replace(server_line, ""),
+          }
+
+          # Strategy A: Python ZipFile rewrite preserving ZipInfo metadata.
+          for name, patched_text in variants.items():
+              dst = out / f"python-preserve-{name}.jar"
+              with zipfile.ZipFile(publisher, "r") as zin, zipfile.ZipFile(dst, "w") as zout:
+                  zout.comment = zin.comment
+                  for info in zin.infolist():
+                      data = zin.read(info.filename)
+                      if info.filename == target:
+                          data = patched_text.encode("utf-8")
+                      zout.writestr(info, data)
+
+          # Control rewrite with no content changes.
+          control = out / "python-preserve-control.jar"
+          with zipfile.ZipFile(publisher, "r") as zin, zipfile.ZipFile(control, "w") as zout:
+              zout.comment = zin.comment
+              for info in zin.infolist():
+                  zout.writestr(info, zin.read(info.filename))
+
+          dt = datetime.datetime(*target_info.date_time)
+          for name, patched_text in variants.items():
+              d = out / f"payload-{name}"
+              d.mkdir(parents=True, exist_ok=True)
+              p = d / target
+              p.write_text(patched_text, encoding="utf-8", newline="")
+              ts = dt.timestamp()
+              os.utime(p, (ts, ts))
+
+          (out / "publisher-mixins.json").write_text(original_json, encoding="utf-8")
+          for name, patched_text in variants.items():
+              (out / f"{name}.mixins.json").write_text(patched_text, encoding="utf-8")
+
+          (out / "candidate-inputs.txt").write_text(
+              "\n".join([
+                  "official_sha1=b6094adde68bd4b909bc75c64901e1f3fb99ad8f",
+                  "official_sha256=eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af",
+                  "official_bytes=3906057",
+                  f"official_cf_fingerprint_verified={publisher_fp}",
+                  "physical_sha1=83f7edd0a8516b2767c2cda7a3b2402f9e290d88",
+                  "physical_cf_fingerprint=1917446721",
+                  "retained_stage1_bytes=3906052",
+                  "retained_stage2_bytes=3906044",
+                  "",
+              ]),
+              encoding="utf-8",
+          )
+          PY
+
+          # Strategy B/C: preserve the original archive and replace only the
+          # mixin JSON entry using Info-ZIP, with and without -X.
+          for stage in stage1-remove-player stage2-remove-player-server; do
+            for flavor in zip-update zip-update-X; do
+              cp "$OUT/publisher.jar" "$OUT/\${flavor}-\${stage}.jar"
+              if [ "$flavor" = "zip-update-X" ]; then
+                (cd "$OUT/payload-\${stage}" && zip -q -X "$OLDPWD/\${flavor}-\${stage}.jar" deeperdarker.mixins.json)
+              else
+                (cd "$OUT/payload-\${stage}" && zip -q "$OLDPWD/\${flavor}-\${stage}.jar" deeperdarker.mixins.json)
+              fi
+            done
+          done
+
+      - name: Measure candidates and compare retained/physical fingerprints
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-neovitae-repro"
+
+          python3 - "$OUT" <<'PY'
+          import csv
+          import hashlib
+          import pathlib
+          import sys
+          import zipfile
+
+          out = pathlib.Path(sys.argv[1])
+          publisher = out / "publisher.jar"
+
+          PHYSICAL_SHA1 = "83f7edd0a8516b2767c2cda7a3b2402f9e290d88"
+          PHYSICAL_CF_FP = 1917446721
+          OFFICIAL_CF_FP = 1323964125
+          RETAINED = {"stage1": 3906052, "stage2": 3906044}
+
+          def murmur2(data: bytes, seed: int = 1) -> int:
+              m = 0x5BD1E995
+              r = 24
+              h = (seed ^ len(data)) & 0xFFFFFFFF
+              i = 0
+              remaining = len(data)
+              while remaining >= 4:
+                  k = data[i] | (data[i+1] << 8) | (data[i+2] << 16) | (data[i+3] << 24)
+                  k = (k * m) & 0xFFFFFFFF
+                  k ^= k >> r
+                  k = (k * m) & 0xFFFFFFFF
+                  h = (h * m) & 0xFFFFFFFF
+                  h ^= k
+                  i += 4
+                  remaining -= 4
+              if remaining == 3:
+                  h ^= data[i+2] << 16
+              if remaining >= 2:
+                  h ^= data[i+1] << 8
+              if remaining >= 1:
+                  h ^= data[i]
+                  h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 13
+              h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 15
+              return h & 0xFFFFFFFF
+
+          def fingerprint(path):
+              raw = path.read_bytes()
+              return murmur2(bytes(b for b in raw if b not in (9,10,13,32)), 1)
+
+          def digest(path, alg):
+              h = hashlib.new(alg)
+              h.update(path.read_bytes())
+              return h.hexdigest()
+
+          def entry_map(path):
+              with zipfile.ZipFile(path) as z:
+                  return {
+                      n: hashlib.sha256(z.read(n)).hexdigest()
+                      for n in z.namelist()
+                      if not n.endswith("/")
+                  }
+
+          pub_entries = entry_map(publisher)
+          rows = []
+          for path in sorted(out.glob("*.jar")):
+              sha1 = digest(path, "sha1")
+              sha256 = digest(path, "sha256")
+              fp = fingerprint(path)
+              size = path.stat().st_size
+              entries = entry_map(path)
+              changed = sorted(k for k in set(pub_entries) & set(entries) if pub_entries[k] != entries[k])
+              only_candidate = sorted(set(entries) - set(pub_entries))
+              only_publisher = sorted(set(pub_entries) - set(entries))
+
+              stage = ""
+              expected_size = ""
+              if "stage1-remove-player" in path.name:
+                  stage = "stage1"
+                  expected_size = RETAINED["stage1"]
+              elif "stage2-remove-player-server" in path.name:
+                  stage = "stage2"
+                  expected_size = RETAINED["stage2"]
+
+              rows.append({
+                  "candidate": path.name,
+                  "bytes": size,
+                  "sha1": sha1,
+                  "sha256": sha256,
+                  "curseforge_fingerprint": fp,
+                  "stage": stage,
+                  "expected_retained_bytes": expected_size,
+                  "size_matches_retained": bool(expected_size and size == expected_size),
+                  "sha1_matches_physical": sha1 == PHYSICAL_SHA1,
+                  "fingerprint_matches_physical": fp == PHYSICAL_CF_FP,
+                  "changed_entry_count": len(changed),
+                  "changed_entries": ";".join(changed),
+                  "candidate_only_entries": ";".join(only_candidate),
+                  "publisher_only_entries": ";".join(only_publisher),
+              })
+
+          with (out / "candidate-results.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.DictWriter(f, fieldnames=rows[0].keys(), delimiter="\t")
+              w.writeheader()
+              w.writerows(rows)
+
+          matches = [r for r in rows if r["sha1_matches_physical"] or r["fingerprint_matches_physical"]]
+          retained_size_matches = [r for r in rows if r["size_matches_retained"]]
+
+          with (out / "candidate-summary.txt").open("w", encoding="utf-8") as f:
+              f.write(f"publisher_cf_fingerprint={fingerprint(publisher)}\n")
+              f.write(f"publisher_cf_expected={OFFICIAL_CF_FP}\n")
+              f.write(f"physical_sha1={PHYSICAL_SHA1}\n")
+              f.write(f"physical_cf_fingerprint={PHYSICAL_CF_FP}\n")
+              f.write(f"candidate_count={len(rows)}\n")
+              f.write(f"retained_size_match_count={len(retained_size_matches)}\n")
+              for r in retained_size_matches:
+                  f.write(
+                      "retained_size_match="
+                      + r["candidate"]
+                      + f" bytes={r['bytes']} sha1={r['sha1']} cf={r['curseforge_fingerprint']}\n"
+                  )
+              f.write(f"physical_hash_or_fp_match_count={len(matches)}\n")
+              for r in matches:
+                  f.write(
+                      "physical_match="
+                      + r["candidate"]
+                      + f" bytes={r['bytes']} sha1={r['sha1']} cf={r['curseforge_fingerprint']}\n"
+                  )
+
+          print((out / "candidate-summary.txt").read_text())
+          print((out / "candidate-results.tsv").read_text())
+          PY
+
+      - name: Record hypothesis and evidence boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-neovitae-repro"
+          cat > "$OUT/hypothesis.txt" <<'EOF'
+          HYPOTHESIS UNDER TEST
+          - Official deeperdarker.mixins.json contains ContainerMenuMixin, PlayerMixin and ServerPlayerMixin.
+          - Pre-patch retained boot shows PlayerMixin redirect conflict with NeoVitae.
+          - A first generated compatibility JAR exists at 3,906,052 bytes.
+          - The next retained failing boot shows ServerPlayerMixin redirect conflict.
+          - A second generated v2 compatibility JAR exists at 3,906,044 bytes.
+          - Candidate stage 1 removes only PlayerMixin from deeperdarker.mixins.json.
+          - Candidate stage 2 removes PlayerMixin and ServerPlayerMixin while retaining ContainerMenuMixin.
+
+          FAIL-CLOSED BOUNDARY
+          - Matching only retained byte size is not proof of deployed identity.
+          - An exact physical SHA-1 and/or validated CurseForge fingerprint match is required for a cryptographic bridge.
+          - If no candidate matches, do not infer the patch recipe from chronology alone.
+          - No third-party binary is committed or uploaded by this audit.
+          EOF
+
+      - name: Upload text-only evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: deeper-darker-neovitae-patch-repro-evidence
+          path: |
+            build/audit/deeperdarker-neovitae-repro/candidate-inputs.txt
+            build/audit/deeperdarker-neovitae-repro/candidate-summary.txt
+            build/audit/deeperdarker-neovitae-repro/candidate-results.tsv
+            build/audit/deeperdarker-neovitae-repro/publisher-mixins.json
+            build/audit/deeperdarker-neovitae-repro/stage1-remove-player.mixins.json
+            build/audit/deeperdarker-neovitae-repro/stage2-remove-player-server.mixins.json
+            build/audit/deeperdarker-neovitae-repro/hypothesis.txt
+          if-no-files-found: error
