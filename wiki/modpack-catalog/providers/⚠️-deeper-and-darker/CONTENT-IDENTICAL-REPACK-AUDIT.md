@@ -126,6 +126,28 @@ The workflow also reports that none of the 61 candidates reproduced the publishe
 
 The decisive acceptance gate is still hash/fingerprint equality, not size.
 
+## Python zipfile follow-up
+
+Because NON-MERGE **#635** established that the independently verified publisher artifact is directly readable by Python `zipfile` without reproducible overlap/read errors, NON-MERGE **#640** measured the Python-`zipfile` family that was described but not present in #632's final 61-candidate result.
+
+Measured #640 boundary:
+
+- candidates: **22**;
+- `ZipInfo` strategies: shallow copy and bounded metadata rebuild;
+- compression variants: default plus explicit DEFLATE levels **0–9**;
+- physical SHA-1/fingerprint matches: **0/22**;
+- retained local-size **3,906,052** matches: **0/22**;
+- retained local-size **3,906,044** matches: **0/22**;
+- publisher-size **3,906,057** matches: **4/22**.
+
+The four publisher-size candidates are byte-identical to each other at SHA-1 `eb6f9fbc5adfc4e12de9e6b2462370da74572acc` / fingerprint **824150764**. They match only the publisher's total size and match neither the publisher hash/fingerprint nor the physical target.
+
+Disposition:
+
+`NO_PHYSICAL_MATCH_IN_22-CANDIDATE_PYTHON_ZIPFILE_CONTENT_IDENTICAL_REPACK_FAMILY`
+
+See [`PYTHON-ZIPFILE-REPACK-AUDIT.md`](PYTHON-ZIPFILE-REPACK-AUDIT.md).
+
 ## Interpretation
 
 This audit rules out a useful bounded hypothesis:
@@ -148,7 +170,8 @@ The evidence now excludes several distinct bounded explanations without establis
 
 - NON-MERGE **#604**: **57** mixin-config candidate repacks, **0/57** exact physical SHA-1 matches;
 - NON-MERGE **#622**: **80** expanded NeoVitae patch/repack candidates, **0/80** physical SHA-1 or fingerprint matches;
-- NON-MERGE **#632**: **61** effective-content-identical full repacks, **0/61** physical SHA-1 or fingerprint matches.
+- NON-MERGE **#632**: **61** Info-ZIP/JDK effective-content-identical full repacks, **0/61** physical SHA-1 or fingerprint matches;
+- NON-MERGE **#640**: **22** Python-`zipfile` content-identical full rewrites, **0/22** physical SHA-1 or fingerprint matches.
 
 These matrices test different hypotheses and are not arithmetically merged into one exhaustive search space.
 

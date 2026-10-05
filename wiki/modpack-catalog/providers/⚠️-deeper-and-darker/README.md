@@ -71,7 +71,9 @@ NON-MERGE audit **#632** separately tested the narrower hypothesis that the phys
 
 Follow-up NON-MERGE audit **#635** re-downloaded the verified publisher artifact and inspected its central-directory/local-header/span structure directly. It found **2,900 unique entries**, **0** duplicate names, **0** duplicate local-header offsets, **0** CPython-style overlap-span violations, **0** full-entry `zipfile` read errors, `ZipFile.testzip() == NONE`, and **0** local-vs-central metadata mismatches. That result supersedes only the earlier explanatory note that publisher ZIP overlap forced #632's extraction boundary; the measured **0/61** #632 no-match remains valid.
 
-See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md), [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md), [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md), and [`PUBLISHER-ZIP-STRUCTURE-AUDIT.md`](PUBLISHER-ZIP-STRUCTURE-AUDIT.md).
+NON-MERGE audit **#640** then filled the Python-`zipfile` gap left by #632. It measured **22** content-identical full rewrites across two `ZipInfo` strategies and default/0–9 DEFLATE settings. **0/22** matched physical SHA-1 `83f7edd0...` or fingerprint `1917446721`; **0/22** matched either retained local compatibility-JAR size. Four candidates reproduced the publisher total size exactly, but collapsed to SHA-1 `eb6f9fbc5adfc4e12de9e6b2462370da74572acc` / fingerprint **824150764**, so size equality did not establish identity.
+
+See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md), [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md), [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md), [`PUBLISHER-ZIP-STRUCTURE-AUDIT.md`](PUBLISHER-ZIP-STRUCTURE-AUDIT.md), and [`PYTHON-ZIPFILE-REPACK-AUDIT.md`](PYTHON-ZIPFILE-REPACK-AUDIT.md).
 
 ## Exact source reproduction — corroboration, not closure
 
