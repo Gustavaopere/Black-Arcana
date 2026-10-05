@@ -47,7 +47,7 @@ A retained CurseForge instance-metadata snapshot narrows the origin of the curre
 - original File length: **3,906,057 bytes**;
 - the snapshot records `isModified=false`, `isWorkingCopy=false` and `isFuzzyMatch=false` at that capture point.
 
-The later physical modlist records the **same filename, mod id, runtime and byte length lineage**, but measures SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+The later physical modlist records the **same filename, mod id and runtime**, and measures SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`. That physical table has no JAR-size column, so no same-byte-length claim is made for the later snapshot.
 
 This closes an important provenance question: the current physical fingerprint is **not evidence of a second official 1.4.1 release**. The retained installation history points to the official File 8201775 as the original installed artifact, followed by a local byte-level change/repack before the later physical hash snapshot.
 
