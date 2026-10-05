@@ -35,6 +35,19 @@ This is **publisher-only context**, not exact-alpha/current-physical proof. The 
 
 These are direct constants from exact publisher File `6342780`; they are **not** projected to current physical SHA-1 `7b74816e...`. Spell-power inputs are not final damage formulas, and effective host config/multipliers remain separate. See `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`.
 
+## Exact-alpha entity-power dependency — File `6342780`
+
+- selected numeric accessor: `getDuration(LivingEntity, int)`;
+- LivingEntity slot reads: **1**;
+- provider field references: **none**;
+- branches: **0**;
+- only retained member dependency: host `getSpellPower(int, Entity)`;
+- retained arithmetic classification: `imul ×1; f2i ×1; iadd ×1`.
+
+Current Iron's `1.21.1-3.16.3` resolves `getSpellPower` from the spell's base/per-level power plus entity Spell Power, school power and effective `POWER_MULTIPLIER`. This exact Traveloptics spell uses File-`6342780` spell-power inputs `1 / 1`.
+
+The provider-side formula is deliberately **not reconstructed**. This accessor remains entity/config dependent and no entity-independent numeric result is assigned. See `../EXACT-4.4.0.1-ENTITY-POWER-DEPENDENCY-CHECKPOINT.md`.
+
 ## Reachability
 
 `HOST-DEFAULT CRAFTABLE / EFFECTIVE ELIGIBILITY CONDITIONAL`: exact File `6342780` class has no direct craftability mutator; current Iron's `1.21.1-3.16.3` host defaults `allowCrafting` to `true`. This closes only the host-default craftability gate. Effective Scroll Forge eligibility still depends on `isEnabled()`, effective `allow_crafting` configuration, a compatible focus/school path, and player-specific learning where applicable; unconditional survival acquisition is not established.
