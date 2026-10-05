@@ -1,6 +1,6 @@
 # Traveloptics Blackout — retained external-route evidence checkpoint
 
-Status: `NO PRESERVED EXTERNAL ACQUISITION ROUTE FOUND / CURRENT PACK ABSENCE NOT PROVEN / FAIL-CLOSED`
+Status: `NO PRESERVED LITERAL / OBJECT-SPECIFIC EXTERNAL ROUTE FOUND / GENERIC EXTERNAL FILTERS UNRESOLVED / CURRENT PACK ABSENCE NOT PROVEN / FAIL-CLOSED`
 
 ## Purpose
 
@@ -19,19 +19,13 @@ Current repositories checked:
 - `Gustavaopere/Black-Arcana`;
 - `Gustavaopere/neoforge-rpg-skilltree`.
 
-Targeted code/script/data searches were performed for both `blackout` and `traveloptics` under the path classes:
+The bounded search looked for literal/object-specific references to `blackout` and `traveloptics` in versioned code/script/data surfaces.
 
-- `kubejs`;
-- `src`;
-- `data`;
-- `scripts`.
+Black Arcana does contain Traveloptics references in `src/catalogQaProbe/java/dev/gustavopere/blackarcana/qa/catalog/CatalogRuntimeEvidence.java`. That source is a read-only runtime evidence probe: it observes mod presence and the two bounded Traveloptics loot-modifier serializer registry IDs. It does not grant spells, build loot tables, inject recipes or implement acquisition.
 
-Result:
+After excluding that observational QA surface, no **literal/object-specific acquisition route** for `traveloptics:blackout` was identified in the versioned Black Arcana or sibling project surfaces checked.
 
-- Black Arcana code/script/data hits: **0**;
-- sibling code/script/data hits: **0**.
-
-This proves only that no route is versioned in the searched repository surfaces. It does not prove absence from an unversioned assembled-instance KubeJS/datapack tree.
+This is intentionally narrower than “no external route exists”. A generic external Iron's loot path could use school/global `SpellFilter` / `RandomizeSpellFunction` semantics, including a forced Eldritch/global filter, without mentioning `blackout` or `traveloptics` literally. Because the authoritative current assembled KubeJS/datapack/progression tree is not captured, those generic external filters remain **UNRESOLVED**.
 
 ## Project / Library retained-source search
 
@@ -71,15 +65,16 @@ Retained evidence now supports the following bounded statement:
 
 - exact File `6342780` provider direct route: **EXCLUDED**;
 - exact File `6342780` provider built-in generic random-spell route: **EXCLUDED**;
-- Black Arcana repository external route: **NOT FOUND IN VERSIONED CODE/SCRIPT/DATA SURFACES**;
-- sibling repository external route: **NOT FOUND IN VERSIONED CODE/SCRIPT/DATA SURFACES**;
+- Black Arcana literal/object-specific external route: **NOT FOUND AFTER EXCLUDING THE OBSERVATIONAL QA PROBE**;
+- sibling literal/object-specific external route: **NOT FOUND IN THE SEARCHED VERSIONED SURFACES**;
+- generic external school/global filter route: **UNRESOLVED — may exist without literal Blackout/Traveloptics references**;
 - retained Library KubeJS/datapack source route: **NOT PRESERVED / NOT FOUND**;
 - actual assembled current-pack external route: **UNVERIFIED**;
 - current physical Traveloptics-only delta route: **UNVERIFIED**.
 
 Therefore Blackout remains:
 
-`REGISTERED / UNIQUE / NON-CRAFTABLE / NON-LOOTABLE IN EXACT ALPHA / NO PRESERVED EXTERNAL ROUTE FOUND / CURRENT-PACK SURVIVAL REACHABILITY UNVERIFIED`.
+`REGISTERED / UNIQUE / NON-CRAFTABLE / NON-LOOTABLE IN EXACT ALPHA / NO PRESERVED LITERAL ROUTE FOUND / GENERIC EXTERNAL FILTERS UNRESOLVED / CURRENT-PACK SURVIVAL REACHABILITY UNVERIFIED`.
 
 ## What can close the gate
 
