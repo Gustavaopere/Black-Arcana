@@ -1,4 +1,4 @@
-name: Traveloptics Effective Cast Dependency Audit
+name: Traveloptics Effective Cast Direct-Delegate Audit
 
 on:
   pull_request:
@@ -22,7 +22,7 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Extract bounded member dependencies
+      - name: Classify exact direct delegation
         shell: bash
         run: |
           set -euo pipefail
@@ -116,24 +116,39 @@ jobs:
                           invokes.add(f"{op}:{c}")
                   if op.startswith(("if","goto","tableswitch","lookupswitch","jsr","ret")):
                       branches+=1
-              rows.append((simple,method,desc,this_loads,branches,sorted(fields),sorted(invokes)))
+              def is_level_load(item):
+                  op,arg=item
+                  return op=="iload_1" or (op=="iload" and arg.strip().startswith("1"))
+
+              direct_delegate=(
+                  len(instr)==4
+                  and instr[0][0]=="aload_0"
+                  and is_level_load(instr[1])
+                  and instr[2][0]=="invokevirtual"
+                  and "Method getCastTime:(I)I" in comment(instr[2][1])
+                  and instr[3][0]=="ireturn"
+              )
+              rows.append((simple,method,desc,this_loads,branches,sorted(fields),sorted(invokes),direct_delegate))
 
           report=Path("audit/report.txt")
           with report.open("w",encoding="utf-8") as f:
-              f.write("Traveloptics exact-alpha effective-cast dependency audit\n")
+              f.write("Traveloptics exact-alpha effective-cast direct-delegate audit v2\n")
               f.write("artifact=CurseForge 1046916/6342780\n")
               f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
-              f.write("scope=7 ENTITY_UNUSED getEffectiveCastTime methods rejected by strict scalar evaluator at instance-object access\n")
-              f.write("retention=method identity + unordered referenced member identities + this-load count + branch count only; no bytecode/method bodies\n\n")
-              for simple,method,desc,this_loads,branches,fields,invokes in rows:
+              f.write("scope=7 ENTITY_UNUSED getEffectiveCastTime methods; classify whether each is an exact direct delegate to getCastTime(level)\n")
+              f.write("retention=method identity + bounded dependency counts + DIRECT_DELEGATE boolean only; no bytecode/instruction sequence/method bodies\n\n")
+              for simple,method,desc,this_loads,branches,fields,invokes,direct_delegate in rows:
                   fs=";".join(fields) if fields else "NONE"
                   ins=";".join(invokes) if invokes else "NONE"
-                  f.write(f"{simple}|{method}|{desc}|this_loads={this_loads}|branches={branches}|fields={fs}|invokes={ins}\n")
+                  dd="YES" if direct_delegate else "NO"
+                  f.write(f"{simple}|{method}|{desc}|this_loads={this_loads}|branches={branches}|fields={fs}|invokes={ins}|direct_delegate={dd}\n")
               f.write("\nsummary\n")
               f.write(f"targets={len(rows)}\n")
               f.write(f"with_field_refs={sum(1 for r in rows if r[5])}\n")
               f.write(f"with_invokes={sum(1 for r in rows if r[6])}\n")
               f.write(f"with_branches={sum(1 for r in rows if r[4])}\n")
+              f.write(f"direct_delegate_yes={sum(1 for r in rows if r[7])}\n")
+              f.write(f"direct_delegate_no={sum(1 for r in rows if not r[7])}\n")
 
           if len(rows)!=7:
               raise RuntimeError(f"expected 7 rows, got {len(rows)}")
@@ -143,7 +158,7 @@ jobs:
       - name: Upload text-only audit
         uses: actions/upload-artifact@v7
         with:
-          name: traveloptics-effective-cast-dependencies
+          name: traveloptics-effective-cast-direct-delegate
           path: audit/report.txt
           if-no-files-found: error
           retention-days: 30
