@@ -130,6 +130,23 @@ allow_lost_tablet = false
             self.assertFalse(entry["current_physical_4_0_3_equality"])
 
 
+    def test_hash_inventory_checks_current_irons_spellbooks_3163_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            (mods / "irons_spellbooks-1.21.1-3.16.3.jar").write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("irons_spellbooks", result)
+            self.assertEqual(1, len(result["irons_spellbooks"]))
+            entry = result["irons_spellbooks"][0]
+            self.assertEqual("irons_spellbooks-1.21.1-3.16.3.jar", entry["filename"])
+            self.assertIn("current_physical_3_16_3_equality", entry)
+            self.assertFalse(entry["current_physical_3_16_3_equality"])
+
+
     def test_hash_inventory_checks_current_kubejs_build_377_physical_fingerprint(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
