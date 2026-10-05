@@ -169,11 +169,11 @@ See [`EXACT-4.4.0.1-MECHANICS-BASELINE.md`](EXACT-4.4.0.1-MECHANICS-BASELINE.md)
 
 Provider-owned ancestry divides the 33 registrations into three relevant groups:
 
-- 21 registrations are outside the Unique/Weapon provider bases and do not declare provider-owned `allowCrafting`, `isEnabled` or `canBeCraftedBy` overrides. A focused exact-alpha probe additionally found **0/21** direct `DefaultConfig.setAllowCrafting(...)` calls in those concrete classes. Under the current physical Iron's `1.21.1-3.16.3` host contract, whose `DefaultConfig.allowCrafting` and generic `ALLOW_CRAFTING` defaults are `true`, these 21 are **host-default craftable**, while effective Scroll Forge eligibility remains conditioned by `isEnabled()`, effective config, compatible focus/school selection and player-specific learning where applicable;
+- 21 registrations are outside the Unique/Weapon provider bases. Exact-alpha probes now establish **0/21** direct `DefaultConfig.setAllowCrafting(...)` calls, **0/21** direct `setDeprecated(...)` calls, **0** direct `DefaultConfig.allowCrafting`/`enabled` writes, and **0/21** concrete `isEnabled()` / `canBeCraftedBy(Player)` overrides. Under current Iron's `1.21.1-3.16.3`, `DefaultConfig.allowCrafting=true`, `DefaultConfig.enabled=true`, and both generic config parameters default true. These 21 are therefore **host/publisher-default craftable + enabled**, while effective Scroll Forge eligibility remains conditioned by active server/datapack/global config, compatible focus/school selection and player-specific learning where applicable;
 - 10 registrations inherit `AbstractUniqueSpell.allowCrafting() = false`;
 - 2 registrations inherit `AbstractWeaponSpell.allowCrafting() = true`: `cursed_blast` and `gyro_slash`.
 
-See [`HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`](HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md). Host-default craftability is narrower than effective Scroll Forge eligibility and does not establish unconditional survival acquisition.
+See [`HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md`](HOST-CRAFTABILITY-3.16.3-CHECKPOINT.md) and [`HOST-ENABLED-3.16.3-CHECKPOINT.md`](HOST-ENABLED-3.16.3-CHECKPOINT.md). Default craftability/enabled closure is narrower than effective Scroll Forge eligibility and does not establish unconditional survival acquisition.
 
 Nine of the ten non-craftable Unique spells have direct exact structured loot references in the JAR:
 
