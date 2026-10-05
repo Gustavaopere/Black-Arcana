@@ -4,7 +4,7 @@ Status: `33 REGISTERED SPELL IDS + EXACT PUBLISHER MECHANICS CATALOGED / CURRENT
 
 ## Purpose
 
-The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown, and now additionally closes **29 bounded scalar accessors across 18 spells** with 29/29 exact File-`6342780` results. The remaining work is not another spell/default-stat enumeration or another generic scalar sweep. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
+The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown, and now additionally closes **37 bounded scalar accessor results across 24 spells**: 29 no-`LivingEntity` accessors plus 8 LivingEntity-signature methods proven entity-unused before strict evaluation. The remaining work is not another spell/default-stat enumeration or another generic scalar sweep. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
 
 This checklist does not promote the provider, does not treat a third-party patch as upstream authority, and does not infer survival acquisition or assembled-pack runtime from publisher marketing language.
 
@@ -180,7 +180,10 @@ The following work is already canonical and should not be repeated:
 - `blackout` isolated as the unresolved Unique reachability exception;
 - structural `TOLootModifiers` codec mismatch recorded clean-room;
 - 33/33 exact default mechanics baseline closed for File `6342780`;
-- 29/29 selected numeric no-`LivingEntity` accessors closed across 18 spells with 0 UNKNOWN; raw non-count units/final formulas remain intentionally unassigned.
+- 29/29 selected numeric no-`LivingEntity` accessors closed across 18 spells with 0 UNKNOWN;
+- 49 numeric LivingEntity-bearing methods classified: 15 ENTITY_UNUSED / 34 ENTITY_SLOT_READ;
+- of the 15 ENTITY_UNUSED methods, 8 resolve exactly and 7 remain strict-evaluator UNKNOWN; no value is assigned to the 34 entity-reading methods or the 7 UNKNOWN methods;
+- total exact resolved bounded accessor outputs now 37 across 24/33 spell cards; raw non-count units/final formulas remain intentionally unassigned.
 
 ## Acceptance boundary
 
