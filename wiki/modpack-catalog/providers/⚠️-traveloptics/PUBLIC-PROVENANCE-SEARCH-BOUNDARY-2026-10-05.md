@@ -12,42 +12,98 @@ This checkpoint records the exhausted **public/indexed provenance** search for t
 
 It does **not** claim that the artifact has no public origin. Search-engine and repository non-results are negative discovery evidence only.
 
-## Public/indexed search — 2026-10-05
+## Bounded provenance surfaces — 2026-10-05
 
-Bounded current web searches used the exact:
+The negative discovery result is grounded in temporary **NON-MERGE PR #641**, not in an unrecorded general-web search.
+
+Canonical audit evidence:
+
+- audit PR: **#641** — `chore(audit): temporary Traveloptics public provenance probe`;
+- audit HEAD: `7caca3b2c5a73646e413a39b1b9e75fd7cc2a088`;
+- workflow run: `37263841885` — **SUCCESS**;
+- text-only artifact: `11324569430`;
+- artifact digest: `sha256:6ad7373adb0e8c1b7b5555c87c4dfec3e06858f134f478694f51402a7aa96501`;
+- retained report name: `traveloptics-public-provenance-report.txt`.
+
+The report records the exact surfaces, revisions, endpoints and query terms below. No matched source body is retained.
+
+### Surface A — exact Git snapshot scans
+
+The audit checked exact immutable revisions with `git grep -I -F` for:
 
 - SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - fingerprint `4254006126`;
-- filename `traveloptics-4.4.0.1-1.21.1-fixed-keyloot.jar`.
+- filename `traveloptics-4.4.0.1-1.21.1-fixed-keyloot.jar`;
+- token `fixed-keyloot`.
 
-No indexed result identified the current physical SHA, the physical fingerprint, or the retained `fixed-keyloot` filename as a published artifact/provenance source.
+Revisions:
 
-The related public artifact that does surface is the already-audited third-party compatibility patch:
+- `Gustavaopere/Black-Arcana@98f7669d519dc288142f63e03b40175e25cb638d`;
+- `Gustavaopere/neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 
-- project/file: `1690333 / 8861368`;
-- filename: `traveloptics-4.4.0.1.1-1.21.1-patched.jar`;
-- upload date: **2026-09-12**;
-- known SHA-1 from the existing clean-room patch audit: `680fa679d8ea2419a79571f455436367222f6f9d`;
-- publisher-described scope: correct `TOLootModifiers` so `key_loot` uses `KeyLootModifier.CODEC` and `universal_loot` uses `UniversalLootModifier.CODEC`, with no other mod classes/resources changed.
+The Black Arcana hits are existing catalog/meta references to the physical hash/fingerprint/Aug-17 candidate chronology. The sibling SHA hit is the existing certified Traveloptics physical dossier. The sibling has zero hits for the fingerprint, fixed filename and `fixed-keyloot` token.
 
-That patch cannot explain the current artifact as a later download/rename because:
+No exact-snapshot hit provides a script, commit-local build recipe or other source identifying how `7b74816e...` was produced.
+
+### Surface B — GitHub public code-search API
+
+Endpoint recorded by the audit:
+
+`https://api.github.com/search/code`
+
+Semantics retained in the report: current GitHub indexed public/default-branch **code** search, not a release/binary/full-web index.
+
+Results:
+
+| Query | HTTP | GitHub total | Interpretation |
+| --- | ---: | ---: | --- |
+| exact SHA-1 `7b74816e...` | 200 | 0 | no indexed code hit on this surface |
+| exact fingerprint `4254006126` | 200 | 12 | 12 external numeric-data hits retained by repo/path/URL; none identifies Traveloptics provenance |
+| exact retained filename | 200 | 0 | no indexed code hit on this surface |
+| `fixed-keyloot` | 200 | 0 | no indexed code hit on this surface |
+
+The 12 fingerprint hits are treated as unrelated numeric collisions, not as provenance matches; their repository/path/URL list is preserved in artifact `11324569430`.
+
+### Surface C — Modrinth SHA-1 lookup
+
+Endpoint recorded by the audit:
+
+`https://api.modrinth.com/v2/version_file/7b74816e89cc15dd0b5a31d9ea1e456024e8fae4?algorithm=sha1`
+
+Result:
+
+- HTTP **404**;
+- audit state: `NO_MATCH`.
+
+This proves only that the exact SHA-1 was not resolved by that Modrinth hash endpoint at audit time.
+
+### Known positive public comparison — separate provenance
+
+The related public compatibility patch remains CurseForge project/file `1690333 / 8861368`, filename `traveloptics-4.4.0.1.1-1.21.1-patched.jar`, uploaded **2026-09-12**.
+
+Provenance is deliberately split:
+
+- the **patch publisher** states the semantic purpose: `key_loot` should use `KeyLootModifier.CODEC` and `universal_loot` should use `UniversalLootModifier.CODEC`;
+- Black Arcana clean-room evidence in [`PATCH-8861368-BINARY-DIFF.md`](PATCH-8861368-BINARY-DIFF.md) independently proves the binary scope relative to File `6342780`: **1 changed class entry** (`TOLootModifiers.class`) and **0 changed non-class entries**. The binary diff does not claim to derive the class-change semantics.
+
+File `8861368` still cannot explain the current artifact as a later download/rename because:
 
 1. `7b74816e...` is directly captured in the assembled instance by **2026-08-22**;
 2. File `8861368` was uploaded on **2026-09-12**;
 3. the two SHA-1 values differ.
 
-## User-repository search — 2026-10-05
+### Search-boundary conclusion
 
-Bounded public GitHub searches across repositories owned by `Gustavaopere` for:
+Across the named, retained surfaces above, no source identifies the provenance/build transformation of current physical `7b74816e...`.
 
-- `fixed-keyloot`;
-- `TOLootModifiers`;
-- `UniversalLootModifier`;
-- `traveloptics`;
+This is intentionally narrower than “no public origin exists”. In particular:
 
-did not identify a public script, commit or checked-in artifact establishing how the current `7b74816e...` JAR was produced.
+- GitHub code search is not a release/binary/full-web index;
+- Modrinth is one distribution/hash registry, not a universal artifact index;
+- exact project snapshot scans cover only the two named repositories/revisions;
+- private/local history and other public hosts are outside this negative result.
 
-This is not evidence that no local script/history ever existed. It establishes only that no such provenance was found in the searched public repository surface.
+Repeating the **same named queries against the same retained revisions/endpoints** is no longer a useful closure strategy. A newly indexed source, another explicitly named provenance surface, or pack-local evidence remains valid new evidence.
 
 ## Retained Aug-17 candidate boundary
 
