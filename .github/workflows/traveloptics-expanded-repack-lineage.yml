@@ -211,17 +211,19 @@ jobs:
                       for strategy in ('delete-add','update-direct'):
                           candidate=work/f'{strategy}-{extras}-l{level}-{ts_mode}.jar'
                           shutil.copyfile(original,candidate)
+                          candidate_abs=candidate.resolve()
                           if strategy=='delete-add':
-                              subprocess.run(['zip','-q','-d',str(candidate),entry],check=True)
+                              subprocess.run(['zip','-q','-d',str(candidate_abs),entry],check=True)
                           cwd=out/'replacement'
-                          subprocess.run(['zip','-q',*extra_args,level_arg,str(candidate),entry],cwd=cwd,check=True)
+                          subprocess.run(['zip','-q',*extra_args,level_arg,str(candidate_abs),entry],cwd=cwd,check=True)
                           measure(candidate,strategy,level,extras,ts_mode)
                           candidate.unlink()
 
               # JDK update variants are timestamp-sensitive; no compression level control.
               candidate=work/f'jar-uf-{ts_mode}.jar'
               shutil.copyfile(original,candidate)
-              subprocess.run(['jar','uf',str(candidate),entry],cwd=out/'replacement',check=True)
+              candidate_abs=candidate.resolve()
+              subprocess.run(['jar','uf',str(candidate_abs),entry],cwd=out/'replacement',check=True)
               measure(candidate,'jar-uf','default','jdk',ts_mode)
               candidate.unlink()
 
