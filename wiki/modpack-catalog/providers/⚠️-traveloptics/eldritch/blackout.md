@@ -48,7 +48,7 @@ This is **not** counted as a File-6342780-alone scalar result and is **not** pro
 
 ## Reachability
 
-`UNIQUE / allowCrafting=false / allowLooting=false`; exact File `6342780` has no direct structured acquisition anchor and no built-in provider generic-loot path for Blackout. Current-pack survival reachability remains `UNVERIFIED` because external datapack/KubeJS/progression/current-physical routes are not closed.
+`UNIQUE / allowCrafting=false / allowLooting=false`; exact File `6342780` has no direct structured acquisition anchor and no built-in provider generic-loot path for Blackout. A retained-evidence search found no literal/object-specific Blackout acquisition route after excluding Black Arcana's Traveloptics QA probe as observational, and no preserved Library KubeJS/datapack source resolving to Blackout. Generic external school/global filter routes remain unresolved. Current-pack survival reachability remains `UNVERIFIED` because absence from the actual assembled KubeJS/datapack/progression/current-physical surfaces is not proven.
 
 ## Evidence boundary
 
@@ -56,4 +56,4 @@ Identity, school and the File-`6342780` default mechanics baseline above are exa
 
 Iron's owns host casting/resource settlement; T.O Magic owns this spell. Provider stays **⚠️** because current-physical registry equality/provenance and full runtime closure are not proven.
 
-Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`; `../BLACKOUT-GENERIC-LOOT-EXCLUSION.md`.
+Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`; `../BLACKOUT-GENERIC-LOOT-EXCLUSION.md`; `../BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md`.
