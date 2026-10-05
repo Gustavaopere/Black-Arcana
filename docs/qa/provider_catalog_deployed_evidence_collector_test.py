@@ -486,6 +486,25 @@ enable_tunneling = false
             self.assertTrue(row["irons_spellbooks_kubejs_markers_truncated"])
 
 
+    def test_classifies_irons_spellbooks_kubejs_closure_fail_closed_without_current_irons_host(self) -> None:
+        result = collector.classify_irons_spellbooks_kubejs_closure(
+            {
+                "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                "kubejs": [{"current_physical_build_377_equality": True}],
+                "irons_spellbooks": [],
+            },
+            {
+                "kubejs_root_present": False,
+                "file_count": 0,
+                "surface_counts": {},
+                "files": [],
+            },
+        )
+
+        self.assertEqual("IRONS_HOST_NOT_OBSERVED", result["status"])
+        self.assertFalse(result.get("irons_host_certified", False))
+
+
     def test_classifies_irons_spellbooks_kubejs_closure_evidence_fail_closed(self) -> None:
         empty_inventory = {
             "kubejs_root_present": False,
