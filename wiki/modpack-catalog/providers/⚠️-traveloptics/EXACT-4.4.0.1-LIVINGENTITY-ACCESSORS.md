@@ -1,10 +1,10 @@
 # T.O Magic n' Extras 4.4.0.1 — LivingEntity accessor checkpoint
 
-Status: `EXACT FILE 6342780 / 49 NUMERIC LIVINGENTITY ACCESSORS CLASSIFIED / 8 EXACT VALUES / 41 UNRESOLVED`
+Status: `EXACT FILE 6342780 / 49 NUMERIC LIVINGENTITY ACCESSORS CLASSIFIED / 8 FILE-LOCAL EXACT VALUES / 7 DIRECT-DELEGATE HOST BRIDGES / 34 ENTITY-SLOT-READ UNRESOLVED`
 
 ## Authority
 
-This checkpoint derives from two temporary **NON-MERGE** clean-room audits against exact publisher File `6342780`:
+This checkpoint derives from three temporary **NON-MERGE** clean-room audits against exact publisher File `6342780`:
 
 - CurseForge project/file: `1046916 / 6342780`;
 - exact SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
@@ -20,6 +20,13 @@ This checkpoint derives from two temporary **NON-MERGE** clean-room audits again
   - artifact: `11319088574`;
   - digest: `sha256:2223139cf8d43acff7c3841d1de322e6e8c0b2064b2e461826ab5449a29eebef`;
   - result: **15 targets / 8 OK / 7 UNKNOWN**.
+- effective-cast direct-delegate PR **#619**:
+  - authoritative HEAD: `4ae4daea3dd3cf2e7b9e3d1b76cddaceb0ae5683`;
+  - workflow run: `37249217412` — **SUCCESS**;
+  - artifact: `11320511282`;
+  - digest: `sha256:f1f35c1bee04ee3df73550d4609d95653551150af520d77b2ab6cc1a16123d48`;
+  - result: **7 targets / 7 DIRECT_DELEGATE YES / 0 NO**.
+
 
 The candidate surface comes from method-signature audit **#608**. Only numeric accessors carrying exactly one `LivingEntity` parameter were considered.
 
@@ -104,19 +111,23 @@ The strict evaluator accepts only straight-line numeric constants/arithmetic and
 | `traveloptics:em_pulse` | `EmPulse.getRadius(int, LivingEntity)` | L1=4.0, L2=6.0, L3=8.0, L4=10.0, L5=12.0 |
 | `traveloptics:aerial_collapse` | `AerialCollapseSpell.getRadius(int, LivingEntity)` | L1=4.0, L2=6.0, L3=8.0, L4=10.0, L5=12.0 |
 
-## ENTITY_UNUSED but evaluator-UNKNOWN — 7 methods
+## ENTITY_UNUSED direct-delegate bridge — 7 methods
 
-These methods do not read the `LivingEntity` argument, but the strict evaluator encountered instance-object access (`aload_0`) and refused to infer the result:
+Audit #619 proves that all seven previously evaluator-UNKNOWN methods are exact direct delegates to `getCastTime(level)`: one `this` load, zero provider field refs, zero branches, and `DIRECT_DELEGATE=YES` for every target.
 
-- `AbyssalBlastSpell.getEffectiveCastTime(int, LivingEntity)`;
-- `BlackoutSpell.getEffectiveCastTime(int, LivingEntity)`;
-- `CursedMinefieldSpell.getEffectiveCastTime(int, LivingEntity)`;
-- `VortexPunchSpell.getEffectiveCastTime(int, LivingEntity)`;
-- `GyroSlashSpell.getEffectiveCastTime(int, LivingEntity)`;
-- `DeathLaserSpell.getEffectiveCastTime(int, LivingEntity)`;
-- `AerialCollapseSpell.getEffectiveCastTime(int, LivingEntity)`.
+The current Iron's Spellbooks 1.21.1-3.16.3 source pin `e4056af90302d37eb1739f5ff05020b020e6e252` establishes that `AbstractSpell.getCastTime(level)` returns `0` only for `INSTANT`, otherwise the spell's raw `castTime` field. All seven exact Traveloptics targets are `LONG`.
 
-No effective-cast-time value is assigned from this audit.
+| Registry ID | Exact provider accessor relation | Current-host-resolved result |
+| --- | --- | ---: |
+| `traveloptics:abyssal_blast` | direct `getCastTime(level)` delegate | **50 ticks** |
+| `traveloptics:blackout` | direct `getCastTime(level)` delegate | **39 ticks** |
+| `traveloptics:cursed_minefield` | direct `getCastTime(level)` delegate | **45 ticks** |
+| `traveloptics:vortex_punch` | direct `getCastTime(level)` delegate | **15 ticks** |
+| `traveloptics:gyro_slash` | direct `getCastTime(level)` delegate | **25 ticks** |
+| `traveloptics:death_laser` | direct `getCastTime(level)` delegate | **20 ticks** |
+| `traveloptics:aerial_collapse` | direct `getCastTime(level)` delegate | **10 ticks** |
+
+These seven values are **not counted as File-6342780-alone scalar outputs**. They require the current Iron's 3.16.3 host contract. Canonical boundary: `EXACT-4.4.0.1-CURRENT-HOST-EFFECTIVE-CAST-BRIDGE.md`.
 
 ## Evidence boundary
 
@@ -124,7 +135,7 @@ All facts here are exact for publisher File `6342780` only.
 
 They are **not** projected to current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
-For the 34 `ENTITY_SLOT_READ` methods, no damage/range/duration/count/formula value is inferred. For the seven evaluator-UNKNOWN methods, no effective cast-time value is inferred.
+For the 34 `ENTITY_SLOT_READ` methods, no damage/range/duration/count/formula value is inferred. The seven entity-unused effective-cast methods are structurally closed as direct delegates and numerically resolved only through the separately pinned current-host bridge; they are not File-only scalar results.
 
 This checkpoint does not close:
 
