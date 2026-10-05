@@ -86,19 +86,22 @@ jobs:
           compiled_java = {k: re.compile(v) for k, v in java_patterns.items()}
           compiled_res = {k: re.compile(v, re.IGNORECASE) for k, v in resource_patterns.items()}
 
-          def files_under(root: Path, prefix: str, suffixes: set[str]):
-              base = root / prefix
+          def java_files_under(root: Path):
+              base = root / "src/main/java"
               if not base.exists():
                   return []
-              return sorted(
-                  p for p in base.rglob("*")
-                  if p.is_file() and p.suffix.lower() in suffixes
-              )
+              return sorted(p for p in base.rglob("*.java") if p.is_file())
+
+          def resource_files_under(root: Path):
+              base = root / "src/main/resources"
+              if not base.exists():
+                  return []
+              return sorted(p for p in base.rglob("*") if p.is_file())
 
           report = {
               "audit": "Traveloptics Blackout bounded versioned acquisition-surface audit",
               "scope_note": (
-                  "Direct token/path audit across versioned src/main Java/resources only. "
+                  "Direct token/path audit across all versioned src/main Java files and all src/main/resources blobs. "
                   "Negative results do not exclude reflection, encoded/dynamic invocation, "
                   "external assembled KubeJS/datapacks/mods, world data, or current physical Traveloptics bytes."
               ),
@@ -107,8 +110,8 @@ jobs:
           }
 
           for name, root in roots.items():
-              java_files = files_under(root, "src/main/java", {".java"})
-              res_files = files_under(root, "src/main/resources", {".json", ".toml", ".mcmeta", ".txt"})
+              java_files = java_files_under(root)
+              res_files = resource_files_under(root)
               repo_result = {
                   "java_file_count": len(java_files),
                   "resource_file_count": len(res_files),
@@ -134,7 +137,7 @@ jobs:
                   paths = []
                   occurrences = 0
                   for p in res_files:
-                      text = p.read_text(encoding="utf-8", errors="replace")
+                      text = p.read_bytes().decode("utf-8", errors="replace")
                       n = len(rx.findall(text))
                       if n:
                           paths.append(str(p.relative_to(root)).replace("\\", "/"))
