@@ -156,6 +156,25 @@ A coherent `json + final newline / Info-ZIP -X / DEFLATE 5–7` family reproduce
 Those candidates reproduce retained **sizes only**. Neither stage matches physical SHA-1 `83f7edd0...` or physical fingerprint **1917446721**.
 
 See [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md).
+## Content-identical full-repack control
+
+NON-MERGE audit **#632** tests a different explanation from the NeoVitae patch matrices: that the deployed physical JAR differs from official File 8201775 only because the archive was fully reserialized/recompressed while the effective extracted file tree remained byte-identical.
+
+Successful run **37258315752** validates the CurseForge fingerprint implementation against the publisher artifact and measures **61** effective-content-identical candidates:
+
+- Info-ZIP publisher-order rebuilds: **20**;
+- Info-ZIP sorted-order rebuilds: **20**;
+- Info-ZIP recursive rebuilds: **20**;
+- JDK `jar --no-manifest` rebuild: **1**.
+
+Measured physical SHA-1/fingerprint matches:
+
+**0 / 61**
+
+The publisher JAR contains overlapping ZIP structure as observed by Python 3.12 `zipfile`, so the audit uses standard Info-ZIP extraction as the effective file-tree boundary. This result therefore rules out the enumerated ordinary full-repack-only family, not every possible low-level ZIP serialization/duplicate-entry layout.
+
+See [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md).
+
 ## Raw-byte limitation
 
 The retained generated JARs are visible through Project Library metadata, but this audit does not have an authorized raw-byte materialization path for them. Their SHA-1/SHA-256 values could therefore not be computed here.
