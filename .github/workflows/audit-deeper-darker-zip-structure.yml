@@ -247,15 +247,18 @@ jobs:
                   duplicate_local_offsets.append((off, group))
 
           zipfile_errors = []
+          zipfile_testzip_result = "NOT_RUN"
           try:
               with zipfile.ZipFile(jar, "r") as zf:
                   infos = zf.infolist()
                   for i, info in enumerate(infos):
                       try:
                           with zf.open(info, "r") as src:
-                              # Read one byte: CPython performs its overlap bound
-                              # validation before/while opening the stream.
-                              src.read(1)
+                              data = src.read()
+                              if len(data) != info.file_size:
+                                  raise RuntimeError(
+                                      f"full-read size mismatch expected={info.file_size} actual={len(data)}"
+                                  )
                       except Exception as exc:
                           zipfile_errors.append((
                               i,
@@ -266,8 +269,18 @@ jobs:
                               getattr(info, "_end_offset", None),
                               info.compress_size,
                           ))
+                  try:
+                      bad_name = zf.testzip()
+                      zipfile_testzip_result = "NONE" if bad_name is None else bad_name
+                  except Exception as exc:
+                      zipfile_testzip_result = f"EXCEPTION:{type(exc).__name__}:{exc}"
+                      zipfile_errors.append(
+                          (-2, "<testzip>", type(exc).__name__, str(exc), "", "", "")
+                      )
           except Exception as exc:
-              zipfile_errors.append((-1, "<ZipFile-open>", type(exc).__name__, str(exc), "", "", ""))
+              zipfile_errors.append(
+                  (-1, "<ZipFile-open>", type(exc).__name__, str(exc), "", "", "")
+              )
 
           fieldnames = [
               "index","name","flags","method","crc32","compressed_size","uncompressed_size",
@@ -323,7 +336,8 @@ jobs:
               f"duplicate_name_count={len(duplicate_names)}",
               f"duplicate_local_offset_count={len(duplicate_local_offsets)}",
               f"zipfile_overlap_model_count={len(overlap_rows)}",
-              f"zipfile_read_error_count={len(zipfile_errors)}",
+              f"zipfile_full_read_error_count={len(zipfile_errors)}",
+              f"zipfile_testzip_result={zipfile_testzip_result}",
               f"local_central_mismatch_count={len(mismatch_rows)}",
               f"minimum_margin_to_next_bound={min_margin}",
           ]
