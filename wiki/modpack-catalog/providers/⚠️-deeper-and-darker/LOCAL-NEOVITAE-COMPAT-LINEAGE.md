@@ -175,6 +175,23 @@ The #632 workflow used Info-ZIP extraction as its effective file-tree boundary a
 
 See [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md) and [`PUBLISHER-ZIP-STRUCTURE-AUDIT.md`](PUBLISHER-ZIP-STRUCTURE-AUDIT.md).
 
+## Python zipfile content-identical follow-up
+
+NON-MERGE audit **#640** uses #635's clean publisher ZIP-read boundary to test **22** Python-`zipfile` full rewrites with no semantic/content mutation.
+
+Measured result:
+
+- physical SHA-1/fingerprint matches: **0/22**;
+- retained first local size **3,906,052** matches: **0/22**;
+- retained `v2` size **3,906,044** matches: **0/22**;
+- publisher-size **3,906,057** matches: **4/22**.
+
+The four publisher-size candidates collapse to SHA-1 `eb6f9fbc5adfc4e12de9e6b2462370da74572acc` / fingerprint **824150764** and therefore do not establish either publisher identity or physical identity.
+
+This rules out only the bounded Python-`zipfile` family tested there. It does not identify the deployed transformation.
+
+See [`PYTHON-ZIPFILE-REPACK-AUDIT.md`](PYTHON-ZIPFILE-REPACK-AUDIT.md).
+
 ## Raw-byte limitation
 
 The retained generated JARs are visible through Project Library metadata, but this audit does not have an authorized raw-byte materialization path for them. Their SHA-1/SHA-256 values could therefore not be computed here.
