@@ -512,7 +512,10 @@ enable_tunneling = false
             "surface_counts": {},
             "files": [],
         }
-        current_host = {"kubejs": [{"current_physical_build_377_equality": True}]}
+        current_host = {
+            "irons_spellbooks": [{"current_physical_3_16_3_equality": True}],
+            "kubejs": [{"current_physical_build_377_equality": True}],
+        }
 
         self.assertEqual(
             "ARTIFACT_NOT_OBSERVED",
@@ -527,6 +530,17 @@ enable_tunneling = false
                 {
                     "irons_spells_js": [{"current_physical_4_0_3_equality": False}],
                     **current_host,
+                },
+                empty_inventory,
+            )["status"],
+        )
+        self.assertEqual(
+            "IRONS_HOST_HASH_MISMATCH",
+            collector.classify_irons_spellbooks_kubejs_closure(
+                {
+                    "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                    "irons_spellbooks": [{"current_physical_3_16_3_equality": False}],
+                    "kubejs": [{"current_physical_build_377_equality": True}],
                 },
                 empty_inventory,
             )["status"],
@@ -619,6 +633,7 @@ enable_tunneling = false
                 "collect_mod_hashes",
                 return_value={
                     "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                    "irons_spellbooks": [{"current_physical_3_16_3_equality": True}],
                     "kubejs": [],
                 },
             ), patch(
