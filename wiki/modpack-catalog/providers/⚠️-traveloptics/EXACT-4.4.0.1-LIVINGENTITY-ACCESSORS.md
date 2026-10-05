@@ -1,6 +1,6 @@
 # T.O Magic n' Extras 4.4.0.1 — LivingEntity accessor checkpoint
 
-Status: `EXACT FILE 6342780 / 49 NUMERIC LIVINGENTITY ACCESSORS CLASSIFIED / 8 FILE-LOCAL EXACT VALUES / 7 DIRECT-DELEGATE HOST BRIDGES / 34 ENTITY-SLOT-READ UNRESOLVED`
+Status: `EXACT FILE 6342780 / 49 NUMERIC LIVINGENTITY ACCESSORS CLASSIFIED / 8 FILE-LOCAL EXACT VALUES / 7 DIRECT-DELEGATE HOST BRIDGES / 34 ENTITY-SLOT-READ NUMERICALLY UNRESOLVED / 5 IDENTITY-GAP METHODS DEPENDENCY-CLASSIFIED`
 
 ## Authority
 
@@ -129,13 +129,27 @@ The current Iron's Spellbooks 1.21.1-3.16.3 source pin `e4056af90302d37eb1739f5f
 
 These seven values are **not counted as File-6342780-alone scalar outputs**. They require the current Iron's 3.16.3 host contract. Canonical boundary: `EXACT-4.4.0.1-CURRENT-HOST-EFFECTIVE-CAST-BRIDGE.md`.
 
+## Five identity-gap ENTITY_SLOT_READ methods — dependency-classified
+
+Audit #623 selects one numeric `ENTITY_SLOT_READ` accessor from each spell identity still outside the File-only scalar/current-host numeric bridge coverage. All five read their LivingEntity exactly once, reference no provider field, contain no branch and invoke only host `getSpellPower(int, Entity)`.
+
+| Registry ID | Exact accessor | Retained dependency | Arithmetic classification | Numeric disposition |
+| --- | --- | --- | --- | --- |
+| `traveloptics:reversal` | `calculateDamageMultiplier(int, LivingEntity)` | host `getSpellPower(int, Entity)` only | `fadd ×1; fmul ×1` | entity/config dependent — no value assigned |
+| `traveloptics:spectral_blink` | `getEffectLevel(int, LivingEntity)` | host `getSpellPower(int, Entity)` only | `fmul ×1; f2i ×1; iadd ×1` | entity/config dependent — no value assigned |
+| `traveloptics:ashen_breath` | `getDamage(int, LivingEntity)` | host `getSpellPower(int, Entity)` only | none | entity/config dependent — no value assigned |
+| `traveloptics:lingering_strain` | `getDuration(LivingEntity, int)` | host `getSpellPower(int, Entity)` only | `imul ×1; f2i ×1; iadd ×1` | entity/config dependent — no value assigned |
+| `traveloptics:rapid_laser` | `getDamage(int, LivingEntity)` | host `getSpellPower(int, Entity)` only | `fadd ×1` | entity/config dependent — no value assigned |
+
+Current Iron's 3.16.3 source pins `getSpellPower` to spell base/per-level power × entity SPELL_POWER × school power × effective POWER_MULTIPLIER. All five File-6342780 baseline rows use spell-power inputs 1/1. The provider-side arithmetic is deliberately not reconstructed. See `EXACT-4.4.0.1-ENTITY-POWER-DEPENDENCY-CHECKPOINT.md`.
+
 ## Evidence boundary
 
 All facts here are exact for publisher File `6342780` only.
 
 They are **not** projected to current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
-For the 34 `ENTITY_SLOT_READ` methods, no damage/range/duration/count/formula value is inferred. The seven entity-unused effective-cast methods are structurally closed as direct delegates and numerically resolved only through the separately pinned current-host bridge; they are not File-only scalar results.
+For all 34 `ENTITY_SLOT_READ` methods, no damage/range/duration/count/formula value is inferred. Five selected identity-gap methods now have their host dependency bounded to `getSpellPower(int, Entity)`; the other entity-reading methods remain dependency-unclassified beyond their slot-read status. The seven entity-unused effective-cast methods are structurally closed as direct delegates and numerically resolved only through the separately pinned current-host bridge; they are not File-only scalar results.
 
 This checkpoint does not close:
 
