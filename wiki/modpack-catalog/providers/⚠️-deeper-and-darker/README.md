@@ -67,7 +67,9 @@ A bounded reproduction audit in NON-MERGE PR **#604** first tested **57** candid
 
 The expanded NON-MERGE audit **#622** then tested **80** candidates, validated the CurseForge fingerprint implementation against the official artifact, and found a coherent serialization/repack family that reproduces **both retained local sizes**. Even so, **0/80** candidates matched physical SHA-1 `83f7edd0...` or physical fingerprint `1917446721`. The size chronology is therefore structurally plausible, but the deployed physical transformation remains unidentified.
 
-See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md) and [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md).
+NON-MERGE audit **#632** separately tested the narrower hypothesis that the physical JAR is only a full repack/recompression of the publisher **effective extracted file tree**, with no extracted file-content changes. The successful run validated the publisher fingerprint and measured **61** effective-content-identical Info-ZIP/JDK rebuilds; **0/61** matched physical SHA-1 `83f7edd0...` or fingerprint `1917446721`. This rules out the bounded no-op full-repack family tested there, but it does not prove that every archive serializer/metadata layout has been excluded or that semantic file content necessarily changed.
+
+See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md), [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md), and [`CONTENT-IDENTICAL-REPACK-AUDIT.md`](CONTENT-IDENTICAL-REPACK-AUDIT.md).
 
 ## Exact source reproduction — corroboration, not closure
 
