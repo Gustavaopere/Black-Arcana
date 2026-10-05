@@ -125,6 +125,16 @@ A newly reconciled Project Library pair materially narrows runtime uncertainty f
 This is **strong contemporaneous physical-runtime correlation**, not process-embedded hash attestation. It proves that a boot temporally adjacent to the `7b74816e...` physical dump progressed beyond the earlier duplicate-codec registration failure, but it does not identify provenance, spell-registry equality or exact serializer-object identity.
 
 See [`RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md`](RUNTIME-2026-09-08-PHYSICAL-CORRELATION.md).
+## Bounded public provenance surfaces — 2026-10-05
+
+Temporary NON-MERGE PR **#641** replaced the earlier informal search with a reproducible text-only audit. Run `37263841885` succeeded; artifact `11324569430` has digest `sha256:6ad7373adb0e8c1b7b5555c87c4dfec3e06858f134f478694f51402a7aa96501`.
+
+The retained audit names exact Git revisions, the GitHub public code-search endpoint and the Modrinth SHA-1 lookup endpoint. It finds no provenance source for `7b74816e...` on those bounded surfaces. The numeric fingerprint query has 12 unrelated external code-index hits, all retained by repository/path/URL rather than treated as matches.
+
+This is negative discovery evidence only for the named surfaces. It does not establish that the artifact has no public origin or identify either Aug-17 candidate. Repeating the same queries against the same revisions/endpoints is no longer a closure path without new evidence.
+
+Canonical detail: [`PUBLIC-PROVENANCE-SEARCH-BOUNDARY-2026-10-05.md`](PUBLIC-PROVENANCE-SEARCH-BOUNDARY-2026-10-05.md).
+
 ## Catalog consequence
 
 The clean-room File-6342780 audit remains valid for that publisher artifact and provides a **33-ID release baseline**. It can no longer be presented as byte-exact evidence for the currently fingerprinted physical JAR.
