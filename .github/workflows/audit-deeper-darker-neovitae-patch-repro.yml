@@ -98,17 +98,17 @@ jobs:
 
           print("publisher_mixins_json_repr=" + repr(original_json))
 
-          import re
+          newline = "\r\n" if "\r\n" in original_json else "\n"
+          player_line = '    "PlayerMixin",' + newline
+          server_line = '    "ServerPlayerMixin",' + newline
 
-          def remove_mixin_line(text: str, name: str) -> str:
-              pattern = rf'(?m)^[ \\t]*"{re.escape(name)}",[ \\t]*(?:\\r?\\n)'
-              patched, count = re.subn(pattern, "", text, count=1)
-              if count != 1:
-                  raise SystemExit(f"{name} line not uniquely found; count={count}")
-              return patched
+          if original_json.count(player_line) != 1:
+              raise SystemExit(f"PlayerMixin line not uniquely found; count={original_json.count(player_line)}")
+          if original_json.count(server_line) != 1:
+              raise SystemExit(f"ServerPlayerMixin line not uniquely found; count={original_json.count(server_line)}")
 
-          stage1 = remove_mixin_line(original_json, "PlayerMixin")
-          stage2 = remove_mixin_line(stage1, "ServerPlayerMixin")
+          stage1 = original_json.replace(player_line, "", 1)
+          stage2 = stage1.replace(server_line, "", 1)
 
           variants = {
               "stage1-remove-player": stage1,
