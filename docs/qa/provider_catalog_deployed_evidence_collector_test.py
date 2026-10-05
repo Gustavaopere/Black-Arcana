@@ -469,6 +469,84 @@ enable_tunneling = false
             self.assertTrue(row["irons_spellbooks_kubejs_markers_truncated"])
 
 
+    def test_classifies_irons_spellbooks_kubejs_closure_evidence_fail_closed(self) -> None:
+        empty_inventory = {
+            "kubejs_root_present": False,
+            "file_count": 0,
+            "surface_counts": {},
+            "files": [],
+        }
+        current_host = {"kubejs": [{"current_physical_build_377_equality": True}]}
+
+        self.assertEqual(
+            "ARTIFACT_NOT_OBSERVED",
+            collector.classify_irons_spellbooks_kubejs_closure(
+                {"irons_spells_js": [], **current_host},
+                empty_inventory,
+            )["status"],
+        )
+        self.assertEqual(
+            "ARTIFACT_HASH_MISMATCH",
+            collector.classify_irons_spellbooks_kubejs_closure(
+                {
+                    "irons_spells_js": [{"current_physical_4_0_3_equality": False}],
+                    **current_host,
+                },
+                empty_inventory,
+            )["status"],
+        )
+        self.assertEqual(
+            "KUBEJS_HOST_HASH_MISMATCH",
+            collector.classify_irons_spellbooks_kubejs_closure(
+                {
+                    "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                    "kubejs": [{"current_physical_build_377_equality": False}],
+                },
+                empty_inventory,
+            )["status"],
+        )
+
+        zero_candidate = collector.classify_irons_spellbooks_kubejs_closure(
+            {
+                "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                **current_host,
+            },
+            empty_inventory,
+        )
+        self.assertEqual("ZERO_CONTENT_REVIEW_CANDIDATE", zero_candidate["status"])
+        self.assertTrue(zero_candidate["artifact_certified"])
+        self.assertTrue(zero_candidate["kubejs_host_certified"])
+        self.assertEqual(0, zero_candidate["bounded_file_count"])
+
+        script_review = collector.classify_irons_spellbooks_kubejs_closure(
+            {
+                "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                **current_host,
+            },
+            {
+                "kubejs_root_present": True,
+                "file_count": 2,
+                "surface_counts": {"startup_scripts": 2},
+                "files": [
+                    {
+                        "path": "kubejs/startup_scripts/spells.js",
+                        "irons_spellbooks_kubejs_markers": {
+                            "spell_registry_literal": [1],
+                            "iss_event_bridge": [4],
+                        },
+                    },
+                    {"path": "kubejs/startup_scripts/other.js"},
+                ],
+            },
+        )
+        self.assertEqual("SCRIPT_REVIEW_REQUIRED", script_review["status"])
+        self.assertEqual(1, script_review["marker_file_count"])
+        self.assertEqual(
+            ["iss_event_bridge", "spell_registry_literal"],
+            script_review["marker_types"],
+        )
+
+
     def test_main_report_includes_empty_kubejs_inventory_as_explicit_absence(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
