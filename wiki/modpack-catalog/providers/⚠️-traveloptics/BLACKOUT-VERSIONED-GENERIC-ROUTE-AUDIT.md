@@ -1,6 +1,6 @@
-# Traveloptics Blackout — current versioned generic-route exclusion
+# Traveloptics Blackout — current versioned named generic-surface boundary
 
-Status: `VERSIONED PROJECT-OWNED GENERIC ROUTES EXCLUDED / ASSEMBLED EXTERNAL ROUTES UNRESOLVED / CURRENT PHYSICAL PROVIDER ROUTE UNRESOLVED / FAIL-CLOSED`
+Status: `NAMED SPELLFILTER/RANDOMIZESPELL + INSPECTED PROJECT-OWNED SURFACES NEGATIVE / OTHER VERSIONED GENERIC ROUTES NOT EXHAUSTIVELY EXCLUDED / ASSEMBLED EXTERNAL + CURRENT PHYSICAL ROUTES UNRESOLVED / FAIL-CLOSED`
 
 ## Purpose
 
@@ -106,13 +106,13 @@ The existing catalog QA probe remains observational only and is not an acquisiti
 For the two current versioned project repositories:
 
 - literal/object-specific Blackout route — **NOT FOUND**;
-- generic Iron's `SpellFilter` / `RandomizeSpellFunction` route — **NOT FOUND**;
+- named Iron's `SpellFilter` / `RandomizeSpellFunction` route — **NOT FOUND IN THE AUDITED VERSIONED TREES**;
 - RPG Skill Tree versioned global loot modifier as a Blackout route — **EXCLUDED**;
 - RPG Skill Tree Iron's progression adapter as a Blackout grant — **EXCLUDED**;
 - Black Arcana versioned KubeJS/script acquisition surface — **ABSENT FROM THE AUDITED TREE**;
 - sibling versioned assembled `server_scripts` tree — **ABSENT FROM THE AUDITED TREE**.
 
-This closes the **current versioned project-owned generic-route exception**.
+This closes only the specifically audited **named `SpellFilter` / `RandomizeSpellFunction` surfaces plus the concrete GLM/progression/script/resource paths inspected above**. It does **not** exhaust every acquisition-capable Java/data path in either repository; alternative versioned routes using other Iron's APIs, spell-container construction, commands, rewards/events or other code paths remain unexcluded unless separately audited.
 
 ## What remains open
 
@@ -130,7 +130,7 @@ Therefore the broader assembled-pack generic external route remains **UNRESOLVED
 
 Blackout remains:
 
-`REGISTERED / UNIQUE / NON-CRAFTABLE / NON-LOOTABLE IN EXACT ALPHA / PROVIDER BUILT-IN ROUTES EXCLUDED / VERSIONED PROJECT-OWNED EXTERNAL ROUTES EXCLUDED / ASSEMBLED EXTERNAL + CURRENT-PHYSICAL ROUTES UNVERIFIED`.
+`REGISTERED / UNIQUE / NON-CRAFTABLE / NON-LOOTABLE IN EXACT ALPHA / PROVIDER BUILT-IN ROUTES EXCLUDED / NAMED VERSIONED FILTER + INSPECTED PROJECT-OWNED SURFACES NEGATIVE / OTHER VERSIONED + ASSEMBLED EXTERNAL + CURRENT-PHYSICAL ROUTES UNVERIFIED`.
 
 Traveloptics remains:
 
