@@ -35,7 +35,7 @@ Disposition: **`OTHER_VERIFIED`**.
 
 The earliest direct physical SHA-1 capture now available is **2026-08-22**, moving the cryptographic boundary more than two weeks earlier than the previous 2026-09-08 checkpoint. The public third-party patch File `8861368` was uploaded on **2026-09-12**. Therefore the already-present `7b74816e...` physical artifact cannot be explained as a later download/rename of that public patch file. It may still represent an independent local modification touching similar code, but no such lineage is inferred without the physical bytes.
 
-## August local-modification chronology — narrowed 2026-10-04
+## August local-modification chronology — narrowed 2026-10-05
 
 Retained Project Library evidence now establishes this bounded sequence:
 
@@ -133,7 +133,8 @@ The older launcher metadata does not identify the entry-level provenance of the 
 
 - August modified-runtime spell-registry equality to the 33-ID baseline is **observed 33/33**;
 - current physical spell-registry equality to that 33-ID set is **unverified**;
-- current physical `TOLootModifiers` exact serializer-object wiring remains **unverified**, but a 2026-09-08 boot contemporaneous with the `7b74816e...` physical dump progressed beyond the historical duplicate-registry failure path;
+- the duplicate-codec registry failure is **historically reproduced** in four 2026-08-16 assembled-pack crash reports under the canonical filename, but those processes are hash-unbound;
+- current physical `TOLootModifiers` exact serializer-object wiring remains **unverified**, while a 2026-09-08 boot contemporaneous with the `7b74816e...` physical dump progressed beyond that historical duplicate-registry failure path;
 - known patch deployment is **disproved by hash**;
 - tested common one-entry repacks of the known patch class are **disproved as byte-identical matches** for the current physical hash;
 - `traveloptics:blackout` reachability remains unresolved;
