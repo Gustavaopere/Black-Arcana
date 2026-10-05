@@ -183,9 +183,9 @@ Nine of the ten non-craftable Unique spells have direct exact structured loot re
 - `summon_desert_dwellers` — Koboleton / Wadjet loot;
 - `sword_of_the_ancients` — Kobolediator loot.
 
-`traveloptics:blackout` is the unresolved exception. It inherits `AbstractUniqueSpell.allowCrafting() = false`, has no direct structured-data reference in the exact artifact, and the focused class-reference audit found no provider-owned reference to `TOSpells.BLACKOUT_SPELL` outside `TOSpells` itself. The publisher's generic statement that ported spells are obtainable in survival is not specific enough to manufacture an object-level Blackout route.
+`traveloptics:blackout` remains the unresolved object-level acquisition exception. It inherits `AbstractUniqueSpell.allowCrafting() = false`; audit #626 additionally proves exact provider `AbstractUniqueSpell.allowLooting() = false`. The exact artifact has no direct structured-data reference to Blackout, no forced Eldritch loot filter, no explicit Blackout randomize-spell filter, no provider-owned `SpellFilter`/`RandomizeSpellFunction` reference, and no provider-owned `TOSpells.BLACKOUT_SPELL` reference outside `TOSpells` itself. Thus provider-owned generic/randomized loot is closed **negative** for File `6342780` under current Iron's 3.16.3 semantics, while other acquisition routes and current-physical reachability remain unverified.
 
-The current broad project description documents a Dead King → Blackout route for the full project, while official 1.20.1 File `6010839` introduced `Blackout`, `Call Forth The Dead King` and `Enraged Dead King` together. Exact alpha File `6342780`, however, does not register `call_forth_the_dead_king` and exposes no Enraged Dead King structured loot/resource route in its audited 41 loot JSON surfaces. The broad/full-line route is therefore **versioned context, not 1.21.1 acquisition proof**. See [`BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`](BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md).
+The current broad project description documents a Dead King → Blackout route for the full project, while official 1.20.1 File `6010839` introduced `Blackout`, `Call Forth The Dead King` and `Enraged Dead King` together. Exact alpha File `6342780`, however, does not register `call_forth_the_dead_king` and exposes no Enraged Dead King structured loot/resource route in its audited loot surfaces. The broad/full-line route is therefore **versioned context, not 1.21.1 acquisition proof**. See [`BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`](BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md) and [`BLACKOUT-GENERIC-LOOT-EXCLUSION-CHECKPOINT.md`](BLACKOUT-GENERIC-LOOT-EXCLUSION-CHECKPOINT.md).
 
 Result: complete object-level survival reachability for all 33 registrations is **not closed**.
 
@@ -250,7 +250,8 @@ Somake 1.0.9 and Traveloptics 4.4.0.1 are both physically present in the current
 - current Iron's 3.16.3 host default craftability contract: `HIGH / SOURCE-PINNED`;
 - effective deployed craftability for those 21 after server/datapack config + player learning: `CONDITIONAL`;
 - nine exact Unique-spell loot routes: `HIGH`;
-- `blackout` object-level survival route: `UNVERIFIED / FAIL-CLOSED`;
+- exact-alpha provider-owned generic/randomized Blackout loot route under current Iron's 3.16.3: `NEGATIVE / CLOSED`;
+- `blackout` other/current-physical object-level survival route: `UNVERIFIED / FAIL-CLOSED`;
 - `TOLootModifiers` codec reference wiring: `HIGH` structural fact;
 - actual registry-startup failure in the assembled pack: `NOT REPRODUCED`;
 - physical deployment of exact patch File `8861368`: `DISPROVED BY HASH`;
@@ -270,7 +271,7 @@ Traveloptics is currently installed and remains blocked on a finite current-pack
 
 1. materialize the exact `7b74816e...` physical bytes or obtain contemporaneous exact provenance, then reconstruct the current registry/content delta;
 2. verify current physical `TOLootModifiers` wiring and assembled registry initialization;
-3. close `traveloptics:blackout` object-level survival reachability for the actual physical artifact;
+3. close `traveloptics:blackout` object-level survival reachability for the actual physical artifact; exact-alpha provider-owned generic/randomized loot is already closed negative, so remaining evidence must come from another provider/pack/runtime route or current-physical delta;
 4. close Somake Aqua ↔ T.O Aqua coexistence/authority on the assembled current stack.
 
 Until those gates close, the 33 publisher-baseline cards remain useful catalog evidence but contribute **+0 strict** for the current physical provider.
