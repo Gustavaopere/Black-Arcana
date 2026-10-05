@@ -50,7 +50,7 @@ The retained compatibility chronology already establishes:
 - v2 generated Deeper compatibility JAR: `2026-08-18T12:43:04Z`, `3,906,044` bytes;
 - following retained canonical-name boot: progresses beyond the earlier Deeper/NeoVitae redirect-conflict failure point.
 
-The 2026-08-22 physical inventory therefore proves that the current `83f7...` artifact was in the canonical pack slot **by four days after** that compatibility-work window.
+The 2026-08-22 physical inventory therefore proves that the current `83f7...` artifact was in the canonical pack slot **no later than 2026-08-22**, roughly four days after that compatibility-work window.
 
 This materially narrows the previously open interval between local compatibility work and later September physical inventories.
 
