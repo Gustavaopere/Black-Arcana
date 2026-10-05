@@ -1,0 +1,276 @@
+name: Traveloptics Expanded Surgical Repack Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Generate bounded surgical repack matrix
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          OUT='build/audit/traveloptics-expanded-repack'
+          mkdir -p "$OUT" "$OUT/work"
+
+          ORIGINAL_URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          PATCH_URL='https://www.cursemaven.com/curse/maven/t-o-magic-n-extras-irons-spells-addon-patch-1690333/8861368/t-o-magic-n-extras-irons-spells-addon-patch-1690333-8861368.jar'
+          ORIGINAL_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+          PATCH_SHA1='680fa679d8ea2419a79571f455436367222f6f9d'
+          CURRENT_SHA1='7b74816e89cc15dd0b5a31d9ea1e456024e8fae4'
+          CURRENT_CF='4254006126'
+          ORIGINAL_CF='1868150654'
+          FIXED_SIZE='18393641'
+          ORIGINAL_SIZE='18393445'
+          ENTRY='com/gametechbc/traveloptics/loot/TOLootModifiers.class'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$ORIGINAL_URL" -o "$OUT/original.jar"
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$PATCH_URL" -o "$OUT/patched.jar"
+
+          test "$(sha1sum "$OUT/original.jar" | awk '{print $1}')" = "$ORIGINAL_SHA1"
+          test "$(sha1sum "$OUT/patched.jar" | awk '{print $1}')" = "$PATCH_SHA1"
+          test "$(stat -c %s "$OUT/original.jar")" = "$ORIGINAL_SIZE"
+
+          mkdir -p "$OUT/replacement/com/gametechbc/traveloptics/loot"
+          unzip -p "$OUT/patched.jar" "$ENTRY" > "$OUT/replacement/$ENTRY"
+
+          python3 - "$OUT" "$ENTRY" "$ORIGINAL_CF" <<'PY'
+          import pathlib, sys, zipfile
+          out=pathlib.Path(sys.argv[1]); entry=sys.argv[2]; expected=int(sys.argv[3])
+
+          def murmur2(data: bytes, seed: int = 1) -> int:
+              m=0x5BD1E995; r=24
+              h=(seed ^ len(data)) & 0xFFFFFFFF
+              i=0; remaining=len(data)
+              while remaining >= 4:
+                  k=data[i] | (data[i+1]<<8) | (data[i+2]<<16) | (data[i+3]<<24)
+                  k=(k*m)&0xFFFFFFFF; k ^= k>>r; k=(k*m)&0xFFFFFFFF
+                  h=(h*m)&0xFFFFFFFF; h ^= k
+                  i += 4; remaining -= 4
+              if remaining == 3: h ^= data[i+2] << 16
+              if remaining >= 2: h ^= data[i+1] << 8
+              if remaining >= 1:
+                  h ^= data[i]; h=(h*m)&0xFFFFFFFF
+              h ^= h>>13; h=(h*m)&0xFFFFFFFF; h ^= h>>15
+              return h & 0xFFFFFFFF
+
+          def fp(path):
+              raw=path.read_bytes()
+              return murmur2(bytes(b for b in raw if b not in (9,10,13,32)),1)
+
+          got=fp(out/'original.jar')
+          if got != expected:
+              raise SystemExit(f'fingerprint implementation mismatch expected={expected} got={got}')
+
+          with zipfile.ZipFile(out/'original.jar') as oz, zipfile.ZipFile(out/'patched.jar') as pz:
+              oi=oz.getinfo(entry); pi=pz.getinfo(entry)
+              (out/'member-metadata.txt').write_text(
+                  '\n'.join([
+                      f'original_crc={oi.CRC:08x}',
+                      f'patch_crc={pi.CRC:08x}',
+                      f'original_file_size={oi.file_size}',
+                      f'patch_file_size={pi.file_size}',
+                      f'original_compress_size={oi.compress_size}',
+                      f'patch_compress_size={pi.compress_size}',
+                      f'original_compress_type={oi.compress_type}',
+                      f'patch_compress_type={pi.compress_type}',
+                      f'original_date_time={oi.date_time}',
+                      f'patch_date_time={pi.date_time}',
+                      f'official_cf_fingerprint_verified={got}',
+                      ''
+                  ]),
+                  encoding='utf-8'
+              )
+          PY
+
+          python3 - "$OUT" "$ENTRY" "$CURRENT_SHA1" "$CURRENT_CF" "$FIXED_SIZE" <<'PY'
+          import csv, hashlib, os, pathlib, shutil, subprocess, sys, time, zipfile
+          from datetime import datetime, timezone, timedelta
+
+          out=pathlib.Path(sys.argv[1])
+          entry=sys.argv[2]
+          current_sha1=sys.argv[3]
+          current_cf=int(sys.argv[4])
+          fixed_size=int(sys.argv[5])
+          original=out/'original.jar'
+          patched=out/'patched.jar'
+          replacement=out/'replacement'/entry
+          work=out/'work'
+          report=out/'candidate-results.tsv'
+
+          def murmur2(data: bytes, seed: int = 1) -> int:
+              m=0x5BD1E995; r=24
+              h=(seed ^ len(data)) & 0xFFFFFFFF
+              i=0; remaining=len(data)
+              while remaining >= 4:
+                  k=data[i] | (data[i+1]<<8) | (data[i+2]<<16) | (data[i+3]<<24)
+                  k=(k*m)&0xFFFFFFFF; k ^= k>>r; k=(k*m)&0xFFFFFFFF
+                  h=(h*m)&0xFFFFFFFF; h ^= k
+                  i += 4; remaining -= 4
+              if remaining == 3: h ^= data[i+2] << 16
+              if remaining >= 2: h ^= data[i+1] << 8
+              if remaining >= 1:
+                  h ^= data[i]; h=(h*m)&0xFFFFFFFF
+              h ^= h>>13; h=(h*m)&0xFFFFFFFF; h ^= h>>15
+              return h & 0xFFFFFFFF
+
+          def fingerprint(path):
+              raw=path.read_bytes()
+              return murmur2(bytes(b for b in raw if b not in (9,10,13,32)),1)
+
+          def sha1(path):
+              h=hashlib.sha1()
+              with path.open('rb') as f:
+                  for chunk in iter(lambda:f.read(1024*1024),b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          with zipfile.ZipFile(original) as oz, zipfile.ZipFile(patched) as pz:
+              original_info=oz.getinfo(entry)
+              patch_info=pz.getinfo(entry)
+              original_names=oz.namelist()
+              original_content_hash={
+                  n: hashlib.sha256(oz.read(n)).hexdigest()
+                  for n in original_names if not n.endswith('/')
+              }
+
+          timestamp_modes={
+              'original': datetime(*original_info.date_time),
+              'patch': datetime(*patch_info.date_time),
+              # Retained Library creation timestamp expressed as UTC wall-clock.
+              'library-utc': datetime(2026,8,17,2,56,14),
+              # Same instant expressed as Brazil UTC-03 wall-clock, plausible local ZIP timestamp.
+              'library-brt': datetime(2026,8,16,23,56,14),
+          }
+
+          rows=[]
+          def measure(candidate, strategy, level, extras, ts_mode):
+              digest=sha1(candidate)
+              size=candidate.stat().st_size
+              cf=fingerprint(candidate)
+              with zipfile.ZipFile(candidate) as z:
+                  info=z.getinfo(entry)
+                  names=z.namelist()
+                  bad=z.testzip()
+                  changed=[]
+                  for n in names:
+                      if n.endswith('/') or n not in original_content_hash:
+                          continue
+                      if hashlib.sha256(z.read(n)).hexdigest() != original_content_hash[n]:
+                          changed.append(n)
+              row={
+                  'candidate':candidate.name,
+                  'strategy':strategy,
+                  'level':level,
+                  'extra_mode':extras,
+                  'timestamp_mode':ts_mode,
+                  'bytes':size,
+                  'size_delta_from_fixed':size-fixed_size,
+                  'sha1':digest,
+                  'curseforge_fingerprint':cf,
+                  'target_compress_type':info.compress_type,
+                  'target_compress_size':info.compress_size,
+                  'target_file_size':info.file_size,
+                  'entry_count':len(names),
+                  'testzip':bad or 'NONE',
+                  'changed_entry_count':len(changed),
+                  'changed_entries':';'.join(changed),
+                  'size_matches_fixed':size==fixed_size,
+                  'sha1_matches_current':digest==current_sha1,
+                  'fingerprint_matches_current':cf==current_cf,
+              }
+              rows.append(row)
+
+          def set_mtime(path, dt):
+              ts=time.mktime(dt.timetuple())
+              os.utime(path,(ts,ts))
+
+          for ts_mode,dt in timestamp_modes.items():
+              set_mtime(replacement,dt)
+              for extras in ('default','X'):
+                  extra_args=[] if extras=='default' else ['-X']
+                  for level in range(10):
+                      level_arg=f'-{level}'
+                      for strategy in ('delete-add','update-direct'):
+                          candidate=work/f'{strategy}-{extras}-l{level}-{ts_mode}.jar'
+                          shutil.copyfile(original,candidate)
+                          if strategy=='delete-add':
+                              subprocess.run(['zip','-q','-d',str(candidate),entry],check=True)
+                          cwd=out/'replacement'
+                          subprocess.run(['zip','-q',*extra_args,level_arg,str(candidate),entry],cwd=cwd,check=True)
+                          measure(candidate,strategy,level,extras,ts_mode)
+                          candidate.unlink()
+
+              # JDK update variants are timestamp-sensitive; no compression level control.
+              candidate=work/f'jar-uf-{ts_mode}.jar'
+              shutil.copyfile(original,candidate)
+              subprocess.run(['jar','uf',str(candidate),entry],cwd=out/'replacement',check=True)
+              measure(candidate,'jar-uf','default','jdk',ts_mode)
+              candidate.unlink()
+
+          fields=list(rows[0].keys())
+          with report.open('w',encoding='utf-8',newline='') as f:
+              w=csv.DictWriter(f,fieldnames=fields,delimiter='\t')
+              w.writeheader(); w.writerows(rows)
+
+          exact=[r for r in rows if r['sha1_matches_current']]
+          fp=[r for r in rows if r['fingerprint_matches_current']]
+          sized=[r for r in rows if r['size_matches_fixed']]
+          closest=sorted(rows,key=lambda r:(abs(r['size_delta_from_fixed']),r['candidate']))[:20]
+
+          summary=out/'summary.txt'
+          with summary.open('w',encoding='utf-8') as f:
+              f.write('Traveloptics expanded surgical repack clean-room audit\n')
+              f.write('scope=public publisher + public patch replacement class; archive/hash/size metadata only; no class parsing/decompilation\n')
+              f.write(f'candidate_count={len(rows)}\n')
+              f.write(f'current_sha1={current_sha1}\n')
+              f.write(f'current_cf_fingerprint={current_cf}\n')
+              f.write(f'library_fixed_keyloot_size={fixed_size}\n')
+              f.write(f'exact_sha1_match_count={len(exact)}\n')
+              for r in exact:
+                  f.write('exact_sha1_match='+repr(r)+'\n')
+              f.write(f'fingerprint_match_count={len(fp)}\n')
+              for r in fp:
+                  f.write('fingerprint_match='+repr(r)+'\n')
+              f.write(f'fixed_size_match_count={len(sized)}\n')
+              for r in sized:
+                  f.write('fixed_size_match='+repr(r)+'\n')
+              f.write('closest_size_candidates:\n')
+              for r in closest:
+                  f.write(
+                      f"  {r['candidate']} bytes={r['bytes']} delta={r['size_delta_from_fixed']} "
+                      f"sha1={r['sha1']} cf={r['curseforge_fingerprint']} "
+                      f"target_compress_size={r['target_compress_size']} changed={r['changed_entry_count']}\n"
+                  )
+
+          print((out/'member-metadata.txt').read_text())
+          print(summary.read_text())
+          PY
+
+      - name: Upload text-only evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-expanded-repack-report
+          path: |
+            build/audit/traveloptics-expanded-repack/member-metadata.txt
+            build/audit/traveloptics-expanded-repack/summary.txt
+            build/audit/traveloptics-expanded-repack/candidate-results.tsv
+          if-no-files-found: error
+          retention-days: 30
