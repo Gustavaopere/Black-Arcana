@@ -62,6 +62,7 @@ Together, these surfaces establish a spell-construction framework rather than a 
 ## Exact 4.0.3 framework surface catalog
 
 See [`EXACT-4.0.3-FRAMEWORK-SURFACE.md`](EXACT-4.0.3-FRAMEWORK-SURFACE.md) for the source-pinned inventory of spell/school/item builders, synchronized magic-attribute construction, 21 KubeJS bindings, event bridge, Alchemist Cauldron schemas, conditional EntityJS magic mobs/projectiles and client support for script-built spellbooks/staves. Those are framework capabilities, not pack spell identities. The exact dossier now also contains a **30/30 Java source coverage ledger** plus the structural resources controlling version/dependencies, mixins, plugin loading and official KubeJS development fixtures. This closes provider-source coverage while leaving current-pack script content fail-closed.
+It now also classifies the **entire exact repository tree: 49/49 paths**. The pin contains 30 Java files, 5 main resources, 3 development fixtures, 11 repository/build-tooling files and **0 generated-resource files**; no packaged `data/**`/`assets/**` magic roster exists outside the already-audited builder/runtime framework.
 ## Semantic disposition
 
 ### Base addon
