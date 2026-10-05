@@ -1,6 +1,6 @@
 # Traveloptics Blackout — current versioned named generic-surface boundary
 
-Status: `NAMED SPELLFILTER/RANDOMIZESPELL + INSPECTED PROJECT-OWNED SURFACES NEGATIVE / OTHER VERSIONED GENERIC ROUTES NOT EXHAUSTIVELY EXCLUDED / ASSEMBLED EXTERNAL + CURRENT PHYSICAL ROUTES UNRESOLVED / FAIL-CLOSED`
+Status: `NAMED FILTERS + AUDITED DIRECT IRON'S CONSTRUCTION/ITEM-DELIVERY SURFACES NEGATIVE / DYNAMIC OR UNENUMERATED VERSIONED ROUTES NOT UNIVERSALLY EXCLUDED / ASSEMBLED EXTERNAL + CURRENT PHYSICAL ROUTES UNRESOLVED / FAIL-CLOSED`
 
 ## Purpose
 
@@ -112,7 +112,7 @@ For the two current versioned project repositories:
 - Black Arcana versioned KubeJS/script acquisition surface — **ABSENT FROM THE AUDITED TREE**;
 - sibling versioned assembled `server_scripts` tree — **ABSENT FROM THE AUDITED TREE**.
 
-This closes only the specifically audited **named `SpellFilter` / `RandomizeSpellFunction` surfaces plus the concrete GLM/progression/script/resource paths inspected above**. It does **not** exhaust every acquisition-capable Java/data path in either repository; alternative versioned routes using other Iron's APIs, spell-container construction, commands, rewards/events or other code paths remain unexcluded unless separately audited.
+A later bounded full-`src/main` audit now additionally excludes the **direct Iron's spell-container/scroll construction APIs and reviewed generic item/reward candidates** enumerated in [`BLACKOUT-VERSIONED-ACQUISITION-SURFACE-AUDIT.md`](BLACKOUT-VERSIONED-ACQUISITION-SURFACE-AUDIT.md). That audit scanned 482 Java + 22 resource blobs in Black Arcana `da8a5c18...` and 1,144 Java + 724 resource blobs in sibling `de80b186...`, with zero occurrences of the audited direct Iron's construction/lookup tokens and zero Traveloptics/Blackout/scroll/container resource tokens. It still does **not** prove that every conceivable versioned route is absent: reflection, encoded/dynamic invocation or semantically equivalent custom code not containing those tokens remains outside the negative claim.
 
 ## What remains open
 
@@ -130,7 +130,7 @@ Therefore the broader assembled-pack generic external route remains **UNRESOLVED
 
 Blackout remains:
 
-`REGISTERED / UNIQUE / NON-CRAFTABLE / NON-LOOTABLE IN EXACT ALPHA / PROVIDER BUILT-IN ROUTES EXCLUDED / NAMED VERSIONED FILTER + INSPECTED PROJECT-OWNED SURFACES NEGATIVE / OTHER VERSIONED + ASSEMBLED EXTERNAL + CURRENT-PHYSICAL ROUTES UNVERIFIED`.
+`REGISTERED / UNIQUE / NON-CRAFTABLE / NON-LOOTABLE IN EXACT ALPHA / PROVIDER BUILT-IN ROUTES EXCLUDED / NAMED FILTERS + AUDITED DIRECT VERSIONED CONSTRUCTION/DELIVERY SURFACES NEGATIVE / DYNAMIC + ASSEMBLED EXTERNAL + CURRENT-PHYSICAL ROUTES UNVERIFIED`.
 
 Traveloptics remains:
 
