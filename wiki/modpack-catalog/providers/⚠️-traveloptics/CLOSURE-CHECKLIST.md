@@ -4,7 +4,7 @@ Status: `33 REGISTERED SPELL IDS + EXACT PUBLISHER MECHANICS CATALOGED / CURRENT
 
 ## Purpose
 
-The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, and now closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown. The remaining work is not another spell or default-stat enumeration. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
+The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown, and now additionally closes **29 bounded scalar accessors across 18 spells** with 29/29 exact File-`6342780` results. The remaining work is not another spell/default-stat enumeration or another generic scalar sweep. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
 
 This checklist does not promote the provider, does not treat a third-party patch as upstream authority, and does not infer survival acquisition or assembled-pack runtime from publisher marketing language.
 
@@ -178,7 +178,9 @@ The following work is already canonical and should not be repeated:
 - 2 `AbstractWeaponSpell` craftable registrations identified (`cursed_blast`, `gyro_slash`);
 - nine non-craftable Unique spell structured loot routes identified;
 - `blackout` isolated as the unresolved Unique reachability exception;
-- structural `TOLootModifiers` codec mismatch recorded clean-room.
+- structural `TOLootModifiers` codec mismatch recorded clean-room;
+- 33/33 exact default mechanics baseline closed for File `6342780`;
+- 29/29 selected numeric no-`LivingEntity` accessors closed across 18 spells with 0 UNKNOWN; raw non-count units/final formulas remain intentionally unassigned.
 
 ## Acceptance boundary
 
@@ -191,6 +193,7 @@ No future checkpoint may claim strict semantic promotion or runtime compatibilit
 - the publisher says spells are generally survival-obtainable;
 - a build without the actual provider stack is green;
 - exact File-6342780 default mechanics are known;
+- selected File-6342780 range/radius/duration/count/health/damage-named accessor outputs are known;
 - the version string matches the publisher release.
 
 Any promotion must cite the exact physical artifact/runtime evidence and preserve Iron's/Traveloptics provider authority. Black Arcana must not silently repair the provider registry, invent a `blackout` acquisition route, or select an Aqua authority by assumption.
