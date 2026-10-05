@@ -96,16 +96,21 @@ jobs:
               original_json = zin.read(target).decode("utf-8")
               target_info = zin.getinfo(target)
 
-          player_line = '    "PlayerMixin",\n'
-          server_line = '    "ServerPlayerMixin",\n'
-          if original_json.count(player_line) != 1:
-              raise SystemExit("PlayerMixin line not uniquely found")
-          if original_json.count(server_line) != 1:
-              raise SystemExit("ServerPlayerMixin line not uniquely found")
+          import re
+
+          def remove_mixin_line(text: str, name: str) -> str:
+              pattern = rf'(?m)^[ \\t]*"{re.escape(name)}",[ \\t]*(?:\\r?\\n)'
+              patched, count = re.subn(pattern, "", text, count=1)
+              if count != 1:
+                  raise SystemExit(f"{name} line not uniquely found; count={count}")
+              return patched
+
+          stage1 = remove_mixin_line(original_json, "PlayerMixin")
+          stage2 = remove_mixin_line(stage1, "ServerPlayerMixin")
 
           variants = {
-              "stage1-remove-player": original_json.replace(player_line, ""),
-              "stage2-remove-player-server": original_json.replace(player_line, "").replace(server_line, ""),
+              "stage1-remove-player": stage1,
+              "stage2-remove-player-server": stage2,
           }
 
           # Strategy A: Python ZipFile rewrite preserving ZipInfo metadata.
