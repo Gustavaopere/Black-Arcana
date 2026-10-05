@@ -550,6 +550,7 @@ enable_tunneling = false
             collector.classify_irons_spellbooks_kubejs_closure(
                 {
                     "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                    "irons_spellbooks": [{"current_physical_3_16_3_equality": True}],
                     "kubejs": [{"current_physical_build_377_equality": False}],
                 },
                 empty_inventory,
