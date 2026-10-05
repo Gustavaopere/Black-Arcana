@@ -183,7 +183,7 @@ Nine of the ten non-craftable Unique spells have direct exact structured loot re
 - `summon_desert_dwellers` — Koboleton / Wadjet loot;
 - `sword_of_the_ancients` — Kobolediator loot.
 
-`traveloptics:blackout` is the unresolved exception. It inherits `AbstractUniqueSpell.allowCrafting() = false`, has no direct structured-data reference in the exact artifact, and the focused class-reference audit found no provider-owned reference to `TOSpells.BLACKOUT_SPELL` outside `TOSpells` itself. The publisher's generic statement that ported spells are obtainable in survival is not specific enough to manufacture an object-level Blackout route.
+`traveloptics:blackout` is the unresolved current-pack exception. It inherits `AbstractUniqueSpell.allowCrafting() = false`; a focused exact-alpha generic-loot audit additionally proves `allowLooting() = false`, 23 explicit random-spell filters with no Blackout entry, no forced Eldritch filter, no provider code reference to host `SpellFilter` / `RandomizeSpellFunction`, and no `BLACKOUT_SPELL` reference outside `TOSpells`. Thus File `6342780` has neither a direct structured acquisition anchor nor a provider-owned built-in generic loot path for Blackout. External/current-physical acquisition remains unverified. See [`BLACKOUT-GENERIC-LOOT-EXCLUSION.md`](BLACKOUT-GENERIC-LOOT-EXCLUSION.md).
 
 The current broad project description documents a Dead King → Blackout route for the full project, while official 1.20.1 File `6010839` introduced `Blackout`, `Call Forth The Dead King` and `Enraged Dead King` together. Exact alpha File `6342780`, however, does not register `call_forth_the_dead_king` and exposes no Enraged Dead King structured loot/resource route in its audited 41 loot JSON surfaces. The broad/full-line route is therefore **versioned context, not 1.21.1 acquisition proof**. See [`BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`](BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md).
 
@@ -215,7 +215,7 @@ Phase 2BS disposition:
 
 - 33 exact registered spell identities in publisher File `6342780`: **cataloged as release baseline**; current physical `OTHER_VERIFIED` bytes require re-audit before those 33 are claimed exact for the installed artifact;
 - 32 residual localization-only IDs: **excluded +0**;
-- `traveloptics:blackout`: survival reachability unresolved under its non-craftable Unique gate;
+- `traveloptics:blackout`: exact-alpha provider direct/generic loot routes excluded; current-pack survival reachability remains unresolved;
 - exact publisher mechanics baseline: 33/33 registered spells closed for raw/default host inputs; current-physical stat equality unverified;
 - exact publisher File-only bounded scalar accessors: 37 resolved outputs across 24 spells; LivingEntity-bearing surface classified at 15 ENTITY_UNUSED / 34 ENTITY_SLOT_READ, with 8 File-only values plus 7 exact direct-delegate relations; current Iron's 3.16.3 host resolves those seven effective-cast delegates, bringing numeric accessor/bridge coverage to 28/33 spell identities; five remaining identities have selected entity-reading accessors dependency-classified to host `getSpellPower`, so identity-level accessor/bridge/dependency coverage is 33/33 while numeric closure stays 28/33; current-physical equality remains unverified;
 - exact publisher artifact: structural `TOLootModifiers` codec-wiring risk unresolved at runtime;
@@ -250,7 +250,8 @@ Somake 1.0.9 and Traveloptics 4.4.0.1 are both physically present in the current
 - current Iron's 3.16.3 host default craftability contract: `HIGH / SOURCE-PINNED`;
 - effective deployed craftability for those 21 after server/datapack config + player learning: `CONDITIONAL`;
 - nine exact Unique-spell loot routes: `HIGH`;
-- `blackout` object-level survival route: `UNVERIFIED / FAIL-CLOSED`;
+- `blackout` File-6342780 provider loot route: `EXCLUDED — DIRECT + GENERIC`;
+- `blackout` actual current-pack survival route: `UNVERIFIED / FAIL-CLOSED`;
 - `TOLootModifiers` codec reference wiring: `HIGH` structural fact;
 - actual registry-startup failure in the assembled pack: `NOT REPRODUCED`;
 - physical deployment of exact patch File `8861368`: `DISPROVED BY HASH`;

@@ -48,7 +48,7 @@ This is **not** counted as a File-6342780-alone scalar result and is **not** pro
 
 ## Reachability
 
-`UNIQUE / allowCrafting=false`; no direct exact acquisition anchor found — survival reachability `UNVERIFIED`.
+`UNIQUE / allowCrafting=false / allowLooting=false`; exact File `6342780` has no direct structured acquisition anchor and no built-in provider generic-loot path for Blackout. Current-pack survival reachability remains `UNVERIFIED` because external datapack/KubeJS/progression/current-physical routes are not closed.
 
 ## Evidence boundary
 
@@ -56,4 +56,4 @@ Identity, school and the File-`6342780` default mechanics baseline above are exa
 
 Iron's owns host casting/resource settlement; T.O Magic owns this spell. Provider stays **⚠️** because current-physical registry equality/provenance and full runtime closure are not proven.
 
-Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`.
+Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`; `../BLACKOUT-GENERIC-LOOT-EXCLUSION.md`.
