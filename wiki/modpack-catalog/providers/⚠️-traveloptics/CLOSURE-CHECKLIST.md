@@ -41,7 +41,7 @@ A 2026-10-05 bounded public-provenance search also found no indexed origin for t
 
 A separate Project Library runtime checkpoint from **2026-08-19** proves that the assembled pack discovered the same nominal filename/version and that its runtime spell analyzer emitted exactly **33 unique `traveloptics:` spell IDs**, equal as a set to the File-6342780 33-ID baseline, including `traveloptics:blackout`. A direct physical inventory only three days later, on **2026-08-22**, records SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
-The retained chronology is therefore: Aug-16 repeated duplicate-codec assembled-runtime crashes -> Aug-17 local repair artifacts -> Aug-18 launcher `isModified=true` -> Aug-19 33-ID runtime observation -> Aug-22 first direct `7b74816e...` hash capture. This is substantially stronger lineage evidence than the previous September-only boundary, but the Aug-19 log still carries no JAR SHA-1. It does **not** prove that the 33-ID runtime observation used the exact Aug-22 bytes and does not close Gate 1.
+The retained chronology is therefore: Aug-16 repeated duplicate-codec assembled-runtime crashes -> Aug-17 local repair artifacts -> immediate post-repair NeoForge process discovers the canonical `traveloptics-4.4.0.1-1.21.1.jar` from the real instance `mods` directory and progresses past the former fatal registration stage into Traveloptics resource reload -> Aug-18 launcher `isModified=true` -> Aug-19 33-ID runtime observation -> Aug-22 first direct `7b74816e...` hash capture. The canonical-slot discovery occurs approximately 73 seconds after the retained Library timestamp for `traveloptics-4.4.0.1-1.21.1-fixed-keyloot.jar`; this strongly narrows the repair episode but does **not** prove that the candidate was copied/renamed into the canonical slot or that either Aug-17/Aug-19 process used the exact Aug-22 bytes. See [`RUNTIME-2026-08-17-POST-REPAIR-CORRELATION.md`](RUNTIME-2026-08-17-POST-REPAIR-CORRELATION.md). Gate 1 remains open.
 
 ## Gate 2 — Loot-modifier registry initialization
 
@@ -81,6 +81,14 @@ Project Library preserves four independent 2026-08-16 crash reports under the ca
 This is direct assembled-pack reproduction of the failure mode predicted by the exact File-6342780 `TOLootModifiers` structure. The crash reports do not embed a JAR SHA-1, so they are **historical / process-hash-unbound** evidence and cannot be projected onto current `7b74816e...` bytes.
 
 Canonical detail: [`RUNTIME-2026-08-16-LOOT-CODEC-CRASH.md`](RUNTIME-2026-08-16-LOOT-CODEC-CRASH.md).
+
+### 2026-08-17 immediate post-repair canonical-slot correlation — historical
+
+Project Library retains a separately named `traveloptics-4.4.0.1-1.21.1-fixed-keyloot.jar`, followed approximately 73 seconds later by a NeoForge `ModDiscoverer` event that discovers the canonical `traveloptics-4.4.0.1-1.21.1.jar` from the real CurseForge instance `mods` directory. That same process progresses through Traveloptics configuration/event initialization and reaches provider resource reload, unlike the immediately preceding canonical-slot processes that terminate during `RegisterEvent` with the duplicate `KeyLootModifier` codec.
+
+This is strong post-repair canonical-slot runtime evidence but remains **historical / process-hash-unbound**. It does not prove identity with the retained `fixed-keyloot.jar` candidate or current SHA-1 `7b74816e...`, and it does not directly observe the target serializer object pair.
+
+Canonical detail: [`RUNTIME-2026-08-17-POST-REPAIR-CORRELATION.md`](RUNTIME-2026-08-17-POST-REPAIR-CORRELATION.md).
 
 ### 2026-09-08 physical/runtime correlation — current physical line
 
