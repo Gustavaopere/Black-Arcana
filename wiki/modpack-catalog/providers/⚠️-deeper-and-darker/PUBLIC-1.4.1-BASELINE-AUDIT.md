@@ -22,7 +22,7 @@ Therefore `publisher_sha1 != physical_sha1`. Relation: **`OTHER_VERIFIED_PUBLISH
 
 A retained CurseForge instance-metadata snapshot records the original installation as project **659011**, File **8201775**, filename `deeperdarker-neoforge-1.21.1-1.4.1.jar`, SHA-1 `b6094adde68bd4b909bc75c64901e1f3fb99ad8f`, and length **3,906,057 bytes**. At the snapshot point CurseForge reports the entry as unmodified/non-working-copy/non-fuzzy.
 
-The later physical modlist measures the same filename/runtime/byte-length lineage as SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+The later physical modlist records the same filename/runtime and measures SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`. Its schema does not include JAR byte size, so byte-length continuity is not asserted.
 
 Disposition: **the current physical artifact is locally byte-different from the originally installed official File 8201775**. This rules out treating the mismatch as an alternate official publisher artifact, but it does not reveal the changed archive entries and therefore does not close the exact-current semantic denominator.
 
