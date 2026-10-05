@@ -130,6 +130,23 @@ allow_lost_tablet = false
             self.assertFalse(entry["current_physical_4_0_3_equality"])
 
 
+    def test_hash_inventory_checks_current_kubejs_build_377_physical_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            (mods / "kubejs-neoforge-2101.7.2-build.377.jar").write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertIn("kubejs", result)
+            self.assertEqual(1, len(result["kubejs"]))
+            entry = result["kubejs"][0]
+            self.assertEqual("kubejs-neoforge-2101.7.2-build.377.jar", entry["filename"])
+            self.assertIn("current_physical_build_377_equality", entry)
+            self.assertFalse(entry["current_physical_build_377_equality"])
+
+
     def test_hash_inventory_checks_kubejsarsnouveau_132_physical_fingerprint(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
