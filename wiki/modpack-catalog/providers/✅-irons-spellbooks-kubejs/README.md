@@ -1,6 +1,6 @@
 # Iron's Spellbooks KubeJS — 4.0.3
 
-Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / EXACT OFFICIAL SOURCE VERSION PIN / SCRIPTABLE IRON'S SPELL+SCHOOL FRAMEWORK / 0 FIXED BUILT-IN SPELL IDENTITIES ESTABLISHED / CURRENT PACK SCRIPT INVENTORY UNVERIFIED / FAIL-CLOSED`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 4.0.3 / EXACT OFFICIAL SOURCE VERSION PIN / SCRIPTABLE IRON'S SPELL+SCHOOL FRAMEWORK / 0 FIXED BUILT-IN SPELL IDENTITIES / OWNER-ATTESTED 0 PACK-AUTHORED SPELL/SCHOOL DEFINITIONS / DEPLOYED-INSTANCE PARITY QA PENDING`
 
 ## Current physical identity
 
@@ -75,25 +75,28 @@ This does not mean the current modpack has zero KubeJS-defined Iron's spells.
 
 ### Current pack scripts
 
-The current pack's script-defined semantic inventory is **UNVERIFIED**.
+On **2026-10-05**, the project owner explicitly attested that no custom Iron's spells or schools were authored through KubeJS for the current modpack, and that Iron's Spellbooks KubeJS was added specifically as infrastructure for future creation work.
 
-Repository and Project-file searches performed on 2026-09-26 did not locate the exact current instance's `kubejs/startup_scripts` or relevant `server_scripts`. Absence from those available sources is not treated as proof that the physical CurseForge instance contains no such scripts.
+That owner attestation is catalog-authority evidence about project-authored content. Combined with the exact 4.0.3 provider-source audit — which establishes **0 fixed built-in spell identities** and **0 fixed built-in school identities** — it closes the catalog denominator for this provider at the project's accepted evidence ceiling:
 
-A fresh revalidation on 2026-10-04 against sibling `fa47288bd99e1166880a8fb0ee00cab06697a88a` preserves the same conclusion. The certified physical dossier still states that the effective pack scripts were not audited and that no custom spell/item should be attributed to runtime without locating the corresponding script. Default-branch searches of the current sibling for `startup_scripts`, `server_scripts`, `SpellRegistry.SPELL_REGISTRY_KEY` and `irons_spells_js` returned no script/registering source. Project/Library retrieval found the current KubeJS build metadata (`2101.7.2-build.377`) but no authoritative current `kubejs/` script tree; the available boot logs remain the historical 2026-09-08 build-374 instance. These negative searches are continuity evidence only and are not zero-content proof.
+- provider-built fixed spells: **0**;
+- provider-built fixed schools: **0**;
+- project-authored KubeJS Iron's spells/schools: **0, owner-attested**;
+- catalog semantic delta: **+0**.
 
-See [`CURRENT-EVIDENCE-2026-10-04.md`](CURRENT-EVIDENCE-2026-10-04.md) for the bounded freshness checkpoint.
+The exact current assembled instance's `kubejs/` tree still has **not** been physically inspected. That residual question is classified as **deployed-instance parity QA**, not as an unknown catalog denominator. No claim is made that the filesystem is empty.
 
-A KubeJS script can register a custom Iron's spell under an arbitrary namespace, so filtering only namespace `irons_spells_js` cannot close this provider.
+If later physical inspection finds an Iron's spell/school registration script, this catalog closure is invalidated and the provider must immediately reopen for object-level cataloging.
+
+See [`OWNER-ATTESTATION-2026-10-05.md`](OWNER-ATTESTATION-2026-10-05.md).
 
 Current disposition:
 
-**⚠️ partial / conditioned**
+**✅ cataloged — zero-semantic scripting framework at the current authored-content evidence ceiling.**
 
-Strict contribution from the base framework itself: **+0**.
+Strict semantic contribution: **+0**.
 
-Any pack-script-defined semantic objects remain outside the denominator until the exact current script set or equivalent authoritative assembled-instance provenance is audited.
-
-## Historical assembled-instance script evidence — not current closure
+## Historical assembled-instance script evidence — corroboration only
 
 Project Library logs from a physical boot on 2026-09-08 provide a bounded historical observation:
 
@@ -107,21 +110,23 @@ It does **not** close the current pack: current sibling authority now records Ku
 
 Accordingly the current script-defined inventory remains `UNVERIFIED / NOT ADDITIVE` until current-instance evidence is available.
 
-## Closure path
+## Deployed-instance parity QA
 
-See [`PACK-SCRIPT-CLOSURE-CHECKLIST.md`](PACK-SCRIPT-CLOSURE-CHECKLIST.md).
+See [`PACK-SCRIPT-CLOSURE-CHECKLIST.md`](PACK-SCRIPT-CLOSURE-CHECKLIST.md), now retained as the deployed-instance parity procedure.
 
-The deployed-evidence collector now fingerprints all three binaries required to establish the current closure context from the **same assembled instance**:
+The deployed-evidence collector fingerprints all three binaries from the **same assembled instance**:
 
 - `irons_spells_js-4.0.3.jar` -> `current_physical_4_0_3_equality` against SHA-1 `0481395c5847e2920d1425e77833bef87df63139`;
 - `irons_spellbooks-1.21.1-3.16.3.jar` -> `current_physical_3_16_3_equality` against SHA-1 `017fd8140c477f9ae602cf95594f1c23bef1d6e3`;
 - `kubejs-neoforge-2101.7.2-build.377.jar` -> `current_physical_build_377_equality` against SHA-1 `150c5d6efc09b969ac350ea205128dff832e0850`.
 
-The collector combines those checks with `kubejs_script_inventory` into `irons_spellbooks_kubejs_closure`. Provider-artifact failure yields `ARTIFACT_NOT_OBSERVED` / `ARTIFACT_HASH_MISMATCH`; Iron's-host failure yields `IRONS_HOST_NOT_OBSERVED` / `IRONS_HOST_HASH_MISMATCH`; KubeJS-host failure yields `KUBEJS_HOST_NOT_OBSERVED` / `KUBEJS_HOST_HASH_MISMATCH`. Only certified provider + certified Iron's 3.16.3 + certified KubeJS build 377 can reach `ZERO_CONTENT_REVIEW_CANDIDATE` or `SCRIPT_REVIEW_REQUIRED`. These are routing states, never automatic catalog promotion.
+The collector combines those checks with `kubejs_script_inventory` into `irons_spellbooks_kubejs_closure`. Its statuses remain useful for deployment review, but **they no longer gate the catalog's ✅ state**.
 
-The same inventory now emits bounded per-file `irons_spellbooks_kubejs_markers` for exact spell/school registry literals, exact registry-key binding names, `ISSEvents.*` references and known 4.0.3 builder literals. This is review acceleration only: it never copies script bodies and never promotes marker presence/absence into semantic-count evidence without reviewing the exact hashed file/provenance.
+- `ZERO_CONTENT_REVIEW_CANDIDATE` corroborates the owner-attested zero-content catalog state when provenance/current-instance scope is valid.
+- `SCRIPT_REVIEW_REQUIRED` means the physical instance contains bounded KubeJS files and those exact files must be inspected. If any file registers Iron's spell/school objects, reopen this provider's catalog immediately.
+- artifact or host mismatch states remain fail-closed for deployment parity.
 
-Promotion to a closed zero-semantic framework requires authoritative current-instance evidence that no relevant Iron's spell/school registration exists. If scripts do register objects, they must be enumerated, deduplicated and evaluated for effective host config and survival reachability.
+The marker inventory remains review acceleration only; marker presence/absence does not by itself prove semantic registration or absence.
 
 ## Authority boundary
 
@@ -140,8 +145,13 @@ Still separate from semantic inventory closure: startup registry lifecycle, Iron
 
 ## Result
 
-**⚠️ Partial / conditioned.**
+**✅ Cataloged.**
 
-The 4.0.3 base addon is cataloged as a scriptable Iron's/KubeJS framework with no fixed built-in spell inventory established by the provider itself. The current modpack's script-defined Iron's semantic inventory remains open until the physical scripts or equivalent authoritative assembled-instance evidence are available.
+Iron's Spellbooks KubeJS 4.0.3 is cataloged as a scriptable Iron's/KubeJS framework with:
 
-Strict semantic delta from the base framework itself: **+0**.
+- **0** fixed provider-built spell identities;
+- **0** fixed provider-built school identities;
+- **0** project-authored custom Iron's spell/school definitions, by explicit project-owner attestation dated 2026-10-05;
+- strict semantic delta: **+0**.
+
+The exact current `kubejs/` filesystem remains uninspected and therefore stays as **deployed-instance parity QA**, not a catalog-content blocker. A future contradictory physical script finding reopens the provider automatically.

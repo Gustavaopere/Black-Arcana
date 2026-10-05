@@ -1,6 +1,8 @@
 # Iron's Spellbooks KubeJS 4.0.3 — current evidence checkpoint (2026-10-04)
 
-Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / BASE FRAMEWORK +0 / CURRENT SCRIPT TREE NOT CAPTURED / FAIL-CLOSED`
+Status: `HISTORICAL PRE-ATTESTATION CHECKPOINT / PHYSICAL SCRIPT TREE NOT CAPTURED / SUPERSEDED FOR CATALOG STATUS ON 2026-10-05`
+
+> **Supersession note (2026-10-05):** this file remains the historical physical-evidence checkpoint. The project owner subsequently attested that no custom Iron's spells/schools were authored through KubeJS and that the addon was included as future creation infrastructure. The catalog is therefore closed at `✅ / +0`; the missing exact current `kubejs/` tree remains deployed-instance parity QA only. See [`OWNER-ATTESTATION-2026-10-05.md`](OWNER-ATTESTATION-2026-10-05.md).
 
 ## Authority checkpoints
 
