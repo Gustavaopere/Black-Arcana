@@ -535,6 +535,65 @@ def collect_kubejs_script_inventory(instance: Path) -> dict[str, Any]:
     }
 
 
+def classify_irons_spellbooks_kubejs_closure(
+    mods: dict[str, Any],
+    kubejs_inventory: dict[str, Any],
+) -> dict[str, Any]:
+    provider_entries = mods.get("irons_spells_js", [])
+    artifact_observed = bool(provider_entries)
+    artifact_certified = any(
+        entry.get("current_physical_4_0_3_equality") is True
+        for entry in provider_entries
+        if isinstance(entry, dict)
+    )
+
+    host_entries = mods.get("kubejs", [])
+    kubejs_host_observed = bool(host_entries)
+    kubejs_host_certified = any(
+        entry.get("current_physical_build_377_equality") is True
+        for entry in host_entries
+        if isinstance(entry, dict)
+    )
+
+    files = kubejs_inventory.get("files", [])
+    marker_files = [
+        row
+        for row in files
+        if isinstance(row, dict) and row.get("irons_spellbooks_kubejs_markers")
+    ]
+    marker_types = sorted(
+        {
+            marker_type
+            for row in marker_files
+            for marker_type in row.get("irons_spellbooks_kubejs_markers", {})
+        }
+    )
+    bounded_file_count = int(kubejs_inventory.get("file_count", 0))
+
+    if not artifact_observed:
+        status = "ARTIFACT_NOT_OBSERVED"
+    elif not artifact_certified:
+        status = "ARTIFACT_HASH_MISMATCH"
+    elif not kubejs_host_observed:
+        status = "KUBEJS_HOST_NOT_OBSERVED"
+    elif not kubejs_host_certified:
+        status = "KUBEJS_HOST_HASH_MISMATCH"
+    elif bounded_file_count == 0:
+        status = "ZERO_CONTENT_REVIEW_CANDIDATE"
+    else:
+        status = "SCRIPT_REVIEW_REQUIRED"
+
+    return {
+        "status": status,
+        "artifact_certified": artifact_certified,
+        "kubejs_host_certified": kubejs_host_certified,
+        "kubejs_root_present": bool(kubejs_inventory.get("kubejs_root_present")),
+        "bounded_file_count": bounded_file_count,
+        "marker_file_count": len(marker_files),
+        "marker_types": marker_types,
+    }
+
+
 def candidate_worlds(instance: Path, explicit: list[Path]) -> list[Path]:
     out: list[Path] = []
     seen: set[Path] = set()
@@ -1613,18 +1672,24 @@ def main() -> int:
         return 2
 
     worlds = candidate_worlds(instance, [p.expanduser() for p in args.world])
+    mods = collect_mod_hashes(instance)
+    kubejs_inventory = collect_kubejs_script_inventory(instance)
 
     report = {
         "schema": 3,
         "collector": "Black Arcana provider catalog deployed evidence",
         "instance_root_redacted": True,
         "worlds_scanned": [rel(w, instance) for w in worlds],
-        "mods": collect_mod_hashes(instance),
+        "mods": mods,
         "runtime_probe": collect_catalog_runtime_probe(
             instance,
             args.probe_log.expanduser() if args.probe_log is not None else None,
         ),
-        "kubejs_script_inventory": collect_kubejs_script_inventory(instance),
+        "kubejs_script_inventory": kubejs_inventory,
+        "irons_spellbooks_kubejs_closure": classify_irons_spellbooks_kubejs_closure(
+            mods,
+            kubejs_inventory,
+        ),
         "asterism_arcanum": collect_asterism(instance, worlds),
         "corail_tombstone": collect_tombstone(instance, worlds),
         "gaze": collect_gaze(instance, worlds),
