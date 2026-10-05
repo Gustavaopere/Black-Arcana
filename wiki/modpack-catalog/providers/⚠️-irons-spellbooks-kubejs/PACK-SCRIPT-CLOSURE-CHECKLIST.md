@@ -25,6 +25,7 @@ Close the only semantic question that the base-addon audit cannot answer: whethe
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Deeper audit #629: `3c8f5163ea7985bdf5ed667b804d0f663c676798`;
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Traveloptics #628: `d1cffe8068d16fcf6c61876e14133bf966c8d387`;
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Deeper summary #630: `59fc2ead8443ecdb2cb652047fa948952baa7fec`;
+- Black Arcana main reconciled again before final PR #627 validation after concurrent Traveloptics runtime evidence #631: `285499cb762173a1b1079cc4a72bbd6d02d0274e`;
 - sibling modlist authority: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`;
 - current physical row remains `irons_spells_js-4.0.3.jar` / mod id `irons_spells_js` / runtime `4.0.3`;
 - current host stack remains Iron's `1.21.1-3.16.3` + KubeJS `2101.7.2-build.377`;
