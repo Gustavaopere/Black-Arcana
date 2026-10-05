@@ -1,6 +1,6 @@
 # Traveloptics 4.4.0.1 — Blackout versioned acquisition boundary
 
-Status: `PUBLISHER ROUTE EXISTS ON FULL PROJECT / 1.20.1 INTRODUCTION CONFIRMED / EXACT 1.21.1 ALPHA ROUTE NOT PRESENT IN AUDITED STRUCTURED SURFACE / SURVIVAL REACHABILITY STILL UNVERIFIED`
+Status: `PUBLISHER ROUTE EXISTS ON FULL PROJECT / 1.20.1 INTRODUCTION CONFIRMED / EXACT 1.21.1 GENERIC RANDOM LOOT ROUTE NEGATIVE / OTHER ACQUISITION + CURRENT-PHYSICAL REACHABILITY STILL UNVERIFIED`
 
 ## Purpose
 
@@ -59,10 +59,33 @@ The existing exact clean-room audit of File `6342780` already proves:
 
 The exact resource audit also enumerated **41 loot/loot-modifier JSON resources** for File `6342780`. They cover the alpha's current Cataclysm/chest surfaces, including entities such as Leviathan, Ignis, Maledictus, Kobolediator, Koboleton, Prowler, Watcher and others. No Enraged Dead King loot/resource identity appears in that exact structured-resource inventory.
 
+### Exact-alpha generic/randomized loot boundary
+
+A focused clean-room follow-up now closes the ordinary Iron's randomized-loot exception space for File `6342780`.
+
+Temporary NON-MERGE audit **#626**, HEAD `5670beca2b61ee5e302bd95db3c6bb595ddeb152`, run `37251558059` SUCCESS, text artifact `11321475072`, digest `sha256:1b3bb4e570afa9dd0a0333dc00b4e36eb7a16baf7b31d690dc41293ff8550b9d`, establishes:
+
+- `BlackoutSpell` inherits provider `AbstractUniqueSpell.allowLooting()`;
+- that exact provider override is constant **false**;
+- 151 provider JSON files contain 23 `spell_filter` / `randomize_spell` nodes;
+- all 23 filters are explicit spell lists;
+- structured references to `traveloptics:blackout`: **0**;
+- explicit Blackout filters: **0**;
+- forced Eldritch school filters: **0**;
+- across 250 provider classes, references to host `SpellFilter`: **0** and `RandomizeSpellFunction`: **0**;
+- `BLACKOUT_SPELL` is referenced only by `TOSpells`, the registry holder.
+
+Current Iron's 3.16.3 source pin `e4056af90302d37eb1739f5ff05020b020e6e252` defines ordinary random-loot admission through `allowLooting()`, while explicit spell lists or `force=true` school filters can bypass that predicate. The exact Traveloptics artifact contains neither bypass for Blackout.
+
+Therefore **provider-owned generic/randomized loot is a negative result for exact File `6342780` under current Iron's 3.16.3 semantics**. This still does not exclude external datapack/KubeJS/progression grants, another provider-specific acquisition mechanism not captured by the audited loot surface, or changes in current physical SHA-1 `7b74816e...`.
+
+Canonical detail: [`BLACKOUT-GENERIC-LOOT-EXCLUSION-CHECKPOINT.md`](BLACKOUT-GENERIC-LOOT-EXCLUSION-CHECKPOINT.md).
+
 This establishes a version boundary:
 
 - the publisher's broader Dead King → Blackout route is real;
 - the exact 1.21.1 alpha does **not** expose the supporting Dead King route in the structured surfaces already audited;
+- its provider-owned generic/randomized loot surface also excludes Blackout under the current Iron's 3.16.3 host contract;
 - this does **not** prove Blackout is impossible to obtain by every conceivable runtime path;
 - it does prove that the generic 1.20.1/full-project route is insufficient evidence for the installed alpha.
 
