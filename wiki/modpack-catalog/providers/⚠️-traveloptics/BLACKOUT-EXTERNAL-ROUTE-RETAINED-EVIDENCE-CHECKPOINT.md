@@ -25,7 +25,7 @@ Black Arcana does contain Traveloptics references in `src/catalogQaProbe/java/de
 
 After excluding that observational QA surface, no **literal/object-specific acquisition route** for `traveloptics:blackout` was identified in the versioned Black Arcana or sibling project surfaces checked.
 
-A follow-up current-tree audit now closes that exception for the **versioned project-owned repositories**. At Black Arcana `4749aac3...` and sibling `de80b186...`, no `SpellFilter`, `RandomizeSpellFunction`, `spell_filter` or `randomize_spell` route is versioned. The sibling's only runtime GLM is `rpgskilltree:reward_risk`, which scales already-generated loot and does not create spell/scroll identities; its Iron's progression adapter gates casting/inscription and awards mastery but does not grant spells. The sibling has no `server_scripts` tree and only two duplicated Volcanoes integration-template `.js` files; Black Arcana has zero versioned `.js` files and zero server/startup-script paths. This excludes the **current versioned project-owned generic route**, while the actual assembled external KubeJS/datapack/mod route remains unresolved because those physical surfaces are not captured. See [`BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md`](BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md).
+A follow-up current-tree audit closes only the specifically named **`SpellFilter` / `RandomizeSpellFunction` surfaces and inspected GLM/progression/script/resource paths** in Black Arcana `4749aac3...` and sibling `de80b186...`: those named filter APIs are not versioned, the sibling's only inspected runtime GLM scales already-generated loot, its inspected Iron's progression adapter does not grant spells, and neither repository contains an assembled `server_scripts` tree. Other acquisition-capable versioned Java/data paths were not exhaustively audited, so a broader project-owned generic route remains **UNRESOLVED** alongside physical external surfaces. See [`BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md`](BLACKOUT-VERSIONED-GENERIC-ROUTE-AUDIT.md).
 
 ## Project / Library retained-source search
 
@@ -67,7 +67,8 @@ Retained evidence now supports the following bounded statement:
 - exact File `6342780` provider built-in generic random-spell route: **EXCLUDED**;
 - Black Arcana literal/object-specific external route: **NOT FOUND AFTER EXCLUDING THE OBSERVATIONAL QA PROBE**;
 - sibling literal/object-specific external route: **NOT FOUND IN THE SEARCHED VERSIONED SURFACES**;
-- current versioned project-owned generic school/global filter route: **EXCLUDED IN AUDITED REPOSITORY SURFACES**;
+- named `SpellFilter` / `RandomizeSpellFunction` route in the audited versioned trees: **NOT FOUND**;
+- other versioned project-owned generic acquisition paths: **UNRESOLVED — not exhaustively audited**;
 - assembled-pack external school/global filter route: **UNRESOLVED — physical KubeJS/datapack/other-mod surfaces are not captured**;
 - retained Library KubeJS/datapack source route: **NOT PRESERVED / NOT FOUND**;
 - actual assembled current-pack external route: **UNVERIFIED**;
