@@ -1,0 +1,186 @@
+name: Traveloptics Scroll Forge Default Gates Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Extract bounded Traveloptics enabled/learning gate facts
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar = "traveloptics.jar"
+          targets = [
+              "BloodHowlSpell",
+              "PsychicBoltSpell",
+              "ReversalSpell",
+              "SpectralBlinkSpell",
+              "OrbitalVoidSpell",
+              "CursedMinefieldSpell",
+              "VoidEruptionSpell",
+              "VortexPunchSpell",
+              "AstralSenseSpell",
+              "AshenBreathSpell",
+              "LingeringStrainSpell",
+              "MeteorStormSpell",
+              "LavaBombSpell",
+              "NullflareSpell",
+              "CursedRevenantsSpell",
+              "DespairSpell",
+              "RapidLaserSpell",
+              "DeathLaserSpell",
+              "EmPulse",
+              "AerialCollapseSpell",
+              "SteleCascadeSpell",
+          ]
+
+          with zipfile.ZipFile(jar) as z:
+              entries = z.namelist()
+
+          provider_entries = [
+              e for e in entries
+              if e.startswith("com/gametechbc/traveloptics/") and e.endswith(".class")
+          ]
+
+          def fqcn_for(simple):
+              suffix = "/" + simple + ".class"
+              matches = [e for e in entries if e.endswith(suffix)]
+              if len(matches) != 1:
+                  raise SystemExit(f"{simple}: expected exactly one class entry, found {len(matches)}: {matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          def javap(fqcn):
+              return subprocess.run(
+                  ["javap", "-classpath", jar, "-c", "-p", fqcn],
+                  check=True, text=True, capture_output=True
+              ).stdout.splitlines()
+
+          insn_re = re.compile(r"^\s*\d+:\s+(\S+)(?:\s+(.*))?$")
+          deprecated_re = re.compile(r"DefaultConfig\.setDeprecated:\(Z\)")
+          enabled_field_re = re.compile(r"DefaultConfig\.enabled:Z")
+          is_enabled_decl_re = re.compile(r"^\s*(?:public|protected|private).*\bboolean\s+isEnabled\(\);\s*$")
+          can_craft_decl_re = re.compile(r"^\s*(?:public|protected|private).*\bboolean\s+canBeCraftedBy\([^)]*Player[^)]*\);\s*$")
+
+          rows = []
+          for simple in targets:
+              fqcn = fqcn_for(simple)
+              lines = javap(fqcn)
+              dep_calls = []
+              field_writes = 0
+              is_enabled_override = False
+              can_craft_override = False
+
+              for i, line in enumerate(lines):
+                  if is_enabled_decl_re.match(line):
+                      is_enabled_override = True
+                  if can_craft_decl_re.match(line):
+                      can_craft_override = True
+
+                  if deprecated_re.search(line):
+                      prev = None
+                      for j in range(i - 1, max(-1, i - 8), -1):
+                          m = insn_re.match(lines[j])
+                          if m:
+                              prev = m.group(1)
+                              break
+                      if prev == "iconst_0":
+                          dep_calls.append("FALSE")
+                      elif prev == "iconst_1":
+                          dep_calls.append("TRUE")
+                      else:
+                          dep_calls.append("UNKNOWN")
+
+                  if enabled_field_re.search(line):
+                      m = insn_re.match(line)
+                      if m and m.group(1) == "putfield":
+                          field_writes += 1
+
+              dep = "ABSENT" if not dep_calls else ",".join(dep_calls)
+              rows.append((simple, fqcn, dep, len(dep_calls), field_writes, is_enabled_override, can_craft_override))
+
+          provider_mutators = []
+          for entry in provider_entries:
+              fqcn = entry[:-6].replace("/", ".")
+              lines = javap(fqcn)
+              dep_refs = sum(1 for line in lines if deprecated_re.search(line))
+              enabled_writes = 0
+              for line in lines:
+                  if enabled_field_re.search(line):
+                      m = insn_re.match(line)
+                      if m and m.group(1) == "putfield":
+                          enabled_writes += 1
+              if dep_refs or enabled_writes:
+                  provider_mutators.append((fqcn, dep_refs, enabled_writes))
+
+          report = Path("audit/report.txt")
+          with report.open("w", encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha Scroll Forge default-gate clean-room audit\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("scope=21 host-default-craftability concrete classes + provider-wide direct enabled-default mutator scan\n")
+              f.write("retention=class identity + setDeprecated/direct-enabled-write/override presence only; no method bodies\n\n")
+
+              for row in rows:
+                  simple, fqcn, dep, dep_count, field_writes, is_enabled, can_craft = row
+                  f.write(
+                      f"{simple}|{fqcn}|setDeprecated={dep}|setDeprecated_call_count={dep_count}|"
+                      f"direct_enabled_field_writes={field_writes}|"
+                      f"declares_isEnabled={str(is_enabled).upper()}|"
+                      f"declares_canBeCraftedBy={str(can_craft).upper()}\n"
+                  )
+
+              f.write("\nsummary\n")
+              f.write(f"rows={len(rows)}\n")
+              f.write(f"target_setDeprecated_absent={sum(r[2] == 'ABSENT' for r in rows)}\n")
+              f.write(f"target_setDeprecated_true={sum('TRUE' in r[2].split(',') for r in rows)}\n")
+              f.write(f"target_setDeprecated_false={sum('FALSE' in r[2].split(',') for r in rows)}\n")
+              f.write(f"target_setDeprecated_unknown={sum('UNKNOWN' in r[2].split(',') for r in rows)}\n")
+              f.write(f"target_direct_enabled_field_writes={sum(r[4] for r in rows)}\n")
+              f.write(f"target_declares_isEnabled={sum(r[5] for r in rows)}\n")
+              f.write(f"target_declares_canBeCraftedBy={sum(r[6] for r in rows)}\n")
+              f.write(f"provider_class_entries_scanned={len(provider_entries)}\n")
+              f.write(f"provider_classes_with_direct_enabled_default_mutator={len(provider_mutators)}\n")
+              for fqcn, dep_refs, enabled_writes in provider_mutators:
+                  f.write(f"provider_enabled_mutator|{fqcn}|setDeprecated_refs={dep_refs}|enabled_field_writes={enabled_writes}\n")
+
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-scroll-forge-default-gates-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
