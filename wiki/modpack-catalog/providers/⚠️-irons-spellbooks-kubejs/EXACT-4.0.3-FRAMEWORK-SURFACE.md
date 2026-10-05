@@ -286,3 +286,72 @@ These development fixtures are source evidence only. They are **not** current mo
 For the provider code itself, the exact 4.0.3 Java/framework surface is now **source-covered 30/30** with the critical structural resources above also reviewed.
 
 The remaining `⚠️ PARTIAL / CONDITIONAL` state is therefore **not a provider-source coverage gap**. It is exclusively the unresolved current-pack content question: whether the authoritative assembled instance's KubeJS script/provenance layer registers any custom Iron's spells, schools, attributes, items, entities or recipes.
+
+
+## Appendix B. Exact repository-tree classification — 49 / 49 paths
+
+The exact source checkpoint contains **49 blob/file paths total**.
+
+Tree decomposition:
+
+- **30** files under `src/main/java/**` — individually mapped in Appendix A;
+- **5** files under `src/main/resources/**`;
+- **0** files under `src/generated/resources/**`;
+- **3** development fixtures under `run/kubejs/**`;
+- **11** repository/build-tooling files outside those trees.
+
+This section is a **path-level classification**, not a claim that opaque build-tool binaries were reverse-engineered.
+
+### Runtime/resource tree — 5 / 5 classified
+
+| Exact resource path | Classification | Semantic effect |
+| --- | --- | --- |
+| `src/main/resources/META-INF/accesstransformer.cfg` | empty access-transformer file | no provider semantic object |
+| `src/main/resources/META-INF/neoforge.mods.toml` | NeoForge metadata/dependencies + mixin config declaration | loader contract only |
+| `src/main/resources/icon.png` | mod-list presentation asset | no gameplay semantic object |
+| `src/main/resources/irons_spells_js.mixins.json` | required five-common-mixin declaration | runtime bridge activation, no fixed magic identity |
+| `src/main/resources/kubejs.plugins.txt` | core plugin + EntityJS-conditional plugin loading | scripting/bootstrap capability |
+
+Critical negative result at the exact 4.0.3 tree:
+
+- `src/generated/resources/**`: **absent**;
+- packaged provider `data/**`: **absent**;
+- packaged provider `assets/**` beyond the root icon: **absent**;
+- therefore no source-tree JSON/data/resource roster exists that independently defines fixed provider spells, schools, recipes, tags or other semantic magic objects outside the Java/script-builder framework already cataloged.
+
+### Development fixtures — 3 / 3 classified
+
+- `run/kubejs/startup_scripts/test/test.js` — startup/builder syntax fixture;
+- `run/kubejs/server_scripts/test/test.js` — event/recipe syntax fixture;
+- `run/kubejs/client_scripts/test/test.js` — client development fixture.
+
+These are development-run files, not `src/main/resources`, and remain **syntax evidence only**. They are not current-pack KubeJS content.
+
+### Repository/build tooling — 11 / 11 classified
+
+- `.editorconfig` — editor formatting metadata;
+- `.gitattributes` — VCS metadata;
+- `.gitignore` — VCS ignore metadata;
+- `LICENSE.txt` — repository license text;
+- `build.gradle.kts` — build/dependency/run configuration;
+- `gradle.properties` — exact 4.0.3 project/version/dependency properties;
+- `gradle/wrapper/gradle-wrapper.jar` — Gradle wrapper binary/tooling;
+- `gradle/wrapper/gradle-wrapper.properties` — Gradle wrapper configuration;
+- `gradlew` — Gradle wrapper launcher;
+- `gradlew.bat` — Windows Gradle wrapper launcher;
+- `settings.gradle.kts` — Gradle project settings.
+
+None of these 11 paths is a provider gameplay-content roster.
+
+### Whole-tree result
+
+Exact 4.0.3 repository path classification: **49 / 49**.
+
+The tree-wide audit strengthens the base-framework conclusion:
+
+- fixed provider-owned spells from source/package content: **0 established**;
+- fixed provider-owned schools from source/package content: **0 established**;
+- fixed provider-owned data/resource magic roster outside Java builders: **0 established**;
+- bridge/framework semantic delta before pack scripts: **+0**.
+
+The only unresolved semantic authority remains **external to this provider source tree**: the current assembled modpack's own KubeJS/provenance layer.
