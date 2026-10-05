@@ -549,6 +549,14 @@ def classify_irons_spellbooks_kubejs_closure(
         if isinstance(entry, dict)
     )
 
+    irons_host_entries = mods.get("irons_spellbooks", [])
+    irons_host_observed = bool(irons_host_entries)
+    irons_host_certified = any(
+        entry.get("current_physical_3_16_3_equality") is True
+        for entry in irons_host_entries
+        if isinstance(entry, dict)
+    )
+
     host_entries = mods.get("kubejs", [])
     kubejs_host_observed = bool(host_entries)
     kubejs_host_certified = any(
@@ -576,6 +584,10 @@ def classify_irons_spellbooks_kubejs_closure(
         status = "ARTIFACT_NOT_OBSERVED"
     elif not artifact_certified:
         status = "ARTIFACT_HASH_MISMATCH"
+    elif not irons_host_observed:
+        status = "IRONS_HOST_NOT_OBSERVED"
+    elif not irons_host_certified:
+        status = "IRONS_HOST_HASH_MISMATCH"
     elif not kubejs_host_observed:
         status = "KUBEJS_HOST_NOT_OBSERVED"
     elif not kubejs_host_certified:
@@ -588,6 +600,7 @@ def classify_irons_spellbooks_kubejs_closure(
     return {
         "status": status,
         "artifact_certified": artifact_certified,
+        "irons_host_certified": irons_host_certified,
         "kubejs_host_certified": kubejs_host_certified,
         "kubejs_root_present": bool(kubejs_inventory.get("kubejs_root_present")),
         "bounded_file_count": bounded_file_count,
