@@ -159,11 +159,11 @@ jobs:
           # mixin JSON entry using Info-ZIP, with and without -X.
           for stage in stage1-remove-player stage2-remove-player-server; do
             for flavor in zip-update zip-update-X; do
-              cp "$OUT/publisher.jar" "$OUT/\${flavor}-\${stage}.jar"
+              cp "$OUT/publisher.jar" "$OUT/${flavor}-${stage}.jar"
               if [ "$flavor" = "zip-update-X" ]; then
-                (cd "$OUT/payload-\${stage}" && zip -q -X "$OLDPWD/\${flavor}-\${stage}.jar" deeperdarker.mixins.json)
+                (cd "$OUT/payload-${stage}" && zip -q -X "$OLDPWD/${flavor}-${stage}.jar" deeperdarker.mixins.json)
               else
-                (cd "$OUT/payload-\${stage}" && zip -q "$OLDPWD/\${flavor}-\${stage}.jar" deeperdarker.mixins.json)
+                (cd "$OUT/payload-${stage}" && zip -q "$OLDPWD/${flavor}-${stage}.jar" deeperdarker.mixins.json)
               fi
             done
           done
