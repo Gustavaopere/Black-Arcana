@@ -63,9 +63,11 @@ This narrows the local modification chronology but does **not** identify the dep
 
 See [`LOCAL-NEOVITAE-COMPAT-LINEAGE.md`](LOCAL-NEOVITAE-COMPAT-LINEAGE.md).
 
-A bounded reproduction audit in NON-MERGE PR **#604** then generated **57** candidate repacks by removing `PlayerMixin`, `ServerPlayerMixin`, or both from the official mixin config under common and surgical archive strategies. **0/57** candidates matched physical SHA-1 `83f7edd0...`. One candidate matched only the first local JAR's byte length (**3,906,052 bytes**) but had SHA-1 `304eebbb...`; no candidate reproduced the retained `v2` size (**3,906,044 bytes**). This rules out that bounded family as the physical reconstruction but still does not identify the real byte delta.
+A bounded reproduction audit in NON-MERGE PR **#604** first tested **57** candidate repacks by removing `PlayerMixin`, `ServerPlayerMixin`, or both from the official mixin config under common and surgical archive strategies. **0/57** candidates matched physical SHA-1 `83f7edd0...`; that initial matrix reproduced the first local JAR's size once but did not reproduce the retained `v2` size.
 
-See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md).
+The expanded NON-MERGE audit **#622** then tested **80** candidates, validated the CurseForge fingerprint implementation against the official artifact, and found a coherent serialization/repack family that reproduces **both retained local sizes**. Even so, **0/80** candidates matched physical SHA-1 `83f7edd0...` or physical fingerprint `1917446721`. The size chronology is therefore structurally plausible, but the deployed physical transformation remains unidentified.
+
+See [`NEOVITAE-CANDIDATE-REPRO-AUDIT.md`](NEOVITAE-CANDIDATE-REPRO-AUDIT.md) and [`NEOVITAE-PATCH-REPRO-AUDIT.md`](NEOVITAE-PATCH-REPRO-AUDIT.md).
 
 ## Exact source reproduction — corroboration, not closure
 
