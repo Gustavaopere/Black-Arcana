@@ -1,0 +1,229 @@
+name: Traveloptics Blackout Versioned Acquisition Surface Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout Black Arcana
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Checkout pinned RPG Skill Tree sibling
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _audit
+          git clone --quiet https://github.com/Gustavaopere/neoforge-rpg-skilltree.git _audit/rpg
+          git -C _audit/rpg checkout --quiet de80b186357cad20ba5b81892a8682777e96e35a
+          test "$(git -C _audit/rpg rev-parse HEAD)" = "de80b186357cad20ba5b81892a8682777e96e35a"
+
+      - name: Audit bounded direct acquisition surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          import re
+          from pathlib import Path
+
+          roots = {
+              "black_arcana": Path("."),
+              "rpg_skill_tree": Path("_audit/rpg"),
+          }
+          refs = {
+              "black_arcana": "da8a5c1806c863e91b7ff5383c62761538236f52",
+              "rpg_skill_tree": "de80b186357cad20ba5b81892a8682777e96e35a",
+          }
+
+          # This is deliberately a bounded token audit, not a semantic proof that no conceivable
+          # Java/data acquisition route exists. Patterns are chosen from the pinned Iron's 3.16.3
+          # public construction APIs plus common direct item/command delivery primitives.
+          java_patterns = {
+              "irons_create_scroll_container": r"ISpellContainer\.createScrollContainer\s*\(",
+              "irons_create_imbued_container": r"ISpellContainer\.createImbuedContainer\s*\(",
+              "irons_container_set": r"ISpellContainer\.set\s*\(",
+              "irons_add_spell_at_index": r"\.addSpellAtIndex\s*\(",
+              "irons_add_spell": r"\.addSpell\s*\(",
+              "irons_spell_container_component": r"ComponentRegistry\.SPELL_CONTAINER",
+              "irons_scroll_item_registry": r"ItemRegistry\.SCROLL",
+              "irons_spell_data_holder": r"SpellDataRegistryHolder",
+              "irons_new_spell_data": r"new\s+SpellData\s*\(",
+              "irons_spell_registry_lookup": r"SpellRegistry\.getSpell\s*\(",
+              "generic_player_add_item": r"\.addItem\s*\(",
+              "generic_inventory_add": r"getInventory\s*\(\s*\)\.add\s*\(",
+              "generic_spawn_at_location": r"\.spawnAtLocation\s*\(",
+              "generic_entity_drop": r"\.drop\s*\(",
+              "generic_new_item_stack": r"new\s+ItemStack\s*\(",
+              "generic_builtin_item_registry": r"BuiltInRegistries\.ITEM",
+              "generic_item_registry_key": r"Registries\.ITEM",
+              "generic_command_source": r"CommandSourceStack",
+              "generic_command_dispatch": r"getCommands\s*\(\s*\)|performCommand|performPrefixedCommand",
+              "discovery_item_reward": r"DiscoveryRewardKind\.ITEM",
+              "discovery_command_reward": r"DiscoveryRewardKind\.COMMAND",
+          }
+          resource_patterns = {
+              "blackout_literal": r"traveloptics:blackout",
+              "traveloptics_literal": r"traveloptics",
+              "irons_scroll_id": r"irons_spellbooks:scroll",
+              "irons_spell_container_id": r"irons_spellbooks:spell_container",
+              "spell_container_key": r"spell_container",
+          }
+
+          compiled_java = {k: re.compile(v) for k, v in java_patterns.items()}
+          compiled_res = {k: re.compile(v, re.IGNORECASE) for k, v in resource_patterns.items()}
+
+          def files_under(root: Path, prefix: str, suffixes: set[str]):
+              base = root / prefix
+              if not base.exists():
+                  return []
+              return sorted(
+                  p for p in base.rglob("*")
+                  if p.is_file() and p.suffix.lower() in suffixes
+              )
+
+          report = {
+              "audit": "Traveloptics Blackout bounded versioned acquisition-surface audit",
+              "scope_note": (
+                  "Direct token/path audit across versioned src/main Java/resources only. "
+                  "Negative results do not exclude reflection, encoded/dynamic invocation, "
+                  "external assembled KubeJS/datapacks/mods, world data, or current physical Traveloptics bytes."
+              ),
+              "refs": refs,
+              "repos": {},
+          }
+
+          for name, root in roots.items():
+              java_files = files_under(root, "src/main/java", {".java"})
+              res_files = files_under(root, "src/main/resources", {".json", ".toml", ".mcmeta", ".txt"})
+              repo_result = {
+                  "java_file_count": len(java_files),
+                  "resource_file_count": len(res_files),
+                  "java_patterns": {},
+                  "resource_patterns": {},
+              }
+
+              for key, rx in compiled_java.items():
+                  paths = []
+                  occurrences = 0
+                  for p in java_files:
+                      text = p.read_text(encoding="utf-8", errors="replace")
+                      n = len(rx.findall(text))
+                      if n:
+                          paths.append(str(p.relative_to(root)).replace("\\", "/"))
+                          occurrences += n
+                  repo_result["java_patterns"][key] = {
+                      "occurrences": occurrences,
+                      "paths": sorted(set(paths)),
+                  }
+
+              for key, rx in compiled_res.items():
+                  paths = []
+                  occurrences = 0
+                  for p in res_files:
+                      text = p.read_text(encoding="utf-8", errors="replace")
+                      n = len(rx.findall(text))
+                      if n:
+                          paths.append(str(p.relative_to(root)).replace("\\", "/"))
+                          occurrences += n
+                  repo_result["resource_patterns"][key] = {
+                      "occurrences": occurrences,
+                      "paths": sorted(set(paths)),
+                  }
+
+              report["repos"][name] = repo_result
+
+          # Bounded semantic checks for the runtime candidates that can look like acquisition.
+          def read(repo_name: str, rel: str) -> str:
+              return (roots[repo_name] / rel).read_text(encoding="utf-8", errors="replace")
+
+          discovery_bridge = read(
+              "rpg_skill_tree",
+              "src/main/java/dev/gustavopere/rpgskilltree/runtime/compendium/CompendiumDiscoveryRewardBridge.java",
+          )
+          reward_loot = read(
+              "rpg_skill_tree",
+              "src/main/java/dev/gustavopere/rpgskilltree/runtime/loot/EntityRewardLootRuntime.java",
+          )
+          reward_modifier = read(
+              "rpg_skill_tree",
+              "src/main/java/dev/gustavopere/rpgskilltree/runtime/loot/RewardRiskLootModifier.java",
+          )
+          boss_def = read(
+              "rpg_skill_tree",
+              "src/main/java/dev/gustavopere/rpgskilltree/core/BossRewardDefinition.java",
+          )
+          battle_bridge = read(
+              "rpg_skill_tree",
+              "src/main/java/dev/gustavopere/rpgskilltree/runtime/compat/minecolonies/battlemage/IronsCitizenMagicBridge.java",
+          )
+          ba_synthetic = read(
+              "black_arcana",
+              "src/main/java/dev/gustavopere/blackarcana/integration/irons/IronsSyntheticContent.java",
+          )
+          ba_registry = read(
+              "black_arcana",
+              "src/main/java/dev/gustavopere/blackarcana/integration/irons/IronsSpellRegistryBridge.java",
+          )
+
+          semantic = {
+              "compendium_reward_bridge_character_xp_only": (
+                  "reward.kind() != DiscoveryRewardKind.CHARACTER_XP" in discovery_bridge
+                  and "UnsupportedOperationException" in discovery_bridge
+              ),
+              "reward_loot_transforms_existing_generated_loot": (
+                  "scaleGeneratedLoot" in reward_loot
+                  and "generatedLoot" in reward_loot
+                  and "original.copy()" in reward_loot
+              ),
+              "reward_modifier_delegates_to_existing_loot_scaler": (
+                  "EntityRewardLootRuntime.scaleGeneratedLoot" in reward_modifier
+              ),
+              "boss_reward_definition_points_only": (
+                  "record BossRewardDefinition(String id, int points)" in boss_def
+              ),
+              "battle_mage_bridge_casts_existing_spell_data": (
+                  "beginCast(LivingEntity caster, SpellData spellData)" in battle_bridge
+                  and "spellData.getSpell()" in battle_bridge
+              ),
+              "black_arcana_synthetic_content_owns_black_arcana_definition": (
+                  "ArcanaSpellDefinition" in ba_synthetic
+                  and "IronsIntegrationIds.PROBE_ARCANA_ID" in ba_synthetic
+              ),
+              "black_arcana_irons_registry_only_registers_own_probe": (
+                  'SPELLS.register("irons_integration_probe"' in ba_registry
+              ),
+          }
+          report["semantic_checks"] = semantic
+
+          # Emit a stable text report, not source snippets.
+          payload = json.dumps(report, indent=2, sort_keys=True)
+          digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()
+          out = Path("audit/report.txt")
+          out.write_text(
+              "sha256=" + digest + "\n" + payload + "\n",
+              encoding="utf-8",
+          )
+          print(out.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-blackout-versioned-acquisition-surfaces
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
