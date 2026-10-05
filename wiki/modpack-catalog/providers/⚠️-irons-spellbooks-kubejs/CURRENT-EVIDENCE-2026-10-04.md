@@ -81,12 +81,13 @@ These negative searches reduce duplicate work but are **not zero-content proof**
 
 ## Current collector physical fingerprints
 
-The canonical deployed-evidence collector now binds closure to both exact current binaries from the same assembled instance:
+The canonical deployed-evidence collector now binds closure to all three exact current binaries from the same assembled instance:
 
 - `irons_spells_js-4.0.3.jar` -> `mods.irons_spells_js[*].current_physical_4_0_3_equality` against SHA-1 `0481395c5847e2920d1425e77833bef87df63139`;
+- `irons_spellbooks-1.21.1-3.16.3.jar` -> `mods.irons_spellbooks[*].current_physical_3_16_3_equality` against SHA-1 `017fd8140c477f9ae602cf95594f1c23bef1d6e3`;
 - `kubejs-neoforge-2101.7.2-build.377.jar` -> `mods.kubejs[*].current_physical_build_377_equality` against SHA-1 `150c5d6efc09b969ac350ea205128dff832e0850`.
 
-This closes binary identity/freshness only when the collector is run on the authoritative assembled instance. It does not prove source-build byte equality and it does not close script-defined content. Historical build-374 evidence cannot satisfy the build-377 gate.
+This closes provider/host binary identity and freshness only when the collector is run on the authoritative assembled instance. It does not prove source-build byte equality and it does not close script-defined content. A different Iron's host or historical KubeJS build-374 evidence cannot satisfy the current-host gates.
 
 ## Exact provider-source closure
 
@@ -108,11 +109,13 @@ The collector now emits `irons_spellbooks_kubejs_closure.status` as the first ro
 
 1. `ARTIFACT_NOT_OBSERVED` -> certified 4.0.3 provider JAR not captured; stop;
 2. `ARTIFACT_HASH_MISMATCH` -> provider JAR differs from the certified current artifact; stop;
-3. `KUBEJS_HOST_NOT_OBSERVED` -> current KubeJS build 377 JAR not captured from the same instance; stop;
-4. `KUBEJS_HOST_HASH_MISMATCH` -> build-377 filename exists but does not match the current physical SHA-1; stop;
-5. `ZERO_CONTENT_REVIEW_CANDIDATE` -> both binaries certified + zero bounded KubeJS files; review authoritative-instance provenance before zero-content closure;
-6. `SCRIPT_REVIEW_REQUIRED` -> both binaries certified + one or more bounded KubeJS files; inspect the exact hashed files even if no marker fired;
-7. every surviving custom spell must then be traced through ID, source file/range, registration condition, school, effective Iron's config and survival reachability.
+3. `IRONS_HOST_NOT_OBSERVED` -> current Iron's 3.16.3 JAR not captured from the same instance; stop;
+4. `IRONS_HOST_HASH_MISMATCH` -> Iron's 3.16.3 filename exists but does not match the current physical SHA-1; stop;
+5. `KUBEJS_HOST_NOT_OBSERVED` -> current KubeJS build 377 JAR not captured from the same instance; stop;
+6. `KUBEJS_HOST_HASH_MISMATCH` -> build-377 filename exists but does not match the current physical SHA-1; stop;
+7. `ZERO_CONTENT_REVIEW_CANDIDATE` -> provider + both hosts certified + zero bounded KubeJS files; review authoritative-instance provenance before zero-content closure;
+8. `SCRIPT_REVIEW_REQUIRED` -> provider + both hosts certified + one or more bounded KubeJS files; inspect the exact hashed files even if no marker fired;
+9. every surviving custom spell must then be traced through ID, source file/range, registration condition, school, effective Iron's config and survival reachability.
 
 The machine-readable state never promotes row #98 automatically.
 
