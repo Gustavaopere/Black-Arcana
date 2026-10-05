@@ -206,6 +206,8 @@ This is an exact structural fact from the publisher JAR. Project Library crash r
 
 A later clean-room binary-diff checkpoint fingerprints exact patch File `1690333 / 8861368` at SHA-1 `680fa679d8ea2419a79571f455436367222f6f9d`. Original and patch both contain 1339 ZIP entries; the patch adds/removes none and changes exactly one entry, `com/gametechbc/traveloptics/loot/TOLootModifiers.class`, with zero non-class resource changes. This independently proves the patch's binary scope, while the specific codec semantic fix remains attributed to the patch publisher. Physical deployment and assembled-pack startup remain unverified. See [`PATCH-8861368-BINARY-DIFF.md`](PATCH-8861368-BINARY-DIFF.md).
 
+A bounded Project Library search on 2026-10-05 found no preserved post-repair direct observation of both `traveloptics:key_loot` and `traveloptics:universal_loot` serializer values, and no `distinct_codec_instances=true` probe row. Historical duplicate-`KeyLootModifier` failures remain positive evidence; search misses are not absence evidence. Gate 2 therefore still requires the canonical physical-pack registry probe rather than further generic log searching. See [`GATE2-PRESERVED-LOG-SEARCH-BOUNDARY-2026-10-05.md`](GATE2-PRESERVED-LOG-SEARCH-BOUNDARY-2026-10-05.md).
+
 The structural mismatch is nevertheless sufficient to keep current-pack runtime promotion fail-closed until one of these is proven:
 
 1. the physical pack actually carries a verified patch/replacement that changes this wiring; or
