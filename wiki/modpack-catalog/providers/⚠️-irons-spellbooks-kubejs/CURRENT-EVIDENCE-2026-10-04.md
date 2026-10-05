@@ -4,9 +4,10 @@ Status: `⚠️ PARTIAL / CURRENT PHYSICAL 4.0.3 / BASE FRAMEWORK +0 / CURRENT S
 
 ## Authority checkpoints
 
-- Black Arcana main considered at branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`.
-- latest Black Arcana main reconciled before final validation: `21ae73850eb75b35ff09b6f0eada640cc2a1bf23`.
-- Black Arcana main confirmed after exact source-coverage closure: `04633ea786869045f8959e942dd348aff6258033`.
+- Historical Black Arcana main at the original evidence-branch creation: `e614dea1be34936b095af2a3d7c8d65c69f7e34d`.
+- Historical Black Arcana main reconciled during the earlier evidence checkpoint: `21ae73850eb75b35ff09b6f0eada640cc2a1bf23`.
+- Black Arcana main confirmed after the exact source-coverage closure: `04633ea786869045f8959e942dd348aff6258033`.
+- Black Arcana main reconciled for the current host-377 closure hardening in PR #624: `3b386df50d3db3a8e5606529f97c7413dbf6ab32`.
 - Current sibling/modlist authority: `Gustavaopere/neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 - Current registry row: Black Arcana `wiki/modpack-catalog/PROVIDERS.md` row 98.
 - Certified sibling dossier:
