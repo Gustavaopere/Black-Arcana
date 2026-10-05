@@ -247,7 +247,7 @@ Config presence therefore does not condition whether the 33 `TOSpells` registrat
 
 The JAR contains one mixin configuration, `traveloptics.mixins.json`. Phase 2BS does not infer compatibility or safety from its presence.
 
-The publisher labels file `6342780` a deprecated alpha. Separately, a later third-party patch reports a registry initialization problem at `TOLootModifiers` and describes changing the universal loot codec reference. The clean-room audit independently confirms the exact original JAR's two-name/two-Key-codec/zero-Universal-codec structure, but no assembled-pack crash was reproduced in this checkpoint.
+The publisher labels file `6342780` a deprecated alpha. Separately, a later third-party patch reports a registry initialization problem at `TOLootModifiers` and describes changing the universal loot codec reference. The clean-room audit independently confirms the exact original JAR's two-name/two-Key-codec/zero-Universal-codec structure. Project Library crash reports from 2026-08-16 independently reproduce the corresponding assembled-pack failure signature under the canonical filename: Traveloptics aborts `RegisterEvent` with duplicate `KeyLootModifier` codec registration. Those crash processes do not embed a JAR hash, so this is historical runtime corroboration rather than exact-byte attestation for File `6342780` or current `7b74816e...`.
 
 Therefore runtime remains fail-closed.
 
