@@ -1,6 +1,6 @@
 # T.O Magic n' Extras 4.4.0.1 — exact publisher scalar-accessor checkpoint
 
-Status: `EXACT FILE 6342780 / 14 BOUNDED ACCESSORS / 14 OK / CURRENT PHYSICAL NOT PROJECTED`
+Status: `EXACT FILE 6342780 / 29 BOUNDED ACCESSORS / 29 OK / CURRENT PHYSICAL NOT PROJECTED`
 
 ## Authority
 
@@ -18,10 +18,16 @@ This checkpoint derives from two temporary NON-MERGE clean-room audits against t
   - workflow run: `37239919430` — **SUCCESS**;
   - artifact: `11317076423`;
   - digest: `sha256:c5936eae280589d07d2ba3c684422ec7bd92b088f9f193236242b71b33b46e56`.
+- remaining simple-accessor audit PR **#613**:
+  - authoritative HEAD: `f4f31b3a0e88a4c8a7c608db3dc42a0c79d09463`;
+  - workflow run: `37243561977` — **SUCCESS**;
+  - artifact: `11317109960`;
+  - digest: `sha256:ac3b0b8a7e6ac8137094defe89d21d73263e50cf5cd4a4c8d07a599eebb64726`;
+  - 15 targets / 15 OK / 0 UNKNOWN.
 
-The method-surface audit established the declared accessors. The scalar audit then evaluated only 14 preselected no-`LivingEntity` accessors through a strict straight-line JVM subset. Unsupported control flow, invocation, unresolved fields/locals or unsupported opcodes would have returned `UNKNOWN`.
+The method-surface audit established the declared accessors. Audits #609 and #613 then evaluated the full selected set of 29 numeric `()` / `(int)` no-`LivingEntity` accessors through the same strict straight-line JVM subset. Unsupported control flow, invocation, unresolved fields/locals or unsupported opcodes would have returned `UNKNOWN`.
 
-Result: **14 targets / 14 OK / 0 UNKNOWN**.
+Combined result: **29 targets / 29 OK / 0 UNKNOWN**.
 
 ## Retention boundary
 
@@ -70,10 +76,25 @@ Nothing here is projected to current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1
 | `traveloptics:cursed_blast` | `CursedBlastSpell.getDamage()` | 2.0 |
 | `traveloptics:mechanized_predator` | `MechanizedPredatorSpell.getWatcherCount(int)` | L1=1.0, L2=2.0, L3=3.0, L4=4.0, L5=5.0 |
 | `traveloptics:eternal_sentinel` | `EternalSentinelSpell.getGolemHealth(int)` | L1=90.0, L2=135.0, L3=180.0 |
+| `traveloptics:ignited_onslaught` | `IgnitedOnslaughtSpell.getBerserkerHealth(int)` | L1=33.0, L2=41.0, L3=49.0, L4=57.0, L5=65.0 |
+| `traveloptics:ignited_onslaught` | `IgnitedOnslaughtSpell.getRevenantHealth(int)` | L1=40.0, L2=50.0, L3=60.0, L4=70.0, L5=80.0 |
+| `traveloptics:burning_judgment` | `BurningJudgmentSpell.getFlameStrikeCount(int)` | L1=2.0, L2=3.0, L3=4.0, L4=5.0, L5=6.0, L6=7.0 |
+| `traveloptics:lava_bomb` | `LavaBombSpell.getMotionScale()` | 1.0 |
+| `traveloptics:summon_desert_dwellers` | `SummonDesertDwellers.getKoboletonCount(int)` | L1=1.0, L2=2.0, L3=3.0, L4=4.0, L5=5.0 |
+| `traveloptics:summon_desert_dwellers` | `SummonDesertDwellers.getKoboletonHealth(int)` | L1=5.0, L2=10.0, L3=15.0, L4=20.0, L5=25.0 |
+| `traveloptics:summon_desert_dwellers` | `SummonDesertDwellers.getWadjetHealth(int)` | L1=70.0, L2=90.0, L3=110.0, L4=130.0, L5=150.0 |
+| `traveloptics:sword_of_the_ancients` | `SwordOfTheAncientsSpell.getKobolediatorHealth(int)` | L1=90.0, L2=125.0, L3=160.0 |
+| `traveloptics:axe_of_the_doomed` | `AxeOfTheDoomedSpell.getAptrgangrHealth(int)` | L1=70.0, L2=115.0, L3=160.0 |
+| `traveloptics:cursed_revenants` | `CursedRevenantsSpell.getDraugrCount(int)` | L1=1.0, L2=2.0, L3=3.0, L4=4.0, L5=5.0 |
+| `traveloptics:cursed_revenants` | `CursedRevenantsSpell.getDraugrHealth(int)` | L1=8.0, L2=13.0, L3=18.0, L4=23.0, L5=28.0 |
+| `traveloptics:halberd_horizon` | `HalberdHorizonSpell.getRingCount(int)` | L1=2, L2=3, L3=4, L4=5, L5=6, L6=7 |
+| `traveloptics:mechanized_predator` | `MechanizedPredatorSpell.getWatcherHealth(int)` | L1=5.0, L2=10.0, L3=15.0, L4=20.0, L5=25.0 |
+| `traveloptics:mechanized_predator` | `MechanizedPredatorSpell.getProwlerHealth(int)` | L1=80.0, L2=100.0, L3=120.0, L4=140.0, L5=160.0 |
+| `traveloptics:stele_cascade` | `SteleCascadeSpell.getRingsAndRows(int)` | L1=1, L2=2, L3=3, L4=4, L5=5, L6=6 |
 
 ## Catalog consequence
 
-This checkpoint deepens **10/33** spell cards and closes exactly these 14 File-`6342780` scalar accessors.
+This checkpoint deepens **18/33** spell cards and closes all **29** selected numeric `()` / `(int)` no-`LivingEntity` accessors from the #608 method surface.
 
 It does not:
 
