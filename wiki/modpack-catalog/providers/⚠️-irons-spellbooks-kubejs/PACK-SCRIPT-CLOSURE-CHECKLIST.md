@@ -23,6 +23,7 @@ Close the only semantic question that the base-addon audit cannot answer: whethe
 - Black Arcana main reconciled for the current host-377 collector hardening in PR #624: `3b386df50d3db3a8e5606529f97c7413dbf6ab32`;
 - Black Arcana main reconciled for the Iron's-3.16.3 same-instance host hardening in PR #627: `969771099e8e04758f29b8aa09835b467967d3c7`;
 - Black Arcana main reconciled again before final PR #627 validation after concurrent Deeper audit #629: `3c8f5163ea7985bdf5ed667b804d0f663c676798`;
+- Black Arcana main reconciled again before final PR #627 validation after concurrent Traveloptics #628: `d1cffe8068d16fcf6c61876e14133bf966c8d387`;
 - sibling modlist authority: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`;
 - current physical row remains `irons_spells_js-4.0.3.jar` / mod id `irons_spells_js` / runtime `4.0.3`;
 - current host stack remains Iron's `1.21.1-3.16.3` + KubeJS `2101.7.2-build.377`;
