@@ -4,7 +4,7 @@ Status: `33 REGISTERED SPELL IDS + EXACT PUBLISHER MECHANICS CATALOGED / CURRENT
 
 ## Purpose
 
-The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown, and now additionally closes **37 File-only bounded scalar accessor results across 24 spells**: 29 no-`LivingEntity` accessors plus 8 LivingEntity-signature methods proven entity-unused before strict evaluation. A separate provider/current-host bridge closes seven effective-cast-time delegates and expands combined documented accessor/bridge coverage to **28/33** spell identities. The remaining work is not another spell/default-stat enumeration or another generic scalar sweep. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
+The current Traveloptics dossier already closes the exact publisher-release registry inventory at **33 registered spell identities**, excludes **32 residual localization-only spell IDs**, closes a 33/33 exact publisher mechanics baseline for base/per-level mana and spell-power inputs, cast type/time, max level, minimum rarity and default cooldown, and now additionally closes **37 File-only bounded scalar accessor results across 24 spells**: 29 no-`LivingEntity` accessors plus 8 LivingEntity-signature methods proven entity-unused before strict evaluation. A separate provider/current-host bridge closes seven effective-cast-time delegates and expands numeric accessor/bridge coverage to **28/33** spell identities. Audit #623 now dependency-classifies one entity-reading numeric accessor for each of the remaining five identities, so **33/33 exact spell identities have at least one bounded numeric accessor result, host bridge or entity-dependent accessor contract documented**. Numeric closure remains 28/33. The remaining work is not another spell/default-stat enumeration or another generic scalar sweep. It is a finite set of current-physical/runtime/acquisition evidence gates required before strict promotion can be considered.
 
 This checklist does not promote the provider, does not treat a third-party patch as upstream authority, and does not infer survival acquisition or assembled-pack runtime from publisher marketing language.
 
@@ -184,7 +184,9 @@ The following work is already canonical and should not be repeated:
 - 49 numeric LivingEntity-bearing methods classified: 15 ENTITY_UNUSED / 34 ENTITY_SLOT_READ;
 - of the 15 ENTITY_UNUSED methods, 8 resolve as File-only scalars and the remaining 7 are proven direct delegates to host `getCastTime(level)` by audit #619;
 - the seven direct delegates resolve under the current Iron's 3.16.3 host contract to 50/39/45/15/25/20/10 ticks, but remain separate from the File-only scalar denominator;
-- File-only exact resolved bounded accessor outputs remain 37 across 24/33 spell cards; combined accessor/host-bridge coverage touches 28/33; no value is assigned to the 34 entity-reading methods.
+- File-only exact resolved bounded accessor outputs remain 37 across 24/33 spell cards; numeric accessor/host-bridge coverage touches 28/33;
+- five selected identity-gap `ENTITY_SLOT_READ` methods are dependency-classified to host `getSpellPower(int, Entity)` with no reconstructed formula or numeric result;
+- identity-level accessor/bridge/dependency coverage therefore touches 33/33, while all 34 entity-reading methods remain numerically unresolved.
 
 ## Acceptance boundary
 
