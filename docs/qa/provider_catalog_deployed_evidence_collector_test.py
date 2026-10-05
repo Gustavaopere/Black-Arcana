@@ -493,6 +493,37 @@ enable_tunneling = false
             self.assertEqual([], report["kubejs_script_inventory"]["files"])
 
 
+    def test_main_report_keeps_irons_kubejs_closure_fail_closed_without_current_kubejs_host(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            (instance / "mods").mkdir(parents=True)
+            (instance / "config").mkdir(parents=True)
+            output = instance / "evidence.json"
+
+            with patch.object(
+                collector,
+                "collect_mod_hashes",
+                return_value={
+                    "irons_spells_js": [{"current_physical_4_0_3_equality": True}],
+                    "kubejs": [],
+                },
+            ), patch(
+                "sys.argv",
+                [
+                    "provider-catalog-deployed-evidence-collector.py",
+                    str(instance),
+                    "--output",
+                    str(output),
+                ],
+            ):
+                self.assertEqual(0, collector.main())
+
+            report = json.loads(output.read_text(encoding="utf-8"))
+            closure = report.get("irons_spellbooks_kubejs_closure", {})
+            self.assertEqual("KUBEJS_HOST_NOT_OBSERVED", closure.get("status"))
+            self.assertFalse(closure.get("kubejs_host_certified", False))
+
+
     def test_main_report_collects_exact_ice_and_fire_jupiter_gate(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
