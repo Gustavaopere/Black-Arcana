@@ -69,7 +69,7 @@ This checkpoint does not infer the exact repaired serializer wiring from the suc
 - a `fixed-keyloot` candidate existed before the following preserved assembled boot — **YES**;
 - the following boot discovered `traveloptics-4.4.0.1-1.21.1.jar` from the actual instance `mods` directory — **YES**;
 - that process progressed past the earlier fatal Traveloptics `RegisterEvent` failure into resource reload — **YES**;
-- a local canonical-slot repair/replacement transition occurred between the retained failing state and the following successful Traveloptics initialization — **STRONGLY SUPPORTED**.
+- the post-candidate canonical-slot process does not terminate at the formerly fatal Traveloptics registration point and reaches provider resource reload — **YES**.
 
 ## What this does not establish
 
