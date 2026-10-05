@@ -1,0 +1,149 @@
+name: Traveloptics Effective Cast Dependency Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Extract bounded member dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar="traveloptics.jar"
+          targets=[
+              ("AbyssalBlastSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("BlackoutSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("CursedMinefieldSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("VortexPunchSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("GyroSlashSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("DeathLaserSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+              ("AerialCollapseSpell","getEffectiveCastTime","(ILnet/minecraft/world/entity/LivingEntity;)I"),
+          ]
+
+          with zipfile.ZipFile(jar) as z:
+              entries=z.namelist()
+
+          def fqcn_for(simple):
+              suffix="/"+simple+".class"
+              matches=[e for e in entries if e.endswith(suffix)]
+              if len(matches)!=1:
+                  raise RuntimeError(f"{simple}: class matches={matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          insn_re=re.compile(r'^\s*(\d+):\s+(\S+)(?:\s+(.*))?$')
+
+          def method_instructions(fqcn,method_name,descriptor):
+              p=subprocess.run(["javap","-classpath",jar,"-c","-p","-s",fqcn],check=True,text=True,capture_output=True)
+              lines=p.stdout.splitlines()
+              for i,raw in enumerate(lines):
+                  sig=raw.strip()
+                  if not (sig.endswith(";") and re.search(r'\b'+re.escape(method_name)+r'\s*\(',sig)):
+                      continue
+                  desc=None
+                  code_idx=None
+                  for j in range(i+1,min(len(lines),i+10)):
+                      s=lines[j].strip()
+                      if s.startswith("descriptor:"):
+                          desc=s.split("descriptor:",1)[1].strip()
+                      if s=="Code:":
+                          code_idx=j
+                          break
+                  if desc != descriptor or code_idx is None:
+                      continue
+                  instr=[]
+                  for raw2 in lines[code_idx+1:]:
+                      m=insn_re.match(raw2)
+                      if m:
+                          instr.append((m.group(2),m.group(3) or ""))
+                          continue
+                      if instr:
+                          break
+                  return instr
+              raise RuntimeError(f"{fqcn}.{method_name}{descriptor}: method not found")
+
+          def comment(arg):
+              return arg.split("//",1)[1].strip() if "//" in arg else ""
+
+          rows=[]
+          for simple,method,desc in targets:
+              fqcn=fqcn_for(simple)
+              instr=method_instructions(fqcn,method,desc)
+              fields=set()
+              invokes=set()
+              branches=0
+              this_loads=0
+              for op,arg in instr:
+                  if op=="aload_0":
+                      this_loads+=1
+                  if op in ("getfield","putfield","getstatic","putstatic"):
+                      c=comment(arg)
+                      if c:
+                          fields.add(f"{op}:{c}")
+                  if op.startswith("invoke"):
+                      c=comment(arg)
+                      if c:
+                          invokes.add(f"{op}:{c}")
+                  if op.startswith(("if","goto","tableswitch","lookupswitch","jsr","ret")):
+                      branches+=1
+              rows.append((simple,method,desc,this_loads,branches,sorted(fields),sorted(invokes)))
+
+          report=Path("audit/report.txt")
+          with report.open("w",encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha effective-cast dependency audit\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("scope=7 ENTITY_UNUSED getEffectiveCastTime methods rejected by strict scalar evaluator at instance-object access\n")
+              f.write("retention=method identity + unordered referenced member identities + this-load count + branch count only; no bytecode/method bodies\n\n")
+              for simple,method,desc,this_loads,branches,fields,invokes in rows:
+                  fs=";".join(fields) if fields else "NONE"
+                  ins=";".join(invokes) if invokes else "NONE"
+                  f.write(f"{simple}|{method}|{desc}|this_loads={this_loads}|branches={branches}|fields={fs}|invokes={ins}\n")
+              f.write("\nsummary\n")
+              f.write(f"targets={len(rows)}\n")
+              f.write(f"with_field_refs={sum(1 for r in rows if r[5])}\n")
+              f.write(f"with_invokes={sum(1 for r in rows if r[6])}\n")
+              f.write(f"with_branches={sum(1 for r in rows if r[4])}\n")
+
+          if len(rows)!=7:
+              raise RuntimeError(f"expected 7 rows, got {len(rows)}")
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-effective-cast-dependencies
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
