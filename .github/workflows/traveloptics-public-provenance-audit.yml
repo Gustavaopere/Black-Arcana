@@ -1,0 +1,190 @@
+name: Traveloptics Public Provenance Clean-room Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout audit branch
+        uses: actions/checkout@v4
+
+      - name: Checkout Black Arcana evidence revision
+        uses: actions/checkout@v4
+        with:
+          repository: Gustavaopere/Black-Arcana
+          ref: 98f7669d519dc288142f63e03b40175e25cb638d
+          path: snapshots/black-arcana
+
+      - name: Checkout sibling evidence revision
+        uses: actions/checkout@v4
+        with:
+          repository: Gustavaopere/neoforge-rpg-skilltree
+          ref: de80b186357cad20ba5b81892a8682777e96e35a
+          path: snapshots/neoforge-rpg-skilltree
+
+      - name: Run bounded public provenance search
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          python3 - <<'PY'
+          import json
+          import os
+          import subprocess
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+
+          SHA1 = "7b74816e89cc15dd0b5a31d9ea1e456024e8fae4"
+          FINGERPRINT = "4254006126"
+          FIXED_NAME = "traveloptics-4.4.0.1-1.21.1-fixed-keyloot.jar"
+          TERMS = [SHA1, FINGERPRINT, FIXED_NAME, "fixed-keyloot"]
+          SNAPSHOTS = [
+              ("Gustavaopere/Black-Arcana", "98f7669d519dc288142f63e03b40175e25cb638d", Path("snapshots/black-arcana")),
+              ("Gustavaopere/neoforge-rpg-skilltree", "de80b186357cad20ba5b81892a8682777e96e35a", Path("snapshots/neoforge-rpg-skilltree")),
+          ]
+          EXCLUDED_REPOS = {"Gustavaopere/Black-Arcana", "Gustavaopere/neoforge-rpg-skilltree"}
+
+          report = []
+          report.append("Traveloptics bounded public provenance audit")
+          report.append("date=2026-10-05")
+          report.append(f"target_sha1={SHA1}")
+          report.append(f"target_fingerprint={FINGERPRINT}")
+          report.append(f"retained_fixed_filename={FIXED_NAME}")
+          report.append("scope=exact Git snapshots + GitHub public code-search API + Modrinth SHA-1 lookup")
+          report.append("claim_boundary=negative results apply only to the named surfaces; they do not prove absence from the public internet or private/local history")
+          report.append("")
+
+          report.append("[exact_git_snapshot_scans]")
+          for repo_name, revision, root in SNAPSHOTS:
+              report.append(f"repository={repo_name} revision={revision}")
+              for term in TERMS:
+                  proc = subprocess.run(
+                      ["git", "-C", str(root), "grep", "-n", "-I", "-F", "--", term, revision],
+                      text=True,
+                      capture_output=True,
+                  )
+                  if proc.returncode not in (0, 1):
+                      raise SystemExit(f"git grep failed for {repo_name} term={term}: {proc.stderr}")
+                  paths = []
+                  for line in proc.stdout.splitlines():
+                      # revision:path:line:text -> retain only path, never matched body.
+                      rest = line.split(":", 1)[1] if ":" in line else line
+                      path = rest.split(":", 1)[0]
+                      if path not in paths:
+                          paths.append(path)
+                  report.append(f"term={json.dumps(term)} hit_path_count={len(paths)}")
+                  for p in paths[:100]:
+                      report.append(f"  path={p}")
+                  if len(paths) > 100:
+                      report.append(f"  paths_truncated={len(paths)-100}")
+              report.append("")
+
+          token = os.environ.get("GH_TOKEN", "")
+          headers = {
+              "Accept": "application/vnd.github+json",
+              "User-Agent": "black-arcana-clean-room-audit",
+          }
+          if token:
+              headers["Authorization"] = f"Bearer {token}"
+
+          report.append("[github_public_code_search]")
+          report.append("endpoint=https://api.github.com/search/code")
+          report.append("semantics=current GitHub indexed public/default-branch code search; not a full release/binary/web index")
+          for term in TERMS:
+              query = f'"{term}"'
+              url = "https://api.github.com/search/code?" + urllib.parse.urlencode({"q": query, "per_page": "100"})
+              req = urllib.request.Request(url, headers=headers)
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as resp:
+                      data = json.load(resp)
+                      items = data.get("items", [])
+                      external = [
+                          item for item in items
+                          if item.get("repository", {}).get("full_name") not in EXCLUDED_REPOS
+                      ]
+                      report.append(
+                          f"term={json.dumps(term)} http_status={resp.status} "
+                          f"total_count={data.get('total_count', 0)} "
+                          f"returned_items={len(items)} external_returned_items={len(external)}"
+                      )
+                      for item in external[:100]:
+                          report.append(
+                              "  external="
+                              + item.get("repository", {}).get("full_name", "?")
+                              + "|"
+                              + item.get("path", "?")
+                              + "|"
+                              + item.get("html_url", "?")
+                          )
+              except urllib.error.HTTPError as exc:
+                  body = exc.read().decode("utf-8", "replace")[:300].replace("\n", " ")
+                  report.append(
+                      f"term={json.dumps(term)} http_status={exc.code} status=SEARCH_UNAVAILABLE detail={json.dumps(body)}"
+                  )
+              except Exception as exc:
+                  report.append(
+                      f"term={json.dumps(term)} status=SEARCH_UNAVAILABLE error={type(exc).__name__}"
+                  )
+          report.append("")
+
+          report.append("[modrinth_sha1_lookup]")
+          report.append("endpoint=https://api.modrinth.com/v2/version_file/<sha1>?algorithm=sha1")
+          modrinth_url = f"https://api.modrinth.com/v2/version_file/{SHA1}?algorithm=sha1"
+          req = urllib.request.Request(
+              modrinth_url,
+              headers={"User-Agent": "black-arcana-clean-room-audit"},
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=30) as resp:
+                  data = json.load(resp)
+                  report.append(
+                      "http_status="
+                      + str(resp.status)
+                      + " status=MATCH"
+                      + " project_id="
+                      + str(data.get("project_id"))
+                      + " version_id="
+                      + str(data.get("id"))
+                  )
+          except urllib.error.HTTPError as exc:
+              if exc.code == 404:
+                  report.append("http_status=404 status=NO_MATCH")
+              else:
+                  body = exc.read().decode("utf-8", "replace")[:300].replace("\n", " ")
+                  report.append(f"http_status={exc.code} status=LOOKUP_UNAVAILABLE detail={json.dumps(body)}")
+          except Exception as exc:
+              report.append(f"status=LOOKUP_UNAVAILABLE error={type(exc).__name__}")
+          report.append("")
+
+          report.append("[interpretation]")
+          report.append("No-match/zero-external-hit results are evidence only for the named query surface and time.")
+          report.append("Exact Git snapshot hits are retained as paths so known catalog references cannot be mistaken for provenance sources.")
+          report.append("A GitHub or Modrinth negative result does not prove that no public artifact/provenance exists elsewhere.")
+          report.append("The known CurseForge patch File 8861368 remains a separately fingerprinted positive comparison artifact in the canonical Black Arcana patch audit.")
+
+          Path("audit/traveloptics-public-provenance-report.txt").write_text(
+              "\n".join(report) + "\n",
+              encoding="utf-8",
+          )
+          print("\n".join(report))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-public-provenance-report
+          path: audit/traveloptics-public-provenance-report.txt
+          if-no-files-found: error
+          retention-days: 30
