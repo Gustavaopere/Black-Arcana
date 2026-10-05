@@ -97,7 +97,7 @@ The spell/school literals are grounded in Iron's Spells 3.11.0 source (`216d6756
 These markers are **triage only**. Comments, dead branches and lookup-only references may produce markers; aliases/dynamic construction may evade them. Presence is not proof of a live registration, and absence is not zero-content proof. The hashed source file or assembled-registry provenance still requires review under the provider checklist.
 
 
-This inventory is evidence input for the Iron's Spellbooks KubeJS and KubeJS Ars Nouveau closure checklists. An explicitly absent/empty authoritative current `kubejs/` tree can support zero-content closure where the provider checklist allows it. A non-empty inventory still requires targeted script/provenance review; hashes and paths alone do not prove semantic registrations or recipe mutations.
+This inventory is evidence input for Iron's Spellbooks KubeJS deployed-instance parity review and the KubeJS Ars Nouveau closure/reachability checklist. For Iron's Spellbooks KubeJS, catalog status is already `✅ / +0` from exact provider-source closure plus the 2026-10-05 project-owner authored-content attestation; the inventory now corroborates deployment parity or triggers a catalog reopen. A non-empty inventory still requires targeted script/provenance review; hashes and paths alone do not prove semantic registrations or recipe mutations.
 
 ### Iron's Spellbooks KubeJS 4.0.3 physical fingerprint
 
@@ -111,7 +111,7 @@ and emits `current_physical_4_0_3_equality` against canonical current-pack SHA-1
 
 This proves only that the assembled instance contains the certified current physical bridge artifact. It does not prove source-build byte equivalence and it does not establish whether pack scripts register custom Iron's spells, schools or items.
 
-Pair this fingerprint with both exact current host fingerprints — Iron's Spellbooks 3.16.3 and KubeJS build 377 — plus `kubejs_script_inventory` from the same assembled instance. Provider-binary equality alone is not sufficient for current-pack closure.
+Pair this fingerprint with both exact current host fingerprints — Iron's Spellbooks 3.16.3 and KubeJS build 377 — plus `kubejs_script_inventory` from the same assembled instance. Provider-binary equality alone is not sufficient for deployed-instance parity review.
 
 ### Current Iron's Spellbooks host 1.21.1-3.16.3 physical fingerprint
 
@@ -123,7 +123,7 @@ and emits `current_physical_3_16_3_equality` against canonical current-pack SHA-
 
 `017fd8140c477f9ae602cf95594f1c23bef1d6e3`.
 
-This is a same-instance host-identity gate for Iron's Spellbooks KubeJS closure. The addon executes against Iron's registries, config and casting semantics, so current-pack zero-content/script-review routing is not valid when the assembled instance carries a different or unverified Iron's host.
+This is a same-instance host-identity gate for Iron's Spellbooks KubeJS deployed-instance parity review. The addon executes against Iron's registries, config and casting semantics, so zero-content/script-review routing is not valid when the assembled instance carries a different or unverified Iron's host.
 
 ### Current KubeJS host 2101.7.2-build.377 physical fingerprint
 
@@ -135,7 +135,7 @@ and emits `current_physical_build_377_equality` against canonical current-pack S
 
 `150c5d6efc09b969ac350ea205128dff832e0850`.
 
-This is a same-instance freshness gate for Iron's Spellbooks KubeJS closure. It prevents a historical or otherwise different KubeJS host — including the previously observed build 374 instance — from being routed as a current zero-content review candidate merely because `irons_spells_js-4.0.3.jar` also exists there.
+This is a same-instance freshness gate for Iron's Spellbooks KubeJS deployed-instance parity review. It prevents a historical or otherwise different KubeJS host — including the previously observed build 374 instance — from being routed as a current zero-content review candidate merely because `irons_spells_js-4.0.3.jar` also exists there.
 
 The report also emits `irons_spellbooks_kubejs_closure`, a fail-closed evidence-routing state:
 
@@ -148,7 +148,7 @@ The report also emits `irons_spellbooks_kubejs_closure`, a fail-closed evidence-
 - `ZERO_CONTENT_REVIEW_CANDIDATE` — provider + both hosts are certified and the bounded KubeJS inventory contains zero files;
 - `SCRIPT_REVIEW_REQUIRED` — provider + both hosts are certified and the bounded KubeJS inventory contains one or more files.
 
-The closure object also records `artifact_certified`, `irons_host_certified`, `kubejs_host_certified`, KubeJS-root presence, bounded file count, marker-file count and sorted marker types. These are evidence workflow states, not catalog statuses. `ZERO_CONTENT_REVIEW_CANDIDATE` never means automatic ✅; authoritative-instance provenance and the provider checklist still control promotion.
+The closure object also records `artifact_certified`, `irons_host_certified`, `kubejs_host_certified`, KubeJS-root presence, bounded file count, marker-file count and sorted marker types. These are evidence workflow states, not catalog statuses. For Iron's Spellbooks KubeJS, `ZERO_CONTENT_REVIEW_CANDIDATE` corroborates the already-closed `✅ / +0` catalog state when provenance is valid; `SCRIPT_REVIEW_REQUIRED` requires exact review and any discovered Iron's spell/school registration reopens the catalog.
 
 ### KubeJS Ars Nouveau 1.3.2 physical fingerprint
 
