@@ -175,6 +175,13 @@ jobs:
                 (cd "$OUT/payload-${stage}" && zip -q "$candidate" deeperdarker.mixins.json)
               fi
             done
+
+            # Compression-level matrix while preserving all untouched publisher bytes.
+            for level in 1 2 3 4 5 6 7 8 9; do
+              candidate="$(realpath -m "$OUT/zip-X-l${level}-${stage}.jar")"
+              cp "$OUT/publisher.jar" "$candidate"
+              (cd "$OUT/payload-${stage}" && zip -q -X "-${level}" "$candidate" deeperdarker.mixins.json)
+            done
           done
 
       - name: Measure candidates and compare retained/physical fingerprints
