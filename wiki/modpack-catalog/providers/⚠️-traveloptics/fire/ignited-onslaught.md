@@ -29,6 +29,13 @@ This is **publisher context only** from the living project page; it does not pro
 
 These are direct constants from exact publisher File `6342780`; they are **not** projected to current physical SHA-1 `7b74816e...`. Spell-power inputs are not final damage formulas, and effective host config/multipliers remain separate. See `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`.
 
+## Exact alpha scalar accessors — File `6342780` only
+
+- `getBerserkerHealth(int)`: **L1 33.0 / L2 41.0 / L3 49.0 / L4 57.0 / L5 65.0**
+- `getRevenantHealth(int)`: **L1 40.0 / L2 50.0 / L3 60.0 / L4 70.0 / L5 80.0**
+
+These are exact **raw accessor outputs** from File `6342780`. Count-named values are retained as counts. Health/motion-scale outputs are not converted into final entity health, physical units or final formulas. They are not projected to current physical SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-SCALAR-ACCESSORS.md`.
+
 ## Reachability
 
 `UNIQUE / allowCrafting=false`; exact loot anchor: Ignited Berserker / Ignited Revenant loot.
