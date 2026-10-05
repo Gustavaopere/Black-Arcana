@@ -131,15 +131,27 @@ Exact File `6342780` evidence instead shows:
 - the exact artifact's 41 loot/loot-modifier JSON resources expose no Enraged Dead King loot route;
 - `blackout` remains registered, but no object-level structured acquisition route is present in the audited artifact.
 
+A focused generic-loot audit now further proves for File `6342780`:
+
+- Blackout ancestry has `allowLooting() = false` through `AbstractUniqueSpell`;
+- 23 exact `spell_filter` / `randomize_spell` nodes were inspected;
+- no forced Eldritch filter exists;
+- no explicit spell list contains Blackout;
+- no provider class references host `SpellFilter` or `RandomizeSpellFunction`;
+- `BLACKOUT_SPELL` remains registry-only in provider code.
+
+Under the pinned Iron's 3.16.3 host contract, this excludes the exact alpha's provider-owned built-in generic random-spell loot route as well as the already-absent direct structured route. See [`BLACKOUT-GENERIC-LOOT-EXCLUSION.md`](BLACKOUT-GENERIC-LOOT-EXCLUSION.md).
+
 See [`BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md`](BLACKOUT-VERSIONED-ACQUISITION-BOUNDARY.md).
 
-Therefore the broader Dead King route must not be projected into the installed alpha. This does not prove impossibility; it preserves the requirement for File-6342780-specific or actual-pack evidence.
+Therefore the broader Dead King route must not be projected into the installed alpha. The exact alpha's provider-owned direct and generic loot surfaces are now excluded, but this does not prove impossibility in the assembled pack; external/current-physical routes remain open.
 
 Required closure evidence must establish an actual current-pack player path, such as an authoritative 1.21.1 provider/host route, progression grant, item/scroll source, scripted acquisition or runtime-observed survival mechanism that resolves specifically to `traveloptics:blackout`.
 
 | Required field | Current state |
 |---|---|
-| exact acquisition mechanism | `NÃO VERIFICADO` |
+| exact File-6342780 provider loot mechanism | `EXCLUDED — direct + built-in generic` |
+| actual current-pack acquisition mechanism | `NÃO VERIFICADO` |
 | authoritative source/runtime evidence | `NÃO VERIFICADO` |
 | prerequisite entity/structure/item/config | `NÃO VERIFICADO` |
 | actual pack/world checkpoint | `NÃO VERIFICADO` |

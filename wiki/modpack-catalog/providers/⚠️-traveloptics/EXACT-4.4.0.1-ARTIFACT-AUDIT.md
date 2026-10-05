@@ -211,9 +211,31 @@ Exact resource scanning finds 41 loot/loot-modifier JSON resources and zero reci
 | `summon_desert_dwellers` | Koboleton / Wadjet loot |
 | `sword_of_the_ancients` | Kobolediator loot |
 
-`blackout` has no structured-data reference in the exact JAR and no provider-owned field reference outside the registry itself. That does not prove impossibility, but it leaves exact object-level survival reachability unresolved.
+`blackout` has no structured-data reference in the exact JAR and no provider-owned field reference outside the registry itself. A later focused generic-loot audit further proves `AbstractUniqueSpell.allowLooting() = false`, 23 exact explicit random-spell filters with no Blackout entry, no forced Eldritch filter, no provider code reference to host `SpellFilter` / `RandomizeSpellFunction`, and no `BLACKOUT_SPELL` reference outside `TOSpells`. Under the pinned Iron's 3.16.3 host contract, File `6342780` therefore exposes neither a direct structured route nor a provider-owned built-in generic random-spell loot route for Blackout. External/current-physical acquisition remains unresolved. See `BLACKOUT-GENERIC-LOOT-EXCLUSION.md`.
 
 The single `data/traveloptics/tags/item/aqua_focus.json` resource is not evidence of active Aqua spell registrations: no Aqua spell appears among the exact 33 registrations in this alpha.
+
+## Blackout generic-loot exclusion checkpoint
+
+Temporary NON-MERGE PR **#626** closes only the exact-alpha provider-owned generic-loot exception:
+
+- audit HEAD: `5670beca2b61ee5e302bd95db3c6bb595ddeb152`;
+- workflow run: `37251558059` — **SUCCESS**;
+- artifact: `11321475072`;
+- digest: `sha256:1b3bb4e570afa9dd0a0333dc00b4e36eb7a16baf7b31d690dc41293ff8550b9d`;
+- provider JSON files: 151;
+- `spell_filter` nodes: 23;
+- `randomize_spell` nodes: 23;
+- forced Eldritch filters: 0;
+- explicit Blackout filters: 0;
+- provider classes referencing host `SpellFilter`: 0;
+- provider classes referencing host `RandomizeSpellFunction`: 0;
+- provider classes referencing `BLACKOUT_SPELL`: registry class only;
+- Blackout provider ancestry: `allowLooting() = false`.
+
+Pinned Iron's 3.16.3 source confirms non-forced school/global spell filtering requires `allowLooting()`. Thus the File-6342780 provider-owned direct + built-in generic loot surfaces exclude Blackout.
+
+This does not exclude external datapack/KubeJS/progression routes or a route present only in current physical SHA-1 `7b74816e...`.
 
 ## Config evidence
 
