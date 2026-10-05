@@ -39,6 +39,7 @@ jobs:
           python3 - "$OUT" <<'PY'
           import datetime
           import hashlib
+          import json
           import os
           import pathlib
           import sys
@@ -133,9 +134,30 @@ jobs:
               for info in zin.infolist():
                   zout.writestr(info, zin.read(info.filename))
 
+          def parsed_variant(remove_server: bool):
+              obj = json.loads(original_json)
+              mixins = obj["mixins"]
+              mixins.remove("PlayerMixin")
+              if remove_server:
+                  mixins.remove("ServerPlayerMixin")
+              return obj
+
+          parsed = {
+              "stage1-remove-player": parsed_variant(False),
+              "stage2-remove-player-server": parsed_variant(True),
+          }
+
           dt = datetime.datetime(*target_info.date_time)
+          payload_variants = {}
           for name, patched_text in variants.items():
-              d = out / f"payload-{name}"
+              json_dump = json.dumps(parsed[name], indent=2)
+              payload_variants[(name, "raw")] = patched_text
+              payload_variants[(name, "lf")] = patched_text.replace("\r\n", "\n")
+              payload_variants[(name, "json")] = json_dump
+              payload_variants[(name, "jsonnl")] = json_dump + "\n"
+
+          for (name, serialization), patched_text in payload_variants.items():
+              d = out / f"payload-{serialization}-{name}"
               d.mkdir(parents=True, exist_ok=True)
               p = d / target
               p.write_text(patched_text, encoding="utf-8", newline="")
@@ -170,9 +192,9 @@ jobs:
               candidate="$(realpath -m "$OUT/${flavor}-${stage}.jar")"
               cp "$OUT/publisher.jar" "$candidate"
               if [ "$flavor" = "zip-update-X" ]; then
-                (cd "$OUT/payload-${stage}" && zip -q -X "$candidate" deeperdarker.mixins.json)
+                (cd "$OUT/payload-raw-${stage}" && zip -q -X "$candidate" deeperdarker.mixins.json)
               else
-                (cd "$OUT/payload-${stage}" && zip -q "$candidate" deeperdarker.mixins.json)
+                (cd "$OUT/payload-raw-${stage}" && zip -q "$candidate" deeperdarker.mixins.json)
               fi
             done
 
@@ -180,7 +202,17 @@ jobs:
             for level in 1 2 3 4 5 6 7 8 9; do
               candidate="$(realpath -m "$OUT/zip-X-l${level}-${stage}.jar")"
               cp "$OUT/publisher.jar" "$candidate"
-              (cd "$OUT/payload-${stage}" && zip -q -X "-${level}" "$candidate" deeperdarker.mixins.json)
+              (cd "$OUT/payload-raw-${stage}" && zip -q -X "-${level}" "$candidate" deeperdarker.mixins.json)
+            done
+
+            # Serialization matrix: raw CRLF, LF-normalized, json.dumps(indent=2),
+            # and json.dumps(indent=2) with a final newline.
+            for serialization in lf json jsonnl; do
+              for level in 1 2 3 4 5 6 7 8 9; do
+                candidate="$(realpath -m "$OUT/zip-X-${serialization}-l${level}-${stage}.jar")"
+                cp "$OUT/publisher.jar" "$candidate"
+                (cd "$OUT/payload-${serialization}-${stage}" && zip -q -X "-${level}" "$candidate" deeperdarker.mixins.json)
+              done
             done
           done
 
@@ -317,7 +349,6 @@ jobs:
                   )
 
           print((out / "candidate-summary.txt").read_text())
-          print((out / "candidate-results.tsv").read_text())
           PY
 
       - name: Record hypothesis and evidence boundary
