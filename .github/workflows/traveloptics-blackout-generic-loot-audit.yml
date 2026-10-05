@@ -146,6 +146,40 @@ jobs:
                   superclass = m.group(1)
               return superclass, declared_allow_looting
 
+          def classify_allow_looting(fqcn):
+              p = subprocess.run(
+                  ["javap", "-classpath", jar, "-c", "-p", fqcn],
+                  check=True, text=True, capture_output=True
+              )
+              lines = p.stdout.splitlines()
+              start = None
+              for i, line in enumerate(lines):
+                  if re.search(r"\bboolean\s+allowLooting\s*\(\s*\)", line):
+                      start = i
+                      break
+              if start is None:
+                  return "NOT_DECLARED"
+              body = []
+              for line in lines[start + 1:]:
+                  if re.match(r"^\s{2}(public|protected|private)\s", line):
+                      break
+                  if line.strip().startswith("Code:"):
+                      continue
+                  if re.match(r"^\s*\d+:", line):
+                      body.append(line.strip())
+              opcodes = []
+              for line in body:
+                  m = re.match(r"^\d+:\s+(\S+)", line)
+                  if m:
+                      opcodes.append(m.group(1))
+              if opcodes == ["iconst_0", "ireturn"]:
+                  return "CONST_FALSE"
+              if opcodes == ["iconst_1", "ireturn"]:
+                  return "CONST_TRUE"
+              if any(op.startswith("invoke") for op in opcodes):
+                  return "DELEGATE_OR_COMPUTED"
+              return "OTHER"
+
           blackout_fqcn = fqcn_for_suffix("BlackoutSpell")
           chain = []
           current = blackout_fqcn
@@ -156,6 +190,7 @@ jobs:
               chain.append({
                   "class": current,
                   "declares_allowLooting": declares,
+                  "allowLooting_outcome": classify_allow_looting(current) if declares else "INHERITED",
                   "superclass": superclass,
               })
               if not superclass or not superclass.startswith(provider_pkg):
@@ -183,7 +218,7 @@ jobs:
               for row in chain:
                   f.write(
                       f"{row['class']}|declares_allowLooting={str(row['declares_allowLooting']).upper()}|"
-                      f"superclass={row['superclass']}\n"
+                      f"allowLooting_outcome={row['allowLooting_outcome']}|superclass={row['superclass']}\n"
                   )
 
               f.write("\nstructured_summary\n")
