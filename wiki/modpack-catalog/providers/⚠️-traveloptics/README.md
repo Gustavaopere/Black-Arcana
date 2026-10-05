@@ -54,7 +54,7 @@ This is an editorial/catalog layer, not exact-version runtime evidence: the proj
 
 The semantic/mechanics layers do **not** change the provider disposition: current physical bytes remain `OTHER_VERIFIED`, exact-current registry/stat equality is unverified, `blackout` reachability remains unresolved, runtime closure remains fail-closed and strict contribution remains **+0**.
 
-A further bounded clean-room accessor audit now closes **14 exact raw scalar accessor outputs across 10/33 spells** for publisher File `6342780` with **14 OK / 0 UNKNOWN**. Those values are cataloged in [`EXACT-4.4.0.1-SCALAR-ACCESSORS.md`](EXACT-4.4.0.1-SCALAR-ACCESSORS.md). They are raw method outputs: counts are counts, while non-count units and final formulas are not inferred, and nothing is projected to current physical SHA-1 `7b74816e...`.
+A further bounded clean-room accessor audit now closes **29 exact raw scalar accessor outputs across 18/33 spells** for publisher File `6342780` with **29 OK / 0 UNKNOWN**. Those values are cataloged in [`EXACT-4.4.0.1-SCALAR-ACCESSORS.md`](EXACT-4.4.0.1-SCALAR-ACCESSORS.md). They are raw method outputs: counts are counts, while non-count units and final formulas are not inferred, and nothing is projected to current physical SHA-1 `7b74816e...`.
 
 ## Exact registry closure
 
@@ -217,7 +217,7 @@ Phase 2BS disposition:
 - 32 residual localization-only IDs: **excluded +0**;
 - `traveloptics:blackout`: survival reachability unresolved under its non-craftable Unique gate;
 - exact publisher mechanics baseline: 33/33 registered spells closed for raw/default host inputs; current-physical stat equality unverified;
-- exact publisher bounded scalar accessors: 14/14 selected accessors closed across 10 spells; non-count units/final formulas and current-physical equality remain unverified;
+- exact publisher bounded scalar accessors: 29/29 selected numeric no-`LivingEntity` accessors closed across 18 spells; non-count units/final formulas and current-physical equality remain unverified;
 - exact publisher artifact: structural `TOLootModifiers` codec-wiring risk unresolved at runtime;
 - semantic contribution to strict global minimum: **+0**;
 - provider component closure: **no new component**;
@@ -241,7 +241,7 @@ Somake 1.0.9 and Traveloptics 4.4.0.1 are both physically present in the current
 - sibling status-prefix/categorization absence: `NON-AUTHORITATIVE FOR PHYSICAL PRESENCE`;
 - exact publisher file identity/hashes: `HIGH`;
 - exact 33 registration identities: `HIGH`;
-- exact File-6342780 bounded scalar accessors (14 selected targets / 14 OK): `HIGH FOR RAW RETURN VALUES / UNITS+FINAL FORMULAS SEPARATE`;
+- exact File-6342780 bounded scalar accessors (29 selected targets / 29 OK): `HIGH FOR RAW RETURN VALUES / UNITS+FINAL FORMULAS SEPARATE`;
 - exclusion of 32 residual localization roots: `HIGH`;
 - provider Unique/Weapon `allowCrafting` constants: `HIGH`;
 - 21 remaining exact-alpha concrete classes with no direct `DefaultConfig.setAllowCrafting(...)`: `HIGH`;
