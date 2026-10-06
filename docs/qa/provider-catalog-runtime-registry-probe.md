@@ -14,7 +14,7 @@ It is intended to reduce current conditional-provider blockers for:
 - Asterism Arcanum 0.1.0;
 - Gaze 1.1.7.1 Iron's-hosted spell surfaces;
 - Not Enough Glyphs 4.6.2 effective glyph enablement;
-- T.O Magic n' Extras / Traveloptics 4.4.0.1 — historical-instance support only.
+- T.O Magic n' Extras / Traveloptics 4.4.0.1 — current physical closure support plus historical-log compatibility.
 
 For Traveloptics exact-pack runs, schema 4 additionally fingerprints the **loaded Traveloptics mod file in the same server process** and observes the two exact NeoForge global-loot-modifier serializer IDs already named by the canonical closure checklist: `traveloptics:key_loot` and `traveloptics:universal_loot`.
 
