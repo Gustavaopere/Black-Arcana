@@ -4,7 +4,7 @@ Status: `5/5 ROOTS INDIVIDUALLY MATERIALIZED / 3 COUNTED_EXACT + 2 CONDITIONAL /
 
 ## Authority
 
-- Black Arcana base before this tranche: `4d6ff1f63bda925836af0b1b1c0a2702c7cbdf3a`;
+- Black Arcana base before this tranche: `c5d978d896ab5ccf4c92880f43bad0d9fd1526cc`;
 - physical JAR: `BOMD-NeoForge-1.21-1.3.3.jar`;
 - mod id: `bosses_of_mass_destruction`;
 - exact physical/publisher SHA-1: `446ff63afb858ad49149d24b72541739de83d38d`;
