@@ -211,7 +211,9 @@ TARGET_PROBE_LOOT_IDS = {
 }
 TARGET_PROBE_GLYPH_IDS = {registry_id for registry_id, _ in NEG_CONFIGS}
 RESOURCE_LOCATION_RE = re.compile(r"^[a-z0-9_.-]+:[a-z0-9_./-]+$")
-SIMPLE_ERROR_RE = re.compile(r"^[A-Za-z0-9_$]+$")\nSHA1_RE = re.compile(r"^[0-9a-f]{40}$")\nSAFE_JAR_FILENAME_RE = re.compile(r"^[A-Za-z0-9_.+\\-]+\\.jar$")
+SIMPLE_ERROR_RE = re.compile(r"^[A-Za-z0-9_$]+$")
+SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
+SAFE_JAR_FILENAME_RE = re.compile(r"^[A-Za-z0-9_.+\-]+\.jar$")
 
 
 def _probe_bool(value: str | None) -> bool | None:
