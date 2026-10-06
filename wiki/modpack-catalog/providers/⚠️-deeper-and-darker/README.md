@@ -107,7 +107,14 @@ The official public artifact and exact upstream source pin corroborate three dis
 2. **Sonorous Staff Sonic Boom** — deliberate charged staff release emits the provider sonic-boom damage/knockback action;
 3. **Soul Elytra Boost** — dedicated client BOOST keybind sends `soul_elytra_boost` to the server; when eligible, the provider supplies a firework-style flight boost and applies its cooldown.
 
-Detailed cards: [`actions/PUBLIC-BASELINE-ACTIONS.md`](actions/PUBLIC-BASELINE-ACTIONS.md).
+Detailed cards:
+
+- aggregate baseline: [`actions/PUBLIC-BASELINE-ACTIONS.md`](actions/PUBLIC-BASELINE-ACTIONS.md);
+- [Otherside Portal Activation](actions/otherside-portal-activation.md);
+- [Sonorous Staff Sonic Boom](actions/sonorous-staff-sonic-boom.md);
+- [Soul Elytra Boost](actions/soul-elytra-boost.md).
+
+Individual-card materialization checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ## Exclusions from the semantic baseline
 
