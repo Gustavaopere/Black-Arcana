@@ -6,17 +6,29 @@ The principal percentage reported to the user is the coverage of **semantic magi
 
 The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. At the Phase 2BT checkpoint the strict minimum remained **1344**. Subsequent current reconciliations recorded below now raise the strict reconstructible minimum to **1849**. The global denominator is still incomplete and no semantic percentage is declared. The earlier **1858** checkpoint is historical: current physical reconciliation excludes Ars Morph (+8) and Woodwalkers SpellBooks (+1), both absent from the current physical snapshot, yielding the reconstructible **1849** minimum.
 
-## Structural provider-directory inventory — current 06/10/2026 cross-domain batch 1
+## Structural provider-directory inventory — current 06/10/2026 cross-domain batch 2
 
-The catalog tree in this checkpoint, built from `Black-Arcana@3e87370c2d5363c06d92d107fcb11826e3820bba`, contains **161 top-level provider directories = 159 ✅ + 2 ⚠️**. The only catalog-partial folders are Traveloptics and Deeper and Darker. Iron's Spellbooks KubeJS is now ✅ at a zero-semantic catalog denominator; deployed-instance script parity remains separate QA. The current sibling `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` still yields **97/97** mapped physical dossiers whose category directory contains `Magic`. See [`PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md`](./PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md).
+The catalog tree after cross-domain batch 2, built from `Black-Arcana@4d6ff1f63bda925836af0b1b1c0a2702c7cbdf3a`, contains **164 top-level provider directories = 162 ✅ + 2 ⚠️**. The only catalog-partial folders are Traveloptics and Deeper and Darker. Iron's Spellbooks KubeJS is now ✅ at a zero-semantic catalog denominator; deployed-instance script parity remains separate QA. The current sibling `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` still yields **97/97** mapped physical dossiers whose category directory contains `Magic`. See [`PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md`](./PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md).
 
 The historical 01/10 rebase reached **154 = 151 ✅ + 3 ⚠️** before subsequent provider closures/additions and the Iron's Spellbooks KubeJS catalog promotion. The 27/09 `115 = 101 ✅ + 14 ⚠️` snapshot, the 29/09 normalization checkpoints, the 30/09 `116 = 114 ✅ + 2 ⚠️` StarbuncleMania closure, and the 01/10 `117 = 115 ✅ + 2 ⚠️` Ignis Soulfires, `118 = 116 ✅ + 2 ⚠️` Artifacts, `119 = 117 ✅ + 2 ⚠️` Cataclysm, `120 = 118 ✅ + 2 ⚠️` BetterEnd, `121 = 119 ✅ + 2 ⚠️` Weapons of Miracles, `122 = 120 ✅ + 2 ⚠️` Born in Chaos, `123 = 121 ✅ + 2 ⚠️` Bosses'Rise, `124 = 122 ✅ + 2 ⚠️` Portable Hole, `125 = 123 ✅ + 2 ⚠️` Legendary Monsters and `126 = 124 ✅ + 2 ⚠️` Alex's Caves Continued tranches remain historical. The 01/10 cross-domain rebase closes `✅-bosses-of-mass-destruction`: exact physical↔publisher equality plus exhaustive activation/summon/data inspection closes five supernatural roots = 3 strict + 2 conditional. The 02/10 continuation adds `⚠️-deeper-and-darker`: three public-release supernatural roots are baseline-closed, but all official 1.4.1 publisher bytes differ from the physical pack SHA-1, so the exact-current denominator remains open and contributes +0 strict. It also adds `✅-protection-pixel`: exact physical↔publisher equality plus exhaustive provider-class/resource inspection closes the addon as `ZERO_SEMANTIC_TECH_GEAR` with +0 strict. `✅-betternether` then closes exact-current as `ZERO_SEMANTIC_WORLDGEN_BREWING_EQUIPMENT`: altar/portal names resolve to structures/portal infrastructure, while brewing/equipment remain processing/gear.
 
-This is a **repository catalog-structure metric only**. The current value **161** does not regenerate or equal the technical cross-domain denominator, which remains `PENDING REBASE`, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
+This is a **repository catalog-structure metric only**. The current value **164** does not regenerate or equal the technical cross-domain denominator, which remains `PENDING REBASE`, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
 
 See [PROVIDER-DIRECTORY-INVENTORY.md](./PROVIDER-DIRECTORY-INVENTORY.md).
 
-## Current cross-domain rebase — 06/10/2026 — batch 1
+## Current cross-domain rebase — 06/10/2026 — batch 2
+
+Three additional current physical providers outside the physical-`Magic` subtotal are now explicitly dispositioned at **+0 strict**:
+
+- Sky Aesthetics 2.0.13-beta — `ZERO_SEMANTIC_CLIENT_SKY_RENDER_API`;
+- Northstar Redux 0.6.5+1.21.1 — `ZERO_SEMANTIC_CREATE_SPACE_TECH_TRAVEL`;
+- YUNG's Better End Island 3.1.2 — `ZERO_SEMANTIC_END_WORLDGEN_DRAGON_FIGHT_OVERLAY`.
+
+Structural count becomes **164 = 162 ✅ + 2 ⚠️**. Physical-`Magic` mapping remains **97/97**. Strict semantic minimum remains **1849**. Cold Sweat: Altitude is not promoted because its 0.7.0 post-install physical presence has not yet been revalidated; Amplified Nether and Chunky remain non-provider worldgen/utility rows in this triage.
+
+See [CROSS-DOMAIN-REBASE-2026-10-06-BATCH-2.md](./CROSS-DOMAIN-REBASE-2026-10-06-BATCH-2.md).
+
+## Prior cross-domain rebase — 06/10/2026 — batch 1
 
 Four new current physical providers outside the physical-`Magic` subtotal are now explicitly dispositioned at **+0 strict**:
 

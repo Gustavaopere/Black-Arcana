@@ -4,12 +4,12 @@
 
 Esta seção prevalece sobre números/filas históricas preservados abaixo.
 
-- Black Arcana canônico: `main@9661f629b991d44854724b7d48fd289bd1ea9111`;
+- Black Arcana base deste batch: `main@4d6ff1f63bda925836af0b1b1c0a2702c7cbdf3a`;
 - sibling físico/modlist: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`;
-- árvore atual de providers: **161 = 159 ✅ + 2 ⚠️**;
+- árvore atual de providers após batch 2: **164 = 162 ✅ + 2 ⚠️**;
 - únicos diretórios ⚠️: **Traveloptics** e **Deeper and Darker**;
 - categoria física sibling `Magic`: **97/97** dossiers mapeados;
-- cobertura estrutural do ledger: **161/161** diretórios atuais com disposição/referência semântica explícita;
+- cobertura estrutural do ledger após batch 2: **164/164** diretórios atuais com disposição/referência semântica explícita;
 - mínimo semântico estrito reconstruível corrente: **1849**;
 - checkpoint **1858**: histórico; Ars Morph (+8) e Woodwalkers SpellBooks (+1) permanecem catalogados historicamente, mas estão ausentes do snapshot físico corrente e contribuem +0 ao numerador atual;
 - denominador semântico final: **aberto**;
@@ -24,6 +24,8 @@ Os dois blockers de **catálogo de diretório** estão estacionados até surgir 
 2. **⚠️ Deeper and Darker 1.4.1** — current physical SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`; baseline público fecha 3 raízes, mas os bytes físicos divergem dos artifacts oficiais e falta bridge/inspeção direta + config implantada do Soul Elytra. Não repetir matrizes de repack/source-build já saturadas sem pista nova.
 
 Além deles, providers ✅ podem manter **rotas de evidência implantada** sem reabrir a completude do diretório. A lista operacional canônica é [`CONDITIONAL-PROVIDER-CLOSURE.md`](./CONDITIONAL-PROVIDER-CLOSURE.md), atualmente com 14 rotas bounded: Asterism Arcanum, Gaze, Not Enough Glyphs 4.6.2, Somake Spells 1.0.9, Corail Tombstone 9.5.6, Mowzie's Mobs 1.8.2, Deeper and Darker 1.4.1, KubeJS Ars Nouveau 1.3.2, Traveloptics 4.4.0.1-1.21.1, Ice And Fire CE 2.1.2, ShadowsZ 1.1.9, Simply Swords: Cataclysm 1.0.2, Simply More Alpha 5 e Simply Swords 1.70.2.
+
+`CROSS-DOMAIN-REBASE-2026-10-06-BATCH-2.md` adiciona Sky Aesthetics, Northstar Redux e YUNG's Better End Island como ✅ +0 e mantém Cold Sweat: Altitude fora do snapshot físico até revalidação pós-instalação.
 
 **Próxima seleção:** só executar uma dessas rotas quando houver input deployed/current novo capaz de satisfazer o checklist específico. Sem novo config/script/datapack/runtime/byte evidence, não fabricar fechamento nem repetir auditoria já esgotada; passar ao próximo blocker com evidência nova.
 

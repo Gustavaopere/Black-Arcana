@@ -3,15 +3,15 @@
 Checkpoint: 2026-10-06
 
 Current structural authority:
-- Black Arcana base for this batch: `main@3e87370c2d5363c06d92d107fcb11826e3820bba`;
+- Black Arcana base for this batch: `main@4d6ff1f63bda925836af0b1b1c0a2702c7cbdf3a`;
 - current sibling physical/modlist authority: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 
 ## Current structural count
 
 The canonical tree `wiki/modpack-catalog/providers/` now contains:
 
-- **161** top-level provider directories;
-- **159 ✅ cataloged**;
+- **164** top-level provider directories;
+- **162 ✅ cataloged**;
 - **2 ⚠️ partial / conditioned**;
 - **0 ❌**;
 - **0 🟡**;
@@ -40,6 +40,20 @@ Four new current physical providers outside the physical-`Magic` category subtot
 All four new providers contribute **+0 strict**. `efiscompat` 3.1.0 is already represented once by canonical `✅-efiscompat` and contributes no new structural row. The physical-`Magic` subtotal remains **97/97 mapped** and the strict reconstructible semantic minimum remains **1849**.
 
 See [CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md](./CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md).
+
+## 06/10 cross-domain zero-semantic batch 2
+
+Three additional current physical cross-domain providers are now materialized:
+
+- `✅-sky-aesthetics` — `ZERO_SEMANTIC_CLIENT_SKY_RENDER_API`;
+- `✅-northstar-redux` — `ZERO_SEMANTIC_CREATE_SPACE_TECH_TRAVEL`;
+- `✅-yungs-better-end-island` — `ZERO_SEMANTIC_END_WORLDGEN_DRAGON_FIGHT_OVERLAY`.
+
+All three contribute **+0 strict**. The physical-`Magic` subtotal remains **97/97 mapped**, the strict reconstructible semantic minimum remains **1849**, and the only catalog-partial providers remain Traveloptics and Deeper and Darker.
+
+Cold Sweat: Altitude 0.7.0 remains outside the current physical structural count because the sibling dossier explicitly lacks post-install physical revalidation. Amplified Nether and Chunky remain pure worldgen/pregeneration infrastructure and are not materialized as magic-provider directories in this batch.
+
+See [CROSS-DOMAIN-REBASE-2026-10-06-BATCH-2.md](./CROSS-DOMAIN-REBASE-2026-10-06-BATCH-2.md).
 
 ## Historical 01/10 structural checkpoint
 
@@ -76,8 +90,8 @@ Both identify mod id `vampiricageing`, installed JAR `vampiricageing-1.21-1.4.21
 
 ## Metric boundary
 
-**161 is not the current technical cross-domain denominator.** It is the current structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical; the current technical denominator is still `PENDING REBASE`.
+**164 is not the current technical cross-domain denominator.** It is the current structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical; the current technical denominator is still `PENDING REBASE`.
 
-Likewise, **161 is not the semantic-magic denominator**. The current strict reconstructible semantic minimum is **1849**. The prior **1858** checkpoint included Ars Morph (+8) and Woodwalkers SpellBooks (+1); current physical reconciliation excludes both because their JARs are absent from the current snapshot. The cross-domain zero-semantic closures, including the four 06/10 Batch 1 additions, do not change that numerator. Traveloptics and Deeper and Darker retain genuine current-physical/provenance blockers, while Iron's Spellbooks KubeJS is catalog-closed at +0 with deployed-instance parity retained as separate QA.
+Likewise, **164 is not the semantic-magic denominator**. The current strict reconstructible semantic minimum is **1849**. The prior **1858** checkpoint included Ars Morph (+8) and Woodwalkers SpellBooks (+1); current physical reconciliation excludes both because their JARs are absent from the current snapshot. The cross-domain zero-semantic closures, including the four 06/10 Batch 1 additions, do not change that numerator. Traveloptics and Deeper and Darker retain genuine current-physical/provenance blockers, while Iron's Spellbooks KubeJS is catalog-closed at +0 with deployed-instance parity retained as separate QA.
 
 See [PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md) for the current snapshot and [PHYSICAL-MAGIC-RECONCILIATION-2026-09-30.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-30.md) for the historical StarbuncleMania correction.
