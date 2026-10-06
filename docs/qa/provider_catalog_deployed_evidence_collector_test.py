@@ -295,6 +295,21 @@ allow_lost_tablet = false
                 result["rows"],
             )
 
+    def test_runtime_probe_retains_traveloptics_mod_file_hash_failure(self) -> None:
+        row = collector.parse_catalog_probe_payload(
+            "type=mod_file id=traveloptics status=HASH_UNAVAILABLE error=IOException"
+        )
+
+        self.assertEqual(
+            {
+                "type": "mod_file",
+                "id": "traveloptics",
+                "status": "HASH_UNAVAILABLE",
+                "error": "IOException",
+            },
+            row,
+        )
+
     def test_runtime_probe_rejects_unbounded_mod_file_observation(self) -> None:
         row = collector.parse_catalog_probe_payload(
             "type=mod_file id=somakespells status=OBSERVED "
