@@ -1,10 +1,10 @@
 # T.O Magic n' Extras 4.4.0.1 — LivingEntity accessor checkpoint
 
-Status: `EXACT FILE 6342780 / 49 NUMERIC LIVINGENTITY ACCESSORS CLASSIFIED / 8 FILE-LOCAL EXACT VALUES / 7 DIRECT-DELEGATE HOST BRIDGES / 34 ENTITY-SLOT-READ NUMERICALLY UNRESOLVED / 5 IDENTITY-GAP METHODS DEPENDENCY-CLASSIFIED`
+Status: `EXACT FILE 6342780 / 49 NUMERIC LIVINGENTITY ACCESSORS CLASSIFIED / 8 FILE-LOCAL EXACT VALUES / 7 DIRECT-DELEGATE HOST BRIDGES / 34 OF 34 ENTITY-SLOT-READ DEPENDENCY-CLASSIFIED / NUMERIC OUTPUTS STILL ENTITY+CONFIG CONDITIONAL`
 
 ## Authority
 
-This checkpoint derives from three temporary **NON-MERGE** clean-room audits against exact publisher File `6342780`:
+This checkpoint derives from four temporary **NON-MERGE** clean-room audits against exact publisher File `6342780`:
 
 - CurseForge project/file: `1046916 / 6342780`;
 - exact SHA-1: `3808493ce45cdfeb6408e85578adecf13df698e8`;
@@ -20,6 +20,14 @@ This checkpoint derives from three temporary **NON-MERGE** clean-room audits aga
   - artifact: `11319088574`;
   - digest: `sha256:2223139cf8d43acff7c3841d1de322e6e8c0b2064b2e461826ab5449a29eebef`;
   - result: **15 targets / 8 OK / 7 UNKNOWN**.
+- full entity-reading dependency PR **#658**:
+  - HEAD: `01f3ea2c87f1f69abca87aae678220017f0c6d1d`;
+  - workflow run: `37455559549`;
+  - job: `112242173861`;
+  - extraction: **SUCCESS**;
+  - artifact: `11409587136`;
+  - digest: `sha256:eb4511931f7ea27c2b1b434f459be2d5a40d89b996f555c3efcfb1987bb48d3c`;
+  - result: **34/34 ENTITY_SLOT_READ methods dependency-classified** = 24 host-spell-power only + 9 SUMMON_DAMAGE augmented + 1 host-spell-power + Math.min.
 - effective-cast direct-delegate PR **#619**:
   - authoritative HEAD: `4ae4daea3dd3cf2e7b9e3d1b76cddaceb0ae5683`;
   - workflow run: `37249217412` — **SUCCESS**;
@@ -129,9 +137,9 @@ The current Iron's Spellbooks 1.21.1-3.16.3 source pin `e4056af90302d37eb1739f5f
 
 These seven values are **not counted as File-6342780-alone scalar outputs**. They require the current Iron's 3.16.3 host contract. Canonical boundary: `EXACT-4.4.0.1-CURRENT-HOST-EFFECTIVE-CAST-BRIDGE.md`.
 
-## Five identity-gap ENTITY_SLOT_READ methods — dependency-classified
+## Complete ENTITY_SLOT_READ dependency map
 
-Audit #623 selects one numeric `ENTITY_SLOT_READ` accessor from each spell identity still outside the File-only scalar/current-host numeric bridge coverage. All five read their LivingEntity exactly once, reference no provider field, contain no branch and invoke only host `getSpellPower(int, Entity)`.
+Audit #623 remains valid for the five identity-gap methods, but audit #658 supersedes that narrow scope for the complete surface: all **34/34** `ENTITY_SLOT_READ` numeric accessors are now dependency-classified. Canonical detail is in `EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`. All five read their LivingEntity exactly once, reference no provider field, contain no branch and invoke only host `getSpellPower(int, Entity)`.
 
 | Registry ID | Exact accessor | Retained dependency | Arithmetic classification | Numeric disposition |
 | --- | --- | --- | --- | --- |
@@ -149,7 +157,7 @@ All facts here are exact for publisher File `6342780` only.
 
 They are **not** projected to current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
-For all 34 `ENTITY_SLOT_READ` methods, no damage/range/duration/count/formula value is inferred. Five selected identity-gap methods now have their host dependency bounded to `getSpellPower(int, Entity)`; the other entity-reading methods remain dependency-unclassified beyond their slot-read status. The seven entity-unused effective-cast methods are structurally closed as direct delegates and numerically resolved only through the separately pinned current-host bridge; they are not File-only scalar results.
+For all 34 `ENTITY_SLOT_READ` methods, no damage/range/duration/count/formula value is inferred. Their dependency surface is now fully bounded: 24 read the entity only through host `getSpellPower(int, Entity)`, 9 summon-damage methods additionally use Iron's `SUMMON_DAMAGE` attribute surface, and `AerialCollapseSpell.getDamage` additionally calls `Math.min(float,float)`. The seven entity-unused effective-cast methods are structurally closed as direct delegates and numerically resolved only through the separately pinned current-host bridge; they are not File-only scalar results.
 
 This checkpoint does not close:
 
