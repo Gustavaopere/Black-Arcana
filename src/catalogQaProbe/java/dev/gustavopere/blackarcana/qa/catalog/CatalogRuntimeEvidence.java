@@ -8,7 +8,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.slf4j.Logger;
 
-import java.util.Comparator;
+import java.io.IOException;\nimport java.nio.file.Files;\nimport java.nio.file.Path;\nimport java.security.MessageDigest;\nimport java.security.NoSuchAlgorithmException;\nimport java.util.Comparator;\nimport java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,7 +24,7 @@ import java.util.TreeMap;
  */
 final class CatalogRuntimeEvidence {
     static final String PREFIX = "[BLACK_ARCANA_CATALOG_PROBE]";
-    static final int SCHEMA_VERSION = 3;
+    static final int SCHEMA_VERSION = 4;
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -60,6 +60,8 @@ final class CatalogRuntimeEvidence {
             LOGGER.info("{} type=mod id={} loaded={}", PREFIX, modId, ModList.get().isLoaded(modId));
         }
 
+        emitTravelopticsModFileEvidence();
+
         Map<String, Integer> counts = new TreeMap<>();
         SpellRegistry.REGISTRY.keySet().stream()
             .filter(CatalogRuntimeEvidence::isTargetSpell)
@@ -85,6 +87,49 @@ final class CatalogRuntimeEvidence {
         emitTravelopticsLootModifierRegistry();
 
         LOGGER.info("{} type=end schema={}", PREFIX, SCHEMA_VERSION);
+    }
+
+    private static void emitTravelopticsModFileEvidence() {
+        try {
+            var modFileInfo = ModList.get().getModFileById("traveloptics");
+            if (modFileInfo == null) {
+                LOGGER.warn("{} type=mod_file id=traveloptics status=HASH_UNAVAILABLE error=ModFileUnavailable", PREFIX);
+                return;
+            }
+
+            Path path = modFileInfo.getFile().getFilePath();
+            String fileName = path.getFileName().toString();
+            long sizeBytes = Files.size(path);
+            String sha1 = sha1(path);
+
+            LOGGER.info(
+                "{} type=mod_file id=traveloptics status=OBSERVED file_name={} size_bytes={} sha1={}",
+                PREFIX,
+                fileName,
+                sizeBytes,
+                sha1
+            );
+        } catch (IOException | NoSuchAlgorithmException | RuntimeException unavailable) {
+            LOGGER.warn(
+                "{} type=mod_file id=traveloptics status=HASH_UNAVAILABLE error={}",
+                PREFIX,
+                unavailable.getClass().getSimpleName()
+            );
+        }
+    }
+
+    private static String sha1(Path path) throws IOException, NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-1");
+        byte[] buffer = new byte[8192];
+
+        try (var input = Files.newInputStream(path)) {
+            int read;
+            while ((read = input.read(buffer)) != -1) {
+                digest.update(buffer, 0, read);
+            }
+        }
+
+        return HexFormat.of().formatHex(digest.digest());
     }
 
     private static boolean isTargetSpell(ResourceLocation id) {
