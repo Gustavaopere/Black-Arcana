@@ -37,6 +37,15 @@ These are exact **raw accessor outputs** from File `6342780`. Counts are counts;
 - `getWatcherHealth(int)`: **L1 5.0 / L2 10.0 / L3 15.0 / L4 20.0 / L5 25.0**
 - `getProwlerHealth(int)`: **L1 80.0 / L2 100.0 / L3 120.0 / L4 140.0 / L5 160.0**
 
+## Exact alpha entity-dependent accessor contracts — File `6342780` only
+
+- `getWatcherDamage(int, LivingEntity)` — **Family B / host spell power + Iron's `SUMMON_DAMAGE`**; entity local-slot loads: **3**. The bounded audit also observes `LivingEntity.getAttributes()`, `AttributeMap.hasAttribute(...)`, `LivingEntity.getAttributeValue(...)`, `AttributeRegistry.SUMMON_DAMAGE` and exactly one branch.
+- `getProwlerDamage(int, LivingEntity)` — **Family B / host spell power + Iron's `SUMMON_DAMAGE`**; entity local-slot loads: **3**. The bounded audit also observes `LivingEntity.getAttributes()`, `AttributeMap.hasAttribute(...)`, `LivingEntity.getAttributeValue(...)`, `AttributeRegistry.SUMMON_DAMAGE` and exactly one branch.
+
+These are **dependency contracts**, not reconstructed formulas or entity-independent numeric results. Each listed method calls Iron's `getSpellPower(int, Entity)` and additionally depends on the host `SUMMON_DAMAGE` attribute surface. Under the pinned current Iron's `1.21.1-3.16.3` host contract, spell power depends on the spell's base/per-level power inputs plus the caster's global `SPELL_POWER`, current-school power and effective `POWER_MULTIPLIER`. The audit does not infer the branch semantics or numeric coefficient for `SUMMON_DAMAGE`.
+
+No result in this section is projected to current physical Traveloptics SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`.
+
 ## Reachability
 
 `UNIQUE / allowCrafting=false`; exact loot anchor: Prowler / Watcher loot.

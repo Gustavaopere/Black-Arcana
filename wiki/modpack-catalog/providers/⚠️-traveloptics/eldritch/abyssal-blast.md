@@ -38,6 +38,14 @@ These are direct constants from exact publisher File `6342780`; they are **not**
 
 This is **not** counted as a File-6342780-alone scalar result and is **not** projected to current physical Traveloptics SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-CURRENT-HOST-EFFECTIVE-CAST-BRIDGE.md`.
 
+## Exact alpha entity-dependent accessor contracts — File `6342780` only
+
+- `getDamage(int, LivingEntity)` — **Family A / host spell-power only**; entity local-slot loads: **1**; retained arithmetic classification: `fadd ×1; fmul ×1`. The bounded audit found no field refs, branches or additional entity-member calls.
+
+This is a **dependency contract**, not a reconstructed formula or entity-independent numeric result. The method calls Iron's `getSpellPower(int, Entity)`. Under the pinned current Iron's `1.21.1-3.16.3` host contract, that host value depends on the spell's base/per-level power inputs plus the caster's global `SPELL_POWER`, current-school power and effective `POWER_MULTIPLIER`.
+
+No result in this section is projected to current physical Traveloptics SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`.
+
 ## Reachability
 
 `UNIQUE / allowCrafting=false`; exact loot anchor: Leviathan loot.
