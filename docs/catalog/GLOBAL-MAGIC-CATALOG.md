@@ -23,16 +23,18 @@ Estado canônico corrente:
 - ✅ mínimo semântico estrito reconstruível: **1849 objetos mágicos**;
 - ⚠️ denominador semântico final: **ainda aberto** — não publicar porcentagem global;
 - ⚠️ denominador técnico cross-domain: **`PENDING REBASE`**;
-- ✅ inventário estrutural: **161 diretórios top-level = 159 ✅ + 2 ⚠️**;
+- ✅ inventário estrutural: **164 diretórios top-level = 162 ✅ + 2 ⚠️**;
 - ✅ os únicos diretórios ainda ⚠️ em nível de catálogo são **Traveloptics** e **Deeper and Darker**;
 - ✅ categoria física sibling `Magic`: **97/97** dossiers atuais mapeados para providers Black Arcana;
-- ✅ cobertura de referência do ledger: **161/161 diretórios atuais** possuem disposição/referência semântica explícita;
+- ✅ cobertura de referência do ledger: **164/164 diretórios atuais** possuem disposição/referência semântica explícita;
 - ✅ Iron's Spellbooks KubeJS está catalog-closed em **+0 strict** no evidence ceiling aceito; a paridade do filesystem implantado permanece QA separado;
 - ℹ️ o checkpoint **1858** é histórico. A reconciliação física corrente remove Ars Morph (+8) e Woodwalkers SpellBooks (+1) do numerador porque seus JARs estão ausentes do snapshot físico atual.
 
 Traveloptics permanece ⚠️ com 33/33 spells extensamente catalogados, mas +0 strict até fechamento da evidência current-physical/runtime. Deeper and Darker permanece ⚠️ com baseline público/source de três raízes sobrenaturais, mas +0 strict porque o JAR físico atual diverge dos artifacts oficiais 1.4.1 e o valor implantado de `soulElytraCooldown` não está retido.
 
 Os demais blockers de config/reachability podem existir dentro de diretórios ✅ e são enumerados no ledger semântico; status de pasta mede completude de catálogo, não garante que todo objeto condicionado entre no mínimo strict.
+
+O cross-domain batch 2 fecha Sky Aesthetics, Northstar Redux e YUNG's Better End Island como providers ✅ de **zero semantic magic**, sem alterar o mínimo strict 1849. Cold Sweat: Altitude 0.7.0 não entra na árvore corrente porque a presença física pós-instalação ainda não foi revalidada.
 
 ## Legenda obrigatória
 
@@ -177,9 +179,9 @@ As métricas atuais têm denominadores diferentes:
 - ✅ **Ledger semântico strict-counted corrente:** **1849 objetos mágicos reconstruíveis**.
 - ⚠️ **Denominador semântico global:** ainda incompleto; nenhuma porcentagem final é declarada.
 - ⚠️ **Cobertura técnica cross-domain:** denominador permanece `PENDING REBASE`.
-- ✅ **Árvore de providers:** **161 = 159 ✅ + 2 ⚠️**.
+- ✅ **Árvore de providers:** **164 = 162 ✅ + 2 ⚠️**.
 - ✅ **Categoria física sibling `Magic`:** **97/97** dossiers mapeados para diretórios Black Arcana.
-- ✅ **Referência semântica por diretório:** **161/161** diretórios atuais têm disposição/referência explícita no ledger.
+- ✅ **Referência semântica por diretório:** **164/164** diretórios atuais têm disposição/referência explícita no ledger.
 - ⚠️ **Diretórios parcialmente condicionados:** Traveloptics e Deeper and Darker.
 - ✅ **Iron's Spellbooks KubeJS:** +0 strict no catálogo aceito; deployed-instance parity é QA separado.
 - ℹ️ **1858** permanece apenas como checkpoint histórico anterior à exclusão física corrente de Ars Morph (+8) e Woodwalkers SpellBooks (+1).
