@@ -24,8 +24,9 @@ import java.util.TreeMap;
  *
  * <p>The output deliberately contains only target mod presence, Iron's spell
  * registry identity/effective host values, the bounded Not Enough Glyphs
- * effective Ars glyph state, and the two Traveloptics global loot-modifier
- * serializer registrations required by its historical closure checklist.
+ * effective Ars glyph state, the bounded Traveloptics loaded-file fingerprint,
+ * and the two Traveloptics global loot-modifier serializer registrations
+ * required by its closure checklist.
  * It never inspects provider implementation classes or reconstructs behavior.</p>
  */
 final class CatalogRuntimeEvidence {
