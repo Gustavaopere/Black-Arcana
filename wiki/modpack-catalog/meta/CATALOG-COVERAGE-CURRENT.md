@@ -8,17 +8,17 @@ The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SE
 
 ## Structural provider-directory inventory — current 06/10/2026 cross-domain batch 1
 
-The catalog tree in this checkpoint, built from `Black-Arcana@9181b59635564700fe127d46f7966854296d2127`, contains **162 top-level provider directories = 160 ✅ + 2 ⚠️**. The only catalog-partial folders are Traveloptics and Deeper and Darker. Iron's Spellbooks KubeJS is now ✅ at a zero-semantic catalog denominator; deployed-instance script parity remains separate QA. The current sibling `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` still yields **97/97** mapped physical dossiers whose category directory contains `Magic`. See [`PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md`](./PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md).
+The catalog tree in this checkpoint, built from `Black-Arcana@3e87370c2d5363c06d92d107fcb11826e3820bba`, contains **161 top-level provider directories = 159 ✅ + 2 ⚠️**. The only catalog-partial folders are Traveloptics and Deeper and Darker. Iron's Spellbooks KubeJS is now ✅ at a zero-semantic catalog denominator; deployed-instance script parity remains separate QA. The current sibling `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` still yields **97/97** mapped physical dossiers whose category directory contains `Magic`. See [`PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md`](./PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md).
 
 The historical 01/10 rebase reached **154 = 151 ✅ + 3 ⚠️** before subsequent provider closures/additions and the Iron's Spellbooks KubeJS catalog promotion. The 27/09 `115 = 101 ✅ + 14 ⚠️` snapshot, the 29/09 normalization checkpoints, the 30/09 `116 = 114 ✅ + 2 ⚠️` StarbuncleMania closure, and the 01/10 `117 = 115 ✅ + 2 ⚠️` Ignis Soulfires, `118 = 116 ✅ + 2 ⚠️` Artifacts, `119 = 117 ✅ + 2 ⚠️` Cataclysm, `120 = 118 ✅ + 2 ⚠️` BetterEnd, `121 = 119 ✅ + 2 ⚠️` Weapons of Miracles, `122 = 120 ✅ + 2 ⚠️` Born in Chaos, `123 = 121 ✅ + 2 ⚠️` Bosses'Rise, `124 = 122 ✅ + 2 ⚠️` Portable Hole, `125 = 123 ✅ + 2 ⚠️` Legendary Monsters and `126 = 124 ✅ + 2 ⚠️` Alex's Caves Continued tranches remain historical. The 01/10 cross-domain rebase closes `✅-bosses-of-mass-destruction`: exact physical↔publisher equality plus exhaustive activation/summon/data inspection closes five supernatural roots = 3 strict + 2 conditional. The 02/10 continuation adds `⚠️-deeper-and-darker`: three public-release supernatural roots are baseline-closed, but all official 1.4.1 publisher bytes differ from the physical pack SHA-1, so the exact-current denominator remains open and contributes +0 strict. It also adds `✅-protection-pixel`: exact physical↔publisher equality plus exhaustive provider-class/resource inspection closes the addon as `ZERO_SEMANTIC_TECH_GEAR` with +0 strict. `✅-betternether` then closes exact-current as `ZERO_SEMANTIC_WORLDGEN_BREWING_EQUIPMENT`: altar/portal names resolve to structures/portal infrastructure, while brewing/equipment remain processing/gear.
 
-This is a **repository catalog-structure metric only**. The current value **162** does not regenerate or equal the technical cross-domain denominator, which remains `PENDING REBASE`, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
+This is a **repository catalog-structure metric only**. The current value **161** does not regenerate or equal the technical cross-domain denominator, which remains `PENDING REBASE`, and must not be used to derive the semantic-magic percentage. The technical denominator remains `PENDING REBASE`; the semantic denominator remains open.
 
 See [PROVIDER-DIRECTORY-INVENTORY.md](./PROVIDER-DIRECTORY-INVENTORY.md).
 
 ## Current cross-domain rebase — 06/10/2026 — batch 1
 
-Five current physical providers outside the physical-`Magic` subtotal are now explicitly dispositioned at **+0 strict**:
+Four new current physical providers outside the physical-`Magic` subtotal are now explicitly dispositioned at **+0 strict**:
 
 - Create: Dragons Plus 1.11.8b — `ZERO_SEMANTIC_CREATE_PROCESSING_COMPAT_INFRA`;
 - Immersive Portals: True Immersion 2.0.4 — `ZERO_SEMANTIC_PORTAL_INTERACTION_BRIDGE`;
@@ -26,7 +26,7 @@ Five current physical providers outside the physical-`Magic` subtotal are now ex
 - Snow! Real Magic! 12.2.2 — `ZERO_SEMANTIC_SNOW_WORLDSTATE`;
 - Epic Fight & Iron's Spellbook Animation Compat 3.1.0 — `ZERO_SEMANTIC_CAST_ANIMATION_BRIDGE`.
 
-Structural count becomes **162 = 160 ✅ + 2 ⚠️**. Physical-`Magic` mapping remains **97/97**. Strict semantic minimum remains **1858**.
+Structural count becomes **161 = 159 ✅ + 2 ⚠️**. Existing `efiscompat` remains represented once by the canonical `✅-efiscompat` directory. Physical-`Magic` mapping remains **97/97**. Strict semantic minimum remains **1858**.
 
 See [CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md](./CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md).
 

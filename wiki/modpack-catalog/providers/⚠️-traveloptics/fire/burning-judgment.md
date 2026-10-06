@@ -42,6 +42,14 @@ These are direct constants from exact publisher File `6342780`; they are **not**
 These are exact **raw accessor outputs** from File `6342780`. Counts are counts; no unit is assigned to the other numeric values unless independently established. They are not projected to current physical SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-SCALAR-ACCESSORS.md`.
 - `getFlameStrikeCount(int)`: **L1 2.0 / L2 3.0 / L3 4.0 / L4 5.0 / L5 6.0 / L6 7.0**
 
+## Exact alpha entity-dependent accessor contracts — File `6342780` only
+
+- `getDamage(int, LivingEntity)` — **Family A / host spell-power only**; entity local-slot loads: **1**; retained arithmetic classification: `fmul ×1`. The bounded audit found no field refs, branches or additional entity-member calls.
+
+These are **dependency contracts**, not reconstructed formulas or entity-independent numeric results. Each listed method calls Iron's `getSpellPower(int, Entity)`. Under the pinned current Iron's `1.21.1-3.16.3` host contract, that host value depends on the spell's base/per-level power inputs plus the caster's global `SPELL_POWER`, current-school power and effective `POWER_MULTIPLIER`.
+
+No result in this section is projected to current physical Traveloptics SHA-1 `7b74816e...`. See `../EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`.
+
 ## Reachability
 
 `UNIQUE / allowCrafting=false`; exact loot anchor: Ignis loot.

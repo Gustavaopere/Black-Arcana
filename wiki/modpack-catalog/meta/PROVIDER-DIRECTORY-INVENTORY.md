@@ -3,15 +3,15 @@
 Checkpoint: 2026-10-06
 
 Current structural authority:
-- Black Arcana base for this batch: `main@9181b59635564700fe127d46f7966854296d2127`;
+- Black Arcana base for this batch: `main@3e87370c2d5363c06d92d107fcb11826e3820bba`;
 - current sibling physical/modlist authority: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 
 ## Current structural count
 
 The canonical tree `wiki/modpack-catalog/providers/` now contains:
 
-- **162** top-level provider directories;
-- **160 ✅ cataloged**;
+- **161** top-level provider directories;
+- **159 ✅ cataloged**;
 - **2 ⚠️ partial / conditioned**;
 - **0 ❌**;
 - **0 🟡**;
@@ -30,15 +30,14 @@ Folder prefixes track **catalog completeness**, not whether every deployed confi
 
 ## 06/10 cross-domain zero-semantic batch 1
 
-Five current physical providers outside the physical-`Magic` category subtotal are now materialized:
+Four new current physical providers outside the physical-`Magic` category subtotal are now materialized:
 
 - `✅-create-dragons-plus` — `ZERO_SEMANTIC_CREATE_PROCESSING_COMPAT_INFRA`;
 - `✅-immersive-portals-true-immersion` — `ZERO_SEMANTIC_PORTAL_INTERACTION_BRIDGE`;
 - `✅-yungs-better-witch-huts` — `ZERO_SEMANTIC_STRUCTURE_WORLDGEN_LOOT`;
 - `✅-snow-real-magic` — `ZERO_SEMANTIC_SNOW_WORLDSTATE`;
-- `✅-epic-fight-irons-spellbook-animation-compat` — `ZERO_SEMANTIC_CAST_ANIMATION_BRIDGE`.
 
-All five contribute **+0 strict**. The physical-`Magic` subtotal remains **97/97 mapped** and the strict reconstructible semantic minimum remains **1858**.
+All four new providers contribute **+0 strict**. `efiscompat` 3.1.0 is already represented once by canonical `✅-efiscompat` and contributes no new structural row. The physical-`Magic` subtotal remains **97/97 mapped** and the strict reconstructible semantic minimum remains **1858**.
 
 See [CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md](./CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md).
 
@@ -77,8 +76,8 @@ Both identify mod id `vampiricageing`, installed JAR `vampiricageing-1.21-1.4.21
 
 ## Metric boundary
 
-**162 is not the current technical cross-domain denominator.** It is the current structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical; the current technical denominator is still `PENDING REBASE`.
+**161 is not the current technical cross-domain denominator.** It is the current structural count of top-level catalog directories. The historical `68/100` technical-component fraction used a different component model and remains historical; the current technical denominator is still `PENDING REBASE`.
 
-Likewise, **162 is not the semantic-magic denominator**. After StarbuncleMania's exact +2 closure, Cataclysm: Ignis Soulfires 1.8.0's exact +8 cross-domain closure, Artifacts 13.2.5's exact +0 base-provider closure, L_Ender's Cataclysm 3.33's exact +27 closure, BetterEnd: New Dawn 21.0.34's exact +49 ritual closure, Weapons of Miracles 2.0.178's exact +12 supernatural-action closure, Born in Chaos 1.7.6's exact +17 player-magic closure, Bosses'Rise 2.1.2's exact +8 supernatural-action closure, Portable Hole 21.1.0's exact +1 traversal closure, Legendary Monsters 2.2.2's exact +22 supernatural-action closure and Alex's Caves Continued 1.0.10's exact +8 player-magic closure plus Alex's Mobs Continued 2.1.13's exact +1 transmutation closure and Ice And Fire: Dread Land 0.1.2's exact +1 portal-activation closure plus Bosses of Mass Destruction 1.3.3's exact +3 strict supernatural-action closure, followed by the already-cataloged Ars Morph 2.0.0 +8 source-pinned normalization and Woodwalkers SpellBooks 0.3.1-BETA +1 source-pinned normalization, plus Epic Fight 21.17.3.1's exact +3 supernatural trident-innate closure and Cold Sweat 2.4.3.1's exact +0 `ZERO_SEMANTIC_TEMPERATURE_SURVIVAL_INFRA` closure and Create: Cold Sweat 1.1.2's exact +0 `ZERO_SEMANTIC_CREATE_THERMAL_BRIDGE` closure, the current strict reconstructible semantic minimum is **1858**, while the final semantic denominator remains open because Traveloptics and Deeper and Darker still have genuine current-physical/provenance blockers. Iron's Spellbooks KubeJS is catalog-closed at +0 with deployed-instance parity retained as separate QA.
+Likewise, **161 is not the semantic-magic denominator**. After StarbuncleMania's exact +2 closure, Cataclysm: Ignis Soulfires 1.8.0's exact +8 cross-domain closure, Artifacts 13.2.5's exact +0 base-provider closure, L_Ender's Cataclysm 3.33's exact +27 closure, BetterEnd: New Dawn 21.0.34's exact +49 ritual closure, Weapons of Miracles 2.0.178's exact +12 supernatural-action closure, Born in Chaos 1.7.6's exact +17 player-magic closure, Bosses'Rise 2.1.2's exact +8 supernatural-action closure, Portable Hole 21.1.0's exact +1 traversal closure, Legendary Monsters 2.2.2's exact +22 supernatural-action closure and Alex's Caves Continued 1.0.10's exact +8 player-magic closure plus Alex's Mobs Continued 2.1.13's exact +1 transmutation closure and Ice And Fire: Dread Land 0.1.2's exact +1 portal-activation closure plus Bosses of Mass Destruction 1.3.3's exact +3 strict supernatural-action closure, followed by the already-cataloged Ars Morph 2.0.0 +8 source-pinned normalization and Woodwalkers SpellBooks 0.3.1-BETA +1 source-pinned normalization, plus Epic Fight 21.17.3.1's exact +3 supernatural trident-innate closure and Cold Sweat 2.4.3.1's exact +0 `ZERO_SEMANTIC_TEMPERATURE_SURVIVAL_INFRA` closure and Create: Cold Sweat 1.1.2's exact +0 `ZERO_SEMANTIC_CREATE_THERMAL_BRIDGE` closure, the current strict reconstructible semantic minimum is **1858**, while the final semantic denominator remains open because Traveloptics and Deeper and Darker still have genuine current-physical/provenance blockers. Iron's Spellbooks KubeJS is catalog-closed at +0 with deployed-instance parity retained as separate QA.
 
 See [PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md) for the current snapshot and [PHYSICAL-MAGIC-RECONCILIATION-2026-09-30.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-09-30.md) for the historical StarbuncleMania correction.
