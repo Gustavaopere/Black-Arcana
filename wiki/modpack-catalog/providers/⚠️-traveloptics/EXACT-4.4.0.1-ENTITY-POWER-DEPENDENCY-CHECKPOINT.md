@@ -1,6 +1,10 @@
 # T.O Magic n' Extras 4.4.0.1 — five remaining entity-power dependency checkpoint
 
-Status: `EXACT FILE 6342780 / 5 REMAINING SPELL IDENTITIES DEPENDENCY-CLASSIFIED / NUMERIC OUTPUTS STILL ENTITY+CONFIG CONDITIONAL / CURRENT PHYSICAL NOT PROJECTED`
+Status: `HISTORICAL FIVE-IDENTITY SUBSET / SUPERSEDED FOR COMPLETE ENTITY-READING SURFACE BY EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md / NUMERIC OUTPUTS STILL ENTITY+CONFIG CONDITIONAL`
+
+## Supersession
+
+This file remains canonical evidence for the five identity-gap methods audited in PR #623. Audit #658 later dependency-classified all **34/34** `ENTITY_SLOT_READ` numeric accessors. For the complete current dependency surface, use [`EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`](EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md).
 
 ## Purpose
 
@@ -85,7 +89,7 @@ After this checkpoint:
 - therefore **33/33 exact spell identities now have at least one bounded accessor result, host bridge, or entity-dependent accessor contract documented**;
 - this is **not** 33/33 numeric closure;
 - the five methods in this document still have no entity-independent numeric return value assigned;
-- the broader `ENTITY_SLOT_READ` surface remains unresolved beyond the bounded facts already documented.
+- the broader `ENTITY_SLOT_READ` dependency surface is now closed by `EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`; numeric outputs remain entity/config conditional.
 
 No result is projected to current physical Traveloptics SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`.
 
