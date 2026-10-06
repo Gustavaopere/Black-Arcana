@@ -296,7 +296,7 @@ Therefore the strict reconstructible minimum is **1849**. This is a minimum, not
 
 ## Strict reconstructible counted minimum
 
-**1849 semantic magic objects are currently reconstructible from canonical current-provider records. The prior 1849 checkpoint is reduced by 9 because Ars Morph (+8 historical source-pinned) and Woodwalkers SpellBooks (+1 historical source-pinned) are absent from the current physical snapshot.**
+**1849 semantic magic objects are currently reconstructible from canonical current-provider records. The prior 1858 checkpoint is reduced by 9 because Ars Morph (+8 historical source-pinned) and Woodwalkers SpellBooks (+1 historical source-pinned) are absent from the current physical snapshot.**
 
 This is a counted minimum, not the final denominator and not a coverage percentage. Providers with `LOWER_BOUND`, `CONDITIONAL` or `OPEN` state remain outside this sum until their current inventory/eligibility is reconciled.
 
