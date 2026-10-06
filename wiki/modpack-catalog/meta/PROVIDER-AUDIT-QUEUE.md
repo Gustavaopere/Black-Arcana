@@ -412,11 +412,11 @@ Blockers atualmente **PARKED até existir input novo**:
 
 - Not Enough Glyphs 4.6.1 — 39 registrations source-enabled permanecem `CONDITIONAL`; cada glyph usa config `SERVER` `not_enough_glyphs/<glyph>.toml` / `[general].enabled`, e nenhum conjunto implantado de world/server overrides está presente no repositório ou nos materiais físicos atualmente disponíveis;
 - Gaze 1.1.7.1 — o registry exato e Soulward Shield já estão fechados; os 26 Spirit Rites permanecem `CONDITIONAL` somente porque o valor COMMON implantado de `disableGazeRites` não está disponível;
-- Somake Spells 1.0.8-fix — o registry exato de 67 identidades está fechado, mas config efetiva de `enableSpellLockSystem` e survival acquisition/reachability completa continuam sem autoridade suficiente.
+- Somake Spells 1.0.9 — o registry/current-composition de **83/83 registrations** está estruturalmente fechado, mas a config efetiva de `enableSpellLockSystem` e survival acquisition/reachability completa continuam sem autoridade suficiente; o antigo 1.0.8-fix/67 permanece apenas como checkpoint histórico.
 
 A próxima seleção deve escolher **outro componente ainda aberto** para o qual exista evidência current/exact capaz de reduzir incerteza de inventário ou de classificação. Defaults de provider, publisher prose ou branches preparatórias não substituem estado implantado. Se um candidato só puder avançar com navegação/material externo indisponível, registrar a pendência e passar ao próximo blocker seguro em vez de fabricar fechamento.
 
-O checkpoint histórico desta seção fechou em **1344 objetos semânticos mínimos / 67 de 100 componentes**. A autoridade corrente é o ledger reconstruído: **1697 objetos semânticos mínimos**, enquanto o antigo denominador `100` permanece histórico e o denominador técnico global continua `PENDING REBASE`. Cataclysm: Ignis Soulfires 1.8.0 entra no rebase como provider cross-domain exato; a promoção só é canônica após merge da tranche durável e exact-SHA post-merge CI GREEN.
+O checkpoint histórico desta seção fechou em **1344 objetos semânticos mínimos / 67 de 100 componentes**. A autoridade corrente é o ledger reconstruído: **1849 objetos semânticos mínimos**; o antigo checkpoint **1858** incluía Ars Morph (+8) e Woodwalkers SpellBooks (+1), ambos ausentes do snapshot físico corrente. O antigo denominador `100` permanece histórico e o denominador técnico global continua `PENDING REBASE`. Cataclysm: Ignis Soulfires 1.8.0 já integra o rebase cross-domain canônico; seus registros históricos de promoção/CI permanecem provenance.
 
 ## Regras
 

@@ -1,6 +1,6 @@
 # Black Arcana — Catálogo Global de Magia e Feitiços
 
-Última sincronização: 2026-09-27
+Última sincronização: 2026-10-06
 
 Este arquivo é o índice operacional global de catalogação do projeto. A árvore detalhada canônica é `wiki/modpack-catalog/providers/`; o ledger semântico reconstruível é `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md`; e a cobertura técnica de componentes é `wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md`.
 
@@ -9,9 +9,9 @@ O objetivo deste índice é responder duas perguntas sem misturá-las:
 1. quais providers possuem ações mágicas semanticamente contáveis e já possuem inventário atual suficientemente fechado;
 2. quais providers/extensões mágicas foram auditados mas contribuem zero ações independentes, permanecem condicionais ou ainda precisam ser revalidados.
 
-## Override corrente — 26/09/2026
+## Override corrente — 06/10/2026
 
-Os números correntes **não** devem ser lidos da tabela histórica da seção 1. A autoridade atual é:
+A tabela histórica da seção 1 permanece provenance e **não** deve ser usada como estado corrente. A autoridade atual é:
 
 - árvore detalhada: `wiki/modpack-catalog/providers/`;
 - ledger semântico: `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md`;
@@ -20,18 +20,20 @@ Os números correntes **não** devem ser lidos da tabela histórica da seção 1
 
 Estado canônico corrente:
 
-- ✅ mínimo semântico estrito reconstruível: **1677 objetos mágicos**;
+- ✅ mínimo semântico estrito reconstruível: **1849 objetos mágicos**;
 - ⚠️ denominador semântico final: **ainda aberto** — não publicar porcentagem global;
-- ⚠️ denominador técnico cross-domain: **`PENDING REBASE`** — o antigo `68/100` é histórico;
-- ✅ inventário estrutural do catálogo: **109 diretórios top-level de provider = 99 ✅ + 10 ⚠️** após consolidar a duplicata histórica de Vampiric Ageing; esta contagem mede diretórios canônicos, **não** substitui o denominador técnico cross-domain nem o denominador semântico;
-- taxonomia física sibling atual com categoria `Magic`: **67 linhas** no sibling `47db7f2…`; após normalização e os fechamentos atuais, **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**);
-- os oito ⚠️ já mapeados nessa categoria física são **Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition**;
-- a fila category-only da taxonomia física `Magic` está **vazia**; todos os 67 itens possuem classificação Black Arcana explícita;
-- providers cross-domain/root-level atuais ampliam esse universo: Gaze, Requiem, Traveloptics, More Relics, Iron's Spellbooks KubeJS, Spell Actionbar/Specs/Recolor/Immersive Portal e addons Reliquified, entre outros.
+- ⚠️ denominador técnico cross-domain: **`PENDING REBASE`**;
+- ✅ inventário estrutural: **161 diretórios top-level = 159 ✅ + 2 ⚠️**;
+- ✅ os únicos diretórios ainda ⚠️ em nível de catálogo são **Traveloptics** e **Deeper and Darker**;
+- ✅ categoria física sibling `Magic`: **97/97** dossiers atuais mapeados para providers Black Arcana;
+- ✅ cobertura de referência do ledger: **161/161 diretórios atuais** possuem disposição/referência semântica explícita;
+- ✅ Iron's Spellbooks KubeJS está catalog-closed em **+0 strict** no evidence ceiling aceito; a paridade do filesystem implantado permanece QA separado;
+- ℹ️ o checkpoint **1858** é histórico. A reconciliação física corrente remove Ars Morph (+8) e Woodwalkers SpellBooks (+1) do numerador porque seus JARs estão ausentes do snapshot físico atual.
 
-Deltas já incorporados depois do antigo checkpoint 1382 incluem Hexalia 1.3.7 (**+4**), Reliquified Ars Nouveau (**+19**), Reliquified Artifacts (**+52**), Reliquified Iron's Spells 'n Spellbooks (**+25**), More Relics (**+61**), Ozymandias Sundries (**+2**), Mowzie's Mobs (**+10 strict; +1 conditional fora do strict**) e Ice And Fire CE (**+8 strict; +1 conditional outside strict**). Wind's Spellbooks, Ars 'n' Spells 3.3.4 e outros providers revalidados permanecem dentro da aritmética corrente sem novo delta nesta reconciliação.
+Traveloptics permanece ⚠️ com 33/33 spells extensamente catalogados, mas +0 strict até fechamento da evidência current-physical/runtime. Deeper and Darker permanece ⚠️ com baseline público/source de três raízes sobrenaturais, mas +0 strict porque o JAR físico atual diverge dos artifacts oficiais 1.4.1 e o valor implantado de `soulElytraCooldown` não está retido.
 
-Blockers estáticos que continuam fail-closed por falta de evidência implantada/exata incluem: 26 Spirit Rites de Gaze, 39 candidatos de Not Enough Glyphs, 12 famílias condicionais de Tombstone, config/reachability de Somake, `astral_gateway`, `mowziesmobs:tunneling` condicionado por `enableTunneling`, Ghost Sword por `tools.phantasmalBladeAbility` em Ice And Fire CE, o registry/reachability exato atual de Traveloptics e as superfícies mutáveis dos bridges KubeJS.
+Os demais blockers de config/reachability podem existir dentro de diretórios ✅ e são enumerados no ledger semântico; status de pasta mede completude de catálogo, não garante que todo objeto condicionado entre no mínimo strict.
+
 ## Legenda obrigatória
 
 - ✅ **Catalogado** — existe inventário/contrato suficientemente fechado para o escopo indicado; isso inclui fechamento correto em **zero** objetos mágicos próprios.
@@ -117,13 +119,18 @@ Zero é um resultado de catálogo válido quando a auditoria fecha que o mod ape
 | Ars Sophisticated Compatibility | `0.3.0` | ✅ `ZERO_SEMANTIC_BRIDGE` | Artefato físico/publisher reconciliado como Sophisticated Backpacks↔Ars Nouveau compat; 0 standalone spells, glyphs/spell-parts ou rituals; runtime/API QA permanece separado. |
 | Reliquified L_Ender's Cataclysm — New Relics Fix | `1.0.2` | ✅ `ZERO_SEMANTIC_BRIDGE` | Bridge Relics 0.10→0.12 para cinco relics já pertencentes ao addon original; 0 novas identidades de relic ou spell; runtime QA separado. |
 
-## 3. Providers mágicos atuais ainda condicionais no ledger
+## 3. Providers/objetos condicionais no ledger
 
-| Provider | Linha | Estado | Motivo |
+A lista exaustiva de objetos `CONDITIONAL`, `LOWER_BOUND` e `OPEN` é mantida em `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md` e não é duplicada integralmente aqui.
+
+No nível de **diretório de provider**, somente dois permanecem ⚠️:
+
+| Provider | Linha | Estado | Motivo principal |
 | --- | --- | --- | --- |
-| T.O Magic n' Extras / Traveloptics | `4.4.0.1-1.21.1` | ⚠️ Parcial/condicionado | 33 IDs registrados exatos catalogados, mas `blackout` survival reachability e risco estrutural de loot modifier permanecem abertos; +0 estrito e componente não fechado. |
-| Gaze — Spirit Rites | `1.1.7.1` | ⚠️ Condicionado | 26 rites player-facing existem no artefato, porém `disableGazeRites` pode suprimir o registry e o valor COMMON implantado não está disponível. O spell Soulward Shield já está contado separadamente na tabela estrita. |
-| Asterism Arcanum — `astral_gateway` | `1.21.1-0.1.0` | ⚠️ Condicionado | Provider possui 10 ações survival já contadas; `astral_gateway` permanece fora do strict count até fechar sua condição/reachability. |
+| T.O Magic n' Extras / Traveloptics | `4.4.0.1-1.21.1` | ⚠️ Parcial/condicionado | 33/33 spells do baseline estão catalogados, mas o JAR físico atual `7b74816e...` ainda exige fechamento process-bound de registry/loot/provenance e `blackout` survival reachability; +0 strict. |
+| Deeper and Darker | `1.4.1` | ⚠️ Parcial/condicionado | baseline público/source fecha 3 raízes, porém o JAR físico `83f7edd0...` diverge de todos os artifacts oficiais testados e o config efetivo do Soul Elytra Boost não está retido; +0 strict. |
+
+Providers com diretório ✅ ainda podem ter objetos individuais fora do strict por config/reachability. Isso não reabre automaticamente a completude do inventário do provider.
 
 ## 4. Candidatos herdados do snapshot antigo do sibling — presença atual não afirmada
 
@@ -165,19 +172,17 @@ Estado global dessa camada: ✅ **Catalogado (32 contratos)**.
 
 ## 7. Resumo de cobertura
 
-As métricas têm denominadores diferentes:
+As métricas atuais têm denominadores diferentes:
 
-- ✅ **Ledger semântico strict-counted corrente:** **1677 objetos mágicos reconstruíveis**.
-- ⚠️ **Denominador semântico global:** ainda incompleto; portanto **nenhuma porcentagem final de spells/magia é declarada**.
-- ⚠️ **Cobertura técnica de componentes:** o antigo `68/100` é apenas checkpoint histórico; o denominador técnico global permanece `PENDING REBASE`.
-- ✅ **Taxonomia física sibling `Magic`:** **67 linhas**; **67/67** mapeiam para diretórios Black Arcana (**59 ✅ + 8 ⚠️**), sem fila category-only.
-- ⚠️ **Oito condicionais já mapeados:** Asterism Arcanum, Somake Spells, Not Enough Glyphs, Corail Tombstone, KubeJS Ars Nouveau, Iron's Spellbooks KubeJS, Mowzie's Mobs e Ice And Fire Community Edition.
-- ✅ **Fila de classificação semântica da categoria física `Magic`:** vazia no snapshot sibling atual.
-- ⚠️ **Cross-domain condicionais relevantes:** Gaze, Traveloptics, Iron's Spellbooks KubeJS e KubeJS Ars Nouveau; More Relics está ✅ `COUNTED_EXACT` com 61 owner-scoped abilities. Spell Actionbar, Specs, Recolor e Immersive Portal estão ✅ catalogados com +0 independente; QA técnico/runtime permanece separado.
-- ✅ **Zero-semantic exact closures recentes:** Photon 2.2.6.a (`ZERO_SEMANTIC_VFX_INFRA`) e RunicLib 5.0.7 (`ZERO_SEMANTIC_LIBRARY_INFRA`), ambos +0.
-- ✅ **Fechamentos finais da categoria física `Magic`:** Mowzie's Cataclysm, Pickable Orbs, IronSable X Wind's Spellbooks, Iron's Gems 'n Jewelry e Integrated Villages — todos exact-artifact, todos **+0** sob a métrica semântica; esses fechamentos não alteram o mínimo strict, que após a promoção parcial de Ice And Fire CE é **1677**.
-- ✅ **Deltas recentes strict-counted:** Hexalia 1.3.7 +4; Reliquified Ars Nouveau +19; Reliquified Artifacts +52; Reliquified Iron's +25; More Relics +61; Ozymandias Sundries +2; Mowzie's Mobs +10 strict; Ice And Fire CE +8 strict.
-- ✅ **Wind's Spellbooks:** 7/7 já estavam strict-counted; a migração atual é apenas continuidade de provider-tree, não +7 adicional.
+- ✅ **Ledger semântico strict-counted corrente:** **1849 objetos mágicos reconstruíveis**.
+- ⚠️ **Denominador semântico global:** ainda incompleto; nenhuma porcentagem final é declarada.
+- ⚠️ **Cobertura técnica cross-domain:** denominador permanece `PENDING REBASE`.
+- ✅ **Árvore de providers:** **161 = 159 ✅ + 2 ⚠️**.
+- ✅ **Categoria física sibling `Magic`:** **97/97** dossiers mapeados para diretórios Black Arcana.
+- ✅ **Referência semântica por diretório:** **161/161** diretórios atuais têm disposição/referência explícita no ledger.
+- ⚠️ **Diretórios parcialmente condicionados:** Traveloptics e Deeper and Darker.
+- ✅ **Iron's Spellbooks KubeJS:** +0 strict no catálogo aceito; deployed-instance parity é QA separado.
+- ℹ️ **1858** permanece apenas como checkpoint histórico anterior à exclusão física corrente de Ars Morph (+8) e Woodwalkers SpellBooks (+1).
 - ✅ **Black Arcana próprio:** 32 contratos de candidatos; runtime/Stage continua separado do catálogo.
 
 ## 8. Regra de manutenção

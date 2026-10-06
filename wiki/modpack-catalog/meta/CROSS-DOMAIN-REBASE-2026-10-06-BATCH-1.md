@@ -1,6 +1,8 @@
 # Cross-Domain Rebase — 2026-10-06 — Zero-Semantic Batch 1
 
-Status: `CURRENT PHYSICAL CROSS-DOMAIN TRIAGE / 4 NEW ✅ ZERO-SEMANTIC PROVIDERS / PROVIDER TREE 161 = 159 ✅ + 2 ⚠️ / STRICT SEMANTIC MINIMUM UNCHANGED 1858`
+Status: `CURRENT PHYSICAL CROSS-DOMAIN TRIAGE / 4 NEW ✅ ZERO-SEMANTIC PROVIDERS / PROVIDER TREE 161 = 159 ✅ + 2 ⚠️ / STRICT SEMANTIC MINIMUM UNCHANGED 1849`
+
+Numerator note: **1849 is current**. The older 1858 checkpoint included Ars Morph (+8) and Woodwalkers SpellBooks (+1), both absent from the current physical snapshot.
 
 ## Authority
 
@@ -107,7 +109,7 @@ The two ⚠️ providers remain:
 
 No semantic object is added.
 
-- strict reconstructible semantic minimum: **1858**;
+- strict reconstructible semantic minimum: **1849**;
 - final semantic denominator: still open;
 - technical cross-domain denominator: still `PENDING REBASE`;
 - no final coverage percentage declared.

@@ -1,8 +1,8 @@
 # Black Arcana — Conditional Provider Closure Index
 
-Checkpoint: 2026-09-30 current routing
+Checkpoint: 2026-10-06 current routing
 
-Status: `2 CATALOG-OPEN ⚠️ DIRECTORIES / 14 DEPLOYED-EVIDENCE ROUTES / CURRENT PHYSICAL MAGIC TAXONOMY 97/97 MAPPED / STRICT MINIMUM 1689`
+Status: `2 CATALOG-OPEN ⚠️ DIRECTORIES / 14 DEPLOYED-EVIDENCE ROUTES / CURRENT PHYSICAL MAGIC TAXONOMY 97/97 MAPPED / STRICT MINIMUM 1849`
 
 ## Purpose
 
@@ -10,9 +10,9 @@ This index routes providers that still have a specific deployed config/script/re
 
 It does **not** replace provider dossiers, does not change the strict semantic ledger, and does not certify runtime compatibility. Its purpose is to prevent repeated registry enumeration and point each provider at the smallest authoritative evidence gate that remains open.
 
-Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@d1659e7abadcf03c386d17b1886a473dc6541195`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
+Current provider-directory reality is read from canonical Black Arcana `main`; physical presence/version authority is reconciled against sibling `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`. This routing document intentionally does **not** pin its own parent `main` SHA, because doing so becomes stale as soon as the document itself is merged:
 
-- **2** provider directories carry the ⚠️ prefix: Iron's Spellbooks KubeJS and Traveloptics;
+- **2** provider directories carry the ⚠️ prefix: Traveloptics and Deeper and Darker;
 - the table below preserves **14 bounded deployed-evidence routes** because 12 catalog-closed ✅ providers still retain specific config/reachability/runtime conditions worth routing;
 - a ✅ folder means semantic denominator/materialization is catalog-closed, not that deployed runtime/config QA automatically passed;
 - Immersive Portal Iron's bridge, Iron's Recolor, Spell Actionbar and Spell Codex Specs remain **✅ cataloged at +0 independent semantic identities**; their remaining interoperability/runtime QA stays separate.
@@ -29,7 +29,7 @@ A route leaves this index when its named deployed-evidence gate is satisfied or 
 | Somake Spells `1.0.9` | Physical SHA-1 equals exact File `8867079`; exact registry = 83 IDs; exact gate topology = 67 unconditional + 16 optional; current provider composition admits 83/83 | Effective deployed `enableSpellLockSystem`; effective Iron's `enabled` / `school` / `allow_crafting` overrides; provider/host survival acquisition and current Aqua coexistence/authority where applicable | [CURRENT-1.0.9-REVALIDATION-CHECKLIST.md](../providers/✅-somake-spells/CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) |
 | Corail Tombstone `9.5.6` | Physical Project Library SHA-1 equals exact File `8842741`; 10 prayer/Ritual Flute actions are `COUNTED_EXACT`; 12 additional castable action families exactly deduplicated one-to-one to `allow_*` gates | Effective deployed values of the 12 `AllowedMagicItems` booleans; missing/ambiguous values remain fail-closed. Recheck the exact fingerprint in the eventual deployed-evidence report as a drift guard | [DEPLOYED-CONFIG-CHECKLIST.md](../providers/✅-corail-tombstone/DEPLOYED-CONFIG-CHECKLIST.md) |
 | Mowzie's Mobs `1.8.2` | Exact physical=publisher artifact; 13 active player-ability slots reconciled to 10 strict actions + 1 conditional Tunneling action; technical `hit_boulder` / `backstab` excluded | Effective deployed `tools_and_abilities.earthrend_gauntlet.enable_tunneling` from the exact current instance/world; physical fingerprint must match the cataloged 1.8.2 SHA-1 | [DEPLOYED-CONFIG-CHECKLIST.md](../providers/✅-mowzies-mobs/DEPLOYED-CONFIG-CHECKLIST.md) |
-| Iron's Spellbooks KubeJS `4.0.3` | Exact framework/source pinned; base framework contributes +0 fixed built-in identities; spell/school builder capability is known | Exact current `kubejs/**` script inventory or bounded assembled-registry provenance proving which script-defined spells/schools exist, including zero-content closure if none exist | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/⚠️-irons-spellbooks-kubejs/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
+| Deeper and Darker `1.4.1` | Public GitHub/Modrinth/CurseForge 1.4.1 artifacts are byte-identical and close a three-root supernatural baseline, while current physical SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88` is `OTHER_VERIFIED`; retained chronology and bounded repack/source-build audits do not bridge those bytes | Direct inspection/cryptographic bridge for the current physical JAR plus effective deployed Soul Elytra cooldown/config evidence; until then the three public roots remain baseline-only and +0 strict | [README.md](../providers/⚠️-deeper-and-darker/README.md) |
 | KubeJS Ars Nouveau `1.3.2` | Exact physical release identified; framework exposes six Ars recipe schemas and +0 provider-owned spell/glyph identities | Exact current `kubejs/server_scripts/**` / relevant `kubejs/data/**` mutation inventory to close recipe/tome reachability and economy effects on existing Ars objects | [PACK-SCRIPT-CLOSURE-CHECKLIST.md](../providers/✅-kubejs-ars-nouveau/PACK-SCRIPT-CLOSURE-CHECKLIST.md) |
 | T.O Magic n' Extras / Traveloptics `4.4.0.1-1.21.1` | Current physical filename/SHA-1 are known; an older 2026-08-18 CurseForge snapshot records File `6342780` with `isModified=true`, but it does not prove ancestry of the later 2026-09-16 SHA-1; physical bytes remain `OTHER_VERIFIED` vs publisher/known patch; 33-ID publisher baseline is not exact-current | Exact current physical provenance/content delta; assembled loot-modifier initialization; 1.21.1-specific `traveloptics:blackout` survival route; Somake Aqua coexistence/authority | [CLOSURE-CHECKLIST.md](../providers/⚠️-traveloptics/CLOSURE-CHECKLIST.md) |
 | Ice And Fire Community Edition `2.1.2` | Exact physical SHA-1 equals publisher File `8757837`; exact source closes 9 active action families; exact provider-data reachability promotes 7 and current-pack NeoForge 21.1.250 runtime audit `36327488231` promotes Dread Lich Staff for 8 strict total | Ghost Sword only: exact recipe is closed, but deployed Jupiter `tools.phantasmalBladeAbility` is still required | [DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md](../providers/✅-ice-and-fire-ce/DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md) |
@@ -45,7 +45,8 @@ These providers are **✅ cataloged** because their independent semantic contrib
 - Immersive Portal Iron's Spells addon;
 - Iron's Spells Recolor;
 - Spell Actionbar;
-- Spell Codex Specs.
+- Spell Codex Specs;
+- Iron's Spellbooks KubeJS — semantic denominator closed at +0 by exact-source + owner-attestation evidence; deployed `kubejs/` filesystem parity remains QA and contradictory current registration scripts reopen the provider.
 
 Their exact implementation/interoperability/config/runtime QA remains fail-closed and separate. Do not move that technical debt into the semantic numerator or reinterpret ✅ as runtime certification.
 
@@ -102,7 +103,7 @@ Already closed evidence must be reused unless the physical/source line changes:
 - Mowzie's: exact 1.8.2 physical artifact, 13 active slots, semantic split 10 strict + 1 conditional + 2 technical/subaction exclusions;
 - Traveloptics: physical SHA-1 disposition is `OTHER_VERIFIED`; the older launcher snapshot records a File-6342780 slot with `isModified=true`, but temporal continuity to the later SHA-1 is unproven; publisher-baseline 33-ID inventory remains baseline only until exact current bytes/provenance are audited;
 - Ice And Fire CE: exact 2.1.2 physical/publisher identity, action candidates and Dread Lich Staff inherited drop reachability are closed; only the current Ghost Sword Jupiter config remains a catalog blocker;
-- KubeJS frameworks: framework/API role is already classified; only current pack scripts/mutations remain open.
+- KubeJS frameworks: provider-owned semantic denominators are classified; Iron's Spellbooks KubeJS deployed filesystem parity remains QA only, while KubeJS Ars Nouveau script mutations remain deployment/reachability/economy QA for externally owned Ars objects.
 
 ## Promotion discipline
 
@@ -115,4 +116,4 @@ When one checklist closes:
 5. keep runtime/integration QA separate;
 6. recheck the latest physical modlist/provider version immediately before merge.
 
-This index is a routing document. It adds no semantic objects itself. After the separately evidenced Reliquified L_Ender's Cataclysm 0.1.1 exact closure, Waystones 21.1.45 source-pinned closure and StarbuncleMania 1.5.8 exact +2 glyph closure, the current strict minimum is **1689**.
+This index is a routing document. It adds no semantic objects itself. The current strict reconstructible minimum is **1849**; the prior 1858 checkpoint is historical because Ars Morph (+8) and Woodwalkers SpellBooks (+1) are absent from the current physical snapshot.
