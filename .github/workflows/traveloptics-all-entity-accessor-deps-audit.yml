@@ -1,0 +1,225 @@
+name: Traveloptics All Entity Accessor Dependency Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Extract bounded dependencies for all entity-reading accessors
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          URL='https://www.cursemaven.com/curse/maven/to-tweaks-irons-spells-1046916/6342780/to-tweaks-irons-spells-1046916-6342780.jar'
+          EXPECTED_SHA1='3808493ce45cdfeb6408e85578adecf13df698e8'
+
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 600 "$URL" -o traveloptics.jar
+          test "$(sha1sum traveloptics.jar | awk '{print $1}')" = "$EXPECTED_SHA1"
+
+          mkdir -p audit
+          python3 - <<'PY'
+          import collections
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          jar="traveloptics.jar"
+
+          # (simple class, method name, entity local slot)
+          targets=[
+              ("BloodHowlSpell","getDamage",2),
+              ("AbyssalBlastSpell","getDamage",2),
+              ("PsychicBoltSpell","getEffectDuration",2),
+              ("ReversalSpell","calculateDamageMultiplier",2),
+              ("SpectralBlinkSpell","getEffectLevel",2),
+              ("EternalSentinelSpell","getGolemDamage",2),
+              ("OrbitalVoidSpell","getDamage",2),
+              ("VoidEruptionSpell","getDamage",2),
+              ("VortexPunchSpell","getDamage",2),
+              ("AstralSenseSpell","getDuration",2),
+              ("AshenBreathSpell","getDamage",2),
+              ("LingeringStrainSpell","getDuration",1),
+              ("IgnitedOnslaughtSpell","getBerserkerDamage",2),
+              ("IgnitedOnslaughtSpell","getRevenantDamage",2),
+              ("BurningJudgmentSpell","getDamage",2),
+              ("MeteorStormSpell","getDamage",1),
+              ("LavaBombSpell","getProjectileCount",2),
+              ("GyroSlashSpell","getDamage",2),
+              ("GyroSlashSpell","getFlameJetDamage",2),
+              ("NullflareSpell","getDamage",2),
+              ("SummonDesertDwellers","getKoboletonDamage",2),
+              ("SummonDesertDwellers","getWadjetDamage",2),
+              ("SwordOfTheAncientsSpell","getKobolediatorDamage",2),
+              ("AxeOfTheDoomedSpell","getAptrgangrDamage",2),
+              ("CursedRevenantsSpell","getDraugrDamage",2),
+              ("DespairSpell","getDamage",2),
+              ("HalberdHorizonSpell","getDamage",2),
+              ("MechanizedPredatorSpell","getWatcherDamage",2),
+              ("MechanizedPredatorSpell","getProwlerDamage",2),
+              ("RapidLaserSpell","getDamage",2),
+              ("DeathLaserSpell","getDamage",2),
+              ("EmPulse","getDuration",2),
+              ("AerialCollapseSpell","getDamage",2),
+              ("SteleCascadeSpell","getDamage",2),
+          ]
+
+          with zipfile.ZipFile(jar) as z:
+              entries=z.namelist()
+
+          def fqcn_for(simple):
+              suffix="/"+simple+".class"
+              matches=[e for e in entries if e.endswith(suffix)]
+              if len(matches)!=1:
+                  raise RuntimeError(f"{simple}: class matches={matches}")
+              return matches[0][:-6].replace("/", ".")
+
+          insn_re=re.compile(r'^\s*(\d+):\s+(\S+)(?:\s+(.*))?$')
+          local_load_re=re.compile(r'^(aload|iload|fload|dload|lload)(?:_(\d+))?$')
+          arithmetic_ops={
+              "iadd","isub","imul","idiv","irem","ineg",
+              "fadd","fsub","fmul","fdiv","frem","fneg",
+              "dadd","dsub","dmul","ddiv","drem","dneg",
+              "ladd","lsub","lmul","ldiv","lrem","lneg",
+              "i2f","i2d","i2l","f2i","f2d","f2l","d2i","d2f","d2l","l2i","l2f","l2d"
+          }
+
+          def javap_lines(fqcn):
+              p=subprocess.run(
+                  ["javap","-classpath",jar,"-c","-p","-s",fqcn],
+                  check=True,text=True,capture_output=True
+              )
+              return p.stdout.splitlines()
+
+          def candidate_methods(lines, method_name):
+              out=[]
+              for i,raw in enumerate(lines):
+                  sig=raw.strip()
+                  if not (sig.endswith(";") and re.search(r'\b'+re.escape(method_name)+r'\s*\(',sig)):
+                      continue
+                  if "LivingEntity" not in sig:
+                      continue
+                  desc=None
+                  code_idx=None
+                  for j in range(i+1,min(len(lines),i+12)):
+                      s=lines[j].strip()
+                      if s.startswith("descriptor:"):
+                          desc=s.split("descriptor:",1)[1].strip()
+                      if s=="Code:":
+                          code_idx=j
+                          break
+                  if desc is None or code_idx is None:
+                      continue
+                  instr=[]
+                  for raw2 in lines[code_idx+1:]:
+                      m=insn_re.match(raw2)
+                      if m:
+                          instr.append((m.group(2),m.group(3) or ""))
+                          continue
+                      if instr:
+                          break
+                  out.append((sig,desc,instr))
+              return out
+
+          def comment(arg):
+              return arg.split("//",1)[1].strip() if "//" in arg else ""
+
+          def loaded_slot(op,arg):
+              m=local_load_re.match(op)
+              if not m:
+                  return None
+              if m.group(2) is not None:
+                  return int(m.group(2))
+              raw=(arg or "").strip().split()
+              if not raw:
+                  return None
+              try:
+                  return int(raw[0])
+              except ValueError:
+                  return None
+
+          rows=[]
+          for simple,method,entity_slot in targets:
+              fqcn=fqcn_for(simple)
+              candidates=candidate_methods(javap_lines(fqcn),method)
+              if len(candidates)!=1:
+                  raise RuntimeError(f"{fqcn}.{method}: expected 1 LivingEntity candidate, found {len(candidates)}")
+              sig,desc,instr=candidates[0]
+              fields=set()
+              invokes=set()
+              branches=0
+              entity_loads=0
+              arithmetic=collections.Counter()
+              for op,arg in instr:
+                  slot=loaded_slot(op,arg)
+                  if slot==entity_slot:
+                      entity_loads+=1
+                  if op in ("getfield","putfield","getstatic","putstatic"):
+                      c=comment(arg)
+                      if c:
+                          fields.add(f"{op}:{c}")
+                  if op.startswith("invoke"):
+                      c=comment(arg)
+                      if c:
+                          invokes.add(f"{op}:{c}")
+                  if op.startswith(("if","goto","tableswitch","lookupswitch","jsr","ret")):
+                      branches+=1
+                  if op in arithmetic_ops:
+                      arithmetic[op]+=1
+              rows.append((simple,method,desc,entity_slot,entity_loads,branches,sorted(fields),sorted(invokes),arithmetic))
+
+          report=Path("audit/report.txt")
+          with report.open("w",encoding="utf-8") as f:
+              f.write("Traveloptics exact-alpha all entity-reading accessor dependency audit\n")
+              f.write("artifact=CurseForge 1046916/6342780\n")
+              f.write("sha1=3808493ce45cdfeb6408e85578adecf13df698e8\n")
+              f.write("scope=34 ENTITY_SLOT_READ numeric accessors from canonical LivingEntity checkpoint\n")
+              f.write("retention=method identity + descriptor + entity-load count + branch count + unordered field/invocation identities + arithmetic-op counts only; no constants, instruction order, reconstructed formulas, method bodies, assets, localization or binary bytes\n\n")
+              for simple,method,desc,entity_slot,entity_loads,branches,fields,invokes,arithmetic in rows:
+                  fs=";".join(fields) if fields else "NONE"
+                  ins=";".join(invokes) if invokes else "NONE"
+                  ar=";".join(f"{k}:{v}" for k,v in sorted(arithmetic.items())) if arithmetic else "NONE"
+                  f.write(
+                      f"{simple}|{method}|{desc}|entity_slot={entity_slot}|entity_loads={entity_loads}|"
+                      f"branches={branches}|fields={fs}|invokes={ins}|arithmetic={ar}\n"
+                  )
+
+              f.write("\nsummary\n")
+              f.write(f"targets={len(rows)}\n")
+              f.write(f"with_fields={sum(1 for r in rows if r[6])}\n")
+              f.write(f"with_invokes={sum(1 for r in rows if r[7])}\n")
+              f.write(f"with_branches={sum(1 for r in rows if r[5])}\n")
+              f.write(f"with_arithmetic={sum(1 for r in rows if r[8])}\n")
+              f.write(f"total_entity_loads={sum(r[4] for r in rows)}\n")
+
+          if len(rows)!=34:
+              raise RuntimeError(f"expected 34 rows, got {len(rows)}")
+          if any(r[4] < 1 for r in rows):
+              raise RuntimeError("canonical ENTITY_SLOT_READ target unexpectedly has zero entity loads")
+          print(report.read_text(encoding="utf-8"))
+          PY
+
+      - name: Upload text-only audit
+        uses: actions/upload-artifact@v7
+        with:
+          name: traveloptics-all-entity-accessor-dependencies
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
