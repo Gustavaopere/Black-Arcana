@@ -70,7 +70,6 @@ This is an **inclusion claim, not exact-set equality**. The targeted retrieval d
 
 - the Java process reports or embeds SHA-1 `7b74816e...` — **NO / NOT OBSERVED**;
 - no file replacement occurred between the physical inventory and either runtime process — **NOT PROVEN**;
-- all 33 publisher-baseline IDs are positively observed in the 22/08 log family — **YES**;
 - the runtime Traveloptics spell set is proven to contain **no additional IDs beyond those 33** — **NOT PROVEN**;
 - current physical registry equality to File `6342780` — **NOT PROVEN**;
 - exact-current mechanics/stat equality — **NOT PROVEN**;
@@ -93,7 +92,7 @@ This is stronger than the earlier >=25/33 correlation, but it remains **process-
 
 Strengthened.
 
-Both 22/08 logs reached the spell-attribute registration surface for numerous Traveloptics identities, including Blackout, after the first direct physical hash capture was retained that day. This is consistent with the replacement physical line progressing beyond the historical duplicate-codec startup failure.
+Both 22/08 logs reached the spell-attribute registration surface for Traveloptics; across the retained first-hash-day log family all 33 publisher-baseline identities are positively observed, including Blackout, after the first direct physical hash capture was retained that day. This is consistent with the replacement physical line progressing beyond the historical duplicate-codec startup failure.
 
 It still does not directly observe the two target loot-modifier serializer objects and does not bind the process to the SHA cryptographically.
 
