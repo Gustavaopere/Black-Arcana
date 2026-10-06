@@ -4,7 +4,7 @@
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
 
-The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. At the Phase 2BT checkpoint the strict minimum remained **1344**. Subsequent current reconciliations recorded below now raise the strict reconstructible minimum to **1858**. The global denominator is still incomplete and no semantic percentage is declared.
+The reconstructible semantic ledger lives in [`SEMANTIC-MAGIC-COVERAGE.md`](./SEMANTIC-MAGIC-COVERAGE.md). Phase 2BL raises the **strict counted minimum to 1316 semantic magic objects** by closing exact Goety Iron 3.1 (+14) and Goety Cataclysm 1.21.1-1.8.2 (+52) inventories without duplicating base-Goety ownership. Phase 2BM then closes Ars Polymorphia 1.0.3 as a source-pinned zero-semantic bridge with **+0**, Phase 2BN closes Ars Sable 1.1.2 as a source-pinned zero-semantic spatial/compat bridge with **+0**, Phase 2BO closes Farmer's Spell 'n Spellbooks 1.0.5.1 with **+6 `COUNTED_SOURCE_PINNED`**, and Phase 2BP closes SnackPirate's Aeromancy Additions 1.2.8 with **+10 `COUNTED_SOURCE_PINNED`**; Phase 2BQ then closes Ars Nouveau: Two-Way Portals 2.0.0 as exact hash-matched `ZERO_SEMANTIC_PORTAL_INFRA` with **+0**; Phase 2BR closes GTBC's Geomancy Plus 1.1.0-1.21.1 at **+12 `COUNTED_RELEASE_BOUNDED`** from the exact publisher-release registry plus provider/host reachability evidence; Phase 2BT closes Vampire Spells Addon 0.0.9 as source-pinned `ZERO_BRIDGE_INFRA` with **+0**. At the Phase 2BT checkpoint the strict minimum remained **1344**. Subsequent current reconciliations recorded below now raise the strict reconstructible minimum to **1849**. The global denominator is still incomplete and no semantic percentage is declared. The earlier **1858** checkpoint is historical: current physical reconciliation excludes Ars Morph (+8) and Woodwalkers SpellBooks (+1), both absent from the current physical snapshot, yielding the reconstructible **1849** minimum.
 
 ## Structural provider-directory inventory — current 06/10/2026 cross-domain batch 1
 
@@ -26,13 +26,13 @@ Four new current physical providers outside the physical-`Magic` subtotal are no
 - Snow! Real Magic! 12.2.2 — `ZERO_SEMANTIC_SNOW_WORLDSTATE`;
 - Epic Fight & Iron's Spellbook Animation Compat 3.1.0 — `ZERO_SEMANTIC_CAST_ANIMATION_BRIDGE`.
 
-Structural count becomes **161 = 159 ✅ + 2 ⚠️**. Existing `efiscompat` remains represented once by the canonical `✅-efiscompat` directory. Physical-`Magic` mapping remains **97/97**. Strict semantic minimum remains **1858**.
+Structural count becomes **161 = 159 ✅ + 2 ⚠️**. Existing `efiscompat` remains represented once by the canonical `✅-efiscompat` directory. Physical-`Magic` mapping remains **97/97**. Strict semantic minimum remains **1849**.
 
 See [CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md](./CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md).
 
 ## Historical current-Magic reconciliation — 05/10/2026
 
-Current sibling authority `de80b186357cad20ba5b81892a8682777e96e35a` still contains **97** physical dossiers whose category directory includes `Magic`; all **97/97** map to canonical Black Arcana providers. Direct normalized names cover 80 rows and 17 naming aliases are validated by matching physical `mod id` against the provider README. At that 05/10 checkpoint, provider-tree structure was **157 = 155 ✅ + 2 ⚠️**, with no ❌ or 🟡. This reconciliation changes no semantic-object count; the strict reconstructible minimum remains **1858** and the final semantic denominator remains open.
+Current sibling authority `de80b186357cad20ba5b81892a8682777e96e35a` still contains **97** physical dossiers whose category directory includes `Magic`; all **97/97** map to canonical Black Arcana providers. Direct normalized names cover 80 rows and 17 naming aliases are validated by matching physical `mod id` against the provider README. At that 05/10 checkpoint, provider-tree structure was **157 = 155 ✅ + 2 ⚠️**, with no ❌ or 🟡. This reconciliation changes no semantic-object count; the strict reconstructible minimum remains **1849** and the final semantic denominator remains open.
 
 See [PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md).
 
@@ -108,7 +108,7 @@ Semantic effect of the current reconciliation:
 - Somake 1.0.9 remains **⚠️ / +0 strict** with 83/83 current registrations structurally closed but deployed config/reachability open.
 - Iron's Spellbooks KubeJS and KubeJS Ars Nouveau have **+0 fixed built-in identities**, while current pack-script mutation/registration inventories remain open.
 
-The strict reconstructible semantic minimum is therefore **1858**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
+The strict reconstructible semantic minimum is therefore **1849**. The semantic denominator and the global cross-domain technical denominator remain incomplete; no percentage is declared.
 
 ## Current provider override — Hazen N Stuff 1.4.0.14
 
@@ -235,7 +235,7 @@ Therefore:
 - semantic numerator delta from current-provider ledger normalization: **+9 strict** = Ars Morph 2.0.0 **+8 `COUNTED_SOURCE_PINNED`** + Woodwalkers SpellBooks 0.3.1-BETA **+1 `COUNTED_SOURCE_PINNED`**; Vampiric Ageing 1.4.21 adds 9 `CONDITIONAL` actions outside strict;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
 - semantic numerator delta from Reliquified L_Ender's Cataclysm 0.1.1 exact-artifact closure: **+7 `COUNTED_EXACT`**;
-- strict reconstructible semantic minimum: **1858**;
+- strict reconstructible semantic minimum: **1849**;
 - the global semantic denominator remains incomplete because other providers still have open granular inventories;
 - **do not derive a spell/magic percentage from the provider-component metric below**.
 
