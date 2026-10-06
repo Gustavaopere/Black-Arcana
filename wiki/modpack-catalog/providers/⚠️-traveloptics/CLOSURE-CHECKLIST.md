@@ -51,10 +51,10 @@ Project Library now provides a second current-line temporal bridge on the date o
 
 - physical inventory `fcb79de3-0e3e-41af-8136-cd524859f71c.txt` records the canonical JAR at SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4` / fingerprint `4254006126`;
 - two same-day assembled debug logs, `debug(20260822-184009).log` and `debug(20260822-185838).log`, expose Traveloptics spell registrations to the runtime attribute layer shortly afterward;
-- a bounded Library-index audit positively confirms **at least 25/33** exact publisher-baseline Traveloptics IDs in those two logs, including `traveloptics:blackout`;
-- the eight IDs not independently surfaced by the bounded index are **not** treated as absent because the raw log bytes are not currently readable/exportable through the available Project file path.
+- the original bounded retrieval pass positively surfaced 25/33 publisher-baseline IDs, including `traveloptics:blackout`;
+- a 2026-10-06 targeted retrieval of the previously unsurfaced eight IDs now finds direct `Registered attribute [spell/traveloptics/<id>]` lines for **all eight**, so the first-hash-day log family positively observes **all 33/33 publisher-baseline IDs**.
 
-This materially strengthens the current-line registry correlation because it occurs on the first hash-capture day. It remains **process-hash-unbound**: neither Java process reports the SHA-1, no immutability between inventory and process is proven, and exact-current 33/33 set equality is still open.
+This materially strengthens the current-line registry correlation because it occurs on the first hash-capture day. It remains **process-hash-unbound**: neither Java process reports the SHA-1, no immutability between inventory and process is proven, and the positive 33/33 inclusion result does **not** exclude additional current-runtime Traveloptics spell IDs. Exact-current set equality therefore remains open.
 
 Canonical detail: [`RUNTIME-2026-08-22-FIRST-HASH-REGISTRY-CORRELATION.md`](RUNTIME-2026-08-22-FIRST-HASH-REGISTRY-CORRELATION.md).
 
