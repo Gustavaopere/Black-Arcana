@@ -1,6 +1,34 @@
 # Fila operacional de auditoria dos providers mágicos
 
-## Autoridade atual
+## Override corrente — 2026-10-06
+
+Esta seção prevalece sobre números/filas históricas preservados abaixo.
+
+- Black Arcana canônico: `main@9661f629b991d44854724b7d48fd289bd1ea9111`;
+- sibling físico/modlist: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`;
+- árvore atual de providers: **161 = 159 ✅ + 2 ⚠️**;
+- únicos diretórios ⚠️: **Traveloptics** e **Deeper and Darker**;
+- categoria física sibling `Magic`: **97/97** dossiers mapeados;
+- cobertura estrutural do ledger: **161/161** diretórios atuais com disposição/referência semântica explícita;
+- mínimo semântico estrito reconstruível corrente: **1849**;
+- checkpoint **1858**: histórico; Ars Morph (+8) e Woodwalkers SpellBooks (+1) permanecem catalogados historicamente, mas estão ausentes do snapshot físico corrente e contribuem +0 ao numerador atual;
+- denominador semântico final: **aberto**;
+- denominador técnico cross-domain: **`PENDING REBASE`**;
+- Iron's Spellbooks KubeJS: **✅ +0 strict** no evidence ceiling aceito; deployed `kubejs/` filesystem parity é QA separado e uma descoberta contraditória reabre o provider.
+
+### Roteamento corrente
+
+Os dois blockers de **catálogo de diretório** estão estacionados até surgir evidência nova:
+
+1. **⚠️ Traveloptics 4.4.0.1-1.21.1** — current physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`; falta bridge/inspeção dos bytes físicos atuais, inicialização process-bound dos loot modifiers e rota survival atual de `traveloptics:blackout`. Não repetir repacks genéricos nem projetar o baseline publisher 33/33 como registry físico atual.
+2. **⚠️ Deeper and Darker 1.4.1** — current physical SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`; baseline público fecha 3 raízes, mas os bytes físicos divergem dos artifacts oficiais e falta bridge/inspeção direta + config implantada do Soul Elytra. Não repetir matrizes de repack/source-build já saturadas sem pista nova.
+
+Além deles, providers ✅ podem manter **rotas de evidência implantada** sem reabrir a completude do diretório. A lista operacional canônica é [`CONDITIONAL-PROVIDER-CLOSURE.md`](./CONDITIONAL-PROVIDER-CLOSURE.md), atualmente com 14 rotas bounded: Asterism Arcanum, Gaze, Not Enough Glyphs 4.6.2, Somake Spells 1.0.9, Corail Tombstone 9.5.6, Mowzie's Mobs 1.8.2, Deeper and Darker 1.4.1, KubeJS Ars Nouveau 1.3.2, Traveloptics 4.4.0.1-1.21.1, Ice And Fire CE 2.1.2, ShadowsZ 1.1.9, Simply Swords: Cataclysm 1.0.2, Simply More Alpha 5 e Simply Swords 1.70.2.
+
+**Próxima seleção:** só executar uma dessas rotas quando houver input deployed/current novo capaz de satisfazer o checklist específico. Sem novo config/script/datapack/runtime/byte evidence, não fabricar fechamento nem repetir auditoria já esgotada; passar ao próximo blocker com evidência nova.
+
+
+## Autoridade histórica preservada
 
 O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-AUDIT-QUEUE-PRE-PHASE2AX.md`](./PROVIDER-AUDIT-QUEUE-PRE-PHASE2AX.md).
 
@@ -20,7 +48,7 @@ O snapshot imediatamente anterior está preservado byte-for-byte em [`PROVIDER-A
 
 ### Cobertura semântica de magias — métrica principal para o usuário
 
-A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, Phase 2BN fecha Ars Sable 1.1.2 como bridge/infra espacial Ars Nouveau ↔ Sable com **+0**, Phase 2BO fecha Farmer's Spell 'n Spellbooks 1.0.5.1 com **+6 `COUNTED_SOURCE_PINNED`**, Phase 2BP fecha SnackPirate's Aeromancy Additions 1.2.8 com **+10 `COUNTED_SOURCE_PINNED`**, Phase 2BQ fecha Ars Nouveau: Two-Way Portals 2.0.0 como `ZERO_SEMANTIC_PORTAL_INFRA` com **+0**, Phase 2BR fecha GTBC's Geomancy Plus 1.1.0-1.21.1 com **+12 `COUNTED_RELEASE_BOUNDED`**, e Phase 2BT fecha Vampire Spells Addon 0.0.9 como `ZERO_BRIDGE_INFRA` com **+0**. Naquele checkpoint o mínimo permanecia **1344**. Reconciliações posteriores, incluindo o fechamento exato de Cataclysm: Ignis Soulfires 1.8.0 em **+8 `COUNTED_EXACT`**, elevam o mínimo estrito corrente para **1697**. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
+A reconstrução canônica após Phase 2BK fecha **1250 objetos mágicos semânticos**. Phase 2BL fecha Goety Iron 3.1 em **+14** e Goety Cataclysm 1.21.1-1.8.2 em **+52**, portanto o mínimo passa a **1316**. Phase 2BM fecha Ars Polymorphia 1.0.3 como bridge de resolução de conflitos de receita com **+0** magias semânticas independentes, Phase 2BN fecha Ars Sable 1.1.2 como bridge/infra espacial Ars Nouveau ↔ Sable com **+0**, Phase 2BO fecha Farmer's Spell 'n Spellbooks 1.0.5.1 com **+6 `COUNTED_SOURCE_PINNED`**, Phase 2BP fecha SnackPirate's Aeromancy Additions 1.2.8 com **+10 `COUNTED_SOURCE_PINNED`**, Phase 2BQ fecha Ars Nouveau: Two-Way Portals 2.0.0 como `ZERO_SEMANTIC_PORTAL_INFRA` com **+0**, Phase 2BR fecha GTBC's Geomancy Plus 1.1.0-1.21.1 com **+12 `COUNTED_RELEASE_BOUNDED`**, e Phase 2BT fecha Vampire Spells Addon 0.0.9 como `ZERO_BRIDGE_INFRA` com **+0**. Naquele checkpoint o mínimo permanecia **1344**. Reconciliações posteriores daquele recorte, incluindo o fechamento exato de Cataclysm: Ignis Soulfires 1.8.0 em **+8 `COUNTED_EXACT`**, levaram o mínimo estrito histórico dessa sequência a **1697**; este valor foi supersedido pelo override corrente acima. O denominador global continua incompleto e nenhuma porcentagem semântica é declarada.
 
 A correção de contagem imediatamente anterior ao fechamento Alshanex continua sendo **Werewolves Leap +1**: a source exata 2.0.3.3 prova `LEAP` como `ActionSkill`, nó `SURVIVAL31` conectado à árvore normal e input dedicado processado pelo servidor/provider. Portanto Leap deixa de ser `CONDITIONAL` e Werewolves passa de 7 para 8 ações semânticas contadas. `hide_name` continua excluído como presentation-only; `no_leap_cooldown` continua sendo uma questão separada de refinement/acquisition.
 
@@ -404,19 +432,20 @@ FamiliarsLib license evidence conflicts across source/publisher surfaces. No reu
 | 50 | 2AV / #160 | `apotheosis` | CANÔNICO |
 | 49 | 2AU / #158 | `apothic_enchanting` | CANÔNICO |
 
-## Próxima seleção
+## Próxima seleção — histórico supersedido
 
-Phase 2BF / Somake, Phase 2BG / Leylines, Phase 2BH / Goety, Phase 2BL / Goety addons, Phase 2BM / Ars Polymorphia, Phase 2BN / Ars Sable, Phase 2BO / Farmer's Spell, Phase 2BP / Aeromancy Additions, Phase 2BQ / Ars Nouveau: Two-Way Portals, Phase 2BR / GTBC's Geomancy Plus e Phase 2BT / Vampire Spells Addon já foram reconciliadas no nível de evidência descrito acima. Não reiniciar esses fechamentos a partir de branches antigas.
+A seleção operacional corrente está no **Override corrente — 2026-10-06** no topo deste arquivo e em [`CONDITIONAL-PROVIDER-CLOSURE.md`](./CONDITIONAL-PROVIDER-CLOSURE.md).
 
-Blockers atualmente **PARKED até existir input novo**:
+Os registros abaixo foram usados por checkpoints anteriores e permanecem apenas como provenance. Não reiniciar Phase 2BF/2BG/2BH/2BL/2BM/2BN/2BO/2BP/2BQ/2BR/2BT nem antigas auditorias de Traveloptics/Deeper a partir de branches históricas.
 
-- Not Enough Glyphs 4.6.1 — 39 registrations source-enabled permanecem `CONDITIONAL`; cada glyph usa config `SERVER` `not_enough_glyphs/<glyph>.toml` / `[general].enabled`, e nenhum conjunto implantado de world/server overrides está presente no repositório ou nos materiais físicos atualmente disponíveis;
-- Gaze 1.1.7.1 — o registry exato e Soulward Shield já estão fechados; os 26 Spirit Rites permanecem `CONDITIONAL` somente porque o valor COMMON implantado de `disableGazeRites` não está disponível;
-- Somake Spells 1.0.9 — o registry/current-composition de **83/83 registrations** está estruturalmente fechado, mas a config efetiva de `enableSpellLockSystem` e survival acquisition/reachability completa continuam sem autoridade suficiente; o antigo 1.0.8-fix/67 permanece apenas como checkpoint histórico.
+No estado corrente:
 
-A próxima seleção deve escolher **outro componente ainda aberto** para o qual exista evidência current/exact capaz de reduzir incerteza de inventário ou de classificação. Defaults de provider, publisher prose ou branches preparatórias não substituem estado implantado. Se um candidato só puder avançar com navegação/material externo indisponível, registrar a pendência e passar ao próximo blocker seguro em vez de fabricar fechamento.
+- **Traveloptics** e **Deeper and Darker** são os únicos diretórios ⚠️ e estão **PARKED até existir evidência física/runtime/provenance nova**;
+- Not Enough Glyphs **4.6.2**, Gaze 1.1.7.1, Somake Spells 1.0.9 e as demais rotas de config/reachability de providers ✅ devem seguir exclusivamente seus checklists atuais;
+- defaults de provider, publisher prose, creative/command access ou branches preparatórias não substituem estado implantado;
+- se uma rota exigir material externo não disponível, registrar a pendência e escolher outro blocker que tenha evidência nova.
 
-O checkpoint histórico desta seção fechou em **1344 objetos semânticos mínimos / 67 de 100 componentes**. A autoridade corrente é o ledger reconstruído: **1849 objetos semânticos mínimos**; o antigo checkpoint **1858** incluía Ars Morph (+8) e Woodwalkers SpellBooks (+1), ambos ausentes do snapshot físico corrente. O antigo denominador `100` permanece histórico e o denominador técnico global continua `PENDING REBASE`. Cataclysm: Ignis Soulfires 1.8.0 já integra o rebase cross-domain canônico; seus registros históricos de promoção/CI permanecem provenance.
+O checkpoint histórico desta seção fechou em **1344 objetos semânticos mínimos / 67 de 100 componentes**. A autoridade corrente é **1849 strict**, com denominador técnico global `PENDING REBASE`.
 
 ## Regras
 
