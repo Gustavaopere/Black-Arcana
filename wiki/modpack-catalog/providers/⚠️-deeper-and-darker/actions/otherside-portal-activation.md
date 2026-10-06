@@ -38,7 +38,9 @@ Heart of the Deep is registered with:
 - interior width: **2–21 blocks**;
 - interior height: **2–21 blocks**;
 - reinforced deepslate on the frame boundary;
-- interior cells that are air or existing Otherside portal blocks.
+- the broader shape/lifecycle validator treats interior cells as structurally empty when they are air or existing Otherside portal blocks.
+
+For **new player activation**, `OthersidePortalBlock.isPortal(...)` adds a stricter condition: the selected valid X/Z shape must have `numPortalBlocks == 0`. A frame whose interior already contains any Otherside portal block is therefore **not eligible for a new Heart activation**, even though those blocks are accepted by the broader shape-validity/lifecycle checks.
 
 The player activation path does **not** read `othersidePortalWidth` or `othersidePortalHeight`. Those COMMON config keys therefore are not used here as activation dimensions.
 
