@@ -6,6 +6,14 @@ These are clean-room behavior cards for the official public 1.4.1 artifact, corr
 
 They are **not** asserted as the exact installed-pack denominator because the physical SHA-1 `83f7edd0...` differs from every official public artifact tested and from the clean source rebuild produced by NON-MERGE PR #573. Quantitative values below are public/source baseline values, not deployed-byte claims.
 
+Individual action files:
+
+- [Otherside Portal Activation](otherside-portal-activation.md)
+- [Sonorous Staff Sonic Boom](sonorous-staff-sonic-boom.md)
+- [Soul Elytra Boost](soul-elytra-boost.md)
+
+These files are a materialization of the same three baseline roots and add **+0** to the current strict numerator.
+
 ## 1. Otherside Portal Activation
 
 - owner item: `deeperdarker:heart_of_the_deep`;
@@ -25,7 +33,9 @@ The exact `OthersidePortalBlock.OthersidePortalShape` validator requires:
 - reinforced deepslate frame;
 - interior width: **2–21 blocks**;
 - interior height: **2–21 blocks**;
-- interior cells empty or already occupied by Otherside portal blocks.
+- the broader shape/lifecycle validator accepts interior cells that are air or already occupied by Otherside portal blocks.
+
+For **new Heart activation**, `OthersidePortalBlock.isPortal(...)` additionally requires `numPortalBlocks == 0`; any pre-existing Otherside portal block in the selected frame prevents a new portal spawn through this action.
 
 The player-facing activation path does **not** read `othersidePortalWidth` / `othersidePortalHeight`; those config fields are therefore not projected onto this action card.
 
