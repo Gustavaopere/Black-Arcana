@@ -186,10 +186,11 @@ The parser accepts only the bounded fields emitted by the QA companion:
 - target Iron's spell IDs, school, `enabled`, `allow_crafting` and bounded failure status;
 - target namespace registered counts;
 - the exact 39 canonical Not Enough Glyphs candidate IDs with runtime registration/effective `enabled` state;
+- Traveloptics loaded-mod-file basename, byte size and SHA-1 (or bounded hash failure), accepted only for mod id `traveloptics`;
 - Traveloptics `key_loot` / `universal_loot` serializer presence;
 - Traveloptics serializer-pair status and distinct-object boolean.
 
-Probe schemas `1`, `2` and `3` are accepted. Schema 3 adds bounded Not Enough Glyphs `type=glyph` rows while retaining backward compatibility with earlier probe logs. Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows, a count of malformed/unrecognized prefixed rows, and a separate count of embedded-prefix rows rejected before parsing.
+Probe schemas `1`, `2`, `3` and `4` are accepted. Schema 3 adds bounded Not Enough Glyphs `type=glyph` rows; schema 4 retains those rows and adds only the whitelisted Traveloptics `type=mod_file` fingerprint row while retaining backward compatibility with earlier probe logs. Unknown row types, unknown provider IDs, malformed booleans/counts/resource locations and unrecognized fields are not copied into the report. The output records only a relative/source label, parser status, schema, structured rows, a count of malformed/unrecognized prefixed rows, and a separate count of embedded-prefix rows rejected before parsing.
 
 Possible parser states:
 
@@ -538,7 +539,7 @@ It also searches only for the exact literal `traveloptics:blackout` in bounded d
 
 The JSON retains only source category, relative path, line number and the exact literal. It does **not** copy script bodies, quest prose or datapack payloads.
 
-This closes physical disposition only when the collected file is the actual installed JAR. A Blackout literal match is only a **route candidate**; it must still be inspected against the Traveloptics checklist to prove an actual current-pack survival grant/acquisition mechanism.
+This closes filesystem physical disposition only when the collected file is the actual installed JAR. Schema-4 runtime probe evidence can independently bind the exact FML-loaded Traveloptics file fingerprint to the same process that emits registry/serializer rows; agreement between the two fingerprints is stronger same-run evidence but still does not establish upstream/local provenance. A Blackout literal match is only a **route candidate**; it must still be inspected against the Traveloptics checklist to prove an actual current-pack survival grant/acquisition mechanism.
 
 ## Iron's 3.16.3 host contract for collected paths
 

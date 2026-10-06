@@ -14,11 +14,11 @@ It is intended to reduce current conditional-provider blockers for:
 - Asterism Arcanum 0.1.0;
 - Gaze 1.1.7.1 Iron's-hosted spell surfaces;
 - Not Enough Glyphs 4.6.2 effective glyph enablement;
-- T.O Magic n' Extras / Traveloptics 4.4.0.1 — historical-instance support only.
+- T.O Magic n' Extras / Traveloptics 4.4.0.1 — current physical closure support plus historical-log compatibility.
 
-For historical Traveloptics instances it also observes the two exact NeoForge global-loot-modifier serializer IDs already named by the canonical closure checklist: `traveloptics:key_loot` and `traveloptics:universal_loot`.
+For Traveloptics exact-pack runs, schema 4 additionally fingerprints the **loaded Traveloptics mod file in the same server process** and observes the two exact NeoForge global-loot-modifier serializer IDs already named by the canonical closure checklist: `traveloptics:key_loot` and `traveloptics:universal_loot`.
 
-For Not Enough Glyphs it does **not** enumerate the global Ars registry. Schema 3 queries only the exact 39 candidate IDs already listed by the canonical NEG checklist and records their effective `AbstractSpellPart.isEnabled()` state. The filesystem SERVER-config checklist remains an independent supporting route.
+For Not Enough Glyphs it does **not** enumerate the global Ars registry. Schema 3 queries only the exact 39 candidate IDs already listed by the canonical NEG checklist and records their effective `AbstractSpellPart.isEnabled()` state. Schema 4 retains schema-3 behavior and adds only the bounded Traveloptics loaded-mod-file fingerprint row. The filesystem SERVER-config checklist remains an independent supporting route.
 
 ## Isolation
 
@@ -118,7 +118,18 @@ For the exact 39 Not Enough Glyphs candidate IDs it emits only:
 
 No other Ars glyph IDs are accepted by the collector whitelist.
 
-For historical Traveloptics loot-modifier registration it emits only:
+For Traveloptics it emits one additional process-bound physical row:
+
+- mod id fixed to `traveloptics`;
+- status `OBSERVED`;
+- the loaded mod-file **basename only**;
+- byte size;
+- SHA-1 of the exact file path reported by FML for the loaded mod;
+- or bounded `HASH_UNAVAILABLE error=<ExceptionClass>` when the file cannot be fingerprinted.
+
+The absolute filesystem path is never logged.
+
+For Traveloptics loot-modifier registration it emits only:
 
 - whether `traveloptics:key_loot` is present in NeoForge's global-loot-modifier serializer registry;
 - whether `traveloptics:universal_loot` is present;
@@ -133,6 +144,7 @@ Example shapes:
 ```text
 [BLACK_ARCANA_CATALOG_PROBE] type=spell id=somakespells:<id> status=OBSERVED school=<namespace:id> enabled=true allow_crafting=true
 [BLACK_ARCANA_CATALOG_PROBE] type=glyph id=not_enough_glyphs:glyph_plow status=OBSERVED enabled=true
+[BLACK_ARCANA_CATALOG_PROBE] type=mod_file id=traveloptics status=OBSERVED file_name=traveloptics-4.4.0.1-1.21.1.jar size_bytes=<bytes> sha1=<40-lowercase-hex>
 [BLACK_ARCANA_CATALOG_PROBE] type=loot_modifier_serializer id=traveloptics:key_loot status=OBSERVED
 [BLACK_ARCANA_CATALOG_PROBE] type=loot_modifier_pair namespace=traveloptics status=OBSERVED distinct_codec_instances=true
 ```
@@ -182,7 +194,7 @@ A bounded NEG `type=glyph` row from schema 3 can close, for that exact assembled
 
 When paired with the already-closed NEG 4.6.2 physical/source registration matrix, those rows can satisfy the deployed-enabled-state gate candidate by candidate. They do not by themselves prove downstream protection, Binder behavior or balance.
 
-For historical Traveloptics Gate 2, a successful exact-pack startup that reaches this probe can additionally provide direct evidence that the two expected NeoForge serializer IDs are present. A `distinct_codec_instances=true` row is bounded evidence that those two registry keys do not resolve to the same codec object in that run. Gate 2 still requires the actual deployed JAR hash/disposition to be paired with the startup evidence; the probe alone does not identify the physical bytes.
+For Traveloptics, schema 4 makes the registry evidence process-bound: the same complete probe block can retain the SHA-1/size/basename of the mod file reported by FML, the observed `traveloptics:` spell rows, and the two serializer IDs/pair result. When the `mod_file` SHA-1 equals the authoritative deployed fingerprint, those rows can be evaluated as one same-process evidence packet. A `distinct_codec_instances=true` row is bounded evidence that the two serializer registry keys do not resolve to the same codec object in that run. The row does not establish provenance/content ancestry of the JAR and does not prove loot behavior.
 
 It does **not** by itself close:
 
@@ -211,7 +223,7 @@ If an Iron's spell registry key resolves without a value, it emits:
 
 For a bounded NEG glyph target, a missing runtime entry emits `status=NOT_REGISTERED`; failure to read the host value emits `status=HOST_VALUE_UNAVAILABLE` with only the exception class name.
 
-For the bounded Traveloptics serializer observation, missing keys emit `status=NOT_PRESENT`; a partial pair emits `status=INCOMPLETE`; registry access failure emits `status=REGISTRY_VALUE_UNAVAILABLE`.
+For the bounded Traveloptics mod-file observation, fingerprint success emits `status=OBSERVED`; file/hash access failure emits `status=HASH_UNAVAILABLE` with only the exception class. For the serializer observation, missing keys emit `status=NOT_PRESENT`; a partial pair emits `status=INCOMPLETE`; registry access failure emits `status=REGISTRY_VALUE_UNAVAILABLE`.
 
 Missing, contradictory or failed observations remain fail-closed.
 

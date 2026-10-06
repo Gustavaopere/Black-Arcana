@@ -260,6 +260,66 @@ allow_lost_tablet = false
             )
 
 
+    def test_runtime_probe_accepts_schema4_traveloptics_mod_file_observation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            logs = instance / "logs"
+            logs.mkdir(parents=True)
+            (logs / "latest.log").write_text(
+                "\n".join(
+                    [
+                        "[BLACK_ARCANA_CATALOG_PROBE] type=begin schema=4",
+                        "[BLACK_ARCANA_CATALOG_PROBE] type=mod_file id=traveloptics status=OBSERVED file_name=traveloptics-4.4.0.1-1.21.1.jar size_bytes=18393641 sha1=7b74816e89cc15dd0b5a31d9ea1e456024e8fae4",
+                        "[BLACK_ARCANA_CATALOG_PROBE] type=end schema=4",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            result = collector.collect_catalog_runtime_probe(instance, None)
+
+            self.assertEqual("COMPLETE", result["status"])
+            self.assertEqual(4, result["schema"])
+            self.assertEqual(
+                [
+                    {
+                        "type": "mod_file",
+                        "id": "traveloptics",
+                        "status": "OBSERVED",
+                        "file_name": "traveloptics-4.4.0.1-1.21.1.jar",
+                        "size_bytes": 18393641,
+                        "sha1": "7b74816e89cc15dd0b5a31d9ea1e456024e8fae4",
+                    }
+                ],
+                result["rows"],
+            )
+
+    def test_runtime_probe_retains_traveloptics_mod_file_hash_failure(self) -> None:
+        row = collector.parse_catalog_probe_payload(
+            "type=mod_file id=traveloptics status=HASH_UNAVAILABLE error=IOException"
+        )
+
+        self.assertEqual(
+            {
+                "type": "mod_file",
+                "id": "traveloptics",
+                "status": "HASH_UNAVAILABLE",
+                "error": "IOException",
+            },
+            row,
+        )
+
+    def test_runtime_probe_rejects_unbounded_mod_file_observation(self) -> None:
+        row = collector.parse_catalog_probe_payload(
+            "type=mod_file id=somakespells status=OBSERVED "
+            "file_name=somakespells-1.0.9-1.21.1.jar size_bytes=123 sha1="
+            "171841ac9f802be9309ecc166c1d972ac6d404c0"
+        )
+
+        self.assertIsNone(row)
+
+
     def test_runtime_probe_rejects_legacy_unprefixed_neg_glyph_id(self) -> None:
         row = collector.parse_catalog_probe_payload(
             "type=glyph id=not_enough_glyphs:plow status=OBSERVED enabled=true"

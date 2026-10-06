@@ -33,7 +33,7 @@ Required authoritative result:
 
 Physical disposition remains **`OTHER_VERIFIED`**. Current provenance is now bounded to an August local-modification window but remains **unidentified at entry level**.
 
-**Gate 1 disposition checkpoint:** physical identity classification itself is closed at `OTHER_VERIFIED` (current SHA-1 `7b74816e...` is neither publisher original nor known patch). What remains open is the **provenance/content delta** of those verified replacement bytes and an exact-current registry/stat bridge. The retained Aug-17 JAR metadata provides two local candidate artifacts by name/size, but current inventories do not preserve a physical file-size field for `7b74816e...`; size therefore cannot identify the current replacement. Do not infer registry equality, File-6342780 ancestry, identity with the retained Aug-17 `fixed-keyloot.jar`, or the known later patch fix from the unchanged nominal filename/version. The next gate is still to materialize/audit the exact `7b74816e...` bytes or obtain equivalent contemporaneous exact-content provenance.
+**Gate 1 disposition checkpoint:** physical identity classification itself is closed at `OTHER_VERIFIED` (current SHA-1 `7b74816e...` is neither publisher original nor known patch). What remains open is the **provenance/content delta** of those verified replacement bytes and an exact-current registry/stat bridge. Schema 4 of the removable catalog QA probe now provides the required future process-bound bridge surface: it fingerprints the FML-loaded Traveloptics file by basename/size/SHA-1 in the same complete block that enumerates Traveloptics spell rows and Gate-2 serializers. This is especially relevant after #661 positively observed all 33 publisher-baseline IDs in the first-hash-day log family: a schema-4 run can bind a future exact registry observation to the file actually loaded by that process and can also expose any additional `traveloptics:` IDs. No such schema-4 physical-pack run is yet canonical evidence, so this infrastructure does not close Gate 1. The retained Aug-17 JAR metadata provides two local candidate artifacts by name/size, but current inventories do not preserve a physical file-size field for `7b74816e...`; size therefore cannot identify the current replacement. Do not infer registry equality, File-6342780 ancestry, identity with the retained Aug-17 `fixed-keyloot.jar`, or the known later patch fix from the unchanged nominal filename/version. The next gate is still to materialize/audit the exact `7b74816e...` bytes or obtain equivalent contemporaneous exact-content provenance.
 
 Temporary NON-MERGE PR **#474** further tested whether the current SHA-1 can be reproduced by common one-entry repacks of publisher File `6342780` using the exact changed `TOLootModifiers.class` from patch File `8861368`. Run `36649716927` succeeded, and none of the tested Info-ZIP, `jar uf`, or Python `zipfile` variants matched `7b74816e...`. The recorded Aug-17 Library `fixed-keyloot.jar` size also matched none of those candidates. This is negative lineage evidence only: it excludes those exact repack outputs but does not identify the installed replacement or its registry/content delta.
 
@@ -134,14 +134,15 @@ For the exact assembled pack it emits only the bounded targets:
 
 Canonical runbook: [`docs/qa/provider-catalog-runtime-registry-probe.md`](../../../../docs/qa/provider-catalog-runtime-registry-probe.md).
 
-This does not create a PASS by itself. Gate 2 evidence must still pair the runtime rows with the deployed artifact hash/disposition from Gate 1.
+This does not create a PASS by itself. Schema 4 can now perform that pairing inside one complete exact-pack probe block: `type=mod_file id=traveloptics status=OBSERVED ... sha1=<deployed hash>` plus the spell-registry and serializer rows/pair. Gate 2 remains open until an authoritative physical-pack run actually records the expected hash, both serializer IDs as `OBSERVED`, and `distinct_codec_instances=true`.
 
 For an exact patched/replacement artifact, a strong closure packet for this gate is:
 
 1. physical hash classified as `PATCHED_EXACT` or another explicitly verified replacement;
-2. assembled dedicated server reaches `ServerStartedEvent` with that exact artifact;
-3. both serializer IDs emit `status=OBSERVED`;
-4. the pair emits `status=OBSERVED distinct_codec_instances=true`.
+2. the same complete schema-4 probe block emits `type=mod_file id=traveloptics status=OBSERVED` with that exact artifact SHA-1;
+3. assembled dedicated server reaches `ServerStartedEvent` with that exact artifact;
+4. both serializer IDs emit `status=OBSERVED`;
+5. the pair emits `status=OBSERVED distinct_codec_instances=true`.
 
 For `ORIGINAL_EXACT`, successful startup and observed serializer rows are evidence to retain, but any result that conflicts with the already-audited duplicate-codec structure must be investigated rather than silently reclassified as fixed. The probe does not identify codec classes and does not prove loot-modifier behavior or Blackout acquisition.
 

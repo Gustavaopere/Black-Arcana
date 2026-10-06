@@ -189,7 +189,7 @@ CATALOG_PROBE_LOG_LINE_RE = re.compile(
     rf"\[{re.escape(CATALOG_PROBE_LOGGER)}/[^\]\r\n]*\]: "
     rf"{re.escape(CATALOG_PROBE_PREFIX)}(?P<payload>.*)$"
 )
-SUPPORTED_CATALOG_PROBE_SCHEMAS = {1, 2, 3}
+SUPPORTED_CATALOG_PROBE_SCHEMAS = {1, 2, 3, 4}
 TARGET_PROBE_MOD_IDS = {
     "ars_nouveau",
     "asterismarcanum",
@@ -212,6 +212,8 @@ TARGET_PROBE_LOOT_IDS = {
 TARGET_PROBE_GLYPH_IDS = {registry_id for registry_id, _ in NEG_CONFIGS}
 RESOURCE_LOCATION_RE = re.compile(r"^[a-z0-9_.-]+:[a-z0-9_./-]+$")
 SIMPLE_ERROR_RE = re.compile(r"^[A-Za-z0-9_$]+$")
+SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
+SAFE_JAR_FILENAME_RE = re.compile(r"^[A-Za-z0-9_.+\-]+\.jar$")
 
 
 def _probe_bool(value: str | None) -> bool | None:
@@ -265,6 +267,44 @@ def parse_catalog_probe_payload(payload: str) -> dict[str, Any] | None:
         if mod_id not in TARGET_PROBE_MOD_IDS or loaded is None:
             return None
         return {"type": "mod", "id": mod_id, "loaded": loaded}
+
+    if row_type == "mod_file":
+        mod_id = fields.get("id")
+        status = fields.get("status")
+        if mod_id != "traveloptics":
+            return None
+        if status == "HASH_UNAVAILABLE":
+            error = _probe_error(fields.get("error"))
+            if error is None:
+                return None
+            return {
+                "type": "mod_file",
+                "id": "traveloptics",
+                "status": status,
+                "error": error,
+            }
+        if status != "OBSERVED":
+            return None
+
+        file_name = fields.get("file_name")
+        size_bytes = _probe_nonnegative_int(fields.get("size_bytes"))
+        sha1 = fields.get("sha1")
+        if (
+            file_name is None
+            or SAFE_JAR_FILENAME_RE.fullmatch(file_name) is None
+            or size_bytes is None
+            or sha1 is None
+            or SHA1_RE.fullmatch(sha1) is None
+        ):
+            return None
+        return {
+            "type": "mod_file",
+            "id": "traveloptics",
+            "status": status,
+            "file_name": file_name,
+            "size_bytes": size_bytes,
+            "sha1": sha1,
+        }
 
     if row_type == "spell":
         registry_id = _probe_resource_location(fields.get("id"))
