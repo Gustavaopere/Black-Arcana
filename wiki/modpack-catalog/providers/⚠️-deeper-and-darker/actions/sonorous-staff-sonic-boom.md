@@ -22,6 +22,8 @@ Exact 1.4.1 registration defines:
 - rarity: **RARE**;
 - repair item: `deeperdarker:soul_crystal`.
 
+Exact generated item tag `#deeperdarker:sonic_weapon` contains only `deeperdarker:sonorous_staff`.
+
 ## Trigger and charge state
 
 Ordinary item use starts the use/charge state. Releasing the use executes the sonic attack.
@@ -36,8 +38,10 @@ The 128-tick value controls the charged presentation/foil state. `releaseUsing(.
 Let:
 
 - `t` = ticks actually used before release;
-- `V` = Volume enchantment level;
-- `R` = Reverberation enchantment level.
+- `V` = Volume enchantment level, exact generated max level **4**;
+- `R` = Reverberation enchantment level, exact generated max level **3**.
+
+Both enchantments support `#deeperdarker:sonic_weapon`, which resolves here only to Sonorous Staff.
 
 ## Exact baseline damage formula
 
