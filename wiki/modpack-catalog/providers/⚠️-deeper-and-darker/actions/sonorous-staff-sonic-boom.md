@@ -100,9 +100,9 @@ Each executed release settles:
 Exact generated shaped recipe:
 
 ```text
- CH
- BC
-B  
+" CH"
+" BC"
+"B  "
 ```
 
 Ingredients:
