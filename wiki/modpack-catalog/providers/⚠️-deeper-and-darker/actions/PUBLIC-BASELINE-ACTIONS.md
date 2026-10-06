@@ -33,7 +33,9 @@ The exact `OthersidePortalBlock.OthersidePortalShape` validator requires:
 - reinforced deepslate frame;
 - interior width: **2–21 blocks**;
 - interior height: **2–21 blocks**;
-- interior cells empty or already occupied by Otherside portal blocks.
+- the broader shape/lifecycle validator accepts interior cells that are air or already occupied by Otherside portal blocks.
+
+For **new Heart activation**, `OthersidePortalBlock.isPortal(...)` additionally requires `numPortalBlocks == 0`; any pre-existing Otherside portal block in the selected frame prevents a new portal spawn through this action.
 
 The player-facing activation path does **not** read `othersidePortalWidth` / `othersidePortalHeight`; those config fields are therefore not projected onto this action card.
 
