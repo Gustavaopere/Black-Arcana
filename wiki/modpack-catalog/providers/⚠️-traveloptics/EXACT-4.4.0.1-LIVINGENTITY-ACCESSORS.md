@@ -139,7 +139,9 @@ These seven values are **not counted as File-6342780-alone scalar outputs**. The
 
 ## Complete ENTITY_SLOT_READ dependency map
 
-Audit #623 remains valid for the five identity-gap methods, but audit #658 supersedes that narrow scope for the complete surface: all **34/34** `ENTITY_SLOT_READ` numeric accessors are now dependency-classified. Canonical detail is in `EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`. All five read their LivingEntity exactly once, reference no provider field, contain no branch and invoke only host `getSpellPower(int, Entity)`.
+Audit #658 closes the dependency surface for all **34/34** `ENTITY_SLOT_READ` numeric accessors. Canonical detail is in [`EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`](EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md): 24 host-spell-power-only methods, 9 summon-damage methods that additionally query Iron's `SUMMON_DAMAGE`, and one Aerial Collapse method that additionally calls `Math.min(float,float)`.
+
+The table below is retained only as the **historical five identity-gap subset** first closed by audit #623. Those five read their LivingEntity exactly once, reference no provider field, contain no branch and invoke only host `getSpellPower(int, Entity)`.
 
 | Registry ID | Exact accessor | Retained dependency | Arithmetic classification | Numeric disposition |
 | --- | --- | --- | --- | --- |
