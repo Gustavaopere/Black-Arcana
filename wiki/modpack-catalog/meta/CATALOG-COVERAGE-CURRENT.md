@@ -32,7 +32,7 @@ See [CROSS-DOMAIN-REBASE-2026-10-06-BATCH-1.md](./CROSS-DOMAIN-REBASE-2026-10-06
 
 ## Historical current-Magic reconciliation — 05/10/2026
 
-Current sibling authority `de80b186357cad20ba5b81892a8682777e96e35a` still contains **97** physical dossiers whose category directory includes `Magic`; all **97/97** map to canonical Black Arcana providers. Direct normalized names cover 80 rows and 17 naming aliases are validated by matching physical `mod id` against the provider README. Current provider-tree structure is **157 = 155 ✅ + 2 ⚠️**, with no ❌ or 🟡. This reconciliation changes no semantic-object count; the strict reconstructible minimum remains **1858** and the final semantic denominator remains open.
+Current sibling authority `de80b186357cad20ba5b81892a8682777e96e35a` still contains **97** physical dossiers whose category directory includes `Magic`; all **97/97** map to canonical Black Arcana providers. Direct normalized names cover 80 rows and 17 naming aliases are validated by matching physical `mod id` against the provider README. At that 05/10 checkpoint, provider-tree structure was **157 = 155 ✅ + 2 ⚠️**, with no ❌ or 🟡. This reconciliation changes no semantic-object count; the strict reconstructible minimum remains **1858** and the final semantic denominator remains open.
 
 See [PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md](./PHYSICAL-MAGIC-RECONCILIATION-2026-10-05.md).
 
