@@ -271,13 +271,26 @@ def parse_catalog_probe_payload(payload: str) -> dict[str, Any] | None:
     if row_type == "mod_file":
         mod_id = fields.get("id")
         status = fields.get("status")
+        if mod_id != "traveloptics":
+            return None
+        if status == "HASH_UNAVAILABLE":
+            error = _probe_error(fields.get("error"))
+            if error is None:
+                return None
+            return {
+                "type": "mod_file",
+                "id": "traveloptics",
+                "status": status,
+                "error": error,
+            }
+        if status != "OBSERVED":
+            return None
+
         file_name = fields.get("file_name")
         size_bytes = _probe_nonnegative_int(fields.get("size_bytes"))
         sha1 = fields.get("sha1")
         if (
-            mod_id != "traveloptics"
-            or status != "OBSERVED"
-            or file_name is None
+            file_name is None
             or SAFE_JAR_FILENAME_RE.fullmatch(file_name) is None
             or size_bytes is None
             or sha1 is None
@@ -287,7 +300,7 @@ def parse_catalog_probe_payload(payload: str) -> dict[str, Any] | None:
         return {
             "type": "mod_file",
             "id": "traveloptics",
-            "status": "OBSERVED",
+            "status": status,
             "file_name": file_name,
             "size_bytes": size_bytes,
             "sha1": sha1,
