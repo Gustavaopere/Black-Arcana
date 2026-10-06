@@ -232,7 +232,7 @@ Therefore:
 - semantic numerator delta from Creating Space 1.7.22 exact-artifact closure: **+0** as `ZERO_SEMANTIC_SPACE_ROCKET_DIMENSION_TRANSPORT`;
 - semantic numerator delta from Create: Dreams n' Desires 2.3a-BETA exact-artifact closure: **+0** as `ZERO_SEMANTIC_CREATE_AUTOMATION_TOOLS_CONTENT`;
 - semantic numerator delta from Epic Fight 21.17.3.1 exact-artifact skill closure: **+3 `COUNTED_EXACT`** (Wrathful Lightning + Tsunami + Everlasting Allegiance);
-- semantic numerator delta from current-provider ledger normalization: **+9 strict** = Ars Morph 2.0.0 **+8 `COUNTED_SOURCE_PINNED`** + Woodwalkers SpellBooks 0.3.1-BETA **+1 `COUNTED_SOURCE_PINNED`**; Vampiric Ageing 1.4.21 adds 9 `CONDITIONAL` actions outside strict;
+- historical semantic normalization checkpoint: **+9 strict** = Ars Morph 2.0.0 **+8 `COUNTED_SOURCE_PINNED`** + Woodwalkers SpellBooks 0.3.1-BETA **+1 `COUNTED_SOURCE_PINNED`**; **current physical reconciliation reverses that +9 to −9** because both provider JARs are absent from the current snapshot; Vampiric Ageing 1.4.21 remains 9 `CONDITIONAL` actions outside strict;
 - semantic numerator/denominator delta currently attributable to current-physical Traveloptics: **+0 strict pending installed-byte registry closure**;
 - semantic numerator delta from Reliquified L_Ender's Cataclysm 0.1.1 exact-artifact closure: **+7 `COUNTED_EXACT`**;
 - strict reconstructible semantic minimum: **1849**;
