@@ -2,6 +2,14 @@
 
 Status: `3/3 ROOTS MATERIALIZED / 1 COUNTED_EXACT + 2 CONDITIONAL`
 
+Individual files:
+
+- [Transmutation Table — Item Transmutation](item-transmutation.md)
+- [Mysterious Worm — Void Worm Summoning](void-worm-summoning.md)
+- [Dimensional Carver — Void Portal / Dimensional Passage](dimensional-carver-passage.md)
+
+These files materialize the existing three-root denominator and do not change the 1 strict + 2 conditional accounting.
+
 These cards retain only the player-owned causal identity. Numerical tuning, entity AI, particles, sounds, costs, config and settlement remain Alex's Mobs Continued authority.
 
 ## 1. Transmutation Table — Item Transmutation
