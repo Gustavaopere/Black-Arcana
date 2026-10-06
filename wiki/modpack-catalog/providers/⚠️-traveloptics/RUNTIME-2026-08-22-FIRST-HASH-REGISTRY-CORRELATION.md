@@ -1,6 +1,6 @@
 # T.O Magic n' Extras — 2026-08-22 first-hash-day runtime registry correlation
 
-Status: `FIRST DIRECT 7b74816e PHYSICAL CAPTURE + SAME-DAY RUNTIME SPELL OBSERVATION / AT LEAST 25 OF 33 IDS INDEX-CONFIRMED / PROCESS HASH UNBOUND / EXACT-CURRENT SET EQUALITY NOT PROVEN`
+Status: `FIRST DIRECT 7b74816e PHYSICAL CAPTURE + SAME-DAY RUNTIME OBSERVATION OF ALL 33 PUBLISHER-BASELINE IDS / PROCESS HASH UNBOUND / EXACT-CURRENT SET EQUALITY NOT PROVEN`
 
 ## Purpose
 
@@ -38,61 +38,40 @@ These retained logs occur shortly after the first direct physical inventory on t
 
 ## Bounded spell-ID observation
 
-A bounded Project Library index audit queried the exact Traveloptics registry-ID spell paths against the two 22/08 debug logs.
+A bounded Project Library retrieval audit queried the exact Traveloptics registry-ID spell paths against the retained 22/08 runtime logs.
 
-The preserved index directly confirms **at least 25 of the 33 exact publisher-baseline spell IDs** in one or both same-day runtime logs:
+The original pass positively surfaced **25/33** exact publisher-baseline IDs. A 2026-10-06 targeted follow-up then queried the eight IDs that the earlier retrieval pass had not surfaced. All eight now have direct positive runtime lines in the same first-hash-day log family:
 
-- `traveloptics:blood_howl`
-- `traveloptics:abyssal_blast`
-- `traveloptics:blackout`
-- `traveloptics:psychic_bolt`
-- `traveloptics:eternal_sentinel`
-- `traveloptics:cursed_minefield`
-- `traveloptics:void_eruption`
-- `traveloptics:vortex_punch`
-- `traveloptics:astral_sense`
-- `traveloptics:lingering_strain`
-- `traveloptics:ignited_onslaught`
-- `traveloptics:burning_judgment`
-- `traveloptics:lava_bomb`
-- `traveloptics:gyro_slash`
-- `traveloptics:nullflare`
-- `traveloptics:sword_of_the_ancients`
-- `traveloptics:axe_of_the_doomed`
-- `traveloptics:cursed_revenants`
-- `traveloptics:despair`
-- `traveloptics:halberd_horizon`
-- `traveloptics:cursed_blast`
-- `traveloptics:rapid_laser`
-- `traveloptics:death_laser`
-- `traveloptics:em_pulse`
-- `traveloptics:stele_cascade`
+| Previously unsurfaced ID | Positive retained runtime line |
+| --- | --- |
+| `traveloptics:reversal` | `debug(20260822-185838).log` — 15:57:46.831 |
+| `traveloptics:spectral_blink` | `debug(20260822-184009).log` — 15:38:50.954 |
+| `traveloptics:orbital_void` | `debug(20260822-184009).log` — 15:38:50.956 |
+| `traveloptics:ashen_breath` | `debug(20260822-185838).log` — 15:57:46.831 |
+| `traveloptics:meteor_storm` | `debug(20260822-184009).log` — 15:38:50.959 |
+| `traveloptics:summon_desert_dwellers` | `debug(20260822-185838).log` — 15:57:46.833 |
+| `traveloptics:mechanized_predator` | `debug(20260822-185838).log` — 15:57:46.823 |
+| `traveloptics:aerial_collapse` | `debug(20260822-185838).log` — 15:57:46.830 |
 
-The bounded search did not independently surface indexed snippets for eight remaining exact IDs:
+Each positive line is emitted by `de.cadentem.additional_attributes.AA` as `Registered attribute [spell/traveloptics/<registry_id>]`.
 
-- `traveloptics:reversal`
-- `traveloptics:spectral_blink`
-- `traveloptics:orbital_void`
-- `traveloptics:ashen_breath`
-- `traveloptics:meteor_storm`
-- `traveloptics:summon_desert_dwellers`
-- `traveloptics:mechanized_predator`
-- `traveloptics:aerial_collapse`
+Combined with the already-positive 25 IDs, this establishes **positive observation of all 33/33 publisher-baseline Traveloptics spell IDs** in the retained first-hash-day runtime log family.
 
-**This is not absence evidence.** The Library search/index surface is retrieval-bounded and the raw log bytes are not currently exportable/readable through the available Project file path. Therefore this checkpoint retains only the positive `>=25/33` observation and does not assert an Aug-22 runtime denominator smaller than 33.
+This is an **inclusion claim, not exact-set equality**. The targeted retrieval does not exhaustively prove that no additional `traveloptics:` spell ID existed in the running registry, and the Java processes still do not report the JAR SHA-1. Therefore the result remains process-hash-unbound and does not by itself prove that the installed `7b74816e...` artifact has an exact 33-ID registry with no extras.
 
 ## What this establishes
 
 - first direct physical `7b74816e...` capture and Traveloptics runtime spell observations occur on the same retained assembled-pack day — **YES**;
 - `traveloptics:blackout` is positively observed in the same-day runtime logs — **YES**;
-- at least 25 exact publisher-baseline IDs are positively correlated to those same-day logs — **YES**;
+- all **33/33 publisher-baseline IDs** are positively observed in the first-hash-day runtime log family — **YES**;
 - the same-day evidence is temporally closer to the first direct `7b74816e...` fingerprint than the previously canonical September correlation — **YES**.
 
 ## What this does not establish
 
 - the Java process reports or embeds SHA-1 `7b74816e...` — **NO / NOT OBSERVED**;
 - no file replacement occurred between the physical inventory and either runtime process — **NOT PROVEN**;
-- all 33 exact IDs are proven present in the 22/08 logs — **NOT PROVEN BY THE AVAILABLE INDEX SURFACE**;
+- all 33 publisher-baseline IDs are positively observed in the 22/08 log family — **YES**;
+- the runtime Traveloptics spell set is proven to contain **no additional IDs beyond those 33** — **NOT PROVEN**;
 - current physical registry equality to File `6342780` — **NOT PROVEN**;
 - exact-current mechanics/stat equality — **NOT PROVEN**;
 - current distinct `key_loot` / `universal_loot` codec-object identity — **NOT PROVEN**;
@@ -106,9 +85,9 @@ Narrowed, not closed.
 
 The current physical line now has:
 
-`first direct 7b74816e fingerprint -> same-day assembled runtime with >=25/33 exact Traveloptics spell IDs positively observed`.
+`first direct 7b74816e fingerprint -> same-day assembled runtime with all 33 publisher-baseline Traveloptics spell IDs positively observed`.
 
-This is stronger than a version/filename-only correlation, but it remains **process-hash-unbound**. Exact-current registry equality still requires process-bound hash/content attestation, exact physical bytes, or an equivalent authoritative exact-current registry capture.
+This is stronger than the earlier >=25/33 correlation, but it remains **process-hash-unbound** and proves baseline-ID inclusion rather than exact-set equality. Exact-current registry equality still requires process-bound hash/content attestation, exact physical bytes, or an equivalent authoritative exact-current registry capture that can also exclude extra IDs.
 
 ### Gate 2 — runtime initialization
 
