@@ -1325,5 +1325,67 @@ unrelatedSecret = "do-not-collect"
                 report["simply_swords"]["loot_config"]["uniqueLootTableOptions"]["entries"][0]["value"],
             )
 
+
+    def test_collects_deeper_and_darker_current_physical_and_cooldown_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            config = instance / "config"
+            mods.mkdir(parents=True)
+            config.mkdir(parents=True)
+
+            (mods / "deeperdarker-neoforge-1.21.1-1.4.1.jar").write_bytes(b"fixture")
+            (config / "deeperdarker-common.toml").write_text(
+                """
+[general]
+soulElytraCooldown = -1
+unrelatedSecret = "do-not-copy"
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+
+            hashes = collector.collect_mod_hashes(instance)
+            self.assertIn("deeper_and_darker", hashes)
+            self.assertEqual(1, len(hashes["deeper_and_darker"]))
+            entry = hashes["deeper_and_darker"][0]
+            self.assertEqual(
+                "deeperdarker-neoforge-1.21.1-1.4.1.jar",
+                entry["filename"],
+            )
+            self.assertIn("current_physical_1_4_1_equality", entry)
+            self.assertFalse(entry["current_physical_1_4_1_equality"])
+
+            result = collector.collect_deeper_and_darker(instance)
+            cooldown = result["soul_elytra_cooldown"]
+            self.assertEqual("OBSERVED", cooldown["status"])
+            self.assertEqual("config/deeperdarker-common.toml", cooldown["path"])
+            self.assertEqual("general.soulElytraCooldown", cooldown["key_path"])
+            self.assertEqual(-1, cooldown["value"])
+            self.assertNotIn("unrelatedSecret", json.dumps(result))
+
+    def test_deeper_and_darker_cooldown_missing_or_invalid_stays_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config = instance / "config"
+            config.mkdir(parents=True)
+
+            missing = collector.collect_deeper_and_darker(instance)
+            self.assertEqual("NOT_FOUND", missing["soul_elytra_cooldown"]["status"])
+
+            path = config / "deeperdarker-common.toml"
+            path.write_text(
+                """
+[general]
+soulElytraCooldown = 12001
+""".strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            invalid = collector.collect_deeper_and_darker(instance)
+            self.assertEqual("OUT_OF_RANGE", invalid["soul_elytra_cooldown"]["status"])
+            self.assertEqual(12001, invalid["soul_elytra_cooldown"]["value"])
+
+
 if __name__ == "__main__":
     unittest.main()
