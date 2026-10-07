@@ -1,0 +1,122 @@
+name: audit-pufferfishs-attributes-0.8.3
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/puffish-attributes
+          cd build/audit/puffish-attributes
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/puffish-attributes-991341/8610466/puffish-attributes-991341-8610466.jar" \
+            -o puffish_attributes-0.8.3-1.21-neoforge.jar
+          test -s puffish_attributes-0.8.3-1.21-neoforge.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/puffish-attributes
+          EXPECTED_SHA1="9e6a87f790fc9281ea2685f8d4f6435d0d7c6d1f"
+          ACTUAL_SHA1="$(sha1sum puffish_attributes-0.8.3-1.21-neoforge.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum puffish_attributes-0.8.3-1.21-neoforge.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s puffish_attributes-0.8.3-1.21-neoforge.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=991341/8610466"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Inventory exact provider surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/puffish-attributes
+          jar tf puffish_attributes-0.8.3-1.21-neoforge.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib,re,zipfile
+          jar=pathlib.Path('puffish_attributes-0.8.3-1.21-neoforge.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              provider_data=[n for n in names if n.startswith('data/puffish_attributes/')]
+              semantic=[n for n in names if re.search(r'(spell|magic|ritual|rite|ability|mana|arcane|glyph|summon|teleport)',n,re.I)]
+              attrs=[n for n in names if re.search(r'attribute',n,re.I)]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'provider_data={len(provider_data)}\nsemantic_path_hits={len(semantic)}\nattribute_path_hits={len(attrs)}\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(provider_data)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-paths.txt').write_text('\n'.join(semantic)+'\n',encoding='utf-8')
+              pathlib.Path('attribute-paths.txt').write_text('\n'.join(attrs)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump all provider classes and registry strings
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/puffish-attributes
+          : > javap-all.txt
+          grep '[.]class$' jar-entries.txt | while IFS= read -r path; do
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all.txt
+            javap -classpath puffish_attributes-0.8.3-1.21-neoforge.jar -p -c -constants "$cls" >> javap-all.txt 2>&1 || true
+          done
+          grep -Ei 'register|attribute|damage|resistance|stamina|healing|life_steal|speed|fortune|experience|stealth|shred|spell|ritual|mana|arcane|summon|teleport' javap-all.txt > registry-seams.txt || true
+
+      - name: Parse localization attribute identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/puffish-attributes
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          rows=[]
+          with zipfile.ZipFile('puffish_attributes-0.8.3-1.21-neoforge.jar') as z:
+              for candidate in ('assets/puffish_attributes/lang/en_us.json',):
+                  if candidate in z.namelist():
+                      data=json.loads(z.read(candidate))
+                      for k,v in sorted(data.items()):
+                          if 'attribute' in k.lower(): rows.append((k,v))
+          pathlib.Path('attribute-localization.txt').write_text('\n'.join(f'{k}\t{v}' for k,v in rows)+'\n',encoding='utf-8')
+          pathlib.Path('attribute-localization-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: pufferfishs-attributes-0.8.3-exact-artifact-audit
+          path: |
+            build/audit/puffish-attributes/hashes.txt
+            build/audit/puffish-attributes/inventory.txt
+            build/audit/puffish-attributes/jar-entries.txt
+            build/audit/puffish-attributes/provider-data.txt
+            build/audit/puffish-attributes/semantic-paths.txt
+            build/audit/puffish-attributes/attribute-paths.txt
+            build/audit/puffish-attributes/javap-all.txt
+            build/audit/puffish-attributes/registry-seams.txt
+            build/audit/puffish-attributes/attribute-localization.txt
+            build/audit/puffish-attributes/attribute-localization-count.txt
+          if-no-files-found: error
