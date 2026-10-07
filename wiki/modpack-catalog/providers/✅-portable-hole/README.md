@@ -49,6 +49,10 @@ The temporary-hole BlockEntity also retains/restores BlockEntity NBT when the pr
 
 Object card: [`actions/PORTABLE-HOLE.md`](actions/PORTABLE-HOLE.md).
 
+Individual action card: [Open Temporary Portable Hole](actions/open-temporary-portable-hole.md).
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 ## Exact acquisition
 
 The exact JAR packages `data/portablehole/loot_table/chests/inject/stronghold_corridor.json`.
