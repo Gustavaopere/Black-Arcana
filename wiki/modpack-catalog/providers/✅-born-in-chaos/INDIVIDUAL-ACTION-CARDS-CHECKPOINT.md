@@ -4,7 +4,7 @@ Status: `17/17 ROOTS INDIVIDUALLY MATERIALIZED / 17 COUNTED_EXACT / NO NUMERATOR
 
 ## Authority
 
-- Black Arcana base before this tranche: `748e56466b9e621180a311b1148d7cb30e8bad92`;
+- Black Arcana base before this tranche: `de3cfc7e9c083735f188e218f639b5c13622ab9c`;
 - physical JAR: `born_in_chaos_[Neoforge]_1.21.1_1.7.6.jar`;
 - mod id: `born_in_chaos_v1`;
 - exact physical/publisher SHA-1: `73704f38ac368c03716f9cc8f537470d3b352fa2`;
