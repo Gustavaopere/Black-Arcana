@@ -1,5 +1,34 @@
 # Fila operacional de auditoria dos providers mágicos
 
+## Override corrente — 2026-10-07 — evidence-capture ceiling
+
+Esta seção prevalece sobre o override de 06/10 para os dois diretórios ainda ⚠️.
+
+- Black Arcana canônico após PRs #676 e #678: `main@17c6c7428906a743a711df48f93bec9a68287078`;
+- árvore estrutural permanece **164 = 162 ✅ + 2 ⚠️**;
+- únicos diretórios ⚠️: **Traveloptics** e **Deeper and Darker**;
+- mínimo semântico estrito reconstruível permanece **1849**; nenhum dos dois providers recebe promoção strict por infraestrutura de coleta;
+- ambos os blockers já possuem rotas bounded no coletor canônico `docs/qa/provider-catalog-deployed-evidence-collector.py`;
+- portanto o próximo avanço autorizado depende de **evidência current/deployed nova**, não de novo scaffolding genérico.
+
+### Ceiling dos dois blockers
+
+1. **⚠️ Traveloptics 4.4.0.1-1.21.1** — o coletor agora:
+   - compara o JAR instalado com o SHA-1 físico corrente `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
+   - procura `traveloptics:blackout` e os quatro marcadores genéricos já auditados em KubeJS/FTB Quests/world datapacks;
+   - retém overrides Iron's do namespace `traveloptics` apenas para `enabled`, `school` e `allow_crafting`;
+   - pode ingerir o probe schema 4 que liga o arquivo FML-loaded ao registry/serializers no mesmo processo.
+   O que ainda falta é a **captura da instância física atual** e/ou os bytes atuais: registry exact-current, serializer pair `distinct_codec_instances=true`, rota survival específica de Blackout e resolução Aqua continuam fail-closed.
+
+2. **⚠️ Deeper and Darker 1.4.1** — o coletor já:
+   - compara o JAR instalado com o SHA-1 físico corrente `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`;
+   - lê estruturalmente apenas `config/deeperdarker-common.toml -> soulElytraCooldown`, aceitando somente inteiro observado em `-1..12000` e sem substituir o default de fonte.
+   O que ainda falta é a **captura deployed desse valor** e, separadamente, uma bridge/inspeção dos bytes físicos atuais. O baseline público de três raízes continua +0 strict enquanto o denominador físico não for fechado.
+
+**Não repetir:** repacks genéricos de Traveloptics, matrizes publisher/source-build de Deeper and Darker, buscas ranqueadas em logs como prova de ausência, nem criação de novos coletores equivalentes para superfícies já cobertas.
+
+**Próximo input útil:** JSON emitido pelo coletor sobre a instância atual + probe schema 4 quando Traveloptics estiver carregado; ou materialização/autorização dos JARs físicos atuais para inspeção clean-room.
+
 ## Override corrente — 2026-10-06
 
 Esta seção prevalece sobre números/filas históricas preservados abaixo.
