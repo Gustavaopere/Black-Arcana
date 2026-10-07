@@ -17,6 +17,8 @@ exact provider crafting route.
 
 ## Boundary
 
+The non-sneaking anchor throw is an ordinary primary weapon throw mode and is excluded.
+
 This card materializes the already-audited causal root. Repeated projectiles/entities/effects, cooldown settlement and ordinary neighboring weapon behavior remain provider-owned consequences or exclusions as recorded by the aggregate catalog.
 
 L_Ender's Cataclysm remains authority for action settlement, cooldowns, projectiles/effects, loot and balance. Black Arcana catalogs the identity and must not replay the provider action.
