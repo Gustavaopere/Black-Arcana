@@ -1,0 +1,287 @@
+name: audit-born-in-chaos-1.7.6
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/bic
+          cd build/audit/bic
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/born-in-chaos-686437/8268280/born-in-chaos-686437-8268280.jar" \
+            -o born_in_chaos_1.7.6.jar
+          test -s born_in_chaos_1.7.6.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          EXPECTED_SHA1="73704f38ac368c03716f9cc8f537470d3b352fa2"
+          ACTUAL_SHA1="$(sha1sum born_in_chaos_1.7.6.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum born_in_chaos_1.7.6.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s born_in_chaos_1.7.6.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=686437/8268280"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract bounded archive inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          jar tf born_in_chaos_1.7.6.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          jar=pathlib.Path('born_in_chaos_1.7.6.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              item_classes=[n for n in classes if '/item/' in n.lower() or n.lower().endswith('item.class')]
+              procedure_classes=[n for n in classes if '/procedures/' in n.lower()]
+              registry_classes=[n for n in classes if n.lower().endswith(('moditems.class','modentities.class','modblocks.class','modtabs.class'))]
+              data=[n for n in names if n.startswith('data/born_in_chaos_v1/')]
+              assets=[n for n in names if n.startswith('assets/born_in_chaos_v1/')]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\n'
+                  f'item_classes={len(item_classes)}\nprocedure_classes={len(procedure_classes)}\n'
+                  f'registry_classes={len(registry_classes)}\ndata_paths={len(data)}\nassets_paths={len(assets)}\n',
+                  encoding='utf-8')
+              pathlib.Path('item-classes.txt').write_text('\n'.join(item_classes)+'\n',encoding='utf-8')
+              pathlib.Path('procedure-classes.txt').write_text('\n'.join(procedure_classes)+'\n',encoding='utf-8')
+              pathlib.Path('registry-classes.txt').write_text('\n'.join(registry_classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data-paths.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              pathlib.Path('provider-asset-paths.txt').write_text('\n'.join(assets)+'\n',encoding='utf-8')
+              for meta in ('META-INF/neoforge.mods.toml','META-INF/mods.toml','META-INF/MANIFEST.MF'):
+                  if meta in names:
+                      pathlib.Path(meta.split('/')[-1]+'.txt').write_bytes(z.read(meta))
+          PY
+
+      - name: Dump item and registry class surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          : > javap-items.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-items.txt
+            javap -classpath born_in_chaos_1.7.6.jar -p -c -constants "$cls" >> javap-items.txt 2>&1 || true
+          done < item-classes.txt
+          : > javap-registries.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-registries.txt
+            javap -classpath born_in_chaos_1.7.6.jar -p -c -constants "$cls" >> javap-registries.txt 2>&1 || true
+          done < registry-classes.txt
+
+      - name: Isolate player-action-shaped item methods
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          grep -nE '(^| )use\(|useOn\(|releaseUsing\(|finishUsingItem\(|onUseTick\(|inventoryTick\(|hurtEnemy\(|interactLivingEntity\(|onLeftClickEntity\(' javap-items.txt > player-action-methods.txt || true
+          grep -nEi 'storm|horn|snow|frost|ice|nightmare|magic|spell|summon|teleport|projectile|explosion|lightning|soul|spirit|curse|ritual|staff|wand|scythe|elixir|barrier|freeze|cooldown|addCooldown|shoot|spawn' javap-items.txt > magic-item-seams.txt || true
+          grep -nEi 'storm|horn|snow|frost|ice|nightmare|magic|spell|summon|teleport|projectile|explosion|lightning|soul|spirit|curse|ritual|staff|wand|scythe|elixir|barrier|freeze|cooldown' javap-registries.txt > magic-registry-seams.txt || true
+
+      - name: Resolve item-linked procedure classes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          grep -oE 'net/mcreator/borninchaosv/procedures/[A-Za-z0-9_$]+' javap-items.txt | sort -u | sed 's#/#.#g' > linked-procedure-classes.txt || true
+          : > javap-linked-procedures.txt
+          while IFS= read -r cls; do
+            [ -n "$cls" ] || continue
+            echo "===== $cls =====" >> javap-linked-procedures.txt
+            javap -classpath born_in_chaos_1.7.6.jar -p -c -constants "$cls" >> javap-linked-procedures.txt 2>&1 || true
+          done < linked-procedure-classes.txt
+          grep -nEi 'storm|snow|frost|ice|nightmare|magic|spell|summon|teleport|projectile|explosion|lightning|soul|spirit|curse|ritual|barrier|freeze|cooldown|entity|level|effect' javap-linked-procedures.txt > linked-procedure-seams.txt || true
+
+      - name: Extract bounded global item-procedure seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          : > all-procedure-seams.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            tmp="$(mktemp)"
+            javap -classpath born_in_chaos_1.7.6.jar -p -c -constants "$cls" > "$tmp" 2>&1 || true
+            if grep -qE 'BornInChaosV1ModItems\.|PlayerInteractEvent|EntityInteract|RightClick|UseOnContext|InteractionHand' "$tmp"; then
+              echo "===== $cls =====" >> all-procedure-seams.txt
+              grep -E 'BornInChaosV1Mod(Items|Entities|MobEffects|Blocks)\.|PlayerInteractEvent|EntityInteract|RightClick|UseOnContext|InteractionHand|addCooldown|addEffect|addFreshEntity|shrink|hurtAndBreak|discard|heal\(|setHealth\(|teleport|setPos|explode|sendParticles' "$tmp" >> all-procedure-seams.txt || true
+            fi
+            rm -f "$tmp"
+          done < procedure-classes.txt
+
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('all-procedure-seams.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'(?m)^===== (.+?) =====\n',text)[1:]
+          rows=[]
+          for i in range(0,len(sections),2):
+              cls,body=sections[i],sections[i+1]
+              items=[]
+              for m in re.finditer(r'BornInChaosV1ModItems\.([A-Z0-9_]+)',body):
+                  if m.group(1) not in items: items.append(m.group(1))
+              entities=[]
+              for m in re.finditer(r'BornInChaosV1ModEntities\.([A-Z0-9_]+)',body):
+                  if m.group(1) not in entities: entities.append(m.group(1))
+              effects=[]
+              for m in re.finditer(r'BornInChaosV1ModMobEffects\.([A-Z0-9_]+)',body):
+                  if m.group(1) not in effects: effects.append(m.group(1))
+              triggers=[]
+              for token in ('PlayerInteractEvent','EntityInteract','RightClick','UseOnContext','InteractionHand','addCooldown','addEffect','addFreshEntity','shrink','heal','setHealth','teleport','explode'):
+                  if token in body: triggers.append(token)
+              if items:
+                  rows.append(f'{cls}\titems={",".join(items)}\tentities={",".join(entities)}\teffects={",".join(effects)}\tseams={",".join(triggers)}')
+          pathlib.Path('global-item-procedure-index.txt').write_text('\n'.join(rows)+'\n',encoding='utf-8')
+          pathlib.Path('global-item-procedure-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Extract localization and acquisition resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          with zipfile.ZipFile('born_in_chaos_1.7.6.jar') as z:
+              names=set(z.namelist())
+              lang={}
+              p='assets/born_in_chaos_v1/lang/en_us.json'
+              if p in names:
+                  try: lang=json.loads(z.read(p))
+                  except Exception: lang={}
+              with open('item-localization.txt','w',encoding='utf-8') as f:
+                  for k,v in sorted(lang.items()):
+                      if k.startswith('item.born_in_chaos_v1.'):
+                          f.write(f'{k}\t{v}\n')
+              rows=[]
+              for name in sorted(names):
+                  low=name.lower()
+                  if not name.startswith('data/born_in_chaos_v1/') or not name.endswith('.json'): continue
+                  if any(tok in low for tok in ('recipe','loot','advancement')):
+                      try:
+                          raw=z.read(name).decode('utf-8')
+                      except Exception:
+                          continue
+                      if any(tok in raw.lower() for tok in ('stormcaller','horn','frost','nightmare','scythe','elixir','magic','staff','wand','ice','snow')):
+                          rows.append((name,raw[:30000]))
+              pathlib.Path('magic-acquisition-resources.txt').write_text(
+                  '\n'.join(f'===== {n} =====\n{raw}' for n,raw in rows)+'\n',encoding='utf-8')
+              pathlib.Path('magic-acquisition-resource-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Build exact provider acquisition index
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/bic
+          python3 - <<'PY'
+          import collections, json, pathlib, zipfile
+          ns='born_in_chaos_v1:'
+          rows=set()
+          def add(item,kind,path):
+              if isinstance(item,str) and item.startswith(ns): rows.add((item,kind,path))
+          def recipe_results(obj,path):
+              if not isinstance(obj,dict): return
+              result=obj.get('result')
+              if isinstance(result,str): add(result,'RECIPE_RESULT',path)
+              elif isinstance(result,dict):
+                  add(result.get('id') or result.get('item'),'RECIPE_RESULT',path)
+          def walk_loot(obj,path):
+              if isinstance(obj,dict):
+                  typ=obj.get('type')
+                  name=obj.get('name')
+                  if typ in ('minecraft:item','neoforge:item') and isinstance(name,str):
+                      add(name,'LOOT_ITEM',path)
+                  for v in obj.values(): walk_loot(v,path)
+              elif isinstance(obj,list):
+                  for v in obj: walk_loot(v,path)
+          with zipfile.ZipFile('born_in_chaos_1.7.6.jar') as z:
+              for name in sorted(z.namelist()):
+                  if not name.startswith('data/born_in_chaos_v1/') or not name.endswith('.json'): continue
+                  try: obj=json.loads(z.read(name))
+                  except Exception: continue
+                  low=name.lower()
+                  if '/recipe/' in low: recipe_results(obj,name)
+                  if '/loot_table/' in low: walk_loot(obj,name)
+                  if '/tags/item/' in low or '/tags/items/' in low:
+                      vals=obj.get('values',[]) if isinstance(obj,dict) else []
+                      for v in vals:
+                          if isinstance(v,str): add(v,'ITEM_TAG_MEMBER',name)
+                          elif isinstance(v,dict): add(v.get('id'),'ITEM_TAG_MEMBER',name)
+          by=collections.defaultdict(list)
+          for item,kind,path in sorted(rows): by[item].append((kind,path))
+          with open('provider-acquisition-index.txt','w',encoding='utf-8') as f:
+              for item in sorted(by):
+                  f.write(f'## {item}\n')
+                  for kind,path in by[item]: f.write(f'{kind}\t{path}\n')
+          pathlib.Path('provider-acquisition-item-count.txt').write_text(f'items={len(by)}\nrows={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: born-in-chaos-1.7.6-exact-artifact-audit
+          path: |
+            build/audit/bic/hashes.txt
+            build/audit/bic/inventory.txt
+            build/audit/bic/jar-entries.txt
+            build/audit/bic/item-classes.txt
+            build/audit/bic/procedure-classes.txt
+            build/audit/bic/registry-classes.txt
+            build/audit/bic/provider-data-paths.txt
+            build/audit/bic/provider-asset-paths.txt
+            build/audit/bic/neoforge.mods.toml.txt
+            build/audit/bic/mods.toml.txt
+            build/audit/bic/MANIFEST.MF.txt
+            build/audit/bic/javap-items.txt
+            build/audit/bic/javap-registries.txt
+            build/audit/bic/player-action-methods.txt
+            build/audit/bic/magic-item-seams.txt
+            build/audit/bic/magic-registry-seams.txt
+            build/audit/bic/linked-procedure-classes.txt
+            build/audit/bic/javap-linked-procedures.txt
+            build/audit/bic/linked-procedure-seams.txt
+            build/audit/bic/all-procedure-seams.txt
+            build/audit/bic/global-item-procedure-index.txt
+            build/audit/bic/global-item-procedure-count.txt
+            build/audit/bic/item-localization.txt
+            build/audit/bic/magic-acquisition-resources.txt
+            build/audit/bic/magic-acquisition-resource-count.txt
+            build/audit/bic/provider-acquisition-index.txt
+            build/audit/bic/provider-acquisition-item-count.txt
+          if-no-files-found: warn
