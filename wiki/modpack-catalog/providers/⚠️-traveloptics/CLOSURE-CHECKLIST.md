@@ -219,7 +219,10 @@ The canonical read-only deployed-evidence collector now covers the remaining bou
 - the installed `traveloptics-4.4.0.1-1.21.1.jar` row reports explicit equality against current known physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
 - exact `traveloptics:blackout` references are searched across `kubejs/startup_scripts`, `kubejs/server_scripts`, `kubejs/data`, FTB Quests config/defaultconfigs and discovered/explicit world datapacks, including text-like ZIP entries;
 - the same surfaces are searched for the already-audited generic host markers `SpellFilter`, `RandomizeSpellFunction`, `spell_filter` and `randomize_spell`;
-- output retains only source label, relative path, line number and matched literal. Script, quest and datapack bodies are not copied.
+- bounded Iron's spell-config evidence for namespace `traveloptics` is collected from local config, `global_config.json`, KubeJS data and direct/ZIP world datapacks, retaining only `enabled`, `school` and `allow_crafting`;
+- output retains only source label/path plus selected bounded values; script, quest, datapack and unrelated JSON payload bodies are not copied.
+
+A deployed `traveloptics/blackout.json` row with `allow_crafting=true` would be material Gate-3 evidence because exact-alpha Blackout itself inherits `allowCrafting=false`; it would still need to be paired with current registry identity/effective-host interpretation before survival reachability is declared. Likewise a `school` override can inform Gate 4 but cannot create or prove an Aqua registration by filename alone, because Iron's ignores per-spell configs for unknown registry IDs.
 
 This is evidence-discovery infrastructure only. A positive generic marker still requires inspection to determine whether it can resolve to Blackout; a zero-marker result narrows the named generic-filter path but does not exclude reflection, encoded/dynamic logic, semantically equivalent custom code, other mods, or world-state acquisition. Gate 3 remains fail-closed until an authoritative current-instance capture is reviewed under the acceptance boundary below.
 
