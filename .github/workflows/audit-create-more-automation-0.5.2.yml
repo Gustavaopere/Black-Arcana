@@ -1,0 +1,134 @@
+name: audit-create-more-automation-0.5.2
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact Modrinth artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/create_more_automation
+          cd build/audit/create_more_automation
+          curl -fL --retry 3 --retry-all-errors 'https://api.modrinth.com/v2/version/en1TN4J7' -o version.json
+          python3 - <<'PY'
+          import json, pathlib
+          o=json.loads(pathlib.Path('version.json').read_text())
+          files=o.get('files',[])
+          chosen=next((f for f in files if f.get('primary')), files[0] if files else None)
+          if not chosen: raise SystemExit('no version file')
+          pathlib.Path('download-url.txt').write_text(chosen['url'])
+          pathlib.Path('publisher-file-name.txt').write_text(chosen['filename'])
+          PY
+          curl -fL --retry 3 --retry-all-errors "$(cat download-url.txt)" -o create_more_automation-0.5.2-neoforge-1.21.1.jar
+          test -s create_more_automation-0.5.2-neoforge-1.21.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_more_automation
+          EXPECTED_SHA1='a184d11c11fb03619dd8940cc160b3aa0d5e96fe'
+          ACTUAL_SHA1="$(sha1sum create_more_automation-0.5.2-neoforge-1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum create_more_automation-0.5.2-neoforge-1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s create_more_automation-0.5.2-neoforge-1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo 'publisher=modrinth/en1TN4J7'
+            echo "publisher_file_name=$(cat publisher-file-name.txt)"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract exact archive and semantic inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_more_automation
+          jar tf create_more_automation-0.5.2-neoforge-1.21.1.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          jar=pathlib.Path('create_more_automation-0.5.2-neoforge-1.21.1.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              data=[n for n in names if n.startswith('data/create_more_automation/')]
+              keywords=('spell','magic','ritual','ability','mana','arcane','glyph','summon','soul','teleport','portal','enchant','curse','recipe','mixing','crushing','pressing','compacting')
+              counts={k:sum(k in n.lower() for n in names) for k in keywords}
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nprovider_data={len(data)}\n' +
+                  '\n'.join(f'{k}={v}' for k,v in counts.items())+'\n',encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              rows=[]
+              for name in data:
+                  if not name.endswith('.json'): continue
+                  try:
+                      obj=json.loads(z.read(name)); compact=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                  except Exception as e: compact='INVALID_JSON:'+type(e).__name__
+                  rows.append((name,compact[:30000]))
+              pathlib.Path('provider-json.txt').write_text('\n'.join(f'===== {n} =====\n{j}' for n,j in rows)+'\n',encoding='utf-8')
+              pathlib.Path('provider-json-count.txt').write_text(f'count={len(rows)}\n',encoding='utf-8')
+          PY
+
+      - name: Dump provider classes and activation signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/create_more_automation
+          : > javap-all.txt
+          : > javap-signatures.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"; cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-signatures.txt
+            javap -classpath create_more_automation-0.5.2-neoforge-1.21.1.jar -p -s "$cls" >> javap-signatures.txt 2>&1 || true
+            echo "===== $cls =====" >> javap-all.txt
+            javap -classpath create_more_automation-0.5.2-neoforge-1.21.1.jar -p -c -constants "$cls" >> javap-all.txt 2>&1 || true
+          done < classes.txt
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          methods=['use','useOn','useWithoutItem','releaseUsing','onUseTick','finishUsingItem','interactLivingEntity','hurtEnemy','inventoryTick','onArmorTick','onItemUseFirst','mineBlock']
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls=sections[i]; body=sections[i+1]
+              found=[m for m in methods if re.search(r'\b'+re.escape(m)+r'\s*\(',body)]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('activation-index.txt').write_text('\n'.join(f'{c}\t{m}' for c,m in rows)+'\n',encoding='utf-8')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: create-more-automation-0.5.2-exact-artifact-audit
+          path: |
+            build/audit/create_more_automation/hashes.txt
+            build/audit/create_more_automation/inventory.txt
+            build/audit/create_more_automation/jar-entries.txt
+            build/audit/create_more_automation/classes.txt
+            build/audit/create_more_automation/provider-data.txt
+            build/audit/create_more_automation/provider-json.txt
+            build/audit/create_more_automation/provider-json-count.txt
+            build/audit/create_more_automation/javap-signatures.txt
+            build/audit/create_more_automation/javap-all.txt
+            build/audit/create_more_automation/activation-index.txt
+          if-no-files-found: error
