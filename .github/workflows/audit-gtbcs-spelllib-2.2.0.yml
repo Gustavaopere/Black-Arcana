@@ -1,0 +1,52 @@
+name: audit-gtbcs-spelllib-2.2.0
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-hash-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/gtbcs_spelllib
+          cd build/audit/gtbcs_spelllib
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/gtbcs-spelllib-1194714/8824651/gtbcs-spelllib-1194714-8824651.jar" \
+            -o gtbcs_spell_lib-2.2.0-1.21.1.jar
+          test -s gtbcs_spell_lib-2.2.0-1.21.1.jar
+
+      - name: Verify physical hash equality only
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/gtbcs_spelllib
+          EXPECTED_SHA1="36cce8ab3117e89ae992a84a566d596709db2ffe"
+          ACTUAL_SHA1="$(sha1sum gtbcs_spell_lib-2.2.0-1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum gtbcs_spell_lib-2.2.0-1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s gtbcs_spell_lib-2.2.0-1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=1194714/8824651"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+            echo "inspection_policy=hash-only-clean-room"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Upload hash-only evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtbcs-spelllib-2.2.0-hash-only-audit
+          path: build/audit/gtbcs_spelllib/hashes.txt
+          if-no-files-found: error
