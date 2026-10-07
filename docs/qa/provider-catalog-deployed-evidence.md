@@ -553,17 +553,27 @@ Hashes the known original/patched filenames and classifies an observed hash as:
 - `PATCHED_EXACT`;
 - `OTHER_VERIFIED`.
 
-It also searches only for the exact literal `traveloptics:blackout` in bounded deployed customization surfaces:
+For the canonical current physical replacement, the mod-hash row also emits `current_physical_known_equality` against SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. A true value binds the collected filesystem JAR to the current sibling/Library physical fingerprint while retaining the provider disposition `OTHER_VERIFIED`; it does not identify provenance or project publisher equality.
 
+It searches for the exact literal `traveloptics:blackout` in bounded deployed customization surfaces:
+
+- `kubejs/startup_scripts/`;
 - `kubejs/server_scripts/`;
 - `kubejs/data/`;
 - `config/ftbquests/`;
 - `defaultconfigs/ftbquests/`;
 - discovered/explicit world `datapacks/`, including text-like entries inside ZIP datapacks.
 
-The JSON retains only source category, relative path, line number and the exact literal. It does **not** copy script bodies, quest prose or datapack payloads.
+The same bounded surfaces are additionally scanned for the four generic Iron's acquisition markers already named by the canonical Traveloptics Gate-3 audit:
 
-This closes filesystem physical disposition only when the collected file is the actual installed JAR. Schema-4 runtime probe evidence can independently bind the exact FML-loaded Traveloptics file fingerprint to the same process that emits registry/serializer rows; agreement between the two fingerprints is stronger same-run evidence but still does not establish upstream/local provenance. A Blackout literal match is only a **route candidate**; it must still be inspected against the Traveloptics checklist to prove an actual current-pack survival grant/acquisition mechanism.
+- `SpellFilter`;
+- `RandomizeSpellFunction`;
+- `spell_filter`;
+- `randomize_spell`.
+
+The JSON retains only source category, relative path, line number and the matched literal. It does **not** copy script bodies, quest prose or datapack payloads.
+
+This closes filesystem physical disposition only when the collected file is the actual installed JAR. Schema-4 runtime probe evidence can independently bind the exact FML-loaded Traveloptics file fingerprint to the same process that emits registry/serializer rows; agreement between the two fingerprints is stronger same-run evidence but still does not establish upstream/local provenance. A Blackout literal or generic marker match is only a **route candidate**. A generic marker does not prove that the matched surface selects Blackout, the Eldritch school, or any survival-obtainable spell; provider-specific inspection is still required. Conversely, zero matches do not prove universal absence of every dynamic/encoded/custom acquisition route.
 
 ## Iron's 3.16.3 host contract for collected paths
 

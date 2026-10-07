@@ -29,6 +29,7 @@ from typing import Any
 
 TRAVELOPTICS_ORIGINAL_SHA1 = "3808493ce45cdfeb6408e85578adecf13df698e8"
 TRAVELOPTICS_PATCH_SHA1 = "680fa679d8ea2419a79571f455436367222f6f9d"
+TRAVELOPTICS_CURRENT_PHYSICAL_SHA1 = "7b74816e89cc15dd0b5a31d9ea1e456024e8fae4"
 DEEPER_DARKER_141_PHYSICAL_SHA1 = "83f7edd0a8516b2767c2cda7a3b2402f9e290d88"
 ASTERISM_010_PHYSICAL_SHA1 = "4a25ba80116168ddcc812f71467c0598127e774a"
 SOMAKE_109_RELEASE_SHA1 = "171841ac9f802be9309ecc166c1d972ac6d404c0"
@@ -183,6 +184,12 @@ KUBEJS_IRONS_MARKER_PATTERNS = {
 ASTERISM_DATA_RELATIVE = "asterismarcanum/irons_spellbooks_spell_config/astral_gateway.json"
 ASTERISM_DATAPACK_PATH = f"data/{ASTERISM_DATA_RELATIVE}"
 TRAVELOPTICS_BLACKOUT_LITERAL = "traveloptics:blackout"
+TRAVELOPTICS_GENERIC_ACQUISITION_MARKERS = (
+    "SpellFilter",
+    "RandomizeSpellFunction",
+    "spell_filter",
+    "randomize_spell",
+)
 
 CATALOG_PROBE_PREFIX = "[BLACK_ARCANA_CATALOG_PROBE]"
 CATALOG_PROBE_LOGGER = "dev.gustavopere.blackarcana.qa.catalog.CatalogRuntimeEvidence"
@@ -695,6 +702,9 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                 elif provider == "deeper_and_darker":
                     entry["current_physical_1_4_1_equality"] = entry["sha1"] == DEEPER_DARKER_141_PHYSICAL_SHA1
                 elif provider == "traveloptics":
+                    entry["current_physical_known_equality"] = (
+                        entry["sha1"] == TRAVELOPTICS_CURRENT_PHYSICAL_SHA1
+                    )
                     if entry["sha1"] == TRAVELOPTICS_ORIGINAL_SHA1:
                         entry["classification"] = "ORIGINAL_EXACT"
                     elif entry["sha1"] == TRAVELOPTICS_PATCH_SHA1:
@@ -1702,6 +1712,7 @@ def collect_somake(instance: Path, worlds: list[Path]) -> dict[str, Any]:
 
 def collect_traveloptics(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     roots: list[tuple[str, Path]] = [
+        ("kubejs_startup_scripts", instance / "kubejs" / "startup_scripts"),
         ("kubejs_server_scripts", instance / "kubejs" / "server_scripts"),
         ("kubejs_data", instance / "kubejs" / "data"),
         ("ftbquests_config", instance / "config" / "ftbquests"),
@@ -1732,17 +1743,33 @@ def collect_traveloptics(instance: Path, worlds: list[Path]) -> dict[str, Any]:
         TRAVELOPTICS_BLACKOUT_LITERAL,
     )
 
+    generic_acquisition_markers: list[dict[str, Any]] = []
+    for marker in TRAVELOPTICS_GENERIC_ACQUISITION_MARKERS:
+        generic_acquisition_markers.extend(
+            collect_exact_literal_references(instance, roots, marker)
+        )
+        generic_acquisition_markers.extend(
+            collect_zip_literal_references(instance, archives, marker)
+        )
+
     return {
         "classification_rule": {
             TRAVELOPTICS_ORIGINAL_SHA1: "ORIGINAL_EXACT",
             TRAVELOPTICS_PATCH_SHA1: "PATCHED_EXACT",
+            TRAVELOPTICS_CURRENT_PHYSICAL_SHA1: "OTHER_VERIFIED_CURRENT_PHYSICAL",
             "other": "OTHER_VERIFIED",
         },
         "blackout_reference_matches": direct + zipped,
+        "generic_acquisition_marker_matches": generic_acquisition_markers,
         "blackout_reference_note": (
             "A literal match is candidate deployed-route evidence only. "
             "It does not by itself prove that the referenced script/quest/datapack grants "
             "traveloptics:blackout in survival."
+        ),
+        "generic_acquisition_marker_note": (
+            "Generic marker matches are bounded candidate evidence only. "
+            "They do not prove that a matching surface selects Blackout, the Eldritch school, "
+            "or any survival-obtainable spell without provider-specific inspection."
         ),
     }
 
