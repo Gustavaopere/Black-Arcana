@@ -4,7 +4,7 @@ Status: `22/22 ROOTS INDIVIDUALLY MATERIALIZED / 22 COUNTED_EXACT / NO NUMERATOR
 
 ## Authority
 
-- preparation base: `b5ebb56a98db004cbe39fa96bed52d6bd072c6af`;
+- preparation base: `712f381557668e6f84d3d7ace3f73d002759be10`;
 - physical JAR: `legendary_monsters-2.2.2 MC 1.21.1.jar`;
 - mod id: `legendary_monsters`;
 - exact physical/publisher SHA-1: `8910859ba94190dd8cbc8c2c1e2f07562db729b4`;

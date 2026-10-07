@@ -45,6 +45,19 @@ See [`EXACT-1.8.0-ARTIFACT-AUDIT.md`](EXACT-1.8.0-ARTIFACT-AUDIT.md).
 
 Detailed cards: [`actions/README.md`](actions/README.md).
 
+Individual action cards:
+
+- [Bulwark Deployment](actions/bulwark-deployment.md)
+- [Bulwark Charge](actions/bulwark-charge.md)
+- [Soul-Fire Chain](actions/soul-fire-chain.md)
+- [Gauntlet Charge](actions/gauntlet-charge.md)
+- [Soul-Fire Stun Area](actions/soul-fire-stun-area.md)
+- [Flame Strike](actions/flame-strike.md)
+- [Incinerator Dash](actions/incinerator-dash.md)
+- [Incinerator Slam](actions/incinerator-slam.md)
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 These are eight identities because each is a distinct player-invoked action branch with a distinct provider settlement seam/cooldown or spawned outcome. Stun, Blazing Brand, knockback, particles, damage, wall effects and individual spawned strikes are downstream consequences and are not counted again.
 
 ## Exact acquisition routes

@@ -2,6 +2,19 @@
 
 Status: `8/8 EXACT ACTION ROOTS MATERIALIZED`
 
+Individual files:
+
+- [Bulwark Deployment](bulwark-deployment.md)
+- [Bulwark Charge](bulwark-charge.md)
+- [Soul-Fire Chain](soul-fire-chain.md)
+- [Gauntlet Charge](gauntlet-charge.md)
+- [Soul-Fire Stun Area](soul-fire-stun-area.md)
+- [Flame Strike](flame-strike.md)
+- [Incinerator Dash](incinerator-dash.md)
+- [Incinerator Slam](incinerator-slam.md)
+
+These files materialize the existing eight-root denominator and do not change the +8 strict accounting.
+
 These cards cover the provider's discrete supernatural player actions under the Black Arcana semantic-magic metric. Numerical values remain provider/config authority and are not frozen here.
 
 ## 1. Bulwark Deployment
