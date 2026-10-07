@@ -76,7 +76,24 @@ These twelve have exact current identity plus a provider-native acquisition rout
 
 The exact weapon capability maps this root to `wom:nova`. The audited exact recipes and the provider's chest/drop classes do not close a normal acquisition route for Nova, so the identity remains **`CONDITIONAL`** and contributes **+0 strict**.
 
-Object-level cards: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
+Object-level cards:
+
+- aggregate: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md);
+- [Ender Step](actions/ender-step.md);
+- [Ender Obscuris](actions/ender-obscuris.md);
+- [Shadow Step](actions/shadow-step.md);
+- [Time Travel](actions/time-travel.md);
+- [Voodoo Magic](actions/voodoo-magic.md);
+- [Avatar of Might](actions/avatar-of-might.md);
+- [Sky Dive](actions/sky-dive.md);
+- [True Wrath](actions/true-wrath.md);
+- [Demonic Ascension](actions/demonic-ascension.md);
+- [Ender Ritual](actions/ender-ritual.md);
+- [Lunar Eclipse](actions/lunar-eclipse.md);
+- [Solar Arcano](actions/solar-arcano.md);
+- [Flash Mutilation](actions/flash-mutilation.md).
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ## Why the other 51 skill IDs do not count
 
