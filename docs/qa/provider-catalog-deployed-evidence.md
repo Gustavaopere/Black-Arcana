@@ -573,6 +573,14 @@ The same bounded surfaces are additionally scanned for the four generic Iron's a
 
 The JSON retains only source category, relative path, line number and the matched literal. It does **not** copy script bodies, quest prose or datapack payloads.
 
+Separately, the collector now gathers bounded Iron's spell-config override evidence for the `traveloptics` namespace through the same host-contract path used for Somake. It retains only:
+
+- `irons_spellbooks:enabled`;
+- `irons_spellbooks:school`;
+- `irons_spellbooks:allow_crafting`.
+
+Observed locations are limited to the current Iron's config/datapack surfaces already documented below: local per-spell JSONs, `global_config.json`, KubeJS data overrides and direct/ZIP world datapacks. Full JSON payloads are not copied. For Traveloptics this can surface a deployed `blackout.json` craftability/enabled/school override or a namespace-level school override relevant to Aqua coexistence. File presence alone is not registry proof: the host applies per-spell overrides only to entries that actually exist in the Iron's spell registry.
+
 This closes filesystem physical disposition only when the collected file is the actual installed JAR. Schema-4 runtime probe evidence can independently bind the exact FML-loaded Traveloptics file fingerprint to the same process that emits registry/serializer rows; agreement between the two fingerprints is stronger same-run evidence but still does not establish upstream/local provenance. A Blackout literal or generic marker match is only a **route candidate**. A generic marker does not prove that the matched surface selects Blackout, the Eldritch school, or any survival-obtainable spell; provider-specific inspection is still required. Conversely, zero matches do not prove universal absence of every dynamic/encoded/custom acquisition route.
 
 ## Iron's 3.16.3 host contract for collected paths
@@ -591,7 +599,7 @@ At that checkpoint, `SpellConfigManager` defines:
 
 The host builds effective config by iterating the actual Iron's spell registry, applying a per-spell JSON only when an entry exists for that registered spell, then applying global values as fallback where the parameter is still at its default. Unknown spell-config files are ignored by the host.
 
-Consequently, the collector reports observed config/override evidence but **does not use the presence or filename of a JSON file as proof that a Somake spell is currently registered**. Registry closure remains separate from filesystem evidence: the deployed current-pack registration outcome may be closed by deterministic exact assembled-server registry observation, while generalized optional-registration predicates still require permitted provider-authoritative evidence.
+Consequently, the collector reports observed config/override evidence but **does not use the presence or filename of a JSON file as proof that a Somake or Traveloptics spell is currently registered**. Registry closure remains separate from filesystem evidence: the deployed current-pack registration outcome may be closed by deterministic exact assembled-server registry observation, while generalized optional-registration predicates still require permitted provider-authoritative evidence.
 
 ## Collector fixture validation — Somake Iron's overrides
 
