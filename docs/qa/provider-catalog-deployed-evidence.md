@@ -335,6 +335,30 @@ The catalog acceptance rule is provider-specific. A matching physical fingerprin
 
 See [`wiki/modpack-catalog/providers/⚠️-mowzies-mobs/DEPLOYED-CONFIG-CHECKLIST.md`](../../wiki/modpack-catalog/providers/⚠️-mowzies-mobs/DEPLOYED-CONFIG-CHECKLIST.md).
 
+
+### Deeper and Darker
+
+The collector hashes the exact current filename:
+
+`deeperdarker-neoforge-1.21.1-1.4.1.jar`
+
+and emits `current_physical_1_4_1_equality` against the canonical current physical SHA-1
+`83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
+
+For the remaining Soul Elytra configuration gate, it reads only the exact NeoForge COMMON file:
+
+`config/deeperdarker-common.toml`
+
+and retains only the exact key:
+
+`soulElytraCooldown`
+
+The TOML is parsed structurally. The report retains only the relative path, resolved key path, a bounded status, and the integer value when observed. The accepted provider range is `-1..12000`; `-1` is the provider-defined disable value. Missing files/keys, parse errors, duplicate matches, non-integer values and out-of-range values stay explicit fail-closed states. The collector never substitutes the source default `600`.
+
+This can close the **deployed config subgate** for Soul Elytra Boost when the report comes from the authoritative current instance. Matching `current_physical_1_4_1_equality=true` only proves that the collected installed file is the already-known physical `83f7edd0...` artifact. It does **not** establish publisher/source equality and does **not** close the exact-current semantic denominator by itself; direct raw-byte semantic inspection or another exact bridge is still required.
+
+See [`wiki/modpack-catalog/providers/⚠️-deeper-and-darker/README.md`](../../wiki/modpack-catalog/providers/⚠️-deeper-and-darker/README.md).
+
 ### Ice And Fire Community Edition
 
 The collector hashes the exact current filename:
@@ -618,6 +642,7 @@ Do not convert missing files into source-default values unless the actual runtim
 - Ice And Fire CE: current physical 2.1.2 equality plus deployed `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility` for the sole remaining Ghost Sword gate; Dread Lich Staff acquisition is already closed by provider-specific runtime audit `36327488231`;
 - Simply Swords: Cataclysm: current physical 1.0.2 equality plus the ten exact STARTUP values needed to classify all four source-pinned abilities;
 - Simply Swords: current physical 1.70.2 equality plus bounded Awakening and loot/remnant config evidence; per-stack Awakening/unlock, complete acquisition/reformation, compat materialization and addon ownership remain provider-specific;
+- Deeper and Darker: bind the actual installed JAR to physical `83f7edd0...` and retain only the effective `soulElytraCooldown`; this can close the deployed config subgate but not the unmatched physical semantic denominator.
 - Traveloptics: current physical override/provider blocker — classify the actual installed JAR and discover bounded deployed `traveloptics:blackout` references; exact-current registry/loot/acquisition review remains provider-specific.
 - Iron's Spellbooks KubeJS / KubeJS Ars Nouveau: use `kubejs_script_inventory` to bind the review to the exact current script/data tree; for KubeJS Ars Nouveau also require the exact 1.3.2 physical fingerprint, then inspect non-empty files for recipe/acquisition mutations according to its provider checklist.
 
