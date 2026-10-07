@@ -1387,5 +1387,47 @@ soulElytraCooldown = 12001
             self.assertEqual(12001, invalid["soul_elytra_cooldown"]["value"])
 
 
+
+    def test_main_report_includes_deeper_and_darker_deployed_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            config = instance / "config"
+            mods.mkdir(parents=True)
+            config.mkdir(parents=True)
+            (mods / "deeperdarker-neoforge-1.21.1-1.4.1.jar").write_bytes(b"fixture")
+            (config / "deeperdarker-common.toml").write_text(
+                "soulElytraCooldown = 600\n",
+                encoding="utf-8",
+            )
+            output = instance / "evidence.json"
+
+            with patch(
+                "sys.argv",
+                [
+                    "provider-catalog-deployed-evidence-collector.py",
+                    str(instance),
+                    "--output",
+                    str(output),
+                ],
+            ):
+                self.assertEqual(0, collector.main())
+
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertIn("deeper_and_darker", report["mods"])
+            self.assertFalse(
+                report["mods"]["deeper_and_darker"][0]["current_physical_1_4_1_equality"]
+            )
+            self.assertEqual(
+                {
+                    "path": "config/deeperdarker-common.toml",
+                    "key_path": "soulElytraCooldown",
+                    "status": "OBSERVED",
+                    "value": 600,
+                },
+                report["deeper_and_darker"]["soul_elytra_cooldown"],
+            )
+
+
 if __name__ == "__main__":
     unittest.main()
