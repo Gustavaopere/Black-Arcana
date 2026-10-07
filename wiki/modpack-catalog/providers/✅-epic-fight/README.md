@@ -67,7 +67,14 @@ All three are weapon-innate actions on the provider's exact trident moveset and 
 
 This exact selector closes current catalog reachability without inventing a separate Epic Fight item-acquisition path: the owner remains `minecraft:trident`, while the vanilla enchantment parameter selects the provider-owned Epic Fight innate.
 
-Object cards: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
+Object cards:
+
+- aggregate: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md);
+- [Wrathful Lightning](actions/wrathful-lightning.md);
+- [Tsunami](actions/tsunami.md);
+- [Everlasting Allegiance](actions/everlasting-allegiance.md).
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ## Why the three count
 
