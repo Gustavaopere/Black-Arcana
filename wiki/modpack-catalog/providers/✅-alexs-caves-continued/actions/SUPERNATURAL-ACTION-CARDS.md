@@ -2,6 +2,19 @@
 
 Status: `8/8 COUNTED_EXACT ROOTS MATERIALIZED`
 
+Individual files:
+
+- [Sea Staff — Water Bolt](sea-staff-water-bolt.md)
+- [Sugar Staff — Peppermint Cast](sugar-staff-peppermint-cast.md)
+- [Sugar Staff — Hex Cast](sugar-staff-hex-cast.md)
+- [Magic Conch — Summon Deep Ones](magic-conch-summon-deep-ones.md)
+- [Totem of Possession — Possession / Remote Control](totem-possession-remote-control.md)
+- [Occult Gem + Beholder — Remote Observation](occult-gem-beholder-observation.md)
+- [Cloak of Darkness — Darkness Incarnate](cloak-darkness-incarnate.md)
+- [Conversion Crucible — Biome Conversion](conversion-crucible-biome-conversion.md)
+
+These files materialize the existing eight-root denominator and do not change the +8 strict accounting.
+
 These cards retain only the player-owned causal identity. Numerical tuning, enchantment modifiers, entity AI, particles, sounds, cooldowns and world settlement remain Alex's Caves Continued authority.
 
 ## 1. Sea Staff — Water Bolt

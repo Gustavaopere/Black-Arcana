@@ -50,7 +50,21 @@ Eight provider-owned actions satisfy the canonical semantic rule for a discrete 
 7. **Cloak of Darkness — Darkness Incarnate activation**;
 8. **Conversion Crucible — Biome Conversion ritual/process**.
 
-All eight are `COUNTED_EXACT` in the current semantic ledger. Object-level cards are in [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
+All eight are `COUNTED_EXACT` in the current semantic ledger.
+
+Object-level cards:
+
+- aggregate: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md);
+- [Sea Staff — Water Bolt](actions/sea-staff-water-bolt.md);
+- [Sugar Staff — Peppermint Cast](actions/sugar-staff-peppermint-cast.md);
+- [Sugar Staff — Hex Cast](actions/sugar-staff-hex-cast.md);
+- [Magic Conch — Summon Deep Ones](actions/magic-conch-summon-deep-ones.md);
+- [Totem of Possession — Possession / Remote Control](actions/totem-possession-remote-control.md);
+- [Occult Gem + Beholder — Remote Observation](actions/occult-gem-beholder-observation.md);
+- [Cloak of Darkness — Darkness Incarnate](actions/cloak-darkness-incarnate.md);
+- [Conversion Crucible — Biome Conversion](actions/conversion-crucible-biome-conversion.md).
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ## Why Sugar Staff contributes two identities
 
