@@ -35,7 +35,16 @@ See [`EXACT-1.3.3-ARTIFACT-AUDIT.md`](EXACT-1.3.3-ARTIFACT-AUDIT.md).
 
 ## Semantic inventory — five supernatural roots
 
-Detailed cards: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
+Detailed cards:
+
+- aggregate: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md);
+- [Obsidilith Summoning](actions/obsidilith-summoning.md);
+- [Earthdive Wall Teleport](actions/earthdive-wall-teleport.md);
+- [Brimstone Structure Restoration](actions/brimstone-structure-restoration.md);
+- [Night Lich Summoning](actions/night-lich-summoning.md);
+- [Charged Ender Pearl Teleport](actions/charged-ender-pearl-teleport.md).
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ### Strict exact-current — 3
 

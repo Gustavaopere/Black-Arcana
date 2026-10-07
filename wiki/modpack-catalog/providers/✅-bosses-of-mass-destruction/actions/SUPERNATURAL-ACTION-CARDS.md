@@ -2,6 +2,16 @@
 
 Status: `5/5 ROOTS MATERIALIZED / 3 COUNTED_EXACT + 2 CONDITIONAL`
 
+Individual files:
+
+- [Obsidilith Summoning](obsidilith-summoning.md)
+- [Earthdive Wall Teleport](earthdive-wall-teleport.md)
+- [Brimstone Structure Restoration](brimstone-structure-restoration.md)
+- [Night Lich Summoning](night-lich-summoning.md)
+- [Charged Ender Pearl Teleport](charged-ender-pearl-teleport.md)
+
+These files materialize the existing five-root denominator and do not change the 3 strict + 2 conditional accounting.
+
 ## 1. Obsidilith Summoning
 
 - provider trigger: Eye of Ender used on the provider Obsidian Altar / `obsidilith_end_frame`;
