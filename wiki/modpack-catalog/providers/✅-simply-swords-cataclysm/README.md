@@ -61,6 +61,8 @@ Therefore the **complete exact-version source inventory is four provider-owned s
 
 Object-level catalog: [ACTION-CARDS-1.0.2.md](ACTION-CARDS-1.0.2.md).
 
+Individual-card materialization checkpoint: [INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 ## Why the strict contribution remains +0
 
 The same exact source registers `SCConfig.SPEC` as a NeoForge `ModConfig.Type.STARTUP` configuration and exposes numerical gates that can suppress the action surface.
