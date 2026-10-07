@@ -68,7 +68,19 @@ Normal melee use remains excluded.
 
 Multiple summoned entity types settle one summon action root.
 
-Object cards: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
+Object cards:
+
+- aggregate: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md);
+- [Skor Gauntlet — Ice Spike Wave](actions/skor-ice-spike-wave.md);
+- [Skor Gauntlet — Ice Slam Leap](actions/skor-ice-slam-leap.md);
+- [Sirok Gauntlet — Earthquake](actions/sirok-earthquake.md);
+- [Sirok Gauntlet — Poison Barrage](actions/sirok-poison-barrage.md);
+- [Undying Tentacle — Hook](actions/undying-tentacle-hook.md);
+- [Undying Tentacle — Ghost Tentacle Summon](actions/undying-tentacle-summon.md);
+- [Helvar's Sword — Sword Wave](actions/helvar-sword-wave.md);
+- [Pirate Saber — Pirate Crew Summon](actions/pirate-crew-summon.md).
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ## Exact acquisition
 
