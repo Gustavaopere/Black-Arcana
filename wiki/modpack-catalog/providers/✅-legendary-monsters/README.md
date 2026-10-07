@@ -59,7 +59,34 @@ After object-level classification and deduplication, Legendary Monsters 2.2.2 co
 21. Wand of Clouds — Explosive Cloud Summon;
 22. Teleport Machine + Eye Crystal — Obliterator Summon.
 
-All 22 are materialized in [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
+All 22 remain materialized in the aggregate [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
+
+Individual action cards:
+
+- [Annihilator Helmet — Targeted Teleport](actions/annihilator-helmet-targeted-teleport.md);
+- [Axe of Lightning — Lightning Strike](actions/axe-lightning-strike.md);
+- [Axe of Lightning — Electric Burst](actions/axe-electric-burst.md);
+- [Buckler of Annihilation — Sweep + Bombs](actions/buckler-annihilation-sweep-bombs.md);
+- [Chorus Blade — Random Teleport](actions/chorus-blade-random-teleport.md);
+- [Dinosaur Bone Club — Circular Shockwaves](actions/dinosaur-bone-club-shockwaves.md);
+- [Entity Warper — Radius Entity Warp](actions/entity-warper-radius-warp.md);
+- [Fiery Boots — Fire Trail](actions/fiery-boots-fire-trail.md);
+- [Fiery Jaw — Fire Breath + Repulsion](actions/fiery-jaw-fire-breath-repulsion.md);
+- [The Great Frost — Directed Ice Spikes](actions/great-frost-directed-ice-spikes.md);
+- [The Great Frost — Radial Ice Spikes](actions/great-frost-radial-ice-spikes.md);
+- [Guard Summoner — Guard Summon](actions/guard-summoner.md);
+- [Knight Summoner — Knight Summon](actions/knight-summoner.md);
+- [Monstrous Anchor — Launch + Stun Burst](actions/monstrous-anchor-launch-stun.md);
+- [Mossy Chestplate — Poison Cloud Field](actions/mossy-chestplate-poison-field.md);
+- [Mossy Hammer — Poison/Moss Shockwave](actions/mossy-hammer-shockwave.md);
+- [Soul Great Sword — Phantom Daggers](actions/soul-great-sword-phantom-daggers.md);
+- [The Tesseract — Annihilation Portal Star](actions/tesseract-annihilation-portal-star.md);
+- [Totem of Moss — Mossy Golem Summon](actions/totem-moss-golem-summon.md);
+- [Void Entity Warper — Targeted Entity Warp](actions/void-entity-warper-targeted.md);
+- [Wand of Clouds — Explosive Cloud Summon](actions/wand-clouds-explosive-cloud.md);
+- [Teleport Machine + Eye Crystal — Obliterator Summon](actions/teleport-machine-obliterator-summon.md);
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ## Why the summon items count
 
