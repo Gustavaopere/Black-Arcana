@@ -1429,5 +1429,84 @@ soulElytraCooldown = 12001
             )
 
 
+
+    def test_traveloptics_hash_inventory_marks_current_other_verified_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            (mods / "traveloptics-4.4.0.1-1.21.1.jar").write_bytes(b"fixture")
+
+            result = collector.collect_mod_hashes(instance)
+
+            self.assertEqual(1, len(result["traveloptics"]))
+            entry = result["traveloptics"][0]
+            self.assertEqual("OTHER_VERIFIED", entry["classification"])
+            self.assertIn("current_physical_known_equality", entry)
+            self.assertFalse(entry["current_physical_known_equality"])
+
+    def test_traveloptics_collects_bounded_generic_acquisition_markers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            startup = instance / "kubejs" / "startup_scripts"
+            server = instance / "kubejs" / "server_scripts"
+            data = instance / "kubejs" / "data" / "pack"
+            quests = instance / "config" / "ftbquests"
+            world_datapacks = instance / "world" / "datapacks" / "pack" / "data" / "example"
+            for root in (startup, server, data, quests, world_datapacks):
+                root.mkdir(parents=True)
+
+            (startup / "registry.js").write_text(
+                'const route = SpellFilter; const secret = "do-not-copy-startup";\n',
+                encoding="utf-8",
+            )
+            (server / "grant.js").write_text(
+                'const id = "traveloptics:blackout"; const secret = "do-not-copy-server";\n',
+                encoding="utf-8",
+            )
+            (data / "loot.json").write_text(
+                '{"type":"randomize_spell","secret":"do-not-copy-data"}\n',
+                encoding="utf-8",
+            )
+            (quests / "quest.snbt").write_text(
+                'filter: "spell_filter", secret: "do-not-copy-quest"\n',
+                encoding="utf-8",
+            )
+            (world_datapacks / "route.json").write_text(
+                '{"bridge":"RandomizeSpellFunction","secret":"do-not-copy-world"}\n',
+                encoding="utf-8",
+            )
+
+            worlds = collector.candidate_worlds(instance, [])
+            result = collector.collect_traveloptics(instance, worlds)
+
+            self.assertEqual(
+                {
+                    "SpellFilter",
+                    "RandomizeSpellFunction",
+                    "spell_filter",
+                    "randomize_spell",
+                },
+                {row["literal"] for row in result["generic_acquisition_marker_matches"]},
+            )
+            self.assertIn(
+                "kubejs/startup_scripts/registry.js",
+                {row["path"] for row in result["generic_acquisition_marker_matches"]},
+            )
+            self.assertIn(
+                "kubejs/server_scripts/grant.js",
+                {row["path"] for row in result["blackout_reference_matches"]},
+            )
+            serialized = json.dumps(result)
+            for secret in (
+                "do-not-copy-startup",
+                "do-not-copy-server",
+                "do-not-copy-data",
+                "do-not-copy-quest",
+                "do-not-copy-world",
+            ):
+                self.assertNotIn(secret, serialized)
+
+
 if __name__ == "__main__":
     unittest.main()
