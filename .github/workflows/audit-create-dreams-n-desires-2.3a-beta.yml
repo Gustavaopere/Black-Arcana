@@ -1,0 +1,144 @@
+name: audit-create-dreams-n-desires-2.3a-beta
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/dndesires
+          cd build/audit/dndesires
+          curl -fL --retry 3 --retry-all-errors \
+            'https://api.modrinth.com/maven/maven/modrinth/JmybsfWs/bqMxf6Ua/JmybsfWs-bqMxf6Ua.jar' \
+            -o DnDesires-1.21.1-2.3a-BETA.jar
+          test -s DnDesires-1.21.1-2.3a-BETA.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dndesires
+          EXPECTED_SHA1='72635119b4bcc49b050c50d6cbb1abb02bb3982a'
+          ACTUAL_SHA1="$(sha1sum DnDesires-1.21.1-2.3a-BETA.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum DnDesires-1.21.1-2.3a-BETA.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s DnDesires-1.21.1-2.3a-BETA.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo 'publisher=modrinth:JmybsfWs/bqMxf6Ua'
+            echo 'curseforge_file=864781/8037481'
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract exact semantic inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dndesires
+          jar tf DnDesires-1.21.1-2.3a-BETA.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json,pathlib,re,zipfile
+          jar=pathlib.Path('DnDesires-1.21.1-2.3a-BETA.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              data=[n for n in names if n.startswith('data/dndesires/')]
+              keys=('spell','magic','ritual','ability','mana','arcane','glyph','summon','soul','teleport','portal','enchant','charm','sentry','effect')
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nprovider_data={len(data)}\n'+
+                  '\n'.join(f'{k}={sum(k in n.lower() for n in names)}' for k in keys)+'\n',
+                  encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              rows=[]
+              for n in data:
+                  if n.endswith('.json'):
+                      try:
+                          obj=json.loads(z.read(n))
+                          compact=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                      except Exception as e:
+                          compact='INVALID_JSON:'+type(e).__name__
+                      rows.append((n,compact[:30000]))
+              pathlib.Path('provider-json.txt').write_text(
+                  '\n'.join(f'===== {n} =====\n{s}' for n,s in rows)+'\n',encoding='utf-8')
+          PY
+
+      - name: Index all player interaction signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dndesires
+          : > javap-signatures.txt
+          : > javap-actions.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-signatures.txt
+            javap -classpath DnDesires-1.21.1-2.3a-BETA.jar -p -s "$cls" >> javap-signatures.txt 2>&1 || true
+          done < classes.txt
+          python3 - <<'PY'
+          import pathlib,re
+          text=pathlib.Path('javap-signatures.txt').read_text(encoding='utf-8',errors='replace')
+          sections=re.split(r'^===== (.+?) =====$',text,flags=re.M)
+          pats=(' use(', 'useOn(', 'useWithoutItem(', 'interactLivingEntity(', 'releaseUsing(', 'onUseTick(',
+                'finishUsingItem(', 'hurtEnemy(', 'inventoryTick(', 'onArmorTick(', 'onLeftClick(')
+          rows=[]
+          for i in range(1,len(sections),2):
+              cls,body=sections[i],sections[i+1]
+              found=[p.strip(' (') for p in pats if p in body]
+              if found: rows.append((cls,','.join(found)))
+          pathlib.Path('activation-index.txt').write_text(
+              '\n'.join(f'{c}\t{m}' for c,m in rows)+'\n',encoding='utf-8')
+          PY
+          while IFS=$'\t' read -r cls methods; do
+            [ -n "$cls" ] || continue
+            echo "===== $cls :: $methods =====" >> javap-actions.txt
+            javap -classpath DnDesires-1.21.1-2.3a-BETA.jar -p -c -constants "$cls" >> javap-actions.txt 2>&1 || true
+          done < activation-index.txt
+
+      - name: Extract semantic and acquisition seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/dndesires
+          grep -nEi 'spell|magic|ritual|ability|mana|arcane|glyph|summon|soul|teleport|portal|enchant|charm|sentry|effect|flight|creative|potion|mobEffect|addEffect|addFreshEntity|projectile|damage|useItemOn|InteractionResult' \
+            javap-actions.txt > semantic-action-seams.txt || true
+          grep -Ei 'recipe|loot_table|advancement|item_modifier|tags/items' provider-data.txt > acquisition-paths.txt || true
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: create-dreams-n-desires-2.3a-beta-exact-artifact-audit
+          path: |
+            build/audit/dndesires/hashes.txt
+            build/audit/dndesires/inventory.txt
+            build/audit/dndesires/jar-entries.txt
+            build/audit/dndesires/provider-data.txt
+            build/audit/dndesires/provider-json.txt
+            build/audit/dndesires/javap-signatures.txt
+            build/audit/dndesires/activation-index.txt
+            build/audit/dndesires/javap-actions.txt
+            build/audit/dndesires/semantic-action-seams.txt
+            build/audit/dndesires/acquisition-paths.txt
+          if-no-files-found: error
