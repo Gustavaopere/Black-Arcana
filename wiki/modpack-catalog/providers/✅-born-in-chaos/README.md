@@ -62,6 +62,28 @@ All 17 are `COUNTED_EXACT`: identity/control flow and a current provider-native 
 
 Object-level cards: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
 
+### Individual action cards
+
+- [Bone Heart — Bone Barrier](actions/bone-heart-bone-barrier.md)
+- [Charm of Endurance](actions/charm-endurance.md)
+- [Charm of Fury](actions/charm-fury.md)
+- [Charm of Strength](actions/charm-strength.md)
+- [Charm of Resistance](actions/charm-resistance.md)
+- [Charm of Stealth](actions/charm-stealth.md)
+- [Dark Atrium — Dark Ward](actions/dark-atrium-dark-ward.md)
+- [Dark Ritual Dagger — Sacrifice](actions/dark-ritual-dagger-sacrifice.md)
+- [Ethereal Spirit — Pumpkin Spirit Animation](actions/ethereal-spirit-pumpkin-spirit-animation.md)
+- [Bonescaller Staff — Controlled Summon](actions/bonescaller-staff-controlled-summon.md)
+- [Fel Lamp — Summon Felsteed](actions/fel-lamp-summon-felsteed.md)
+- [Lord Pumpkinhead's Lamp — Summon Lord's Felsteed](actions/lord-pumpkinheads-lamp-summon-lords-felsteed.md)
+- [Icy Splash](actions/icy-splash.md)
+- [Pumpkin Staff — Arcane Pumpkin Shot](actions/pumpkin-staff-arcane-pumpkin-shot.md)
+- [Staff of Magic Arrows — Magic Arrow](actions/staff-of-magic-arrows-magic-arrow.md)
+- [Stormcaller's Horn — Snow Storm](actions/stormcallers-horn-snow-storm.md)
+- [Transmuting Elixir — Transmutation](actions/transmuting-elixir-transmutation.md)
+
+These files materialize the existing 17-root denominator only. They do not change acquisition, provider authority or strict accounting.
+
 ## Important deduplications
 
 - Frostbitten Blade and Icy Sweetness invoke the same exact Icy Splash procedure; they are two owners of **one semantic action root**, not two spells.

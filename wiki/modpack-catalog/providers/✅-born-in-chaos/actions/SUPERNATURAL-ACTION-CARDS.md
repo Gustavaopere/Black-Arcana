@@ -2,6 +2,28 @@
 
 Status: `17/17 EXACT-CURRENT SEMANTIC ROOTS MATERIALIZED`
 
+Individual files:
+
+- [Bone Heart — Bone Barrier](bone-heart-bone-barrier.md)
+- [Charm of Endurance](charm-endurance.md)
+- [Charm of Fury](charm-fury.md)
+- [Charm of Strength](charm-strength.md)
+- [Charm of Resistance](charm-resistance.md)
+- [Charm of Stealth](charm-stealth.md)
+- [Dark Atrium — Dark Ward](dark-atrium-dark-ward.md)
+- [Dark Ritual Dagger — Sacrifice](dark-ritual-dagger-sacrifice.md)
+- [Ethereal Spirit — Pumpkin Spirit Animation](ethereal-spirit-pumpkin-spirit-animation.md)
+- [Bonescaller Staff — Controlled Summon](bonescaller-staff-controlled-summon.md)
+- [Fel Lamp — Summon Felsteed](fel-lamp-summon-felsteed.md)
+- [Lord Pumpkinhead's Lamp — Summon Lord's Felsteed](lord-pumpkinheads-lamp-summon-lords-felsteed.md)
+- [Icy Splash](icy-splash.md)
+- [Pumpkin Staff — Arcane Pumpkin Shot](pumpkin-staff-arcane-pumpkin-shot.md)
+- [Staff of Magic Arrows — Magic Arrow](staff-of-magic-arrows-magic-arrow.md)
+- [Stormcaller's Horn — Snow Storm](stormcallers-horn-snow-storm.md)
+- [Transmuting Elixir — Transmutation](transmuting-elixir-transmutation.md)
+
+These files materialize the same 17 roots summarized below; no semantic or strict-count delta is introduced.
+
 Numerical tuning, effect duration, damage and entity lifetime remain provider/config authority. These cards record causal identity, trigger/result shape and catalog-level acquisition only.
 
 ### 1. Bone Heart — Bone Barrier
