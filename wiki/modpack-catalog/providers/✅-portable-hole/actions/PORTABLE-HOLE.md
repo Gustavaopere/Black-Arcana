@@ -2,6 +2,12 @@
 
 Status: `1/1 COUNTED_EXACT`
 
+Individual file:
+
+- [Open Temporary Portable Hole](open-temporary-portable-hole.md)
+
+This file materializes the existing one-root denominator and does not change the +1 strict accounting.
+
 ## Open Temporary Portable Hole
 
 - owner: `portablehole:portable_hole`;
