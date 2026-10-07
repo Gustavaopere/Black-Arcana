@@ -4,7 +4,7 @@ Status: `3/3 ROOTS INDIVIDUALLY MATERIALIZED / 3 COUNTED_EXACT / NO NUMERATOR DE
 
 ## Authority
 
-- Black Arcana base before this tranche: `11b98f5f3c3a571caa750f1e6ed4cc123965ddbe`;
+- Black Arcana base before this tranche: `f15abea12bf04f67ce33ae6d9be93682929a14e0`;
 - physical JAR: `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`;
 - mod id: `epicfight`;
 - exact physical/publisher SHA-1: `fb199b7bbea2fc402da28ab586e73f47e32f8fc0`;

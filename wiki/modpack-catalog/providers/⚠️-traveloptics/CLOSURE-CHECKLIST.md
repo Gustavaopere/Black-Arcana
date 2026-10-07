@@ -211,6 +211,18 @@ Canonical detail: [`BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md`](BL
 
 Gate 3 therefore remains open. Literal-ID searches, the named filter/GLM/progression/script/resource surfaces, and the audited direct Iron's construction/lookup + generic item/reward candidates need not be repeated on the pinned refs. The current versioned repositories are still **not universally cleared of reflection/encoded/dynamic or semantically equivalent unenumerated acquisition logic**. Strong next evidence is now an authoritative assembled physical script/datapack/other-mod capture, exact-current Traveloptics content, or a concrete runtime/world acquisition checkpoint.
 
+
+### Deployed collector support — current-instance candidate capture
+
+The canonical read-only deployed-evidence collector now covers the remaining bounded filesystem discovery surface without claiming reachability:
+
+- the installed `traveloptics-4.4.0.1-1.21.1.jar` row reports explicit equality against current known physical SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`;
+- exact `traveloptics:blackout` references are searched across `kubejs/startup_scripts`, `kubejs/server_scripts`, `kubejs/data`, FTB Quests config/defaultconfigs and discovered/explicit world datapacks, including text-like ZIP entries;
+- the same surfaces are searched for the already-audited generic host markers `SpellFilter`, `RandomizeSpellFunction`, `spell_filter` and `randomize_spell`;
+- output retains only source label, relative path, line number and matched literal. Script, quest and datapack bodies are not copied.
+
+This is evidence-discovery infrastructure only. A positive generic marker still requires inspection to determine whether it can resolve to Blackout; a zero-marker result narrows the named generic-filter path but does not exclude reflection, encoded/dynamic logic, semantically equivalent custom code, other mods, or world-state acquisition. Gate 3 remains fail-closed until an authoritative current-instance capture is reviewed under the acceptance boundary below.
+
 ## Gate 4 — Somake Aqua ↔ T.O Aqua coexistence
 
 Current physical authority confirms both providers are installed:
