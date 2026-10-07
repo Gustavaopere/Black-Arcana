@@ -563,7 +563,7 @@ These rows remain **outside the 1849 strict sum** because one or more strict-cou
 | [Weapons of Miracles](../providers/✅-weapons-of-miracles/README.md) | exact physical/publisher File `8829395` equality closes all 64 WOM skill IDs and 13 supernatural semantic roots | `12 COUNTED_EXACT + 1 CONDITIONAL` | `wom:flash_mutilation` is exact-current and bound to `wom:nova`, but normal current Nova acquisition is not closed by the audited exact recipe/chest/drop surfaces; the other 12 supernatural roots are strict-counted |
 | [Alex's Mobs Continued](../providers/✅-alexs-mobs-continued/README.md) | exact physical/publisher File `8856498` equality closes 3 supernatural roots across exhaustive 26-item + 11-block interaction inspection | `1 COUNTED_EXACT + 2 CONDITIONAL` | Mysterious Worm Void Worm Summoning depends on deployed `voidWormSummonable` and `voidWormSpawnDimensions`; Dimensional Carver is exact-current but normal acquisition depends on Void Worm Eye/Mandible loot from that config-gated boss path; Item Transmutation is already strict-counted |
 
-All **161 current top-level provider directories** now have an explicit semantic-ledger disposition/reference. This **164/164 provider-directory reference coverage** is structural bookkeeping only: it does not close the final semantic denominator, because the conditional/open rows above still remain outside the strict counted minimum.
+All **164 current top-level provider directories** now have an explicit semantic-ledger disposition/reference. This **164/164 provider-directory reference coverage** is structural bookkeeping only: it does not close the final semantic denominator, because the conditional/open rows above still remain outside the strict counted minimum.
 
 ## Important interpretation rules
 
