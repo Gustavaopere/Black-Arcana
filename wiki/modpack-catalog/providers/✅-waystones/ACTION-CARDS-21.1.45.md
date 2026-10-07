@@ -10,6 +10,8 @@ O provider permanece **✅ catalogado / COUNTED_SOURCE_PINNED 3 / +3 strict**. E
 - [Warp Portal Conjuration](actions/warp-portal-conjuration.md)
 - [Twinbound Link](actions/twinbound-link.md)
 
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 ## Deduplicação e exclusões
 
 A raiz **Waystone Warp / Teleport** deduplica todas as superfícies que convergem no mesmo pipeline provider-native de teleport settlement, incluindo Waystone, Sharestone, Portstone, Warp Stone, Warp Scroll, Bound Scroll, Return Scroll, inventory-button, Warp Plate traversal e Warp Portal traversal.
