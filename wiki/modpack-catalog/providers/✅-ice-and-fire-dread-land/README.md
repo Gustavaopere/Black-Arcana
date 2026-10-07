@@ -53,6 +53,10 @@ The portal travel itself is downstream lifecycle of the one activation root, not
 
 Object card: [`actions/DREAD-PORTAL-ACTIVATION.md`](actions/DREAD-PORTAL-ACTIVATION.md).
 
+Individual action card: [Dreadland Key — Dread Portal Activation](actions/dreadland-key-dread-portal-activation.md).
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 ## Exact progression / acquisition closure
 
 The exact JAR closes the whole normal key progression:
