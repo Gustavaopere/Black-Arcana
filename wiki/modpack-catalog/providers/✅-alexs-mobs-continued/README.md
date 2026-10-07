@@ -45,7 +45,14 @@ Three provider-owned roots satisfy the semantic definition of a deliberate magic
 2. **Mysterious Worm — Void Worm Summoning** — `CONDITIONAL`;
 3. **Dimensional Carver — Void Portal / Dimensional Passage** — `CONDITIONAL`.
 
-Object-level cards are in [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md).
+Object-level cards:
+
+- aggregate: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md);
+- [Transmutation Table — Item Transmutation](actions/item-transmutation.md);
+- [Mysterious Worm — Void Worm Summoning](actions/void-worm-summoning.md);
+- [Dimensional Carver — Void Portal / Dimensional Passage](actions/dimensional-carver-passage.md).
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ## Why only one is strict
 
