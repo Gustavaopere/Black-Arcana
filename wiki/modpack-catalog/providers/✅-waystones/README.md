@@ -44,6 +44,8 @@ Aliases and alternate trigger surfaces are deduplicated when they settle through
 
 As **3 identidades semânticas** fechadas para Waystones 21.1.45 estão materializadas em fichas individuais em [`ACTION-CARDS-21.1.45.md`](ACTION-CARDS-21.1.45.md). A camada de cards preserva `COUNTED_SOURCE_PINNED 3 / +3 strict` e não altera runtime QA.
 
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 ## Exact current semantic inventory
 
 ### 1. Waystone Warp / Teleport
