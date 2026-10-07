@@ -2,6 +2,12 @@
 
 Status: `1/1 COUNTED_EXACT`
 
+Individual file:
+
+- [Dreadland Key — Dread Portal Activation](dreadland-key-dread-portal-activation.md)
+
+This file materializes the existing one-root denominator and does not change the +1 strict accounting.
+
 ## Identity
 
 **Dread Portal Activation**

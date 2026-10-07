@@ -4,7 +4,7 @@ Status: `22/22 ROOTS INDIVIDUALLY MATERIALIZED / 22 COUNTED_EXACT / NO NUMERATOR
 
 ## Authority
 
-- Black Arcana base before this tranche: `bc6f387a2e0e627d7fa11dc0664b0cf6dcbf8a6a`;
+- Black Arcana base before this tranche: `eb12c2227724066560f915ea2ec8075576e8eb02`;
 - physical JAR: `legendary_monsters-2.2.2 MC 1.21.1.jar`;
 - mod id: `legendary_monsters`;
 - exact physical/publisher SHA-1: `8910859ba94190dd8cbc8c2c1e2f07562db729b4`;
