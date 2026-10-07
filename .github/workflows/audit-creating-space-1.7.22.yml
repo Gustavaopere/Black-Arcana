@@ -1,0 +1,105 @@
+name: audit-creating-space-1.7.22
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/creating_space
+          cd build/audit/creating_space
+          curl -fL --retry 3 --retry-all-errors \
+            'https://cursemaven.com/curse/maven/create-creating-space-858897/8882869/create-creating-space-858897-8882869.jar' \
+            -o creatingspace-1.21.1-1.7.22.jar
+          test -s creatingspace-1.21.1-1.7.22.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/creating_space
+          EXPECTED_SHA1='6eca99ee07780ef8918ad6969809f15ed0b1371c'
+          ACTUAL_SHA1="$(sha1sum creatingspace-1.21.1-1.7.22.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum creatingspace-1.21.1-1.7.22.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s creatingspace-1.21.1-1.7.22.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo 'publisher_file=858897/8882869'
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Extract exact semantic inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/creating_space
+          jar tf creatingspace-1.21.1-1.7.22.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          jar=pathlib.Path('creatingspace-1.21.1-1.7.22.jar')
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              data=[n for n in names if n.startswith('data/creatingspace/')]
+              keys=('spell','magic','ritual','ability','mana','arcane','glyph','summon','soul','teleport','portal','dimension','planet','rocket','warp')
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nprovider_data={len(data)}\n'+
+                  '\n'.join(f'{k}={sum(k in n.lower() for n in names)}' for k in keys)+'\n',encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('provider-data.txt').write_text('\n'.join(data)+'\n',encoding='utf-8')
+              rows=[]
+              for n in data:
+                  if n.endswith('.json'):
+                      try:o=json.loads(z.read(n)); s=json.dumps(o,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                      except Exception as e:s='INVALID_JSON:'+type(e).__name__
+                      rows.append((n,s[:30000]))
+              pathlib.Path('provider-json.txt').write_text('\n'.join(f'===== {n} =====\n{s}' for n,s in rows)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump all provider classes and activation seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/creating_space
+          : > javap-all.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"; cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all.txt
+            javap -classpath creatingspace-1.21.1-1.7.22.jar -p -c -constants "$cls" >> javap-all.txt 2>&1 || true
+          done < classes.txt
+          grep -nEi 'teleport|changeDimension|dimension|planet|rocket|launch|destination|schedule|portal|warp|summon|spell|ritual|magic|ability|useItemOn|InteractionResult.*use|addFreshEntity' javap-all.txt > semantic-seams.txt || true
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: creating-space-1.7.22-exact-artifact-audit
+          path: |
+            build/audit/creating_space/hashes.txt
+            build/audit/creating_space/inventory.txt
+            build/audit/creating_space/jar-entries.txt
+            build/audit/creating_space/provider-data.txt
+            build/audit/creating_space/provider-json.txt
+            build/audit/creating_space/javap-all.txt
+            build/audit/creating_space/semantic-seams.txt
+          if-no-files-found: error
