@@ -147,6 +147,18 @@ Therefore Black Arcana does not infer `600` from the source default or from succ
 
 See [`DEPLOYED-CONFIG-CHECKPOINT.md`](DEPLOYED-CONFIG-CHECKPOINT.md).
 
+
+## Deployed evidence collector support
+
+The canonical read-only collector at `docs/qa/provider-catalog-deployed-evidence-collector.py` now has a bounded Deeper and Darker surface:
+
+- hashes only `mods/deeperdarker-neoforge-1.21.1-1.4.1.jar` for this provider and reports whether it equals current physical SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`;
+- reads only `config/deeperdarker-common.toml` for the exact key `soulElytraCooldown`;
+- accepts only an observed integer in the provider range `-1..12000`; missing, malformed, ambiguous, wrong-type or out-of-range evidence stays fail-closed;
+- does not copy the surrounding TOML or substitute the source default.
+
+An authoritative current-instance report can therefore close the deployed-config subgate independently. It cannot close the physical semantic denominator merely by matching `83f7edd0...`: that SHA-1 is the already-known unmatched physical artifact, so raw-byte semantic inspection or another exact bridge is still required before the three public/source roots enter the strict numerator.
+
 ## Strict accounting
 
 Because the physical JAR is not byte-equivalent to any official public 1.4.1 artifact, is not reproduced by a clean build of the official `v1.4.1` source pin, and its raw bytes are not currently available to this audit despite the retained Library/instance metadata:
