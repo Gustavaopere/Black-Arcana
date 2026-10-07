@@ -2,6 +2,14 @@
 
 Status: `3/3 COUNTED_EXACT`
 
+Individual files:
+
+- [Wrathful Lightning](wrathful-lightning.md)
+- [Tsunami](tsunami.md)
+- [Everlasting Allegiance](everlasting-allegiance.md)
+
+These files materialize the existing three-root denominator and do not change the +3 strict accounting.
+
 These cards represent the three Epic Fight core skill identities that meet the current semantic-magic rule. The vanilla trident/enchantment is the owner/reachability surface; Epic Fight remains authority for the action lifecycle, resource settlement, animation and damage.
 
 ## 1. Wrathful Lightning
