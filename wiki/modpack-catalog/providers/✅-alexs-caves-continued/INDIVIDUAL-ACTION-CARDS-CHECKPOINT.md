@@ -4,7 +4,7 @@ Status: `8/8 ROOTS INDIVIDUALLY MATERIALIZED / 8 COUNTED_EXACT / NO NUMERATOR DE
 
 ## Authority
 
-- preparation base: `58092fc16251b8e237777e23152cfd238a7f739d`;
+- Black Arcana base before this tranche: `748e56466b9e621180a311b1148d7cb30e8bad92`;
 - physical JAR: `alexscaves-1.0.10-neoforge+1.21.1.jar`;
 - mod id: `alexscaves`;
 - exact physical/publisher SHA-1: `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`;
