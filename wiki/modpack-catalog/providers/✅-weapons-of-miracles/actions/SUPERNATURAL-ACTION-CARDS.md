@@ -2,6 +2,24 @@
 
 Status: `13/13 SUPERNATURAL SEMANTIC ROOTS MATERIALIZED / 12 COUNTED_EXACT + 1 CONDITIONAL`
 
+Individual files:
+
+- [Ender Step](ender-step.md)
+- [Ender Obscuris](ender-obscuris.md)
+- [Shadow Step](shadow-step.md)
+- [Time Travel](time-travel.md)
+- [Voodoo Magic](voodoo-magic.md)
+- [Avatar of Might](avatar-of-might.md)
+- [Sky Dive](sky-dive.md)
+- [True Wrath](true-wrath.md)
+- [Demonic Ascension](demonic-ascension.md)
+- [Ender Ritual](ender-ritual.md)
+- [Lunar Eclipse](lunar-eclipse.md)
+- [Solar Arcano](solar-arcano.md)
+- [Flash Mutilation](flash-mutilation.md)
+
+These files materialize the existing 13-root denominator and do not change the 12 strict + 1 conditional accounting.
+
 These cards retain the causal action identity only. Numerical tuning, animation frames, resource values and downstream effects remain WOM/Epic Fight authority.
 
 ## Exact current skill-tree actions — 6
