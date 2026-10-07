@@ -1508,5 +1508,51 @@ soulElytraCooldown = 12001
                 self.assertNotIn(secret, serialized)
 
 
+
+    def test_traveloptics_collects_bounded_irons_spell_config_overrides(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            local = (
+                instance
+                / "config"
+                / "irons_spellbooks_spell_config"
+                / "traveloptics"
+            )
+            local.mkdir(parents=True)
+            (local / "blackout.json").write_text(
+                json.dumps(
+                    {
+                        "irons_spellbooks:enabled": True,
+                        "irons_spellbooks:school": "irons_spellbooks:eldritch",
+                        "irons_spellbooks:allow_crafting": True,
+                        "unrelatedSecret": "do-not-copy-traveloptics-config",
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            worlds = collector.candidate_worlds(instance, [])
+            result = collector.collect_traveloptics(instance, worlds)
+
+            self.assertEqual(
+                [
+                    {
+                        "path": "config/irons_spellbooks_spell_config/traveloptics/blackout.json",
+                        "selected": {
+                            "irons_spellbooks:enabled": True,
+                            "irons_spellbooks:school": "irons_spellbooks:eldritch",
+                            "irons_spellbooks:allow_crafting": True,
+                        },
+                    }
+                ],
+                result["irons_spell_config_evidence"]["local_spell_configs"],
+            )
+            self.assertNotIn(
+                "do-not-copy-traveloptics-config",
+                json.dumps(result),
+            )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1761,6 +1761,11 @@ def collect_traveloptics(instance: Path, worlds: list[Path]) -> dict[str, Any]:
         },
         "blackout_reference_matches": direct + zipped,
         "generic_acquisition_marker_matches": generic_acquisition_markers,
+        "irons_spell_config_evidence": collect_irons_spell_namespace_overrides(
+            instance,
+            worlds,
+            "traveloptics",
+        ),
         "blackout_reference_note": (
             "A literal match is candidate deployed-route evidence only. "
             "It does not by itself prove that the referenced script/quest/datapack grants "
