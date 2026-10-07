@@ -2,6 +2,19 @@
 
 Status: `8/8 COUNTED_EXACT`
 
+Individual files:
+
+- [Skor Gauntlet — Ice Spike Wave](skor-ice-spike-wave.md)
+- [Skor Gauntlet — Ice Slam Leap](skor-ice-slam-leap.md)
+- [Sirok Gauntlet — Earthquake](sirok-earthquake.md)
+- [Sirok Gauntlet — Poison Barrage](sirok-poison-barrage.md)
+- [Undying Tentacle — Hook](undying-tentacle-hook.md)
+- [Undying Tentacle — Ghost Tentacle Summon](undying-tentacle-summon.md)
+- [Helvar's Sword — Sword Wave](helvar-sword-wave.md)
+- [Pirate Saber — Pirate Crew Summon](pirate-crew-summon.md)
+
+These files materialize the existing eight-root denominator and do not change the +8 strict accounting.
+
 ## 1. Skor Gauntlet — Ice Spike Wave
 
 - owner: `block_factorys_bosses:ice_gauntlet`;
