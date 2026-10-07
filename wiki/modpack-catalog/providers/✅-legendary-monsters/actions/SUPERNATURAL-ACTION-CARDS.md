@@ -2,6 +2,33 @@
 
 Status: `22/22 COUNTED_EXACT ACTION ROOTS MATERIALIZED`
 
+Individual files:
+
+- [Annihilator Helmet — Targeted Teleport](annihilator-helmet-targeted-teleport.md)
+- [Axe of Lightning — Lightning Strike](axe-lightning-strike.md)
+- [Axe of Lightning — Electric Burst](axe-electric-burst.md)
+- [Buckler of Annihilation — Sweep + Bombs](buckler-annihilation-sweep-bombs.md)
+- [Chorus Blade — Random Teleport](chorus-blade-random-teleport.md)
+- [Dinosaur Bone Club — Circular Shockwaves](dinosaur-bone-club-shockwaves.md)
+- [Entity Warper — Radius Entity Warp](entity-warper-radius-warp.md)
+- [Fiery Boots — Fire Trail](fiery-boots-fire-trail.md)
+- [Fiery Jaw — Fire Breath + Repulsion](fiery-jaw-fire-breath-repulsion.md)
+- [The Great Frost — Directed Ice Spikes](great-frost-directed-ice-spikes.md)
+- [The Great Frost — Radial Ice Spikes](great-frost-radial-ice-spikes.md)
+- [Guard Summoner — Guard Summon](guard-summoner.md)
+- [Knight Summoner — Knight Summon](knight-summoner.md)
+- [Monstrous Anchor — Launch + Stun Burst](monstrous-anchor-launch-stun.md)
+- [Mossy Chestplate — Poison Cloud Field](mossy-chestplate-poison-field.md)
+- [Mossy Hammer — Poison/Moss Shockwave](mossy-hammer-shockwave.md)
+- [Soul Great Sword — Phantom Daggers](soul-great-sword-phantom-daggers.md)
+- [The Tesseract — Annihilation Portal Star](tesseract-annihilation-portal-star.md)
+- [Totem of Moss — Mossy Golem Summon](totem-moss-golem-summon.md)
+- [Void Entity Warper — Targeted Entity Warp](void-entity-warper-targeted.md)
+- [Wand of Clouds — Explosive Cloud Summon](wand-clouds-explosive-cloud.md)
+- [Teleport Machine + Eye Crystal — Obliterator Summon](teleport-machine-obliterator-summon.md)
+
+These files materialize the existing 22-root denominator and do not change the +22 strict accounting.
+
 Each card represents one player-owned causal supernatural action. Repeated projectiles, particles, waves, summoned-entity attacks, cooldown ticks and other downstream consequences remain provider-owned settlement details rather than additional identities.
 
 ## 1. Annihilator Helmet — Targeted Teleport
