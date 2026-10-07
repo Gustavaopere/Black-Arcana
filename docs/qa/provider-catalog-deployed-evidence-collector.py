@@ -29,6 +29,7 @@ from typing import Any
 
 TRAVELOPTICS_ORIGINAL_SHA1 = "3808493ce45cdfeb6408e85578adecf13df698e8"
 TRAVELOPTICS_PATCH_SHA1 = "680fa679d8ea2419a79571f455436367222f6f9d"
+DEEPER_DARKER_141_PHYSICAL_SHA1 = "83f7edd0a8516b2767c2cda7a3b2402f9e290d88"
 ASTERISM_010_PHYSICAL_SHA1 = "4a25ba80116168ddcc812f71467c0598127e774a"
 SOMAKE_109_RELEASE_SHA1 = "171841ac9f802be9309ecc166c1d972ac6d404c0"
 GAZE_1171_SHA1 = "a8cb3190bde157f78160ce65c202ce2d47fb2041"
@@ -145,6 +146,7 @@ NEG_CONFIGS = [
 
 MOD_PATTERNS = {
     "asterism_arcanum": ["asterismarcanum-1.21.1-0.1.0.jar"],
+    "deeper_and_darker": ["deeperdarker-neoforge-1.21.1-1.4.1.jar"],
     "corail_tombstone": ["tombstone-neoforge-1.21.1-9.5.6.jar"],
     "gaze": ["gaze-1.1.7.1.jar"],
     "ice_and_fire_ce": ["iceandfire-2.1.2.jar"],
@@ -690,6 +692,8 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
                 entry = digest_file(path)
                 if provider == "asterism_arcanum":
                     entry["current_physical_0_1_0_equality"] = entry["sha1"] == ASTERISM_010_PHYSICAL_SHA1
+                elif provider == "deeper_and_darker":
+                    entry["current_physical_1_4_1_equality"] = entry["sha1"] == DEEPER_DARKER_141_PHYSICAL_SHA1
                 elif provider == "traveloptics":
                     if entry["sha1"] == TRAVELOPTICS_ORIGINAL_SHA1:
                         entry["classification"] = "ORIGINAL_EXACT"
@@ -979,6 +983,50 @@ def collect_selected_key(instance: Path, roots: list[Path], key: str) -> list[di
                 })
 
     return matches
+
+
+
+def collect_deeper_and_darker(instance: Path) -> dict[str, Any]:
+    path = instance / "config" / "deeperdarker-common.toml"
+    evidence: dict[str, Any] = {
+        "path": rel(path, instance),
+        "key_path": "soulElytraCooldown",
+        "status": "NOT_FOUND",
+    }
+    if not path.is_file():
+        return {"soul_elytra_cooldown": evidence}
+
+    try:
+        with path.open("rb") as handle:
+            data = tomllib.load(handle)
+    except Exception as exc:
+        evidence["status"] = "PARSE_ERROR"
+        evidence["error"] = type(exc).__name__
+        return {"soul_elytra_cooldown": evidence}
+
+    matches = _find_key_recursive(data, "soulElytraCooldown")
+    if not matches:
+        evidence["status"] = "KEY_NOT_FOUND"
+        return {"soul_elytra_cooldown": evidence}
+    if len(matches) != 1:
+        evidence["status"] = "AMBIGUOUS_KEY"
+        evidence["match_count"] = len(matches)
+        return {"soul_elytra_cooldown": evidence}
+
+    key_path, value = matches[0]
+    evidence["key_path"] = key_path
+    if isinstance(value, bool) or not isinstance(value, int):
+        evidence["status"] = "INVALID_TYPE"
+        evidence["value_type"] = type(value).__name__
+        return {"soul_elytra_cooldown": evidence}
+
+    evidence["value"] = value
+    if value < -1 or value > 12000:
+        evidence["status"] = "OUT_OF_RANGE"
+        return {"soul_elytra_cooldown": evidence}
+
+    evidence["status"] = "OBSERVED"
+    return {"soul_elytra_cooldown": evidence}
 
 
 def collect_ice_and_fire_ce(instance: Path) -> dict[str, Any]:
@@ -1749,6 +1797,7 @@ def main() -> int:
         ),
         "asterism_arcanum": collect_asterism(instance, worlds),
         "corail_tombstone": collect_tombstone(instance, worlds),
+        "deeper_and_darker": collect_deeper_and_darker(instance),
         "gaze": collect_gaze(instance, worlds),
         "ice_and_fire_ce": collect_ice_and_fire_ce(instance),
         "mowzies_mobs": collect_mowzies_mobs(instance, worlds),
