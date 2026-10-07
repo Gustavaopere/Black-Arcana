@@ -30,4 +30,6 @@ O collector read-only já sabe capturar os dez valores STARTUP relevantes, mas n
 
 Até o arquivo implantado ser capturado contra o SHA-1 físico esperado, a contribuição deste provider permanece **+0 strict**.
 
+Checkpoint de materialização: [INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 Fontes canônicas: [SOURCE-1.0.2-ABILITY-INVENTORY.md](SOURCE-1.0.2-ABILITY-INVENTORY.md) e [DEPLOYED-CONFIG-CHECKLIST.md](DEPLOYED-CONFIG-CHECKLIST.md).
