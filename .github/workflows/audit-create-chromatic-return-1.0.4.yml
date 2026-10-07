@@ -1,0 +1,155 @@
+name: audit-create-chromatic-return-1.0.4
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-artifact-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/audit/chromatic-return
+          cd build/audit/chromatic-return
+          curl -fL --retry 3 --retry-all-errors \
+            "https://cursemaven.com/curse/maven/create-chromaticreturn-503784/8578225/create-chromaticreturn-503784-8578225.jar" \
+            -o createchromaticreturn-1.0.4-neoforge-1.21.1.jar
+          test -s createchromaticreturn-1.0.4-neoforge-1.21.1.jar
+
+      - name: Verify physical hash equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/chromatic-return
+          EXPECTED_SHA1="be588d9e76ba1ce1a0556354c15fcc19d7fda133"
+          ACTUAL_SHA1="$(sha1sum createchromaticreturn-1.0.4-neoforge-1.21.1.jar | awk '{print $1}')"
+          ACTUAL_SHA256="$(sha256sum createchromaticreturn-1.0.4-neoforge-1.21.1.jar | awk '{print $1}')"
+          BYTES="$(stat -c %s createchromaticreturn-1.0.4-neoforge-1.21.1.jar)"
+          {
+            echo "expected_physical_sha1=$EXPECTED_SHA1"
+            echo "publisher_file=503784/8578225"
+            echo "publisher_sha1=$ACTUAL_SHA1"
+            echo "publisher_sha256=$ACTUAL_SHA256"
+            echo "bytes=$BYTES"
+          } | tee hashes.txt
+          test "$ACTUAL_SHA1" = "$EXPECTED_SHA1"
+
+      - name: Inventory exact artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/chromatic-return
+          jar tf createchromaticreturn-1.0.4-neoforge-1.21.1.jar | sort > jar-entries.txt
+          python3 - <<'PY'
+          import pathlib,re,zipfile
+          jar='createchromaticreturn-1.0.4-neoforge-1.21.1.jar'
+          with zipfile.ZipFile(jar) as z:
+              names=sorted(z.namelist())
+              classes=[n for n in names if n.endswith('.class')]
+              resources=[n for n in names if not n.endswith('.class')]
+              semantic=re.compile(r'(charm|flight|creative|magic|spell|ritual|ability|power|teleport|invulner|effect|potion|enchant|soul|arcane)',re.I)
+              candidates=[n for n in names if semantic.search(n)]
+              pathlib.Path('inventory.txt').write_text(
+                  f'entries={len(names)}\nclasses={len(classes)}\nresources={len(resources)}\nsemantic_like_paths={len(candidates)}\n',encoding='utf-8')
+              pathlib.Path('classes.txt').write_text('\n'.join(classes)+'\n',encoding='utf-8')
+              pathlib.Path('semantic-like-paths.txt').write_text('\n'.join(candidates)+'\n',encoding='utf-8')
+          PY
+
+      - name: Dump all exact provider classes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/chromatic-return
+          : > javap-all.txt
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            cls="${path%.class}"
+            cls="${cls//\//.}"
+            echo "===== $cls =====" >> javap-all.txt
+            javap -classpath createchromaticreturn-1.0.4-neoforge-1.21.1.jar -p -c -constants "$cls" >> javap-all.txt 2>&1 || true
+          done < classes.txt
+
+      - name: Extract player-action and passive seams
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/chromatic-return
+          grep -nEi ' use\(|useOn|inventoryTick|onArmorTick|finishUsing|releaseUsing|interactLivingEntity|rightclick|rightclicked|keybind|flight|flying|mayfly|instabuild|creative|charm|effect|potion|enchant|teleport|summon|spell|ritual|magic|ability|power' javap-all.txt > player-semantic-seams.txt || true
+
+      - name: Extract exact provider JSON and localization
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/chromatic-return
+          python3 - <<'PY'
+          import json,pathlib,zipfile
+          jar='createchromaticreturn-1.0.4-neoforge-1.21.1.jar'
+          json_rows=[]
+          lang_rows=[]
+          with zipfile.ZipFile(jar) as z:
+              names=set(z.namelist())
+              for name in sorted(names):
+                  if name.startswith('data/') and name.endswith('.json'):
+                      try:
+                          obj=json.loads(z.read(name))
+                          compact=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+                      except Exception as e:
+                          compact='INVALID_JSON:'+type(e).__name__
+                      json_rows.append((name,compact))
+                  if name.endswith('/lang/en_us.json'):
+                      try:
+                          obj=json.loads(z.read(name))
+                      except Exception:
+                          continue
+                      for k,v in sorted(obj.items()):
+                          if any(t in (k+' '+str(v)).lower() for t in ('charm','flight','creative','ability','magic','spell','ritual','power','invulner','soul','enchant')):
+                              lang_rows.append((k,str(v)))
+          pathlib.Path('provider-data-json.txt').write_text(
+              '\n'.join(f'===== {n} =====\n{j}' for n,j in json_rows)+'\n',encoding='utf-8')
+          pathlib.Path('provider-data-count.txt').write_text(f'count={len(json_rows)}\n',encoding='utf-8')
+          pathlib.Path('semantic-localization.txt').write_text(
+              '\n'.join(f'{k}\t{v}' for k,v in lang_rows)+'\n',encoding='utf-8')
+          PY
+
+      - name: Count exact magic-registry/resource keywords
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/audit/chromatic-return
+          python3 - <<'PY' | tee magic-keyword-counts.txt
+          import pathlib,re
+          text=pathlib.Path('jar-entries.txt').read_text(encoding='utf-8',errors='replace')
+          for term in ('spell','magic','ritual','ability','mana','arcane','glyph','charm','flight','enchant'):
+              print(f'{term}={len(re.findall(term,text,re.I))}')
+          PY
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: create-chromatic-return-1.0.4-exact-artifact-audit
+          path: |
+            build/audit/chromatic-return/hashes.txt
+            build/audit/chromatic-return/inventory.txt
+            build/audit/chromatic-return/jar-entries.txt
+            build/audit/chromatic-return/semantic-like-paths.txt
+            build/audit/chromatic-return/javap-all.txt
+            build/audit/chromatic-return/player-semantic-seams.txt
+            build/audit/chromatic-return/provider-data-json.txt
+            build/audit/chromatic-return/provider-data-count.txt
+            build/audit/chromatic-return/semantic-localization.txt
+            build/audit/chromatic-return/magic-keyword-counts.txt
+          if-no-files-found: error
