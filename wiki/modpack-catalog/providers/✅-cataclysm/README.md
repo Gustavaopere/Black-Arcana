@@ -56,7 +56,38 @@ The exact current Cataclysm base contributes **27 semantic magic objects** under
 - **24 discrete supernatural player actions** hosted by items/equipment;
 - **3 deliberate boss-summoning ritual actions** tied to provider world structures.
 
-Detailed cards: [`actions/README.md`](actions/README.md).
+Detailed cards:
+
+- aggregate: [`actions/README.md`](actions/README.md);
+- [Ancient Spear — Sandstorm Launch](actions/ancient-spear-sandstorm-launch.md);
+- [Astrape — Lightning Spear](actions/astrape-lightning-spear.md);
+- [Bulwark of the Flame — Charge](actions/bulwark-of-the-flame-charge.md);
+- [Ceraunus — Wave Fan](actions/ceraunus-wave-fan.md);
+- [Gauntlet of Bulwark — Blazing Push](actions/gauntlet-of-bulwark-blazing-push.md);
+- [Gauntlet of Bulwark — Charge](actions/gauntlet-of-bulwark-charge.md);
+- [Gauntlet of Guard — Pull Field](actions/gauntlet-of-guard-pull-field.md);
+- [Gauntlet of Maelstrom — Void Vortex](actions/gauntlet-of-maelstrom-void-vortex.md);
+- [Infernal Forge — Earthquake](actions/infernal-forge-earthquake.md);
+- [Sandstorm in a Bottle — Orbiting Sandstorms](actions/sandstorm-in-a-bottle-orbiting-sandstorms.md);
+- [Soul Render — Render Rush](actions/soul-render-render-rush.md);
+- [Soul Render — Phantom Halberd Spiral](actions/soul-render-phantom-halberd-spiral.md);
+- [The Annihilator — Dual-Wield Burst](actions/the-annihilator-dual-wield-burst.md);
+- [The Immolator — Flame Strike](actions/the-immolator-flame-strike.md);
+- [The Incinerator — Flame Strike Line](actions/the-incinerator-flame-strike-line.md);
+- [Tidal Claws — Tentacle Attack](actions/tidal-claws-tentacle-attack.md);
+- [Tidal Claws — Grappling Hook](actions/tidal-claws-grappling-hook.md);
+- [Void Core — Void Rune Formation](actions/void-core-void-rune-formation.md);
+- [Void Forge — Void Rune Fan](actions/void-forge-void-rune-fan.md);
+- [Wrath of the Desert — Cursed Sandstorm Volley](actions/wrath-of-the-desert-cursed-sandstorm-volley.md);
+- [Ignitium Helmet — Gaze of Heat](actions/ignitium-helmet-gaze-of-heat.md);
+- [Cursium Helmet — Ghost Vision](actions/cursium-helmet-ghost-vision.md);
+- [Cursium Boots — Back-Step](actions/cursium-boots-back-step.md);
+- [Bloom Stone Pauldrons — Amethyst Cluster Burst](actions/bloom-stone-pauldrons-amethyst-cluster-burst.md);
+- [Ignis Summoning](actions/ignis-summoning.md);
+- [Leviathan Summoning](actions/leviathan-summoning.md);
+- [Maledictus Summoning](actions/maledictus-summoning.md);
+
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 ### Action-owner summary
 
