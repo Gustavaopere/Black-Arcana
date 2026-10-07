@@ -17,6 +17,8 @@ exact weapon-infusion route.
 
 ## Boundary
 
+The three projectiles are one action result, not three identities.
+
 This card materializes the already-audited causal root. Repeated projectiles/entities/effects, cooldown settlement and ordinary neighboring weapon behavior remain provider-owned consequences or exclusions as recorded by the aggregate catalog.
 
 L_Ender's Cataclysm remains authority for action settlement, cooldowns, projectiles/effects, loot and balance. Black Arcana catalogs the identity and must not replay the provider action.
