@@ -4,6 +4,8 @@
 
 **Índice global atualizado:** [CATALOGO-GLOBAL-MAGIAS.md](meta/CATALOGO-GLOBAL-MAGIAS.md) — 164/164 READMEs canônicos ✅, 97/97 providers da categoria física Magic reconciliados, 162 dentro do escopo definido pelo usuário (Traveloptics e Deeper and Darker base excluídos). O catálogo de Tunes n' Tomes passa a possuir 16/16 [fichas individualizadas](providers/✅-tunes-n-tomes/SPELL-CARDS-1.1.0-HOTFIX.md). Validação de registry/config/runtime permanece separada e não recebe aprovação fictícia.
 
+**Quadro atual de pendências e estados:** [PENDENCIAS-MAGICAS-ATUAIS.md](meta/PENDENCIAS-MAGICAS-ATUAIS.md) — cinco linhas acompanhadas individualmente, com o que está comprovado, o que é apenas triagem, provas binárias pendentes, QA de Survival e o bloqueio de ativação do grande ritual. A contagem ✅ dos diretórios não equivale à conclusão dessas cinco pendências.
+
 Status: `IN PROGRESS`
 
 This directory is the canonical Phase 2 inventory for every magic-relevant top-level component in the current Black Arcana modpack.
