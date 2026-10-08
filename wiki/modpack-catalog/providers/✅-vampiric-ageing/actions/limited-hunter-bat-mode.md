@@ -9,7 +9,7 @@
 
 ## Unlock and admission
 
-Cumulative Tainted Age at least 10 plus environmental gates: not underwater, not in The End or provider bat blacklist, not mounted, and no disallowed sun state when configured.
+Cumulative Tainted Age at least 10 plus environmental gates: not in water, not in The End or provider bat blacklist, not mounted, and no disallowed sun state when configured.
 
 ## Source-default contract
 
