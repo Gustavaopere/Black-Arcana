@@ -5,6 +5,13 @@
 The physical artifacts for Traveloptics (`7b74816e...`) and Deeper and Darker (`83f7edd0...`) were provided and read-only audited. Exact-current Traveloptics static spell registration closes **33 distinct IDs** equal to the existing baseline, but Blackout survival/current-deployed Iron's/serializer evidence remains open: **+0 strict**. Deeper and Darker closes **3 current supernatural action roots**: Otherside Portal Activation and Sonorous Staff are **2 `COUNTED_EXACT`** roots (exact physical trigger and provider acquisition); Soul Elytra Boost is **1 `CONDITIONAL`** until deployed COMMON `soulElytraCooldown` is captured. **Current strict minimum: 1851 (= 1849 + 2)**. Both provider action inventories have separate **✅ catalog completion** (Traveloptics 33/33; Deeper and Darker 3/3), distinct from semantic strict eligibility. Neither promotion changes the **1851** minimum. The semantic denominator for the entire pack is still open; no global percentage is inferred. The historical 1849 figures retained below precede this direct-JAR intake. See provider direct-JAR audit checkpoints.
 
 
+## Physical ledger/version reconciliation — 2026-10-08
+
+The certified sibling `PROJECT-INSTRUCTIONS/modlist/modlist.md` at `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` contains 587 numbered physical rows. Exact display-name/explicit-alias reconciliation establishes **69/69 present counted-ledger providers**, **0 declared-version-token mismatches**, and two historical catalogs absent from the snapshot (**Ars Morph** and **Woodwalkers SpellBooks**). Matching a declared version does **not** upgrade a source-pinned/release-bounded registry to binary-exact authority.
+
+Physical NeoForge is **21.1.250** in modlist row #001. Black Arcana `gradle.properties` uses **21.1.248** as the build baseline; this distinction is not evidence of a runtime failure. The older 21.1.248 anchor below remains historical, not current certified physical modloader authority.
+
+For this user's scope excluding Traveloptics and the **Deeper and Darker base mod**, the reconstructible strict minimum remains **1849**; global **1851** includes two Deeper and Darker base actions. The distinct **Deeper & Darker Spellbooks** addon stays in scope. The semantic denominator is still unknown, and physical config/reachability checks remain unverified. Full physical JAR crosswalk: [PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md](PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md).
 ## Purpose
 
 This file is the reconstructible ledger for the user-facing semantic-magic coverage metric. It is deliberately separate from the provider-component closure metric in [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).

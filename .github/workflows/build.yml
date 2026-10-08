@@ -36,6 +36,9 @@ jobs:
       - name: Provider catalog collector Python tests
         run: python3 docs/qa/provider_catalog_deployed_evidence_collector_test.py
 
+      - name: Physical catalog ledger reconciliation tests
+        run: python3 docs/qa/catalog_physical_ledger_test.py
+
       - name: Unit tests
         run: ./gradlew --no-daemon test
 
