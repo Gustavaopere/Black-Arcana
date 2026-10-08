@@ -4,7 +4,7 @@
 
 ## Status
 
-`⚠️ CURRENT PHYSICAL PROVIDER / PHYSICAL SHA-1 OTHER_VERIFIED / 33-ID PUBLISHER BASELINE + HISTORICAL MODIFIED-RUNTIME 33/33 OBSERVED / SEPT-08 PHYSICAL-LINE RUNTIME INIT CORRELATED / CURRENT PHYSICAL REGISTRY UNVERIFIED / STRICT +0 / FAIL-CLOSED`
+`⚠️ CURRENT PHYSICAL JAR DIRECTLY INSPECTED / EXACT-CURRENT 33 REGISTERED SPELL IDS / DISTINCT LOOT CODEC SUPPLIER REFERENCES / BLACKOUT SURVIVAL + IN-PROCESS CODEC IDENTITY + AQUA AUTHORITY OPEN / STRICT +0`
 
 Current physical status: **INSTALLED / CURRENT PROVIDER BLOCKER**. Current sibling authority rechecked at `neoforge-rpg-skilltree@b9edb403c06567423d6c101d136b73a1065f2ad4` (certified Traveloptics dossier blob unchanged from the previously cited checkpoint): `PROJECT-INSTRUCTIONS/modlist/modlist.md` row **#550** and `PROJECT-INSTRUCTIONS/modlist/Addons + Adventure and RPG + Armor, Tools, and Weapons + Magic + Mobs/✅-to-magic-n-extras v4.4.0.1-1.21.1.md` both record `traveloptics-4.4.0.1-1.21.1.jar`, mod id `traveloptics`, runtime `4.4.0.1-1.21.1`, SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`. This current physical authority supersedes older claims that Traveloptics was absent. Project Library physical inventories now provide direct SHA-1 corroboration as early as **22/08/2026**, followed by **08/09/2026** and **16/09/2026**, each recording the same `7b74816e...` bytes under the same filename.
 
@@ -60,7 +60,7 @@ The current official CurseForge project page also publishes behavioral descripti
 
 This is an editorial/catalog layer, not exact-version runtime evidence: the project page is living documentation and also describes content absent from File `6342780`. Registry IDs, schools, provider gates and exact loot anchors therefore remain controlled by the exact-artifact audit. Display-label drift on the living page is never allowed to rename or add registry identities. Seven explicitly stated thresholds/timings/conditions are retained only as publisher-only version-conditioned context; they are not promoted to exact-alpha/current-physical balance facts.
 
-The semantic/mechanics layers do **not** change the provider disposition: current physical bytes remain `OTHER_VERIFIED`, exact-current registry/stat equality is unverified, `blackout` reachability remains unresolved, runtime closure remains fail-closed and strict contribution remains **+0**.
+The semantic/mechanics layers do **not** change the provider disposition: current physical bytes remain `OTHER_VERIFIED` *relative to the publisher*, but the exact-current 33-ID registry is now directly established. Publisher numeric/stat parity, `blackout` reachability, in-process serializer identity and full-pack runtime remain unresolved; strict contribution remains **+0**.
 
 A bounded clean-room accessor audit closes **37 exact File-only resolved bounded accessor outputs across 24/33 spells** for publisher File `6342780`: 29 no-entity values plus 8 LivingEntity-signature values proven entity-unused before evaluation. A separate direct-delegate audit plus the current Iron's 3.16.3 source contract closes **7 host-resolved effective-cast-time results**, expanding numeric accessor/bridge coverage to **28/33** spell identities while keeping the 37 File-only denominator unchanged. Audit #658 now dependency-classifies **all 34/34 `ENTITY_SLOT_READ` numeric accessors**: 24 depend on the entity only through host `getSpellPower(int, Entity)`, 9 summon-damage accessors additionally depend on Iron's `SUMMON_DAMAGE` attribute surface, and `aerial_collapse#getDamage` adds `Math.min(float,float)`. The methods remain numerically entity/config dependent. Thus **33/33 identities have at least one bounded accessor result, host bridge or dependency contract**, not 33/33 numeric closure. See [`EXACT-4.4.0.1-SCALAR-ACCESSORS.md`](EXACT-4.4.0.1-SCALAR-ACCESSORS.md), [`EXACT-4.4.0.1-LIVINGENTITY-ACCESSORS.md`](EXACT-4.4.0.1-LIVINGENTITY-ACCESSORS.md), [`EXACT-4.4.0.1-CURRENT-HOST-EFFECTIVE-CAST-BRIDGE.md`](EXACT-4.4.0.1-CURRENT-HOST-EFFECTIVE-CAST-BRIDGE.md) and [`EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md`](EXACT-4.4.0.1-ALL-ENTITY-DEPENDENCY-MAP.md). None of these results is projected to current physical SHA-1 `7b74816e...`.
 
@@ -197,7 +197,7 @@ The current broad project description documents a Dead King → Blackout route f
 
 Result: complete object-level survival reachability for all 33 registrations is **not closed**.
 
-## Exact loot-registry structural risk
+## Historical publisher loot-registry defect and remaining current runtime gate
 
 A focused clean-room audit independently inspected `com.gametechbc.traveloptics.loot.TOLootModifiers` in exact file `6342780` and found:
 
@@ -212,26 +212,21 @@ A later clean-room binary-diff checkpoint fingerprints exact patch File `1690333
 
 A bounded Project Library search on 2026-10-05 found no preserved post-repair direct observation of both `traveloptics:key_loot` and `traveloptics:universal_loot` serializer values, and no `distinct_codec_instances=true` probe row. Historical duplicate-`KeyLootModifier` failures remain positive evidence; search misses are not absence evidence. Gate 2 therefore still requires the canonical physical-pack registry probe rather than further generic log searching. See [`GATE2-PRESERVED-LOG-SEARCH-BOUNDARY-2026-10-05.md`](GATE2-PRESERVED-LOG-SEARCH-BOUNDARY-2026-10-05.md).
 
-The structural mismatch is nevertheless sufficient to keep current-pack runtime promotion fail-closed until one of these is proven:
+The attached current physical JAR now directly establishes distinct **supplier references** (`key_loot -> KeyLootModifier.CODEC` and `universal_loot -> UniversalLootModifier.CODEC`), unlike the historical publisher wiring. This supersedes the earlier *current-wiring-unknown* premise, not the runtime blocker. Only an in-process schema-4 observation of distinct constructed codec instances, both registrations and successful same-artifact startup can close the remaining serializer/runtime gate. No such authoritative current-instance observation is present.
 
-1. the physical pack actually carries a verified patch/replacement that changes this wiring; or
-2. the exact unpatched physical artifact successfully initializes in an authoritative assembled-pack/runtime test despite the structural risk.
+## Semantic accounting — current physical override and historical Phase 2BS
 
-Neither proof is currently present in repository evidence.
+Phase 2BS historical disposition, superseded where expressly noted below:
 
-## Semantic accounting
-
-Phase 2BS disposition:
-
-- 33 exact registered spell identities in publisher File `6342780`: **cataloged as release baseline**; current physical `OTHER_VERIFIED` bytes require re-audit before those 33 are claimed exact for the installed artifact;
+- 33 publisher-registered spell identities: **release baseline**, independently confirmed as the same **33/33 exact-current physical registered IDs** by the 2026-10-08 direct-JAR audit;
 - 32 residual localization-only IDs: **excluded +0**;
 - `traveloptics:blackout`: exact-alpha provider direct/generic loot routes excluded; current-pack survival reachability remains unresolved;
 - exact publisher mechanics baseline: 33/33 registered spells closed for raw/default host inputs; current-physical stat equality unverified;
 - exact publisher File-only bounded scalar accessors: 37 resolved outputs across 24 spells; LivingEntity-bearing surface classified at 15 ENTITY_UNUSED / 34 ENTITY_SLOT_READ, with 8 File-only values plus 7 exact direct-delegate relations; current Iron's 3.16.3 host resolves those seven effective-cast delegates, bringing numeric accessor/bridge coverage to 28/33 spell identities; audit #658 dependency-classifies all 34/34 entity-reading methods into 24 host-spell-power-only + 9 `SUMMON_DAMAGE`-augmented + 1 spell-power+`Math.min`, so identity-level accessor/bridge/dependency coverage is 33/33 while numeric closure stays 28/33; current-physical equality remains unverified;
-- exact publisher artifact: structural `TOLootModifiers` defect is corroborated by historical assembled-runtime reproduction; current physical `7b74816e...` serializer wiring remains unresolved;
+- exact publisher artifact: structural `TOLootModifiers` defect is corroborated by historical assembled-runtime reproduction; current physical `7b74816e...` supplier references are distinct, while constructed codec object identity and process-bound startup remain unresolved;
 - semantic contribution to strict global minimum: **+0**;
 - provider component closure: **no new component**;
-- strict minimum at the historical Phase 2BS checkpoint remained **1344**; the current catalog-wide strict reconstructible minimum is **1689**;
+- strict minimum at the historical Phase 2BS checkpoint remained **1344**; after direct physical-JAR intake PR #697 the current catalog-wide strict reconstructible minimum is **1851** (Deeper and Darker +2; Traveloptics +0);
 - technical component closure at the historical Phase 2BS checkpoint remained **66/100**; the current cross-domain technical denominator is **`PENDING REBASE`**.
 
 `66/100` is a technical component metric, not a spell-coverage percentage.
@@ -279,12 +274,12 @@ No method bodies, source reconstruction, localization prose, recipe/loot payload
 
 Traveloptics is currently installed and remains blocked on a finite current-pack closure set:
 
-1. materialize the exact `7b74816e...` physical bytes or obtain contemporaneous exact provenance, then reconstruct the current registry/content delta;
-2. verify current physical `TOLootModifiers` wiring and assembled registry initialization;
-3. close `traveloptics:blackout` object-level survival reachability for the actual physical artifact;
-4. close Somake Aqua ↔ T.O Aqua coexistence/authority on the assembled current stack.
+1. capture the assembled-instance schema-4 registry probe with both constructed codec identities distinct and the exact FML-loaded current-JAR fingerprint; physical `TOLootModifiers` supplier references are already inspected;
+2. close `traveloptics:blackout` normal-survival acquisition using actual deployed Iron's settings and KubeJS/datapack/loot/quest routes, not publisher descriptions or source defaults;
+3. close Somake Aqua ↔ Traveloptics cross-provider identity/authority and deduplication using actual assembled-stack evidence;
+4. complete provider-native runtime acceptance without conflating registry/serializer smoke with gameplay QA.
 
-Until those gates close, the 33 publisher-baseline cards remain useful catalog evidence but contribute **+0 strict** for the current physical provider.
+The **33 exact-current physical registered identities are cataloged 33/33**, but contribute **+0 strict** pending the current-pack reachability/runtime gates. The semantic global minimum remains **1851** independently of Traveloptics.
 
 ## Audit anchors
 
