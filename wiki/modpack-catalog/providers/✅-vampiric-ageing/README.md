@@ -158,6 +158,16 @@ Alternatives:
 
 - [`PROGRESSION-CATALOG.md`](./PROGRESSION-CATALOG.md) — Age Types, methods, ranks, attributes and progression settlement.
 - [`ACTION-CATALOG.md`](./ACTION-CATALOG.md) — all 9 registered actions and their gates/default contracts.
+- [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](./INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md) — 9/9 one-action-per-file materialization; all remain source-pinned/conditional.
+- [Celerity](actions/celerity.md) — `vampiricageing:celerity_action`;
+- [Blood Tap / Drain Blood](actions/blood-tap.md) — `vampiricageing:drain_blood_action`;
+- [Water Walking](actions/water-walking.md) — `vampiricageing:water_walking_action`;
+- [Vampire Step Assist](actions/vampire-step-assist.md) — `vampiricageing:step_assist_action`;
+- [Hunter Teleport](actions/hunter-teleport.md) — `vampiricageing:hunter_teleport_action`;
+- [Limited Hunter Bat Mode](actions/limited-hunter-bat-mode.md) — `vampiricageing:limited_hunter_batmode_action`;
+- [Hunter Step Assist](actions/hunter-step-assist.md) — `vampiricageing:step_assist_hunter_action`;
+- [Wise Eye](actions/wise-eye.md) — `vampiricageing:hunter_wise_eye_action`;
+- [Improved Senses](actions/improved-senses.md) — `vampiricageing:improved_senses_action`;
 - [`TAINTED-BLOOD-AND-WEREWOLVES.md`](./TAINTED-BLOOD-AND-WEREWOLVES.md) — Hunter cumulative Tainted Age, survival acquisition and Werewolves overlays.
 - [`TECHNICAL-AUDIT.md`](./TECHNICAL-AUDIT.md) — attachment, lifecycle, event/mixin surfaces and static discrepancies.
 - [`INTEGRATION-RULES.md`](./INTEGRATION-RULES.md) — Black Arcana authority/settlement contract.
