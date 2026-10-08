@@ -8,7 +8,7 @@ Status: `VERSION/IDENTITY RECONCILIATION COMPLETE FOR CURRENT COUNTED-LEDGER PRO
 - Black Arcana base: `main@e4d001e05a1e45a24136e8b6582096e9ea71ceff`.
 - Ledger source: [SEMANTIC-MAGIC-COVERAGE.md](SEMANTIC-MAGIC-COVERAGE.md), counted-ledger rows as recorded at the base commit.
 - Identity matching uses exact normalized display names or **explicit, checked aliases**; never substring matching. This prevents false matches such as Wind's Spellbooks versus IronSable X Wind's Spellbooks, or Vampirism versus Bloodlines.
-- Version test confirms that the ledger's first stated version token appears in either the physical index's runtime/distribution version string or the exact JAR filename. It is a **declared-version consistency check**, not a binary hash, loaded registry or source-build equivalence proof.
+- Version test confirms that **every explicitly stated numeric version token** in the ledger line appears in the physical index's runtime/distribution version string or exact JAR filename (including deliberately different distribution/embedded metadata versions). It is a **declared-version consistency check**, not a binary hash, loaded registry or source-build equivalence proof.
 
 ## Results
 
