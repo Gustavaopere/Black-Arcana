@@ -20,6 +20,8 @@ O provider permanece **⚠️ parcial/condicionado**. A auditoria fecha o denomi
 - [Despawn Wild Shadows](actions/despawn-wild-shadows.md)
 - [Shadow Fusion](actions/shadow-fusion.md)
 
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 ## Contagem e exclusões
 
 - 10/10 fichas correspondem a raízes semânticas exatas do artefato físico/publisher hash-matched;
