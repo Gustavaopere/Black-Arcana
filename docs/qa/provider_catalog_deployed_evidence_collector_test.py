@@ -1636,6 +1636,16 @@ class AdditionalProviderGateEvidenceTest(unittest.TestCase):
             self.assertEqual(64, len(specs["config_files"][0]["sha256"]))
             self.assertNotIn("do-not-copy", json.dumps([ageing, specs]))
 
+    def test_fingerprint_skips_symlinks_outside_instance(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp) / "instance"
+            config = instance / "config"
+            config.mkdir(parents=True)
+            external = Path(tmp) / "vampiricageing-external.toml"
+            external.write_text('secret = "not-a-pack-config"\n', encoding="utf-8")
+            (config / "vampiricageing-link.toml").symlink_to(external)
+            result = collector.collect_vampiric_ageing(instance, [])
+            self.assertEqual([], result["config_files"])
     def test_wom_reference_is_candidate_not_acquisition_proof(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
