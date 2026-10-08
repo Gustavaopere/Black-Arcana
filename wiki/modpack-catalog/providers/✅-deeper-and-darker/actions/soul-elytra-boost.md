@@ -1,6 +1,6 @@
 # Soul Elytra Boost
 
-Status: `PUBLIC_SOURCE_BASELINE / CONFIG_CONDITIONAL / PHYSICAL EXACTNESS OPEN / +0 STRICT`
+Status: `✅ PHYSICAL ACTION ROOT CATALOGED / ⚠️ DEPLOYED CONFIG CONDITIONAL / +0 STRICT`
 
 - Provider: **Deeper and Darker** (`deeperdarker`)
 - Version line: `1.4.1`
@@ -12,9 +12,9 @@ Status: `PUBLIC_SOURCE_BASELINE / CONFIG_CONDITIONAL / PHYSICAL EXACTNESS OPEN /
 - Public publisher SHA-1: `b6094adde68bd4b909bc75c64901e1f3fb99ad8f`
 - Current physical SHA-1: `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`
 - Semantic type: deliberate supernatural equipment/flight action
-- Current strict state: `OPEN_PHYSICAL_ARTIFACT / DEPLOYED_CONFIG_UNKNOWN / +0`
+- Current strict state: `PHYSICAL_ROOT_CONFIRMED / CONDITIONAL (soulElytraCooldown unknown) / +0`
 
-This card describes the **official/public 1.4.1 + exact-source baseline**. It is not projected onto the unmatched physical JAR.
+**Current physical-JAR reconciliation (2026-10-08):** the matching `83f7edd0...` JAR directly confirms this action's packet handler, eligibility checks and Soul Elytra recipe. Source-specific numeric/item facts below are still marked as source baseline, not assumed mechanically equal without physical-value audit. See `../PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`.
 
 ## Input and network path
 
@@ -91,7 +91,7 @@ Ingredients:
 
 Result: **1 `deeperdarker:soul_elytra`**.
 
-This is baseline acquisition evidence only; exact physical reachability is not asserted while the installed JAR remains byte-different.
+The current physical JAR independently contains the Soul Elytra recipe. Whether the active boost is enabled remains dependent on the deployed COMMON `soulElytraCooldown`.
 
 ## Excluded adjacent behavior
 
@@ -101,17 +101,11 @@ Ordinary Elytra fall-flying is host behavior; the provider-owned semantic root h
 
 ## Evidence boundary
 
-Two independent gates remain open:
+The **exact-current physical action root is confirmed**, but the effective deployed `soulElytraCooldown` is unknown (`-1` disables). Numeric source-parity, provider-native activation and NeoVitae coexistence are not established by this static audit. The historical public-vs-physical SHA-1 difference remains provenance-only.
 
-1. the current physical JAR does not hash-match the public artifact or clean source build;
-2. the deployed effective `soulElytraCooldown` value is unknown.
-
-Therefore:
-
-- public/source baseline: **present**;
-- exact-current physical action: **not proven**;
-- deployed enablement: **unknown**;
-- strict semantic contribution: **+0**;
-- provider remains **⚠️ partial**.
+- catalog: **✅ included (1/3 of Deeper and Darker's exact-current action roots)**;
+- deployed enablement: **⚠️ unknown**;
+- strict semantic contribution: **+0 (`CONDITIONAL`)**;
+- provider runtime QA: **⚠️ pending**.
 
 Sources inside this provider folder: `../PUBLIC-1.4.1-BASELINE-AUDIT.md`, `../DEPLOYED-CONFIG-CHECKPOINT.md`, `PUBLIC-BASELINE-ACTIONS.md`.

@@ -1,6 +1,6 @@
 # Otherside Portal Activation
 
-Status: `PUBLIC_SOURCE_BASELINE / PHYSICAL EXACTNESS OPEN / +0 STRICT`
+Status: `✅ PHYSICAL ACTION ROOT CATALOGED / COUNTED_EXACT / +1 STRICT / ⚠️ RUNTIME QA OPEN`
 
 - Provider: **Deeper and Darker** (`deeperdarker`)
 - Version line: `1.4.1`
@@ -10,9 +10,9 @@ Status: `PUBLIC_SOURCE_BASELINE / PHYSICAL EXACTNESS OPEN / +0 STRICT`
 - Public publisher SHA-1: `b6094adde68bd4b909bc75c64901e1f3fb99ad8f`
 - Current physical SHA-1: `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`
 - Semantic type: supernatural portal creation / traversal setup
-- Current strict state: `OPEN_PHYSICAL_ARTIFACT / +0`
+- Current strict state: `COUNTED_EXACT / CURRENT PHYSICAL ROOT + ACQUISITION VERIFIED / +1`
 
-This card describes the **official/public 1.4.1 + exact-source baseline**. It is not projected onto the unmatched physical JAR.
+**Current physical-JAR reconciliation (2026-10-08):** the matching `83f7edd0...` JAR directly confirms this action root and its packaged acquisition path, independently of the public-source baseline. Quantitative source-only claims below are **not** automatically projected to the physical JAR. See `../PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`.
 
 ## Trigger and admission
 
@@ -73,13 +73,11 @@ Portal collision, cross-dimensional transfer and exit-portal generation after ac
 
 ## Evidence boundary
 
-The public artifact and exact source pin mutually support this action family and the quantitative contracts above. The current physical JAR does not hash-match the public artifact or clean source build.
+The public release and source support the baseline details above. The separately audited exact-current physical JAR confirms the action root and acquisition, but **does not yet establish exact numeric/mechanical parity** for every public-source value. The publisher/source hash mismatch is provenance-only for this catalog identity.
 
-Therefore:
-
-- public/source baseline: **present**;
-- exact-current physical action: **not proven**;
-- strict semantic contribution: **+0**;
-- provider remains **⚠️ partial**.
+- catalog: **✅ exact-current action materialized**;
+- exact-current root and acquisition: **verified by static physical-JAR audit**;
+- strict semantic contribution: **+1 `COUNTED_EXACT`**;
+- provider runtime QA: **⚠️ pending**.
 
 Sources inside this provider folder: `../PUBLIC-1.4.1-BASELINE-AUDIT.md`, `PUBLIC-BASELINE-ACTIONS.md`.
