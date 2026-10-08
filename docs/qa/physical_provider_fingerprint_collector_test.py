@@ -22,15 +22,15 @@ class PhysicalProviderFingerprintTest(unittest.TestCase):
         manifest = collector.load_manifest()
         self.assertEqual(69, len(manifest))
         self.assertEqual(69, len(set(manifest.values())))
-        self.assertIn("Somake Spells", manifest)
-        self.assertEqual("somakespells-1.0.9-1.21.1.jar", manifest["Somake Spells"])
+        self.assertIn("Ars Nouveau", manifest)
+        self.assertEqual("ars_nouveau-1.21.1-5.13.1.jar", manifest["Ars Nouveau"])
 
     def test_fake_valid_jar_can_be_fingerprinted_without_registry_claim(self):
         with tempfile.TemporaryDirectory() as tmp:
             mods = Path(tmp) / "mods"
             mods.mkdir()
             names = collector.load_manifest()
-            filename = names["Somake Spells"]
+            filename = names["Ars Nouveau"]
             with zipfile.ZipFile(mods / filename, "w") as archive:
                 archive.writestr("META-INF/MANIFEST.MF", "Fixture, not a real mod")
             report = collector.fingerprint_instance(mods, names)
@@ -41,7 +41,7 @@ class PhysicalProviderFingerprintTest(unittest.TestCase):
                 "READ_ONLY_JAR_FINGERPRINT_NOT_REGISTRY_PROOF",
                 report["evidence_class"],
             )
-            observed = next(x for x in report["entries"] if x["provider"] == "Somake Spells")
+            observed = next(x for x in report["entries"] if x["provider"] == "Ars Nouveau")
             self.assertEqual(40, len(observed["sha1"]))
             self.assertEqual(64, len(observed["sha256"]))
             self.assertEqual("FINGERPRINTED", observed["status"])
