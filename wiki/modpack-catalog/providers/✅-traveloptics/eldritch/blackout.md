@@ -1,5 +1,7 @@
 # `traveloptics:blackout`
 
+**Current physical inventory (2026-10-08):** this is one of **33/33 identities** directly registered in the SHA-1 `7b74816e...` JAR. Catalog **✅**; publisher-File-only mechanics and actual deployed runtime/survival remain version-conditioned or ⚠️. See `../PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`.
+
 - Provider: **T.O Magic n' Extras** (`traveloptics`)
 - Version line: `4.4.0.1-1.21.1`
 - Exact publisher file: CurseForge `6342780`
@@ -7,7 +9,7 @@
 - Registry: `traveloptics:blackout`
 - Registry field: `BLACKOUT_SPELL`
 - Concrete class: `BlackoutSpell`
-- State: `EXACT REGISTRY / RUNTIME CONDITIONAL`
+- State: `✅ CURRENT PHYSICAL ID CATALOGED / ⚠️ RUNTIME QA OPEN`
 
 ## Publisher semantic context — version-conditioned
 
@@ -54,6 +56,6 @@ This is **not** counted as a File-6342780-alone scalar result and is **not** pro
 
 Identity, school and the File-`6342780` default mechanics baseline above are exact-alpha evidence. Current-physical stats for SHA-1 `7b74816e...` remain unverified. Final damage formulas, range/radius/duration and PvP/boss rules remain `NÃO VERIFICADO` unless separately proven.
 
-Iron's owns host casting/resource settlement; T.O Magic owns this spell. Provider stays **⚠️** because current-physical registry equality/provenance and full runtime closure are not proven.
+Iron's owns host casting/resource settlement; T.O Magic owns this spell. **✅ Cataloged:** the current physical ID is verified; current-physical numerical parity, publisher lineage, survival availability and runtime acceptance are separate unproven gates.
 
 Sources: `../EXACT-4.4.0.1-ARTIFACT-AUDIT.md`; `../EXACT-4.4.0.1-MECHANICS-BASELINE.md`; `../BLACKOUT-GENERIC-LOOT-EXCLUSION.md`; `../BLACKOUT-EXTERNAL-ROUTE-RETAINED-EVIDENCE-CHECKPOINT.md`; `../BLACKOUT-VERSIONED-ACQUISITION-SURFACE-AUDIT.md`.
