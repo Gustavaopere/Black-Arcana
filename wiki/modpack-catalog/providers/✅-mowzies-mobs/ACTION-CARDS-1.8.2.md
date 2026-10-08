@@ -2,7 +2,7 @@
 
 Este índice materializa em fichas individuais as **11 identidades semânticas player-facing** reconciliadas no artefato físico/publisher exato `mowziesmobs-1.21.1-1.8.2.jar`.
 
-O provider permanece **⚠️ parcial/condicionado** porque `tunneling` depende do valor efetivamente implantado de `enableTunneling`. As outras dez identidades permanecem strict.
+A identidade `tunneling` permanece **⚠️ condicionada** porque sua ativação depende do valor efetivamente implantado de `enableTunneling`. As outras dez identidades permanecem strict.
 
 ## Heliomancy — 4
 
@@ -41,5 +41,7 @@ A única pendência de catálogo é o valor efetivo do provider para Tunneling, 
 - efetivo `true` => Tunneling pode ser promovido; strict do provider passa a 11;
 - efetivo `false` => Tunneling fecha como deployed-disabled; strict permanece 10;
 - missing/ambiguous/conflicting => provider permanece ⚠️.
+
+Checkpoint de materialização: [INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 Fontes canônicas: [PLAYER-MAGIC-INVENTORY.md](PLAYER-MAGIC-INVENTORY.md), [EXACT-1.8.2-ARTIFACT-AUDIT.md](EXACT-1.8.2-ARTIFACT-AUDIT.md) e [DEPLOYED-CONFIG-CHECKLIST.md](DEPLOYED-CONFIG-CHECKLIST.md).
