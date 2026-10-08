@@ -35,7 +35,7 @@ The physical `TOLootModifiers` bytecode has:
 
 These are distinct *referenced suppliers*. This supports the intended structural repair compared with the historical shared-serializer failure; it does **not** prove distinct constructed MapCodec instance identities or successful provider startup in the assembled pack. The schema-4 in-process probe is still required for that gate.
 
-The exact JAR includes **20** provider global-loot JSON entries, all referenced by its NeoForge global-modifiers index. None directly names `traveloptics:blackout`. This is a bounded negative fact about the mod's own packaged modifier data, not a universal exclusion of generic host loot rules, third-party scripts, datapacks or command grants. The Blackout survival route remains **unverified**.
+The exact JAR includes **20** provider global-loot JSON entries, all referenced by its NeoForge global-modifiers index. None directly names `traveloptics:blackout`. The physical `BlackoutSpell` extends `AbstractUniqueSpell`; that parent returns `false` from both `allowLooting()` and `allowCrafting()`. Together with zero direct Blackout entries in the 20 packaged loot-modifier files, this closes the exact-current provider-native **default** crafting/looting exclusion. It does not exclude generic host loot rules, third-party scripts, datapacks or command grants. The Blackout survival route remains **unverified**.
 
 The current exact registered spell set contains no `traveloptics:aqua` spell ID. That does not independently resolve Somake Aqua integration/semantic ownership across the assembled pack.
 
