@@ -33,7 +33,7 @@ The collector now emits five additional **candidate-evidence** sections. These a
 - `spell_codex_specs` — provider-named config/JSON fingerprints to identify deployed discovery, unlock and blacklist documents without leaking their content.
 - `weapons_of_miracles_nova` — bounded literal `wom:nova` references in server scripts and world datapacks. A reference is not proof of normal survival acquisition.
 
-Only whitelisted booleans, validated dimension IDs, hashes, sizes and relative paths are retained. No missing value is replaced by a source default. Template versus world-specific effective precedence is not inferred.
+Only whitelisted booleans, validated dimension IDs, hashes, sizes and relative paths are retained. Provider filtering uses **file names and subdirectories relative to `config/`, `defaultconfigs/` or the world `serverconfig/` root**; world names cannot impersonate provider names. Provider-owned config directories with generic file names are discoverable. External symlinks and paths outside the selected config root are ignored before the data is parsed or hashed; unparseable files never become observed gate values. No missing value is replaced by a source default. Template versus world-specific effective precedence is not inferred.
 
 Run the existing collector tests: `python3 docs/qa/provider_catalog_deployed_evidence_collector_test.py`.
 
