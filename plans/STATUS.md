@@ -20,6 +20,8 @@ Stage 09 is the consolidated exact-release-candidate validation campaign and rem
 
 **Stage 06 — Rituals is the current numbered audit target. 06.01–06.04 are ✅ complete; 06.05 — Rituals Final Validation Handoff is active and ⛔ blocked by the missing canonical player activation surface for `black_arcana:veil_anchor_consecration`. Real Eidolon/Malum provider acceptance remains pending.**
 
+The [2026-10-08 activation design gate](../docs/qa/ritual-veil-anchor-activation-design-gate-2026-10-08.md) documents the requirements for a legitimate player-facing ingress; it is not implemented. The [five-item magic pendency tracker](../wiki/modpack-catalog/meta/PENDENCIAS-MAGICAS-ATUAIS.md) tracks this blockage separately from catalog coverage.
+
 Stage 05 — Casting & UX is `COMPLETE / ENGINEERING CLOSED / REAL-CLIENT RELEASE VALIDATION CARRIED TO STAGE 09`.
 
 The Stage 05 ledger is in `plans/05-casting-ux/00-execution-status.md`. Its 05.01–05.07 engineering plans are ✅ under D035 because their runtime/integration/deterministic gates are closed and every unresolved real-client/provider observation is explicitly retained in the Stage 09 matrix.
