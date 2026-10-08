@@ -146,6 +146,11 @@ NEG_CONFIGS = [
 ]
 
 MOD_PATTERNS = {
+    "bosses_of_mass_destruction": ["BOMD-NeoForge-1.21-1.3.3.jar"],
+    "alexs_mobs_continued": ["alexsmobs-2.1.13-neoforge+1.21.1.jar"],
+    "vampiric_ageing": ["vampiricageing-1.21-1.4.21.jar"],
+    "spell_codex_specs": ["specs_irons_spellbooks-1.6.5.jar"],
+    "weapons_of_miracles": ["WeaponsOfMiracles-2.0.178.jar"],
     "asterism_arcanum": ["asterismarcanum-1.21.1-0.1.0.jar"],
     "deeper_and_darker": ["deeperdarker-neoforge-1.21.1-1.4.1.jar"],
     "corail_tombstone": ["tombstone-neoforge-1.21.1-9.5.6.jar"],
@@ -697,7 +702,15 @@ def collect_mod_hashes(instance: Path) -> dict[str, Any]:
             path = mods / name
             if path.is_file():
                 entry = digest_file(path)
-                if provider == "asterism_arcanum":
+                if provider == "bosses_of_mass_destruction":
+                    entry["current_physical_1_3_3_equality"] = entry["sha1"] == "446ff63afb858ad49149d24b72541739de83d38d"
+                elif provider == "alexs_mobs_continued":
+                    entry["current_physical_2_1_13_equality"] = entry["sha1"] == "50ddafdf3d12b33331e4eecb4ab514ae451baadd"
+                elif provider == "spell_codex_specs":
+                    entry["current_physical_1_6_5_equality"] = entry["sha1"] == "05349ae05cf7119bf46f45621ee578b3651563e6"
+                elif provider == "weapons_of_miracles":
+                    entry["current_physical_2_0_178_equality"] = entry["sha1"] == "b507eb376778cfd1cbecec2841c38891b26a7349"
+                elif provider == "asterism_arcanum":
                     entry["current_physical_0_1_0_equality"] = entry["sha1"] == ASTERISM_010_PHYSICAL_SHA1
                 elif provider == "deeper_and_darker":
                     entry["current_physical_1_4_1_equality"] = entry["sha1"] == DEEPER_DARKER_141_PHYSICAL_SHA1
