@@ -1,5 +1,10 @@
 # Semantic Magic Coverage Ledger
 
+## Latest current-state override — 2026-10-08 physical JAR intake
+
+The physical artifacts for Traveloptics (`7b74816e...`) and Deeper and Darker (`83f7edd0...`) were provided and read-only audited. Exact-current Traveloptics static spell registration closes **33 distinct IDs** equal to the existing baseline, but Blackout survival/current-deployed Iron's/serializer evidence remains open: **+0 strict**. Deeper and Darker closes **3 current supernatural action roots**: Otherside Portal Activation and Sonorous Staff are **2 `COUNTED_EXACT`** roots (exact physical trigger and provider acquisition); Soul Elytra Boost is **1 `CONDITIONAL`** until deployed COMMON `soulElytraCooldown` is captured. **Current strict minimum: 1851 (= 1849 + 2)**. The semantic denominator for the entire pack is still open; no global percentage is inferred. The historical 1849 figures retained below precede this direct-JAR intake. See provider direct-JAR audit checkpoints.
+
+
 ## Purpose
 
 This file is the reconstructible ledger for the user-facing semantic-magic coverage metric. It is deliberately separate from the provider-component closure metric in [`CATALOG-COVERAGE-CURRENT.md`](./CATALOG-COVERAGE-CURRENT.md).
