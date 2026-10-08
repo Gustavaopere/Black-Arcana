@@ -1,5 +1,10 @@
 # Fila operacional de auditoria dos providers mágicos
 
+## Override corrente — 2026-10-08 — physical JARs received and inspected
+
+Matching user-supplied physical bytes have resolved the *missing raw-JAR* blocker for both providers. The physical Traveloptics 33-root registry and Deeper and Darker 3-root action inventory are now directly confirmed. **Current global strict minimum: 1851**, with **+2 exact Deeper portal/staff**, **+0 Traveloptics**. Structural provider-folder states stay **164 = 162 ✅ + 2 ⚠️** until the residual deployed gates are resolved. Traveloptics still needs Blackout survival reachability, in-process serializer/registry runtime observation and Aqua cross-provider authority. Deeper's Soul Elytra remains gated by current deployed `config/deeperdarker-common.toml -> soulElytraCooldown`; the six-mixin active JSON list must not be mistaken for full-pack NeoVitae runtime PASS. Do not repeat raw-JAR acquisition requests or publisher repack-matrix searches: the raw bytes are now available in the conversation but are **not** copied into the repository. Previous 'missing physical bytes' sections below are historical.
+
+
 ## Override corrente — 2026-10-07 — evidence-capture ceiling
 
 Esta seção prevalece sobre o override de 06/10 para os dois diretórios ainda ⚠️.

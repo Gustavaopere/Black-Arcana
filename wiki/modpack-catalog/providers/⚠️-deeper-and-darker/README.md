@@ -1,5 +1,7 @@
 # Deeper and Darker — 1.4.1
 
+**Current physical-JAR intake override (2026-10-08):** direct inspection of the exact `83f7edd0...` JAR closes the **3-root physical semantic inventory** with **2 `COUNTED_EXACT` actions + 1 Soul Elytra config-conditional**. Deeper and Darker now contributes **+2 strict**. Its old raw-JAR-unavailable premise below is historical; the deployed `soulElytraCooldown` remains unknown, so the provider folder remains ⚠️. See [`PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`](PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md).
+
 Status: `⚠️ PARTIAL / PUBLIC 1.4.1 BASELINE + EXACT SOURCE TAG CORROBORATED / PHYSICAL JAR UNMATCHED / 3 SUPERNATURAL ACTION ROOTS IN PUBLIC+SOURCE BASELINE / +0 STRICT`
 
 ## Current physical identity

@@ -1,5 +1,7 @@
 # T.O Magic n' Extras 4.4.0.1-1.21.1 — exact-release partial semantic closure
 
+**Current physical-JAR intake override (2026-10-08):** the exact `7b74816e...` bytes have now been inspected directly; **33/33 current registered spell IDs** are confirmed, and the two loot codec suppliers point to their respective modifier classes. The old raw-JAR-unavailable premises below are historical. Blackout survival, deployed runtime/serializer observation and Aqua cross-provider coexistence remain open; strict stays **+0**. See [`PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`](PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md).
+
 ## Status
 
 `⚠️ CURRENT PHYSICAL PROVIDER / PHYSICAL SHA-1 OTHER_VERIFIED / 33-ID PUBLISHER BASELINE + HISTORICAL MODIFIED-RUNTIME 33/33 OBSERVED / SEPT-08 PHYSICAL-LINE RUNTIME INIT CORRELATED / CURRENT PHYSICAL REGISTRY UNVERIFIED / STRICT +0 / FAIL-CLOSED`

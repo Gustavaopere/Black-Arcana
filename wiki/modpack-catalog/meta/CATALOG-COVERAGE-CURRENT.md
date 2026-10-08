@@ -1,5 +1,10 @@
 # Current Magic Catalog Coverage
 
+## Current override — 2026-10-08 direct physical artifact intake
+
+User-supplied matching physical JARs close Traveloptics's exact-current 33-ID spell registry and Deeper and Darker's exact-current three supernatural action roots. **Deeper +2 `COUNTED_EXACT`**, with Soul Elytra remaining deployed-config conditional; Traveloptics remains **+0 strict** pending Blackout and runtime gates. Thus the **current reconstructible strict minimum is 1851** (1849 + 2), not a semantic percentage. Structural folders remain **164 = 162 ✅ + 2 ⚠️** pending deployed-gate dispositions. The older 1849 references retained below are pre-intake historical snapshots. Details: [`../providers/⚠️-traveloptics/PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`](../providers/⚠️-traveloptics/PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md) and [`../providers/⚠️-deeper-and-darker/PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`](../providers/⚠️-deeper-and-darker/PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md).
+
+
 ## User-facing semantic magic coverage
 
 The principal percentage reported to the user is the coverage of **semantic magic objects**: spells, glyphs/spell-parts, rituals/rites and equivalent discrete magical actions. Provider count, JAR count, technical proxies, items, gear, familiars, affixes and machines do not substitute for that denominator.
