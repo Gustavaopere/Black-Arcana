@@ -4,6 +4,43 @@ Status: `27/27 EXACT-CURRENT SEMANTIC ROOTS MATERIALIZED`
 
 These cards enumerate discrete supernatural player actions and deliberate summoning rituals in the exact installed Cataclysm 3.33 artifact. Numerical tuning remains provider/config authority and is intentionally not frozen here.
 
+## Individual object-card index
+
+**24 item/equipment action cards**
+
+- [Ancient Spear — Sandstorm Launch](ancient-spear-sandstorm-launch.md)
+- [Astrape — Lightning Spear](astrape-lightning-spear.md)
+- [Bulwark of the Flame — Charge](bulwark-of-the-flame-charge.md)
+- [Ceraunus — Wave Fan](ceraunus-wave-fan.md)
+- [Gauntlet of Bulwark — Blazing Push](gauntlet-of-bulwark-blazing-push.md)
+- [Gauntlet of Bulwark — Charge](gauntlet-of-bulwark-charge.md)
+- [Gauntlet of Guard — Pull Field](gauntlet-of-guard-pull-field.md)
+- [Gauntlet of Maelstrom — Void Vortex](gauntlet-of-maelstrom-void-vortex.md)
+- [Infernal Forge — Earthquake](infernal-forge-earthquake.md)
+- [Sandstorm in a Bottle — Orbiting Sandstorms](sandstorm-in-a-bottle-orbiting-sandstorms.md)
+- [Soul Render — Render Rush](soul-render-render-rush.md)
+- [Soul Render — Phantom Halberd Spiral](soul-render-phantom-halberd-spiral.md)
+- [The Annihilator — Dual-Wield Burst](the-annihilator-dual-wield-burst.md)
+- [The Immolator — Flame Strike](the-immolator-flame-strike.md)
+- [The Incinerator — Flame Strike Line](the-incinerator-flame-strike-line.md)
+- [Tidal Claws — Tentacle Attack](tidal-claws-tentacle-attack.md)
+- [Tidal Claws — Grappling Hook](tidal-claws-grappling-hook.md)
+- [Void Core — Void Rune Formation](void-core-void-rune-formation.md)
+- [Void Forge — Void Rune Fan](void-forge-void-rune-fan.md)
+- [Wrath of the Desert — Cursed Sandstorm Volley](wrath-of-the-desert-cursed-sandstorm-volley.md)
+- [Ignitium Helmet — Gaze of Heat](ignitium-helmet-gaze-of-heat.md)
+- [Cursium Helmet — Ghost Vision](cursium-helmet-ghost-vision.md)
+- [Cursium Boots — Back-Step](cursium-boots-back-step.md)
+- [Bloom Stone Pauldrons — Amethyst Cluster Burst](bloom-stone-pauldrons-amethyst-cluster-burst.md)
+
+**3 deliberate summoning ritual cards**
+
+- [Ignis Summoning](ignis-summoning.md)
+- [Leviathan Summoning](leviathan-summoning.md)
+- [Maledictus Summoning](maledictus-summoning.md)
+
+Materialization checkpoint: [`../INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](../INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md). The existing 27-root aggregate below remains the semantic source of truth; no numerator delta.
+
 ## Item and equipment actions — 24
 
 ### 1. Ancient Spear — Sandstorm Launch
