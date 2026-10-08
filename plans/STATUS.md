@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-09-18
+Last updated: 2026-10-08 (no Stage promotion; canonical engineering state preserved)
 
 ## Authoritative execution rule
 
