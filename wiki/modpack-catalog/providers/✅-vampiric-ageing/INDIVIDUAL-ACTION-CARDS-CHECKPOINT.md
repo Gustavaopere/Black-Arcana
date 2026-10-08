@@ -6,7 +6,7 @@ Status: `9/9 REGISTERED ACTIONS INDIVIDUALLY DOCUMENTED / SOURCE-PINNED / 9 COND
 
 - initial drafting base: `7e0d6af87422d3b294a392e5701dd169b92ec1ec`;
 - previous synchronized `main` base: `d9387d8125171f8799dec4147e183a84f0bf7dcf`;
-- current synchronized `main` base: `f93618259035592b360210889f903a8ae0fbbf8f`;
+- current synchronized `main` base: `e207cf9ae0ac1c5af8a54951ede9d5a1e2d3e26c`;
 - exact version-correlated source: `TheDrOfDoctoring/Vampiric-Ageing@16049e9aeadc47b2307995901c373521cef5fd76`;
 - current installed JAR filename: `vampiricageing-1.21-1.4.21.jar`;
 - registered action identities: **9** (eight in `VampiricAgeingActions`, one Werewolves-dependent action from `WerewolfAgeingSkills`);
