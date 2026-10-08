@@ -2,6 +2,10 @@
 
 > **Estado auditado em 2026-10-08.** Referências: `Black-Arcana/main@a131ca1d1bc00049178977b3d60ff3ee017d7194`, modlist física certificada `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`. Este índice é uma visão agregada da árvore e não uma nova extração física de registries.
 
+## Pendências de validação e cobertura global
+
+O quadro operacional dos cinco itens solicitados encontra-se em [PENDENCIAS-MAGICAS-ATUAIS.md](PENDENCIAS-MAGICAS-ATUAIS.md). A auditoria cross-domain atual priorizou 46/490 linhas fora da categoria física Magic, sem declarar exaustividade para o restante; 39 providers source/release-bounded continuam aguardando comparação binária. Consulte os checkpoints antes de afirmar cobertura total de feitiços.
+
 ## Situação da catalogação
 
 - **164/164 diretórios canônicos** de providers com prefixo `✅-` e `README.md` presente; **0 ❌, 0 🟡, 0 ⚠️ ou ⛔ no prefixo de catálogo**.
