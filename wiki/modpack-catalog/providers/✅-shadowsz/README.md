@@ -77,6 +77,8 @@ Together with the three registered spells, the complete current 1.1.9 semantic d
 
 As 10 raízes exatas estão materializadas objeto-a-objeto em [ACTION-CARDS-1.1.9.md](ACTION-CARDS-1.1.9.md). As fichas preservam a distinção entre identidade semântica já fechada e reachability implantado ainda condicionado; nenhuma delas promove o strict sem a evidência exigida em [DEPLOYED-STATE-CHECKLIST.md](DEPLOYED-STATE-CHECKLIST.md).
 
+Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 ## Exact exclusions and aliases
 
 The following exact router/control surfaces do **not** mint additional semantic roots under the Black Arcana metric:

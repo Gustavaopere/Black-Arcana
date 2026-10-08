@@ -5,6 +5,7 @@ Status: `27/27 INDIVIDUAL ROOT CARDS / 27 COUNTED_EXACT ALREADY INCLUDED / +0 DE
 ## Exact authority
 
 - preparation base: `7e0d6af87422d3b294a392e5701dd169b92ec1ec`;
+- synchronized `main` base: `f93618259035592b360210889f903a8ae0fbbf8f`;
 - installed JAR: `L_Ender's Cataclysm 1.21.1-3.33.jar`;
 - exact current/publisher SHA-1: `5ff39c0eddfa08ea0e921bdcb17da7f32f0b00ce`;
 - exact-artifact audit: NON-MERGE PR #495 / run `36893767327`;
