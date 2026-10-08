@@ -1779,6 +1779,153 @@ def collect_traveloptics(instance: Path, worlds: list[Path]) -> dict[str, Any]:
     }
 
 
+
+def _remaining_gate_config_roots(instance: Path, worlds: list[Path]) -> list[Path]:
+    roots = [instance / "config", instance / "defaultconfigs"]
+    roots.extend(world / "serverconfig" for world in worlds)
+    return roots
+
+
+def _remaining_gate_observations(
+        instance: Path, roots: list[Path], key: str,
+        owner_tokens: tuple[str, ...], kind: str
+) -> list[dict[str, Any]]:
+    """Retain only provider-scoped, type-checked values; no raw config lines."""
+    rows = []
+    for observation in collect_selected_key(instance, roots, key):
+        path = observation.get("path", "")
+        if not isinstance(path, str) or not any(
+                token in path.lower() for token in owner_tokens):
+            continue
+        result: dict[str, Any] = {"path": path, "status": "UNPARSED_CANDIDATE"}
+        if observation.get("parser") not in {"tomllib", "json"}:
+            rows.append(result)
+            continue
+        key_path = observation.get("key_path")
+        if not isinstance(key_path, str):
+            rows.append(result)
+            continue
+        result["key_path"] = key_path
+        value = observation.get("value")
+        if kind == "boolean" and isinstance(value, bool):
+            result.update(status="OBSERVED", value=value)
+        elif kind == "dimension_ids" and isinstance(value, list):
+            valid = all(
+                isinstance(item, str) and RESOURCE_LOCATION_RE.fullmatch(item)
+                for item in value
+            )
+            if valid:
+                result.update(status="OBSERVED", value=value[:64], total=len(value))
+            else:
+                result["status"] = "INVALID_VALUE"
+        else:
+            result["status"] = "INVALID_VALUE"
+        rows.append(result)
+    return rows
+
+
+def collect_bosses_mass_destruction(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    """Lich summon gate only; unrelated isEnabled switches are not accepted."""
+    roots = _remaining_gate_config_roots(instance, worlds)
+    observations = _remaining_gate_observations(
+        instance, roots, "isEnabled",
+        ("bosses_of_mass_destruction", "bossesofmassdestruction", "bomd"),
+        "boolean",
+    )
+    observations = [
+        row for row in observations
+        if row["status"] == "UNPARSED_CANDIDATE"
+        or row.get("key_path", "").lower().endswith("lichconfig.summonmechanic.isenabled")
+    ]
+    return {
+        "expected_gate": "lichConfig.summonMechanic.isEnabled",
+        "observations": observations,
+        "status": (
+            "OBSERVED_CANDIDATE"
+            if any(row["status"] == "OBSERVED" for row in observations)
+            else "NOT_VERIFIED"
+        ),
+        "note": "Values from different config scopes are not effective-runtime proof. No defaults are inferred.",
+    }
+
+
+def collect_alexs_mobs(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    roots = _remaining_gate_config_roots(instance, worlds)
+    tokens = ("alexsmobs", "alexs_mobs", "alexs-mobs")
+    return {
+        "voidWormSummonable": _remaining_gate_observations(
+            instance, roots, "voidWormSummonable", tokens, "boolean"),
+        "voidWormSpawnDimensions": _remaining_gate_observations(
+            instance, roots, "voidWormSpawnDimensions", tokens, "dimension_ids"),
+        "note": (
+            "Observed config is not confirmation of an actually summonable Void Worm. "
+            "Dimension access, loot, and Dimensional Carver acquisition still need runtime evidence."
+        ),
+    }
+
+
+def _remaining_gate_file_fingerprints(
+        instance: Path, worlds: list[Path], owner_tokens: tuple[str, ...]
+) -> list[dict[str, Any]]:
+    """Hash only provider-named configs; never retain file contents or paths outside the instance."""
+    out: list[dict[str, Any]] = []
+    for root in _remaining_gate_config_roots(instance, worlds):
+        if not root.is_dir():
+            continue
+        for path in sorted(root.rglob("*")):
+            if not path.is_file() or path.suffix.lower() not in {
+                    ".toml", ".json", ".json5", ".cfg", ".conf"}:
+                continue
+            if not any(token in path.name.lower() for token in owner_tokens):
+                continue
+            if path.stat().st_size > 4 * 1024 * 1024:
+                out.append({"path": rel(path, instance), "status": "OVERSIZED"})
+                continue
+            result = digest_file(path)
+            out.append({
+                "path": rel(path, instance),
+                "sha256": result["sha256"],
+                "size": path.stat().st_size,
+                "status": "FINGERPRINT_ONLY",
+            })
+    return out
+
+
+def collect_vampiric_ageing(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    return {
+        "config_files": _remaining_gate_file_fingerprints(
+            instance, worlds, ("vampiricageing", "vampiric_ageing", "vampiric-ageing")),
+        "status": "ACTION_ELIGIBILITY_UNVERIFIED",
+        "note": "No guessed enable keys or source-default promotion for the nine action roots.",
+    }
+
+
+def collect_spell_codex_specs(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    return {
+        "config_files": _remaining_gate_file_fingerprints(
+            instance, worlds, ("specs_irons_spellbooks", "spellcodex", "spell_codex")),
+        "status": "DISCOVERY_AND_UNLOCK_GATES_UNVERIFIED",
+        "note": "Hashes are audit pointers, not contents, effective blacklists or proof of unlock.",
+    }
+
+
+def collect_weapons_of_miracles_nova(instance: Path, worlds: list[Path]) -> dict[str, Any]:
+    roots = [
+        ("kubejs_server_scripts", instance / "kubejs" / "server_scripts"),
+        ("kubejs_data", instance / "kubejs" / "data"),
+    ]
+    roots.extend(
+        (f"world_datapack:{rel(world, instance)}", world / "datapacks")
+        for world in worlds
+    )
+    return {
+        "candidate_script_or_datapack_references": collect_exact_literal_references(
+            instance, roots, "wom:nova"),
+        "status": "NORMAL_SURVIVAL_ACQUISITION_UNVERIFIED",
+        "note": "A literal reference is not proof that Nova is obtainable or flash_mutilation is active.",
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("instance", type=Path, help="Minecraft/modpack instance root containing mods/ and config/")
@@ -1829,6 +1976,11 @@ def main() -> int:
         ),
         "asterism_arcanum": collect_asterism(instance, worlds),
         "corail_tombstone": collect_tombstone(instance, worlds),
+        "bosses_of_mass_destruction": collect_bosses_mass_destruction(instance, worlds),
+        "alexs_mobs_continued": collect_alexs_mobs(instance, worlds),
+        "vampiric_ageing": collect_vampiric_ageing(instance, worlds),
+        "spell_codex_specs": collect_spell_codex_specs(instance, worlds),
+        "weapons_of_miracles_nova": collect_weapons_of_miracles_nova(instance, worlds),
         "deeper_and_darker": collect_deeper_and_darker(instance),
         "gaze": collect_gaze(instance, worlds),
         "ice_and_fire_ce": collect_ice_and_fire_ce(instance),
