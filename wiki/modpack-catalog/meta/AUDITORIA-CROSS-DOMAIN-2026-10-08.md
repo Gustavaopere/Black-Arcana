@@ -79,6 +79,20 @@
 | #383 | Injeção de loot em Integrated Structures; não registrar novo spell por loot | ⚠️ Nenhuma identidade mágica própria demonstrada pelo dossiê; JAR não inspecionado neste lote |
 | #399 | Física pós-morte de cadáveres (ragdoll); não confundir corpse effect com necromancia intencional | ⚠️ Nenhuma identidade mágica própria demonstrada pelo dossiê; JAR não inspecionado neste lote |
 
+## Fontes exatas dos 11 dossiês revisados
+
+- #88: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Addons%20%2B%20Bug%20Fixes/%E2%9C%85-cataclysm-yungs-better-nether-fortresses-compat%20v1.21.1.md)
+- #251: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Addons%20%2B%20Farming%20%2B%20Food/%E2%9C%85-enders-delight%20v1.3.1.md)
+- #253: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Adventure%20and%20RPG%20%2B%20Cosmetic%20%2B%20Miscellaneous%20%2B%20Mobs/%E2%9C%85-enhanced-boss-bars%20v1.0.0.md)
+- #317: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Addons%20%2B%20Armor%2C%20Tools%2C%20and%20Weapons%20%2B%20Bug%20Fixes%20%2B%20Cosmetic/%E2%9C%85-ice-and-fire-ce-epic-fight-armor-compat%20v1.0.0.md)
+- #325: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Adventure%20and%20RPG%20%2B%20Structures%20%2B%20World%20Gen/%E2%9C%85-integrated-mowzies-mobs%20v1.3.0.md)
+- #327: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Create/%E2%9C%85-immersive-aeronautics%20v1.1.4.md)
+- #333: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Addons%20%2B%20Adventure%20and%20RPG%20%2B%20Armor%2C%20Tools%2C%20and%20Weapons%20%2B%20Create%20%2B%20World%20Gen/%E2%9C%85-integrated-cataclysm%20v1.0.6%2B1.21.1-neoforge.md)
+- #381: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Addons%20%2B%20Structures/%E2%9C%85-loot-integrations-cataclysm%20v1.2.md)
+- #382: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Addons%20%2B%20Structures/%E2%9C%85-loot-integrations-ice-and-fire%20v1.2.md)
+- #383: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Addons%20%2B%20Structures/%E2%9C%85-loot-integrations-integrated-structures%20v1.5.md)
+- #399: [dossiê físico do sibling](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/de80b186357cad20ba5b81892a8682777e96e35a/PROJECT-INSTRUCTIONS/modlist/Addons%20%2B%20Mobs/%E2%9C%85-sable-mob-ragdoll-corpses%20v1.1.5.md)
+
 ## Próximos gates
 
 1. Auditar de modo físico/binary-exact os 11 candidatos quando houver acesso aos JARs exatos; cruzar registries, metadata, recursos e eventos player-owned sem reutilizar implementação de terceiros.
