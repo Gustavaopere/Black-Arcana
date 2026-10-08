@@ -45,6 +45,9 @@ jobs:
       - name: Physical provider JAR fingerprint collector tests
         run: python3 docs/qa/physical_provider_fingerprint_collector_test.py
 
+      - name: Magic pendency tracker and cross-domain triage tests
+        run: python3 docs/qa/magic_pendency_tracker_test.py
+
       - name: Unit tests
         run: ./gradlew --no-daemon test
 
