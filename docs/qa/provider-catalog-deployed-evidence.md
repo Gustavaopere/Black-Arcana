@@ -23,6 +23,21 @@ The remaining conditional-provider blockers are increasingly tied to the **actua
 
 It does not alter the instance, generate provider configs, enable content, create datapacks, or infer defaults from absent files.
 
+## Additional bounded provider gates (2026-10-08)
+
+The collector now emits five additional **candidate-evidence** sections. These are not provider runtime corrections and never change strict semantic eligibility automatically:
+
+- `bosses_of_mass_destruction` — only a parsed, provider-scoped `lichConfig.summonMechanic.isEnabled` boolean can be treated as observed. Unparsed provider-file hits are `UNPARSED_CANDIDATE`. Other `isEnabled` flags are ignored. Actual summon/loot reachability needs runtime confirmation.
+- `alexs_mobs_continued` — provider-scoped `voidWormSummonable` boolean and `voidWormSpawnDimensions` resource-location array. These do not prove Void Worm access, drops or Dimensional Carver acquisition.
+- `vampiric_ageing` — relative paths and SHA-256 of provider-named configs, without copying their content. All nine action gates remain separately unresolved.
+- `spell_codex_specs` — provider-named config/JSON fingerprints to identify deployed discovery, unlock and blacklist documents without leaking their content.
+- `weapons_of_miracles_nova` — bounded literal `wom:nova` references in server scripts and world datapacks. A reference is not proof of normal survival acquisition.
+
+Only whitelisted booleans, validated dimension IDs, hashes, sizes and relative paths are retained. No missing value is replaced by a source default. Template versus world-specific effective precedence is not inferred.
+
+Run the existing collector tests: `python3 docs/qa/provider_catalog_deployed_evidence_collector_test.py`.
+
+These additions narrow the inputs needed for the open rows; they do **not** close strict semantic counts or runtime acceptance. Traveloptics and base Deeper and Darker were not modified by this extension.
 ## Requirements
 
 - Python 3.11+;
