@@ -1873,7 +1873,7 @@ def _remaining_gate_file_fingerprints(
         if not root.is_dir():
             continue
         for path in sorted(root.rglob("*")):
-            if not path.is_file() or path.suffix.lower() not in {
+            if path.is_symlink() or not path.is_file() or path.suffix.lower() not in {
                     ".toml", ".json", ".json5", ".cfg", ".conf"}:
                 continue
             if not any(token in path.name.lower() for token in owner_tokens):
