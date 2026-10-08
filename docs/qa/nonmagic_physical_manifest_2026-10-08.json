@@ -1,0 +1,3932 @@
+{
+  "schema": "black_arcana_nonmagic_jar_manifest_v1",
+  "source_repo": "Gustavaopere/neoforge-rpg-skilltree",
+  "source_commit": "de80b186357cad20ba5b81892a8682777e96e35a",
+  "source_path": "PROJECT-INSTRUCTIONS/modlist/modlist.md",
+  "physical_top_level_count_including_loader": 587,
+  "physical_magic_category_rows": 97,
+  "nonmagic_rows": 490,
+  "triage_is_heuristic_not_registry_proof": true,
+  "rows": [
+    {
+      "physical_number": 1,
+      "name": "NeoForge",
+      "filename": "neoforge-21.1.250 (modloader)",
+      "version": "21.1.250",
+      "categories": "Sem projeto CurseForge confirmado",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 3,
+      "name": "Ace's Spell Utils",
+      "filename": "aces_spell_utils-1.2.7.2-1.21.1.jar",
+      "version": "1.2.7.2-1.21.1",
+      "categories": "Addons + API and Library",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 5,
+      "name": "Additional Attributes",
+      "filename": "additional_attributes-1.21.1-1.2.2.jar",
+      "version": "1.2.2",
+      "categories": "Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 6,
+      "name": "Advanced Core Info (ACI)",
+      "filename": "AdvancedCoreInfo-neoforge-1.21.1-1.1.0.jar",
+      "version": "1.1.0",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 7,
+      "name": "Advanced Loot Info (ALI)",
+      "filename": "AdvancedLootInfo-neoforge-1.21.1-2.1.0.jar",
+      "version": "2.1.0",
+      "categories": "Addons + API and Library + Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 8,
+      "name": "Advancement Plaques [Neo/Forge]",
+      "filename": "AdvancementPlaques-1.21.1-neoforge-1.6.8.jar",
+      "version": "1.6.8",
+      "categories": "Cosmetic + Map and Information + Miscellaneous + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 10,
+      "name": "Aeronautics Camera Sync",
+      "filename": "aero_cam_sync-1.4.0.jar",
+      "version": "1.4.0",
+      "categories": "Addons + Cosmetic + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 11,
+      "name": "Aeronautics Player Tilt",
+      "filename": "aero_player_tilt-0.2.0.jar",
+      "version": "0.2.0",
+      "categories": "Addons + Cosmetic + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 12,
+      "name": "Create Aeronautics and Connected Fluid Vessel Compatability",
+      "filename": "aeroconnectedfluidvessel-1.0.0.jar",
+      "version": "1.0.0",
+      "categories": "Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 13,
+      "name": "Copycats+ aeronautics weight",
+      "filename": "aerocopycats-1.1.1.jar",
+      "version": "1.1.1 (distribuição/filename); metadata interna 1.1.0",
+      "categories": "Addons + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 14,
+      "name": "Create Aeronautics: Compatibility",
+      "filename": "aeronauticscompat-1.1.3.jar",
+      "version": "1.1.3",
+      "categories": "Addons + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 15,
+      "name": "Create: AeroStar Northstar Comp",
+      "filename": "AeroStar-1.0.1.jar",
+      "version": "1.0.1",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 16,
+      "name": "Create: Aeroworks",
+      "filename": "aeroworks-1.5.0.jar",
+      "version": "1.5.0",
+      "categories": "Addons + Create + Technology + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 17,
+      "name": "AI Improvements: Performance Tuning",
+      "filename": "AI-Improvements-1.21-0.5.3.jar",
+      "version": "0.5.3",
+      "categories": "Mobs + Server Utility",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 18,
+      "name": "Create Aeronautics: Alcubierre",
+      "filename": "alcubierre-1.2.6.jar",
+      "version": "1.2.6",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 19,
+      "name": "Alex's Caves Continued",
+      "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+      "version": "1.0.10",
+      "categories": "World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 20,
+      "name": "Alex's Delight",
+      "filename": "alexsdelight-1.6.jar",
+      "version": "1.6",
+      "categories": "Addons + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 21,
+      "name": "Alex's Mobs Continued",
+      "filename": "alexsmobs-2.1.13-neoforge+1.21.1.jar",
+      "version": "2.1.13",
+      "categories": "Mobs",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 22,
+      "name": "Almost Unified",
+      "filename": "almostunified-neoforge-1.21.1-1.4.2.jar",
+      "version": "1.21.1-1.4.2",
+      "categories": "API and Library + KubeJS + Ores and Resources + Processing + Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 24,
+      "name": "Alternate Current",
+      "filename": "alternate_current-mc1.21-1.9.0.jar",
+      "version": "1.9.0",
+      "categories": "Redstone + Server Utility + Technology + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 25,
+      "name": "AmbientSounds 6",
+      "filename": "AmbientSounds_NEOFORGE_v6.3.8_mc1.21.1.jar",
+      "version": "6.3.8",
+      "categories": "Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 26,
+      "name": "Amendments",
+      "filename": "amendments-1.21-2.1.10-neoforge.jar",
+      "version": "1.21-2.1.10",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 27,
+      "name": "Amplified Nether",
+      "filename": "Amplified_Nether_26.2_v1.2.16.jar",
+      "version": "1.2.16",
+      "categories": "Biomes + Dimensions + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 28,
+      "name": "Animal Husbandry",
+      "filename": "AnimalHusbandry-neoforge-0.4.1.jar",
+      "version": "0.4.1",
+      "categories": "Farming + Genetics + Mobs",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 31,
+      "name": "Apotheotic Creation",
+      "filename": "apotheoticcreation-2.0.0.jar",
+      "version": "2.0.0",
+      "categories": "Automation + Create + Storage + Utility & QoL",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 32,
+      "name": "Apothic Category Compat",
+      "filename": "apothic_compat-2.0.2.jar",
+      "version": "2.0.2",
+      "categories": "Addons + Armor, Tools, and Weapons + Bug Fixes",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 33,
+      "name": "Apothic Compats",
+      "filename": "apothic_compats-0.2.4.2.jar",
+      "version": "0.2.4.2",
+      "categories": "Addons + Armor, Tools, and Weapons",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 34,
+      "name": "Apothic Attributes",
+      "filename": "ApothicAttributes-1.21.1-2.10.1.jar",
+      "version": "2.10.1",
+      "categories": "Adventure and RPG + API and Library",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 36,
+      "name": "Apothic Spawners",
+      "filename": "ApothicSpawners-1.21.1-1.4.0.jar",
+      "version": "1.4.0",
+      "categories": "Automation + Utility & QoL",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 37,
+      "name": "AppleSkin",
+      "filename": "appleskin-neoforge-mc1.21-3.0.9.jar",
+      "version": "3.0.9+mc1.21",
+      "categories": "Food + Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 39,
+      "name": "Architectury API",
+      "filename": "architectury-13.0.11-neoforge.jar",
+      "version": "13.0.11",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 51,
+      "name": "Ars Nouveau: Two-Way Portals (with immersive portal support)",
+      "filename": "ars_two_way_portals-2.0.0.jar",
+      "version": "2.0.0",
+      "categories": "Addons",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 55,
+      "name": "Artifacts",
+      "filename": "artifacts-neoforge-13.2.5.jar",
+      "version": "13.2.5",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Cosmetic + Structures",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 57,
+      "name": "Athena",
+      "filename": "athena-neoforge-1.21.1-4.0.6.jar",
+      "version": "4.0.6",
+      "categories": "API and Library + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 58,
+      "name": "Atlas API",
+      "filename": "atlas_api-1.21.1-1.2.0.jar",
+      "version": "1.21.1-1.2.0",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 59,
+      "name": "AttributeFix",
+      "filename": "attributefix-neoforge-1.21.1-21.1.3.jar",
+      "version": "21.1.3",
+      "categories": "Bug Fixes + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 60,
+      "name": "Azimuth API",
+      "filename": "azimuth-1.4.8.jar",
+      "version": "1.4.8",
+      "categories": "Addons + API and Library + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 61,
+      "name": "AzureLib",
+      "filename": "azurelib-neo-1.21.1-3.1.11.jar",
+      "version": "3.1.11",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 62,
+      "name": "Create: Backpack Pixel",
+      "filename": "backpack_pixel-1.2.0-neoforge-1.21.1.jar",
+      "version": "1.2.0",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + Storage + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 64,
+      "name": "Balm",
+      "filename": "balm-neoforge-1.21.1-21.0.65.jar",
+      "version": "21.0.65",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 65,
+      "name": "Battle Arts - API",
+      "filename": "battle_arts_api-21.17.7-mc1.21.1-neoforge.jar",
+      "version": "21.17.7",
+      "categories": "Addons + API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 66,
+      "name": "BCLib: New Dawn",
+      "filename": "bclib-21.0.26.jar",
+      "version": "21.0.26",
+      "categories": "API and Library + Biomes + Utility & QoL + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 67,
+      "name": "Create: Bells & Whistles",
+      "filename": "bellsandwhistles-0.4.7-1.21.1.jar",
+      "version": "0.4.7-1.21.1",
+      "categories": "Cosmetic + Create + Player Transport + Technology + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 68,
+      "name": "Better Advanced Tooltips",
+      "filename": "better-advanced-tooltips-2101.1.0-build.5.jar",
+      "version": "2101.1.0-build.5",
+      "categories": "API and Library + Map and Information + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 69,
+      "name": "Better Library",
+      "filename": "better_lib-neoforge-1.21.1-1.0.111.jar",
+      "version": "1.0.111",
+      "categories": "API and Library + Server Utility + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 70,
+      "name": "Better Modlist",
+      "filename": "better_modlist-21.1.1.jar",
+      "version": "21.1.1",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 71,
+      "name": "BetterEnd: New Dawn",
+      "filename": "BetterEnd-21.0.34.jar",
+      "version": "21.0.34",
+      "categories": "Biomes + Cosmetic + Mobs + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 72,
+      "name": "Better Fps - Render Distance",
+      "filename": "betterfpsdist-1.21.1-6.1.jar",
+      "version": "6.1",
+      "categories": "Cosmetic + Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 73,
+      "name": "Epic Fight - Better lock on",
+      "filename": "betterlockon-2.0.8-neoforge.jar",
+      "version": "2.0.8-neoforge",
+      "categories": "Addons + Adventure and RPG",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 74,
+      "name": "BetterNether: New Dawn",
+      "filename": "BetterNether-21.0.26.jar",
+      "version": "21.0.26",
+      "categories": "Biomes + Cosmetic + Mobs + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 75,
+      "name": "Create: Big Contraptions",
+      "filename": "bigcontraptions-neoforge-1.0.jar",
+      "version": "1.0",
+      "categories": "Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 76,
+      "name": "Biolith",
+      "filename": "biolith-neoforge-3.0.14.jar",
+      "version": "3.0.14",
+      "categories": "Biomes + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 77,
+      "name": "Create: Bits 'n' Bobs",
+      "filename": "bits_n_bobs-2.3.5.jar",
+      "version": "2.3.5",
+      "categories": "Addons + Cosmetic + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 78,
+      "name": "BjornLib",
+      "filename": "bjornlib-neoforge-1.0.88-1.21.1.jar",
+      "version": "1.0.88",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 79,
+      "name": "Bosses'Rise - Epic Souls like boss fights",
+      "filename": "block_factorys_bosses-2.1.2-neo-1.21.1.jar",
+      "version": "2.1.2",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Mobs + Structures + World Gen",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 80,
+      "name": "BlockUI",
+      "filename": "blockui-1.0.212-1.21.1-snapshot.jar",
+      "version": "1.0.212-1.21.1-snapshot",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 82,
+      "name": "Bosses of Mass Destruction [Forge | NeoForge]",
+      "filename": "BOMD-NeoForge-1.21-1.3.3.jar",
+      "version": "1.3.3",
+      "categories": "Mobs + Structures",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 83,
+      "name": "Bookshelf",
+      "filename": "bookshelf-neoforge-1.21.1-21.1.81.jar",
+      "version": "21.1.81",
+      "categories": "API and Library + Miscellaneous + Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 84,
+      "name": "Born in Chaos",
+      "filename": "born_in_chaos_[Neoforge]_1.21.1_1.7.6.jar",
+      "version": "1.7.6",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Mobs + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 85,
+      "name": "Butchercraft",
+      "filename": "butchercraft-2.6.5.jar",
+      "version": "2.6.5",
+      "categories": "Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 86,
+      "name": "Caelus API",
+      "filename": "caelus-neoforge-7.0.1+1.21.1.jar",
+      "version": "7.0.1+1.21.1",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 88,
+      "name": "Cataclysm x YUNG's Better Nether Fortresses Compat",
+      "filename": "cataclysmfortresses-1.21.1-NeoForge.jar",
+      "version": "1.21.1",
+      "categories": "Addons + Bug Fixes",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 89,
+      "name": "Create Big Cannons: Advanced Technologies",
+      "filename": "cbc_at_Neoforge_1.21.1_0.1.4c.jar",
+      "version": "0.1.4c-1.21.1",
+      "categories": "Armor, Tools, and Weapons + Create",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 90,
+      "name": "CBC: Advanced technologies crash fix",
+      "filename": "cbcatfix-1.21.1-neoforge-1.0.1.jar",
+      "version": "1.0.1 (distribuição/filename); metadata runtime 1.0.0",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 91,
+      "name": "CERBON's API [Forge | Fabric | NeoForge]",
+      "filename": "CerbonsAPI-NeoForge-1.21-1.3.0.jar",
+      "version": "1.3.0",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 92,
+      "name": "Chipped",
+      "filename": "chipped-neoforge-1.21.1-4.0.2.jar",
+      "version": "4.0.2",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 93,
+      "name": "Chunky (Forge/NeoForge)",
+      "filename": "Chunky-NeoForge-1.4.23.jar",
+      "version": "1.4.23",
+      "categories": "Dimensions + Server Utility + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 94,
+      "name": "Citadel",
+      "filename": "citadel-2.7.1-1.21.1.jar",
+      "version": "2.7.1",
+      "categories": "API and Library + Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 95,
+      "name": "Climbable Ropes for Create Aeronautics",
+      "filename": "climbable_ropes-2.1.3.jar",
+      "version": "2.1.3",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 96,
+      "name": "Clockwork",
+      "filename": "clockwork-neoforge-1.21.1-1.1.4.jar",
+      "version": "1.1.4",
+      "categories": "Cosmetic + Mobs + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 97,
+      "name": "Cloth Config API (Fabric/Forge/NeoForge)",
+      "filename": "cloth-config-15.0.140-neoforge.jar",
+      "version": "15.0.140",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 98,
+      "name": "Clumps",
+      "filename": "Clumps-neoforge-1.21.1-19.0.0.1.jar",
+      "version": "19.0.0.1",
+      "categories": "Server Utility + Storage + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 99,
+      "name": "Cobweb",
+      "filename": "cobweb-neoforge-1.21-1.4.0.jar",
+      "version": "1.4.0",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 100,
+      "name": "CodeChicken Lib 1.8.+",
+      "filename": "CodeChickenLib-1.21.1-4.6.1.529.jar",
+      "version": "4.6.1.529",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 101,
+      "name": "Codxlib",
+      "filename": "codxlib-1.6.0-neoforge+1.21.1.jar",
+      "version": "1.6.0",
+      "categories": "Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 102,
+      "name": "Cold Sweat",
+      "filename": "ColdSweat-2.4.3.1.jar",
+      "version": "2.4.3.1",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 103,
+      "name": "Collective",
+      "filename": "collective-1.21.1-8.39.jar",
+      "version": "8.39",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 105,
+      "name": "Sinytra Connector",
+      "filename": "connector-2.0.0-beta.17+1.21.1-full.jar",
+      "version": "2.0.0-beta.17+1.21.1",
+      "categories": "Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 106,
+      "name": "Connector Extras",
+      "filename": "ConnectorExtras-1.12.1+1.21.1.jar",
+      "version": "1.12.1+1.21.1",
+      "categories": "Addons + API and Library + Technology + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 107,
+      "name": "Continuity",
+      "filename": "continuity-3.0.0+1.21.neoforge.jar",
+      "version": "3.0.0+1.21.neoforge",
+      "categories": "API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 108,
+      "name": "Controlling",
+      "filename": "Controlling-neoforge-1.21.1-19.0.5.jar",
+      "version": "19.0.5",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 109,
+      "name": "Create: Copycats+",
+      "filename": "copycats-3.0.9+mc.1.21.1-neoforge.jar",
+      "version": "3.0.9+mc.1.21.1-neoforge",
+      "categories": "Cosmetic + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 110,
+      "name": "CorgiLib",
+      "filename": "Corgilib-NeoForge-1.21.1-5.0.0.9.jar",
+      "version": "5.0.0.9",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 111,
+      "name": "Cosmetic Armor Reworked",
+      "filename": "cosmeticarmorreworked-1.21.1-v1-neoforge.jar",
+      "version": "1.21.1-v1-neoforge",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 112,
+      "name": "Customizable Player Models OSC Compat",
+      "filename": "cpm-osc-compat-1.7.2.jar",
+      "version": "1.7.2",
+      "categories": "Addons + API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 113,
+      "name": "CraftedCore",
+      "filename": "craftedcore-5.8.2.jar",
+      "version": "5.8.2",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 114,
+      "name": "Crash Assistant",
+      "filename": "CrashAssistant-neoforge-1.20.6-1.21.4-1.11.12.jar",
+      "version": "1.11.12",
+      "categories": "Bug Fixes + Miscellaneous + Performance + Server Utility + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 115,
+      "name": "Create: Quality Of Life",
+      "filename": "Create Quality of Life-1.21.1-1.6.3-fix1.jar",
+      "version": "1.6.3-fix1",
+      "categories": "Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 116,
+      "name": "Create",
+      "filename": "create-1.21.1-6.0.10.jar",
+      "version": "6.0.10",
+      "categories": "Armor, Tools, and Weapons + Cosmetic + Redstone + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 117,
+      "name": "Create Aeronautics",
+      "filename": "create-aeronautics-bundled-1.21.1-1.3.2.jar",
+      "version": "1.3.2",
+      "categories": "Adventure and RPG + Automation + Player Transport + Redstone + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 118,
+      "name": "Create: Central Kitchen",
+      "filename": "create-central-kitchen-2.6.0.jar",
+      "version": "2.6.0",
+      "categories": "Addons + Create + Food + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 119,
+      "name": "Create Confectionery",
+      "filename": "create-confectionery1.21.1_v1.1.3b.jar",
+      "version": "1.1.3b (distribuição/filename); metadata runtime 1.1.3.",
+      "categories": "Addons + Cosmetic + Create + Food + MCreator",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 120,
+      "name": "Create: Enchantment Industry",
+      "filename": "create-enchantment-industry-2.5.3b.jar",
+      "version": "2.5.3b",
+      "categories": "Addons + Create + Storage + Technology",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 121,
+      "name": "Create Guardian Beam Defense",
+      "filename": "Create-Guardian-Beam-Defense-1.3.7.1b-1.21.1-neoforge.jar",
+      "version": "1.3.7.1b",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 122,
+      "name": "Create: Gunsmithing",
+      "filename": "create-gunsmithing-1.21.1-1.4.9.jar",
+      "version": "1.4.9",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 123,
+      "name": "Create: Integrated Farming",
+      "filename": "create-integrated-farming-1.4.1c.jar",
+      "version": "1.4.1c",
+      "categories": "Addons + Automation + Create + Farming + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 124,
+      "name": "Create: New Age",
+      "filename": "create-new-age-1.2.0+neoforge-mc1.21.1.jar",
+      "version": "1.2.0+mc1.21.1",
+      "categories": "Addons + Create + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 125,
+      "name": "Create Stuff 'N Additions",
+      "filename": "create-stuff-additions1.21.1_v2.1.4b.jar",
+      "version": "2.1.4b (distribuição); metadata interna 2.1.4.",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + MCreator + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 126,
+      "name": "Create Utilities J",
+      "filename": "Create-Utilities-J-1.21.1-0.3.4+1.21.1.jar",
+      "version": "0.3.4+1.21.1",
+      "categories": "Automation + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 127,
+      "name": "Create Aero Radars",
+      "filename": "create_aero_radar-0.1.1-1.21.1.jar",
+      "version": "0.1.1-1.21.1",
+      "categories": "Create + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 128,
+      "name": "Create Aeronautics: Automated Logistics",
+      "filename": "create_aeronautics_automated_logistics-0.6.2.jar",
+      "version": "0.6.2",
+      "categories": "Addons + Automation + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 129,
+      "name": "Create Aeronautics: FTB Chunks",
+      "filename": "create_aeronautics_ftb_chunks-1.21.1-NeoForge-1.2.0.jar",
+      "version": "1.2.0",
+      "categories": "Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 130,
+      "name": "Create Aeronautics: Throwable Rope Connector",
+      "filename": "create_aeronautics_throwable_rope_connector-0.4.3.jar",
+      "version": "0.4.3",
+      "categories": "Addons + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 131,
+      "name": "create aeronautics：toolgun",
+      "filename": "create_aeronautics_toolgun-0.3.6.jar",
+      "version": "0.3.6",
+      "categories": "Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 132,
+      "name": "Create Aeronautics: Transmission & Linkage",
+      "filename": "create_aeronautics_transmission_linkage-0.2.8.jar",
+      "version": "0.2.8",
+      "categories": "Create + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 133,
+      "name": "Create: Aquatic Ambitions",
+      "filename": "create_aquatic_ambitions-1.21.1-2.0.4.jar",
+      "version": "2.0.4",
+      "categories": "Armor, Tools, and Weapons + Automation + Create + Ores and Resources",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 134,
+      "name": "Create: Blocks & Bogies",
+      "filename": "create_bb-1.0.8-1.21.1.jar",
+      "version": "1.0.8",
+      "categories": "Addons + Create + Player Transport + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 135,
+      "name": "Create: Blaze Burner Fuels",
+      "filename": "create_blaze_burner_fuels-1.0.2-neoforge-1.21.1.jar",
+      "version": "1.0.2",
+      "categories": "Automation + Create + Energy + Ores and Resources + Processing",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 136,
+      "name": "Create: Cold Sweat",
+      "filename": "create_cold_sweat-1.1.2.jar",
+      "version": "1.1.2",
+      "categories": "Addons + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 137,
+      "name": "Create: Colony Logistics",
+      "filename": "create_colony_logistics-1.3.3.jar",
+      "version": "1.3.3",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 138,
+      "name": "Create: Connected",
+      "filename": "create_connected-1.3.3-mc1.21.1.jar",
+      "version": "1.3.3-mc1.21.1",
+      "categories": "Addons + Automation + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 139,
+      "name": "Create: Arm-made Cuisine",
+      "filename": "create_cuisine-1.0.0-mc1.21.1-neoforge.jar",
+      "version": "1.0.0",
+      "categories": "Automation + Create + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 140,
+      "name": "Create: Curios Backtank",
+      "filename": "create_curios_backtank-neoforge-1.21.1-1.0.1.jar",
+      "version": "1.0.1",
+      "categories": "Addons + Armor, Tools, and Weapons + Automation + Create",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 141,
+      "name": "Create: Deep Dark",
+      "filename": "create_deep_dark-3.0.2-neoforge-1.21.1.jar",
+      "version": "3.0.2",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Biomes + Create + Ores and Resources",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 142,
+      "name": "Create: Factory",
+      "filename": "create_factory-0.7b-1.21.1.jar",
+      "version": "0.7b-1.21.1",
+      "categories": "Automation + Create + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 143,
+      "name": "Create: Fantasizing Again",
+      "filename": "create_fantasizing-1.21.1-1.2.0-b3.jar",
+      "version": "1.2.0-b3",
+      "categories": "Addons + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 144,
+      "name": "Create : New Furnitures",
+      "filename": "create_furnitures-1.1.2-neoforge-1.21.1.jar",
+      "version": "1.1.2",
+      "categories": "Addons + Cosmetic + Create + Structures + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 145,
+      "name": "Create Jetpack",
+      "filename": "create_jetpack-forge-5.2.1.jar",
+      "version": "5.2.1",
+      "categories": "Addons + Armor, Tools, and Weapons + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 146,
+      "name": "Create: Curios Jetpack & Backtank",
+      "filename": "create_jetpack_curios-1.2.0-neoforge-1.21.1.jar",
+      "version": "1.2.0",
+      "categories": "Armor, Tools, and Weapons + Create + Player Transport + Technology + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 147,
+      "name": "Create Mechanical Spawner",
+      "filename": "create_mechanical_spawner-1.21.1-1.3.2-6.0.10.jar",
+      "version": "1.3.2-6.0.10 (distribuição); metadata interna 1.3.1-6.0.10",
+      "categories": "Automation + Create + KubeJS + Mobs + Skyblock",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 148,
+      "name": "Create: More Features",
+      "filename": "create_mf-0.1.3-neoforge-1.21.1.jar",
+      "version": "0.1.3",
+      "categories": "Addons + Automation + Create + Ores and Resources",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 149,
+      "name": "Create: Mobile Packages",
+      "filename": "create_mobile_packages-1.21.1-0.7.7.jar",
+      "version": "0.7.7",
+      "categories": "Automation + Create + Storage",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 150,
+      "name": "Create More Automation",
+      "filename": "create_more_automation-0.5.2-neoforge-1.21.1.jar",
+      "version": "0.5.2",
+      "categories": "Automation + Create + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 151,
+      "name": "Create Optical",
+      "filename": "create_optical-0.4.2.jar",
+      "version": "0.4.2",
+      "categories": "Addons + Create + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 152,
+      "name": "Create: Pattern Schematics",
+      "filename": "create_pattern_schematics-2.0.10.jar",
+      "version": "2.0.10",
+      "categories": "Automation + Create + Structures + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 153,
+      "name": "Create: Pillager Arise",
+      "filename": "create_pillagers_arise NeoForge 1.21.1-132.36.jar",
+      "version": "132.36",
+      "categories": "Create + Mobs + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 154,
+      "name": "Create: Radars",
+      "filename": "create_radar-0.4.9.4-1.21.1.jar",
+      "version": "0.4.9.4-1.21.1",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + Map and Information + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 155,
+      "name": "Create: Ratatouille",
+      "filename": "create_ratatouille-1.21.1-1.4.0.jar",
+      "version": "1.4.0",
+      "categories": "Addons + Automation + Create + Farming + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 156,
+      "name": "Create Recycle Everything (Continued)",
+      "filename": "create_recycle_everything-2.1.0.jar",
+      "version": "2.1.0 (distribuição); metadata interna 1.1",
+      "categories": "Addons + Create + Ores and Resources + Processing + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 157,
+      "name": "Create: Rock & Stone",
+      "filename": "create_rns-1.3.1-1.21.1-6.jar",
+      "version": "1.3.1-1.21.1-6",
+      "categories": "Addons + Automation + Create + Ores and Resources + Processing",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 158,
+      "name": "Create Stuff & Additions Curios Jetpacks",
+      "filename": "create_sa_curios_jetpacks-neoforge-1.21.1-1.2.4.jar",
+      "version": "1.2.4 (distribuição); metadata interna 1.2.22",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 159,
+      "name": "Create Stuff & Netherite Additions",
+      "filename": "create_sna-1.2-neoforge-1.21.1.jar",
+      "version": "1.2",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + MCreator + Player Transport",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 160,
+      "name": "Create: Sophisticated Backpacks Compat",
+      "filename": "create_sophback_compat-1.0.jar",
+      "version": "1.0 (distribuição); metadata interna vazia",
+      "categories": "Addons + Create + Processing",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 161,
+      "name": "Create: Stats & Power",
+      "filename": "create_stats-1.13.1.jar",
+      "version": "1.13.1",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 162,
+      "name": "Create Deep Seas",
+      "filename": "create_submarine-2.2.4.jar",
+      "version": "2.2.4",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 163,
+      "name": "Create : Misc & Things",
+      "filename": "create_things_and_misc-4.1.1-neoforge-1.21.1.jar",
+      "version": "4.1.1",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + MCreator + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 164,
+      "name": "Create: Tweaked Controllers",
+      "filename": "create_tweaked_controllers-1.21.1-1.2.7.jar",
+      "version": "1.21.1-1.2.7",
+      "categories": "Addons + Create + Redstone + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 165,
+      "name": "Create: Ultimate Factory",
+      "filename": "create_ultimate_factory-2.2.4-neoforge-1.21.1.jar",
+      "version": "2.2.4",
+      "categories": "Create + Farming + Processing + Server Utility + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 167,
+      "name": "Create Crafts & Additions",
+      "filename": "createaddition-1.7.1.jar",
+      "version": "1.7.1",
+      "categories": "Addons + Energy + Energy, Fluid, and Item Transport",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 168,
+      "name": "Create: Additional Logistics",
+      "filename": "createadditionallogistics-1.21.1-1.4.5.jar",
+      "version": "1.4.5",
+      "categories": "Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 169,
+      "name": "Create: Addon Compatibility",
+      "filename": "createaddoncompatibility-neoforge-1.21.1-1.0.0.jar",
+      "version": "1.0.0",
+      "categories": "Addons + Bug Fixes + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 170,
+      "name": "Create Aeronautics: Copycat Wing",
+      "filename": "CreateAeronauticsCopycatWing-1.21.1-1.0.4.jar",
+      "version": "1.0.4",
+      "categories": "Addons + API and Library + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 171,
+      "name": "Create Aeronautics x Curios API Compat",
+      "filename": "createaeronauticscurios-neoforge-1.21.1-2.2.jar",
+      "version": "2.2 (distribuição); metadata interna 2.0",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 172,
+      "name": "Create Aeronautics: Harness",
+      "filename": "CreateAeronauticsHarness-1.21.1-1.0.1.jar",
+      "version": "1.0.1",
+      "categories": "Addons + Create + Player Transport + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 173,
+      "name": "Create Better FPS",
+      "filename": "createbetterfps-1.21.1-1.1.4.jar",
+      "version": "1.1.4",
+      "categories": "Addons + Create + Performance + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 174,
+      "name": "Create Big Cannons",
+      "filename": "createbigcannons-5.11.7+mc.1.21.1.jar",
+      "version": "5.11.7",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 175,
+      "name": "Create: Chromatic Return",
+      "filename": "createchromaticreturn-1.0.4-neoforge-1.21.1.jar",
+      "version": "1.0.4 (distribuição/filename); metadata interna 1.0.0",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + Energy, Fluid, and Item Transport + MCreator",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 176,
+      "name": "Create Cobblestone",
+      "filename": "createcobblestone-1.5.0+neoforge-1.21.1-153.jar",
+      "version": "1.5.0+neoforge-1.21.1-153",
+      "categories": "Addons + Automation + Create + Performance + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 177,
+      "name": "CreateColonies",
+      "filename": "createcolonies-2.0.6.jar",
+      "version": "2.0.6",
+      "categories": "Addons + Adventure and RPG + Automation + Create",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 178,
+      "name": "Create Contraption Terminals",
+      "filename": "createcontraptionterminals-1.21-1.4.0.jar",
+      "version": "1.4.0",
+      "categories": "Create + Storage + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 179,
+      "name": "Create: Cyber Goggles",
+      "filename": "CreateCyberGoggles-1.21.1-8.6.3-NeoForge.jar",
+      "version": "8.6.3",
+      "categories": "Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 180,
+      "name": "Create Deco",
+      "filename": "createdeco-2.1.3.jar",
+      "version": "2.1.3",
+      "categories": "Addons + Cosmetic + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 181,
+      "name": "Create Diesel Generators",
+      "filename": "createdieselgenerators-1.21.1-1.3.15.jar",
+      "version": "1.21.1-1.3.15",
+      "categories": "Addons + Create + Processing + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 182,
+      "name": "Create: Dragons Plus",
+      "filename": "CreateDragonsPlus-1.11.8b.jar",
+      "version": "1.11.8b",
+      "categories": "API and Library + Create + Energy, Fluid, and Item Transport + Processing + Technology",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 183,
+      "name": "Create: Enchantable Machinery",
+      "filename": "createenchantablemachinery-3.6.0+mc1.21.1-neoforge.jar",
+      "version": "3.6.0",
+      "categories": "Addons + Create + Technology + Utility & QoL",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 184,
+      "name": "Create: Ender Transmission",
+      "filename": "createendertransmission-2.1.1-1.21.1.jar",
+      "version": "2.1.1-1.21.1",
+      "categories": "Addons + Technology",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 185,
+      "name": "Create: Fast SchematicCannon",
+      "filename": "CreateFastSchematicCannon-2.6.1-neoforge-1.21.1.jar",
+      "version": "2.6.1-neoforge",
+      "categories": "Addons + Bug Fixes + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 186,
+      "name": "Create: Filters Anywhere",
+      "filename": "createfiltersanywhere-1.21.1-2.6.0.jar",
+      "version": "2.6.0",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 187,
+      "name": "Create: Fishery Industry",
+      "filename": "createfisheryindustry-5.1.2.jar",
+      "version": "5.1.2",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 188,
+      "name": "Create: Food",
+      "filename": "createfood-neoforge-1.21.1-2.7.1.jar",
+      "version": "2.7.1",
+      "categories": "Automation + Create + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 189,
+      "name": "Create Goggles (Create Plus)",
+      "filename": "creategoggles-1.21.1-6.1.1-[NEOFORGE].jar",
+      "version": "6.1.1",
+      "categories": "Addons + Armor, Tools, and Weapons + Create",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 190,
+      "name": "Create JEI Compat",
+      "filename": "createjeicompat-1.0.3.jar",
+      "version": "1.0.3",
+      "categories": "Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 191,
+      "name": "Create:LazyTick",
+      "filename": "CreateLazyTick-2.6.25-6.0.10-neoforge-1.21.1.jar",
+      "version": "2.6.25-6.0.10",
+      "categories": "Addons + Bug Fixes + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 192,
+      "name": "Create: Liquid Fuel",
+      "filename": "createliquidfuel-3.0.0-1.21.1.jar",
+      "version": "3.0.0-1.21.1",
+      "categories": "Addons + API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 193,
+      "name": "Create: Mechanical Companion",
+      "filename": "createmechanicalcompanion-1.9-neoforge-1.21.1.jar",
+      "version": "1.9 (artefato/publicação); metadata runtime vazia",
+      "categories": "Addons + Adventure and RPG + Create + Mobs + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 194,
+      "name": "Create: Metallurgy",
+      "filename": "createmetallurgy-1.0.3-1.21.1.jar",
+      "version": "1.0.3",
+      "categories": "Addons + Automation + Create + Processing + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 195,
+      "name": "Create: Metalwork",
+      "filename": "createmetalwork-2.0.0.jar",
+      "version": "2.0.0",
+      "categories": "Automation + Create + Energy, Fluid, and Item Transport + Processing",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 196,
+      "name": "Create Missiles",
+      "filename": "createmissiles-1.0.3+neoforge-1.21.1.jar",
+      "version": "1.0.3",
+      "categories": "Addons + Create + Map and Information + Structures + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 197,
+      "name": "Create Nuclear",
+      "filename": "createnuclear-1.3.2-beta.3-neoforge.jar",
+      "version": "1.3.2-beta.3",
+      "categories": "Addons + Create + Energy + Ores and Resources + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 198,
+      "name": "Create: Ornithopter Glider",
+      "filename": "createornithopterglider-1.2.0-1.21.1.jar",
+      "version": "1.2.0-1.21.1 (runtime/filename); publicação 1.2.0+1.21.1",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + Player Transport + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 199,
+      "name": "Create: Prismatic Shine",
+      "filename": "createprism-1.2.2.jar",
+      "version": "1.2.2",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 200,
+      "name": "Create Propulsion: Simulated",
+      "filename": "createpropulsion-1.1.5.jar",
+      "version": "1.1.5",
+      "categories": "Addons + Create + Player Transport + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 201,
+      "name": "Create : radiologistics",
+      "filename": "CreateRadiologistics-1.1.1.jar",
+      "version": "1.1.1",
+      "categories": "Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 202,
+      "name": "Create: Schematic Checker",
+      "filename": "createschematicchecker-2.27.45-6.0-neoforge-1.21.1.jar",
+      "version": "2.27.45-6.0",
+      "categories": "Addons + Bug Fixes + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 203,
+      "name": "Create : Teleporters",
+      "filename": "createteleporters-remastered-2.0.2b-neoforge-1.21.1.jar",
+      "version": "2.0.2b (filename/publicação); metadata runtime 2.0.2",
+      "categories": "Create + Energy, Fluid, and Item Transport + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 204,
+      "name": "Create: Transmission!",
+      "filename": "createtransmission-1.2.2+neoforge-create6-1.21.1.jar",
+      "version": "1.2.2+neoforge-create6-1.21.1",
+      "categories": "Addons + Cosmetic + Create + Technology + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 205,
+      "name": "Create Ultimine",
+      "filename": "createultimine-1.21.1-neoforge-1.3.2.jar",
+      "version": "1.3.2",
+      "categories": "Addons + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 206,
+      "name": "Create : Creating Space",
+      "filename": "creatingspace-1.21.1-1.7.22.jar",
+      "version": "1.7.22",
+      "categories": "Create + Dimensions + Player Transport + Technology + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 207,
+      "name": "CreativeCore",
+      "filename": "CreativeCore_NEOFORGE_v2.13.46_mc1.21.1.jar",
+      "version": "2.13.46",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 209,
+      "name": "Cuisine Delight",
+      "filename": "cuisinedelight-1.2.10.jar",
+      "version": "1.2.10",
+      "categories": "Food + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 210,
+      "name": "Cupboard",
+      "filename": "cupboard-1.21.1-4.1.jar",
+      "version": "4.1",
+      "categories": "Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 211,
+      "name": "Curios API",
+      "filename": "curios-neoforge-9.5.1+1.21.1.jar",
+      "version": "9.5.1+1.21.1",
+      "categories": "Adventure and RPG + API and Library + Armor, Tools, and Weapons",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 212,
+      "name": "Customizable Player Models",
+      "filename": "CustomPlayerModels-1.21-0.6.27a.jar",
+      "version": "0.6.27a",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 213,
+      "name": "Cyclops Core",
+      "filename": "cyclopscore-1.21.1-neoforge-1.30.0.jar",
+      "version": "1.30.0",
+      "categories": "API and Library + Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 215,
+      "name": "Deeper and Darker",
+      "filename": "deeperdarker-neoforge-1.21.1-1.4.1.jar",
+      "version": "1.4.1",
+      "categories": "Biomes + Dimensions + Mobs + Ores and Resources + Structures",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 216,
+      "name": "VanillaBackport X Farmer's Delight Compat",
+      "filename": "Delightful-Backport-1.0-1.21.1-neoforge.jar",
+      "version": "1.0",
+      "categories": "Addons + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 217,
+      "name": "Create: Design n' Decor",
+      "filename": "Design-n-Decor-1.21.1-2.2b.jar",
+      "version": "2.2b",
+      "categories": "Addons + Cosmetic + Create + Storage + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 218,
+      "name": "Destroy",
+      "filename": "destroy-1.21.1-0.4.3.jar",
+      "version": "0.4.3",
+      "categories": "Sem projeto CurseForge confirmado",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 219,
+      "name": "Dimensional Sable",
+      "filename": "dimensional_sable-1.0.5.jar",
+      "version": "1.0.5",
+      "categories": "Sem projeto CurseForge confirmado",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 222,
+      "name": "Distant Horizons: A Level of Detail mod",
+      "filename": "DistantHorizons-3.2.0-b-1.21.1-fabric-neoforge.jar",
+      "version": "3.2.0-b",
+      "categories": "Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 223,
+      "name": "Create: Dreams n' Desires",
+      "filename": "DnDesires-1.21.1-2.3a-BETA.jar",
+      "version": "2.3a-BETA",
+      "categories": "Armor, Tools, and Weapons + Automation + Create + Utility & QoL + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 224,
+      "name": "Domum Ornamentum",
+      "filename": "domum-ornamentum-1.0.236-snapshot-main.jar",
+      "version": "1.0.236-snapshot",
+      "categories": "API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 226,
+      "name": "Dynamic Trees - BetterEnd",
+      "filename": "dtbetterend-1.21.1-2.2.0.jar",
+      "version": "2.2.0",
+      "categories": "Addons + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 227,
+      "name": "Dynamic Trees - BetterNether",
+      "filename": "dtbetternether-1.21.1-2.2.0.jar",
+      "version": "2.2.0",
+      "categories": "Addons + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 228,
+      "name": "Dynamic Trees - Oh The Biomes We've Gone",
+      "filename": "dtbwg-1.1.0-BETA02.jar",
+      "version": "1.1.0-BETA02",
+      "categories": "Addons + Cosmetic + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 229,
+      "name": "Dynamic Trees - Quark",
+      "filename": "dtquark-2.6.1.jar",
+      "version": "2.6.1",
+      "categories": "Addons + Cosmetic + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 230,
+      "name": "Dynamic Trees - Terralith",
+      "filename": "dtterralith-1.3.0.jar",
+      "version": "1.3.0",
+      "categories": "Addons + Biomes + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 231,
+      "name": "Dynamic Trees - VanillaBackport",
+      "filename": "dtvanillabackport-1.21.1-1.7.0.jar",
+      "version": "1.7.0",
+      "categories": "Addons + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 233,
+      "name": "Dynamic Brightness",
+      "filename": "DynamicBrightness-neoforge-1.3.1.jar",
+      "version": "1.3.1",
+      "categories": "Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 234,
+      "name": "Dynamic Trees Addon Lib",
+      "filename": "DynamicTrees-AddonLib-DTteam-neoforge-1.21.1-0.2.0-BETA03.jar",
+      "version": "0.2.0-BETA03",
+      "categories": "Addons + API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 235,
+      "name": "Dynamic Trees",
+      "filename": "dynamictrees-neoforge-1.21.1-1.7.2.jar",
+      "version": "1.7.2",
+      "categories": "Biomes + Cosmetic + Farming + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 236,
+      "name": "Dynamic Trees Plus",
+      "filename": "DynamicTreesPlus-neoforge-1.21.1-1.3.2.jar",
+      "version": "1.3.2",
+      "categories": "Addons + Biomes + Cosmetic + Farming + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 237,
+      "name": "Create: Dynamic Village",
+      "filename": "dynamicvillage-0.9-1.21.1.jar",
+      "version": "0.9",
+      "categories": "Cosmetic + Create + Structures + Technology + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 238,
+      "name": "Easy Model Entities",
+      "filename": "easy_model_entities-neoforge-1.21.1-2.4.0.jar",
+      "version": "2.4.0 do JAR; metadata runtime sem versão",
+      "categories": "Adventure and RPG + API and Library + Automation + Mobs + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 239,
+      "name": "Easy NPC: Core",
+      "filename": "easy_npc-neoforge-1.21.1-7.12.1.jar",
+      "version": "7.12.1 do JAR; metadata runtime sem versão",
+      "categories": "Adventure and RPG + API and Library",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 240,
+      "name": "Easy NPC",
+      "filename": "easy_npc_bundle-neoforge-1.21.1-7.12.1.jar",
+      "version": "7.12.1",
+      "categories": "Adventure and RPG + API and Library",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 241,
+      "name": "Easy NPC: Config UI",
+      "filename": "easy_npc_config_ui-neoforge-1.21.1-7.12.1.jar",
+      "version": "7.12.1",
+      "categories": "Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 242,
+      "name": "Ecliptic Seasons: MultiMod Patch",
+      "filename": "Ecliptic-Seasons-MultiMod-Patch-1.21.1-neoforge-0.32.1.jar",
+      "version": "0.32.1",
+      "categories": "Addons + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 243,
+      "name": "Ecliptic Seasons",
+      "filename": "EclipticSeasons-1.21.1-neoforge-0.15.0-rc-3-1.jar",
+      "version": "0.15.0-rc-3-1",
+      "categories": "Adventure and RPG + Cosmetic + Farming + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 244,
+      "name": "Ecliptic Seasons : Bundles",
+      "filename": "EclipticSeasons-Bundles-0.18.0.2.jar",
+      "version": "0.18.0.2",
+      "categories": "Addons + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 245,
+      "name": "Epic Fight x Iron's Spells: Enhanced Animations",
+      "filename": "efiscompat-3.1.0.jar",
+      "version": "3.1.0",
+      "categories": "Cosmetic + Miscellaneous",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 247,
+      "name": "EMF Compat: Core",
+      "filename": "emf_compat_core_1.21.1_2.0.0.jar",
+      "version": "2.0.0",
+      "categories": "API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 248,
+      "name": "EMF Compat: Create",
+      "filename": "emf_compat_create_1.21.1_2.0.0.jar",
+      "version": "2.0.0",
+      "categories": "Bug Fixes + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 249,
+      "name": "EMF Compat: Iron's Spells 'n Spellbooks",
+      "filename": "emf_compat_iron_spells_1.21.1_2.0.0.jar",
+      "version": "2.0.0",
+      "categories": "Addons + Bug Fixes",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 251,
+      "name": "Ender's Delight",
+      "filename": "endersdelight-1.3.1.jar",
+      "version": "1.3.1",
+      "categories": "Addons + Farming + Food",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 252,
+      "name": "Enhanced AI",
+      "filename": "enhancedai-4.2.3.0.jar",
+      "version": "4.2.3.0",
+      "categories": "Mobs",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 253,
+      "name": "Enhanced Boss Bars",
+      "filename": "enhancedbossbars-1.0.0.jar",
+      "version": "1.0.0",
+      "categories": "Adventure and RPG + Cosmetic + Miscellaneous + Mobs",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 254,
+      "name": "[EMF] Entity Model Features [Fabric & Forge]",
+      "filename": "entity_model_features-3.3.5-1.21-neoforge.jar",
+      "version": "3.3.5",
+      "categories": "Cosmetic + Mobs + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 255,
+      "name": "[ESF] Entity Sound Features",
+      "filename": "entity_sound_features-0.8.2-1.21-neoforge.jar",
+      "version": "0.8.2",
+      "categories": "Cosmetic + Mobs + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 256,
+      "name": "[ETF] Entity Texture Features - [Fabric & Forge]",
+      "filename": "entity_texture_features-7.2.1-1.21-neoforge.jar",
+      "version": "7.2.1",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 257,
+      "name": "Entity Culling Fabric/Forge",
+      "filename": "entityculling-neoforge-1.10.5-mc1.21.1.jar",
+      "version": "1.10.5",
+      "categories": "Miscellaneous + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 258,
+      "name": "EpheroLib",
+      "filename": "EpheroLib-1.21.1-NEO-FORGE-1.2.0.jar",
+      "version": "1.2.0",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 259,
+      "name": "Epic Fight: Curios Compat 2.0",
+      "filename": "Epic Fight x Curios Compat 2.2.jar",
+      "version": "2.2 (distribuição/filename); metadata runtime 1.4",
+      "categories": "Addons + Bug Fixes + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 260,
+      "name": "Epic Fight",
+      "filename": "epic-fight-21.17.3.1-mc1.21.1-neoforge.jar",
+      "version": "21.17.3.1",
+      "categories": "Adventure and RPG + API and Library + Armor, Tools, and Weapons",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 261,
+      "name": "Epic Fight - Epic-API",
+      "filename": "epic_api-21.3.1.jar",
+      "version": "21.3.1",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 262,
+      "name": "Minecolonies: Epicfied (Epic Colonies)",
+      "filename": "EpicColonies-NeoForge-1.21.1-EFM-21.16.4-21.0.8.jar",
+      "version": "21.0.8",
+      "categories": "Addons + Adventure and RPG + Armor, Tools, and Weapons + Cosmetic",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 263,
+      "name": "Epic Fight - Mod Compat",
+      "filename": "epicfightcompat-1.1.0-mc1.21.1-neoforge.jar",
+      "version": "1.1.0",
+      "categories": "Addons + Adventure and RPG + Armor, Tools, and Weapons + Mobs",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 264,
+      "name": "Epic Fight - Pehkui FIX",
+      "filename": "epicfightpehkuiincompatibilityfix-1.0.2.jar",
+      "version": "1.0.2",
+      "categories": "Addons + Bug Fixes",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 265,
+      "name": "Ender's Spells and Stuff: Requiem",
+      "filename": "ess_requiem-0.1.7.jar",
+      "version": "0.1.7",
+      "categories": "Addons",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 266,
+      "name": "Euphoria Patches",
+      "filename": "EuphoriaPatcher-1.10.5-r5.9.3-neoforge.jar",
+      "version": "1.10.5-r5.9.3-neoforge",
+      "categories": "Addons + Cosmetic + Miscellaneous + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 267,
+      "name": "ExpandAbility",
+      "filename": "expandability-12.0.0.jar",
+      "version": "12.0.0",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 268,
+      "name": "Expanded Delight",
+      "filename": "expandeddelight-0.1.4.jar",
+      "version": "0.1.4",
+      "categories": "Addons + Farming + Food + Ores and Resources",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 269,
+      "name": "Explorer's Compass",
+      "filename": "ExplorersCompass-1.21.1-3.4.0-neoforge.jar",
+      "version": "1.21.1-3.4.0-neoforge",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Map and Information + Structures",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 270,
+      "name": "Explosive Enhancement: Reforged",
+      "filename": "explosiveenhancement-neoforge-1.21.1-1.1.2.jar",
+      "version": "1.1.2",
+      "categories": "Cosmetic + Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 271,
+      "name": "Create: Extra Copycats",
+      "filename": "extra_copycats-1.0.2.jar",
+      "version": "1.0.2",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 272,
+      "name": "Factory Construction Registry Probe",
+      "filename": "factory_construction_registry_probe-0.1.0.jar",
+      "version": "0.1.0",
+      "categories": "— (dossier ausente; categoria não atribuída)",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 273,
+      "name": "FamiliarsLib",
+      "filename": "familiarslib-1.21.1-1.7.1.jar",
+      "version": "1.7.1 do JAR/publicação; metadata runtime 1.21.1-1.7",
+      "categories": "API and Library",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 276,
+      "name": "Farmer's Delight",
+      "filename": "FarmersDelight-1.21.1-1.3.4.jar",
+      "version": "1.3.4",
+      "categories": "Cosmetic + Farming + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 277,
+      "name": "Farmer's Delight: Extended",
+      "filename": "farmersdelight_extended-1.21.1-0.2.2.jar",
+      "version": "1.21.1-0.2.2",
+      "categories": "Addons + Create + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 278,
+      "name": "Farmers Structures",
+      "filename": "FarmersStructures-1.0.6-1.21.1_neoforge.jar",
+      "version": "1.0.6",
+      "categories": "Addons + Farming + MCreator + Structures + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 279,
+      "name": "FastSuite",
+      "filename": "FastSuite-1.21.1-6.0.7.jar",
+      "version": "6.0.7",
+      "categories": "Performance",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 280,
+      "name": "FerriteCore ((Neo)Forge)",
+      "filename": "ferritecore-7.0.3-neoforge.jar",
+      "version": "7.0.3",
+      "categories": "Performance",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 282,
+      "name": "First-person Model",
+      "filename": "firstperson-neoforge-2.7.2-mc1.21.1.jar",
+      "version": "2.7.2",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Cosmetic",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 283,
+      "name": "Flowing Fluids",
+      "filename": "flowing_fluids-1.0.6-1.21-neoforge.jar",
+      "version": "1.0.6",
+      "categories": "Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 284,
+      "name": "Create: Fluid",
+      "filename": "fluid-2.1.6.jar",
+      "version": "2.1.6",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 285,
+      "name": "Create: FluidLogistics",
+      "filename": "fluidlogistics-1.3.0-mc1.21.1.jar",
+      "version": "1.3.0",
+      "categories": "Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 286,
+      "name": "Forgified Fabric API",
+      "filename": "forgified-fabric-api-0.116.15+2.3.5+1.21.1.jar",
+      "version": "0.116.15+2.3.5+1.21.1",
+      "categories": "Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 287,
+      "name": "Fragmentum [NeoForge Edition]",
+      "filename": "fragmentum-neoforge-1.21.1-2.4.4.jar",
+      "version": "2.4.4",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 288,
+      "name": "FTB Chunks (NeoForge)",
+      "filename": "ftb-chunks-neoforge-2101.1.22.jar",
+      "version": "2101.1.22",
+      "categories": "Map and Information + Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 289,
+      "name": "FTB Library (NeoForge)",
+      "filename": "ftb-library-neoforge-2101.1.36.jar",
+      "version": "2101.1.36",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 290,
+      "name": "FTB Quests (NeoForge)",
+      "filename": "ftb-quests-neoforge-2101.1.36.jar",
+      "version": "2101.1.36",
+      "categories": "Adventure and RPG + API and Library + Map and Information + Server Utility",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 291,
+      "name": "FTB Teams (NeoForge)",
+      "filename": "ftb-teams-neoforge-2101.1.11.jar",
+      "version": "2101.1.11",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 292,
+      "name": "FTB Ultimine (NeoForge)",
+      "filename": "ftb-ultimine-neoforge-2101.1.15.jar",
+      "version": "2101.1.15",
+      "categories": "Armor, Tools, and Weapons + Server Utility",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 293,
+      "name": "FTB XMod Compat",
+      "filename": "ftb-xmod-compat-neoforge-21.1.11.jar",
+      "version": "21.1.11",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 294,
+      "name": "Fusion (Connected Textures)",
+      "filename": "fusion-1.3.15a-neoforge-mc1.21.1.jar",
+      "version": "1.3.15+a (metadata runtime); filename/release 1.3.15a",
+      "categories": "API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 295,
+      "name": "Fancy World Animations",
+      "filename": "fwa+1.21.1-neoforge-1.2.31.jar",
+      "version": "1.2.31",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 296,
+      "name": "Fzzy Config",
+      "filename": "fzzy_config-0.7.7+1.21+neoforge.jar",
+      "version": "0.7.7+1.21+neoforge",
+      "categories": "API and Library + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 297,
+      "name": "Gabou's Libs",
+      "filename": "gaboulibs-neoforge-1.9.jar",
+      "version": "1.9",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 298,
+      "name": "Create Aeronautics: Gadgets & Gizmos",
+      "filename": "gadgets-and-gizmos-bundled-V1.2.2.jar",
+      "version": "1.2.2",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 299,
+      "name": "Create: Garnished",
+      "filename": "garnished-2.1.9.2+1.21.1-neoforged.jar",
+      "version": "2.1.9.2",
+      "categories": "Addons + Automation + Create + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 300,
+      "name": "Gaze - A Malum Addon",
+      "filename": "gaze-1.1.7.1.jar",
+      "version": "1.1.7.1",
+      "categories": "Addons",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 301,
+      "name": "GeckoLib",
+      "filename": "geckolib-neoforge-1.21.1-4.9.2.jar",
+      "version": "4.9.2",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 302,
+      "name": "Global Packs",
+      "filename": "globalpacks-neoforge-1.21.1-21.0.6.jar",
+      "version": "21.0.6",
+      "categories": "Map and Information + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 303,
+      "name": "Glodium",
+      "filename": "Glodium-1.21-2.2-neoforge.jar",
+      "version": "1.21-2.2-neoforge",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 304,
+      "name": "GroovyModLoader (GML)",
+      "filename": "gml-6.0.2.jar",
+      "version": "6.0.2",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 308,
+      "name": "Grappling Hook Mod: Skybound",
+      "filename": "grapplemod-1.1+1.21.1.neoforge.jar",
+      "version": "1.1+1.21.1.neoforge",
+      "categories": "Player Transport + Skyblock + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 310,
+      "name": "GTBC's SpellLib/API",
+      "filename": "gtbcs_spell_lib-2.2.0-1.21.1.jar",
+      "version": "2.2.0-1.21.1",
+      "categories": "Addons + API and Library",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 311,
+      "name": "Guide-API Village and Pillage",
+      "filename": "Guide-API-VP-1.21.1-2.3.0.jar",
+      "version": "2.3.0",
+      "categories": "API and Library + Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 313,
+      "name": "HazentouveLib",
+      "filename": "hazentouvelib-1.0.9.jar",
+      "version": "1.0.9",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 315,
+      "name": "Ice And Fire: Dragon Care",
+      "filename": "Ice and Fire - Dragon Care-1.3.1 - 1.21.1v.jar",
+      "version": "1.3.1 - 1.21.1v",
+      "categories": "Addons",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 317,
+      "name": "Ice and Fire X Epic Fight",
+      "filename": "iceandfire-ce-epicfight-armor-compat-1.0.0.jar",
+      "version": "1.0.0",
+      "categories": "Addons + Armor, Tools, and Weapons + Bug Fixes + Cosmetic",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 318,
+      "name": "Ice And Fire: Dread Land",
+      "filename": "iceandfire_dreadland-0.1.2.jar",
+      "version": "0.1.2",
+      "categories": "Addons + Adventure and RPG + Biomes + Dimensions",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 319,
+      "name": "Iceberg [Neo/Forge]",
+      "filename": "Iceberg-1.21.1-neoforge-1.3.2.jar",
+      "version": "1.3.2",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 320,
+      "name": "Integrated Dungeons Arise",
+      "filename": "IDA v2.1.1-1.21.1.jar",
+      "version": "2.1.1",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 321,
+      "name": "Integrated Dungeons and Structures",
+      "filename": "idas-1.13.7+1.21.1-neoforge.jar",
+      "version": "1.13.7+1.21.1-neoforge",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Create + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 322,
+      "name": "Iglee's Library",
+      "filename": "igleelib-1.21.1-1.2.7.jar",
+      "version": "1.21.1-1.2.7",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 323,
+      "name": "Cataclysm: Ignis Soulfires",
+      "filename": "ignissoulfires-1.8.0.jar",
+      "version": "1.8.0",
+      "categories": "Addons + Armor, Tools, and Weapons + Cosmetic + Ores and Resources",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 325,
+      "name": "Integrated Mowzie's Mobs",
+      "filename": "IMM v1.3.0-1.21.1.jar",
+      "version": "1.3.0",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 326,
+      "name": "ImmediatelyFast",
+      "filename": "ImmediatelyFast-NeoForge-1.6.14+1.21.1.jar",
+      "version": "1.6.14+1.21.1",
+      "categories": "Performance + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 327,
+      "name": "Immersive Aeronautics - Immersive Portals + Create: Aeronautics",
+      "filename": "Immersive-Aeronautics1.1.4-1.21.1-NeoForge.jar",
+      "version": "1.1.4",
+      "categories": "Create",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 328,
+      "name": "Immersive Furniture",
+      "filename": "immersive_furniture-neoforge-0.3.3+1.21.1.jar",
+      "version": "0.3.3+1.21.1",
+      "categories": "Cosmetic + Storage",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 330,
+      "name": "Immersive Portals: True Immersion",
+      "filename": "immersive_portals_true_immersion-2.0.4.jar",
+      "version": "2.0.4",
+      "categories": "Addons",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 331,
+      "name": "InsaneLib",
+      "filename": "insanelib-2.4.33.0.jar",
+      "version": "2.4.33.0",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 332,
+      "name": "Integrated API",
+      "filename": "integrated_api-neoforge-1.21.1-1.8.2.jar",
+      "version": "1.8.2",
+      "categories": "Adventure and RPG + API and Library + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 333,
+      "name": "Integrated Cataclysm",
+      "filename": "integrated_cataclysm-1.0.6+1.21.1-neoforge.jar",
+      "version": "1.0.6+1.21.1-neoforge",
+      "categories": "Addons + Adventure and RPG + Armor, Tools, and Weapons + Create + World Gen",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 334,
+      "name": "Integrated Simply Swords",
+      "filename": "integrated_simply_swords-1.4.0+1.21.1-neoforge.jar",
+      "version": "1.4.0+1.21.1-neoforge",
+      "categories": "Addons + Adventure and RPG + Armor, Tools, and Weapons",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 335,
+      "name": "Integrated Stronghold",
+      "filename": "integrated_stronghold-1.1.4+1.21.1-neoforge.jar",
+      "version": "1.1.4+1.21.1-neoforge",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Create + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 337,
+      "name": "Inventory Sorter",
+      "filename": "inventorysorter-1.21.1-24.0.24.jar",
+      "version": "24.0.24",
+      "categories": "Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 338,
+      "name": "Iris Shaders",
+      "filename": "iris-neoforge-1.8.14-beta.1+mc1.21.1.jar",
+      "version": "1.8.14-beta.1+mc1.21.1",
+      "categories": "Cosmetic + Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 341,
+      "name": "Iron's Lib",
+      "filename": "irons_lib-1.21.1-2.1.0.jar",
+      "version": "1.21.1-2.1.0",
+      "categories": "API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 347,
+      "name": "Jade 🔍",
+      "filename": "Jade-1.21.1-NeoForge-15.10.6.jar",
+      "version": "15.10.6+neoforge",
+      "categories": "Map and Information + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 348,
+      "name": "Just Enough Effect Descriptions (JEED)",
+      "filename": "jeed-1.21-2.3.2.jar",
+      "version": "1.21-2.3.2",
+      "categories": "Addons + Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 349,
+      "name": "Just Enough Items (JEI)",
+      "filename": "jei-1.21.1-neoforge-19.56.0.440.jar",
+      "version": "19.56.0.440",
+      "categories": "API and Library + Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 350,
+      "name": "JinxedLib",
+      "filename": "jinxedlib-neoforge-1.21.1-1.0.4.jar",
+      "version": "1.0.4",
+      "categories": "API and Library + Server Utility + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 351,
+      "name": "JourneyMap Integration",
+      "filename": "jmi-neoforge-1.21.1-1.9.jar",
+      "version": "1.21.1-1.9",
+      "categories": "Addons + Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 352,
+      "name": "JourneyMap",
+      "filename": "journeymap-neoforge-1.21.1-6.0.8.jar",
+      "version": "1.21.1-6.0.8",
+      "categories": "Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 353,
+      "name": "Jupiter",
+      "filename": "jupiter-2.3.7-1.21.1-neoforge.jar",
+      "version": "2.3.7",
+      "categories": "API and Library + Server Utility + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 354,
+      "name": "Just Enough Breeding (JEBr)",
+      "filename": "justenoughbreeding-neoforge-1.21.1-3.2.1.jar",
+      "version": "3.2.1",
+      "categories": "Addons + Map and Information + Mobs + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 355,
+      "name": "Just Enough Professions (JEP)",
+      "filename": "JustEnoughProfessions-neoforge-1.21.1-4.0.5.jar",
+      "version": "4.0.5",
+      "categories": "Addons + Map and Information + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 356,
+      "name": "Just Enough Resources (JER)",
+      "filename": "JustEnoughResources-NeoForge-1.21.1-1.6.0.17.jar",
+      "version": "1.6.0.17",
+      "categories": "Addons + Biomes + Map and Information + Mobs + Ores and Resources",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 357,
+      "name": "KilaGraph",
+      "filename": "kilagraph-neoforge-1.21.1-21.1.0.14.jar",
+      "version": "21.1.0.14",
+      "categories": "API and Library + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 358,
+      "name": "Kiwi 🥝 (Neo/Forge)",
+      "filename": "Kiwi-1.21.1-NeoForge-15.8.7.jar",
+      "version": "15.8.7+neoforge",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 359,
+      "name": "Knight Lib",
+      "filename": "knightlib-neoforge-1.21.1-2.0.1.jar",
+      "version": "2.0.1",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 360,
+      "name": "Konkrete",
+      "filename": "konkrete_neoforge_1.9.9_MC_1.21.jar",
+      "version": "1.9.9",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 361,
+      "name": "Kotlin for Forge",
+      "filename": "kotlinforforge-5.12.0-all.jar",
+      "version": "5.12.0",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 362,
+      "name": "KubeJS Create",
+      "filename": "kubejs-create-neoforge-2101.3.1-build.18.jar",
+      "version": "2101.3.1-build.18",
+      "categories": "KubeJS",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 363,
+      "name": "KubeJS",
+      "filename": "kubejs-neoforge-2101.7.2-build.377.jar",
+      "version": "2101.7.2-build.377",
+      "categories": "API and Library + KubeJS + Map and Information + Server Utility + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 364,
+      "name": "KubeJS Curios",
+      "filename": "kubejs_curios_neoforge_1.21.1-1.0.4.jar",
+      "version": "1.0.4",
+      "categories": "KubeJS",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 365,
+      "name": "KubeJS Additions",
+      "filename": "kubejsadditions-neoforge-1.21.1-6.0.0.jar",
+      "version": "1.21.1-6.0.0",
+      "categories": "API and Library + Energy, Fluid, and Item Transport + KubeJS + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 367,
+      "name": "KubeJS Delight",
+      "filename": "kubejsdelight-1.1.6.jar",
+      "version": "1.1.6",
+      "categories": "KubeJS",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 368,
+      "name": "L_Ender's Cataclysm",
+      "filename": "L_Ender's Cataclysm 1.21.1-3.33.jar",
+      "version": "3.33",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Mobs + Structures",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 369,
+      "name": "LambDynamicLights",
+      "filename": "lambdynamiclights-4.8.11+1.21.1.jar",
+      "version": "4.8.11+1.21.1",
+      "categories": "Adventure and RPG + Cosmetic",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 370,
+      "name": "LDLib",
+      "filename": "ldlib2-neoforge-1.21.1-2.2.39.a-all.jar",
+      "version": "2.2.39.a",
+      "categories": "API and Library + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 371,
+      "name": "Legendary Monsters",
+      "filename": "legendary_monsters-2.2.2 MC 1.21.1.jar",
+      "version": "2.2.2 (distribuição); metadata interna 1.21.1",
+      "categories": "Armor, Tools, and Weapons + Mobs + Structures",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 374,
+      "name": "Lionfish API",
+      "filename": "lionfishapi-3.1.jar",
+      "version": "3.1",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 375,
+      "name": "Lithostitched",
+      "filename": "lithostitched-1.8.0+beta6-neoforge-21.1.jar",
+      "version": "1.8.0+beta6",
+      "categories": "API and Library + Miscellaneous + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 376,
+      "name": "Load My F***ing Tags",
+      "filename": "lmft-1.1.1+1.21.9-neoforge.jar",
+      "version": "1.1.1+1.21.9",
+      "categories": "Miscellaneous + Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 377,
+      "name": "Epic Fight x Better Lock On: Movement & Camera Fixes",
+      "filename": "lockonmovementfix-neoforge-1.0.2.jar",
+      "version": "1.0.2",
+      "categories": "Addons + Bug Fixes + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 378,
+      "name": "Lodestone",
+      "filename": "lodestone-1.21.1-1.8.2.jar",
+      "version": "1.8.2",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 379,
+      "name": "Loot Journal: Pickup Notifier [Forge Edition]",
+      "filename": "loot_journal-neoforge-1.21.1-6.2.1.jar",
+      "version": "6.2.1",
+      "categories": "Adventure and RPG + Cosmetic + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 380,
+      "name": "Loot Integrations",
+      "filename": "lootintegrations-1.21.1-4.7.jar",
+      "version": "4.7",
+      "categories": "Adventure and RPG + Server Utility",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 381,
+      "name": "Loot Integrations: L_Ender 's Cataclysm",
+      "filename": "lootintegrations_cataclysm-1.2.jar",
+      "version": "1.2 (distribuição); metadata interna 1",
+      "categories": "Addons + Structures",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 382,
+      "name": "Loot Integrations: Ice and Fire",
+      "filename": "lootintegrations_iceandfire-1.2.jar",
+      "version": "1.2",
+      "categories": "Addons + Structures",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 383,
+      "name": "Loot Integrations: Integrated Dungeons, Villages & Strongholds & Cataclysm",
+      "filename": "lootintegrations_integrated-1.5.jar",
+      "version": "1.5 (distribuição); metadata interna 1",
+      "categories": "Addons + Structures",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 384,
+      "name": "Loot Integrations: Randomized Loot Compatibility",
+      "filename": "lootintegrations_vanilla-1.7.jar",
+      "version": "1.7 (distribuição); metadata interna 1",
+      "categories": "Addons + Structures",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 385,
+      "name": "Yung Structures Addon for Loot Integrations",
+      "filename": "lootintegrations_yungs-1.6.jar",
+      "version": "1.6 (distribuição); metadata interna 1",
+      "categories": "Addons + Adventure and RPG + Structures",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 386,
+      "name": "LootJS: KubeJS Addon",
+      "filename": "lootjs-neoforge-1.21.1-3.7.0.jar",
+      "version": "1.21.1-3.7.0",
+      "categories": "KubeJS + Map and Information + Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 387,
+      "name": "Lootr (Forge & NeoForge)",
+      "filename": "lootr-neoforge-1.21.1-1.11.38.125.jar",
+      "version": "1.21.1-1.11.38.125",
+      "categories": "Server Utility + Structures",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 388,
+      "name": "Lychee (Neo/Forge)",
+      "filename": "Lychee-1.21.1-NeoForge-6.7.0.jar",
+      "version": "6.7.0+neoforge",
+      "categories": "Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 390,
+      "name": "Max Health Fix",
+      "filename": "maxhealthfix-neoforge-1.21.1-21.1.4.jar",
+      "version": "21.1.4",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Bug Fixes + Server Utility + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 391,
+      "name": "MineColonies: Jade crops addon",
+      "filename": "mcjadecrops-1.1.1300.jar",
+      "version": "1.1.1300",
+      "categories": "Addons + Farming + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 392,
+      "name": "Mechanicals Lib",
+      "filename": "mechanicals-1.21.1-1.1.6.jar",
+      "version": "1.1.6",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 393,
+      "name": "Melody",
+      "filename": "melody_neoforge_1.0.10_MC_1.21.jar",
+      "version": "1.0.10",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 394,
+      "name": "MezzConfig",
+      "filename": "mezz_config-1.21.1-neoforge-0.5.9.jar",
+      "version": "0.5.9",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 395,
+      "name": "MineColonies",
+      "filename": "minecolonies-1.1.1387-1.21.1-snapshot.jar",
+      "version": "1.1.1387-1.21.1-snapshot",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Automation + Storage + Structures",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 396,
+      "name": "Compatibility addon for MineColonies",
+      "filename": "MineColonies_Compatibility-1.21.1-3.57.jar",
+      "version": "3.57",
+      "categories": "Addons + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 397,
+      "name": "Tweaks addon for MineColonies",
+      "filename": "MineColonies_Tweaks-1.21.1-3.33.jar",
+      "version": "3.33",
+      "categories": "Addons + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 398,
+      "name": "Miner's Delight +",
+      "filename": "minersdelight-1.21.1-1.4.5.jar",
+      "version": "1.4.5",
+      "categories": "Cosmetic + Farming + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 399,
+      "name": "Ragdoll mob corpses",
+      "filename": "mob_ragdoll_corpse-1.1.5.jar",
+      "version": "1.1.5",
+      "categories": "Addons + Mobs",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 400,
+      "name": "Mobstein : Revive animals and necromancy!",
+      "filename": "mobstein-5.4.4-neoforge-1.21.1.jar",
+      "version": "5.4.4",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Cosmetic + Mobs",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 401,
+      "name": "Model Gap Fix",
+      "filename": "modelfix-1.21-1.10.jar",
+      "version": "1.21-1.10",
+      "categories": "API and Library + Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 402,
+      "name": "ModernFix",
+      "filename": "modernfix-neoforge-5.27.24+mc1.21.1.jar",
+      "version": "5.27.24+mc1.21.1",
+      "categories": "Performance + Server Utility + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 403,
+      "name": "Modern UI",
+      "filename": "ModernUI-NeoForge-1.21.1-3.13.0.1-universal.jar",
+      "version": "3.13.0.1",
+      "categories": "API and Library + Cosmetic + Miscellaneous + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 404,
+      "name": "Modonomicon",
+      "filename": "modonomicon-1.21.1-neoforge-1.120.4.jar",
+      "version": "1.120.4",
+      "categories": "Adventure and RPG + API and Library + Map and Information",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 405,
+      "name": "MonoLib",
+      "filename": "monolib-neoforge-1.21.1-4.1.0.jar",
+      "version": "4.1.0",
+      "categories": "API and Library + Education + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 407,
+      "name": "Moonlight Lib",
+      "filename": "moonlight-1.21.1-3.6.4-neoforge.jar",
+      "version": "1.21.1-3.6.4",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 409,
+      "name": "Mouse Tweaks",
+      "filename": "MouseTweaks-neoforge-mc1.21-2.26.1.jar",
+      "version": "2.26.1",
+      "categories": "Miscellaneous + Storage + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 412,
+      "name": "M.R.U",
+      "filename": "mru-1.0.40+1.21.1-neoforge.jar",
+      "version": "1.0.40+1.21.1",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 413,
+      "name": "Multi-Piston",
+      "filename": "multipiston-1.2.58-1.21.1.jar",
+      "version": "1.2.58-1.21.1",
+      "categories": "Adventure and RPG + Cosmetic + Player Transport + Redstone",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 414,
+      "name": "My Nether's Delight",
+      "filename": "MyNethersDelight-1.21.1-1.10.4.1.jar",
+      "version": "1.10.4.1",
+      "categories": "Cosmetic + Farming + Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 415,
+      "name": "Nature's Compass",
+      "filename": "NaturesCompass-1.21.1-3.4.0-neoforge.jar",
+      "version": "1.21.1-3.4.0-neoforge",
+      "categories": "Armor, Tools, and Weapons + Biomes + Map and Information + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 418,
+      "name": "Create: Northstar - Redux",
+      "filename": "Northstar-0.6.5+1.21.1.jar",
+      "version": "0.6.5+1.21.1",
+      "categories": "Addons + Create + Dimensions + KubeJS + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 420,
+      "name": "Not Enough Animations",
+      "filename": "notenoughanimations-neoforge-1.12.4-mc1.21.1.jar",
+      "version": "1.12.4",
+      "categories": "Cosmetic + Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 421,
+      "name": "[NTGL] NukaTeam's Gun Lib",
+      "filename": "ntgl-1.21.1-3.2.0.jar",
+      "version": "3.2.0",
+      "categories": "API and Library + Armor, Tools, and Weapons",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 422,
+      "name": "Nutritional Balance",
+      "filename": "nutritionalbalance-1.21.1-7.0.3.jar",
+      "version": "1.21.1-7.0.3",
+      "categories": "Adventure and RPG + Food",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 423,
+      "name": "Nyf's Spiders",
+      "filename": "nyfsspiders-neoforge-1.21.1-3.0.1.jar",
+      "version": "3.0.1",
+      "categories": "Mobs",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 424,
+      "name": "Obscure Tooltips",
+      "filename": "obscure_tooltips-neoforge-1.21.1-4.2.4.jar",
+      "version": "4.2.4",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Cosmetic + Map and Information",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 425,
+      "name": "ShatterLib | OctoLib",
+      "filename": "OctoLib-NEOFORGE-0.6.2+1.21.jar",
+      "version": "0.6.2",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 426,
+      "name": "Oh The Biomes We've Gone",
+      "filename": "Oh-The-Biomes-Weve-Gone-NeoForge-2.6.0.jar",
+      "version": "2.6.0",
+      "categories": "Biomes + Farming + Mobs + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 427,
+      "name": "Oh The Trees You'll Grow",
+      "filename": "Oh-The-Trees-Youll-Grow-neoforge-1.21.1-5.3.2.jar",
+      "version": "5.3.2",
+      "categories": "API and Library + Biomes + Structures + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 428,
+      "name": "Oracle Index",
+      "filename": "oracle_index-neoforge-1.4.0.jar",
+      "version": "1.4.0",
+      "categories": "API and Library + Education + Map and Information + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 429,
+      "name": "Overflowing Bars",
+      "filename": "OverflowingBars-v21.1.1-1.21.1-NeoForge.jar",
+      "version": "21.1.1",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 430,
+      "name": "oωo (owo-lib)",
+      "filename": "owo-lib-neoforge-0.12.15.5-beta.1+1.21.jar",
+      "version": "0.12.15.5-beta.1+1.21",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 433,
+      "name": "ParCool! ~ Minecraft Parkour ~",
+      "filename": "ParCool-1.21.1-4.0.0.3.jar",
+      "version": "4.0.0.3",
+      "categories": "Adventure and RPG + Miscellaneous + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 434,
+      "name": "Particle Effects",
+      "filename": "ParticleEffects-1.5.0+1.21.1+neoforge.jar",
+      "version": "1.5.0+1.21.1+neoforge",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 435,
+      "name": "Particle Rain",
+      "filename": "particlerain-4.0.0-beta.11+1.21.1-neoforge.jar",
+      "version": "4.0.0-beta.11",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 436,
+      "name": "Particular ✨ Reforged",
+      "filename": "particular-1.21.1-NeoForge-1.5.7.jar",
+      "version": "1.5.7",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 437,
+      "name": "PartiCull: Particle Fix",
+      "filename": "PartiCull-neoforge-1.21.1-v2.0.jar",
+      "version": "2.0",
+      "categories": "Performance + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 438,
+      "name": "Patchouli",
+      "filename": "Patchouli-1.21.1-93-NEOFORGE.jar",
+      "version": "1.21.1-93-NEOFORGE",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 439,
+      "name": "Pehkui",
+      "filename": "Pehkui-3.8.3+1.21-neoforge.jar",
+      "version": "3.8.3+1.21-neoforge",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 440,
+      "name": "Petrolpark's Library",
+      "filename": "petrolpark-1.21.1-1.5.11.jar",
+      "version": "1.5.11",
+      "categories": "Addons + API and Library + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 441,
+      "name": "Presence Footsteps x Sable (Aeronautics Compat)",
+      "filename": "pfsable-1.0.jar",
+      "version": "1.0",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 444,
+      "name": "Placebo",
+      "filename": "Placebo-1.21.1-9.9.2.jar",
+      "version": "9.9.2",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 445,
+      "name": "Platform",
+      "filename": "Platform-neoforge-1.21.1-1.3.3.jar",
+      "version": "1.3.3",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 446,
+      "name": "playerAnimator",
+      "filename": "player-animation-lib-forge-2.0.4+1.21.1.jar",
+      "version": "2.0.4+1.21.1",
+      "categories": "API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 447,
+      "name": "Player Animation Library",
+      "filename": "PlayerAnimationLibNeoforge-1.1.6+mc.1.21.1.jar",
+      "version": "1.1.6+mc.1.21.1",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 448,
+      "name": "Polymorph+",
+      "filename": "polymorph_plus-neoforge-1.3.1+1.21.1.jar",
+      "version": "1.3.1+1.21.1",
+      "categories": "Miscellaneous + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 449,
+      "name": "Polytone",
+      "filename": "polytone-1.21-4.4.0-neoforge.jar",
+      "version": "1.21-4.4.0",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 450,
+      "name": "Pondus Inventory [Sable]",
+      "filename": "pondus_inventory_fi-0.15-Beta.jar",
+      "version": "0.15-Beta",
+      "categories": "Addons + API and Library + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 451,
+      "name": "Create Aeronautics: Portable Engine Liquid Fuel",
+      "filename": "portable_engine_liquid_fuel-2.0.0-neoforge-1.21.1.jar",
+      "version": "2.0.0",
+      "categories": "Addons + Create + MCreator + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 452,
+      "name": "Portable Hole",
+      "filename": "PortableHole-v21.1.0-1.21.1-NeoForge.jar",
+      "version": "21.1.0",
+      "categories": "Armor, Tools, and Weapons + Player Transport",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 453,
+      "name": "Potentials",
+      "filename": "potentials-neoforge-1.21-0.7.1.jar",
+      "version": "0.7.1",
+      "categories": "API and Library + Energy, Fluid, and Item Transport + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 454,
+      "name": "Create: Power Grid",
+      "filename": "powergrid-mc1.21.1-0.6.1.jar",
+      "version": "0.6.1",
+      "categories": "Addons + Create + Energy + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 455,
+      "name": "Presence Footsteps (NeoForge)",
+      "filename": "PresenceFootsteps-1.21.1-1.12.0-beta.1-1.21NeoForge.jar",
+      "version": "1.21.1-1.12.0-beta.1",
+      "categories": "Cosmetic + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 456,
+      "name": "Prickle",
+      "filename": "prickle-neoforge-1.21.1-21.1.11.jar",
+      "version": "21.1.11",
+      "categories": "API and Library + Server Utility + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 457,
+      "name": "KubeJS Metalworks (KubeJS Addon for Productive Metalworks)",
+      "filename": "productive-metalworks-kubejs-addon-1.0.0.jar",
+      "version": "1.0.0",
+      "categories": "Addons + API and Library + KubeJS",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 458,
+      "name": "Productive Metalworks",
+      "filename": "productivemetalworks-1.21.1-1.15.1.jar",
+      "version": "1.21.1-1.15.1",
+      "categories": "Ores and Resources + Processing",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 459,
+      "name": "Prometheus",
+      "filename": "prometheus-neoforge-1.21-1.2.5.jar",
+      "version": "1.2.5",
+      "categories": "Adventure and RPG + API and Library + Cosmetic + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 460,
+      "name": "Create: Protection Pixel",
+      "filename": "protection_pixel-2.2.1-neoforge-1.21.1.jar",
+      "version": "2.2.1",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Create + MCreator",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 461,
+      "name": "Puddles & Floods",
+      "filename": "puddleflood-1.1.5+1.21.1-neoforge.jar",
+      "version": "1.1.5",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 462,
+      "name": "Pufferfish's Unofficial Additions",
+      "filename": "pufferfish_unofficial_additions-1.21.1-2.2.8.jar",
+      "version": "2.2.8",
+      "categories": "Addons",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 463,
+      "name": "Pufferfish's Attributes [Fabric & Forge & NeoForge]",
+      "filename": "puffish_attributes-0.8.3-1.21-neoforge.jar",
+      "version": "0.8.3",
+      "categories": "Adventure and RPG + API and Library + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 464,
+      "name": "Pufferfish's Skills [Fabric & Forge & NeoForge]",
+      "filename": "puffish_skills-0.19.0-1.21-neoforge.jar",
+      "version": "0.19.0",
+      "categories": "Adventure and RPG + API and Library + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 465,
+      "name": "Punchy! - First person animations",
+      "filename": "punchy-2.7e-neoforge-1.21.1.jar",
+      "version": "2.7e",
+      "categories": "Cosmetic + Map and Information",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 466,
+      "name": "Epic Fight X Punchy! Neo",
+      "filename": "punchy_epicfight_neoforge.jar",
+      "version": "1.0.0",
+      "categories": "Addons",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 467,
+      "name": "Puzzles Lib",
+      "filename": "PuzzlesLib-v21.1.60-mc1.21.1-NeoForge.jar",
+      "version": "21.1.60",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 468,
+      "name": "Quark",
+      "filename": "Quark-4.1-484.jar",
+      "version": "4.1-484",
+      "categories": "Cosmetic + Ores and Resources",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 469,
+      "name": "Ragdoll Reactions",
+      "filename": "ragdoll_reactions-1.21.1-0.7.0.jar",
+      "version": "0.7.0",
+      "categories": "Addons + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 470,
+      "name": "Steam 'n' Rails Neoforge",
+      "filename": "railways-0.3.0-beta.2+neoforge-mc1.21.1.jar",
+      "version": "0.3.0-beta.2+neoforge-mc1.21.1",
+      "categories": "Addons + Cosmetic + Create + Player Transport + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 471,
+      "name": "Rechiseled",
+      "filename": "rechiseled-1.2.6-neoforge-mc1.21.jar",
+      "version": "1.2.6",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 473,
+      "name": "Reese's Sodium Options",
+      "filename": "reeses-sodium-options-neoforge-2.2.3+mc1.21.1.jar",
+      "version": "2.2.3+mc1.21.1",
+      "categories": "Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 475,
+      "name": "Reliquified L_Ender 's Cataclysm new relics fix",
+      "filename": "reliquified-lenders-cataclysm-new-relics-fix-1.0.2.jar",
+      "version": "1.0.2",
+      "categories": "Addons + Bug Fixes + Server Utility",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 480,
+      "name": "Resourceful Config",
+      "filename": "resourcefulconfig-neoforge-1.21-3.0.11.jar",
+      "version": "3.0.11",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 481,
+      "name": "Resourceful Lib",
+      "filename": "resourcefullib-neoforge-1.21-3.0.12.jar",
+      "version": "3.0.12",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 482,
+      "name": "Rhino",
+      "filename": "rhino-2101.2.8-build.91.jar",
+      "version": "2101.2.8-build.91",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 483,
+      "name": "Ritchie's Projectile Library",
+      "filename": "ritchiesprojectilelib-2.1.2-mc.1.21.1-neoforge.jar",
+      "version": "2.1.2",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 484,
+      "name": "Create: Rubberworks",
+      "filename": "rubberworks-neoforge-1.21.1-1.1.4.jar",
+      "version": "1.1.4",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 485,
+      "name": "Sable Dynamic Lights (Create: Dynamic Lights fork)",
+      "filename": "sable-dynamic-lights-1.21.1-2.0.1.jar",
+      "version": "2.0.1",
+      "categories": "Cosmetic + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 486,
+      "name": "Sable",
+      "filename": "sable-neoforge-1.21.1-2.0.5.jar",
+      "version": "2.0.5",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 487,
+      "name": "sable-x-cpm",
+      "filename": "sable-x-cpm-0.3.2+1.21.1.jar",
+      "version": "0.3.2+1.21.1",
+      "categories": "Bug Fixes + Cosmetic + Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 488,
+      "name": "Create Additions - Sable Compat",
+      "filename": "sable_createaddition_compat-0.1.13.jar",
+      "version": "0.1.13",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 489,
+      "name": "Sable & Flowing Fluids Compat",
+      "filename": "sable_flowing_fluids_compat-1.0.2.jar",
+      "version": "1.0.2",
+      "categories": "Addons + Bug Fixes",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 490,
+      "name": "Sable: Ragdolls",
+      "filename": "sable_player_ragdoll-1.21.1-0.7.5.jar",
+      "version": "0.7.5",
+      "categories": "Addons + API and Library + Cosmetic + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 491,
+      "name": "Sable: Ragdoll - Patch",
+      "filename": "sable_player_ragdoll_patch-1.21.1-1.9.jar",
+      "version": "1.9",
+      "categories": "Bug Fixes",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 492,
+      "name": "Sable Assembly Fix",
+      "filename": "SableAssemblyFix-1.0.0.jar",
+      "version": "1.0.0",
+      "categories": "Bug Fixes + Create + Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 493,
+      "name": "Sable Beyond",
+      "filename": "sablebeyond-neoforge-1.21.1-v0.5.0.jar",
+      "version": "0.5.0",
+      "categories": "Addons + API and Library + Create + KubeJS + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 494,
+      "name": "Jade Sable Compat",
+      "filename": "sablejade-1.3.0.jar",
+      "version": "1.3.0",
+      "categories": "Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 495,
+      "name": "Sable: Mass view (Create Aeronautics)",
+      "filename": "sablemassview-1.0.0.jar",
+      "version": "1.0.0",
+      "categories": "Addons",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 496,
+      "name": "Sable: Physics Compat",
+      "filename": "sablephysicscompat-1.3.0.jar",
+      "version": "1.3.0",
+      "categories": "Addons + Bug Fixes + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 497,
+      "name": "Create Stuff 'N Additions x Sable & Aeronautics Compat",
+      "filename": "SableStuffAdditionsCompat v1.0.3-1.21.1.jar",
+      "version": "1.0.3",
+      "categories": "Addons + Automation + Bug Fixes + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 498,
+      "name": "Searchables",
+      "filename": "Searchables-neoforge-1.21.1-1.0.2.jar",
+      "version": "1.0.2",
+      "categories": "API and Library + Cosmetic + Map and Information + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 499,
+      "name": "ServerCore",
+      "filename": "servercore-neoforge-1.5.19+1.21.1.jar",
+      "version": "1.5.19+1.21.1",
+      "categories": "Performance + Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 504,
+      "name": "Simply Tooltips",
+      "filename": "SimplyTooltips-neoforge-0.1.5.jar",
+      "version": "0.1.5",
+      "categories": "API and Library + Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 505,
+      "name": "Create: Coasters Simulated",
+      "filename": "simulatedcoasters-0.1.5.jar",
+      "version": "0.1.5",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 506,
+      "name": "Skin Layers 3D",
+      "filename": "skinlayers3d-neoforge-1.11.2-mc1.21.1.jar",
+      "version": "1.11.2",
+      "categories": "Adventure and RPG + Cosmetic",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 507,
+      "name": "Sky Aesthetics",
+      "filename": "sky_aesthetics-neoforge-2.0.13-beta.jar",
+      "version": "2.0.13-beta",
+      "categories": "API and Library + Cosmetic + Dimensions + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 508,
+      "name": "Create Slice & Dice",
+      "filename": "sliceanddice-4.3.3-neoforge.jar",
+      "version": "4.3.3",
+      "categories": "Addons + Farming + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 509,
+      "name": "Create: Smart Bounds",
+      "filename": "smart_bounds-1.0.0.jar",
+      "version": "1.0.0",
+      "categories": "Bug Fixes + Create + Performance + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 510,
+      "name": "SmartBrainLib (Forge/Fabric/Quilt)",
+      "filename": "SmartBrainLib-neoforge-1.21.1-1.16.11.jar",
+      "version": "1.16.11",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 511,
+      "name": "Snow! Real Magic! ⛄ (Neo/Forge)",
+      "filename": "SnowRealMagic-1.21.1-NeoForge-12.2.2.jar",
+      "version": "12.2.2+neoforge",
+      "categories": "Cosmetic + Utility & QoL + World Gen",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 512,
+      "name": "Sodium",
+      "filename": "sodium-neoforge-0.8.13+mc1.21.1.jar",
+      "version": "0.8.13+mc1.21.1",
+      "categories": "Performance",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 514,
+      "name": "Thirst Upgrade for Sophisticated Backpacks (Thirst Was Taken)",
+      "filename": "sophisticated-thirst-upgrade.jar",
+      "version": "0.1.8",
+      "categories": "Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 515,
+      "name": "Sophisticated JEI Index",
+      "filename": "sophisticated_jei_index-1.2.3+1.21.1.jar",
+      "version": "1.2.3",
+      "categories": "Addons + Applied Energistics 2 + Refined Storage + Storage",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 516,
+      "name": "Sophisticated Backpacks",
+      "filename": "sophisticatedbackpacks-1.21.1-3.26.3.2158.jar",
+      "version": "3.26.3",
+      "categories": "Armor, Tools, and Weapons + Storage",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 517,
+      "name": "Sophisticated Backpacks Create Integration",
+      "filename": "sophisticatedbackpackscreateintegration-1.21.1-0.2.0.168.jar",
+      "version": "0.2.0",
+      "categories": "Addons + Storage",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 518,
+      "name": "Sophisticated Core",
+      "filename": "sophisticatedcore-1.21.1-1.5.1.2341.jar",
+      "version": "1.5.1",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 519,
+      "name": "Sophisticated Storage",
+      "filename": "sophisticatedstorage-1.21.1-1.5.91.2127.jar",
+      "version": "1.5.91",
+      "categories": "Storage",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 520,
+      "name": "Sophisticated Storage Create Integration",
+      "filename": "sophisticatedstoragecreateintegration-1.21.1-0.1.21.209.jar",
+      "version": "0.1.21",
+      "categories": "Addons + Storage",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 521,
+      "name": "Soul fire'd",
+      "filename": "soul-fire-d-neoforge-1.21-6.1.0.jar",
+      "version": "6.1.0",
+      "categories": "Adventure and RPG + Armor, Tools, and Weapons + Cosmetic + Utility & QoL",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 522,
+      "name": "Sound Physics: Aeronautics",
+      "filename": "sound-physics-remastered-neoforge-1.4.0.1.jar",
+      "version": "1.4.0.1",
+      "categories": "Create + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 523,
+      "name": "Sounds",
+      "filename": "sounds-2.4.22+lts+1.21.1-neoforge.jar",
+      "version": "2.4.22+lts",
+      "categories": "Adventure and RPG + Cosmetic + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 524,
+      "name": "spark",
+      "filename": "spark-1.10.124-neoforge.jar",
+      "version": "1.10.124",
+      "categories": "Server Utility",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 528,
+      "name": "Streams Reflowing",
+      "filename": "StreamsReflowing-1.21.1-neoforge-2.13.5.jar",
+      "version": "2.13.5",
+      "categories": "Biomes + Cosmetic + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 529,
+      "name": "Structurize",
+      "filename": "structurize-1.0.833-1.21.1-snapshot.jar",
+      "version": "1.0.833-1.21.1-snapshot",
+      "categories": "Cosmetic + Server Utility + Structures",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 530,
+      "name": "Strut Your Stuff (Struts)",
+      "filename": "struts-1.3.1.jar",
+      "version": "1.3.1",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 531,
+      "name": "Stylish Effects",
+      "filename": "StylishEffects-v21.1.3-1.21.1-NeoForge.jar",
+      "version": "21.1.3",
+      "categories": "Cosmetic + Map and Information + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 532,
+      "name": "Create: Deep Seas - Lava Fix",
+      "filename": "submarinefix-1.0.1.jar",
+      "version": "1.0.1",
+      "categories": "Bug Fixes + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 533,
+      "name": "Subtle Effects",
+      "filename": "SubtleEffects-neoforge-1.21.1-1.14.3.jar",
+      "version": "1.14.3",
+      "categories": "Cosmetic + Miscellaneous",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 534,
+      "name": "SuperMartijn642's Config Lib",
+      "filename": "supermartijn642configlib-1.1.8-neoforge-mc1.21.jar",
+      "version": "1.1.8",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 535,
+      "name": "SuperMartijn642's Core Lib",
+      "filename": "supermartijn642corelib-1.1.24-neoforge-mc1.21.jar",
+      "version": "1.1.24",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 536,
+      "name": "Supplementaries",
+      "filename": "supplementaries-1.21.1-3.9.9-neoforge.jar",
+      "version": "1.21.1-3.9.9",
+      "categories": "Cosmetic + Miscellaneous + Redstone + Storage",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 537,
+      "name": "Tectonic",
+      "filename": "tectonic-3.0.28-neoforge-21.1.jar",
+      "version": "3.0.28",
+      "categories": "World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 538,
+      "name": "TenshiLib (Forge/NeoForge)",
+      "filename": "tenshilib-1.21.1-2.3.0.b-neoforge.jar",
+      "version": "1.21.1-2.3.0.b-neoforge",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 539,
+      "name": "TerraBlender (NeoForge)",
+      "filename": "TerraBlender-neoforge-1.21.1-4.1.0.8.jar",
+      "version": "4.1.0.8",
+      "categories": "API and Library + Biomes + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 540,
+      "name": "Terralith",
+      "filename": "Terralith_1.21.x_v2.6.2.jar",
+      "version": "2.6.2",
+      "categories": "Biomes + Structures + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 541,
+      "name": "Create: TFMG Community Edition",
+      "filename": "tfmg-1.21.1-1.3.1-community.jar",
+      "version": "1.3.1-community",
+      "categories": "Addons + Armor, Tools, and Weapons + Create + Ores and Resources + Technology",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 542,
+      "name": "ThirstWasFixed",
+      "filename": "thirstwasfixed-2.1.6.jar",
+      "version": "2.1.6",
+      "categories": "Addons + Bug Fixes",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 543,
+      "name": "Thirst Was Reclaimed",
+      "filename": "ThirstWasReclaimed-1.21.1-3.0.5.jar",
+      "version": "1.21.1-3.0.5",
+      "categories": "Food",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 545,
+      "name": "Tom's Simple Storage Mod",
+      "filename": "toms_storage-1.21-2.4.2.jar",
+      "version": "2.4.2",
+      "categories": "Storage + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 546,
+      "name": "TownTalk",
+      "filename": "towntalk-1.2.0.jar",
+      "version": "1.2.0",
+      "categories": "Addons + Adventure and RPG + Cosmetic + Utility & QoL",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 548,
+      "name": "Create:Tracks+",
+      "filename": "tracks_plus-1.0.6b6.jar",
+      "version": "1.0.6b6",
+      "categories": "Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 549,
+      "name": "Transmog",
+      "filename": "transmog-neoforge-1.6.0+1.21.1.jar",
+      "version": "1.6.0",
+      "categories": "Armor, Tools, and Weapons + Cosmetic",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 551,
+      "name": "Sable: True Impact (For Create: Aeronautics)",
+      "filename": "true_impact-0.5.7-delta.jar",
+      "version": "0.5.7-delta",
+      "categories": "Create + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 553,
+      "name": "UnChipped",
+      "filename": "unchipped-1.21-1.2.jar",
+      "version": "1.21-1.2",
+      "categories": "Addons + Automation + Create + Processing",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 554,
+      "name": "Underground Villages, Stoneholm (Fabric/Forge/NeoForge)",
+      "filename": "underground_village-neoforge-1.21.1-2.0.jar",
+      "version": "2.0",
+      "categories": "Biomes + Structures + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 555,
+      "name": "Uranus",
+      "filename": "uranus-3.0-beta.1.jar",
+      "version": "3.0-beta.1",
+      "categories": "API and Library + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 560,
+      "name": "Vanilla Backport",
+      "filename": "VanillaBackport-neoforge-1.21.1-1.1.7.10.jar",
+      "version": "1.1.7.10",
+      "categories": "Armor, Tools, and Weapons + Biomes + Mobs + Ores and Resources + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 561,
+      "name": "Village Spawn Point",
+      "filename": "villagespawnpoint-1.21.1-4.6.jar",
+      "version": "4.6",
+      "categories": "Adventure and RPG + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 562,
+      "name": "Vintage Improvenents - SSW Edition",
+      "filename": "vintageimprovements-1.21.1-0.0.0.7.jar",
+      "version": "1.21.1-0.0.0.7",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 563,
+      "name": "VS / Sable Hose Connectors",
+      "filename": "VS-Sable-HoseConnectors-0.1.8-1.21.1.jar",
+      "version": "0.1.8",
+      "categories": "Addons + Create + Industrial Craft + Storage + Technology",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 565,
+      "name": "Waystones: Sable (Create Aeronautics Addon)",
+      "filename": "waystonessable-1.0.7.jar",
+      "version": "1.0.7",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 566,
+      "name": "Wayward Attributes",
+      "filename": "wayward_attributes-1.21.1-1.1.1.jar",
+      "version": "1.1.1",
+      "categories": "API and Library + Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 567,
+      "name": "YDM's Weapon Master",
+      "filename": "weaponmaster_ydm-1.21.1-neoforge-4.2.7.jar",
+      "version": "4.2.7",
+      "categories": "Cosmetic",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 568,
+      "name": "Weapons of Miracles - epic fight",
+      "filename": "WeaponsOfMiracles-2.0.178.jar",
+      "version": "2.0.178",
+      "categories": "Addons + Adventure and RPG + Armor, Tools, and Weapons",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 569,
+      "name": "Create Aeronautics: Weight",
+      "filename": "weight-1.2.0.jar",
+      "version": "1.2.0",
+      "categories": "Addons + Create",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 572,
+      "name": "WorldWeaver: New Dawn",
+      "filename": "worldweaver-21.0.25.jar",
+      "version": "21.0.25",
+      "categories": "API and Library + Biomes + Utility & QoL + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 573,
+      "name": "WunderLib: New Dawn",
+      "filename": "wunderlib-21.0.10.jar",
+      "version": "21.0.10",
+      "categories": "API and Library + Utility & QoL",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 574,
+      "name": "YetAnotherConfigLib",
+      "filename": "yet_another_config_lib_v3-3.8.2+1.21.1-neoforge.jar",
+      "version": "3.8.2+1.21.1-neoforge",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 576,
+      "name": "YUNG's API (NeoForge) [1.20.4-1.21.1 ONLY]",
+      "filename": "YungsApi-1.21.1-NeoForge-5.1.8.jar",
+      "version": "1.21.1-NeoForge-5.1.8",
+      "categories": "API and Library + World Gen",
+      "triage_group": "OTHER"
+    },
+    {
+      "physical_number": 577,
+      "name": "YUNG's Better Caves (Forge/NeoForge)",
+      "filename": "YungsBetterCaves-1.21.1-NeoForge-3.1.6.jar",
+      "version": "1.21.1-NeoForge-3.1.6",
+      "categories": "Adventure and RPG + Biomes + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 578,
+      "name": "YUNG's Better Desert Temples (NeoForge) [1.20.4 - 1.21.1 ONLY]",
+      "filename": "YungsBetterDesertTemples-1.21.1-NeoForge-4.1.5.jar",
+      "version": "1.21.1-NeoForge-4.1.5",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 579,
+      "name": "YUNG's Better Dungeons (NeoForge) [1.20.4 - 1.21.1 ONLY]",
+      "filename": "YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+      "version": "1.21.1-NeoForge-5.1.4",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 580,
+      "name": "YUNG's Better End Island (NeoForge) [1.20.4 - 1.21.1 ONLY]",
+      "filename": "YungsBetterEndIsland-1.21.1-NeoForge-3.1.2.jar",
+      "version": "1.21.1-NeoForge-3.1.2",
+      "categories": "Adventure and RPG + Dimensions + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 581,
+      "name": "YUNG's Better Jungle Temples (NeoForge) [1.20.4 - 1.21.1 ONLY]",
+      "filename": "YungsBetterJungleTemples-1.21.1-NeoForge-3.1.2.jar",
+      "version": "1.21.1-NeoForge-3.1.2",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 582,
+      "name": "YUNG's Better Mineshafts (NeoForge) [1.20.4 - 1.21.1 ONLY]",
+      "filename": "YungsBetterMineshafts-1.21.1-NeoForge-5.1.1.jar",
+      "version": "1.21.1-NeoForge-5.1.1",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 583,
+      "name": "YUNG's Better Nether Fortresses (NeoForge) [1.20.4 - 1.21.1 ONLY]",
+      "filename": "YungsBetterNetherFortresses-1.21.1-NeoForge-3.1.5.jar",
+      "version": "1.21.1-NeoForge-3.1.5",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 584,
+      "name": "YUNG's Better Ocean Monuments (NeoForge) [1.20.4 - 1.21.1 ONLY]",
+      "filename": "YungsBetterOceanMonuments-1.21.1-NeoForge-4.1.2.jar",
+      "version": "1.21.1-NeoForge-4.1.2",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 585,
+      "name": "YUNG's Better Witch Huts (NeoForge) [1.20.4 - 1.21.1 ONLY]",
+      "filename": "YungsBetterWitchHuts-1.21.1-NeoForge-4.1.1.jar",
+      "version": "1.21.1-NeoForge-4.1.1",
+      "categories": "Adventure and RPG + Structures + World Gen",
+      "triage_group": "LEXICAL_NAME"
+    },
+    {
+      "physical_number": 586,
+      "name": "YUNG's Cave Biomes (Forge/NeoForge)",
+      "filename": "YungsCaveBiomes-1.21.1-NeoForge-3.1.1.jar",
+      "version": "1.21.1-NeoForge-3.1.1",
+      "categories": "Adventure and RPG + Biomes + Mobs + World Gen",
+      "triage_group": "RPG_GEAR_MOBS_DIMENSIONS"
+    },
+    {
+      "physical_number": 587,
+      "name": "Zeta",
+      "filename": "Zeta-1.1-40.jar",
+      "version": "1.1-40",
+      "categories": "API and Library",
+      "triage_group": "OTHER"
+    }
+  ]
+}
