@@ -1799,41 +1799,70 @@ def _remaining_gate_config_roots(instance: Path, worlds: list[Path]) -> list[Pat
     return roots
 
 
+def _remaining_provider_path(relative_path: Path, owner_tokens: tuple[str, ...]) -> bool:
+    """Inspect the config-relative file/parent names, never world or instance names."""
+    return any(
+        token in part.lower()
+        for part in relative_path.parts
+        for token in owner_tokens
+    )
+
+
 def _remaining_gate_observations(
         instance: Path, roots: list[Path], key: str,
         owner_tokens: tuple[str, ...], kind: str
 ) -> list[dict[str, Any]]:
-    """Retain only provider-scoped, type-checked values; no raw config lines."""
-    rows = []
-    for observation in collect_selected_key(instance, roots, key):
-        path = observation.get("path", "")
-        if not isinstance(path, str) or not any(
-                token in path.lower() for token in owner_tokens):
+    """Collect typed keys from provider-scoped files, not arbitrary world names.
+
+    Unknown formats and parse errors remain candidate evidence. Symlinked and
+    out-of-scope files are ignored before reading, including nested symlinks.
+    """
+    rows: list[dict[str, Any]] = []
+    for root in roots:
+        if root.is_symlink() or not root.is_dir():
             continue
-        result: dict[str, Any] = {"path": path, "status": "UNPARSED_CANDIDATE"}
-        if observation.get("parser") not in {"tomllib", "json"}:
-            rows.append(result)
-            continue
-        key_path = observation.get("key_path")
-        if not isinstance(key_path, str):
-            rows.append(result)
-            continue
-        result["key_path"] = key_path
-        value = observation.get("value")
-        if kind == "boolean" and isinstance(value, bool):
-            result.update(status="OBSERVED", value=value)
-        elif kind == "dimension_ids" and isinstance(value, list):
-            valid = all(
-                isinstance(item, str) and RESOURCE_LOCATION_RE.fullmatch(item)
-                for item in value
-            )
-            if valid:
-                result.update(status="OBSERVED", value=value[:64], total=len(value))
-            else:
-                result["status"] = "INVALID_VALUE"
-        else:
-            result["status"] = "INVALID_VALUE"
-        rows.append(result)
+        root_resolved = root.resolve()
+        for path in iter_text_files([root]):
+            if not _remaining_provider_path(path.relative_to(root), owner_tokens):
+                continue
+            if path.is_symlink() or not path.resolve().is_relative_to(root_resolved):
+                continue
+            evidence_path = rel(path, instance)
+            if path.stat().st_size > 4 * 1024 * 1024:
+                rows.append({"path": evidence_path, "status": "OVERSIZED"})
+                continue
+            try:
+                if path.suffix.lower() == ".toml":
+                    with path.open("rb") as stream:
+                        document = tomllib.load(stream)
+                elif path.suffix.lower() == ".json":
+                    document = json.loads(path.read_text(encoding="utf-8"))
+                else:
+                    rows.append({"path": evidence_path, "status": "UNPARSED_CANDIDATE"})
+                    continue
+            except (OSError, ValueError, UnicodeError) as exc:
+                rows.append({
+                    "path": evidence_path,
+                    "status": "UNPARSED_CANDIDATE",
+                    "error_type": type(exc).__name__,
+                })
+                continue
+            for key_path, value in _find_key_recursive(document, key):
+                row: dict[str, Any] = {
+                    "path": evidence_path,
+                    "key_path": key_path,
+                    "status": "INVALID_VALUE",
+                }
+                if kind == "boolean" and isinstance(value, bool):
+                    row.update(status="OBSERVED", value=value)
+                elif kind == "dimension_ids" and isinstance(value, list):
+                    valid = all(
+                        isinstance(item, str) and RESOURCE_LOCATION_RE.fullmatch(item)
+                        for item in value
+                    )
+                    if valid:
+                        row.update(status="OBSERVED", value=value[:64], total=len(value))
+                rows.append(row)
     return rows
 
 
@@ -1883,13 +1912,16 @@ def _remaining_gate_file_fingerprints(
     """Hash only provider-named configs; never retain file contents or paths outside the instance."""
     out: list[dict[str, Any]] = []
     for root in _remaining_gate_config_roots(instance, worlds):
-        if not root.is_dir():
+        if root.is_symlink() or not root.is_dir():
             continue
+        root_resolved = root.resolve()
         for path in sorted(root.rglob("*")):
             if path.is_symlink() or not path.is_file() or path.suffix.lower() not in {
                     ".toml", ".json", ".json5", ".cfg", ".conf"}:
                 continue
-            if not any(token in path.name.lower() for token in owner_tokens):
+            if not path.resolve().is_relative_to(root_resolved):
+                continue
+            if not _remaining_provider_path(path.relative_to(root), owner_tokens):
                 continue
             if path.stat().st_size > 4 * 1024 * 1024:
                 out.append({"path": rel(path, instance), "status": "OVERSIZED"})
