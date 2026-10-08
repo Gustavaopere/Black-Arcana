@@ -39,6 +39,9 @@ jobs:
       - name: Physical catalog ledger reconciliation tests
         run: python3 docs/qa/catalog_physical_ledger_test.py
 
+      - name: Global magic catalog documentation tests
+        run: python3 docs/qa/global_magic_catalog_test.py
+
       - name: Unit tests
         run: ./gradlew --no-daemon test
 
