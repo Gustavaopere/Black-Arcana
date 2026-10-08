@@ -100,13 +100,14 @@ class PhysicalLedgerVersionReconciliationTest(unittest.TestCase):
 
     def test_declared_version_consistency(self) -> None:
         for name, _position, quoted_jar, physical_version, ledger_version in self.installed:
-            candidate = VERSION.search(ledger_version)
-            self.assertIsNotNone(candidate, name)
-            token = candidate.group()
-            self.assertTrue(
-                token.lower() in (physical_version + " " + quoted_jar).lower(),
-                f"{name}: ledger {ledger_version!r} versus {physical_version!r}",
-            )
+            tokens = VERSION.findall(ledger_version)
+            self.assertTrue(tokens, name)
+            for token in tokens:
+                self.assertIn(
+                    token.lower(),
+                    (physical_version + " " + quoted_jar).lower(),
+                    f"{name}: ledger {ledger_version!r} versus {physical_version!r}",
+                )
 
     def test_absent_counted_contribution_is_zero(self) -> None:
         for name, _ver, row, status in self.absent:
