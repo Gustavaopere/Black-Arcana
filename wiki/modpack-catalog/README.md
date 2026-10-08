@@ -1,5 +1,7 @@
 # Modpack Magic Catalog — Phase 2
 
+**Current catalog-only coverage (2026-10-08): 164 provider directories = 164 ✅ cataloged, 0 ❌ or ⚠️ catalog-incomplete.** The direct physical JARs close [Traveloptics 33/33](providers/✅-traveloptics/SPELL-CARDS-4.4.0.1.md) and [Deeper and Darker 3/3](providers/✅-deeper-and-darker/actions/PUBLIC-BASELINE-ACTIONS.md). This is an **inventory** conclusion, not provider runtime/eligibility certification; Soul Elytra configuration, Blackout survival, codec runtime and Aqua interoperability remain ⚠️ technical QA. Strict semantic minimum remains **1851**; global semantic denominator is open. Older historical checkpoint counts below remain archival.
+
 Status: `IN PROGRESS`
 
 This directory is the canonical Phase 2 inventory for every magic-relevant top-level component in the current Black Arcana modpack.
