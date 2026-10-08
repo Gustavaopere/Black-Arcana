@@ -1667,6 +1667,81 @@ class AdditionalProviderGateEvidenceTest(unittest.TestCase):
                 for key, value in observed[provider][0].items():
                     if key.endswith("_equality"):
                         self.assertIs(False, value)
+    def test_world_name_cannot_impersonate_provider_config(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            world = instance / "saves" / "alexsmobs"
+            serverconfig = world / "serverconfig"
+            serverconfig.mkdir(parents=True)
+            (serverconfig / "unrelated-common.toml").write_text(
+                "[all]\nvoidWormSummonable = true\n", encoding="utf-8"
+            )
+            result = collector.collect_alexs_mobs(instance, [world])
+            self.assertEqual([], result["voidWormSummonable"])
+
+    def test_nested_provider_directory_captures_bounded_config(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            world = instance / "world"
+            provider = world / "serverconfig" / "alexsmobs"
+            provider.mkdir(parents=True)
+            (provider / "gates.toml").write_text(
+                "[all]\nvoidWormSummonable = false\n", encoding="utf-8"
+            )
+            specs = instance / "config" / "specs_irons_spellbooks"
+            specs.mkdir(parents=True)
+            (specs / "unlock.json").write_text(
+                '{"secret": "do-not-copy-nested"}\n', encoding="utf-8"
+            )
+            result = collector.collect_alexs_mobs(instance, [world])
+            self.assertEqual(1, len(result["voidWormSummonable"]))
+            self.assertIs(False, result["voidWormSummonable"][0]["value"])
+            fingerprints = collector.collect_spell_codex_specs(instance, [])["config_files"]
+            self.assertEqual(1, len(fingerprints))
+            self.assertIn("specs_irons_spellbooks/unlock.json", fingerprints[0]["path"])
+            self.assertNotIn("do-not-copy-nested", json.dumps(fingerprints))
+
+    def test_symlinked_provider_directory_does_not_read_external_config(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            instance = root / "instance"
+            config = instance / "config"
+            config.mkdir(parents=True)
+            external = root / "external"
+            external.mkdir()
+            (external / "gates.toml").write_text(
+                "[all]\nvoidWormSummonable = true\n", encoding="utf-8"
+            )
+            (external / "specs_unlock.json").write_text(
+                '{"secret": "not-from-instance"}\n', encoding="utf-8"
+            )
+            (config / "alexsmobs").symlink_to(external, target_is_directory=True)
+            (config / "specs_irons_spellbooks").symlink_to(
+                external, target_is_directory=True
+            )
+            self.assertEqual(
+                [], collector.collect_alexs_mobs(instance, [])["voidWormSummonable"]
+            )
+            self.assertEqual(
+                [], collector.collect_spell_codex_specs(instance, [])["config_files"]
+            )
+
+    def test_provider_named_file_unparseable_is_not_an_observed_gate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config = instance / "config"
+            config.mkdir(parents=True)
+            (config / "alexsmobs-common.toml").write_text(
+                "[broken]\nvoidWormSummonable = definitely-not-valid\n", encoding="utf-8"
+            )
+            result = collector.collect_alexs_mobs(instance, [])
+            self.assertEqual(1, len(result["voidWormSummonable"]))
+            self.assertEqual(
+                "UNPARSED_CANDIDATE", result["voidWormSummonable"][0]["status"]
+            )
+            self.assertNotIn("definitely-not-valid", json.dumps(result))
+
+
     def test_wom_reference_is_candidate_not_acquisition_proof(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
