@@ -34,7 +34,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 | 15 | Harmonic Aria | [Ficha 15](#15-harmonic-aria) | Publicador / release-bounded |
 | 16 | Piercing Solo | [Ficha 16](#16-piercing-solo) | Publicador / release-bounded |
 
-### 01 — Chord Blast
+### 01 Chord Blast
 
 - **Nome confirmado na lista atual do publisher:** `Chord Blast`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -42,7 +42,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 02 — Crescendo
+### 02 Crescendo
 
 - **Nome confirmado na lista atual do publisher:** `Crescendo`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -50,7 +50,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 03 — Grand Finale
+### 03 Grand Finale
 
 - **Nome confirmado na lista atual do publisher:** `Grand Finale`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -58,7 +58,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 04 — Celestial Chant
+### 04 Celestial Chant
 
 - **Nome confirmado na lista atual do publisher:** `Celestial Chant`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -66,7 +66,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 05 — Rhapsody
+### 05 Rhapsody
 
 - **Nome confirmado na lista atual do publisher:** `Rhapsody`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -74,7 +74,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 06 — Sonata
+### 06 Sonata
 
 - **Nome confirmado na lista atual do publisher:** `Sonata`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -82,7 +82,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 07 — Serenade
+### 07 Serenade
 
 - **Nome confirmado na lista atual do publisher:** `Serenade`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -90,7 +90,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 08 — Fortissimo
+### 08 Fortissimo
 
 - **Nome confirmado na lista atual do publisher:** `Fortissimo`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -98,7 +98,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 09 — Dal Segno
+### 09 Dal Segno
 
 - **Nome confirmado na lista atual do publisher:** `Dal Segno`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -107,7 +107,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 - **Cuidado com causalidade:** o provider possui mecânicas de Segno e Resonance, mas não há prova neste catálogo sobre o fluxo exato desta identidade no artefato instalado.
 
-### 10 — Swift Melody
+### 10 Swift Melody
 
 - **Nome confirmado na lista atual do publisher:** `Swift Melody`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -115,7 +115,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 11 — Hymn of Hope
+### 11 Hymn of Hope
 
 - **Nome confirmado na lista atual do publisher:** `Hymn of Hope`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -123,7 +123,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 12 — Slumber Note
+### 12 Slumber Note
 
 - **Nome confirmado na lista atual do publisher:** `Slumber Note`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -131,7 +131,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 13 — Clamor Note
+### 13 Clamor Note
 
 - **Nome confirmado na lista atual do publisher:** `Clamor Note`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -139,7 +139,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 14 — Encore
+### 14 Encore
 
 - **Nome confirmado na lista atual do publisher:** `Encore`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -148,7 +148,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 - **Cuidado funcional documentado:** a descrição do publisher indica recast forçado do último feitiço do jogador-alvo; condições exatas, permissão PvP, custos, cooldown e limites de recursão não foram comprovados.
 
-### 15 — Harmonic Aria
+### 15 Harmonic Aria
 
 - **Nome confirmado na lista atual do publisher:** `Harmonic Aria`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
@@ -156,7 +156,7 @@ Status: `✅ 16/16 PUBLISHER-NAMED SPELL CARDS MATERIALIZED / COUNTED_RELEASE_BO
 - **ID de registry / classe / school asset exatos no JAR 1.1.0-HOTFIX:** não verificados; a normalização inferida do nome não é usada como mod ID.
 - **Custos, duração, cooldown, alcance, mecânica individual, aquisição e compatibilidade efetiva:** não verificados separadamente para esta identidade.
 
-### 16 — Piercing Solo
+### 16 Piercing Solo
 
 - **Nome confirmado na lista atual do publisher:** `Piercing Solo`.
 - **Proprietário semântico:** `tunes_n_tomes`, escola Melodic; casting genérico e mana permanecem responsabilidade do Iron's Spells 'n Spellbooks.
