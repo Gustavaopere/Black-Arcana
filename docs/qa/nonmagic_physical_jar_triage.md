@@ -1,0 +1,42 @@
+# Auditoria read-only dos 489 JARs fora da categoria Magic
+
+Status: `SUPPORTED TOOL / NOT EXECUTED AGAINST USER ASSEMBLED INSTANCE / ZIP NAMES ARE CANDIDATES, NOT REGISTRY PROOF`
+
+## Fonte física e aritmética
+
+- Snapshot físico sibling `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a` contém **587 entradas numeradas: 97 categorizadas Magic + 489 JARs fora de Magic + 1 modloader NeoForge**.
+- Manifesto exato [nonmagic_physical_manifest_2026-10-08.json](nonmagic_physical_manifest_2026-10-08.json), campos `physical_number`, `name`, `filename`, `version`, `categories`, `triage_group` e source SHA. **Não** inclui o modloader no conjunto de JARs processáveis.
+- Grupos de triagem de alta prioridade são disjuntos: **46** com correspondência lexical no nome, **96** por categoria RPG/equipamentos/mobs/dimensões que não caíram no grupo lexical, **347** outros JARs. Os 347 também estão no manifesto.
+- `triage_group` é exclusivamente um filtro para ordenar investigação; ele não comprova presença nem ausência de magia ou feitiço no JAR.
+
+## Executar sobre a instância real
+
+Requisitos: Python 3.11+ e acesso autorizado à pasta real com `mods/`. A partir da raiz Black Arcana:
+
+```bash
+python3 docs/qa/nonmagic_physical_jar_triage.py --instance "/caminho/da/instancia" > nonmagic-physical-jar-triage.json
+```
+
+Para priorizar algumas posições da modlist física:
+
+```bash
+python3 docs/qa/nonmagic_physical_jar_triage.py --instance "/caminho/da/instancia" --physical-numbers "121,334,395,404,464" > selected-nonmagic-triage.json
+```
+
+Não é preciso enviar o conteúdo bruto dos JARs ou o save: este processo apenas lê ZIP member names, tamanhos, SHA-1 e SHA-256 dos filenames físicos explícitos. Não executa mod code, não extrai arquivo do ZIP, não decompila classes nem modifica o pack. Symlinks são rejeitados; ZIPs inválidos/ausentes/over-sized e archives com membros excessivos ficam com status de falha fechada.
+
+## Interpretação dos resultados
+
+- `status=FINGERPRINTED` significa **JAR estruturalmente ZIP e hash do arquivo capturado**, não que aquele JAR tem spell registry ou carregou no NeoForge.
+- `lexical_hint_member_count` é apenas o número de nomes de entradas com expressões como `spell`, `glyph`, `ritual`, `ability`, `summon`, `power` ou `beam`. É insuficiente para definir action ownership ou castability; dependências podem aparecer nos nomes de classes e data genéricos.
+- **Zero** `lexical_hint_member_count` não autoriza classificar o provider como sem conteúdo mágico. Registries declarativos/indiretos, bytecode dinâmico, scripts KubeJS e ativos encriptados podem não fornecer essas palavras nos caminhos.
+- A tool retorna no máximo 16 caminhos candidatos por JAR, com até 256 caracteres cada; não retém corpos de classes/JSONs; a trilha de evidência é read-only.
+- Este output prioriza a inspeção **individual e version-exact** dos JARs conforme a [auditoria cross-domain](../../wiki/modpack-catalog/meta/AUDITORIA-CROSS-DOMAIN-2026-10-08.md). Após encontrar ID de registry novo, validar a versão exata, registrar sua ficha e só então alterar contagens.
+
+## Testes
+
+```bash
+python3 docs/qa/nonmagic_physical_jar_triage_test.py
+```
+
+Estes testes usam arquivos ZIP sintéticos, sem depender da instância real. Os resultados passam a ser parte da CI, mas **não** são prova de JAR físico carregado.

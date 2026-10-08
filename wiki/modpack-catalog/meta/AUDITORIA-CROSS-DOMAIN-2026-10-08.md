@@ -10,6 +10,34 @@
 - **35/46** correspondem, por identidade ou alias explícito, a diretórios de provider ✅ já existentes. **11/46** foram revisados contra seus dossiês físicos sibling; não foi demonstrada uma identidade nova de spell, glyph, rite ou ação sobrenatural player-owned nesses 11 pelo material analisado.
 - **Não se conclui que as outras 444 entradas são semanticamente vazias**: não passaram por inspeção exaustiva de JAR ou source de cada versão. O denominador cross-domain global continua aberto.
 
+## Segundo ciclo — catálogo físico integral e triagem por categoria (2026-10-08)
+
+O inventário físico do sibling inclui o **NeoForge modloader como #001**. Assim, o conjunto real contém **587 = 97 JARs classificados Magic + 489 JARs fora de Magic + 1 loader**. Os 490 itens fora da categoria citados no primeiro ciclo incluíam inadvertidamente o loader: somente **489 são JARs de mods escaneáveis**. Isso não altera as 46 linhas lexicais do primeiro ciclo.
+
+Novo [manifesto reproduzível dos 489 JARs](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json), fixado em `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`:
+
+| Grupo de triagem (disjunto) | Entradas físicas JAR | Interpretação |
+|---|---:|---|
+| `LEXICAL_NAME` | **46** | Nome contém indicador de possível magia/sistema; 35 READMEs catalogados e 11 dossiês lidos no ciclo anterior |
+| `RPG_GEAR_MOBS_DIMENSIONS` | **96** | Não passou no filtro lexical, mas categoria inclui RPG/equipamento/mobs/dimensões. Pode conter habilidades mágicas ou apenas tecnologia/estruturas |
+| `OTHER` | **347** | Outros JARs; não classificados como semanticamente vazios e continuam dentro da varredura física |
+| **Total** | **489** | **0/489** JARs inspecionados binariamente nesta execução; manifesto e ferramenta prontos |
+
+Ferramenta [nonmagic_physical_jar_triage.py](../../../docs/qa/nonmagic_physical_jar_triage.py) e [procedimento](../../../docs/qa/nonmagic_physical_jar_triage.md) fazem fingerprint read-only e buscam candidatos pelos nomes das entradas ZIP (sem ler corpos, executar classes ou copiar código). ZIP filename matching **não estabelece registry, spell ID, autoria ou ausência de poder**.
+
+### Sete dossiês da segunda passada conferidos
+
+| Física | Mod | Evidência declarada no dossiê físico | Disposição de catálogo |
+|---:|---|---|---|
+| #121 | Create Guardian Beam Defense | Turrets cinéticos e **Beam Reactor Helmet** (beam acionado por keybind); natureza tecnológica/combate definida pelo dossiê | ⚠️ Ação tecnológica real, não convertida sem prova em feitiço mágico Black Arcana; autoritatividade do addon |
+| #334 | Integrated Simply Swords | Variantes de armas por material e integração com Simply Swords | ⚠️ Sem nova spell identity independente demonstrada; requer revisão de registries se surgir efeito ativo próprio |
+| #404 | Modonomicon | Framework data-driven de livros/guias e previews de multibloco | ⚠️ Não é por si só um spell registry; consumidores/datapacks podem apresentar rituais |
+| #395 | MineColonies | Colônias, IA/jobs, research e permissões | ⚠️ Research/skills não são feitiços propriamente ditos sem contrato de ação verificável |
+| #320 | Integrated Dungeons Arise | Overhaul de estruturas, loot e spawners | ⚠️ Worldgen pode alterar obtenção de itens mágicos de terceiros; não provar spell própria |
+| #335 | Integrated Stronghold | Megaestrutura vanilla de exploração, puzzles e traps | ⚠️ Estruturas/loot não equivalem a magia independente |
+| #464 | Pufferfish's Skills | Framework data-driven de skill trees com requisitos, custos e rewards | ⚠️ Conteúdo efetivamente carregado depende de datapacks; ponte de progressão permanece sibling, não um novo runtime mágico |
+
+Os sete dossiês acima são leitura de evidência documental da modlist, **não inspeção binária da build atual**. O filtro de categoria encontrou **96** linhas relevantes, das quais **7** receberam leitura específica nesta segunda passada; as restantes **89** continuam em revisão. Os **347** JARs do grupo OTHER também continuam no universo de auditoria. Total de dossiês individuais revisados nas duas passadas: **18** (11 + 7), sem promover nenhum novo feitiço a contagem semântica por mera interpretação.
 ## Candidatos lexicais, estado por linha física
 
 | Linha física | Mod | JAR registrado | Disposição nesta rodada |

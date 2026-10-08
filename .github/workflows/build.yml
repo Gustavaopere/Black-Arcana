@@ -48,6 +48,9 @@ jobs:
       - name: Magic pendency tracker and cross-domain triage tests
         run: python3 docs/qa/magic_pendency_tracker_test.py
 
+      - name: Full physical non-Magic archive triage tests
+        run: python3 docs/qa/nonmagic_physical_jar_triage_test.py
+
       - name: Unit tests
         run: ./gradlew --no-daemon test
 

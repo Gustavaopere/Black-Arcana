@@ -4,7 +4,7 @@
 
 ## Pendências de validação e cobertura global
 
-O quadro operacional dos cinco itens solicitados encontra-se em [PENDENCIAS-MAGICAS-ATUAIS.md](PENDENCIAS-MAGICAS-ATUAIS.md). A auditoria cross-domain atual priorizou 46/490 linhas fora da categoria física Magic, sem declarar exaustividade para o restante; 39 providers source/release-bounded continuam aguardando comparação binária. Consulte os checkpoints antes de afirmar cobertura total de feitiços.
+O quadro operacional dos cinco itens solicitados encontra-se em [PENDENCIAS-MAGICAS-ATUAIS.md](PENDENCIAS-MAGICAS-ATUAIS.md). O [segundo ciclo cross-domain](AUDITORIA-CROSS-DOMAIN-2026-10-08.md) fixou 489/489 JARs fora da categoria física Magic (o loader NeoForge é a 587ª entrada total, mas não é JAR de mod), com 142 candidatos prioritários (46 por nome + 96 por categoria). A [varredura read-only de JARs](../../../docs/qa/nonmagic_physical_jar_triage.md) está implementada, ainda não executada na instância. Os outros 347 JARs permanecem no universo de auditoria; 39 providers source/release-bounded continuam aguardando prova binária de registry. Consulte os checkpoints antes de afirmar cobertura total de feitiços.
 
 ## Situação da catalogação
 

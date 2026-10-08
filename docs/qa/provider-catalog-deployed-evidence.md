@@ -48,6 +48,10 @@ python3 docs/qa/physical_provider_fingerprint_collector.py --instance "/caminho/
 
 O JSON contém apenas nome do provider, JAR relativo esperado, estado da presença, tamanho, SHA-1 e SHA-256; rejeita symlinks/ZIP inválidos. **Não extrai classes/registries nem prova a igualdade com o publisher.** Os 39 casos source/release-bounded exigem leitura semântica/binary-exact adicional para eventual promoção. Suíte: `python3 docs/qa/physical_provider_fingerprint_collector_test.py`. [Matriz de verificação](../../wiki/modpack-catalog/meta/REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md).
 
+## Auditoria física cross-domain de todo o modpack não-Magic
+
+O [manifesto físico de 489 JARs fora de Magic](nonmagic_physical_manifest_2026-10-08.json) e o [coletor ZIP/sha read-only](nonmagic_physical_jar_triage.py) são distintos do coletor dos 69 providers estritos. A metodologia e os limites estão em [nonmagic_physical_jar_triage.md](nonmagic_physical_jar_triage.md). Sem captura efetiva da instância, esses novos artefatos comprovam a reprodutibilidade do plano de verificação, **não registries nem gameplay**.
+
 ## Requirements
 
 - Python 3.11+;
