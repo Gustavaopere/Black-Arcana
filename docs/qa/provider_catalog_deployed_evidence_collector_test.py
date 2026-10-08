@@ -1554,5 +1554,137 @@ soulElytraCooldown = 12001
             )
 
 
+
+
+class AdditionalProviderGateEvidenceTest(unittest.TestCase):
+    def test_bomd_exact_nested_gate_ignores_unrelated_switch(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config = instance / "config"
+            config.mkdir(parents=True)
+            (config / "bosses_of_mass_destruction-common.toml").write_text(
+                "[other]\nisEnabled = false\n"
+                "[lichConfig.summonMechanic]\nisEnabled = true\n"
+                "unrelatedSecret = 'do-not-copy-bomd'\n",
+                encoding="utf-8",
+            )
+            (config / "other_mod.toml").write_text(
+                "[lichConfig.summonMechanic]\nisEnabled = false\n",
+                encoding="utf-8",
+            )
+            result = collector.collect_bosses_mass_destruction(instance, [])
+            self.assertEqual("OBSERVED_CANDIDATE", result["status"])
+            self.assertEqual(
+                [("lichConfig.summonMechanic.isEnabled", True)],
+                [(row["key_path"], row["value"]) for row in result["observations"]],
+            )
+            self.assertNotIn("do-not-copy-bomd", json.dumps(result))
+
+    def test_alex_mobs_validates_boolean_and_dimension_ids(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config = instance / "config"
+            config.mkdir(parents=True)
+            (config / "alexsmobs-common.toml").write_text(
+                "[all]\nvoidWormSummonable = true\n"
+                'voidWormSpawnDimensions = ["minecraft:the_end"]\n'
+                'unrelatedSecret = "do-not-copy-alex"\n',
+                encoding="utf-8",
+            )
+            result = collector.collect_alexs_mobs(instance, [])
+            self.assertEqual(
+                True, result["voidWormSummonable"][0]["value"])
+            self.assertEqual(
+                ["minecraft:the_end"], result["voidWormSpawnDimensions"][0]["value"])
+            self.assertNotIn("do-not-copy-alex", json.dumps(result))
+
+    def test_absent_deployment_is_not_promoted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            instance.mkdir(exist_ok=True)
+            self.assertEqual(
+                "NOT_VERIFIED",
+                collector.collect_bosses_mass_destruction(instance, [])["status"],
+            )
+            self.assertEqual(
+                [], collector.collect_alexs_mobs(instance, [])["voidWormSummonable"])
+            self.assertEqual(
+                "ACTION_ELIGIBILITY_UNVERIFIED",
+                collector.collect_vampiric_ageing(instance, [])["status"])
+            self.assertEqual(
+                "NORMAL_SURVIVAL_ACQUISITION_UNVERIFIED",
+                collector.collect_weapons_of_miracles_nova(instance, [])["status"])
+
+    def test_fingerprint_only_never_copies_config_secrets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            config = instance / "config"
+            config.mkdir(parents=True)
+            (config / "vampiricageing-common.toml").write_text(
+                'secret = "do-not-copy-ageing"\n',
+                encoding="utf-8",
+            )
+            (config / "specs_irons_spellbooks.json").write_text(
+                '{"secret": "do-not-copy-specs"}\n',
+                encoding="utf-8",
+            )
+            ageing = collector.collect_vampiric_ageing(instance, [])
+            specs = collector.collect_spell_codex_specs(instance, [])
+            self.assertEqual(1, len(ageing["config_files"]))
+            self.assertEqual(1, len(specs["config_files"]))
+            self.assertEqual("FINGERPRINT_ONLY", ageing["config_files"][0]["status"])
+            self.assertEqual(64, len(specs["config_files"][0]["sha256"]))
+            self.assertNotIn("do-not-copy", json.dumps([ageing, specs]))
+
+    def test_fingerprint_skips_symlinks_outside_instance(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp) / "instance"
+            config = instance / "config"
+            config.mkdir(parents=True)
+            external = Path(tmp) / "vampiricageing-external.toml"
+            external.write_text('secret = "not-a-pack-config"\n', encoding="utf-8")
+            (config / "vampiricageing-link.toml").symlink_to(external)
+            result = collector.collect_vampiric_ageing(instance, [])
+            self.assertEqual([], result["config_files"])
+    def test_new_provider_jar_names_fingerprint_without_false_equality(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            names = {
+                "bosses_of_mass_destruction": "BOMD-NeoForge-1.21-1.3.3.jar",
+                "alexs_mobs_continued": "alexsmobs-2.1.13-neoforge+1.21.1.jar",
+                "vampiric_ageing": "vampiricageing-1.21-1.4.21.jar",
+                "spell_codex_specs": "specs_irons_spellbooks-1.6.5.jar",
+                "weapons_of_miracles": "WeaponsOfMiracles-2.0.178.jar",
+            }
+            for filename in names.values():
+                (mods / filename).write_bytes(b"fixture-not-a-real-jar")
+            observed = collector.collect_mod_hashes(instance)
+            for provider, filename in names.items():
+                self.assertEqual(filename, observed[provider][0]["filename"])
+                self.assertEqual(40, len(observed[provider][0]["sha1"]))
+                for key, value in observed[provider][0].items():
+                    if key.endswith("_equality"):
+                        self.assertIs(False, value)
+    def test_wom_reference_is_candidate_not_acquisition_proof(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            script = instance / "kubejs" / "server_scripts" / "wom.js"
+            script.parent.mkdir(parents=True)
+            script.write_text(
+                'const id = "wom:nova"; // do-not-copy-wom\n',
+                encoding="utf-8",
+            )
+            result = collector.collect_weapons_of_miracles_nova(instance, [])
+            self.assertEqual(
+                "NORMAL_SURVIVAL_ACQUISITION_UNVERIFIED", result["status"])
+            self.assertEqual(
+                ["kubejs/server_scripts/wom.js"],
+                [row["path"] for row in result["candidate_script_or_datapack_references"]],
+            )
+            self.assertNotIn("do-not-copy-wom", json.dumps(result))
+
+
 if __name__ == "__main__":
     unittest.main()
