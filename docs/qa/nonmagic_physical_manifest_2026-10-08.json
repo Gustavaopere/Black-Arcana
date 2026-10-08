@@ -5,17 +5,8 @@
   "source_path": "PROJECT-INSTRUCTIONS/modlist/modlist.md",
   "physical_top_level_count_including_loader": 587,
   "physical_magic_category_rows": 97,
-  "nonmagic_rows": 490,
   "triage_is_heuristic_not_registry_proof": true,
   "rows": [
-    {
-      "physical_number": 1,
-      "name": "NeoForge",
-      "filename": "neoforge-21.1.250 (modloader)",
-      "version": "21.1.250",
-      "categories": "Sem projeto CurseForge confirmado",
-      "triage_group": "OTHER"
-    },
     {
       "physical_number": 3,
       "name": "Ace's Spell Utils",
@@ -3928,5 +3919,15 @@
       "categories": "API and Library",
       "triage_group": "OTHER"
     }
-  ]
+  ],
+  "loader": {
+    "physical_number": 1,
+    "name": "NeoForge",
+    "filename": "neoforge-21.1.250 (modloader)",
+    "version": "21.1.250",
+    "categories": "Sem projeto CurseForge confirmado",
+    "triage_group": "OTHER"
+  },
+  "nonmagic_rows_including_loader": 490,
+  "nonmagic_mod_jars": 489
 }
