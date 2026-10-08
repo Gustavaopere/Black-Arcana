@@ -1646,6 +1646,27 @@ class AdditionalProviderGateEvidenceTest(unittest.TestCase):
             (config / "vampiricageing-link.toml").symlink_to(external)
             result = collector.collect_vampiric_ageing(instance, [])
             self.assertEqual([], result["config_files"])
+    def test_new_provider_jar_names_fingerprint_without_false_equality(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            instance = Path(tmp)
+            mods = instance / "mods"
+            mods.mkdir(parents=True)
+            names = {
+                "bosses_of_mass_destruction": "BOMD-NeoForge-1.21-1.3.3.jar",
+                "alexs_mobs_continued": "alexsmobs-2.1.13-neoforge+1.21.1.jar",
+                "vampiric_ageing": "vampiricageing-1.21-1.4.21.jar",
+                "spell_codex_specs": "specs_irons_spellbooks-1.6.5.jar",
+                "weapons_of_miracles": "WeaponsOfMiracles-2.0.178.jar",
+            }
+            for filename in names.values():
+                (mods / filename).write_bytes(b"fixture-not-a-real-jar")
+            observed = collector.collect_mod_hashes(instance)
+            for provider, filename in names.items():
+                self.assertEqual(filename, observed[provider][0]["filename"])
+                self.assertEqual(40, len(observed[provider][0]["sha1"]))
+                for key, value in observed[provider][0].items():
+                    if key.endswith("_equality"):
+                        self.assertIs(False, value)
     def test_wom_reference_is_candidate_not_acquisition_proof(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             instance = Path(tmp)
