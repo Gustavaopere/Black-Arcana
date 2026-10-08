@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-09-18
+Last updated: 2026-10-08 (no Stage promotion; canonical engineering state preserved)
 
 ## Authoritative execution rule
 
@@ -19,6 +19,8 @@ Stage 09 is the consolidated exact-release-candidate validation campaign and rem
 ## Current active stage
 
 **Stage 06 — Rituals is the current numbered audit target. 06.01–06.04 are ✅ complete; 06.05 — Rituals Final Validation Handoff is active and ⛔ blocked by the missing canonical player activation surface for `black_arcana:veil_anchor_consecration`. Real Eidolon/Malum provider acceptance remains pending.**
+
+The [2026-10-08 activation design gate](../docs/qa/ritual-veil-anchor-activation-design-gate-2026-10-08.md) documents the requirements for a legitimate player-facing ingress; it is not implemented. The [five-item magic pendency tracker](../wiki/modpack-catalog/meta/PENDENCIAS-MAGICAS-ATUAIS.md) tracks this blockage separately from catalog coverage.
 
 Stage 05 — Casting & UX is `COMPLETE / ENGINEERING CLOSED / REAL-CLIENT RELEASE VALIDATION CARRIED TO STAGE 09`.
 
