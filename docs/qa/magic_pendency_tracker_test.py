@@ -33,8 +33,11 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertEqual(46, len(rows))
         self.assertEqual(35, sum("✅ Catálogo existente" in line for line in rows))
         self.assertEqual(11, sum("⚠️ Dossiê físico revisado" in line for line in rows))
-        self.assertIn("444 outras entradas", self.cross)
-        self.assertIn("não passaram por inspeção exaustiva", self.cross)
+        self.assertIn("**489**", self.cross)
+        self.assertIn("**96**", self.cross)
+        self.assertIn("**347**", self.cross)
+        self.assertIn("489/489 nomes físicos", self.status)
+        self.assertIn("**não executado na instância real**", self.status)
 
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
         section = self.binary.split("|---|---|---:|---|---|", 1)[1].split(
