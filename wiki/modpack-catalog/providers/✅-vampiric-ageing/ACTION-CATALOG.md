@@ -231,6 +231,22 @@ Like Wise Eye, activation sets `hasBypassInvisibility` and optionally adds `MOVE
 
 Static timing caveat: duration is converted to ticks but cooldown is not.
 
+## Individual action cards
+
+These nine files materialize the **same nine registrations** already listed above. They do not add action identities or strict counts. Effective installed runtime/config remains unverified.
+
+- [Celerity](actions/celerity.md) — `vampiricageing:celerity_action`;
+- [Blood Tap / Drain Blood](actions/blood-tap.md) — `vampiricageing:drain_blood_action`;
+- [Water Walking](actions/water-walking.md) — `vampiricageing:water_walking_action`;
+- [Vampire Step Assist](actions/vampire-step-assist.md) — `vampiricageing:step_assist_action`;
+- [Hunter Teleport](actions/hunter-teleport.md) — `vampiricageing:hunter_teleport_action`;
+- [Limited Hunter Bat Mode](actions/limited-hunter-bat-mode.md) — `vampiricageing:limited_hunter_batmode_action`;
+- [Hunter Step Assist](actions/hunter-step-assist.md) — `vampiricageing:step_assist_hunter_action`;
+- [Wise Eye](actions/wise-eye.md) — `vampiricageing:hunter_wise_eye_action`;
+- [Improved Senses](actions/improved-senses.md) — `vampiricageing:improved_senses_action`;
+
+See [materialization checkpoint](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
 ## Action authority rules
 
 - registration in Vampirism's ACTION registry does not turn these into Iron's spells;
