@@ -2,7 +2,7 @@
 
 **Current physical-JAR intake override (2026-10-08):** direct inspection of the exact `83f7edd0...` JAR closes the **3-root physical semantic inventory** with **2 `COUNTED_EXACT` actions + 1 Soul Elytra config-conditional**. Deeper and Darker now contributes **+2 strict**. Its old raw-JAR-unavailable premise below is historical; the deployed `soulElytraCooldown` remains unknown, so the provider folder remains ⚠️. See [`PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`](PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md).
 
-Status: `⚠️ PARTIAL / PUBLIC 1.4.1 BASELINE + EXACT SOURCE TAG CORROBORATED / PHYSICAL JAR UNMATCHED / 3 SUPERNATURAL ACTION ROOTS IN PUBLIC+SOURCE BASELINE / +0 STRICT`
+Status: `⚠️ PARTIAL / EXACT PHYSICAL JAR VERIFIED / 3 CURRENT ACTION ROOTS / 2 COUNTED_EXACT + 1 SOUL ELYTRA CONFIG-CONDITIONAL / STRICT +2 / RUNTIME QA PENDING`
 
 ## Current physical identity
 
@@ -18,7 +18,7 @@ The mod is cross-domain: its sibling category is dimension/worldgen/mobs rather 
 
 This folder is only for the base provider **Deeper and Darker**. The separate `darkermagic` / **Deeper and Darker: Spellbooks** addon has its own provider folder and is not folded into this denominator.
 
-## Publisher origin and local post-install modification — blocker
+## Publisher origin and local post-install modification — historical provenance gap
 
 NON-MERGE PR **#517** tested every relevant official 1.4.1 distribution path:
 
@@ -32,7 +32,7 @@ All three official paths resolve to the same public artifact:
 - SHA-256: `eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af`;
 - bytes: `3,906,057`.
 
-That artifact does **not** equal the physical pack fingerprint `83f7edd0...`. The pack JAR is therefore `OTHER_VERIFIED` relative to the official public release and cannot inherit the public semantic denominator as exact-current.
+That artifact does **not** equal the physical pack fingerprint `83f7edd0...`; the pack JAR remains `OTHER_VERIFIED` relative to the publisher release. Before the 2026-10-08 direct physical-JAR intake, this mismatch blocked exact-current semantic accounting. It still blocks claims of publisher-byte identity or patch provenance, but no longer blocks the three-root *directly inspected* current physical inventory.
 
 Publisher-baseline audit run `36959073485` completed successfully and produced evidence artifact `11206937200` with digest `sha256:b103afe2dd4b52780acf54682ddcca4b6df484df9ad9cf7accd218e443fb8b1f`.
 
@@ -53,7 +53,7 @@ The later physical modlist records the **same filename, mod id and runtime**, an
 
 This closes an important provenance question: the current physical fingerprint is **not evidence of a second official 1.4.1 release**. The retained installation history points to the official File 8201775 as the original installed artifact, followed by a local byte-level change/repack before the later physical hash snapshot.
 
-It does **not** identify which archive entries changed. Therefore it does not authorize projecting the official three-root denominator onto the physical JAR.
+The installation provenance does **not** identify which archive entries changed. That historical evidence alone cannot project the official three-root denominator onto the physical JAR; the three roots were subsequently established independently by direct inspection of the matching current physical bytes.
 
 ### Known local compatibility signal
 
@@ -61,7 +61,7 @@ Logs from the local compatibility-work window record Deeper and Darker `PlayerMi
 
 The retained boot after the first generated set still records the Deeper/NeoVitae `ServerPlayerMixin` redirect conflict. A later boot captured after the `v2` generation loads both mods under their **canonical JAR filenames**, advances beyond that earlier redirect-conflict failure point, and eventually crashes for an unrelated Photon config lifecycle error. It also records Deeper and Darker `ContainerMenuMixin` activity; because retained pre-v2 logs already expose `ContainerMenuMixin`, that surface is not treated as a v2 deployment fingerprint or as proof that v2 caused a runtime transition.
 
-This narrows the local modification chronology but does **not** identify the deployed bytes. The generated JARs are not raw-byte accessible in the current audit, so their hashes cannot be compared to physical SHA-1 `83f7edd0...`. Black Arcana therefore does not infer that `v2` was renamed/deployed, that the mixin change is the only archive-level delta, or that every semantic action class is byte-identical to the official publisher artifact.
+This historical chronology does **not** identify whether either generated compatibility JAR became the deployed artifact: the *generated candidate* JARs remain unavailable for byte-level comparison. Separately, the 2026-10-08 uploaded current physical JAR now matches `83f7edd0...` and has been inspected directly. That does not establish the `v2` candidate's deployment, the full archive-level delta or byte identity of the semantic classes with the official publisher artifact.
 
 A retained physical inventory from **2026-08-22** now directly binds the canonical `deeperdarker-neoforge-1.21.1-1.4.1.jar` row to SHA-1 `83f7edd0a8516b2767c2cda7a3b2402f9e290d88` / fingerprint `1917446721`. The current physical artifact was therefore present in the canonical pack slot no later than 2026-08-22, roughly four days after the 2026-08-18 compatibility-work window. This narrows chronology only; it does not prove that either generated compatibility JAR became those bytes.
 
@@ -101,7 +101,7 @@ A normalized source-build↔publisher comparison has the same **2,668 file paths
 
 See [`SOURCE-1.4.1-REPRO-AUDIT.md`](SOURCE-1.4.1-REPRO-AUDIT.md).
 
-## Public/source 1.4.1 supernatural baseline
+## Public/source 1.4.1 supernatural baseline — corroborated by the physical JAR
 
 The official public artifact and exact upstream source pin corroborate three discrete player-owned supernatural actions:
 
@@ -137,7 +137,7 @@ Public 1.4.1 provider data closes baseline acquisition:
 
 - `deeperdarker:heart_of_the_deep` is added to the vanilla Warden loot table by a provider loot modifier;
 - `deeperdarker:sonorous_staff` has a provider shaped recipe using Heart of the Deep, Soul Crystal and Sculk Bone;
-- Soul Elytra is provider equipment; exact current-pack acquisition is not projected from the public release because the physical JAR differs.
+- Soul Elytra is provider equipment; the exact physical JAR contains its recipe. Eligibility to *activate the boost* remains contingent on the current deployed COMMON `soulElytraCooldown` value.
 
 ## Soul Elytra config condition
 
@@ -159,24 +159,21 @@ The canonical read-only collector at `docs/qa/provider-catalog-deployed-evidence
 - accepts only an observed integer in the provider range `-1..12000`; missing, malformed, ambiguous, wrong-type or out-of-range evidence stays fail-closed;
 - does not copy the surrounding TOML or substitute the source default.
 
-An authoritative current-instance report can therefore close the deployed-config subgate independently. It cannot close the physical semantic denominator merely by matching `83f7edd0...`: that SHA-1 is the already-known unmatched physical artifact, so raw-byte semantic inspection or another exact bridge is still required before the three public/source roots enter the strict numerator.
+An authoritative current-instance collector report can close the remaining deployed-config subgate independently. Exact-current semantic inventory is already closed by the 2026-10-08 direct JAR inspection, so no additional raw-byte acquisition or publisher-match search is required. The config report alone is not a live-modpack gameplay PASS.
 
-## Strict accounting
+## Current strict accounting — 2026-10-08
 
-Because the physical JAR is not byte-equivalent to any official public 1.4.1 artifact, is not reproduced by a clean build of the official `v1.4.1` source pin, and its raw bytes are not currently available to this audit despite the retained Library/instance metadata:
+- exact physical semantic-action roots: **3**, independently observed in the matching current JAR;
+- `COUNTED_EXACT`: **2** — Otherside Portal Activation and Sonorous Staff Sonic Boom, with physical triggering/acquisition evidence;
+- `CONDITIONAL`: **1** — Soul Elytra Boost, with a physical recipe/packet but missing deployed `soulElytraCooldown`;
+- current provider strict contribution: **+2**;
+- global strict minimum after PR #697: **1851**;
+- provider folder: **⚠️ partial/conditioned**, not ✅ runtime-qualified.
 
-- public/source baseline roots: **3**;
-- exact-current physical roots: **UNKNOWN**;
-- strict semantic contribution: **+0**;
-- folder state: **⚠️ partial/conditioned**.
+## Remaining closure requirements
 
-## Closure requirement
+1. Capture the effective `config/deeperdarker-common.toml -> soulElytraCooldown` from the authoritative current assembled instance using the bounded collector. The source default `600` is not an observed deployed value; `-1` disables the boost.
+2. Reconcile enabled/disabled Soul Elytra eligibility and strict accounting from that *observed* value without manufacturing a survival or runtime claim.
+3. Perform provider-native/current-modpack runtime acceptance (including NeoVitae coexistence and the Soul Elytra boost path when enabled). A six-entry active mixin configuration and static packet analysis are not runtime acceptance.
 
-Promote this provider only after one of these evidence paths closes the installed bytes:
-
-- direct raw-byte inspection of the physical `deeperdarker-neoforge-1.21.1-1.4.1.jar`; or
-- a publisher/repository artifact whose SHA-1 exactly equals `83f7edd0a8516b2767c2cda7a3b2402f9e290d88`.
-
-The exact official source tag is now audited and is **not** a hash match, so version/source-label agreement alone is not sufficient.
-
-Until physical closure exists, do not add the three public/source baseline actions to the strict global numerator and do not assume the installed JAR has exactly the same registrations/control flow.
+Direct physical-byte inspection is already complete. Publisher hash mismatch remains a provenance limitation, **not** an outstanding raw-JAR semantic-inventory gate. See [`PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`](PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md).
