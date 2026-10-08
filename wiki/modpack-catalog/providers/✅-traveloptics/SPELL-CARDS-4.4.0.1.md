@@ -1,8 +1,8 @@
 # T.O Magic n' Extras 4.4.0.1 — fichas canônicas de spells
 
-Este índice materializa em fichas individuais as **33 identidades de spell** já fechadas pela auditoria clean-room do publisher artifact exato CurseForge `6342780` para a versão física `4.4.0.1-1.21.1`.
+Este índice materializa em fichas individuais as **33/33 identidades registradas no JAR físico atual** (`SHA-1 7b74816e...`), com igualdade integral ao conjunto da auditoria clean-room do publisher artifact CurseForge `6342780`. As fichas usam baseline mecânico do publisher apenas onde declarado.
 
-O provider permanece **⚠️ parcial/condicionado**: o JAR físico atual está fingerprintado como `OTHER_VERIFIED` no SHA-1 `7b74816e89cc15dd0b5a31d9ea1e456024e8fae4`, mas seus bytes/proveniência e o delta exato do registry atual continuam não materializados; `traveloptics:blackout` segue sem rota survival objeto-a-objeto fechada e o runtime atual ainda não fecha todos os gates do provider.
+O **catálogo está ✅ completo (33/33)**: os bytes físicos atuais foram auditados e a identidade de todas as entradas foi confirmada. A proveniência da modificação permanece desconhecida; `traveloptics:blackout` não tem rota survival da instância confirmada e os gates de serializer, coexistência Aqua e runtime permanecem ⚠️. Isso não invalida as fichas nem exige abrir o jogo para produzi-las.
 
 ## Contexto semântico público condicionado
 
@@ -86,7 +86,7 @@ Essa camada é deliberadamente **não-estrita e version-conditioned**: a página
 - 2/33 retain provider Weapon `allowCrafting=true`; 10/33 retain provider Unique `allowCrafting=false`; 9 have exact structured loot anchors, while `blackout` additionally has `allowLooting=false` and its File-6342780 provider-owned direct + generic loot routes are excluded, though current-pack acquisition remains unresolved;
 - 32 localization-only IDs residuais continuam excluídos;
 - nenhum número de mana/cooldown/dano/nível foi inferido;
-- status global do provider permanece ⚠️.
+- **status de catalogação: ✅ 33/33**; estado de implantação/survival/runtime: **⚠️ pendente**, sem alterar `+0 strict`.
 
 ## Autoridade
 

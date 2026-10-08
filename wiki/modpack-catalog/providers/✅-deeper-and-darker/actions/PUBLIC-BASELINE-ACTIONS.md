@@ -1,10 +1,10 @@
 # Deeper and Darker 1.4.1 — public/source baseline action cards
 
-Status: `3 PUBLIC+SOURCE SUPERNATURAL ROOTS / QUANTITATIVE SOURCE CONTRACT RECORDED / PHYSICAL EXACTNESS OPEN / ALL +0 STRICT`
+Status: `✅ 3/3 CURRENT PHYSICAL ACTION ROOTS CATALOGED / 2 COUNTED_EXACT + 1 CONFIG-CONDITIONAL / +2 STRICT / ⚠️ RUNTIME QA OPEN`
 
 These are clean-room behavior cards for the official public 1.4.1 artifact, corroborated against exact upstream tag `v1.4.1` / commit `f7ba235d078411a1165a8cac184adfe0ccc8cebe`.
 
-They are **not** asserted as the exact installed-pack denominator because the physical SHA-1 `83f7edd0...` differs from every official public artifact tested and from the clean source rebuild produced by NON-MERGE PR #573. Quantitative values below are public/source baseline values, not deployed-byte claims.
+The **3-root installed-pack denominator was independently closed** by direct 2026-10-08 inspection of the exact physical `83f7edd0...` JAR. The current physical hash still differs from publisher/source artifacts: *quantitative formulas below remain public/source-only baseline values*, not current-physical mechanical parity claims. See `../PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`.
 
 Individual action files:
 
@@ -12,7 +12,7 @@ Individual action files:
 - [Sonorous Staff Sonic Boom](sonorous-staff-sonic-boom.md)
 - [Soul Elytra Boost](soul-elytra-boost.md)
 
-These files are a materialization of the same three baseline roots and add **+0** to the current strict numerator.
+These cards cover **3/3 exact-current roots**; portal and staff are `COUNTED_EXACT` **(+2 strict)** and Soul Elytra Boost is `CONDITIONAL` pending the deployed COMMON config.
 
 ## 1. Otherside Portal Activation
 
@@ -20,7 +20,7 @@ These files are a materialization of the same three baseline roots and add **+0*
 - public/source implementation seam: `WardenHeartItem.useOn(...)`;
 - semantic type: supernatural portal-creation/traversal setup;
 - public/source baseline state: `BASELINE_PRESENT`;
-- strict current-pack state: `OPEN_PHYSICAL_ARTIFACT / +0`.
+- strict current-pack state: `COUNTED_EXACT / PHYSICAL JAR CONFIRMED / +1`.
 
 ### Exact item and admission contract
 
@@ -67,7 +67,7 @@ Portal collision/travel after creation and destination-side portal generation ar
 - public/source implementation seam: `SonorousStaffItem.use(...)` + `releaseUsing(...)`;
 - semantic type: discrete supernatural staff attack;
 - public/source baseline state: `BASELINE_PRESENT`;
-- strict current-pack state: `OPEN_PHYSICAL_ARTIFACT / +0`.
+- strict current-pack state: `COUNTED_EXACT / PHYSICAL JAR CONFIRMED / +1`.
 
 ### Exact item contract
 
@@ -160,7 +160,7 @@ The other exact-source Deeper and Darker enchantments remain enchantment mechani
 - public/source implementation seam: BOOST keybind -> server payload `deeperdarker:soul_elytra_boost` / `SoulElytraBoostPacket`;
 - semantic type: discrete supernatural equipment/flight action;
 - public/source baseline state: `BASELINE_PRESENT / CONFIG_CONDITIONAL`;
-- strict current-pack state: `OPEN_PHYSICAL_ARTIFACT / DEPLOYED_CONFIG_UNKNOWN / +0`.
+- strict current-pack state: `CONDITIONAL / PHYSICAL JAR CONFIRMED / DEPLOYED_CONFIG_UNKNOWN / +0`.
 
 ### Exact item contract
 
@@ -240,12 +240,13 @@ All three hashes differ.
 
 The source build and official publisher JAR have the same 2,668 file paths. Of those, 2,408 file contents are identical and 260 differ. The semantic-difference filter finds only three Otherside portal asset resources and no source-only/publisher-only semantic path.
 
-This strengthens the three-root baseline but does not close the unmatched physical JAR.
+This is a historical source/publisher mismatch; the separately inspected exact-current JAR has since closed the three-root action identity denominator without proving numerical equivalence.
 
 ## Accounting
 
 - public/source supernatural roots: **3**;
-- exact-current physical roots proven: **0**;
-- exact-current physical denominator: **UNKNOWN**;
-- strict contribution: **+0**;
-- provider state: **⚠️ partial / physical denominator open**.
+- exact-current physical roots proven: **3**;
+- exact-current physical denominator: **3**;
+- strict contribution: **+2** (portal and staff);
+- one conditional root: **Soul Elytra Boost** (`soulElytraCooldown` not observed in deployed config);
+- catalog state: **✅ 3/3 materialized**; runtime/config state: **⚠️ pending**.

@@ -1,8 +1,8 @@
 # Deeper and Darker — 1.4.1
 
-**Current physical-JAR intake override (2026-10-08):** direct inspection of the exact `83f7edd0...` JAR closes the **3-root physical semantic inventory** with **2 `COUNTED_EXACT` actions + 1 Soul Elytra config-conditional**. Deeper and Darker now contributes **+2 strict**. Its old raw-JAR-unavailable premise below is historical; the deployed `soulElytraCooldown` remains unknown, so the provider folder remains ⚠️. See [`PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`](PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md).
+**Current physical-JAR intake override (2026-10-08):** direct inspection of the exact `83f7edd0...` JAR closes the **3-root physical semantic inventory** with **2 `COUNTED_EXACT` actions + 1 Soul Elytra config-conditional**. Deeper and Darker now contributes **+2 strict**. Its old raw-JAR-unavailable premise below is historical; the deployed `soulElytraCooldown` remains unknown, so the catalog directory is now ✅ because all 3/3 exact-current actions are materialized; deployed-config and provider runtime QA remain ⚠️. See [`PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md`](PHYSICAL-JAR-DIRECT-AUDIT-2026-10-08.md).
 
-Status: `⚠️ PARTIAL / EXACT PHYSICAL JAR VERIFIED / 3 CURRENT ACTION ROOTS / 2 COUNTED_EXACT + 1 SOUL ELYTRA CONFIG-CONDITIONAL / STRICT +2 / RUNTIME QA PENDING`
+Status: `✅ CATALOG COMPLETE (3/3) / ⚠️ DEPLOYED-CONFIG + RUNTIME QA OPEN / EXACT PHYSICAL JAR VERIFIED / 3 CURRENT ACTION ROOTS / 2 COUNTED_EXACT + 1 SOUL ELYTRA CONFIG-CONDITIONAL / STRICT +2 / RUNTIME QA PENDING`
 
 ## Current physical identity
 
@@ -168,7 +168,7 @@ An authoritative current-instance collector report can close the remaining deplo
 - `CONDITIONAL`: **1** — Soul Elytra Boost, with a physical recipe/packet but missing deployed `soulElytraCooldown`;
 - current provider strict contribution: **+2**;
 - global strict minimum after PR #697: **1851**;
-- provider folder: **⚠️ partial/conditioned**, not ✅ runtime-qualified.
+- catalog folder: **✅ cataloged 3/3** under the catalog-only folder-prefix convention; runtime/config qualification: **⚠️ pending**.
 
 ## Remaining closure requirements
 
