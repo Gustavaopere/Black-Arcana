@@ -59,6 +59,9 @@ See [`PLAYER-MAGIC-INVENTORY.md`](PLAYER-MAGIC-INVENTORY.md).
 
 Object-level catalog: [ACTION-CARDS-1.8.2.md](ACTION-CARDS-1.8.2.md).
 
+Individual-card materialization checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
+
 ## Exact acquisition/reachability evidence
 
 The exact artifact packages or references current provider-native routes for the counted families:

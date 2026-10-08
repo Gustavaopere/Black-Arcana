@@ -1,6 +1,6 @@
 # Corail Tombstone 9.5.6 — action cards
 
-Status: `10 COUNTED_RELEASE_BOUNDED / 12 CONFIG-CONDITIONAL / 22 INDIVIDUAL ACTION CARDS`
+Status: `10 COUNTED_EXACT / 12 CONFIG-CONDITIONAL / 22 INDIVIDUAL ACTION CARDS`
 
 This directory materializes the exact 9.5.6 action inventory into individual catalog cards.
 
@@ -38,3 +38,5 @@ This directory materializes the exact 9.5.6 action inventory into individual cat
 12. [Scroll of Knowledge](castables/scroll-of-knowledge.md)
 
 The 12 conditional cards remain outside the strict numerator until their deployed Tombstone `allow_*` values are observed. Individual cards do not change the provider status or the current strict global minimum.
+
+Checkpoint de materialização: [INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md](../INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).

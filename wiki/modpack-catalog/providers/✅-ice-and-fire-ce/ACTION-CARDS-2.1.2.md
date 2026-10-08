@@ -2,7 +2,7 @@
 
 Este índice materializa em fichas individuais as **9 famílias de ação mágica** fechadas pela auditoria do artefato físico/publisher exato `iceandfire-2.1.2.jar`.
 
-O provider permanece **⚠️ parcial/condicionado** porque Ghost Sword / Phantasmal Blade ainda depende do valor implantado de `tools.phantasmalBladeAbility`. As outras oito famílias já são `COUNTED_EXACT`.
+A identidade Ghost Sword / Phantasmal Blade permanece **⚠️ condicionada** porque sua execução depende do valor implantado de `tools.phantasmalBladeAbility`. As outras oito famílias já são `COUNTED_EXACT`.
 
 ## Ações strict — 8
 
@@ -38,5 +38,7 @@ Ghost Sword possui recipe/advancement exatos, mas sua ação só pode entrar no 
 `config/iceandfire/iaf-common.json -> tools.phantasmalBladeAbility=true`
 
 associada ao SHA-1 físico esperado.
+
+Checkpoint de materialização: [INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 Fontes canônicas: [ACTIVE-MAGIC-INVENTORY.md](ACTIVE-MAGIC-INVENTORY.md) e [DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md](DEPLOYED-CONFIG-AND-REACHABILITY-CHECKLIST.md).

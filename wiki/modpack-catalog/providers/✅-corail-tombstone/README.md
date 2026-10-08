@@ -50,6 +50,9 @@ See `EXACT-9.5.6-ACTION-INVENTORY.md`.
 
 Individual action cards: [`actions/README.md`](actions/README.md).
 
+Individual-card materialization checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
+
 ## Publisher-confirmed magic system
 
 The current publisher description explicitly states that Tombstone has a magic system based on enchantable items powered by Souls haunting Decorative Graves.
