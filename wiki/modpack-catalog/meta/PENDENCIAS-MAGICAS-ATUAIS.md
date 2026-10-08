@@ -4,7 +4,7 @@
 
 | Pendência | Estado |
 |---|---|
-| Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 46 candidatos triados, auditoria exaustiva aberta |
+| Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria); auditoria binária não executada |
 | Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — 39 catalogados, 0 novas provas binary-exact |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
@@ -12,7 +12,7 @@
 
 ## Evidências por pendência
 
-**1 — Modlist cross-domain:** [auditoria](AUDITORIA-CROSS-DOMAIN-2026-10-08.md). Foram conferidas 490 linhas físicas fora de `Magic`: 46 receberam triagem lexical, 35 remetem a catálogos existentes e 11 tiveram dossiês individuais revisados. Ainda faltam 444 linhas sem inspeção binária exaustiva. Nenhum ID mágico novo foi demonstrado na triagem.
+**1 — Modlist cross-domain:** [auditoria](AUDITORIA-CROSS-DOMAIN-2026-10-08.md) e [procedimento de inspeção](../../../docs/qa/nonmagic_physical_jar_triage.md). O índice físico contém **587 = 97 linhas Magic + 489 JARs fora de Magic + 1 NeoForge loader**, este último indevidamente contado como mod no checkpoint anterior. **489/489 nomes físicos** estão agora num manifesto determinístico; a triagem prioriza **46** por nome e **96** adicionais por categoria (142 prioritários; outros 347 JARs também incluídos na ferramenta). **18 dossiês** tiveram revisão textual pontual (11 + 7). O scanner de ZIP/sha de 489 JARs foi implementado e testado em ZIPs sintéticos, **não executado na instância real**. Não há prova de ausência de feitiços nas outras linhas nem novo ID certificado.
 
 **2 — Registries:** [matriz nominal dos 39](REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md) e [crosswalk 69](PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md). O coletor [physical_provider_fingerprint_collector.py](../../../docs/qa/physical_provider_fingerprint_collector.py) produz SHA-1/SHA-256 read-only sobre os 69 JARs esperados, **mas ainda não foi executado contra a instância real**. Não transforma nome de JAR em prova de registry.
 
