@@ -38,6 +38,16 @@ Only whitelisted booleans, validated dimension IDs, hashes, sizes and relative p
 Run the existing collector tests: `python3 docs/qa/provider_catalog_deployed_evidence_collector_test.py`.
 
 These additions narrow the inputs needed for the open rows; they do **not** close strict semantic counts or runtime acceptance. Traveloptics and base Deeper and Darker were not modified by this extension.
+## Fingerprints do conjunto físico de 69 providers do ledger
+
+Um coletor read-only independente cobre exatamente os **69 nomes de JARs** do [crosswalk canônico](../../wiki/modpack-catalog/meta/PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md). Executar a partir da raiz do repositório, sobre a instância física atual (não sobre diretórios inferidos da modlist):
+
+```bash
+python3 docs/qa/physical_provider_fingerprint_collector.py --instance "/caminho/da/instancia" > physical-provider-fingerprints.json
+```
+
+O JSON contém apenas nome do provider, JAR relativo esperado, estado da presença, tamanho, SHA-1 e SHA-256; rejeita symlinks/ZIP inválidos. **Não extrai classes/registries nem prova a igualdade com o publisher.** Os 39 casos source/release-bounded exigem leitura semântica/binary-exact adicional para eventual promoção. Suíte: `python3 docs/qa/physical_provider_fingerprint_collector_test.py`. [Matriz de verificação](../../wiki/modpack-catalog/meta/REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md).
+
 ## Requirements
 
 - Python 3.11+;
