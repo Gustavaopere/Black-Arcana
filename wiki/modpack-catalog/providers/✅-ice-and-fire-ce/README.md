@@ -44,6 +44,9 @@ See [`ACTIVE-MAGIC-INVENTORY.md`](ACTIVE-MAGIC-INVENTORY.md) and [`DREAD-LICH-ST
 
 Object-level catalog: [ACTION-CARDS-2.1.2.md](ACTION-CARDS-2.1.2.md).
 
+Individual-card materialization checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
+
+
 ## Explicit exclusions
 
 - Dread Queen Staff — exact 2.1.2 source says it currently has no usage;
