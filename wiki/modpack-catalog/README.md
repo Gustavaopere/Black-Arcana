@@ -2,6 +2,8 @@
 
 **Current catalog-only coverage (2026-10-08): 164 provider directories = 164 ✅ cataloged, 0 ❌ or ⚠️ catalog-incomplete.** The direct physical JARs close [Traveloptics 33/33](providers/✅-traveloptics/SPELL-CARDS-4.4.0.1.md) and [Deeper and Darker 3/3](providers/✅-deeper-and-darker/actions/PUBLIC-BASELINE-ACTIONS.md). This is an **inventory** conclusion, not provider runtime/eligibility certification; Soul Elytra configuration, Blackout survival, codec runtime and Aqua interoperability remain ⚠️ technical QA. Strict semantic minimum remains **1851**; global semantic denominator is open. Older historical checkpoint counts below remain archival.
 
+**Índice global atualizado:** [CATALOGO-GLOBAL-MAGIAS.md](meta/CATALOGO-GLOBAL-MAGIAS.md) — 164/164 READMEs canônicos ✅, 97/97 providers da categoria física Magic reconciliados, 162 dentro do escopo definido pelo usuário (Traveloptics e Deeper and Darker base excluídos). O catálogo de Tunes n' Tomes passa a possuir 16/16 [fichas individualizadas](providers/✅-tunes-n-tomes/SPELL-CARDS-1.1.0-HOTFIX.md). Validação de registry/config/runtime permanece separada e não recebe aprovação fictícia.
+
 Status: `IN PROGRESS`
 
 This directory is the canonical Phase 2 inventory for every magic-relevant top-level component in the current Black Arcana modpack.

@@ -30,6 +30,9 @@ The current Alshanex project/wiki still contains stale Sound/Bard prose. For 4.x
 
 ## Current publisher roster — 16 semantic spell identities
 
+**Fichas individuais dos 16 nomes oficiais:** [SPELL-CARDS-1.1.0-HOTFIX.md](SPELL-CARDS-1.1.0-HOTFIX.md). Essas fichas são de identidade editorial/release-bounded; não afirmam registry IDs/custos/runtime que ainda não foram comprovados.
+
+
 The current Tunes n' Tomes project page states that the Melodic School **features these spells** and enumerates exactly sixteen names:
 
 1. Chord Blast

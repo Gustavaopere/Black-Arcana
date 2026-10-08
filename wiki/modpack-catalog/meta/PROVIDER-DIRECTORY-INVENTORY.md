@@ -6,6 +6,10 @@ Current structural authority:
 - Black Arcana base for this batch: `main@4d6ff1f63bda925836af0b1b1c0a2702c7cbdf3a`;
 - current sibling physical/modlist authority: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`.
 
+## Atualização sobreposta — 2026-10-08
+
+O checkpoint da árvore canônica prevalece sobre o resumo de 06/10 abaixo: **164 diretórios de provider, todos 164 ✅ catalogados**, todos com `README.md`, **0 pastas de catálogo ❌/🟡/⚠️/⛔**. Traveloptics tem 33/33 fichas e Deeper and Darker base 3/3, mas ambos permanecem excluídos do escopo operacional desta conversa. O escopo do usuário contém **162** providers catalogados, inclusive Deeper & Darker Spellbooks. O inventário físico de categoria `Magic` está **97/97 mapeado**. Veja o [índice único](CATALOGO-GLOBAL-MAGIAS.md) para todos os 164 nomes e links; **✅ é catalogação, não validação de runtime/config/reachability**. O mínimo estrito no escopo é **1849**; o global é **1851** e o denominador final permanece aberto.
+
 ## Current structural count
 
 The canonical tree `wiki/modpack-catalog/providers/` now contains:

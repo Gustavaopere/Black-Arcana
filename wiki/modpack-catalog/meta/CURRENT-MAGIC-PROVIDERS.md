@@ -1,5 +1,9 @@
 # Inventário atual de providers mágicos
 
+## Atualização canônica — 2026-10-08
+
+A árvore atual em `Black-Arcana/main@a131ca1d1bc00049178977b3d60ff3ee017d7194` foi inspecionada: **164 diretórios de providers, 164 ✅ e 0 ❌/🟡/⚠️/⛔ de catalogação**, todos com `README.md`. A categoria física `Magic` do sibling certificado `de80b186357cad20ba5b81892a8682777e96e35a` segue **97/97 mapeada**. Os dois providers que o usuário não deseja trabalhar (Traveloptics e Deeper and Darker base) permanecem documentados globalmente, mas fora do escopo operacional; portanto, **162** diretórios ficam no escopo. O addon Deeper & Darker Spellbooks permanece dentro. A classificação ✅ não valida configurações, registry binário integral, acesso Survival ou runtime. Ver [índice global completo](CATALOGO-GLOBAL-MAGIAS.md) e [checkpoint de produção](CATALOG-PRODUCTION-2026-10-08.md). Os valores 162✅+2⚠️ abaixo são checkpoints históricos, não o estado físico atual da árvore.
+
 ## Estado
 
 `AUDITORIA EM ANDAMENTO — categoria física Magic 97/97 reconciliada / cross-domain rebase avançado para 164 providers / denominador cross-domain ainda PENDING REBASE`
