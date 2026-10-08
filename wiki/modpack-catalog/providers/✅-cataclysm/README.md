@@ -58,6 +58,8 @@ The exact current Cataclysm base contributes **27 semantic magic objects** under
 
 Detailed cards: [`actions/README.md`](actions/README.md).
 
+Individual materialization: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md). The [action index](actions/README.md) links **27/27** one-action-per-file cards. This is **+0 newly counted** relative to the existing exact-current 27.
+
 ### Action-owner summary
 
 | Provider owner | Counted actions |

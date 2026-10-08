@@ -4,6 +4,38 @@ Status: `27/27 EXACT-CURRENT SEMANTIC ROOTS MATERIALIZED`
 
 These cards enumerate discrete supernatural player actions and deliberate summoning rituals in the exact installed Cataclysm 3.33 artifact. Numerical tuning remains provider/config authority and is intentionally not frozen here.
 
+## Individual action cards
+
+Each card below materializes one entry in this existing 27-root exact-current aggregate. These files do **not** create new semantic identities or increase the strict numerator.
+
+1. [Ancient Spear — Sandstorm Launch](ancient-spear-sandstorm.md)
+2. [Astrape — Lightning Spear](astrape-lightning-spear.md)
+3. [Bulwark of the Flame — Charge](bulwark-flame-charge.md)
+4. [Ceraunus — Wave Fan](ceraunus-wave-fan.md)
+5. [Gauntlet of Bulwark — Blazing Push](gauntlet-bulwark-blazing-push.md)
+6. [Gauntlet of Bulwark — Charge](gauntlet-bulwark-charge.md)
+7. [Gauntlet of Guard — Pull Field](gauntlet-guard-pull-field.md)
+8. [Gauntlet of Maelstrom — Void Vortex](gauntlet-maelstrom-void-vortex.md)
+9. [Infernal Forge — Earthquake](infernal-forge-earthquake.md)
+10. [Sandstorm in a Bottle — Orbiting Sandstorms](sandstorm-bottle-orbit.md)
+11. [Soul Render — Render Rush](soul-render-rush.md)
+12. [Soul Render — Phantom Halberd Spiral](soul-render-halberd-spiral.md)
+13. [The Annihilator — Dual-Wield Burst](annihilator-dual-burst.md)
+14. [The Immolator — Flame Strike](immolator-flame-strike.md)
+15. [The Incinerator — Flame Strike Line](incinerator-flame-line.md)
+16. [Tidal Claws — Tentacle Attack](tidal-claws-tentacle.md)
+17. [Tidal Claws — Grappling Hook](tidal-claws-grapple.md)
+18. [Void Core — Void Rune Formation](void-core-rune-formation.md)
+19. [Void Forge — Void Rune Fan](void-forge-rune-fan.md)
+20. [Wrath of the Desert — Cursed Sandstorm Volley](wrath-desert-volley.md)
+21. [Ignitium Helmet — Gaze of Heat](ignitium-helmet-gaze.md)
+22. [Cursium Helmet — Ghost Vision](cursium-helmet-ghost-vision.md)
+23. [Cursium Boots — Back-Step](cursium-boots-back-step.md)
+24. [Bloom Stone Pauldrons — Amethyst Cluster Burst](bloom-pauldrons-amethyst-burst.md)
+25. [Ignis Summoning](ignis-summoning.md)
+26. [Leviathan Summoning](leviathan-summoning.md)
+27. [Maledictus Summoning](maledictus-summoning.md)
+
 ## Item and equipment actions — 24
 
 ### 1. Ancient Spear — Sandstorm Launch
