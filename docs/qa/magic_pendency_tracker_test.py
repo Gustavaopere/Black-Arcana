@@ -766,6 +766,66 @@ class MagicPendencyStatusTest(unittest.TestCase):
         ).read_text(encoding="utf-8"))
         self.assertIn("0 novas provas binary-exact", self.status)
 
+    def test_undocumented_physical_272_has_source_attested_id_not_binary_proof(self):
+        evidence = json.loads(
+            (QA / "nonmagic_missing_dossier_272_2026-10-09.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        manifest = json.loads(
+            (QA / "nonmagic_physical_manifest_2026-10-08.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        record = next(r for r in manifest["rows"] if r["physical_number"] == 272)
+        sibling = evidence["snapshot"]
+        attested = evidence["observed_from_pinned_sibling"]
+        gates = evidence["evidence_boundaries"]
+        self.assertEqual(272, evidence["physical_number"])
+        self.assertEqual("OTHER", record["triage_group"])
+        self.assertEqual(manifest["source_commit"], sibling["commit"])
+        self.assertEqual(
+            "de80b186357cad20ba5b81892a8682777e96e35a", sibling["commit"]
+        )
+        self.assertEqual("PROJECT-INSTRUCTIONS/modlist/modlist.md", sibling["path"])
+        self.assertEqual(record["name"], attested["name"])
+        self.assertEqual(record["filename"], attested["jar_filename"])
+        self.assertEqual(record["version"], attested["version"])
+        self.assertEqual("factory_construction_registry_probe", attested["declared_mod_id"])
+        self.assertFalse(attested["dossier_available"])
+        self.assertFalse(attested["dossier_category_assigned"])
+        self.assertEqual(
+            "ATTESTED_BY_PINNED_SIBLING_MODLIST_NOT_REEXTRACTED_FROM_BINARY",
+            gates["identity_source"],
+        )
+        for field in (
+            "installed_jar_bytes_examined", "embedded_neoforge_mod_id_verified",
+            "registry_entries_verified", "gameplay_owner_verified",
+            "survival_acquisition_verified",
+        ):
+            self.assertIs(gates[field], False, field)
+        for field in ("actual_jar_sha1", "actual_jar_sha256", "spells_or_rituals_found"):
+            self.assertIsNone(gates[field], field)
+        self.assertEqual(0, gates["proven_spells_added"])
+        self.assertEqual(
+            "BLOCKED_MISSING_DOSSIER_AND_REAL_JAR_EVIDENCE", evidence["status"]
+        )
+        report = (
+            META / "EXCECAO-PHYSICAL-272-2026-10-09.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("factory_construction_registry_probe-0.1.0.jar", report)
+        self.assertIn("factory_construction_registry_probe", report)
+        self.assertIn("de80b186357cad20ba5b81892a8682777e96e35a", report)
+        self.assertIn("**346/347**", report)
+        self.assertIn("⛔", report)
+        self.assertIn("0/489", report)
+        self.assertIn("--physical-numbers \"272\"", report)
+        self.assertIn("EXCECAO-PHYSICAL-272-2026-10-09.md", self.status)
+        self.assertIn("⛔", self.status)
+        self.assertIn("346/347", self.status)
+        self.assertIn("0 novas provas binary-exact", self.status)
+        self.assertIn("Bloqueado na Stage 06.05", self.status)
+
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
         section = self.binary.split("|---|---|---:|---|---|", 1)[1].split(
             "\n## Requisitos mínimos", 1
