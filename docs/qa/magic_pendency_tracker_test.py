@@ -20,6 +20,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         cls.sixth = (META / "AUDITORIA-OTHER-LOTE-6-2026-10-09.md").read_text(encoding="utf-8")
         cls.seventh = (META / "AUDITORIA-OTHER-LOTE-7-2026-10-09.md").read_text(encoding="utf-8")
         cls.eighth = (META / "AUDITORIA-OTHER-LOTE-8-2026-10-09.md").read_text(encoding="utf-8")
+        cls.ninth = (META / "AUDITORIA-OTHER-LOTE-9-2026-10-09.md").read_text(encoding="utf-8")
         cls.binary = (META / "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
         cls.conditional = (META / "CONDITIONAL-PROVIDER-CLOSURE.md").read_text(encoding="utf-8")
         cls.stage = (QA / "ritual-veil-anchor-activation-design-gate-2026-10-08.md").read_text(encoding="utf-8")
@@ -59,7 +60,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**79**", section)
         self.assertIn("0/489 JARs", section)
         self.assertIn("0 novas identidades mágicas certificadas", section)
-        self.assertIn("**349 dossiês**", self.status)
+        self.assertIn("**379 dossiês**", self.status)
         self.assertIn("auditoria binária não executada", self.status)
 
     def test_fourth_pass_manifest_disjoint_and_not_binary_proof(self):
@@ -94,7 +95,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**59/96**", section)
         self.assertIn("**0/489 JARs inspecionados na instância", section)
         self.assertIn("**0 novas magias promovidas**", section)
-        self.assertIn("**349 dossiês**", self.status)
+        self.assertIn("**379 dossiês**", self.status)
         self.assertIn("auditoria binária não executada", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
 
@@ -136,7 +137,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**34/96**", section)
         self.assertIn("**0/489 JARs", section)
         self.assertIn("0 novos spell/ritual IDs certificados", section)
-        self.assertIn("**349 dossiês**", self.status)
+        self.assertIn("**379 dossiês**", self.status)
         self.assertIn("auditoria binária não executada", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
 
@@ -189,7 +190,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**347/347 JARs sem revisão", section)
         self.assertIn("**0/489 JARs", section)
         self.assertIn("0 novas magias certificadas", section)
-        self.assertIn("**349 dossiês**", self.status)
+        self.assertIn("**379 dossiês**", self.status)
         self.assertIn("142/142 candidatos priorizados", self.status)
         self.assertIn("auditoria binária não executada", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
@@ -233,8 +234,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**139 dossiês cross-domain individualmente revisados**", self.other)
         self.assertIn("**0/489 JARs", self.other)
         self.assertIn("0 novas identidades de spell certificadas", self.other)
-        self.assertIn("**349 dossiês**", self.status)
-        self.assertIn("105/347 sem leitura individual", self.status)
+        self.assertIn("**379 dossiês**", self.status)
+        self.assertIn("75/347 sem leitura individual", self.status)
         self.assertIn("auditoria binária não executada", self.status)
         self.assertIn("AUDITORIA-OTHER-2026-10-09.md", self.cross)
         self.assertIn("0 novas provas binary-exact", self.status)
@@ -282,10 +283,10 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**169** dossiês", self.other)
         self.assertIn("0 novas identidades de spell certificadas", self.other)
         self.assertIn("0/489 JARs", self.other)
-        self.assertIn("**349 dossiês**", self.status)
-        self.assertIn("105/347 sem leitura individual", self.status)
-        self.assertIn("242/347", self.cross)
-        self.assertIn("**349 dossiês individuais**", (
+        self.assertIn("**379 dossiês**", self.status)
+        self.assertIn("75/347 sem leitura individual", self.status)
+        self.assertIn("272/347", self.cross)
+        self.assertIn("**379 dossiês individuais**", (
             META / "CATALOGO-GLOBAL-MAGIAS.md"
         ).read_text(encoding="utf-8"))
         self.assertIn("0 novas provas binary-exact", self.status)
@@ -338,10 +339,10 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**199 dossiês cross-domain individualmente revisados**", self.other)
         self.assertIn("0 novas identidades de spell certificadas", self.other)
         self.assertIn("0/489 JARs", self.other)
-        self.assertIn("**349 dossiês**", self.status)
-        self.assertIn("105/347 sem leitura individual", self.status)
-        self.assertIn("242/347", self.cross)
-        self.assertIn("**349 dossiês individuais**", (
+        self.assertIn("**379 dossiês**", self.status)
+        self.assertIn("75/347 sem leitura individual", self.status)
+        self.assertIn("272/347", self.cross)
+        self.assertIn("**379 dossiês individuais**", (
             META / "CATALOGO-GLOBAL-MAGIAS.md"
         ).read_text(encoding="utf-8"))
         self.assertIn("0 novas provas binary-exact", self.status)
@@ -395,10 +396,10 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**229 dossiês cross-domain individualmente revisados**", self.other)
         self.assertIn("0 novos spell/ritual IDs certificados", self.other)
         self.assertIn("0/489 JARs", self.other)
-        self.assertIn("**349 dossiês**", self.status)
-        self.assertIn("105/347 sem leitura individual", self.status)
-        self.assertIn("242/347", self.cross)
-        self.assertIn("**349 dossiês individuais**", (
+        self.assertIn("**379 dossiês**", self.status)
+        self.assertIn("75/347 sem leitura individual", self.status)
+        self.assertIn("272/347", self.cross)
+        self.assertIn("**379 dossiês individuais**", (
             META / "CATALOGO-GLOBAL-MAGIAS.md"
         ).read_text(encoding="utf-8"))
         self.assertIn("0 novas provas binary-exact", self.status)
@@ -453,10 +454,10 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**259 dossiês cross-domain individualmente revisados**", self.other)
         self.assertIn("0 novos spell/ritual IDs certificados", self.other)
         self.assertIn("0/489 JARs", self.other)
-        self.assertIn("**349 dossiês**", self.status)
-        self.assertIn("105/347 sem leitura individual", self.status)
-        self.assertIn("242/347", self.cross)
-        self.assertIn("**349 dossiês individuais**", (
+        self.assertIn("**379 dossiês**", self.status)
+        self.assertIn("75/347 sem leitura individual", self.status)
+        self.assertIn("272/347", self.cross)
+        self.assertIn("**379 dossiês individuais**", (
             META / "CATALOGO-GLOBAL-MAGIAS.md"
         ).read_text(encoding="utf-8"))
         self.assertIn("0 novas provas binary-exact", self.status)
@@ -540,8 +541,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("212/347", self.other)
         self.assertIn("319 dossiês cross-domain individualmente revisados", self.other)
         self.assertIn("135/347", self.other)
-        self.assertIn("**349 dossiês**", self.status)
-        self.assertIn("**349 dossiês individuais**", (
+        self.assertIn("**379 dossiês**", self.status)
+        self.assertIn("**379 dossiês individuais**", (
             META / "CATALOGO-GLOBAL-MAGIAS.md"
         ).read_text(encoding="utf-8"))
 
@@ -590,10 +591,63 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**349**", self.eighth)
         self.assertIn("0/489 JARs", self.eighth)
         self.assertIn("Nenhuma nova identidade", self.eighth)
-        self.assertIn("**349 dossiês**", self.status)
-        self.assertIn("105/347 sem leitura individual", self.status)
-        self.assertIn("242/347", self.cross)
-        self.assertIn("**349 dossiês individuais**", (
+        self.assertIn("**379 dossiês**", self.status)
+        self.assertIn("75/347 sem leitura individual", self.status)
+        self.assertIn("272/347", self.cross)
+        self.assertIn("**379 dossiês individuais**", (
+            META / "CATALOGO-GLOBAL-MAGIAS.md"
+        ).read_text(encoding="utf-8"))
+        self.assertIn("0 novas provas binary-exact", self.status)
+
+    def test_other_ninth_pass_disjoint_pinned_and_binary_gates_preserved(self):
+        pattern = r"^\| #(\d{3}) \| \[.+?\]\((https://[^)]+)\) \|"
+        links = re.findall(pattern, self.ninth, re.MULTILINE)
+        expected = [
+            486, 487, 489, 490, 492, 493, 494, 496, 498, 499,
+            504, 505, 508, 509, 512, 515, 517, 518, 519, 520,
+            522, 524, 529, 532, 535, 536, 537, 540, 545, 555,
+        ]
+        found = [int(n) for n, _ in links]
+        self.assertEqual(expected, found)
+        self.assertEqual(30, len(set(found)))
+        sibling_prefix = (
+            "https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/"
+            "de80b186357cad20ba5b81892a8682777e96e35a/"
+        )
+        self.assertTrue(all(url.startswith(sibling_prefix) for _, url in links))
+        historical = {int(n) for n in re.findall(
+            r"^\| #(\d{3}) \|", self.other, re.MULTILINE,
+        )}
+        for prev in (self.sixth, self.seventh, self.eighth):
+            old = {int(n) for n, _ in re.findall(
+                pattern, prev, re.MULTILINE,
+            )}
+            self.assertTrue(historical.isdisjoint(old))
+            historical |= old
+        self.assertEqual(242, len(historical))
+        self.assertTrue(historical.isdisjoint(found))
+        manifest = json.loads(
+            (QA / "nonmagic_physical_manifest_2026-10-08.json").read_text(encoding="utf-8")
+        )
+        other = {row["physical_number"] for row in manifest["rows"]
+                 if row["triage_group"] == "OTHER"}
+        audited = historical | set(found)
+        self.assertEqual(347, len(other))
+        self.assertTrue(audited.issubset(other))
+        self.assertEqual(272, len(audited))
+        self.assertEqual(75, len(other - audited))
+        self.assertIn("**272/347**", self.other)
+        self.assertIn("**75/347**", self.other)
+        self.assertIn("379 dossiês cross-domain individualmente revisados", self.other)
+        self.assertIn("**272/347", self.ninth)
+        self.assertIn("**75/347", self.ninth)
+        self.assertIn("**379 dossiês", self.ninth)
+        self.assertIn("0/489 JARs", self.ninth)
+        self.assertIn("Nenhuma identidade nova", self.ninth)
+        self.assertIn("**379 dossiês**", self.status)
+        self.assertIn("75/347 sem leitura individual", self.status)
+        self.assertIn("272/347", self.cross)
+        self.assertIn("**379 dossiês individuais**", (
             META / "CATALOGO-GLOBAL-MAGIAS.md"
         ).read_text(encoding="utf-8"))
         self.assertIn("0 novas provas binary-exact", self.status)
