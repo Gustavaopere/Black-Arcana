@@ -40,3 +40,16 @@ python3 docs/qa/nonmagic_physical_jar_triage_test.py
 ```
 
 Estes testes usam arquivos ZIP sintéticos, sem depender da instância real. Os resultados passam a ser parte da CI, mas **não** são prova de JAR físico carregado.
+
+
+## Posição física #272 — dossiê ausente, identidade declarada
+
+A [reconciliação #272](../../wiki/modpack-catalog/meta/EXCECAO-PHYSICAL-272-2026-10-09.md) informa que a modlist do sibling declara o arquivo `factory_construction_registry_probe-0.1.0.jar`, versão `0.1.0` e mod ID `factory_construction_registry_probe`, mas **não há dossiê certificado nem SHA do binário real**. A referência do mod ID é uma declaração documental, não extração do JAR.
+
+Com a instância real disponível, executar somente esta posição:
+
+```bash
+python3 docs/qa/nonmagic_physical_jar_triage.py --instance "/caminho/da/instancia" --physical-numbers "272" > nonmagic-272-triage.json
+```
+
+Verificar se o resultado retornou `FINGERPRINTED` com hashes. Mesmo esse status não comprova registros de spells, mod ID embutido, gameplay ou configuração: isso exige verificação posterior de metadata e runtime. `MISSING`, `INVALID_ZIP_JAR`, `UNREADABLE` e demais falhas devem manter o caso **⛔**. O comando acima é um procedimento e **não foi executado na instalação do usuário**.
