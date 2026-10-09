@@ -2,7 +2,7 @@
 
 **Início: 2026-10-09 · Base Black Arcana `main@a982f963264db33b4cc9bd478f07dae5b8fc0372` · modlist sibling `de80b186357cad20ba5b81892a8682777e96e35a`.**
 
-Este é um inventário **🟡 em revisão documental**. O snapshot físico pinado tem **587** posições no total (97 `Magic` + 489 outros JARs + 1 loader); destes 489, **347** foram classificados `OTHER` pelo [manifesto](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json). Após os cinco lotes documentados abaixo, foram lidos **152/347** dossiês distintos, com **195/347** ainda sem leitura individual, sem alterar a classificação física das linhas. Fonte de escopo e evidência: cada dossiê sibling SHA-pinned no link; não se trata de nova inspeção dos binários instalados.
+Este é um inventário **🟡 em revisão documental**. O snapshot físico pinado tem **587** posições no total (97 `Magic` + 489 outros JARs + 1 loader); destes 489, **347** foram classificados `OTHER` pelo [manifesto](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json). Após os cinco lotes incorporados neste documento e o [sexto lote separado](AUDITORIA-OTHER-LOTE-6-2026-10-09.md), foram lidos **182/347** dossiês distintos, com **165/347** ainda sem leitura individual, sem alterar a classificação física das linhas. Fonte de escopo e evidência: cada dossiê sibling SHA-pinned no link; não se trata de nova inspeção dos binários instalados.
 
 ## Primeiro lote — 32 dossiês individuais do grupo `OTHER`
 
@@ -246,3 +246,7 @@ A marca ✅ de uma pasta do *sibling* significa que esse dossiê de modlist exis
 - **QA geral:** a [CI pós-merge do PR #713](https://github.com/Gustavaopere/Black-Arcana/actions/runs/37938438924) foi consultada e concluiu `success`. Isso não substitui CI da próxima branch nem testes de instância.
 - **0/489 JARs não-Magic fisicamente inspecionados neste trabalho, 0 novos spell/ritual IDs certificados.** Mínimo global 1851 e escopo operacional 1849 preservados; permanecem 39 provas provider binary-exact, 14 rotas Survival e o ritual `black_arcana:veil_anchor_consecration` ⛔ bloqueado na Stage 06.05.
 - **Próximo gate:** examinar os 195 `OTHER` sem dossiê individual revisado; não supor ficha ou mod ID para #272, cuja documentação está ausente. Obter JAR/config/script/datapack da instalação para resultados de registry/efeitos e aquisição confiáveis.
+
+## Sexto lote — índice do complemento (2026-10-09)
+
+A [sexta rodada documental](AUDITORIA-OTHER-LOTE-6-2026-10-09.md) verifica 30 dossiês adicionais do grupo `OTHER`, com links fixados ao SHA do sibling e checagem de posições sem sobreposição: **182/347 lidos, 165/347 restantes**, **289 dossiês cross-domain individualmente revisados**. A exceção prioritária é BjornLib/Ability Registry, ainda ⚠️ sem identidade de magia comprovada. Os cinco lotes acima são preservados como checkpoints históricos e suas contagens não foram retroativamente reescritas.
