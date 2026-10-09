@@ -225,8 +225,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertTrue(set(ids).issubset(other))
         self.assertEqual(315, len(other - set(ids)))
 
-        self.assertIn("**32/347**", self.other)
-        self.assertIn("**315/347**", self.other)
+        self.assertIn("**32/347 `OTHER` lidos individualmente**", self.other)
+        self.assertIn("**315/347 `OTHER` ainda sem revisão individual**", self.other)
         self.assertIn("**139 dossiês cross-domain individualmente revisados**", self.other)
         self.assertIn("**0/489 JARs", self.other)
         self.assertIn("0 novas identidades de spell certificadas", self.other)
