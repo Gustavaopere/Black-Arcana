@@ -2,7 +2,7 @@
 
 **Início: 2026-10-09 · Base Black Arcana `main@a982f963264db33b4cc9bd478f07dae5b8fc0372` · modlist sibling `de80b186357cad20ba5b81892a8682777e96e35a`.**
 
-Este é um inventário **🟡 em revisão documental**. O snapshot físico pinado tem **587** posições no total (97 `Magic` + 489 outros JARs + 1 loader); destes 489, **347** foram classificados `OTHER` pelo [manifesto](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json). Após os cinco lotes incorporados neste documento e o [sexto lote separado](AUDITORIA-OTHER-LOTE-6-2026-10-09.md), foram lidos **182/347** dossiês distintos, com **165/347** ainda sem leitura individual, sem alterar a classificação física das linhas. Fonte de escopo e evidência: cada dossiê sibling SHA-pinned no link; não se trata de nova inspeção dos binários instalados.
+Este é um inventário **🟡 em revisão documental**. O snapshot físico pinado tem **587** posições no total (97 `Magic` + 489 outros JARs + 1 loader); destes 489, **347** foram classificados `OTHER` pelo [manifesto](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json). Após os cinco lotes incorporados neste documento, o [sexto lote](AUDITORIA-OTHER-LOTE-6-2026-10-09.md) e o [sétimo lote](AUDITORIA-OTHER-LOTE-7-2026-10-09.md), foram lidos **212/347** dossiês distintos, com **135/347** ainda sem leitura individual, sem alterar a classificação física das linhas. Fonte de escopo e evidência: cada dossiê sibling SHA-pinned no link; não se trata de nova inspeção dos binários instalados.
 
 ## Primeiro lote — 32 dossiês individuais do grupo `OTHER`
 
@@ -250,3 +250,8 @@ A marca ✅ de uma pasta do *sibling* significa que esse dossiê de modlist exis
 ## Sexto lote — índice do complemento (2026-10-09)
 
 A [sexta rodada documental](AUDITORIA-OTHER-LOTE-6-2026-10-09.md) verifica 30 dossiês adicionais do grupo `OTHER`, com links fixados ao SHA do sibling e checagem de posições sem sobreposição: **182/347 lidos, 165/347 restantes**, **289 dossiês cross-domain individualmente revisados**. A exceção prioritária é BjornLib/Ability Registry, ainda ⚠️ sem identidade de magia comprovada. Os cinco lotes acima são preservados como checkpoints históricos e suas contagens não foram retroativamente reescritas.
+
+
+## Sétimo lote — índice do complemento (2026-10-09)
+
+O [sétimo lote documental](AUDITORIA-OTHER-LOTE-7-2026-10-09.md) adiciona 30 novas posições `OTHER` com documentação pinada ao SHA do sibling: **212/347 revisadas**, **135/347 restantes**, **319 dossiês cross-domain individualmente revisados**. ⚠️ HazentouveLib/AbstractTaggedSpell, InsaneLib/world-state e efeitos de fluidos continuam condicionados a registry, autoria e versão binária real. A contagem semântica de magias não foi promovida por documentação de bibliotecas.
