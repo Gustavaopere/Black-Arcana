@@ -55,7 +55,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**79**", section)
         self.assertIn("0/489 JARs", section)
         self.assertIn("0 novas identidades mágicas certificadas", section)
-        self.assertIn("**73 dossiês**", self.status)
+        self.assertIn("**107 dossiês**", self.status)
         self.assertIn("auditoria binária não executada", self.status)
 
     def test_fourth_pass_manifest_disjoint_and_not_binary_proof(self):
@@ -90,14 +90,14 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**59/96**", section)
         self.assertIn("**0/489 JARs inspecionados na instância", section)
         self.assertIn("**0 novas magias promovidas**", section)
-        self.assertIn("**73 dossiês**", self.status)
+        self.assertIn("**107 dossiês**", self.status)
         self.assertIn("auditoria binária não executada", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
 
     def test_fifth_pass_disjoint_and_denominator_open(self):
         section = self.cross.split(
             "## Quinto ciclo — vinte e cinco dossiês cross-domain adicionais", 1
-        )[1].split("## Candidatos lexicais, estado por linha física", 1)[0]
+        )[1].split("## Sexto ciclo — trinta e quatro dossiês cross-domain adicionais", 1)[0]
         ids = [int(x) for x in re.findall(r"^\| #(\d{3}) \|", section, re.MULTILINE)]
         expected = [
             17, 27, 28, 62, 73, 89, 93, 116, 117, 133, 140, 145, 146,
@@ -132,7 +132,61 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**34/96**", section)
         self.assertIn("**0/489 JARs", section)
         self.assertIn("0 novos spell/ritual IDs certificados", section)
-        self.assertIn("**73 dossiês**", self.status)
+        self.assertIn("**107 dossiês**", self.status)
+        self.assertIn("auditoria binária não executada", self.status)
+        self.assertIn("0 novas provas binary-exact", self.status)
+
+    def test_sixth_pass_finishes_category_dossiers_without_binary_promotion(self):
+        section = self.cross.split(
+            "## Sexto ciclo — trinta e quatro dossiês cross-domain adicionais", 1
+        )[1].split("## Candidatos lexicais, estado por linha física", 1)[0]
+        matches = list(re.finditer(
+            r"^\| #(\d{3}) \| \[[^\]]+\]\((https://[^)]+)\) \|",
+            section, re.MULTILINE,
+        ))
+        ids = [int(m.group(1)) for m in matches]
+        expected = [
+            252, 254, 255, 282, 292, 332, 354, 356, 369, 379, 380,
+            385, 390, 413, 421, 422, 423, 424, 459, 463, 506, 507,
+            523, 541, 546, 549, 561, 577, 579, 581, 582, 583, 584, 586,
+        ]
+        self.assertEqual(expected, ids)
+        self.assertEqual(34, len(set(ids)))
+        sibling_pin = (
+            "Gustavaopere/neoforge-rpg-skilltree/blob/"
+            "de80b186357cad20ba5b81892a8682777e96e35a/"
+            "PROJECT-INSTRUCTIONS/modlist/"
+        )
+        self.assertTrue(all(sibling_pin in m.group(2) for m in matches))
+
+        manifest = json.loads(
+            (QA / "nonmagic_physical_manifest_2026-10-08.json").read_text(encoding="utf-8")
+        )
+        category = {
+            x["physical_number"] for x in manifest["rows"]
+            if x["triage_group"] == "RPG_GEAR_MOBS_DIMENSIONS"
+        }
+        self.assertEqual(96, len(category))
+        prior = {
+            121, 334, 404, 395, 320, 335, 464,
+            71, 74, 84, 193, 260, 321, 371, 433, 452, 568,
+            96, 102, 125, 147, 153, 175, 206, 223, 262, 263, 269,
+            290, 415, 418, 426, 460, 516, 560, 578, 580,
+            17, 27, 28, 62, 73, 89, 93, 116, 117, 133, 140, 145,
+            146, 154, 159, 163, 174, 177, 189, 198, 211, 238, 239,
+            240, 243,
+        }
+        self.assertEqual(62, len(prior))
+        self.assertFalse(prior.intersection(ids))
+        self.assertEqual(category, prior | set(ids))
+
+        self.assertIn("**96/96**", section)
+        self.assertIn("**107 dossiês individuais**", section)
+        self.assertIn("**347/347 JARs sem revisão", section)
+        self.assertIn("**0/489 JARs", section)
+        self.assertIn("0 novas magias certificadas", section)
+        self.assertIn("**107 dossiês**", self.status)
+        self.assertIn("142/142 candidatos priorizados", self.status)
         self.assertIn("auditoria binária não executada", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
 
