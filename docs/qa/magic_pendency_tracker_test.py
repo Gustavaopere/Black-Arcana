@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check the five operational pending items against their evidence inventories."""
 from __future__ import annotations
+import json
 import re
 import unittest
 from pathlib import Path
@@ -42,7 +43,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
     def test_third_pass_doc_triage_keeps_individual_registry_proof_open(self):
         section = self.cross.split(
             "## Terceiro ciclo — dez dossiês cross-domain adicionais", 1
-        )[1].split("## Candidatos lexicais, estado por linha física", 1)[0]
+        )[1].split("## Quarto ciclo — vinte dossiês cross-domain adicionais", 1)[0]
         ids = re.findall(r"^\| #(\d{3}) \|", section, re.MULTILINE)
         self.assertEqual(
             ["071", "074", "084", "193", "260", "321", "371", "433", "452", "568"],
@@ -54,8 +55,44 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**79**", section)
         self.assertIn("0/489 JARs", section)
         self.assertIn("0 novas identidades mágicas certificadas", section)
-        self.assertIn("**28 dossiês**", self.status)
+        self.assertIn("**48 dossiês**", self.status)
         self.assertIn("auditoria binária não executada", self.status)
+
+    def test_fourth_pass_manifest_disjoint_and_not_binary_proof(self):
+        section = self.cross.split(
+            "## Quarto ciclo — vinte dossiês cross-domain adicionais", 1
+        )[1].split("## Candidatos lexicais, estado por linha física", 1)[0]
+        ids = [int(x) for x in re.findall(r"^\| #(\d{3}) \|", section, re.MULTILINE)]
+        self.assertEqual(
+            [96, 102, 125, 147, 153, 175, 206, 223, 262, 263,
+             269, 290, 415, 418, 426, 460, 516, 560, 578, 580],
+            ids,
+        )
+        self.assertEqual(20, len(set(ids)))
+        prior_category = {121, 334, 404, 395, 320, 335, 464, 71, 74, 84,
+                          193, 260, 321, 371, 433, 452, 568}
+        self.assertFalse(prior_category.intersection(ids))
+        manifest = json.loads(
+            (QA / "nonmagic_physical_manifest_2026-10-08.json").read_text(encoding="utf-8")
+        )
+        rows = {row["physical_number"]: row for row in manifest["rows"]}
+        self.assertEqual(489, len(rows))
+        self.assertEqual(96, sum(
+            row["triage_group"] == "RPG_GEAR_MOBS_DIMENSIONS"
+            for row in rows.values()
+        ))
+        self.assertTrue(all(
+            rows[number]["triage_group"] == "RPG_GEAR_MOBS_DIMENSIONS"
+            for number in ids
+        ))
+        self.assertIn("**48 dossiês individuais**", section)
+        self.assertIn("**37/96**", section)
+        self.assertIn("**59/96**", section)
+        self.assertIn("**0/489 JARs inspecionados na instância", section)
+        self.assertIn("**0 novas magias promovidas**", section)
+        self.assertIn("**48 dossiês**", self.status)
+        self.assertIn("auditoria binária não executada", self.status)
+        self.assertIn("0 novas provas binary-exact", self.status)
 
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
         section = self.binary.split("|---|---|---:|---|---|", 1)[1].split(
