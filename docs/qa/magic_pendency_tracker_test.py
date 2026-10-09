@@ -461,7 +461,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
 
     def test_other_sixth_pass_disjoint_source_pinned_and_not_binary_proof(self):
         anchors = re.findall(
-            r"^\\| #(\\d{3}) \\| \\[.+?\\]\\((https://[^)]+)\\) \\|",
+            r"^\| #(\d{3}) \| \[.+?\]\((https://[^)]+)\) \|",
             self.sixth, re.MULTILINE,
         )
         expected = [
@@ -477,7 +477,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         )
         self.assertTrue(all(url.startswith(sibling_prefix) for _, url in anchors))
         previous = {int(n) for n in re.findall(
-            r"^\\| #(\\d{3}) \\|", self.other, re.MULTILINE,
+            r"^\| #(\d{3}) \|", self.other, re.MULTILINE,
         )}
         self.assertEqual(152, len(previous))
         self.assertTrue(previous.isdisjoint(found))
