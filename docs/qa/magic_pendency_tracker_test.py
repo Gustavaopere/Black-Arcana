@@ -39,6 +39,24 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("489/489 nomes físicos", self.status)
         self.assertIn("**não executado na instância real**", self.status)
 
+    def test_third_pass_doc_triage_keeps_individual_registry_proof_open(self):
+        section = self.cross.split(
+            "## Terceiro ciclo — dez dossiês cross-domain adicionais", 1
+        )[1].split("## Candidatos lexicais, estado por linha física", 1)[0]
+        ids = re.findall(r"^\| #(\d{3}) \|", section, re.MULTILINE)
+        self.assertEqual(
+            ["071", "074", "084", "193", "260", "321", "371", "433", "452", "568"],
+            ids,
+        )
+        self.assertIn("**28 dossiês**", section)
+        self.assertIn("11 candidatos `LEXICAL_NAME`", section)
+        self.assertIn("17 de `RPG_GEAR_MOBS_DIMENSIONS`", section)
+        self.assertIn("**79**", section)
+        self.assertIn("0/489 JARs", section)
+        self.assertIn("0 novas identidades mágicas certificadas", section)
+        self.assertIn("**28 dossiês**", self.status)
+        self.assertIn("auditoria binária não executada", self.status)
+
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
         section = self.binary.split("|---|---|---:|---|---|", 1)[1].split(
             "\n## Requisitos mínimos", 1
