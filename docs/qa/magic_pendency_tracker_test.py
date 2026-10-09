@@ -16,6 +16,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
     def setUpClass(cls):
         cls.status = (META / "PENDENCIAS-MAGICAS-ATUAIS.md").read_text(encoding="utf-8")
         cls.cross = (META / "AUDITORIA-CROSS-DOMAIN-2026-10-08.md").read_text(encoding="utf-8")
+        cls.other = (META / "AUDITORIA-OTHER-2026-10-09.md").read_text(encoding="utf-8")
         cls.binary = (META / "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
         cls.conditional = (META / "CONDITIONAL-PROVIDER-CLOSURE.md").read_text(encoding="utf-8")
         cls.stage = (QA / "ritual-veil-anchor-activation-design-gate-2026-10-08.md").read_text(encoding="utf-8")
@@ -188,6 +189,51 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**107 dossiês**", self.status)
         self.assertIn("142/142 candidatos priorizados", self.status)
         self.assertIn("auditoria binária não executada", self.status)
+        self.assertIn("0 novas provas binary-exact", self.status)
+
+    def test_other_first_pass_dossiers_are_manifest_pinned_not_spell_proof(self):
+        section = self.other.split(
+            "## Primeiro lote — 32 dossiês individuais do grupo ", 1
+        )[1].split("## Limites de autoridade e próximos gates", 1)[0]
+        rows = list(re.finditer(
+            r"^\| #(\d{3}) \| \[[^\]]+\]\((https://[^)]+)\) \|",
+            section, re.MULTILINE,
+        ))
+        ids = [int(m.group(1)) for m in rows]
+        expected = [
+            12, 16, 66, 76, 105, 106, 118, 124, 127, 132, 136,
+            151, 164, 172, 194, 196, 197, 200, 203, 218, 242, 244,
+            267, 286, 348, 434, 514, 531, 533, 542, 543, 551,
+        ]
+        self.assertEqual(expected, ids)
+        self.assertEqual(32, len(set(ids)))
+
+        sibling_prefix = (
+            "https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/"
+            "de80b186357cad20ba5b81892a8682777e96e35a/"
+            "PROJECT-INSTRUCTIONS/modlist/"
+        )
+        self.assertTrue(all(m.group(2).startswith(sibling_prefix) for m in rows))
+
+        manifest = json.loads(
+            (QA / "nonmagic_physical_manifest_2026-10-08.json").read_text(encoding="utf-8")
+        )
+        all_rows = {r["physical_number"]: r for r in manifest["rows"]}
+        other = {n for n, row in all_rows.items()
+                 if row["triage_group"] == "OTHER"}
+        self.assertEqual(347, len(other))
+        self.assertTrue(set(ids).issubset(other))
+        self.assertEqual(315, len(other - set(ids)))
+
+        self.assertIn("**32/347**", self.other)
+        self.assertIn("**315/347**", self.other)
+        self.assertIn("**139 dossiês cross-domain individualmente revisados**", self.other)
+        self.assertIn("**0/489 JARs", self.other)
+        self.assertIn("0 novas identidades de spell certificadas", self.other)
+        self.assertIn("**139 dossiês**", self.status)
+        self.assertIn("315/347 sem leitura individual", self.status)
+        self.assertIn("auditoria binária não executada", self.status)
+        self.assertIn("AUDITORIA-OTHER-2026-10-09.md", self.cross)
         self.assertIn("0 novas provas binary-exact", self.status)
 
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
