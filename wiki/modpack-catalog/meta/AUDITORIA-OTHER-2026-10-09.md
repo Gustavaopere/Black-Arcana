@@ -2,7 +2,7 @@
 
 **Início: 2026-10-09 · Base Black Arcana `main@a982f963264db33b4cc9bd478f07dae5b8fc0372` · modlist sibling `de80b186357cad20ba5b81892a8682777e96e35a`.**
 
-Este é um inventário **🟡 em revisão documental**. O snapshot físico pinado tem **587** posições no total (97 `Magic` + 489 outros JARs + 1 loader); destes 489, **347** foram classificados `OTHER` pelo [manifesto](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json). Após os cinco lotes incorporados neste documento e os [lotes 6](AUDITORIA-OTHER-LOTE-6-2026-10-09.md), [7](AUDITORIA-OTHER-LOTE-7-2026-10-09.md), [8](AUDITORIA-OTHER-LOTE-8-2026-10-09.md) e [9](AUDITORIA-OTHER-LOTE-9-2026-10-09.md), foram lidos **272/347** dossiês distintos, com **75/347** ainda sem leitura individual, sem alterar a classificação física das linhas. Fonte de escopo e evidência: cada dossiê sibling SHA-pinned no link; não se trata de nova inspeção dos binários instalados.
+Este é um inventário **🟡 em revisão documental**. O snapshot físico pinado tem **587** posições no total (97 `Magic` + 489 outros JARs + 1 loader); destes 489, **347** foram classificados `OTHER` pelo [manifesto](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json). Após os cinco lotes incorporados neste documento e os [lotes 6](AUDITORIA-OTHER-LOTE-6-2026-10-09.md), [7](AUDITORIA-OTHER-LOTE-7-2026-10-09.md), [8](AUDITORIA-OTHER-LOTE-8-2026-10-09.md), [9](AUDITORIA-OTHER-LOTE-9-2026-10-09.md) e [10](AUDITORIA-OTHER-LOTE-10-2026-10-09.md), foram lidos **302/347** dossiês distintos, com **45/347** ainda sem leitura individual, sem alterar a classificação física das linhas. Fonte de escopo e evidência: cada dossiê sibling SHA-pinned no link; não se trata de nova inspeção dos binários instalados.
 
 ## Primeiro lote — 32 dossiês individuais do grupo `OTHER`
 
@@ -265,3 +265,8 @@ O [oitavo lote documental](AUDITORIA-OTHER-LOTE-8-2026-10-09.md) adiciona **30 d
 ## Nono lote — índice do complemento (2026-10-09)
 
 O [nono lote documental](AUDITORIA-OTHER-LOTE-9-2026-10-09.md) registra **30 dossiês `OTHER`** adicionais, SHA-pinned ao sibling e sem duplicação: **272/347 revisados, 75/347 restantes e 379 dossiês cross-domain individualmente revisados**. Os riscos de sublevels físicos Sable, Sprinkler do Create Slice & Dice, patch de lava Deep Seas e storage Sophisticated são condicionados a configuração, versão binária e owner real. Não foram certificados novos spell IDs nesta rodada; contagens dos lotes anteriores permanecem checkpoints históricos.
+
+
+## Décimo lote — índice do complemento (2026-10-09)
+
+O [décimo lote documental](AUDITORIA-OTHER-LOTE-10-2026-10-09.md) adiciona **30 dossiês `OTHER`** com caminho real SHA-pinned ao sibling, sem sobreposição: **302/347 revisados**, **45/347 restantes**, **409 dossiês cross-domain individualmente revisados**. Integrações Waystones↔Sable, FTB Teams, GeckoLib/TenshiLib, SmartBrainLib e bibliotecas de configuração permanecem condicionadas a autoridade do provider, registries reais e configuração implantada. Checkpoints dos lotes 1–9 foram preservados; nenhuma nova identidade semântica de magia foi certificada.
