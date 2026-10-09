@@ -1,0 +1,33 @@
+{
+  "schema": "black_arcana_missing_nonmagic_dossier_evidence_v1",
+  "physical_number": 272,
+  "snapshot": {
+    "repository": "Gustavaopere/neoforge-rpg-skilltree",
+    "commit": "de80b186357cad20ba5b81892a8682777e96e35a",
+    "path": "PROJECT-INSTRUCTIONS/modlist/modlist.md",
+    "source_section": "Exceções estruturais e bloqueios — 29/09/2026",
+    "physical_table_row": 272
+  },
+  "observed_from_pinned_sibling": {
+    "name": "Factory Construction Registry Probe",
+    "jar_filename": "factory_construction_registry_probe-0.1.0.jar",
+    "version": "0.1.0",
+    "declared_mod_id": "factory_construction_registry_probe",
+    "dossier_available": false,
+    "dossier_category_assigned": false
+  },
+  "evidence_boundaries": {
+    "identity_source": "ATTESTED_BY_PINNED_SIBLING_MODLIST_NOT_REEXTRACTED_FROM_BINARY",
+    "installed_jar_bytes_examined": false,
+    "actual_jar_sha1": null,
+    "actual_jar_sha256": null,
+    "embedded_neoforge_mod_id_verified": false,
+    "registry_entries_verified": false,
+    "spells_or_rituals_found": null,
+    "gameplay_owner_verified": false,
+    "survival_acquisition_verified": false,
+    "proven_spells_added": 0
+  },
+  "status": "BLOCKED_MISSING_DOSSIER_AND_REAL_JAR_EVIDENCE",
+  "next_action": "Use nonmagic_physical_jar_triage.py --physical-numbers 272 with the real authorized Minecraft instance; reconcile SHA-256, mods.toml/neoforge.mods.toml and runtime registries before semantic classification. A ZIP filename scan alone is not registry or spell proof."
+}
