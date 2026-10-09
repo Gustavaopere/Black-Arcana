@@ -195,7 +195,7 @@ O comando não foi executado no modpack atual. Mesmo quando houver ZIP filename 
 - **Fila sugerida para futura inspeção da instância:** #421 NukaTeam's Gun Lib (atribuição de projéteis aos consumers), #459 Prometheus (origem de fogo de consumidores), #463 Pufferfish's Attributes (atributos mágicos não são cast), #586 YUNG's Cave Biomes (mobs/itens próprios), além de #028 Animal Husbandry, #163 Create: Misc & Things e #460 Protection Pixel vistos antes. Resolver via JAR/registry/config/trigger real, não por assunto/nome.
 - **Risco não encerrado no escopo técnico do sibling:** #385 `lootintegrations_yungs-1.6.jar` relata runtime metadata `1` e página de publicação associada a outra game-version; isso exige teste do artefato efetivo, mas não prova incompatibilidade nem define magia.
 
-**Próximo gate de catalogação:** as [quatro primeiras passadas documentais `OTHER`](AUDITORIA-OTHER-2026-10-09.md) registraram **122/347** JARs com dossiê individual lido (32 + 30 + 30 + 30), **225/347** ainda sem leitura; permanecem abertas inspeção binária dos 489 JARs e certificação de spells/registries. O fechamento das 96 categorias prioritárias é apenas revisão de *dossiês*, não `registry coverage=100%`.
+**Próximo gate de catalogação:** as [cinco primeiras passadas documentais `OTHER`](AUDITORIA-OTHER-2026-10-09.md) registraram **152/347** JARs com dossiê individual lido (32 + 30 + 30 + 30 + 30), **195/347** ainda sem leitura; permanecem abertas inspeção binária dos 489 JARs e certificação de spells/registries. O fechamento das 96 categorias prioritárias é apenas revisão de *dossiês*, não `registry coverage=100%`.
 
 ## Candidatos lexicais, estado por linha física
 
@@ -283,6 +283,6 @@ O comando não foi executado no modpack atual. Mesmo quando houver ZIP filename 
 ## Próximos gates
 
 1. Auditar de modo físico/binary-exact os 11 candidatos quando houver acesso aos JARs exatos; cruzar registries, metadata, recursos e eventos player-owned sem reutilizar implementação de terceiros.
-2. Prosseguir a [auditoria documental `OTHER`](AUDITORIA-OTHER-2026-10-09.md) com os **225/347** JARs ainda sem leitura individual (122/347 lidos), sem perder os 489/489 JARs do escopo binário e seus eventuais datapacks, scripts ou efeitos mágicos; nenhuma inferência negativa por ausência da palavra magic.
+2. Prosseguir a [auditoria documental `OTHER`](AUDITORIA-OTHER-2026-10-09.md) com os **195/347** JARs ainda sem leitura individual (152/347 lidos), sem perder os 489/489 JARs do escopo binário e seus eventuais datapacks, scripts ou efeitos mágicos; nenhuma inferência negativa por ausência da palavra magic.
 3. Adicionar ficha e ajustar ledger **apenas** quando uma nova identidade semântica comprovada for encontrada. Catálogo de infraestrutura +0 não equivale a ação mágica provider-owned.
 4. Conservar Traveloptics e o Deeper and Darker base fora do escopo operacional do usuário, preservando seus dossiês históricos; Deeper & Darker Spellbooks segue em escopo.
