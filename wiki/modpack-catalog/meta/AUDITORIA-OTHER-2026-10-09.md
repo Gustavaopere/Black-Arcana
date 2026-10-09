@@ -99,4 +99,3 @@ A marca ✅ de uma pasta do *sibling* significa que esse dossiê de modlist exis
 - **#363 KubeJS**, **#362 KubeJS Create**, **#364 KubeJS Curios**, **#365 KubeJS Additions**, **#386 LootJS** e **#388 Lychee:** sem scripts/datapacks ativos da instância não se pode certificar nova magia, rito nem ausência de poder customizado. Scripts devem ser inspecionados com provenance e sem copiar código de terceiro.
 - **0/489 JARs cross-domain fisicamente inspecionados nesta continuação; 0 novas identidades de spell certificadas.** Mínimo global 1851 preservado; 39 provas de registry binário, 14 rotas Survival e Stage 06.05 continuam pendentes.
 - **Próximo passo:** revisar os 285 dossiês `OTHER` restantes por número físico; distinguir casos com dossiê ausente, como #272 (`Factory Construction Registry Probe`), de itens com ficha disponível, sem completar informação faltante por heurística de nome.
-
