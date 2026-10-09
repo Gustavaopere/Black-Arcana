@@ -55,7 +55,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**79**", section)
         self.assertIn("0/489 JARs", section)
         self.assertIn("0 novas identidades mágicas certificadas", section)
-        self.assertIn("**28 dossiês**", self.status)
+        self.assertIn("**48 dossiês**", self.status)
         self.assertIn("auditoria binária não executada", self.status)
 
     def test_fourth_pass_manifest_disjoint_and_not_binary_proof(self):
