@@ -62,3 +62,8 @@
 - ⚠️ **#294 Fusion** tem arquivo físico de distribuição 1.3.15a e metadata runtime 1.3.15+a; o dossiê realmente se chama `fusion v1.3.15+a.md` (sem prefixo ✅). O **nome do dossiê não certifica** estado de magia/provedor. **#376** tem versão documentada com sufixo 1.21.9 em pack-alvo 1.21.1; compatibilidade runtime não foi presumida.
 - **Nenhum ID adicional de spell, glyph, ritual ou ação mágica foi certificado por estes dossiês. 0/489 JARs não-Magic inspecionados fisicamente nesta sequência.** Preservados **164 diretórios estruturais ✅**, mínimo semântico **1851 global / 1849 no escopo**, ⚠️ **39 provas binary-exact**, ⚠️ **14 rotas de configuração/aquisição Survival** e ⛔ **Stage 06.05** sem ativação de jogador para `black_arcana:veil_anchor_consecration`. Não promover Stage 07.
 - **Próximo gate:** localizar fonte/artefato verificável para #272 e coletar JARs/configs/scripts/datapacks da instalação real para executar os coletores read-only. As 346 leituras de texto não comprovam ausência de magias fora da categoria `Magic` e não encerram a auditoria binária.
+
+
+## Retificação de proveniência para #272 (2026-10-09)
+
+A [reconciliação de identidade do #272](EXCECAO-PHYSICAL-272-2026-10-09.md) confirmou que a **modlist sibling pinada já declara** o filename `factory_construction_registry_probe-0.1.0.jar`, versão `0.1.0` e mod ID `factory_construction_registry_probe`. O texto original de ausência de mod ID deve ser entendido **apenas como ausência de verificação independente dos metadados do JAR**, não como falta de declaração no índice. O dossiê próprio continua **ausente (⛔)**; nenhum binário, registry, spell ou teste Survival foi acessado; **346/347** permanece inalterado.
