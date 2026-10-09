@@ -288,7 +288,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("0 novas provas binary-exact", self.status)
 
     def test_other_third_pass_completes_92_documentary_dossiers_without_registry_proof(self):
-        pattern = r"^\| #(\d{3}) \| \[[^\]]+\]\((https://[^)]+)\) \|"
+        pattern = r"^\| #(\d{3}) \| \[.+?\]\((https://[^)]+)\) \|"
         first = self.other.split(
             "## Primeiro lote — 32 dossiês individuais do grupo", 1
         )[1].split("## Limites de autoridade e próximos gates", 1)[0]
