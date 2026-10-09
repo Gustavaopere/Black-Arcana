@@ -283,6 +283,6 @@ O comando não foi executado no modpack atual. Mesmo quando houver ZIP filename 
 ## Próximos gates
 
 1. Auditar de modo físico/binary-exact os 11 candidatos quando houver acesso aos JARs exatos; cruzar registries, metadata, recursos e eventos player-owned sem reutilizar implementação de terceiros.
-2. Prosseguir a [auditoria documental `OTHER`](AUDITORIA-OTHER-2026-10-09.md) com os **135/347** JARs ainda sem leitura individual (212/347 lidos), sem perder os 489/489 JARs do escopo binário e seus eventuais datapacks, scripts ou efeitos mágicos; nenhuma inferência negativa por ausência da palavra magic.
+2. Prosseguir a [auditoria documental `OTHER`](AUDITORIA-OTHER-2026-10-09.md) com os **105/347** JARs ainda sem leitura individual (242/347 lidos), sem perder os 489/489 JARs do escopo binário e seus eventuais datapacks, scripts ou efeitos mágicos; nenhuma inferência negativa por ausência da palavra magic.
 3. Adicionar ficha e ajustar ledger **apenas** quando uma nova identidade semântica comprovada for encontrada. Catálogo de infraestrutura +0 não equivale a ação mágica provider-owned.
 4. Conservar Traveloptics e o Deeper and Darker base fora do escopo operacional do usuário, preservando seus dossiês históricos; Deeper & Darker Spellbooks segue em escopo.

@@ -2,7 +2,7 @@
 
 **Início: 2026-10-09 · Base Black Arcana `main@a982f963264db33b4cc9bd478f07dae5b8fc0372` · modlist sibling `de80b186357cad20ba5b81892a8682777e96e35a`.**
 
-Este é um inventário **🟡 em revisão documental**. O snapshot físico pinado tem **587** posições no total (97 `Magic` + 489 outros JARs + 1 loader); destes 489, **347** foram classificados `OTHER` pelo [manifesto](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json). Após os cinco lotes incorporados neste documento, o [sexto lote](AUDITORIA-OTHER-LOTE-6-2026-10-09.md) e o [sétimo lote](AUDITORIA-OTHER-LOTE-7-2026-10-09.md), foram lidos **212/347** dossiês distintos, com **135/347** ainda sem leitura individual, sem alterar a classificação física das linhas. Fonte de escopo e evidência: cada dossiê sibling SHA-pinned no link; não se trata de nova inspeção dos binários instalados.
+Este é um inventário **🟡 em revisão documental**. O snapshot físico pinado tem **587** posições no total (97 `Magic` + 489 outros JARs + 1 loader); destes 489, **347** foram classificados `OTHER` pelo [manifesto](../../../docs/qa/nonmagic_physical_manifest_2026-10-08.json). Após os cinco lotes incorporados neste documento e os [lotes 6](AUDITORIA-OTHER-LOTE-6-2026-10-09.md), [7](AUDITORIA-OTHER-LOTE-7-2026-10-09.md) e [8](AUDITORIA-OTHER-LOTE-8-2026-10-09.md), foram lidos **242/347** dossiês distintos, com **105/347** ainda sem leitura individual, sem alterar a classificação física das linhas. Fonte de escopo e evidência: cada dossiê sibling SHA-pinned no link; não se trata de nova inspeção dos binários instalados.
 
 ## Primeiro lote — 32 dossiês individuais do grupo `OTHER`
 
@@ -255,3 +255,8 @@ A [sexta rodada documental](AUDITORIA-OTHER-LOTE-6-2026-10-09.md) verifica 30 do
 ## Sétimo lote — índice do complemento (2026-10-09)
 
 O [sétimo lote documental](AUDITORIA-OTHER-LOTE-7-2026-10-09.md) adiciona 30 novas posições `OTHER` com documentação pinada ao SHA do sibling: **212/347 revisadas**, **135/347 restantes**, **319 dossiês cross-domain individualmente revisados**. ⚠️ HazentouveLib/AbstractTaggedSpell, InsaneLib/world-state e efeitos de fluidos continuam condicionados a registry, autoria e versão binária real. A contagem semântica de magias não foi promovida por documentação de bibliotecas.
+
+
+## Oitavo lote — índice do complemento (2026-10-09)
+
+O [oitavo lote documental](AUDITORIA-OTHER-LOTE-8-2026-10-09.md) adiciona **30 dossiês `OTHER`** com documentação identificada e fixada ao commit do sibling, sem sobreposição: **242/347 lidos; 105/347 pendentes; 349 dossiês cross-domain individualmente revisados**. ⚠️ Livros Patchouli, scripts Rhino/KubeJS, XP de Pufferfish, projéteis Ritchie's e módulos Quark são superfícies condicionadas aos consumidores/configs e ao registry efetivo. Contagens de lotes anteriores são checkpoints históricos; zero novas identidades mágicas certificadas nesta etapa.
