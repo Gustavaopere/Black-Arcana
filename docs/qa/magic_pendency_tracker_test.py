@@ -43,7 +43,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
     def test_third_pass_doc_triage_keeps_individual_registry_proof_open(self):
         section = self.cross.split(
             "## Terceiro ciclo — dez dossiês cross-domain adicionais", 1
-        )[1].split("## Candidatos lexicais, estado por linha física", 1)[0]
+        )[1].split("## Quarto ciclo — vinte dossiês cross-domain adicionais", 1)[0]
         ids = re.findall(r"^\| #(\d{3}) \|", section, re.MULTILINE)
         self.assertEqual(
             ["071", "074", "084", "193", "260", "321", "371", "433", "452", "568"],
