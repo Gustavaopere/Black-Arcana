@@ -537,7 +537,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("0/489", self.seventh)
         self.assertIn("Nenhuma identidade nova", self.seventh)
         self.assertIn("212/347", self.other)
-        self.assertIn("319 dossiês individuais", self.other)
+        self.assertIn("319 dossiês cross-domain individualmente revisados", self.other)
         self.assertIn("135/347", self.other)
         self.assertIn("**319 dossiês**", self.status)
         self.assertIn("**319 dossiês individuais**", (
