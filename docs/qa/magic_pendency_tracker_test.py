@@ -43,7 +43,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         section = self.cross.split(
             "## Terceiro ciclo — dez dossiês cross-domain adicionais", 1
         )[1].split("## Candidatos lexicais, estado por linha física", 1)[0]
-        ids = re.findall(r"^\\| #(\\d{3}) \\|", section, re.MULTILINE)
+        ids = re.findall(r"^\| #(\d{3}) \|", section, re.MULTILINE)
         self.assertEqual(
             ["071", "074", "084", "193", "260", "321", "371", "433", "452", "568"],
             ids,
