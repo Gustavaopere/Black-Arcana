@@ -48,6 +48,18 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 
+## Coleta física reproduzível — integridade dos 69 fingerprints (2026-10-10)
+
+O coletor read-only `docs/qa/physical_provider_fingerprint_collector.py` lê os JARs correspondentes às **69 linhas** do crosswalk físico. Executar, a partir da raiz do Black Arcana, somente quando houver acesso autorizado à cópia real da instância:
+
+```bash
+python3 docs/qa/physical_provider_fingerprint_collector.py --instance "/caminho/da/instancia" > providers-69-fingerprint.json
+```
+
+**Garantia técnica do coletor:** a validação de ZIP e os hashes SHA-1/SHA-256 usam **um único descritor aberto por arquivo**, com `O_NOFOLLOW` quando disponível e comparação de identidade/tamanho/`mtime`/`ctime` antes e depois. O status `CHANGED_DURING_SCAN` recusa uma substituição ou gravação detectada durante a leitura **sem emitir hashes**. Outros casos fail-closed incluem `MISSING`, `UNSAFE`, `UNREADABLE`, `OVERSIZED` e `INVALID_JAR`. O procedimento é somente leitura; não carrega mods, não extrai classes nem aplica datapacks. Testes usam artefatos ZIP sintéticos, não JARs físicos de providers.
+
+**Fronteira semântica:** mesmo um resultado `FINGERPRINTED` de **69/69** demonstraria somente integridade de arquivo ZIP e fingerprint daquela coleta; não identifica os 39 registries de spells, não prova correspondência a publicação oficial, não certifica config/Survival nem autoriza promover `COUNTED_SOURCE_PINNED`/`COUNTED_RELEASE_BOUNDED` para `COUNTED_EXACT`. Conferir JAR real, provenance, IDs de registry, gates e deduplicação **por provider** antes de mudar qualquer linha. **Nenhuma execução nos JARs reais nem promoção de contagem foi realizada nesta revisão.**
+
 ## Requisitos mínimos para encerrar cada linha
 
 - Capturar **bytes do JAR da instância efetiva** ou uma fonte oficialmente reproduzível com igualdade criptográfica verificável, usando a modlist física atual como identidade do artefato.
