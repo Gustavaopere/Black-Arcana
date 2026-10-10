@@ -150,6 +150,39 @@ class NonMagicPhysicalJarTriageTest(unittest.TestCase):
             self.assertNotIn("lexical_hint_examples", item)
             self.assertNotIn(replacement_sha, json.dumps(report))
 
+    def test_in_place_mutation_cannot_claim_fingerprinted_hints(self):
+        with tempfile.TemporaryDirectory() as td:
+            mods = Path(td)
+            target = mods / "provider.jar"
+            updated = mods / "updated.jar"
+            with zipfile.ZipFile(target, "w") as jar:
+                jar.writestr("data/example/spells/one.json", "{}")
+            with zipfile.ZipFile(updated, "w") as jar:
+                jar.writestr("data/example/recipes/changed.json", '{"different":true}')
+            changed_bytes = updated.read_bytes()
+            real_zip = zipfile.ZipFile
+
+            class RewriteOnClose:
+                def __init__(self, source):
+                    self.handle = real_zip(source)
+
+                def __enter__(self):
+                    return self.handle
+
+                def __exit__(self, exc_type, exc, tb):
+                    self.handle.close()
+                    target.write_bytes(changed_bytes)
+
+            with mock.patch.object(module.zipfile, "ZipFile", side_effect=RewriteOnClose):
+                result = module.scan(mods, [{
+                    "physical_number": 272, "name": "Provider",
+                    "filename": "provider.jar", "triage_group": "OTHER",
+                }])["rows"][0]
+            self.assertEqual("CHANGED_DURING_SCAN", result["status"])
+            self.assertNotIn("sha1", result)
+            self.assertNotIn("sha256", result)
+            self.assertNotIn("lexical_hint_member_count", result)
+
     def test_max_member_count_fails_closed(self):
         with tempfile.TemporaryDirectory() as td:
             mods = Path(td)
