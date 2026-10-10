@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-10-10 (PR #733 merged; Stage 06.05 physical/provider validation pending, no Stage promotion)
+Last updated: 2026-10-10 (PR #739 merged; Stage 06.05 physical/provider validation pending, no Stage promotion)
 
 ## Authoritative execution rule
 
@@ -18,7 +18,7 @@ Stage 09 is the consolidated exact-release-candidate validation campaign and rem
 
 ## Current active stage
 
-**Stage 06 — Rituals remains the current numbered audit target. 06.01–06.04 are ✅; 06.05 remains 🟡 for physical acceptance. PR #733 merged at `Black-Arcana/main@5783034ca83834b6610aad0a5fd975edd1331743`: a 3×3 Survival altar now provides a server-authoritative `RitualEngine.start(...)` caller for `black_arcana:veil_anchor_consecration`; both CI jobs passed in run `38077919349`. Real client/modpack and exact Malum/Eidolon provider acceptance remain outstanding under D035. Not Stage closure.**
+**Stage 06 — Rituals remains the current numbered audit target. 06.01–06.04 are ✅; 06.05 remains 🟡 for physical acceptance. Current `Black-Arcana/main@0887efe2f8cfa3e753b3b9fd72084755536b809c` includes the Survival 3×3 altar ingress (#733, originally merged at `5783034ca83834b6610aad0a5fd975edd1331743`, CI `38077919349`), caster lifecycle interruption (#735), bounded round-robin session processing (#737), immediate SavedData snapshot recapture on ritual transitions (#738), and fail-closed restoration chronology (#739). PR #739 final-head CI run `38088955006` passed both `verify` and `stage05_qa_companion_smoke` (including GameTest and dedicated-server smoke). Real client/modpack, exact Malum/Eidolon provider acceptance, save/restart and crash-consistency remain outstanding under D035. CI is not physical acceptance. Not Stage closure.**
 
 The [original 2026-10-08 activation design gate](../docs/qa/ritual-veil-anchor-activation-design-gate-2026-10-08.md) documented the missing player ingress. The [2026-10-10 Survival altar implementation/QA note](../docs/qa/ritual-veil-anchor-survival-ingress-2026-10-10.md) now describes the candidate production route and its outstanding acceptance conditions. The [five-item magic pendency tracker](../wiki/modpack-catalog/meta/PENDENCIAS-MAGICAS-ATUAIS.md) remains separate from catalog coverage.
 
@@ -44,7 +44,7 @@ The manual rows themselves remain unresolved:
 | 04 World Safety | ✅ COMPLETE | historical completed predecessor |
 | 05 Casting & UX | ✅ ENGINEERING COMPLETE | real-client/provider-real rows transferred to Stage 09 under D035 |
 | 05A Arcane Danger | ✅ ENGINEERING COMPLETE | 05A.01–05A.13 ✅; real-client/real-modpack/provider rows transferred to Stage 09 under D035 |
-| 06 Rituals | 🟡 ACTIVE AUDIT TARGET | 06.01–06.04 ✅; 06.05 🟡 PR #733 incorporated with CI success; physical provider/client/modpack validation pending; no promotion |
+| 06 Rituals | 🟡 ACTIVE AUDIT TARGET | 06.01–06.04 ✅; 06.05 🟡 through merged PR #739 with final-head CI success; physical provider/client/modpack validation pending; no promotion |
 | 07 Spell Domains | ⛔ BLOCKED BY 05A -> 06 | historical domain work remains reusable but is not the active target |
 | 07A Arcane Polarity, Fusion & Metamagic | ⛔ BLOCKED BY 07 | do not start until Stage 07 engineering closes |
 | 08 Progression & Balance | ⛔ BLOCKED BY 07A | RPG Skill Tree remains progression/attributes/Mastery/perks/gates authority |
