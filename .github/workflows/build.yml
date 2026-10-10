@@ -51,7 +51,7 @@ jobs:
       - name: Full physical non-Magic archive triage tests
         run: python3 docs/qa/nonmagic_physical_jar_triage_test.py
 
-      - name: Physical #272 NeoForge metadata-only probe tests
+      - name: "Physical #272 NeoForge metadata-only probe tests"
         run: python3 docs/qa/nonmagic_272_metadata_probe_test.py
 
       - name: Unit tests
