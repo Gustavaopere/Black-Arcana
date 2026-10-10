@@ -93,11 +93,9 @@ public final class MalumServerIntegrationBootstrap {
         RitualCompletionKey completion = RitualCompletionKey.forCaster(
             BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID,
             context.casterId());
-        if (RitualCompletionSavedData.get(server).contains(completion)) {
-            return ArcanaDecision.deny(
-                "grand_ritual_already_completed",
-                "veil anchor consecration is already recorded for this caster");
-        }
+        ArcanaDecision admission = checkGrandRitualCompletionAdmission(
+            RitualCompletionSavedData.get(server), completion);
+        if (!admission.allowed()) return admission;
 
         ServerLevel level = findLevel(server, context.anchor().dimensionId());
         if (level == null) {
@@ -121,6 +119,31 @@ public final class MalumServerIntegrationBootstrap {
             return ArcanaDecision.deny(
                 "grand_ritual_anchor_invalid",
                 "Veil Anchor structure is incomplete or unloaded");
+        }
+        return ArcanaDecision.allow();
+    }
+
+    /**
+     * Check completion-ledger availability during both ritual admission and the
+     * existing precommit requirement recheck. A known-full ledger must never
+     * trigger Malum spirit reservation. This is a preflight, not a crash-atomic
+     * reservation of future completion capacity.
+     */
+    static ArcanaDecision checkGrandRitualCompletionAdmission(
+            RitualCompletionSavedData completions,
+            RitualCompletionKey completion
+    ) {
+        Objects.requireNonNull(completions, "completions");
+        Objects.requireNonNull(completion, "completion");
+        if (completions.contains(completion)) {
+            return ArcanaDecision.deny(
+                "grand_ritual_already_completed",
+                "veil anchor consecration is already recorded for this caster");
+        }
+        if (!completions.canAcceptNewCompletion()) {
+            return ArcanaDecision.deny(
+                "grand_ritual_completion_capacity",
+                "ritual completion ledger is full");
         }
         return ArcanaDecision.allow();
     }

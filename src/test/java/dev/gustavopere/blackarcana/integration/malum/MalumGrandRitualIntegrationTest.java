@@ -2,6 +2,9 @@ package dev.gustavopere.blackarcana.integration.malum;
 
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.core.ritual.BlackArcanaGrandRituals;
+import dev.gustavopere.blackarcana.core.ritual.RitualCompletionKey;
+import dev.gustavopere.blackarcana.core.ritual.RitualCompletionLedger;
+import dev.gustavopere.blackarcana.persistence.RitualCompletionSavedData;
 import dev.gustavopere.blackarcana.core.ritual.RitualActivationId;
 import dev.gustavopere.blackarcana.core.ritual.RitualAnchor;
 import dev.gustavopere.blackarcana.core.ritual.RitualContext;
@@ -100,6 +103,75 @@ class MalumGrandRitualIntegrationTest {
         assertEquals(1, access.count(CASTER, "arcane"));
         assertEquals(1, access.count(CASTER, "wicked"));
         assertEquals(0, runtime.rituals().activeSessionCount());
+    }
+
+    @Test
+    void fullCompletionLedgerDeniesGrandRitualBeforeAnyMalumSpiritsAreTaken() {
+        RitualCompletionSavedData completions = new RitualCompletionSavedData();
+        fillCompletionLedger(completions);
+        FakeAccess access = new FakeAccess(Map.of("arcane", 5, "wicked", 3));
+        ArcanaServerRuntime runtime = completionCapacityRuntime(access, completions);
+
+        RitualResult result = runtime.rituals().start(
+                BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION,
+                RitualActivationId.parse("33333333-3333-3333-3333-333333333331"),
+                new RitualContext(CASTER, List.of(), new RitualAnchor("minecraft:overworld", 42L)),
+                1_000L);
+
+        assertEquals(RitualResult.Status.DENIED_REQUIREMENT, result.status());
+        assertEquals("grand_ritual_completion_capacity", result.code());
+        assertEquals(5, access.count(CASTER, "arcane"));
+        assertEquals(3, access.count(CASTER, "wicked"));
+        assertEquals(0, runtime.rituals().activeSessionCount());
+    }
+
+    @Test
+    void ledgerThatFillsDuringPreparationCancelsBeforeSpiritCommit() {
+        RitualCompletionSavedData completions = new RitualCompletionSavedData();
+        FakeAccess access = new FakeAccess(Map.of("arcane", 5, "wicked", 3));
+        ArcanaServerRuntime runtime = completionCapacityRuntime(access, completions);
+        var context = new RitualContext(CASTER, List.of(), new RitualAnchor("minecraft:overworld", 42L));
+        assertEquals(RitualResult.Status.STARTED, runtime.rituals().start(
+                BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION,
+                RitualActivationId.parse("33333333-3333-3333-3333-333333333332"),
+                context, 1_000L).status());
+        fillCompletionLedger(completions);
+
+        assertEquals(1, runtime.rituals().tick(1_100L, 8).cancelled());
+        assertEquals(5, access.count(CASTER, "arcane"));
+        assertEquals(3, access.count(CASTER, "wicked"));
+        assertEquals(0, runtime.rituals().activeSessionCount());
+    }
+
+    private static ArcanaServerRuntime completionCapacityRuntime(
+            FakeAccess access, RitualCompletionSavedData completions) {
+        MalumRitualSpiritComponentProvider components = new MalumRitualSpiritComponentProvider(
+                access,
+                Map.of(BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID,
+                        List.of(new MalumRitualSpiritRequirement("arcane", 4),
+                                new MalumRitualSpiritRequirement("wicked", 2))));
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        BlackArcanaGrandRituals.install(runtime,
+                (definition, context, nowTick) -> MalumServerIntegrationBootstrap.checkGrandRitualCompletionAdmission(
+                        completions,
+                        RitualCompletionKey.forCaster(definition.id(), context.casterId())),
+                components,
+                (definition, context, nowTick) -> {
+                    RitualCompletionLedger.CompletionResult result = completions.complete(
+                            RitualCompletionKey.forCaster(definition.id(), context.casterId()), nowTick);
+                    return result == RitualCompletionLedger.CompletionResult.RECORDED
+                            ? ArcanaDecision.allow()
+                            : ArcanaDecision.deny("grand_ritual_completion_capacity", "completion unavailable");
+                });
+        return runtime;
+    }
+
+    private static void fillCompletionLedger(RitualCompletionSavedData data) {
+        for (int i = 0; i < RitualCompletionSavedData.MAX_PERSISTED_COMPLETIONS; i++) {
+            RitualCompletionKey key = RitualCompletionKey.forCaster(
+                    BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID, new UUID(0L, i + 10L));
+            assertEquals(RitualCompletionLedger.CompletionResult.RECORDED, data.complete(key, i));
+        }
     }
 
     private static final class FakeAccess implements MalumSpiritAccess {

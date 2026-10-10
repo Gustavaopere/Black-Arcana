@@ -53,6 +53,11 @@ public final class RitualCompletionSavedData extends SavedData {
         return result;
     }
 
+    /** Server-owned read-only admission gate; does not reserve a completion slot. */
+    public synchronized boolean canAcceptNewCompletion() {
+        return ledger.canAcceptNewCompletion();
+    }
+
     public synchronized boolean contains(RitualCompletionKey key) {
         return ledger.contains(key);
     }
