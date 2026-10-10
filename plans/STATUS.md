@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-10-08 (no Stage promotion; canonical engineering state preserved)
+Last updated: 2026-10-10 (Stage 06.05 canonical ingress candidate under review; no Stage promotion)
 
 ## Authoritative execution rule
 
@@ -18,9 +18,9 @@ Stage 09 is the consolidated exact-release-candidate validation campaign and rem
 
 ## Current active stage
 
-**Stage 06 — Rituals is the current numbered audit target. 06.01–06.04 are ✅ complete; 06.05 — Rituals Final Validation Handoff is active and ⛔ blocked by the missing canonical player activation surface for `black_arcana:veil_anchor_consecration`. Real Eidolon/Malum provider acceptance remains pending.**
+**Stage 06 — Rituals remains the current numbered audit target. 06.01–06.04 are ✅; 06.05 is 🟡 in engineering verification: PR #733 adds a player-built 3×3 Survival altar, direct server-authoritative interaction, and a canonical `RitualEngine.start(...)` caller for `black_arcana:veil_anchor_consecration`. Physical client/modpack and Eidolon/Malum acceptance are still pending. This is not Stage closure.**
 
-The [2026-10-08 activation design gate](../docs/qa/ritual-veil-anchor-activation-design-gate-2026-10-08.md) documents the requirements for a legitimate player-facing ingress; it is not implemented. The [five-item magic pendency tracker](../wiki/modpack-catalog/meta/PENDENCIAS-MAGICAS-ATUAIS.md) tracks this blockage separately from catalog coverage.
+The [original 2026-10-08 activation design gate](../docs/qa/ritual-veil-anchor-activation-design-gate-2026-10-08.md) documented the missing player ingress. The [2026-10-10 Survival altar implementation/QA note](../docs/qa/ritual-veil-anchor-survival-ingress-2026-10-10.md) now describes the candidate production route and its outstanding acceptance conditions. The [five-item magic pendency tracker](../wiki/modpack-catalog/meta/PENDENCIAS-MAGICAS-ATUAIS.md) remains separate from catalog coverage.
 
 Stage 05 — Casting & UX is `COMPLETE / ENGINEERING CLOSED / REAL-CLIENT RELEASE VALIDATION CARRIED TO STAGE 09`.
 
@@ -44,7 +44,7 @@ The manual rows themselves remain unresolved:
 | 04 World Safety | ✅ COMPLETE | historical completed predecessor |
 | 05 Casting & UX | ✅ ENGINEERING COMPLETE | real-client/provider-real rows transferred to Stage 09 under D035 |
 | 05A Arcane Danger | ✅ ENGINEERING COMPLETE | 05A.01–05A.13 ✅; real-client/real-modpack/provider rows transferred to Stage 09 under D035 |
-| 06 Rituals | 🟡 ACTIVE AUDIT TARGET | 06.01–06.04 ✅; 06.05 active — ⛔ grand-ritual validation blocked by missing canonical player activation surface; real-provider QA pending |
+| 06 Rituals | 🟡 ACTIVE AUDIT TARGET | 06.01–06.04 ✅; 06.05 🟡 ingress implementation PR #733 under review, with real-provider/client/modpack validation still pending; no promotion |
 | 07 Spell Domains | ⛔ BLOCKED BY 05A -> 06 | historical domain work remains reusable but is not the active target |
 | 07A Arcane Polarity, Fusion & Metamagic | ⛔ BLOCKED BY 07 | do not start until Stage 07 engineering closes |
 | 08 Progression & Balance | ⛔ BLOCKED BY 07A | RPG Skill Tree remains progression/attributes/Mastery/perks/gates authority |

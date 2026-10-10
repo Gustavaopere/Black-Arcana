@@ -825,7 +825,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("⛔", self.status)
         self.assertIn("346/347", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
-        self.assertIn("Bloqueado na Stage 06.05", self.status)
+        self.assertIn("🟡 **Em implementação**", self.status)
+        self.assertIn("Stage 06.05 não promovida", self.status)
 
     def test_post_snapshot_delta_source_pinned_and_no_physical_or_magic_promotion(self):
         snapshot = json.loads(
@@ -894,7 +895,9 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**346/347**", global_catalog)
         self.assertIn("**453 dossiês**", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
-        self.assertIn("⛔ **Bloqueado na Stage 06.05**", self.status)
+        self.assertIn("PR #733 adiciona interação Survival", self.status)
+        self.assertIn("falta CI final e aceitação real", self.status)
+        self.assertIn("Stage 06.05 não promovida", self.status)
 
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
         section = self.binary.split("|---|---|---:|---|---|", 1)[1].split(
