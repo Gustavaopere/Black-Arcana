@@ -27,6 +27,140 @@ def _load_report(path: Path) -> dict | None:
     return result if isinstance(result, dict) else None
 
 
+
+def _valid_collector_report(name: str, doc: dict | None, exit_code: int) -> bool:
+    """Validate report identity/shape, not claimed physical or spell provenance."""
+    if not isinstance(doc, dict):
+        return False
+    if name == 'nonmagic_489':
+        rows, statuses = doc.get('rows'), doc.get('statuses')
+        if not (exit_code == 0
+                and doc.get('schema') == 'black_arcana_nonmagic_jar_triage_v1'
+                and doc.get('source_commit') == SNAPSHOT
+                and doc.get('evidence') == 'ZIP_MEMBER_NAME_HINTS_AND_SHA_NOT_REGISTRY_OR_RUNTIME_PROOF'
+                and type(doc.get('attempted')) is int and doc['attempted'] == 489
+                and isinstance(rows, list) and len(rows) == 489
+                and isinstance(statuses, dict)):
+            return False
+        seen = set()
+        counted = {}
+        for row in rows:
+            if not isinstance(row, dict):
+                return False
+            num, filename, status = (row.get(k) for k in ('physical_number', 'filename', 'status'))
+            if (type(num) is not int or num < 2 or num > 587 or num in seen
+                    or not isinstance(filename, str) or not filename.endswith('.jar')
+                    or '/' in filename or '\\' in filename or not isinstance(status, str)):
+                return False
+            seen.add(num)
+            counted[status] = counted.get(status, 0) + 1
+            if num == 272 and (filename != 'factory_construction_registry_probe-0.1.0.jar'
+                               or row.get('triage_group') != 'OTHER'):
+                return False
+        return 272 in seen and counted == statuses
+
+    if name == 'providers_69':
+        rows, counts = doc.get('entries'), doc.get('counts')
+        if not (exit_code == 0
+                and doc.get('source') == 'PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md'
+                and doc.get('evidence_class') == 'READ_ONLY_JAR_FINGERPRINT_NOT_REGISTRY_PROOF'
+                and type(doc.get('expected')) is int and doc['expected'] == 69
+                and isinstance(rows, list) and len(rows) == 69 and isinstance(counts, dict)):
+            return False
+        providers, seen = set(), {}
+        for row in rows:
+            if not isinstance(row, dict):
+                return False
+            provider, filename, status = (row.get(k) for k in ('provider', 'filename', 'status'))
+            if (not isinstance(provider, str) or not provider or provider in providers
+                    or not isinstance(filename, str) or not filename.endswith('.jar')
+                    or '/' in filename or '\\' in filename or not isinstance(status, str)):
+                return False
+            providers.add(provider)
+            seen[status] = seen.get(status, 0) + 1
+        return (all(type(n) is int and n >= 0 for n in counts.values())
+                and all(seen.get(k, 0) == value for k, value in counts.items())
+                and all(key in counts for key in seen) and sum(counts.values()) == 69)
+
+    if name == 'physical_272_metadata':
+        status, ver = doc.get('status'), doc.get('version_evidence')
+        if not (doc.get('schema') == 'black_arcana_nonmagic_272_metadata_probe_v1'
+                and doc.get('evidence') == 'EMBEDDED_MOD_ID_ONLY_NOT_SPELL_REGISTRY_OR_RUNTIME_PROOF'
+                and doc.get('source_commit') == SNAPSHOT
+                and type(doc.get('physical_number')) is int and doc['physical_number'] == 272
+                and doc.get('filename') == 'factory_construction_registry_probe-0.1.0.jar'
+                and doc.get('expected_mod_id') == 'factory_construction_registry_probe'
+                and doc.get('expected_version') == '0.1.0'
+                and doc.get('registry_entries_verified') is False
+                and doc.get('survival_acquisition_verified') is False
+                and doc.get('spell_count', object()) is None
+                and isinstance(status, str) and isinstance(ver, str)):
+            return False
+        if exit_code == 0:
+            return (status == 'MATCHED_EMBEDDED_MOD_ID'
+                    and ver == 'MATCHED_SOURCE_LITERAL'
+                    and doc.get('embedded_version') == '0.1.0')
+        return (exit_code == 2
+                and (status != 'MATCHED_EMBEDDED_MOD_ID'
+                     or ver != 'MATCHED_SOURCE_LITERAL'))
+
+    if name == 'physical_272_reconciliation':
+        status = doc.get('status')
+        if not (doc.get('schema') == 'black_arcana_nonmagic_272_cross_report_reconciliation_v1'
+                and doc.get('evidence') == 'REPORT_CONSISTENCY_ONLY_NOT_REAL_INSTANCE_OR_REGISTRY_PROOF'
+                and doc.get('source_commit') == SNAPSHOT
+                and type(doc.get('physical_number')) is int and doc['physical_number'] == 272
+                and doc.get('filename') == 'factory_construction_registry_probe-0.1.0.jar'
+                and doc.get('catalog_status') == 'BLOCKED_MISSING_DOSSIER_AND_REGISTRY_PROOF'
+                and doc.get('registry_entries_verified') is False
+                and doc.get('survival_acquisition_verified') is False
+                and doc.get('spell_count', object()) is None):
+            return False
+        return (exit_code == 0 and status == 'REPORTED_HASHES_AND_MOD_ID_CONSISTENT'
+                or exit_code == 2 and status in (
+                    'COLLECTOR_BLOCKED', 'SHA256_MISMATCH',
+                    'EMBEDDED_MOD_ID_NOT_CONFIRMED', 'SOURCE_VERSION_MISMATCH',
+                    'SOURCE_VERSION_UNVERIFIED'))
+
+    if name == 'registry_39_queue':
+        rows = doc.get('providers')
+        if not (exit_code == 0
+                and doc.get('schema') == 'black_arcana_39_provider_registry_evidence_queue_v1'
+                and doc.get('evidence') == 'REPORT_ONLY_NOT_REGISTRY_OR_SURVIVAL_PROOF'
+                and doc.get('source_commit') == SNAPSHOT
+                and type(doc.get('expected_physical_jars')) is int
+                and doc['expected_physical_jars'] == 69
+                and type(doc.get('expected_binary_registry_proofs')) is int
+                and doc['expected_binary_registry_proofs'] == 39
+                and type(doc.get('registry_proofs_completed')) is int
+                and doc['registry_proofs_completed'] == 0
+                and isinstance(rows, list) and len(rows) == 39):
+            return False
+        fingerprinted = 0
+        for row in rows:
+            if (not isinstance(row, dict) or row.get('registry_verified') is not False
+                    or row.get('survival_verified') is not False
+                    or row.get('promotion_allowed') is not False):
+                return False
+            if row.get('status') == 'FINGERPRINTED_PENDING_REGISTRY':
+                fingerprinted += 1
+            elif row.get('status') != 'PHYSICAL_ARTIFACT_BLOCKED':
+                return False
+        return (type(doc.get('fingerprinted_pending_registry')) is int
+                and doc['fingerprinted_pending_registry'] == fingerprinted
+                and type(doc.get('blocked_physical_artifact')) is int
+                and doc['blocked_physical_artifact'] == 39 - fingerprinted)
+
+    if name == 'deployed_config_survival':
+        return (exit_code == 0 and type(doc.get('schema')) is int and doc['schema'] == 3
+                and doc.get('collector') == 'Black Arcana provider catalog deployed evidence'
+                and doc.get('instance_root_redacted') is True
+                and isinstance(doc.get('worlds_scanned'), list)
+                and isinstance(doc.get('mods'), dict)
+                and isinstance(doc.get('notes'), list))
+    return False
+
+
 def capture(instance: Path, output_dir: Path, worlds: tuple[Path, ...] = (),
             probe_log: Path | None = None, *, qa_dir: Path = QA) -> dict:
     """Capture evidence in a fresh directory outside the Minecraft instance."""
@@ -65,8 +199,9 @@ def capture(instance: Path, output_dir: Path, worlds: tuple[Path, ...] = (),
                                           text=True, check=False)
             payload = _load_report(destination)
             allowed = proc.returncode == 0 or proc.returncode in blocked_codes
+            validated = allowed and _valid_collector_report(name, payload, proc.returncode)
             status = ('BLOCKED' if proc.returncode in blocked_codes else 'COLLECTED') \
-                if allowed and payload is not None else 'FAILED'
+                if validated else 'FAILED'
             entry = {'status': status, 'exit_code': proc.returncode, 'file': filename}
             if payload is not None and isinstance(payload.get('status'), str):
                 entry['collector_status'] = payload['status']
