@@ -131,7 +131,7 @@ public final class RitualEngine {
         int committed = 0;
         int completed = 0;
         int cancelled = 0;
-        for (RitualSessionRegistry.Session session : sessions.sessions(maxSessionsToProcess)) {
+        for (RitualSessionRegistry.Session session : sessions.sessionsForTick(maxSessionsToProcess)) {
             if (session.state == RitualSessionState.PRECOMMIT && nowTick >= session.commitAtTick) {
                 // World/player requirements can change during the preparation phase.
                 // Recheck before reservation so a disconnected caster or unloaded
