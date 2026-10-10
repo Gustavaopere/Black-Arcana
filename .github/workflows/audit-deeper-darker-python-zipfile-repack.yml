@@ -1,0 +1,292 @@
+name: audit-deeper-darker-python-zipfile-repack
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python-zipfile-repack-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Black Arcana
+        uses: actions/checkout@v4
+
+      - name: Download and verify official Deeper and Darker 1.4.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-python-zipfile-repack"
+          mkdir -p "$OUT"
+
+          curl -fL --retry 3 --retry-all-errors \
+            "https://github.com/KyaniteMods/DeeperAndDarker/releases/download/v1.4.1/deeperdarker-neoforge-1.21.1-1.4.1.jar" \
+            -o "$OUT/publisher.jar"
+
+          test "$(stat -c %s "$OUT/publisher.jar")" = "3906057"
+          test "$(sha1sum "$OUT/publisher.jar" | awk '{print $1}')" = "b6094adde68bd4b909bc75c64901e1f3fb99ad8f"
+          test "$(sha256sum "$OUT/publisher.jar" | awk '{print $1}')" = "eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af"
+
+      - name: Generate and verify Python zipfile content-identical candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-python-zipfile-repack"
+
+          python3 - "$OUT" <<'PY'
+          import copy
+          import csv
+          import hashlib
+          import pathlib
+          import sys
+          import zipfile
+
+          out = pathlib.Path(sys.argv[1])
+          publisher = out / "publisher.jar"
+
+          PHYSICAL_SHA1 = "83f7edd0a8516b2767c2cda7a3b2402f9e290d88"
+          PHYSICAL_CF_FP = 1917446721
+          OFFICIAL_CF_FP = 1323964125
+          LOCAL_SIZE_1 = 3906052
+          LOCAL_SIZE_2 = 3906044
+
+          def murmur2(data: bytes, seed: int = 1) -> int:
+              m = 0x5BD1E995
+              r = 24
+              h = (seed ^ len(data)) & 0xFFFFFFFF
+              i = 0
+              remaining = len(data)
+              while remaining >= 4:
+                  k = data[i] | (data[i+1] << 8) | (data[i+2] << 16) | (data[i+3] << 24)
+                  k = (k * m) & 0xFFFFFFFF
+                  k ^= k >> r
+                  k = (k * m) & 0xFFFFFFFF
+                  h = (h * m) & 0xFFFFFFFF
+                  h ^= k
+                  i += 4
+                  remaining -= 4
+              if remaining == 3:
+                  h ^= data[i+2] << 16
+              if remaining >= 2:
+                  h ^= data[i+1] << 8
+              if remaining >= 1:
+                  h ^= data[i]
+                  h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 13
+              h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 15
+              return h & 0xFFFFFFFF
+
+          def fingerprint(path: pathlib.Path) -> int:
+              raw = path.read_bytes()
+              filtered = bytes(b for b in raw if b not in (9, 10, 13, 32))
+              return murmur2(filtered, 1)
+
+          def digest(path: pathlib.Path, alg: str) -> str:
+              h = hashlib.new(alg)
+              with path.open("rb") as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          def entry_manifest(path: pathlib.Path):
+              rows = []
+              with zipfile.ZipFile(path, "r") as zf:
+                  for info in zf.infolist():
+                      sha256 = ""
+                      if not info.is_dir():
+                          sha256 = hashlib.sha256(zf.read(info)).hexdigest()
+                      rows.append((
+                          info.filename,
+                          info.is_dir(),
+                          info.compress_type,
+                          info.file_size,
+                          sha256,
+                      ))
+              return rows
+
+          publisher_fp = fingerprint(publisher)
+          if publisher_fp != OFFICIAL_CF_FP:
+              raise SystemExit(
+                  f"CurseForge fingerprint implementation mismatch: expected {OFFICIAL_CF_FP}, got {publisher_fp}"
+              )
+
+          with zipfile.ZipFile(publisher, "r") as src:
+              publisher_comment = src.comment
+              publisher_infos = src.infolist()
+              publisher_payloads = [
+                  b"" if info.is_dir() else src.read(info)
+                  for info in publisher_infos
+              ]
+
+          publisher_manifest = entry_manifest(publisher)
+
+          levels = [None] + list(range(10))
+          strategies = ["copy-info", "rebuild-info"]
+          result_rows = []
+
+          def rebuilt_info(info: zipfile.ZipInfo) -> zipfile.ZipInfo:
+              zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
+              zi.compress_type = info.compress_type
+              zi.comment = info.comment
+              zi.extra = info.extra
+              zi.create_system = info.create_system
+              zi.create_version = info.create_version
+              zi.extract_version = info.extract_version
+              zi.reserved = info.reserved
+              zi.flag_bits = info.flag_bits
+              zi.volume = info.volume
+              zi.internal_attr = info.internal_attr
+              zi.external_attr = info.external_attr
+              return zi
+
+          for strategy in strategies:
+              for level in levels:
+                  level_label = "default" if level is None else str(level)
+                  candidate = out / f"python-{strategy}-level-{level_label}.jar"
+
+                  with zipfile.ZipFile(
+                      candidate,
+                      "w",
+                      allowZip64=True,
+                      strict_timestamps=True,
+                  ) as dst:
+                      dst.comment = publisher_comment
+                      for info, payload in zip(publisher_infos, publisher_payloads):
+                          if strategy == "copy-info":
+                              zi = copy.copy(info)
+                          else:
+                              zi = rebuilt_info(info)
+
+                          kwargs = {"compress_type": info.compress_type}
+                          if info.compress_type == zipfile.ZIP_DEFLATED and level is not None:
+                              kwargs["compresslevel"] = level
+
+                          dst.writestr(zi, payload, **kwargs)
+
+                  candidate_manifest = entry_manifest(candidate)
+                  if candidate_manifest != publisher_manifest:
+                      raise SystemExit(
+                          f"candidate {candidate.name} changed publisher entry order/metadata-content manifest"
+                      )
+
+                  sha1 = digest(candidate, "sha1")
+                  sha256 = digest(candidate, "sha256")
+                  fp = fingerprint(candidate)
+                  size = candidate.stat().st_size
+
+                  result_rows.append({
+                      "candidate": candidate.name,
+                      "strategy": strategy,
+                      "level": level_label,
+                      "bytes": size,
+                      "sha1": sha1,
+                      "sha256": sha256,
+                      "curseforge_fingerprint": fp,
+                      "entry_manifest_identical": True,
+                      "sha1_matches_physical": sha1 == PHYSICAL_SHA1,
+                      "fingerprint_matches_physical": fp == PHYSICAL_CF_FP,
+                      "matches_publisher_size": size == publisher.stat().st_size,
+                      "matches_retained_local_size_1": size == LOCAL_SIZE_1,
+                      "matches_retained_local_size_2": size == LOCAL_SIZE_2,
+                  })
+
+          if len(result_rows) != len(strategies) * len(levels):
+              raise SystemExit(f"unexpected candidate count: {len(result_rows)}")
+
+          with (out / "python-zipfile-results.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.DictWriter(f, fieldnames=result_rows[0].keys(), delimiter="\t")
+              w.writeheader()
+              w.writerows(result_rows)
+
+          physical_matches = [
+              r for r in result_rows
+              if r["sha1_matches_physical"] or r["fingerprint_matches_physical"]
+          ]
+          publisher_size_matches = [r for r in result_rows if r["matches_publisher_size"]]
+          local1_matches = [r for r in result_rows if r["matches_retained_local_size_1"]]
+          local2_matches = [r for r in result_rows if r["matches_retained_local_size_2"]]
+
+          summary = [
+              f"publisher_sha1={digest(publisher, 'sha1')}",
+              f"publisher_cf_fingerprint={publisher_fp}",
+              f"publisher_cf_expected={OFFICIAL_CF_FP}",
+              f"publisher_entry_count={len(publisher_manifest)}",
+              f"physical_sha1={PHYSICAL_SHA1}",
+              f"physical_cf_fingerprint={PHYSICAL_CF_FP}",
+              f"candidate_count={len(result_rows)}",
+              f"physical_hash_or_fp_match_count={len(physical_matches)}",
+              f"publisher_size_match_count={len(publisher_size_matches)}",
+              f"retained_local_size_3906052_match_count={len(local1_matches)}",
+              f"retained_local_size_3906044_match_count={len(local2_matches)}",
+          ]
+          for row in physical_matches:
+              summary.append(
+                  "physical_match="
+                  + row["candidate"]
+                  + f" bytes={row['bytes']} sha1={row['sha1']} cf={row['curseforge_fingerprint']}"
+              )
+          for label, matches in [
+              ("publisher_size_match", publisher_size_matches),
+              ("local_size_3906052_match", local1_matches),
+              ("local_size_3906044_match", local2_matches),
+          ]:
+              for row in matches:
+                  summary.append(
+                      f"{label}={row['candidate']} bytes={row['bytes']} sha1={row['sha1']} cf={row['curseforge_fingerprint']}"
+                  )
+
+          text = "\n".join(summary) + "\n"
+          (out / "python-zipfile-summary.txt").write_text(text, encoding="utf-8")
+          print(text)
+
+          # Never leave candidate/publisher JARs in the text-only artifact directory.
+          for jar in out.glob("*.jar"):
+              jar.unlink()
+          PY
+
+      - name: Record bounded hypothesis
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-python-zipfile-repack"
+          cat > "$OUT/hypothesis.txt" <<'EOF'
+          HYPOTHESIS UNDER TEST
+          - The physical Deeper and Darker JAR may be a content-identical Python
+            zipfile rewrite of official File 8201775.
+          - All publisher entries are rewritten in publisher order.
+          - Entry names, directory flags, compression method, file size, and
+            non-directory file-content SHA-256 must match the verified publisher
+            manifest exactly.
+          - Two bounded ZipInfo strategies are tested:
+            1. shallow-copy publisher ZipInfo records;
+            2. rebuild ZipInfo records from preserved public metadata fields.
+          - DEFLATED entries are tested with Python default compression behavior
+            and explicit levels 0-9.
+
+          ACCEPTANCE
+          - Exact physical SHA-1 or validated physical CurseForge fingerprint
+            match is required for an archive bridge.
+          - Size equality is recorded only as context and never as identity.
+          - A no-match result rules out only this 22-candidate Python zipfile
+            family.
+
+          CLEAN-ROOM / ARTIFACT BOUNDARY
+          - Official publisher bytes are downloaded only at CI runtime.
+          - Candidate JARs are generated only in the runner workspace.
+          - Publisher/candidate JARs are deleted before artifact upload.
+          - Uploaded evidence is text-only hashes/metadata.
+          EOF
+
+      - name: Upload text-only evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: deeper-darker-python-zipfile-repack-evidence
+          path: |
+            build/audit/deeperdarker-python-zipfile-repack/python-zipfile-summary.txt
+            build/audit/deeperdarker-python-zipfile-repack/python-zipfile-results.tsv
+            build/audit/deeperdarker-python-zipfile-repack/hypothesis.txt
+          if-no-files-found: error
