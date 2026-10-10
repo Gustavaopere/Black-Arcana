@@ -21,6 +21,19 @@ class RitualEngineTest {
     private static final RitualDefinition DEFINITION = new RitualDefinition(RITUAL, 20L, 40L);
 
     @Test
+    void replayGuardRejectsFutureDatedRestoredClaimsWithoutOccupyingCapacity() {
+        RitualActivationGuard guard = new RitualActivationGuard(1, 1_200L);
+        RitualActivationId nonce = activation("d3000000-0000-0000-0000-000000000001");
+
+        // Even direct guard callers must not insert a claim that has not happened yet.
+        assertFalse(guard.remember(nonce, 101L, 100L));
+        assertTrue(guard.claim(nonce, 100L).allowed(),
+                "rejected future claim must not poison nonce or exhaust guard capacity");
+        assertFalse(guard.claim(nonce, 100L).allowed(),
+                "valid claims still prevent replay");
+    }
+
+    @Test
     void interruptionBeforeCommitConsumesNothing() {
         FakeComponents components = new FakeComponents();
         RitualEngine engine = engine(components, new AtomicInteger());

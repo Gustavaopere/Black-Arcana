@@ -37,7 +37,7 @@ public final class RitualActivationGuard {
 
     public synchronized boolean remember(RitualActivationId activationId, long claimedAtTick, long nowTick) {
         Objects.requireNonNull(activationId, "activationId");
-        if (claimedAtTick < 0L || nowTick < 0L) return false;
+        if (claimedAtTick < 0L || nowTick < 0L || claimedAtTick > nowTick) return false;
         prune(nowTick);
         Long existing = claimed.get(activationId);
         if (existing != null) return existing == claimedAtTick;
