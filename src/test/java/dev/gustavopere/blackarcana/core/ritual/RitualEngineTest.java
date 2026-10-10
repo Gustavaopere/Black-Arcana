@@ -85,6 +85,91 @@ class RitualEngineTest {
     }
 
     @Test
+    void requirementRevokedBeforeCommitCancelsWithoutSpendingComponents() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        java.util.concurrent.atomic.AtomicBoolean online = new java.util.concurrent.atomic.AtomicBoolean(true);
+        RitualEngine engine = new RitualEngine(
+                new RitualSessionRegistry(8),
+                new RitualActivationGuard(32, 1_200L),
+                (definition, context, now) -> online.get()
+                        ? ArcanaDecision.allow()
+                        : ArcanaDecision.deny("grand_ritual_caster_offline", "caster disconnected"),
+                components,
+                (definition, context, now) -> {
+                    outcomes.incrementAndGet();
+                    return ArcanaDecision.allow();
+                });
+        RitualActivationId activation = activation("f0000000-0000-0000-0000-000000000001");
+
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(DEFINITION, activation, context(), 100L).status());
+        online.set(false);
+
+        RitualEngine.TickSummary summary = engine.tick(120L, 8);
+        assertEquals(1, summary.cancelled());
+        assertEquals(0, components.reserveCount.get());
+        assertEquals(0, components.commitCount.get());
+        assertEquals(0, components.refundCount.get());
+        assertEquals(0, outcomes.get());
+        assertEquals(0, engine.activeSessionCount());
+    }
+
+    @Test
+    void requirementRevokedAfterCommitPreventsOutcomeWithoutRefund() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        java.util.concurrent.atomic.AtomicBoolean chunkLoaded = new java.util.concurrent.atomic.AtomicBoolean(true);
+        RitualEngine engine = new RitualEngine(
+                new RitualSessionRegistry(8),
+                new RitualActivationGuard(32, 1_200L),
+                (definition, context, now) -> chunkLoaded.get()
+                        ? ArcanaDecision.allow()
+                        : ArcanaDecision.deny("grand_ritual_chunk_unloaded", "anchor unloaded"),
+                components,
+                (definition, context, now) -> {
+                    outcomes.incrementAndGet();
+                    return ArcanaDecision.allow();
+                });
+
+        engine.start(DEFINITION, activation("f0000000-0000-0000-0000-000000000002"), context(), 100L);
+        assertEquals(1, engine.tick(120L, 8).committed());
+        assertEquals(1, components.commitCount.get());
+        chunkLoaded.set(false);
+
+        RitualEngine.TickSummary summary = engine.tick(140L, 8);
+        assertEquals(1, summary.cancelled());
+        assertEquals(0, summary.completed());
+        assertEquals(0, outcomes.get());
+        assertEquals(0, components.refundCount.get());
+        assertEquals(0, engine.activeSessionCount());
+    }
+
+    @Test
+    void requirementRecheckExceptionFailsClosedAtCommit() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        AtomicInteger checks = new AtomicInteger();
+        RitualEngine engine = new RitualEngine(
+                new RitualSessionRegistry(8),
+                new RitualActivationGuard(32, 1_200L),
+                (definition, context, now) -> {
+                    if (checks.incrementAndGet() > 1) throw new IllegalStateException("provider unavailable");
+                    return ArcanaDecision.allow();
+                },
+                components,
+                (definition, context, now) -> {
+                    outcomes.incrementAndGet();
+                    return ArcanaDecision.allow();
+                });
+        engine.start(DEFINITION, activation("f0000000-0000-0000-0000-000000000003"), context(), 100L);
+        RitualEngine.TickSummary summary = engine.tick(120L, 8);
+        assertEquals(1, summary.cancelled());
+        assertEquals(0, components.reserveCount.get());
+        assertEquals(0, outcomes.get());
+    }
+
+    @Test
     void sameAnchorMultiplayerRaceAdmitsExactlyOneSession() throws Exception {
         FakeComponents components = new FakeComponents();
         RitualEngine engine = engine(components, new AtomicInteger());
