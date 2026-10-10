@@ -62,7 +62,7 @@ O coletor geral acima analisa **nomes** de entradas ZIP e hashes, sem ler o cont
 python3 docs/qa/nonmagic_272_metadata_probe.py --instance "/caminho/da/instancia" > nonmagic-272-metadata.json
 ```
 
-A sonda cruza o manifesto físico e a proveniência SHA-pinned do sibling. Ela aceita somente o arquivo exato `factory_construction_registry_probe-0.1.0.jar` na pasta `mods/`; dentro do ZIP, lê no máximo 64 KiB de `META-INF/neoforge.mods.toml`. Rejeita symlinks, duplicação/invalidez do metadata, JARs acima de 1 GiB e ZIPs com mais de 100.000 entradas. **Não executa código, não lê classes ou JSONs de feitiços, não decompila nem modifica o pack.**
+A sonda cruza o manifesto físico e a proveniência SHA-pinned do sibling. Ela aceita somente o arquivo exato `factory_construction_registry_probe-0.1.0.jar` na pasta `mods/`; dentro do ZIP, lê no máximo 64 KiB de `META-INF/neoforge.mods.toml`. Rejeita symlinks, duplicação/invalidez do metadata, JARs acima de 1 GiB e ZIPs com mais de 100.000 entradas. A leitura do TOML e o cálculo do SHA-256 agora usam **o mesmo descritor de arquivo aberto**, com `O_NOFOLLOW` quando disponível e conferência de identidade/alteração do arquivo; uma substituição ou alteração detectada durante a leitura retorna `CHANGED_DURING_SCAN` **sem hash nem mod IDs**. **Não executa código, não lê classes ou JSONs de feitiços, não decompila nem modifica o pack.**
 
 - `MATCHED_EMBEDDED_MOD_ID`: o `modId` declarado em TOML coincide com o documentado no snapshot e um SHA-256 do arquivo foi calculado. Exit `0`. **Isso não certifica registries, feitiços, gameplay ou aquisição em Survival.**
 - `MOD_ID_MISMATCH`, ZIP inválido, metadata ausente/ambígua ou outras falhas: bloqueio e exit `2`. Fonte/manifesto divergentes produzem erro.
