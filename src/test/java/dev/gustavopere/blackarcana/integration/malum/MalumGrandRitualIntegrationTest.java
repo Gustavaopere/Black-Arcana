@@ -61,6 +61,47 @@ class MalumGrandRitualIntegrationTest {
         assertEquals(1, rewards.get());
     }
 
+    @Test
+    void losingGrandRitualRequirementsAfterSpiritCommitSuppressesCompletion() {
+        FakeAccess access = new FakeAccess(Map.of("arcane", 5, "wicked", 3));
+        MalumRitualSpiritComponentProvider components = new MalumRitualSpiritComponentProvider(
+                access,
+                Map.of(BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID,
+                        List.of(new MalumRitualSpiritRequirement("arcane", 4),
+                                new MalumRitualSpiritRequirement("wicked", 2))));
+        java.util.concurrent.atomic.AtomicBoolean casterOnline = new java.util.concurrent.atomic.AtomicBoolean(true);
+        AtomicInteger recordedCompletions = new AtomicInteger();
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        BlackArcanaGrandRituals.install(
+                runtime,
+                (definition, context, nowTick) -> casterOnline.get()
+                        ? ArcanaDecision.allow()
+                        : ArcanaDecision.deny("grand_ritual_caster_offline", "caster logged out"),
+                components,
+                (definition, context, nowTick) -> {
+                    recordedCompletions.incrementAndGet();
+                    return ArcanaDecision.allow();
+                });
+
+        RitualContext context = new RitualContext(
+                CASTER, List.of(), new RitualAnchor("minecraft:overworld", 42L));
+        assertEquals(RitualResult.Status.STARTED,
+                runtime.rituals().start(
+                        BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION,
+                        RitualActivationId.parse("22222222-2222-2222-2222-222222222223"),
+                        context, 1_000L).status());
+        assertEquals(1, runtime.rituals().tick(1_100L, 8).committed());
+        assertEquals(1, access.count(CASTER, "arcane"));
+        assertEquals(1, access.count(CASTER, "wicked"));
+
+        casterOnline.set(false);
+        assertEquals(1, runtime.rituals().tick(1_400L, 8).cancelled());
+        assertEquals(0, recordedCompletions.get());
+        assertEquals(1, access.count(CASTER, "arcane"));
+        assertEquals(1, access.count(CASTER, "wicked"));
+        assertEquals(0, runtime.rituals().activeSessionCount());
+    }
+
     private static final class FakeAccess implements MalumSpiritAccess {
         private final Map<String, Integer> counts = new HashMap<>();
 
