@@ -12,6 +12,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+import stat
 import re
 import zipfile
 from collections import Counter
@@ -69,25 +71,24 @@ def manifest_entries(manifest: Path = MANIFEST) -> list[dict]:
     return rows
 
 
-def inspect_zip_name_signals(jar: Path) -> tuple[str, int, int, list[str]]:
-    with zipfile.ZipFile(jar) as archive:
-        members = archive.infolist()
-        if len(members) > MAX_ARCHIVE_MEMBERS:
-            return ("TOO_MANY_MEMBERS", len(members), 0, [])
-        hits = 0
-        examples: list[str] = []
-        for member in members:
-            name = member.filename
-            if (
-                not member.is_dir()
-                and len(name) <= MAX_MEMBER_NAME
-                and ".." not in name.split("/")
-                and SIGNALS.search(name)
-            ):
-                hits += 1
-                if len(examples) < MAX_CANDIDATE_NAMES:
-                    examples.append(name)
-        return ("FINGERPRINTED", len(members), hits, examples)
+def inspect_zip_name_signals(archive: zipfile.ZipFile) -> tuple[str, int, int, list[str]]:
+    members = archive.infolist()
+    if len(members) > MAX_ARCHIVE_MEMBERS:
+        return ("TOO_MANY_MEMBERS", len(members), 0, [])
+    hits = 0
+    examples: list[str] = []
+    for member in members:
+        name = member.filename
+        if (
+            not member.is_dir()
+            and len(name) <= MAX_MEMBER_NAME
+            and ".." not in name.split("/")
+            and SIGNALS.search(name)
+        ):
+            hits += 1
+            if len(examples) < MAX_CANDIDATE_NAMES:
+                examples.append(name)
+    return ("FINGERPRINTED", len(members), hits, examples)
 
 
 def scan(mods: Path, rows: list[dict]) -> dict:
@@ -110,31 +111,49 @@ def scan(mods: Path, rows: list[dict]) -> dict:
                 row["status"] = "MISSING"
             elif not path.resolve().is_relative_to(root):
                 row["status"] = "UNSAFE_OUT_OF_ROOT"
-            elif path.stat().st_size > MAX_JAR_BYTES:
-                row["status"] = "OVERSIZED"
-            elif not zipfile.is_zipfile(path):
-                row["status"] = "INVALID_ZIP_JAR"
             else:
-                outcome, member_count, hits, examples = inspect_zip_name_signals(path)
-                if outcome == "TOO_MANY_MEMBERS":
-                    row.update(status=outcome, archive_member_count=member_count)
-                else:
-                    sha256 = hashlib.sha256()
-                    sha1 = hashlib.sha1()
-                    with path.open("rb") as stream:
-                        while chunk := stream.read(1024 * 1024):
-                            sha256.update(chunk)
-                            sha1.update(chunk)
-                    row.update(
-                        status=outcome,
-                        sha1=sha1.hexdigest(),
-                        sha256=sha256.hexdigest(),
-                        bytes=path.stat().st_size,
-                        archive_member_count=member_count,
-                        lexical_hint_member_count=hits,
-                        lexical_hint_examples=examples,
-                    )
-        except (OSError, zipfile.BadZipFile, ValueError):
+                # Bind ZIP hints and hashes to a single open descriptor. Otherwise
+                # a replaced pathname could pair artifact A's names with B's digest.
+                flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+                with os.fdopen(os.open(path, flags), "rb") as artifact:
+                    first = os.fstat(artifact.fileno())
+                    if not stat.S_ISREG(first.st_mode):
+                        row["status"] = "UNREADABLE"
+                    elif first.st_size > MAX_JAR_BYTES:
+                        row["status"] = "OVERSIZED"
+                    else:
+                        with zipfile.ZipFile(artifact) as archive:
+                            outcome, member_count, hits, examples = inspect_zip_name_signals(archive)
+                        if outcome == "TOO_MANY_MEMBERS":
+                            row.update(status=outcome, archive_member_count=member_count)
+                        else:
+                            sha256 = hashlib.sha256()
+                            sha1 = hashlib.sha1()
+                            artifact.seek(0)
+                            for chunk in iter(lambda: artifact.read(1024 * 1024), b""):
+                                sha256.update(chunk)
+                                sha1.update(chunk)
+                            final = os.fstat(artifact.fileno())
+                            current_path = os.stat(path, follow_symlinks=False)
+
+                            def fingerprint(st: os.stat_result) -> tuple[int, int, int, int, int]:
+                                return (st.st_dev, st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns)
+
+                            if fingerprint(first) != fingerprint(final) or fingerprint(first) != fingerprint(current_path):
+                                row["status"] = "CHANGED_DURING_SCAN"
+                            else:
+                                row.update(
+                                    status=outcome,
+                                    sha1=sha1.hexdigest(),
+                                    sha256=sha256.hexdigest(),
+                                    bytes=final.st_size,
+                                    archive_member_count=member_count,
+                                    lexical_hint_member_count=hits,
+                                    lexical_hint_examples=examples,
+                                )
+        except zipfile.BadZipFile:
+            row["status"] = "INVALID_ZIP_JAR"
+        except (OSError, RuntimeError, ValueError, EOFError):
             row["status"] = "UNREADABLE"
         results.append(row)
     counts = dict(sorted(Counter(x["status"] for x in results).items()))
