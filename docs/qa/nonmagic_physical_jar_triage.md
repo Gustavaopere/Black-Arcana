@@ -53,3 +53,24 @@ python3 docs/qa/nonmagic_physical_jar_triage.py --instance "/caminho/da/instanci
 ```
 
 Verificar se o resultado retornou `FINGERPRINTED` com hashes. Mesmo esse status não comprova registros de spells, mod ID embutido, gameplay ou configuração: isso exige verificação posterior de metadata e runtime. `MISSING`, `INVALID_ZIP_JAR`, `UNREADABLE` e demais falhas devem manter o caso **⛔**. O comando acima é um procedimento e **não foi executado na instalação do usuário**.
+
+## Sonda read-only de metadados NeoForge para #272
+
+O coletor geral acima analisa **nomes** de entradas ZIP e hashes, sem ler o conteúdo de metadados. Para validar especificamente a identidade embutida de **#272**, existe uma sonda separada e opcional:
+
+```bash
+python3 docs/qa/nonmagic_272_metadata_probe.py --instance "/caminho/da/instancia" > nonmagic-272-metadata.json
+```
+
+A sonda cruza o manifesto físico e a proveniência SHA-pinned do sibling. Ela aceita somente o arquivo exato `factory_construction_registry_probe-0.1.0.jar` na pasta `mods/`; dentro do ZIP, lê no máximo 64 KiB de `META-INF/neoforge.mods.toml`. Rejeita symlinks, duplicação/invalidez do metadata, JARs acima de 1 GiB e ZIPs com mais de 100.000 entradas. **Não executa código, não lê classes ou JSONs de feitiços, não decompila nem modifica o pack.**
+
+- `MATCHED_EMBEDDED_MOD_ID`: o `modId` declarado em TOML coincide com o documentado no snapshot e um SHA-256 do arquivo foi calculado. Exit `0`. **Isso não certifica registries, feitiços, gameplay ou aquisição em Survival.**
+- `MOD_ID_MISMATCH`, ZIP inválido, metadata ausente/ambígua ou outras falhas: bloqueio e exit `2`. Fonte/manifesto divergentes produzem erro.
+
+Os testes de regressão usam JARs inteiramente sintéticos:
+
+```bash
+python3 docs/qa/nonmagic_272_metadata_probe_test.py
+```
+
+**O JAR da instalação real não foi lido nesta implementação.** Não alterar a contagem de 346/347 dossiês `OTHER`, 453 dossiês cross-domain, 39 provas binary-exact ou 14 rotas Survival apenas por disponibilizar a sonda.
