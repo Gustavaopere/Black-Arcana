@@ -28,6 +28,17 @@ class RitualCompletionLedgerTest {
     }
 
     @Test
+    void admissionCapacityClosesBeforeAnotherCompletionCanBeRecorded() {
+        RitualCompletionLedger ledger = new RitualCompletionLedger(1);
+        RitualCompletionKey caster = RitualCompletionKey.forCaster(
+            RITUAL, UUID.fromString("11111111-1111-1111-1111-111111111111"));
+        assertTrue(ledger.canAcceptNewCompletion());
+        assertEquals(RitualCompletionLedger.CompletionResult.RECORDED, ledger.complete(caster, 10L));
+        assertTrue(!ledger.canAcceptNewCompletion());
+        assertEquals(RitualCompletionLedger.CompletionResult.ALREADY_COMPLETED, ledger.complete(caster, 11L));
+    }
+
+    @Test
     void anchorIdentityIncludesDimensionAndPosition() {
         RitualCompletionKey overworld = RitualCompletionKey.forAnchor(
             RITUAL,
