@@ -45,6 +45,9 @@ jobs:
       - name: Physical provider JAR fingerprint collector tests
         run: python3 docs/qa/physical_provider_fingerprint_collector_test.py
 
+      - name: 39-provider registry evidence queue tests
+        run: python3 docs/qa/provider_39_evidence_queue_test.py
+
       - name: Magic pendency tracker and cross-domain triage tests
         run: python3 docs/qa/magic_pendency_tracker_test.py
 
