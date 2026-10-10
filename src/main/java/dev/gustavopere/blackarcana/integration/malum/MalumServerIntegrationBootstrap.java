@@ -123,6 +123,31 @@ public final class MalumServerIntegrationBootstrap {
         return ArcanaDecision.allow();
     }
 
+    /**
+     * Check completion-ledger availability during both ritual admission and the
+     * existing precommit requirement recheck. A known-full ledger must never
+     * trigger Malum spirit reservation. This is a preflight, not a crash-atomic
+     * reservation of future completion capacity.
+     */
+    static ArcanaDecision checkGrandRitualCompletionAdmission(
+            RitualCompletionSavedData completions,
+            RitualCompletionKey completion
+    ) {
+        Objects.requireNonNull(completions, "completions");
+        Objects.requireNonNull(completion, "completion");
+        if (completions.contains(completion)) {
+            return ArcanaDecision.deny(
+                "grand_ritual_already_completed",
+                "veil anchor consecration is already recorded for this caster");
+        }
+        if (!completions.canAcceptNewCompletion()) {
+            return ArcanaDecision.deny(
+                "grand_ritual_completion_capacity",
+                "ritual completion ledger is full");
+        }
+        return ArcanaDecision.allow();
+    }
+
     private static ArcanaDecision completeGrandRitual(
             MinecraftServer server,
             RitualContext context,
