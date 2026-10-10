@@ -242,7 +242,9 @@ class RitualEngineTest {
                 engine.start(DEFINITION, activation("f1000000-0000-0000-0000-000000000006"),
                         new RitualContext(other, List.of(), ANCHOR), 101L).status());
         assertEquals(1, engine.tick(120L, 8).committed());
-        assertEquals(2, engine.tick(140L, 8).completed());
+        assertEquals(1, engine.tick(140L, 8).committed());
+        assertEquals(1, outcomes.get());
+        assertEquals(1, engine.tick(141L, 8).completed());
         assertEquals(2, outcomes.get());
     }
 
