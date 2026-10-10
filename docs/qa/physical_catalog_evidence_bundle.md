@@ -42,6 +42,12 @@ A orquestração invoca scripts versionados do próprio repositório, via argume
 
 **Privacidade:** embora os coletores excluam corpos de scripts, configs e JARs, os JSONs podem conter nomes relativos de arquivos, hashes e dados específicos do pack. Revisar os relatórios antes de compartilhá-los publicamente. O índice não traz o caminho absoluto da instância.
 
+## Integridade mínima dos relatórios (2026-10-10)
+
+O índice do bundle **não aceita apenas um subprocesso encerrado com código zero e qualquer objeto JSON**. Cada etapa passa por validação específica de `schema`, `evidence`, versão da modlist pinada quando aplicável, identidade da posição #272, cardinalidade/contagem dos manifests de **489 / 69 / 39**, estrutura dos registros e flags de não promoção. A sonda e o reconciliador #272 relacionam os códigos de saída 0/2 a estados compatíveis; um JSON inválido é **`FAILED`**, não `BLOCKED` ou `COLLECTED`. Se uma dependência falhar, o seu derivado será `SKIPPED`.
+
+Esta validação evita falsas classificações decorrentes de saída truncada, de outra versão da ferramenta ou de formato incorreto. **Não autentica a procedência de um arquivo JSON fabricado** e não substitui hashes do JAR real, registro carregado de spells nem teste de aquisição em Survival. A saída de um bundler jamais concede prova semântica por si mesma.
+
 ## Gates que permanecem
 
 - #272 ⛔ — sem dossiê certificado e sem JAR real inspecionado nesta contribuição
