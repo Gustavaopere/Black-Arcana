@@ -3,6 +3,7 @@ package dev.gustavopere.blackarcana.core.ritual;
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -49,14 +50,14 @@ class RitualRegistryTest {
     @Test
     void explicitBindingRoutesAllThreePhases() {
         RitualBindingRegistry bindings = new RitualBindingRegistry(4);
-        AtomicInteger requirementCalls = new AtomicInteger();
+        List<Long> requirementChecks = new ArrayList<>();
         AtomicInteger componentCommits = new AtomicInteger();
         AtomicInteger outcomes = new AtomicInteger();
 
         bindings.register(
                 ID,
                 (definition, context, now) -> {
-                    requirementCalls.incrementAndGet();
+                    requirementChecks.add(now);
                     return ArcanaDecision.allow();
                 },
                 new RitualComponentProvider() {
@@ -87,7 +88,7 @@ class RitualRegistryTest {
         engine.tick(120L, 4);
         engine.tick(140L, 4);
 
-        assertEquals(1, requirementCalls.get());
+        assertEquals(List.of(100L, 120L, 140L), requirementChecks);
         assertEquals(1, componentCommits.get());
         assertEquals(1, outcomes.get());
         assertTrue(bindings.contains(ID));
