@@ -1,0 +1,140 @@
+#!/usr/bin/env python3
+"""End-to-end guards for the physical catalog evidence bundle orchestration."""
+import importlib.util
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from unittest import mock
+
+SOURCE = Path(__file__).with_name('physical_catalog_evidence_bundle.py')
+spec = importlib.util.spec_from_file_location('physical_catalog_evidence_bundle', SOURCE)
+module = importlib.util.module_from_spec(spec)
+assert spec and spec.loader
+spec.loader.exec_module(module)
+
+
+class EvidenceBundleTests(unittest.TestCase):
+    def setup_dirs(self, root):
+        instance = root / 'instance'
+        (instance / 'mods').mkdir(parents=True)
+        qa = root / 'qa'
+        qa.mkdir()
+        return instance, qa
+
+    def fake_run(self, calls, fail_script=None, metadata_status='MISSING_JAR'):
+        def runner(argv, **kwargs):
+            script = Path(argv[1]).name
+            calls.append((script, tuple(argv[2:])))
+            if script == fail_script:
+                return mock.Mock(returncode=1)
+            if script == 'provider-catalog-deployed-evidence-collector.py':
+                destination = Path(argv[argv.index('--output') + 1])
+                destination.write_text(json.dumps({'schema': 3, 'collector': 'Black Arcana provider catalog deployed evidence'}))
+            else:
+                if script == 'nonmagic_272_metadata_probe.py':
+                    payload = {'status': metadata_status}
+                    ret = 2 if metadata_status != 'MATCHED_EMBEDDED_MOD_ID' else 0
+                elif script == 'nonmagic_272_report_reconcile.py':
+                    payload = {'status': 'COLLECTOR_BLOCKED'}
+                    ret = 2
+                elif script == 'provider_39_evidence_queue.py':
+                    payload = {'registry_proofs_completed': 0,
+                               'expected_binary_registry_proofs': 39,
+                               'providers': [{'promotion_allowed': False} for _ in range(39)]}
+                    ret = 0
+                else:
+                    payload = {'schema': 'synthetic'}
+                    ret = 0
+                if 'stdout' in kwargs and hasattr(kwargs['stdout'], 'write'):
+                    json.dump(payload, kwargs['stdout'])
+                return mock.Mock(returncode=ret)
+            return mock.Mock(returncode=0)
+        return runner
+
+    def test_all_six_reports_are_collected_with_explicit_catalog_block(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            inst, qa = self.setup_dirs(root)
+            calls = []
+            with mock.patch.object(module.subprocess, 'run', side_effect=self.fake_run(calls)):
+                report = module.capture(inst, root / 'out', qa_dir=qa)
+            self.assertEqual(6, len(calls))
+            self.assertEqual('REPORTS_CAPTURED_CATALOG_UNVERIFIED', report['status'])
+            self.assertEqual('BLOCKED', report['steps']['physical_272_metadata']['status'])
+            self.assertEqual('BLOCKED', report['steps']['physical_272_reconciliation']['status'])
+            self.assertEqual(0, report['registry_proofs_completed'])
+            self.assertEqual(0, report['catalog_spells_added'])
+            self.assertFalse(report['stage_promotion_allowed'])
+            self.assertTrue((root / 'out' / 'bundle-index.json').is_file())
+            self.assertNotIn(str(inst), (root / 'out' / 'bundle-index.json').read_text())
+
+    def test_failed_dependency_is_skipped_but_independent_collection_continues(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst, qa=self.setup_dirs(root)
+            calls=[]
+            with mock.patch.object(module.subprocess, 'run', side_effect=self.fake_run(calls, fail_script='physical_provider_fingerprint_collector.py')):
+                result=module.capture(inst, root/'out', qa_dir=qa)
+            self.assertEqual('COLLECTION_INCOMPLETE', result['status'])
+            self.assertEqual('SKIPPED', result['steps']['registry_39_queue']['status'])
+            self.assertEqual('COLLECTED', result['steps']['deployed_config_survival']['status'])
+            self.assertFalse(any(x[0]=='provider_39_evidence_queue.py' for x in calls))
+
+    def test_does_not_overwrite_output_or_modify_instance(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst,qa=self.setup_dirs(root)
+            (root/'out').mkdir()
+            with self.assertRaises(FileExistsError):
+                module.capture(inst, root/'out',qa_dir=qa)
+            with self.assertRaises(ValueError):
+                module.capture(inst,inst/'report',qa_dir=qa)
+            self.assertFalse((inst/'report').exists())
+
+    def test_passes_world_and_probe_log_as_literal_argv(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst,qa=self.setup_dirs(root)
+            calls=[]
+            w=root/'world with spaces'
+            log=root/'logs with spaces'/'latest.log'
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+                module.capture(inst,root/'out',worlds=(w,),probe_log=log,qa_dir=qa)
+            deploy=next(c for c in calls if c[0]=='provider-catalog-deployed-evidence-collector.py')[1]
+            self.assertEqual(str(w),deploy[deploy.index('--world')+1])
+            self.assertEqual(str(log),deploy[deploy.index('--probe-log')+1])
+
+    def test_rejects_symlinked_mods_directory(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst=root/'instance'; inst.mkdir()
+            other=root/'other';other.mkdir()
+            (inst/'mods').symlink_to(other,target_is_directory=True)
+            with self.assertRaises(ValueError):
+                module.capture(inst,root/'out')
+            self.assertFalse((root/'out').exists())
+
+    def test_forged_registry_queue_cannot_be_considered_collected(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst,qa=self.setup_dirs(root)
+            calls=[]
+            def malicious(argv,**kwargs):
+                r=self.fake_run(calls)(argv,**kwargs)
+                if Path(argv[1]).name=='provider_39_evidence_queue.py':
+                    dest = kwargs['stdout']
+                    dest.seek(0)
+                    dest.truncate(0)
+                    json.dump({'registry_proofs_completed':39,
+                               'expected_binary_registry_proofs':39,
+                               'providers':[{'promotion_allowed':True} for _ in range(39)]},dest)
+                return r
+            with mock.patch.object(module.subprocess,'run',side_effect=malicious):
+                output=module.capture(inst,root/'out',qa_dir=qa)
+            self.assertEqual('FAILED',output['steps']['registry_39_queue']['status'])
+            self.assertEqual('COLLECTION_INCOMPLETE',output['status'])
+
+
+if __name__ == '__main__':
+    unittest.main()
