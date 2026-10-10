@@ -27,12 +27,14 @@ MAX_ARCHIVE_MEMBERS = 100_000
 MOD_ID = re.compile(r"^[a-z][a-z0-9_]{1,63}$")
 
 
-def inspect_272_metadata(jar: Path, expected_mod_id: str) -> dict:
+def inspect_272_metadata(jar: Path, expected_mod_id: str, expected_version: str | None = None) -> dict:
     """Read only the bounded NeoForge metadata entry, never registry payloads."""
     result = {
         "schema": "black_arcana_nonmagic_272_metadata_probe_v1",
         "evidence": "EMBEDDED_MOD_ID_ONLY_NOT_SPELL_REGISTRY_OR_RUNTIME_PROOF",
         "expected_mod_id": expected_mod_id,
+        "expected_version": expected_version,
+        "version_evidence": "NOT_EXAMINED" if expected_version is not None else "NOT_CHECKED",
         "status": "UNREADABLE",
         "registry_entries_verified": False,
         "survival_acquisition_verified": False,
@@ -45,6 +47,11 @@ def inspect_272_metadata(jar: Path, expected_mod_id: str) -> dict:
 
     if not MOD_ID.fullmatch(expected_mod_id):
         raise ValueError("invalid source-attested mod ID")
+    if expected_version is not None and (
+        not isinstance(expected_version, str)
+        or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+\\-]{0,63}", expected_version)
+    ):
+        raise ValueError("invalid source-attested version")
     if jar.is_symlink():
         return blocked("UNSAFE_SYMLINK")
     if not jar.is_file():
@@ -104,6 +111,24 @@ def inspect_272_metadata(jar: Path, expected_mod_id: str) -> dict:
         result["status"] = (
             "MATCHED_EMBEDDED_MOD_ID" if expected_mod_id in ids else "MOD_ID_MISMATCH"
         )
+        if expected_version is not None:
+            matching = next((item for item in mods if item["modId"] == expected_mod_id), None)
+            if matching is None:
+                result["version_evidence"] = "NOT_APPLICABLE_MOD_ID_MISMATCH"
+            else:
+                version = matching.get("version")
+                if not isinstance(version, str) or not version or len(version) > 128 or any(
+                    ord(ch) < 32 or ord(ch) == 127 for ch in version
+                ):
+                    result["version_evidence"] = "VERSION_UNVERIFIABLE"
+                else:
+                    result["embedded_version"] = version
+                    if "${" in version:
+                        result["version_evidence"] = "UNRESOLVED_TEMPLATE"
+                    elif version == expected_version:
+                        result["version_evidence"] = "MATCHED_SOURCE_LITERAL"
+                    else:
+                        result["version_evidence"] = "MISMATCHED_SOURCE_LITERAL"
         return result
     except zipfile.BadZipFile:
         return blocked("INVALID_JAR")
@@ -134,7 +159,7 @@ def probe_instance(instance: Path, manifest: Path = MANIFEST, provenance: Path =
     mods = instance / "mods"
     if mods.is_symlink() or not mods.is_dir():
         raise ValueError("mods must be an existing non-symlink directory")
-    result = inspect_272_metadata(mods / filename, attested["declared_mod_id"])
+    result = inspect_272_metadata(mods / filename, attested["declared_mod_id"], attested["version"])
     result.update(physical_number=272, filename=filename, source_commit=SOURCE_COMMIT)
     return result
 
@@ -148,7 +173,8 @@ def main() -> int:
     except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
         parser.error(str(exc))
     print(json.dumps(result, indent=2, ensure_ascii=False))
-    return 0 if result["status"] == "MATCHED_EMBEDDED_MOD_ID" else 2
+    return 0 if (result["status"] == "MATCHED_EMBEDDED_MOD_ID"
+                 and result["version_evidence"] == "MATCHED_SOURCE_LITERAL") else 2
 
 
 if __name__ == "__main__":
