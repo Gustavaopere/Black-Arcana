@@ -52,6 +52,65 @@ class VeilAnchorActivationServiceTest {
     }
 
     @Test
+    void providerPreflightExceptionDeniesWithoutClaimingAnchorOrConsumingSpirits() {
+        ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+        AtomicInteger reserves = new AtomicInteger();
+        BlackArcanaGrandRituals.install(runtime,
+                (definition, context, now) -> ArcanaDecision.allow(),
+                new RitualComponentProvider() {
+                    @Override
+                    public ArcanaDecision check(RitualDefinition definition, RitualContext context, long now) {
+                        throw new IllegalStateException("Malum resource API became unavailable");
+                    }
+
+                    @Override
+                    public RitualComponentReservation reserve(RitualDefinition definition, RitualContext context, long now) {
+                        reserves.incrementAndGet();
+                        return RitualComponentReservation.denied("not_reserved", "should never reserve");
+                    }
+                },
+                (definition, context, now) -> ArcanaDecision.allow());
+
+        RitualResult result = VeilAnchorActivationService.start(runtime, CASTER, ANCHOR, 1_000L);
+
+        assertEquals(RitualResult.Status.DENIED_REQUIREMENT, result.status());
+        assertEquals("grand_ritual_component_preflight_failed", result.code());
+        assertEquals(0, runtime.rituals().activeSessionCount());
+        assertEquals(0, reserves.get());
+    }
+
+    @Test
+    void nullAndLinkageFailureFromProviderPreflightDenyWithoutAnyNewSession() {
+        for (boolean linkageError : new boolean[]{false, true}) {
+            ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
+            AtomicInteger reserves = new AtomicInteger();
+            BlackArcanaGrandRituals.install(runtime,
+                    (definition, context, now) -> ArcanaDecision.allow(),
+                    new RitualComponentProvider() {
+                        @Override
+                        public ArcanaDecision check(RitualDefinition definition, RitualContext context, long now) {
+                            if (linkageError) throw new NoClassDefFoundError("malum/spirit/Api");
+                            return null;
+                        }
+
+                        @Override
+                        public RitualComponentReservation reserve(RitualDefinition definition, RitualContext context, long now) {
+                            reserves.incrementAndGet();
+                            return RitualComponentReservation.denied("not_reserved", "should never reserve");
+                        }
+                    },
+                    (definition, context, now) -> ArcanaDecision.allow());
+
+            RitualResult result = VeilAnchorActivationService.start(runtime, CASTER, ANCHOR, 1_000L);
+
+            assertEquals(RitualResult.Status.DENIED_REQUIREMENT, result.status());
+            assertEquals("grand_ritual_component_preflight_failed", result.code());
+            assertEquals(0, runtime.rituals().activeSessionCount());
+            assertEquals(0, reserves.get());
+        }
+    }
+
+    @Test
     void authenticatedActivationStartsOneSessionAndCompetingPlayerCannotTakeSameAltar() {
         ArcanaServerRuntime runtime = ArcanaServerRuntime.createDefault();
         AtomicInteger commits = new AtomicInteger();
