@@ -114,6 +114,16 @@ public final class RitualEngine {
         int cancelled = 0;
         for (RitualSessionRegistry.Session session : sessions.sessions(maxSessionsToProcess)) {
             if (session.state == RitualSessionState.PRECOMMIT && nowTick >= session.commitAtTick) {
+                // World/player requirements can change during the preparation phase.
+                // Recheck before reservation so a disconnected caster or unloaded
+                // anchor never consumes components.
+                ArcanaDecision currentRequirements = safeRequirement(
+                        session.definition, session.context, nowTick);
+                if (!currentRequirements.allowed()) {
+                    sessions.remove(session.activationId);
+                    cancelled++;
+                    continue;
+                }
                 ArcanaDecision available = safeComponentCheck(session, nowTick);
                 if (!available.allowed()) {
                     sessions.remove(session.activationId);
@@ -144,6 +154,16 @@ public final class RitualEngine {
             }
 
             if (session.state == RitualSessionState.COMMITTED && nowTick >= session.completeAtTick) {
+                // Completion must not record an outcome if the caster/anchor
+                // becomes invalid after commit. Previously committed costs stay
+                // spent: a post-commit interruption is not a refund.
+                ArcanaDecision currentRequirements = safeRequirement(
+                        session.definition, session.context, nowTick);
+                if (!currentRequirements.allowed()) {
+                    sessions.remove(session.activationId);
+                    cancelled++;
+                    continue;
+                }
                 ArcanaDecision outcome = safeOutcome(session, nowTick);
                 sessions.remove(session.activationId);
                 if (outcome.allowed()) completed++;
