@@ -29,6 +29,11 @@ public final class RitualCompletionLedger {
         return CompletionResult.RECORDED;
     }
 
+    /** Pure capacity preflight; the caller must separately reject duplicate completion keys. */
+    public synchronized boolean canAcceptNewCompletion() {
+        return completedAt.size() < maxEntries;
+    }
+
     public synchronized boolean contains(RitualCompletionKey key) {
         return completedAt.containsKey(Objects.requireNonNull(key, "key"));
     }
