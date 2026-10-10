@@ -895,8 +895,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**346/347**", global_catalog)
         self.assertIn("**453 dossiês**", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
-        self.assertIn("PR #733 adiciona interação Survival", self.status)
-        self.assertIn("falta CI final e aceitação real", self.status)
+        self.assertIn("PR #733 incorporado", self.status)
+        self.assertIn("aceitação física pendente", self.status)
         self.assertIn("Stage 06.05 não promovida", self.status)
 
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
@@ -917,6 +917,39 @@ class MagicPendencyStatusTest(unittest.TestCase):
         rows = [line for line in section.splitlines() if line.startswith("| ")
                 and not line.startswith("| Provider")]
         self.assertEqual(14, len(rows))
+
+    def test_sibling_doc_edits_cannot_promote_physical_or_magic_counts(self):
+        report = (META / "AUDITORIA-DELTA-DOSSIER-SIBLING-2026-10-10.md").read_text(
+            encoding="utf-8"
+        )
+        catalog = (META / "CATALOGO-GLOBAL-MAGIAS.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("f85c9acf2d50c6d8fd9a7fa2f0912c9f03ba42f8", report)
+        self.assertIn("de80b186357cad20ba5b81892a8682777e96e35a", report)
+        self.assertIn("20 arquivos de dossiê modificados", report)
+        self.assertIn("sem novo dump físico", report)
+        for provider in (
+            "aces-spell-utils", "ars-sable", "arsdelight",
+            "apothic-enchanting", "hexalia", "mobstein",
+        ):
+            self.assertIn("✅-" + provider, catalog)
+            self.assertIn("✅-" + provider, report)
+        for token in ("587", "589", "164", "453", "346/347", "#272",
+                      "39", "14", "1851", "1849"):
+            self.assertIn(token, report)
+        self.assertIn("AUDITORIA-DELTA-DOSSIER-SIBLING-2026-10-10.md",
+                      self.status)
+
+    def test_merged_ritual_ingress_is_not_still_described_as_pending_ci(self):
+        stage_status = (ROOT / "plans/STATUS.md").read_text(encoding="utf-8")
+        self.assertIn("PR #733 incorporado", self.status)
+        self.assertIn("38077919349", self.status)
+        self.assertIn("aceitação física pendente", self.status)
+        self.assertNotIn("falta CI final", self.status)
+        self.assertIn("5783034ca83834b6610aad0a5fd975edd1331743", stage_status)
+        self.assertNotIn("PR #733 adds a player-built", stage_status)
+        self.assertNotIn(r"\n\n## Evidências", self.status)
 
     def test_ritual_stays_explicitly_blocked(self):
         self.assertIn("⛔ SEM INGRESSO CANÔNICO", self.stage)
