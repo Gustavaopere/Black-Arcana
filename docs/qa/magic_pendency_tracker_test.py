@@ -895,8 +895,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("**346/347**", global_catalog)
         self.assertIn("**453 dossiês**", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
-        self.assertIn("PR #733 adiciona interação Survival", self.status)
-        self.assertIn("falta CI final e aceitação real", self.status)
+        self.assertIn("PR #733 incorporado", self.status)
+        self.assertIn("aceitação física pendente", self.status)
         self.assertIn("Stage 06.05 não promovida", self.status)
 
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
