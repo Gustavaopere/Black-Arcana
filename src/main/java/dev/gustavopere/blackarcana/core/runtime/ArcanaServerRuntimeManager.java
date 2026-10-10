@@ -6,6 +6,7 @@ import dev.gustavopere.blackarcana.api.ArcanaDecision;
 import dev.gustavopere.blackarcana.config.SpellDataDefinition;
 import dev.gustavopere.blackarcana.core.cast.LoadoutUpdateService;
 import dev.gustavopere.blackarcana.core.registry.SpellDataCatalog;
+import dev.gustavopere.blackarcana.core.ritual.RitualEngine;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftTemporaryBlockBackend;
 import dev.gustavopere.blackarcana.integration.neoforge.NeoForgeHazardRuntimeInstaller;
 import dev.gustavopere.blackarcana.integration.neoforge.NeoForgeIntegrationBootstrap;
@@ -224,11 +225,23 @@ public final class ArcanaServerRuntimeManager {
         }
     }
 
+    /** Capture the newly started session before a world-save can use a stale snapshot. */
+    public static void recordRitualActivation(MinecraftServer server) {
+        Objects.requireNonNull(server, "server");
+        persist(server, server.overworld().getGameTime());
+    }
+
+    static boolean ritualStateChanged(RitualEngine.TickSummary summary) {
+        Objects.requireNonNull(summary, "summary");
+        return summary.committed() > 0 || summary.completed() > 0 || summary.cancelled() > 0;
+    }
+
     private static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
         long now = server.overworld().getGameTime();
         ArcanaServerRuntime runtime = RUNTIMES.get(server);
         boolean ritualInterrupted = false;
+        boolean ritualTransition = false;
         if (runtime != null) {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 if (!player.isAlive()) {
@@ -238,8 +251,9 @@ public final class ArcanaServerRuntimeManager {
                 }
             }
             runtime.tick(now);
+            ritualTransition = ritualStateChanged(runtime.lastRitualTickSummary());
         }
-        if (ritualInterrupted || now % PERSIST_INTERVAL_TICKS == 0L) persist(server, now);
+        if (ritualInterrupted || ritualTransition || now % PERSIST_INTERVAL_TICKS == 0L) persist(server, now);
     }
 
     private static void onServerStopping(ServerStoppingEvent event) {
