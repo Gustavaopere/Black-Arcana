@@ -255,13 +255,28 @@ class EvidenceBundleTests(unittest.TestCase):
             self.assertEqual('FAILED',report['steps']['physical_272_metadata']['status'])
 
     def test_rejects_272_cross_report_block_without_provenance(self):
+        # The triage/metadata inputs are valid, only reconciliation is forged.
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td)
-            inst,qa=self.setup_dirs(root)
-            calls=[]
-            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls,valid=False)):
-                report=module.capture(inst,root/'out',qa_dir=qa)
-            self.assertNotEqual('BLOCKED',report['steps']['physical_272_reconciliation']['status'])
+            root = Path(td)
+            inst, qa = self.setup_dirs(root)
+            calls = []
+            runner = self.fake_run(calls)
+
+            def malformed_reconciliation(argv, **kwargs):
+                result = runner(argv, **kwargs)
+                if Path(argv[1]).name == 'nonmagic_272_report_reconcile.py':
+                    stream = kwargs['stdout']
+                    stream.seek(0)
+                    stream.truncate(0)
+                    json.dump({'status': 'COLLECTOR_BLOCKED'}, stream)
+                return result
+
+            with mock.patch.object(module.subprocess, 'run', side_effect=malformed_reconciliation):
+                report = module.capture(inst, root / 'out', qa_dir=qa)
+            self.assertEqual('COLLECTED', report['steps']['nonmagic_489']['status'])
+            self.assertEqual('BLOCKED', report['steps']['physical_272_metadata']['status'])
+            self.assertEqual('FAILED', report['steps']['physical_272_reconciliation']['status'])
+            self.assertEqual('COLLECTION_INCOMPLETE', report['status'])
 
     def test_rejects_deployed_output_without_canonical_schema(self):
         with tempfile.TemporaryDirectory() as td:
@@ -273,13 +288,30 @@ class EvidenceBundleTests(unittest.TestCase):
             self.assertEqual('FAILED',report['steps']['deployed_config_survival']['status'])
 
     def test_rejects_39_queue_without_schema_even_if_promotion_false(self):
+        # Keep the 69-JAR prerequisite valid; corrupt only the queue's JSON.
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td)
-            inst,qa=self.setup_dirs(root)
-            calls=[]
-            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls,valid=False)):
-                report=module.capture(inst,root/'out',qa_dir=qa)
-            self.assertEqual('FAILED',report['steps']['registry_39_queue']['status'])
+            root = Path(td)
+            inst, qa = self.setup_dirs(root)
+            calls = []
+            runner = self.fake_run(calls)
+
+            def malformed_queue(argv, **kwargs):
+                result = runner(argv, **kwargs)
+                if Path(argv[1]).name == 'provider_39_evidence_queue.py':
+                    stream = kwargs['stdout']
+                    stream.seek(0)
+                    stream.truncate(0)
+                    json.dump({'registry_proofs_completed': 0,
+                               'expected_binary_registry_proofs': 39,
+                               'providers': [{'promotion_allowed': False}
+                                             for _ in range(39)]}, stream)
+                return result
+
+            with mock.patch.object(module.subprocess, 'run', side_effect=malformed_queue):
+                report = module.capture(inst, root / 'out', qa_dir=qa)
+            self.assertEqual('COLLECTED', report['steps']['providers_69']['status'])
+            self.assertEqual('FAILED', report['steps']['registry_39_queue']['status'])
+            self.assertEqual('COLLECTION_INCOMPLETE', report['status'])
 
 
 if __name__ == '__main__':
