@@ -1,0 +1,306 @@
+name: audit-deeper-darker-noop-repack
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  noop-repack-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Black Arcana
+        uses: actions/checkout@v4
+
+      - name: Download and verify official Deeper and Darker 1.4.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+          mkdir -p "$OUT"
+
+          curl -fL --retry 3 --retry-all-errors \
+            "https://github.com/KyaniteMods/DeeperAndDarker/releases/download/v1.4.1/deeperdarker-neoforge-1.21.1-1.4.1.jar" \
+            -o "$OUT/publisher.jar"
+
+          test "$(stat -c %s "$OUT/publisher.jar")" = "3906057"
+          test "$(sha1sum "$OUT/publisher.jar" | awk '{print $1}')" = "b6094adde68bd4b909bc75c64901e1f3fb99ad8f"
+          test "$(sha256sum "$OUT/publisher.jar" | awk '{print $1}')" = "eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af"
+
+      - name: Extract effective publisher tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+          ROOT="$OUT/extracted"
+
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT"
+          unzip -oq "$OUT/publisher.jar" -d "$ROOT"
+
+          unzip -Z1 "$OUT/publisher.jar" \
+            | grep -v '/$' \
+            | awk '!seen[$0]++' \
+            > "$OUT/order-publisher.txt"
+
+          (cd "$ROOT" && find . -type f -printf '%P\n' | LC_ALL=C sort) \
+            > "$OUT/order-sorted.txt"
+
+          unzip -Z1 "$OUT/publisher.jar" \
+            | grep -v '/$' \
+            | LC_ALL=C sort \
+            | uniq -d \
+            > "$OUT/duplicate-entry-names.txt"
+
+          python3 - "$ROOT" "$OUT/publisher-tree-sha256.tsv" <<'PY'
+          import hashlib
+          import pathlib
+          import sys
+
+          root = pathlib.Path(sys.argv[1])
+          out = pathlib.Path(sys.argv[2])
+
+          rows = []
+          for path in sorted(p for p in root.rglob("*") if p.is_file()):
+              rel = path.relative_to(root).as_posix()
+              rows.append((rel, hashlib.sha256(path.read_bytes()).hexdigest()))
+
+          out.write_text(
+              "".join(f"{sha}\t{rel}\n" for rel, sha in rows),
+              encoding="utf-8",
+          )
+          print(f"effective_file_count={len(rows)}")
+          PY
+
+      - name: Generate content-identical full-repack candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+          ROOT="$OUT/extracted"
+
+          command -v zip >/dev/null
+          command -v jar >/dev/null
+
+          for order in publisher sorted; do
+            order_file="$(realpath "$OUT/order-$order.txt")"
+            for extras in keep strip; do
+              for level in 0 1 2 3 4 5 6 7 8 9; do
+                candidate="$(realpath -m "$OUT/infozip-list-$order-$extras-l$level.jar")"
+                rm -f "$candidate"
+                if [ "$extras" = "strip" ]; then
+                  (cd "$ROOT" && zip -q -X "-$level" "$candidate" -@ < "$order_file")
+                else
+                  (cd "$ROOT" && zip -q "-$level" "$candidate" -@ < "$order_file")
+                fi
+              done
+            done
+          done
+
+          for extras in keep strip; do
+            for level in 0 1 2 3 4 5 6 7 8 9; do
+              candidate="$(realpath -m "$OUT/infozip-recursive-$extras-l$level.jar")"
+              rm -f "$candidate"
+              if [ "$extras" = "strip" ]; then
+                (cd "$ROOT" && zip -q -X -r "-$level" "$candidate" .)
+              else
+                (cd "$ROOT" && zip -q -r "-$level" "$candidate" .)
+              fi
+            done
+          done
+
+          candidate="$(realpath -m "$OUT/jdk-jar-no-manifest.jar")"
+          rm -f "$candidate"
+          (cd "$ROOT" && jar --create --file "$candidate" --no-manifest .)
+
+      - name: Verify effective content identity and measure candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+
+          python3 - "$OUT" <<'PY'
+          import csv
+          import hashlib
+          import pathlib
+          import shutil
+          import subprocess
+          import sys
+
+          out = pathlib.Path(sys.argv[1])
+          publisher = out / "publisher.jar"
+          expected_manifest = (out / "publisher-tree-sha256.tsv").read_text(encoding="utf-8")
+
+          PHYSICAL_SHA1 = "83f7edd0a8516b2767c2cda7a3b2402f9e290d88"
+          PHYSICAL_CF_FP = 1917446721
+          OFFICIAL_CF_FP = 1323964125
+
+          def murmur2(data: bytes, seed: int = 1) -> int:
+              m = 0x5BD1E995
+              r = 24
+              h = (seed ^ len(data)) & 0xFFFFFFFF
+              i = 0
+              remaining = len(data)
+              while remaining >= 4:
+                  k = data[i] | (data[i+1] << 8) | (data[i+2] << 16) | (data[i+3] << 24)
+                  k = (k * m) & 0xFFFFFFFF
+                  k ^= k >> r
+                  k = (k * m) & 0xFFFFFFFF
+                  h = (h * m) & 0xFFFFFFFF
+                  h ^= k
+                  i += 4
+                  remaining -= 4
+              if remaining == 3:
+                  h ^= data[i+2] << 16
+              if remaining >= 2:
+                  h ^= data[i+1] << 8
+              if remaining >= 1:
+                  h ^= data[i]
+                  h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 13
+              h = (h * m) & 0xFFFFFFFF
+              h ^= h >> 15
+              return h & 0xFFFFFFFF
+
+          def fingerprint(path: pathlib.Path) -> int:
+              raw = path.read_bytes()
+              filtered = bytes(b for b in raw if b not in (9, 10, 13, 32))
+              return murmur2(filtered, 1)
+
+          def digest(path: pathlib.Path, alg: str) -> str:
+              h = hashlib.new(alg)
+              h.update(path.read_bytes())
+              return h.hexdigest()
+
+          def effective_manifest(path: pathlib.Path, scratch: pathlib.Path) -> str:
+              if scratch.exists():
+                  shutil.rmtree(scratch)
+              scratch.mkdir(parents=True)
+              subprocess.run(
+                  ["unzip", "-oq", str(path), "-d", str(scratch)],
+                  check=True,
+              )
+
+              rows = []
+              for file in sorted(p for p in scratch.rglob("*") if p.is_file()):
+                  rel = file.relative_to(scratch).as_posix()
+                  rows.append((rel, hashlib.sha256(file.read_bytes()).hexdigest()))
+              return "".join(f"{sha}\t{rel}\n" for rel, sha in rows)
+
+          publisher_fp = fingerprint(publisher)
+          if publisher_fp != OFFICIAL_CF_FP:
+              raise SystemExit(
+                  f"CurseForge fingerprint implementation mismatch: expected {OFFICIAL_CF_FP}, got {publisher_fp}"
+              )
+
+          rows = []
+          scratch = out / "verify-extracted"
+
+          for path in sorted(out.glob("*.jar")):
+              if path.name == "publisher.jar":
+                  continue
+
+              actual_manifest = effective_manifest(path, scratch)
+              if actual_manifest != expected_manifest:
+                  raise SystemExit(
+                      f"candidate {path.name} does not reproduce the publisher effective file tree"
+                  )
+
+              sha1 = digest(path, "sha1")
+              sha256 = digest(path, "sha256")
+              fp = fingerprint(path)
+              rows.append({
+                  "candidate": path.name,
+                  "bytes": path.stat().st_size,
+                  "sha1": sha1,
+                  "sha256": sha256,
+                  "curseforge_fingerprint": fp,
+                  "effective_tree_identical": True,
+                  "sha1_matches_physical": sha1 == PHYSICAL_SHA1,
+                  "fingerprint_matches_physical": fp == PHYSICAL_CF_FP,
+              })
+
+          if not rows:
+              raise SystemExit("no candidates were generated")
+
+          with (out / "noop-results.tsv").open("w", encoding="utf-8", newline="") as f:
+              w = csv.DictWriter(f, fieldnames=rows[0].keys(), delimiter="\t")
+              w.writeheader()
+              w.writerows(rows)
+
+          matches = [
+              r for r in rows
+              if r["sha1_matches_physical"] or r["fingerprint_matches_physical"]
+          ]
+
+          with (out / "noop-summary.txt").open("w", encoding="utf-8") as f:
+              f.write(f"publisher_sha1={digest(publisher, 'sha1')}\n")
+              f.write(f"publisher_cf_fingerprint={publisher_fp}\n")
+              f.write(f"publisher_cf_expected={OFFICIAL_CF_FP}\n")
+              f.write(f"physical_sha1={PHYSICAL_SHA1}\n")
+              f.write(f"physical_cf_fingerprint={PHYSICAL_CF_FP}\n")
+              f.write(f"candidate_count={len(rows)}\n")
+              f.write(f"effective_tree_identical_candidate_count={len(rows)}\n")
+              f.write(f"physical_hash_or_fp_match_count={len(matches)}\n")
+              for r in matches:
+                  f.write(
+                      "physical_match="
+                      + r["candidate"]
+                      + f" bytes={r['bytes']} sha1={r['sha1']} cf={r['curseforge_fingerprint']}\n"
+                  )
+
+          print((out / "noop-summary.txt").read_text())
+          PY
+
+      - name: Record evidence boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="build/audit/deeperdarker-noop-repack"
+          cat > "$OUT/hypothesis.txt" <<'EOF'
+          HYPOTHESIS UNDER TEST
+          - The physical Deeper and Darker JAR may differ from official File 8201775
+            only because the ZIP/JAR archive was reserialized/recompressed.
+          - Every candidate must reproduce the same effective extracted file tree
+            as the official publisher JAR, byte-for-byte per file.
+          - Candidate archive order/compression/extra metadata may differ.
+
+          PUBLISHER ZIP NOTE
+          - Python 3.12 zipfile refuses direct per-entry reads of the publisher JAR
+            because it detects overlapping ZIP entries.
+          - This audit therefore uses the standard Info-ZIP extraction result as
+            the effective file-tree boundary and records duplicate entry names.
+          - A candidate is rejected if its extracted file tree differs.
+
+          BOUNDED MATRIX
+          - Info-ZIP file-list rebuild:
+            publisher-derived order or sorted order;
+            extra attributes retained or stripped with -X;
+            compression levels 0-9.
+          - Info-ZIP recursive rebuild:
+            extra attributes retained or stripped with -X;
+            compression levels 0-9.
+          - JDK jar full rebuild with --no-manifest.
+
+          FAIL-CLOSED BOUNDARY
+          - A physical SHA-1 or validated CurseForge fingerprint match would
+            establish an exact archive bridge for that candidate.
+          - No match only rules out this bounded effective-content-identical
+            repack family.
+          - No third-party JAR bytes are committed or uploaded.
+          EOF
+
+      - name: Upload text-only evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: deeper-darker-noop-repack-evidence
+          path: |
+            build/audit/deeperdarker-noop-repack/noop-summary.txt
+            build/audit/deeperdarker-noop-repack/noop-results.tsv
+            build/audit/deeperdarker-noop-repack/hypothesis.txt
+            build/audit/deeperdarker-noop-repack/duplicate-entry-names.txt
+            build/audit/deeperdarker-noop-repack/publisher-tree-sha256.tsv
+          if-no-files-found: error
