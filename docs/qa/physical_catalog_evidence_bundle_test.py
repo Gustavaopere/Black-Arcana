@@ -157,5 +157,56 @@ class EvidenceBundleTests(unittest.TestCase):
             self.assertEqual(0, queue['registry_proofs_completed'])
 
 
+    def test_rejects_success_exit_with_unrecognized_489_and_69_json(self):
+        # Regression: the current bundle accepts any JSON dict as successful evidence.
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst,qa=self.setup_dirs(root)
+            calls=[]
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+                report=module.capture(inst,root/'out',qa_dir=qa)
+            self.assertEqual('FAILED',report['steps']['nonmagic_489']['status'])
+            self.assertEqual('FAILED',report['steps']['providers_69']['status'])
+            self.assertEqual('SKIPPED',report['steps']['physical_272_reconciliation']['status'])
+            self.assertEqual('SKIPPED',report['steps']['registry_39_queue']['status'])
+            self.assertEqual('COLLECTION_INCOMPLETE',report['status'])
+
+    def test_rejects_272_missing_metadata_without_pinned_evidence_fields(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst,qa=self.setup_dirs(root)
+            calls=[]
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+                report=module.capture(inst,root/'out',qa_dir=qa)
+            self.assertEqual('FAILED',report['steps']['physical_272_metadata']['status'])
+
+    def test_rejects_272_cross_report_block_without_provenance(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst,qa=self.setup_dirs(root)
+            calls=[]
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+                report=module.capture(inst,root/'out',qa_dir=qa)
+            self.assertNotEqual('BLOCKED',report['steps']['physical_272_reconciliation']['status'])
+
+    def test_rejects_deployed_output_without_canonical_schema(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst,qa=self.setup_dirs(root)
+            calls=[]
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+                report=module.capture(inst,root/'out',qa_dir=qa)
+            self.assertEqual('FAILED',report['steps']['deployed_config_survival']['status'])
+
+    def test_rejects_39_queue_without_schema_even_if_promotion_false(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            inst,qa=self.setup_dirs(root)
+            calls=[]
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+                report=module.capture(inst,root/'out',qa_dir=qa)
+            self.assertEqual('FAILED',report['steps']['registry_39_queue']['status'])
+
+
 if __name__ == '__main__':
     unittest.main()
