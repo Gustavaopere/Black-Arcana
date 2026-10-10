@@ -48,6 +48,9 @@ jobs:
       - name: 39-provider registry evidence queue tests
         run: python3 docs/qa/provider_39_evidence_queue_test.py
 
+      - name: Physical magic catalog evidence bundle tests
+        run: python3 docs/qa/physical_catalog_evidence_bundle_test.py
+
       - name: Magic pendency tracker and cross-domain triage tests
         run: python3 docs/qa/magic_pendency_tracker_test.py
 
