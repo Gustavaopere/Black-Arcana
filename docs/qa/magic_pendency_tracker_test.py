@@ -23,6 +23,7 @@ class MagicPendencyStatusTest(unittest.TestCase):
         cls.ninth = (META / "AUDITORIA-OTHER-LOTE-9-2026-10-09.md").read_text(encoding="utf-8")
         cls.tenth = (META / "AUDITORIA-OTHER-LOTE-10-2026-10-09.md").read_text(encoding="utf-8")
         cls.eleventh = (META / "AUDITORIA-OTHER-LOTE-11-2026-10-09.md").read_text(encoding="utf-8")
+        cls.delta = (META / "AUDITORIA-DELTA-POS-SNAPSHOT-2026-10-10.md").read_text(encoding="utf-8")
         cls.binary = (META / "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
         cls.conditional = (META / "CONDITIONAL-PROVIDER-CLOSURE.md").read_text(encoding="utf-8")
         cls.stage = (QA / "ritual-veil-anchor-activation-design-gate-2026-10-08.md").read_text(encoding="utf-8")
@@ -825,6 +826,75 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("346/347", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
         self.assertIn("Bloqueado na Stage 06.05", self.status)
+
+    def test_post_snapshot_delta_source_pinned_and_no_physical_or_magic_promotion(self):
+        snapshot = json.loads(
+            (QA / "nonmagic_physical_manifest_2026-10-08.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            "de80b186357cad20ba5b81892a8682777e96e35a",
+            snapshot["source_commit"],
+        )
+        self.assertEqual(489, len(snapshot["rows"]))
+        alcubierre = [x for x in snapshot["rows"] if x["name"] == "Create Aeronautics: Alcubierre"]
+        self.assertEqual(1, len(alcubierre))
+        self.assertEqual(18, alcubierre[0]["physical_number"])
+        self.assertEqual("alcubierre-1.2.6.jar", alcubierre[0]["filename"])
+        self.assertEqual("OTHER", alcubierre[0]["triage_group"])
+        self.assertFalse(any(
+            x["name"] in ("Cold Sweat: Altitude", "Create: Bionics", "Create: AeroWarptics")
+            for x in snapshot["rows"]
+        ))
+        refs = re.findall(
+            r"^\| \[([^\]]+)\]\((https://[^)]+)\) \|",
+            self.delta,
+            re.MULTILINE,
+        )
+        self.assertEqual(
+            ["Cold Sweat: Altitude", "Create: Bionics",
+             "Create: AeroWarptics", "Create Aeronautics: Alcubierre"],
+            [name for name, _ in refs],
+        )
+        base_url = (
+            "https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/"
+            + snapshot["source_commit"]
+            + "/PROJECT-INSTRUCTIONS/modlist/"
+        )
+        self.assertTrue(all(url.startswith(base_url) for _, url in refs))
+        for name, marker in (
+            ("Cold Sweat: Altitude", "cold-sweat-altitude%20v0.7.0.md"),
+            ("Create: Bionics", "create-bionics%20v2.5.0.md"),
+            ("Create: AeroWarptics", "%E2%9C%85-create-aerowarptics%20v1.3.0.md"),
+            ("Create Aeronautics: Alcubierre", "%E2%9C%85-alcubierre%20v1.2.6.md"),
+        ):
+            self.assertIn(marker, dict(refs)[name])
+        for target in (
+            "coldsweat_altitude-0.7.0.jar", "createbionics-2.5.0.jar",
+            "aerowarptics-1.3.0.jar", "alcubierre-1.2.6.jar",
+        ):
+            self.assertIn(target, self.delta)
+        self.assertIn("589 entradas", self.delta)
+        self.assertIn("587 = 97 Magic + 489 JARs não-Magic + 1 loader", self.delta)
+        self.assertIn("346/347", self.delta)
+        self.assertIn("453 dossiês", self.delta)
+        self.assertIn("Zero novas identidades mágicas certificadas", self.delta)
+        self.assertIn("1851 global / 1849 em escopo", self.delta)
+        self.assertIn("39 provas binary-exact", self.delta)
+        self.assertIn("14 rotas Survival", self.delta)
+        self.assertIn("Stage 06.05 ⛔", self.delta)
+        self.assertIn("#272 segue ⛔", self.delta)
+        self.assertIn("AUDITORIA-DELTA-POS-SNAPSHOT-2026-10-10.md", self.cross)
+        self.assertIn("AUDITORIA-DELTA-POS-SNAPSHOT-2026-10-10.md", self.status)
+        global_catalog = (META / "CATALOGO-GLOBAL-MAGIAS.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("AUDITORIA-DELTA-POS-SNAPSHOT-2026-10-10.md", global_catalog)
+        self.assertIn("**164/164 diretórios canônicos**", global_catalog)
+        self.assertIn("**453 dossiês individuais**", global_catalog)
+        self.assertIn("**346/347**", global_catalog)
+        self.assertIn("**453 dossiês**", self.status)
+        self.assertIn("0 novas provas binary-exact", self.status)
+        self.assertIn("⛔ **Bloqueado na Stage 06.05**", self.status)
 
     def test_39_non_binary_exact_provider_rows_are_explicit(self):
         section = self.binary.split("|---|---|---:|---|---|", 1)[1].split(
