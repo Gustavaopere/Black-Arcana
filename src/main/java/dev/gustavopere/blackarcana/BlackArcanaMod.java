@@ -25,6 +25,7 @@ import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSpiritSightRunt
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSympatheticWoundRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftThresholdGateRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftVeilstepReflexRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftVeilAnchorConsecrationRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.OptionalModEntrypoints;
 import dev.gustavopere.blackarcana.network.ClientArcanaSyncState;
 import dev.gustavopere.blackarcana.network.neoforge.ArcanaNetworkBridge;
@@ -87,6 +88,7 @@ public final class BlackArcanaMod {
         MinecraftSympatheticWoundRuntime.register(NeoForge.EVENT_BUS);
         MinecraftThresholdGateRuntime.register(NeoForge.EVENT_BUS);
         MinecraftVeilstepReflexRuntime.register(NeoForge.EVENT_BUS);
+        MinecraftVeilAnchorConsecrationRuntime.register(NeoForge.EVENT_BUS);
         HazardPreflightSyncService.register(NeoForge.EVENT_BUS);
         HazardResistanceForecastService.register(NeoForge.EVENT_BUS);
         ArcanaSpellDataReloadListener.register(NeoForge.EVENT_BUS);
