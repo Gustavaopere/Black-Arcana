@@ -40,3 +40,13 @@ Este comando, **não executado na instância real nesta revisão**, apenas confi
 - ⛔ Stage **06.05** ainda bloqueada pelo ingresso player-facing do ritual `black_arcana:veil_anchor_consecration`. Nenhuma mudança de runtime, estágio, domínio ou mínimo semântico (**1851 global / 1849 escopo**).
 
 **Gate de encerramento da exceção:** hash SHA-256 do JAR real, metadados extraídos, owner e possível registry identificados; dossiê source/metadata verificável se disponível. Só então revisar se o objeto merece ficha de provider/magia. Na ausência de JAR: **⛔**, não ✅.
+
+## Sonda binária de metadados preparada (2026-10-10)
+
+Uma [sonda read-only específica](../../../docs/qa/nonmagic_272_metadata_probe.py) e seus [testes sintéticos](../../../docs/qa/nonmagic_272_metadata_probe_test.py) foram acrescentados para separar o `modId` **declarado** no sibling do `modId` **lido em `META-INF/neoforge.mods.toml`** do JAR real. O procedimento fica no [guia de triagem](../../../docs/qa/nonmagic_physical_jar_triage.md).
+
+```bash
+python3 docs/qa/nonmagic_272_metadata_probe.py --instance "/caminho/da/instancia" > nonmagic-272-metadata.json
+```
+
+Mesmo o resultado futuro `MATCHED_EMBEDDED_MOD_ID` demonstrará somente identidade de metadata do artefato e SHA-256. **O dossiê próprio segue ausente e os registries/spells, runtime, scripts e Survival permanecem não verificados.** Não houve execução contra o JAR da instalação nesta etapa; a posição continua ⛔ e os contadores históricos não se alteram.
