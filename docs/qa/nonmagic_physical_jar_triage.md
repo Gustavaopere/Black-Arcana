@@ -23,7 +23,7 @@ Para priorizar algumas posições da modlist física:
 python3 docs/qa/nonmagic_physical_jar_triage.py --instance "/caminho/da/instancia" --physical-numbers "121,334,395,404,464" > selected-nonmagic-triage.json
 ```
 
-Não é preciso enviar o conteúdo bruto dos JARs ou o save: este processo apenas lê ZIP member names, tamanhos, SHA-1 e SHA-256 dos filenames físicos explícitos. Não executa mod code, não extrai arquivo do ZIP, não decompila classes nem modifica o pack. Symlinks são rejeitados; ZIPs inválidos/ausentes/over-sized e archives com membros excessivos ficam com status de falha fechada.
+Não é preciso enviar o conteúdo bruto dos JARs ou o save: este processo apenas lê ZIP member names, tamanhos, SHA-1 e SHA-256 dos filenames físicos explícitos. Não executa mod code, não extrai arquivo do ZIP, não decompila classes nem modifica o pack. Symlinks são rejeitados; ZIPs inválidos/ausentes/over-sized e archives com membros excessivos ficam com status de falha fechada. **Nomes de entradas ZIP e hashes SHA-1/SHA-256 são agora colhidos do mesmo descritor aberto** (`O_NOFOLLOW` quando disponível). A ferramenta confere identidade, tamanho e tempos do arquivo no começo/final e rejeita alterações ou substituição de caminho detectadas como `CHANGED_DURING_SCAN`, **sem retornar hashes ou hints**; isso evita associar os nomes de um JAR ao hash de outro.
 
 ## Interpretação dos resultados
 
