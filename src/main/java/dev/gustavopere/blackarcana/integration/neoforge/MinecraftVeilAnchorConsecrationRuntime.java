@@ -70,6 +70,7 @@ public final class MinecraftVeilAnchorConsecrationRuntime {
                 level.dimension().location().toString(), center.asLong());
         RitualResult result = VeilAnchorActivationService.start(runtime, player.getUUID(), anchor, nowTick);
         if (result.status() == RitualResult.Status.STARTED) {
+            ArcanaServerRuntimeManager.recordRitualActivation(level.getServer());
             player.displayClientMessage(Component.translatable(
                     "ritual.black_arcana.veil_anchor.started"), true);
         } else {
