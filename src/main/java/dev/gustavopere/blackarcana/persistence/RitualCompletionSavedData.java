@@ -58,6 +58,11 @@ public final class RitualCompletionSavedData extends SavedData {
         return ledger.canAcceptNewCompletion();
     }
 
+    /** Check the number of slots claimed by in-flight canonical ritual sessions. */
+    public synchronized boolean canAcceptCompletions(int requiredSlots) {
+        return ledger.canAcceptCompletions(requiredSlots);
+    }
+
     public synchronized boolean contains(RitualCompletionKey key) {
         return ledger.contains(key);
     }

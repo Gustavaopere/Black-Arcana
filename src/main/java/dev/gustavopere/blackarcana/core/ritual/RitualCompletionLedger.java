@@ -31,7 +31,15 @@ public final class RitualCompletionLedger {
 
     /** Pure capacity preflight; the caller must separately reject duplicate completion keys. */
     public synchronized boolean canAcceptNewCompletion() {
-        return completedAt.size() < maxEntries;
+        return canAcceptCompletions(1);
+    }
+
+    /** Reserve headroom in the calculation for all active completion-producing rituals. */
+    public synchronized boolean canAcceptCompletions(int requiredSlots) {
+        if (requiredSlots <= 0 || requiredSlots > ABSOLUTE_MAX_COMPLETIONS) {
+            throw new IllegalArgumentException("required ritual completion slots outside bounds");
+        }
+        return requiredSlots <= maxEntries - completedAt.size();
     }
 
     public synchronized boolean contains(RitualCompletionKey key) {
