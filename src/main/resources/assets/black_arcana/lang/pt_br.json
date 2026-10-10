@@ -1,4 +1,6 @@
 {
+  "ritual.black_arcana.veil_anchor.started": "Consagração da Âncora do Véu iniciada. Espíritos serão consumidos após 100 ticks; conclusão em 400 ticks.",
+  "ritual.black_arcana.veil_anchor.denied": "Consagração da Âncora do Véu negada: %s",
   "spell.black_arcana.irons_integration_probe": "Prova de Integração da Arcana Negra",
   "death.attack.black_arcana.arcane_backlash": "%1$s foi consumido pelo refluxo arcano",
   "key.categories.black_arcana": "Black Arcana",
