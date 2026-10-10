@@ -53,6 +53,24 @@ class BlackArcanaModWiringTest {
     }
 
     @Test
+    void worldRitualIngressAndEveryTickTransitionCaptureSavedData() throws IOException {
+        Path sourceRoot = repositoryRoot().resolve("src/main/java/dev/gustavopere/blackarcana");
+        String ingress = Files.readString(sourceRoot.resolve(
+                "integration/neoforge/MinecraftVeilAnchorConsecrationRuntime.java"));
+        String manager = Files.readString(sourceRoot.resolve(
+                "core/runtime/ArcanaServerRuntimeManager.java"));
+
+        assertTrue(ingress.contains("ArcanaServerRuntimeManager.recordRitualActivation("),
+                "a successful player-triggered ritual must capture its newly started session immediately");
+        assertTrue(manager.contains("ritualStateChanged(runtime.lastRitualTickSummary())"),
+                "commit, completion and cancellation transitions must capture their updated sessions");
+        assertTrue(manager.contains("if (ritualInterrupted || ritualTransition"),
+                "immediate mutation captures must coexist with periodic persistence");
+        assertTrue(manager.contains("BlackArcanaSavedData.get(server)"),
+                "captures must use the existing Black Arcana SavedData owner");
+    }
+
+    @Test
     void borrowedSightClientboundPayloadIsRegisteredOnModBus() throws IOException {
         String source = Files.readString(MOD_SOURCE);
         assertTrue(
