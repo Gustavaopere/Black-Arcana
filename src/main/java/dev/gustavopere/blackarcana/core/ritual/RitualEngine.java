@@ -105,6 +105,25 @@ public final class RitualEngine {
                 "ritual interrupted after components were committed");
     }
 
+    /**
+     * Immediately interrupts every session owned by one caster on a server lifecycle
+     * transition. The registry itself bounds the scan; no world/structure search
+     * occurs. Precommit costs stay untouched and committed costs are never refunded.
+     *
+     * @return number of sessions removed (0 when no sessions belonged to this caster)
+     */
+    public synchronized int interruptCaster(java.util.UUID casterId, String reason) {
+        Objects.requireNonNull(casterId, "casterId");
+        Objects.requireNonNull(reason, "reason");
+        int removed = 0;
+        for (RitualSessionRegistry.Session session : sessions.sessions(MAX_SNAPSHOT_ENTRIES)) {
+            if (!session.context.casterId().equals(casterId)) continue;
+            interrupt(session.activationId, reason);
+            removed++;
+        }
+        return removed;
+    }
+
     public synchronized TickSummary tick(long nowTick, int maxSessionsToProcess) {
         if (nowTick < 0L) throw new IllegalArgumentException("nowTick cannot be negative");
         if (maxSessionsToProcess <= 0) return new TickSummary(0, 0, 0);
