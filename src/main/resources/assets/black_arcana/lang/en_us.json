@@ -1,4 +1,6 @@
 {
+  "ritual.black_arcana.veil_anchor.started": "Veil Anchor consecration begun. Spirits commit in 100 ticks; completion in 400 ticks.",
+  "ritual.black_arcana.veil_anchor.denied": "Veil Anchor denied: %s",
   "spell.black_arcana.irons_integration_probe": "Black Arcana Integration Probe",
   "death.attack.black_arcana.arcane_backlash": "%1$s was consumed by arcane backlash",
   "key.categories.black_arcana": "Black Arcana",
