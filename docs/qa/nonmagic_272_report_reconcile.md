@@ -41,3 +41,14 @@ Testes locais e CI (relatórios sintéticos):
 - ⛔ Stage 06.05: ritual veil_anchor_consecration sem player ingress legítimo.
 
 Nenhuma coleta física na instalação do usuário foi realizada nesta contribuição.
+
+## Evidência de versão embutida (2026-10-10)
+
+A sonda `nonmagic_272_metadata_probe.py` agora informa `expected_version=0.1.0`, `version_evidence` e, quando seguro, `embedded_version` da **mesma** entrada `[[mods]]` correspondente ao mod ID alvo. O reconciliador preserva o antigo `status=MATCHED_EMBEDDED_MOD_ID` como evidência somente de ID e rejeita a consistência final em caso de conflito ou ausência de versão literal comprovada:
+
+- `SOURCE_VERSION_MISMATCH` — dois relatórios podem ter hashes e mod ID coerentes, mas versão embutida diferente da declarada;
+- `SOURCE_VERSION_UNVERIFIED` — `${file.jarVersion}` não resolvido ou valor de versão inválido/ausente;
+- `INVALID_REPORT` — JSON sem a nova evidência de versão, com verdicto inconsistente, ou sem o vínculo documental exigido;
+- `REPORTED_HASHES_AND_MOD_ID_CONSISTENT` — mantido por compatibilidade de rótulo, mas agora **exige adicionalmente** `MATCHED_SOURCE_LITERAL`.
+
+O status combinado ainda atesta somente *consistência de valores informados em relatórios*, não captura real, registry de magia nem obtenção. Mesmo uma correspondência literal `0.1.0` não fecha o dossiê #272; `346/347 OTHER`, `39` provas binárias e `14` rotas Survival continuam inalteradas. Ver [NeoForge 1.21.1 — Mod Files](https://docs.neoforged.net/docs/1.21.1/gettingstarted/modfiles/).
