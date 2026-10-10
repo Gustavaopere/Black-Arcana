@@ -170,6 +170,85 @@ class RitualEngineTest {
     }
 
     @Test
+    void casterDisconnectBeforeCommitCannotBeHiddenByImmediateReconnect() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        RitualEngine engine = engine(components, outcomes);
+        RitualActivationId activation = activation("f1000000-0000-0000-0000-000000000001");
+
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(DEFINITION, activation, context(), 100L).status());
+        assertEquals(1, engine.interruptCaster(CASTER, "ritual_caster_disconnected"));
+        assertEquals(0, engine.interruptCaster(CASTER, "ritual_caster_disconnected"));
+        assertEquals(0, engine.activeSessionCount());
+        assertTrue(engine.snapshot(8).isEmpty());
+
+        // Requirements may be valid again on the next tick; the interrupted activation
+        // must not resume or commit resources after a fast reconnect.
+        engine.tick(120L, 8);
+        engine.tick(140L, 8);
+        assertEquals(0, components.reserveCount.get());
+        assertEquals(0, components.commitCount.get());
+        assertEquals(0, outcomes.get());
+        assertEquals(RitualResult.Status.DENIED_REPLAY,
+                engine.start(DEFINITION, activation, context(), 141L).status());
+    }
+
+    @Test
+    void dimensionChangeAfterCommitDoesNotRefundOrCompleteOnReturn() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        RitualEngine engine = engine(components, outcomes);
+        RitualActivationId activation = activation("f1000000-0000-0000-0000-000000000002");
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(DEFINITION, activation, context(), 100L).status());
+        assertEquals(1, engine.tick(120L, 8).committed());
+        assertEquals(1, components.commitCount.get());
+
+        assertEquals(1, engine.interruptCaster(CASTER, "ritual_caster_changed_dimension"));
+        assertEquals(0, engine.activeSessionCount());
+        assertTrue(engine.snapshot(8).isEmpty());
+        engine.tick(140L, 8);
+        assertEquals(1, components.commitCount.get());
+        assertEquals(0, components.refundCount.get());
+        assertEquals(0, outcomes.get());
+    }
+
+    @Test
+    void casterInterruptionIsScopedAndReleasesAllOwnedAnchors() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        RitualEngine engine = engine(components, outcomes);
+        UUID other = UUID.fromString("22222222-2222-2222-2222-222222222222");
+        RitualAnchor secondAnchor = new RitualAnchor("minecraft:overworld", 43L);
+        RitualAnchor otherAnchor = new RitualAnchor("minecraft:overworld", 44L);
+
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(DEFINITION, activation("f1000000-0000-0000-0000-000000000003"),
+                        context(), 100L).status());
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(DEFINITION, activation("f1000000-0000-0000-0000-000000000004"),
+                        new RitualContext(CASTER, List.of(), secondAnchor), 100L).status());
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(DEFINITION, activation("f1000000-0000-0000-0000-000000000005"),
+                        new RitualContext(other, List.of(), otherAnchor), 100L).status());
+
+        assertEquals(2, engine.interruptCaster(CASTER, "ritual_caster_died"));
+        assertEquals(1, engine.activeSessionCount());
+        assertEquals(other, engine.snapshot(8).getFirst().context().casterId());
+
+        // A second player may immediately use the released anchor with a fresh server nonce.
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(DEFINITION, activation("f1000000-0000-0000-0000-000000000006"),
+                        new RitualContext(other, List.of(), ANCHOR), 101L).status());
+        assertEquals(1, engine.tick(120L, 8).committed());
+        assertEquals(1, engine.tick(140L, 8).committed());
+        assertEquals(1, outcomes.get());
+        assertEquals(1, engine.tick(141L, 8).completed());
+        assertEquals(2, outcomes.get());
+    }
+
+    @Test
     void sameAnchorMultiplayerRaceAdmitsExactlyOneSession() throws Exception {
         FakeComponents components = new FakeComponents();
         RitualEngine engine = engine(components, new AtomicInteger());

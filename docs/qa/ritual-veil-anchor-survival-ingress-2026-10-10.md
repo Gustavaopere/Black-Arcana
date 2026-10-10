@@ -34,3 +34,14 @@ A recompensa atual é registrada no RitualCompletionSavedData, sem mutação de 
 Teste determinístico de wiring no composition root, padrão exato de nove células (incluindo célula ausente/incorreta), ausência de provider/binding, espíritos insuficientes, exclusividade da âncora em multiplayer, interrupção pré-commit e conclusão uma única vez. Testes anteriores cobrem replay, restore, delays e componentes Malum. Exigir ambos os jobs da CI no HEAD final antes de merge.
 
 **Ainda sem prova física:** Malum 1.8.2 da instância, claims, latência cliente/multiplayer, obtenção no pack real, quebra/reconstrução entre fases, Eidolon real e persistência do candidato exato. Conservar no Stage 09 sob D035. Não declarar Stage 06.05 ✅ ou iniciar Stage 07 apenas pela presença de código.
+
+## 2026-10-10 — correção de interrupção em eventos de lifecycle (PR #735)
+
+Uma lacuna foi encontrada após o PR #733: mesmo com os requisitos revalidados aos ticks 100/400, o caster poderia desconectar e reconectar, trocar de dimensão e retornar, ou morrer entre os checkpoints, sem que a sessão fosse interrompida nesse intervalo. O PR #735 adiciona cancelamento **imediato** por UUID do caster em `PlayerLoggedOutEvent`, `PlayerChangedDimensionEvent` e no tick do servidor para jogadores mortos, usando o `RitualEngine.interrupt(...)` existente. O scan é limitado ao registro de sessões ativas; não toca JAR/API do Malum e não inspeciona estruturas globais.
+
+- **Antes de commit:** não há consumo; a âncora é liberada e a sessão desaparece do snapshot.
+- **Depois de commit:** o espírito já consumido permanece gasto e nenhum outcome de conclusão é executado, mesmo após retorno rápido do jogador.
+- **Outros jogadores:** sessões de outros casters permanecem intactas; o cancelamento do caster remove todas as suas sessões ativas e libera suas âncoras.
+- **Persistência:** a camada server manager recaptura o estado quando o evento remove sessões; o próximo save do Minecraft usa a lista de sessões canceladas, evitando snapshot em memória stale. Isso não é garantia física contra queda do processo antes de flush em disco.
+
+Testes determinísticos comprovam esses contratos no core e a presença de listeners no composition root. Ainda faltam testes **com cliente real** de logout/reconnect, morte, troca de dimensão, custos Malum e preservação após restart do mesmo save, na Stage 09. Este PR não promove a Stage 06.05.
