@@ -54,6 +54,9 @@ jobs:
       - name: "Physical #272 NeoForge metadata-only probe tests"
         run: python3 docs/qa/nonmagic_272_metadata_probe_test.py
 
+      - name: "Physical #272 cross-report SHA reconciliation tests"
+        run: python3 docs/qa/nonmagic_272_report_reconcile_test.py
+
       - name: Unit tests
         run: ./gradlew --no-daemon test
 
