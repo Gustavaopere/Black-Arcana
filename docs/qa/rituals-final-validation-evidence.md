@@ -81,6 +81,17 @@ Existing Stage 06 automated coverage remains valid supporting evidence for:
 
 These rows do not convert `06-P02`–`06-P14` into physical PASS.
 
+
+## 2026-10-10 — audit of requirement drift during grand ritual lifecycle (PR #732)
+
+The source audit at `Black-Arcana/main@c69273a8a0e7bf06e0420d9a979188de6e685fd0` found that `RitualEngine.start(...)` evaluated ritual requirements only on session admission. The precommit branch subsequently checked spirit components, and the completion branch executed the outcome without rechecking the requirement evaluator. Thus, for the Malum-backed `veil_anchor_consecration`, a change in caster-online or loaded-anchor state between admission and commit/completion was not enforced at those later transaction boundaries.
+
+PR [#732](https://github.com/Gustavaopere/Black-Arcana/pull/732) changes **the existing canonical RitualEngine** to recheck the same server-owned requirement binding before component reservation at commit and again before outcome execution at completion. Requirements revoked before commit cancel without consuming components; requirements revoked after commit cancel without reward and **do not refund** already-committed Malum spirits. Exceptions in the recheck fail closed. This does not add a new ritual engine or player activation entrypoint.
+
+The PR's focused regression tests cover changing requirements before commit, after commit, requirement-evaluator exceptions, binding validation ticks and a Malum representative `4 arcane + 2 wicked` spirit transaction that loses its caster gate after commitment. Synthetic tests exercise engine/typed-spirit contracts, **not** real Malum player logout, server chunk lifecycle, installed JAR behavior or the absent production player activation surface.
+
+**Caveat:** checks occur at the *commit and completion boundaries*, not at every intermediate tick; a transient condition that disappears and returns between those checkpoints is not proven to interrupt the ritual. The requirement remains `06-P05 BLOCKED` and physical rows remain PENDING/BLOCKED. Neither the Stage 06.05 release gate nor Stage 07 promotion follows from this correction.
+
 ## Required next action
 
 Stage 06 remains the active audit target. To close it legitimately:
