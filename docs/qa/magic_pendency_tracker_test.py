@@ -964,6 +964,15 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("historical checkpoint", ledger)
         self.assertIn("06.05 🟡", self.status)
         self.assertIn("38088955006", self.status)
+        stage09 = (ROOT / "plans/09-hardening-release/01-test-matrix.md").read_text(
+            encoding="utf-8"
+        )
+        for row in ("06-P01", "06-P02–06-P03", "06-P04", "06-P05",
+                    "06-P06–06-P09", "06-P10–06-P11", "06-P12–06-P14",
+                    "06-P15–06-P16"):
+            self.assertIn(row, stage09)
+        self.assertIn("PENDING / DEFERRED TO STAGE 09", stage09)
+        self.assertIn("crash consistency", stage09)
 
     def test_historical_ritual_design_gate_preserves_original_blocker(self):
         self.assertIn("⛔ SEM INGRESSO CANÔNICO", self.stage)
