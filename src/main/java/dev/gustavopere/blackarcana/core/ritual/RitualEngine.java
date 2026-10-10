@@ -192,6 +192,46 @@ public final class RitualEngine {
         return new TickSummary(committed, completed, cancelled);
     }
 
+    /**
+     * Bounded count of in-flight claims for one completion-producing ritual.
+     * Called by its server-owned requirements on start, precommit and outcome.
+     * An already-running invocation counts itself; a new invocation must
+     * request one additional completion slot.
+     *
+     * This scans only the bounded active-session registry, never the world.
+     */
+    public synchronized CompletionClaims completionClaims(ArcanaRitualId ritualId, RitualContext context) {
+        Objects.requireNonNull(ritualId, "ritualId");
+        Objects.requireNonNull(context, "context");
+        int active = 0;
+        boolean includesCurrent = false;
+        boolean anotherForCaster = false;
+        for (RitualSessionRegistry.Session session : sessions.sessions(MAX_SNAPSHOT_ENTRIES)) {
+            if (!session.definition.id().equals(ritualId)) continue;
+            active++;
+            if (!session.context.casterId().equals(context.casterId())) continue;
+            if (session.context.equals(context)) includesCurrent = true;
+            else anotherForCaster = true;
+        }
+        return new CompletionClaims(active, includesCurrent, anotherForCaster);
+    }
+
+    public record CompletionClaims(
+            int activeSessions,
+            boolean includesCurrentSession,
+            boolean anotherSessionForCaster
+    ) {
+        public CompletionClaims {
+            if (activeSessions < 0 || activeSessions > MAX_SNAPSHOT_ENTRIES) {
+                throw new IllegalArgumentException("active completion claims outside bounds");
+            }
+        }
+
+        public int requiredSlots() {
+            return activeSessions + (includesCurrentSession ? 0 : 1);
+        }
+    }
+
     public synchronized int activeSessionCount() {
         return sessions.size();
     }
