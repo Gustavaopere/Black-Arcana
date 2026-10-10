@@ -2,6 +2,10 @@
 
 Status: **⛔ SEM INGRESSO CANÔNICO DE JOGADOR NO RUNTIME ATUAL**. Documento de arquitetura/critério de implementação, **não uma implementação**. Baseline analisada: Black Arcana `main@9141a8ed1c345db4e995e5f2aa849df2c24769b9`.
 
+## Atualização 2026-10-10 — ingresso Survival em implementação
+
+O status ⛔ abaixo descreve a **ausência no baseline histórico de 2026-10-08**. O PR [#733](https://github.com/Gustavaopere/Black-Arcana/pull/733) introduz um candidato real de ativação por gesto de jogador (altar 3×3, Echo Shard, servidor autoritativo, definição Malum existente, RitualEngine.start). Consultar a [especificação e QA](ritual-veil-anchor-survival-ingress-2026-10-10.md). Este avanço permanece **🟡 em implementação/aceitação** enquanto os jobs do HEAD final e a validação real não forem fechados; não promover 06.05 nem Stage 07 por antecipação. O desenho não inventa APIs do Malum.
+
 ## Evidência já estabelecida
 
 - [Plano 06.05](../../plans/06-rituals/05-final-validation-handoff.md) e [evidência do ritual](rituals-final-validation-evidence.md) identificam ausência de caller de produção para `RitualEngine.start(...)` e ausência de rede, bloco/item, UI/evento ou comando de ativação canônico.
