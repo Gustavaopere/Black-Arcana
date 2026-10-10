@@ -2,6 +2,10 @@
 
 **Estado: 🟡 triagem documentada; ⚠️ varredura binária integral ainda não comprovada.**
 
+## Adendo — entradas pós-snapshot do sibling (2026-10-10)
+
+A [auditoria de alterações pós-snapshot](AUDITORIA-DELTA-POS-SNAPSHOT-2026-10-10.md) revisou as fontes SHA-pinned de quatro dossiês: **Cold Sweat: Altitude** e **Create: Bionics** adicionados após a modlist física, **AeroWarptics** solicitado como entrada e **Alcubierre** solicitado como remoção, ainda presente na posição física #018. **Não incorporar estes nomes ao manifesto congelado de 587 posições sem novo dump físico**. A revisão documental foi adicional; **não somar o Alcubierre novamente** ao total de 453 dossiês individuais da auditoria do snapshot nem presumir registry mágico para portal/warp de veículo. A classificação de AeroWarptics como **⚠️ candidato temático a inspeção** não certifica spell, ritual ou propriedade Black Arcana. Versões, mod IDs e SHA-256 físicos pós-snapshot aguardam validação.
+
 ## Autoridade e método
 
 - Snapshot físico do sibling: `neoforge-rpg-skilltree@de80b186357cad20ba5b81892a8682777e96e35a`, índice `PROJECT-INSTRUCTIONS/modlist/modlist.md`; Black Arcana `main@9141a8ed1c345db4e995e5f2aa849df2c24769b9` antes do lote.
