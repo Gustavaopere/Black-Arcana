@@ -15,6 +15,7 @@ import dev.gustavopere.blackarcana.api.ArcanaTargetSpec;
 import dev.gustavopere.blackarcana.core.cast.BoundedReplayGuard;
 import dev.gustavopere.blackarcana.core.cast.CompositeCastRequestValidator;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftVeilAnchorConsecrationRuntime;
 import dev.gustavopere.blackarcana.core.targeting.ServerEntityTargetSelector;
 import dev.gustavopere.blackarcana.network.ArcanaProtocol;
 import dev.gustavopere.blackarcana.network.CastIntentPayload;
@@ -42,6 +43,30 @@ public final class BlackArcanaGameTests {
     @GameTest(template = "foundation_empty", timeoutTicks = 20)
     public static void foundationLoadsOnDedicatedGameTestServer(GameTestHelper helper) {
         helper.assertTrue("black_arcana".equals(BlackArcanaMod.MOD_ID), "canonical mod id must remain stable");
+        helper.succeed();
+    }
+
+    @GameTest(template = "foundation_empty", timeoutTicks = 40)
+    public static void survivalVeilAnchorRequiresTheExactNineWorldBlocks(GameTestHelper helper) {
+        BlockPos center = new BlockPos(2, 2, 2);
+        helper.setBlock(2, 2, 2, Blocks.CRYING_OBSIDIAN);
+        helper.setBlock(2, 2, 1, Blocks.AMETHYST_BLOCK);
+        helper.setBlock(2, 2, 3, Blocks.AMETHYST_BLOCK);
+        helper.setBlock(1, 2, 2, Blocks.AMETHYST_BLOCK);
+        helper.setBlock(3, 2, 2, Blocks.AMETHYST_BLOCK);
+        helper.setBlock(1, 2, 1, Blocks.SOUL_SAND);
+        helper.setBlock(1, 2, 3, Blocks.SOUL_SAND);
+        helper.setBlock(3, 2, 1, Blocks.SOUL_SAND);
+        helper.setBlock(3, 2, 3, Blocks.SOUL_SAND);
+
+        BlockPos physicalAnchor = helper.absolutePos(center);
+        helper.assertTrue(
+                MinecraftVeilAnchorConsecrationRuntime.isValidAnchor(helper.getLevel(), physicalAnchor),
+                "a completed player-built altar must be recognized in an already loaded server world");
+        helper.setBlock(1, 2, 1, Blocks.AIR);
+        helper.assertTrue(
+                !MinecraftVeilAnchorConsecrationRuntime.isValidAnchor(helper.getLevel(), physicalAnchor),
+                "removing one Soul Sand block must deny the altar");
         helper.succeed();
     }
 
