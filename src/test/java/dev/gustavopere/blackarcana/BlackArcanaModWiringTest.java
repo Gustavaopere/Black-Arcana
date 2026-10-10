@@ -28,6 +28,12 @@ class BlackArcanaModWiringTest {
     }
 
     @Test
+    void veilAnchorHasCanonicalPlayerFacingGameBusIngress() throws IOException {
+        String source = Files.readString(MOD_SOURCE);
+        assertRegistered(source, "MinecraftVeilAnchorConsecrationRuntime");
+    }
+
+    @Test
     void noeticLifecycleRuntimeIsRegisteredOnGameBus() throws IOException {
         String source = Files.readString(MOD_SOURCE);
         assertRegistered(source, "MinecraftNoeticRuntime");
