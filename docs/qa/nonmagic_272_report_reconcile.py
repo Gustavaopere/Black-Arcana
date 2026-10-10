@@ -15,6 +15,7 @@ import re
 SOURCE = "de80b186357cad20ba5b81892a8682777e96e35a"
 FILENAME = "factory_construction_registry_probe-0.1.0.jar"
 MOD_ID = "factory_construction_registry_probe"
+VERSION = "0.1.0"
 TRIAGE_EVIDENCE = "ZIP_MEMBER_NAME_HINTS_AND_SHA_NOT_REGISTRY_OR_RUNTIME_PROOF"
 METADATA_EVIDENCE = "EMBEDDED_MOD_ID_ONLY_NOT_SPELL_REGISTRY_OR_RUNTIME_PROOF"
 SHA1 = re.compile(r"[0-9a-f]{40}\Z")
@@ -49,6 +50,7 @@ def _valid(triage: object, metadata: object) -> bool:
         or metadata.get("physical_number") != 272
         or metadata.get("filename") != FILENAME
         or metadata.get("expected_mod_id") != MOD_ID
+        or metadata.get("expected_version") != VERSION
         or metadata.get("registry_entries_verified") is not False
         or metadata.get("survival_acquisition_verified") is not False
         or metadata.get("spell_count", "MISSING") is not None
@@ -101,6 +103,36 @@ def _valid(triage: object, metadata: object) -> bool:
         return False
     metadata_status = metadata["status"]
     embedded_ids = metadata.get("embedded_mod_ids")
+    version_evidence = metadata.get("version_evidence")
+    embedded_version = metadata.get("embedded_version")
+    if metadata_status == "MATCHED_EMBEDDED_MOD_ID":
+        if version_evidence not in (
+            "MATCHED_SOURCE_LITERAL", "MISMATCHED_SOURCE_LITERAL",
+            "UNRESOLVED_TEMPLATE", "VERSION_UNVERIFIABLE",
+        ):
+            return False
+        if version_evidence == "VERSION_UNVERIFIABLE":
+            if "embedded_version" in metadata:
+                return False
+        else:
+            if (
+                not isinstance(embedded_version, str) or not embedded_version
+                or len(embedded_version) > 128
+                or any(ord(ch) < 32 or ord(ch) == 127 for ch in embedded_version)
+            ):
+                return False
+            expected_verdict = (
+                "UNRESOLVED_TEMPLATE" if "${" in embedded_version else
+                "MATCHED_SOURCE_LITERAL" if embedded_version == VERSION else
+                "MISMATCHED_SOURCE_LITERAL"
+            )
+            if version_evidence != expected_verdict:
+                return False
+    elif metadata_status == "MOD_ID_MISMATCH":
+        if version_evidence != "NOT_APPLICABLE_MOD_ID_MISMATCH" or "embedded_version" in metadata:
+            return False
+    elif version_evidence != "NOT_EXAMINED" or "embedded_version" in metadata:
+        return False
     if metadata_status in ("MATCHED_EMBEDDED_MOD_ID", "MOD_ID_MISMATCH"):
         if (
             not _digest(metadata.get("sha256"), SHA256)
@@ -144,6 +176,10 @@ def reconcile(triage: dict, metadata: dict) -> dict:
         result["status"] = "SHA256_MISMATCH"
     elif metadata["status"] != "MATCHED_EMBEDDED_MOD_ID":
         result["status"] = "EMBEDDED_MOD_ID_NOT_CONFIRMED"
+    elif metadata["version_evidence"] == "MISMATCHED_SOURCE_LITERAL":
+        result["status"] = "SOURCE_VERSION_MISMATCH"
+    elif metadata["version_evidence"] != "MATCHED_SOURCE_LITERAL":
+        result["status"] = "SOURCE_VERSION_UNVERIFIED"
     else:
         result["status"] = "REPORTED_HASHES_AND_MOD_ID_CONSISTENT"
         result["sha256"] = target["sha256"]
