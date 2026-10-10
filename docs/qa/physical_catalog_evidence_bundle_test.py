@@ -22,34 +22,108 @@ class EvidenceBundleTests(unittest.TestCase):
         qa.mkdir()
         return instance, qa
 
-    def fake_run(self, calls, fail_script=None, metadata_status='MISSING_JAR'):
+    def fake_run(self, calls, fail_script=None, metadata_status='MISSING_JAR',
+                 valid=True):
         def runner(argv, **kwargs):
             script = Path(argv[1]).name
             calls.append((script, tuple(argv[2:])))
             if script == fail_script:
                 return mock.Mock(returncode=1)
+            pin = 'de80b186357cad20ba5b81892a8682777e96e35a'
             if script == 'provider-catalog-deployed-evidence-collector.py':
                 destination = Path(argv[argv.index('--output') + 1])
-                destination.write_text(json.dumps({'schema': 3, 'collector': 'Black Arcana provider catalog deployed evidence'}))
+                data = {'schema': 3,
+                        'collector': 'Black Arcana provider catalog deployed evidence'}
+                if valid:
+                    data.update(instance_root_redacted=True, worlds_scanned=[],
+                                mods={}, notes=['This collector is read-only.'])
+                destination.write_text(json.dumps(data))
+                return mock.Mock(returncode=0)
+            if script == 'nonmagic_272_metadata_probe.py':
+                payload = {'status': metadata_status}
+                ret = 2 if metadata_status != 'MATCHED_EMBEDDED_MOD_ID' else 0
+                if valid:
+                    payload.update(
+                        schema='black_arcana_nonmagic_272_metadata_probe_v1',
+                        evidence='EMBEDDED_MOD_ID_ONLY_NOT_SPELL_REGISTRY_OR_RUNTIME_PROOF',
+                        physical_number=272,
+                        filename='factory_construction_registry_probe-0.1.0.jar',
+                        source_commit=pin,
+                        expected_mod_id='factory_construction_registry_probe',
+                        expected_version='0.1.0',
+                        version_evidence='NOT_EXAMINED',
+                        registry_entries_verified=False,
+                        survival_acquisition_verified=False,
+                        spell_count=None)
+            elif script == 'nonmagic_272_report_reconcile.py':
+                payload = {'status': 'COLLECTOR_BLOCKED'}
+                ret = 2
+                if valid:
+                    payload.update(
+                        schema='black_arcana_nonmagic_272_cross_report_reconciliation_v1',
+                        source_commit=pin,
+                        evidence='REPORT_CONSISTENCY_ONLY_NOT_REAL_INSTANCE_OR_REGISTRY_PROOF',
+                        physical_number=272,
+                        filename='factory_construction_registry_probe-0.1.0.jar',
+                        catalog_status='BLOCKED_MISSING_DOSSIER_AND_REGISTRY_PROOF',
+                        registry_entries_verified=False,
+                        survival_acquisition_verified=False,
+                        spell_count=None)
+            elif script == 'provider_39_evidence_queue.py':
+                payload = {
+                    'registry_proofs_completed': 0,
+                    'expected_binary_registry_proofs': 39,
+                    'providers': [{'promotion_allowed': False} for _ in range(39)],
+                }
+                ret = 0
+                if valid:
+                    payload.update(
+                        schema='black_arcana_39_provider_registry_evidence_queue_v1',
+                        evidence='REPORT_ONLY_NOT_REGISTRY_OR_SURVIVAL_PROOF',
+                        source_commit=pin, expected_physical_jars=69,
+                        fingerprinted_pending_registry=0,
+                        blocked_physical_artifact=39,
+                        providers=[dict(provider=f'Provider {i}',
+                                        physical_status='MISSING',
+                                        status='PHYSICAL_ARTIFACT_BLOCKED',
+                                        registry_verified=False,
+                                        survival_verified=False,
+                                        promotion_allowed=False)
+                                   for i in range(39)])
+            elif script == 'nonmagic_physical_jar_triage.py':
+                payload = {'schema': 'synthetic'}
+                ret = 0
+                if valid:
+                    rows = [{'physical_number': i, 'filename': f'other-{i}.jar',
+                             'status': 'MISSING'} for i in range(2, 491)]
+                    rows[270].update(filename='factory_construction_registry_probe-0.1.0.jar',
+                                     triage_group='OTHER')
+                    payload = {
+                        'schema': 'black_arcana_nonmagic_jar_triage_v1',
+                        'evidence': 'ZIP_MEMBER_NAME_HINTS_AND_SHA_NOT_REGISTRY_OR_RUNTIME_PROOF',
+                        'source_commit': pin, 'attempted': 489,
+                        'statuses': {'MISSING': 489}, 'rows': rows,
+                    }
+            elif script == 'physical_provider_fingerprint_collector.py':
+                payload = {'schema': 'synthetic'}
+                ret = 0
+                if valid:
+                    statuses = ('FINGERPRINTED','MISSING','UNSAFE','OVERSIZED',
+                                'INVALID_JAR','UNREADABLE','CHANGED_DURING_SCAN')
+                    payload = {
+                        'source': 'PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md',
+                        'evidence_class': 'READ_ONLY_JAR_FINGERPRINT_NOT_REGISTRY_PROOF',
+                        'expected': 69,
+                        'counts': {s:(69 if s=='MISSING' else 0) for s in statuses},
+                        'entries': [{'provider': f'Provider {i}',
+                                     'filename': f'provider-{i}.jar',
+                                     'status': 'MISSING'} for i in range(69)],
+                    }
             else:
-                if script == 'nonmagic_272_metadata_probe.py':
-                    payload = {'status': metadata_status}
-                    ret = 2 if metadata_status != 'MATCHED_EMBEDDED_MOD_ID' else 0
-                elif script == 'nonmagic_272_report_reconcile.py':
-                    payload = {'status': 'COLLECTOR_BLOCKED'}
-                    ret = 2
-                elif script == 'provider_39_evidence_queue.py':
-                    payload = {'registry_proofs_completed': 0,
-                               'expected_binary_registry_proofs': 39,
-                               'providers': [{'promotion_allowed': False} for _ in range(39)]}
-                    ret = 0
-                else:
-                    payload = {'schema': 'synthetic'}
-                    ret = 0
-                if 'stdout' in kwargs and hasattr(kwargs['stdout'], 'write'):
-                    json.dump(payload, kwargs['stdout'])
-                return mock.Mock(returncode=ret)
-            return mock.Mock(returncode=0)
+                raise AssertionError(f'unrecognized script: {script}')
+            if 'stdout' in kwargs and hasattr(kwargs['stdout'], 'write'):
+                json.dump(payload, kwargs['stdout'])
+            return mock.Mock(returncode=ret)
         return runner
 
     def test_all_six_reports_are_collected_with_explicit_catalog_block(self):
@@ -163,7 +237,7 @@ class EvidenceBundleTests(unittest.TestCase):
             root=Path(td)
             inst,qa=self.setup_dirs(root)
             calls=[]
-            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls,valid=False)):
                 report=module.capture(inst,root/'out',qa_dir=qa)
             self.assertEqual('FAILED',report['steps']['nonmagic_489']['status'])
             self.assertEqual('FAILED',report['steps']['providers_69']['status'])
@@ -176,7 +250,7 @@ class EvidenceBundleTests(unittest.TestCase):
             root=Path(td)
             inst,qa=self.setup_dirs(root)
             calls=[]
-            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls,valid=False)):
                 report=module.capture(inst,root/'out',qa_dir=qa)
             self.assertEqual('FAILED',report['steps']['physical_272_metadata']['status'])
 
@@ -185,7 +259,7 @@ class EvidenceBundleTests(unittest.TestCase):
             root=Path(td)
             inst,qa=self.setup_dirs(root)
             calls=[]
-            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls,valid=False)):
                 report=module.capture(inst,root/'out',qa_dir=qa)
             self.assertNotEqual('BLOCKED',report['steps']['physical_272_reconciliation']['status'])
 
@@ -194,7 +268,7 @@ class EvidenceBundleTests(unittest.TestCase):
             root=Path(td)
             inst,qa=self.setup_dirs(root)
             calls=[]
-            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls,valid=False)):
                 report=module.capture(inst,root/'out',qa_dir=qa)
             self.assertEqual('FAILED',report['steps']['deployed_config_survival']['status'])
 
@@ -203,7 +277,7 @@ class EvidenceBundleTests(unittest.TestCase):
             root=Path(td)
             inst,qa=self.setup_dirs(root)
             calls=[]
-            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls)):
+            with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls,valid=False)):
                 report=module.capture(inst,root/'out',qa_dir=qa)
             self.assertEqual('FAILED',report['steps']['registry_39_queue']['status'])
 
