@@ -136,5 +136,26 @@ class EvidenceBundleTests(unittest.TestCase):
             self.assertEqual('COLLECTION_INCOMPLETE',output['status'])
 
 
+    def test_actual_collectors_are_composable_on_empty_synthetic_instance(self):
+        # End-to-end integration: all six versioned scripts execute; no JARs are
+        # real or present, so this can never be evidence of spell completeness.
+        self.assertTrue((module.QA / 'provider_39_evidence_queue.py').is_file())
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            instance = root / 'fake-instance'
+            (instance / 'mods').mkdir(parents=True)
+            outcome = module.capture(instance, root / 'bundle')
+            self.assertEqual('REPORTS_CAPTURED_CATALOG_UNVERIFIED', outcome['status'])
+            self.assertEqual('BLOCKED', outcome['steps']['physical_272_metadata']['status'])
+            self.assertEqual('BLOCKED', outcome['steps']['physical_272_reconciliation']['status'])
+            triage = json.loads((root / 'bundle' / 'nonmagic-489.json').read_text())
+            self.assertEqual(489, triage['attempted'])
+            fingerprint = json.loads((root / 'bundle' / 'providers-69.json').read_text())
+            self.assertEqual(69, fingerprint['expected'])
+            queue = json.loads((root / 'bundle' / 'provider-39-queue.json').read_text())
+            self.assertEqual(39, len(queue['providers']))
+            self.assertEqual(0, queue['registry_proofs_completed'])
+
+
 if __name__ == '__main__':
     unittest.main()
