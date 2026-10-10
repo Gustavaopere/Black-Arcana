@@ -32,6 +32,15 @@ def fixture():
 
 
 class Provider39EvidenceQueueTest(unittest.TestCase):
+    def test_pinned_real_matrix_maps_all_39_to_the_69_crosswalk(self):
+        matrix = mod.load_matrix()
+        crosswalk = mod.load_crosswalk()
+        self.assertEqual(39, len(matrix))
+        self.assertEqual(69, len(crosswalk))
+        self.assertTrue(set(matrix).issubset(crosswalk))
+        self.assertEqual(909, sum(x['semantic_objects'] for x in matrix.values()))
+        self.assertEqual('ars_nouveau-1.21.1-5.13.1.jar', crosswalk['Ars Nouveau'])
+
     def test_missing_69_still_keeps_39_pending(self):
         matrix, crosswalk, report = fixture()
         output = mod.build_queue(matrix, crosswalk, report)
