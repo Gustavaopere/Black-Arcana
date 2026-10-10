@@ -74,3 +74,17 @@ python3 docs/qa/nonmagic_272_metadata_probe_test.py
 ```
 
 **O JAR da instalação real não foi lido nesta implementação.** Não alterar a contagem de 346/347 dossiês `OTHER`, 453 dossiês cross-domain, 39 provas binary-exact ou 14 rotas Survival apenas por disponibilizar a sonda.
+
+## Checagem adicional de versão embutida da posição #272 (2026-10-10)
+
+A sonda de metadados agora compara também o valor **literal** de `version` na entrada `[[mods]]` cujo `modId` corresponde ao valor declarado pela modlist. Usa a versão documental pinada `0.1.0`; não usa `version` de um segundo mod presente no mesmo ZIP. As possibilidades explícitas no JSON são:
+
+- `MATCHED_SOURCE_LITERAL`: a versão textual embutida coincide exatamente com `0.1.0`;
+- `MISMATCHED_SOURCE_LITERAL`: a versão textual literal diverge;
+- `UNRESOLVED_TEMPLATE`: campo como `${file.jarVersion}` exige resolução pela plataforma ou inspeção adicional do manifesto, **não inferida por esta sonda**;
+- `VERSION_UNVERIFIABLE`: campo vazio, ausente, não-string ou incompatível com a leitura limitada;
+- `NOT_APPLICABLE_MOD_ID_MISMATCH` ou `NOT_EXAMINED`: sem evidência de versão atribuível ao mod alvo.
+
+O campo histórico `status=MATCHED_EMBEDDED_MOD_ID` continua significando **somente mod ID**, mas o **código de saída 0** da CLI agora requer também `version_evidence=MATCHED_SOURCE_LITERAL`. Divergência de versão ou template não resolvido não autoriza aprovação. O reconciliador dos dois JSONs exige esses campos novos e rejeita relatórios antigos sem evidência explícita de versão.
+
+A referência de `${file.jarVersion}` e de `Implementation-Version` está documentada na [documentação oficial NeoForge 1.21.1](https://docs.neoforged.net/docs/1.21.1/gettingstarted/modfiles/). A resolução de versão no runtime, mesmo quando literal, não constitui prova de registro de spell ou presença em Survival. Nenhum JAR da instalação real foi inspecionado nesta alteração.

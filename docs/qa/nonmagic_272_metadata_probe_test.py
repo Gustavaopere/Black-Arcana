@@ -44,6 +44,62 @@ class MetadataProbeTest(unittest.TestCase):
         self.assertNotIn("NOT COPIED", json.dumps(result))
         self.assertNotIn("forbidden.json", json.dumps(result))
 
+    def test_version_literal_match_does_not_prove_registry(self):
+        with tempfile.TemporaryDirectory() as td:
+            record = probe.inspect_272_metadata(self._jar(Path(td)), MOD_ID, "0.1.0")
+        self.assertEqual("MATCHED_EMBEDDED_MOD_ID", record["status"])
+        self.assertEqual("MATCHED_SOURCE_LITERAL", record["version_evidence"])
+        self.assertEqual("0.1.0", record["embedded_version"])
+        self.assertFalse(record["registry_entries_verified"])
+
+    def test_version_mismatch_is_not_promoted_from_mod_id_match(self):
+        with tempfile.TemporaryDirectory() as td:
+            jar = self._jar(Path(td), VALID_TOML.replace('version="0.1.0"', 'version="9.9.9"'))
+            record = probe.inspect_272_metadata(jar, MOD_ID, "0.1.0")
+        self.assertEqual("MATCHED_EMBEDDED_MOD_ID", record["status"])
+        self.assertEqual("MISMATCHED_SOURCE_LITERAL", record["version_evidence"])
+        self.assertEqual("9.9.9", record["embedded_version"])
+        self.assertFalse(record["registry_entries_verified"])
+
+    def test_template_version_remains_unresolved(self):
+        with tempfile.TemporaryDirectory() as td:
+            jar = self._jar(Path(td), VALID_TOML.replace('version="0.1.0"', 'version="${file.jarVersion}"'))
+            record = probe.inspect_272_metadata(jar, MOD_ID, "0.1.0")
+        self.assertEqual("UNRESOLVED_TEMPLATE", record["version_evidence"])
+        self.assertEqual("${file.jarVersion}", record["embedded_version"])
+
+    def test_version_gate_selects_matching_mod_id_in_multi_mod_metadata(self):
+        other = '[[mods]]\nmodId="other_mod"\nversion="9.9.9"\n'
+        with tempfile.TemporaryDirectory() as td:
+            record = probe.inspect_272_metadata(self._jar(Path(td), VALID_TOML + other), MOD_ID, "0.1.0")
+        self.assertEqual("MATCHED_SOURCE_LITERAL", record["version_evidence"])
+        self.assertEqual("0.1.0", record["embedded_version"])
+
+    def test_version_from_pinned_probe_instance_is_checked(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / "mods").mkdir()
+            self._jar(root / "mods", VALID_TOML.replace('version="0.1.0"', 'version="9.9.9"'))
+            manifest = root / "manifest.json"
+            provenance = root / "provenance.json"
+            manifest.write_text(json.dumps({"source_commit": probe.SOURCE_COMMIT, "rows": [{
+                "physical_number": 272, "name": "Factory Construction Registry Probe",
+                "filename": "factory_construction_registry_probe-0.1.0.jar",
+                "version": "0.1.0", "triage_group": "OTHER",
+            }]}), encoding="utf-8")
+            provenance.write_text(json.dumps({
+                "snapshot": {"commit": probe.SOURCE_COMMIT},
+                "physical_number": 272,
+                "observed_from_pinned_sibling": {
+                    "jar_filename": "factory_construction_registry_probe-0.1.0.jar",
+                    "version": "0.1.0", "declared_mod_id": MOD_ID,
+                    "dossier_available": False,
+                },
+            }), encoding="utf-8")
+            record = probe.probe_instance(root, manifest, provenance)
+        self.assertEqual("MISMATCHED_SOURCE_LITERAL", record["version_evidence"])
+        self.assertEqual("0.1.0", record["expected_version"])
+
     def test_missing_and_non_zip_fail_closed(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
