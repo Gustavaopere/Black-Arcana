@@ -8,6 +8,7 @@ import dev.gustavopere.blackarcana.core.ritual.RitualCompletionLedger;
 import dev.gustavopere.blackarcana.core.ritual.RitualContext;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSpiritSightRuntime;
+import dev.gustavopere.blackarcana.integration.neoforge.MinecraftVeilAnchorConsecrationRuntime;
 import dev.gustavopere.blackarcana.integration.rpg.RpgSkillTreeBridge;
 import dev.gustavopere.blackarcana.persistence.RitualCompletionSavedData;
 import net.minecraft.core.BlockPos;
@@ -109,6 +110,17 @@ public final class MalumServerIntegrationBootstrap {
             return ArcanaDecision.deny(
                 "grand_ritual_chunk_unloaded",
                 "ritual anchor chunk must already be loaded");
+        }
+        var caster = server.getPlayerList().getPlayer(context.casterId());
+        if (!MinecraftVeilAnchorConsecrationRuntime.isPermitted(level, caster, anchorPos)) {
+            return ArcanaDecision.deny(
+                "grand_ritual_anchor_forbidden",
+                "caster must remain near an authorized altar");
+        }
+        if (!MinecraftVeilAnchorConsecrationRuntime.isValidAnchor(level, anchorPos)) {
+            return ArcanaDecision.deny(
+                "grand_ritual_anchor_invalid",
+                "Veil Anchor structure is incomplete or unloaded");
         }
         return ArcanaDecision.allow();
     }
