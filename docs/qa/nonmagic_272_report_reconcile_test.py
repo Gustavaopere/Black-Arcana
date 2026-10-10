@@ -39,6 +39,9 @@ def reports():
         "schema": "black_arcana_nonmagic_272_metadata_probe_v1",
         "evidence": "EMBEDDED_MOD_ID_ONLY_NOT_SPELL_REGISTRY_OR_RUNTIME_PROOF",
         "expected_mod_id": MOD_ID,
+        "expected_version": "0.1.0",
+        "embedded_version": "0.1.0",
+        "version_evidence": "MATCHED_SOURCE_LITERAL",
         "status": "MATCHED_EMBEDDED_MOD_ID",
         "registry_entries_verified": False,
         "survival_acquisition_verified": False,
@@ -63,6 +66,32 @@ class ReconciliationTests(unittest.TestCase):
         self.assertEqual("BLOCKED_MISSING_DOSSIER_AND_REGISTRY_PROOF", result["catalog_status"])
         self.assertNotIn("lexical_hint_examples", result)
 
+    def test_mismatched_embedded_version_blocks_even_with_matching_hash_and_mod_id(self):
+        triage, metadata = reports()
+        metadata.update(embedded_version="9.9.9", version_evidence="MISMATCHED_SOURCE_LITERAL")
+        result = reconciler.reconcile(triage, metadata)
+        self.assertEqual("SOURCE_VERSION_MISMATCH", result["status"])
+        self.assertNotIn("sha256", result)
+        self.assertFalse(result["registry_entries_verified"])
+
+    def test_unresolved_version_template_blocks_fully_consistent_claim(self):
+        triage, metadata = reports()
+        metadata.update(embedded_version="${file.jarVersion}", version_evidence="UNRESOLVED_TEMPLATE")
+        result = reconciler.reconcile(triage, metadata)
+        self.assertEqual("SOURCE_VERSION_UNVERIFIED", result["status"])
+
+    def test_legacy_metadata_report_without_version_evidence_fails_closed(self):
+        triage, metadata = reports()
+        del metadata["expected_version"]
+        del metadata["embedded_version"]
+        del metadata["version_evidence"]
+        self.assertEqual("INVALID_REPORT", reconciler.reconcile(triage, metadata)["status"])
+
+    def test_forged_version_verdict_is_rejected(self):
+        triage, metadata = reports()
+        metadata.update(embedded_version="9.9.9", version_evidence="MATCHED_SOURCE_LITERAL")
+        self.assertEqual("INVALID_REPORT", reconciler.reconcile(triage, metadata)["status"])
+
     def test_cross_capture_swapped_jar_detected_and_blocks(self):
         triage, metadata = reports()
         metadata["sha256"] = "b" * 64
@@ -77,8 +106,8 @@ class ReconciliationTests(unittest.TestCase):
         for key in ("sha1", "sha256", "bytes", "archive_member_count"):
             triage["rows"][0].pop(key, None)
         triage["statuses"] = {"MISSING": 1}
-        metadata.update(status="MISSING_JAR")
-        for key in ("sha256", "embedded_mod_ids"):
+        metadata.update(status="MISSING_JAR", version_evidence="NOT_EXAMINED")
+        for key in ("sha256", "embedded_mod_ids", "embedded_version"):
             metadata.pop(key, None)
         result = reconciler.reconcile(triage, metadata)
         self.assertEqual("COLLECTOR_BLOCKED", result["status"])
@@ -86,7 +115,8 @@ class ReconciliationTests(unittest.TestCase):
 
     def test_metadata_mod_id_mismatch_even_if_same_hash_is_blocked(self):
         triage, metadata = reports()
-        metadata.update(status="MOD_ID_MISMATCH", embedded_mod_ids=["other_mod"])
+        metadata.update(status="MOD_ID_MISMATCH", embedded_mod_ids=["other_mod"], version_evidence="NOT_APPLICABLE_MOD_ID_MISMATCH")
+        metadata.pop("embedded_version")
         result = reconciler.reconcile(triage, metadata)
         self.assertEqual("EMBEDDED_MOD_ID_NOT_CONFIRMED", result["status"])
 
