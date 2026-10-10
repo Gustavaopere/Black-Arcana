@@ -69,6 +69,69 @@ class RitualEngineTest {
     }
 
     @Test
+    void boundedTickFairlyServesReadyRitualBehindAnEarlierSlowRitual() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        RitualEngine engine = engine(components, outcomes);
+        RitualDefinition slow = new RitualDefinition(
+                ArcanaRitualId.parse("black_arcana:slow_altar"), 100L, 200L);
+        RitualDefinition fast = new RitualDefinition(
+                ArcanaRitualId.parse("black_arcana:fast_altar"), 5L, 10L);
+        RitualAnchor fastAnchor = new RitualAnchor("minecraft:overworld", 43L);
+
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(slow, activation("d1000000-0000-0000-0000-000000000001"),
+                        context(), 1_000L).status());
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(fast, activation("d1000000-0000-0000-0000-000000000002"),
+                        new RitualContext(CASTER, List.of(), fastAnchor), 1_000L).status());
+
+        assertEquals(0, engine.tick(1_005L, 1).committed()); // older ritual not due
+        assertEquals(1, engine.tick(1_006L, 1).committed()); // younger one gets a turn
+        assertEquals(1, components.commitCount.get());
+        assertEquals(0, engine.tick(1_010L, 1).completed());
+        assertEquals(1, engine.tick(1_011L, 1).completed());
+        assertEquals(1, outcomes.get());
+        assertEquals(1, engine.activeSessionCount());
+        assertEquals(slow.id(), engine.snapshot(8).getFirst().ritualId());
+    }
+
+    @Test
+    void roundRobinRespectsPerTickBudgetWhileAllThreeRitualsProgress() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        RitualEngine engine = engine(components, outcomes);
+
+        for (int i = 0; i < 3; i++) {
+            RitualActivationId activation = new RitualActivationId(
+                    UUID.nameUUIDFromBytes(("fair-ritual-" + i).getBytes()));
+            RitualAnchor anchor = new RitualAnchor("minecraft:overworld", 100L + i);
+            assertEquals(RitualResult.Status.STARTED,
+                    engine.start(DEFINITION, activation,
+                            new RitualContext(CASTER, List.of(), anchor), 100L).status());
+        }
+
+        int committed = 0;
+        for (int i = 0; i < 3; i++) {
+            RitualEngine.TickSummary summary = engine.tick(120L, 1);
+            assertTrue(summary.committed() <= 1);
+            committed += summary.committed();
+        }
+        assertEquals(3, committed);
+        assertEquals(3, components.commitCount.get());
+
+        int completed = 0;
+        for (int i = 0; i < 3; i++) {
+            RitualEngine.TickSummary summary = engine.tick(140L, 1);
+            assertTrue(summary.completed() <= 1);
+            completed += summary.completed();
+        }
+        assertEquals(3, completed);
+        assertEquals(3, outcomes.get());
+        assertEquals(0, engine.activeSessionCount());
+    }
+
+    @Test
     void missingComponentsAtCommitCancelWithoutConsumption() {
         FakeComponents components = new FakeComponents();
         RitualEngine engine = engine(components, new AtomicInteger());

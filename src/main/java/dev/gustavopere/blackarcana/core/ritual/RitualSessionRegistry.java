@@ -59,6 +59,23 @@ public final class RitualSessionRegistry {
         return result;
     }
 
+    /**
+     * Returns at most the requested number of sessions, rotating those selected to
+     * the tail for the next tick. This avoids starving ready rituals behind a
+     * long-running oldest batch while preserving a strict per-tick processing cap.
+     *
+     * Only the selected entries are moved: there is no per-tick full-registry scan,
+     * and neither the active-session identities nor their anchor ownership changes.
+     */
+    List<Session> sessionsForTick(int limit) {
+        List<Session> selected = sessions(limit);
+        for (Session session : selected) {
+            byActivation.remove(session.activationId);
+            byActivation.put(session.activationId, session);
+        }
+        return selected;
+    }
+
     static final class Session {
         final RitualDefinition definition;
         final RitualActivationId activationId;

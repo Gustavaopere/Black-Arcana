@@ -45,3 +45,11 @@ Uma lacuna foi encontrada após o PR #733: mesmo com os requisitos revalidados a
 - **Persistência:** a camada server manager recaptura o estado quando o evento remove sessões; o próximo save do Minecraft usa a lista de sessões canceladas, evitando snapshot em memória stale. Isso não é garantia física contra queda do processo antes de flush em disco.
 
 Testes determinísticos comprovam esses contratos no core e a presença de listeners no composition root. Ainda faltam testes **com cliente real** de logout/reconnect, morte, troca de dimensão, custos Malum e preservação após restart do mesmo save, na Stage 09. Este PR não promove a Stage 06.05.
+
+## 2026-10-10 — atendimento justo de sessões com orçamento por tick (PR #737)
+
+Auditoria do `RitualEngine.tick` encontrou starvation: `ArcanaServerRuntime` permite até 1.024 sessões ativas e processa no máximo 64 por tick, mas a seleção anterior retornava sempre o prefixo mais antigo do registro. Assim, mesmo uma sessão já pronta para commit/outcome poderia permanecer sem processamento enquanto as primeiras sessões aguardavam prazos futuros. Duas regressões determinísticas falharam no workflow RED `38085725067`, inclusive com `tick(..., 1)` retornando zero commits para uma sessão posterior já pronta.
+
+A correção introduz seleção **round-robin limitada ao lote escolhido** em `RitualSessionRegistry.sessionsForTick(limit)`. Ela move somente as sessões escolhidas para o final da ordem de seleção; `RitualEngine.tick` passa a usar essa rota. `snapshot`, `interruptCaster` e `restore` continuam com seus próprios métodos; a ordem de serialização dos snapshots pode acompanhar a ordem rotativa, sem alterar os elementos, identidades, estados ou os prazos persistidos. Sem nova varredura global, ticket de chunk, novo motor ou modificação de custos/outcomes. O limite de 64 sessões processadas por tick e a capacidade de 1.024 permanecem os mesmos.
+
+Consequência importante: sob saturação, uma sessão pode ser processada **após** seu tick nominal de commit/conclusão devido ao orçamento, mas deve receber serviço de modo justo; não prometer duração exata sob 1.024 sessões concorrentes. Aceitação física com Malum, cliente e modpack continua transferida para Stage 09. O teste de CI não comprova TPS real sob carga.
