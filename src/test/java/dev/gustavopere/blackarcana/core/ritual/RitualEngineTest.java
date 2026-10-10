@@ -379,6 +379,64 @@ class RitualEngineTest {
     }
 
     @Test
+    void restoreRejectsFutureStartedSessionWithoutClaimingReplayNonce() {
+        FakeComponents components = new FakeComponents();
+        RitualEngine engine = engine(components, new AtomicInteger());
+        RitualActivationId nonce = activation("d2000000-0000-0000-0000-000000000001");
+        RitualSessionSnapshot future = new RitualSessionSnapshot(
+                RITUAL, nonce, context(), 150L, 170L, 190L, RitualSessionState.PRECOMMIT);
+
+        RitualRestoreResult result = engine.restore(List.of(DEFINITION), List.of(future), 140L);
+
+        assertEquals(0, result.restored());
+        assertEquals(1, result.rejected());
+        assertEquals(0, engine.activeSessionCount());
+        assertEquals(0, components.reserveCount.get());
+        // Invalid serialized sessions must not poison the replay guard.
+        assertEquals(RitualResult.Status.STARTED,
+                engine.start(DEFINITION, nonce, context(), 140L).status());
+    }
+
+    @Test
+    void restoreRejectsPrematureCommittedPhaseWithoutGrantingFreeOutcome() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        RitualEngine engine = engine(components, outcomes);
+        RitualActivationId nonce = activation("d2000000-0000-0000-0000-000000000002");
+        // A COMMITTED phase before its scheduled commit tick cannot have spent components.
+        RitualSessionSnapshot forged = new RitualSessionSnapshot(
+                RITUAL, nonce, context(), 100L, 120L, 140L, RitualSessionState.COMMITTED);
+
+        RitualRestoreResult result = engine.restore(List.of(DEFINITION), List.of(forged), 119L);
+
+        assertEquals(0, result.restored());
+        assertEquals(1, result.rejected());
+        assertTrue(engine.snapshot(8).isEmpty());
+        assertEquals(0, engine.tick(140L, 8).completed());
+        assertEquals(0, outcomes.get());
+        assertEquals(0, components.commitCount.get());
+    }
+
+    @Test
+    void restoreAllowsCommittedPhaseAtItsCommitTickWithoutSpendingTwice() {
+        FakeComponents components = new FakeComponents();
+        AtomicInteger outcomes = new AtomicInteger();
+        RitualEngine engine = engine(components, outcomes);
+        RitualActivationId nonce = activation("d2000000-0000-0000-0000-000000000003");
+        RitualSessionSnapshot valid = new RitualSessionSnapshot(
+                RITUAL, nonce, context(), 100L, 120L, 140L, RitualSessionState.COMMITTED);
+
+        RitualRestoreResult result = engine.restore(List.of(DEFINITION), List.of(valid), 120L);
+
+        assertEquals(1, result.restored());
+        assertEquals(0, result.rejected());
+        assertEquals(1, engine.tick(140L, 8).completed());
+        assertEquals(0, components.reserveCount.get());
+        assertEquals(0, components.commitCount.get());
+        assertEquals(1, outcomes.get());
+    }
+
+    @Test
     void failedInitialRequirementNeverClaimsAnchorOrComponents() {
         FakeComponents components = new FakeComponents();
         RitualSessionRegistry sessions = new RitualSessionRegistry(8);

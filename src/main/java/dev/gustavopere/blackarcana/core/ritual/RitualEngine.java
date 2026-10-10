@@ -239,6 +239,12 @@ public final class RitualEngine {
         if (snapshot == null) return false;
         RitualDefinition definition = definitions.get(snapshot.ritualId());
         if (definition == null) return false;
+        // A restored activation cannot originate in the future, and a committed
+        // phase cannot precede the tick when its components could have been spent.
+        // Validate before remembering the nonce so malformed snapshots cannot
+        // poison the replay guard or bypass the provider's cost transaction.
+        if (snapshot.startedAtTick() > nowTick) return false;
+        if (snapshot.state() == RitualSessionState.COMMITTED && snapshot.commitAtTick() > nowTick) return false;
         if (snapshot.commitAtTick() - snapshot.startedAtTick() != definition.commitDelayTicks()) return false;
         if (snapshot.completeAtTick() - snapshot.startedAtTick() != definition.completionDelayTicks()) return false;
         if (sessions.anchorBusy(snapshot.context().anchor()) || !sessions.hasCapacity()) return false;
