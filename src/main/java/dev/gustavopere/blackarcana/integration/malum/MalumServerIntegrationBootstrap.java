@@ -93,11 +93,9 @@ public final class MalumServerIntegrationBootstrap {
         RitualCompletionKey completion = RitualCompletionKey.forCaster(
             BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID,
             context.casterId());
-        if (RitualCompletionSavedData.get(server).contains(completion)) {
-            return ArcanaDecision.deny(
-                "grand_ritual_already_completed",
-                "veil anchor consecration is already recorded for this caster");
-        }
+        ArcanaDecision admission = checkGrandRitualCompletionAdmission(
+            RitualCompletionSavedData.get(server), completion);
+        if (!admission.allowed()) return admission;
 
         ServerLevel level = findLevel(server, context.anchor().dimensionId());
         if (level == null) {
