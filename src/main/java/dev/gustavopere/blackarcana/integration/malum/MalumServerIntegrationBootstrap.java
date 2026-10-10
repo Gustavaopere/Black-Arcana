@@ -6,6 +6,7 @@ import dev.gustavopere.blackarcana.core.ritual.BlackArcanaGrandRituals;
 import dev.gustavopere.blackarcana.core.ritual.RitualCompletionKey;
 import dev.gustavopere.blackarcana.core.ritual.RitualCompletionLedger;
 import dev.gustavopere.blackarcana.core.ritual.RitualContext;
+import dev.gustavopere.blackarcana.core.ritual.RitualEngine;
 import dev.gustavopere.blackarcana.core.runtime.ArcanaServerRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftSpiritSightRuntime;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftVeilAnchorConsecrationRuntime;
@@ -78,12 +79,13 @@ public final class MalumServerIntegrationBootstrap {
 
         BlackArcanaGrandRituals.install(
             runtime,
-            (definition, context, nowTick) -> checkGrandRitualRequirements(server, context),
+            (definition, context, nowTick) -> checkGrandRitualRequirements(server, runtime, context),
             components,
             (definition, context, nowTick) -> completeGrandRitual(server, context, nowTick));
     }
 
-    private static ArcanaDecision checkGrandRitualRequirements(MinecraftServer server, RitualContext context) {
+    private static ArcanaDecision checkGrandRitualRequirements(
+            MinecraftServer server, ArcanaServerRuntime runtime, RitualContext context) {
         if (server.getPlayerList().getPlayer(context.casterId()) == null) {
             return ArcanaDecision.deny(
                 "grand_ritual_caster_offline",
@@ -94,7 +96,8 @@ public final class MalumServerIntegrationBootstrap {
             BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID,
             context.casterId());
         ArcanaDecision admission = checkGrandRitualCompletionAdmission(
-            RitualCompletionSavedData.get(server), completion);
+            RitualCompletionSavedData.get(server), completion,
+            runtime.rituals().completionClaims(BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID, context));
         if (!admission.allowed()) return admission;
 
         ServerLevel level = findLevel(server, context.anchor().dimensionId());
@@ -131,16 +134,23 @@ public final class MalumServerIntegrationBootstrap {
      */
     static ArcanaDecision checkGrandRitualCompletionAdmission(
             RitualCompletionSavedData completions,
-            RitualCompletionKey completion
+            RitualCompletionKey completion,
+            RitualEngine.CompletionClaims activeClaims
     ) {
         Objects.requireNonNull(completions, "completions");
         Objects.requireNonNull(completion, "completion");
+        Objects.requireNonNull(activeClaims, "activeClaims");
         if (completions.contains(completion)) {
             return ArcanaDecision.deny(
                 "grand_ritual_already_completed",
                 "veil anchor consecration is already recorded for this caster");
         }
-        if (!completions.canAcceptNewCompletion()) {
+        if (activeClaims.anotherSessionForCaster()) {
+            return ArcanaDecision.deny(
+                "grand_ritual_in_progress",
+                "this caster already has a grand ritual activation in progress");
+        }
+        if (!completions.canAcceptCompletions(activeClaims.requiredSlots())) {
             return ArcanaDecision.deny(
                 "grand_ritual_completion_capacity",
                 "ritual completion ledger is full");
