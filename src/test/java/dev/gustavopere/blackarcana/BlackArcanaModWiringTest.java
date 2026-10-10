@@ -40,6 +40,19 @@ class BlackArcanaModWiringTest {
     }
 
     @Test
+    void casterLifecycleEventsInvalidateRitualSessions() throws IOException {
+        Path manager = repositoryRoot().resolve(
+                "src/main/java/dev/gustavopere/blackarcana/core/runtime/ArcanaServerRuntimeManager.java");
+        String source = Files.readString(manager);
+        assertTrue(source.contains("PlayerLoggedOutEvent"), "logout must be observed");
+        assertTrue(source.contains("PlayerChangedDimensionEvent"), "dimension changes must be observed");
+        assertTrue(source.contains("interruptCaster("),
+                "server lifecycle must terminate owned ritual sessions immediately");
+        assertTrue(source.contains("ritual_caster_died"),
+                "server tick must also interrupt rituals on player death");
+    }
+
+    @Test
     void borrowedSightClientboundPayloadIsRegisteredOnModBus() throws IOException {
         String source = Files.readString(MOD_SOURCE);
         assertTrue(
