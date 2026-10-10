@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
+from unittest import mock
 import json
 import tempfile
 import unittest
@@ -75,6 +77,65 @@ class PhysicalProviderFingerprintTest(unittest.TestCase):
             (mods / "some-provider.jar").symlink_to(outside)
             report = collector.fingerprint_instance(mods, {"provider": "some-provider.jar"})
             self.assertEqual(1, report["counts"]["UNSAFE"])
+
+    def test_replaced_path_never_mixes_old_jar_validation_with_new_digest(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mods = Path(tmp)
+            filename = "ars_nouveau-1.21.1-5.13.1.jar"
+            current = mods / filename
+            replacement = mods / "replacement.jar"
+            with zipfile.ZipFile(current, "w") as jar:
+                jar.writestr("data/example/spells/alpha.json", "{}")
+            with zipfile.ZipFile(replacement, "w") as jar:
+                jar.writestr("data/example/recipes/new.json", '{"changed":true}')
+            wrong_sha = hashlib.sha256(replacement.read_bytes()).hexdigest()
+            original_sha1 = hashlib.sha1
+
+            def replace_before_fingerprinting():
+                replacement.replace(current)
+                return original_sha1()
+
+            with mock.patch.object(
+                collector.hashlib, "sha1", side_effect=replace_before_fingerprinting
+            ):
+                report = collector.fingerprint_instance(
+                    mods, {"Ars Nouveau": filename}
+                )
+            item = report["entries"][0]
+            self.assertEqual("CHANGED_DURING_SCAN", item["status"])
+            self.assertEqual(1, report["counts"]["CHANGED_DURING_SCAN"])
+            self.assertNotIn("sha1", item)
+            self.assertNotIn("sha256", item)
+            self.assertNotIn(wrong_sha, json.dumps(report))
+
+    def test_in_place_change_during_hash_must_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mods = Path(tmp)
+            filename = "ars_nouveau-1.21.1-5.13.1.jar"
+            current = mods / filename
+            with zipfile.ZipFile(current, "w") as jar:
+                jar.writestr("data/example/spells/alpha.json", "{}")
+            replacement = mods / "replacement.jar"
+            with zipfile.ZipFile(replacement, "w") as jar:
+                jar.writestr("data/example/recipes/different.json", '{"x":true}')
+            new_bytes = replacement.read_bytes()
+            original_sha1 = hashlib.sha1
+
+            def rewrite_before_fingerprinting():
+                current.write_bytes(new_bytes)
+                return original_sha1()
+
+            with mock.patch.object(
+                collector.hashlib, "sha1", side_effect=rewrite_before_fingerprinting
+            ):
+                report = collector.fingerprint_instance(
+                    mods, {"Ars Nouveau": filename}
+                )
+            item = report["entries"][0]
+            self.assertEqual("CHANGED_DURING_SCAN", item["status"])
+            self.assertEqual(1, report["counts"]["CHANGED_DURING_SCAN"])
+            self.assertNotIn("sha1", item)
+            self.assertNotIn("sha256", item)
 
     def test_directory_symlink_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
