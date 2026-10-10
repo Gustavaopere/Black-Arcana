@@ -9,6 +9,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+import stat
 import re
 import tomllib
 import zipfile
@@ -48,40 +50,55 @@ def inspect_272_metadata(jar: Path, expected_mod_id: str) -> dict:
     if not jar.is_file():
         return blocked("MISSING_JAR")
     try:
-        size = jar.stat().st_size
-        if size > MAX_JAR_BYTES:
-            return blocked("OVERSIZED_JAR")
-        with zipfile.ZipFile(jar) as z:
-            entries = z.infolist()
-            if len(entries) > MAX_ARCHIVE_MEMBERS:
-                return blocked("TOO_MANY_MEMBERS")
-            metadata = [x for x in entries if x.filename == METADATA_PATH and not x.is_dir()]
-            if not metadata:
-                return blocked("MISSING_NEOFORGE_METADATA")
-            if len(metadata) != 1:
-                return blocked("AMBIGUOUS_NEOFORGE_METADATA")
-            info = metadata[0]
-            if info.file_size > MAX_METADATA_BYTES:
-                return blocked("METADATA_OVERSIZED")
-            with z.open(info, "r") as stream:
-                contents = stream.read(MAX_METADATA_BYTES + 1)
-            if len(contents) > MAX_METADATA_BYTES:
-                return blocked("METADATA_OVERSIZED")
-        try:
-            parsed = tomllib.loads(contents.decode("utf-8"))
-        except (UnicodeError, tomllib.TOMLDecodeError):
-            return blocked("INVALID_NEOFORGE_METADATA")
-        mods = parsed.get("mods")
-        if not isinstance(mods, list) or not mods:
-            return blocked("INVALID_NEOFORGE_METADATA")
-        ids = [item.get("modId") for item in mods if isinstance(item, dict)]
-        if (len(ids) != len(mods) or not all(isinstance(x, str) and MOD_ID.fullmatch(x) for x in ids)
-                or len(set(ids)) != len(ids)):
-            return blocked("INVALID_NEOFORGE_METADATA")
-        sha = hashlib.sha256()
-        with jar.open("rb") as stream:
-            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+        # Bind ZIP metadata, SHA-256 and final identity to one open descriptor.
+        # Reopening the path could mix the metadata from artifact A with
+        # the hash of a replacement artifact B.
+        flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+        with os.fdopen(os.open(jar, flags), "rb") as artifact:
+            initial = os.fstat(artifact.fileno())
+            if not stat.S_ISREG(initial.st_mode):
+                return blocked("UNREADABLE")
+            if initial.st_size > MAX_JAR_BYTES:
+                return blocked("OVERSIZED_JAR")
+            with zipfile.ZipFile(artifact) as z:
+                entries = z.infolist()
+                if len(entries) > MAX_ARCHIVE_MEMBERS:
+                    return blocked("TOO_MANY_MEMBERS")
+                metadata = [x for x in entries if x.filename == METADATA_PATH and not x.is_dir()]
+                if not metadata:
+                    return blocked("MISSING_NEOFORGE_METADATA")
+                if len(metadata) != 1:
+                    return blocked("AMBIGUOUS_NEOFORGE_METADATA")
+                info = metadata[0]
+                if info.file_size > MAX_METADATA_BYTES:
+                    return blocked("METADATA_OVERSIZED")
+                with z.open(info, "r") as stream:
+                    contents = stream.read(MAX_METADATA_BYTES + 1)
+                if len(contents) > MAX_METADATA_BYTES:
+                    return blocked("METADATA_OVERSIZED")
+            try:
+                parsed = tomllib.loads(contents.decode("utf-8"))
+            except (UnicodeError, tomllib.TOMLDecodeError):
+                return blocked("INVALID_NEOFORGE_METADATA")
+            mods = parsed.get("mods")
+            if not isinstance(mods, list) or not mods:
+                return blocked("INVALID_NEOFORGE_METADATA")
+            ids = [item.get("modId") for item in mods if isinstance(item, dict)]
+            if (len(ids) != len(mods) or not all(isinstance(x, str) and MOD_ID.fullmatch(x) for x in ids)
+                    or len(set(ids)) != len(ids)):
+                return blocked("INVALID_NEOFORGE_METADATA")
+            sha = hashlib.sha256()
+            artifact.seek(0)
+            for chunk in iter(lambda: artifact.read(1024 * 1024), b""):
                 sha.update(chunk)
+            completed = os.fstat(artifact.fileno())
+            current_path = os.stat(jar, follow_symlinks=False)
+
+            def fingerprint(st: os.stat_result) -> tuple[int, int, int, int, int]:
+                return (st.st_dev, st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns)
+
+            if fingerprint(initial) != fingerprint(completed) or fingerprint(initial) != fingerprint(current_path):
+                return blocked("CHANGED_DURING_SCAN")
         result["sha256"] = sha.hexdigest()
         result["embedded_mod_ids"] = ids
         result["status"] = (

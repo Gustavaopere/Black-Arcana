@@ -49,4 +49,4 @@ Uma [sonda read-only específica](../../../docs/qa/nonmagic_272_metadata_probe.p
 python3 docs/qa/nonmagic_272_metadata_probe.py --instance "/caminho/da/instancia" > nonmagic-272-metadata.json
 ```
 
-Mesmo o resultado futuro `MATCHED_EMBEDDED_MOD_ID` demonstrará somente identidade de metadata do artefato e SHA-256. **O dossiê próprio segue ausente e os registries/spells, runtime, scripts e Survival permanecem não verificados.** Não houve execução contra o JAR da instalação nesta etapa; a posição continua ⛔ e os contadores históricos não se alteram.
+A verificação da identidade do artefato agora mantém **um único descritor** do início da leitura do TOML até o SHA-256 e confere o arquivo no encerramento: `CHANGED_DURING_SCAN` bloqueia o resultado se a fonte mudar durante a inspeção. Mesmo o resultado futuro `MATCHED_EMBEDDED_MOD_ID` demonstrará somente identidade de metadata do artefato e SHA-256. **O dossiê próprio segue ausente e os registries/spells, runtime, scripts e Survival permanecem não verificados.** Não houve execução contra o JAR da instalação nesta etapa; a posição continua ⛔ e os contadores históricos não se alteram.

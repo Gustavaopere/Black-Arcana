@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Focused synthetic-JAR tests for the physical #272 metadata-only probe."""
 import importlib.util
+import hashlib
+from unittest import mock
 import json
 import tempfile
 import unittest
@@ -123,6 +125,38 @@ class MetadataProbeTest(unittest.TestCase):
             manifest.write_text(json.dumps(source), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "provenance mismatch"):
                 probe.probe_instance(root, manifest, provenance)
+
+    def test_replaced_path_does_not_mix_metadata_and_sha256(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            jar = self._jar(root)
+            original_hash = hashlib.sha256(jar.read_bytes()).hexdigest()
+            replacement = root / "replacement.jar"
+            with zipfile.ZipFile(replacement, "w") as z:
+                z.writestr(
+                    "META-INF/neoforge.mods.toml",
+                    VALID_TOML.replace(MOD_ID, "other_mod"),
+                )
+            replacement_hash = hashlib.sha256(replacement.read_bytes()).hexdigest()
+            self.assertNotEqual(original_hash, replacement_hash)
+            real_zip = zipfile.ZipFile
+
+            class SwappingZip:
+                def __init__(self, source):
+                    self.handle = real_zip(source)
+
+                def __enter__(self):
+                    return self.handle
+
+                def __exit__(self, exc_type, exc, tb):
+                    self.handle.close()
+                    replacement.replace(jar)
+
+            with mock.patch.object(probe.zipfile, "ZipFile", side_effect=SwappingZip):
+                result = probe.inspect_272_metadata(jar, MOD_ID)
+            self.assertEqual("CHANGED_DURING_SCAN", result["status"])
+            self.assertNotIn("sha256", result)
+            self.assertNotIn("embedded_mod_ids", result)
 
     def test_symlink_never_scanned(self):
         with tempfile.TemporaryDirectory() as td:
