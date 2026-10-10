@@ -204,31 +204,42 @@ public final class ArcanaServerRuntimeManager {
 
     private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
-        cancelPlayerChannels(player);
+        cancelPlayerActiveWork(player, "ritual_caster_disconnected");
     }
 
     private static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
-        cancelPlayerChannels(player);
+        cancelPlayerActiveWork(player, "ritual_caster_changed_dimension");
     }
 
-    private static void cancelPlayerChannels(ServerPlayer player) {
+    private static void cancelPlayerActiveWork(ServerPlayer player, String ritualReason) {
         MinecraftServer server = player.serverLevel().getServer();
         ArcanaServerRuntime runtime = RUNTIMES.get(server);
-        if (runtime != null) runtime.channels().cancelCaster(player.getUUID());
+        if (runtime == null) return;
+        runtime.channels().cancelCaster(player.getUUID());
+        if (runtime.rituals().interruptCaster(player.getUUID(), ritualReason) > 0) {
+            // Immediately capture the updated sessions; a quick reconnect must not
+            // restore a stale precommit or committed ritual on the next server save.
+            persist(server, server.overworld().getGameTime());
+        }
     }
 
     private static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
         long now = server.overworld().getGameTime();
         ArcanaServerRuntime runtime = RUNTIMES.get(server);
+        boolean ritualInterrupted = false;
         if (runtime != null) {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-                if (!player.isAlive()) runtime.channels().cancelCaster(player.getUUID());
+                if (!player.isAlive()) {
+                    runtime.channels().cancelCaster(player.getUUID());
+                    ritualInterrupted |= runtime.rituals().interruptCaster(
+                            player.getUUID(), "ritual_caster_died") > 0;
+                }
             }
             runtime.tick(now);
         }
-        if (now % PERSIST_INTERVAL_TICKS == 0L) persist(server, now);
+        if (ritualInterrupted || now % PERSIST_INTERVAL_TICKS == 0L) persist(server, now);
     }
 
     private static void onServerStopping(ServerStoppingEvent event) {
