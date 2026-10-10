@@ -259,7 +259,8 @@ class MalumGrandRitualIntegrationTest {
         BlackArcanaGrandRituals.install(runtime,
                 (definition, context, nowTick) -> MalumServerIntegrationBootstrap.checkGrandRitualCompletionAdmission(
                         completions,
-                        RitualCompletionKey.forCaster(definition.id(), context.casterId())),
+                        RitualCompletionKey.forCaster(definition.id(), context.casterId()),
+                        runtime.rituals().completionClaims(definition.id(), context)),
                 components,
                 (definition, context, nowTick) -> {
                     RitualCompletionLedger.CompletionResult result = completions.complete(
