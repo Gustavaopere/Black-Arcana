@@ -6,7 +6,15 @@
 
 Close the remaining Stage 06 real-modpack/provider acceptance surface with reproducible exact-SHA evidence while keeping Black Arcana authoritative for ritual identity, lifecycle, persistence, completion accounting, progression-facing outcomes and world safety.
 
-## Current canonical state
+## 2026-10-10 — operational reconciliation after PR #740
+
+This plan retains its dated 2026-10-01 pre-ingress baseline below for provenance. **D035 supersedes D031/D034 for the scheduling of physical/manual/provider-native acceptance.** The baseline's statement that there is no production ritual activation ingress was true at `main@44dfac8683a013e147f678e1016e91ed0ac128d8` but is **not true of the later source baseline** `main@1a7078dfc52ff1bcb97584a0216c5e3ffd764192`.
+
+PR #733 installed a server-owned Survival altar entrypoint (`MinecraftVeilAnchorConsecrationRuntime` registered in `BlackArcanaMod`, invoking `VeilAnchorActivationService.start` and the canonical `RitualEngine.start`). It was followed by #735 (caster interruption), #737 (bounded fair processing), #738 (transition-time SavedData capture) and #739 (chronological restore guard). The latter passed final-head workflow `38088955006`. **Task 4's source-level ingress discovery is addressed**, but its **real-client/player acceptance remains PENDING / DEFERRED TO STAGE 09**. Tasks 5–8 are now physically executable candidates, not automatically PASS: preserve the exact Malum/Eidolon topology, claim behavior, resource consumption, restart and crash-consistency checks as unverified.
+
+The original stop conditions remain useful if the *latest release candidate* loses its ingress or provider binding; apply them to directly observed current evidence, not the archived pre-#733 source audit. Stage 06.05 remains 🟡. Do not promote Stage 07 solely on these deterministic results.
+
+## Historical canonical state (pre-PR #733)
 
 - Baseline used to prepare this handoff: `main@0138e994bf2390d4903277a8d945baabf9b8c733`.
 - Stage 06 implementation is canonical via PR #43, merge `4a79d440a4bba3920002eb8fc49a520e15744c48`.

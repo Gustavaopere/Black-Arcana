@@ -22,7 +22,7 @@ Stage 06 is canonical on `main` as `IMPLEMENTED / FINAL VALIDATION DEFERRED` via
 
 Creating or merging the handoff does **not** validate Stage 06, does not alter `plans/STATUS.md`, and does not convert automated provider tests into real-provider acceptance.
 
-Current deterministic audit evidence is tracked in `docs/qa/rituals-final-validation-evidence.md`. On `main@44dfac8683a013e147f678e1016e91ed0ac128d8`, the canonical JAR has no external caller of `RitualEngine.start(...)`; the representative native grand ritual therefore remains blocked for real-player validation until a separately reviewed production activation surface exists. This blocker does not erase the implemented/tested ritual core.
+The historical 2026-10-01 deterministic audit in `docs/qa/rituals-final-validation-evidence.md` found no external caller of `RitualEngine.start(...)` on `main@44dfac8683a013e147f678e1016e91ed0ac128d8`. That finding is preserved as a dated checkpoint, not the current runtime status. PR #733 subsequently installed a server-authoritative Survival altar ingress (`MinecraftVeilAnchorConsecrationRuntime` → `VeilAnchorActivationService` → the existing `RitualEngine.start`), with additional lifecycle, fairness, persistence and restore hardening through PR #739. Latest reconciled source baseline: `main@1a7078dfc52ff1bcb97584a0216c5e3ffd764192` after PR #740. Stage 06.05 remains 🟡, and physical Malum/Eidolon, client/pack and save/restart/crash checks remain PENDING / DEFERRED TO STAGE 09 under D035; automated ingress is not a real-player PASS.
 
 ## Exit criteria
 At least one integrated ritual and one Black Arcana grand ritual execute transactionally, respect progression/world safety and recover safely from interruption/restart as designed.

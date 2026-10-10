@@ -2,6 +2,16 @@
 
 > **Status:** Stage 06 remains `IMPLEMENTED / FINAL VALIDATION DEFERRED`. This ledger records the 2026-10-01 deterministic audit checkpoint and unresolved physical/manual acceptance. No real-provider/manual row is promoted to PASS by automation or source inspection.
 
+## Reconciliation after PR #740 — 2026-10-10
+
+**Latest source baseline reviewed:** `Black-Arcana/main@1a7078dfc52ff1bcb97584a0216c5e3ffd764192`. This is a source/CI checkpoint, **not** real-modpack acceptance. The 2026-10-01 audit and its table remain below as dated historical evidence; their **BLOCKED — NO CANONICAL PLAYER ACTIVATION SURFACE** classification no longer describes the current source tree.
+
+- **06-P05 (production activation ingress):** server-authoritative ingress exists in `MinecraftVeilAnchorConsecrationRuntime.onRightClickBlock`, registered through `BlackArcanaMod`. A sneak + main-hand Echo Shard interaction at the Crying Obsidian center of the nine-cell Survival altar calls `VeilAnchorActivationService.start`, which creates a server-owned activation identity and invokes the existing `RitualEngine.start`. PR #733 merged at `5783034ca83834b6610aad0a5fd975edd1331743`; its CI was `38077919349`. **Ingress present by source inspection / deterministic tests; real-player acceptance PENDING / DEFERRED TO STAGE 09**, not PASS.
+- **06-P06–06-P11 (transaction, interruption, completion, multiplayer and restart):** previously **BLOCKED by absent ingress** at the historical 2026-10-01 checkpoint; now **PENDING / DEFERRED TO STAGE 09** for physical execution on an exact release candidate. Do not infer correct Malum consumption, multiplayer behavior or save/restart from the presence of the code.
+- **Hardening after ingress:** #735 cancels on caster logout/dimension change/death; #737 rotates bounded active sessions; #738 captures `SavedData` on ritual transitions; #739 rejects impossible future-started/prematurely COMMITTED restored sessions. PR #739 final-head CI `38088955006` completed successfully. These are automated/runtime results only.
+- **Remaining physical/provider requirements:** 06-P01–06-P04 and 06-P12–06-P14 are still **PENDING**; representative real Eidolon/Malum integrations, claim behavior, Survival acquisition, interruption, same-save restart and crash-consistency have no directly recorded physical PASS. The exact provider/JAR topology must be re-established at release validation.
+- **Stage gate:** Stage 06.01–06.04 ✅; 06.05 🟡. D035 permits deferring enumerated physical/manual observations to Stage 09 but **never** upgrades them to PASS. No Stage 07 promotion is claimed.
+
 ## Audit candidate
 
 - Black Arcana candidate audited: `main@44dfac8683a013e147f678e1016e91ed0ac128d8`.
@@ -26,7 +36,7 @@ The modlist proves provider presence/version in the intended pack. It does not p
 - `NOT APPLICABLE` — the current production representative does not exercise the boundary.
 - `AUTOMATED / STATIC EVIDENCE` — supporting evidence only; never a substitute for real-provider/manual PASS.
 
-## Deterministic activation-surface audit
+## Deterministic activation-surface audit — historical checkpoint (2026-10-01)
 
 ### Finding: native grand ritual has no canonical player activation surface
 
@@ -44,7 +54,7 @@ Result: **BLOCKED — NO CANONICAL PLAYER ACTIVATION SURFACE**.
 
 Per `plans/06-rituals/05-final-validation-handoff.md`, this blocks real-player execution of the representative Black Arcana grand ritual and prevents Stage 06 from becoming `VALIDATED / COMPLETE`. A production command/debug item/client packet must not be invented solely to manufacture validation evidence.
 
-## Physical/manual acceptance ledger
+## Physical/manual acceptance ledger — historical checkpoint (2026-10-01)
 
 | ID | Scenario | Current evidence | Result |
 | --- | --- | --- | --- |
@@ -92,7 +102,7 @@ The PR's focused regression tests cover changing requirements before commit, aft
 
 **Caveat:** checks occur at the *commit and completion boundaries*, not at every intermediate tick; a transient condition that disappears and returns between those checkpoints is not proven to interrupt the ritual. The requirement remains `06-P05 BLOCKED` and physical rows remain PENDING/BLOCKED. Neither the Stage 06.05 release gate nor Stage 07 promotion follows from this correction.
 
-## Required next action
+## Required next action — historical checkpoint (2026-10-01)
 
 Stage 06 remains the active audit target. To close it legitimately:
 

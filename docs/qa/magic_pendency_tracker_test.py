@@ -951,7 +951,30 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertNotIn("PR #733 adds a player-built", stage_status)
         self.assertNotIn(r"\n\n## Evidências", self.status)
 
-    def test_ritual_stays_explicitly_blocked(self):
+    def test_current_ritual_ingress_keeps_historical_blocker_separate_from_physical_acceptance(self):
+        ledger = (QA / "rituals-final-validation-evidence.md").read_text(encoding="utf-8")
+        handoff = (ROOT / "plans/06-rituals/05-final-validation-handoff.md").read_text(encoding="utf-8")
+        readme = (ROOT / "plans/06-rituals/README.md").read_text(encoding="utf-8")
+        for record in (ledger, handoff, readme):
+            self.assertIn("MinecraftVeilAnchorConsecrationRuntime", record)
+            self.assertIn("PENDING / DEFERRED TO STAGE 09", record)
+            self.assertIn("1a7078dfc52ff1bcb97584a0216c5e3ffd764192", record)
+        self.assertIn("06-P05", ledger)
+        self.assertIn("06-P06–06-P11", ledger)
+        self.assertIn("historical checkpoint", ledger)
+        self.assertIn("06.05 🟡", self.status)
+        self.assertIn("38088955006", self.status)
+        stage09 = (ROOT / "plans/09-hardening-release/01-test-matrix.md").read_text(
+            encoding="utf-8"
+        )
+        for row in ("06-P01", "06-P02–06-P03", "06-P04", "06-P05",
+                    "06-P06–06-P09", "06-P10–06-P11", "06-P12–06-P14",
+                    "06-P15–06-P16"):
+            self.assertIn(row, stage09)
+        self.assertIn("PENDING / DEFERRED TO STAGE 09", stage09)
+        self.assertIn("crash consistency", stage09)
+
+    def test_historical_ritual_design_gate_preserves_original_blocker(self):
         self.assertIn("⛔ SEM INGRESSO CANÔNICO", self.stage)
         self.assertIn("RitualEngine.start(", self.stage)
         self.assertIn("não uma implementação", self.stage)
