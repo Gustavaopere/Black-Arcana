@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
+from unittest import mock
 import json
 import tempfile
 import unittest
@@ -110,6 +112,43 @@ class NonMagicPhysicalJarTriageTest(unittest.TestCase):
             tmp.write_text(json.dumps(obj), encoding="utf-8")
             with self.assertRaises(ValueError):
                 module.manifest_entries(tmp)
+
+    def test_replaced_jar_path_cannot_mix_zip_hints_and_other_jar_hash(self):
+        with tempfile.TemporaryDirectory() as td:
+            mods = Path(td)
+            original = mods / "provider.jar"
+            replacement = mods / "replacement.jar"
+            with zipfile.ZipFile(original, "w") as jar:
+                jar.writestr("data/example/spells/one.json", "{}")
+            with zipfile.ZipFile(replacement, "w") as jar:
+                jar.writestr("data/example/recipes/iron.json", "{}")
+            replacement_sha = hashlib.sha256(replacement.read_bytes()).hexdigest()
+            real_zip = zipfile.ZipFile
+
+            class SwapAfterZipRead:
+                def __init__(self, source):
+                    self.handle = real_zip(source)
+
+                def __enter__(self):
+                    return self.handle
+
+                def __exit__(self, exc_type, exc, tb):
+                    self.handle.close()
+                    replacement.replace(original)
+
+            with mock.patch.object(module.zipfile, "ZipFile", side_effect=SwapAfterZipRead):
+                report = module.scan(mods, [{
+                    "physical_number": 272, "name": "Provider",
+                    "filename": "provider.jar", "triage_group": "OTHER",
+                }])
+            item = report["rows"][0]
+            self.assertEqual("CHANGED_DURING_SCAN", item["status"])
+            self.assertEqual({"CHANGED_DURING_SCAN": 1}, report["statuses"])
+            self.assertNotIn("sha256", item)
+            self.assertNotIn("sha1", item)
+            self.assertNotIn("lexical_hint_member_count", item)
+            self.assertNotIn("lexical_hint_examples", item)
+            self.assertNotIn(replacement_sha, json.dumps(report))
 
     def test_max_member_count_fails_closed(self):
         with tempfile.TemporaryDirectory() as td:
