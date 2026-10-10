@@ -35,4 +35,20 @@ For Stage 05A Arcane Danger, the executable transfer contract is
 - 05A.11 real-client forecast thresholds, bounded gate presentation, reconnect/reload staleness, readability and accessibility;
 - optional-provider fail-closed behavior and dedicated-server isolation.
 
+For Stage 06 Rituals, the physical acceptance source is
+`plans/06-rituals/05-final-validation-handoff.md`, with the dated and reconciled
+`docs/qa/rituals-final-validation-evidence.md` ledger. Stage 06.05 is still
+**🟡 ACTIVE / NOT ENGINEERING CLOSED**; listing its release-candidate tests here
+is an explicit D035 handoff, **not** Stage promotion or manual PASS:
+
+- **06-P01** exact candidate boot with the intended Eidolon/Malum physical JARs;
+- **06-P02–06-P03** real Eidolon ritual host, cost, anchor-scoped exactly-once completion and same-save restart;
+- **06-P04** real Malum typed-spirit presence/binding and `4 arcane + 2 wicked` access;
+- **06-P05** player-side Survival altar activation through the now-existing server-authoritative ingress; source and synthetic tests alone remain insufficient;
+- **06-P06–06-P09** real requirement denial, pre/post-commit interruption, resource consumption and one-time outcome;
+- **06-P10–06-P11** real multiplayer same-anchor exclusion, lifecycle, loaded-chunk, logout/dimension/death and restart recovery;
+- **06-P12–06-P14** controlled optional-provider variants and dedicated-server isolation in the actual provider topology;
+- **06-P15–06-P16** currently NOT APPLICABLE for the non-world-mutating, non-hazard-owning representative outcomes; reassess if representative effects change;
+- independently retain the **provider-vs-SavedData abrupt-crash consistency window** as PENDING; transition-time capture is not durable atomic disk commit.
+
 These rows remain `PENDING / DEFERRED TO STAGE 09` until observed on an exact release candidate. Automated evidence may support setup but never converts a manual row to PASS. Any FAIL reopens the originating plan for correction before release.
