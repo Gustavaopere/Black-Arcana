@@ -29,6 +29,12 @@ O JAR contém **48 recipes `goety:ritual`**; retiradas as 24 recipes de aquisiç
 
 Portanto: **28 Focus + 24 rituais não-Focus = 52 objetos mágicos semânticos `COUNTED_EXACT`.**
 
+## Fichas individuais de Focus — 2026-10-11
+
+**✅ 28/28 Focuses com páginas próprias:** [FOCUS-CARDS-1.21.1-1.8.2.md](FOCUS-CARDS-1.21.1-1.8.2.md) e `focuses/`. Os nomes de holders já provados pelo JAR exato tornam possível a individualização sem fabricar `ResourceLocation` nem mecânicas. Cada Focus tem receita de aquisição empaquetada; o split 24 rituais / 4 crafting comum é **agregado**, não atribuído por Focus.
+
+**⚠️ 24 rituais não-Focus continuam comprovados semanticamente (10 conversion, 13 summon/thrall, 1 fabricator), porém sem matriz documental de 24 IDs/paths/outcomes individuais**; não publicar páginas inventadas. **+0 identidades novas**; a contribuição permanece **52 `COUNTED_EXACT`**. Custos, API, runtime e gameplay/Survival permanecem fail-closed.
+
 ## Gate de registration/config
 
 O passe estrutural do initializer prova:
