@@ -381,6 +381,56 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                           (provider / filename).read_text(encoding="utf-8"))
         self.assertIn("RITUAL-CARDS-3.1.4.md", self.index)
 
+    def test_goety_cataclysm_28_exact_focus_cards_with_24_ritual_gap(self):
+        provider = PROVIDERS / "✅-goety-cataclysm"
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        source = readme.split(
+            "O provider registra exatamente **28 Focuses próprios**:", 1
+        )[1].split("Todos os 28 possuem caminho de aquisição", 1)[0]
+        holders = re.findall(r"`([A-Z_]+_FOCUS)`", source)
+        self.assertEqual(28, len(holders))
+        self.assertEqual(28, len(set(holders)))
+        card_files = sorted((provider / "focuses").glob("*.md"))
+        self.assertEqual(28, len(card_files))
+        index = (provider / "FOCUS-CARDS-1.21.1-1.8.2.md").read_text(
+            encoding="utf-8"
+        )
+        for ordinal, holder in enumerate(holders, 1):
+            rel = holder.lower().replace("_", "-") + ".md"
+            page = provider / "focuses" / rel
+            self.assertTrue(page.is_file(), holder)
+            card = page.read_text(encoding="utf-8")
+            self.assertIn(f"# Goety Cataclysm 1.21.1-1.8.2 — `{holder}`", card)
+            self.assertIn(f"**Focus holder observado:** `{holder}`", card)
+            self.assertIn(f"**Posição na lista exata:** {ordinal}/28", card)
+            self.assertIn("COUNTED_EXACT", card)
+            self.assertIn("**+0 novas identidades**", card)
+            self.assertIn("**NÃO VERIFICADO nesta ficha**", card)
+            self.assertIn("Qual dessas duas vias pertence a este Focus individual", card)
+            self.assertIn(
+                f"| {ordinal} | `{holder}` | [Abrir](focuses/{rel}) |",
+                index,
+            )
+            self.assertIn("../EXACT-1.21.1-1.8.2-ARTIFACT-AUDIT.md", card)
+        self.assertIn("28/28 fichas", index)
+        self.assertIn("**10 conversões + 13 summons/thralls + 1 fabricator**", index)
+        self.assertIn("0/24 fichas nominais", index)
+        self.assertIn("24 rituais de *aquisição*", index)
+        self.assertIn("**+0 novas identidades semânticas**", index)
+        self.assertIn("4e3052a082200371b36e1a88fdce05e294d82757", index)
+        self.assertIn("52 objetos mágicos", index)
+        self.assertIn("FOCUS-CARDS-1.21.1-1.8.2.md", readme)
+        self.assertIn("FOCUS-CARDS-1.21.1-1.8.2.md", self.index)
+        tech = (provider / "TECHNICAL-AUDIT.md").read_text(encoding="utf-8")
+        self.assertIn("## Adendo de autoridade — evidência posterior", tech)
+        self.assertIn("24 rituais não-Focus distintos", tech)
+        artifact = (provider / "EXACT-1.21.1-1.8.2-ARTIFACT-AUDIT.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("28 addon-owned Focus holders", artifact)
+        self.assertIn("24 non-Focus rituals remain", artifact)
+        self.assertIn("10 conversion, 13 summon/thrall, 1 fabricator", artifact)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
