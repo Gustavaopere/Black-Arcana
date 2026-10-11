@@ -43,6 +43,12 @@ These family names are package/registry organization from the provider source. T
 
 See [`SPELL-CATALOG.md`](./SPELL-CATALOG.md) for the complete 98-entry source inventory.
 
+## Fichas individuais do inventário 98/98
+
+**✅ 98/98 fichas source-observed** em [SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md](SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md), reconciliadas com `SPELL-CATALOG.md`. Constantes e classes são os únicos identificadores técnicos promovidos por ficha; o ID físico e os detalhes de execução continuam `NÃO VERIFICADO` até prova do JAR exato.
+
+Não há novas identidades na métrica (**+0**): as 98 já estavam em `COUNTED_RELEASE_BOUNDED`. Nenhum resultado de QA runtime é inferido desta documentação.
+
 ## School surface
 
 The inspected public source head contains two `SchoolType` registrations:
