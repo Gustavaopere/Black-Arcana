@@ -53,6 +53,13 @@ The four new Nature's Ritual identities are:
 
 The two summon recipes are not item recipes: they set `requires_soul=true` and produce one provider entity after the provider's soul-manifestation phase.
 
+## Fichas individuais de 29 ações — release source 1.3.7
+
+- **✅ 23/23 Nature's Rituals:** [índice e fichas de receitas](NATURES-RITUAL-CARDS-1.3.7.md) com recipe ID, input central, offerings, resultado, processamento e soul gate, preservando o lifecycle 1.3.7.
+- **✅ 6/6 Celestial Infusions:** [índice e fichas de infusão](CELESTIAL-INFUSION-CARDS-1.3.7.md), com input/output e channel/environment costs documentados.
+- **+0 identidades novas:** os 29 objetos `COUNTED_SOURCE_PINNED` já estavam contabilizados; os nove brews continuam catálogos separados e não viram ações adicionais do numerador semântico desta fase.
+- **⚠️** Não elevar source pin a prova de igualdade binária, config implantada ou QA Survival. Black Arcana não duplica offerings, Source, flores, phase settlement ou resultados.
+
 ## Nature's Ritual lifecycle changed in 1.3.7
 
 The 1.3.6 four-cardinal-brazier description is no longer current. Release-correlated 1.3.7 source:
