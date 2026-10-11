@@ -27,6 +27,12 @@ The current physical modlist is authoritative for installed JAR/runtime identity
 
 Exact PR #197 evidence supersedes source-only uncertainty for catalog identity: **123 active Focus actions + 238 available distinct non-Focus ritual actions = 361**. Durable PR #198 HEAD `d75f82a23b5c977ccc8ec84813bf89c928ffc0ab` passed CI #2523; squash merge `4fcc40aaf8149b5511dbd882a5616ee5240cd640` passed exact-SHA post-merge CI #2524 and published canonical QA artifact `10291461067` with SHA-256 `4f2ccf8be11cdba348c7cd0bdc64e595f6b101257b2b99f80fbe5542fae41ada`. Canonical totals are now **1249 semantic objects / 57 of 100 components**. See `EXACT-3.1.4-ARTIFACT-AUDIT.md` and `EXACT-3.1.4-SEMANTIC-INVENTORY.md`. Runtime/API/balance and provider-owned Soul Energy/research/servant/Lichdom settlement remain fail-closed.
 
+## Fichas individuais dos 123 Focuses — 3.1.4
+
+O [índice **FOCUS-CARDS-3.1.4.md**](FOCUS-CARDS-3.1.4.md) liga **123/123 fichas** em `focuses/`, ancoradas nos identificadores do artefato 3.1.4 hash-matched. O proxy `empty_focus` não é ação catalogável. Cada Focus possui receita base de aquisição conforme a auditoria exata, mas o subtipo individual (80 rituais/43 shaped no agregado) e o custo/efeito não são extrapolados.
+
+Estas fichas **não** adicionam identidades ao ledger: **+0** sobre os 123 Focuses `COUNTED_EXACT`, sem alterar os **238 rituais não-Focus** do Goety. Estado documental ✅; runtime, Survival e API continuam ⚠️ condicionados.
+
 ## Source/provenance reconciliation
 
 The previous catalog statement that no public Goety source exists for Minecraft 1.21.1 is stale.
