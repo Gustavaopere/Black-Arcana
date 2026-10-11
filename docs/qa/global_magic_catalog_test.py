@@ -700,6 +700,72 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("ABILITY-CARDS-0.12.8.md",
                       (provider / "README.md").read_text(encoding="utf-8"))
 
+    def test_hexalia_137_29_ritual_infusion_cards(self):
+        provider = PROVIDERS / "✅-hexalia"
+        nature = (provider / "rituals" / "NATURES-RITUAL-CATALOG.md").read_text(encoding="utf-8")
+        celestial = (provider / "infusions" / "CELESTIAL-INFUSION-CATALOG.md").read_text(encoding="utf-8")
+        def recipe_rows(document, size):
+            rows = []
+            for line in document.splitlines():
+                if line.startswith("| `hexalia:"):
+                    data = [part.strip() for part in line.split("|")[1:-1]]
+                    self.assertEqual(size, len(data), line)
+                    rows.append(data)
+            return rows
+        rituals = recipe_rows(nature, 6)
+        infusions = recipe_rows(celestial, 3)
+        self.assertEqual((23, 6), (len(rituals), len(infusions)))
+        self.assertEqual(29, len({x[0] for x in rituals + infusions}))
+        ritual_index = (provider / "NATURES-RITUAL-CARDS-1.3.7.md").read_text(encoding="utf-8")
+        infusion_index = (provider / "CELESTIAL-INFUSION-CARDS-1.3.7.md").read_text(encoding="utf-8")
+        self.assertEqual(23, len(list((provider / "rituals" / "cards").glob("*.md"))))
+        self.assertEqual(6, len(list((provider / "infusions" / "cards").glob("*.md"))))
+        for number, (raw, center, offerings, result, timing, soul) in enumerate(rituals, 1):
+            recipe_id = raw.strip("`")
+            filename = recipe_id.split(":")[1] + ".md"
+            path = provider / "rituals" / "cards" / filename
+            self.assertTrue(path.is_file(), recipe_id)
+            card = path.read_text(encoding="utf-8")
+            self.assertIn("**Registry de receita:** `" + recipe_id + "`", card)
+            self.assertIn("**Centro no Ritual Table:** " + center, card)
+            self.assertIn("**Offerings por Ritual Braziers:** " + offerings, card)
+            self.assertIn("**Resultado provider-owned:** " + result, card)
+            self.assertIn("**Quantidade de offerings / processamento base:** " + timing, card)
+            self.assertIn("**Requer captura de alma:** **" + ("sim" if soul == "yes" else "não") + "**", card)
+            self.assertIn("**Ordinal editorial:** " + str(number) + "/23", card)
+            self.assertIn("COUNTED_SOURCE_PINNED", card)
+            self.assertIn("**+0 novas identidades**", card)
+            self.assertIn("../../rituals/NATURES-RITUAL-CATALOG.md", card)
+            self.assertIn("[Abrir](rituals/cards/" + filename + ")", ritual_index)
+            if soul == "yes":
+                self.assertIn("AWAITING_SOUL", card)
+                self.assertIn("50 ticks", card)
+                self.assertIn("hexalia:athame", card)
+            else:
+                self.assertIn("não há fase `AWAITING_SOUL`", card)
+        for number, (raw, item_in, item_out) in enumerate(infusions, 1):
+            recipe_id = raw.strip("`")
+            filename = recipe_id.split(":")[1] + ".md"
+            path = provider / "infusions" / "cards" / filename
+            self.assertTrue(path.is_file(), recipe_id)
+            card = path.read_text(encoding="utf-8")
+            self.assertIn("**Recipe ID:** `" + recipe_id + "`", card)
+            self.assertIn("**Entrada no Ritual Brazier:** " + item_in, card)
+            self.assertIn("**Saída substitutiva (1x):** " + item_out, card)
+            self.assertIn("**Ordinal editorial:** " + str(number) + "/6", card)
+            self.assertIn("COUNTED_SOURCE_PINNED", card)
+            self.assertIn("**+0 novas identidades**", card)
+            self.assertIn("120 ticks (6 s)", card)
+            self.assertIn("**não há exigência `SALTED=true`**", card)
+            self.assertIn("../../infusions/CELESTIAL-INFUSION-CATALOG.md", card)
+            self.assertIn("[Abrir](infusions/cards/" + filename + ")", infusion_index)
+        self.assertIn("✅ 23/23 receitas", ritual_index)
+        self.assertIn("✅ 6/6 receitas", infusion_index)
+        self.assertIn("**+0 novas identidades semânticas**", infusion_index)
+        for filename in ("NATURES-RITUAL-CARDS-1.3.7.md", "CELESTIAL-INFUSION-CARDS-1.3.7.md"):
+            self.assertIn(filename, self.index)
+            self.assertIn(filename, (provider / "README.md").read_text(encoding="utf-8"))
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
