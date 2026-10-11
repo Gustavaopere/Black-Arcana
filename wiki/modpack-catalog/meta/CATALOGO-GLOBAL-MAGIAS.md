@@ -45,6 +45,7 @@ A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae
 | GTBC's Geomancy Plus | [12 fichas de spells](../providers/✅-gtbcs-geomancy-plus/SPELL-CARDS-1.1.0-1.21.1.md) | 10 Geo + 2 Holy, roots/classes já registrados no artifact audit 1.1.0-1.21.1; +0 novos nesta materialização, aquisição/host runtime condicionados |
 | Simply Swords | [66 ações individualizadas](../providers/✅-simply-swords/ACTION-CARDS-1.70.2.md) | alcance e Awakening ainda condicionados |
 | Simply More | [24 ações sobrenaturais](../providers/✅-simply-more/README.md) | alcance, configuração e Mimicry ainda condicionados |
+| Bloodlines | [29 fichas de Actions](../providers/✅-bloodlines/ACTION-CARDS-3.0.9.md) | 28 COUNTED_SOURCE_PINNED + 1 EXCLUDED (Sorcerous Strike); runtime/Survival ⚠️ condicionado; +0 novas identidades |
 
 ## Inventário completo de providers da árvore canônica
 

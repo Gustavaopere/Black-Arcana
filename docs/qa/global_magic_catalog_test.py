@@ -205,6 +205,66 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         readme = (provider / "README.md").read_text(encoding="utf-8")
         self.assertIn("SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md", readme)
 
+    def test_bloodlines_29_action_cards_keep_source_contract_and_exclusion(self):
+        provider = PROVIDERS / "✅-bloodlines"
+        source = (provider / "ACTION-CATALOG.md").read_text(encoding="utf-8")
+        actions = list(re.finditer(
+            r"^## ([^\n]+?) — `bloodlines:([a-z_]+)`$", source, re.MULTILINE
+        ))
+        self.assertEqual(29, len(actions))
+        self.assertEqual(29, len({m.group(2) for m in actions}))
+        groups = {"Noble": 5, "Zealot": 4, "Ectotherm": 3,
+                  "Bloodknight": 5, "Gravebound": 12}
+        index = (provider / "ACTION-CARDS-3.0.9.md").read_text(encoding="utf-8")
+        pages = sorted((provider / "actions").glob("*.md"))
+        self.assertEqual(29, len(pages))
+        checked = {key: 0 for key in groups}
+        counted = 0
+        excluded = 0
+        for match in actions:
+            name, ident = match.group(1), match.group(2)
+            prev = source[:match.start()]
+            group_matches = list(re.finditer(
+                r"^# (Noble|Zealot|Ectotherm|Bloodknight|Gravebound) actions$",
+                prev, re.MULTILINE,
+            ))
+            self.assertTrue(group_matches, ident)
+            group = group_matches[-1].group(1)
+            checked[group] += 1
+            slug = ident.replace("_", "-")
+            path = provider / "actions" / (slug + ".md")
+            self.assertTrue(path.is_file(), ident)
+            card = path.read_text(encoding="utf-8")
+            self.assertIn(f"# {name} — Bloodlines 3.0.9", card)
+            self.assertIn(f"**Registry ID:** `bloodlines:{ident}`", card)
+            self.assertIn(f"**Bloodline:** `{group}`", card)
+            self.assertIn("IAction", card)
+            self.assertIn("ACTION-CATALOG.md", card)
+            self.assertIn(f"`bloodlines:{ident}`", index)
+            self.assertIn(f"(actions/{slug}.md)", index)
+            tail = source[match.end():]
+            boundary = re.search(r"^#{1,2} ", tail, re.MULTILINE)
+            original = (tail[:boundary.start()] if boundary else tail).strip()
+            self.assertIn(original, card,
+                          f"source detail drift for bloodlines:{ident}")
+            if ident == "gravebound_crit_action":
+                self.assertIn("EXCLUDED (+0)", card)
+                self.assertIn("SEM AQUISIÇÃO NORMAL COMPROVADA", card)
+                excluded += 1
+            else:
+                self.assertIn("COUNTED_SOURCE_PINNED", card)
+                self.assertNotIn("EXCLUDED (+0)", card)
+                counted += 1
+        self.assertEqual(groups, checked)
+        self.assertEqual((28, 1), (counted, excluded))
+        self.assertIn("29/29 registros individualizados", index)
+        self.assertIn("Materialização de fichas = **+0 identidades novas**", index)
+        self.assertIn("ACTION-CARDS-3.0.9.md", self.index)
+        self.assertIn("ACTION-CARDS-3.0.9.md",
+                      (provider / "README.md").read_text(encoding="utf-8"))
+        self.assertIn("ACTION-CARDS-3.0.9.md",
+                      (provider / "MAGIAS.md").read_text(encoding="utf-8"))
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
