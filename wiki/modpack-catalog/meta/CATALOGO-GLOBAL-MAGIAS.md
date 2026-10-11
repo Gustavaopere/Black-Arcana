@@ -40,7 +40,7 @@ A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae
 | Monsters & Spellbooks | [98/98 fichas individuais](../providers/✅-monsters-spellbooks/SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md) · [inventário](../providers/✅-monsters-spellbooks/SPELL-CATALOG.md) | ✅ fichas source-observed / ⚠️ registry físico 0.0.16.3 e Survival não comprovados; +0 novas identidades |
 | Somake Spells | [83 registros e 83 fichas](../providers/✅-somake-spells/MAGIC-CARDS-1.0.9.md) | exato 1.0.9; alcance/configuração separados |
 | Not Enough Glyphs | [40 glifos](../providers/✅-not-enough-glyphs/README.md) | 39 candidatos source-enabled; config ativa ainda condicionada |
-| Ars Zero | [12 glifos/capacidades](../providers/✅-ars-zero/GLYPH-CATALOG.md) | evidência da release 2.0.2, sem inventar IDs |
+| Ars Zero 2.0.2 | [12/12 fichas de capacidades](../providers/✅-ars-zero/GLYPH-CARDS-2.0.2.md) · [matriz da release](../providers/✅-ars-zero/GLYPH-CATALOG.md) | ✅ fichas `COUNTED_RELEASE_BOUNDED` / ⚠️ registry, API, Survival físicos pendentes; 4 glifos de compatibilidade desativados excluídos; +0 identidades |
 | Tunes n' Tomes | [16 fichas de spells](../providers/✅-tunes-n-tomes/SPELL-CARDS-1.1.0-HOTFIX.md) | 16 nomes da página da editora, ids/classes/custos internos não verificados |
 | GTBC's Geomancy Plus | [12 fichas de spells](../providers/✅-gtbcs-geomancy-plus/SPELL-CARDS-1.1.0-1.21.1.md) | 10 Geo + 2 Holy, roots/classes já registrados no artifact audit 1.1.0-1.21.1; +0 novos nesta materialização, aquisição/host runtime condicionados |
 | Simply Swords | [66 ações individualizadas](../providers/✅-simply-swords/ACTION-CARDS-1.70.2.md) | alcance e Awakening ainda condicionados |
