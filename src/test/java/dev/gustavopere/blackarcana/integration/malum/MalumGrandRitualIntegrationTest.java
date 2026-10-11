@@ -248,6 +248,83 @@ class MalumGrandRitualIntegrationTest {
         assertEquals(0, spirits.count(CASTER, "wicked"));
     }
 
+    @Test
+    void restoredCommittedGrandRitualsCannotOverbookTheLastDurableCompletionSlot() {
+        RitualCompletionSavedData completions = new RitualCompletionSavedData();
+        fillCompletionLedger(completions, RitualCompletionSavedData.MAX_PERSISTED_COMPLETIONS - 1);
+        FakeAccess access = new FakeAccess(Map.of("arcane", 0, "wicked", 0));
+        ArcanaServerRuntime runtime = completionCapacityRuntime(access, completions);
+        UUID secondCaster = UUID.fromString("22222222-2222-2222-2222-222222222222");
+
+        var result = runtime.restoreRitualSessions(List.of(
+                restoredGrandRitual("88888888-8888-8888-8888-888888888881", CASTER, 42L,
+                        dev.gustavopere.blackarcana.core.ritual.RitualSessionState.COMMITTED),
+                restoredGrandRitual("88888888-8888-8888-8888-888888888882", secondCaster, 43L,
+                        dev.gustavopere.blackarcana.core.ritual.RitualSessionState.COMMITTED)), 1_200L);
+
+        assertEquals(1, result.restored());
+        assertEquals(1, result.rejected());
+        assertEquals(1, runtime.rituals().activeSessionCount());
+        assertEquals(1, runtime.rituals().tick(1_400L, 8).completed());
+        assertEquals(0, runtime.rituals().tick(1_400L, 8).cancelled());
+        assertEquals(RitualCompletionSavedData.MAX_PERSISTED_COMPLETIONS, completions.size());
+        assertEquals(0, access.count(CASTER, "arcane"), "already committed resources must not be charged again");
+        assertEquals(0, access.count(CASTER, "wicked"));
+    }
+
+    @Test
+    void restoredPaidRitualWinsOverEarlierUnpaidSnapshotWhenOnlyOneSlotRemains() {
+        RitualCompletionSavedData completions = new RitualCompletionSavedData();
+        fillCompletionLedger(completions, RitualCompletionSavedData.MAX_PERSISTED_COMPLETIONS - 1);
+        FakeAccess access = new FakeAccess(Map.of("arcane", 0, "wicked", 0));
+        ArcanaServerRuntime runtime = completionCapacityRuntime(access, completions);
+        UUID unpaidCaster = UUID.fromString("22222222-2222-2222-2222-222222222222");
+
+        var result = runtime.restoreRitualSessions(List.of(
+                restoredGrandRitual("99999999-9999-9999-9999-999999999991", unpaidCaster, 43L,
+                        dev.gustavopere.blackarcana.core.ritual.RitualSessionState.PRECOMMIT),
+                restoredGrandRitual("99999999-9999-9999-9999-999999999992", CASTER, 42L,
+                        dev.gustavopere.blackarcana.core.ritual.RitualSessionState.COMMITTED)), 1_200L);
+
+        assertEquals(1, result.restored());
+        assertEquals(1, result.rejected());
+        assertEquals(dev.gustavopere.blackarcana.core.ritual.RitualSessionState.COMMITTED,
+                runtime.rituals().snapshot(8).getFirst().state());
+        assertEquals(CASTER, runtime.rituals().snapshot(8).getFirst().context().casterId());
+        assertEquals(1, runtime.rituals().tick(1_400L, 8).completed());
+        assertEquals(RitualCompletionSavedData.MAX_PERSISTED_COMPLETIONS, completions.size());
+    }
+
+    @Test
+    void restoreRejectsDuplicateCasterWithoutDroppingTheirAlreadyCommittedRitual() {
+        RitualCompletionSavedData completions = new RitualCompletionSavedData();
+        FakeAccess access = new FakeAccess(Map.of("arcane", 0, "wicked", 0));
+        ArcanaServerRuntime runtime = completionCapacityRuntime(access, completions);
+
+        var result = runtime.restoreRitualSessions(List.of(
+                restoredGrandRitual("aaaaaaaa-1111-1111-1111-111111111111", CASTER, 42L,
+                        dev.gustavopere.blackarcana.core.ritual.RitualSessionState.COMMITTED),
+                restoredGrandRitual("aaaaaaaa-2222-2222-2222-222222222222", CASTER, 43L,
+                        dev.gustavopere.blackarcana.core.ritual.RitualSessionState.PRECOMMIT)), 1_200L);
+
+        assertEquals(1, result.restored());
+        assertEquals(1, result.rejected());
+        assertEquals(1, runtime.rituals().tick(1_400L, 8).completed());
+        assertEquals(1, completions.size());
+        assertEquals(0, runtime.rituals().activeSessionCount());
+    }
+
+    private static dev.gustavopere.blackarcana.core.ritual.RitualSessionSnapshot restoredGrandRitual(
+            String activation, UUID caster, long packedAnchor,
+            dev.gustavopere.blackarcana.core.ritual.RitualSessionState state) {
+        return new dev.gustavopere.blackarcana.core.ritual.RitualSessionSnapshot(
+                BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID,
+                RitualActivationId.parse(activation),
+                new RitualContext(caster, List.of(),
+                        new RitualAnchor("minecraft:overworld", packedAnchor)),
+                1_000L, 1_100L, 1_400L, state);
+    }
+
     private static ArcanaServerRuntime completionCapacityRuntime(
             FakeAccess access, RitualCompletionSavedData completions) {
         MalumRitualSpiritComponentProvider components = new MalumRitualSpiritComponentProvider(
@@ -269,6 +346,7 @@ class MalumGrandRitualIntegrationTest {
                             ? ArcanaDecision.allow()
                             : ArcanaDecision.deny("grand_ritual_completion_capacity", "completion unavailable");
                 });
+        MalumServerIntegrationBootstrap.registerGrandRitualRestoreAdmission(runtime, () -> completions);
         return runtime;
     }
 

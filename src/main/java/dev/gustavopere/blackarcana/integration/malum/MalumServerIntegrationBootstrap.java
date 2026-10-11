@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /** Loaded reflectively only when Malum is present. */
 public final class MalumServerIntegrationBootstrap {
@@ -82,6 +83,25 @@ public final class MalumServerIntegrationBootstrap {
             (definition, context, nowTick) -> checkGrandRitualRequirements(server, runtime, context),
             components,
             (definition, context, nowTick) -> completeGrandRitual(server, context, nowTick));
+        registerGrandRitualRestoreAdmission(runtime, () -> RitualCompletionSavedData.get(server));
+    }
+
+    /**
+     * Register a lifecycle-safe restore gate before BlackArcanaSavedData.restore().
+     * Only durable completion capacity and active caster identity are considered:
+     * server-start is too early to require online players or loaded altar chunks.
+     */
+    static void registerGrandRitualRestoreAdmission(
+            ArcanaServerRuntime runtime, Supplier<RitualCompletionSavedData> completionSource
+    ) {
+        Objects.requireNonNull(runtime, "runtime");
+        Objects.requireNonNull(completionSource, "completionSource");
+        runtime.rituals().registerRestoreAdmission(
+            BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID,
+            (definition, context, nowTick) -> checkGrandRitualCompletionAdmission(
+                Objects.requireNonNull(completionSource.get(), "ritual completions"),
+                RitualCompletionKey.forCaster(definition.id(), context.casterId()),
+                runtime.rituals().completionClaims(definition.id(), context)));
     }
 
     private static ArcanaDecision checkGrandRitualRequirements(
