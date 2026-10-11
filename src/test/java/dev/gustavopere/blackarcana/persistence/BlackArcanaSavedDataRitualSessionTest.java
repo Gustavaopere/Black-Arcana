@@ -16,6 +16,8 @@ import dev.gustavopere.blackarcana.core.ritual.RitualEngine;
 import dev.gustavopere.blackarcana.core.ritual.RitualSessionRegistry;
 import dev.gustavopere.blackarcana.core.world.TemporaryMutationTracker;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -167,6 +169,111 @@ class BlackArcanaSavedDataRitualSessionTest {
         assertEquals(1, restored.tick(140L, 8).completed());
         assertEquals(0, afterRestartCommits.get(), "restore must not charge committed costs again");
         assertEquals(1, afterRestartOutcomes.get());
+    }
+
+    @Test
+    void malformedRitualEntryRequiresDirtyRewriteEvenWithoutAnyRestoredSession() {
+        CompoundTag root = new BlackArcanaSavedData().save(new CompoundTag(), null);
+        ListTag entries = new ListTag();
+        CompoundTag invalid = new CompoundTag();
+        invalid.putString("ritual", "black_arcana:persistent_rite");
+        invalid.putString("state", "COMMITTED");
+        // Missing activation/caster UUIDs: the existing NBT reader drops this record.
+        entries.add(invalid);
+        root.put("ritual_sessions", entries);
+
+        BlackArcanaSavedData recovered = BlackArcanaSavedData.load(root, null);
+
+        assertEquals(0, recovered.save(new CompoundTag(), null)
+                .getList("ritual_sessions", Tag.TAG_COMPOUND).size());
+        org.junit.jupiter.api.Assertions.assertTrue(recovered.isDirty(),
+                "a silently discarded ritual entry must schedule a clean SavedData rewrite");
+    }
+
+    @Test
+    void corruptedRitualEntryIsRemovedWithoutDroppingValidCommittedSnapshotOnNextSave() {
+        RitualDefinition definition = new RitualDefinition(
+                ArcanaRitualId.parse("black_arcana:persistent_rite"), 20L, 40L);
+        var cooldowns = new PersistentCooldownService(request -> null);
+        var charges = new ChargePoolCooldownService(request -> null);
+        var loadouts = new LoadoutRegistry();
+        var temporary = new TemporaryMutationTracker(8);
+        RitualEngine original = engine(new AtomicInteger(), new AtomicInteger());
+        UUID caster = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        assertEquals(dev.gustavopere.blackarcana.core.ritual.RitualResult.Status.STARTED,
+                original.start(definition,
+                        RitualActivationId.parse("dddddddd-dddd-dddd-dddd-dddddddddddd"),
+                        new RitualContext(caster, List.of(), new RitualAnchor("minecraft:overworld", 123L)),
+                        100L).status());
+        assertEquals(1, original.tick(120L, 8).committed());
+
+        BlackArcanaSavedData saved = new BlackArcanaSavedData();
+        saved.capture(cooldowns, charges, loadouts, temporary, original, 125L);
+        CompoundTag root = saved.save(new CompoundTag(), null);
+        ListTag entries = root.getList("ritual_sessions", Tag.TAG_COMPOUND);
+        entries.add(new CompoundTag()); // corrupted sibling of a valid COMMITTED record
+
+        BlackArcanaSavedData loaded = BlackArcanaSavedData.load(root, null);
+        org.junit.jupiter.api.Assertions.assertTrue(loaded.isDirty(),
+                "dropping malformed sibling must be persisted even if other snapshots remain valid");
+        CompoundTag normalized = loaded.save(new CompoundTag(), null);
+        assertEquals(1, normalized.getList("ritual_sessions", Tag.TAG_COMPOUND).size());
+        assertEquals(caster, normalized.getList("ritual_sessions", Tag.TAG_COMPOUND)
+                .getCompound(0).getUUID("caster"));
+
+        AtomicInteger afterRestartCommits = new AtomicInteger();
+        AtomicInteger afterRestartOutcomes = new AtomicInteger();
+        RitualEngine restored = engine(afterRestartCommits, afterRestartOutcomes);
+        var recovery = BlackArcanaSavedData.load(normalized, null).restore(
+                cooldowns, charges, loadouts, new TemporaryMutationTracker(8),
+                restored, List.of(definition), 125L);
+        assertEquals(1, recovery.restored());
+        assertEquals(0, recovery.rejected());
+        assertEquals(1, restored.tick(140L, 8).completed());
+        assertEquals(0, afterRestartCommits.get());
+        assertEquals(1, afterRestartOutcomes.get());
+    }
+
+    @Test
+    void interruptedCommittedRitualDoesNotReappearAfterCapturedSaveAndReload() {
+        RitualDefinition definition = new RitualDefinition(
+                ArcanaRitualId.parse("black_arcana:persistent_rite"), 20L, 40L);
+        UUID caster = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        var cooldowns = new PersistentCooldownService(request -> null);
+        var charges = new ChargePoolCooldownService(request -> null);
+        var loadouts = new LoadoutRegistry();
+        var temporary = new TemporaryMutationTracker(8);
+
+        AtomicInteger spent = new AtomicInteger();
+        RitualEngine before = engine(spent, new AtomicInteger());
+        assertEquals(dev.gustavopere.blackarcana.core.ritual.RitualResult.Status.STARTED,
+                before.start(definition,
+                        RitualActivationId.parse("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"),
+                        new RitualContext(caster, List.of(),
+                                new RitualAnchor("minecraft:overworld", 123L)), 100L).status());
+        assertEquals(1, before.tick(120L, 8).committed());
+        BlackArcanaSavedData data = new BlackArcanaSavedData();
+        data.capture(cooldowns, charges, loadouts, temporary, before, 125L);
+        assertEquals(1, data.save(new CompoundTag(), null)
+                .getList("ritual_sessions", Tag.TAG_COMPOUND).size());
+
+        assertEquals(1, before.interruptCaster(caster, "ritual_caster_disconnected"));
+        data.capture(cooldowns, charges, loadouts, temporary, before, 126L);
+        CompoundTag persistedAfterInterruption = data.save(new CompoundTag(), null);
+        assertEquals(0, persistedAfterInterruption.getList("ritual_sessions", Tag.TAG_COMPOUND).size());
+        assertEquals(1, spent.get(), "committed components remain spent after interruption");
+
+        AtomicInteger restartedCommits = new AtomicInteger();
+        AtomicInteger restartedOutcomes = new AtomicInteger();
+        RitualEngine reloaded = engine(restartedCommits, restartedOutcomes);
+        var result = BlackArcanaSavedData.load(persistedAfterInterruption, null).restore(
+                cooldowns, charges, loadouts, new TemporaryMutationTracker(8),
+                reloaded, List.of(definition), 126L);
+        assertEquals(0, result.restored());
+        assertEquals(0, result.rejected());
+        assertEquals(0, reloaded.tick(140L, 8).completed());
+        assertEquals(0, restartedCommits.get());
+        assertEquals(0, restartedOutcomes.get());
     }
 
     private static RitualEngine engine(AtomicInteger commits, AtomicInteger outcomes) {

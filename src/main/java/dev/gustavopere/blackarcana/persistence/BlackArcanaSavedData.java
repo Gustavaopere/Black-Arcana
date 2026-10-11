@@ -91,7 +91,14 @@ public final class BlackArcanaSavedData extends SavedData {
         data.charges = readCharges(root.getList("charges", Tag.TAG_COMPOUND));
         data.loadouts = readLoadouts(root.getList("loadouts", Tag.TAG_COMPOUND));
         data.temporaryMutations = readTemporaryMutations(root.getList("temporary_mutations", Tag.TAG_COMPOUND));
-        data.ritualSessions = readRitualSessions(root.getList("ritual_sessions", Tag.TAG_COMPOUND));
+        ListTag persistedRitualSessions = root.getList("ritual_sessions", Tag.TAG_COMPOUND);
+        data.ritualSessions = readRitualSessions(persistedRitualSessions);
+        if (data.ritualSessions.size() != persistedRitualSessions.size()) {
+            // Malformed/over-budget ritual entries are dropped fail-closed while reading.
+            // Persist the sanitized set even if this world has no later ritual transition;
+            // otherwise the original rejected NBT can remain on disk across restarts.
+            data.setDirty();
+        }
         data.corruptionStates = HazardStatePersistence.readCorruption(
             root.getList("corruption", Tag.TAG_COMPOUND), MAX_PERSISTED_CORRUPTION_PLAYERS);
         data.strainStates = HazardStatePersistence.readStrain(

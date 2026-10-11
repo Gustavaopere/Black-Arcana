@@ -109,3 +109,14 @@ A regressão comportamental RED em `main@f4b9d81e7da3b30b49a8615a01cf7f9f11e2940
 Após uma restauração com `rejected() > 0`, `BlackArcanaSavedData.restore` passa a recapturar somente `ritualEngine.snapshot(MAX_PERSISTED_RITUAL_SESSIONS)` e marca `SavedData` como dirty. Isso conserva as sessões efetivamente admitidas, inclusive `COMMITTED`, enquanto remove do *próximo estado a gravar* registros recusados pelo motor. Se nenhuma entrada for rejeitada, não é introduzida uma gravação adicional. A integração Malum ainda rejeita um snapshot cuja chave já conste no ledger, sem duplicar recompensa.
 
 **Limites:** o reparo não recupera um evento de interrupção **não gravado antes de uma queda abrupta**, não cria tombstones e não fornece transação de disco entre inventário Malum e `SavedData`. O efeito demonstrado é a coerência do estado em memória e da próxima serialização após o restore; gravação física/restart real e validação de providers continuam PENDING sob D035. Stage 06.05 🟡; Stage 07 ⛔.
+
+
+## 2026-10-11 — NBT malformado e interrupção persistida (PR #747)
+
+No `main@e756ad51c46760d2c782c2535cb7409601c393ca` (#746 integrado), uma entrada `ritual_sessions` com UUIDs ausentes ou outras incompatibilidades era descartada em `BlackArcanaSavedData.readRitualSessions`; porém `load` não marcava `SavedData` dirty. Se nenhuma outra mutação disparasse gravação, o conteúdo original inválido poderia permanecer no disco e reaparecer em novas leituras. Um NBT com um registro `COMMITTED` válido e outro corrompido exigia preservar a sessão válida e ainda assim gravar a lista normalizada.
+
+**RED**: `38107503142`, 906 testes, 2 falhas comportamentais em `BlackArcanaSavedDataRitualSessionTest`: `malformedRitualEntryRequiresDirtyRewriteEvenWithoutAnyRestoredSession` e `corruptedRitualEntryIsRemovedWithoutDroppingValidCommittedSnapshotOnNextSave`. A falha observada em ambos foi `expected isDirty() true, was false`. O terceiro teste, `interruptedCommittedRitualDoesNotReappearAfterCapturedSaveAndReload`, passou no baseline; ele fixa o contrato de interrupção pós-commit sem devolução nem dupla recompensa **quando a captura alterada já foi serializada**.
+
+O patch compara o número de entradas `ritual_sessions` do `ListTag` com o número de snapshots lidos dentro do limite de `MAX_PERSISTED_RITUAL_SESSIONS`. Se algum registro for recusado ou exceder o limite, a cópia em memória já sanitizada passa a ser marcada dirty para uma futura gravação. Entradas válidas continuam disponíveis para restore, sem mudança da identidade canônica nem da reserva de custos.
+
+**Limite explícito:** marcação dirty e round-trip NBT são evidência da solicitação de regravação e da próxima serialização, **não** de flush síncrono, tombstone durável, recuperação após uma queda abrupta ou atomicidade entre inventário Malum e `SavedData`. D035 mantém testes físicos/real-modpack e consistência após crash como pendências da Stage 09; Stage 06.05 🟡 e Stage 07 ⛔.
