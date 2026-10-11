@@ -20,6 +20,10 @@ O catálogo de GTBC's Geomancy Plus 1.1.0-1.21.1 ganhou **12 fichas individualiz
 
 A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae55ea66e7aa234dba0a8318e5b`: o índice mantém **587 posições físicas certificadas** congeladas, com adições/substituição pós-snapshot separadas em notas não certificadas. A comparação documental de `de80b186357cad20ba5b81892a8682777e96e35a` ao HEAD atual não autoriza alterar o inventário físico apenas por edição de Markdown. As 39 provas de registry binary-exact e 14 rotas de Survival do quadro de pendências permanecem abertas.
 
+### BetterEnd 21.0.34 — fichas individuais, 2026-10-11
+
+As **48/48** recipes `betterend:infusion` do artefato publisher=physical foram individualizadas em [fichas próprias](../providers/✅-betterend/INFUSION-RITUAL-CARDS-21.0.34.md), preservando recipe ID e resultado item por ficha; **39** livros encantados e **9** transformações. A ação separada do Eternal Portal permanece contabilizada uma vez. **+0 novas identidades** (mínimos **1851 / 1849** inalterados). Não foi realizado novo teste físico de JAR, de ingredientes/tempos, configurações ou Survival; o runtime e a Stage 06.05 permanecem condicionados.
+
 ## Situação da catalogação
 
 - **164/164 diretórios canônicos** de providers com prefixo `✅-` e `README.md` presente; **0 ❌, 0 🟡, 0 ⚠️ ou ⛔ no prefixo de catálogo**.
@@ -43,6 +47,7 @@ A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae
 | Ars Zero 2.0.2 | [12/12 fichas de capacidades](../providers/✅-ars-zero/GLYPH-CARDS-2.0.2.md) · [matriz da release](../providers/✅-ars-zero/GLYPH-CATALOG.md) | ✅ fichas `COUNTED_RELEASE_BOUNDED` / ⚠️ registry, API, Survival físicos pendentes; 4 glifos de compatibilidade desativados excluídos; +0 identidades |
 | Ars Elemental 0.7.10.1 | [39/39 glyphs](../providers/✅-ars-elemental/GLYPH-CARDS-0.7.10.1.md) · [8/8 rituais](../providers/✅-ars-elemental/RITUAL-CARDS-0.7.10.1.md) | ✅ 47/47 fichas `COUNTED_SOURCE_PINNED` / ⚠️ 27 IDs não-filtros, config e Survival pendentes; Nullify Defense recipe desativada por default; +0 novas identidades |
 | Hexalia 1.3.7 | [23 Nature's Rituals](../providers/✅-hexalia/NATURES-RITUAL-CARDS-1.3.7.md) · [6 Celestial Infusions](../providers/✅-hexalia/CELESTIAL-INFUSION-CARDS-1.3.7.md) | ✅ 29/29 provider-owned actions `COUNTED_SOURCE_PINNED` individualizadas; ⚠️ byte parity, config/Survival e APIs não comprovadas; +0 novas identidades |
+| BetterEnd: New Dawn 21.0.34 | [48/48 Infusion Rituals](../providers/✅-betterend/INFUSION-RITUAL-CARDS-21.0.34.md) · [Eternal Portal](../providers/✅-betterend/rituals/ETERNAL-PORTAL-RITUAL.md) | ✅ 48 recipes `betterend:infusion` `COUNTED_EXACT` individualizadas, 1 ritual de portal separado; ⚠️ ingredientes/tempo por receita e Survival pendentes; +0 identidades |
 | Ars Hex 5.0.4b | [Soul Shatter — 1/1 glyph](../providers/✅-ars-hex/GLYPH-CARDS-5.0.4b.md) | ✅ `COUNTED_SOURCE_PINNED`, Malum-conditioned and source-pinned ID `ars_hex:glyph_soul_shatter` / ⚠️ binary-runtime QA still open; +0 new identities |
 | Relics 0.12.8 | [41/41 fichas de powers](../providers/✅-relics/ABILITY-CARDS-0.12.8.md) · [inventário exato](../providers/✅-relics/EXACT-0.12.8-ABILITY-INVENTORY.md) | ✅ 39 abilities + 2 synergies owner-scoped `COUNTED_EXACT` / ⚠️ runtime, Curios/Survival e API pendentes; +0 novas identidades |
 | Tunes n' Tomes | [16 fichas de spells](../providers/✅-tunes-n-tomes/SPELL-CARDS-1.1.0-HOTFIX.md) | 16 nomes da página da editora, ids/classes/custos internos não verificados |

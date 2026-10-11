@@ -57,6 +57,10 @@ The catalog records identity/result only. Exact ingredients, balance values and 
 | 47 | `betterend:thorns_book` | `minecraft:enchanted_book` | `COUNTED_EXACT` |
 | 48 | `betterend:unbreaking_book` | `minecraft:enchanted_book` | `COUNTED_EXACT` |
 
+## Fichas individuais
+
+**✅ 48/48** receitas deste inventário possuem fichas de identidade e resultado: [índice de fichas BetterEnd 21.0.34](../INFUSION-RITUAL-CARDS-21.0.34.md). Campos individuais não extraídos do artifact audit (ingredientes, quantidades, tempos, componentes de enchantment) permanecem **NÃO VERIFICADOS**, não estimados. **+0 novas identidades** nesta individualização.
+
 ## Accounting
 
 - exact recipe IDs: **48**;
