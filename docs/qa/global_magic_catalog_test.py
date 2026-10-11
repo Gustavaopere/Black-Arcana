@@ -308,6 +308,79 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("FOCUS-CARDS-3.1.4.md", self.index)
         self.assertIn("1.851 global / 1.849 no escopo solicitado", index)
 
+    def test_goety_exact_238_nonfocus_ritual_cards(self):
+        provider = PROVIDERS / "✅-goety"
+        source = (provider / "EXACT-3.1.4-SEMANTIC-INVENTORY.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## Exact non-Focus ritual actions — 238", source)
+        subset = source.split("### Counted ritual identities", 1)[1]
+        records = re.findall(
+            r"^- `([^`]+\.json)` → `([^`]+)` \(`([A-Z_]+)`, `([a-z_]+)`\)$",
+            subset, re.MULTILINE,
+        )
+        self.assertEqual(238, len(records))
+        self.assertEqual(238, len({row[0] for row in records}))
+        self.assertEqual(238, len({row[1] for row in records}))
+        expected_classes = {
+            "OTHER_RITUAL": 123, "CONVERSION_RITUAL": 23,
+            "ENCHANT_RITUAL": 37, "LOCATE_RITUAL": 19,
+            "SUMMON_RITUAL": 2, "THRALL_SUMMON_RITUAL": 34,
+        }
+        expected_crafts = {
+            "deep": 9, "geoturgy": 15, "animation": 3, "forge": 47,
+            "end": 7, "expert_nether": 13, "necroturgy": 36,
+            "overgrown": 11, "adept_nether": 8, "magic": 48,
+            "storm": 8, "frost": 4, "sky": 9,
+            "divination": 19, "sabbath": 1,
+        }
+        for name, count in expected_classes.items():
+            self.assertEqual(count, sum(1 for r in records if r[2] == name))
+        for name, count in expected_crafts.items():
+            self.assertEqual(count, sum(1 for r in records if r[3] == name))
+        cards_root = provider / "rituals" / "cards"
+        pages = sorted(cards_root.rglob("*.md"))
+        self.assertEqual(238, len(pages))
+        index = (provider / "RITUAL-CARDS-3.1.4.md").read_text(
+            encoding="utf-8"
+        )
+        for ordinal, (resource, signature, family, craft) in enumerate(records, 1):
+            relative = resource[:-5] + ".md"
+            path = cards_root / relative
+            self.assertTrue(path.is_file(), resource)
+            card = path.read_text(encoding="utf-8")
+            self.assertIn(f"# Goety 3.1.4 — ritual `{resource}`", card)
+            self.assertIn(f"**Recurso de receita no inventário do JAR:** `{resource}`", card)
+            self.assertIn(f"**Assinatura semântica auditada:** `{signature}`", card)
+            self.assertIn(f"**Classe de auditoria:** `{family}`", card)
+            self.assertIn(f"**Tipo de crafting de ritual:** `{craft}`", card)
+            self.assertIn(f"**Posição editorial:** {ordinal}/238", card)
+            self.assertIn("COUNTED_EXACT", card)
+            self.assertIn("**NÃO VERIFICADO nesta ficha**", card)
+            self.assertIn(f"| {ordinal} | [`{resource}`](rituals/cards/{relative}) |", index)
+            for label, canonical in (
+                ("Inventário semântico exato", "EXACT-3.1.4-SEMANTIC-INVENTORY.md"),
+                ("Auditoria de artefato", "EXACT-3.1.4-ARTIFACT-AUDIT.md"),
+                ("Integração", "INTEGRATION-RULES.md"),
+            ):
+                match = re.search(r"\[" + label + r"\]\(([^)]+)\)", card)
+                self.assertIsNotNone(match, (resource, label))
+                resolved = (path.parent / match.group(1)).resolve()
+                self.assertEqual((provider / canonical).resolve(), resolved)
+            if "?->" in signature:
+                self.assertIn("origem/input não está certificado", card)
+            if signature.startswith("RITUAL_PATH:"):
+                self.assertIn("não um resultado ou entity registry ID", card)
+        self.assertIn("**238** assinaturas são únicas", index)
+        self.assertIn("**+0 novas identidades**", index)
+        self.assertIn("**342** recursos", index)
+        self.assertIn("**83** recursos", index)
+        self.assertIn("**17** rituais", index)
+        for filename in ("README.md", "rituals/README.md"):
+            self.assertIn("RITUAL-CARDS-3.1.4.md",
+                          (provider / filename).read_text(encoding="utf-8"))
+        self.assertIn("RITUAL-CARDS-3.1.4.md", self.index)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
