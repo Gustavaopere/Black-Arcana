@@ -125,6 +125,12 @@ Strict semantic delta contributed by Relics:
 
 This provider-specific checkpoint does not edit the shared global total; shared-ledger reconciliation is separate.
 
+## Fichas individuais — 41/41 identidades exatas
+
+**✅ 39 habilidades e duas sinergias individualizadas:** [ABILITY-CARDS-0.12.8.md](ABILITY-CARDS-0.12.8.md), com fichas em `abilities/<owner>/<id>.md` e `synergies/<owner>/<id>.md`. A chave owner-scoped evita colapsar `slots` entre Hunting/Kinetic Belt ou as duas sinergias `electricity`. Evidência física do JAR hash-matched permanece autoritativa para identidades: não inferir APIs, custos, cooldowns, efeitos específicos ou IDs de registry de spell.
+
+Estas **41 identidades `COUNTED_EXACT` já estavam no ledger**, portanto a individualização adiciona **+0 novas identidades**. **⚠️** Config/QA real, Curios lifecycle, FTB Teams targeting e integrações continuam não verificados; nenhum runtime Black Arcana foi alterado.
+
 ## Authority boundary
 
 Relics owns:
