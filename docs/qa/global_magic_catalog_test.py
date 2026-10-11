@@ -121,6 +121,42 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("12/12", cards)
         self.assertIn("sem validação física", cards)
 
+    def test_leyline_cards_match_exact_fourteen_registry_roots(self):
+        provider = PROVIDERS / "✅-leyline-spellbooks"
+        inventory = (provider / "EXACT-1.0.3-SPELL-INVENTORY.md").read_text(
+            encoding="utf-8"
+        )
+        rows = re.findall(
+            r"^\| (\d+) \| \x60([A-Z_]+)\x60 \| \x60([A-Za-z]+)\x60 \| "
+            r"\x60leylines:([a-z_]+)\x60 \|$",
+            inventory,
+            re.MULTILINE,
+        )
+        self.assertEqual(14, len(rows))
+        self.assertEqual([str(i) for i in range(1, 15)], [row[0] for row in rows])
+        self.assertEqual(14, len({row[3] for row in rows}))
+        all_pages = sorted((provider / "spells").glob("*.md"))
+        self.assertEqual(14, len(all_pages), "one page per exact provider spell")
+
+        index = (provider / "SPELL-CARDS-1.0.3.md").read_text(encoding="utf-8")
+        self.assertIn("14/14", index)
+        self.assertIn("1.851 / 1.849", index)
+        self.assertIn("Total semântico neste trabalho: +0", index)
+        self.assertIn("⚠️ QA condicionado", index)
+        for _n, field, klass, ident in rows:
+            slug = "eclipse" if ident == "ley_eclipse" else ident.replace("_", "-")
+            path = provider / "spells" / (slug + ".md")
+            self.assertTrue(path.is_file(), f"missing individual card {ident}")
+            page = path.read_text(encoding="utf-8")
+            self.assertIn(f"**Registry ID:** \x60leylines:{ident}\x60", page)
+            self.assertIn(f"**Classe exata:** \x60{klass}\x60", page)
+            self.assertIn(f"campo \x60{field}\x60", page)
+            self.assertIn("COUNTED_EXACT", page)
+            self.assertIn(f"(spells/{path.name})", index)
+            self.assertIn(f"\x60leylines:{ident}\x60", index)
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        self.assertIn("SPELL-CARDS-1.0.3.md", readme)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)

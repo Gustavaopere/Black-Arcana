@@ -109,6 +109,10 @@ The exact provider artifact exposes no Leylines-specific spell lock or condition
 
 The Phase 2BG semantic delta is canonically **+14**. Durable PR #195 HEAD `a9d7b55044230bbb011f7233ffd75d9a8321489b` passed CI #2503; squash merge `88f042f68429ff920314a7ec3a6923369edc93fd` passed exact-SHA post-merge CI #2504. Canonical totals are **888 semantic objects / 56 of 100 components**.
 
+## Individual spell cards — 14/14 from exact 1.0.3 registry
+
+**✅ 14/14 páginas individuais de identidade:** [SPELL-CARDS-1.0.3.md](SPELL-CARDS-1.0.3.md) vincula um registro, classe e ID exato a cada ficha em `spells/`. Nove fichas antigas da lista pública foram reconciliadas com o JAR; cinco antes ausentes da lista pública (`charge_leyline`, `tether_gaze`, `ley_veil`, `leyline_discharge` e `ley_resonance`) agora têm fichas próprias. Os 14 roots já integravam a contagem `COUNTED_EXACT`; esta individualização adiciona **+0** ao mínimo global. Valores numéricos, aquisição efetiva/configuração implantada e runtime QA continuam pendentes.
+
 ## Current exactness ceiling
 
 Verified from the exact installed artifact:
