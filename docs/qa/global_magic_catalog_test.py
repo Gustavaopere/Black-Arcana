@@ -527,6 +527,95 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("GLYPH-CARDS-2.0.2.md",
                       (provider / "README.md").read_text(encoding="utf-8"))
 
+    def test_ars_elemental_47_source_pinned_cards(self):
+        provider = PROVIDERS / "✅-ars-elemental"
+        glyph_source = (provider / "GLYPHS.md").read_text(encoding="utf-8")
+        ritual_source = (provider / "RITUALS.md").read_text(encoding="utf-8")
+        glyph_index = (provider / "GLYPH-CARDS-0.7.10.1.md").read_text(
+            encoding="utf-8"
+        )
+        ritual_index = (provider / "RITUAL-CARDS-0.7.10.1.md").read_text(
+            encoding="utf-8"
+        )
+        expected_types = (
+            ("## Effects — 23", "### Source-behavior notes", 23),
+            ("## Cast methods — 2", "## Propagators — 2", 2),
+            ("## Propagators — 2", "## Filters — 12", 2),
+        )
+        names = []
+        for start, end, expected in expected_types:
+            source = glyph_source.split(start, 1)[1].split(end, 1)[0]
+            rows = [line.split("|")[1].strip()
+                    for line in source.splitlines()
+                    if line.startswith("| ")
+                    and not line.startswith("| Glyph")
+                    and not line.startswith("|---")]
+            self.assertEqual(expected, len(rows), start)
+            names.extend(rows)
+        pairs_source = glyph_source.split(
+            "| Normal / inverted pair |", 1
+        )[1].split("Registered ids are", 1)[0]
+        pairs = [row.split("|")[1].strip() for row in pairs_source.splitlines()
+                 if row.startswith("| ") and not row.startswith("|---")]
+        self.assertEqual(6, len(pairs))
+        for pair in pairs:
+            names.extend(pair.split(" / "))
+        registered = re.findall(
+            r"`(glyph_[a-z_]+)`",
+            glyph_source.split("Registered ids are", 1)[1].split(
+                "under namespace", 1
+            )[0],
+        )
+        self.assertEqual(12, len(registered))
+        self.assertEqual(39, len(names))
+        self.assertEqual(39, len(set(names)))
+        glyph_pages = sorted((provider / "glyphs").glob("*.md"))
+        self.assertEqual(39, len(glyph_pages))
+        for ordinal, name in enumerate(names, 1):
+            slug = re.sub(r"(^-|-$)", "", re.sub(r"[^a-z0-9]+", "-", name.lower()))
+            page = provider / "glyphs" / (slug + ".md")
+            self.assertTrue(page.is_file(), name)
+            card = page.read_text(encoding="utf-8")
+            self.assertIn(f"# Ars Elemental 0.7.10.1 — {name}", card)
+            self.assertIn("COUNTED_SOURCE_PINNED", card)
+            self.assertIn("**+0 novas identidades**", card)
+            self.assertIn(f"| {ordinal} |", glyph_index)
+            self.assertIn(f"(glyphs/{slug}.md)", glyph_index)
+            self.assertIn("../GLYPHS.md", card)
+            if ordinal <= 27:
+                self.assertIn("**ResourceLocation individual:** **NÃO VERIFICADO", card)
+            else:
+                ident = "glyph_" + name.lower().replace("not ", "not_").replace(" ", "_") + "_filter"
+                self.assertIn(ident, registered)
+                self.assertIn(f"`ars_elemental:{ident}`", card)
+        self.assertIn("MethodCarianPhalanx", glyph_index)
+        self.assertIn("frame_skip_recipe=false", glyph_index)
+        ritual_ids = re.findall(
+            r"^## `(ars_elemental:ritual_[a-z_]+)`$",
+            ritual_source, re.MULTILINE,
+        )
+        self.assertEqual(8, len(ritual_ids))
+        self.assertEqual(8, len(set(ritual_ids)))
+        ritual_pages = sorted((provider / "rituals" / "cards").glob("*.md"))
+        self.assertEqual(8, len(ritual_pages))
+        for ordinal, ident in enumerate(ritual_ids, 1):
+            slug = ident.split(":")[1]
+            path = provider / "rituals" / "cards" / (slug + ".md")
+            self.assertTrue(path.is_file(), ident)
+            text = path.read_text(encoding="utf-8")
+            self.assertIn(f"# Ars Elemental 0.7.10.1 — `{ident}`", text)
+            self.assertIn("COUNTED_SOURCE_PINNED", text)
+            self.assertIn(f"| {ordinal} | `{ident}` | [Abrir](rituals/cards/{slug}.md) |", ritual_index)
+            self.assertIn("../../RITUALS.md", text)
+        self.assertIn("50 Ars Source a cada cinco placements", ritual_index)
+        self.assertIn("getSourceCost()=0", ritual_index)
+        self.assertIn("**+0 novas identidades semânticas**", ritual_index)
+        self.assertIn("GLYPH-CARDS-0.7.10.1.md", self.index)
+        self.assertIn("RITUAL-CARDS-0.7.10.1.md", self.index)
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        self.assertIn("GLYPH-CARDS-0.7.10.1.md", readme)
+        self.assertIn("RITUAL-CARDS-0.7.10.1.md", readme)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
