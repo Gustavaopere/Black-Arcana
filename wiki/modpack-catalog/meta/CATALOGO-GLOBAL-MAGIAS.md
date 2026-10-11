@@ -22,7 +22,7 @@ A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae
 
 ### BetterEnd 21.0.34 — fichas individuais, 2026-10-11
 
-As **48/48** recipes `betterend:infusion` do artefato publisher=physical foram individualizadas em [fichas próprias](../providers/✅-betterend/INFUSION-RITUAL-CARDS-21.0.34.md), preservando recipe ID e resultado item por ficha; **39** livrescos encantados e **9** transformações. A ação separada do Eternal Portal permanece contabilizada uma vez. **+0 novas identidades** (mínimos **1851 / 1849** inalterados). Não foi realizado novo teste físico de JAR, de ingredientes/tempos, configurações ou Survival; o runtime e a Stage 06.05 permanecem condicionados.
+As **48/48** recipes `betterend:infusion` do artefato publisher=physical foram individualizadas em [fichas próprias](../providers/✅-betterend/INFUSION-RITUAL-CARDS-21.0.34.md), preservando recipe ID e resultado item por ficha; **39** livros encantados e **9** transformações. A ação separada do Eternal Portal permanece contabilizada uma vez. **+0 novas identidades** (mínimos **1851 / 1849** inalterados). Não foi realizado novo teste físico de JAR, de ingredientes/tempos, configurações ou Survival; o runtime e a Stage 06.05 permanecem condicionados.
 
 ## Situação da catalogação
 
