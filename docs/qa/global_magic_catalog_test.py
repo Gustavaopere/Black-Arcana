@@ -372,7 +372,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             if signature.startswith("RITUAL_PATH:"):
                 self.assertIn("não um resultado ou entity registry ID", card)
         self.assertIn("**238** assinaturas são únicas", index)
-        self.assertIn("**+0 novas identidades semânticas:**", index)
+        self.assertIn("**+0 novas identidades**", index)
         self.assertIn("**342** recursos", index)
         self.assertIn("**83** recursos", index)
         self.assertIn("**17** rituais", index)
@@ -809,7 +809,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             )
         self.assertIn("48/48", index)
         self.assertIn("**48** infusões + **1** Eternal Portal Ritual", index)
-        self.assertIn("**+0 novas identidades**", index)
+        self.assertIn("**+0 novas identidades semânticas:**", index)
         self.assertIn("INFUSION-RITUAL-CARDS-21.0.34.md", self.index)
         self.assertIn(
             "INFUSION-RITUAL-CARDS-21.0.34.md",
