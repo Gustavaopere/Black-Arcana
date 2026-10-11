@@ -47,6 +47,7 @@ A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae
 | Simply More | [24 ações sobrenaturais](../providers/✅-simply-more/README.md) | alcance, configuração e Mimicry ainda condicionados |
 | Bloodlines | [29 fichas de Actions](../providers/✅-bloodlines/ACTION-CARDS-3.0.9.md) | 28 COUNTED_SOURCE_PINNED + 1 EXCLUDED (Sorcerous Strike); runtime/Survival ⚠️ condicionado; +0 novas identidades |
 | Goety 3.1.4 | [123 fichas de Focus](../providers/✅-goety/FOCUS-CARDS-3.1.4.md) · [238 fichas de rituais não-Focus](../providers/✅-goety/RITUAL-CARDS-3.1.4.md) · [inventário exato 361](../providers/✅-goety/EXACT-3.1.4-SEMANTIC-INVENTORY.md) | ✅ 361/361 identidades Goety individualizadas com evidência `COUNTED_EXACT` / ⚠️ execução física, custos e runtime continuam condicionados; +0 novas identidades |
+| Goety Cataclysm 1.21.1-1.8.2 | [28/28 fichas de Focus](../providers/✅-goety-cataclysm/FOCUS-CARDS-1.21.1-1.8.2.md) · [52 identidades do addon](../providers/✅-goety-cataclysm/README.md) | ✅ 28 Focus `COUNTED_EXACT` individualizados; ⚠️ 24 rituais distintos auditados só no agregado e execução física pendente; +0 novas identidades |
 
 ## Inventário completo de providers da árvore canônica
 
