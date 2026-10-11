@@ -37,7 +37,7 @@ A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae
 | Ars Nouveau | [Inventário Ars](../providers/✅-ars-nouveau/README.md) | 109 componentes/rituais distintos no ledger; composições arbitrárias não duplicadas |
 | Iron's Spells 'n Spellbooks | [Inventário Iron's](../providers/✅-irons-spells/README.md) | base e addons segregados por autoria |
 | Apprentice's Codex | [83 feitiços/fichas](../providers/✅-apprentice-codex/README.md) | versão 0.9.7.1 source-pinned |
-| Monsters & Spellbooks | [98 feitiços](../providers/✅-monsters-spellbooks/SPELL-CATALOG.md) | fonte pública contemporânea; registry binário 0.0.16.3 ainda não provado |
+| Monsters & Spellbooks | [98/98 fichas individuais](../providers/✅-monsters-spellbooks/SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md) · [inventário](../providers/✅-monsters-spellbooks/SPELL-CATALOG.md) | ✅ fichas source-observed / ⚠️ registry físico 0.0.16.3 e Survival não comprovados; +0 novas identidades |
 | Somake Spells | [83 registros e 83 fichas](../providers/✅-somake-spells/MAGIC-CARDS-1.0.9.md) | exato 1.0.9; alcance/configuração separados |
 | Not Enough Glyphs | [40 glifos](../providers/✅-not-enough-glyphs/README.md) | 39 candidatos source-enabled; config ativa ainda condicionada |
 | Ars Zero | [12 glifos/capacidades](../providers/✅-ars-zero/GLYPH-CATALOG.md) | evidência da release 2.0.2, sem inventar IDs |
