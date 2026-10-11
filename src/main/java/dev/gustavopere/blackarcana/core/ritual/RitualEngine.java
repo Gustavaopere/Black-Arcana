@@ -2,6 +2,8 @@ package dev.gustavopere.blackarcana.core.ritual;
 
 import dev.gustavopere.blackarcana.api.ArcanaDecision;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,8 @@ public final class RitualEngine {
     private final RitualRequirementEvaluator requirements;
     private final RitualComponentProvider components;
     private final RitualOutcomeExecutor outcomes;
+    /** Optional world-independent restore gates, registered by completion-producing providers. */
+    private final Map<ArcanaRitualId, RitualRequirementEvaluator> restoreAdmissions = new HashMap<>();
 
     public RitualEngine(
             RitualSessionRegistry sessions,
@@ -243,6 +247,21 @@ public final class RitualEngine {
         return sessions.sessions(maxEntries).stream().map(RitualSessionRegistry.Session::snapshot).toList();
     }
 
+    /**
+     * Register a provider-owned, world-independent admission rule for legacy/restored
+     * sessions. No online-player, chunk or altar checks run during server startup.
+     */
+    public synchronized void registerRestoreAdmission(
+            ArcanaRitualId ritualId, RitualRequirementEvaluator admission
+    ) {
+        Objects.requireNonNull(ritualId, "ritualId");
+        Objects.requireNonNull(admission, "admission");
+        if (restoreAdmissions.containsKey(ritualId) || restoreAdmissions.size() >= MAX_SNAPSHOT_ENTRIES) {
+            throw new IllegalStateException("duplicate or excessive ritual restore admission");
+        }
+        restoreAdmissions.put(ritualId, admission);
+    }
+
     public synchronized RitualRestoreResult restore(
             List<RitualDefinition> definitions,
             List<RitualSessionSnapshot> snapshots,
@@ -262,9 +281,16 @@ public final class RitualEngine {
             }
         }
 
+        // Previously committed costs must take precedence over unpaid preparation
+        // when older saves contain conflicting sessions. Stable order within each
+        // phase keeps restoration deterministic while honoring the bounded input.
+        List<RitualSessionSnapshot> ordered = new ArrayList<>(snapshots);
+        ordered.sort(Comparator.comparingInt(
+                snapshot -> snapshot != null && snapshot.state() == RitualSessionState.COMMITTED ? 0 : 1));
+
         int restored = 0;
         int rejected = 0;
-        for (RitualSessionSnapshot snapshot : snapshots) {
+        for (RitualSessionSnapshot snapshot : ordered) {
             if (!restoreOne(byId, snapshot, nowTick)) rejected++;
             else restored++;
         }
@@ -288,6 +314,21 @@ public final class RitualEngine {
         if (snapshot.commitAtTick() - snapshot.startedAtTick() != definition.commitDelayTicks()) return false;
         if (snapshot.completeAtTick() - snapshot.startedAtTick() != definition.completionDelayTicks()) return false;
         if (sessions.anchorBusy(snapshot.context().anchor()) || !sessions.hasCapacity()) return false;
+        // Restore cannot run full gameplay requirements: casters/chunks may not be
+        // available at server-start. A registered provider-specific admission gate
+        // guards durable reward capacity and caster identity before replay retention.
+        RitualRequirementEvaluator restoreAdmission = restoreAdmissions.get(definition.id());
+        if (restoreAdmission != null) {
+            final ArcanaDecision admitted;
+            try {
+                admitted = Objects.requireNonNull(
+                        restoreAdmission.check(definition, snapshot.context(), nowTick),
+                        "ritual restore admission decision");
+            } catch (RuntimeException | LinkageError failure) {
+                return false;
+            }
+            if (!admitted.allowed()) return false;
+        }
         if (!activationGuard.remember(snapshot.activationId(), snapshot.startedAtTick(), nowTick)) return false;
 
         RitualSessionRegistry.Session restored = new RitualSessionRegistry.Session(
