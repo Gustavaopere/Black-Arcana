@@ -1,6 +1,6 @@
 # Black Arcana — Status
 
-Last updated: 2026-10-10 (PR #744 merged; Stage 06.05 restore admission under audit, no Stage promotion)
+Last updated: 2026-10-10 (PR #745 merged; Stage 06.05 rejected snapshot reconciliation under audit, no Stage promotion)
 
 ## Authoritative execution rule
 
@@ -18,7 +18,7 @@ Stage 09 is the consolidated exact-release-candidate validation campaign and rem
 
 ## Current active stage
 
-**Stage 06 — Rituals remains the current numbered audit target. 06.01–06.04 are ✅; 06.05 remains 🟡 for physical acceptance. Baseline `Black-Arcana/main@d832be03d437f612cf42a963c4d60f2c3e58148d` contains Survival 3×3 altar ingress (#733, originally merged at `5783034ca83834b6610aad0a5fd975edd1331743`, CI `38077919349`), caster lifecycle interruption (#735), bounded round-robin processing (#737), transition-time SavedData recapture (#738), chronological restore guard (#739), guard-level future-claim rejection (#742) and initial full-ledger preflight (#743). PR #743 premerge CI `38095219947` and postmerge CI `38095524331` passed both jobs, including GameTest and dedicated-server smoke. PR #744 closed the in-flight completion-capacity and same-caster concurrency gaps (behavioral RED `38096062929`, postmerge CI `38096704046` both jobs success) on `main@d87409a8e9e5c427cdbc921447f06f561fbd7d74`. PR #745 is the restore-admission follow-up: its RED workflow `38104394615` proved three snapshot-admission gaps before the candidate fix. Real client/modpack, exact Malum/Eidolon provider acceptance, save/restart and crash-consistency remain outstanding under D035. CI is not physical acceptance. Not Stage closure.**
+**Stage 06 — Rituals remains the current numbered audit target. 06.01–06.04 are ✅; 06.05 remains 🟡 for physical acceptance. Baseline `Black-Arcana/main@d832be03d437f612cf42a963c4d60f2c3e58148d` contains Survival 3×3 altar ingress (#733, originally merged at `5783034ca83834b6610aad0a5fd975edd1331743`, CI `38077919349`), caster lifecycle interruption (#735), bounded round-robin processing (#737), transition-time SavedData recapture (#738), chronological restore guard (#739), guard-level future-claim rejection (#742) and initial full-ledger preflight (#743). PR #743 premerge CI `38095219947` and postmerge CI `38095524331` passed both jobs, including GameTest and dedicated-server smoke. PR #744 closed the in-flight completion-capacity and same-caster concurrency gaps (behavioral RED `38096062929`, postmerge CI `38096704046` both jobs success) on `main@d87409a8e9e5c427cdbc921447f06f561fbd7d74`. PR #745 merged at `f4b9d81e7da3b30b49a8615a01cf7f9f11e2940b` with postmerge CI `38104885732` both jobs success, closing the three RED restore-admission gaps shown in `38104394615`. PR #746 audits immediate reconciliation of rejected snapshots in the independently persistent `BlackArcanaSavedData` (RED `38106081471`: 902 tests, 2 expected failures). Real client/modpack, exact Malum/Eidolon provider acceptance, save/restart and crash-consistency remain outstanding under D035. CI is not physical acceptance. Not Stage closure.**
 
 The [original 2026-10-08 activation design gate](../docs/qa/ritual-veil-anchor-activation-design-gate-2026-10-08.md) documented the missing player ingress. The [2026-10-10 Survival altar implementation/QA note](../docs/qa/ritual-veil-anchor-survival-ingress-2026-10-10.md) now describes the candidate production route and its outstanding acceptance conditions. The [five-item magic pendency tracker](../wiki/modpack-catalog/meta/PENDENCIAS-MAGICAS-ATUAIS.md) remains separate from catalog coverage.
 
@@ -44,7 +44,7 @@ The manual rows themselves remain unresolved:
 | 04 World Safety | ✅ COMPLETE | historical completed predecessor |
 | 05 Casting & UX | ✅ ENGINEERING COMPLETE | real-client/provider-real rows transferred to Stage 09 under D035 |
 | 05A Arcane Danger | ✅ ENGINEERING COMPLETE | 05A.01–05A.13 ✅; real-client/real-modpack/provider rows transferred to Stage 09 under D035 |
-| 06 Rituals | 🟡 ACTIVE AUDIT TARGET | 06.01–06.04 ✅; 06.05 🟡 through merged PR #744; PR #745 audits restoration of committed ritual sessions under capacity/caster conflicts; physical provider/client/modpack validation pending; no promotion |
+| 06 Rituals | 🟡 ACTIVE AUDIT TARGET | 06.01–06.04 ✅; 06.05 🟡 through merged PR #745; PR #746 audits resaving of stale/rejected ritual snapshots; physical provider/client/modpack validation pending; no promotion |
 | 07 Spell Domains | ⛔ BLOCKED BY 05A -> 06 | historical domain work remains reusable but is not the active target |
 | 07A Arcane Polarity, Fusion & Metamagic | ⛔ BLOCKED BY 07 | do not start until Stage 07 engineering closes |
 | 08 Progression & Balance | ⛔ BLOCKED BY 07A | RPG Skill Tree remains progression/attributes/Mastery/perks/gates authority |
