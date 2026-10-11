@@ -766,6 +766,56 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             self.assertIn(filename, self.index)
             self.assertIn(filename, (provider / "README.md").read_text(encoding="utf-8"))
 
+    def test_betterend_21034_48_infusion_ritual_cards(self):
+        provider = PROVIDERS / "✅-betterend"
+        source = (provider / "rituals" / "INFUSION-RITUAL-CATALOG.md").read_text(
+            encoding="utf-8"
+        )
+        rows = re.findall(
+            r"^\| (\d+) \| `(betterend:[a-z0-9_]+)` "
+            r"\| `([a-z0-9_:]+)` \| `COUNTED_EXACT` \|$",
+            source, re.MULTILINE,
+        )
+        self.assertEqual(48, len(rows))
+        self.assertEqual([str(i) for i in range(1, 49)], [r[0] for r in rows])
+        self.assertEqual(48, len({r[1] for r in rows}))
+        self.assertEqual(39, sum(1 for r in rows if r[2] == "minecraft:enchanted_book"))
+        self.assertEqual(9, sum(1 for r in rows if r[2] != "minecraft:enchanted_book"))
+        self.assertEqual(10, len({r[2] for r in rows}))
+        index = (provider / "INFUSION-RITUAL-CARDS-21.0.34.md").read_text(
+            encoding="utf-8"
+        )
+        cards = sorted((provider / "rituals" / "cards").glob("*.md"))
+        self.assertEqual(48, len(cards), "must have one card per exact recipe")
+        self.assertNotIn("betterend:eternal_portal", [r[1] for r in rows])
+        for number, rid, output in rows:
+            slug = rid.split(":", 1)[1]
+            page = provider / "rituals" / "cards" / (slug + ".md")
+            self.assertTrue(page.is_file(), rid)
+            body = page.read_text(encoding="utf-8")
+            self.assertIn("**Recipe ID:** `" + rid + "`", body)
+            self.assertIn("**Recipe type:** `betterend:infusion`", body)
+            self.assertIn("**Resultado — item ID:** `" + output + "`", body)
+            self.assertIn("**Posição no inventário exato:** " + number + "/48", body)
+            self.assertIn("COUNTED_EXACT", body)
+            self.assertIn("**+0 novas identidades**", body)
+            self.assertIn("**NÃO VERIFICADO individualmente**", body)
+            self.assertIn("../INFUSION-RITUAL-CATALOG.md", body)
+            self.assertIn("../../EXACT-21.0.34-ARTIFACT-AUDIT.md", body)
+            self.assertIn(
+                f"| {number} | `{rid}` | `{output}` | "
+                f"[Abrir](rituals/cards/{slug}.md) |",
+                index,
+            )
+        self.assertIn("48/48", index)
+        self.assertIn("48 infusões + **1** Eternal Portal Ritual", index)
+        self.assertIn("**+0 novas identidades**", index)
+        self.assertIn("INFUSION-RITUAL-CARDS-21.0.34.md", self.index)
+        self.assertIn(
+            "INFUSION-RITUAL-CARDS-21.0.34.md",
+            (provider / "README.md").read_text(encoding="utf-8"),
+        )
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)

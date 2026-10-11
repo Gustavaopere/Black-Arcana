@@ -83,6 +83,12 @@ Only the 48 ritual recipe identities and the one Eternal Portal activation ident
 
 BetterEnd remains authority for Infusion Ritual matching/timing/consumption/output, pedestal state, Eternal Ritual structure validation/portal settlement and portal destination/key configuration. Black Arcana catalogs these identities but must not introduce a second BetterEnd ritual engine or double-settle the same provider ritual.
 
+## Fichas individuais das 48 infusões
+
+**✅ 48/48** receitas `betterend:infusion` receberam [fichas individuais source/publisher-exact](INFUSION-RITUAL-CARDS-21.0.34.md), reconciliadas 1:1 com o [inventário de recipe IDs/outputs](rituals/INFUSION-RITUAL-CATALOG.md). Esta individualização acrescenta **+0 novas identidades**: continuam **48 infusões + 1 Eternal Ritual = 49 `COUNTED_EXACT`**.
+
+**⚠️** Ingredientes individuais, quantidades, duração por receita, conteúdo do livro encantado, configuração implantada e Survival não foram verificados. Essas fichas não substituem dados originais do provider nem certificam hooks de interoperabilidade.
+
 ## Runtime QA remains separate
 
 Catalog closure does not assert assembled-pack runtime PASS. Remaining QA includes exact deployed `betterend/portals.json`, complete-modpack pedestal interaction, multiplayer synchronization, portal/world lifecycle, protection/worldgen coexistence and provider dependencies BCLib/WorldWeaver/WunderLib.
