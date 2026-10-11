@@ -866,6 +866,68 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             )
         self.assertIn("ABILITY-CARDS-1.7.7-REL0128.md", self.index)
 
+    def test_reliquified_artifacts_108_52_owner_scoped_cards(self):
+        provider = PROVIDERS / "✅-reliquified-artifacts"
+        source = (provider / "ABILITY-INVENTORY-1.0.8.md").read_text(
+            encoding="utf-8"
+        )
+        records = re.findall(
+            r"^\| (\d+) \| \x60(artifacts:[a-z0-9_]+)\x60 \| "
+            r"\x60([a-z0-9_]+)\x60 \| \x60([A-Za-z][A-Za-z0-9]+)\x60 \|$",
+            source, re.MULTILINE,
+        )
+        self.assertEqual(52, len(records), "source-pinned 1.0.8 has 52 roots")
+        self.assertEqual([str(i) for i in range(1, 53)], [r[0] for r in records])
+        self.assertEqual(52, len({(r[1], r[2]) for r in records}))
+        self.assertEqual(48, len({r[1] for r in records}))
+        self.assertEqual(47, len({r[3] for r in records}))
+        for duplicated_root in ("drinking", "jump", "meal"):
+            self.assertEqual(2, sum(r[2] == duplicated_root for r in records))
+        self.assertEqual(
+            {"artifacts:plastic_drinking_hat", "artifacts:novelty_drinking_hat"},
+            {r[1] for r in records if r[3] == "DrinkingHatItem"},
+        )
+        self.assertEqual(
+            ("artifacts:eternal_steak", "meal", "EternalSteakItem"),
+            tuple(records[-1][1:]),
+        )
+        index = (provider / "ABILITY-CARDS-1.0.8.md").read_text(
+            encoding="utf-8"
+        )
+        pages = sorted((provider / "abilities").rglob("*.md"))
+        self.assertEqual(52, len(pages), "one page per owner+root")
+        for ordinal, owner, ability, klass in records:
+            slug = owner.split(":", 1)[1]
+            page = provider / "abilities" / slug / (ability + ".md")
+            self.assertTrue(page.is_file(), owner + ":" + ability)
+            text = page.read_text(encoding="utf-8")
+            self.assertIn("**Owner original:** \x60" + owner + "\x60", text)
+            self.assertIn("**Ability root do addon:** \x60" + ability + "\x60", text)
+            self.assertIn("**Classe de implementação na fonte 1.0.8:** \x60" + klass + "\x60", text)
+            self.assertIn("**Ordinal editorial:** " + ordinal + "/52", text)
+            self.assertIn("COUNTED_SOURCE_PINNED", text)
+            self.assertIn("**+0 novas identidades semânticas**", text)
+            self.assertIn("**NÃO VERIFICADOS individualmente**", text)
+            self.assertIn("../../ABILITY-INVENTORY-1.0.8.md", text)
+            self.assertIn("../../README.md", text)
+            self.assertIn(
+                f"| {ordinal} | \x60{owner}\x60 | \x60{ability}\x60 | "
+                f"\x60{klass}\x60 | [Abrir](abilities/{slug}/{ability}.md) |",
+                index,
+            )
+            if owner == "artifacts:eternal_steak":
+                self.assertIn("mixins de forno e fogueira", text)
+                self.assertIn("Sem \x60LootTemplate\x60 local", text)
+        self.assertIn("✅ 52/52 habilidades individualizadas", index)
+        self.assertIn("**+0 novas identidades semânticas**", index)
+        self.assertIn("não \x60COUNTED_EXACT\x60", index)
+        self.assertIn("ABILITY-CARDS-1.0.8.md", self.index)
+        for doc in ("README.md", "ABILITY-INVENTORY-1.0.8.md"):
+            self.assertIn(
+                "ABILITY-CARDS-1.0.8.md",
+                (provider / doc).read_text(encoding="utf-8"),
+            )
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)

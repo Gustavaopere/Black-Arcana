@@ -63,6 +63,10 @@ Counting uses **owner + ability ID**, not ability string alone. Reused IDs such 
 | 51 | `artifacts:everlasting_beef` | `meal` | `EverlastingBeefItem` |
 | 52 | `artifacts:eternal_steak` | `meal` | `EternalSteakItem` |
 
+## Materialização em fichas individuais
+
+**✅ 52/52 fichas** estão ligadas ao [índice de owner + ability](ABILITY-CARDS-1.0.8.md), preservando as classes da matriz e a exceção de Eternal Steak. Esta transformação editorial acrescenta **+0 identidades novas** e mantém a evidência `COUNTED_SOURCE_PINNED`, sem simular paridade binária ou runtime Survival.
+
 ## Cardinality checks
 
 - Artifacts owners redirected by `ModItemsMixin`: **48**;

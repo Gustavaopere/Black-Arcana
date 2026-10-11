@@ -74,6 +74,14 @@ This does not count the 48 Artifact item containers, `mimi_dust`, loot entries o
 - Sophisticated Backpacks/Curios-equivalent infrastructure retains its own storage/equip authority.
 - RPG Skill Tree remains sibling authority only for its own progression/contracts; it does not gain Relics/Artifacts runtime authority.
 
+## Fichas individuais — 52/52
+
+As **52** habilidades owner-scoped da fonte 1.0.8 foram individualizadas em [ABILITY-CARDS-1.0.8.md](ABILITY-CARDS-1.0.8.md) com fichas por `artifacts:owner` e ability root, classe source-pinned e rota de obtenção somente quando comprovada.
+
+**✅ 52/52 fichas documentais; +0 novas identidades** (as 52 já constavam do ledger). Esta entrega **não** prova igualdade binária source↔JAR instalado, nem APIs, configuração ou funcionamento físico. O status permanece `COUNTED_SOURCE_PINNED`; as verificações de Survival continuam ⚠️.
+
+A modlist sibling atualizada documenta Artifacts **13.2.5** no topo do dossiê, em contraste com o baseline **13.2.3** usado no fix histórico de Reliquified 1.0.8. A combinação efetiva necessita regressão física, não promoção por changelog.
+
 ## Runtime QA remains separate
 
 Catalog closure is not an assembled-pack PASS. Important runtime regression gates include:
