@@ -273,7 +273,16 @@ public final class BlackArcanaSavedData extends SavedData {
             long now
     ) {
         restore(cooldownService, chargeService, loadoutRegistry, temporaryMutationTracker, now);
-        return ritualEngine.restore(definitions, ritualSessions, now);
+        RitualRestoreResult result = ritualEngine.restore(definitions, ritualSessions, now);
+        if (result.rejected() > 0) {
+            // The loaded snapshot list is not the authoritative restored runtime.
+            // Drop denied/completed/conflicting snapshots before the next world save;
+            // otherwise a stale record can be serialized again until periodic capture.
+            // Keep all accepted sessions, including already COMMITTED phases.
+            ritualSessions = ritualEngine.snapshot(MAX_PERSISTED_RITUAL_SESSIONS);
+            setDirty();
+        }
+        return result;
     }
 
     public void restoreHazards(CorruptionStateService corruption, ArcaneStrainStateService strain) {
