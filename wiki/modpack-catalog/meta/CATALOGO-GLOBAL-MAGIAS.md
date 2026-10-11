@@ -14,6 +14,12 @@ A [auditoria do delta de 20 dossiês modificados](AUDITORIA-DELTA-DOSSIER-SIBLIN
 
 A [auditoria adicional de quatro dossiês](AUDITORIA-DELTA-POS-SNAPSHOT-2026-10-10.md) separa **Cold Sweat: Altitude** e **Create: Bionics** (adições declaradas pelo usuário) da **substituição solicitada** Alcubierre → AeroWarptics. A última modlist **fisicamente certificada segue em 587 posições**; os dois acréscimos trazem **589 entradas conhecidas declaradas**, ainda sem nova inspeção de JAR ou ordem física. A troca de dois mods tem efeito líquido zero **somente se executada**. Alcubierre continua na posição histórica física **#018**; nenhum desses deltas pode receber posição 588/589 fictícia ou aumentar os **453 dossiês cross-domain** revisados no snapshot. Mecânicas térmicas, robôs e warp/rift de airship foram analisados por owner, **sem certificar spell ID novo**. ⚠️ AeroWarptics continua candidato temático a revisão de portal, não novo provider mágico comprovado. Preservados **1851/1849** mínimos semânticos, 39 registry binary-exact e 14 rotas Survival pendentes.
 
+### Continuidade das fichas individuais — 2026-10-11
+
+O catálogo de GTBC's Geomancy Plus 1.1.0-1.21.1 ganhou **12 fichas individualizadas** reconciliadas com a lista de roots e classes já presente no README e no audit exato do artefato do publicador. A contribuição **+12** desse provider já integrava o ledger; esta mudança representa **+0 novas identidades**, preservando **1851 global / 1849 no escopo** e a classificação `COUNTED_RELEASE_BOUNDED` (não houve inspeção nova de JAR físico, config implantada ou execução real).
+
+A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae55ea66e7aa234dba0a8318e5b`: o índice mantém **587 posições físicas certificadas** congeladas, com adições/substituição pós-snapshot separadas em notas não certificadas. A comparação documental de `de80b186357cad20ba5b81892a8682777e96e35a` ao HEAD atual não autoriza alterar o inventário físico apenas por edição de Markdown. As 39 provas de registry binary-exact e 14 rotas de Survival do quadro de pendências permanecem abertas.
+
 ## Situação da catalogação
 
 - **164/164 diretórios canônicos** de providers com prefixo `✅-` e `README.md` presente; **0 ❌, 0 🟡, 0 ⚠️ ou ⛔ no prefixo de catálogo**.
@@ -36,6 +42,7 @@ A [auditoria adicional de quatro dossiês](AUDITORIA-DELTA-POS-SNAPSHOT-2026-10-
 | Not Enough Glyphs | [40 glifos](../providers/✅-not-enough-glyphs/README.md) | 39 candidatos source-enabled; config ativa ainda condicionada |
 | Ars Zero | [12 glifos/capacidades](../providers/✅-ars-zero/GLYPH-CATALOG.md) | evidência da release 2.0.2, sem inventar IDs |
 | Tunes n' Tomes | [16 fichas de spells](../providers/✅-tunes-n-tomes/SPELL-CARDS-1.1.0-HOTFIX.md) | 16 nomes da página da editora, ids/classes/custos internos não verificados |
+| GTBC's Geomancy Plus | [12 fichas de spells](../providers/✅-gtbcs-geomancy-plus/SPELL-CARDS-1.1.0-1.21.1.md) | 10 Geo + 2 Holy, roots/classes já registrados no artifact audit 1.1.0-1.21.1; +0 novos nesta materialização, aquisição/host runtime condicionados |
 | Simply Swords | [66 ações individualizadas](../providers/✅-simply-swords/ACTION-CARDS-1.70.2.md) | alcance e Awakening ainda condicionados |
 | Simply More | [24 ações sobrenaturais](../providers/✅-simply-more/README.md) | alcance, configuração e Mimicry ainda condicionados |
 
