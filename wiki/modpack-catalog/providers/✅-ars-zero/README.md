@@ -36,6 +36,12 @@ Phase 2AE closes the currently public unique glyph capability surface at **12** 
 
 See [`GLYPH-CATALOG.md`](GLYPH-CATALOG.md) for the per-capability evidence/disposition matrix.
 
+## Fichas individuais de 12 capacidades da release 2.0.2
+
+**✅ 12/12 fichas documentais:** [GLYPH-CARDS-2.0.2.md](GLYPH-CARDS-2.0.2.md) e `glyphs/`, uma por nome público e papel semântico da matriz [GLYPH-CATALOG.md](GLYPH-CATALOG.md). O status `COUNTED_RELEASE_BOUNDED` e a contribuição global permanecem **+0 novos objetos**: as 12 capacidades já estavam incluídas no ledger. Glifos `AOE II/III` e `Amplifier II/III` continuam excluídos por serem compatibilidade copiada desativada por padrão.
+
+**⚠️** A individualização não prova doze IDs no JAR 2.0.2, nem cast internals, receitas, APIs, custos ou teste de Survival. Todos esses contratos permanecem explicitamente não verificados.
+
 ## Multiphase authority
 
 Ars Zero already owns a real multiphase spell-device model around **Begin / Tick / End** phases:

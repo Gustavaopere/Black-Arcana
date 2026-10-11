@@ -482,6 +482,51 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         )
         self.assertIn("## Supersession note — exact 3.1 Phase 2BL artifact", sync)
 
+    def test_ars_zero_twelve_release_bounded_glyph_cards(self):
+        provider = PROVIDERS / "✅-ars-zero"
+        matrix = (provider / "GLYPH-CATALOG.md").read_text(encoding="utf-8")
+        records = re.findall(
+            r"^\| ([^|]+) \| ([^|]+) \| ([^|]+) \| ([^|]+) \|$",
+            matrix, re.MULTILINE,
+        )
+        capabilities = [
+            (name.strip(), evidence.strip(), role.strip(), bound.strip())
+            for name, evidence, role, bound in records
+            if name.strip() not in ("Capability", "---")
+            and not name.strip().startswith("---")
+        ]
+        self.assertEqual(12, len(capabilities))
+        self.assertEqual(12, len({x[0] for x in capabilities}))
+        index = (provider / "GLYPH-CARDS-2.0.2.md").read_text(
+            encoding="utf-8"
+        )
+        pages = sorted((provider / "glyphs").glob("*.md"))
+        self.assertEqual(12, len(pages))
+        for ordinal, (name, evidence, role, bound) in enumerate(capabilities, 1):
+            slug = re.sub(r"^-|-$", "", re.sub(r"[^a-z0-9]+", "-", name.lower()))
+            path = provider / "glyphs" / (slug + ".md")
+            self.assertTrue(path.is_file(), name)
+            text = path.read_text(encoding="utf-8")
+            self.assertIn(f"# Ars Zero 2.0.2 — {name}", text)
+            self.assertIn(f"**Nome exibido pelo provider:** {name}", text)
+            self.assertIn(f"**Evidência corrente na matriz original:** {evidence}", text)
+            self.assertIn(f"**Papel semântico publicado:** {role}", text)
+            self.assertIn(f"**Fronteira de integração Black Arcana:** {bound}", text)
+            self.assertIn(f"**Posição editorial:** {ordinal}/12", text)
+            self.assertIn("COUNTED_RELEASE_BOUNDED", text)
+            self.assertIn("**+0 novas identidades**", text)
+            self.assertIn("`NÃO VERIFICADO`", text)
+            self.assertIn(f"| {ordinal} | {name} | {evidence} | [Abrir](glyphs/{slug}.md) |", index)
+            self.assertIn("../GLYPH-CATALOG.md", text)
+        self.assertIn("12/12 capacidades públicas distintas", index)
+        self.assertIn("**+0 novas identidades**", index)
+        self.assertIn("**1.851 global / 1.849 no escopo solicitado**", index)
+        for ignored in ("AOE II", "AOE III", "Amplifier II", "Amplifier III"):
+            self.assertIn(ignored, index)
+        self.assertIn("GLYPH-CARDS-2.0.2.md", self.index)
+        self.assertIn("GLYPH-CARDS-2.0.2.md",
+                      (provider / "README.md").read_text(encoding="utf-8"))
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
