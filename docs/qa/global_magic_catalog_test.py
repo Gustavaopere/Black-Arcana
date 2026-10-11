@@ -646,6 +646,60 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("Malum é fisicamente presente", index)
         self.assertIn("Hexerei/Hexcasting são ausentes", index)
 
+    def test_relics_41_exact_owner_scoped_power_cards(self):
+        provider = PROVIDERS / "✅-relics"
+        source = (provider / "EXACT-0.12.8-ABILITY-INVENTORY.md").read_text(
+            encoding="utf-8"
+        )
+        ability_section = source.split("## 39 exact base ability roots", 1)[1].split(
+            "The identity key is owner-scoped", 1
+        )[0]
+        synergy_section = source.split("## 2 exact synergy roots", 1)[1].split(
+            "These are distinct owner-scoped", 1
+        )[0]
+        pattern = r"^\| (\d+) \| ([a-z_]+) \| ([a-z_]+) \|$"
+        abilities = re.findall(pattern, ability_section, re.MULTILINE)
+        synergies = re.findall(pattern, synergy_section, re.MULTILINE)
+        self.assertEqual(39, len(abilities))
+        self.assertEqual(2, len(synergies))
+        self.assertEqual(39, len({(o, i) for _, o, i in abilities}))
+        self.assertEqual(2, len({(o, i) for _, o, i in synergies}))
+        self.assertEqual(20, len({o for _, o, _ in abilities}))
+        self.assertEqual({("glitchy_mantle", "electricity"),
+                          ("kinetic_belt", "electricity")},
+                         {(o, i) for _, o, i in synergies})
+        index = (provider / "ABILITY-CARDS-0.12.8.md").read_text(
+            encoding="utf-8"
+        )
+        for label, kind, rows, expected in (
+            ("Habilidade", "abilities", abilities, 39),
+            ("Sinergia", "synergies", synergies, 2),
+        ):
+            pages = sorted((provider / kind).rglob("*.md"))
+            self.assertEqual(expected, len(pages))
+            for num, (owner, ident) in enumerate([(o, i) for _, o, i in rows], 1):
+                path = provider / kind / owner / (ident + ".md")
+                self.assertTrue(path.is_file(), (kind, owner, ident))
+                card = path.read_text(encoding="utf-8")
+                self.assertIn(f"# Relics 0.12.8 — {owner} / {ident}", card)
+                self.assertIn(f"**Relíquia proprietária:** `{owner}`", card)
+                self.assertIn(f"**Chave semântica inequívoca:** `{owner}|{ident}`", card)
+                self.assertIn(f"**Ordinal da seção factual:** {num}/{expected}", card)
+                self.assertIn("COUNTED_EXACT", card)
+                self.assertIn("**+0 novas identidades**", card)
+                self.assertIn("**NÃO VERIFICADO**", card)
+                self.assertIn("../../EXACT-0.12.8-ABILITY-INVENTORY.md", card)
+                self.assertIn(
+                    f"| {num} | `{owner}` | `{ident}` | `{owner}|{ident}` | "
+                    f"[Abrir]({kind}/{owner}/{ident}.md) |", index
+                )
+        self.assertIn("**✅ 39/39 habilidades base + 2/2 sinergias", index)
+        self.assertIn("**+0 novas identidades**", index)
+        self.assertIn("**1.851 global / 1.849 escopo**", index)
+        self.assertIn("ABILITY-CARDS-0.12.8.md", self.index)
+        self.assertIn("ABILITY-CARDS-0.12.8.md",
+                      (provider / "README.md").read_text(encoding="utf-8"))
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
