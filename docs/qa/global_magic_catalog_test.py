@@ -431,6 +431,57 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("24 non-Focus rituals remain", artifact)
         self.assertIn("10 conversion, 13 summon/thrall, 1 fabricator", artifact)
 
+    def test_goety_iron_3_1_focus_cards_and_ritual_evidence_gate(self):
+        provider = PROVIDERS / "✅-goety-iron"
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        section = readme.split(
+            "O provider registra exatamente **2 Focuses próprios**:", 1
+        )[1].split("Ambos são superfícies", 1)[0]
+        holders = re.findall(r"^- `([A-Z_]+_FOCUS)`$", section, re.MULTILINE)
+        self.assertEqual(["FIERY_FOCUS", "TARNISHED_FOCUS"], holders)
+        index = (provider / "FOCUS-CARDS-3.1.md").read_text(encoding="utf-8")
+        pages = sorted((provider / "focuses").glob("*.md"))
+        self.assertEqual(2, len(pages))
+        for ordinal, field in enumerate(holders, 1):
+            filename = field.lower().replace("_", "-") + ".md"
+            path = provider / "focuses" / filename
+            self.assertTrue(path.is_file(), field)
+            body = path.read_text(encoding="utf-8")
+            self.assertIn(f"# Goety Iron 3.1 — `{field}`", body)
+            self.assertIn(f"**Focus holder auditado:** `{field}`", body)
+            self.assertIn(f"**Ordinal editorial:** {ordinal}/2", body)
+            self.assertIn("COUNTED_EXACT", body)
+            self.assertIn("**+0 identidades semânticas**", body)
+            self.assertIn("**NÃO VERIFICADO**", body)
+            self.assertIn("não são inventadas", body)
+            self.assertIn(
+                f"| {ordinal} | `{field}` | [Abrir](focuses/{filename}) |",
+                index,
+            )
+            self.assertIn("../EXACT-3.1-ARTIFACT-AUDIT.md", body)
+        self.assertIn("**✅ 2/2 Focuses", index)
+        self.assertIn("**14 recipes `goety:ritual`**", index)
+        self.assertIn("**12 restantes**", index)
+        self.assertIn("12/12 rituais semanticamente contabilizados", index)
+        self.assertIn("0/12 fichas nominais", index)
+        self.assertIn("**+0 novas identidades**", index)
+        self.assertIn("1.851 global / 1.849 no escopo", index)
+        self.assertIn("c8529867e798661ed01fb2948abda23735888fc6", index)
+        artifact = (provider / "EXACT-3.1-ARTIFACT-AUDIT.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("2 addon-owned Focus holders", artifact)
+        self.assertIn("12 non-Focus rituals remain", artifact)
+        self.assertIn("14 packaged `goety:ritual` recipes", artifact)
+        self.assertIn("FOCUS-CARDS-3.1.md", readme)
+        self.assertIn("FOCUS-CARDS-3.1.md", self.index)
+        tech = (provider / "TECHNICAL-AUDIT.md").read_text(encoding="utf-8")
+        self.assertIn("## Adendo de autoridade — auditoria hash-matched 3.1", tech)
+        sync = (provider / "RELEASE-SYNC-EVIDENCE.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## Supersession note — exact 3.1 Phase 2BL artifact", sync)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
