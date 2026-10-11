@@ -30,6 +30,12 @@ O JAR empacota **14 recipes `goety:ritual`**. Dois são apenas caminhos de aquis
 
 Portanto: **2 Focus + 12 rituais não-Focus = 14 objetos mágicos semânticos `COUNTED_EXACT`.**
 
+## Fichas individuais de Focus — 3.1
+
+**✅ 2/2 fichas comprovadas:** [FOCUS-CARDS-3.1.md](FOCUS-CARDS-3.1.md) e `focuses/`. São `FIERY_FOCUS` e `TARNISHED_FOCUS`, obtidos da auditoria do JAR hash-matched, sem inferir `ResourceLocation`, custo, classe, tipo de servo ou API.
+
+**⚠️ 12/12 rituais não-Focus permanecem contabilizados por outcomes distintos, mas sem os doze `resource paths/signatures` documentados individualmente**; não atribuir os nomes públicos de servants a recipes não comprovadas. A métrica do addon continua **14 `COUNTED_EXACT`**, fichas adicionam **+0** objetos. QA físico de Survival, settlement e balance não são promovidos.
+
 ## Gate de registration/config
 
 O passe estrutural do initializer prova:

@@ -2,6 +2,10 @@
 
 Status: `EXACT 3.1 ARTIFACT HASH MATCH / CROSS-LOADER RELEASE LINE SYNCHRONIZED / SOURCE URL ABSENT / SEMANTIC INVENTORY STILL OPEN`
 
+## Supersession note — exact 3.1 Phase 2BL artifact (2026-10-11)
+
+The "semantic inventory still open" and "+0/797" statements below are **historical status at the publisher-only checkpoint**, superseded for identity/count by [EXACT-3.1-ARTIFACT-AUDIT.md](EXACT-3.1-ARTIFACT-AUDIT.md): exact hash-matched JAR has **2 addon-owned Focus holders and 12 distinct non-Focus rituals = 14 `COUNTED_EXACT` objects**, already reconciled globally. The [2 individual Focus cards](FOCUS-CARDS-3.1.md) add **+0** identities; the **12 ritual resource paths and outcome signatures** have not been preserved individually in current durable catalog. Public/source/API/runtime gates remain unaffected; no exact-source revision has been found.
+
 ## Scope
 
 This note records publisher-controlled evidence connecting the installed NeoForge 1.21.1 release line to the parallel Forge 1.20.1 line. It does **not** promote Forge implementation details to NeoForge authority and does not claim binary equivalence.
