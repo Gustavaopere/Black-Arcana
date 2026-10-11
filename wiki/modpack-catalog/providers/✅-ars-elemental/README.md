@@ -44,6 +44,12 @@ See:
 - [MIXIN-BOUNDARIES.md](MIXIN-BOUNDARIES.md)
 - [REGISTRIES.md](REGISTRIES.md)
 
+## Fichas individuais do inventário — 47/47
+
+- **✅ 39/39 partes de spell:** [GLYPH-CARDS-0.7.10.1.md](GLYPH-CARDS-0.7.10.1.md), com fichas em `glyphs/`. Somente os 12 filtros têm IDs literais comprovados na matriz; não deduzir os 27 demais pelo nome.
+- **✅ 8/8 rituais:** [RITUAL-CARDS-0.7.10.1.md](RITUAL-CARDS-0.7.10.1.md), fichas em `rituals/cards/`, com IDs source-pinned e semântica herdada.
+- **+0 identidades novas:** todos os 47 já contados no ledger; `MethodCarianPhalanx` fica excluído (dev-only), e a receita de Nullify Defense é default-disabled. Config real/Survival, APIs e efeitos físicos continuam ⚠️ pendentes.
+
 ## Authority and deduplication
 
 Ars Nouveau and Ars Elemental remain authority for their own mana, Source, glyph resolution, spell-cost calculation, spell modifiers, familiars, rituals, perk threads, elemental gear, entities and provider world effects.
