@@ -816,6 +816,56 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             (provider / "README.md").read_text(encoding="utf-8"),
         )
 
+    def test_more_relics_177_sixty_one_exact_ability_cards(self):
+        provider = PROVIDERS / "✅-more-relics"
+        source = (provider / "ABILITY-INVENTORY-EXACT.md").read_text(encoding="utf-8")
+        records = re.findall(
+            r"^\| \x60([a-z0-9_]+)\x60 \| (\d+) \| ([^|]+) \| ([^|]+) \|$",
+            source, re.MULTILINE,
+        )
+        self.assertEqual(29, len(records), "29 owner roots from exact artifact")
+        pairs = []
+        for owner, count, roots, route in records:
+            abilities = [entry.strip(" \x60") for entry in roots.split(",")]
+            self.assertEqual(int(count), len(abilities), owner)
+            pairs.extend((owner, ability, route) for ability in abilities)
+        self.assertEqual(61, len(pairs))
+        self.assertEqual(61, len({(owner, ability) for owner, ability, _ in pairs}))
+        self.assertEqual(56, len({ability for _, ability, _ in pairs}))
+        for root, cardinality in (("cyberpsychosis", 4), ("blood_bond", 2), ("head_start", 2)):
+            self.assertEqual(cardinality, sum(ability == root for _, ability, _ in pairs))
+        index = (provider / "ABILITY-CARDS-1.7.7-REL0128.md").read_text(
+            encoding="utf-8"
+        )
+        pages = sorted((provider / "abilities").rglob("*.md"))
+        self.assertEqual(61, len(pages), "one card per owner+ability")
+        for ordinal, (owner, ability, route) in enumerate(pairs, 1):
+            card = provider / "abilities" / owner / (ability + ".md")
+            self.assertTrue(card.is_file(), f"missing {owner}/{ability}")
+            content = card.read_text(encoding="utf-8")
+            self.assertIn(f"**Relíquia owner — root do inventário:** \x60{owner}\x60", content)
+            self.assertIn(f"**Ability root:** \x60{ability}\x60", content)
+            self.assertIn(f"**Posição editorial:** {ordinal}/61", content)
+            self.assertIn("**Registro literal no inventário:** " + route, content)
+            self.assertIn("COUNTED_EXACT", content)
+            self.assertIn("**+0 novas identidades**", content)
+            self.assertIn("**NÃO VERIFICADOS individualmente**", content)
+            self.assertIn("../../ABILITY-INVENTORY-EXACT.md", content)
+            self.assertIn("../../EXACT-1.7.7-REL0128-ARTIFACT-AUDIT.md", content)
+            self.assertIn(
+                f"| {ordinal} | \x60{owner}\x60 | \x60{ability}\x60 | {route} | "
+                f"[Abrir](abilities/{owner}/{ability}.md) |",
+                index,
+            )
+        self.assertIn("✅ 61/61 fichas materializadas", index)
+        self.assertIn("**+0 novas identidades semânticas**", index)
+        for filename in ("README.md", "ABILITY-INVENTORY-EXACT.md"):
+            self.assertIn(
+                "ABILITY-CARDS-1.7.7-REL0128.md",
+                (provider / filename).read_text(encoding="utf-8"),
+            )
+        self.assertIn("ABILITY-CARDS-1.7.7-REL0128.md", self.index)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)

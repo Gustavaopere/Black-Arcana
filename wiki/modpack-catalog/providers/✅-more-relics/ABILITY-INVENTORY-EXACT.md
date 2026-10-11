@@ -60,6 +60,10 @@ Therefore **61**, not 56, is the semantic cardinality.
 | `whispering_amulet` | 1 | `ascend_heaven` | provider evolution: Slumbering Amulet → Whispering Amulet |
 | `wonder_of_u` | 3 | `entropy`, `event_horizon`, `flow_of_calamity` | provider evolution: Converging Orb → Wonder of U |
 
+## 61 fichas individuais
+
+As **61/61** combinações exatas de `owner + ability root` estão indexadas em [ABILITY-CARDS-1.7.7-REL0128.md](ABILITY-CARDS-1.7.7-REL0128.md), com uma ficha para cada par, inclusive roots compartilhadas. **+0 novas identidades**. Esta individualização não extrai parâmetros de gameplay nem valida configuração/Survival.
+
 ## Reachability boundary
 
 Exact bytecode evidence exposes direct Relics `LootTemplate` entries for **20/29** ability-bearing relic classes. The remaining nine owners are closed by the current 1.7.7 publisher acquisition/evolution inventory already tied to this content-locked compatibility line:

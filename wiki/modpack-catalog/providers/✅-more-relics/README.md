@@ -48,6 +48,12 @@ More Relics' owner-scoped Relics abilities are discrete provider-owned supernatu
 
 Relic containers, rank/stat modifiers, UI indicators, loot entries, evolution container stages and downstream effects are not extra identities.
 
+## Fichas individuais de habilidades — 61/61
+
+**✅ 61/61 owner-scoped abilities** possuem [fichas individuais](ABILITY-CARDS-1.7.7-REL0128.md) reconciliadas 1:1 com o [inventário binário exato](ABILITY-INVENTORY-EXACT.md). São **29** owners e **56** strings de root; nomes repetidos entre owners preservam identidades independentes.
+
+**+0 novas identidades**, pois as 61 já constavam da contribuição `COUNTED_EXACT`. As fichas documentam owner, root e proveniência de loot/evolução; comportamento individual, parametros, configuração do pack e testes Survival continuam **⚠️ NÃO VERIFICADOS**.
+
 ## Runtime QA remains separate
 
 Still fail-closed:
