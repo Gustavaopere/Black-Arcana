@@ -24,6 +24,10 @@ A modlist sibling foi consultada em `neoforge-rpg-skilltree/main@84eba01ab4f08ae
 
 As **48/48** recipes `betterend:infusion` do artefato publisher=physical foram individualizadas em [fichas próprias](../providers/✅-betterend/INFUSION-RITUAL-CARDS-21.0.34.md), preservando recipe ID e resultado item por ficha; **39** livros encantados e **9** transformações. A ação separada do Eternal Portal permanece contabilizada uma vez. **+0 novas identidades** (mínimos **1851 / 1849** inalterados). Não foi realizado novo teste físico de JAR, de ingredientes/tempos, configurações ou Survival; o runtime e a Stage 06.05 permanecem condicionados.
 
+### More Relics 1.7.7 — fichas individuais, 2026-10-11
+
+Foram individualizadas **61/61** habilidades owner-scoped de **29** relíquias More Relics, deduplicadas por par `owner + ability root` conforme [inventário exato](../providers/✅-more-relics/ABILITY-INVENTORY-EXACT.md) e [fichas](../providers/✅-more-relics/ABILITY-CARDS-1.7.7-REL0128.md). A build instalada específica para **Relics 0.12.8** é hash-matched ao artefato oficial. **+0 novas identidades**, preservando mínimos **1851 global / 1849 no escopo**. Sem novo runtime/API ou QA de Survival; Stage 06.05 permanece 🟡.
+
 ## Situação da catalogação
 
 - **164/164 diretórios canônicos** de providers com prefixo `✅-` e `README.md` presente; **0 ❌, 0 🟡, 0 ⚠️ ou ⛔ no prefixo de catálogo**.
@@ -50,6 +54,7 @@ As **48/48** recipes `betterend:infusion` do artefato publisher=physical foram i
 | BetterEnd: New Dawn 21.0.34 | [48/48 Infusion Rituals](../providers/✅-betterend/INFUSION-RITUAL-CARDS-21.0.34.md) · [Eternal Portal](../providers/✅-betterend/rituals/ETERNAL-PORTAL-RITUAL.md) | ✅ 48 recipes `betterend:infusion` `COUNTED_EXACT` individualizadas, 1 ritual de portal separado; ⚠️ ingredientes/tempo por receita e Survival pendentes; +0 identidades |
 | Ars Hex 5.0.4b | [Soul Shatter — 1/1 glyph](../providers/✅-ars-hex/GLYPH-CARDS-5.0.4b.md) | ✅ `COUNTED_SOURCE_PINNED`, Malum-conditioned and source-pinned ID `ars_hex:glyph_soul_shatter` / ⚠️ binary-runtime QA still open; +0 new identities |
 | Relics 0.12.8 | [41/41 fichas de powers](../providers/✅-relics/ABILITY-CARDS-0.12.8.md) · [inventário exato](../providers/✅-relics/EXACT-0.12.8-ABILITY-INVENTORY.md) | ✅ 39 abilities + 2 synergies owner-scoped `COUNTED_EXACT` / ⚠️ runtime, Curios/Survival e API pendentes; +0 novas identidades |
+| More Relics 1.7.7 (compat Relics 0.12.8) | [61 fichas owner-scoped](../providers/✅-more-relics/ABILITY-CARDS-1.7.7-REL0128.md) · [inventário exato](../providers/✅-more-relics/ABILITY-INVENTORY-EXACT.md) | ✅ 61/61 habilidades `COUNTED_EXACT` individualizadas em 29 owners; ⚠️ efeitos/config/Survival não verificados; +0 novas identidades |
 | Tunes n' Tomes | [16 fichas de spells](../providers/✅-tunes-n-tomes/SPELL-CARDS-1.1.0-HOTFIX.md) | 16 nomes da página da editora, ids/classes/custos internos não verificados |
 | GTBC's Geomancy Plus | [12 fichas de spells](../providers/✅-gtbcs-geomancy-plus/SPELL-CARDS-1.1.0-1.21.1.md) | 10 Geo + 2 Holy, roots/classes já registrados no artifact audit 1.1.0-1.21.1; +0 novos nesta materialização, aquisição/host runtime condicionados |
 | Simply Swords | [66 ações individualizadas](../providers/✅-simply-swords/ACTION-CARDS-1.70.2.md) | alcance e Awakening ainda condicionados |
