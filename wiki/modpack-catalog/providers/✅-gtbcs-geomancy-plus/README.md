@@ -51,6 +51,8 @@ The exact localization root-key set independently contains the same twelve spell
 
 Phase 2BR therefore closes a semantic delta of **+12 provider-owned spell identities** under the current metric: ten Geo spells and two Holy spells.
 
+**Fichas individuais consolidadas:** [SPELL-CARDS-1.1.0-1.21.1.md](SPELL-CARDS-1.1.0-1.21.1.md) materializa **12/12** roots e classes já comprovados nesta seção (10 Geo + 2 Holy), com gating de aquisição e exclusões por objeto. Esta materialização não acrescenta 12 novos feitiços à soma anterior nem altera a confiança `COUNTED_RELEASE_BOUNDED`.
+
 ## Explicit exclusions and deduplication
 
 ### `EarthshatterSpell`

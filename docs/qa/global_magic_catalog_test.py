@@ -78,6 +78,49 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             )
             self.assertEqual(expected, link["anchor"])
 
+    def test_gtbcs_spell_cards_match_release_registry_without_minting_extra_spells(self):
+        geomancy = PROVIDERS / "✅-gtbcs-geomancy-plus"
+        readme = (geomancy / "README.md").read_text(encoding="utf-8")
+        roster = readme.split("## Exact semantic spell inventory", 1)[1].split(
+            "## Explicit exclusions", 1
+        )[0]
+        registry = re.findall(
+            r"^[|] (Geo|Holy) [|] `([a-z_]+)` [|] `([A-Za-z]+)` [|]$",
+            roster,
+            re.MULTILINE,
+        )
+        self.assertEqual(12, len(registry), "expected pinned release inventory")
+        self.assertEqual(12, len({identifier for _, identifier, _ in registry}))
+
+        cards = (geomancy / "SPELL-CARDS-1.1.0-1.21.1.md").read_text(encoding="utf-8")
+        headings = list(re.finditer(
+            r"^### ([0-9]{2}) — `gtbcs_geomancy_plus:([a-z_]+)`$",
+            cards,
+            re.MULTILINE,
+        ))
+        self.assertEqual(12, len(headings), "one individual card per registered spell")
+        self.assertEqual([f"{i:02d}" for i in range(1, 13)],
+                         [match.group(1) for match in headings])
+        self.assertEqual(
+            {identifier for _, identifier, _ in registry},
+            {match.group(2) for match in headings},
+            "cards cannot omit or fabricate provider-owned IDs",
+        )
+        for idx, header in enumerate(headings):
+            body = cards[header.end():(
+                headings[idx + 1].start() if idx + 1 < len(headings) else len(cards)
+            )]
+            expected = next(row for row in registry if row[1] == header.group(2))
+            school, _identifier, concrete = expected
+            self.assertIn(f"- **Família confirmada:** {school}", body)
+            self.assertIn(f"- **Classe concreta:** `{concrete}`", body)
+            self.assertIn("**Confiança:** `COUNTED_RELEASE_BOUNDED`", body)
+        self.assertIn("EarthshatterSpell", cards)
+        self.assertIn("Earthquake", cards)
+        self.assertIn("Stomp", cards)
+        self.assertIn("12/12", cards)
+        self.assertIn("sem validação física", cards)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
