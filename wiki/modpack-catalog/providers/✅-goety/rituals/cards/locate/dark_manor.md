@@ -24,6 +24,6 @@ A assinatura indica uma chave-alvo de localização; dimensões, coordenadas, ra
 
 Goety controla Dark Altar/ritual settlement, Soul Energy, pré-requisitos, efeitos, conversões e lifecycle dos servants. Black Arcana não inicia segundo ritual, não debita Soul Energy duas vezes, não credita o resultado novamente, não duplica summons/conversões nem contorna proteções. Futuros adaptadores dependem de API/hook comprovado e são fail-closed.
 
-**Fonte factual:** [Inventário semântico exato](../../EXACT-3.1.4-SEMANTIC-INVENTORY.md) · [Auditoria de artefato](../../EXACT-3.1.4-ARTIFACT-AUDIT.md) · [Integração](../../INTEGRATION-RULES.md).
+**Fonte factual:** [Inventário semântico exato](../../../EXACT-3.1.4-SEMANTIC-INVENTORY.md) · [Auditoria de artefato](../../../EXACT-3.1.4-ARTIFACT-AUDIT.md) · [Integração](../../../INTEGRATION-RULES.md).
 
 **Clean-room:** somente metadados e assinaturas factuais documentados pelo Black Arcana, sem corpos de implementação, JSONs de receitas, assets ou prosa criativa upstream.
