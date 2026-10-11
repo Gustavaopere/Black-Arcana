@@ -85,7 +85,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             "## Explicit exclusions", 1
         )[0]
         registry = re.findall(
-            r"^\\| (Geo|Holy) \\| \\x60([a-z_]+)\\x60 \\| \\x60([A-Za-z]+)\\x60 \\|$",
+            r"^[|] (Geo|Holy) [|] `([a-z_]+)` [|] `([A-Za-z]+)` [|]$",
             roster,
             re.MULTILINE,
         )
@@ -94,7 +94,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
 
         cards = (geomancy / "SPELL-CARDS-1.1.0-1.21.1.md").read_text(encoding="utf-8")
         headings = list(re.finditer(
-            r"^### ([0-9]{2}) — \\x60gtbcs_geomancy_plus:([a-z_]+)\\x60$",
+            r"^### ([0-9]{2}) — `gtbcs_geomancy_plus:([a-z_]+)`$",
             cards,
             re.MULTILINE,
         ))
@@ -113,8 +113,8 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             expected = next(row for row in registry if row[1] == header.group(2))
             school, _identifier, concrete = expected
             self.assertIn(f"- **Família confirmada:** {school}", body)
-            self.assertIn(f"- **Classe concreta:** \\x60{concrete}\\x60", body)
-            self.assertIn("**Confiança:** \\x60COUNTED_RELEASE_BOUNDED\\x60", body)
+            self.assertIn(f"- **Classe concreta:** `{concrete}`", body)
+            self.assertIn("**Confiança:** `COUNTED_RELEASE_BOUNDED`", body)
         self.assertIn("EarthshatterSpell", cards)
         self.assertIn("Earthquake", cards)
         self.assertIn("Stomp", cards)
