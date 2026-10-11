@@ -265,6 +265,49 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("ACTION-CARDS-3.0.9.md",
                       (provider / "MAGIAS.md").read_text(encoding="utf-8"))
 
+    def test_goety_exact_123_focus_cards_crosswalk(self):
+        provider = PROVIDERS / "✅-goety"
+        inventory = (provider / "EXACT-3.1.4-SEMANTIC-INVENTORY.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## Exact Focus actions — 123", inventory)
+        self.assertIn("## Exact non-Focus ritual actions — 238", inventory)
+        subset = inventory.split("## Exact Focus actions — 123", 1)[1].split(
+            "## Exact non-Focus ritual actions — 238", 1
+        )[0]
+        registered = re.findall(r"^- `([a-z_]+_focus)`$", subset, re.MULTILINE)
+        self.assertEqual(123, len(registered))
+        self.assertEqual(123, len(set(registered)))
+        self.assertNotIn("empty_focus", registered)
+        pages = sorted((provider / "focuses").glob("*-focus.md"))
+        self.assertEqual(123, len(pages), "one page per exact 3.1.4 Focus")
+        index = (provider / "FOCUS-CARDS-3.1.4.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("123/123", index)
+        self.assertIn("**+0 novas identidades semânticas**", index)
+        self.assertIn("80 `goety:ritual` / 43 shaped", index)
+        self.assertIn("238 rituais não-Focus", index)
+        self.assertIn("a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7", index)
+        for ordinal, ident in enumerate(registered, start=1):
+            slug = ident.replace("_", "-")
+            path = provider / "focuses" / (slug + ".md")
+            self.assertTrue(path.is_file(), f"missing Focus {ident}")
+            page = path.read_text(encoding="utf-8")
+            self.assertIn(f"# Goety 3.1.4 — `{ident}`", page)
+            self.assertIn(f"**Identidade de Focus no artefato:** `{ident}`", page)
+            self.assertIn(f"**Posição no inventário exato:** {ordinal}/123", page)
+            self.assertIn("COUNTED_EXACT", page)
+            self.assertIn("**NÃO VERIFICADO nesta ficha**", page)
+            self.assertIn("Não é o `empty_focus` proxy", page)
+            self.assertIn(f"| {ordinal} | `{ident}` | [Abrir](focuses/{slug}.md) |", index)
+        self.assertFalse((provider / "focuses" / "empty-focus.md").exists())
+        for filename in ("README.md", "FOCUS-CATALOG.md", "focuses/README.md"):
+            self.assertIn("FOCUS-CARDS-3.1.4.md",
+                          (provider / filename).read_text(encoding="utf-8"))
+        self.assertIn("FOCUS-CARDS-3.1.4.md", self.index)
+        self.assertIn("1.851 global / 1.849 no escopo solicitado", index)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)

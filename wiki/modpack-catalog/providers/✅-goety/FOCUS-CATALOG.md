@@ -283,6 +283,10 @@ The public source registry adds further current-line registry evidence beyond th
 
 Black Arcana uses the audited file only for factual names/counts/blob/version provenance. No Goety implementation, assets, text, models or sounds are copied or adapted.
 
+## Atualização do gate de fichas individuais — exato 3.1.4
+
+O critério (1) abaixo foi **satisfeito posteriormente** pela [auditoria hash-matched 3.1.4](EXACT-3.1.4-SEMANTIC-INVENTORY.md), que prova as 123 identidades e uma receita base para cada uma. Assim, os 123 Focuses já conhecidos agora possuem [fichas individuais](FOCUS-CARDS-3.1.4.md) em `focuses/`, com campos sem prova técnica explicitamente marcados `NÃO VERIFICADO`. A prova de registro/aquisição **não** é prova de dano, custo, classe, efeito ou QA físico em Survival. Contador semântico **+0**.
+
 ## Individual-file policy
 
 Do not create one `.md` per newly observed Focus from registry membership alone. Individual Focus pages become appropriate when at least one of the following is available for the relevant installed line:
