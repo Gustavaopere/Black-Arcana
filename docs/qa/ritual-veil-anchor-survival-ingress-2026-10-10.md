@@ -120,3 +120,14 @@ No `main@e756ad51c46760d2c782c2535cb7409601c393ca` (#746 integrado), uma entrada
 O patch compara o número de entradas `ritual_sessions` do `ListTag` com o número de snapshots lidos dentro do limite de `MAX_PERSISTED_RITUAL_SESSIONS`. Se algum registro for recusado ou exceder o limite, a cópia em memória já sanitizada passa a ser marcada dirty para uma futura gravação. Entradas válidas continuam disponíveis para restore, sem mudança da identidade canônica nem da reserva de custos.
 
 **Limite explícito:** marcação dirty e round-trip NBT são evidência da solicitação de regravação e da próxima serialização, **não** de flush síncrono, tombstone durável, recuperação após uma queda abrupta ou atomicidade entre inventário Malum e `SavedData`. D035 mantém testes físicos/real-modpack e consistência após crash como pendências da Stage 09; Stage 06.05 🟡 e Stage 07 ⛔.
+
+
+## 2026-10-11 — saneamento do ledger independente de conclusões (PR #748)
+
+O `RitualCompletionSavedData` armazena recompensas/conclusões idempotentes independentemente das sessões do `BlackArcanaSavedData`. Uma entrada NBT inválida era descartada durante `load`; uma segunda entrada com a mesma `RitualCompletionKey` era deduplicada por `RitualCompletionLedger.restore`. Em ambos os casos, antes de #748, o `SavedData` não recebia `setDirty()`, de modo que uma gravação sem outra mutação poderia manter no disco a representação malformada ou duplicada. A sanitização da sessão adicionada em #747 não cobria este ledger separado.
+
+**RED:** `38108443443`, commit só de testes `e639c2ff20b1c0e28669a9899ad58dd915674e0a`, 909 testes, duas falhas de asserção `isDirty() == false` contra `true`. Os casos validam entrada inválida ao lado de uma conclusão legítima, deduplicação com preservação do timestamp inicial e round-trip NBT; carregamentos válidos não devem disparar regravações extras.
+
+O candidato #748 mantém a semântica canônica de `RitualCompletionLedger.restore`. Após a leitura limitada e a deduplicação, `RitualCompletionSavedData.load` compara a quantidade de entradas originais com o tamanho efetivo do ledger e marca `SavedData` dirty quando houve descarte. Assim, a **próxima serialização** emite apenas conclusões retidas, sem criar recompensas nem reconstituir registros inválidos.
+
+**Limites:** registros de conclusão cuja identidade não pôde ser lida não são recuperáveis por esse saneamento; uma entrada perdida pode tornar impossível provar a conclusão anterior. Marcar dirty não garante flush síncrono nem atomicidade entre o inventário/provider Malum, o histórico de conclusões e o estado de sessão. Não interpretar CI/Gametest como teste real de desconexão/crash ou de integração com JAR físico; linhas físicas continuam `PENDING / DEFERRED TO STAGE 09` conforme D035. Stage 06.05 🟡, Stage 07 ⛔.

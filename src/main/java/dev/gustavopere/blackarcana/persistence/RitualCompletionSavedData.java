@@ -44,6 +44,12 @@ public final class RitualCompletionSavedData extends SavedData {
             }
         }
         data.ledger.restore(snapshots);
+        if (data.ledger.size() != entries.size()) {
+            // The parsed ledger is authoritative after rejecting malformed,
+            // duplicate or over-capacity entries. Rewrite the sanitized NBT
+            // on the next world save so rejected reward rows do not persist.
+            data.setDirty();
+        }
         return data;
     }
 
