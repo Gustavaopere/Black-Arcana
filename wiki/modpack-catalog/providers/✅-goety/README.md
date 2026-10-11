@@ -33,6 +33,12 @@ O [índice **FOCUS-CARDS-3.1.4.md**](FOCUS-CARDS-3.1.4.md) liga **123/123 fichas
 
 Estas fichas **não** adicionam identidades ao ledger: **+0** sobre os 123 Focuses `COUNTED_EXACT`, sem alterar os **238 rituais não-Focus** do Goety. Estado documental ✅; runtime, Survival e API continuam ⚠️ condicionados.
 
+## Fichas dos 238 rituais não-Focus — 3.1.4
+
+O [índice RITUAL-CARDS-3.1.4.md](RITUAL-CARDS-3.1.4.md) materializa **238/238** fichas em `rituals/cards/`, cada uma reconciliada com o caminho de recurso `.json`, assinatura semântica, classe e craft type do inventário exato hash-matched. A auditoria já separava **123 Focuses + 238 rituais não-Focus = 361** objetos Goety; a individualização produz **+0 novas identidades**, preservando o global **1.851 / 1.849 no escopo**. Os 83 recursos de aquisição Focus, quatro grupos de alternativas e 17 recursos com dependências ausentes não são recontados.
+
+**Documentação ✅ / runtime ⚠️:** a existência do recurso e sua assinatura no artefato não provam seus ingredientes numéricos, o gasto de Soul Energy, o comportamento em Survival ou um hook seguro. Goety mantém autoridade sobre altar/custo/ritual/servant; Stage 06.05 Black Arcana não muda.
+
 ## Source/provenance reconciliation
 
 The previous catalog statement that no public Goety source exists for Minecraft 1.21.1 is stale.
