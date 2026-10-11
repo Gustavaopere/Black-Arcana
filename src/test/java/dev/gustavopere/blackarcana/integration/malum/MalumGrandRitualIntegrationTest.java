@@ -346,6 +346,7 @@ class MalumGrandRitualIntegrationTest {
                             ? ArcanaDecision.allow()
                             : ArcanaDecision.deny("grand_ritual_completion_capacity", "completion unavailable");
                 });
+        MalumServerIntegrationBootstrap.registerGrandRitualRestoreAdmission(runtime, () -> completions);
         return runtime;
     }
 
