@@ -693,7 +693,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                     f"| {num} | `{owner}` | `{ident}` | `{owner}|{ident}` | "
                     f"[Abrir]({kind}/{owner}/{ident}.md) |", index
                 )
-        self.assertIn("**39/39 habilidades base + 2/2 sinergias", index)
+        self.assertIn("**✅ 39/39 habilidades base + 2/2 sinergias", index)
         self.assertIn("**+0 novas identidades**", index)
         self.assertIn("**1.851 global / 1.849 escopo**", index)
         self.assertIn("ABILITY-CARDS-0.12.8.md", self.index)
