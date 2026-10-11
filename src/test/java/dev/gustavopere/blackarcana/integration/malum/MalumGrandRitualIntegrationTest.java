@@ -249,6 +249,29 @@ class MalumGrandRitualIntegrationTest {
     }
 
     @Test
+    void grandRitualAlreadyInCompletionLedgerIsNotRestoredOrRewardedAgain() {
+        RitualCompletionSavedData completions = new RitualCompletionSavedData();
+        RitualCompletionKey key = RitualCompletionKey.forCaster(
+                BlackArcanaGrandRituals.VEIL_ANCHOR_CONSECRATION_ID, CASTER);
+        assertEquals(RitualCompletionLedger.CompletionResult.RECORDED, completions.complete(key, 1_150L));
+
+        FakeAccess access = new FakeAccess(Map.of("arcane", 0, "wicked", 0));
+        ArcanaServerRuntime runtime = completionCapacityRuntime(access, completions);
+        var result = runtime.restoreRitualSessions(List.of(
+                restoredGrandRitual("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee", CASTER, 42L,
+                        dev.gustavopere.blackarcana.core.ritual.RitualSessionState.COMMITTED)),
+                1_200L);
+
+        assertEquals(0, result.restored());
+        assertEquals(1, result.rejected());
+        assertEquals(0, runtime.rituals().activeSessionCount());
+        assertEquals(0, runtime.rituals().tick(1_400L, 8).completed());
+        assertEquals(1, completions.size());
+        assertEquals(0, access.count(CASTER, "arcane"));
+        assertEquals(0, access.count(CASTER, "wicked"));
+    }
+
+    @Test
     void restoredCommittedGrandRitualsCannotOverbookTheLastDurableCompletionSlot() {
         RitualCompletionSavedData completions = new RitualCompletionSavedData();
         fillCompletionLedger(completions, RitualCompletionSavedData.MAX_PERSISTED_COMPLETIONS - 1);
