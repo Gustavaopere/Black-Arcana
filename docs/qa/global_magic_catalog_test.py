@@ -157,6 +157,54 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         readme = (provider / "README.md").read_text(encoding="utf-8")
         self.assertIn("SPELL-CARDS-1.0.3.md", readme)
 
+    def test_monsters_spellbooks_ninety_eight_source_cards(self):
+        provider = PROVIDERS / "✅-monsters-spellbooks"
+        inventory = (provider / "SPELL-CATALOG.md").read_text(encoding="utf-8")
+        recorded = re.findall(
+            r"^\| (\d+) \| `([a-z]+)` \| `([A-Z_]+)` \| `([A-Za-z]+)` \| "
+            r"`registered in ModSpellRegistry` \|$",
+            inventory, re.MULTILINE,
+        )
+        self.assertEqual(98, len(recorded), "source registry should have 98")
+        self.assertEqual([str(i) for i in range(1, 99)],
+                         [entry[0] for entry in recorded])
+        self.assertEqual(98, len({e[2] for e in recorded}))
+
+        cards = (provider / "SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md").read_text(
+            encoding="utf-8"
+        )
+        headings = list(re.finditer(
+            r"^### (\d{2}) — `([A-Z_]+)`$", cards, re.MULTILINE
+        ))
+        self.assertEqual(98, len(headings))
+        self.assertEqual(
+            [(f"{int(n):02d}", field) for n, _, field, _ in recorded],
+            [(m.group(1), m.group(2)) for m in headings],
+        )
+        expected_families = {
+            "blood": 5, "ender": 12, "evocation": 3, "fire": 10,
+            "holy": 4, "hydro": 8, "ice": 8, "lightning": 14,
+            "nature": 7, "necro": 25, "technomancy": 2,
+        }
+        for family, count in expected_families.items():
+            self.assertEqual(count, sum(1 for _, f, _, _ in recorded if f == family))
+        for idx, (_n, family, field, klass) in enumerate(recorded):
+            end = (headings[idx + 1].start() if idx + 1 < len(headings)
+                   else cards.index("## Exclusões e limites finais"))
+            page = cards[headings[idx].end():end]
+            self.assertIn(f"**Família organizacional na fonte:** `{family}`", page)
+            self.assertIn(f"**Constante em `ModSpellRegistry`:** `{field}`", page)
+            self.assertIn(f"**Classe da fonte pública:** `{klass}`", page)
+            self.assertIn("**Registry ID físico 0.0.16.3:** `NÃO VERIFICADO`", page)
+            self.assertIn("COUNTED_RELEASE_BOUNDED", page)
+        self.assertIn("98/98 fichas", cards)
+        self.assertIn("**+0 novas identidades**", cards)
+        self.assertIn("**NÃO é um build pin exato**", cards)
+        self.assertIn("`aero` = **0 registros**", cards)
+        self.assertIn("fichas source-observed / ⚠️ registry físico", self.index)
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        self.assertIn("SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md", readme)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
