@@ -137,6 +137,7 @@ They must not be collapsed into a generic Black Arcana resource by naming simila
 - [`BLOODLINE-CATALOG.md`](./BLOODLINE-CATALOG.md): five Bloodlines, identity, joins, innate mechanics and state.
 - [`SKILL-CATALOG.md`](./SKILL-CATALOG.md): 101/101 skills, costs/gates, sibling choices and tree topology.
 - [`ACTION-CATALOG.md`](./ACTION-CATALOG.md): 29/29 actions, defaults, settlement semantics and static discrepancies.
+- [`ACTION-CARDS-3.0.9.md`](./ACTION-CARDS-3.0.9.md): **29/29 fichas individuais** (28 COUNTED_SOURCE_PINNED; Sorcerous Strike EXCLUDED, registrado sem aquisição normal comprovada); cada ficha preserva o contrato source-pinned e os gates de runtime.
 - [`PROGRESSION-AND-TASKS.md`](./PROGRESSION-AND-TASKS.md): ranks, 22 tasks, rewards, repeatability and perk wallet.
 - [`RESOURCE-AUTHORITY.md`](./RESOURCE-AUTHORITY.md): Vampirism blood vs Bloodline points vs Gravebound Souls/Phylactery.
 - [`TECHNICAL-AUDIT.md`](./TECHNICAL-AUDIT.md): registry/attachment lifecycle, events, mixins, authority boundaries and QA matrix.

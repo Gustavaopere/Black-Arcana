@@ -15,6 +15,8 @@ Portanto, para esta pasta, `MAGIAS.md` funciona como o índice canônico da supe
 
 ## Actions — 29/29
 
+**Fichas individuais navegáveis:** [ACTION-CARDS-3.0.9.md](ACTION-CARDS-3.0.9.md) registra os **29/29** objetos de Action com IDs/provider-native, contratos source-pinned e referências. Destes, **28** integram o mínimo semântico; **Sorcerous Strike** permanece `EXCLUDED` por ausência de acesso normal comprovado. A documentação não altera os totais nem certifica runtime/Survival.
+
 ### Noble — 5
 
 | Poder | ID | Contrato principal |
