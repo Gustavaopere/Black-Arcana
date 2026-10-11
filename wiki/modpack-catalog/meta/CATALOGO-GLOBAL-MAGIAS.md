@@ -28,6 +28,10 @@ As **48/48** recipes `betterend:infusion` do artefato publisher=physical foram i
 
 Foram individualizadas **61/61** habilidades owner-scoped de **29** relíquias More Relics, deduplicadas por par `owner + ability root` conforme [inventário exato](../providers/✅-more-relics/ABILITY-INVENTORY-EXACT.md) e [fichas](../providers/✅-more-relics/ABILITY-CARDS-1.7.7-REL0128.md). A build instalada específica para **Relics 0.12.8** é hash-matched ao artefato oficial. **+0 novas identidades**, preservando mínimos **1851 global / 1849 no escopo**. Sem novo runtime/API ou QA de Survival; Stage 06.05 permanece 🟡.
 
+### Reliquified Artifacts 1.0.8 — fichas individuais, 2026-10-11
+
+O inventário source-pinned da build 1.0.8 teve as **52/52** habilidades owner-scoped individualizadas em [fichas independentes](../providers/✅-reliquified-artifacts/ABILITY-CARDS-1.0.8.md). São 48 owners Artifacts (47 classes, `DrinkingHatItem` compartilhado) com classificação `COUNTED_SOURCE_PINNED`. **+0 identidades**: mínimos globais **1851 / 1849** preservados. A igualdade binária source↔JAR físico, compatibilidade com Artifacts 13.2.5 efetivamente instalado, configuração, API e Survival permanecem ⚠️; nenhum runtime BA foi modificado.
+
 ## Situação da catalogação
 
 - **164/164 diretórios canônicos** de providers com prefixo `✅-` e `README.md` presente; **0 ❌, 0 🟡, 0 ⚠️ ou ⛔ no prefixo de catálogo**.
@@ -55,6 +59,7 @@ Foram individualizadas **61/61** habilidades owner-scoped de **29** relíquias M
 | Ars Hex 5.0.4b | [Soul Shatter — 1/1 glyph](../providers/✅-ars-hex/GLYPH-CARDS-5.0.4b.md) | ✅ `COUNTED_SOURCE_PINNED`, Malum-conditioned and source-pinned ID `ars_hex:glyph_soul_shatter` / ⚠️ binary-runtime QA still open; +0 new identities |
 | Relics 0.12.8 | [41/41 fichas de powers](../providers/✅-relics/ABILITY-CARDS-0.12.8.md) · [inventário exato](../providers/✅-relics/EXACT-0.12.8-ABILITY-INVENTORY.md) | ✅ 39 abilities + 2 synergies owner-scoped `COUNTED_EXACT` / ⚠️ runtime, Curios/Survival e API pendentes; +0 novas identidades |
 | More Relics 1.7.7 (compat Relics 0.12.8) | [61 fichas owner-scoped](../providers/✅-more-relics/ABILITY-CARDS-1.7.7-REL0128.md) · [inventário exato](../providers/✅-more-relics/ABILITY-INVENTORY-EXACT.md) | ✅ 61/61 habilidades `COUNTED_EXACT` individualizadas em 29 owners; ⚠️ efeitos/config/Survival não verificados; +0 novas identidades |
+| Reliquified Artifacts 1.0.8 | [52/52 fichas owner-scoped](../providers/✅-reliquified-artifacts/ABILITY-CARDS-1.0.8.md) · [inventário versionado](../providers/✅-reliquified-artifacts/ABILITY-INVENTORY-1.0.8.md) | ✅ 52 habilidades `COUNTED_SOURCE_PINNED` em 48 owners, 47 classes; ⚠️ paridade binária, config/Survival e APIs pendentes; +0 identidades |
 | Tunes n' Tomes | [16 fichas de spells](../providers/✅-tunes-n-tomes/SPELL-CARDS-1.1.0-HOTFIX.md) | 16 nomes da página da editora, ids/classes/custos internos não verificados |
 | GTBC's Geomancy Plus | [12 fichas de spells](../providers/✅-gtbcs-geomancy-plus/SPELL-CARDS-1.1.0-1.21.1.md) | 10 Geo + 2 Holy, roots/classes já registrados no artifact audit 1.1.0-1.21.1; +0 novos nesta materialização, aquisição/host runtime condicionados |
 | Simply Swords | [66 ações individualizadas](../providers/✅-simply-swords/ACTION-CARDS-1.70.2.md) | alcance e Awakening ainda condicionados |
