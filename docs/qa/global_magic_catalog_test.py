@@ -616,6 +616,36 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("GLYPH-CARDS-0.7.10.1.md", readme)
         self.assertIn("RITUAL-CARDS-0.7.10.1.md", readme)
 
+    def test_ars_hex_one_source_pinned_glyph_card(self):
+        provider = PROVIDERS / "✅-ars-hex"
+        source = (provider / "GLYPHS.md").read_text(encoding="utf-8")
+        registry = (provider / "REGISTRIES.md").read_text(encoding="utf-8")
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        index = (provider / "GLYPH-CARDS-5.0.4b.md").read_text(encoding="utf-8")
+        pages = sorted((provider / "glyphs").glob("*.md"))
+        self.assertEqual(1, len(pages))
+        card = (provider / "glyphs" / "soul-shatter.md").read_text(encoding="utf-8")
+        self.assertIn("`ars_hex:glyph_soul_shatter`", source)
+        self.assertIn("`ars_hex:glyph_soul_shatter`", registry)
+        self.assertIn("`ars_hex:glyph_soul_shatter`", card)
+        self.assertIn("`ars_hex:glyph_soul_shatter`", index)
+        self.assertIn("(glyphs/soul-shatter.md)", index)
+        for field in ("Tier II", "Mana base 30", "Amplify +3.0",
+                      "limite explícito de Amplify 2", "XP 55", "VOODOO",
+                      "malum:wicked_spirit", "malum:soul_stained_steel_sword"):
+            self.assertIn(field, card)
+        self.assertIn("COUNTED_SOURCE_PINNED", card)
+        self.assertIn("**+0 novas identidades**", card)
+        self.assertIn("**⚠️ NÃO VERIFICADO no runtime físico:**", card)
+        self.assertIn("não implementa fórmula/RNG explícito de spirit-release", card)
+        self.assertIn("2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4", card)
+        self.assertIn("Alexthw46/Ars-Unity@b25528adf8c0135585cd6d654582efa147e0a227", card)
+        self.assertIn("GLYPH-CARDS-5.0.4b.md", readme)
+        self.assertIn("GLYPH-CARDS-5.0.4b.md", self.index)
+        self.assertIn("**1.851 global / 1.849 no escopo solicitado**", index)
+        self.assertIn("Malum é fisicamente presente", index)
+        self.assertIn("Hexerei/Hexcasting são ausentes", index)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)

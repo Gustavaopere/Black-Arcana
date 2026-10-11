@@ -45,6 +45,12 @@ Ars Hex is not a new independent magic school. Its source bootstrap conditionall
 
 Each host retains authority over its own resource, attribute, spell or entity semantics. Ars Hex owns only the compatibility behavior it actually installs.
 
+## Ficha individual do glyph ativo
+
+**✅ 1/1 identidade própria individualizada:** [GLYPH-CARDS-5.0.4b.md](GLYPH-CARDS-5.0.4b.md) documenta `ars_hex:glyph_soul_shatter` em `glyphs/soul-shatter.md`, com parâmetros de source, receita Malum-conditioned, dano Voodoo e limite spirit-release. Esta ficha acrescenta **+0 novos objetos** ao ledger `COUNTED_SOURCE_PINNED`.
+
+**⚠️** O JAR físico não foi comprovado byte-idêntico ao source retarget, e a compatibilidade de execução com a atual Ars/Malum/Elemental/Iron's/Lodestone precisa de QA físico; nenhum adapter/hook de runtime é promovido.
+
 ## Closed source catalog surface
 
 ### Malum-present / source-selected content
