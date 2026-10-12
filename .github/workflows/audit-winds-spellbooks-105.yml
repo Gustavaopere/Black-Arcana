@@ -77,3 +77,43 @@ jobs:
           print('DISCOVERY_ONLY_NOT_REGISTRY_PROOF=true')
           print('NOT_VERIFIED=registry_cardinality,bootstrap,config,Survival')
           PY
+
+      - name: Inspect exact spell registrar and entrypoint bytecode (read-only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, zipfile, subprocess
+          p=os.environ['AUDIT_JAR']
+          registry='net.raptorzizi.wind_spellbooks.registries.ModSpellRegistry'
+          with zipfile.ZipFile(p) as z:
+            classes=[x for x in z.namelist() if x.endswith('.class') and '$' not in x]
+            owners=[x for x in classes if b'ModSpellRegistry' in z.read(x)]
+            spells=sorted(x for x in classes if x.startswith('net/raptorzizi/wind_spellbooks/spells/wind/') and x.endswith('Spell.class'))
+          print('REGISTRY_REFERENCE_CLASSES='+repr(owners))
+          print('CANDIDATE_OWNED_SPELL_CLASSES='+repr(spells))
+          def decompile(cls):
+            return subprocess.check_output(['javap','-c','-p','-constants','-classpath',p,cls],text=True)
+          reg=decompile(registry)
+          print('BEGIN_STATIC_REGISTRY_BYTECODE')
+          print(reg[:26000])
+          print('END_STATIC_REGISTRY_BYTECODE')
+          for clsfile in spells:
+            cls=clsfile[:-6].replace('/','.')
+            out=decompile(cls)
+            lines=out.splitlines()
+            relevant=[(i, line) for i,line in enumerate(lines) if ('getSpellResource' in line or '// String ' in line or 'ResourceLocation' in line)]
+            print('SPELL_BYTECODE_CLASS='+cls)
+            for index,_ in relevant[:18]:
+              print('  '+' | '.join(lines[max(0,index-1):min(len(lines),index+3)])[:700])
+          for cf in owners:
+            if cf.endswith('ModSpellRegistry.class') or '/spells/wind/' in cf:
+              continue
+            cls=cf[:-6].replace('/','.')
+            out=decompile(cls)
+            print('REGISTRY_BOOTSTRAP_CANDIDATE='+cls)
+            matches=[(i,line) for i,line in enumerate(out.splitlines()) if ('ModSpellRegistry' in line or 'onModEventBus' in line)]
+            for index,line in matches[:14]:
+              print('  '+line[:500])
+          print('EVIDENCE_ONLY_NO_RUNTIME_OR_SURVIVAL_VALIDATION=true')
+          PY
