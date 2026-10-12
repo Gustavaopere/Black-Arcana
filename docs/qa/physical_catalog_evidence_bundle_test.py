@@ -83,13 +83,24 @@ class EvidenceBundleTests(unittest.TestCase):
                         source_commit=pin, expected_physical_jars=69,
                         fingerprinted_pending_registry=0,
                         blocked_physical_artifact=39,
-                        providers=[dict(provider=f'Provider {i}',
-                                        physical_status='MISSING',
-                                        status='PHYSICAL_ARTIFACT_BLOCKED',
-                                        registry_verified=False,
-                                        survival_verified=False,
-                                        promotion_allowed=False)
-                                   for i in range(39)])
+                        catalog_exact_preexisting=1,
+                        registry_proofs_remaining=38,
+                        providers=[
+                            dict(
+                                provider=('Ars Additions' if i == 1 else f'Provider {i}'),
+                                catalog_evidence=('COUNTED_EXACT' if i == 1
+                                                  else 'COUNTED_SOURCE_PINNED'),
+                                declared_version=('21.3.0' if i == 1 else '1.0'),
+                                existing_semantic_objects=(5 if i == 1 else i+1),
+                                physical_status='MISSING',
+                                status=('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT'
+                                        if i == 1 else 'PHYSICAL_ARTIFACT_BLOCKED'),
+                                registry_verified=False,
+                                survival_verified=False,
+                                promotion_allowed=False,
+                            )
+                            for i in range(39)
+                        ])
             elif script == 'nonmagic_physical_jar_triage.py':
                 payload = {'schema': 'synthetic'}
                 ret = 0
@@ -229,6 +240,14 @@ class EvidenceBundleTests(unittest.TestCase):
             queue = json.loads((root / 'bundle' / 'provider-39-queue.json').read_text())
             self.assertEqual(39, len(queue['providers']))
             self.assertEqual(0, queue['registry_proofs_completed'])
+            self.assertEqual(1, queue['catalog_exact_preexisting'])
+            self.assertEqual(38, queue['registry_proofs_remaining'])
+            exact = [x for x in queue['providers']
+                     if x['catalog_evidence'] == 'COUNTED_EXACT']
+            self.assertEqual(1, len(exact))
+            self.assertEqual('Ars Additions', exact[0]['provider'])
+            self.assertFalse(exact[0]['registry_verified'])
+            self.assertFalse(exact[0]['promotion_allowed'])
 
 
     def test_rejects_success_exit_with_unrecognized_489_and_69_json(self):
@@ -286,6 +305,35 @@ class EvidenceBundleTests(unittest.TestCase):
             with mock.patch.object(module.subprocess,'run',side_effect=self.fake_run(calls,valid=False)):
                 report=module.capture(inst,root/'out',qa_dir=qa)
             self.assertEqual('FAILED',report['steps']['deployed_config_survival']['status'])
+
+    def test_bundle_rejects_fake_prior_exact_owner_or_promotion(self):
+        for mutation in ('wrong_owner', 'forged_promotion', 'wrong_count'):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as td:
+                root=Path(td)
+                inst,qa=self.setup_dirs(root)
+                runner=self.fake_run([])
+                def forged(argv, **kwargs):
+                    result=runner(argv,**kwargs)
+                    if Path(argv[1]).name=='provider_39_evidence_queue.py':
+                        stream=kwargs['stdout']
+                        stream.seek(0)
+                        doc=json.load(stream)
+                        exact=next(x for x in doc['providers']
+                                   if x['status']=='CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT')
+                        if mutation=='wrong_owner':
+                            exact['provider']='AnotherAddon'
+                        elif mutation=='forged_promotion':
+                            exact['promotion_allowed']=True
+                        else:
+                            exact['existing_semantic_objects']=500
+                        stream.seek(0)
+                        stream.truncate(0)
+                        json.dump(doc,stream)
+                    return result
+                with mock.patch.object(module.subprocess,'run',side_effect=forged):
+                    output=module.capture(inst,root/'out',qa_dir=qa)
+                self.assertEqual('FAILED',output['steps']['registry_39_queue']['status'])
+                self.assertEqual('COLLECTION_INCOMPLETE',output['status'])
 
     def test_rejects_39_queue_without_schema_even_if_promotion_false(self):
         # Keep the 69-JAR prerequisite valid; corrupt only the queue's JSON.
