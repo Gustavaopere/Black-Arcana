@@ -1,0 +1,86 @@
+name: Crystal Chronicles 0.1.3-alpha physical registry audit
+
+on:
+  push:
+    branches:
+      - 'audit/crystal-chronicles-013-*'
+
+permissions:
+  contents: read
+
+jobs:
+  binary-identity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch only official CurseForge file 8346590 and verify physical SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED='afdc32ab27661cd52160280dc4273d70a2d4a3d2'
+          FILE="$RUNNER_TEMP/crystal_chronicles-0.1.3-alpha.jar"
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/8346/590/crystal_chronicles-0.1.3-alpha.jar' \
+            'https://media.forgecdn.net/files/8346/590/crystal_chronicles-0.1.3-alpha.jar' \
+            'https://www.curseforge.com/api/v1/mods/1153374/files/8346590/download'
+          do
+            rm -f "$FILE"
+            if curl --fail --silent --show-error --location --retry 2 --connect-timeout 15 --max-time 100 "$URL" -o "$FILE"; then
+              if file "$FILE" | grep -qE 'Zip archive|Java archive'; then
+                echo "Downloaded publisher release from approved CurseForge endpoint"
+                break
+              fi
+            fi
+          done
+          test -s "$FILE"
+          echo "$EXPECTED  $FILE" | sha1sum --check --status
+          echo "PHYSICAL_SHA1_MATCH=$EXPECTED"
+          echo "JAR_SIZE_BYTES=$(wc -c < "$FILE")"
+          echo "AUDIT_JAR=$FILE" >> "$GITHUB_ENV"
+      - name: Verify class/registration identity via Java 21 classfile inspection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os
+          import re
+          import subprocess
+          import zipfile
+          p = os.environ['AUDIT_JAR']
+          base = 'net/veroxuniverse/crystal_chronicles/'
+          with zipfile.ZipFile(p) as z:
+              names = z.namelist()
+              if z.testzip() is not None:
+                  raise SystemExit('Corrupt ZIP entry')
+              for c in ('CrystalChronicles.class', 'spells/CCSpells.class', 'spells/PrismaticPortalSpell.class'):
+                  if base + c not in names:
+                      raise SystemExit('Missing expected binary class: ' + c)
+              magic_candidates = sorted(x for x in names if x.startswith(base+'spells/') and x.endswith('Spell.class'))
+              print('SPELL_CLASS_CANDIDATES='+repr(magic_candidates))
+              metadata=z.read('META-INF/neoforge.mods.toml').decode('utf-8')
+              if 'crystal_chronicles' not in metadata:
+                  raise SystemExit('mod ID not in metadata')
+          def javap(name):
+              return subprocess.check_output(['javap', '-p', '-c', '-classpath', p, name], text=True)
+          reg=javap('net.veroxuniverse.crystal_chronicles.spells.CCSpells')
+          spell=javap('net.veroxuniverse.crystal_chronicles.spells.PrismaticPortalSpell')
+          boot=javap('net.veroxuniverse.crystal_chronicles.CrystalChronicles')
+          reg_count=len(re.findall(r'// (?:Interface)?Method [^\n]*DeferredRegister\.register:\(Ljava/lang/String;Ljava/util/function/Supplier;',reg))
+          if reg_count != 1:
+              raise SystemExit(f'Exact spell register invocation count not proven (found {reg_count})')
+          if not ('prismatic_portal' in spell and 'crystal_chronicles' in boot and 'CCSpells.register:' in boot):
+              raise SystemExit('Source-pinned ID or bootstrap not demonstrated by JAR')
+          if 'PrismaticPortalSpell' not in reg:
+              raise SystemExit('Single spell registrar does not link portal class')
+          print('STATIC_BINARY_REGISTRATION_INVOCATIONS=1')
+          print('STATIC_BINARY_NAMESPACE=crystal_chronicles')
+          print('STATIC_BINARY_PATH=prismatic_portal')
+          print('BOOTSTRAP_TO_CCSPELLS=present')
+          print('RESULT=EXACT_REGISTRY_IDENTITY_ONLY')
+          print('NOT_VERIFIED=assembled_modpack_runtime,config,scroll_forge,portal_behavior,survival')
+          PY
