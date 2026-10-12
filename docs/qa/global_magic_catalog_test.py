@@ -1181,7 +1181,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         doc = (provider / name).read_text(encoding="utf-8")
         rows = re.findall(
             r"^\| ([1-5]) \| \x60(GLYPH|RITUAL)\x60 "
-            r"\| \x60([A-Za-z]+)\x60 \| \x60(ars_additions:[^\\x60]+)\x60 "
+            r"\| \x60([A-Za-z]+)\x60 \| \x60(ars_additions:[^|]+?)\x60 "
             r"\| \x60(NO_BRANCH)\x60 \|$", doc, re.MULTILINE,
         )
         self.assertEqual([
