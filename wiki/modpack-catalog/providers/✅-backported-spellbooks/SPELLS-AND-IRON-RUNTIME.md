@@ -1,5 +1,7 @@
 # Backported Spellbooks — spells and Iron's runtime boundary
 
+**Registro binário auditado:** [seis IDs exatos no JAR físico 0.1.2](EXACT-BINARY-SPELLS-0.1.2.md); [cartões individuais](spells/README.md). A tabela numérica abaixo pertence ao **source de referência de 2026-05-28**, não a uma auditoria funcional/binária de cooldown, custo ou nível. **7/39 exatos / 32/39 pendentes** na campanha; +0 novos.
+
 ## Canonical semantic spell inventory at the source ceiling
 
 The May 28 official source registers exactly six provider spells in Iron's spell registry:
@@ -125,7 +127,7 @@ That does not prove the physical JAR contains no generated/inherited serializati
 ## Runtime QA still required
 
 - physical Iron's 3.16.3 compatibility versus source development baseline 3.15.4;
-- exact physical spell registry parity;
+- exact physical **static** six-spell registry parity is verified in [#38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989); effective in-game/conditional registration remains QA;
 - multiplayer cast lifecycle for all six spells;
 - continuous Resin Spray start/continue/stop synchronization;
 - repeated Sulfur projectile/AOE deduplication;

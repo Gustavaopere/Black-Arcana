@@ -1,5 +1,7 @@
 # Backported Spellbooks — evidence and provenance
 
+**Prova adicional 2026-10-12:** [JAR SHA-1 físico/publicador e seis registros estáticos comprovados](EXACT-BINARY-SPELLS-0.1.2.md), [run #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989). A discrepância JAR 0.1.2 versus `neoforge.mods.toml` 0.1.0 foi diretamente reconfirmada pelo JAR; execução e equivalência completa source→JAR não foram validadas.
+
 ## Physical authority
 
 Current physical inventory is the authority for installed identity:
@@ -116,14 +118,11 @@ Both exact source biome modifiers use `neoforge:add_features`, target `minecraft
 
 This independently matches the publisher's 0.1.2 Sulfur Caves statement.
 
-## Binary evidence boundary
+## Binary evidence boundary — updated 2026-10-12
 
-The exact public CurseForge file could not be directly obtained through the available read path for byte/hash comparison during this audit. Therefore:
+The earlier audit could not obtain the exact publisher JAR. That historical access gap is now closed **for the six static registrations only**: [run #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989) obtained CurseForge file 8158731, size **209868 bytes**, SHA-1 `747847c1f38c73250ebac05ea06b41a381187850`, matching the certified physical snapshot. Java 21 `javap` proved the six literal spell paths, one deferred-registration helper and entrypoint bootstrap, with intermediate Pale Thorn inheritance verified.
 
-- physical SHA-1 is retained as physical-inventory evidence;
-- publisher file ID/name/date is retained as publisher evidence;
-- release-day source head is retained as source-line evidence;
-- no byte-for-byte source/JAR identity is asserted.
+The original source date/registry alignment remains independent evidence, **not** a reproducible source→binary build proof. Worldgen, equipment/attribute semantics, runtime host compatibility, deployed configs and Survival remain out of scope.
 
 ## License discrepancy / clean-room
 

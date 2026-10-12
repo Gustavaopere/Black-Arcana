@@ -1,5 +1,7 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+**Nova prova física (2026-10-12):** [JAR 0.1.2, seis spells registradas](EXACT-BINARY-SPELLS-0.1.2.md), [auditoria Java 21 #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989). SHA físico/publicador igual; `COUNTED_EXACT` somente para registro estático 6/6. Campanha 7/39 exatos / 32/39 pendentes; +0 novos, 1851/1849 preservados. Metadata interno 0.1.0 permanece distinto. Sem gameplay/config/Survival aprovado.
+
 Status: `EXACT PHYSICAL ARTIFACT + EXACT PUBLISHER 0.1.2 RELEASE / RELEASE-DAY OFFICIAL SOURCE CEILING / 6 IRON'S SPELL REGISTRATIONS / 1 SCHOOL / CONTENT+WORLDGEN+EQUIPMENT PROCS / EMBEDDED VERSION MISMATCH PRESERVED / BYTE+FULL-PACK QA FAIL-CLOSED`
 
 ## Installed identity
@@ -37,7 +39,7 @@ The prior May 18 source point `4149c37c77dda46ab0a8697c438101e07ff14d19` exposes
 
 ## Semantic spell inventory
 
-The release-day official source registers exactly six standalone Iron's `AbstractSpell` identities:
+The exact physical JAR now independently establishes six static Iron's spell registrations, with the same IDs as the release-day official source:
 
 1. `backportedspellbooks:slime_aspect`
 2. `backportedspellbooks:sulfur_bomb`
@@ -46,7 +48,9 @@ The release-day official source registers exactly six standalone Iron's `Abstrac
 5. `backportedspellbooks:pale_thorn`
 6. `backportedspellbooks:resin_spray`
 
-It also registers one provider school: `backportedspellbooks:pale_flora`.
+Individual [spell cards](spells/README.md) document these six identities and keep source-only mechanics separate from physical registry proof.
+
+The release-day source additionally registers one provider school: `backportedspellbooks:pale_flora`; this school was not the object of the six-spell binary-proof gate.
 
 These are provider spell identities executed through Iron's spell infrastructure. Iron's remains authority for cast state, spell configuration plumbing, mana settlement, cooldown settlement and its network/runtime pipeline. Backported Spellbooks owns the semantic spell definitions and provider effects/projectiles/content attached to them.
 
@@ -113,8 +117,8 @@ Iron's retains its own casting/mana/cooldown runtime. Backported Spellbooks owns
 Still fail-closed:
 
 - byte-for-byte source↔physical-JAR reproducibility;
-- direct inspection/hash comparison of CurseForge file 8158731 against the physical JAR;
-- physical-JAR class/resource parity with release-day source;
+- exact publisher ↔ physical JAR SHA equality and six-class spell-registry static parity are **now verified** in [run #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989); this is not proof of all resources or functional source↔binary equivalence;
+- complete physical-JAR resource/behavior parity with release-day source remains unverified;
 - runtime compatibility of source baseline NeoForge 21.1.216 / Iron's 3.15.4 against physical NeoForge 21.1.248 / Iron's 3.16.3;
 - behavior if undeclared Vanilla Backport / Iron's / Ace's dependencies are absent or change API;
 - full-modpack worldgen/recipe reload and server/client behavior;

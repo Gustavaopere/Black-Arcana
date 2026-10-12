@@ -1,5 +1,7 @@
 # Provedores source/release-bounded — roteiro de verificação binária
 
+**Sétima prova independente (2026-10-12):** [Backported Spellbooks 0.1.2 / metadata 0.1.0](../providers/✅-backported-spellbooks/EXACT-BINARY-SPELLS-0.1.2.md), [run #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989), hash JAR físico/pub `747847c1f38c73250ebac05ea06b41a381187850`, seis registrations + bootstrap. **7/39** exatos / **32/39** pendentes, +0 novas. Checkpoints abaixo são históricos.
+
 **Sexta prova independente (2026-10-12):** Wind's Spellbooks 1.0.5, [run #38312284152](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38312284152), SHA-1 físico/publicador `8744886899bc245ae147a44baa2b183689cec7da`, sete registros estáticos + bootstrap. [Dossiê](../providers/✅-winds-spellbooks/EXACT-BINARY-SPELLS-1.0.5.md). **6/39 exatos / 33/39 pendentes**, +0. Checkpoints antigos são históricos.
 
 **Quinta prova independente (2026-10-12):** Paladin Spells 1.1.1, JAR oficial SHA-1 idêntico à modlist; cinco classes e registros comprovados por Java 21. [Run #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364), [dossiê](../providers/✅-paladin-spells/EXACT-BINARY-SPELLS-1.1.1.md). Campanha **5/39** exatos, **34/39** pendentes, +0 novos. Histórico posterior ao título é preservado.
@@ -8,7 +10,7 @@
 
 **Terceira prova independente (2026-10-12):** Crystal Chronicles 0.1.3-alpha, registro `crystal_chronicles:prismatic_portal` físico e publicado com SHA-1 idêntico. [Run #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874). Campanha 3/39 exatos e 36/39 condicionados. Nenhuma nova magia.
 
-**Estado atualizado 2026-10-12:** roster original de **39** providers. **✅ 6/39 `COUNTED_EXACT`** (Ars Additions 5/5, Ars Hex 1/1 sob Malum, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5 e Wind's Spellbooks 7/7); **⚠️ 33/39** pendentes. +0 novas roots; runtime, aquisição, configuração e Survival continuam gates independentes.
+**Estado atualizado 2026-10-12:** roster congelado de **39** providers. **✅ 7/39 `COUNTED_EXACT`** (Ars Additions 5/5, Ars Hex 1/1 condicionado a Malum, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6); **⚠️ 32/39** pendentes. +0 novos; gameplay, config, aquisição e Survival independentes.
 
 Snapshot: `Black-Arcana/main@9141a8ed1c345db4e995e5f2aa849df2c24769b9` / sibling modlist `de80b186357cad20ba5b81892a8682777e96e35a`.
 
@@ -25,7 +27,7 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | [Ars Elemental](../providers/✅-ars-elemental/README.md) | 0.7.10.1 | 47 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Ars 'n' Spells](../providers/✅-ars-n-spells/README.md) | 3.3.4 | 5 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Apprentice's Codex](../providers/✅-apprentice-codex/README.md) | 0.9.7.1 | 83 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
-| [Backported Spellbooks](../providers/✅-backported-spellbooks/README.md) | physical 0.1.2 / embedded 0.1.0 | 6 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
+| [Backported Spellbooks](../providers/✅-backported-spellbooks/README.md) | physical 0.1.2 / embedded 0.1.0 | 6 | COUNTED_EXACT | ✅ [seis spells binárias estáticas](../providers/✅-backported-spellbooks/EXACT-BINARY-SPELLS-0.1.2.md), file 8158731, SHA-1 `747847c1f38c73250ebac05ea06b41a381187850`, [run #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989); +0; ⚠️ config/efeitos/Survival |
 | [Deeper & Darker Spellbooks](../providers/✅-deeper-and-darker-spellbooks/README.md) | 1.3.3 Version B | 4 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Discerning The Eldritch](../providers/✅-discerning-the-eldritch/README.md) | 1.4.4 | 22 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Dreamless Spells](../providers/✅-dreamless-spells/README.md) | 1.1.9 | 4 | COUNTED_EXACT | ✅ [4/4 spell IDs binários estáticos](../providers/✅-dreamless-spells/EXACT-BINARY-SPELLS-1.1.9.md), file 7905334, SHA-1 `d51960bfb8af1aafa5d716ef9a48c3135f36b956`, [run #38302406303](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38302406303); +0 novos; ⚠️ config/Emptied/Counterspell/Survival |
