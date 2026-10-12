@@ -1327,9 +1327,10 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
         self.assertEqual(2, len(exact))
-        self.assertEqual({"Ars Additions", "Ars Hex"}, {
-            re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact,
-        })
+        self.assertEqual(
+            {"Ars Additions", "Ars Hex"},
+            {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
+        )
         self.assertIn(name, tracker)
         ledger = (ROOT / "wiki/modpack-catalog/meta" /
                   "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
