@@ -55,9 +55,9 @@ for cls,path in rituals.items():
     static=body(code,"static {};")
     assert re.search(r"// String "+path+r"\s*\n",static),cls
     assert re.search(r"ArsAdditions\.prefix",static),cls
-    assert re.search(r"// Field (?:\S*/)?"+cls+r"\.RESOURCE_LOCATION:",static),cls
+    assert re.search(r"// Field (?:(?:\S*/)?"+cls+r"\.)?RESOURCE_LOCATION:",static),cls
     accessor=body(code,"net.minecraft.resources.ResourceLocation getRegistryName();")
-    assert re.search(r"// Field (?:\S*/)?"+cls+r"\.RESOURCE_LOCATION:",accessor),cls
+    assert re.search(r"// Field (?:(?:\S*/)?"+cls+r"\.)?RESOURCE_LOCATION:",accessor),cls
     print("RITUAL_ID_CONSTRUCTION="+cls+"|ars_additions:"+path)
 print("CONFIRMED_REGISTRATION_CONSTRUCTION_PATHS=5")
 print("PHYSICAL_SHA1="+sha)
