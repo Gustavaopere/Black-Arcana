@@ -1,0 +1,96 @@
+name: Dreamless Spells 1.1.9 physical registry audit
+
+on:
+  push:
+    branches:
+      - 'audit/dreamless-spells-119-*'
+
+permissions:
+  contents: read
+
+jobs:
+  binary-identity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch publisher release and prove exact physical SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED='d51960bfb8af1aafa5d716ef9a48c3135f36b956'
+          FILE="$RUNNER_TEMP/dreamless_spells-1.1.9.jar"
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/7905/334/dreamless_spells-1.1.9.jar' \
+            'https://media.forgecdn.net/files/7905/334/dreamless_spells-1.1.9.jar' \
+            'https://www.curseforge.com/api/v1/mods/1250250/files/7905334/download'
+          do
+            rm -f "$FILE"
+            if curl --fail --silent --show-error --location --retry 2 --connect-timeout 15 --max-time 100 "$URL" -o "$FILE"; then
+              if file "$FILE" | grep -qE 'Zip archive|Java archive'; then
+                echo "SOURCE=OFFICIAL_CURSEFORGE_FILE_7905334"
+                break
+              fi
+            fi
+          done
+          test -s "$FILE"
+          echo "$EXPECTED  $FILE" | sha1sum --check --status
+          echo "PHYSICAL_SHA1_MATCH=$EXPECTED"
+          echo "JAR_SIZE_BYTES=$(wc -c < "$FILE")"
+          echo "AUDIT_JAR=$FILE" >> "$GITHUB_ENV"
+      - name: Extract exhaustive static spell identity evidence without executing mod
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, re, subprocess, zipfile
+          p = os.environ['AUDIT_JAR']
+          package = 'net/Iceforkkk/DreamlessAditions/'
+          expected = {
+              'spells/ice/JadeskinSpell.class': 'jadeskin',
+              'spells/empty/DrainedSpell.class': 'drained',
+              'spells/empty/DullardSpell.class': 'dullard',
+              'spells/empty/MuteSpell.class': 'doorway_effect'
+          }
+          with zipfile.ZipFile(p) as z:
+              all_names = z.namelist()
+              if z.testzip() is not None:
+                  raise SystemExit('Corrupt JAR')
+              classes = sorted(x for x in all_names if x.startswith(package+'spells/')
+                               and x.endswith('Spell.class'))
+              want = sorted(package+k for k in expected)
+              print('PROVIDER_SPELL_CLASSES=' + repr(classes))
+              if classes != want:
+                  raise SystemExit('Unexpected top-level provider spell classes or missing class')
+              for k in ('registries/SpellRegistries.class', 'Dreamless_Spells.class'):
+                  if package+k not in all_names: raise SystemExit('Missing class: '+k)
+              mods = z.read('META-INF/neoforge.mods.toml').decode('utf-8')
+              if 'dreamless_spells' not in mods: raise SystemExit('Wrong mod metadata')
+          def javap(rel):
+              cls = rel[:-6].replace('/','.')
+              return subprocess.check_output(['javap','-p','-c','-classpath',p,cls],text=True)
+          reg=javap(package+'registries/SpellRegistries.class')
+          boot=javap(package+'Dreamless_Spells.class')
+          invocations=len(re.findall(r'// Method (?:[^\s]*\.)?registerSpell:',reg))
+          print('STATIC_SPELL_FACTORY_INVOCATIONS='+str(invocations))
+          if invocations != 4: raise SystemExit('Not four direct spell factories')
+          registrations=len(re.findall(r'// (?:Interface)?Method [^\n]*DeferredRegister\.register:\(Ljava/lang/String;Ljava/util/function/Supplier;',reg))
+          print('DEFERRED_REGISTER_HELPER_INVOCATIONS='+str(registrations))
+          if registrations != 1: raise SystemExit('Unproven DeferredRegister.register helper')
+          if 'SpellRegistries.register:' not in boot or 'dreamless_spells' not in boot:
+              raise SystemExit('Bootstrap or provider namespace not proven')
+          for cls, id in expected.items():
+              b=javap(package+cls)
+              if not re.search(r'// String '+re.escape(id)+r'\b',b):
+                  raise SystemExit('Missing binary spell path literal: '+id)
+              if 'getSpellResource' not in b:
+                  raise SystemExit('No getSpellResource: '+cls)
+              print('SPELL_ID=dreamless_spells:'+id)
+          print('BOOTSTRAP_SPELL_REGISTRIES=present')
+          print('RESULT=EXACT_STATIC_BINARY_REGISTRY_FOUR_IDS')
+          print('NOT_VERIFIED=assembled_pack,config,Emptied_gate,Counterspell_mixin,Survival')
+          PY
