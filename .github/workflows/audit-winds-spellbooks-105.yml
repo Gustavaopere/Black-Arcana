@@ -1,0 +1,79 @@
+name: Wind's Spellbooks 1.0.5 physical registry discovery
+
+on:
+  push:
+    branches:
+      - 'audit/winds-spellbooks-105-*'
+
+permissions:
+  contents: read
+
+jobs:
+  physical-discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify publisher binary against certified physical SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE="$RUNNER_TEMP/wind_spellbooks-1.0.5.jar"
+          EXPECTED='8744886899bc245ae147a44baa2b183689cec7da'
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/8485/822/wind_spellbooks-1.0.5.jar' \
+            'https://media.forgecdn.net/files/8485/822/wind_spellbooks-1.0.5.jar' \
+            'https://www.curseforge.com/api/v1/mods/1519158/files/8485822/download'
+          do
+            rm -f "$FILE"
+            if curl --fail --silent --show-error --location --retry 2 --connect-timeout 12 --max-time 95 "$URL" -o "$FILE"; then
+              if file "$FILE" | grep -qE 'Zip archive|Java archive'; then
+                echo 'OFFICIAL_FILE=8485822'
+                break
+              fi
+            fi
+          done
+          test -s "$FILE"
+          echo "$EXPECTED  $FILE" | sha1sum --check --status
+          echo "PHYSICAL_SHA1_MATCH=$EXPECTED"
+          echo "JAR_BYTES=$(wc -c < "$FILE")"
+          echo "AUDIT_JAR=$FILE" >> "$GITHUB_ENV"
+      - name: Read-only class and likely registrar discovery
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, zipfile, subprocess, re
+          p=os.environ['AUDIT_JAR']
+          ids=('wind_jump','tornado','iron_slash','aeropic','almighty_push','wind_blade','tailwind')
+          with zipfile.ZipFile(p) as z:
+            if z.testzip() is not None: raise SystemExit('JAR failed integrity')
+            classes=[x for x in z.namelist() if x.endswith('.class') and '$' not in x]
+            print('TOTAL_TOP_LEVEL_CLASSES='+str(len(classes)))
+            print('SPELL_CLASS_CANDIDATES='+repr(sorted(x for x in classes if x.endswith('Spell.class'))[:60]))
+            registry_names=sorted(x for x in classes if re.search('spell.*regist|regist.*spell|spellreg|modspells',x,re.I))
+            print('REGISTRY_NAME_CANDIDATES='+repr(registry_names[:45]))
+            hits=[]
+            for name in classes:
+              data=z.read(name)
+              found=[x for x in ids if x.encode() in data]
+              if found: hits.append((name,found))
+            for name,found in sorted(hits,key=lambda x:(-len(x[1]),x[0]))[:25]:
+              print('CLASS_SPELL_PATH_HINT='+name+':'+','.join(found))
+            possible=[name for name,found in hits if len(found)>=5]
+          for name in possible[:12]:
+            cls=name[:-6].replace('/','.')
+            out=subprocess.check_output(['javap','-p','-c','-classpath',p,cls],text=True)
+            paths=re.findall(r'// String ([a-z0-9_]+)',out)
+            matches=[x for x in paths if x in ids]
+            calls=sum('DeferredRegister.register:' in line for line in out.splitlines())
+            print('CANDIDATE_CLASS='+name)
+            print('CANDIDATE_LITERAL_IDS='+repr(matches))
+            print('CANDIDATE_DEFERRED_REGISTER_CALLS='+str(calls))
+          print('DISCOVERY_ONLY_NOT_REGISTRY_PROOF=true')
+          print('NOT_VERIFIED=registry_cardinality,bootstrap,config,Survival')
+          PY
