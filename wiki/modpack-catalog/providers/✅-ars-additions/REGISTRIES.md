@@ -152,6 +152,10 @@ These are provider codec/data surfaces and are not generic Black Arcana mutation
 
 The source uses vanilla `LootItemCondition` values inside its exploration-scroll loot function codec, but does not register a separate provider loot-condition type in `AddonSetup`.
 
+## Confirmação binária estrutural posterior — 2026-10-12
+
+A [auditoria SHA-matched](BINARY-REGISTRATION-21.3.0.md) comprova 3 referências de glifo, 2 de ritual e 1 de perk no registro de Ars Additions 21.3.0, sem branch no helper. As 5 raízes mágicas já constavam do ledger: **+0**. A resolução de `GlyphLib.prependGlyph` do Ars host e config/Survival continuam ⚠️; outros registries source-pinned não foram reenumerados neste audit.
+
 ## Authority consequence
 
 Registry presence establishes provider-owned identity only. Black Arcana must not mirror persistent components/attachments, duplicate recipe settlement or infer gameplay authority from decorative registrations. Stateful systems are audited separately and remain provider-owned unless a real integration seam is later proven.

@@ -5,7 +5,7 @@
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — 39 catalogados, 0 novas provas binary-exact |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — 1/39 provas estruturais do JAR físico (`Ars Additions`), 38/39 ainda não auditados nessa camada; **0/39** promoções completas `COUNTED_EXACT` |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |
@@ -17,6 +17,8 @@
 **Reconciliação de dossiês sibling (2026-10-10):** a [auditoria do delta documental de 20 fichas](AUDITORIA-DELTA-DOSSIER-SIBLING-2026-10-10.md) conferiu `de80b186…` → `f85c9acf…`: vinte arquivos `.md` modificados, sem prova de JAR recém-instalado. Seis fichas de providers mágicos já possuíam diretório ✅ e todos os totais físicos/semânticos permanecem inalterados.
 
 **Reconciliação de runtime (2026-10-10, após PR #740):** os PRs #735, #737, #738 e #739 reforçaram interrupção, fairness bounded, persistência de transições e cronologia do restore sem criar um segundo motor. O PR #739 passou `verify` e `stage05_qa_companion_smoke` no workflow `38088955006`; #740 alinhou `plans/STATUS.md`. O bloqueio histórico de ingresso registrado em 2026-10-01 foi resolvido **apenas em código/CI** por #733. A linha 06-P05 e as dependentes 06-P06–06-P11 seguem **PENDING / DEFERRED TO STAGE 09** para comprovação física. O denominador de catálogo não muda por isso.
+
+**Atualização binária 2026-10-12:** Ars Additions 21.3.0 [documentado no JAR físico](../providers/✅-ars-additions/BINARY-REGISTRATION-21.3.0.md), com SHA-1 `ce2440b606acb20b79a42bf7c6c24d163c93241f`, 3 glyph/2 ritual registrations, 0 branches nos métodos examinados e 1 perk excluído. Runs [#38261401056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261401056) e [#38261976223](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261976223) SUCCESS. **1/39** com estrutura inspecionada, **0/39** com promoção semântica integral; a função do host, config e Survival não foram validados. Sem mudança de contagem.
 
 ## Evidências por pendência
 

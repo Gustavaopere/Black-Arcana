@@ -1,6 +1,6 @@
 # Provedores source/release-bounded — roteiro de verificação binária
 
-**Estado:** ⚠️ 39 provedores com registro do ledger `COUNTED_SOURCE_PINNED` ou `COUNTED_RELEASE_BOUNDED`; **0/39 promovidos a `COUNTED_EXACT` neste lote**. Não rebaixe indevidamente suas identidades contadas nem assuma que o registry no JAR é idêntico à fonte pública.
+**Estado:** ⚠️ 39 provedores com registro do ledger `COUNTED_SOURCE_PINNED` ou `COUNTED_RELEASE_BOUNDED`; **1/39 auditado estruturalmente contra JAR físico, 38/39 não auditados estruturalmente; 0/39 promovidos integralmente a `COUNTED_EXACT`**. Não rebaixe indevidamente suas identidades contadas nem assuma que o registry no JAR é idêntico à fonte pública.
 
 Snapshot: `Black-Arcana/main@9141a8ed1c345db4e995e5f2aa849df2c24769b9` / sibling modlist `de80b186357cad20ba5b81892a8682777e96e35a`.
 
@@ -9,7 +9,7 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | Provider | Linha/version ledger | Quantidade já identificada | Evidência semântica atual | Evidência para promover registry |
 |---|---|---:|---|---|
 | [Ars Nouveau](../providers/✅-ars-nouveau/README.md) | 5.13.1 | 109 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
-| [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
+| [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | COUNTED_SOURCE_PINNED | ✅ [prova estrutural binária](../providers/✅-ars-additions/BINARY-REGISTRATION-21.3.0.md): SHA publisher=físico `ce2440b606acb20b79a42bf7c6c24d163c93241f`, 3 glyph + 2 ritual calls sem branches, 1 perk excluído; ⚠️ `GlyphLib.prependGlyph` do host não resolvido, gates de config/Survival não executados. **Sem promoção integral `COUNTED_EXACT`** |
 | [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Ars Technica](../providers/✅-ars-technica/README.md) | 2.7.6 | 11 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
@@ -47,6 +47,10 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
+
+## Checkpoint pós-snapshot — Ars Additions 21.3.0, 2026-10-12
+
+A evidência [#38261401056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261401056) e [#38261976223](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261976223) prova **1/39** registros estruturais binários no mesmo artefato SHA-matched ao físico, incluindo 3 glyphs + 2 rituais e 1 perk excluído. O host `GlyphLib.prependGlyph` não foi resolvido: **0/39 promoções completas**; preservar todos os 39 itens originais no quadro e os 5 objetos previamente contados.
 
 ## Coleta física reproduzível — integridade dos 69 fingerprints (2026-10-10)
 

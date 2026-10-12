@@ -11,7 +11,7 @@ Status: `PHASE 2Q / SOURCE-PINNED 21.3.0 CATALOG COMPLETE / RUNTIME+PACK QA PEND
 - CurseForge project/file: `974408` / `7646325`
 - Loader/game: NeoForge 1.21.1
 
-Physical identity comes from the current 612-entry modlist. The publisher release is the 1.21.1 NeoForge `21.3.0` file published on 2026-02-18.
+A autoridade física corrente permanece o snapshot certificado de 587 posições, com Ars Additions na posição #040; a referência antiga a 612 entradas não substitui esse snapshot. The publisher release is the 1.21.1 NeoForge `21.3.0` file published on 2026-02-18.
 
 ## Exact source checkpoint used by Phase 2Q
 
@@ -66,6 +66,10 @@ Memory Crystal runtime/state semantics are confirmed, but a normal default acqui
 - Ender Source Jar uses one provider-owned Source economy keyed by owner identity; it must not become a Black Arcana resource mirror.
 - Spellweave extends Ars Thread slots onto eligible non-Ars armor; RPG Skill Tree/Black Arcana must not add a second perk-slot interpretation for the same item state.
 - Explorer/Nexus warp mechanics, Advanced Dominion linking, Memory Crystal state transfer and Haversack remote inventory all have provider-owned validation/persistence contracts and must not be reproduced by heuristic NBT or client-side inference.
+
+## Auditoria binária de registro — 2026-10-12
+
+**✅ 1/39 providers com evidência estrutural binária exata**, no [audit SHA-matched](BINARY-REGISTRATION-21.3.0.md): **3 classes de glyph + 2 classes de ritual**, com 1 perk excluído da contagem. [Run #38261401056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261401056) confirma bootstrap e contagens; [run #38261976223](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261976223) confirma expressões de identificação no JAR físico. O método `GlyphLib.prependGlyph` pertence ao host e não foi resolvido/rodado: **0/39 promoções completas**; este provider permanece `COUNTED_SOURCE_PINNED` até fechamento dos gates.
 
 ## Validation boundary
 
