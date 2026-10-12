@@ -19,7 +19,11 @@ Semantic disposition: **+52 = 28 Focus + 24 non-Focus rituals**.
 
 ## Exact ritual resource paths and outcomes — 2026-10-11
 
-O [workflow de reauditoria SHA-matched #38190078609](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38190078609) produziu [48/48 paths, subtipos e outcomes textuais](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md), com **24** receitas de Focus deduplicadas e [24 rituais não-Focus individualizados](RITUAL-CARDS-1.21.1-1.8.2.md). As categorias exatas são 10 conversions (9 `goety:convert_tamed`, 1 `goety:convert_complete_tamed`), 13 summons `goety:summon_tamed` e um fabricator `goety:craft`. `goety:jei_dummy/none` é placeholder. Os quatro Focuses sem path ritual pertencem ao grupo crafting comum **por exclusão** da prova agregada, sem recipe paths de crafting comprovados. **+0 identidades novas**, 52 mantidas.
+O [workflow de reauditoria SHA-matched #38190078609](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38190078609) produziu [48/48 paths, subtipos e outcomes textuais](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md), com **24** receitas de Focus deduplicadas e [24 rituais não-Focus individualizados](RITUAL-CARDS-1.21.1-1.8.2.md). As categorias exatas são 10 conversions (9 `goety:convert_tamed`, 1 `goety:convert_complete_tamed`), 13 summons `goety:summon_tamed` e um fabricator `goety:craft`. `goety:jei_dummy/none` é placeholder. Os quatro Focuses sem path ritual agora possuem [receitas `minecraft:crafting_shaped` individualizadas](FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md) por auditoria SHA-matched [#38191990175](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38191990175). A atribuição deixou de depender de exclusão, mas ingredientes e execução real permanecem não verificados. **+0 identidades novas**, 52 mantidas.
+
+## Exact ordinary crafting Focus paths — 2026-10-11
+
+O [workflow #38191990175](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38191990175), na branch de auditoria NON-MERGE `eae06402af7abbe6195e05a41f72cfd27bbf453d`, verificou o hash físico `4e3052a082200371b36e1a88fdce05e294d82757` **antes de extrair** quatro `CRAFTING_ROW` com path, `minecraft:crafting_shaped`, result item IDs e conditions de topo zero. [Matriz factual 4/4](FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md). Junto às 24 aquisições rituais, **28/28 Focuses têm caminhos literais comprovados**. `COUNTED_EXACT` permanece **52** e **+0 novas identidades**. Nenhum corpo JSON de recipe, código upstream ou JAR foi incorporado.
 
 ## Evidence chain
 
