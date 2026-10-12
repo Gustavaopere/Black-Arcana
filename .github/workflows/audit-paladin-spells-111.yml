@@ -1,0 +1,92 @@
+name: Paladin Spells 1.1.1 physical registry audit
+
+on:
+  push:
+    branches:
+      - 'audit/paladin-spells-111-*'
+
+permissions:
+  contents: read
+
+jobs:
+  binary-identity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Acquire publisher JAR and check physical modlist SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE="$RUNNER_TEMP/paladin_spells-1.21.1-1.1.1.jar"
+          EXPECTED='e4c6f4fa70989f0b9f1819e46e29f68d414ccbaf'
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/8661/566/paladin_spells-1.21.1-1.1.1.jar' \
+            'https://media.forgecdn.net/files/8661/566/paladin_spells-1.21.1-1.1.1.jar' \
+            'https://www.curseforge.com/api/v1/mods/1593269/files/8661566/download'
+          do
+            rm -f "$FILE"
+            if curl --fail --silent --show-error --location --retry 2 --connect-timeout 12 --max-time 95 "$URL" -o "$FILE"; then
+              if file "$FILE" | grep -qE 'Zip archive|Java archive'; then
+                echo 'OFFICIAL_FILE=8661566'
+                break
+              fi
+            fi
+          done
+          test -s "$FILE"
+          echo "$EXPECTED  $FILE" | sha1sum --check --status
+          echo "PHYSICAL_SHA1_MATCH=$EXPECTED"
+          echo "PUBLISHER_JAR_BYTES=$(wc -c < "$FILE")"
+          echo "AUDIT_JAR=$FILE" >> "$GITHUB_ENV"
+      - name: Prove five static registry IDs without mod execution or code inclusion
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, re, subprocess, zipfile
+          p = os.environ['AUDIT_JAR']
+          ns='paladin_spells'
+          base='eu/kaufko/paladin_spells/'
+          registry=base+'registry/PaladinSpellRegistry.class'
+          entry=base+'PaladinSpells.class'
+          expected=('taunt','bulwark','sworn_protector','bedrock_skin','ram')
+          spell_classes=('TauntSpell','BulwarkSpell','SwornProtectorSpell','BedrockSkinSpell','RamSpell')
+          with zipfile.ZipFile(p) as z:
+              if z.testzip() is not None: raise SystemExit('Corrupt zip entry')
+              names=z.namelist()
+              for c in (registry,entry):
+                  if c not in names: raise SystemExit('Missing '+c)
+              found=sorted(x for x in names if x.startswith(base+'spells/')
+                           and x.endswith('Spell.class') and '$' not in x)
+              want=sorted(base+'spells/'+x+'.class' for x in spell_classes)
+              print('PROVIDER_TOP_LEVEL_SPELL_CLASSES='+repr(found))
+              if found != want: raise SystemExit('Unexpected provider spell classes')
+              meta=z.read('META-INF/neoforge.mods.toml').decode('utf-8')
+              if 'paladin_spells' not in meta: raise SystemExit('Mod metadata mismatch')
+          def javap(filename):
+              cls=filename[:-6].replace('/','.')
+              return subprocess.check_output(['javap','-c','-p','-classpath',p,cls],text=True)
+          reg=javap(registry)
+          boot=javap(entry)
+          registrations=len(re.findall(r'// (?:Interface)?Method [^\n]*DeferredRegister\.register:\(Ljava/lang/String;Ljava/util/function/Supplier;',reg))
+          print('STATIC_DEFERRED_REGISTER_INVOCATIONS='+str(registrations))
+          if registrations != 5: raise SystemExit('Exactly five direct spell registrations not established')
+          literals=re.findall(r'// String ([a-z0-9_]+)',reg)
+          matched=[x for x in literals if x in expected]
+          print('STATIC_REGISTRATION_PATHS='+repr(matched))
+          if len(matched)!=5 or set(matched)!=set(expected):
+              raise SystemExit('Final path literals incomplete or duplicate')
+          if 'PaladinSpellRegistry.register:' not in boot:
+              raise SystemExit('Provider entrypoint bootstrap not established')
+          if 'paladin_spells' not in boot:
+              raise SystemExit('Provider namespace not established')
+          print('ENTRYPOINT_TO_REGISTRY=present')
+          for id in expected:
+              print('SPELL_ID='+ns+':'+id)
+          print('RESULT=EXACT_STATIC_BINARY_REGISTRY_FIVE_IDS')
+          print('NOT_VERIFIED=deployed_pack,config,Survival,spell_effectiveness,dedicated_server_compatibility')
+          PY
