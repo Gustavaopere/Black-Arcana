@@ -62,7 +62,51 @@ jobs:
               bad=z.testzip()
               assert bad is None, f'corrupted file: {bad}'
               entries=set(z.namelist())
-              owned=sorted(x for x in entries if x.startswith(base+'spells/') and x.endswith('Spell.class') and '$' not in x and not x.endswith('AbstractPaleSpells.class'))
+              owned=sorted(x for x in entries if x.startswith(base+'spells/') and (x.endswith('Spell.class') or x.endswith('SPell.class')) and ')
+              print('OWNED_SPELL_CLASSES='+repr(owned))
+              print('OWNED_SPELL_CLASS_COUNT='+str(len(owned)))
+              assert len(owned)==6, 'number of concrete owned top-level spell classes changed'
+              metadata=[x for x in entries if x.endswith('neoforge.mods.toml')]
+              for item in metadata[:3]:
+                  m=z.read(item).decode('utf-8',errors='replace')
+                  print('METADATA='+item)
+                  for line in m.splitlines():
+                      if 'modId' in line or 'version' in line or 'displayName' in line:
+                          print('  '+line[:220])
+          def javap(cls):
+              return subprocess.check_output(['javap','-p','-c','-classpath',jar,cls],text=True)
+          reg=javap('net.redreaper.backported_spellbooks.init.ModSpellRegistry')
+          init=reg.split('static {};')[-1]
+          constructor_calls=len(re.findall(r'// Method registerSpell:',init))
+          helper_calls=len(re.findall(r'// Method net/neoforged/neoforge/registries/DeferredRegister.register:\(Ljava/lang/String;',reg))
+          print('STATIC_REGISTER_SPELL_INVOCATIONS='+str(constructor_calls))
+          print('REGISTRATION_HELPER_DEFERRED_REGISTER_CALLS='+str(helper_calls))
+          print('REGISTRAR_BOOTSTRAP='+str('DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)' in reg))
+          print('REGISTRY_METADATA_SNIPPET_START')
+          print('\n'.join(line for line in reg.splitlines() if 'SpellRegistry' in line or 'registerSpell' in line or 'backportedspellbooks' in line or 'DeferredRegister' in line)[:11000])
+          print('REGISTRY_METADATA_SNIPPET_END')
+          assert constructor_calls==6, 'static registry does not construct exactly six spells'
+          assert helper_calls==1, 'single registerSpell helper not confirmed'
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)' in reg
+          main=javap('net.redreaper.backported_spellbooks.BackportedSpellbooks')
+          entry='ModSpellRegistry.register:(Lnet/neoforged/bus/api/IEventBus;)' in main
+          print('ENTRYPOINT_TO_REGISTRY='+('present' if entry else 'absent'))
+          assert entry, 'entrypoint does not bootstrap registrar'
+          for cls,id_,slot in pairs:
+              src=base+'spells/nature/'+cls+'.class'
+              assert src in owned, 'missing spell: '+src
+              out=javap('net.redreaper.backported_spellbooks.spells.nature.'+cls)
+              keys=set(re.findall(r'// String ([a-z0-9_]+)',out))
+              print('EXACT_BINARY_SPELL=backportedspellbooks:'+id_+';class='+cls+';slot='+slot+';literals='+repr(sorted(keys & ({id_,'backportedspellbooks'}))))
+              assert id_ in keys, 'literal spell id absent: '+id_
+              assert 'backportedspellbooks' in keys, 'provider namespace absent: '+id_
+              assert 'getSpellResource()' in out, 'getSpellResource missing: '+id_
+              assert 'AbstractSpell' in out, 'not AbstractSpell: '+id_
+              assert ('Field '+slot+':' in init), 'registered supplier missing: '+slot
+          print('RESULT=EXACT_SIX_BINARY_STATIC_SPELL_REGISTRATIONS')
+          print('LIMITATIONS=NO_MODPACK_RUNTIME_NO_CONFIG_NO_SURVIVAL_NO_SOURCE_BINARY_EQUIVALENCE')
+          PY
+ not in x and not x.endswith('AbstractPaleSpells.class'))
               print('OWNED_SPELL_CLASSES='+repr(owned))
               print('OWNED_SPELL_CLASS_COUNT='+str(len(owned)))
               assert len(owned)==6, 'number of concrete owned top-level spell classes changed'
