@@ -1,0 +1,69 @@
+name: Audit Goety Iron 3.1 non-Focus ritual identities
+
+on:
+  push:
+    branches:
+      - audit/goety-iron-3.1-ritual-identities-20261011
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit_goety_iron_31:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout isolated clean-room audit
+        uses: actions/checkout@v4
+      - name: Download exact publisher artifact and check physical hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="$RUNNER_TEMP/GoetyIron-1.21.1-NeoForge-3.1.jar"
+          urls=(
+            "https://www.curseforge.com/api/v1/mods/1367643/files/8662179/download"
+            "https://edge.forgecdn.net/files/8662/179/GoetyIron-1.21.1-NeoForge-3.1.jar"
+            "https://mediafilez.forgecdn.net/files/8662/179/GoetyIron-1.21.1-NeoForge-3.1.jar"
+          )
+          found=0
+          for url in "${urls[@]}"; do
+            rm -f "$target"
+            if curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 120 "$url" -o "$target"; then
+              sha="$(sha1sum "$target" | awk '{print $1}')"
+              if [ "$sha" = "c8529867e798661ed01fb2948abda23735888fc6" ]; then
+                found=1
+                break
+              fi
+            fi
+          done
+          test "$found" -eq 1 || { echo "Exact physical hash not available: FAIL CLOSED"; exit 1; }
+          echo "ARTIFACT_SHA1=c8529867e798661ed01fb2948abda23735888fc6"
+          echo "ARTIFACT_SIZE=$(stat -c %s "$target")"
+      - name: Extract only clean-room resource path and outcome signatures
+        shell: bash
+        env:
+          JAR_PATH: ${{ runner.temp }}/GoetyIron-1.21.1-NeoForge-3.1.jar
+          RECIPE_ROOT: data/goetyiron/recipe
+          AUDIT_OUT: audit-targeted
+        run: |
+          set -euo pipefail
+          python .github/goety_addon_targeted_semantic.py
+          cat audit-targeted/summary.txt
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          rows = [json.loads(l) for l in Path('audit-targeted/ritual-targeted.jsonl').read_text().splitlines()]
+          assert len(rows) == 14, "unexpected recipe count"
+          assert sum(r['focus_acquisition'] for r in rows) == 2
+          assert sum(not r['focus_acquisition'] for r in rows) == 12
+          assert not any(r['conditions'] for r in rows), "unexpected recipe conditions"
+          paths = [r['path'] for r in rows]
+          assert len(set(paths)) == 14
+          for i, r in enumerate(rows, 1):
+              print("RITUAL_ROW="+json.dumps({"index": i, "path": r["path"], "type": r["ritual_type"], "result_ids": r["result_ids"], "outcome_ids": r["semantic_outcome_ids"], "conditions": r["conditions"], "focus_acquisition": r["focus_acquisition"]}, sort_keys=True, separators=(',',':')))
+          PY
+      - name: Prove no binary content was committed
+        run: |
+          set -euo pipefail
+          test ! -e ./GoetyIron-1.21.1-NeoForge-3.1.jar
+          echo "NON_MERGE_AUDIT_ONLY=true"
