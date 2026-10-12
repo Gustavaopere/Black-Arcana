@@ -974,9 +974,9 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("PENDING / DEFERRED TO STAGE 09", stage09)
         self.assertIn("crash consistency", stage09)
 
-    def test_two_exact_registries_do_not_certify_other_or_survival(self):
-        self.assertIn("2/39", self.status)
-        self.assertIn("37/39", self.status)
+    def test_three_exact_registries_do_not_certify_other_or_survival(self):
+        self.assertIn("3/39", self.status)
+        self.assertIn("36/39", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
         self.assertIn("JARs fora da categoria Magic", self.status)
         self.assertIn("14 rotas", self.status)
@@ -986,12 +986,16 @@ class MagicPendencyStatusTest(unittest.TestCase):
                    if s.startswith("| [Ars Additions]"))
         self.assertIn("| COUNTED_EXACT |", row)
         self.assertIn("HOST-GLYPH-IDS-EXACT-5.13.1.md", row)
-        self.assertIn("2/39", self.binary)
-        self.assertIn("37/39", self.binary)
+        self.assertIn("3/39", self.binary)
+        self.assertIn("36/39", self.binary)
         second = next(s for s in self.binary.splitlines()
                       if s.startswith("| [Ars Hex]"))
         self.assertIn("| COUNTED_EXACT |", second)
         self.assertIn("EXACT-BINARY-GLYPH-5.0.4b.md", second)
+        third = next(s for s in self.binary.splitlines()
+                     if s.startswith("| [Crystal Chronicles]"))
+        self.assertIn("| COUNTED_EXACT |", third)
+        self.assertIn("EXACT-BINARY-SPELL-0.1.3-alpha.md", third)
 
     def test_historical_ritual_design_gate_preserves_original_blocker(self):
         self.assertIn("⛔ SEM INGRESSO CANÔNICO", self.stage)

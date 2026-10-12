@@ -83,18 +83,18 @@ class EvidenceBundleTests(unittest.TestCase):
                         source_commit=pin, expected_physical_jars=69,
                         fingerprinted_pending_registry=0,
                         blocked_physical_artifact=39,
-                        catalog_exact_preexisting=2,
-                        registry_proofs_remaining=37,
+                        catalog_exact_preexisting=3,
+                        registry_proofs_remaining=36,
                         providers=[
                             dict(
-                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else f'Provider {i}'),
-                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2)
+                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else 'Crystal Chronicles' if i == 3 else f'Provider {i}'),
+                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2, 3)
                                                   else 'COUNTED_SOURCE_PINNED'),
-                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '1.0'),
-                                existing_semantic_objects=(5 if i == 1 else 1 if i == 2 else i+1),
+                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '0.1.3-alpha' if i == 3 else '1.0'),
+                                existing_semantic_objects=(5 if i == 1 else 1 if i in (2, 3) else i+1),
                                 physical_status='MISSING',
                                 status=('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT'
-                                        if i in (1, 2) else 'PHYSICAL_ARTIFACT_BLOCKED'),
+                                        if i in (1, 2, 3) else 'PHYSICAL_ARTIFACT_BLOCKED'),
                                 registry_verified=False,
                                 survival_verified=False,
                                 promotion_allowed=False,
@@ -240,12 +240,12 @@ class EvidenceBundleTests(unittest.TestCase):
             queue = json.loads((root / 'bundle' / 'provider-39-queue.json').read_text())
             self.assertEqual(39, len(queue['providers']))
             self.assertEqual(0, queue['registry_proofs_completed'])
-            self.assertEqual(2, queue['catalog_exact_preexisting'])
-            self.assertEqual(37, queue['registry_proofs_remaining'])
+            self.assertEqual(3, queue['catalog_exact_preexisting'])
+            self.assertEqual(36, queue['registry_proofs_remaining'])
             exact = [x for x in queue['providers']
                      if x['catalog_evidence'] == 'COUNTED_EXACT']
-            self.assertEqual(2, len(exact))
-            self.assertEqual({'Ars Additions', 'Ars Hex'},
+            self.assertEqual(3, len(exact))
+            self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles'},
                              {x['provider'] for x in exact})
             self.assertTrue(all(not row['registry_verified'] and
                                 not row['promotion_allowed'] for row in exact))
