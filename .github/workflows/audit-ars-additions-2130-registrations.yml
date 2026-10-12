@@ -1,0 +1,42 @@
+name: Audit Ars Additions 21.3.0 exact magic registrations
+on:
+  push:
+    branches: [audit/ars-additions-2130-exact-five-magic-register-20261012]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download publisher release with fail-closed physical SHA verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar="$RUNNER_TEMP/ars_additions-1.21.1-21.3.0.jar"
+          exact=0
+          urls=(
+            "https://www.curseforge.com/api/v1/mods/974408/files/7646325/download"
+            "https://mediafilez.forgecdn.net/files/7646/325/ars_additions-1.21.1-21.3.0.jar"
+            "https://edge.forgecdn.net/files/7646/325/ars_additions-1.21.1-21.3.0.jar"
+          )
+          for url in "${urls[@]}"; do
+            rm -f "$jar"
+            if curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 120 "$url" -o "$jar"; then
+              if [ "$(sha1sum "$jar" | awk '{print $1}')" = "ce2440b606acb20b79a42bf7c6c24d163c93241f" ]; then exact=1; break; fi
+            fi
+          done
+          test "$exact" -eq 1 || { echo "PUBLISHER ARTIFACT FAILED PHYSICAL SHA GATE"; exit 1; }
+      - name: Report only structural registration evidence
+        env:
+          JAR_PATH: ${{ runner.temp }}/ars_additions-1.21.1-21.3.0.jar
+        run: python3 .github/ars_additions_2130_exact_magic_registration_audit.py
+      - name: Confirm audit branch excludes publisher JAR
+        run: test ! -e ./ars_additions-1.21.1-21.3.0.jar
