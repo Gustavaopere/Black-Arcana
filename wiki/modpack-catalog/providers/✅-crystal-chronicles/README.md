@@ -1,6 +1,8 @@
 # Crystal Chronicles — 0.1.3-alpha
 
-Status: `COUNTED_SOURCE_PINNED / 1 PROVIDER-OWNED SPELL / CATALOG ✅ / ALPHA-WIP / RUNTIME QA FAIL-CLOSED`
+**Atualização 2026-10-12:** prova física estática [1/1 `COUNTED_EXACT`](EXACT-BINARY-SPELL-0.1.3-alpha.md) — JAR oficial 8346590 com SHA-1 idêntico à modlist (`afdc32ab27661cd52160280dc4273d70a2d4a3d2`), classe única, uma inscrição `CCSpells` e ID `crystal_chronicles:prismatic_portal` auditados pelo Java 21 na [CI #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874). Campanha 3/39 exatos, 36/39 pendentes, +0 novas magias. O source pin documentado abaixo continua sendo evidência de assinatura, não de build source-reproducible. Config, portal, multiplayer e Survival permanecem ⚠️.
+
+Status: `COUNTED_EXACT (STATIC REGISTRY ONLY) / 1 PROVIDER-OWNED SPELL / CATALOG ✅ / ALPHA-WIP / RUNTIME QA FAIL-CLOSED`
 
 ## Current physical identity
 

@@ -23,9 +23,11 @@ REPORT_SOURCE = 'PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md'
 REPORT_EVIDENCE = 'READ_ONLY_JAR_FINGERPRINT_NOT_REGISTRY_PROOF'
 CROSSWALK_LINE = re.compile(r'^\| (?P<provider>[^|]+) \| #\d{3} \| \x60(?P<filename>[^|\x60]+\.jar)\x60 \|')
 MATRIX_LINE = re.compile(r'^\| \[(?P<provider>[^|\]]+)\]\([^|)]+\) \| (?P<version>[^|]+) \| (?P<count>\d+) \| (?P<evidence>COUNTED_SOURCE_PINNED|COUNTED_RELEASE_BOUNDED|COUNTED_EXACT) \|')
-# Only this exact previously-audited identity can appear as COUNTED_EXACT in the
+# Only these independently audited identities can appear as COUNTED_EXACT in the
 # frozen campaign. No arbitrarily supplied exact row or fingerprint is trusted.
-KNOWN_EXACT = {'Ars Additions': ('21.3.0', 5), 'Ars Hex': ('5.0.4b', 1)}
+KNOWN_EXACT = {'Ars Additions': ('21.3.0', 5),
+               'Ars Hex': ('5.0.4b', 1),
+               'Crystal Chronicles': ('0.1.3-alpha', 1)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')

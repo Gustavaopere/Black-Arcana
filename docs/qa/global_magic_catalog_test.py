@@ -1270,9 +1270,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(2, len(exact))
+        self.assertEqual(3, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1329,9 +1329,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(2, len(exact))
+        self.assertEqual(3, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1344,6 +1344,32 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("2/39", self.index)
         self.assertIn("37/39", self.index)
         self.assertIn(name, self.index)
+
+    def test_crystal_chronicles_static_binary_013_has_exact_registration_only(self):
+        provider = PROVIDERS / '✅-crystal-chronicles'
+        name = 'EXACT-BINARY-SPELL-0.1.3-alpha.md'
+        note = (provider / name).read_text(encoding='utf-8')
+        for marker in (
+            '8346590', '38298343874',
+            'afdc32ab27661cd52160280dc4273d70a2d4a3d2',
+            '2192223', 'crystal_chronicles:prismatic_portal',
+            'STATIC_BINARY_REGISTRATION_INVOCATIONS=1',
+            '3/39', '36/39', '1851', '1849', 'Survival', '+0',
+        ):
+            self.assertIn(marker, note)
+        for path in ('README.md', 'SPELL-CARDS-0.1.3-alpha.md',
+                     'spells/prismatic-portal.md'):
+            self.assertIn(name, (provider / path).read_text(encoding='utf-8'))
+        matrix = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        row = next(x for x in matrix.splitlines() if x.startswith('| [Crystal Chronicles]'))
+        self.assertIn('| 0.1.3-alpha | 1 | COUNTED_EXACT |', row)
+        ledger = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        line = next(x for x in ledger.splitlines() if x.startswith('| [Crystal Chronicles]'))
+        self.assertIn('| 0.1.3-alpha | 1 | `COUNTED_EXACT` |', line)
+        self.assertIn('3/39', self.index)
+        self.assertIn('36/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)

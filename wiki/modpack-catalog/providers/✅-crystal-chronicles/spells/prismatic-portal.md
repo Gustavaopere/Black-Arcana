@@ -1,13 +1,15 @@
 # Prismatic Portal
 
+**Prova do registro:** [arquivo do publicador SHA-1 compatível com modpack, bootstrap e única inscrição confirmados](../EXACT-BINARY-SPELL-0.1.3-alpha.md). A assinatura abaixo permanece source-pinned, sem comprovação de custos ou execução em Survival no conjunto de mods.
+
 - Provider: **Crystal Chronicles** (`crystal_chronicles`)
 - Version: `0.1.3-alpha`
 - Registry id: `crystal_chronicles:prismatic_portal`
 - Concrete class: `PrismaticPortalSpell`
 - Provider school: `crystal_chronicles:prismatic`
 - Host registry: **Iron's SpellRegistry**
-- Semantic state: `COUNTED_SOURCE_PINNED`
-- Strict contribution: `1`
+- Semantic state: `COUNTED_EXACT` (ID/registro binário estático; QA runtime pendente)
+- Strict contribution: `1` (já contabilizada; promoção +0)
 
 ## Source-pinned signature
 
