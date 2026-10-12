@@ -18,6 +18,8 @@
 
 **Reconciliação de runtime (2026-10-10, após PR #740):** os PRs #735, #737, #738 e #739 reforçaram interrupção, fairness bounded, persistência de transições e cronologia do restore sem criar um segundo motor. O PR #739 passou `verify` e `stage05_qa_companion_smoke` no workflow `38088955006`; #740 alinhou `plans/STATUS.md`. O bloqueio histórico de ingresso registrado em 2026-10-01 foi resolvido **apenas em código/CI** por #733. A linha 06-P05 e as dependentes 06-P06–06-P11 seguem **PENDING / DEFERRED TO STAGE 09** para comprovação física. O denominador de catálogo não muda por isso.
 
+**Limite de promoção do ledger:** há **0 novas provas binary-exact integrais** de registry (identificação final + gates), apesar de 1/39 auditoria estrutural hash-matched; a expressão histórica de testes `0 novas provas binary-exact` continua válida **somente para provas integrais**, e não apaga a inspeção física parcial já realizada.
+
 **Atualização binária 2026-10-12:** Ars Additions 21.3.0 [documentado no JAR físico](../providers/✅-ars-additions/BINARY-REGISTRATION-21.3.0.md), com SHA-1 `ce2440b606acb20b79a42bf7c6c24d163c93241f`, 3 glyph/2 ritual registrations, 0 branches nos métodos examinados e 1 perk excluído. Runs [#38261401056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261401056) e [#38261976223](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261976223) SUCCESS. **1/39** com estrutura inspecionada, **0/39** com promoção semântica integral; a função do host, config e Survival não foram validados. Sem mudança de contagem.
 
 ## Evidências por pendência
