@@ -32,6 +32,10 @@ Foram individualizadas **61/61** habilidades owner-scoped de **29** relíquias M
 
 O inventário source-pinned da build 1.0.8 teve as **52/52** habilidades owner-scoped individualizadas em [fichas independentes](../providers/✅-reliquified-artifacts/ABILITY-CARDS-1.0.8.md). São 48 owners Artifacts (47 classes, `DrinkingHatItem` compartilhado) com classificação `COUNTED_SOURCE_PINNED`. **+0 identidades**: mínimos globais **1851 / 1849** preservados. A igualdade binária source↔JAR físico, compatibilidade com Artifacts 13.2.5 efetivamente instalado, configuração, API e Survival permanecem ⚠️; nenhum runtime BA foi modificado.
 
+### Goety Iron 3.1 — 12 rituais nominais, 2026-10-11
+
+A [reextração textual do JAR físico hash-matched](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38186445480) preservou os [14 resource paths, subtipos, outcomes e conditions top-level](../providers/✅-goety-iron/RITUAL-INVENTORY-EXACT-3.1.md). **✅ 12/12 fichas não-Focus** em [RITUAL-CARDS-3.1.md](../providers/✅-goety-iron/RITUAL-CARDS-3.1.md): 10 conversões e 2 craft de item. Duas outras recipes são aquisição de Focus, já contado. `goety:jei_dummy/none` é placeholder, não identidade. **+0 novas identidades** (mínimos **1851 / 1849** inalterados); APIs, custos, inputs e Survival ficam ⚠️/⛔; Stage 06.05 continua 🟡.
+
 ## Situação da catalogação
 
 - **164/164 diretórios canônicos** de providers com prefixo `✅-` e `README.md` presente; **0 ❌, 0 🟡, 0 ⚠️ ou ⛔ no prefixo de catálogo**.
@@ -67,7 +71,7 @@ O inventário source-pinned da build 1.0.8 teve as **52/52** habilidades owner-s
 | Bloodlines | [29 fichas de Actions](../providers/✅-bloodlines/ACTION-CARDS-3.0.9.md) | 28 COUNTED_SOURCE_PINNED + 1 EXCLUDED (Sorcerous Strike); runtime/Survival ⚠️ condicionado; +0 novas identidades |
 | Goety 3.1.4 | [123 fichas de Focus](../providers/✅-goety/FOCUS-CARDS-3.1.4.md) · [238 fichas de rituais não-Focus](../providers/✅-goety/RITUAL-CARDS-3.1.4.md) · [inventário exato 361](../providers/✅-goety/EXACT-3.1.4-SEMANTIC-INVENTORY.md) | ✅ 361/361 identidades Goety individualizadas com evidência `COUNTED_EXACT` / ⚠️ execução física, custos e runtime continuam condicionados; +0 novas identidades |
 | Goety Cataclysm 1.21.1-1.8.2 | [28/28 fichas de Focus](../providers/✅-goety-cataclysm/FOCUS-CARDS-1.21.1-1.8.2.md) · [52 identidades do addon](../providers/✅-goety-cataclysm/README.md) | ✅ 28 Focus `COUNTED_EXACT` individualizados; ⚠️ 24 rituais distintos auditados só no agregado e execução física pendente; +0 novas identidades |
-| Goety Iron 3.1 | [2/2 fichas de Focus](../providers/✅-goety-iron/FOCUS-CARDS-3.1.md) · [14 objetos no artefato](../providers/✅-goety-iron/README.md) | ✅ 2 Focuses `COUNTED_EXACT` individualizados; ⚠️ 12 rituais não-Focus apenas no agregado, 0/12 fichas nominais e QA físico pendente; +0 novas identidades |
+| Goety Iron 3.1 | [2/2 fichas de Focus](../providers/✅-goety-iron/FOCUS-CARDS-3.1.md) · [12/12 fichas de rituais](../providers/✅-goety-iron/RITUAL-CARDS-3.1.md) · [14/14 paths/outcomes](../providers/✅-goety-iron/RITUAL-INVENTORY-EXACT-3.1.md) | ✅ 2 Focuses + 12 rituais não-Focus `COUNTED_EXACT` individualizados, 10 conversões + 2 craft; ⚠️ QA físico/Survival pendente; +0 novas identidades |
 
 ## Inventário completo de providers da árvore canônica
 

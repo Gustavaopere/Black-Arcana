@@ -1,10 +1,10 @@
 # Goety Iron — cross-loader release synchronization evidence
 
-Status: `EXACT 3.1 ARTIFACT HASH MATCH / CROSS-LOADER RELEASE LINE SYNCHRONIZED / SOURCE URL ABSENT / SEMANTIC INVENTORY STILL OPEN`
+Status: `EXACT 3.1 ARTIFACT HASH MATCH / CROSS-LOADER RELEASE LINE SYNCHRONIZED / SOURCE URL ABSENT / RECIPE PATHS AND OUTCOMES DOCUMENTED EXACTLY (2026-10-11)`
 
 ## Supersession note — exact 3.1 Phase 2BL artifact (2026-10-11)
 
-The "semantic inventory still open" and "+0/797" statements below are **historical status at the publisher-only checkpoint**, superseded for identity/count by [EXACT-3.1-ARTIFACT-AUDIT.md](EXACT-3.1-ARTIFACT-AUDIT.md): exact hash-matched JAR has **2 addon-owned Focus holders and 12 distinct non-Focus rituals = 14 `COUNTED_EXACT` objects**, already reconciled globally. The [2 individual Focus cards](FOCUS-CARDS-3.1.md) add **+0** identities; the **12 ritual resource paths and outcome signatures** have not been preserved individually in current durable catalog. Public/source/API/runtime gates remain unaffected; no exact-source revision has been found.
+The "semantic inventory still open" and "+0/797" statements below are **historical status at the publisher-only checkpoint**, superseded for identity/count by [EXACT-3.1-ARTIFACT-AUDIT.md](EXACT-3.1-ARTIFACT-AUDIT.md): exact hash-matched JAR has **2 addon-owned Focus holders and 12 distinct non-Focus rituals = 14 `COUNTED_EXACT` objects**, already reconciled globally. The [2 individual Focus cards](FOCUS-CARDS-3.1.md) add **+0** identities; the **12 non-Focus ritual resource paths, subtypes and outcome signatures** are now preserved in the [exact 14/14 matrix](RITUAL-INVENTORY-EXACT-3.1.md) and [12/12 cards](RITUAL-CARDS-3.1.md) through re-audit workflow `38186445480`, with **+0 new identities**. Public/source/API/runtime gates remain unaffected; no exact-source revision has been found.
 
 ## Scope
 

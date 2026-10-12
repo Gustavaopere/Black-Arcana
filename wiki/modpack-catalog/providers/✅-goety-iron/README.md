@@ -34,7 +34,7 @@ Portanto: **2 Focus + 12 rituais não-Focus = 14 objetos mágicos semânticos `C
 
 **✅ 2/2 fichas comprovadas:** [FOCUS-CARDS-3.1.md](FOCUS-CARDS-3.1.md) e `focuses/`. São `FIERY_FOCUS` e `TARNISHED_FOCUS`, obtidos da auditoria do JAR hash-matched, sem inferir `ResourceLocation`, custo, classe, tipo de servo ou API.
 
-**⚠️ 12/12 rituais não-Focus permanecem contabilizados por outcomes distintos, mas sem os doze `resource paths/signatures` documentados individualmente**; não atribuir os nomes públicos de servants a recipes não comprovadas. A métrica do addon continua **14 `COUNTED_EXACT`**, fichas adicionam **+0** objetos. QA físico de Survival, settlement e balance não são promovidos.
+**✅ 12/12 rituais não-Focus agora individualizados** em [RITUAL-CARDS-3.1.md](RITUAL-CARDS-3.1.md), com [14/14 resource paths e outcomes literais](RITUAL-INVENTORY-EXACT-3.1.md) auditados no [workflow #38186445480](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38186445480) após SHA-1 igual ao físico. Dez conversões (`goety:convert_complete_tamed`), duas receitas de item (`goety:craft`) e duas receitas de aquisição de Focus (`goety:craft`), estas deduplicadas contra os dois Focuses. O `goety:jei_dummy/none` é placeholder em resultado de conversão, não objeto semântico adicional. **+0 novas identidades**; a métrica permanece 14 `COUNTED_EXACT`. QA de Survival, recipe inputs/custos, settlement, compatibilidade e API continuam ⚠️/⛔.
 
 ## Gate de registration/config
 
@@ -56,6 +56,8 @@ Logo os dois Focuses não dependem de um gate provider-specific de registration/
 - Black Arcana não cria segundo Soul ledger, segundo servant state, segundo cast pipeline nem double-processing.
 
 ## Evidência
+
+- Reauditoria text-only de **14/14** recipes, hash verificado e outcomes associados, [workflow #38186445480](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38186445480), branch audit NON-MERGE `474f17eda068883629b9017eaf5c6f37ae980e0e`; o resultado factual foi preservado em [RITUAL-INVENTORY-EXACT-3.1.md](RITUAL-INVENTORY-EXACT-3.1.md).
 
 - NON-MERGE PR #205, HEAD `1feb07a7b9c721a0851e374ebe27c8dc748191fc`;
 - structural run `34704435612`, artifact `10301537361`, digest `sha256:c39d4aff68878e34aa3a88e5bd07bf12b6b6616030b5ba20789bdff1e4fd7445`;
