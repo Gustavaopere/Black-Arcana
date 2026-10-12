@@ -1,6 +1,6 @@
 # Ars Additions — Ars Nouveau Extension Provider
 
-Status: `PHASE 2Q / SOURCE-PINNED 21.3.0 CATALOG COMPLETE / RUNTIME+PACK QA PENDING`
+Status: `COUNTED_EXACT MAGIC ROOTS 5/5 (JAR 21.3.0 + HOST ARS 5.13.1 MATCHED) / OTHER REGISTRIES SOURCE-PINNED / RUNTIME+PACK QA PENDING`
 
 ## Exact installed identity
 
@@ -66,6 +66,12 @@ Memory Crystal runtime/state semantics are confirmed, but a normal default acqui
 - Ender Source Jar uses one provider-owned Source economy keyed by owner identity; it must not become a Black Arcana resource mirror.
 - Spellweave extends Ars Thread slots onto eligible non-Ars armor; RPG Skill Tree/Black Arcana must not add a second perk-slot interpretation for the same item state.
 - Explorer/Nexus warp mechanics, Advanced Dominion linking, Memory Crystal state transfer and Haversack remote inventory all have provider-owned validation/persistence contracts and must not be reproduced by heuristic NBT or client-side inference.
+
+## Prova binária dos cinco IDs com host exato — 2026-10-12
+
+[HOST-GLYPH-IDS-EXACT-5.13.1.md](HOST-GLYPH-IDS-EXACT-5.13.1.md) + [run #38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543) fecharam o `GlyphLib.prependGlyph` no JAR físico do Ars Nouveau **5.13.1** (SHA-1 `02782d071ee5fab3b5c4b8ced67b7e1748277dfd`), junto ao Ars Additions **21.3.0** (SHA-1 `ce2440b606acb20b79a42bf7c6c24d163c93241f`). Resultado: **3 glifos** `ars_additions:glyph_retaliate`, `ars_additions:glyph_mark`, `ars_additions:glyph_recall` e **2 rituais** `ars_additions:ritual_chunk_loading`, `ars_additions:ritual_locate_structure` resolvidos e deduplicados. **1/39 providers promovido integralmente para `COUNTED_EXACT` no registro mágico; 38/39 ainda pendentes; +0 identidades novas**.
+
+⚠️ Outros registries do addon, config/Source/mana, compatibilidade runtime, aquisição e Survival seguem como evidência **source-pinned / não testada**. O resultado de `GlyphLib.prependGlyph` foi **comprovado por método binário** e não por partida de Minecraft; esta prova é de **ID de registro**, não de gameplay.
 
 ## Auditoria binária de registro — 2026-10-12
 

@@ -5,7 +5,7 @@
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — 1/39 provas estruturais do JAR físico (`Ars Additions`), 38/39 ainda não auditados nessa camada; **0/39** promoções completas `COUNTED_EXACT` |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **1/39 `COUNTED_EXACT` para os cinco registros mágicos** de Ars Additions 21.3.0 (host Ars 5.13.1 + addon SHA-1 físicos); ⚠️ 38/39 roster original não promovidos; config/Survival ainda não verificados |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |
@@ -18,9 +18,11 @@
 
 **Reconciliação de runtime (2026-10-10, após PR #740):** os PRs #735, #737, #738 e #739 reforçaram interrupção, fairness bounded, persistência de transições e cronologia do restore sem criar um segundo motor. O PR #739 passou `verify` e `stage05_qa_companion_smoke` no workflow `38088955006`; #740 alinhou `plans/STATUS.md`. O bloqueio histórico de ingresso registrado em 2026-10-01 foi resolvido **apenas em código/CI** por #733. A linha 06-P05 e as dependentes 06-P06–06-P11 seguem **PENDING / DEFERRED TO STAGE 09** para comprovação física. O denominador de catálogo não muda por isso.
 
-**Limite de promoção do ledger:** há **0 novas provas binary-exact integrais** de registry (identificação final + gates), apesar de 1/39 auditoria estrutural hash-matched; a expressão histórica de testes `0 novas provas binary-exact` continua válida **somente para provas integrais**, e não apaga a inspeção física parcial já realizada.
+**Limite da auditoria OTHER:** continuam **0 novas provas binary-exact** para os JARs fora da categoria Magic: 453 dossiês documentais não provam nenhum registry físico OTHER. Separadamente, **Ars Additions** já conta com **1/39** prova binária completa de cinco IDs mágicos após a auditoria do host. As 14 rotas de obtenção/Survival seguem condicionadas.
 
-**Atualização binária 2026-10-12:** Ars Additions 21.3.0 [documentado no JAR físico](../providers/✅-ars-additions/BINARY-REGISTRATION-21.3.0.md), com SHA-1 `ce2440b606acb20b79a42bf7c6c24d163c93241f`, 3 glyph/2 ritual registrations, 0 branches nos métodos examinados e 1 perk excluído. Runs [#38261401056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261401056) e [#38261976223](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261976223) SUCCESS. **1/39** com estrutura inspecionada, **0/39** com promoção semântica integral; a função do host, config e Survival não foram validados. Sem mudança de contagem.
+**Fechamento de registry 2026-10-12:** [Ars Additions 5/5 binário](../providers/✅-ars-additions/HOST-GLYPH-IDS-EXACT-5.13.1.md), [workflow #38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543) com os SHA-1 físico/publisher de host + addon comprovados. **1/39 `COUNTED_EXACT`** no registry mágico, **38/39** pendentes, **+0 novas identidades**; runtime, config, gameplay e Survival ainda não aprovados.
+
+**Checkpoint estrutural anterior (antes de inspecionar o host):** Ars Additions 21.3.0 [documentado no JAR físico](../providers/✅-ars-additions/BINARY-REGISTRATION-21.3.0.md), com SHA-1 `ce2440b606acb20b79a42bf7c6c24d163c93241f`, 3 glyph/2 ritual registrations, 0 branches nos métodos examinados e 1 perk excluído. Runs [#38261401056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261401056) e [#38261976223](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261976223) SUCCESS. **1/39** com estrutura inspecionada, **0/39** com promoção semântica integral; a função do host, config e Survival não foram validados. Sem mudança de contagem.
 
 ## Evidências por pendência
 

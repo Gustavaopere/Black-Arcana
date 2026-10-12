@@ -1,6 +1,12 @@
 # Ars Additions 21.3.0 — prova estrutural do registro mágico binário
 
+**Atualização 2026-10-12:** ✅ **5/5 IDs e chamadas de registro binários completos** após a prova de `GlyphLib.prependGlyph` no JAR físico do host Ars Nouveau 5.13.1. Consultar [HOST-GLYPH-IDS-EXACT-5.13.1.md](HOST-GLYPH-IDS-EXACT-5.13.1.md) e [run #38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543). **Ars Additions = `COUNTED_EXACT` para as cinco raízes mágicas, 1/39 promoções, 38/39 pendentes, +0 novos objetos; QA/Survival ⚠️.**
+
+## Registro histórico da etapa estrutural anterior
+
 Estado: **✅ 1/39 providers com prova estrutural do JAR físico / ⚠️ 0/39 promoções completas `COUNTED_EXACT`**. O ledger Ars Additions permanece **`COUNTED_SOURCE_PINNED`**, com **5** raízes já contabilizadas e **+0 novas identidades**.
+
+> Esta seção registra **o estado antes da auditoria cruzada do host**. As afirmações abaixo sobre a não resolução de `GlyphLib.prependGlyph` pertencem à etapa anterior; foram superadas pela evidência binária [host 5.13.1](HOST-GLYPH-IDS-EXACT-5.13.1.md), sem que isso comprove execução real.
 
 ## Proveniência física e auditável
 

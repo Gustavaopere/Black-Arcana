@@ -1,6 +1,6 @@
 # Ars Additions 21.3.0 — Exact Registry Inventory
 
-Status: `SOURCE-PINNED 21.3.0 / REGISTRY COUNTS NORMALIZED / RUNTIME QA PENDING`
+Status: `COUNTED_EXACT FOR 3 GLYPHS + 2 RITUALS / OTHER REGISTRIES SOURCE-PINNED / RUNTIME QA PENDING`
 
 Exact source checkpoint: `Jarva/Ars-Additions@91f102a90dc058cf40e4eac5a67a881e48b856b4`.
 
@@ -81,6 +81,10 @@ No additional block-entity DeferredRegister was found in the exact setup. Older 
 ## Custom entity types — 0
 
 `AddonSetup` does not register an EntityType DeferredRegister, and the exact source search exposes no addon EntityType registration surface. References to external/vanilla entity types in Source Spawner recipes are not provider-owned entity registrations.
+
+## Ars-facing magic registries — JAR+host exatos
+
+O [audit com ambos os JARs hash-matched](HOST-GLYPH-IDS-EXACT-5.13.1.md) e o [workflow #38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543) comprovam os **cinco IDs finais** de registry de glifos/rituais. A enumeração abaixo está **`COUNTED_EXACT`** apenas nesse subconjunto. Os contadores source-pinned de demais registries **não são promovidos**.
 
 ## Ars-facing magic registries
 

@@ -1,5 +1,9 @@
 # Semantic Magic Coverage Ledger
 
+## Latest addendum — Ars Additions exact 5/5 registry IDs, 2026-10-12
+
+[Proof using physical SHA-matched Ars Nouveau 5.13.1 and Ars Additions 21.3.0](../providers/✅-ars-additions/HOST-GLYPH-IDS-EXACT-5.13.1.md) closes **3 final glyph IDs + 2 literal ritual IDs** after the prior exact binary audit and [SUCCESS workflow #38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543). Ars Additions moves **5 existing identities** from `COUNTED_SOURCE_PINNED` to **`COUNTED_EXACT` for magic registry**; **+0** newly counted, **1/39** original candidates promoted, **38/39** still not promoted. Independent config, acquisition, game runtime and real Survival validation remain ⚠️. The global strict minimum **1851** and user-scope minimum **1849** are unchanged, with final denominator open. Older sections are historic as dated.
+
 ## Latest current-state override — 2026-10-08 physical JAR intake
 
 The physical artifacts for Traveloptics (`7b74816e...`) and Deeper and Darker (`83f7edd0...`) were provided and read-only audited. Exact-current Traveloptics static spell registration closes **33 distinct IDs** equal to the existing baseline, but Blackout survival/current-deployed Iron's/serializer evidence remains open: **+0 strict**. Deeper and Darker closes **3 current supernatural action roots**: Otherside Portal Activation and Sonorous Staff are **2 `COUNTED_EXACT`** roots (exact physical trigger and provider acquisition); Soul Elytra Boost is **1 `CONDITIONAL`** until deployed COMMON `soulElytraCooldown` is captured. **Current strict minimum: 1851 (= 1849 + 2)**. Both provider action inventories have separate **✅ catalog completion** (Traveloptics 33/33; Deeper and Darker 3/3), distinct from semantic strict eligibility. Neither promotion changes the **1851** minimum. The semantic denominator for the entire pack is still open; no global percentage is inferred. The historical 1849 figures retained below precede this direct-JAR intake. See provider direct-JAR audit checkpoints.
@@ -355,7 +359,7 @@ Arithmetic cross-check by provider family:
 |---|---|---:|---|---|
 | [Ars Nouveau](../providers/✅-ars-nouveau/README.md) | 5.13.1 | 109 | `COUNTED_SOURCE_PINNED` | 5 Forms + 13 Augments + 67 Effects + 24 rituals; arbitrary composed chains excluded |
 | [StarbuncleMania](../providers/✅-starbunclemania/README.md) | 1.5.8 | 2 | `COUNTED_EXACT` | physical SHA-1 equals exact publisher File `8778598`; exact artifact closes two unconditional Ars `AbstractEffect` glyphs plus their two packaged `ars_nouveau:glyph` acquisition recipes |
-| [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | `COUNTED_SOURCE_PINNED` | 3 glyphs + 2 rituals |
+| [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | `COUNTED_EXACT` | 3 glyphs + 2 rituals; host 5.13.1 glyph prefix directly verified; +0 previously counted |
 | [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts; 1.6.15→1.6.16 registry source is blob-identical |
 | [Ars Technica](../providers/✅-ars-technica/README.md) | 2.7.6 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 registered spell parts |
 | [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | `COUNTED_SOURCE_PINNED` | one current Malum-backed registered glyph under the physical provider set |

@@ -137,19 +137,58 @@ def _valid_collector_report(name: str, doc: dict | None, exit_code: int) -> bool
                 and isinstance(rows, list) and len(rows) == 39):
             return False
         fingerprinted = 0
+        prior_exact = 0
+        prior_exact_physical_fingerprinted = 0
+        seen = set()
         for row in rows:
             if (not isinstance(row, dict) or row.get('registry_verified') is not False
                     or row.get('survival_verified') is not False
-                    or row.get('promotion_allowed') is not False):
+                    or row.get('promotion_allowed') is not False
+                    or not isinstance(row.get('provider'), str)
+                    or row['provider'] in seen):
                 return False
-            if row.get('status') == 'FINGERPRINTED_PENDING_REGISTRY':
+            seen.add(row['provider'])
+            status = row.get('status')
+            evidence = row.get('catalog_evidence')
+            physical = row.get('physical_status')
+            if status == 'CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT':
+                # Only a separately documented, independently SHA-proven
+                # registry closure may carry this state. The new fingerprint
+                # report never verifies, promotes or backfills the registry.
+                if (row['provider'] != 'Ars Additions'
+                        or evidence != 'COUNTED_EXACT'
+                        or row.get('declared_version') != '21.3.0'
+                        or row.get('existing_semantic_objects') != 5
+                        or physical not in ('FINGERPRINTED', 'MISSING', 'UNSAFE',
+                                            'OVERSIZED', 'INVALID_JAR', 'UNREADABLE',
+                                            'CHANGED_DURING_SCAN')):
+                    return False
+                prior_exact += 1
+                if physical == 'FINGERPRINTED':
+                    prior_exact_physical_fingerprinted += 1
+            elif status == 'FINGERPRINTED_PENDING_REGISTRY':
+                if (physical != 'FINGERPRINTED'
+                        or evidence not in ('COUNTED_SOURCE_PINNED',
+                                            'COUNTED_RELEASE_BOUNDED')):
+                    return False
                 fingerprinted += 1
-            elif row.get('status') != 'PHYSICAL_ARTIFACT_BLOCKED':
+            elif status == 'PHYSICAL_ARTIFACT_BLOCKED':
+                if (physical == 'FINGERPRINTED'
+                        or evidence not in ('COUNTED_SOURCE_PINNED',
+                                            'COUNTED_RELEASE_BOUNDED')):
+                    return False
+            else:
                 return False
-        return (type(doc.get('fingerprinted_pending_registry')) is int
+        return (len(seen) == 39 and prior_exact == 1
+                and type(doc.get('catalog_exact_preexisting')) is int
+                and doc['catalog_exact_preexisting'] == 1
+                and type(doc.get('registry_proofs_remaining')) is int
+                and doc['registry_proofs_remaining'] == 38
+                and type(doc.get('fingerprinted_pending_registry')) is int
                 and doc['fingerprinted_pending_registry'] == fingerprinted
                 and type(doc.get('blocked_physical_artifact')) is int
-                and doc['blocked_physical_artifact'] == 39 - fingerprinted)
+                and doc['blocked_physical_artifact'] ==
+                    39 - fingerprinted - prior_exact_physical_fingerprinted)
 
     if name == 'deployed_config_survival':
         return (exit_code == 0 and type(doc.get('schema')) is int and doc['schema'] == 3

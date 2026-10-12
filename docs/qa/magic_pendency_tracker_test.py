@@ -974,6 +974,21 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("PENDING / DEFERRED TO STAGE 09", stage09)
         self.assertIn("crash consistency", stage09)
 
+    def test_ars_additions_exact_registry_does_not_certify_other_or_survival(self):
+        self.assertIn("1/39", self.status)
+        self.assertIn("38/39", self.status)
+        self.assertIn("0 novas provas binary-exact", self.status)
+        self.assertIn("JARs fora da categoria Magic", self.status)
+        self.assertIn("14 rotas", self.status)
+        self.assertIn("⚠️", self.status)
+        self.assertIn("COUNTED_EXACT", self.binary)
+        row = next(s for s in self.binary.splitlines()
+                   if s.startswith("| [Ars Additions]"))
+        self.assertIn("| COUNTED_EXACT |", row)
+        self.assertIn("HOST-GLYPH-IDS-EXACT-5.13.1.md", row)
+        self.assertIn("1/39", self.binary)
+        self.assertIn("38/39", self.binary)
+
     def test_historical_ritual_design_gate_preserves_original_blocker(self):
         self.assertIn("⛔ SEM INGRESSO CANÔNICO", self.stage)
         self.assertIn("RitualEngine.start(", self.stage)
