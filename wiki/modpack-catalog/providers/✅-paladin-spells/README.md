@@ -1,5 +1,7 @@
 # Paladin Spells — Iron's Spells Addon
 
+**Atualização binária 2026-10-12:** ✅ **5/5** identidades de spells `COUNTED_EXACT` **apenas no registro estático**, comprovadas no JAR oficial `8661566`, SHA-1 idêntico à modlist física `e4c6f4fa70989f0b9f1819e46e29f68d414ccbaf` e [workflow #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364). [Dossiê binário](EXACT-BINARY-SPELLS-1.1.1.md). Promoção **proposta** na campanha original: **5/39** providers com registro exato, **34/39** pendentes, **+0** magias novas; mínimos **1851 global / 1849 escopo** inalterados. O status source-pinned abaixo reflete a auditoria anterior, não mede o novo registro. ⚠️ Inscrição real do pack, os quatro blockers funcionais, config, aquisição, Survival e dedicated-server continuam sem PASS físico.
+
 Status: `INSTALLED 1.1.1 / SOURCE-PINNED / 5/5 SPELLS CATALOGED / UPSTREAM QA BLOCKERS EXPLICIT`
 
 - **JAR do pack:** `paladin_spells-1.21.1-1.1.1.jar`

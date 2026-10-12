@@ -1,5 +1,7 @@
 # Paladin Spells — technical audit 1.1.1
 
+**Adendo independente 2026-10-12:** [cinco IDs exatos de registro estático do JAR 1.1.1](EXACT-BINARY-SPELLS-1.1.1.md) auditados em [#38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364). Somente identidade/registro passam a `COUNTED_EXACT`. As fórmulas e os riscos analisados abaixo são achados de source; a inspeção de classfile não validou funcionamento, correções upstream, configuração, server boot ou Survival.
+
 ## Exact source pin
 
 - installed: `paladin_spells-1.21.1-1.1.1.jar`;
