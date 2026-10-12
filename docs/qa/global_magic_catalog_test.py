@@ -1270,9 +1270,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(3, len(exact))
+        self.assertEqual(4, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1329,9 +1329,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(3, len(exact))
+        self.assertEqual(4, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1370,6 +1370,38 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('| 0.1.3-alpha | 1 | `COUNTED_EXACT` |', line)
         self.assertIn('3/39', self.index)
         self.assertIn('36/39', self.index)
+
+    def test_dreamless_spells_119_exact_four_static_registry_ids(self):
+        provider = PROVIDERS / '✅-dreamless-spells'
+        name = 'EXACT-BINARY-SPELLS-1.1.9.md'
+        note = (provider / name).read_text(encoding='utf-8')
+        expected = (
+            'dreamless_spells:jadeskin', 'dreamless_spells:drained',
+            'dreamless_spells:dullard', 'dreamless_spells:doorway_effect',
+        )
+        for marker in (
+            '7905334', '38302406303',
+            'd51960bfb8af1aafa5d716ef9a48c3135f36b956',
+            '443506', 'STATIC_SPELL_FACTORY_INVOCATIONS=4',
+            'DEFERRED_REGISTER_HELPER_INVOCATIONS=1',
+            '4/39', '35/39', '1851', '1849', 'Survival', '+0',
+            *expected,
+        ):
+            self.assertIn(marker, note)
+        for file in ('README.md', 'TECHNICAL-AUDIT.md',
+                     'ice/jadeskin.md', 'empty/drained.md',
+                     'empty/dullard.md', 'empty/mute-doorway-effect.md'):
+            self.assertIn(name, (provider / file).read_text(encoding='utf-8'))
+        matrix = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        row = next(x for x in matrix.splitlines() if x.startswith('| [Dreamless Spells]'))
+        self.assertIn('| 1.1.9 | 4 | COUNTED_EXACT |', row)
+        ledger = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        record = next(x for x in ledger.splitlines() if x.startswith('| [Dreamless Spells]'))
+        self.assertIn('| 1.1.9 | 4 | `COUNTED_EXACT` |', record)
+        self.assertIn('4/39', self.index)
+        self.assertIn('35/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
