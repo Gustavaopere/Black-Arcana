@@ -6,7 +6,7 @@
 - CurseForge: project `1519158`, file `8485822`, NeoForge 1.21.1, publicado em 2026-07-22.
 - Notion e modlist atuais convergem no mesmo JAR/versão.
 - Source GitHub público da build 1.0.5: **não localizado**.
-- O inventário é fechado por duas evidências independentes: publicação oficial = sete spells upgradáveis; runtime real do pack = sete IDs/classes `wind_spellbooks:*` observados.
+- O inventário foi fechado inicialmente pela publicação oficial (sete spells upgradáveis) e pelos sete IDs/classes observados no runtime; a [auditoria exata](EXACT-BINARY-SPELLS-1.0.5.md) agora também comprova hash JAR físico/publicador, sete chamadas binárias e entrypoint.
 
 ## Registry observado
 
@@ -44,7 +44,7 @@ Isso prova continuidade dos spells Tornado/Tailwind na linha e que a 1.0.5 incor
 
 ## Campos deliberadamente não preenchidos
 
-Até extrair o JAR 1.0.5 ou localizar source correspondente, ficam `NÃO VERIFICADO` por spell:
+Mesmo após inspecionar o JAR exato para o registry estático, seguem `NÃO VERIFICADO` por spell, por ausência de auditoria numérica/funcional:
 
 - min/max level individual;
 - rarity;
@@ -69,4 +69,4 @@ O pack possui IronSable 1.2.0. A release do IronSable declara que `maelstrom`, `
 
 ## Estado
 
-`RELEASE-PINNED 1.0.5 / RUNTIME REGISTRY 7/7 / SEMANTIC CATALOG 7/7 / SOURCE/JAR DECOMPILATION PENDENTE`.
+`COUNTED_EXACT` para registry binário estático 7/7 / catálogo semântico 7/7; source não localizado, parâmetros numéricos, config, gameplay e Survival ⚠️. [Prova #38312284152](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38312284152).

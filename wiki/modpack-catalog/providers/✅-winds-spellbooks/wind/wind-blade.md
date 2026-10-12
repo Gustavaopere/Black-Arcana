@@ -1,5 +1,7 @@
 # Wind Blade
 
+**Registro estático:** ✅ `COUNTED_EXACT` no JAR 1.0.5; [prova binária](../EXACT-BINARY-SPELLS-1.0.5.md). Config, números e Survival ⚠️.
+
 - **ID:** `wind_spellbooks:wind_blade`
 - **Classe runtime:** `net.raptorzizi.wind_spellbooks.spells.wind.WindBladeSpell`
 - **School:** Wind

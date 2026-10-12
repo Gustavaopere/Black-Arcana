@@ -1,12 +1,14 @@
 # Provedores source/release-bounded — roteiro de verificação binária
 
+**Sexta prova independente (2026-10-12):** Wind's Spellbooks 1.0.5, [run #38312284152](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38312284152), SHA-1 físico/publicador `8744886899bc245ae147a44baa2b183689cec7da`, sete registros estáticos + bootstrap. [Dossiê](../providers/✅-winds-spellbooks/EXACT-BINARY-SPELLS-1.0.5.md). **6/39 exatos / 33/39 pendentes**, +0. Checkpoints antigos são históricos.
+
 **Quinta prova independente (2026-10-12):** Paladin Spells 1.1.1, JAR oficial SHA-1 idêntico à modlist; cinco classes e registros comprovados por Java 21. [Run #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364), [dossiê](../providers/✅-paladin-spells/EXACT-BINARY-SPELLS-1.1.1.md). Campanha **5/39** exatos, **34/39** pendentes, +0 novos. Histórico posterior ao título é preservado.
 
 **Quarta prova física independente, 2026-10-12:** Dreamless Spells 1.1.9, [run #38302406303](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38302406303), comprovou o SHA-1 físico versus JAR oficial e quatro classes/registrations de spells; [dossiê](../providers/✅-dreamless-spells/EXACT-BINARY-SPELLS-1.1.9.md). Campanha **4/39 exatos, 35/39 pendentes**, +0 novos; versões anteriores deste documento são checkpoints históricos.
 
 **Terceira prova independente (2026-10-12):** Crystal Chronicles 0.1.3-alpha, registro `crystal_chronicles:prismatic_portal` físico e publicado com SHA-1 idêntico. [Run #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874). Campanha 3/39 exatos e 36/39 condicionados. Nenhuma nova magia.
 
-**Estado atualizado 2026-10-12:** roster original congelado de **39** providers source/release-bounded. **✅ 5/39 `COUNTED_EXACT` para roots mágicas** (Ars Additions 5/5, Ars Hex 1/1 sob gate Malum, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5); **⚠️ 34/39** ainda carecem de prova binária exata. Runtime real, configuração, aquisição e Survival seguem gates independentes; **+0** novos objetos.
+**Estado atualizado 2026-10-12:** roster original de **39** providers. **✅ 6/39 `COUNTED_EXACT`** (Ars Additions 5/5, Ars Hex 1/1 sob Malum, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5 e Wind's Spellbooks 7/7); **⚠️ 33/39** pendentes. +0 novas roots; runtime, aquisição, configuração e Survival continuam gates independentes.
 
 Snapshot: `Black-Arcana/main@9141a8ed1c345db4e995e5f2aa849df2c24769b9` / sibling modlist `de80b186357cad20ba5b81892a8682777e96e35a`.
 
@@ -38,7 +40,7 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | [Legendary Spellbooks](../providers/✅-legendary-spellbooks/README.md) | 0.3.2 | 30 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Monsters & Spellbooks](../providers/✅-monsters-spellbooks/README.md) | 0.0.16.3 | 98 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Paladin Spells](../providers/✅-paladin-spells/README.md) | 1.1.1 | 5 | COUNTED_EXACT | ✅ [cinco IDs estáticos no JAR físico](../providers/✅-paladin-spells/EXACT-BINARY-SPELLS-1.1.1.md), file 8661566, SHA-1 `e4c6f4fa70989f0b9f1819e46e29f68d414ccbaf`, [run #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364); +0 novos; ⚠️ config/efeitos/Survival não testados |
-| [Wind's Spellbooks](../providers/✅-winds-spellbooks/README.md) | 1.0.5 | 7 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
+| [Wind's Spellbooks](../providers/✅-winds-spellbooks/README.md) | 1.0.5 | 7 | COUNTED_EXACT | ✅ [sete registros binários estáticos](../providers/✅-winds-spellbooks/EXACT-BINARY-SPELLS-1.0.5.md), file 8485822, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`, [run #38312284152](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38312284152); +0 novas; ⚠️ config/efeitos/Survival |
 | [Ypsilon's Fundamentalism](../providers/✅-ypsilons-fundamentalism/README.md) | 1.1.7.1 | 15 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Tunes n' Tomes](../providers/✅-tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Companions!](../providers/✅-companions/README.md) | 1.3.4 | 9 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
