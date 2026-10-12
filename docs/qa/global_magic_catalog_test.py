@@ -481,7 +481,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             self.assertIn("índice no arquivo: " + number + "/48", card)
             self.assertIn("**+0 novas identidades semânticas**", card)
             self.assertIn("COUNTED_EXACT", card)
-            self.assertIn("**NÃO VERIFICADOS individualmente**", card)
+            self.assertIn("**NÃO VERIFICADOS individualmente:**", card)
             self.assertIn("../RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md", card)
             self.assertIn(
                 f"| {i} | \x60{path}\x60 | \x60{typ}\x60 | \x60{outcome}\x60 "
