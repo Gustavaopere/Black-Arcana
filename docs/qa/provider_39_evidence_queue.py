@@ -25,7 +25,7 @@ CROSSWALK_LINE = re.compile(r'^\| (?P<provider>[^|]+) \| #\d{3} \| \x60(?P<filen
 MATRIX_LINE = re.compile(r'^\| \[(?P<provider>[^|\]]+)\]\([^|)]+\) \| (?P<version>[^|]+) \| (?P<count>\d+) \| (?P<evidence>COUNTED_SOURCE_PINNED|COUNTED_RELEASE_BOUNDED|COUNTED_EXACT) \|')
 # Only this exact previously-audited identity can appear as COUNTED_EXACT in the
 # frozen campaign. No arbitrarily supplied exact row or fingerprint is trusted.
-KNOWN_EXACT = {'Ars Additions': ('21.3.0', 5)}
+KNOWN_EXACT = {'Ars Additions': ('21.3.0', 5), 'Ars Hex': ('5.0.4b', 1)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')

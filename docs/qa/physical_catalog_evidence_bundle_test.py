@@ -83,18 +83,18 @@ class EvidenceBundleTests(unittest.TestCase):
                         source_commit=pin, expected_physical_jars=69,
                         fingerprinted_pending_registry=0,
                         blocked_physical_artifact=39,
-                        catalog_exact_preexisting=1,
-                        registry_proofs_remaining=38,
+                        catalog_exact_preexisting=2,
+                        registry_proofs_remaining=37,
                         providers=[
                             dict(
-                                provider=('Ars Additions' if i == 1 else f'Provider {i}'),
-                                catalog_evidence=('COUNTED_EXACT' if i == 1
+                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else f'Provider {i}'),
+                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2)
                                                   else 'COUNTED_SOURCE_PINNED'),
-                                declared_version=('21.3.0' if i == 1 else '1.0'),
-                                existing_semantic_objects=(5 if i == 1 else i+1),
+                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '1.0'),
+                                existing_semantic_objects=(5 if i == 1 else 1 if i == 2 else i+1),
                                 physical_status='MISSING',
                                 status=('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT'
-                                        if i == 1 else 'PHYSICAL_ARTIFACT_BLOCKED'),
+                                        if i in (1, 2) else 'PHYSICAL_ARTIFACT_BLOCKED'),
                                 registry_verified=False,
                                 survival_verified=False,
                                 promotion_allowed=False,
@@ -240,14 +240,15 @@ class EvidenceBundleTests(unittest.TestCase):
             queue = json.loads((root / 'bundle' / 'provider-39-queue.json').read_text())
             self.assertEqual(39, len(queue['providers']))
             self.assertEqual(0, queue['registry_proofs_completed'])
-            self.assertEqual(1, queue['catalog_exact_preexisting'])
-            self.assertEqual(38, queue['registry_proofs_remaining'])
+            self.assertEqual(2, queue['catalog_exact_preexisting'])
+            self.assertEqual(37, queue['registry_proofs_remaining'])
             exact = [x for x in queue['providers']
                      if x['catalog_evidence'] == 'COUNTED_EXACT']
-            self.assertEqual(1, len(exact))
-            self.assertEqual('Ars Additions', exact[0]['provider'])
-            self.assertFalse(exact[0]['registry_verified'])
-            self.assertFalse(exact[0]['promotion_allowed'])
+            self.assertEqual(2, len(exact))
+            self.assertEqual({'Ars Additions', 'Ars Hex'},
+                             {x['provider'] for x in exact})
+            self.assertTrue(all(not row['registry_verified'] and
+                                not row['promotion_allowed'] for row in exact))
 
 
     def test_rejects_success_exit_with_unrecognized_489_and_69_json(self):

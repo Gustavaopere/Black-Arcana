@@ -105,16 +105,21 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_real_frozen_campaign_has_one_existing_exact_registry(self):
+    def test_real_frozen_campaign_has_two_existing_exact_registries(self):
         matrix = mod.load_matrix()
         self.assertEqual(39, len(matrix))
-        self.assertEqual(1, sum(
+        self.assertEqual(2, sum(
             x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
         ))
         self.assertEqual(
             {'version': '21.3.0', 'semantic_objects': 5,
              'catalog_evidence': 'COUNTED_EXACT'},
             matrix['Ars Additions'],
+        )
+        self.assertEqual(
+            {'version': '5.0.4b', 'semantic_objects': 1,
+             'catalog_evidence': 'COUNTED_EXACT'},
+            matrix['Ars Hex'],
         )
 
     def test_preexisting_exact_registry_does_not_come_from_fingerprint(self):
@@ -178,6 +183,31 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
              )['provider'] = 'Ars Additions'
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
+
+    def test_two_independent_prior_exact_providers_not_report_promoted(self):
+        matrix, crosswalk, report = fixture()
+        for name, orig, version, count in (
+            ('Ars Additions', 'Provider 1', '21.3.0', 5),
+            ('Ars Hex', 'Provider 2', '5.0.4b', 1),
+        ):
+            filename = crosswalk.pop(orig)
+            matrix.pop(orig)
+            crosswalk[name] = filename
+            matrix[name] = dict(version=version, semantic_objects=count,
+                                catalog_evidence='COUNTED_EXACT')
+            next(r for r in report['entries'] if r['provider'] == orig
+                 )['provider'] = name
+        result = mod.build_queue(matrix, crosswalk, report)
+        self.assertEqual(2, result['catalog_exact_preexisting'])
+        self.assertEqual(37, result['registry_proofs_remaining'])
+        self.assertEqual(0, result['registry_proofs_completed'])
+        exact_rows = [x for x in result['providers']
+                      if x['status'] == 'CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT']
+        self.assertEqual({'Ars Additions', 'Ars Hex'},
+                         {x['provider'] for x in exact_rows})
+        self.assertTrue(all(not x['registry_verified'] and
+                            not x['promotion_allowed'] and
+                            not x['survival_verified'] for x in exact_rows))
 
     def test_output_does_not_leak_archive_bodies_or_infer_survival(self):
         matrix, crosswalk, report = fixture()
