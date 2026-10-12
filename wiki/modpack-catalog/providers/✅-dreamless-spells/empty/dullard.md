@@ -1,5 +1,7 @@
 # Dullard
 
+**Status do registro:** ✅ `COUNTED_EXACT` para ID estático no JAR físico — [evidência](../EXACT-BINARY-SPELLS-1.1.9.md) ([run #38302406303](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38302406303)). As fórmulas, efeitos, gate, custos e duração abaixo continuam source-pinned, sem QA física de execução/Survival.
+
 - ID: `dreamless_spells:dullard`
 - escola: Empty (`dreamless_spells:empty`)
 - rarity: Legendary

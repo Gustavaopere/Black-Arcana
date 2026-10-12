@@ -1,5 +1,7 @@
 # Dreamless Spells
 
+**Adendo binário 2026-10-12: ✅ 4/4 spells `COUNTED_EXACT` para identidade estática de registro.** [Prova física]( EXACT-BINARY-SPELLS-1.1.9.md ) e [run #38302406303](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38302406303): JAR oficial 7905334 corresponde ao SHA-1 do pack `d51960bfb8af1aafa5d716ef9a48c3135f36b956` e registra `jadeskin`, `drained`, `dullard`, `doorway_effect` uma vez cada. Na campanha 39: **4/39 exatos / 35/39 pendentes**; +0 novas identidades; mínimos **1851/1849** inalterados. Source pin abaixo conserva seu escopo histórico. ⚠️ `Emptied`, Counterspell, Empty Rune, configuração, casting e Survival não validados.
+
 ## Estado canônico
 
 - mod id: `dreamless_spells`

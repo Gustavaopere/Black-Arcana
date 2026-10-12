@@ -1,5 +1,7 @@
 # 39 providers — fila de evidências para validação binária
 
+**Checkpoint 2026-10-12:** a [prova de Dreamless Spells 1.1.9](../../wiki/modpack-catalog/providers/✅-dreamless-spells/EXACT-BINARY-SPELLS-1.1.9.md) ([run #38302406303](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38302406303)) eleva as provas **independentes** a **4/39**; **35/39** ainda exigem JAR/registro. +0 magias, mínimos 1851/1849. O fingerprint collector não promove nenhuma delas e continua com `registry_proofs_completed=0`; números dos checkpoints antigos abaixo são históricos.
+
 **Checkpoint 2026-10-12:** a [prova binária independente de Crystal Chronicles 0.1.3-alpha](../../wiki/modpack-catalog/providers/✅-crystal-chronicles/EXACT-BINARY-SPELL-0.1.3-alpha.md) ([run #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874)) eleva para **3/39** os registries estáticos exatos documentados (Ars Additions, Ars Hex, Crystal Chronicles). **36/39** pendentes, +0 novos, mínimos 1851/1849. A saída do fingerprint collector ainda relata `registry_proofs_completed=0` porque nunca comprova registry por si. As linhas originais abaixo são históricas.
 
 **Escopo:** unificar as 39 entradas `COUNTED_SOURCE_PINNED` ou `COUNTED_RELEASE_BOUNDED` com os 69 nomes exatos de JAR do crosswalk e o relatório read-only de fingerprints. Fonte física do sibling: `de80b186357cad20ba5b81892a8682777e96e35a` (snapshot 587 posições). O programa **não** lê registry, não inspeciona binários adicionais e não certifica conteúdo semântico.
