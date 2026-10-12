@@ -9,14 +9,14 @@ Estado: **✅ CATALOGADO / `COUNTED_EXACT`** pela auditoria de JAR hash-matched;
 - **Posição na lista exata:** 24/28 (ordem editorial, não ID/ordem de carregamento).
 - **Artefato instalado e auditado:** `goety_cataclysm-1.21.1-1.8.2.jar`, Minecraft 1.21.1 / NeoForge, SHA-1 físico = publisher `4e3052a082200371b36e1a88fdce05e294d82757`, CurseForge project/file `1224214 / 8518940`.
 - **Registro:** um dos 28 Focus holders incondicionais no initializer auditado (0 branches, 0 referências a `GCSpellConfig` e 0 flags enable/disable-like registradas na verificação restrita).
-- **Aquisição documentada:** cada um dos 28 Focuses possui **uma receita de aquisição no JAR**; o conjunto total é 24 `goety:ritual` e 4 crafting normal. **Qual dessas duas vias pertence a este Focus individual: NÃO VERIFICADO** a partir do inventário preservado.
+- **Rota de aquisição atribuída:** ✅ `goety:ritual` comprovado individualmente pelo path literal `data/goety_cataclysm/recipe/focus/sunken_tribune_focus.json`, outcome `goety_cataclysm:sunken_tribune_focus`. A receita é **aquisição** deste Focus já contado, não ação mágica adicional.
 - **Contagem semântica:** um dos **28 `COUNTED_EXACT` já contabilizados** do addon; esta ficha adiciona **+0 novas identidades**. A receita de aquisição não se soma novamente como um ritual independente.
 
 ## Limites da evidência
 
 - **Classe concreta da magia, registry ID runtime, escola, efeito real, Soul Energy numérica, cast time, cooldown, alcance, targeting, dano, invocações, world safety, recipe ingredients, research e condições reais de Survival:** **NÃO VERIFICADO nesta ficha**. A denominação do holder não comprova essas mecânicas.
 - **Evidência de componente:** o JAR exato comprova o Focus e a presença de aquisição em pacote. O conteúdo do modpack com configuração implantada, gameplay do cliente e servidor e interop com as demais integrações permanece **⚠️ pendente de QA físico**.
-- **Rituais não-Focus:** 24 outcomes próprios adicionais foram encerrados **no agregado** (10 conversões, 13 summons/thralls, 1 fabricator), mas seus 24 caminhos e signatures individuais **não estão preservados** neste inventário. Não criar fichas individuais ou presumir IDs para esses rituais sem nova evidência.
+- **Rituais não-Focus:** ✅ 24/24 fichas individuais em [RITUAL-CARDS-1.21.1-1.8.2.md](../RITUAL-CARDS-1.21.1-1.8.2.md), com [48/48 recipe paths e outcomes](../RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md) hash-matched. São 10 conversões, 13 summons/thralls, 1 fabricator; nenhuma dessas 24 receitas é aquisição deste Focus.
 
 ## Autoridade e clean-room
 

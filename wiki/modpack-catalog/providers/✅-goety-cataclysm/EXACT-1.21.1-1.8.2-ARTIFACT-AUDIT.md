@@ -17,6 +17,10 @@ Physical SHA-1 and publisher artifact SHA-1 are identical: `4e3052a082200371b36e
 
 Semantic disposition: **+52 = 28 Focus + 24 non-Focus rituals**.
 
+## Exact ritual resource paths and outcomes — 2026-10-11
+
+O [workflow de reauditoria SHA-matched #38190078609](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38190078609) produziu [48/48 paths, subtipos e outcomes textuais](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md), com **24** receitas de Focus deduplicadas e [24 rituais não-Focus individualizados](RITUAL-CARDS-1.21.1-1.8.2.md). As categorias exatas são 10 conversions (9 `goety:convert_tamed`, 1 `goety:convert_complete_tamed`), 13 summons `goety:summon_tamed` e um fabricator `goety:craft`. `goety:jei_dummy/none` é placeholder. Os quatro Focuses sem path ritual pertencem ao grupo crafting comum **por exclusão** da prova agregada, sem recipe paths de crafting comprovados. **+0 identidades novas**, 52 mantidas.
+
 ## Evidence chain
 
 NON-MERGE PR #206. Structural `34704449593 / 10301367858`; semantic `34704823100 / 10301168646`; registration gate `34705567753 / 10301603762`.
