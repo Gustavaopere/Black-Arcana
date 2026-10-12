@@ -105,6 +105,80 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
+    def test_real_frozen_campaign_has_one_existing_exact_registry(self):
+        matrix = mod.load_matrix()
+        self.assertEqual(39, len(matrix))
+        self.assertEqual(1, sum(
+            x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
+        ))
+        self.assertEqual(
+            {'version': '21.3.0', 'semantic_objects': 5,
+             'catalog_evidence': 'COUNTED_EXACT'},
+            matrix['Ars Additions'],
+        )
+
+    def test_preexisting_exact_registry_does_not_come_from_fingerprint(self):
+        matrix, crosswalk, report = fixture()
+        original = 'Provider 1'
+        filename = crosswalk.pop(original)
+        row = matrix.pop(original)
+        self.assertEqual(2, row['semantic_objects'])
+        matrix['Ars Additions'] = {
+            'version': '21.3.0', 'semantic_objects': 5,
+            'catalog_evidence': 'COUNTED_EXACT',
+        }
+        crosswalk['Ars Additions'] = filename
+        next(r for r in report['entries'] if r['provider'] == original
+             )['provider'] = 'Ars Additions'
+        output = mod.build_queue(matrix, crosswalk, report)
+        self.assertEqual(39, len(output['providers']))
+        self.assertEqual(1, output['catalog_exact_preexisting'])
+        self.assertEqual(38, output['registry_proofs_remaining'])
+        self.assertEqual(0, output['registry_proofs_completed'])
+        self.assertEqual(39, output['blocked_physical_artifact'])
+        item = next(x for x in output['providers']
+                    if x['provider'] == 'Ars Additions')
+        self.assertEqual('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT',
+                         item['status'])
+        self.assertEqual('MISSING', item['physical_status'])
+        self.assertFalse(item['registry_verified'])
+        self.assertFalse(item['promotion_allowed'])
+        self.assertFalse(item['survival_verified'])
+        # A later arbitrary fingerprint is still not the independent proof.
+        report_row = next(x for x in report['entries']
+                          if x['provider'] == 'Ars Additions')
+        report_row.update(status='FINGERPRINTED', sha1='a'*40,
+                          sha256='b'*64, size_bytes=300)
+        report['counts']['FINGERPRINTED'] = 1
+        report['counts']['MISSING'] = 68
+        after = mod.build_queue(matrix, crosswalk, report)
+        exact = next(x for x in after['providers']
+                     if x['provider'] == 'Ars Additions')
+        self.assertEqual('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT',
+                         exact['status'])
+        self.assertFalse(exact['registry_verified'])
+        self.assertFalse(exact['promotion_allowed'])
+        self.assertEqual(1, after['catalog_exact_preexisting'])
+        self.assertEqual(38, after['registry_proofs_remaining'])
+
+    def test_exact_registry_label_requires_known_identity_and_exact_count(self):
+        matrix, crosswalk, report = fixture()
+        matrix['Provider 0']['catalog_evidence'] = 'COUNTED_EXACT'
+        with self.assertRaises(ValueError):
+            mod.build_queue(matrix, crosswalk, report)
+        matrix, crosswalk, report = fixture()
+        filename = crosswalk.pop('Provider 1')
+        matrix.pop('Provider 1')
+        matrix['Ars Additions'] = {
+            'version': '21.3.0', 'semantic_objects': 6,
+            'catalog_evidence': 'COUNTED_EXACT',
+        }
+        crosswalk['Ars Additions'] = filename
+        next(r for r in report['entries'] if r['provider'] == 'Provider 1'
+             )['provider'] = 'Ars Additions'
+        with self.assertRaises(ValueError):
+            mod.build_queue(matrix, crosswalk, report)
+
     def test_output_does_not_leak_archive_bodies_or_infer_survival(self):
         matrix, crosswalk, report = fixture()
         report['entries'][0]['bogus_payload'] = 'SECRET FROM THIRD PARTY JAR'
