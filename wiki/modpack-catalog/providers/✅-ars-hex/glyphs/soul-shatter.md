@@ -1,6 +1,6 @@
 # Ars Hex 5.0.4b — Soul Shatter
 
-Estado: **✅ `COUNTED_SOURCE_PINNED` — ficha da única identidade de glyph própria do provider**; **⚠️ JAR/registro em runtime e gameplay físico condicionados**.
+Estado: **✅ `COUNTED_EXACT` para o único ID de glyph comprovado no JAR físico**; **⚠️ execução/configuração/recipe/Survival condicionados**.
 
 ## Identidade e condicionamento
 
@@ -15,7 +15,11 @@ Estado: **✅ `COUNTED_SOURCE_PINNED` — ficha da única identidade de glyph pr
 - **Dano e escola:** resolução por helper Ars `attemptDamage(...)` usando `VOODOO` de Malum. Enquanto Ars Elemental estiver carregado (como no pack), a escola source-selecionada é Necromancy. Se Ars Elemental estiver ausente, a escola herdada não foi redefinida artificialmente.
 - **Target exclusion:** o efeito não aplica sua resolução de dano a `ItemEntity`.
 - **Receita de aprendizado gerada no source e condicionada a Malum:** `ars_nouveau:glyph`, XP 55, insumos `ars_nouveau:manipulation_essence`, `malum:wicked_spirit` e `malum:soul_stained_steel_sword`. **Não** equivale a prova de receita disponível/funcional sob os datapacks e configs efetivos do pack.
-- **Contagem:** **uma identidade semântica `COUNTED_SOURCE_PINNED` já contabilizada** no ledger do Ars Hex; criar esta ficha = **+0 novas identidades**.
+- **Contagem:** **1/1 `COUNTED_EXACT` no registry binário** pelo [audit físico #38291974275](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38291974275); o objeto já estava contabilizado: **+0 novas identidades**.
+
+## Fechamento de identidade posterior (2026-10-12)
+
+A [auditoria binária física](../EXACT-BINARY-GLYPH-5.0.4b.md) comprova `EffectSoulShatter.INSTANCE`, o literal `glyph_soul_shatter`, `ArsHex.prefix`, `GlyphRegistry.registerSpell` e o gate `ModList.isLoaded("malum")`. O claim histórico de “inspeção do JAR pendente” nesta ficha referia-se ao checkpoint source-pinned anterior; não se aplica mais à **identificação estática**. Continua válida a pendência de execução física e aquisição.
 
 ## Limites causais
 

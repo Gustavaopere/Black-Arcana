@@ -1,6 +1,10 @@
 # Ars Hex 5.0.4b
 
-Status: `PHASE 2W — SOURCE CATALOG CLOSED / INSTALLED RUNTIME + CONFIG QA OPEN`
+Status: `COUNTED_EXACT GLYPH 1/1 (PHYSICAL JAR REGISTRY) / INSTALLED FULL-MODPACK RUNTIME + CONFIG + SURVIVAL QA OPEN`
+
+## Fechamento binário posterior — 2026-10-12
+
+O [inventário exato de Soul Shatter](EXACT-BINARY-GLYPH-5.0.4b.md) registra **1/1 identidade `COUNTED_EXACT`**, gate físico no JAR `ModList.isLoaded("malum")`, e **3 perks Malum excluídas**. O [audit SHA-matched #38291974275](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38291974275) examinou diretamente o JAR 5.0.4b instalado/publicado. **2/39 providers originais promovidos** (Ars Additions + Ars Hex), **37/39 pendentes**, sem magias novas. Malum está na modlist; **runtime real, config, recipe, damage/spirits e Survival continuam não testados**.
 
 ## Exact installed identity
 

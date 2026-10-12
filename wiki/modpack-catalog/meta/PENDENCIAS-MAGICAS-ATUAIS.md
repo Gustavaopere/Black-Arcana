@@ -5,7 +5,7 @@
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **1/39 `COUNTED_EXACT` para os cinco registros mágicos** de Ars Additions 21.3.0 (host Ars 5.13.1 + addon SHA-1 físicos); ⚠️ 38/39 roster original não promovidos; config/Survival ainda não verificados |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **2/39 `COUNTED_EXACT` de registro mágico** (Ars Additions 5/5 e Ars Hex 1/1 condicional a `malum`); ⚠️ **37/39** pendentes; nenhum PASS de execução/Survival |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |
@@ -20,7 +20,9 @@
 
 **Limite da auditoria OTHER:** continuam **0 novas provas binary-exact** para os JARs fora da categoria Magic: 453 dossiês documentais não provam nenhum registry físico OTHER. Separadamente, **Ars Additions** já conta com **1/39** prova binária completa de cinco IDs mágicos após a auditoria do host. As 14 rotas de obtenção/Survival seguem condicionadas.
 
-**Fechamento de registry 2026-10-12:** [Ars Additions 5/5 binário](../providers/✅-ars-additions/HOST-GLYPH-IDS-EXACT-5.13.1.md), [workflow #38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543) com os SHA-1 físico/publisher de host + addon comprovados. **1/39 `COUNTED_EXACT`** no registry mágico, **38/39** pendentes, **+0 novas identidades**; runtime, config, gameplay e Survival ainda não aprovados.
+**Segundo fecho binário 2026-10-12:** [Ars Hex 5.0.4b, único glyph](../providers/✅-ars-hex/EXACT-BINARY-GLYPH-5.0.4b.md), SHA-1 físico `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`, [workflow #38291974275](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38291974275) SUCCESS. A construção `ars_hex:glyph_soul_shatter` e o gate `malum` foram auditados diretamente no JAR e Malum está na modlist. **2/39 `COUNTED_EXACT` para registro, 37/39 pendentes, +0 novos; 14 rotas Survival seguem ⚠️**.
+
+**Checkpoint Ars Additions anterior — registro 2026-10-12:** [Ars Additions 5/5 binário](../providers/✅-ars-additions/HOST-GLYPH-IDS-EXACT-5.13.1.md), [workflow #38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543) com os SHA-1 físico/publisher de host + addon comprovados. **1/39 `COUNTED_EXACT`** no registry mágico, **38/39** pendentes, **+0 novas identidades**; runtime, config, gameplay e Survival ainda não aprovados.
 
 **Checkpoint estrutural anterior (antes de inspecionar o host):** Ars Additions 21.3.0 [documentado no JAR físico](../providers/✅-ars-additions/BINARY-REGISTRATION-21.3.0.md), com SHA-1 `ce2440b606acb20b79a42bf7c6c24d163c93241f`, 3 glyph/2 ritual registrations, 0 branches nos métodos examinados e 1 perk excluído. Runs [#38261401056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261401056) e [#38261976223](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38261976223) SUCCESS. **1/39** com estrutura inspecionada, **0/39** com promoção semântica integral; a função do host, config e Survival não foram validados. Sem mudança de contagem.
 

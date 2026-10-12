@@ -1,5 +1,9 @@
 # Semantic Magic Coverage Ledger
 
+## Latest addendum — Ars Hex exact 1/1 conditional registry ID, 2026-10-12
+
+Ars Hex 5.0.4b [exact publisher SHA-matched binary audit](../providers/✅-ars-hex/EXACT-BINARY-GLYPH-5.0.4b.md) [#38291974275](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38291974275) verified `ArsHex` constructor bootstrap, `malum`-conditional single call to `GlyphRegistry.registerSpell`, literal `ArsHex.prefix("glyph_soul_shatter")` and a single glyph class. Physical Malum installed by sibling modlist, without asserting full assembled server compatibility. Existing **one** Ars Hex glyph moves `COUNTED_SOURCE_PINNED → COUNTED_EXACT` for registry identity, **+0 newly counted**, original 39-provider campaign **2/39 promoted / 37/39 open**. **1851 global / 1849 user-scope** minimum unchanged; config, acquisition, Soul Shatter effects, and Survival remain unaccepted.
+
 ## Latest addendum — Ars Additions exact 5/5 registry IDs, 2026-10-12
 
 [Proof using physical SHA-matched Ars Nouveau 5.13.1 and Ars Additions 21.3.0](../providers/✅-ars-additions/HOST-GLYPH-IDS-EXACT-5.13.1.md) closes **3 final glyph IDs + 2 literal ritual IDs** after the prior exact binary audit and [SUCCESS workflow #38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543). Ars Additions moves **5 existing identities** from `COUNTED_SOURCE_PINNED` to **`COUNTED_EXACT` for magic registry**; **+0** newly counted, **1/39** original candidates promoted, **38/39** still not promoted. Independent config, acquisition, game runtime and real Survival validation remain ⚠️. The global strict minimum **1851** and user-scope minimum **1849** are unchanged, with final denominator open. Older sections are historic as dated.
@@ -362,7 +366,7 @@ Arithmetic cross-check by provider family:
 | [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | `COUNTED_EXACT` | 3 glyphs + 2 rituals; host 5.13.1 glyph prefix directly verified; +0 previously counted |
 | [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts; 1.6.15→1.6.16 registry source is blob-identical |
 | [Ars Technica](../providers/✅-ars-technica/README.md) | 2.7.6 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 registered spell parts |
-| [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | `COUNTED_SOURCE_PINNED` | one current Malum-backed registered glyph under the physical provider set |
+| [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | `COUNTED_EXACT` | one Malum-gated Soul Shatter glyph, physically SHA-matched binary registry ID, +0 new |
 | [Ars Zero](../providers/✅-ars-zero/README.md) | 2.0.2 | 12 | `COUNTED_RELEASE_BOUNDED` | 12 current unique glyph capabilities; disabled copied AOE/Amplifier variants excluded |
 | [Ars Elemental](../providers/✅-ars-elemental/README.md) | 0.7.10.1 | 47 | `COUNTED_SOURCE_PINNED` | 39 production spell parts + 8 rituals |
 | [Ars Morph](../providers/✅-ars-morph/README.md) | 2.0.0 | 0 | `CURRENT_PHYSICAL_ABSENT` | historical source catalog closes 8 identities, but the current physical snapshot contains no `ars_morph` JAR; +0 current strict |
