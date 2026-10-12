@@ -1213,11 +1213,78 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         original = [line for line in tracker.splitlines()
                     if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(original))
-        self.assertIn("COUNTED_SOURCE_PINNED", original[1])
+        self.assertIn("COUNTED_EXACT", original[1])
         for f in ("README.md", "REGISTRIES.md"):
             self.assertIn(name, (provider / f).read_text(encoding="utf-8"))
         self.assertIn(name, self.index)
-        self.assertIn("0/39", self.index)
+        self.assertIn("1/39", self.index)
+
+    def test_ars_additions_2130_five_exact_ids_with_host_5131(self):
+        provider = PROVIDERS / "✅-ars-additions"
+        name = "HOST-GLYPH-IDS-EXACT-5.13.1.md"
+        contents = (provider / name).read_text(encoding="utf-8")
+        final_rows = re.findall(
+            r"^\| ([1-5]) \| \x60(GLYPH|RITUAL)\x60 "
+            r"\| \x60([A-Za-z]+)\x60 "
+            r"\| \x60(ars_additions:[a-z0-9_]+)\x60 "
+            r"\| \x60([a-z_]+)\x60 \|$",
+            contents, re.MULTILINE,
+        )
+        expected = [
+            ("1", "GLYPH", "MethodRetaliate",
+             "ars_additions:glyph_retaliate", "host_prefix_verified"),
+            ("2", "GLYPH", "EffectMark",
+             "ars_additions:glyph_mark", "host_prefix_verified"),
+            ("3", "GLYPH", "MethodRecall",
+             "ars_additions:glyph_recall", "host_prefix_verified"),
+            ("4", "RITUAL", "RitualChunkLoading",
+             "ars_additions:ritual_chunk_loading", "direct_resource_location"),
+            ("5", "RITUAL", "RitualLocateStructure",
+             "ars_additions:ritual_locate_structure", "direct_resource_location"),
+        ]
+        self.assertEqual(expected, final_rows)
+        self.assertEqual(5, len({r[3] for r in final_rows}))
+        self.assertEqual(3, sum(r[1] == "GLYPH" for r in final_rows))
+        self.assertEqual(2, sum(r[1] == "RITUAL" for r in final_rows))
+        for s in (
+            "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+            "ce2440b606acb20b79a42bf7c6c24d163c93241f",
+            "38266741543", "20107711", "1458261",
+            "**✅ 5/5 \x60COUNTED_EXACT\x60 (registro estático).**",
+            "**1/39 encerrada para identidade binária**",
+            "**38/39 ainda sem prova completa**",
+            "**+0** novas",
+            "**1851 mínimo global / 1849 mínimo no escopo**",
+        ):
+            self.assertIn(s, contents)
+        self.assertIn("não é uma sexta identidade mágica", contents)
+        self.assertIn("⚠️ QA independente não realizada", contents)
+        index = (provider / "README.md").read_text(encoding="utf-8")
+        self.assertIn(name, index)
+        reg = (provider / "REGISTRIES.md").read_text(encoding="utf-8")
+        self.assertIn(name, reg)
+        tracker = (ROOT / "wiki/modpack-catalog/meta" /
+                   "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md"
+                   ).read_text(encoding="utf-8")
+        providers = [line for line in tracker.splitlines()
+                     if line.startswith("| [") and line.count(" | ") >= 4]
+        self.assertEqual(39, len(providers))
+        exact = [row for row in providers if "| COUNTED_EXACT |" in row]
+        self.assertEqual(1, len(exact))
+        self.assertTrue(exact[0].startswith("| [Ars Additions]"))
+        other = (ROOT / "wiki/modpack-catalog/meta" /
+                 "PENDENCIAS-MAGICAS-ATUAIS.md").read_text(encoding="utf-8")
+        self.assertIn("0 novas provas binary-exact", other)
+        self.assertIn("JARs fora da categoria Magic", other)
+        self.assertIn("1/39", other)
+        self.assertIn("38/39", other)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        entry = next(row for row in ledger.splitlines()
+                     if row.startswith("| [Ars Additions]"))
+        self.assertIn("| 21.3.0 | 5 | \x60COUNTED_EXACT\x60 |", entry)
+        self.assertIn(name, ledger)
+        self.assertIn(name, self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
