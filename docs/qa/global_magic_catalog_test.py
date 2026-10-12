@@ -1270,14 +1270,17 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(1, len(exact))
-        self.assertTrue(exact[0].startswith("| [Ars Additions]"))
+        self.assertEqual(2, len(exact))
+        self.assertEqual(
+            {"Ars Additions", "Ars Hex"},
+            {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
+        )
         other = (ROOT / "wiki/modpack-catalog/meta" /
                  "PENDENCIAS-MAGICAS-ATUAIS.md").read_text(encoding="utf-8")
         self.assertIn("0 novas provas binary-exact", other)
         self.assertIn("JARs fora da categoria Magic", other)
-        self.assertIn("1/39", other)
-        self.assertIn("38/39", other)
+        self.assertIn("2/39", other)
+        self.assertIn("37/39", other)
         ledger = (ROOT / "wiki/modpack-catalog/meta" /
                   "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
         entry = next(row for row in ledger.splitlines()
