@@ -1,0 +1,51 @@
+name: Audit physical Ars Nouveau 5.13.1 GlyphLib vs Ars Additions 21.3.0
+on:
+  push:
+    branches: [audit/ars-additions-2130-host-5131-glyphlib-exact-20261012]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host_glyph_id_audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download exact publisher JARs and reject SHA drift
+        shell: bash
+        run: |
+          set -euo pipefail
+          fetch_exact() {
+            local project="$1" file="$2" filename="$3" sha="$4"
+            local target="$RUNNER_TEMP/$filename"
+            local a="${file:0:4}" b="${file:4:3}"
+            local urls=(
+              "https://www.curseforge.com/api/v1/mods/$project/files/$file/download"
+              "https://mediafilez.forgecdn.net/files/$a/$b/$filename"
+              "https://edge.forgecdn.net/files/$a/$b/$filename"
+            )
+            local found=0
+            for url in "${urls[@]}"; do
+              rm -f "$target"
+              if curl -fLSs --retry 2 --connect-timeout 15 --max-time 180 "$url" -o "$target"; then
+                if [[ "$(sha1sum "$target" | awk '{print $1}')" == "$sha" ]]; then found=1; break; fi
+              fi
+            done
+            if [[ "$found" != 1 ]]; then echo "EXACT HASH UNAVAILABLE: $filename" >&2; return 1; fi
+          }
+          fetch_exact 401955 8721482 ars_nouveau-1.21.1-5.13.1.jar 02782d071ee5fab3b5c4b8ced67b7e1748277dfd
+          fetch_exact 974408 7646325 ars_additions-1.21.1-21.3.0.jar ce2440b606acb20b79a42bf7c6c24d163c93241f
+      - name: Verify exact host prefix semantics and addon symbolic IDs
+        env:
+          HOST_JAR: ${{ runner.temp }}/ars_nouveau-1.21.1-5.13.1.jar
+          ADDON_JAR: ${{ runner.temp }}/ars_additions-1.21.1-21.3.0.jar
+        run: python3 .github/ars_additions_host_glyphlib_5131_audit.py
+      - name: Audit remains text-only
+        run: |
+          test ! -e ./ars_nouveau-1.21.1-5.13.1.jar
+          test ! -e ./ars_additions-1.21.1-21.3.0.jar
