@@ -1,6 +1,6 @@
 # Provedores source/release-bounded — roteiro de verificação binária
 
-**Estado atualizado 2026-10-12:** roster congelado dos **39** providers originalmente source/release-bounded: **✅ 1/39 `COUNTED_EXACT` para as raízes mágicas** (Ars Additions, 5/5 IDs binários host+addon), **⚠️ 38/39 não promovidos**. Runtime real/configuração/Survival continuam gates independentes; nenhuma contagem nova.
+**Estado atualizado 2026-10-12:** roster original congelado de **39** providers source/release-bounded. **✅ 2/39 `COUNTED_EXACT` para roots mágicas** (Ars Additions 5/5, Ars Hex 1/1 sob gate físico Malum); **⚠️ 37/39** ainda carecem de prova binária exata. Runtime real, configuração, aquisição e Survival seguem gates independentes; **+0** novos objetos.
 
 Snapshot: `Black-Arcana/main@9141a8ed1c345db4e995e5f2aa849df2c24769b9` / sibling modlist `de80b186357cad20ba5b81892a8682777e96e35a`.
 
@@ -12,7 +12,7 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | COUNTED_EXACT | ✅ [cinco IDs binários finais (host Ars 5.13.1 + addon 21.3.0)](../providers/✅-ars-additions/HOST-GLYPH-IDS-EXACT-5.13.1.md), ambos JARs SHA físico/pub verificados [#38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543); 3 glifos + 2 rituais, 1 perk não contada; +0. ⚠️ config/Survival/runtime não aceitos |
 | [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Ars Technica](../providers/✅-ars-technica/README.md) | 2.7.6 | 11 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
-| [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
+| [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | COUNTED_EXACT | ✅ [1/1 glifo `ars_hex:glyph_soul_shatter` de registry físico exato](../providers/✅-ars-hex/EXACT-BINARY-GLYPH-5.0.4b.md); [run #38291974275](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38291974275), SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`; condicionado a `ModList.isLoaded(malum)`, Malum instalado; 3 perks excluídas, +0; ⚠️ runtime/Survival não testados |
 | [Ars Zero](../providers/✅-ars-zero/README.md) | 2.0.2 | 12 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Ars Elemental](../providers/✅-ars-elemental/README.md) | 0.7.10.1 | 47 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Ars 'n' Spells](../providers/✅-ars-n-spells/README.md) | 3.3.4 | 5 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
@@ -47,6 +47,10 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
+
+## Fechamento condicional do Ars Hex — segundo provider binário, 2026-10-12
+
+[Run #38291974275](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38291974275) extraiu só contagens/ID/path do JAR exato Ars Hex 5.0.4b após comparação criptográfica com a modlist; comprovados **1 glyph**, `malum` gate, registro Ars `GlyphRegistry.registerSpell`, três perks fora da contagem. [Dossiê exato](../providers/✅-ars-hex/EXACT-BINARY-GLYPH-5.0.4b.md). Campanha original agora **2/39 `COUNTED_EXACT` / 37/39** pendentes. Isso não prova carregamento integral de Malum/Ars nem aquisições/Survival e não acrescenta identidade mágica.
 
 ## Fechamento do host binário — Ars Additions 21.3.0, 2026-10-12
 

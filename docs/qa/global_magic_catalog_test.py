@@ -863,7 +863,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("GLYPH-CARDS-0.7.10.1.md", readme)
         self.assertIn("RITUAL-CARDS-0.7.10.1.md", readme)
 
-    def test_ars_hex_one_source_pinned_glyph_card(self):
+    def test_ars_hex_one_exact_binary_glyph_card(self):
         provider = PROVIDERS / "✅-ars-hex"
         source = (provider / "GLYPHS.md").read_text(encoding="utf-8")
         registry = (provider / "REGISTRIES.md").read_text(encoding="utf-8")
@@ -881,7 +881,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                       "limite explícito de Amplify 2", "XP 55", "VOODOO",
                       "malum:wicked_spirit", "malum:soul_stained_steel_sword"):
             self.assertIn(field, card)
-        self.assertIn("COUNTED_SOURCE_PINNED", card)
+        self.assertIn("COUNTED_EXACT", card)
         self.assertIn("**+0 novas identidades**", card)
         self.assertIn("**⚠️ NÃO VERIFICADO no runtime físico:**", card)
         self.assertIn("não implementa fórmula/RNG explícito de spirit-release", card)
@@ -1270,20 +1270,79 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(1, len(exact))
-        self.assertTrue(exact[0].startswith("| [Ars Additions]"))
+        self.assertEqual(2, len(exact))
+        self.assertEqual(
+            {"Ars Additions", "Ars Hex"},
+            {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
+        )
         other = (ROOT / "wiki/modpack-catalog/meta" /
                  "PENDENCIAS-MAGICAS-ATUAIS.md").read_text(encoding="utf-8")
         self.assertIn("0 novas provas binary-exact", other)
         self.assertIn("JARs fora da categoria Magic", other)
-        self.assertIn("1/39", other)
-        self.assertIn("38/39", other)
+        self.assertIn("2/39", other)
+        self.assertIn("37/39", other)
         ledger = (ROOT / "wiki/modpack-catalog/meta" /
                   "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
         entry = next(row for row in ledger.splitlines()
                      if row.startswith("| [Ars Additions]"))
         self.assertIn("| 21.3.0 | 5 | \x60COUNTED_EXACT\x60 |", entry)
         self.assertIn(name, ledger)
+        self.assertIn(name, self.index)
+
+    def test_ars_hex_504b_single_conditional_physical_binary_registry(self):
+        provider = PROVIDERS / "✅-ars-hex"
+        name = "EXACT-BINARY-GLYPH-5.0.4b.md"
+        note = (provider / name).read_text(encoding="utf-8")
+        entries = re.findall(
+            r"^\| (1) \| \x60(ars_hex)\x60 \| \x60(EffectSoulShatter)\x60 "
+            r"\| \x60(ars_hex:glyph_soul_shatter)\x60 "
+            r"\| \x60(ModList\.isLoaded\(malum\))\x60 "
+            r"\| \x60(EXACT_BINARY_STATIC)\x60 \|$",
+            note, re.MULTILINE,
+        )
+        self.assertEqual([(
+            "1", "ars_hex", "EffectSoulShatter",
+            "ars_hex:glyph_soul_shatter", "ModList.isLoaded(malum)",
+            "EXACT_BINARY_STATIC",
+        )], entries)
+        for marker in (
+            "38291974275",
+            "2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4",
+            "273389",
+            "**2/39**", "**37/39**",
+            "**+0** novos objetos",
+            "PerkRegistry.registerPerk",
+            "SoulWardPerk", "MagicProficencyPerk", "SpiritSpoilsPerk",
+            "⚠️ Fora do escopo da prova",
+            "1851", "1849",
+        ):
+            self.assertIn(marker, note)
+        for filename in ("README.md", "REGISTRIES.md",
+                         "GLYPH-CARDS-5.0.4b.md", "glyphs/soul-shatter.md"):
+            self.assertIn(name, (provider / filename).read_text(
+                encoding="utf-8"
+            ))
+        tracker = (ROOT / "wiki/modpack-catalog/meta" /
+                   "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md"
+                   ).read_text(encoding="utf-8")
+        roster = [line for line in tracker.splitlines()
+                  if line.startswith("| [") and line.count(" | ") >= 4]
+        self.assertEqual(39, len(roster))
+        exact = [line for line in roster if "| COUNTED_EXACT |" in line]
+        self.assertEqual(2, len(exact))
+        self.assertEqual(
+            {"Ars Additions", "Ars Hex"},
+            {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
+        )
+        self.assertIn(name, tracker)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        hexrow = next(line for line in ledger.splitlines()
+                      if line.startswith("| [Ars Hex]"))
+        self.assertIn("| 5.0.4b | 1 | \x60COUNTED_EXACT\x60 |", hexrow)
+        self.assertIn(name, ledger)
+        self.assertIn("2/39", self.index)
+        self.assertIn("37/39", self.index)
         self.assertIn(name, self.index)
 
     def test_current_status_does_not_promote_runtime(self):

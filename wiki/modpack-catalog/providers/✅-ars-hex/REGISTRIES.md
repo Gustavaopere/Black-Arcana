@@ -2,6 +2,10 @@
 
 Status: `SOURCE REGISTRY SURFACE CLOSED / ACTIVE-vs-DORMANT SEPARATED / INSTALLED QA OPEN`
 
+## Nova prova binária física do único glifo — 2026-10-12
+
+[EXACT-BINARY-GLYPH-5.0.4b.md](EXACT-BINARY-GLYPH-5.0.4b.md) + [workflow #38291974275](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38291974275) fecham o caminho `ArsHex → ArsNouveauRegistry.init → registerCompatGlyphs` com gate `malum` e uma chamada `GlyphRegistry.registerSpell(EffectSoulShatter.INSTANCE)`, construída a partir do literal `glyph_soul_shatter` e namespace `ars_hex`. **1/1 ID `COUNTED_EXACT` para glifo**, três perks condicionais excluídas; os outros registries listados neste inventário **continuam source-pinned**, sem provas binárias integradas. **+0** ao ledger.
+
 ## Base DeferredRegisters
 
 `ModRegistry` creates and registers buses for:
