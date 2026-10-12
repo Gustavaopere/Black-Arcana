@@ -463,7 +463,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("**14 recipes `goety:ritual`**", index)
         self.assertIn("**12 restantes**", index)
         self.assertIn("12/12 rituais semanticamente contabilizados", index)
-        self.assertIn("0/12 fichas nominais", index)
+        self.assertIn("12/12 fichas nominais", index)
         self.assertIn("**+0 novas identidades**", index)
         self.assertIn("1.851 global / 1.849 no escopo", index)
         self.assertIn("c8529867e798661ed01fb2948abda23735888fc6", index)
@@ -481,6 +481,82 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("## Supersession note — exact 3.1 Phase 2BL artifact", sync)
+
+    def test_goety_iron_31_12_exact_ritual_cards_from_source_matrix(self):
+        provider = PROVIDERS / "✅-goety-iron"
+        matrix = (provider / "RITUAL-INVENTORY-EXACT-3.1.md").read_text(
+            encoding="utf-8"
+        )
+        rows = re.findall(
+            r"^\| (\d+) \| \x60(data/goetyiron/recipe/[a-z0-9_]+\.json)\x60 "
+            r"\| \x60(goety:[a-z0-9_]+)\x60 \| (.*?) \| "
+            r"\x60([a-z0-9_:/]+)\x60 \| \x60\[\]\x60 \| "
+            r"\x60(FOCUS_ACQUISITION_DEDUP|COUNTED_EXACT)\x60 \|$",
+            matrix, re.MULTILINE,
+        )
+        self.assertEqual(14, len(rows))
+        self.assertEqual([str(i) for i in range(1, 15)], [r[0] for r in rows])
+        self.assertEqual(14, len({r[1] for r in rows}))
+        self.assertEqual(14, len({r[4] for r in rows}))
+        self.assertEqual(2, sum(r[5] == "FOCUS_ACQUISITION_DEDUP" for r in rows))
+        exact = [r for r in rows if r[5] == "COUNTED_EXACT"]
+        self.assertEqual(12, len(exact))
+        self.assertEqual(10, sum(r[2] == "goety:convert_complete_tamed" for r in exact))
+        self.assertEqual(2, sum(r[2] == "goety:craft" for r in exact))
+        self.assertEqual(
+            {"goetyiron:fiery_focus", "goetyiron:tarnished_focus"},
+            {r[4] for r in rows if r[5] == "FOCUS_ACQUISITION_DEDUP"},
+        )
+        self.assertEqual(
+            {"goetyiron:hemolytic_ring", "irons_spellbooks:rotten_spell_book"},
+            {r[4] for r in exact if r[2] == "goety:craft"},
+        )
+        self.assertIn("goety:jei_dummy/none", matrix)
+        self.assertNotIn(
+            "goety:jei_dummy/none", {r[4] for r in rows},
+            "JEI dummy must not be semantic outcome",
+        )
+        index = (provider / "RITUAL-CARDS-3.1.md").read_text(
+            encoding="utf-8"
+        )
+        pages = sorted((provider / "rituals").glob("*.md"))
+        self.assertEqual(12, len(pages))
+        for ordinal, (_, path, typ, result_ids, dest, _) in enumerate(exact, 1):
+            slug = path.split("/")[-1][:-5]
+            page = provider / "rituals" / (slug + ".md")
+            self.assertTrue(page.is_file(), path)
+            card = page.read_text(encoding="utf-8")
+            self.assertIn("**Resource path literal:** \x60" + path + "\x60", card)
+            self.assertIn("**Recipe type do pacote:** \x60goety:ritual\x60", card)
+            self.assertIn("**Campo \x60ritual_type\x60:** \x60" + typ + "\x60", card)
+            self.assertIn("**Resultado semântico do ritual:** \x60" + dest + "\x60", card)
+            self.assertIn("**Ordinal não-Focus:** " + str(ordinal) + "/12", card)
+            self.assertIn("COUNTED_EXACT", card)
+            self.assertIn("**+0 novas identidades semânticas**", card)
+            self.assertIn("**NÃO VERIFICADOS individualmente**", card)
+            self.assertIn("../RITUAL-INVENTORY-EXACT-3.1.md", card)
+            self.assertIn("../EXACT-3.1-ARTIFACT-AUDIT.md", card)
+            self.assertIn(
+                f"| {ordinal} | \x60{slug}\x60 | \x60{typ}\x60 | "
+                f"\x60{dest}\x60 | [Abrir](rituals/{slug}.md) |",
+                index,
+            )
+            if typ == "goety:convert_complete_tamed":
+                self.assertEqual("\x60goety:jei_dummy/none\x60", result_ids)
+                self.assertIn("marcador placeholder", card)
+            else:
+                self.assertEqual("\x60" + dest + "\x60", result_ids)
+        self.assertIn("**✅ 12/12 fichas nominais", index)
+        self.assertIn("**+0 novas identidades semânticas**", index)
+        self.assertIn("RITUAL-INVENTORY-EXACT-3.1.md", index)
+        self.assertIn("38186445480", index)
+        for path in ("README.md", "FOCUS-CARDS-3.1.md", "EXACT-3.1-ARTIFACT-AUDIT.md"):
+            self.assertIn(
+                "RITUAL-CARDS-3.1.md",
+                (provider / path).read_text(encoding="utf-8"),
+            )
+        self.assertIn("RITUAL-CARDS-3.1.md", self.index)
+        self.assertIn("RITUAL-INVENTORY-EXACT-3.1.md", self.index)
 
     def test_ars_zero_twelve_release_bounded_glyph_cards(self):
         provider = PROVIDERS / "✅-ars-zero"
