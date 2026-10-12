@@ -5,7 +5,7 @@ Estado: **✅ 28/28 fichas de Focus individualizadas**, com nomes de holders com
 ## Fonte de autoridade
 
 - Mod `goety_cataclysm`, JAR `goety_cataclysm-1.21.1-1.8.2.jar`, SHA-1 físico/publisher `4e3052a082200371b36e1a88fdce05e294d82757`, CurseForge `1224214 / 8518940`. O source público disponível é da linha 1.20.1 e **não** é fonte de implementação exata do JAR 1.21.1.
-- O [README canônico](README.md) enumera **28 Focus holders** no JAR exact-matched; o [audit do artefato](EXACT-1.21.1-1.8.2-ARTIFACT-AUDIT.md) comprova 28 identidades, cada uma com caminho de aquisição empacotado. No agregado: 24 rituais de aquisição e 4 craftings comuns. Agora a [matriz exata 48/48](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md) comprova **24** relações Focus→path de aquisição por ritual. Os **4** Focuses restantes só podem ser atribuídos ao crafting comum **por exclusão controlada** do split 24+4, sem fabricar recipe paths.
+- O [README canônico](README.md) enumera **28 Focus holders** no JAR exact-matched; o [audit do artefato](EXACT-1.21.1-1.8.2-ARTIFACT-AUDIT.md) comprova 28 identidades, cada uma com caminho de aquisição empacotado. No agregado: 24 rituais de aquisição e 4 craftings comuns. Agora a [matriz exata 48/48](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md) comprova **24** relações Focus→path de aquisição por ritual. Os outros **4 Focuses** possuem agora [paths nominais e outputs comprovados de `minecraft:crafting_shaped`](FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md) (auditoria [#38191990175](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38191990175)); portanto **28/28** rotas de aquisição têm caminho individual, sem recorrer a inferência.
 - Registry initializer: 0 branches e 0 referências à configuração específica `GCSpellConfig`. Os 28 são Focuses registered unconditional na verificação restrita, mas não constituem uma garantia de aquisição efetiva/enablement em todo gameplay.
 - Todos estes 28 Focuses já são `COUNTED_EXACT` no ledger do addon. Criar fichas registra **+0 novas identidades semânticas**; mínimos globais mantidos em **1.851 global / 1.849 no escopo solicitado** (denominador final em aberto).
 - Os **24 rituais não-Focus** adicionais e distintos são `COUNTED_EXACT` pelo JAR exato: **10 conversões + 13 summons/thralls + 1 fabricator**, sem mod-loaded conditions. A [matriz literal](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md) comprova seus 24 paths/outcomes; veja [24/24 fichas](RITUAL-CARDS-1.21.1-1.8.2.md). Não se usam IDs inferidos de outras versões.
@@ -46,7 +46,14 @@ Estado: **✅ 28/28 fichas de Focus individualizadas**, com nomes de holders com
 | 27 | `VOID_VORTEX_FOCUS` | [Abrir](focuses/void-vortex-focus.md) | `COUNTED_EXACT` |
 | 28 | `WATER_SPEAR_FOCUS` | [Abrir](focuses/water-spear-focus.md) | `COUNTED_EXACT` |
 
-## Pendência de individualização de rituais
+## Fechamento das 28 rotas de aquisição de Focus
+
+- ✅ **24/24** aquisição por `goety:ritual` associada a Focuses no [inventário exato 48/48](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md).
+- ✅ **4/4** aquisição por `minecraft:crafting_shaped` com path + output [reextraídos do JAR exato](FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md).
+- ✅ **28/28** Focuses com receita de aquisição nominal identificada; nenhuma receita recontada como magia independente. **+0** identidades.
+- ⚠️ Ingredientes, unlock/advancement, configuração e QA real de Survival não auditados; sem promoção de Stage 06.05.
+
+## Rituais não-Focus individualizados
 
 **✅ 24/24 fichas nominais** com [matriz exata 48/48](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md), [workflow #38190078609](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38190078609). **+0 novas identidades**; receitas de aquisição de Focus são deduplicadas; custo e Survival ficam pendentes.
 

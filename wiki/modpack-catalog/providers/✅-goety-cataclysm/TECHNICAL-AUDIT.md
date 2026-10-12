@@ -1,5 +1,9 @@
 # Goety Cataclysm 1.21.1-1.8.2 — auditoria técnica e provenance
 
+## Adendo de fechamento dos quatro craftings — 2026-10-11
+
+A [auditoria separada do JAR físico SHA-matched #38191990175](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38191990175) prova nominalmente [4/4 paths `minecraft:crafting_shaped`, Focus outcomes e ausência de conditions de topo](FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md): `amethyst_cluster_focus`, `ashen_breath_focus`, `void_rune_focus`, `water_spear_focus`. A classificação anterior **por exclusão** foi substituída por identificação direta no mesmo JAR. São **28 Focuses com 28 caminhos de aquisição** (24 por `goety:ritual`, quatro por crafting comum). Quantidade de magias **+0**: esses crafts são aquisição de Focuses já contados, não novos feitiços. Não prova ingredientes, disponibilidade real, hooks nem comportamento em Survival.
+
 ## Adendo de autoridade — evidência posterior Phase 2BL (2026-10-11)
 
 Este dossiê registra inicialmente uma auditoria **publisher-only** anterior à extração factual do JAR exato. As afirmações históricas abaixo de "Não confirmado na build exata" quanto à **quantidade/nome dos Focus holders, existência de receitas e classificação agregada dos 24 rituais** foram superadas pela auditoria hash-matched registrada em [EXACT-1.21.1-1.8.2-ARTIFACT-AUDIT.md](EXACT-1.21.1-1.8.2-ARTIFACT-AUDIT.md) e no [README atual](README.md). São **28 Focuses de identidade documental provada**, dos quais 28 ganharam [fichas factuais individuais](FOCUS-CARDS-1.21.1-1.8.2.md), mais 24 rituais não-Focus distintos **agora com paths/outcomes individuais comprovados na [matriz 48/48](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md) e [24 fichas](RITUAL-CARDS-1.21.1-1.8.2.md) pelo workflow #38190078609**. Contribuição `COUNTED_EXACT` = **52**.

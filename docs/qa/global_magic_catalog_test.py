@@ -512,8 +512,8 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             content = fpath.read_text(encoding="utf-8")
             self.assertIn("**Rota de aquisição atribuída:**", content)
             if holder in inferred:
-                self.assertIn("por exclusão controlada", content)
-                self.assertIn("não foram extraídos", content)
+                self.assertIn("minecraft:crafting_shaped", content)
+                self.assertIn("**Rota de aquisição atribuída:** ✅ receita", content)
             else:
                 matched = next(r for r in focus if
                     r[4] == "goety_cataclysm:" + holder.lower())
@@ -521,6 +521,86 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                 self.assertIn("comprovado individualmente", content)
             self.assertIn("../RITUAL-CARDS-1.21.1-1.8.2.md", content)
 
+
+    def test_goety_cataclysm_182_four_exact_shaped_focus_acquisitions(self):
+        provider = PROVIDERS / "✅-goety-cataclysm"
+        doc = (provider / "FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md").read_text(
+            encoding="utf-8"
+        )
+        records = re.findall(
+            r"^\| (\d+) \| \x60([A-Z_]+_FOCUS)\x60 "
+            r"\| \x60(data/goety_cataclysm/recipe/focus/[a-z0-9_]+\.json)\x60 "
+            r"\| \x60(minecraft:crafting_shaped)\x60 "
+            r"\| \x60(goety_cataclysm:[a-z0-9_]+)\x60 "
+            r"\| (0) \| \x60(FOCUS_ACQUISITION_DEDUP)\x60 \|$",
+            doc, re.MULTILINE,
+        )
+        self.assertEqual(4, len(records))
+        self.assertEqual(["1", "2", "3", "4"], [r[0] for r in records])
+        expected = {
+            "AMETHYST_CLUSTER_FOCUS": "amethyst_cluster_focus",
+            "ASHEN_BREATH_FOCUS": "ashen_breath_focus",
+            "VOID_RUNE_FOCUS": "void_rune_focus",
+            "WATER_SPEAR_FOCUS": "water_spear_focus",
+        }
+        self.assertEqual(set(expected), {r[1] for r in records})
+        self.assertEqual(4, len({r[2] for r in records}))
+        self.assertEqual(4, len({r[4] for r in records}))
+        for _, holder, path, recipe_type, result_id, conditions, status in records:
+            short = expected[holder]
+            self.assertEqual(
+                "data/goety_cataclysm/recipe/focus/" + short + ".json", path
+            )
+            self.assertEqual("goety_cataclysm:" + short, result_id)
+            self.assertEqual("minecraft:crafting_shaped", recipe_type)
+            self.assertEqual("0", conditions)
+            self.assertEqual("FOCUS_ACQUISITION_DEDUP", status)
+            card = provider / "focuses" / (
+                holder.lower().replace("_", "-") + ".md"
+            )
+            self.assertTrue(card.is_file())
+            body = card.read_text(encoding="utf-8")
+            self.assertIn("**Rota de aquisição atribuída:**", body)
+            self.assertIn("receita \x60minecraft:crafting_shaped\x60", body)
+            self.assertIn(path, body)
+            self.assertIn(result_id, body)
+            self.assertIn(
+                "../FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md", body,
+            )
+            self.assertNotIn("por exclusão controlada", body)
+        self.assertIn("38191990175", doc)
+        self.assertIn("4e3052a082200371b36e1a88fdce05e294d82757", doc)
+        self.assertIn("**+0 novas identidades semânticas**", doc)
+        ritual = (
+            provider / "RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md"
+        ).read_text(encoding="utf-8")
+        ritual_focus_ids = set(re.findall(
+            r"^\| \d+ \| .*? \| \x60(goety_cataclysm:[a-z0-9_]+_focus)\x60 "
+            r"\| \x60\[\]\x60 \| \x60FOCUS_ACQUISITION_DEDUP\x60 \|$",
+            ritual, re.MULTILINE,
+        ))
+        self.assertEqual(24, len(ritual_focus_ids))
+        shaped_ids = {r[4] for r in records}
+        self.assertTrue(shaped_ids.isdisjoint(ritual_focus_ids))
+        self.assertEqual(28, len(shaped_ids | ritual_focus_ids))
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        holders_section = readme.split(
+            "O provider registra exatamente **28 Focuses próprios**:", 1
+        )[1].split("Todos os 28 possuem caminho de aquisição", 1)[0]
+        holder_ids = {
+            "goety_cataclysm:" + h.lower()
+            for h in re.findall(r"\x60([A-Z_]+_FOCUS)\x60", holders_section)
+        }
+        self.assertEqual(holder_ids, shaped_ids | ritual_focus_ids)
+        self.assertIn(
+            "FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md", self.index
+        )
+        self.assertIn(
+            "FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md",
+            (provider / "FOCUS-CARDS-1.21.1-1.8.2.md").read_text(
+                encoding="utf-8"
+            ),
+        )
 
     def test_goety_iron_3_1_focus_cards_and_ritual_evidence_gate(self):
         provider = PROVIDERS / "✅-goety-iron"
