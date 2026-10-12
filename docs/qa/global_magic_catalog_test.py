@@ -406,7 +406,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             self.assertIn("COUNTED_EXACT", card)
             self.assertIn("**+0 novas identidades**", card)
             self.assertIn("**NÃO VERIFICADO nesta ficha**", card)
-            self.assertIn("Qual dessas duas vias pertence a este Focus individual", card)
+            self.assertIn("**Rota de aquisição atribuída:**", card)
             self.assertIn(
                 f"| {ordinal} | `{holder}` | [Abrir](focuses/{rel}) |",
                 index,
@@ -492,6 +492,35 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("38190078609", text)
         self.assertIn("RITUAL-CARDS-1.21.1-1.8.2.md", self.index)
         self.assertIn("RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md", self.index)
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        owners = readme.split(
+            "O provider registra exatamente **28 Focuses próprios**:", 1
+        )[1].split("Todos os 28 possuem caminho de aquisição", 1)[0]
+        owners = re.findall(r"\x60([A-Z_]+_FOCUS)\x60", owners)
+        self.assertEqual(28, len(owners))
+        mapped_foci = {r[4] for r in focus}
+        inferred = {"AMETHYST_CLUSTER_FOCUS", "ASHEN_BREATH_FOCUS",
+                    "VOID_RUNE_FOCUS", "WATER_SPEAR_FOCUS"}
+        self.assertEqual(
+            inferred, {h for h in owners
+                       if "goety_cataclysm:" + h.lower() not in mapped_foci}
+        )
+        for holder in owners:
+            fpath = provider / "focuses" / (
+                holder.lower().replace("_", "-") + ".md"
+            )
+            content = fpath.read_text(encoding="utf-8")
+            self.assertIn("**Rota de aquisição atribuída:**", content)
+            if holder in inferred:
+                self.assertIn("por exclusão controlada", content)
+                self.assertIn("não foram extraídos", content)
+            else:
+                matched = next(r for r in focus if
+                    r[4] == "goety_cataclysm:" + holder.lower())
+                self.assertIn(matched[1], content)
+                self.assertIn("comprovado individualmente", content)
+            self.assertIn("../RITUAL-CARDS-1.21.1-1.8.2.md", content)
+
 
     def test_goety_iron_3_1_focus_cards_and_ritual_evidence_gate(self):
         provider = PROVIDERS / "✅-goety-iron"
