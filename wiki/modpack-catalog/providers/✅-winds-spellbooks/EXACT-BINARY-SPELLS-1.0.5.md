@@ -5,7 +5,7 @@
 ## Âncora física e inspeção
 
 - Modlist física `neoforge-rpg-skilltree/main@06ec1d1d586d4fc3cf957223cfc9ac30077f2875`: `wind_spellbooks-1.0.5.jar`, mod ID `wind_spellbooks`, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.
-- Publicador: [CurseForge project 1519158 / file 8485822](https://www.curseforge.com/minecraft/mc-mods/winds-spellbooks/files/8485822), versão 1.0.5, 2026-07-22, JAR **459532 bytes**.
+- Publicador: [CurseForge project 1519158 / file 8485822](https://www.curseforge.com/minecraft/mc-mods/winds-spellbooks-irons-spells-n-spellbooks-addon/files/8485822), versão 1.0.5, 2026-07-22, JAR **459532 bytes**.
 - [Auditoria isolada GitHub Actions #38312284152](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38312284152), commit `f6d6891a08c755fef2e8ec69188cac909e68a9a0`, job `physical-discovery` **SUCCESS**. O SHA-1 do JAR oficial corresponde ao físico. Inspeção ZIP e `javap -c -p -constants` com Java 21; provider não executado.
 
 ## Prova da cardinalidade e identidades
