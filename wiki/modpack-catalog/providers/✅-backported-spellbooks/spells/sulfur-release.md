@@ -17,4 +17,3 @@ A descrição de gameplay é uma leitura limitada da fonte oficial [`@07cb65efca
 - **Authority:** Iron's para cast, mana, cooldown; addon para efeitos/projéteis; Black Arcana não replica o settlement.
 - **⚠️ Não verificados no modpack:** parâmetros finais de dano/mana/cooldown, targeting, friendly-fire/PvP, duração, rareza, nível máximo efetivo, aquisição, sincronização MP e Survival.
 - **Deduplicação:** esta identidade já estava contada antes da prova; **+0** novas magias.
-
