@@ -31,9 +31,9 @@ Portanto: **28 Focus + 24 rituais não-Focus = 52 objetos mágicos semânticos `
 
 ## Fichas individuais de Focus — 2026-10-11
 
-**✅ 28/28 Focuses com páginas próprias:** [FOCUS-CARDS-1.21.1-1.8.2.md](FOCUS-CARDS-1.21.1-1.8.2.md) e `focuses/`. Os nomes de holders já provados pelo JAR exato tornam possível a individualização sem fabricar `ResourceLocation` nem mecânicas. Cada Focus tem receita de aquisição empaquetada; o split 24 rituais / 4 crafting comum é **agregado**, não atribuído por Focus.
+**✅ 28/28 Focuses com páginas próprias:** [FOCUS-CARDS-1.21.1-1.8.2.md](FOCUS-CARDS-1.21.1-1.8.2.md) e `focuses/`. Os nomes de holders já provados pelo JAR exato tornam possível a individualização sem fabricar `ResourceLocation` nem mecânicas. Os **28/28** caminhos de aquisição estão agora individualizados: 24 vias `goety:ritual` já provadas e [4 recipes `minecraft:crafting_shaped` comprovadas com path e output no JAR exato](FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md), reauditoria [#38191990175](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38191990175).
 
-**✅ 24/24 rituais não-Focus individualizados** em [RITUAL-CARDS-1.21.1-1.8.2.md](RITUAL-CARDS-1.21.1-1.8.2.md), a partir de [48 paths/outcomes `goety:ritual` exatos](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md) reextraídos no [workflow #38190078609](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38190078609) com SHA-1 físico confirmado. São 10 conversões, 13 summons/thralls e 1 fabricator; os outros 24 rituais são receitas de Focus deduplicadas. **+0 identidades** (52 `COUNTED_EXACT` mantidos). Os 24 Focuses com ritual têm path confirmado e os quatro restantes são crafting comum somente por exclusão do split exato, sem inventar seus paths. QA/Survival permanece ⚠️ e API fail-closed.
+**✅ 24/24 rituais não-Focus individualizados** em [RITUAL-CARDS-1.21.1-1.8.2.md](RITUAL-CARDS-1.21.1-1.8.2.md), a partir de [48 paths/outcomes `goety:ritual` exatos](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md) reextraídos no [workflow #38190078609](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38190078609) com SHA-1 físico confirmado. São 10 conversões, 13 summons/thralls e 1 fabricator; os outros 24 rituais são receitas de Focus deduplicadas. **+0 identidades** (52 `COUNTED_EXACT` mantidos). Os 24 Focuses com ritual têm path confirmado e os quatro restantes têm agora [paths `minecraft:crafting_shaped` comprovados](FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md), sem inventar ingredientes ou aquisição efetiva em Survival. QA/Survival permanece ⚠️ e API fail-closed.
 
 ## Gate de registration/config
 
@@ -55,6 +55,8 @@ Logo os 28 Focuses não dependem de um gate provider-specific de registration/co
 - Black Arcana não cria segundo Soul ledger, segundo servant state, segundo ritual settlement nem segundo cast pipeline.
 
 ## Evidência
+
+- **4/4 Focuses comuns** com paths e outputs exatos em [FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md](FOCUS-CRAFTING-EXACT-1.21.1-1.8.2.md), auditados após hash-match no workflow [#38191990175](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38191990175), branch NON-MERGE `eae06402af7abbe6195e05a41f72cfd27bbf453d`. 28/28 caminhos de aquisição agora nominais, **+0 identidades**.
 
 - Reextração exata text-only, [workflow #38190078609](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38190078609), branch de auditoria NON-MERGE `449444fc897659bb3ab2506ff61c5b1920aa4148`. [Matriz 48/48](RITUAL-INVENTORY-EXACT-1.21.1-1.8.2.md) e [24 fichas](RITUAL-CARDS-1.21.1-1.8.2.md); sem JAR/recipes integrais em branch de catálogo.
 
