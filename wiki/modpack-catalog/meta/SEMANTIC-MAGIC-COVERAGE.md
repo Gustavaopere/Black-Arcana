@@ -1,5 +1,9 @@
 # Semantic Magic Coverage Ledger
 
+## Latest addendum — Paladin Spells 1.1.1 five exact binary static registrations, 2026-10-12
+
+The official [CurseForge file 8661566](https://www.curseforge.com/minecraft/mc-mods/paladin-spells-irons-spells-addon/files/8661566) is **1858683 bytes** with SHA-1 `e4c6f4fa70989f0b9f1819e46e29f68d414ccbaf`, matching the physical sibling snapshot. [Java 21 audit #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364) proves five deferred registers, five provider spell classes, namespace and bootstrap. IDs: `paladin_spells:taunt`, `paladin_spells:bulwark`, `paladin_spells:sworn_protector`, `paladin_spells:bedrock_skin`, `paladin_spells:ram`. [Dossier](../providers/✅-paladin-spells/EXACT-BINARY-SPELLS-1.1.1.md). Previously counted five roots advance `COUNTED_SOURCE_PINNED → COUNTED_EXACT` **only for static binary registry identity**, **+0** new. Campaign **5/39 exact / 34/39 pending**; minimum **1851 global / 1849 scoped** unchanged. Dedicated server, functional effects, config, Scroll Forge, multiplayer, Survival and Stage 06.05 remain unaccepted. Older dated addenda remain historical.
+
 ## Latest addendum — Dreamless Spells exact 4/4 static spell registrations, 2026-10-12
 
 The exact publisher [file 7905334](https://www.curseforge.com/minecraft/mc-mods/dreamless-spells/files/7905334), **443506 bytes**, matches physical SHA-1 `d51960bfb8af1aafa5d716ef9a48c3135f36b956`. [Java 21 audit #38302406303](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38302406303) establishes four factory calls/one registration helper under `SpellRegistries`, four top-level classes and `dreamless_spells:jadeskin`, `drained`, `dullard`, `doorway_effect` (see [proof](../providers/✅-dreamless-spells/EXACT-BINARY-SPELLS-1.1.9.md)). Already-counted 4 roots promoted **`COUNTED_SOURCE_PINNED → COUNTED_EXACT` only for binary static registry**, +0 new. Original campaign **4/39 exact / 35/39 pending**, minimum **1851 global / 1849 in-scope** unchanged. Runtime, config, `Emptied`, Counterspell, Empty Rune, Survival and stage 06.05 remain open.
@@ -396,7 +400,7 @@ Arithmetic cross-check by provider family:
 | [ISS: Magic From The East](../providers/✅-iss-magic-from-the-east/README.md) | 1.1.5 | 22 | `COUNTED_SOURCE_PINNED` | 11 Symmetry + 11 Spirit spells |
 | [Legendary Spellbooks](../providers/✅-legendary-spellbooks/README.md) | 0.3.2 | 30 | `COUNTED_SOURCE_PINNED` | 30 current provider spell identities |
 | [Monsters & Spellbooks](../providers/✅-monsters-spellbooks/README.md) | 0.0.16.3 | 98 | `COUNTED_RELEASE_BOUNDED` | release-interval evidence closes a stable 98-spell semantic inventory |
-| [Paladin Spells](../providers/✅-paladin-spells/README.md) | 1.1.1 | 5 | `COUNTED_SOURCE_PINNED` | 5/5 Holy spells |
+| [Paladin Spells](../providers/✅-paladin-spells/README.md) | 1.1.1 | 5 | `COUNTED_EXACT` | [five exact static physical spell registry identities](../providers/✅-paladin-spells/EXACT-BINARY-SPELLS-1.1.1.md); +0 new, effects/config/Survival not verified |
 | [Wind's Spellbooks](../providers/✅-winds-spellbooks/README.md) | 1.0.5 | 7 | `COUNTED_RELEASE_BOUNDED` | 7/7 publisher/runtime-observed Wind spells; canonical provider-tree link restored |
 | [Ypsilon's Fundamentalism](../providers/✅-ypsilons-fundamentalism/README.md) | 1.1.7.1 | 15 | `COUNTED_SOURCE_PINNED` | 15/15 active spell registrations; commented prototypes excluded |
 | [Woodwalkers SpellBooks](../providers/✅-woodwalkers-spellbooks/README.md) | 0.3.1-BETA | 0 | `CURRENT_PHYSICAL_ABSENT` | historical source catalog closes `woodwalkers_spellbooks:shapeshifting`, but the current physical snapshot contains no Woodwalkers SpellBooks JAR; +0 current strict |

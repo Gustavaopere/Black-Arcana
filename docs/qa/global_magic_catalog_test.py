@@ -1270,9 +1270,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(4, len(exact))
+        self.assertEqual(5, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1329,9 +1329,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(4, len(exact))
+        self.assertEqual(5, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1402,6 +1402,40 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('| 1.1.9 | 4 | `COUNTED_EXACT` |', record)
         self.assertIn('4/39', self.index)
         self.assertIn('35/39', self.index)
+
+    def test_paladin_spells_111_exact_five_static_binary_registrations(self):
+        provider = PROVIDERS / '✅-paladin-spells'
+        name = 'EXACT-BINARY-SPELLS-1.1.1.md'
+        proof = (provider / name).read_text(encoding='utf-8')
+        expected_ids = (
+            'paladin_spells:taunt', 'paladin_spells:bulwark',
+            'paladin_spells:sworn_protector', 'paladin_spells:bedrock_skin',
+            'paladin_spells:ram',
+        )
+        for marker in (
+            '8661566', '38308575364',
+            'e4c6f4fa70989f0b9f1819e46e29f68d414ccbaf',
+            '1858683', 'STATIC_DEFERRED_REGISTER_INVOCATIONS=5',
+            'ENTRYPOINT_TO_REGISTRY=present',
+            '5/39', '34/39', '1851', '1849', 'Survival', '+0',
+            *expected_ids,
+        ):
+            self.assertIn(marker, proof)
+        for path in ('README.md', 'TECHNICAL-AUDIT.md',
+                     'holy/README.md', 'holy/taunt.md', 'holy/bulwark.md',
+                     'holy/sworn-protector.md', 'holy/bedrock-skin.md',
+                     'holy/ram.md'):
+            self.assertIn(name, (provider / path).read_text(encoding='utf-8'))
+        roster = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        row = next(x for x in roster.splitlines() if x.startswith('| [Paladin Spells]'))
+        self.assertIn('| 1.1.1 | 5 | COUNTED_EXACT |', row)
+        ledger = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        entry = next(x for x in ledger.splitlines() if x.startswith('| [Paladin Spells]'))
+        self.assertIn('| 1.1.1 | 5 | `COUNTED_EXACT` |', entry)
+        self.assertIn('5/39', self.index)
+        self.assertIn('34/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)

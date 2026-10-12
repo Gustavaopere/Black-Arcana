@@ -1,5 +1,7 @@
 # Sworn Protector
 
+**Prova de identidade:** ✅ `COUNTED_EXACT` **somente para ID de registry estático** no JAR publicado, ver [auditoria binária 5/5](../EXACT-BINARY-SPELLS-1.1.1.md) e [run #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364). Os dados funcionais abaixo continuam source-pinned; efeitos reais, configurações e Survival não foram aceitos.
+
 - **Status:** PRESENTE — current 1.1.1 changelog removes WIP from released spells; stale README wording is not current authority
 - **ID:** `paladin_spells:sworn_protector`
 - **School:** Holy
