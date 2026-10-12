@@ -1,5 +1,7 @@
 # Dreamless Spells 1.1.9 — auditoria técnica
 
+**Prova binária restrita (2026-10-12):** [4/4 registros estáticos publisher/physical SHA-1-match](EXACT-BINARY-SPELLS-1.1.9.md), [run #38302406303](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38302406303). Os achados funcionais abaixo continuam baseados no código-fonte e não foram aprovados em runtime/Survival.
+
 ## Provenance
 
 Autoridade da instalação: `dreamless_spells-1.1.9.jar` na modlist atual.
