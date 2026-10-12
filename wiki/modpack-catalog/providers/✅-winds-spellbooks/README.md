@@ -10,9 +10,13 @@
 - Escola própria: Wind
 - Release exata: CurseForge file `8485822`, publicada em 2026-07-22
 - Catálogo: **7/7 spells ativos documentados**
-- Estado de evidência: `RELEASE-PINNED 1.0.5 / RUNTIME-REGISTRY OBSERVED / SOURCE PÚBLICO NÃO LOCALIZADO / BYTECODE NUMÉRICO PENDENTE`
+- Estado de evidência: `COUNTED_EXACT` para sete identidades binárias estáticas; mecânicas, config e Survival ⚠️
 
 A página oficial da release 1.0.5 descreve o addon como uma escola completa de Wind com **sete spells upgradáveis**, armor de mago, staff, spellbook, Windmill e Aeromancer. Os logs reais do pack confirmam exatamente sete registrations `wind_spellbooks:*` e expõem as classes carregadas pelo runtime.
+
+## Prova binária exata
+
+[Auditoria do JAR 1.0.5](EXACT-BINARY-SPELLS-1.0.5.md) ([run #38312284152](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38312284152)) confirmou hash físico/publicador, sete registros estáticos e bootstrap. `ACROBATICS_SPELL` corresponde ao ID `aeropic`, não a um oitavo spell. Campanha **6/39 exatos / 33/39 pendentes**, **+0** novos; mínimos **1851/1849**. QA real não realizado.
 
 ## Inventário 7/7
 
@@ -62,6 +66,6 @@ IronSable registra seus próprios `maelstrom`, `tempests_grasp` e `downburst` e 
 
 ## Regra de fail-closed
 
-Sem source/JAR bytecode exato, Black Arcana não deve inventar mana, cooldown, dano, range, recast count, friendly-fire, PvP ou APIs para estes spells. Integrações futuras devem usar IDs/runtime hooks comprovados e manter o provider como authority do efeito.
+A prova binária de registro não autoriza inventar mana, cooldown, dano, range, recast count, friendly-fire, PvP ou APIs para esses spells. Integrações futuras devem usar IDs/runtime hooks comprovados e manter o provider como authority do efeito.
 
 Ver [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md).
