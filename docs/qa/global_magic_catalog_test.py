@@ -513,7 +513,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             self.assertIn("**Rota de aquisição atribuída:**", content)
             if holder in inferred:
                 self.assertIn("minecraft:crafting_shaped", content)
-                self.assertIn("receita \`minecraft:crafting_shaped\`", content)
+                self.assertIn("**Rota de aquisição atribuída:** ✅ receita", content)
             else:
                 matched = next(r for r in focus if
                     r[4] == "goety_cataclysm:" + holder.lower())
