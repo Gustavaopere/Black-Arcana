@@ -83,18 +83,18 @@ class EvidenceBundleTests(unittest.TestCase):
                         source_commit=pin, expected_physical_jars=69,
                         fingerprinted_pending_registry=0,
                         blocked_physical_artifact=39,
-                        catalog_exact_preexisting=5,
-                        registry_proofs_remaining=34,
+                        catalog_exact_preexisting=6,
+                        registry_proofs_remaining=33,
                         providers=[
                             dict(
-                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else 'Crystal Chronicles' if i == 3 else 'Dreamless Spells' if i == 4 else 'Paladin Spells' if i == 5 else f'Provider {i}'),
-                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2, 3, 4, 5)
+                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else 'Crystal Chronicles' if i == 3 else 'Dreamless Spells' if i == 4 else 'Paladin Spells' if i == 5 else "Wind's Spellbooks" if i == 6 else f'Provider {i}'),
+                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2, 3, 4, 5, 6)
                                                   else 'COUNTED_SOURCE_PINNED'),
-                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '0.1.3-alpha' if i == 3 else '1.1.9' if i == 4 else '1.1.1' if i == 5 else '1.0'),
+                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '0.1.3-alpha' if i == 3 else '1.1.9' if i == 4 else '1.1.1' if i == 5 else '1.0.5' if i == 6 else '1.0'),
                                 existing_semantic_objects=(5 if i == 1 else 1 if i in (2, 3) else 4 if i == 4 else 5 if i == 5 else i+1),
                                 physical_status='MISSING',
                                 status=('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT'
-                                        if i in (1, 2, 3, 4, 5) else 'PHYSICAL_ARTIFACT_BLOCKED'),
+                                        if i in (1, 2, 3, 4, 5, 6) else 'PHYSICAL_ARTIFACT_BLOCKED'),
                                 registry_verified=False,
                                 survival_verified=False,
                                 promotion_allowed=False,
@@ -240,13 +240,13 @@ class EvidenceBundleTests(unittest.TestCase):
             queue = json.loads((root / 'bundle' / 'provider-39-queue.json').read_text())
             self.assertEqual(39, len(queue['providers']))
             self.assertEqual(0, queue['registry_proofs_completed'])
-            self.assertEqual(5, queue['catalog_exact_preexisting'])
-            self.assertEqual(34, queue['registry_proofs_remaining'])
+            self.assertEqual(6, queue['catalog_exact_preexisting'])
+            self.assertEqual(33, queue['registry_proofs_remaining'])
             exact = [x for x in queue['providers']
                      if x['catalog_evidence'] == 'COUNTED_EXACT']
-            self.assertEqual(5, len(exact))
+            self.assertEqual(6, len(exact))
             self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
-                              'Dreamless Spells', 'Paladin Spells'},
+                              'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks"},
                              {x['provider'] for x in exact})
             self.assertTrue(all(not row['registry_verified'] and
                                 not row['promotion_allowed'] for row in exact))

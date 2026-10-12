@@ -1270,9 +1270,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(5, len(exact))
+        self.assertEqual(6, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1329,9 +1329,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(5, len(exact))
+        self.assertEqual(6, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1436,6 +1436,44 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('| 1.1.1 | 5 | `COUNTED_EXACT` |', entry)
         self.assertIn('5/39', self.index)
         self.assertIn('34/39', self.index)
+
+    def test_winds_spellbooks_105_binary_static_registry_seven_ids(self):
+        provider = PROVIDERS / '✅-winds-spellbooks'
+        name = 'EXACT-BINARY-SPELLS-1.0.5.md'
+        proof = (provider / name).read_text(encoding='utf-8')
+        expected = (
+            'wind_spellbooks:wind_jump', 'wind_spellbooks:tornado',
+            'wind_spellbooks:iron_slash', 'wind_spellbooks:aeropic',
+            'wind_spellbooks:almighty_push', 'wind_spellbooks:wind_blade',
+            'wind_spellbooks:tailwind',
+        )
+        for marker in (
+            '8485822', '38312284152',
+            '8744886899bc245ae147a44baa2b183689cec7da',
+            '459532', 'STATIC_REGISTER_SPELL_INVOCATIONS=7',
+            'ENTRYPOINT_TO_REGISTRY=present', 'ACROBATICS_SPELL',
+            '6/39', '33/39', '1851', '1849', '+0', 'Survival', *expected,
+        ):
+            self.assertIn(marker, proof)
+        rows = [x for x in proof.splitlines() if x.startswith('| ')
+                and 'wind_spellbooks:' in x]
+        self.assertEqual(7, len(rows))
+        for path in ('README.md', 'TECHNICAL-AUDIT.md',
+                     'wind/wind-jump.md', 'wind/tornado.md',
+                     'wind/iron-slash.md', 'wind/aeropic.md',
+                     'wind/almighty-push.md', 'wind/wind-blade.md',
+                     'wind/tailwind.md'):
+            self.assertIn(name, (provider / path).read_text(encoding='utf-8'))
+        matrix = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        entry = next(x for x in matrix.splitlines() if x.startswith("| [Wind's Spellbooks]"))
+        self.assertIn('| 1.0.5 | 7 | COUNTED_EXACT |', entry)
+        ledger = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        row = next(x for x in ledger.splitlines() if x.startswith("| [Wind's Spellbooks]"))
+        self.assertIn('| 1.0.5 | 7 | `COUNTED_EXACT` |', row)
+        self.assertIn('6/39', self.index)
+        self.assertIn('33/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
