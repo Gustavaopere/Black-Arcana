@@ -1175,6 +1175,50 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                 (provider / doc).read_text(encoding="utf-8"),
             )
 
+    def test_ars_additions_2130_binary_structural_gate(self):
+        provider = PROVIDERS / "✅-ars-additions"
+        name = "BINARY-REGISTRATION-21.3.0.md"
+        doc = (provider / name).read_text(encoding="utf-8")
+        rows = re.findall(
+            r"^\| ([1-5]) \| \x60(GLYPH|RITUAL)\x60 "
+            r"\| \x60([A-Za-z]+)\x60 \| \x60(ars_additions:[^|]+?)\x60 "
+            r"\| \x60(NO_BRANCH)\x60 \|$", doc, re.MULTILINE,
+        )
+        self.assertEqual([
+            ("1", "GLYPH", "MethodRetaliate",
+             "ars_additions:GlyphLib.prependGlyph(retaliate)", "NO_BRANCH"),
+            ("2", "GLYPH", "EffectMark",
+             "ars_additions:GlyphLib.prependGlyph(mark)", "NO_BRANCH"),
+            ("3", "GLYPH", "MethodRecall",
+             "ars_additions:GlyphLib.prependGlyph(recall)", "NO_BRANCH"),
+            ("4", "RITUAL", "RitualChunkLoading",
+             "ars_additions:ritual_chunk_loading", "NO_BRANCH"),
+            ("5", "RITUAL", "RitualLocateStructure",
+             "ars_additions:ritual_locate_structure", "NO_BRANCH"),
+        ], rows)
+        self.assertEqual(3, sum(r[1] == "GLYPH" for r in rows))
+        self.assertEqual(2, sum(r[1] == "RITUAL" for r in rows))
+        self.assertEqual(5, len({r[2] for r in rows}))
+        self.assertIn("ReachPerk", doc)
+        self.assertIn("não é um sexto objeto mágico", doc)
+        self.assertIn("COUNTED_SOURCE_PINNED", doc)
+        self.assertIn("0/39", doc)
+        self.assertIn("1/39", doc)
+        self.assertIn("ce2440b606acb20b79a42bf7c6c24d163c93241f", doc)
+        self.assertIn("38261401056", doc)
+        self.assertIn("38261976223", doc)
+        tracker = (ROOT / "wiki" / "modpack-catalog" / "meta" /
+                   "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md"
+                   ).read_text(encoding="utf-8")
+        original = [line for line in tracker.splitlines()
+                    if line.startswith("| [") and line.count(" | ") >= 4]
+        self.assertEqual(39, len(original))
+        self.assertIn("COUNTED_SOURCE_PINNED", original[1])
+        for f in ("README.md", "REGISTRIES.md"):
+            self.assertIn(name, (provider / f).read_text(encoding="utf-8"))
+        self.assertIn(name, self.index)
+        self.assertIn("0/39", self.index)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
