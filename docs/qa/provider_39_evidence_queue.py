@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Plan binary registry audit for 39 source/release-bounded providers, fail closed.
+"""Plan binary registry audit for frozen 39-provider source/release cohort, fail closed.
 
 Consumes only a 69-JAR fingerprint *report*, and never declares registry proof.
 It does not inspect the installed modpack, validate report provenance, run mod
-code, or count newly discovered spells. All promotion flags remain false.
+code, or count newly discovered spells. Independently preverified catalog-exact
+rows remain exact, but this report never promotes a record. All report-level
+verification and promotion flags remain false.
 """
 from __future__ import annotations
 
@@ -20,7 +22,10 @@ SOURCE_SHA = 'de80b186357cad20ba5b81892a8682777e96e35a'
 REPORT_SOURCE = 'PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md'
 REPORT_EVIDENCE = 'READ_ONLY_JAR_FINGERPRINT_NOT_REGISTRY_PROOF'
 CROSSWALK_LINE = re.compile(r'^\| (?P<provider>[^|]+) \| #\d{3} \| \x60(?P<filename>[^|\x60]+\.jar)\x60 \|')
-MATRIX_LINE = re.compile(r'^\| \[(?P<provider>[^|\]]+)\]\([^|)]+\) \| (?P<version>[^|]+) \| (?P<count>\d+) \| (?P<evidence>COUNTED_SOURCE_PINNED|COUNTED_RELEASE_BOUNDED) \|')
+MATRIX_LINE = re.compile(r'^\| \[(?P<provider>[^|\]]+)\]\([^|)]+\) \| (?P<version>[^|]+) \| (?P<count>\d+) \| (?P<evidence>COUNTED_SOURCE_PINNED|COUNTED_RELEASE_BOUNDED|COUNTED_EXACT) \|')
+# Only this exact previously-audited identity can appear as COUNTED_EXACT in the
+# frozen campaign. No arbitrarily supplied exact row or fingerprint is trusted.
+KNOWN_EXACT = {'Ars Additions': ('21.3.0', 5)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')
@@ -70,7 +75,16 @@ def load_matrix(path: Path = MATRIX_PATH) -> dict[str, dict]:
             'catalog_evidence': match.group('evidence'),
         }
     if len(result) != 39:
-        raise ValueError(f'expected 39 source/release-bounded providers, found {len(result)}')
+        raise ValueError(f'expected 39 original source/release-bounded providers, found {len(result)}')
+    known_exact = {name for name, item in result.items()
+                   if item['catalog_evidence'] == 'COUNTED_EXACT'}
+    if known_exact != set(KNOWN_EXACT):
+        raise ValueError('frozen promoted exact row does not match verified campaign record')
+    for name in known_exact:
+        item = result[name]
+        if (item['version'], item['semantic_objects']) != KNOWN_EXACT[name]:
+            raise ValueError('forged or drifted previously verified exact registry row')
+
     return result
 
 
@@ -91,7 +105,10 @@ def build_queue(matrix: dict, crosswalk: dict, fingerprint_report: dict) -> dict
             not isinstance(src, dict) or not isinstance(src.get('version'), str)
             or not src['version'].strip() or not isinstance(src.get('semantic_objects'), int)
             or isinstance(src['semantic_objects'], bool) or src['semantic_objects'] < 0
-            or src.get('catalog_evidence') not in ('COUNTED_SOURCE_PINNED', 'COUNTED_RELEASE_BOUNDED')
+            or src.get('catalog_evidence') not in ('COUNTED_SOURCE_PINNED', 'COUNTED_RELEASE_BOUNDED', 'COUNTED_EXACT')
+            or (src.get('catalog_evidence') == 'COUNTED_EXACT'
+                and (name not in KNOWN_EXACT
+                     or (src['version'], src['semantic_objects']) != KNOWN_EXACT[name]))
         ):
             raise ValueError(f'unrecognized semantic ledger evidence: {name}')
     report = fingerprint_report
@@ -141,7 +158,12 @@ def build_queue(matrix: dict, crosswalk: dict, fingerprint_report: dict) -> dict
             'catalog_evidence': details['catalog_evidence'],
             'existing_semantic_objects': details['semantic_objects'],
             'physical_status': artifact['status'],
-            'status': 'FINGERPRINTED_PENDING_REGISTRY' if fingerprinted else 'PHYSICAL_ARTIFACT_BLOCKED',
+            # Already established by a separate SHA-matched Java audit:
+            # fingerprint report may not re-prove or promote this registry.
+            'status': ('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT'
+                       if details['catalog_evidence'] == 'COUNTED_EXACT'
+                       else ('FINGERPRINTED_PENDING_REGISTRY'
+                             if fingerprinted else 'PHYSICAL_ARTIFACT_BLOCKED')),
             'registry_verified': False,
             'survival_verified': False,
             'promotion_allowed': False,
@@ -157,7 +179,14 @@ def build_queue(matrix: dict, crosswalk: dict, fingerprint_report: dict) -> dict
         'expected_physical_jars': 69,
         'expected_binary_registry_proofs': 39,
         'fingerprinted_pending_registry': sum(x['status'] == 'FINGERPRINTED_PENDING_REGISTRY' for x in result_rows),
-        'blocked_physical_artifact': sum(x['status'] == 'PHYSICAL_ARTIFACT_BLOCKED' for x in result_rows),
+        # The physical report can still mark a previously exact provider JAR as
+        # missing; this does not revoke independently documented historical proof.
+        'blocked_physical_artifact': sum(x['physical_status'] != 'FINGERPRINTED'
+                                         for x in result_rows),
+        'catalog_exact_preexisting': sum(x['catalog_evidence'] == 'COUNTED_EXACT'
+                                         for x in result_rows),
+        'registry_proofs_remaining': sum(x['catalog_evidence'] != 'COUNTED_EXACT'
+                                         for x in result_rows),
         'registry_proofs_completed': 0,
         'providers': result_rows,
     }
