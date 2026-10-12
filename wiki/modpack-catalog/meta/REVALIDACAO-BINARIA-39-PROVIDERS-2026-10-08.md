@@ -1,6 +1,8 @@
 # Provedores source/release-bounded — roteiro de verificação binária
 
-**Estado atualizado 2026-10-12:** roster original congelado de **39** providers source/release-bounded. **✅ 2/39 `COUNTED_EXACT` para roots mágicas** (Ars Additions 5/5, Ars Hex 1/1 sob gate físico Malum); **⚠️ 37/39** ainda carecem de prova binária exata. Runtime real, configuração, aquisição e Survival seguem gates independentes; **+0** novos objetos.
+**Terceira prova independente (2026-10-12):** Crystal Chronicles 0.1.3-alpha, registro `crystal_chronicles:prismatic_portal` físico e publicado com SHA-1 idêntico. [Run #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874). Campanha 3/39 exatos e 36/39 condicionados. Nenhuma nova magia.
+
+**Estado atualizado 2026-10-12:** roster original congelado de **39** providers source/release-bounded. **✅ 3/39 `COUNTED_EXACT` para roots mágicas** (Ars Additions 5/5, Ars Hex 1/1 sob gate físico Malum, Crystal Chronicles 1/1); **⚠️ 36/39** ainda carecem de prova binária exata. Runtime real, configuração, aquisição e Survival seguem gates independentes; **+0** novos objetos.
 
 Snapshot: `Black-Arcana/main@9141a8ed1c345db4e995e5f2aa849df2c24769b9` / sibling modlist `de80b186357cad20ba5b81892a8682777e96e35a`.
 
@@ -36,7 +38,7 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | [Ypsilon's Fundamentalism](../providers/✅-ypsilons-fundamentalism/README.md) | 1.1.7.1 | 15 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Tunes n' Tomes](../providers/✅-tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Companions!](../providers/✅-companions/README.md) | 1.3.4 | 9 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
-| [Crystal Chronicles](../providers/✅-crystal-chronicles/README.md) | 0.1.3-alpha | 1 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
+| [Crystal Chronicles](../providers/✅-crystal-chronicles/README.md) | 0.1.3-alpha | 1 | COUNTED_EXACT | ✅ [prova binária estática 1/1](../providers/✅-crystal-chronicles/EXACT-BINARY-SPELL-0.1.3-alpha.md), file 8346590, SHA-1 `afdc32ab27661cd52160280dc4273d70a2d4a3d2`, [run #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874); +0 novos, ⚠️ Survival/config/portal pendentes |
 | [Reliquified Ars Nouveau](../providers/✅-reliquified-ars-nouveau/README.md) | 0.8.1 | 19 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Reliquified Artifacts](../providers/✅-reliquified-artifacts/README.md) | 1.0.8 | 52 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Reliquified Iron's Spells 'n Spellbooks](../providers/✅-reliquified-irons-spells-n-spellbooks/README.md) | 0.2.7 | 25 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |

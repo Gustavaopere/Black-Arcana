@@ -1,11 +1,13 @@
 # Black Arcana — cinco pendências mágicas (acompanhamento)
 
+**Checkpoint 2026-10-12:** [Crystal Chronicles 0.1.3-alpha](../providers/✅-crystal-chronicles/EXACT-BINARY-SPELL-0.1.3-alpha.md) passou comparação SHA-1 publicador/pack e inspeção de registro por Java 21 ([run #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874)). **3/39** registros exatos e **36/39** pendentes, +0 novos; 14 rotas Survival e Stage 06.05 permanecem sem promoção. Os checkpoints anteriores abaixo conservam seus números históricos.
+
 **Atualizado: 2026-10-10.** Base técnica inicial: `Black-Arcana/main@9141a8ed1c345db4e995e5f2aa849df2c24769b9`; modlist física sibling `de80b186357cad20ba5b81892a8682777e96e35a`. Este arquivo é o quadro de execução; atualizar status somente após evidência concreta no HEAD/PR correspondente. **Nenhuma tarefa em andamento executa em segundo plano.**
 
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **2/39 `COUNTED_EXACT` de registro mágico** (Ars Additions 5/5 e Ars Hex 1/1 condicional a `malum`); ⚠️ **37/39** pendentes; nenhum PASS de execução/Survival |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **3/39 `COUNTED_EXACT` de registro mágico** (Ars Additions 5/5, Ars Hex 1/1 sob `malum` e Crystal Chronicles 1/1); ⚠️ **36/39** pendentes; nenhum PASS de execução/Survival |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |

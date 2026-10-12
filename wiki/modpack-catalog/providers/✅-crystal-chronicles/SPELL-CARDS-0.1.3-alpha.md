@@ -1,6 +1,8 @@
 # Crystal Chronicles 0.1.3-alpha — canonical spell cards
 
-Status: `✅ CATALOGED / 1 OF 1 PROVIDER SPELL MATERIALIZED / COUNTED_SOURCE_PINNED / +1 STRICT / ALPHA-WIP / RUNTIME QA SEPARATE`
+**Atualização:** [prova estática de registro 1/1](EXACT-BINARY-SPELL-0.1.3-alpha.md) confirma `COUNTED_EXACT` no JAR físico (`afdc32ab27661cd52160280dc4273d70a2d4a3d2`, [CI #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874)). A contribuição +1 era anterior a este fechamento; delta **+0**. Execução em Survival não aprovada.
+
+Status: `✅ CATALOGED / 1 OF 1 PROVIDER SPELL MATERIALIZED / COUNTED_EXACT STATIC REGISTRY / +1 PREVIOUSLY COUNTED / ALPHA-WIP / RUNTIME QA SEPARATE`
 
 This index materializes the complete provider-owned spell inventory established by the version-correlated source pin `VeroxUniverse/CrystalChronicles-NeoForge@dff00d5ebbc5c726dad010f0d4cd40201ba4fc17`.
 
