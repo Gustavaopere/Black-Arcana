@@ -38,5 +38,9 @@ jobs:
         env:
           JAR_PATH: ${{ runner.temp }}/ars_additions-1.21.1-21.3.0.jar
         run: python3 .github/ars_additions_2130_exact_magic_registration_audit.py
+      - name: Check glyph and ritual symbolic ID construction
+        env:
+          JAR_PATH: ${{ runner.temp }}/ars_additions-1.21.1-21.3.0.jar
+        run: python3 .github/ars_additions_2130_exact_registry_ids_audit.py
       - name: Confirm audit branch excludes publisher JAR
         run: test ! -e ./ars_additions-1.21.1-21.3.0.jar
