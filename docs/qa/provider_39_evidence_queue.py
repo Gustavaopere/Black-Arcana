@@ -30,7 +30,8 @@ KNOWN_EXACT = {'Ars Additions': ('21.3.0', 5),
                'Crystal Chronicles': ('0.1.3-alpha', 1),
                'Dreamless Spells': ('1.1.9', 4),
                'Paladin Spells': ('1.1.1', 5),
-               "Wind's Spellbooks": ('1.0.5', 7)}
+               "Wind's Spellbooks": ('1.0.5', 7),
+               'Backported Spellbooks': ('physical 0.1.2 / embedded 0.1.0', 6)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')

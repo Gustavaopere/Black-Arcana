@@ -1270,9 +1270,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(6, len(exact))
+        self.assertEqual(7, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1329,9 +1329,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(6, len(exact))
+        self.assertEqual(7, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1474,6 +1474,51 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('| 1.0.5 | 7 | `COUNTED_EXACT` |', row)
         self.assertIn('6/39', self.index)
         self.assertIn('33/39', self.index)
+
+    def test_backported_spellbooks_012_exact_six_static_binary_registrations(self):
+        provider = PROVIDERS / '✅-backported-spellbooks'
+        name = 'EXACT-BINARY-SPELLS-0.1.2.md'
+        proof = (provider / name).read_text(encoding='utf-8')
+        expected = (
+            'backportedspellbooks:slime_aspect',
+            'backportedspellbooks:sulfur_bomb',
+            'backportedspellbooks:sulfur_clouds',
+            'backportedspellbooks:sulfur_release',
+            'backportedspellbooks:pale_thorn',
+            'backportedspellbooks:resin_spray',
+        )
+        for marker in (
+            '8158731', '38318268989',
+            '747847c1f38c73250ebac05ea06b41a381187850',
+            '209868', '0.1.2', '0.1.0',
+            'OWNED_SPELL_CLASS_COUNT=6',
+            'STATIC_REGISTER_SPELL_INVOCATIONS=6',
+            'ENTRYPOINT_TO_REGISTRY=present',
+            'SulfurBombSPell', 'AbstractPaleSpells',
+            '7/39', '32/39', '1851', '1849', '+0', 'Survival',
+            *expected,
+        ):
+            self.assertIn(marker, proof)
+        rows = [x for x in proof.splitlines() if x.startswith('| ')
+                and 'backportedspellbooks:' in x]
+        self.assertEqual(6, len(rows))
+        paths = ('README.md', 'SPELLS-AND-IRON-RUNTIME.md',
+                 'EVIDENCE-AND-PROVENANCE.md', 'spells/README.md',
+                 'spells/slime-aspect.md', 'spells/sulfur-bomb.md',
+                 'spells/sulfur-clouds.md', 'spells/sulfur-release.md',
+                 'spells/pale-thorn.md', 'spells/resin-spray.md')
+        for path in paths:
+            self.assertIn(name, (provider / path).read_text(encoding='utf-8'))
+        matrix = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        row = next(x for x in matrix.splitlines() if x.startswith('| [Backported Spellbooks]'))
+        self.assertIn('| physical 0.1.2 / embedded 0.1.0 | 6 | COUNTED_EXACT |', row)
+        ledger = (ROOT / 'wiki/modpack-catalog/meta' /
+                  'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        entry = next(x for x in ledger.splitlines() if x.startswith('| [Backported Spellbooks]'))
+        self.assertIn('| physical 0.1.2 / embedded 0.1.0 | 6 | `COUNTED_EXACT` |', entry)
+        self.assertIn('7/39', self.index)
+        self.assertIn('32/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
