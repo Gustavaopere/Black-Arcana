@@ -1,9 +1,11 @@
 # Warp Portal Conjuration
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT` — `PortalScrollItem → WarpPortalManager.spawnPortal` confirmado no JAR físico `21.1.45`; distinct portal creation, not portal traversal. [Java21 #38460510230](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38460510230), [dossiê](../EXACT-BINARY-ACTIONS-21.1.45.md). Sem promoção de custo, multiplayer, persistência ou Survival (⚠️); +0 nova ação.
+
 - Provider: **Waystones** (`waystones`)
 - Version: `21.1.45`
 - Classificação: **portal-conjuration player action**
-- Semantic state: `COUNTED_SOURCE_PINNED`
+- Semantic state: `COUNTED_EXACT` (**identidade física estática somente**)
 - Strict contribution: `1`
 - Provider surface: **Portal Scroll**
 
