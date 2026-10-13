@@ -48,41 +48,56 @@ jobs:
           assert ok,'Exact physical SHA1 publisher JAR unavailable. No promotion.'
           with open(os.environ['GITHUB_ENV'],'a') as f: f.write('AUDIT_JAR='+str(dest)+'\n')
           PY
-      - name: Inspect metadata and compiled glyph registrar candidates
+      - name: Inspect exact registrar bytecode and 22 identity constructors
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import os,re,subprocess,zipfile
-          path=os.environ['AUDIT_JAR']
-          with zipfile.ZipFile(path) as z:
-              classes=sorted(x for x in z.namelist() if x.endswith('.class'))
-              meta=[x for x in z.namelist() if x.endswith('neoforge.mods.toml') or x.endswith('mods.toml')]
-              print('TOTAL_CLASSES='+str(len(classes)))
-              for m in meta:
-                  txt=z.read(m).decode('utf-8',errors='replace')
-                  print('MOD_METADATA_PATH='+m)
-                  print('MOD_METADATA_IDS='+repr(re.findall(r'modId\s*=\s*["\x27]([^"\x27]+)',txt)[:25]))
-              packages=sorted({x.rsplit('/',1)[0] for x in classes if '$' not in x})
-              print('PACKAGE_PATHS='+repr(packages[:120]))
-              candidates=[x for x in classes if ('$' not in x and re.search(r'glyph|spell|registry|register|effect|augment|form|filter',x,re.I))]
-              print('CANDIDATE_CLASS_COUNT='+str(len(candidates)))
-              for x in candidates[:240]: print('CANDIDATE_CLASS='+x)
-              # Datapack glyph learning recipes may not mirror registry. Record separately.
-              recipes=[x for x in z.namelist() if ('recipe' in x and x.endswith('.json') and re.search(r'glyph|spell',x,re.I))]
-              print('RECIPE_CANDIDATES='+str(len(recipes)))
-              for x in sorted(recipes)[:80]:print('RECIPE_PATH='+x)
-          ranked=[x for x in candidates if re.search(r'glyph.*regist|regist.*glyph|spell.*regist|regist.*spell|arszero(?:mod)?\.class',x,re.I)]
-          ranked=ranked[:35]
-          print('REGISTRAR_CANDIDATES='+repr(ranked))
-          for x in ranked:
-              cls=x[:-6].replace('/','.')
+          jar=os.environ['AUDIT_JAR']
+          with zipfile.ZipFile(jar) as z:
+              entries=sorted(z.namelist())
+              main=[n for n in entries if n.endswith('.class') and n.count('/')==3 and n.startswith('com/github/ars_zero/')]
+              print('ROOT_TOPLEVEL_CLASSES='+repr(main))
+              for n in entries:
+                  if n.startswith('data/ars_zero/recipe') and 'glyph' in n:print('LEARNING_RECIPE='+n)
+          def javap(name):
+              cp=subprocess.run(['javap','-p','-c','-classpath',jar,name],text=True,capture_output=True,timeout=45)
+              assert cp.returncode==0,(name,cp.stderr[:400])
+              return cp.stdout
+          def section(txt,marker):
+              if marker not in txt:return ''
+              a=txt.split(marker,1)[1]
+              return a.split('\n  public ',1)[0].split('\n  private ',1)[0].split('\n  static {};',1)[0]
+          mod=javap('com.github.ars_zero.registry.ModGlyphs')
+          body=section(mod,'public static void registerGlyphs();')
+          print('MODGLYPHS_REGISTER_BODY_BEGIN')
+          print(body[:24000])
+          print('MODGLYPHS_REGISTER_BODY_END')
+          print('DIRECT_REGISTER_CALLS='+str(body.count('GlyphRegistry.registerSpell:')))
+          print('REGISTRY_BRANCH_INSNS='+repr(re.findall(r'^\s+\d+:\s+(?:ifeq|ifne|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\b',body,re.M)))
+          helper=section(mod,'public static void addOptionalAugmentCompatibility();')
+          print('OPTIONAL_COMPAT_HELPER='+helper[:12000])
+          stat=mod.split('static {};',1)[1] if 'static {};' in mod else ''
+          print('STATIC_GLYPH_INITIALIZER='+stat[:23500])
+          fields=re.findall(r'public static final com\.github\.ars_zero\.[\w.<>]+ (\w+);',mod)
+          print('STATIC_GLYPH_FIELDS='+repr(fields))
+          for name in ['com.github.ars_zero.ArsZero','com.github.ars_zero.ArsZeroMod','com.github.ars_zero.ArsZeroMain']:
               try:
-                  p=subprocess.run(['javap','-p','-c','-classpath',path,cls],text=True,capture_output=True,timeout=35)
-                  raw=p.stdout
-                  print('DISASSEMBLED_CLASS='+cls+' return='+str(p.returncode)+' bytes='+str(len(raw)))
-                  keep=[v.strip() for v in raw.splitlines() if re.search(r'public static|registerSpell|registerGlyph|Register|register\(|INSTANCE|<clinit>|static \{|// class .*glyph|// class .*spell',v,re.I)]
-                  for v in keep[:125]:print('BC_'+cls+': '+v[:260])
-              except Exception as ex:print('JAVAP_ERROR='+cls+':'+str(ex)[:130])
-          print('AUDIT_DISCOVERY_ONLY=NO_COUNT_PROMOTION')
+                  txt=javap(name)
+                  print('ENTRYPOINT_CLASS='+name)
+                  print('ENTRYPOINT_LINES='+repr([l.strip() for l in txt.splitlines() if re.search(r'ModGlyphs|registerGlyphs|addOptionalAugmentCompatibility|// String ars_zero|prefix:|ResourceLocation\.fromNamespace',l)]))
+              except Exception as e:print('NOT_ENTRYPOINT='+name)
+          # Inspect every concrete glyph class initialized in ModGlyphs; no runtime execution.
+          cls=sorted(set(re.findall(r'com/github/ars_zero/common/glyph/(?:augment/|geometrize/|convergence/)?[A-Za-z_0-9]+',stat)))
+          print('INITIALIZER_REFERENCED_GLYPH_CLASSES='+repr(cls))
+          for path in cls:
+              name=path.replace('/','.')
+              try:
+                  txt=javap(name)
+                  pieces=[l.strip() for l in txt.splitlines() if '// String ' in l or 'ResourceLocation' in l or 'prefix:' in l or 'public static' in l or 'static {};' in l or 'getGlyphName' in l or 'getRegistryName' in l]
+                  print('GLYPH_CLASS='+name)
+                  for line in pieces[:70]:print('GLYPH_BC='+line[:275])
+              except Exception as e:print('GLYPH_INSPECT_FAIL='+name+':'+str(e)[:160])
+          print('DISCOVERY_NO_PROMOTION=PASS')
           PY
