@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização binária 2026-10-13:** [Discerning The Eldritch 1.4.4-1.21](providers/✅-discerning-the-eldritch/EXACT-BINARY-SPELLS-1.4.4-1.21.md) registra **22/22** spells físicos com IDs/classes/escolas SHA-exatos ([Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207)). Campanha **22/39 exatos / 17/39 pendentes**, **+0** raízes, mínimos **1857 global / 1855 escopo**. Exorcism/Insanity, escola Ritual, runtime/Survival ⚠️.
+
+
 **Atualização binária 2026-10-13:** [Legendary Spellbooks 0.3.2](providers/✅-legendary-spellbooks/EXACT-BINARY-SPELLS-0.3.2.md) possui **30/30** IDs/classfiles físicos inscritos sem condições, [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179), **+0** raízes, campanha **21/39 exatos / 18/39 pendentes**, mínimos **1857 global / 1855 escopo** preservados. Survival/compatibilidade Iron's e Legendary Monsters ⚠️.
 
 
