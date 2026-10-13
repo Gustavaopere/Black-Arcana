@@ -1,0 +1,71 @@
+name: Clean-room Tunes n Tomes 1.1.0-HOTFIX binary discovery
+on:
+  push:
+    branches:
+      - 'audit/tunes-n-tomes-110hotfix-*'
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Pin publisher bytes to the sibling physical SHA-1 and discover spell registry
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import urllib.request, hashlib, pathlib, os, zipfile, re, subprocess
+          expect='6cac45631ea63577f8eeeab454e1df0ce8f78386'
+          urls=[
+            'https://cursemaven.com/curse/maven/tunes-n-tomes-a-bards-journey-1509193/8370271/tunes-n-tomes-a-bards-journey-1509193-8370271.jar',
+            'https://mediafilez.forgecdn.net/files/8370/271/tunes_n_tomes-1.1.0-HOTFIX.jar',
+            'https://media.forgecdn.net/files/8370/271/tunes_n_tomes-1.1.0-HOTFIX.jar',
+          ]
+          data=None
+          for url in urls:
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'Black-Arcana-cleanroom-audit'})
+              with urllib.request.urlopen(req,timeout=90) as response:
+                candidate=response.read(45000000)
+              digest=hashlib.sha1(candidate).hexdigest()
+              print('CANDIDATE_URL='+url+' BYTES='+str(len(candidate))+' SHA1='+digest,flush=True)
+              if digest==expect:
+                data=candidate
+                break
+            except Exception as e:print('FETCH_ERROR='+repr(e)[:240],flush=True)
+          if data is None:
+            raise SystemExit('FAIL-CLOSED: publisher bytes do not match physical snapshot SHA1')
+          path=pathlib.Path(os.environ['RUNNER_TEMP'])/'tunes_n_tomes-1.1.0-HOTFIX.jar'
+          path.write_bytes(data)
+          with zipfile.ZipFile(path) as z:
+            assert z.testzip() is None
+            entries=z.namelist()
+            modmeta=z.read('META-INF/neoforge.mods.toml').decode('utf8',errors='replace')
+          assert re.search(r'modId\s*=\s*["\x27]tunes_n_tomes',modmeta),'modID mismatch'
+          print('PUBLISHER_EQUALS_PHYSICAL_SHA1=PASS')
+          print('CERTIFIED_FILE_ID=8370271')
+          print('CERTIFIED_BYTES='+str(len(data)))
+          classes=[e[:-6].replace('/','.') for e in entries if e.endswith('.class')]
+          print('TOTAL_CLASSES='+str(len(classes)))
+          match=[c for c in classes if any(t in c.lower() for t in ('spell','registr','melod','resonan','segno','tunes'))]
+          print('CANDIDATE_CLASSES='+repr(match[:260]))
+          for c in match:
+            if 'registr' not in c.lower() and 'spell' not in c.lower():continue
+            if c.count('$')>0:continue
+            if any(x in c.lower() for x in ('item','menu','config','sound','client','render')):continue
+            p=subprocess.run(['javap','-p','-c','-classpath',str(path),c],capture_output=True,text=True,timeout=18)
+            if p.returncode!=0:continue
+            data=p.stdout
+            if not any(x in data for x in ('DeferredRegister','SpellRegistry.SPELL_REGISTRY_KEY','registerSpell','AbstractSpell','registerSpells')):continue
+            print('== CLASS '+c+' ==')
+            for l in data.splitlines():
+              if any(t in l for t in ('String ','Class ','// class ','DeferredRegister','registerSpell','AbstractSpell','SpellRegistry.SPELL_REGISTRY_KEY','invoke','// Method','// InterfaceMethod')):
+                print(l.strip()[:210])
+          print('DISCOVERY_NOT_RUNTIME_ACCEPTANCE=TRUE')
+          PY
