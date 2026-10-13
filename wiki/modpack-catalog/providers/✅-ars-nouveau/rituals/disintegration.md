@@ -28,3 +28,12 @@ Any observation for Arcane Danger/mastery must preserve one ritual causal identi
 ## QA
 
 Source is pinned to 5.13.1; the exact effective Source settlement and interaction with death/drop event consumers require runtime validation.
+
+## Dossiê de implementação para perks — ritual exato
+
+- **Classe fonte:** [`RitualDisintegration.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualDisintegration.java), fonte `112920ff774831f204031da75b4c4e73d3765157` para Ars 5.13.1.
+- **Amostragem:** a cada `60` ticks de jogo no servidor percorre `LivingEntity` em AABB `inflate(5.0)`; exige classificação MONSTER ou `DISINTEGRATION_WHITELIST`, exclui Players e `DISINTEGRATION_BLACKLIST`.
+- **Efeito:** usa `remove(Entity.RemovalReason.DISCARDED)`, **não** `hurt/kill`. Se entidade removida reporta `shouldDropExperience` e XP calculado >0, dobra a XP e gera `GREATER_EXPERIENCE_GEM` (grupos de 12) e `EXPERIENCE_GEM` (grupos de 3 com arredondamento para cima para resto); sem drops normais.
+- **Ressalva de Source:** `setNeedsSource(true)` ocorre depois de `didWorkOnce`, que só é marcado com XP positiva convertida; a descrição pública diz custo por monstro. Não tratar como prova de taxa de Source por entidade; preservar a discrepância e pedir QA físico. `getSourceCost=300` é declaração, não prova da frequência da cobrança.
+- **Perks:** Ritual completion/progress e conversões são provider-owned; não disparar death perks em entidades apenas descartadas.
+- **Mutabilidade externa:** ⛔ nenhum adapter RPG provado que altere lifecycle, Source ou raio sem duplicar settlement; 🟡 fórmula/lógica source-pinned; ⚠️ runtime, receitas/config física, addons e Survival pendentes.
