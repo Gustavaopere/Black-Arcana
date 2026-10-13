@@ -1,5 +1,8 @@
 # Ars Technica 2.7.6 — spell-part catalog
 
+**Fecho binário 2026-10-13:** ✅ [11 glyphs verificados diretamente no JAR físico 2.7.6](EXACT-BINARY-GLYPHS-2.7.6.md), [run #38342392322](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38342392322), 10 efeitos e um augment; `COUNTED_EXACT` quanto a registro estático. Os custos/comportamentos source-pinned abaixo não se tornam PASS de runtime por esta evidência.
+
+
 Status: `11/11 PRODUCTION SPELL PARTS SOURCE-PINNED`
 
 Physical provider authority:

@@ -1,6 +1,9 @@
 # Ars Technica 2.7.6
 
-Status: `PHASE 2V — SOURCE CATALOG CLOSED / INSTALLED RUNTIME + CONFIG QA OPEN`
+**✅ Prova física 2026-10-13:** [11/11 glifos exatos no JAR](EXACT-BINARY-GLYPHS-2.7.6.md), [Java 21 #38342392322](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38342392322) SUCCESS, **3691171 bytes** SHA-1 `adb2641d538375f6eff6a22f0196bb330ab0b171` igual ao físico. Dez efeitos + um augment, registros incondicionais; `COUNTED_EXACT` apenas para identities/registry. Campanha **13/39 exatos / 26/39 pendentes**, **+0** novas identidades e mínimos **1851/1849**. Integração Ars 5.13.1 / Create 6.0.10 e Survival ⚠️.
+
+
+Status: `PHASE 2V — BINARY REGISTRY COUNTED_EXACT 11/11 / INSTALLED RUNTIME + CONFIG QA OPEN`
 
 ## Exact installed identity
 

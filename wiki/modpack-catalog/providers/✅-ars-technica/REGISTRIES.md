@@ -1,5 +1,8 @@
 # Ars Technica 2.7.6 — registries
 
+**Verificação posterior 2026-10-13:** ✅ [11/11 spell parts binários exatos](EXACT-BINARY-GLYPHS-2.7.6.md), [Java 21 #38342392322](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38342392322); glyph registry `COUNTED_EXACT`, blocos e outros registros permanecem no escopo da inspeção original. Compatibilidade física em jogo/Survival ⚠️.
+
+
 Status: `SOURCE-PINNED REGISTRY INVENTORY`
 
 Source checkpoint: `zeroregard/Ars-Technica@bf34b58ff8908837e5894dee773d3afbd98aa3e3`.

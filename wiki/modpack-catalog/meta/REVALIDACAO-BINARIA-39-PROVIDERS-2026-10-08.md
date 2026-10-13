@@ -1,5 +1,8 @@
 # Provedores source/release-bounded — roteiro de verificação binária
 
+**Décima terceira prova binária (2026-10-13):** [Ars Technica 2.7.6](../providers/✅-ars-technica/EXACT-BINARY-GLYPHS-2.7.6.md), [Java 21 #38342392322](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38342392322) SUCCESS; CurseForge file 7642730, 3691171 bytes, SHA-1 `adb2641d538375f6eff6a22f0196bb330ab0b171` igual ao JAR físico sibling #050. Onze glifos estáticos registrados sem branch, bootstrap e namespace; **13/39 exatos / 26/39 pendentes**, +0 novos, mínimos 1851/1849. Runtime, Create/Ars mixins e Survival ⚠️; checkpoints anteriores históricos.
+
+
 **Décima segunda prova binária, 2026-10-13:** [Ars Controle 1.6.16](../providers/✅-ars-controle/EXACT-BINARY-GLYPHS-1.6.16.md), [Java 21 #38339934100](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38339934100) SUCCESS; publicador Modrinth `r7YxZN9m`, 313828 bytes, SHA-1 físico `795567371450debec83fe634fd0114c295f7da5a`. Nove glyphs estáticos, host-prefix e bootstrap confirmados: **12/39 exatos / 27/39 pendentes**, +0, mínimos 1851/1849, runtime/Survival ⚠️; checkpoints anteriores históricos.
 
 
@@ -21,7 +24,7 @@
 
 **Terceira prova independente (2026-10-12):** Crystal Chronicles 0.1.3-alpha, registro `crystal_chronicles:prismatic_portal` físico e publicado com SHA-1 idêntico. [Run #38298343874](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38298343874). Campanha 3/39 exatos e 36/39 condicionados. Nenhuma nova magia.
 
-**Estado atualizado 2026-10-13:** roster congelado **39** providers. **✅ 12/39 `COUNTED_EXACT`** (Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob Malum, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 com quatro rituais condicionados a Iron's); **⚠️ 27/39** pendentes. +0 novas raízes, runtime e Survival sem promoção.
+**Estado atualizado 2026-10-13:** roster congelado **39** providers. **✅ 13/39 `COUNTED_EXACT`** (Ars Technica 11/11, Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob Malum, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 com quatro rituais condicionados a Iron's); **⚠️ 26/39** pendentes. +0 novas raízes, runtime e Survival sem promoção.
 
 Snapshot: `Black-Arcana/main@9141a8ed1c345db4e995e5f2aa849df2c24769b9` / sibling modlist `de80b186357cad20ba5b81892a8682777e96e35a`.
 
@@ -32,7 +35,7 @@ Uma correspondência entre **nome/versão do arquivo JAR** e o ledger já foi co
 | [Ars Nouveau](../providers/✅-ars-nouveau/README.md) | 5.13.1 | 109 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | COUNTED_EXACT | ✅ [cinco IDs binários finais (host Ars 5.13.1 + addon 21.3.0)](../providers/✅-ars-additions/HOST-GLYPH-IDS-EXACT-5.13.1.md), ambos JARs SHA físico/pub verificados [#38266741543](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38266741543); 3 glifos + 2 rituais, 1 perk não contada; +0. ⚠️ config/Survival/runtime não aceitos |
 | [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | COUNTED_EXACT | ✅ [nove glyphs no JAR físico](../providers/✅-ars-controle/EXACT-BINARY-GLYPHS-1.6.16.md), SHA-1 `795567371450debec83fe634fd0114c295f7da5a`, [run #38339934100](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38339934100); +0, ⚠️ custos, runtime, config e Survival |
-| [Ars Technica](../providers/✅-ars-technica/README.md) | 2.7.6 | 11 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
+| [Ars Technica](../providers/✅-ars-technica/README.md) | 2.7.6 | 11 | COUNTED_EXACT | ✅ [11 glifos estáticos no JAR](../providers/✅-ars-technica/EXACT-BINARY-GLYPHS-2.7.6.md), 10 effects + 1 augment, SHA-1 `adb2641d538375f6eff6a22f0196bb330ab0b171`, [run #38342392322](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38342392322); +0, ⚠️ runtime Ars/Create, config e Survival |
 | [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | COUNTED_EXACT | ✅ [1/1 glifo `ars_hex:glyph_soul_shatter` de registry físico exato](../providers/✅-ars-hex/EXACT-BINARY-GLYPH-5.0.4b.md); [run #38291974275](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38291974275), SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`; condicionado a `ModList.isLoaded(malum)`, Malum instalado; 3 perks excluídas, +0; ⚠️ runtime/Survival não testados |
 | [Ars Zero](../providers/✅-ars-zero/README.md) | 2.0.2 | 12 | COUNTED_RELEASE_BOUNDED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |
 | [Ars Elemental](../providers/✅-ars-elemental/README.md) | 0.7.10.1 | 47 | COUNTED_SOURCE_PINNED | ⚠️ Exato JAR SHA + enumeração exaustiva das identidades + condições de registro + deduplicação; **não executado neste lote** |

@@ -105,10 +105,10 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_real_frozen_campaign_has_twelve_existing_exact_registries(self):
+    def test_real_frozen_campaign_has_thirteen_existing_exact_registries(self):
         matrix = mod.load_matrix()
         self.assertEqual(39, len(matrix))
-        self.assertEqual(12, sum(
+        self.assertEqual(13, sum(
             x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
         ))
         self.assertEqual(
@@ -119,6 +119,9 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         self.assertEqual(
             {'version': '1.6.16', 'semantic_objects': 9,
              'catalog_evidence': 'COUNTED_EXACT'}, matrix['Ars Controle'])
+        self.assertEqual(
+            {'version': '2.7.6', 'semantic_objects': 11,
+             'catalog_evidence': 'COUNTED_EXACT'}, matrix['Ars Technica'])
         self.assertEqual(
             {'version': '5.0.4b', 'semantic_objects': 1,
              'catalog_evidence': 'COUNTED_EXACT'},
@@ -230,7 +233,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_twelve_independent_prior_exact_providers_not_report_promoted(self):
+    def test_thirteen_independent_prior_exact_providers_not_report_promoted(self):
         matrix, crosswalk, report = fixture()
         for name, orig, version, count in (
             ('Ars Additions', 'Provider 1', '21.3.0', 5),
@@ -245,6 +248,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             ("Farmer's Spell 'n Spellbooks", 'Provider 10', '1.0.5.1-1.21.1', 6),
             ("Ars 'n' Spells", 'Provider 11', '3.3.4', 5),
             ('Ars Controle', 'Provider 12', '1.6.16', 9),
+            ('Ars Technica', 'Provider 13', '2.7.6', 11),
         ):
             filename = crosswalk.pop(orig)
             matrix.pop(orig)
@@ -254,15 +258,15 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             next(r for r in report['entries'] if r['provider'] == orig
                  )['provider'] = name
         result = mod.build_queue(matrix, crosswalk, report)
-        self.assertEqual(12, result['catalog_exact_preexisting'])
-        self.assertEqual(27, result['registry_proofs_remaining'])
+        self.assertEqual(13, result['catalog_exact_preexisting'])
+        self.assertEqual(26, result['registry_proofs_remaining'])
         self.assertEqual(0, result['registry_proofs_completed'])
         exact_rows = [x for x in result['providers']
                       if x['status'] == 'CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT']
         self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                           'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                           'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
-                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle'},
+                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica'},
                          {x['provider'] for x in exact_rows})
         self.assertTrue(all(not x['registry_verified'] and
                             not x['promotion_allowed'] and
