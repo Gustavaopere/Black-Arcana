@@ -32,11 +32,11 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-apothic-enchanting` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apprentice-codex` | 101 | 🟡 83/83 fichas de spell com source class; 6 com causalidade aprofundada; hooks/QA pendentes |
-| `✅-ars-additions` | 48 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-elemancy` | 11 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-elemental` | 59 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ars-elemental` | 59 | ✅ 47/47 objetos core (23 effects, 2 methods, 2 propagators, 12 filtros, 8 rituais) com dossiês source-located; ⚠️ config/QA; ⛔ adapter RPG |
 | `✅-ars-hex` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-morph` | 7 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-n-spells` | 15 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -186,10 +186,16 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 
 **85/85 Glyph Parts** e **24/24 rituais** com mapeamento de perks/cadeia causal source-pinned nesta branch; sendo 5 Forms, 67 Effects, 13 Augments e 24 rituais. [Matriz técnica Ars 5.13.1](../providers/✅-ars-nouveau/PERK-ENGINEERING-MATRIX-5.13.1.md) com métodos, fórmulas, provas auxiliares e bloqueios. [Eventos reais do Ars 5.13.1](../providers/✅-ars-nouveau/VERIFIED-EVENT-SURFACES-5.13.1.md) foram localizados, mas não constituem adapter implementado. A cobertura semântica de identidade preexistente é diferente da profundidade técnica para perks. **✅ source-located** nesta branch não implica **✅ adapter implementado**, **✅ QA**, **✅ hooks em todos os efeitos** ou merge na main.
 
+## Continuação — Ars Additions e Ars Elemental 2026-10-13
+
+- ✅ [Ars Additions 21.3.0](../providers/✅-ars-additions/PERK-ENGINEERING-MATRIX-21.3.0.md): 5/5 objetos de magias/rituais com métodos source-pinned, fórmulas e limites de perks. Fonte é 21.3.0; build baseline publica Ars 5.11.2, pack usa host 5.13.1 — compatibilidade ⚠️.
+- ✅ [Ars Elemental 0.7.10.1](../providers/✅-ars-elemental/PERK-ENGINEERING-MATRIX-0.7.10.1.md): 47/47 objetos (39 Glyph Parts + 8 Rituals) com classes source-pinned e dossiês por ficha. ID no JAR físico foi comprovado anteriormente; igualdade entre implementação do source pin e JAR não foi provada.
+- Este lote é +0 no denominador semântico; mantém mínimos 1857 global / 1855 escopo e 25/39 providers com prova binária. Nenhum teste de runtime/CI/Survival, adapter RPG, merge ou promoção de Stage por este lote.
+
 ## Priorização para próximos lotes
 
 1. Spells do Apprentice's Codex (`apprenticecodex`), 83 identidades source-pinned; depois validar as classes de entidades/helpers e a versão binária instalada.
-2. Ars Nouveau 5.13.1 (form, effect, augment, ritual), que exige auditoria de composição e modificadores semânticos diferentes de Iron's.
+2. Ars Nouveau 5.13.1, Ars Elemental 0.7.10.1 e Ars Additions 21.3.0: objetos source-located no PR draft; aprofundar auxiliares/eventos/versões e QA, sem repetir fichas.
 3. Goety 3.1.4, cujo catálogo dos 123 Focuses é exact-binary, mas muitos arquivos não comprovam método, custo, raio e hook.
 4. Outros 162 diretórios conforme relevância de spells, glifos, rituais, habilidades e riscos/capacidade de implementação, sempre preservando as fontes instaladas.
 
