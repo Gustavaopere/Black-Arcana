@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização binária 2026-10-13:** [Fire's Ender Expansion 2.4.1](providers/✅-fires-ender-expansion/EXACT-BINARY-SPELLS-2.4.1.md) possui **11/11** IDs físicos exatos, sem novos objetos semânticos; campanha **17/39 exatos / 22/39 pendentes**. Mínimos **1857 global / 1855 escopo** inalterados; nenhum PASS de gameplay/Survival.
+
+
 **Auditoria publisher bloqueada por SHA físico — 2026-10-13:** [Aeromancy Additions 1.2.8](providers/✅-aeromancy-additions/EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md) registra dez spells no JAR oficial, mas o dado legado atribuído ao arquivo físico tem 35 caracteres (SHA-1 inválido). **Não** foi contado como `COUNTED_EXACT`; campanha **16/39** exatos/**23/39** pendentes; mínimos **1857/1855**. Nenhum gameplay/Survival PASS.
 
 
