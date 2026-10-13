@@ -37,3 +37,10 @@ Fonte de interoperabilidade para o Codex. Minecraft 1.21.1 / NeoForge / Java 21.
 ✅ Iron's 110/110 fichas de identidade (pré-existentes). 🟡 Blood 10/10 com aprofundamento estático de parâmetros. ⚠️ Ainda não é QA físico, hook de reescrita comprovado nem validação de Survival ou modpack; auxiliares de effects/projectiles devem ser auditados. Sem promoção de Stage 06.05/07/08.
 
 Fontes: [wiki oficial](https://iron.wiki/spells/), [índice do provider](README.md), [integração planejada no RPG Skill Tree](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/main/docs/integrations/irons.md), [decisões](../../../../plans/DECISIONS.md).
+
+## Andamento do enriquecimento
+
+- ✅ Blood: 10/10 fichas com fórmulas e encadeamento de efeito auditados inicialmente.
+- ⚠️ Eldritch: 7/7 fichas com classes, campos e métodos diretamente extraídos; auxiliares ainda pendentes.
+- ⚠️ Ender: 16/16 fichas com âncoras de source e superfícies mecânicas extraídas; auxiliares e runtime pendentes.
+- Total desta entrega: **33/110 fichas com anexo técnico**; o catálogo de identidade permanece 110/110.
