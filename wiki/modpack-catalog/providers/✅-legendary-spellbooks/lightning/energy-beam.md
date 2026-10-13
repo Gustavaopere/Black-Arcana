@@ -1,5 +1,7 @@
 # Energy Beam
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT` — `legendary_spellbooks:energy_beam`, classe `dev.higurashi.legendary_spellbooks.common.spells.lightning.EnergyBeamSpell` ([Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179); [dossiê SHA-exato](../EXACT-BINARY-SPELLS-0.3.2.md)). Valores e mecânicas source-pinned; runtime/Survival ⚠️; +0 raízes.
+
 - ID: `legendary_spellbooks:energy_beam`
 - School: Lightning
 - Levels: 1–3
