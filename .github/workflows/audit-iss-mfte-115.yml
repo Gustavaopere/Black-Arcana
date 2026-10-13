@@ -117,6 +117,10 @@ jobs:
             assert 'getSpellResource()' in body,klass
             # ISS stores the literal ResourceLocation in spellId during
             # construction; getSpellResource() may only return that field.
+            if idx==1:
+              print('SWORD_DANCE_FULL_BYTECODE_BEGIN')
+              print(body[:16000])
+              print('SWORD_DANCE_FULL_BYTECODE_END')
             assert 'ResourceLocation.fromNamespaceAndPath:' in body,klass
             bytecode=body.splitlines()
             suffixes=[]
