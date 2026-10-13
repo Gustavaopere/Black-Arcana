@@ -61,3 +61,38 @@ jobs:
           print('RELIC_CLASS_CANDIDATES='+repr(items[:110]))
           print('DISCOVERY_ONLY=TRUE')
           PY
+
+      - name: Discover Relics ability builders for nineteen physical owner items
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,pathlib,zipfile,hashlib,re,subprocess
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'reliquified_ars_nouveau-1.21.1-0.8.1.jar'
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='4be1f4b0fd7fbec6618596e2e7c3705db88a7579'
+          base='it.hurts.shatterbyte.reliquified_ars_nouveau.'
+          def disasm(name):
+            p=subprocess.run(['javap','-p','-c','-classpath',str(jar),name],capture_output=True,text=True,timeout=25)
+            assert p.returncode==0,(name,p.stderr[:180])
+            return p.stdout
+          reg=disasm(base+'init.ItemRegistry')
+          initializer=reg.split('static {};',1)[1]
+          names=re.findall(r'// String ([a-z][a-z0-9_]*)',initializer)
+          registrations=re.findall(r'// Method net/neoforged/neoforge/registries/DeferredRegister.register:\\(Ljava/lang/String;Ljava/util/function/Supplier;\\)',initializer)
+          print('PHYSICAL_ITEM_NAMES='+repr(names))
+          print('ITEM_REGISTRATION_CALLS='+str(len(registrations)))
+          print('INITIALIZER_BRANCHES='+repr([l.strip() for l in initializer.splitlines() if re.search(r'^\s*\d+:\s+(?:ifne|ifeq|goto|tableswitch|lookupswitch)\\b',l)][:15]))
+          with zipfile.ZipFile(jar) as z:
+            classes=[x[:-6].replace('/','.') for x in z.namelist() if x.endswith('.class') and '$' not in x
+                     and '/items/' in x and x.endswith('Item.class')]
+          abilityclasses=[]
+          for c in classes:
+            body=disasm(c)
+            builders=[line.strip() for line in body.splitlines() if 'AbilityTemplate.builder:' in line or 'AbilityTemplate.builder' in line]
+            strings=re.findall(r'// String ([a-z][a-z0-9_]*)',body)
+            if builders:
+              abilityclasses.append(c)
+              print('RELIC_ABILITY_CLASS='+c+'|BUILDER_CALLS='+str(len(builders))+'|LITERALS='+repr(strings[:22]))
+          print('RELIC_ABILITY_CLASS_COUNT='+str(len(abilityclasses)))
+          print('REGISTRY_DISCOVERY_ONLY=TRUE')
+          PY
