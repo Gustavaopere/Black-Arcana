@@ -1,6 +1,9 @@
 # Ars Zero
 
-Status: `PHASE 2AE — RELEASE-PINNED 2.0.2 / 12 CURRENT UNIQUE GLYPH CAPABILITIES NORMALIZED / MULTIPHASE + VOXEL + STATIC-STAFF SURFACES CATALOGED / EXACT BINARY INTERNALS FAIL-CLOSED`
+**✅ Revalidação binária (2026-10-13):** [inventário físico 22 registros / 18 glyphs próprios](EXACT-BINARY-GLYPHS-2.0.2.md), [Java 21 #38343776242](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38343776242) SUCCESS, SHA-1 publisher/physical `ac9b6e6f7a2bd403ee7cdc16023509fde7c4e1d0`. Seis identidades faltantes nas 12 capacidades públicas anteriores (Sustain, Discard, Hollow, Sphere, Cube, Flatten): **+6** raízes estritas, mínimos atuais **1857 global / 1855 escopo**. Quatro glyphs copied compat opcionais têm inscrições físicas mas não acrescem raízes. **14/39 providers exatos / 25/39 pendentes**. Runtime/config/Survival ⚠️; status antigos abaixo são checkpoints históricos.
+
+
+Status: `PHASE 2AE — 18 UNIQUE BINARY GLYPHS COUNTED_EXACT / 4 COPIED COMPAT OPTIONAL / MULTIPHASE SYSTEMS DOCUMENTED / RUNTIME+SURVIVAL QA PENDING`
 
 ## Runtime identity
 

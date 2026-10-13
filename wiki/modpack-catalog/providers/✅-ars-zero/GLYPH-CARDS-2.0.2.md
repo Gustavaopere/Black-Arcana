@@ -1,5 +1,8 @@
 # Ars Zero 2.0.2 — 12 fichas de capacidades de glifo
 
+**Adendo binário 2026-10-13:** as 12 fichas públicas listadas abaixo são históricas. A [prova física](EXACT-BINARY-GLYPHS-2.0.2.md) confirmou os IDs destas 12 e mais **6 novos** (18 próprios únicos), além de 4 cópias opcionais. As fichas de Sustain/Discard/Hollow/Sphere/Cube/Flatten estão em `glyphs/`. Os mínimos atuais são **1.857 global / 1.855 no escopo**; os valores 1.851/1.849 abaixo pertencem ao checkpoint anterior. A prova não certifica gameplay/Survival.
+
+
 Status: **✅ 12/12 capacidades públicas distintas documentadas** como `COUNTED_RELEASE_BOUNDED` · **⚠️ IDs de registry, internals exatos, aquisição e execução física continuam condicionados**.
 
 ## Evidência e limite de fechamento

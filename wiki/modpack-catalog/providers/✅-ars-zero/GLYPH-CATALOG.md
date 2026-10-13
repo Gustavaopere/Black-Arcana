@@ -1,5 +1,8 @@
 # Ars Zero 2.0.2 — Glyph Capability Catalog
 
+**Adendo exato 2026-10-13:** a lista de 12 nomes públicos abaixo é histórica; [o JAR 2.0.2 registra 22 glyphs, sendo 18 próprios únicos e 4 cópias opcionais](EXACT-BINARY-GLYPHS-2.0.2.md). Os seis próprios adicionais têm fichas em `glyphs/`; contribuição nova **+6** e mínimos estritos **1857/1855**. O texto antigo de ausência de IDs binários refere-se à evidência editorial anterior, não ao estado atual.
+
+
 This catalog records the **publicly evidenced current capability surface** for installed Ars Zero 2.0.2. Display names are authoritative only at the level shown by official project/release documentation. Exact registry IDs, mana costs, tier values, recipes and implementation signatures remain fail-closed unless explicitly proven.
 
 | Capability | Current evidence | Semantic role | Black Arcana disposition |
