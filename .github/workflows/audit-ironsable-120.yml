@@ -70,3 +70,32 @@ jobs:
                 print("RESOURCE="+p,flush=True)
           print("INSPECTION_ONLY_NO_REGISTRY_PROMOTION=TRUE")
           PY
+      - name: Disassemble spell bootstrap, seven constructors and physics API surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,subprocess,re
+          jar=os.environ["PHYSICAL_IRONSABLE_JAR"]
+          def javap(cls):
+            p=subprocess.run(["javap","-p","-c","-classpath",jar,cls],capture_output=True,text=True,timeout=50)
+            assert p.returncode==0,(cls,p.stderr[:250])
+            return p.stdout
+          roots=[
+            "com.ironsable.Ironsable",
+            "com.ironsable.compat.WindSchool",
+            "com.ironsable.core.PhysicsMagic",
+            "com.ironsable.spells.MaelstromSpell",
+            "com.ironsable.spells.TempestsGraspSpell",
+            "com.ironsable.spells.GyroscopicSpinSpell",
+            "com.ironsable.spells.DownburstSpell",
+            "com.ironsable.spells.StasisLockSpell",
+            "com.ironsable.spells.KineticBarrierSpell",
+            "com.ironsable.spells.ElasticTetherSpell",
+          ]
+          for c in roots:
+            txt=javap(c)
+            print("DISASM_BEGIN="+c,flush=True)
+            print(txt[:23000] if c.endswith("Ironsable") else txt[:7000],flush=True)
+            print("DISASM_END="+c,flush=True)
+          PY
