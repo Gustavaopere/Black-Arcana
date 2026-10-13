@@ -2,7 +2,7 @@
 
 Este índice materializa as **6 identidades de spell provider-owned** fechadas no source pin exato `GLDYM/Farmers-Spell-n-Spellbook@b7cbb40316a9ccbbc2ce2b56b3023647261ce569`.
 
-O provider permanece **✅ catalogado / COUNTED_SOURCE_PINNED 6 / +6 strict**. A escola `farmers_spell:gluttony`, itens, Foodgeist, projectiles/entities, status effects e receitas de aquisição não criam identidades adicionais.
+O provider permanece **✅ catalogado / COUNTED_EXACT 6/6 no registry estático do JAR físico**, [auditoria #38334052069](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38334052069) e [dossiê](EXACT-BINARY-SPELLS-1.0.5.1.md). A contribuição estrita **+6** é histórica; a promoção adiciona **+0**. A escola `farmers_spell:gluttony`, itens, Foodgeist, projectiles/entities, status effects e receitas de aquisição não criam identidades adicionais.
 
 ## Gluttony spells — 6
 
@@ -17,7 +17,7 @@ O provider permanece **✅ catalogado / COUNTED_SOURCE_PINNED 6 / +6 strict**. A
 
 `ModSpells` mantém um único `DeferredRegister<AbstractSpell>` sob o namespace `farmers_spell` e registra exatamente os seis IDs acima no Iron's `SpellRegistry`.
 
-O registrar é ligado diretamente ao event bus pelo provider; não há branch de mod-loaded/config em torno da criação desses seis registros no source pin auditado.
+A análise Java 21 do **JAR físico 1.0.5.1** provou seis `DeferredRegister.register` sem branches e o bootstrap em `FarmersSpell`, sem inferir compatibilidade/configuração de jogo. [Dossiê](EXACT-BINARY-SPELLS-1.0.5.1.md).
 
 ## School and reachability boundary
 

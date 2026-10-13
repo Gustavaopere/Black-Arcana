@@ -1,5 +1,7 @@
 # Farmer's Spell 'n Spellbooks 1.0.5.1
 
+**Prova binária 2026-10-12:** [JAR exato com seis spells estáticas](EXACT-BINARY-SPELLS-1.0.5.1.md), [run #38334052069](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38334052069); publisher file 8760428, **5537418 bytes**, SHA-1 `f77355e029af39bbaba3854e10cc087a608351ff` igual ao snapshot físico. `ModSpells` tem seis entradas sem branches e bootstrap em `FarmersSpell`; classe `BerserkCleaverSpell` do source não é um sétimo registry ID físico. **✅ 10/39 exatos / ⚠️ 29/39 pendentes**, +0 novas identidades e mínimos 1851/1849. Casting, config, Foodgeist, cooking/dupe fixes e Survival ainda ⚠️.
+
 Status: `EXACT SOURCE-PINNED 1.0.5.1 CATALOG / 6 REGISTERED SPELL IDENTITIES / HOST-NATIVE SCROLL-FORGE REACHABILITY / COMPONENT #63 / CURRENT-HOST RUNTIME QA FAIL-CLOSED`
 
 ## Installed authority
@@ -14,7 +16,7 @@ Status: `EXACT SOURCE-PINNED 1.0.5.1 CATALOG / 6 REGISTERED SPELL IDENTITIES / H
 - Provider class: `MIXED`
 - Required providers: Iron's Spells 'n Spellbooks, Farmer's Delight and GeckoLib
 
-The physical modlist remains authority for the installed JAR/runtime/hash. Public source is used only to close factual registry, dependency, acquisition and interoperability surfaces; it is not treated as a binary hash proof of the physical artifact.
+The physical modlist remains authority for the installed JAR/version. An independent [binary audit](EXACT-BINARY-SPELLS-1.0.5.1.md) now also matches the exact publisher artifact SHA-1 to that physical snapshot and proves six static spell registrations. The public source remains a separate contract/baseline; neither source-to-JAR build equivalence nor deployed runtime/Survival is claimed.
 
 ## Exact official source checkpoint
 
@@ -66,7 +68,7 @@ A future Black Arcana integration must use a verified provider/host-native bound
 
 ## Current runtime ceiling
 
-Catalog/source identity is closed, but current-host runtime compatibility is not.
+Source and **physical static binary registry identity** are closed; current-host runtime compatibility is still not.
 
 - source build: NeoForge `21.1.238`; physical pack: `21.1.248`;
 - source build: Farmer's Delight `1.3.2`; physical pack: `1.3.4`;
@@ -79,7 +81,7 @@ Dependency ranges or version-label equality are not a runtime PASS.
 
 ## Semantic disposition
 
-Phase 2BO contributes **+6 `COUNTED_SOURCE_PINNED`** semantic spell identities.
+Historical Phase 2BO contributed **+6 `COUNTED_SOURCE_PINNED`** semantic spell identities. Current static binary evidence upgrades those **same six** to `COUNTED_EXACT`, **+0 newly added** from this promotion.
 
 The Gluttony school is taxonomy/support for the six actions and is not counted as a seventh object under the current semantic metric. At the Phase 2BO checkpoint, the shared-ledger state was **1322 strict semantic objects / 63 of 100 provider components**. That pair is a historical Phase 2BO snapshot, not a live aggregate; current aggregate totals are maintained in the shared semantic/component ledgers. These catalog values do not certify current-host runtime compatibility.
 

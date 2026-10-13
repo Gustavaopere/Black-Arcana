@@ -974,9 +974,9 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("PENDING / DEFERRED TO STAGE 09", stage09)
         self.assertIn("crash consistency", stage09)
 
-    def test_nine_exact_registries_do_not_certify_other_or_survival(self):
-        self.assertIn("9/39", self.status)
-        self.assertIn("30/39", self.status)
+    def test_ten_exact_registries_do_not_certify_other_or_survival(self):
+        self.assertIn("10/39", self.status)
+        self.assertIn("29/39", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
         self.assertIn("JARs fora da categoria Magic", self.status)
         self.assertIn("14 rotas", self.status)
@@ -986,8 +986,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
                    if s.startswith("| [Ars Additions]"))
         self.assertIn("| COUNTED_EXACT |", row)
         self.assertIn("HOST-GLYPH-IDS-EXACT-5.13.1.md", row)
-        self.assertIn("9/39", self.binary)
-        self.assertIn("30/39", self.binary)
+        self.assertIn("10/39", self.binary)
+        self.assertIn("29/39", self.binary)
         second = next(s for s in self.binary.splitlines()
                       if s.startswith("| [Ars Hex]"))
         self.assertIn("| COUNTED_EXACT |", second)
@@ -1020,6 +1020,10 @@ class MagicPendencyStatusTest(unittest.TestCase):
                      if s.startswith("| [GTBC\'s Geomancy Plus]"))
         self.assertIn("| COUNTED_EXACT |", ninth)
         self.assertIn("EXACT-BINARY-SPELLS-1.1.0-1.21.1.md", ninth)
+        tenth = next(s for s in self.binary.splitlines()
+                     if s.startswith("| [Farmer\'s Spell \'n Spellbooks]"))
+        self.assertIn("| COUNTED_EXACT |", tenth)
+        self.assertIn("EXACT-BINARY-SPELLS-1.0.5.1.md", tenth)
 
     def test_historical_ritual_design_gate_preserves_original_blocker(self):
         self.assertIn("⛔ SEM INGRESSO CANÔNICO", self.stage)
