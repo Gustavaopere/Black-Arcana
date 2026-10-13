@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe exata:** [`EffectCavitate.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectCavitate.java) fonte pinned 0.7.10.1, sem prova de byte-equality ao JAR.
+- **Gatilho:** target deve ser `BubbleEntity` ou passageiro de uma `BubbleEntity`, no `ServerLevel`, **e** `attemptDamage` direto no target deve retornar true. Fora da bolha não há shockwave.
+- **Escala e AOE:** dano nominal `DAMAGE+AMP_VALUE*ampMultiplier`, defaults 8+3*amp; busca outras `LivingEntity` em AABB `inflate(2+getAoeMultiplier())`, excluindo caster e o objeto target. Para cada uma tenta dano e aplica `SOAKED_EFFECT` mesmo quando o resultado de `attemptDamage` no alvo secundário foi false (a aplicação não está guardada pelo retorno).
+- **Perks:** dano inicial, dano secundário, status e ondas visuais não são multiplicadores independentes; conferir entidade Bubble real e prevenção de procs recursivos, sem atribuir Mastery por ring particles.
+- **Estado:** ✅ ID JAR + código exato no source commit; ⚠️ gameplay/config/host/auxiliares requerem confirmação; ⛔ adapter de perk RPG não implementado, sem duplicar status, mana ou dano.

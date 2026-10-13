@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe exata:** [`EffectCauterize.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectCauterize.java) fonte pinned 0.7.10.1, sem prova de byte-equality ao JAR.
+- **Admissão:** `onResolveEntity` requer `LivingEntity`; `IDamageEffect.attemptDamage` com dano base de `DAMAGE.get()` default 3, fonte `DamageTypesRegistry.FLARE`. A cura de status só ocorre **quando o ataque é aceito**, e `canDamage` desta classe permite dano no próprio caster salvo health<=0.
+- **Remoção de status:** remove efeito `MobEffectCategory.HARMFUL` curável com `EffectCures.MILK` salvo blacklist `PotionEffectTags.DISPEL_DENY`; o ramo `else if` também remove efeitos na whitelist `DISPEL_ALLOW`. Não equivale a `EffectDispel` genérico em todos os caminhos.
+- **Perks:** dano de fogo e cleanse estão causalmente ligados, mas não são dois casts; callback de cura sem dano aceito não é respaldado pelo método.
+- **Estado:** ✅ ID JAR + código exato no source commit; ⚠️ gameplay/config/host/auxiliares requerem confirmação; ⛔ adapter de perk RPG não implementado, sem duplicar status, mana ou dano.

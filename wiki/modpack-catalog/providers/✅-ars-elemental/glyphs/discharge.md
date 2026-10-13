@@ -29,3 +29,12 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe exata:** [`EffectDischarge.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectDischarge.java) fonte pinned 0.7.10.1, sem prova de byte-equality ao JAR.
+- **Gatilho:** exige `LivingEntity` com `SHOCKED_EFFECT` ou `LIGHTNING_LURE` prévio, no server. Dano inicial nominal `DAMAGE+AMP_VALUE*ampMultiplier` (defaults 7+3*amp); com `LIGHTNING_LURE`, multiplica por 1.3 e remove esse efeito.
+- **Energia/roupa:** para **cada** peça no `getArmorSlots` com `Capabilities.EnergyStorage.ITEM`, extrai `25%` de `getEnergyStored()` (cast para int, não simulação) e multiplica o dano por `1.1` de maneira cumulativa. O código não comprova compensação/rollback se nenhum alvo secundário aceitar dano.
+- **AOE/resultado:** varre `LivingEntity` em AABB `inflate(3+aoeMultiplier)`, exclui shooter; para cada `attemptDamage` aceito aplica SHOCKED e envia `DischargeEffectPacket`. A aplicação de potion limita amplifier a `(int)min(ampMultiplier,5)`; status só ocorre com hit aceito.
+- **Perks:** energia drenada dos itens, dano em cascata e debuff não podem receber liquidação paralela do RPG. Mana/custo do spell e energia das armaduras são recursos distintos sob autoridade dos respectivos providers.
+- **Estado:** ✅ ID JAR + código exato no source commit; ⚠️ gameplay/config/host/auxiliares requerem confirmação; ⛔ adapter de perk RPG não implementado, sem duplicar status, mana ou dano.
