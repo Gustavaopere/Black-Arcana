@@ -1,4 +1,4 @@
-name: Aeromancy Additions 1.2.8 exact physical JAR audit
+name: Aeromancy Additions 1.2.8 exact publisher JAR audit
 on:
   push:
     branches:
@@ -15,14 +15,14 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Verify official exact publisher artifact against physical modlist SHA
+      - name: Verify official CurseForge release SHA, leave physical parity unclaimed
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import os,hashlib,urllib.request,zipfile,pathlib
           name="aero_additions-1.2.8.jar"
-          expected="dee32c9fa84d6e39846608f8f77591ea56f"
+          expected="dee32c9fa84a9b3796e39846608f8f77591ea56f"
           urls=[
             "https://mediafilez.forgecdn.net/files/8251/034/"+name,
             "https://media.forgecdn.net/files/8251/034/"+name,
@@ -41,13 +41,13 @@ jobs:
               path.write_bytes(data)
               with zipfile.ZipFile(path) as archive:
                 assert archive.testzip() is None
-              print("PHYSICAL_PUBLISHER_SHA_MATCH=PASS",flush=True)
+              print("OFFICIAL_PUBLISHER_SHA_VERIFIED=PASS; PHYSICAL_SHA_UNKNOWN=TRUE",flush=True)
               with open(os.environ["GITHUB_ENV"],"a") as f:f.write("AERO_JAR="+str(path)+"\n")
               break
             except Exception as exc:
               print("PUBLISHER_SOURCE_ERROR="+repr(exc)[:200],flush=True)
           else:
-            raise SystemExit("FAIL-CLOSED: no official exact physical file")
+            raise SystemExit("FAIL-CLOSED: exact publisher release could not be verified")
           PY
       - name: Enumerate Java 21 compiled spell registry and entrypoint
         shell: bash
@@ -80,5 +80,5 @@ jobs:
               print("BC_"+line.strip()[:300],flush=True)
           print("REGISTRAR_BODY_END",flush=True)
           print("SOURCE_CATALOG_IDS="+repr(["wind_charge","updraft","airstep","asphyxiate","feather_fall","wind_shield","airblast","wind_blade","flush","dash"]))
-          print("DISCOVERY_ONLY_NO_PROMOTION=TRUE")
+          print("PUBLISHER_DISCOVERY_ONLY_PHYSICAL_PARITY_NOT_PROVEN=TRUE")
           PY
