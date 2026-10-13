@@ -40,7 +40,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-ars-hex` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-morph` | 7 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-n-spells` | 15 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-nouveau` | 149 | 🟡 59/85 glyph parts (5 Forms, 41 Effects, 13 Augments) + 24/24 rituais; eventos públicos reais source-pinned, adapter RPG e QA pendentes |
+| `✅-ars-nouveau` | 149 | ✅ 85/85 glyph parts (5 Forms, 67 Effects, 13 Augments) + 24/24 rituais com dossiê source-located; ⚠️ runtime/hooks/QA e ⛔ adapter RPG não validados; eventos públicos reais source-pinned, adapter RPG e QA pendentes |
 | `✅-ars-polymorphia` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sable` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sophisticated-compat` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -184,7 +184,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 
 ## Ars Nouveau — checkpoint 2026-10-13
 
-**59/85 Glyph Parts** e **24/24 rituais** com mapeamento de perks/cadeia causal source-pinned nesta branch; sendo 5 Forms, 41 Effects, 13 Augments e 24 rituais. [Matriz técnica Ars 5.13.1](../providers/✅-ars-nouveau/PERK-ENGINEERING-MATRIX-5.13.1.md) com métodos, fórmulas, provas auxiliares e bloqueios. [Eventos reais do Ars 5.13.1](../providers/✅-ars-nouveau/VERIFIED-EVENT-SURFACES-5.13.1.md) foram localizados, mas não constituem adapter implementado. A cobertura semântica de identidade preexistente é diferente da profundidade técnica para perks.
+**85/85 Glyph Parts** e **24/24 rituais** com mapeamento de perks/cadeia causal source-pinned nesta branch; sendo 5 Forms, 67 Effects, 13 Augments e 24 rituais. [Matriz técnica Ars 5.13.1](../providers/✅-ars-nouveau/PERK-ENGINEERING-MATRIX-5.13.1.md) com métodos, fórmulas, provas auxiliares e bloqueios. [Eventos reais do Ars 5.13.1](../providers/✅-ars-nouveau/VERIFIED-EVENT-SURFACES-5.13.1.md) foram localizados, mas não constituem adapter implementado. A cobertura semântica de identidade preexistente é diferente da profundidade técnica para perks. **✅ source-located** nesta branch não implica **✅ adapter implementado**, **✅ QA**, **✅ hooks em todos os efeitos** ou merge na main.
 
 ## Priorização para próximos lotes
 
