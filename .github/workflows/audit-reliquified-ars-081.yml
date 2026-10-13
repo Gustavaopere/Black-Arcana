@@ -96,3 +96,64 @@ jobs:
           print('RELIC_ABILITY_CLASS_COUNT='+str(len(abilityclasses)))
           print('REGISTRY_DISCOVERY_ONLY=TRUE')
           PY
+
+      - name: Assert all nineteen unique provider item and root ability IDs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,pathlib,hashlib,re,subprocess,zipfile
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'reliquified_ars_nouveau-1.21.1-0.8.1.jar'
+          assert jar.is_file() and hashlib.sha1(jar.read_bytes()).hexdigest()=='4be1f4b0fd7fbec6618596e2e7c3705db88a7579'
+          base='it.hurts.shatterbyte.reliquified_ars_nouveau.'
+          def javap(cls):
+            p=subprocess.run(['javap','-c','-p','-classpath',str(jar),base+cls],capture_output=True,text=True,timeout=35)
+            assert p.returncode==0,(cls,p.stderr[:120])
+            return p.stdout
+          registry=javap('init.ItemRegistry')
+          block=registry.split('static {};',1)[1]
+          items=re.findall(r'// String ([a-z][a-z0-9_]*)',block)
+          assert items[0]=='reliquified_ars_nouveau'
+          items=items[1:]
+          expected=[
+            ('architects_staff','items.ArchitectsStaffItem','bridgecraft'),
+            ('archmage_glove','items.hands.ArchmageGloveItem','multicasted'),
+            ('ballistarian_bracer','items.bracelet.BallistarianBracerItem','ballistary'),
+            ('cloak_of_concealment','items.back.CloakOfConcealmentItem','absorption'),
+            ('emblem_of_assault','items.charm.EmblemOfAssaultItem','onslaught'),
+            ('emblem_of_defense','items.charm.EmblemOfDefenseItem','sentinel'),
+            ('emblem_of_devotion','items.charm.EmblemOfDevotionItem','devotion'),
+            ('flaming_bracer','items.bracelet.FlamingBracerItem','pyroclastic'),
+            ('horn_of_the_wild_hunter','items.head.HornOfWildHunterItem','summoner'),
+            ('illusionists_mantle','items.back.IllusionistsMantleItem','deception'),
+            ('mana_ring','items.ring.ManaRingItem','resonance'),
+            ('quantum_bubble','items.head.QuantumBubbleItem','stasis'),
+            ('ring_of_last_will','items.ring.RingOfLastWillItem','last_will'),
+            ('ring_of_thrift','items.ring.RingOfThriftItem','thrift'),
+            ('spiked_cloak','items.back.SpikedCloakItem','thorn_burst'),
+            ('staff_of_the_spectral_walker','items.StaffOfTheSpectralWalkerItem','spectral'),
+            ('whirling_broom','items.WhirlingBroomItem','broom'),
+            ('whirlisprig_petals','items.WhirlisprigPetalsItem','petal_lift'),
+            ('wing_of_the_wild_stalker','items.body.WingWildStalkerItem','wild_flight')
+          ]
+          assert len(items)==19 and len(set(items))==19
+          assert set(items)=={x[0] for x in expected},(items,expected)
+          # Disambiguate the root's literal from the four subsequent provider-native
+          # subabilities without counting their strings as independent roots.
+          for i,(item,cls,root) in enumerate(expected,1):
+            body=javap(cls)
+            builders=[l for l in body.splitlines() if 'AbilityTemplate.builder:' in l]
+            names=re.findall(r'// String ([a-z][a-z0-9_]*)',body)
+            assert len(builders)==1,(item,len(builders))
+            assert names and names[0]==root,(item,root,names[:6])
+            print(f'EXACT_RELIC_{i}=reliquified_ars_nouveau:{item}|{cls}|{root}')
+          count=block.count('DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)')
+          assert count==19,('item registry calls',count)
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\b',block,re.M)
+          print('PHYSICAL_RELIC_ITEM_REGISTRATIONS=19')
+          print('UNIQUE_ROOT_ABILITY_BUILDERS=19')
+          print('STATIC_REGISTRY_BRANCHES=0')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('EXACT_STATIC_REGISTRY_AUDIT=PASS')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
