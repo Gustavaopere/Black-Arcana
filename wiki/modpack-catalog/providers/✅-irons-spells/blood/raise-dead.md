@@ -35,3 +35,18 @@ A catalogar visualmente no runtime do pack.
 ## Fonte
 
 `https://iron.wiki/spells/` · `https://iron.wiki/schools/` · `https://iron.wiki/progression/`.
+
+## Parâmetros de implementação para perks — código auditado
+
+- **Source exato:** [`RaiseDeadSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/blood/RaiseDeadSpell.java) (`e4056af90302d37eb1739f5ff05020b020e6e252`, versão declarada 1.21.1-3.16.3); classe `io.redspace.ironsspellbooks.spells.blood.RaiseDeadSpell`.
+- **ID:** `irons_spellbooks:raise_dead`. **DefaultConfig:** `RARE/UNCOMMON/COMMON=UNCOMMON` (raridade mínima), maxLevel `6`, cooldown `150` segundos, cast `LONG`.
+- **Campos Java verificados:** `baseManaCost=50`, `manaCostPerLevel=10`, `baseSpellPower=10`, `spellPowerPerLevel=3`, `castTime=30` ticks. Custo base a nível n: `(int)((baseManaCost + manaCostPerLevel*(n-1))*MANA_MULTIPLIER)`.
+- **Métodos-base relevantes:** `getDefaultConfig()`, `getCastType()`, `getSpellResource()`, `onCast(...)`; consulte a classe vinculada para helpers e entidades específicas.
+
+### Causalidade e eixos técnicos
+
+getSummonCount(level,caster)=level+2; lifetime das invocações=12000 ticks; getRecastCount=2. Cast gera SummonedZombie ou SummonedSkeleton (30% de chance do último), configura equipamento proporcional a spell power, emite NeoForge.EVENT_BUS.post(new SpellSummonEvent(...)) e chama SummonManager.initSummon. Recast usa SummonedEntitiesCastData e RecastInstance. SpellSummonEvent é um ponto concreto para avaliar substituição de criatura; não prova permissão para reescrever quantidade/cooldown sem observar o restante do pipeline.
+
+### Limites de integração
+
+Atributos nativos `SPELL_POWER` e poder da escola Blood podem alterar `getSpellPower`; isso **não prova** um hook genérico para modificar geometria, quantidade, efeito ou alvo. O RPG Skill Tree fornece perks/gates/Mastery; Iron's preserva a autoridade de casting/custos/cooldowns e entidades; Black Arcana só intervém através de contratos verificados. Nenhum adapter de efeitos foi implementado nesta ficha. Registro **estático/source-pinned**, não teste Survival. [Contrato transversal](../TECHNICAL-PERK-MAP.md).
