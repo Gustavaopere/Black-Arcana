@@ -25,3 +25,13 @@ This provider capability is distinct from Black Arcana mobility spells and from 
 ## QA
 
 Source lifecycle is pinned to 5.13.1. Interaction with other flight providers, ability modifiers and full-pack movement systems remains runtime QA.
+
+## Localizadores e parâmetros para Codex — fonte exata
+
+- **Java:** [`RitualFlight.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualFlight.java) no commit `112920ff774831f204031da75b4c4e73d3765157` correspondente ao catálogo Ars 5.13.1.
+- **Implementação:** `RitualFlight extends RangeEffectRitual`; `getEffect=FLIGHT_EFFECT`, `getDuration=1200 ticks`, `getRange=60 blocks`, `getSourceCost=200` no código-fonte desta versão.
+- **Ativação e refresh:** `applyEffect(ServerPlayer)` salva estado `wasFlying`, chama `super.applyEffect(player,false)` e sincroniza `PacketUpdateFlight` só no sucesso. `onJumpEvent` tenta `attemptRefresh` somente para player sem efeito.
+- **Perk de ritual:** alcance, duração, custo, recarga e elegibilidade são knobs conceitualmente separados; ampliar buff sem manter contrato de `RangeEffectRitual` e custo Source seria bypass.
+- **Mastery:** evento de pulo não é automaticamente uma conclusão de ritual. Atribuir XP somente a uma ação canônica comprovada; nenhuma bridge nova foi implementada.
+
+**Estado:** prova estática de parâmetros por leitura de código; habilidade de mutação por hook externo não verificada. Ars controla composição, execução, mana/Source e configurações; RPG Skill Tree controla perks/Mastery/gates; Black Arcana é autoridade somente de seu runtime próprio. [Padrão universal](../../../meta/PERK-READY-TECHNICAL-STANDARD.md).

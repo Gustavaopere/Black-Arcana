@@ -44,3 +44,14 @@ Ars Nouveau owns this projectile cast method, projectile entity lifecycle, provi
 `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / PACK RUNTIME QA PENDING`
 
 This page records source facts, not proof that the installed 612-mod pack preserves every default config value.
+
+## Localizadores e parâmetros para Codex — fonte exata
+
+- **Java:** [`MethodProjectile.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/method/MethodProjectile.java) no commit `112920ff774831f204031da75b4c4e73d3765157` correspondente ao catálogo Ars 5.13.1.
+- **Método resolutor:** `MethodProjectile.onCast` → `summonProjectiles` → entidades `EntityProjectileSpell`, que resolvem **efeitos de glyph posteriores** quando colidem.
+- **Quantidade no disparo pela entidade:** `numSplits = 1 + spellStats.getBuffCount(AugmentSplit.INSTANCE)`; velocity `max(0.1, 0.75 + spellStats.getAccMultiplier()/2)`; ângulos de yaw variam em passos alternados de 10°.
+- **Diferença importante para perks:** o overload de lançamento em bloco também usa `AugmentSplit`, mas possui posicionamento/velocidade próprios. Qualquer perk de split/velocidade deve preservar origem e resolver do feitiço, não injetar cast extra após o impacto.
+- **Lifespan default:** `getProjectileLifespan` busca `PROJECTILE_TTL` configurável (fallback 60 segundos); não é um alcance máximo por blocos.
+- **Limites:** `getCompatibleAugments` permite Pierce, Split, Accelerate, Decelerate e Sensitive. Quantidade/velocidade são dados do `SpellStats` provider-native; nenhuma API de reescrita por RPG perk foi comprovada.
+
+**Estado:** prova estática de parâmetros por leitura de código; habilidade de mutação por hook externo não verificada. Ars controla composição, execução, mana/Source e configurações; RPG Skill Tree controla perks/Mastery/gates; Black Arcana é autoridade somente de seu runtime próprio. [Padrão universal](../../../meta/PERK-READY-TECHNICAL-STANDARD.md).
