@@ -1,5 +1,7 @@
 # Soul Slice
 
+**Registro binário físico (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:soul_slice`, classe `net.acetheeldritchking.discerning_the_eldritch.spells.fire.SoulSliceSpell`, escola padrão `SchoolRegistry.FIRE_RESOURCE` ([Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207), [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). Custos/efeitos e Survival ⚠️; +0.
+
 - **ID:** `discerning_the_eldritch:soul_slice`
 - **School:** Fire
 - **Level:** 1
