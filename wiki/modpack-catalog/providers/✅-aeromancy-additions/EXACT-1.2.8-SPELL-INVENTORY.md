@@ -1,5 +1,8 @@
 # SnackPirate's Aeromancy Additions 1.2.8 — exact spell inventory
 
+**Adendo 2026-10-13:** [JAR publicado verificado por bytecode (10/10)](EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md), [run #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191). O título/source pin exato abaixo é fidelidade de versão/fonte; **não** equivale a checksum físico no pack, pois o registro legado SHA-1 de 35 caracteres é inválido. Status continua `COUNTED_SOURCE_PINNED`, campanha **16/39** e runtime/Survival ⚠️.
+
+
 Status: `10 / 10 ACTIVE PROVIDER SPELL REGISTRATIONS CLOSED AT EXACT SOURCE PIN`
 
 Source authority: `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`

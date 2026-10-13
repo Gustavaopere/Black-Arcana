@@ -1,5 +1,8 @@
 # SnackPirate's Aeromancy Additions 1.2.8 — fichas canônicas de spells
 
+**Adendo publisher 2026-10-13:** [dez IDs no JAR oficial 1.2.8](EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md), [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191), sem novos IDs vs fichas. **⚠️ Paridade com JAR físico bloqueada** por SHA-1 legado inválido; não promover a `COUNTED_EXACT` ou proclamar runtime. Índice de dez fichas continua ✅ catalogado, `COUNTED_SOURCE_PINNED` 10/10; 16/39 provas físicas exatas no cohort.
+
+
 Este índice materializa as **10 identidades de spell ativamente registradas** fechadas pelo source pin exato `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`.
 
 O provider permanece **✅ catalogado / COUNTED_SOURCE_PINNED 10 / +10 strict**. Esta materialização não altera o contador global nem converte source pin em equivalência binária com o JAR físico.

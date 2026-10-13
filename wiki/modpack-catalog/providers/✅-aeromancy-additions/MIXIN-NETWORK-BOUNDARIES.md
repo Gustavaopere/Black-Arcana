@@ -1,5 +1,8 @@
 # SnackPirate's Aeromancy Additions 1.2.8 — mixin and network boundaries
 
+**Atualização 2026-10-13:** inspeção do publisher JAR 1.2.8 por [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) confirmou `AASpells`/dez IDs e jarjar ExpandAbility 12.0.0. Esta auditoria **não** executou payloads ou os dois mixins, nem confirmou equivalência com JAR físico: [bloqueio SHA](./EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md). As três rotas de payload e risco de duplicação abaixo permanecem source-pinned e runtime ⚠️.
+
+
 Status: `2 REQUIRED MIXINS / 3 PROVIDER-OWNED PAYLOAD REGISTRATIONS OBSERVED / CURRENT-HOST QA OPEN`
 
 Exact source: `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`
