@@ -1,0 +1,84 @@
+name: Ars Elemental 0.7.10.1 exact physical registry audit
+on:
+  push:
+    branches:
+      - 'audit/ars-elemental-07101-*'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch publisher JAR matching exact physical SHA1 or fail closed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,urllib.request,hashlib,zipfile,pathlib
+          name="ars_elemental-1.21.1-0.7.10.1.jar"
+          sha_expected="a1e4021177aae0e16c1f7c6487a82f0b68bbade3"
+          paths=[
+            "https://mediafilez.forgecdn.net/files/8399/862/"+name,
+            "https://media.forgecdn.net/files/8399/862/"+name,
+            "https://cursemaven.com/curse/maven/ars-elemental-561470/8399862/ars-elemental-561470-8399862.jar"
+          ]
+          jar=pathlib.Path(os.environ["RUNNER_TEMP"])/name
+          for url in paths:
+            try:
+              print("SOURCE="+url,flush=True)
+              req=urllib.request.Request(url,headers={"User-Agent":"Black-Arcana-clean-room-physical-audit/1"})
+              with urllib.request.urlopen(req,timeout=85) as response:
+                data=response.read(12000000)
+              digest=hashlib.sha1(data).hexdigest()
+              print("BYTES="+str(len(data))+" SHA1="+digest,flush=True)
+              if digest!=sha_expected:continue
+              jar.write_bytes(data)
+              with zipfile.ZipFile(jar) as z: assert z.testzip() is None
+              print("EXACT_PUBLISHER_PHYSICAL_HASH=PASS",flush=True)
+              with open(os.environ["GITHUB_ENV"],"a") as f:f.write("EXACT_JAR="+str(jar)+"\n")
+              break
+            except Exception as exc: print("SOURCE_FAILURE="+repr(exc)[:200],flush=True)
+          else:
+            raise SystemExit("Cannot fetch SHA-exact Ars Elemental 0.7.10.1; no promotion")
+          PY
+      - name: Discover bytecode registry and glyph/ritual ID constructors
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          path=os.environ["EXACT_JAR"]
+          with zipfile.ZipFile(path) as z:
+            all=z.namelist()
+            print("CLASS_COUNT="+str(sum(x.endswith(".class") for x in all)))
+            print("METADATA="+repr([x for x in all if x.endswith("neoforge.mods.toml")]))
+            print("REGISTRAR_CANDIDATES="+repr([x for x in all if x.endswith(".class") and ("ArsNouveauRegistry" in x or x.endswith("ArsElemental.class"))]))
+            candidates=sorted(x for x in all if x.endswith(".class") and ("glyph" in x.lower() or "ritual" in x.lower()) and "$" not in x)
+            print("GLYPH_RITUAL_CLASS_COUNT="+str(len(candidates)))
+            for x in candidates[:145]:print("CANDIDATE="+x)
+          def javap(cls):
+            x=subprocess.run(["javap","-c","-p","-classpath",path,cls],capture_output=True,text=True,timeout=30)
+            assert x.returncode==0,(cls,x.stderr[:150])
+            return x.stdout
+          for cls in ["alexthw.ars_elemental.ArsElemental","alexthw.ars_elemental.ArsNouveauRegistry"]:
+            text=javap(cls)
+            print("DISASM="+cls+" bytes="+str(len(text)))
+            if cls.endswith("ArsNouveauRegistry"):
+              for start,end in [("public static void init();","public static void registerGlyphs();"),("public static void registerGlyphs();","public static void addSchool("),("public static void registerRituals();","static {};")]:
+                if start in text:
+                  segment=text.split(start,1)[1].split(end,1)[0]
+                  print("SEGMENT_BEGIN="+start)
+                  for line in segment.splitlines()[:410]:print("BC_"+line[:230])
+                  print("SEGMENT_END="+start)
+              print("RITUAL_REGISTER_REFERENCES="+str(text.count("RitualRegistry.registerRitual:")))
+              print("ARS_GLYPH_REGISTER_REFERENCES="+str(text.count("GlyphRegistry.registerSpell:")))
+            else:
+              print("BOOTSTRAP_LINES="+repr([x.strip() for x in text.splitlines() if "ArsNouveauRegistry.init:" in x or "init:()V" in x or "ars_elemental" in x.lower()][:60]))
+          print("DISCOVERY_ONLY_NO_PROMOTION=TRUE")
+          PY
