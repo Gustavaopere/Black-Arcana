@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Source commit:** [`EffectSpores.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectSpores.java) na versão de código fixada, não prova binária dos métodos no JAR.
+- **Gatilho:** target primário só entra no dano quando vivo e possui POISON, HUNGER ou VENOM; default dano `6+2.5*ampMultiplier`, com bônus `2+3*venomAmplifier` se VENOM no alvo inicial. Varre LivingEntity em AABB `inflate(3+aoeMultiplier)` e separa secundários elegíveis para dano dos não elegíveis, que recebem POISON e HUNGER por `20*effectSec`.
+- **Dano/efeitos:** `damage(...)` multiplica 1.25 se EntityTypeTags.UNDEAD, tenta dano e gera partículas. Se morte, 5% de chance por `random.nextInt(100)<5` mais `CompatUtils.earthCheck(resolver)` e solo moss/dirt/leaves com espaço livre podem gerar `GROUND_BLOSSOM`; senão aplica HUNGER. Este último branch não exige sucesso explícito de `attemptDamage`.
+- **Config default:** potion 10s, Extend Time +3s, Amplify scalar +2.5, amp limit 2. Getters sem config retornam 30/8, portanto separar fallback. **Perks:** mundo, dano, DOT e cultivo dependem de gates diferentes; não multiplicar drops ou status por segunda liquidação.
+- **Status:** ✅ objeto com ID de JAR física comprovada e source observado; ⚠️ runtime, API host, config deploy e controle de claims ainda condicionados; ⛔ nenhum adapter RPG implementado, sem duplicação de settle/hit/Source/mana.
