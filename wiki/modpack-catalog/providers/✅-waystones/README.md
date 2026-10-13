@@ -1,6 +1,9 @@
 # Waystones — 21.1.45
 
-Status: `✅ CATALOGED / CURRENT PHYSICAL 21.1.45 / COUNTED_SOURCE_PINNED / EXACT SEMANTIC DENOMINATOR 3 / +3 STRICT / RUNTIME QA SEPARATE`
+**Prova física SHA-exata (2026-10-13):** ✅ [três ações estáticas](EXACT-BINARY-ACTIONS-21.1.45.md), [Java21 #38460510230](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38460510230) **SUCCESS**. CurseForge file `8873000` de **1219809 bytes**, SHA-1 `6ec1a176a102212db4f6391886db52ed103c830f` = JAR físico #564. Teleport, portal e Twinbound são três raízes distintas; Waystone activation, Blank Scroll binding e Warp Plate attunement são operações preparatórias excluídas. `COUNTED_EXACT` significa caminhos compilados, não spells Iron's nem cast runtime. Campanha **24/39 exatos / 15/39 pendentes**, +0 raízes, mínimo **1857/1855**. Runtime/Survival ⚠️.
+
+
+Status: `✅ CATALOGED / CURRENT PHYSICAL 21.1.45 / COUNTED_EXACT STATIC ACTION PATHS / EXACT SEMANTIC DENOMINATOR 3 / +3 STRICT / RUNTIME QA SEPARATE`
 
 ## Current physical authority
 
