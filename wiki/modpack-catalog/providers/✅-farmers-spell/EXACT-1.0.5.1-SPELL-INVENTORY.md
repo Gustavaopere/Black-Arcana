@@ -1,6 +1,6 @@
 # Farmer's Spell 'n Spellbooks 1.0.5.1 — Exact spell inventory
 
-Status: `6 / 6 REGISTERED PROVIDER SPELL IDENTITIES CLOSED AT EXACT SOURCE PIN`
+Status atualizado: `6 / 6 COUNTED_EXACT STATIC BINARY REGISTRATIONS`, source pin histórico mantido. [JAR físico](EXACT-BINARY-SPELLS-1.0.5.1.md), [auditoria #38334052069](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38334052069).
 
 Source authority: `GLDYM/Farmers-Spell-n-Spellbook@b7cbb40316a9ccbbc2ce2b56b3023647261ce569`
 Registry authority: `ModSpells` / Iron's `SpellRegistry`
@@ -8,12 +8,12 @@ Provider school: `farmers_spell:gluttony`
 
 | Registry id | Display name in provider locale | Cast profile observed from provider class/config | Catalog disposition |
 |---|---|---|---|
-| `farmers_spell:goodberry` | Goodberry | server-side item conjuration; instant/minion cast profile | `COUNTED_SOURCE_PINNED` |
-| `farmers_spell:phantom_loot` | Ubiquitous | channelled provider/Foodgeist interaction surface | `COUNTED_SOURCE_PINNED` |
-| `farmers_spell:seal_coat` | Grease Coating | long-duration provider status/defensive food interaction surface | `COUNTED_SOURCE_PINNED` |
-| `farmers_spell:bad_apple` | Rotten Apple | instant provider projectile surface | `COUNTED_SOURCE_PINNED` |
-| `farmers_spell:chaos_slash` | Chaotic Pastry Slash | instant provider slash/projectile attack surface | `COUNTED_SOURCE_PINNED` |
-| `farmers_spell:preserve_circle` | Brining Ritual | long-cast provider area-effect/entity surface | `COUNTED_SOURCE_PINNED` |
+| `farmers_spell:goodberry` | Goodberry | server-side item conjuration; instant/minion cast profile | `COUNTED_EXACT` (static registry) |
+| `farmers_spell:phantom_loot` | Ubiquitous | channelled provider/Foodgeist interaction surface | `COUNTED_EXACT` (static registry) |
+| `farmers_spell:seal_coat` | Grease Coating | long-duration provider status/defensive food interaction surface | `COUNTED_EXACT` (static registry) |
+| `farmers_spell:bad_apple` | Rotten Apple | instant provider projectile surface | `COUNTED_EXACT` (static registry) |
+| `farmers_spell:chaos_slash` | Chaotic Pastry Slash | instant provider slash/projectile attack surface | `COUNTED_EXACT` (static registry) |
+| `farmers_spell:preserve_circle` | Brining Ritual | long-cast provider area-effect/entity surface | `COUNTED_EXACT` (static registry) |
 
 ## Registration closure
 
@@ -37,6 +37,6 @@ No Farmer's Spell override of those three gates was found for the six registered
 
 ## Counting result
 
-Source-pinned semantic delta candidate: **+6**.
+Historical source-pinned semantic contribution: **+6**. Binary registry promotion in 2026-10-12: **+0 additional**; current state 6/6 `COUNTED_EXACT` for static IDs only, 10/39 exact providers / 29/39 pending.
 
 No cooking recipe, food, gear item, status effect, school identity, projectile/entity implementation or acquisition recipe is double-counted as an additional spell merely because it supports one of the six actions.

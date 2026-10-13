@@ -7,8 +7,8 @@
 - Registered class: `PhantomLootSpell`
 - Provider school: `farmers_spell:gluttony`
 - Host registry: **Iron's SpellRegistry**
-- Semantic state: `COUNTED_SOURCE_PINNED`
-- Strict contribution: `1`
+- Semantic state: `COUNTED_EXACT` (binary static registry only)
+- Strict contribution: `1` (already counted; +0 from exact-registry promotion)
 
 ## Identidade semântica
 
@@ -19,6 +19,10 @@ Spell provider-owned registrado no `ModSpells` do source pin exato. A identidade
 O inventário canônico classifica esta superfície como: **channelled provider/Foodgeist interaction surface**.
 
 Essa frase é uma classificação comportamental de alto nível do dossiê, não uma reprodução da implementação upstream nem um compromisso com números de balanceamento.
+
+## Exact physical binary evidence
+
+**✅** The physical JAR `farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar`, SHA-1 `f77355e029af39bbaba3854e10cc087a608351ff`, contains `com.chenjdy.farmers_spell.spells.PhantomLootSpell`; its `ModSpells.PHANTOM_LOOT_SPELL` static field registers literal `phantom_loot`. [Audit #38334052069](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38334052069) and [dossier](../EXACT-BINARY-SPELLS-1.0.5.1.md) prove the registry identity without certifying effective casting, balance, configuration or Survival.
 
 ## Registration evidence
 
