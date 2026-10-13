@@ -36,3 +36,9 @@ Ars Nouveau owns Self-form resolution and its mana/config semantics. Black Arcan
 ## Validation state
 
 `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / PACK RUNTIME QA PENDING`
+
+## Mapeamento para perks — targeting real
+
+- **Source pin:** [`MethodSelf.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/method/MethodSelf.java), Ars Nouveau 5.13.1.
+- **Resolver:** `onCast`, `onCastOnBlock` e `onCastOnEntity` convertem o destino em `EntityHitResult(caster/playerIn)`, enviando `resolver.onResolveEffect` ao próprio caster — mesmo que o jogador tenha clicado outro bloco/entidade. **Mana:** default 10; starter por `defaultedStarterGlyph=true`. **Augments:** `getCompatibleAugments() = augmentSetOf()` (nenhum). **Efeitos:** emitter e sound são visuais e não confirmam resultado de cada effect da cadeia. **Perks:** mudar target self para aliado/inimigo seria alteração de contrato da Form, sem hook comprovado.
+- **Status:** ✅ método/fonte identificado; ⛔ mutação de targeting por perk RPG não verificada. Ars controla SpellResolver, custos e cadeia de efeitos; Black Arcana só controla suas casts. Runtime/Survival: PENDING.
