@@ -1,5 +1,8 @@
 # Ars Elemental 0.7.10.1 — rituals
 
+**✅ Adendo binário 2026-10-13:** [8/8 rituais com IDs exatos](EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md), [Java 21 #38403443682](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38403443682) PASS e SHA físico/publicador idêntico. `ArsNouveauRegistry.registerRituals` faz 8 inscrições incondicionais no `RitualRegistry`. Semânticas herdadas, limites, custos e persistência abaixo vêm do source pin; execução/custo real/Survival seguem ⚠️. Nenhum novo ritual, +0.
+
+
 Status: `8/8 RITUAL REGISTRATIONS + INHERITED DEFAULTS SOURCE-PINNED / INSTALLED RUNTIME QA PENDING`
 
 Source checkpoints:

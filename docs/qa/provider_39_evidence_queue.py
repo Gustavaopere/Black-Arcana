@@ -25,7 +25,8 @@ CROSSWALK_LINE = re.compile(r'^\| (?P<provider>[^|]+) \| #\d{3} \| \x60(?P<filen
 MATRIX_LINE = re.compile(r'^\| \[(?P<provider>[^|\]]+)\]\([^|)]+\) \| (?P<version>[^|]+) \| (?P<count>\d+) \| (?P<evidence>COUNTED_SOURCE_PINNED|COUNTED_RELEASE_BOUNDED|COUNTED_EXACT) \|')
 # Only these independently audited identities can appear as COUNTED_EXACT in the
 # frozen campaign. No arbitrarily supplied exact row or fingerprint is trusted.
-KNOWN_EXACT = {'Ars Zero': ('2.0.2', 18),
+KNOWN_EXACT = {'Ars Elemental': ('0.7.10.1', 47),
+               'Ars Zero': ('2.0.2', 18),
                'Ars Technica': ('2.7.6', 11),
                'Ars Controle': ('1.6.16', 9),
                'Ars Additions': ('21.3.0', 5),

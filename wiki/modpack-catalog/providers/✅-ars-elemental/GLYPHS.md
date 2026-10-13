@@ -1,5 +1,8 @@
 # Ars Elemental 0.7.10.1 — production glyph surface
 
+**✅ Adendo binário 2026-10-13:** todos os **39 IDs de produção** (23 effects, 2 cast methods, 2 propagators, 12 filtros) estão enumerados no [dossiê exato](EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md), [Java 21 #38403443682](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38403443682) PASS. Fonte/modlist JAR hash-matched, método tem 40 chamadas com `MethodCarianPhalanx` condicionado à não produção. Classes abstratas compiladas + sufixos concretos comprovam namespace `ars_elemental:glyph_*`. Defaults/tier/mana abaixo continuam source-pinned, **não** configuração real. Campaign 15/39; +0 novas identidades.
+
+
 Status: `39/39 PRODUCTION REGISTRATIONS + SOURCE DEFAULTS NORMALIZED / INSTALLED RUNTIME QA PENDING`
 
 Source checkpoints:

@@ -820,6 +820,44 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("| 2.0.2 | 18 | `COUNTED_EXACT` |", row)
         self.assertIn("1857 global / 1855 scoped", ledger)
 
+    def test_ars_elemental_07101_exact_39_glyphs_eight_rituals(self):
+        provider = PROVIDERS / "✅-ars-elemental"
+        name = "EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md"
+        note = (provider / name).read_text(encoding="utf-8")
+        lines = note.splitlines()
+        glyph = [x for x in lines if re.match(r"^\| \d+ \| .ars_elemental:glyph_[a-z_]+.", x)]
+        ritual = [x for x in lines if re.match(r"^\| \d+ \| .ars_elemental:ritual_[a-z_]+.", x)]
+        self.assertEqual(39, len(glyph))
+        self.assertEqual(8, len(ritual))
+        self.assertEqual([str(i) for i in range(1, 40)], [x.split("|")[1].strip() for x in glyph])
+        self.assertEqual([str(i) for i in range(1, 9)], [x.split("|")[1].strip() for x in ritual])
+        glyph_ids = [x.split("|")[2].strip() for x in glyph]
+        ritual_ids = [x.split("|")[2].strip() for x in ritual]
+        self.assertEqual(39, len(set(glyph_ids)))
+        self.assertEqual(8, len(set(ritual_ids)))
+        categories = [x.split("|")[4].strip() for x in glyph]
+        self.assertEqual((23, 2, 2, 12),
+                         tuple(categories.count(t) for t in
+                               ("Effect", "Cast method", "Propagator", "Filter")))
+        self.assertTrue(any("ars_elemental:glyph_slip_feet" in x for x in glyph_ids))
+        self.assertTrue(any("ars_elemental:glyph_nullify_defense" in x for x in glyph_ids))
+        self.assertFalse(any("carian_phalanx" in x for x in glyph_ids))
+        for token in ("38403443682", "2260550",
+                      "a1e4021177aae0e16c1f7c6487a82f0b68bbade3",
+                      "MethodCarianPhalanx", "15/39", "24/39",
+                      "1857", "1855", "NEW_SEMANTIC_ROOTS=0"):
+            self.assertIn(token, note)
+        matrix = (ROOT / "wiki/modpack-catalog/meta" /
+                  "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines() if x.startswith("| [Ars Elemental]"))
+        self.assertIn("| 0.7.10.1 | 47 | COUNTED_EXACT |", row)
+        self.assertIn(name, row)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        entry = next(x for x in ledger.splitlines() if x.startswith("| [Ars Elemental]"))
+        self.assertIn("| 0.7.10.1 | 47 |", entry)
+        self.assertIn("COUNTED_EXACT", entry)
+
     def test_ars_elemental_47_source_pinned_cards(self):
         provider = PROVIDERS / "✅-ars-elemental"
         glyph_source = (provider / "GLYPHS.md").read_text(encoding="utf-8")
@@ -1316,9 +1354,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(14, len(exact))
+        self.assertEqual(15, len(exact))
         self.assertEqual(
-            {"Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1375,9 +1413,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(14, len(exact))
+        self.assertEqual(15, len(exact))
         self.assertEqual(
-            {"Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)

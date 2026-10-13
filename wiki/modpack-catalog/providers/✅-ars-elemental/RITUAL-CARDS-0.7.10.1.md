@@ -1,5 +1,8 @@
 # Ars Elemental 0.7.10.1 — oito rituais individualizados
 
+**✅ Checkpoint binário 2026-10-13:** [8/8 rituais exatos por JAR publisher/físico](EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md), [Java 21 #38403443682](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38403443682); status registry `COUNTED_EXACT`, **+0** objetos novos, mínimos globais atuais 1857/1855. Config, consumo Source, effects e Survival ⚠️. Referências source-pinned abaixo são checkpoints históricos.
+
+
 Estado **✅ 8/8 `COUNTED_SOURCE_PINNED`** com IDs e semântica documentados, **⚠️ config, Source/casting no pack e gameplay Survival pendentes**.
 
 - Source pin `Alexthw46/Ars-Elemental@fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`, JAR `ars_elemental-1.21.1-0.7.10.1.jar` SHA-1 `a1e4021177aae0e16c1f7c6487a82f0b68bbade3`. A [auditoria RITUALS.md](RITUALS.md) inclui contratos herdados do Ars Nouveau 5.13.1.
