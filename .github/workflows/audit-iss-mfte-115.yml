@@ -117,17 +117,15 @@ jobs:
             assert 'getSpellResource()' in body,klass
             # ISS stores the literal ResourceLocation in spellId during
             # construction; getSpellResource() may only return that field.
-            if idx==1:
-              print('SWORD_DANCE_FULL_BYTECODE_BEGIN')
-              print(body[:16000])
-              print('SWORD_DANCE_FULL_BYTECODE_END')
-            assert 'ResourceLocation.fromNamespaceAndPath:' in body,klass
+            assert ('ResourceLocation.fromNamespaceAndPath:' in body
+                    or 'ResourceLocation."<init>":(Ljava/lang/String;Ljava/lang/String;)V' in body),klass
+            assert 'MFTESchoolRegistries.'+family.upper()+'_RESOURCE:' in body,('school',klass)
             bytecode=body.splitlines()
             suffixes=[]
             for line_number,line in enumerate(bytecode):
               if '// String iss_magicfromtheeast' not in line:continue
               nearby=bytecode[line_number+1:line_number+8]
-              if not any('ResourceLocation.fromNamespaceAndPath:' in part for part in nearby):continue
+              if not any('ResourceLocation.fromNamespaceAndPath:' in part or 'ResourceLocation."<init>":' in part for part in nearby):continue
               for part in nearby:
                 m=re.search(r'// String ([a-z][a-z0-9_]*)',part)
                 if m and m.group(1)!='iss_magicfromtheeast':
