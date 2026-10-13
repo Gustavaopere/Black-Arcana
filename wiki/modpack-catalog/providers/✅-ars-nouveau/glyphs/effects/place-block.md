@@ -27,3 +27,9 @@ Place Block consumes a block item through the Ars inventory manager and places i
 Ars Nouveau owns the inventory extraction and placement transaction for this spell. Black Arcana must not duplicate block consumption/placement or bypass placement/protection events. Independent Black Arcana block placement remains subject to its own `WorldEffectPolicy`.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectPlaceBlock`).
+
+## Dossiê de engenharia para perks — causalidade exata
+
+- **Código versionado:** [`EffectPlaceBlock.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectPlaceBlock.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectPlaceBlock` no Ars 5.13.1, método `onResolveBlock`.
+- **Geometria e proteção:** `SpellUtil.calcAOEBlocks`, world bounds, replaceable, e publicação de `BlockEvent.EntityPlaceEvent` via `NeoForge.EVENT_BUS`; evento cancelado impede tentativa. Em entity hit converte para block hit abaixo do alvo. **Orientação:** Sensitive count 1 reposiciona `ANFakePlayer` pelo caster; count >1 espelha facing, limit default 2. **Inventário:** `InventoryManager.extractItem` ou `extractRandomItem` com Randomize extrai **1 BlockItem por posição elegível**; `attemptPlace` delega `BlockItem.place` e `ExtractedStack.returnOrDrop` devolve sobra. **Propagação:** `ShapersFocus.tryPropagateBlockSpell` apenas quando tentativa não retorna `InteractionResult.FAIL`. **Perks:** não duplicar placement/item count e não contornar evento de proteção.
+- **Limite de integração:** ✅ source pin da lógica local, ⚠️ execução auxiliares/config dependem do provider real; ⛔ hook externo de mutação não comprovado. Black Arcana só governa suas world mutations; RPG Skill Tree depende de bridge real. QA Survival PENDING.
