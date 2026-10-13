@@ -1,8 +1,8 @@
+# Semantic Magic Coverage Ledger
+
 ## Latest addendum — Tunes n' Tomes 1.1.0-HOTFIX exact 16/16 static spells (2026-10-13)
 
 [Java 21 #38445001328](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38445001328) confirms CurseForge file `8370271` (21.903.598 bytes), SHA-1 `6cac45631ea63577f8eeeab454e1df0ce8f78386` identical to physical modlist. The [binary dossier](../providers/✅-tunes-n-tomes/EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md) identifies all **16** `tunes_n_tomes:*` spell resources/classes in unconditional `TSpellRegistry` registration. Promoted `COUNTED_RELEASE_BOUNDED → COUNTED_EXACT` for *static registration only*; no semantic increase. Campaign **19/39 exact / 20/39 pending**; minima **1857 global / 1855 escopo** unchanged. Server/client, Segno/Resonance and Encore, config, Iron's 3.16.3 and Survival remain **⚠️**.
-
-# Semantic Magic Coverage Ledger
 
 ## Latest addendum — Ypsilon Fundamental Principles 1.1.7.1, 15 exact physical spells (2026-10-13)
 
