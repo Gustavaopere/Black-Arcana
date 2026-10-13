@@ -1,5 +1,8 @@
 # Auditoria técnica — Ypsilon's Fundamentalism 1.1.7.1
 
+**Adendo JAR SHA-verificado 2026-10-13:** [15 identidades e schools compilados](EXACT-BINARY-SPELLS-1.1.7.1.md), [Java21 #38436717443](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443) PASS, SHA-1 `a2855c253202a8fcc2925fcf5b1bf86d64fbe4da` = registro físico. `StealSummonSpell` existe como classfile, **não** é registrado; os treze Principles não adicionam magias. `COUNTED_EXACT` apenas para registry, mantendo +0 e runtime de Principles/XP, Lapsus, Saeptum, multiplayer e Iron's 3.16.3 ⚠️. Observações source-pinned abaixo permanecem evidência de design/risco, não execução.
+
+
 ## Provenance
 
 Source authority: `ypsilonM/FundamentalPrinciples-1.21.1@a9b8f8222fb2a800edece8c1568984bd2a764fc2`.
