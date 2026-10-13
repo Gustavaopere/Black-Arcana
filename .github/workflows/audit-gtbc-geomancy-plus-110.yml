@@ -109,6 +109,17 @@ jobs:
             method='getSpellResource()' in p
             print('EXACT_BINARY_SPELL=gtbcs_geomancy_plus:'+id_+';class='+full+';id_literal='+str(resource)+';resource_method='+str(method))
             assert resource and method,'missing physical ResourceLocation identity '+id_
+          main_candidates=sorted(x for x in entries
+                         if x.startswith('com/gametechbc/gtbcs_geomancy_plus/')
+                         and x.count('/')==3 and x.endswith('.class') and '$' not in x)
+          print('MOD_MAIN_CLASS_CANDIDATES='+repr(main_candidates))
+          wiring=[]
+          for candidate in main_candidates:
+            code=javap(candidate[:-6].replace('/','.'))
+            if 'GGSpells.register:' in code or 'GGSpells.SPELLS:' in code:
+              wiring.append(candidate)
+          print('ENTRYPOINT_REGISTRAR_REFERENCES='+repr(wiring))
+          assert len(wiring)>=1,'cannot confirm registrar is referenced by mod entrypoint'
           print('RESULT=EXACT_TWELVE_STATIC_REGISTRY_IDENTITIES_MATCH_PHYSICAL_JAR')
           print('LIMITATIONS=NO_PACK_RUNTIME_NO_SPELL_CONFIG_NO_PVP_NO_CAST_TEST_NO_SURVIVAL')
           PY
