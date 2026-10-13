@@ -1,5 +1,7 @@
 # Drapes Of Reflection
 
+**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:drapes_of_reflection` / `net.warphan.iss_magicfromtheeast.spells.symmetry.DrapesOfReflectionSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+
 - **ID:** `iss_magicfromtheeast:drapes_of_reflection`
 - **School:** Symmetry
 - **Levels:** 1–6
