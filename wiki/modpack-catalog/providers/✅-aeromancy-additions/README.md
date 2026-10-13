@@ -1,11 +1,14 @@
 # SnackPirate's Aeromancy Additions 1.2.8 — provider dossier
 
+**⚠️ Auditoria física parcial 2026-10-13:** [JAR oficial: dez registries estáticos verificados, arquivo físico sem SHA válido](EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md), [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) SUCCESS. Publisher file 8251034: 753884 bytes e SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`; modlist sibling #009 confirma a versão instalada 1.2.8, **não** seu checksum completo. `COUNTED_SOURCE_PINNED` permanece; **16/39** exatos/**23/39** pendentes, **+0** raízes, mínimos **1857/1855**. Fonte/defaults abaixo são históricos, não prova de gameplay.
+
+
 Status: `COUNTED_SOURCE_PINNED / 10 REGISTERED SPELL IDENTITIES / COMPONENT #64 / CURRENT-HOST RUNTIME QA OPEN`
 
 Physical authority: current 595-entry modlist (`SHA-1 7aaece7acbfb07ba4d0c66029042f36c50d046f0`)
 Physical JAR: `aero_additions-1.2.8.jar`
 Physical mod id/version: `aero_additions` / `1.2.8`
-Physical JAR SHA-1: `dee32c9fa84d6e39846608f8f77591ea56f`
+Physical JAR SHA-1: **NÃO VERIFICADO** (registro legado inválido, 35 caracteres: `dee32c9fa84d6e39846608f8f77591ea56f`; não confundir com SHA oficial)
 Physical CurseForge hash: `3079423735`
 Exact public source: `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`
 Exact source tree: `fcee08e613fbfa030f034268a0240c8693ab7f45` (`truncated=false`)

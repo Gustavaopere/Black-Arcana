@@ -1,5 +1,8 @@
 # Asphyxiate
 
+**⚠️ Verificação do publisher 2026-10-13:** `aero_additions:asphyxiate` e sua classe foram confirmados por `javap` no JAR oficial CurseForge 1.2.8, [Java21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191). O SHA-1 do arquivo físico instalado **não foi comprovado** (dado histórico de 35 dígitos inválido): esta ficha segue `COUNTED_SOURCE_PINNED`, não `COUNTED_EXACT`; já contabilizada, **+0**. [Provenance/gate](../EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md). Runtime, aquisição e config ⚠️.
+
+
 - Provider: **SnackPirate's Aeromancy Additions** (`aero_additions`)
 - Version: `1.2.8`
 - Registry id: `aero_additions:asphyxiate`
