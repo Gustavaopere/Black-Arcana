@@ -35,3 +35,15 @@ Já cobre canal contínuo de múltiplos projéteis incendiários. Os projéteis 
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta em 2026-09-06.
 - Auditoria source 3.16.3 canônica: `wiki/providers/irons-spellbooks/spells/fire/blaze-storm.md`.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`BlazeStormSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/fire/BlazeStormSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:blaze_storm` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `COMMON`; maxLevel `10`; cooldown `20` segundos; cast `CONTINUOUS`.
+- **Campos Java:** `baseManaCost`=`5`; `manaCostPerLevel`=`1`; `baseSpellPower`=`5`; `spellPowerPerLevel`=`1`; `castTime`=`60 - 5`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastTime()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `onServerCastTick()`, `getDamage()`, `getDamageSource()`.
+- **Fórmulas numéricas com retorno direto:** `getCastTime = castTime + 5 * spellLevel`; `getDamage = getSpellPower(spellLevel, caster) * .4f`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `SpellDamageSource`, `addFreshEntity`.
+
+**Contrato de perks:** escola `fire` não certifica que todo dano/incêndio seja fire damage; verificar fonte de dano, duração de burning e entidades de projétil. Separar atributo de spell power nativo de mutações de área/contagem/efeito, que exigem hook específico, caps e world safety. Sem contrato comprovado: ⚠️ condicionado/fail-closed. RPG Skill Tree gerencia perks, Mastery e gates; Iron's mantém cast, mana e efeitos nativos; Black Arcana mantém seu runtime e WorldEffectPolicy para efeitos próprios. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
