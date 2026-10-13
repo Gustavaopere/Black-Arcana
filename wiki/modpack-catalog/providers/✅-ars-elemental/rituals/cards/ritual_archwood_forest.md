@@ -49,3 +49,12 @@ This means the source contract is **50 Ars Source per five successful placement 
 Os campos acima reproduzem os contratos factuais da auditoria do source e do Ars 5.13.1 quando herdados. Não constituem medição no pack físico. Recursos Source, alteração de blocos/biomas, entidades, scheduler, persistência e cleanup permanecem provider-owned. Black Arcana não cobra Source duas vezes nem reexecuta rituais; efeitos destrutivos próprios passam por `WorldEffectPolicy`. Sem hook real, integração **⛔ fail-closed**.
 
 **Fontes:** [rituais](../../RITUALS.md) · [registries](../../REGISTRIES.md) · [acquisition](../../ACQUISITION.md). Clean-room factual, sem código/JSON/assets upstream.
+
+## Engenharia de perks — contrato causal do ritual 0.7.10.1
+
+- **Source checkpoint exato:** [`ArchwoodForestRitual.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/rituals/forest/ArchwoodForestRitual.java). Pin de versionamento, **não** prova binária de equivalência da implementação ao JAR.
+- **Executor herdado:** [Ars Nouveau ConjureBiomeRitual/FeaturePlacementRitual](https://github.com/baileyholl/Ars-Nouveau/tree/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/ritual) no host 5.13.1.
+- **Herança confirmada:** estende `ConjureBiomeRitual` do Ars 5.13.1: raio base 7 somado à quantidade Source Gem-tag; `ManhattenTracker(brazier.below(3),radius,2,radius)`, no máximo um bloco colocado com sucesso por tick, `RitualUtil.changeBiome` em cada colocação, `getSourceCost=50`, `setNeedsSource(true)` a cada 5 placements.
+- **Terreno/bioma:** GRASS_BLOCK na layer Y−1, DIRT nas demais; default biome ARCHWOOD_FOREST. Um Archfruit Pod consumido pode apontar BLazing/Bombegrante, Cascading/Frostaya, Flourishing/Mendosteen, Vexing/Bastion ou Flashing/Flashing Pod. `canConsumeItem` limita um Archfruit Pod e aceita Source Gems conforme super.
+- **Persistência:** grava `biome` especial na NBT via `ResourceKey` e pai guarda tracker/radius; source não comprova proteção de claim por cada `setBlock`. **Perks:** nunca repetir worldgen, Source ou bioma.
+- **Estado:** ✅ ID física do JAR e assinatura do source pinned; ⚠️ equivalência implementation-JAR, config deploy, helpers/host, protection e Survival pendentes; ⛔ adapter de perks RPG e mutabilidade externa não comprovados. Sem dupla Source/cast/concessão de Mastery.

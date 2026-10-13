@@ -28,3 +28,11 @@ Estado: **✅ `COUNTED_SOURCE_PINNED` — ritual individualizado** · **⚠️ c
 Os campos acima reproduzem os contratos factuais da auditoria do source e do Ars 5.13.1 quando herdados. Não constituem medição no pack físico. Recursos Source, alteração de blocos/biomas, entidades, scheduler, persistência e cleanup permanecem provider-owned. Black Arcana não cobra Source duas vezes nem reexecuta rituais; efeitos destrutivos próprios passam por `WorldEffectPolicy`. Sem hook real, integração **⛔ fail-closed**.
 
 **Fontes:** [rituais](../../RITUALS.md) · [registries](../../REGISTRIES.md) · [acquisition](../../ACQUISITION.md). Clean-room factual, sem código/JSON/assets upstream.
+
+## Engenharia de perks — contrato causal do ritual 0.7.10.1
+
+- **Source checkpoint exato:** [`TeslaRitual.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/rituals/TeslaRitual.java). Pin de versionamento, **não** prova binária de equivalência da implementação ao JAR.
+- **Cronologia/alvos:** a cada `100` ticks busca `LivingEntity` em AABB `inflate(5,3,5)` do brazier. Sem Air Essence rejeita `Player`; com Air Essence seleciona **todos** LivingEntity sem outra restrição explícita por tipo neste método.
+- **Output:** cria um `LightningEntity` Ars por entidade, posiciona no alvo e `setCause(null)` antes de `world.addFreshEntity`; marca `setNeedsSource(true)` dentro do loop. Custo declarado 500. Sem contrato para deduzir multiplicador de dano na classe ritual; isso pertence ao `LightningEntity`.
+- **Perks:** cada LightningEntity é derivada de um tick de ritual, não nova raiz de cast; alerta para custo de entidade, risco PvP com Essence e budget em áreas densas.
+- **Estado:** ✅ ID física do JAR e assinatura do source pinned; ⚠️ equivalência implementation-JAR, config deploy, helpers/host, protection e Survival pendentes; ⛔ adapter de perks RPG e mutabilidade externa não comprovados. Sem dupla Source/cast/concessão de Mastery.
