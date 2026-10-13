@@ -29,3 +29,10 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe fonte:** [`EffectSpark.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectSpark.java) pin fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d, não igualdade criptográfica source/JAR.
+- **Gatilho:** se target LivingEntity e `canDamage(...)`, dano nominal `DAMAGE+AMP_VALUE*ampMultiplier+(target.isInWaterOrRain()?2:0)`, defaults 3+1.5*amp+2 wet. Chama `attemptDamage(...)` **e independentemente de seu retorno** chama `applyConfigPotion(target, CompatUtils.airCheck(resolver)?LIGHTNING_LURE:SHOCKED_EFFECT,stats)`.
+- **Config:** duração default 15 segundos, Extend +5, amplificador limit 2; mana 15. **Perks:** status Lightning Lure/Shocked e dano aceito são dois resultados distintos; sem confirmar retorno de dano não conceder bônus on-hit.
+- **Estado:** ✅ símbolo/assinatura reais e ID registral física; ⚠️ config, helper, entidade e Survival runtime pendentes; ⛔ perks RPG/adapters não implementados nem comprovados, settlement/cast pertence ao Ars.
