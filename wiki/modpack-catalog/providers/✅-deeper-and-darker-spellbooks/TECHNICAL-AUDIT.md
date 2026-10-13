@@ -1,5 +1,7 @@
 # Deeper and Darker: Spellbooks 1.3.3-ver.b — technical audit
 
+**Checkpoint binário 2026-10-12:** [JAR físico Version B auditado 4/4](EXACT-BINARY-SUMMONS-1.3.3-VER-B.md), [run #38329132941](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38329132941), SHA-1 `783123ae86c91c01527c10f338679caaef42eb42`. O registrador real está em `registeries.DDISSSpellRegistery`, diferente do `item.DDISSSpellRegistery` na baseline pública 1.3.0. O registro estático passou; hotfix de servidor, mecanismos de invocação, configuração e Survival ⚠️.
+
 ## Autoridade instalada
 
 `darkermagic-1.3.3-1.21.1-ver.b.jar` é a autoridade de versão do pack. O runtime metadata é `1.3.3-1.21.1`; `ver.b` identifica a variante do artefato e não deve ser apagado.
@@ -30,7 +32,7 @@ A página pública atual do projeto declara quatro summon spells. O registry 1.3
 - `darkermagic:summoned_sculk_centipede`
 - `darkermagic:summoned_sculk_snapper`
 
-Status: **inventário 4/4 fechado por release + continuidade pública; IDs ainda aguardam confirmação por bytecode 1.3.3**.
+Status atualizado: **✅ 4/4 IDs no registro estático do JAR Version B 1.3.3 exato**; execução funcional e valores ainda não foram auditados.
 
 ## Baseline lifecycle 1.3.0
 
@@ -63,4 +65,4 @@ Como a release 1.3.3 é especificamente um fix de dedicated-server dos summons, 
 
 ## Estado final
 
-**RELEASE 1.3.3 VER B PINADA / INVENTÁRIO 4/4 / SOURCE 1.3.0 BASELINE / BYTECODE 1.3.3 E RUNTIME QA PENDENTES.**
+**RELEASE 1.3.3 VER B PINADA / REGISTRY BINÁRIO ESTÁTICO 4/4 VERIFICADO / SOURCE 1.3.0 SOMENTE BASELINE / HOTFIX, CONFIG, GAMEPLAY E SURVIVAL PENDENTES.**

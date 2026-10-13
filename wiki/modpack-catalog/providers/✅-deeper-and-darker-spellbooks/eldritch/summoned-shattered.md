@@ -1,5 +1,7 @@
 # Summoned Shattered
 
+**✅ Registro estático exato:** `darkermagic:summoned_shattered`, classe `net.rev.darkermagic.spells.eldritch.SummonShatteredSpell`, `DDISSSpellRegistery.SUMMON_SHATTERED_SPELL` no JAR físico 1.3.3 Version B ([prova](../EXACT-BINARY-SUMMONS-1.3.3-VER-B.md), [run #38329132941](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38329132941)). **⚠️ Spawn, cooldown, fórmulas, config, obtenção e Survival não validados.**
+
 ## Release 1.3.3-ver.b confirmada
 
 - Um dos quatro summon spells oficiais da release instalada.
@@ -25,7 +27,7 @@
 
 ## Bytecode 1.3.3 — campos pendentes
 
-ID/config/count/formulas/event order/learning/AI/owner behavior: **NÃO VERIFICADOS POR BYTECODE 1.3.3**. O inventário do spell é release-verificado; os internals acima são apenas baseline.
+**ID no JAR: ✅ VERIFICADO ESTATICAMENTE.** Config, fórmulas, summon count, spawn/event order, learning, AI e owner behavior: **⚠️ NÃO VERIFICADOS FUNCIONALMENTE EM 1.3.3**. Dados do source acima são baseline.
 
 ## Dedup / authority
 

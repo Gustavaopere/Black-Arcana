@@ -1,5 +1,7 @@
 # Summoned Sculk Centipede
 
+**✅ Registro estático exato:** `darkermagic:summoned_sculk_centipede`, classe `net.rev.darkermagic.spells.eldritch.SummonSculkCentipedeSpell`, `DDISSSpellRegistery.SUMMON_SCULK_CENTIPEDE_SPELL` no JAR físico 1.3.3 Version B ([prova](../EXACT-BINARY-SUMMONS-1.3.3-VER-B.md), [run #38329132941](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38329132941)). **⚠️ Spawn, cooldown, fórmulas, config, obtenção e Survival não validados.**
+
 ## Release 1.3.3-ver.b confirmada
 
 - Um dos quatro summon spells oficiais do provider instalado.
@@ -25,7 +27,7 @@
 
 ## Bytecode 1.3.3 — campos pendentes
 
-ID/config/formulas/spawn placement/event ordering/learning/AI/owner behavior: **NÃO VERIFICADOS POR BYTECODE 1.3.3**.
+**ID no JAR: ✅ VERIFICADO ESTATICAMENTE.** Config, fórmulas, summon count, spawn/event order, learning, AI e owner behavior: **⚠️ NÃO VERIFICADOS FUNCIONALMENTE EM 1.3.3**. Dados do source acima são baseline.
 
 ## Dedup / authority
 

@@ -1,11 +1,13 @@
 # Summoned Warden
 
+**✅ Registro estático exato:** `darkermagic:summoned_warden`, classe `net.rev.darkermagic.spells.eldritch.SummonWardenSpell`, `DDISSSpellRegistery.SUMMON_WARDEN_SPELL` no JAR físico 1.3.3 Version B ([prova](../EXACT-BINARY-SUMMONS-1.3.3-VER-B.md), [run #38329132941](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38329132941)). **⚠️ Spawn, cooldown, fórmulas, config, obtenção e Survival não validados.**
+
 ## Release 1.3.3-ver.b confirmada
 
 - Provider instalado: `darkermagic-1.3.3-1.21.1-ver.b.jar`
 - Integração temática: Deeper and Darker + Iron's Spells
 - Pertence ao conjunto oficial de quatro summon spells.
-- A release 1.3.3 corrige comportamento/crash dos summon spells em servidor; bytecode exato não foi extraído nesta auditoria.
+- A release 1.3.3 publica correção para crash de summons no servidor; registro binário estático confirmado, eficácia do hotfix no gameplay ainda não testada.
 
 ## Source 1.3.0 baseline — NÃO tratar como bytecode 1.3.3
 
@@ -27,7 +29,7 @@
 
 ## Bytecode 1.3.3 — campos pendentes
 
-- ID exato no JAR: **NÃO VERIFICADO POR BYTECODE 1.3.3**
+- ID exato no JAR: **✅ VERIFICADO ESTATICAMENTE** ([dossiê](../EXACT-BINARY-SUMMONS-1.3.3-VER-B.md))
 - fórmulas HP/damage: **NÃO VERIFICADAS EM 1.3.3**
 - ordem de spawn/event/initSummon: **NÃO VERIFICADA EM 1.3.3** e especialmente sensível ao hotfix de servidor
 - owner/friendly-fire/AI fino: **NÃO VERIFICADO EM 1.3.3**
