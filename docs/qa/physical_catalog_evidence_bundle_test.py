@@ -244,11 +244,11 @@ class EvidenceBundleTests(unittest.TestCase):
             self.assertEqual(27, queue['registry_proofs_remaining'])
             exact = [x for x in queue['providers']
                      if x['catalog_evidence'] == 'COUNTED_EXACT']
-            self.assertEqual(11, len(exact))
+            self.assertEqual(12, len(exact))
             self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                               'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                               'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
-                              "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells"},
+                              "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", "Ars Controle"},
                              {x['provider'] for x in exact})
             self.assertTrue(all(not row['registry_verified'] and
                                 not row['promotion_allowed'] for row in exact))
