@@ -1,0 +1,84 @@
+name: Aeromancy Additions 1.2.8 exact physical JAR audit
+on:
+  push:
+    branches:
+      - 'audit/aeromancy-128-binary-*'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify official exact publisher artifact against physical modlist SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,hashlib,urllib.request,zipfile,pathlib
+          name="aero_additions-1.2.8.jar"
+          expected="dee32c9fa84d6e39846608f8f77591ea56f"
+          urls=[
+            "https://mediafilez.forgecdn.net/files/8251/034/"+name,
+            "https://media.forgecdn.net/files/8251/034/"+name,
+            "https://cursemaven.com/curse/maven/snackpirates-aeromancy-additions-1160104/8251034/snackpirates-aeromancy-additions-1160104-8251034.jar",
+          ]
+          path=pathlib.Path(os.environ["RUNNER_TEMP"])/name
+          for url in urls:
+            try:
+              print("PUBLISHER_SOURCE="+url,flush=True)
+              req=urllib.request.Request(url,headers={"User-Agent":"Black-Arcana-static-binary-registry-audit/1"})
+              with urllib.request.urlopen(req,timeout=90) as response:
+                data=response.read(12000000)
+              sha=hashlib.sha1(data).hexdigest()
+              print("ARTIFACT_BYTES="+str(len(data))+" SHA1="+sha,flush=True)
+              if sha!=expected:continue
+              path.write_bytes(data)
+              with zipfile.ZipFile(path) as archive:
+                assert archive.testzip() is None
+              print("PHYSICAL_PUBLISHER_SHA_MATCH=PASS",flush=True)
+              with open(os.environ["GITHUB_ENV"],"a") as f:f.write("AERO_JAR="+str(path)+"\n")
+              break
+            except Exception as exc:
+              print("PUBLISHER_SOURCE_ERROR="+repr(exc)[:200],flush=True)
+          else:
+            raise SystemExit("FAIL-CLOSED: no official exact physical file")
+          PY
+      - name: Enumerate Java 21 compiled spell registry and entrypoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,zipfile,subprocess,re
+          jar=os.environ["AERO_JAR"]
+          def java(cls):
+            p=subprocess.run(["javap","-c","-p","-classpath",jar,cls],text=True,capture_output=True,timeout=35)
+            assert p.returncode==0,(cls,p.stderr[:220])
+            return p.stdout
+          with zipfile.ZipFile(jar) as z:
+            paths=z.namelist()
+            print("TOTAL_CLASSES="+str(sum(s.endswith(".class") for s in paths)),flush=True)
+            print("SPELL_CLASSES="+repr([s for s in paths if s.endswith("Spell.class") and s.startswith("com/snackpirate/aeromancy/spells/")]),flush=True)
+            for s in paths:
+              if s.endswith("neoforge.mods.toml"):
+                t=z.read(s).decode("utf8")
+                print("META_MOD_IDS="+repr(re.findall(r'modId\s*=\s*["\x27]([^"\x27]+)',t)),flush=True)
+            print("JARJAR_EXPANDABILITY="+repr([s for s in paths if "expandability" in s.lower() and s.endswith(".jar")]),flush=True)
+          root=java("com.snackpirate.aeromancy.Aeromancy")
+          reg=java("com.snackpirate.aeromancy.spells.AASpells")
+          print("AEROMANCY_BOOTSTRAP_LINES="+repr([x.strip() for x in root.splitlines() if "AASpells.register:" in x or "AASpells" in x][:20]))
+          print("REGISTRAR_BODY_BEGIN",flush=True)
+          for line in reg.splitlines():
+            if line.strip().startswith("static {};"):
+              print("BEGIN_CLINIT",flush=True)
+            if "registerSpell" in line or "DeferredRegister" in line or "new           #" in line or "// class com/snackpirate/aeromancy/spells/" in line or "ifeq" in line or "ifne" in line or "goto" in line:
+              print("BC_"+line.strip()[:300],flush=True)
+          print("REGISTRAR_BODY_END",flush=True)
+          print("SOURCE_CATALOG_IDS="+repr(["wind_charge","updraft","airstep","asphyxiate","feather_fall","wind_shield","airblast","wind_blade","flush","dash"]))
+          print("DISCOVERY_ONLY_NO_PROMOTION=TRUE")
+          PY
