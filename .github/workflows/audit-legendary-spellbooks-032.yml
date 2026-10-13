@@ -106,7 +106,9 @@ jobs:
             assert 'getSpellResource' in body or 'spellId' in body or 'SPELL_ID' in body or 'ResourceLocation' in body,(name,'missing resource evidence')
             literals=re.findall(r'// String ([A-Za-z][a-zA-Z0-9_:.-]+)',body)
             call=[line.strip() for line in body.splitlines() if 'ResourceLocation' in line or 'SchoolResource' in line or 'SchoolRegistry' in line or 'LSSchoolRegistry' in line or 'SCHOOL_RESOURCE' in line]
-            print('CANDIDATE_SPELL_'+str(i)+'='+family+'.'+name+' STRINGS='+repr(literals[:17])+' RESOURCE_OPS='+repr(call[:11]))
+            static=body.split('static {};',1)[1] if 'static {};' in body else ''
+            static_literals=re.findall(r'// String ([A-Za-z][a-zA-Z0-9_:.-]+)',static)
+            print('CANDIDATE_SPELL_'+str(i)+'='+family+'.'+name+' STRINGS='+repr(literals[:17])+' STATIC_STRINGS='+repr(static_literals)+' RESOURCE_OPS='+repr(call[:11]))
           # Entry point scan: discover an actual initializer path, not infer from class existence.
           with zipfile.ZipFile(jar) as z:
             roots=[f[:-6].replace('/','.') for f in z.namelist()
