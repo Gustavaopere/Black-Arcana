@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização binária 2026-10-13:** [Reliquified Ars Nouveau 0.8.1](providers/✅-reliquified-ars-nouveau/EXACT-BINARY-RELIC-ABILITIES-0.8.1.md) registra **19/19 itens e IDs primários de `AbilityTemplate.builder` exatos** ([Java21 #38461801129](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38461801129)); campanha **25/39 exatos / 14/39 pendentes**, +0 raízes, mínimos **1857 global / 1855 escopo**. Runtime/Survival ⚠️.
+
+
 **Atualização binária 2026-10-13:** [Waystones 21.1.45](providers/✅-waystones/EXACT-BINARY-ACTIONS-21.1.45.md) tem três caminhos causais exatos ([Java21 #38460510230](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38460510230)); **24/39 exatos / 15/39 pendentes**, +0 raízes, mínimos **1857 global / 1855 escopo**. Itens e teletransporte provider-native, runtime/Survival ⚠️.
 
 
