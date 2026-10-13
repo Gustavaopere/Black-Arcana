@@ -873,6 +873,57 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("COUNTED_SOURCE_PINNED", ledger_row)
         self.assertNotIn("COUNTED_EXACT", ledger_row)
 
+    def test_ypsilon_1171_exact_fifteen_spells_principles_not_new_spells(self):
+        folder = PROVIDERS / "✅-ypsilons-fundamentalism"
+        dossier = "EXACT-BINARY-SPELLS-1.1.7.1.md"
+        note = (folder / dossier).read_text(encoding="utf-8")
+        rows = [x for x in note.splitlines()
+                if re.match(r"^\| [0-9]+ \| .ypfundamentals:[a-z_]+. \|", x)]
+        expected = ("chains", "grantstrength", "pyrokinesis", "sol",
+                    "ignite", "bloodstream", "thorn", "laceration",
+                    "holy_lightning", "sacred_disk", "pull_spell", "lapsus",
+                    "taunt", "law_of_regression", "saeptum")
+        self.assertEqual(15, len(rows))
+        self.assertEqual([str(i) for i in range(1, 16)],
+                         [x.split("|")[1].strip() for x in rows])
+        self.assertEqual([f"ypfundamentals:{x}" for x in expected],
+                         [x.split("|")[2].strip().strip(chr(96)) for x in rows])
+        self.assertEqual(15, len(set(x.split("|")[3].strip() for x in rows)))
+        schools = [x.split("|")[4].strip() for x in rows]
+        self.assertEqual((1, 4, 3, 2, 2, 1, 2),
+                         tuple(schools.count(x) for x in
+                               ("Ice", "Fire", "Blood", "Holy", "Ender",
+                                "Evocation", "Fundamentalism")))
+        for token in ("8558503", "858749", "38436717443",
+                      "a2855c253202a8fcc2925fcf5b1bf86d64fbe4da",
+                      "PHYSICAL_SPELL_REGISTRATIONS=15",
+                      "NEW_SEMANTIC_ROOTS=0",
+                      "EXACT_STATIC_REGISTRY_AUDIT=PASS",
+                      "18/39 exact / 21/39 pending",
+                      "1857 global / 1855 escopo",
+                      "StealSummonSpell", "13 Principles"):
+            self.assertIn(token, note)
+        for card in (folder / "ice", folder / "fire", folder / "blood",
+                     folder / "holy", folder / "ender", folder / "evocation",
+                     folder / "fundamentalism"):
+            valid = list(card.glob("*.md"))
+            for path in valid:
+                if path.name == "README.md":
+                    continue
+                text = path.read_text(encoding="utf-8")
+                self.assertIn(dossier, text)
+                self.assertIn("COUNTED_EXACT", text)
+        matrix = (ROOT / "wiki/modpack-catalog/meta" /
+                  "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith("| [Ypsilon's Fundamentalism]"))
+        self.assertIn("| 1.1.7.1 | 15 | COUNTED_EXACT |", row)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        entry = next(x for x in ledger.splitlines()
+                     if x.startswith("| [Ypsilon's Fundamentalism]"))
+        self.assertIn("COUNTED_EXACT", entry)
+
     def test_fires_ender_expansion_241_exact_eleven_spells_no_new_roots(self):
         folder = PROVIDERS / "✅-fires-ender-expansion"
         dossier_name = "EXACT-BINARY-SPELLS-2.4.1.md"
@@ -1491,9 +1542,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(17, len(exact))
+        self.assertEqual(18, len(exact))
         self.assertEqual(
-            {"Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1550,9 +1601,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(17, len(exact))
+        self.assertEqual(18, len(exact))
         self.assertEqual(
-            {"Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)

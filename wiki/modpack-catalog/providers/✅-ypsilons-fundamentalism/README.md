@@ -1,5 +1,8 @@
 # Ypsilon's Fundamentalism / Fundamental Principles
 
+**✅ Prova binária 2026-10-13:** [15/15 spell IDs físicos](EXACT-BINARY-SPELLS-1.1.7.1.md), [Java21 #38436717443](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443) SUCCESS, CurseForge file 8558503 **858749 bytes**, SHA-1 `a2855c253202a8fcc2925fcf5b1bf86d64fbe4da` igual ao registro da modlist física #575. `COUNTED_EXACT` para registry de spells, **+0** raízes, campanha **18/39 exatos / 21/39 pendentes**, mínimos **1857 global / 1855 escopo** inalterados. **13 Principles não são mais 13 feitiços**; XP, mana/casts, side/thread, configuração, multiplayer/Survival ⚠️. Conteúdo source-pinned abaixo continua histórico, não valida runtime.
+
+
 ## Estado canônico
 
 - JAR instalado: `ypfundamentals-1.1.7.1.jar`

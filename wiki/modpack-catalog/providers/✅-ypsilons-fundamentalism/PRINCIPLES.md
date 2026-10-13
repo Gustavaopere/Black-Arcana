@@ -1,5 +1,8 @@
 # Os 13 Fundamental Principles
 
+**Boundary físico 2026-10-13:** [15/15 registries estáticos do provider](EXACT-BINARY-SPELLS-1.1.7.1.md) foram certificados por [Java21 #38436717443](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443); os **13 Principles** são categorização/progressão provider-native, **não** spell registrations extras nem XP/Mastery que Black Arcana/RPG Skill Tree possam liquidar em paralelo. `SpellCategoriesGenerator`, `PrinciplesLevelsAttachment`, mana reinforcement, exhaustion e multiplayer seguem ⚠️ quanto a runtime/configuração.
+
+
 Os Principles são **categorias mecânicas**, não spells. A release 1.1.7.1 os define em `Principles.java` e gera a associação aos spells por ASM sobre o registry global.
 
 | Principle | Categoria técnica | Passiva/default 1.1.7.1 |
