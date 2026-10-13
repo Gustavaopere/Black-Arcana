@@ -1,5 +1,7 @@
 # Glacier Eruption
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT`, `legendary_spellbooks:glacier_eruption` / `dev.higurashi.legendary_spellbooks.common.spells.ice.GlacierEruptionSpell`; [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179), [dossiê SHA-exato](../EXACT-BINARY-SPELLS-0.3.2.md). Números/comportamentos source-pinned; execução/Survival ⚠️; +0 magias.
+
 - ID: `legendary_spellbooks:glacier_eruption`
 - School: Ice
 - Levels: 1–7
