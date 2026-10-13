@@ -1542,9 +1542,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(21, len(exact))
+        self.assertEqual(22, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1601,9 +1601,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(21, len(exact))
+        self.assertEqual(22, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -2143,6 +2143,74 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         row = next(x for x in ledger.splitlines()
                    if x.startswith("| [Legendary Spellbooks]"))
         self.assertIn("| 0.3.2 | 30 | `COUNTED_EXACT` |", row)
+
+    def test_discerning_144_exact_twenty_two_spells_and_ritual_school(self):
+        provider = PROVIDERS / "✅-discerning-the-eldritch"
+        dossier = "EXACT-BINARY-SPELLS-1.4.4-1.21.md"
+        note = (provider / dossier).read_text(encoding="utf-8")
+        expected = (
+            ("eldritch", "silence", "SilenceSpell"),
+            ("eldritch", "conjure_forsaken_aid", "ConjureForsakenAidSpell"),
+            ("eldritch", "esoteric_edge", "EsotericEdgeSpell"),
+            ("eldritch", "conjure_gaoler", "ConjureGaolerSpell"),
+            ("eldritch", "otherworldly_presence", "OtherworldlyPresenceSpell"),
+            ("eldritch", "mend_flesh", "MendFleshSpell"),
+            ("eldritch", "rift_walker", "RiftWalkerSpell"),
+            ("eldritch", "abracadabra", "AbracadabraSpell"),
+            ("eldritch", "esoteric_strike", "EsotericStrikeSpell"),
+            ("blood", "vein_ripper", "VeinRipperSpell"),
+            ("evocation", "boogie_woogie", "BoogieWoogieSpell"),
+            ("evocation", "guardians_gaze", "GuardiansGazeSpell"),
+            ("fire", "soul_slice", "SoulSliceSpell"),
+            ("fire", "soul_set_ablaze", "SoulSetAblazeSpell"),
+            ("holy", "exorcism", "ExorcismSpell"),
+            ("ice", "glacial_edge", "GlacialEdgeSpell"),
+            ("ice", "crystalline_carver", "CrystallineCarverSpell"),
+            ("ritual", "call_ascended_one", "CallAscendedOneSpell"),
+            ("ritual", "blades_of_rancor", "BladesOfRancorSpell"),
+            ("ritual", "zealous_harbinger", "ZealousHarbingerSpell"),
+            ("ritual", "ravenous_revenant", "RavenousRevenantSpell"),
+            ("ritual", "libras_judgement", "LibrasJudgementSpell"),
+        )
+        rows = [line for line in note.splitlines()
+                if line.startswith("| ") and "`discerning_the_eldritch:" in line]
+        self.assertEqual(22, len(rows))
+        self.assertEqual(22, len(set(rows)))
+        for i, (family, ident, cls) in enumerate(expected, 1):
+            row = rows[i-1]
+            self.assertIn(f"| {i} |", row)
+            self.assertIn(f"`discerning_the_eldritch:{ident}`", row)
+            self.assertIn(f"spells.{family}.{cls}`", row)
+            card = provider / family / (ident.replace("_", "-") + ".md")
+            page = card.read_text(encoding="utf-8")
+            for token in ("COUNTED_EXACT", dossier,
+                          f"discerning_the_eldritch:{ident}",
+                          f"spells.{family}.{cls}"):
+                self.assertIn(token, page)
+        for marker in (
+            "8816497", "22098930", "38455449207",
+            "cf35c225aced23b705d1e0fd1bc5c62d96540e0c",
+            "PHYSICAL_SPELL_REGISTRATIONS=22",
+            "STATIC_INITIALIZER_BRANCHES=0",
+            "NEW_SEMANTIC_ROOTS=0",
+            "EXACT_STATIC_REGISTRY_AUDIT=PASS",
+            "RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE",
+            "22/39", "17/39", "1857", "1855",
+            "Exorcism", "Insanity", "RitualEngine",
+        ):
+            self.assertIn(marker, note)
+        for filename in ("README.md", "TECHNICAL-AUDIT.md"):
+            self.assertIn(dossier, (provider / filename).read_text(encoding="utf-8"))
+        matrix = (ROOT / "wiki/modpack-catalog/meta" /
+                  "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith("| [Discerning The Eldritch]"))
+        self.assertIn("| 1.4.4 | 22 | COUNTED_EXACT |", row)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(x for x in ledger.splitlines()
+                   if x.startswith("| [Discerning The Eldritch]"))
+        self.assertIn("| 1.4.4 | 22 | `COUNTED_EXACT` |", row)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
