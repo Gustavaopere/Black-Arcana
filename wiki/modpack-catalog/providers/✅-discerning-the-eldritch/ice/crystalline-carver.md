@@ -1,5 +1,7 @@
 # Crystalline Carver
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT`, `discerning_the_eldritch:crystalline_carver` / `net.acetheeldritchking.discerning_the_eldritch.spells.ice.CrystallineCarverSpell`, escola `SchoolRegistry.ICE_RESOURCE`. [Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207); [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Custos/mecânicas runtime e Survival ⚠️. +0.
+
 - **ID:** `discerning_the_eldritch:crystalline_carver`
 - **School:** Ice
 - **Levels:** 1–5
