@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização exata 2026-10-13:** [Tunes n' Tomes 1.1.0-HOTFIX](providers/✅-tunes-n-tomes/EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md) comprova 16/16 spell IDs e classes no registrador físico SHA-matched ([Java 21 #38445001328](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38445001328)), **+0 raízes**, campanha **19/39 exatos / 20/39 pendentes**; mínimos **1857 global / 1855 escopo**. Gameplay/Survival permanecem ⚠️.
+
+
 **Atualização física 2026-10-13:** [Ypsilon's Fundamentalism 1.1.7.1](providers/✅-ypsilons-fundamentalism/EXACT-BINARY-SPELLS-1.1.7.1.md) comprova **15/15** spell registrations no SHA do modpack, não adiciona 13 Principles à contagem. **18/39 providers exatos / 21/39 pendentes** e mínimos **1857 global / 1855 escopo**; runtime/Survival ⚠️.
 
 

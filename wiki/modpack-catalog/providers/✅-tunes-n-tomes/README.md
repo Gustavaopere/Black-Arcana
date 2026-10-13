@@ -1,8 +1,13 @@
-# Tunes n' Tomes 1.1.0-HOTFIX — release-bounded provider catalog
+# Tunes n' Tomes 1.1.0-HOTFIX — catálogo com prova binária exata
+
+## Atualização binária exata — 2026-10-13
+
+✅ [Dossiê 16/16](EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md): [GitHub Actions Java 21 #38445001328](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38445001328) **SUCCESS**. Publisher CurseForge file `8370271`, **21.903.598 bytes**, SHA-1 `6cac45631ea63577f8eeeab454e1df0ce8f78386` igual à modlist física; `TSpellRegistry` registra **16 classes/IDs `tunes_n_tomes:*` incondicionalmente**. Fichas corrigidas em [SPELL-CARDS-1.1.0-HOTFIX.md](SPELL-CARDS-1.1.0-HOTFIX.md). Evidência: **COUNTED_EXACT (registro estático)**; **+0 raízes**, **19/39 exatos / 20/39 pendentes**, mínimos **1857 global / 1855 escopo**. Gameplay, Iron's 3.16.3, Encore/Resonance/Segno, configuração e Survival continuam **⚠️**. A evidência release-bounded anterior abaixo é histórica onde contradiz o dossiê binário.
+
 
 ## Status
 
-`EXACT PHYSICAL 1.1.0-HOTFIX / EXACT PUBLISHER FILE 8370271 / CURRENT PUBLISHER MELODIC ROSTER 16/16 / SOURCE-JAR INTERNALS + RUNTIME QA PENDING / FAIL-CLOSED FOR PROVIDER-SPECIFIC HOOKS`
+`EXACT PHYSICAL 1.1.0-HOTFIX / EXACT PUBLISHER FILE 8370271 / COUNTED_EXACT 16/16 STATIC SPELL REGISTRY / RUNTIME QA + API HOOKS FAIL-CLOSED`
 
 ## Installed authority
 
@@ -28,9 +33,9 @@ The 4.0 release changelog of Alshanex's Familiars explicitly removes Sound Schoo
 
 The current Alshanex project/wiki still contains stale Sound/Bard prose. For 4.x ownership, the version-specific 4.0 migration changelog takes precedence over that stale generic description.
 
-## Current publisher roster — 16 semantic spell identities
+## Roster 16/16 de feitiços — IDs exatos no JAR físico
 
-**Fichas individuais dos 16 nomes oficiais:** [SPELL-CARDS-1.1.0-HOTFIX.md](SPELL-CARDS-1.1.0-HOTFIX.md). Essas fichas são de identidade editorial/release-bounded; não afirmam registry IDs/custos/runtime que ainda não foram comprovados.
+**Fichas individuais dos 16 nomes oficiais:** [SPELL-CARDS-1.1.0-HOTFIX.md](SPELL-CARDS-1.1.0-HOTFIX.md). As 16 fichas agora usam os IDs e classes binários exatos do dossiê; custos e runtime permanecem não verificados.
 
 
 The current Tunes n' Tomes project page states that the Melodic School **features these spells** and enumerates exactly sixteen names:
@@ -52,7 +57,7 @@ The current Tunes n' Tomes project page states that the Melodic School **feature
 15. Harmonic Aria
 16. Piercing Solo
 
-For semantic-coverage accounting this closes a current publisher roster of **16** provider-owned spell identities at `COUNTED_RELEASE_BOUNDED` confidence. It does not prove registry IDs, classes, exact numerical values or byte-for-byte source/JAR equivalence.
+For semantic-coverage accounting the **16** preexisting spell identities are now `COUNTED_EXACT` at static-registry confidence, backed by the publisher=physical SHA-1 binary audit. This does not prove numerical values or modpack runtime/Survival.
 
 The exact HOTFIX changelog only states that the build was updated to work with Iron's 3.16.2. It does not announce a spell-roster delta. The physical pack has Iron's 3.16.3, so runtime compatibility is still a regression gate rather than something inferred from the publisher's 3.16.2 statement.
 
@@ -81,13 +86,13 @@ The roster materially covers direct damage, stun/control, healing/protection, al
 
 Still unverified for the installed pack:
 
-- exact spell registry IDs/classes and internal APIs;
+- provider-specific internal APIs/hooks for interoperability; spell registry IDs/classes are now statically verified;
 - exact mana/cooldown/damage/range/duration values after config;
 - runtime compatibility against Iron's 3.16.3 rather than the HOTFIX's stated 3.16.2 target;
 - Resonance/Segno persistence, cleanup, caps and multiplayer causality;
 - forced-recast recursion/permission behavior for Encore;
 - stable supported integration hooks suitable for Black Arcana or RPG Skill Tree;
-- exact source-to-installed-JAR equivalence.
+- upstream source-to-installed-JAR build equivalence; the publisher JAR itself is physically SHA-matched.
 
 Provider-specific integration therefore remains fail-closed until a safe current boundary is demonstrated.
 
