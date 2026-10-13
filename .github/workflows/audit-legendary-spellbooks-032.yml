@@ -102,7 +102,8 @@ jobs:
             path='dev/higurashi/legendary_spellbooks/common/spells/'+family+'/'+name+'.class'
             assert path in classes,path
             body=javap(namespace+'common.spells.'+family+'.'+name)
-            assert ('AbstractSpell' in body or 'BaseSpell' in body or 'BaseSummonSpell' in body or 'BaseDoubleSchoolSpell' in body)
+            assert ('public class '+namespace+'common.spells.'+family+'.'+name+' extends ') in body,name
+            print('COMPILED_EXTENDS_'+str(i)+'='+next((x.strip() for x in body.splitlines() if x.startswith('public class ')),'NONE'))
             assert 'getSpellResource' in body or 'spellId' in body or 'SPELL_ID' in body or 'ResourceLocation' in body,(name,'missing resource evidence')
             literals=re.findall(r'// String ([A-Za-z][a-zA-Z0-9_:.-]+)',body)
             call=[line.strip() for line in body.splitlines() if 'ResourceLocation' in line or 'SchoolResource' in line or 'SchoolRegistry' in line or 'LSSchoolRegistry' in line or 'SCHOOL_RESOURCE' in line]
