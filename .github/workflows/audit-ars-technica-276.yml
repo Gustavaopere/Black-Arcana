@@ -1,0 +1,110 @@
+name: Ars Technica 2.7.6 independent binary spell-part audit
+on:
+  push:
+    branches:
+      - 'audit/ars-technica-276-*'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Resolve official exact physical JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,os,pathlib,urllib.request,zipfile
+          expected='adb2641d538375f6eff6a22f0196bb330ab0b171'
+          target=pathlib.Path(os.environ['RUNNER_TEMP'])/'ars_technica-1.21.1-2.7.6.jar'
+          sources=[
+              'https://mediafilez.forgecdn.net/files/7642/730/ars_technica-1.21.1-2.7.6.jar',
+              'https://media.forgecdn.net/files/7642/730/ars_technica-1.21.1-2.7.6.jar',
+          ]
+          for url in sources:
+              try:
+                  print('TRY_CURSEFORGE_FILE_7642730='+url)
+                  req=urllib.request.Request(url,headers={'User-Agent':'Black-Arcana-exact-cleanroom-audit/1'})
+                  with urllib.request.urlopen(req,timeout=95) as stream:
+                      content=stream.read(6000000)
+                  sha=hashlib.sha1(content).hexdigest()
+                  print('PUBLISHER_BYTES='+str(len(content))+' SHA1='+sha)
+                  if sha!=expected: continue
+                  target.write_bytes(content)
+                  with zipfile.ZipFile(target) as z: assert z.testzip() is None
+                  print('PHYSICAL_SHA1_MATCH='+sha)
+                  with open(os.environ['GITHUB_ENV'],'a') as env:
+                      env.write('AUDIT_JAR='+str(target)+'\n')
+                  break
+              except Exception as exc:
+                  print('FETCH_ERROR='+str(exc)[:230])
+          assert target.is_file(),'Exact publisher JAR unavailable or hash mismatch: FAIL CLOSED'
+          PY
+      - name: Inspect static 11 glyph registry and names via Java 21 bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ['AUDIT_JAR']
+          prefix='com/zeroregard/ars_technica'
+          registrar='com.zeroregard.ars_technica.registry.GlyphRegistry'
+          app='com.zeroregard.ars_technica.ArsTechnica'
+          expected=[
+              ('EffectCarve','glyph_carve'),
+              ('EffectPack','glyph_pack'),
+              ('EffectPolish','glyph_polish'),
+              ('EffectObliterate','glyph_obliterate'),
+              ('EffectPress','glyph_press'),
+              ('AugmentSuperheat','glyph_superheat'),
+              ('EffectFuse','glyph_fuse'),
+              ('EffectWhirl','glyph_whirl'),
+              ('EffectInsert','glyph_insert'),
+              ('EffectTelefeast','glyph_telefeast'),
+              ('EffectApply','glyph_apply'),
+          ]
+          with zipfile.ZipFile(jar) as z:
+              names=set(z.namelist())
+              for f in (prefix+'/ArsTechnica.class',prefix+'/registry/GlyphRegistry.class'):
+                  assert f in names,'Missing binary class '+f
+              for k,_ in expected:
+                  assert prefix+'/glyphs/'+k+'.class' in names,'Missing glyph class '+k
+              metadata=[n for n in names if n.endswith('neoforge.mods.toml')]
+              for path in metadata:
+                  raw=z.read(path).decode('utf-8',errors='replace')
+                  assert re.search(r'modId\s*=\s*["\x27]ars_technica["\x27]',raw),'Incorrect NeoForge modId'
+                  print('NEOFORGE_MOD_ID=ars_technica')
+              owned=sorted(x for x in names if x.startswith(prefix+'/glyphs/') and x.endswith('.class') and '$' not in x)
+              print('PHYSICAL_GLYPH_CLASS_PATHS='+repr(owned))
+          def disassemble(c):
+              return subprocess.check_output(['javap','-p','-c','-constants','-classpath',jar,c],text=True)
+          main=disassemble(app)
+          reg=disassemble(registrar)
+          assert 'GlyphRegistry.registerGlyphs:()V' in main,'Entrypoint not connected to glyph registration'
+          assert 'public static void registerGlyphs();' in reg,'missing registrar'
+          body=reg.split('public static void registerGlyphs();',1)[1].split('public static void register(',1)[0]
+          registrations=re.findall(r'// Method register:\(Lcom/hollingsworth/arsnouveau/api/spell/AbstractSpellPart;\)V',body)
+          print('REGISTRATION_CALLS='+str(len(registrations)))
+          assert len(registrations)==11,'expected exactly 11 registered glyphs'
+          assert not re.search(r'\b(?:ifeq|ifne|goto|ifnull|ifnonnull|tableswitch|lookupswitch)\b',body),'unexpected conditional registration'
+          helper=reg.split('public static void register(',1)[1].split('static {};',1)[0]
+          assert 'GlyphRegistry.registerSpell:' in helper,'helper must use Ars Nouveau API'
+          for cls,id_ in expected:
+              assert body.count('glyphs/'+cls+'.INSTANCE:')==1,'missing/duplicate registry entry '+cls
+              java=disassemble('com.zeroregard.ars_technica.glyphs.'+cls)
+              assert '// String '+id_ in java,'exact glyph suffix missing '+id_
+              assert 'ArsTechnica.prefix:' in java,'namespace constructor not connected '+cls
+              print('EXACT_STATIC_GLYPH=ars_technica:'+id_+';class='+cls)
+          assert 'ResourceLocation.fromNamespaceAndPath:' in main,'namespace constructor missing in entrypoint'
+          assert '// String ars_technica' in main,'literal modid absent from class initializer'
+          print('BOOTSTRAP_MOD_TO_REGISTRAR_TO_ARS_API=PASS')
+          print('COUNTED_EXACT_ELEVEN_STATIC_GLYPHS=PASS')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('LIMITATIONS=NO_HOST_COMPAT_NO_PROVIDER_RUNTIME_NO_CREATE_QA_NO_CONFIG_NO_SURVIVAL')
+          PY
