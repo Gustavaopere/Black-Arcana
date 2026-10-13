@@ -186,4 +186,4 @@ Ars core already exposes Heal, Hex, Wither, Ignite, Flare, Gravity, summons, det
 
 ## Fichas técnicas para Codex e perks
 
-A campanha transversal inclui leitura de código exato para `glyph_projectile`, `glyph_ignite`, `glyph_heal` e `ritual_flight`, preservando os contratos de augments, forma/efeito, mana/Source e ciclo do ritual. Os outros glifos/rituais exigem a mesma análise de classes, fórmulas e hooks por objeto: [padrão geral](../../meta/PERK-READY-TECHNICAL-STANDARD.md). Essa documentação não implementa um segundo SpellResolver nem representa QA do modpack.
+A campanha transversal ampliou a leitura de código para **22/85 Glyph Parts** (4 Forms, 14 Effects, 4 Augments) e **1/24 rituais**, incluindo executores `ANExplosion`, `LightningEntity`, `RuneTile`, `SpellUtil`, `IPotionEffect` e `SpellStats`. [Matriz de implementação para Codex](PERK-ENGINEERING-MATRIX-5.13.1.md) e [padrão universal](../../meta/PERK-READY-TECHNICAL-STANDARD.md). Os demais objetos continuam aguardando dossiê da própria classe, helpers e hooks. Essa documentação não cria outro SpellResolver, não autoriza mutação externa e não representa QA do modpack.

@@ -40,7 +40,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-ars-hex` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-morph` | 7 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-n-spells` | 15 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-nouveau` | 149 | 🟡 4 fichas (Projectile, Ignite, Heal, Flight ritual) aprofundadas; demais pendentes |
+| `✅-ars-nouveau` | 149 | 🟡 22/85 glyph parts (4 Forms, 14 Effects, 4 Augments) + 1/24 rituais com dossiê; hooks/QA pendentes |
 | `✅-ars-polymorphia` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sable` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sophisticated-compat` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -181,6 +181,10 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-yungs-better-end-island` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-yungs-better-witch-huts` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `README.md` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+
+## Ars Nouveau — checkpoint 2026-10-13
+
+**22/85 Glyph Parts** e **1/24 rituais** com mapeamento de perks/cadeia causal source-pinned nesta branch; sendo 4 Forms, 14 Effects, 4 Augments e 1 ritual. [Matriz técnica Ars 5.13.1](../providers/✅-ars-nouveau/PERK-ENGINEERING-MATRIX-5.13.1.md) com métodos, fórmulas, provas auxiliares e bloqueios. A cobertura semântica de identidade preexistente é diferente da profundidade técnica para perks.
 
 ## Priorização para próximos lotes
 
