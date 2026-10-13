@@ -83,18 +83,18 @@ class EvidenceBundleTests(unittest.TestCase):
                         source_commit=pin, expected_physical_jars=69,
                         fingerprinted_pending_registry=0,
                         blocked_physical_artifact=39,
-                        catalog_exact_preexisting=14,
-                        registry_proofs_remaining=25,
+                        catalog_exact_preexisting=15,
+                        registry_proofs_remaining=24,
                         providers=[
                             dict(
-                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else 'Crystal Chronicles' if i == 3 else 'Dreamless Spells' if i == 4 else 'Paladin Spells' if i == 5 else "Wind's Spellbooks" if i == 6 else 'Backported Spellbooks' if i == 7 else 'Deeper & Darker Spellbooks' if i == 8 else "GTBC's Geomancy Plus" if i == 9 else "Farmer's Spell 'n Spellbooks" if i == 10 else "Ars 'n' Spells" if i == 11 else 'Ars Controle' if i == 12 else 'Ars Technica' if i == 13 else 'Ars Zero' if i == 14 else f'Provider {i}'),
-                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
+                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else 'Crystal Chronicles' if i == 3 else 'Dreamless Spells' if i == 4 else 'Paladin Spells' if i == 5 else "Wind's Spellbooks" if i == 6 else 'Backported Spellbooks' if i == 7 else 'Deeper & Darker Spellbooks' if i == 8 else "GTBC's Geomancy Plus" if i == 9 else "Farmer's Spell 'n Spellbooks" if i == 10 else "Ars 'n' Spells" if i == 11 else 'Ars Controle' if i == 12 else 'Ars Technica' if i == 13 else 'Ars Zero' if i == 14 else 'Ars Elemental' if i == 15 else f'Provider {i}'),
+                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
                                                   else 'COUNTED_SOURCE_PINNED'),
-                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '0.1.3-alpha' if i == 3 else '1.1.9' if i == 4 else '1.1.1' if i == 5 else '1.0.5' if i == 6 else 'physical 0.1.2 / embedded 0.1.0' if i == 7 else '1.3.3 Version B' if i == 8 else '1.1.0-1.21.1' if i == 9 else '1.0.5.1-1.21.1' if i == 10 else '3.3.4' if i == 11 else '1.6.16' if i == 12 else '2.7.6' if i == 13 else '2.0.2' if i == 14 else '1.0'),
-                                existing_semantic_objects=(5 if i == 1 else 1 if i in (2, 3) else 4 if i == 4 else 5 if i == 5 else 6 if i == 7 else 4 if i == 8 else 12 if i == 9 else 6 if i == 10 else 5 if i == 11 else 9 if i == 12 else 11 if i == 13 else 18 if i == 14 else i+1),
+                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '0.1.3-alpha' if i == 3 else '1.1.9' if i == 4 else '1.1.1' if i == 5 else '1.0.5' if i == 6 else 'physical 0.1.2 / embedded 0.1.0' if i == 7 else '1.3.3 Version B' if i == 8 else '1.1.0-1.21.1' if i == 9 else '1.0.5.1-1.21.1' if i == 10 else '3.3.4' if i == 11 else '1.6.16' if i == 12 else '2.7.6' if i == 13 else '2.0.2' if i == 14 else '0.7.10.1' if i == 15 else '1.0'),
+                                existing_semantic_objects=(5 if i == 1 else 1 if i in (2, 3) else 4 if i == 4 else 5 if i == 5 else 6 if i == 7 else 4 if i == 8 else 12 if i == 9 else 6 if i == 10 else 5 if i == 11 else 9 if i == 12 else 11 if i == 13 else 18 if i == 14 else 47 if i == 15 else i+1),
                                 physical_status='MISSING',
                                 status=('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT'
-                                        if i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14) else 'PHYSICAL_ARTIFACT_BLOCKED'),
+                                        if i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) else 'PHYSICAL_ARTIFACT_BLOCKED'),
                                 registry_verified=False,
                                 survival_verified=False,
                                 promotion_allowed=False,
@@ -240,15 +240,15 @@ class EvidenceBundleTests(unittest.TestCase):
             queue = json.loads((root / 'bundle' / 'provider-39-queue.json').read_text())
             self.assertEqual(39, len(queue['providers']))
             self.assertEqual(0, queue['registry_proofs_completed'])
-            self.assertEqual(14, queue['catalog_exact_preexisting'])
-            self.assertEqual(25, queue['registry_proofs_remaining'])
+            self.assertEqual(15, queue['catalog_exact_preexisting'])
+            self.assertEqual(24, queue['registry_proofs_remaining'])
             exact = [x for x in queue['providers']
                      if x['catalog_evidence'] == 'COUNTED_EXACT']
-            self.assertEqual(14, len(exact))
+            self.assertEqual(15, len(exact))
             self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                               'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                               'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
-                              "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", "Ars Controle", "Ars Technica", "Ars Zero"},
+                              "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", "Ars Controle", "Ars Technica", "Ars Zero", 'Ars Elemental'},
                              {x['provider'] for x in exact})
             self.assertTrue(all(not row['registry_verified'] and
                                 not row['promotion_allowed'] for row in exact))

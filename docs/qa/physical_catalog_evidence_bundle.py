@@ -155,7 +155,8 @@ def _valid_collector_report(name: str, doc: dict | None, exit_code: int) -> bool
                 # Only a separately documented, independently SHA-proven
                 # registry closure may carry this state. The new fingerprint
                 # report never verifies, promotes or backfills the registry.
-                known = {'Ars Zero': ('2.0.2', 18),
+                known = {'Ars Elemental': ('0.7.10.1', 47),
+                         'Ars Zero': ('2.0.2', 18),
                          'Ars Technica': ('2.7.6', 11),
                          'Ars Controle': ('1.6.16', 9),
                          'Ars Additions': ('21.3.0', 5),
@@ -194,11 +195,11 @@ def _valid_collector_report(name: str, doc: dict | None, exit_code: int) -> bool
                     return False
             else:
                 return False
-        return (len(seen) == 39 and prior_exact == 14
+        return (len(seen) == 39 and prior_exact == 15
                 and type(doc.get('catalog_exact_preexisting')) is int
-                and doc['catalog_exact_preexisting'] == 14
+                and doc['catalog_exact_preexisting'] == 15
                 and type(doc.get('registry_proofs_remaining')) is int
-                and doc['registry_proofs_remaining'] == 25
+                and doc['registry_proofs_remaining'] == 24
                 and type(doc.get('fingerprinted_pending_registry')) is int
                 and doc['fingerprinted_pending_registry'] == fingerprinted
                 and type(doc.get('blocked_physical_artifact')) is int
