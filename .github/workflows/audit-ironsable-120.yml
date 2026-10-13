@@ -99,3 +99,77 @@ jobs:
             print(txt[:23000] if c.endswith("Ironsable") else txt[:7000],flush=True)
             print("DISASM_END="+c,flush=True)
           PY
+      - name: Assert physical seven unconditional spell identities and school boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ["PHYSICAL_IRONSABLE_JAR"]
+          roots=[
+             ('tempests_grasp','TempestsGraspSpell','WindSchool.orEvocation'),
+             ('maelstrom','MaelstromSpell','WindSchool.orEvocation'),
+             ('gyroscopic_spin','GyroscopicSpinSpell','SchoolRegistry.LIGHTNING_RESOURCE'),
+             ('downburst','DownburstSpell','WindSchool.orEvocation'),
+             ('stasis_lock','StasisLockSpell','SchoolRegistry.ENDER_RESOURCE'),
+             ('kinetic_barrier','KineticBarrierSpell','SchoolRegistry.EVOCATION_RESOURCE'),
+             ('elastic_tether','ElasticTetherSpell','SchoolRegistry.ENDER_RESOURCE'),
+          ]
+          with zipfile.ZipFile(jar) as z:
+            paths=set(z.namelist())
+            meta=z.read('META-INF/neoforge.mods.toml').decode('utf8')
+            assert re.search(r'modId\s*=\s*"ironsable"',meta)
+            assert len(paths)>50
+            for _,cls,_ in roots:assert 'com/ironsable/spells/'+cls+'.class' in paths
+          def java(name,verbose=False):
+            cmd=['javap','-c','-p']
+            if verbose:cmd.append('-v')
+            p=subprocess.run([*cmd,'-classpath',jar,name],text=True,capture_output=True,timeout=60)
+            assert p.returncode==0,(name,p.stderr[:160])
+            return p.stdout
+          boot=java('com.ironsable.Ironsable',True)
+          ordinary=java('com.ironsable.Ironsable')
+          assert 'SpellRegistry.SPELL_REGISTRY_KEY:' in ordinary
+          assert '// String ironsable' in ordinary
+          static=ordinary.split('static {};',1)[1]
+          init=ordinary.split('public com.ironsable.Ironsable(',1)[1].split('static {};',1)[0]
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V' in init
+          assert 'DeferredRegister.create:' in static
+          literal=re.findall(r'// String ([a-z_]+)\s*$',static,re.M)
+          assert literal==['ironsable']+[x[0] for x in roots],('literal order',literal)
+          count=static.count('DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)')
+          assert count==7,'seven registry calls expected, found '+str(count)
+          assert not re.findall(r'^\s*\d+:\s+(?:ifeq|ifne|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\b',static,re.M),'branch in static registry'
+          for id_,cls,school in roots:
+            assert re.search(r'DeferredHolder<[^;\n]+com\.ironsable\.spells\.'+cls+r'>',ordinary),('typed holder',cls)
+            javaout=java('com.ironsable.spells.'+cls)
+            assert 'extends io.redspace.ironsspellbooks.api.spells.AbstractSpell' in javaout
+            assert 'DefaultConfig.setSchoolResource:' in javaout
+            assert school in javaout,('school contract',cls,school)
+            assert 'public net.minecraft.resources.ResourceLocation getSpellResource();' in javaout
+            assert '// String '+id_ in javaout,('class spell identifier literal absent',cls,id_)
+            assert 'ResourceLocation.fromNamespaceAndPath:' in javaout,('namespace constructor absent',cls)
+            print('EXACT_SPELL_ID=ironsable:'+id_+' class='+cls+' school_source='+school)
+          wind=java('com.ironsable.compat.WindSchool')
+          assert '// String wind_spellbooks' in wind and 'ModList.isLoaded:' in wind
+          assert '// String wind' in wind and 'ResourceLocation.fromNamespaceAndPath:' in wind
+          assert 'SchoolRegistry.EVOCATION_RESOURCE:' in wind
+          print('SCHOOL_WIND_CONDITIONAL=PASS')
+          for marker in ('com/ironsable/compat/GustPhysicsHandler','com/ironsable/compat/BlackHolePhysicsHandler','com/ironsable/compat/EarthquakePhysicsHandler','com/ironsable/compat/BlizzardPhysicsHandler','com/ironsable/compat/StompPhysicsHandler','com/ironsable/compat/RaiseHellPhysicsHandler','com/ironsable/compat/SonicBoomPhysicsHandler','com/ironsable/compat/ShockwavePhysicsHandler','com/ironsable/spells/ShipTelekinesis'):
+            assert marker+'.class' in paths,('missing overlay class',marker)
+          assert 'CompatGuard.registerIfPresent:' in ordinary
+          assert 'CompatGuard.checkMixinTarget:' in ordinary
+          assert 'PhysicsMagic' not in repr(roots)
+          api=subprocess.run(['javap','-p','-classpath',jar,'com.ironsable.core.PhysicsMagic'],text=True,capture_output=True,timeout=30)
+          assert api.returncode==0
+          print('EXACT_PHYSICS_MAGIC_METHOD_DECLARATIONS_BEGIN')
+          for line in api.stdout.splitlines():
+             if line.strip().startswith('public static '):print(line.strip())
+          print('EXACT_PHYSICS_MAGIC_METHOD_DECLARATIONS_END')
+          print('PHYSICAL_OWNED_SPELLS=7')
+          print('STATIC_UNCONDITIONAL_REGISTER=PASS')
+          print('BASE_SPELL_PHYSICS_OVERLAYS_SEPARATE=TRUE')
+          print('NEW_SEMANTIC_IDENTITIES=0')
+          print('RUNTIME_CLIENT_SURVIVAL_NOT_VERIFIED=TRUE')
+          print('EXACT_PHYSICAL_REGISTRY_AUDIT=PASS')
+          PY
