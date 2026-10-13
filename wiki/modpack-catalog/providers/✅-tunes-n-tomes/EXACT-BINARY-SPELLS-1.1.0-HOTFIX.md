@@ -37,10 +37,10 @@
 | 15 | Harmonic Aria | `tunes_n_tomes:harmonic_aria` | `net.alshanex.tunes_n_tomes.spells.HarmonicAriaSpell` |
 | 16 | Piercing Solo | `tunes_n_tomes:piercing_solo` | `net.alshanex.tunes_n_tomes.spells.PiercingSoloSpell` |
 
-**PHYSICAL_SPELL_REGISTRATIONS=16**  
-**NEW_SEMANTIC_ROOTS=0**  
-**EXACT_STATIC_REGISTRY_AUDIT=PASS**  
-**PUBLISHER_EQUALS_PHYSICAL_SHA1=PASS**  
+**PHYSICAL_SPELL_REGISTRATIONS=16**
+**NEW_SEMANTIC_ROOTS=0**
+**EXACT_STATIC_REGISTRY_AUDIT=PASS**
+**PUBLISHER_EQUALS_PHYSICAL_SHA1=PASS**
 **RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE**
 
 ## Exclusões semânticas e authority
