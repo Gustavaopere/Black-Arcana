@@ -33,7 +33,8 @@ KNOWN_EXACT = {'Ars Additions': ('21.3.0', 5),
                "Wind's Spellbooks": ('1.0.5', 7),
                'Backported Spellbooks': ('physical 0.1.2 / embedded 0.1.0', 6),
                'Deeper & Darker Spellbooks': ('1.3.3 Version B', 4),
-               "GTBC's Geomancy Plus": ('1.1.0-1.21.1', 12)}
+               "GTBC's Geomancy Plus": ('1.1.0-1.21.1', 12),
+               "Farmer's Spell 'n Spellbooks": ('1.0.5.1-1.21.1', 6)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')

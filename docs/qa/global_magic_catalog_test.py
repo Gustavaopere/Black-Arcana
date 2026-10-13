@@ -1271,9 +1271,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(9, len(exact))
+        self.assertEqual(10, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1330,9 +1330,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(9, len(exact))
+        self.assertEqual(10, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1598,6 +1598,49 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('| 1.1.0-1.21.1 | 12 | `COUNTED_EXACT` |', entry)
         self.assertIn('9/39', self.index)
         self.assertIn('30/39', self.index)
+
+    def test_farmers_spell_1051_exact_six_static_registry_ids(self):
+        provider = PROVIDERS / '✅-farmers-spell'
+        name = 'EXACT-BINARY-SPELLS-1.0.5.1.md'
+        proof = (provider / name).read_text(encoding='utf-8')
+        ids = ('goodberry', 'phantom_loot', 'seal_coat', 'bad_apple',
+               'chaos_slash', 'preserve_circle')
+        for marker in ('8760428', '38334052069',
+                       'f77355e029af39bbaba3854e10cc087a608351ff',
+                       '5537418', 'ModSpells', 'FarmersSpell',
+                       'BerserkCleaverSpell',
+                       'STATIC_DEFERRED_REGISTER_INVOCATIONS=6',
+                       'STATIC_INITIALIZER_BRANCHES=0',
+                       'ENTRYPOINT_TO_REGISTRY=True',
+                       '10/39', '29/39', '1851', '1849', '+0',
+                       'Survival', *(f'farmers_spell:{ident}' for ident in ids)):
+            self.assertIn(marker, proof)
+        rows = [x for x in proof.splitlines()
+                if x.startswith('| ') and 'farmers_spell:' in x]
+        self.assertEqual(6, len(rows))
+        self.assertEqual(6, len(set(rows)))
+        for path in ('README.md', 'EXACT-1.0.5.1-SPELL-INVENTORY.md',
+                     'SPELL-CARDS-1.0.5.1.md',
+                     'spells/goodberry.md', 'spells/phantom-loot.md',
+                     'spells/seal-coat.md', 'spells/bad-apple.md',
+                     'spells/chaos-slash.md', 'spells/preserve-circle.md'):
+            self.assertIn(name, (provider / path).read_text(encoding='utf-8'))
+        inventory = (provider / 'EXACT-1.0.5.1-SPELL-INVENTORY.md').read_text(encoding='utf-8')
+        registry_rows = [x for x in inventory.splitlines()
+                         if x.startswith('| `farmers_spell:')]
+        self.assertEqual(6, len(registry_rows))
+        self.assertTrue(all('`COUNTED_EXACT`' in x for x in registry_rows))
+        meta = ROOT / 'wiki/modpack-catalog/meta'
+        matrix = (meta / 'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith("| [Farmer's Spell 'n Spellbooks]"))
+        self.assertIn('| 1.0.5.1-1.21.1 | 6 | COUNTED_EXACT |', row)
+        ledger = (meta / 'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        entry = next(x for x in ledger.splitlines()
+                     if x.startswith("| [Farmer's Spell 'n Spellbooks]"))
+        self.assertIn('| 1.0.5.1-1.21.1 | 6 | `COUNTED_EXACT` |', entry)
+        self.assertIn('10/39', self.index)
+        self.assertIn('29/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
