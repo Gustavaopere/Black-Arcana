@@ -1,5 +1,7 @@
 # Release Riftwalker Predator
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT` — `legendary_spellbooks:release_riftwalker_predator`, classe `dev.higurashi.legendary_spellbooks.common.spells.annihilation.ReleaseRiftwalkerPredatorSpell`; [Java21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) / [dossiê](../EXACT-BINARY-SPELLS-0.3.2.md). Parâmetros efetivos e Survival ⚠️, +0 raízes.
+
 - ID: `legendary_spellbooks:release_riftwalker_predator`
 - School: `legendary_spellbooks:annihilation`
 - Levels: 1–3
