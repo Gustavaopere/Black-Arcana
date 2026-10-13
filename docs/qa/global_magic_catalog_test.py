@@ -114,7 +114,8 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             school, _identifier, concrete = expected
             self.assertIn(f"- **Família confirmada:** {school}", body)
             self.assertIn(f"- **Classe concreta:** `{concrete}`", body)
-            self.assertIn("**Confiança:** `COUNTED_RELEASE_BOUNDED`", body)
+            self.assertIn("**Confiança atual:** `COUNTED_EXACT`", body)
+            self.assertIn("sem comprovação de gameplay, config ou Survival", body)
         self.assertIn("EarthshatterSpell", cards)
         self.assertIn("Earthquake", cards)
         self.assertIn("Stomp", cards)
@@ -1270,9 +1271,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(8, len(exact))
+        self.assertEqual(9, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1329,9 +1330,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(8, len(exact))
+        self.assertEqual(9, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1563,6 +1564,40 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('| 1.3.3 Version B | 4 | `COUNTED_EXACT` |', entry)
         self.assertIn('8/39', self.index)
         self.assertIn('31/39', self.index)
+
+    def test_gtbc_110_binary_static_twelve_spells(self):
+        provider = PROVIDERS / '✅-gtbcs-geomancy-plus'
+        name = 'EXACT-BINARY-SPELLS-1.1.0-1.21.1.md'
+        proof = (provider / name).read_text(encoding='utf-8')
+        ids = ('chunker', 'dripstone_bolt', 'eroding_boulder', 'fissure',
+               'geo_conductor', 'petrivise', 'pillar_of_the_resounding_earth',
+               'seismic_surf', 'tremor_spike', 'tremor_step',
+               'solar_beam', 'solar_storm')
+        for marker in ('7041615', '38332395627',
+                       '67e9652799f35f1fbd09968da6f400d0229f5599',
+                       '475333', 'GGSpells', 'GeomancyPlusMod',
+                       'EarthshatterSpell', 'STATIC_REGISTER_SPELL_INVOCATIONS=12',
+                       'STATIC_INITIALIZER_BRANCHES=0', '9/39',
+                       '30/39', '1851', '1849', '+0', 'Survival',
+                       *(f'gtbcs_geomancy_plus:{id}' for id in ids)):
+            self.assertIn(marker, proof)
+        rows = [x for x in proof.splitlines()
+                if x.startswith('| ') and 'gtbcs_geomancy_plus:' in x]
+        self.assertEqual(12, len(rows))
+        for card in ('README.md', 'EXACT-1.1.0-ARTIFACT-AUDIT.md',
+                     'SPELL-CARDS-1.1.0-1.21.1.md'):
+            self.assertIn(name, (provider / card).read_text(encoding='utf-8'))
+        meta = ROOT / 'wiki/modpack-catalog/meta'
+        matrix = (meta / 'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith("| [GTBC's Geomancy Plus]"))
+        self.assertIn('| 1.1.0-1.21.1 | 12 | COUNTED_EXACT |', row)
+        ledger = (meta / 'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        entry = next(x for x in ledger.splitlines()
+                     if x.startswith("| [GTBC's Geomancy Plus]"))
+        self.assertIn('| 1.1.0-1.21.1 | 12 | `COUNTED_EXACT` |', entry)
+        self.assertIn('9/39', self.index)
+        self.assertIn('30/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)

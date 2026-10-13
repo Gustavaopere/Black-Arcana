@@ -1,5 +1,8 @@
 # GTBC's Geomancy Plus 1.1.0-1.21.1 — exact release artifact audit
 
+**Auditoria física 2026-10-12:** [12/12 IDs exatos do JAR](EXACT-BINARY-SPELLS-1.1.0-1.21.1.md) e [CI #38332395627](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38332395627). O JAR CurseForge file 7041615 tem SHA-1 `67e9652799f35f1fbd09968da6f400d0229f5599`, igual ao hash do snapshot físico do sibling. `GGSpells` registra 12 spells; `GeomancyPlusMod` referencia o registrador. `EarthshatterSpell` não foi registrada. Promoção `COUNTED_RELEASE_BOUNDED → COUNTED_EXACT` **somente para ID/cardinalidade estáticos**, 9/39 exatos e 30/39 pendentes, +0 novas magias; mínimos 1851/1849 preservados. Config/efeitos/aquisição/Survival permanecem ⚠️. Histórico abaixo retido como checkpoint.
+
+
 ## Scope
 
 Phase 2BR inspected the exact published NeoForge 1.21.1 release artifact corresponding to the physical pack's installed GTBC's Geomancy Plus line. The work is clean-room, evidence-only and does not copy or retain upstream implementation, assets, recipe payloads or localization prose.

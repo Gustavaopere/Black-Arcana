@@ -1,12 +1,15 @@
 # GTBC's Geomancy Plus — 12 fichas individuais de magia (1.1.0-1.21.1)
 
-Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem validação física de execução no modpack.**
+**Auditoria física 2026-10-12:** [12/12 IDs exatos do JAR](EXACT-BINARY-SPELLS-1.1.0-1.21.1.md) e [CI #38332395627](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38332395627). O JAR CurseForge file 7041615 tem SHA-1 `67e9652799f35f1fbd09968da6f400d0229f5599`, igual ao hash do snapshot físico do sibling. `GGSpells` registra 12 spells; `GeomancyPlusMod` referencia o registrador. `EarthshatterSpell` não foi registrada. Promoção `COUNTED_RELEASE_BOUNDED → COUNTED_EXACT` **somente para ID/cardinalidade estáticos**, 9/39 exatos e 30/39 pendentes, +0 novas magias; mínimos 1851/1849 preservados. Config/efeitos/aquisição/Survival permanecem ⚠️. Histórico abaixo retido como checkpoint.
+
+
+Status atual: **✅ 12/12 objetos catalogados / `COUNTED_EXACT` quanto aos IDs de registry estático / sem validação física de execução no modpack.**
 
 ## Fontes e regra de contagem
 
 - **Versão identificada na modlist física congelada:** `gtbcs_geomancy_plus-1.1.0-1.21.1.jar`; mod id `gtbcs_geomancy_plus`. Minecraft 1.21.1, NeoForge.
 - **Registry examinado:** `GGSpells` do artefato publicado CurseForge File `7041615`; 12 `Supplier<AbstractSpell>` mapeados a 12 `registerSpell(...)`, com zero branches no inicializador. Consulta: [inventário canônico do provider](README.md) e [auditoria de JAR/release](EXACT-1.1.0-ARTIFACT-AUDIT.md).
-- **Provenance:** hash do artefato publisher SHA-1 `67e9652799f35f1fbd09968da6f400d0229f5599`. Este trabalho não extraiu nem revalidou o JAR da instalação. Preservar `COUNTED_RELEASE_BOUNDED` e o gate de execução física.
+- **Provenance atualizada 2026-10-12:** publisher file 7041615 e SHA-1 físico documentado pelo sibling `67e9652799f35f1fbd09968da6f400d0229f5599` coincidem; [auditoria independente Java 21 #38332395627](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38332395627) fechou doze IDs do registro estático. Preservar gates de runtime, configuração e Survival como não executados.
 - **Escopo:** dez registros Geo e dois Holy. Cada root de `GGSpells` aparece uma vez; subclasses não registradas, escolas, mixins, loot, itens e feitiços preexistentes do Iron's não somam objetos adicionais.
 - **Nomenclatura:** os cabeçalhos combinam o mod id declarado e o root exato do registry para indexação. O arquivo **não** prova a resolução final de `ResourceLocation`, configuração efetiva, interface de conjuração, aquisição no mundo ou comportamento vivo do servidor, ainda pendentes em QA.
 
@@ -35,7 +38,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `chunker`
 - **Classe concreta:** `ChunkerSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -48,7 +51,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `dripstone_bolt`
 - **Classe concreta:** `DripstoneBoltSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -61,7 +64,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `eroding_boulder`
 - **Classe concreta:** `ErodingBoulderSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -74,7 +77,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `fissure`
 - **Classe concreta:** `FissureSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -87,7 +90,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `geo_conductor`
 - **Classe concreta:** `GeoConductorSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -100,7 +103,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `petrivise`
 - **Classe concreta:** `PetriviseSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Exceção de cast-time documentada:** 1.1.0: a release registra exceção à redução de cast-time, para evitar descompasso de animação; não forçar redução por adaptador.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -113,7 +116,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `pillar_of_the_resounding_earth`
 - **Classe concreta:** `PillarOfTheResoundingEarthSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Exceção de cast-time documentada:** 1.1.0: a release registra exceção à redução de cast-time, para evitar descompasso de animação; não forçar redução por adaptador.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -126,7 +129,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `seismic_surf`
 - **Classe concreta:** `SeismicSurfSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -139,7 +142,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `tremor_spike`
 - **Classe concreta:** `TremorSpikeSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Exceção de cast-time documentada:** 1.1.0: a release registra exceção à redução de cast-time, para evitar descompasso de animação; não forçar redução por adaptador.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -152,7 +155,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Geo
 - **Root exato de registro:** `tremor_step`
 - **Classe concreta:** `TremorStepSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os dez Geo herdam os gates Iron's de crafting/enabled/player (`allowCrafting`, `isEnabled`, `canBeCraftedBy`) sem override provider-native observado; rota estrutural de foco por `mowziesmobs:bluff_rod` e `#gtbcs_geomancy_plus:geo_focus`.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -165,7 +168,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Holy
 - **Root exato de registro:** `solar_beam`
 - **Classe concreta:** `SolarBeamSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os identificadores `gtbcs_geomancy_plus:solar_beam` e `gtbcs_geomancy_plus:solar_storm` constam em dados de loot de Umvuthi; a release documenta obtenção após derrotar esse boss. Taxas/drops reais e gates Iron's efetivos continuam em QA.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
@@ -178,7 +181,7 @@ Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem valida
 - **Família confirmada:** Holy
 - **Root exato de registro:** `solar_storm`
 - **Classe concreta:** `SolarStormSpell`
-- **Confiança:** `COUNTED_RELEASE_BOUNDED`; identidade registrada na release exata e materializada no catálogo, sem promoção para `COUNTED_EXACT` do JAR local.
+- **Confiança atual:** `COUNTED_EXACT` para identidade no registry binário estático do JAR hash-equal; sem comprovação de gameplay, config ou Survival.
 - **Aquisição / gate sustentado:** Os identificadores `gtbcs_geomancy_plus:solar_beam` e `gtbcs_geomancy_plus:solar_storm` constam em dados de loot de Umvuthi; a release documenta obtenção após derrotar esse boss. Taxas/drops reais e gates Iron's efetivos continuam em QA.
 - **Política individual de cast-time:** não estabelecida nesta auditoria para este registro.
 - **Mecânica individual, targeting, dano, duração, rank, custo, cooldown e efeitos de mundo:** não comprovados pela base documental aqui utilizada; não inferir do nome nem duplicar o casting/mana do Iron's.
