@@ -1,6 +1,9 @@
 # Ars Elemental
 
-Status: `SOURCE CATALOG COMPLETE / INSTALLED CONFIG + RUNTIME QA PENDING`
+**✅ Checkpoint binário 2026-10-13:** [47 IDs exatos / 39 glifos de produção + 8 rituais](EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md), [Java 21 #38403443682](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38403443682), SHA-1 publisher/físico `a1e4021177aae0e16c1f7c6487a82f0b68bbade3`, **2260550 bytes**. `MethodCarianPhalanx` somente sob `!isProduction()`. `COUNTED_EXACT` exclusivamente para registro estático, **15/39** campanha, **24/39** pendentes; **+0** novos, mínimos **1857/1855**. ID dos 27 glifos não-filtro agora comprovado no JAR. Config real e Survival ⚠️. Os textos source-pinned abaixo são checkpoints históricos e continuam úteis para defaults, não para afirmar registro atual.
+
+
+Status: `47/47 PHYSICAL REGISTRY IDENTITIES COUNTED_EXACT / 39 PRODUCTION GLYPHS + 8 RITUALS / INSTALLED CONFIG + RUNTIME QA PENDING`
 
 - Current JAR: `ars_elemental-1.21.1-0.7.10.1.jar`
 - Physical SHA-1: `a1e4021177aae0e16c1f7c6487a82f0b68bbade3`

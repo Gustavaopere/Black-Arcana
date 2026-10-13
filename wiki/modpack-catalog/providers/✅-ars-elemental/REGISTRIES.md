@@ -1,5 +1,8 @@
 # Ars Elemental 0.7.10.1 — registry inventory
 
+**✅ Prova binária exata 2026-10-13:** [47 spell/ritual registry identities](EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md), [Java 21 #38403443682](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38403443682); 39 glyphs em produção, 8 rituals, 1 extra dev-only sob gate. Os demais registros de itens/equipamentos/familiars/threads abaixo permanecem source-pinned: a auditoria não os certificou exaustivamente.
+
+
 Status: `BOOTSTRAP + HIGH-IMPACT REGISTRIES SOURCE-PINNED / FULL ITEM-ID FLATTENING NOT REQUIRED FOR PHASE 2U`
 
 Source checkpoint: `Alexthw46/Ars-Elemental@fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`.

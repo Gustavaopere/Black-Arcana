@@ -1,5 +1,8 @@
 # Ars Elemental 0.7.10.1 — 39 partes de spell individualizadas
 
+**✅ Checkpoint binário 2026-10-13:** [39/39 IDs definitivos do JAR exato](EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md) por [Java 21 #38403443682](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38403443682), incluindo os 27 antigos sem ID individual. Status de registry `COUNTED_EXACT` para os 39; **+0** raízes, mínimos atuais **1857 global / 1855 escopo**, denominação final aberta. As frases source-pinned abaixo que afirmam IDs não verificados ou mínimos 1851/1849 são **históricas**, supersedidas; custos/defaults/config/Survival ⚠️.
+
+
 Estado **✅ 39/39 `COUNTED_SOURCE_PINNED`**, distribuídas em **23 efeitos, dois cast methods, dois propagadores e 12 filtros**; **⚠️ IDs dos 27 não-filtros, config física e Survival não verificados**.
 
 ## Evidência e limites
