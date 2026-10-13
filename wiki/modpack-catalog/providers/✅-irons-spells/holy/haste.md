@@ -58,3 +58,15 @@ Já cobre buff Holy multiatributo de haste. Perks/bridges devem operar por hooks
 - Catálogo oficial atual: `https://iron.wiki/spells/`
 - Source audit canônico: `wiki/modpack-catalog/providers/irons-spells/audits/source-3.16.3/spells/holy/haste.md`
 - Consulta: 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`HasteSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/holy/HasteSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:haste` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `EPIC`; maxLevel `4`; cooldown `80` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`50`; `manaCostPerLevel`=`10`; `baseSpellPower`=`30`; `spellPowerPerLevel`=`5`; `castTime`=`30`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `checkPreCastConditions()`, `onCast()`, `getAmplifier()`, `getDuration()`.
+- **Fórmulas numéricas com retorno direto:** `getDuration = (int) (getSpellPower(spellLevel, caster) * 20)`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `TargetEntityCastData`, `MobEffectInstance`, `addEffect`, `MobEffectRegistry`.
+
+**Contrato de perks:** escola `holy` não prova dano, cura ou imunidade universais. Inspecionar fonte de dano/cura e estado persistente do efeito nativo antes de modificar duração, alcance e alvo. Atributo provider-native e patch em entidade/efeito são integrações diferentes; requerem evento/hook real, caps e prevenção de duplicidade. Sem hook: ⚠️ condicionado/fail-closed. Iron's é autoridade do cast e mana; RPG Skill Tree, perks/Mastery/gates; Black Arcana, seu runtime mágico. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
