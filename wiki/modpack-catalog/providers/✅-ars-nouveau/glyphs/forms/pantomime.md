@@ -38,3 +38,12 @@ Pantomime is an Ars-owned line-of-sight targeting form. Its existence is a stron
 ## Validation state
 
 `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / PACK RUNTIME QA PENDING`
+
+## Engenharia para perks — operador e consumidores
+
+- **Classe Java exata:** [`MethodPantomime.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/method/MethodPantomime.java), source pin `112920ff774831f204031da75b4c4e73d3765157` (Ars Nouveau 5.13.1).
+- **Seleção de posição:** `MethodPantomime.findPosition(shooter,stats)` usa `offset = count(Dampen)>0 ? -1 : count(Amplify)`. A distância é `viewXRot < 45.0 ? 2+offset : 3+offset` blocos ao longo de `getViewVector(1.0f)`, a partir da posição dos olhos. O alvo final é `BlockHitResult` na posição calculada; **não** se trata de raycast comum com colisão/LOS comprovado pela classe.
+- **Overloads:** `onCast`, `onCastOnBlock`, `onCastOnEntity` chamam todos `getTarget`, que resolve os efeitos subsequentes via `resolver.onResolveEffect` e produz partículas/som. Uma EntityHit externa não é passada como alvo direto.
+- **Augments e controle:** Amplify, Dampen, Sensitive, Dampen max 1 por default. Dampen prevalece sobre Amplify no ternário quando ambos presentes; Sensitive fornece apresentação de highlight, não aumenta distância nessa fórmula. Mana declarada 5, config efetiva Ars.
+- **Perk segura:** distinguir potência/alcance do glyph e modificação externa de `SpellStats`; range baixo ou negativo por combinações fora do default requer análise de admissão. Hook externo não verificado.
+- **Mutação externa:** ⛔ nenhum hook de escrita de `SpellStats` por RPG Skill Tree comprovado; a presença do método Java **não** valida bridge. Source auditado; config real, testes físicos/Survival e integração continuam ⚠️ condicionados.
