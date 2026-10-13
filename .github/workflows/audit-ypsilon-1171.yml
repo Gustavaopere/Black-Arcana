@@ -1,0 +1,79 @@
+name: Ypsilon Fundamental Principles 1.1.7.1 physical 15-spell registry audit
+on:
+  push:
+    branches:
+      - 'audit/ypsilon-fundamentals-1171-*'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch CurseForge release 8558503 and enforce installed physical SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,urllib.request,hashlib,zipfile,pathlib
+          expected="a2855c253202a8fcc2925fcf5b1bf86d64fbe4da"
+          physical="ypfundamentals-1.1.7.1.jar"
+          paths=[
+            "https://cursemaven.com/curse/maven/fundamental-principles-1347399/8558503/fundamental-principles-1347399-8558503.jar",
+            "https://mediafilez.forgecdn.net/files/8558/503/ypfundamentals-1.1.7.1.jar",
+            "https://media.forgecdn.net/files/8558/503/ypfundamentals-1.1.7.1.jar",
+          ]
+          path=pathlib.Path(os.environ['RUNNER_TEMP'])/physical
+          for url in paths:
+            try:
+              req=urllib.request.Request(url,headers={"User-Agent":"Black-Arcana-cleanroom-JAR-audit"})
+              with urllib.request.urlopen(req,timeout=70) as response:data=response.read(15000000)
+              sha=hashlib.sha1(data).hexdigest()
+              print("CANDIDATE="+url+" BYTES="+str(len(data))+" SHA1="+sha,flush=True)
+              if sha!=expected:continue
+              path.write_bytes(data)
+              with zipfile.ZipFile(path) as z: assert z.testzip() is None
+              print("PUBLISHER_EQUALS_PHYSICAL_SHA1=PASS",flush=True)
+              print("CERTIFIED_BYTES="+str(len(data)),flush=True)
+              print("CERTIFIED_FILE_ID=8558503",flush=True)
+              with open(os.environ['GITHUB_ENV'],'a') as env: env.write("EXACT_YPS_JAR="+str(path)+"\n")
+              break
+            except Exception as e:print("CANDIDATE_ERROR="+repr(e)[:190],flush=True)
+          else:
+            raise SystemExit("FAIL-CLOSED: publisher byte sequence cannot be matched to physical modlist SHA")
+          PY
+      - name: Enumerate compiled source and registry identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ["EXACT_YPS_JAR"]
+          def java(cls):
+            p=subprocess.run(["javap","-p","-c","-classpath",jar,cls],capture_output=True,text=True,timeout=35)
+            assert p.returncode==0,(cls,p.stderr[:150])
+            return p.stdout
+          with zipfile.ZipFile(jar) as z:
+            files=z.namelist()
+            print("TOTAL_CLASSES="+str(sum(x.endswith(".class") for x in files)))
+            for p in files:
+              if p.endswith("neoforge.mods.toml"):
+                data=z.read(p).decode("utf-8",errors="replace")
+                print("MODIDS="+repr(re.findall(r'modId\s*=\s*["\x27]([^"\x27]+)',data)))
+            print("ACTUAL_SPELL_CLASSES="+repr([x for x in files if re.search(r'/spells/[^$]+Spell\.class$',x)]))
+          cls="com.ypsi.fundamentalism.spells.ModSpells"
+          a=java(cls)
+          print("REGISTRAR_METHODS="+repr([s.strip() for s in a.splitlines() if s.strip().startswith("public static")][:35]))
+          print("REGISTRATION_INIT_BEGIN")
+          for line in a.split("static {};",1)[1].splitlines()[:210]:
+            if "new           #" in line or "registerSpell:" in line or "String " in line or "SpellRegistry" in line or "DeferredRegister" in line or "ifne" in line or "ifeq" in line:
+              print("REGISTRATION_BYTECODE="+line.strip()[:230])
+          print("REGISTRATION_INIT_END")
+          print("MAIN_CLASS_CANDIDATES="+repr([x for x in files if x.endswith("FundamentalPrinciples.class")]))
+          print("DISCOVERY_ONLY=TRUE")
+          PY
