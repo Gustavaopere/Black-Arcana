@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização física 2026-10-13:** [Ars Elemental 0.7.10.1](providers/✅-ars-elemental/EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md) certificou **39 glyph IDs de produção + 8 rituais** no binário físico/publicador, sem novas raízes semânticas; **15/39** provas estáticas exatas. Mínimos **1857 global / 1855 escopo**; config/Survival ainda ⚠️.
+
+
 **Catálogo semântico atualizado em 2026-10-13:** [Ars Zero físico 2.0.2](providers/✅-ars-zero/EXACT-BINARY-GLYPHS-2.0.2.md): 22 glifos registrados, 18 únicos, quatro copied optional, **+6** novas raízes. Mínimos **1857 global / 1855 escopo**; **14/39** registros binários fechados. Não alterar Stage ou status Survival por presunção.
 
 
