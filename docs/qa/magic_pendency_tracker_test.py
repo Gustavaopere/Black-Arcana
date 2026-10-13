@@ -974,9 +974,9 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("PENDING / DEFERRED TO STAGE 09", stage09)
         self.assertIn("crash consistency", stage09)
 
-    def test_twelve_exact_registries_do_not_certify_other_or_survival(self):
-        self.assertIn("12/39", self.status)
-        self.assertIn("27/39", self.status)
+    def test_thirteen_exact_registries_do_not_certify_other_or_survival(self):
+        self.assertIn("13/39", self.status)
+        self.assertIn("26/39", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
         self.assertIn("JARs fora da categoria Magic", self.status)
         self.assertIn("14 rotas", self.status)
@@ -986,8 +986,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
                    if s.startswith("| [Ars Additions]"))
         self.assertIn("| COUNTED_EXACT |", row)
         self.assertIn("HOST-GLYPH-IDS-EXACT-5.13.1.md", row)
-        self.assertIn("12/39", self.binary)
-        self.assertIn("27/39", self.binary)
+        self.assertIn("13/39", self.binary)
+        self.assertIn("26/39", self.binary)
         second = next(s for s in self.binary.splitlines()
                       if s.startswith("| [Ars Hex]"))
         self.assertIn("| COUNTED_EXACT |", second)
@@ -1032,6 +1032,10 @@ class MagicPendencyStatusTest(unittest.TestCase):
                        if s.startswith("| [Ars Controle]"))
         self.assertIn("| 1.6.16 | 9 | COUNTED_EXACT |", twelfth)
         self.assertIn("EXACT-BINARY-GLYPHS-1.6.16.md", twelfth)
+        thirteenth = next(s for s in self.binary.splitlines()
+                         if s.startswith("| [Ars Technica]"))
+        self.assertIn("| 2.7.6 | 11 | COUNTED_EXACT |", thirteenth)
+        self.assertIn("EXACT-BINARY-GLYPHS-2.7.6.md", thirteenth)
 
     def test_historical_ritual_design_gate_preserves_original_blocker(self):
         self.assertIn("⛔ SEM INGRESSO CANÔNICO", self.stage)
