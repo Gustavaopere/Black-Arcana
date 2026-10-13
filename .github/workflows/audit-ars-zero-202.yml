@@ -48,56 +48,87 @@ jobs:
           assert ok,'Exact physical SHA1 publisher JAR unavailable. No promotion.'
           with open(os.environ['GITHUB_ENV'],'a') as f: f.write('AUDIT_JAR='+str(dest)+'\n')
           PY
-      - name: Inspect exact registrar bytecode and 22 identity constructors
+      - name: Assert exact 22 physical glyph registrations and ID set
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import os,re,subprocess,zipfile
           jar=os.environ['AUDIT_JAR']
+          rows=[
+            ('TEMPORAL_CONTEXT_FORM','TemporalContextForm','temporal_context_form','common/glyph'),
+            ('NEAR_FORM','NearForm','near_form','common/glyph'),
+            ('CONJURE_VOXEL_EFFECT','ConjureVoxelEffect','conjure_voxel_effect','common/glyph'),
+            ('CONJURE_ARCANE_SHIELD_EFFECT','ConjureArcaneShieldEffect','conjure_arcane_shield_effect','common/glyph'),
+            ('SELECT_EFFECT','SelectEffect','select_effect','common/glyph'),
+            ('ANCHOR_EFFECT','AnchorEffect','anchor_effect','common/glyph'),
+            ('SUSTAIN_EFFECT','SustainEffect','sustain_effect','common/glyph'),
+            ('PUSH_EFFECT','PushEffect','push_effect','common/glyph'),
+            ('EFFECT_BEAM','EffectBeam','effect_beam','common/glyph'),
+            ('ZERO_GRAVITY_EFFECT','ZeroGravityEffect','zero_gravity_effect','common/glyph'),
+            ('EFFECT_CONVERGENCE','EffectConvergence','effect_convergence','common/glyph/convergence'),
+            ('EFFECT_GEOMETRIZE','EffectGeometrize','effect_geometrize','common/glyph/geometrize'),
+            ('DISCARD_EFFECT','DiscardEffect','discard_effect','common/glyph'),
+            ('AUGMENT_HOLLOW','AugmentHollow','augment_hollow','common/glyph/augment'),
+            ('AUGMENT_SPHERE','AugmentSphere','augment_sphere','common/glyph/augment'),
+            ('AUGMENT_CUBE','AugmentCube','augment_cube','common/glyph/augment'),
+            ('AUGMENT_FLATTEN','AugmentFlatten','augment_flatten','common/glyph/augment'),
+            ('EFFECT_CONJURE_BLIGHT','EffectConjureBlight','effect_conjure_blight','common/glyph'),
+            ('AUGMENT_AOE_TWO','AugmentAOETwo','augment_aoe_two','common/glyph/augment'),
+            ('AUGMENT_AOE_THREE','AugmentAOEThree','augment_aoe_three','common/glyph/augment'),
+            ('AUGMENT_AMPLIFY_TWO','AugmentAmplifyTwo','augment_amplify_two','common/glyph/augment'),
+            ('AUGMENT_AMPLIFY_THREE','AugmentAmplifyThree','augment_amplify_three','common/glyph/augment'),
+          ]
           with zipfile.ZipFile(jar) as z:
-              entries=sorted(z.namelist())
-              main=[n for n in entries if n.endswith('.class') and n.count('/')==3 and n.startswith('com/github/ars_zero/')]
-              print('ROOT_TOPLEVEL_CLASSES='+repr(main))
-              for n in entries:
-                  if n.startswith('data/ars_zero/recipe') and 'glyph' in n:print('LEARNING_RECIPE='+n)
-          def javap(name):
-              cp=subprocess.run(['javap','-p','-c','-classpath',jar,name],text=True,capture_output=True,timeout=45)
-              assert cp.returncode==0,(name,cp.stderr[:400])
-              return cp.stdout
-          def section(txt,marker):
-              if marker not in txt:return ''
-              a=txt.split(marker,1)[1]
-              return a.split('\n  public ',1)[0].split('\n  private ',1)[0].split('\n  static {};',1)[0]
-          mod=javap('com.github.ars_zero.registry.ModGlyphs')
-          body=section(mod,'public static void registerGlyphs();')
-          print('MODGLYPHS_REGISTER_BODY_BEGIN')
-          print(body[:24000])
-          print('MODGLYPHS_REGISTER_BODY_END')
-          print('DIRECT_REGISTER_CALLS='+str(body.count('GlyphRegistry.registerSpell:')))
-          print('REGISTRY_BRANCH_INSNS='+repr(re.findall(r'^\s+\d+:\s+(?:ifeq|ifne|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\b',body,re.M)))
-          helper=section(mod,'public static void addOptionalAugmentCompatibility();')
-          print('OPTIONAL_COMPAT_HELPER='+helper[:12000])
-          stat=mod.split('static {};',1)[1] if 'static {};' in mod else ''
-          print('STATIC_GLYPH_INITIALIZER='+stat[:23500])
-          fields=re.findall(r'public static final com\.github\.ars_zero\.[\w.<>]+ (\w+);',mod)
-          print('STATIC_GLYPH_FIELDS='+repr(fields))
-          for name in ['com.github.ars_zero.ArsZero','com.github.ars_zero.ArsZeroMod','com.github.ars_zero.ArsZeroMain']:
-              try:
-                  txt=javap(name)
-                  print('ENTRYPOINT_CLASS='+name)
-                  print('ENTRYPOINT_LINES='+repr([l.strip() for l in txt.splitlines() if re.search(r'ModGlyphs|registerGlyphs|addOptionalAugmentCompatibility|// String ars_zero|prefix:|ResourceLocation\.fromNamespace',l)]))
-              except Exception as e:print('NOT_ENTRYPOINT='+name)
-          # Inspect every concrete glyph class initialized in ModGlyphs; no runtime execution.
-          cls=sorted(set(re.findall(r'com/github/ars_zero/common/glyph/(?:augment/|geometrize/|convergence/)?[A-Za-z_0-9]+',stat)))
-          print('INITIALIZER_REFERENCED_GLYPH_CLASSES='+repr(cls))
-          for path in cls:
-              name=path.replace('/','.')
-              try:
-                  txt=javap(name)
-                  pieces=[l.strip() for l in txt.splitlines() if '// String ' in l or 'ResourceLocation' in l or 'prefix:' in l or 'public static' in l or 'static {};' in l or 'getGlyphName' in l or 'getRegistryName' in l]
-                  print('GLYPH_CLASS='+name)
-                  for line in pieces[:70]:print('GLYPH_BC='+line[:275])
-              except Exception as e:print('GLYPH_INSPECT_FAIL='+name+':'+str(e)[:160])
-          print('DISCOVERY_NO_PROMOTION=PASS')
+              names=set(z.namelist())
+              assert 'com/github/ars_zero/ArsZero.class' in names
+              assert 'com/github/ars_zero/registry/ModGlyphs.class' in names
+              metadata=z.read('META-INF/neoforge.mods.toml').decode('utf-8')
+              assert re.search(r'modId\s*=\s*"ars_zero"',metadata),'wrong mod ID'
+              for field,cls,id_,dir_ in rows:
+                  member='com/github/ars_zero/'+dir_+'/'+cls+'.class'
+                  assert member in names,'missing class '+member
+          def javap(cls):
+              p=subprocess.run(['javap','-p','-c','-classpath',jar,cls],text=True,capture_output=True,timeout=50)
+              assert p.returncode==0,(cls,p.stderr[:200])
+              return p.stdout
+          entry=javap('com.github.ars_zero.ArsZero')
+          assert 'ModGlyphs.registerGlyphs:()V' in entry,'entrypoint missing registry bootstrap'
+          assert '// String ars_zero' in entry and 'ResourceLocation.fromNamespaceAndPath:' in entry,'modid namespace helper missing'
+          reg=javap('com.github.ars_zero.registry.ModGlyphs')
+          assert 'public static void registerGlyphs();' in reg
+          block=reg.split('public static void registerGlyphs();',1)[1].split('public static void addOptionalAugmentCompatibility();',1)[0]
+          count=block.count('GlyphRegistry.registerSpell:')
+          assert count==22,'expected exactly 22 unconditional invocations, got '+str(count)
+          branches=re.findall(r'^\s*\d+:\s*(?:ifeq|ifne|goto|ifnonnull|ifnull|tableswitch|lookupswitch)\b',block,re.M)
+          assert not branches,'branched registrar '+repr(branches)
+          fields=re.findall(r'^\s*\d+:\s+getstatic\s+#[^\n]*// Field ([A-Z_0-9]+):',block,re.M)
+          assert fields==[row[0] for row in rows], 'registered field order mismatch '+repr(fields)
+          for field,cls,id_,dir_ in rows:
+              assert field in reg,field
+              qualified='com.github.ars_zero.'+dir_.replace('/','.')+'.'+cls
+              bc=javap(qualified)
+              literal='// String '+id_
+              assert literal in bc, 'identifier suffix missing '+qualified+' '+id_
+              assert 'ArsZero.prefix:' in bc, 'namespace derivation missing '+qualified
+              print('PHYSICAL_ID=ars_zero:'+id_+' | '+qualified)
+          ids=['ars_zero:'+r[2] for r in rows]
+          assert len(set(ids))==22
+          original12={'temporal_context_form','near_form','conjure_voxel_effect','conjure_arcane_shield_effect','select_effect','anchor_effect','push_effect','effect_beam','zero_gravity_effect','effect_convergence','effect_geometrize','effect_conjure_blight'}
+          additional6={'sustain_effect','discard_effect','augment_hollow','augment_sphere','augment_cube','augment_flatten'}
+          optional4={'augment_aoe_two','augment_aoe_three','augment_amplify_two','augment_amplify_three'}
+          assert set(r[2] for r in rows)==(original12|additional6|optional4)
+          assert not(original12 & additional6) and not(original12 & optional4) and not(additional6 & optional4)
+          for _,cls,id_,p in rows[-4:]:
+              txt=javap('com.github.ars_zero.'+p.replace('/','.')+'.'+cls)
+              assert 'Optional glyph from Adams Ars Plus, disabled by default' in txt, 'compat flag undocumented in binary'
+          print('REGISTER_CALLS=22')
+          print('UNCONDITIONAL_BOOTSTRAP=PASS')
+          print('EXACT_OWNED_UNIQUE=18')
+          print('PRIOR_PUBLIC_CAPABILITIES=12')
+          print('ADDITIONAL_UNIQUE_IDS=6')
+          print('COPIED_COMPAT_IDS=4')
+          print('DEFAULT_CONFIG_RUNTIME_NOT_TESTED=TRUE')
+          print('NO_PROVIDER_RUNTIME_NO_SURVIVAL_NO_MANA_SETTLEMENT=TRUE')
+          print('STATIC_REGISTRY_AUDIT=PASS')
           PY
