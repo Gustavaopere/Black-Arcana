@@ -6,7 +6,7 @@ Registry identity at the official NeoForge 1.21.1 source baseline: `ars_n_spells
 
 - Physical provider: Ars 'n' Spells `3.3.4`.
 - Implementation evidence: official NeoForge `3.3.0` source pin `a9930223c96806e5d748ea69d02f9a32cab62de9`.
-- Exact 3.3.4 binary registry parity: `NÃO VERIFICADO`; current semantics remain source/release bounded.
+- **✅ 3.3.4 JAR static registry ID:** `ars_n_spells:mana_infusion`, class `com.otectus.arsnspells.rituals.ManaInfusionRitual`, gate `IRONS_GATED`; [dossier](../EXACT-BINARY-RITUALS-3.3.4.md), [audit #38336011675](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38336011675). Functional semantics/Survival remain ⚠️.
 
 The 3.3.0 NeoForge registration handler registers this ritual when Iron's Spellbooks is loaded. Iron's is present in the current physical pack.
 

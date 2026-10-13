@@ -1,5 +1,7 @@
 # Evidence and Provenance — Ars 'n' Spells 3.3.4
 
+**Atualização 2026-10-12:** [dossiê binário 3.3.4](EXACT-BINARY-RITUALS-3.3.4.md), [run #38336011675](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38336011675), SHA-1 físico/publisher `53966330a468e626cd6469259af6778a5a7d9305`, JAR 2222971 bytes, cinco inscrições `RitualRegistry` com um registro incondicional e quatro Iron's-gated; oito slots `ars_cross_*` não semânticos. Registro estático `COUNTED_EXACT`; casting, payment, carriers, codecs, config e Survival ⚠️. Checkpoints abaixo conservam caráter histórico.
+
 ## Physical pack authority
 
 Current physical Project Library authority (`modlist(1).txt`, 2026-09-22 checkpoint):
@@ -92,7 +94,7 @@ Current semantic disposition:
 - standalone semantic spell contribution from proxies: **0**;
 - semantic delta from the previously cataloged 3.3.2 line: **+0**.
 
-Because 3.3.4 changes payment/carrier internals without publishing a source pin, this semantic continuity is `RELEASE_BOUNDED`, not a claim of exact binary registry equivalence.
+Updated binary [evidence](EXACT-BINARY-RITUALS-3.3.4.md) promotes five ritual IDs to `COUNTED_EXACT` **for static registry only**. Source-to-JAR reproducibility, payment/carrier code, runtime hooks and Survival remain release-bounded / fail-closed.
 
 ## Confidence labels
 

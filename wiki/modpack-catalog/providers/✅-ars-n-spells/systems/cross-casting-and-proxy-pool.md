@@ -2,7 +2,7 @@
 
 ## Evidence boundary
 
-Physical runtime is Ars 'n' Spells `3.3.4`. Detailed registry/proxy implementation facts below remain source-pinned to the audited NeoForge 1.21.1 `3.3.0` commit `a9930223c96806e5d748ea69d02f9a32cab62de9`; public 3.3.3 source still exposes `PROXY_POOL_SIZE = 8` / `ars_cross_1..8`. Exact 3.3.4 binary internals remain unverified.
+The [3.3.4 physical binary proof](../EXACT-BINARY-RITUALS-3.3.4.md) ([CI #38336011675](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38336011675)) **✅ confirms** pool size 8, prefix `ars_n_spells:ars_cross_`, and Iron's-conditional registrar bootstrap. **Eight transport-only slots add zero standalone magic actions.** Payload/cast/payment behavior below remains 3.3.0 source baseline and is not proven by this registry audit.
 
 ## Finite native-wheel proxy pool
 
