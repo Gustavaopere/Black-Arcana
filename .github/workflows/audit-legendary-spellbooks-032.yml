@@ -126,3 +126,54 @@ jobs:
           print('REGISTRAR_STATIC_DISCOVERY=PASS')
           print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
           PY
+
+      - name: Assert all 30 literal ResourceLocations independently of display names
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,pathlib,zipfile,hashlib,subprocess,re,collections
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'legendary_spellbooks-0.3.2.jar'
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='bda5b1fbe50ad834a6a76ad36789743c1057ebf5'
+          prefix='dev.higurashi.legendary_spellbooks.'
+          def disasm(name):
+            p=subprocess.run(['javap','-p','-c','-classpath',str(jar),name],capture_output=True,text=True,timeout=25)
+            assert p.returncode==0,(name,p.stderr[:200])
+            return p.stdout
+          root=disasm(prefix+'registries.LSSpellRegistry')
+          static=root.split('static {};',1)[1]
+          rows=re.findall(r'// class dev/higurashi/legendary_spellbooks/common/spells/([a-z]+)/([A-Za-z0-9_]+Spell)',static)
+          assert len(rows)==30 and len(set(rows))==30
+          assert static.count('// Method register:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)')==30
+          assert 'PossessedFallingSoulBladeSpell' not in static
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|if_icmp\w+|goto|tableswitch|lookupswitch)\b',static,re.M)
+          freq=collections.Counter(x[0] for x in rows)
+          assert freq=={'annihilation':9,'blood':3,'evocation':1,'fire':3,'ice':2,'lightning':9,'nature':3},freq
+          ids=[]
+          for n,(family,cls) in enumerate(rows,1):
+            body=disasm(prefix+'common.spells.'+family+'.'+cls)
+            assert 'static {};' in body,cls
+            block=body.split('static {};',1)[1]
+            literals=re.findall(r'// String ([a-zA-Z0-9_.:-]+)',block)
+            assert len(literals)>=2,(cls,literals)
+            assert literals[-2]=='legendary_spellbooks',(cls,literals)
+            name=literals[-1]
+            assert re.fullmatch(r'[a-z0-9_]+',name),cls
+            assert 'ResourceLocation.fromNamespaceAndPath:' in block,cls
+            assert re.search(r'// Field (?:spellResource|SPELL_ID):Lnet/minecraft/resources/ResourceLocation;',body),cls
+            rid='legendary_spellbooks:'+name
+            assert rid not in ids,('duplicate',rid)
+            ids.append(rid)
+            fields=sorted(set(re.findall(r'// Field ((?:dev/higurashi/legendary_spellbooks/registries/LSSchoolRegistry|io/redspace/ironsspellbooks/api/registry/SchoolRegistry)\.[A-Z_]+):',body)))
+            print(f'EXACT_SPELL_{n}={rid}|{family}.{cls}|SCHOOL_FIELDS={fields}')
+          assert len(ids)==30 and len(set(ids))==30
+          main=disasm(prefix+'LegendarySpellbooks')
+          assert 'LSSpellRegistry.register:' in main
+          print('CERTIFIED_FILE_ID=8255715')
+          print('CERTIFIED_BYTES='+str(jar.stat().st_size))
+          print('PHYSICAL_SPELL_REGISTRATIONS=30')
+          print('STATIC_INITIALIZER_BRANCHES=0')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('EXACT_STATIC_REGISTRY_AUDIT=PASS')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
