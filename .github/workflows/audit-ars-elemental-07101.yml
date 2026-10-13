@@ -47,38 +47,61 @@ jobs:
           else:
             raise SystemExit("Cannot fetch SHA-exact Ars Elemental 0.7.10.1; no promotion")
           PY
-      - name: Discover bytecode registry and glyph/ritual ID constructors
+      - name: Inspect exact 39 production glyph fields, eight rituals and identity suffixes
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import os,re,subprocess,zipfile
-          path=os.environ["EXACT_JAR"]
-          with zipfile.ZipFile(path) as z:
-            all=z.namelist()
-            print("CLASS_COUNT="+str(sum(x.endswith(".class") for x in all)))
-            print("METADATA="+repr([x for x in all if x.endswith("neoforge.mods.toml")]))
-            print("REGISTRAR_CANDIDATES="+repr([x for x in all if x.endswith(".class") and ("ArsNouveauRegistry" in x or x.endswith("ArsElemental.class"))]))
-            candidates=sorted(x for x in all if x.endswith(".class") and ("glyph" in x.lower() or "ritual" in x.lower()) and "$" not in x)
-            print("GLYPH_RITUAL_CLASS_COUNT="+str(len(candidates)))
-            for x in candidates[:145]:print("CANDIDATE="+x)
-          def javap(cls):
-            x=subprocess.run(["javap","-c","-p","-classpath",path,cls],capture_output=True,text=True,timeout=30)
-            assert x.returncode==0,(cls,x.stderr[:150])
-            return x.stdout
-          for cls in ["alexthw.ars_elemental.ArsElemental","alexthw.ars_elemental.ArsNouveauRegistry"]:
-            text=javap(cls)
-            print("DISASM="+cls+" bytes="+str(len(text)))
-            if cls.endswith("ArsNouveauRegistry"):
-              for start,end in [("public static void init();","public static void registerGlyphs();"),("public static void registerGlyphs();","public static void addSchool("),("public static void registerRituals();","static {};")]:
-                if start in text:
-                  segment=text.split(start,1)[1].split(end,1)[0]
-                  print("SEGMENT_BEGIN="+start)
-                  for line in segment.splitlines()[:410]:print("BC_"+line[:230])
-                  print("SEGMENT_END="+start)
-              print("RITUAL_REGISTER_REFERENCES="+str(text.count("RitualRegistry.registerRitual:")))
-              print("ARS_GLYPH_REGISTER_REFERENCES="+str(text.count("GlyphRegistry.registerSpell:")))
-            else:
-              print("BOOTSTRAP_LINES="+repr([x.strip() for x in text.splitlines() if "ArsNouveauRegistry.init:" in x or "init:()V" in x or "ars_elemental" in x.lower()][:60]))
-          print("DISCOVERY_ONLY_NO_PROMOTION=TRUE")
+          jar=os.environ['EXACT_JAR']
+          def java(c):
+            p=subprocess.run(['javap','-p','-c','-classpath',jar,c],text=True,capture_output=True,timeout=45)
+            assert p.returncode==0,(c,p.stderr[:180])
+            return p.stdout
+          reg=java('alexthw.ars_elemental.ArsNouveauRegistry')
+          def method(name):
+            anchor='public static void '+name+'();'
+            assert anchor in reg,anchor
+            lines=reg.split(anchor,1)[1].splitlines()
+            pos=next((i for i,line in enumerate(lines[2:],2) if line.startswith('  public ') or line.startswith('  private ') or line.startswith('  static {};')),len(lines))
+            return '\n'.join(lines[:pos])
+          glyph=method('registerGlyphs')
+          ritual=method('registerRituals')
+          print('PRODUCTION_STATIC_REGISTER_CALLS='+str(glyph.count('// Method register:(Lcom/hollingsworth/arsnouveau/api/spell/AbstractSpellPart;)V')))
+          print('REGISTRAR_BRANCHES='+repr([line.strip() for line in glyph.splitlines() if re.search(r'\bifne\b|\bifeq\b|\bifnull\b|\bgoto\b',line)]))
+          print('RITUAL_STATIC_REGISTER_CALLS='+str(ritual.count('// Method registerRitual:(Lcom/hollingsworth/arsnouveau/api/ritual/AbstractRitual;)V')))
+          print('RITUAL_BRANCHES='+repr([line.strip() for line in ritual.splitlines() if re.search(r'\bifne\b|\bifeq\b|\bgoto\b',line)]))
+          print('GLYPH_FIELDS_START')
+          fields=re.findall(r'// Field ([\w/$]+)\.(INSTANCE|NOT_INSTANCE):',glyph)
+          print('FIELD_COUNT='+str(len(fields)))
+          for i,(cls,field) in enumerate(fields,1):
+            print('GLYPH_FIELD_'+str(i)+'='+cls.replace('/','.')+'.'+field)
+          print('GLYPH_FIELDS_END')
+          ritual_classes=re.findall(r'// class (alexthw/ars_elemental/common/rituals/[\w/$]+)',ritual)
+          print('RITUAL_CLASS_COUNT='+str(len(ritual_classes)))
+          for i,c in enumerate(ritual_classes,1):print('RITUAL_CLASS_'+str(i)+'='+c.replace('/','.'))
+          print('ENTRYPOINT_INIT='+str('ArsNouveauRegistry.init:()V' in java('alexthw.ars_elemental.ArsElemental')))
+          print('INIT_CALLS='+repr([s.strip() for s in method('init').splitlines() if 'registerGlyphs:' in s or 'registerRituals:' in s]))
+          print('GLYPH_IDENTITIES_START')
+          by_cls=sorted(set(x[0] for x in fields))
+          for c in by_cls:
+            text=java(c.replace('/','.'))
+            lines=[l.strip() for l in text.splitlines() if ('// String ' in l or 'ArsElemental.prefix:' in l or 'ArsNouveau.prefix:' in l or 'GlyphLib.' in l or 'ResourceLocation' in l and ('prefix' in l or 'fromNamespace' in l))]
+            print('GLYPH_IDENTITY_CLASS='+c.replace('/','.'))
+            for line in lines[:20]:print('GLYPH_CONSTRUCTOR='+line[:260])
+          print('GLYPH_IDENTITIES_END')
+          print('RITUAL_IDENTITIES_START')
+          for c in ritual_classes:
+            text=java(c.replace('/','.'))
+            lines=[l.strip() for l in text.splitlines() if '// String ' in l or 'ArsElemental.prefix:' in l or 'ArsNouveau.prefix:' in l or 'ResourceLocation' in l and 'fromNamespace' in l]
+            print('RITUAL_IDENTITY_CLASS='+c.replace('/','.'))
+            for line in lines[:25]:print('RITUAL_CONSTRUCTOR='+line[:245])
+          print('RITUAL_IDENTITIES_END')
+          with zipfile.ZipFile(jar) as z:
+            metadata=next((x for x in z.namelist() if x.endswith('neoforge.mods.toml')),None)
+            print('MODS_METADATA='+str(metadata))
+            if metadata:
+              data=z.read(metadata).decode('utf8')
+              print('MOD_ID='+repr(re.findall(r'modId\s*=\s*["\x27]([^"\x27]+)',data)[:10]))
+          print('BINARY_DISCOVERY_COMPLETE=TRUE')
           PY
