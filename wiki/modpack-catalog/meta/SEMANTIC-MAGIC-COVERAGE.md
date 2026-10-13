@@ -1,3 +1,7 @@
+## Latest addendum — Tunes n' Tomes 1.1.0-HOTFIX exact 16/16 static spells (2026-10-13)
+
+[Java 21 #38445001328](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38445001328) confirms CurseForge file `8370271` (21.903.598 bytes), SHA-1 `6cac45631ea63577f8eeeab454e1df0ce8f78386` identical to physical modlist. The [binary dossier](../providers/✅-tunes-n-tomes/EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md) identifies all **16** `tunes_n_tomes:*` spell resources/classes in unconditional `TSpellRegistry` registration. Promoted `COUNTED_RELEASE_BOUNDED → COUNTED_EXACT` for *static registration only*; no semantic increase. Campaign **19/39 exact / 20/39 pending**; minima **1857 global / 1855 escopo** unchanged. Server/client, Segno/Resonance and Encore, config, Iron's 3.16.3 and Survival remain **⚠️**.
+
 # Semantic Magic Coverage Ledger
 
 ## Latest addendum — Ypsilon Fundamental Principles 1.1.7.1, 15 exact physical spells (2026-10-13)
@@ -468,7 +472,7 @@ Arithmetic cross-check by provider family:
 | [Wind's Spellbooks](../providers/✅-winds-spellbooks/README.md) | 1.0.5 | 7 | `COUNTED_EXACT` | [7/7 exact physical binary spell registrations](../providers/✅-winds-spellbooks/EXACT-BINARY-SPELLS-1.0.5.md); +0 new, config/Survival ⚠️ |
 | [Ypsilon's Fundamentalism](../providers/✅-ypsilons-fundamentalism/README.md) | 1.1.7.1 | 15 | `COUNTED_EXACT` | 15/15 active spell registrations; commented prototypes excluded — [15/15 physical identities](../providers/✅-ypsilons-fundamentalism/EXACT-BINARY-SPELLS-1.1.7.1.md); 13 Principles are progression categories, +0 |
 | [Woodwalkers SpellBooks](../providers/✅-woodwalkers-spellbooks/README.md) | 0.3.1-BETA | 0 | `CURRENT_PHYSICAL_ABSENT` | historical source catalog closes `woodwalkers_spellbooks:shapeshifting`, but the current physical snapshot contains no Woodwalkers SpellBooks JAR; +0 current strict |
-| [Tunes n' Tomes](../providers/✅-tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | `COUNTED_RELEASE_BOUNDED` | current publisher Melodic roster enumerates 16 spells; migrated Sound ownership is not duplicated under Alshanex/FamiliarsLib |
+| [Tunes n' Tomes](../providers/✅-tunes-n-tomes/README.md) | 1.1.0-HOTFIX | 16 | `COUNTED_EXACT` | [16/16 SHA-exact static spell IDs/classes](../providers/✅-tunes-n-tomes/EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md); previous Melodic roster already counted +16 (current proof adds +0); migrated Sound content excluded from Alshanex/FamiliarsLib; runtime/Survival ⚠️ |
 | [Alshanex's Familiars](../providers/✅-alshanex-familiars/README.md) | 4.0.3 | 18 | `COUNTED_EXACT` | exact hash-matched JAR closes 7 provider-owned spell registrations + 11 packaged `alshanex_familiars:ritual_recipe` identities; migrated Sound/Tunes content and external familiar casts are excluded |
 | [Companions!](../providers/✅-companions/README.md) | 1.3.4 | 9 | `COUNTED_SOURCE_PINNED` | nine direct/unconditional Magic Book action identities; source-level survival routes closed; Soul Mage reuse deduplicated |
 | [Crystal Chronicles](../providers/✅-crystal-chronicles/README.md) | 0.1.3-alpha | 1 | `COUNTED_EXACT` | [registro estático exato](../providers/✅-crystal-chronicles/EXACT-BINARY-SPELL-0.1.3-alpha.md) de `crystal_chronicles:prismatic_portal` atestado pelo SHA-1 físico/publicador e Java 21; QA em modpack/Survival pendente |
