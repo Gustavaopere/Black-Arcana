@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## ISS: Magic From The East 1.1.5 — vigésima prova binária, 2026-10-13
+
+**Vigésima prova binária (2026-10-13):** [ISS: Magic From The East 1.1.5](../providers/✅-iss-magic-from-the-east/EXACT-BINARY-SPELLS-1.1.5.md), [Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162) **SUCCESS**. Publisher CurseForge `7385201`, **1680780 bytes**, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0` = modlist física #346. `ISS_MagicFromTheEast → MFTESpellRegistries`: **22** chamadas incondicionais no `DeferredRegister<AbstractSpell>`, **11 Symmetry + 11 Spirit**, IDs/classes e escolas default provados individualmente; `Nephrite Slash` único registro, `Nephrite Splash` alias de release, não soma nova magia. **20/39 exatos / 19/39 pendentes**, **+0** raízes semânticas, mínimos **1857 global / 1855 escopo** inalterados. Iron's 3.16.3, configurações, casting e Survival ⚠️.
+
+
 ## Tunes n' Tomes 1.1.0-HOTFIX — décima nona prova binária, 2026-10-13
 
 [Java 21 #38445001328](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38445001328) confirmou [16/16 spell IDs físicos](../providers/✅-tunes-n-tomes/EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md), JAR CurseForge `8370271` de **21.903.598 bytes** e SHA-1 `6cac45631ea63577f8eeeab454e1df0ce8f78386` igual à modlist. `TSpellRegistry`: 16 registros incondicionais, classes e suffixes compilados. **19/39 exatos / 20/39 pendentes**, **+0** raízes; mínimo estrito **1857 global / 1855 escopo** inalterado. Resonance/Segno, Encore, Iron's 3.16.3, config/Survival ⚠️.
