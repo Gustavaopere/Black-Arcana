@@ -1,0 +1,137 @@
+name: Ars Controle 1.6.16 exact physical spell-part audit
+on:
+  push:
+    branches:
+      - 'audit/ars-controle-1616-*'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch publisher release and reject nonmatching physical JARs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib,urllib.request,zipfile
+          expected="795567371450debec83fe634fd0114c295f7da5a"
+          target=pathlib.Path(os.environ["RUNNER_TEMP"])/"ars_controle-1.21.1-1.6.16.jar"
+          candidates=[
+            "https://mediafilez.forgecdn.net/files/8847/869/ars_controle-1.21.1-1.6.16.jar",
+            "https://media.forgecdn.net/files/8847/869/ars_controle-1.21.1-1.6.16.jar",
+          ]
+          try:
+              req=urllib.request.Request("https://api.modrinth.com/v2/version/r7YxZN9m",
+                                         headers={"User-Agent":"Black-Arcana-cleanroom-binary-audit/1"})
+              with urllib.request.urlopen(req,timeout=35) as resp:
+                  meta=json.load(resp)
+              assert meta["id"]=="r7YxZN9m" and "1.21.1" in meta["game_versions"]
+              for file in meta["files"]:
+                  if file["filename"]=="ars_controle-1.21.1-1.6.16.jar":
+                      candidates.insert(0,file["url"])
+                      print("MODRINTH_VERSION=r7YxZN9m")
+                      print("MODRINTH_DECLARED_SHA1="+str(file.get("hashes",{}).get("sha1")))
+          except Exception as exc:
+              print("MODRINTH_LOOKUP_UNAVAILABLE="+str(exc)[:180])
+          accepted=False
+          for url in candidates:
+              try:
+                  print("TRY_PUBLISHER_URL="+url)
+                  req=urllib.request.Request(url,headers={"User-Agent":"Black-Arcana-cleanroom-audit/1"})
+                  with urllib.request.urlopen(req,timeout=90) as f:
+                      data=f.read(5000000)
+                  digest=hashlib.sha1(data).hexdigest()
+                  print("JAR_BYTES="+str(len(data))+" SHA1="+digest)
+                  if digest!=expected:
+                      print("REJECT_NON_PHYSICAL_SHA")
+                      continue
+                  target.write_bytes(data)
+                  with zipfile.ZipFile(target) as z:
+                      assert z.testzip() is None
+                  accepted=True
+                  print("PUBLISHER_SHA1_EQUALS_PHYSICAL="+expected)
+                  break
+              except Exception as exc:
+                  print("PUBLISHER_FETCH_FAILED="+str(exc)[:180])
+          assert accepted,"No official publisher JAR matches the physical sibling hash. FAIL CLOSED."
+          with open(os.environ["GITHUB_ENV"],"a") as env:
+              env.write("AUDIT_JAR="+str(target)+"\n")
+          PY
+      - name: Assert exact nine glyphs, codepath and bootstrap using Java 21
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ["AUDIT_JAR"]
+          with zipfile.ZipFile(jar) as z:
+              entries=set(z.namelist())
+              for c in [
+                  "dev/qther/ars_controle/ArsControle.class",
+                  "dev/qther/ars_controle/registry/ACRegistry.class",
+                  "dev/qther/ars_controle/registry/ACRegistry$Glyphs.class",
+                  "dev/qther/ars_controle/registry/ACNames.class",
+                  "dev/qther/ars_controle/spell/effect/EffectPreciseDelay.class",
+                  "dev/qther/ars_controle/spell/filter/FilterBinary.class",
+                  "dev/qther/ars_controle/spell/filter/FilterUnary.class",
+                  "dev/qther/ars_controle/spell/filter/FilterRandom.class",
+                  "dev/qther/ars_controle/spell/filter/FilterYLevel.class",
+              ]: assert c in entries,"missing compiled binary class "+c
+              for file in entries:
+                  if file.endswith("neoforge.mods.toml"):
+                      data=z.read(file).decode("utf-8",errors="replace")
+                      assert re.search(r'modId\s*=\s*["\x27]ars_controle["\x27]',data),"wrong modId"
+                      print("NEOFORGE_MOD_ID=ars_controle")
+          def cls(name):
+              return subprocess.check_output(["javap","-p","-c","-constants","-classpath",jar,name],text=True)
+          app=cls("dev.qther.ars_controle.ArsControle")
+          reg=cls("dev.qther.ars_controle.registry.ACRegistry")
+          glyph=cls("dev.qther.ars_controle.registry.ACRegistry$Glyphs")
+          names=cls("dev.qther.ars_controle.registry.ACNames")
+          assert "ACRegistry.register:(Lnet/neoforged/bus/api/IEventBus;)V" in app, "mod bootstrap does not call ACRegistry"
+          assert "ACRegistry$Glyphs.registerAll:()V" in reg, "registry does not call Glyphs.registerAll"
+          assert "GlyphRegistry.registerSpell:" in glyph, "registration helper does not reach Ars API"
+          assert "public static void registerAll();" in glyph
+          body=glyph.split("public static void registerAll();",1)[1].split("public static com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart register(",1)[0]
+          print("BINARY_GLYPH_REGISTERALL_INSTRUCTIONS:")
+          print(body[:10000])
+          expected={
+             "GLYPH_PRECISE_DELAY":"glyph_precise_delay",
+             "GLYPH_FILTER_ABOVE":"glyph_filter_above",
+             "GLYPH_FILTER_BELOW":"glyph_filter_below",
+             "GLYPH_FILTER_LEVEL":"glyph_filter_level",
+             "GLYPH_FILTER_OR":"glyph_filter_or",
+             "GLYPH_FILTER_XOR":"glyph_filter_xor",
+             "GLYPH_FILTER_XNOR":"glyph_filter_xnor",
+             "GLYPH_FILTER_NOT":"glyph_filter_not",
+             "GLYPH_FILTER_RANDOM":"glyph_filter_random",
+          }
+          for field,value in expected.items():
+              assert re.search(r'\b'+field+r'\s*=\s*"'+re.escape(value)+r'";',names),field+" differs from exact binary literal"
+          calls=re.findall(r'// Method (?:dev/qther/ars_controle/registry/ACRegistry\$Glyphs\.)?register:\(Lcom/hollingsworth/arsnouveau/api/spell/AbstractSpellPart;\)',body)
+          print("DIRECT_SPELL_PART_REGISTER_CALLS="+str(len(calls)))
+          assert len(calls)==9,"registry is not exactly nine calls"
+          assert not re.search(r'\b(?:ifne|ifeq|goto|tableswitch|lookupswitch|ifnonnull|ifnull)\b',body), "conditional registerAll detected"
+          assert body.count("EffectPreciseDelay.INSTANCE")==1
+          assert body.count("FilterYLevel.ABOVE")==1
+          assert body.count("FilterYLevel.BELOW")==1
+          assert body.count("FilterYLevel.LEVEL")==1
+          assert body.count("FilterBinary.OR")==1
+          assert body.count("FilterBinary.XOR")==1
+          assert body.count("FilterBinary.XNOR")==1
+          assert body.count("FilterUnary.NOT")==1
+          assert body.count("FilterRandom.INSTANCE")==1
+          assert len(set(expected.values()))==9
+          for p in expected.values(): print("EXACT_STATIC_GLYPH=ars_controle:"+p)
+          print("BOOTSTRAP_MOD_TO_REGISTRY_TO_GLYPH_REGISTRY=PASS")
+          print("COUNTED_EXACT_NINE_GLYPH_PARTS=PASS")
+          print("NEW_SEMANTIC_ROOTS=0")
+          print("LIMITATIONS=NO_PROVIDER_RUNTIME_NO_CROSS_DIMENSION_NO_TICKET_QA_NO_CONFIG_NO_CLIENT_NO_SURVIVAL")
+          PY
