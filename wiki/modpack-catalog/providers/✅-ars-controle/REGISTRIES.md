@@ -1,5 +1,8 @@
 # Ars Controle 1.6.16 — exact registry surface
 
+**✅ Verificação física posterior:** [9/9 identidades binárias](EXACT-BINARY-GLYPHS-1.6.16.md), [CI #38339934100](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38339934100) SUCCESS; registro estático apenas, runtime/Survival ⚠️.
+
+
 Source checkpoint: `Vonr/Ars-Controle@14c5f4770a9ec265491fb9a7ae1a60a2123dfbc0` (`ver: 1.6.16`).
 
 Registry continuity evidence: `ACRegistry.java` is blob-identical to the 1.6.15 checkpoint `ecbb83ba512bc9ca7a025556fb9c62dbd32b6430`; both resolve to Git blob `b38959053740605768a8945ed40c012c6bef5953`. The 1.6.16 release therefore preserves the exact registry surface below.
