@@ -1,5 +1,8 @@
 # Black Arcana — cinco pendências mágicas (acompanhamento)
 
+**Checkpoint IronSable 2026-10-13:** [Java 21 #38408009738](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38408009738) provou [7/7 spells estáticos](../providers/✅-ironsable/EXACT-BINARY-SPELLS-1.2.0.md) e exclusão de 10 overlays Sable, file 8598255 SHA `6ea9ce03144ec741a1e8d322f06985366d9ecc9e` = físico. Schools próprias provadas no bytecode, inclusive conditional Wind→Evocation. Campanha **16/39 exatos / 23/39 pendentes**, **+0** raízes; mínimos **1857 global / 1855 escopo**. Casting físico, Sable/physics handles, configs, multiplayer e Survival ⚠️; Stage 06.05 🟡.
+
+
 **Checkpoint Ars Elemental 2026-10-13:** [Java 21 #38403443682](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38403443682), [dossiê 47/47](../providers/✅-ars-elemental/EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md), JAR CurseForge file 8399862 SHA igual à modlist, **39 glyphs produção + 8 rituais** registrados. `MethodCarianPhalanx` apenas não-produção, `Nullify Defense` registry presente mas recipe source-default-disabled. **15/39 exatos / 24/39 pendentes**, **+0** identidades novas, mínimos **1857/1855** inalterados; configs, recursos, runtime e Survival ⚠️, Stage 06.05 🟡.
 
 
@@ -35,7 +38,7 @@
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **15/39 `COUNTED_EXACT` de registro mágico** (Ars Elemental 47/47, Ars Zero 18/18, Ars Technica 11/11, Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 sob gate Iron's); ⚠️ **24/39** pendentes; nenhum PASS de execução/Survival |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **16/39 `COUNTED_EXACT` de registro mágico** (IronSable 7/7, Ars Elemental 47/47, Ars Zero 18/18, Ars Technica 11/11, Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 sob gate Iron's); ⚠️ **23/39** pendentes; nenhum PASS de execução/Survival |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |

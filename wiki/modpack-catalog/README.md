@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização física 2026-10-13:** [IronSable 1.2.0](providers/✅-ironsable/EXACT-BINARY-SPELLS-1.2.0.md) fecha **7/7 spells estáticos** e o boundary dos dez overlays físicos sem novas identidades semânticas. **16/39** providers com registros físicos exatos, **23/39** pendentes; mínimos estritos continuam **1857 global / 1855 escopo**. JAR físico/publisher SHA coincidem, não implica runtime Sable nem Survival.
+
+
 **Atualização física 2026-10-13:** [Ars Elemental 0.7.10.1](providers/✅-ars-elemental/EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md) certificou **39 glyph IDs de produção + 8 rituais** no binário físico/publicador, sem novas raízes semânticas; **15/39** provas estáticas exatas. Mínimos **1857 global / 1855 escopo**; config/Survival ainda ⚠️.
 
 
