@@ -145,3 +145,8 @@ The publisher page identifies LGPLv3, but the repository conflict is not resolve
 - full-pack conflict test against other morph/scale/combat systems.
 
 None of these installed-runtime checks are reported as PASS by Phase 2X.
+
+## Dossiê individual de engenharia de perks — Morph 1/1
+
+- ✅ Novo arquivo [glyphs/morph.md](glyphs/morph.md) com `EffectMorph` 2.0.0, fonte versionada, gate `isRealPlayer`, seleção via MobJar/SpawnEgg, strict HP limit e servidor→Identity2. [Matriz de engenharia 2.0.0](PERK-ENGINEERING-MATRIX-2.0.0.md).
+- ⚠️ Source release-aligned e registry 1/1 não demonstram compatibilidade runtime com Identity2 2.2.4 ou permissões PvP; ⛔ nenhum adapter RPG/Black Arcana. O arquivo é dossiê adicional, não uma magia adicional.

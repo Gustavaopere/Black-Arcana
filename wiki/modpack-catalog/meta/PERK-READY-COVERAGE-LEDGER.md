@@ -38,8 +38,8 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-ars-elemancy` | 11 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-elemental` | 59 | ✅ 47/47 objetos core (23 effects, 2 methods, 2 propagators, 12 filtros, 8 rituais) com dossiês source-located; ⚠️ config/QA; ⛔ adapter RPG |
 | `✅-ars-hex` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-morph` | 7 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-n-spells` | 15 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ars-morph` | 7 | ✅ 1/1 glyph Morph com dossiê standalone source 2.0.0; ⚠️ host Identity2/current runtime; ⛔ adapter RPG |
+| `✅-ars-n-spells` | 15 | ✅ 5/5 rituais com IDs binários 3.3.4 e métodos source 3.3.3; ⚠️ semântica método/JAR 3.3.4; ⛔ adapter RPG |
 | `✅-ars-nouveau` | 149 | ✅ 85/85 glyph parts (5 Forms, 67 Effects, 13 Augments) + 24/24 rituais com dossiê source-located; ⚠️ runtime/hooks/QA e ⛔ adapter RPG não validados; eventos públicos reais source-pinned, adapter RPG e QA pendentes |
 | `✅-ars-polymorphia` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sable` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -198,6 +198,12 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - ✅ [Ars Technica 2.7.6](../providers/✅-ars-technica/PERK-ENGINEERING-MATRIX-2.7.6.md): os 11 objetos **já contados no catálogo** foram materializados pela primeira vez em 11 novos `glyphs/*.md` individuais com receitas Create, mana default, compatibilidade, cadeia causal e riscos de conservação. **+11 arquivos `.md`**, **+0 novas identidades de magia**.
 - As quantidades de `.md` na tabela e o total de 2899 são a contagem de arquivos que já existiam na main baseline. A branch draft adicionou fichas/matrizes, portanto seus números de arquivo são maiores; não atualizar o denominador semântico para refletir documentação nova.
 - Nenhum adapter Java, CI, GameTest, Survival ou Stage foi promovido. Testes de equivalência método↔JAR, config real, concorrência, claims e integração Create/Ars permanecem ⚠️ e adaptações de perks RPG ⛔.
+
+## Continuação — Ars 'n' Spells e Ars Morph (2026-10-13)
+
+- ✅ [Ars 'n' Spells 3.3.4](../providers/✅-ars-n-spells/PERK-ENGINEERING-MATRIX-3.3.4.md): cinco rituais com IDs e gates estáticos comprovados no JAR 3.3.4; cinco fichas ampliadas com source público exato **3.3.3**, preflight, receipt/settlement, configuração e boundary da bridge. **⚠️ sem prova de corpo de método exato da release instalada 3.3.4**.
+- ✅ [Ars Morph 2.0.0](../providers/✅-ars-morph/PERK-ENGINEERING-MATRIX-2.0.0.md): uma ficha nova individual `glyphs/morph.md` com seleção de target/form, Max HP, Identity2 e condições de sucesso. Release-aligned source não equivale a bytecode físico nem a teste da versão atual Identity2.
+- +0 identidades semânticas. O ledger de provider `.md` da main baseline (2899) não é métrica de cobertura de perks desta branch. Sem alterações runtime, adapters, CI, GameTests, QA/Survival ou promoção do Stage 06.05.
 
 ## Priorização para próximos lotes
 
