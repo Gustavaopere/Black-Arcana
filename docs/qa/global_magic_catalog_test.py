@@ -781,7 +781,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         provider = PROVIDERS / "✅-ars-zero"
         dossier = (provider / "EXACT-BINARY-GLYPHS-2.0.2.md").read_text(encoding="utf-8")
         rows = re.findall(
-            r"^\\| (\\d+) \\| \\x60(ars_zero:[a-z_]+)\\x60 \\| \\x60([^\\x60]+)\\x60 \\| (base|NEW|COPIED) \\|$",
+            r"^\| (\d+) \| `(ars_zero:[a-z_]+)` \| `([^`]+)` \| (base|NEW|COPIED) \|$",
             dossier, re.MULTILINE,
         )
         self.assertEqual(22, len(rows))
@@ -817,7 +817,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         ledger = (ROOT / "wiki/modpack-catalog/meta" /
                   "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
         row = next(x for x in ledger.splitlines() if x.startswith("| [Ars Zero]"))
-        self.assertIn("| 2.0.2 | 18 | \\x60COUNTED_EXACT\\x60 |", row)
+        self.assertIn("| 2.0.2 | 18 | `COUNTED_EXACT` |", row)
         self.assertIn("1857 global / 1855 scoped", ledger)
 
     def test_ars_elemental_47_source_pinned_cards(self):
