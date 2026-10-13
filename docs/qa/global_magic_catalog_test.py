@@ -1542,9 +1542,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(23, len(exact))
+        self.assertEqual(24, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1601,9 +1601,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(23, len(exact))
+        self.assertEqual(24, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -2261,6 +2261,47 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         row = next(x for x in ledger.splitlines()
                    if x.startswith("| [Companions!]"))
         self.assertIn("| 1.3.4 | 9 | `COUNTED_EXACT` |", row)
+
+    def test_waystones_21145_exact_three_static_causal_paths(self):
+        provider = PROVIDERS / "✅-waystones"
+        dossier = "EXACT-BINARY-ACTIONS-21.1.45.md"
+        source = (provider / dossier).read_text(encoding="utf-8")
+        expected = (
+            ("waystone-warp-teleport", "WaystonesAPI.tryTeleportAsync"),
+            ("warp-portal-conjuration", "WarpPortalManager.spawnPortal"),
+            ("twinbound-link", "TwinboundFeatherLinksComponent.with"),
+        )
+        rows = [line for line in source.splitlines()
+                if line.startswith("| ") and ("[Teleport]" in line or
+                   "[Portal]" in line or "[Twinbound]" in line)]
+        self.assertEqual(3, len(rows))
+        for slug, path in expected:
+            self.assertIn(path, source)
+            card = (provider / "actions" / (slug + ".md")).read_text(encoding="utf-8")
+            for marker in (dossier, "COUNTED_EXACT", path):
+                self.assertIn(marker, card)
+        for term in ("8873000", "1219809",
+                     "6ec1a176a102212db4f6391886db52ed103c830f",
+                     "38460510230", "PHYSICAL_SEMANTIC_ROOTS=3",
+                     "NEW_SEMANTIC_ROOTS=0", "EXACT_STATIC_ACTION_AUDIT=PASS",
+                     "RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE",
+                     "EXCLUDED_SETUP_DISCOVERY", "EXCLUDED_ITEM_PREPARATION",
+                     "EXCLUDED_AUTOMATED_INFRA_PREPARATION",
+                     "24/39", "15/39", "1857", "1855"):
+            self.assertIn(term, source)
+        for name in ("README.md", "SOURCE-21.1.45-SEMANTIC-CLOSURE.md",
+                     "ACTION-CARDS-21.1.45.md",
+                     "INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md"):
+            self.assertIn(dossier, (provider / name).read_text(encoding="utf-8"))
+        root = ROOT / "wiki/modpack-catalog/meta"
+        matrix = (root / "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(line for line in matrix.splitlines()
+                   if line.startswith("| [Waystones]"))
+        self.assertIn("| 21.1.45 | 3 | COUNTED_EXACT |", row)
+        ledger = (root / "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(line for line in ledger.splitlines()
+                   if line.startswith("| [Waystones]"))
+        self.assertIn("| 21.1.45 | 3 | `COUNTED_EXACT` |", row)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)

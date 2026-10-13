@@ -1,5 +1,8 @@
 # Waystones 21.1.45 — fichas canônicas de ações
 
+**Prova física SHA-exata (2026-10-13):** ✅ [três ações estáticas](EXACT-BINARY-ACTIONS-21.1.45.md), [Java21 #38460510230](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38460510230) **SUCCESS**. CurseForge file `8873000` de **1219809 bytes**, SHA-1 `6ec1a176a102212db4f6391886db52ed103c830f` = JAR físico #564. Teleport, portal e Twinbound são três raízes distintas; Waystone activation, Blank Scroll binding e Warp Plate attunement são operações preparatórias excluídas. `COUNTED_EXACT` significa caminhos compilados, não spells Iron's nem cast runtime. Campanha **24/39 exatos / 15/39 pendentes**, +0 raízes, mínimo **1857/1855**. Runtime/Survival ⚠️.
+
+
 Este índice materializa em fichas individuais as **3 identidades semânticas sobrenaturais player-facing** fechadas pela reconciliação source-pinned de Waystones 21.1.45.
 
 O provider permanece **✅ catalogado / COUNTED_SOURCE_PINNED 3 / +3 strict**. Esta materialização é editorial e não altera o denominador nem a contribuição global.

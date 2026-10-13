@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização binária 2026-10-13:** [Waystones 21.1.45](providers/✅-waystones/EXACT-BINARY-ACTIONS-21.1.45.md) tem três caminhos causais exatos ([Java21 #38460510230](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38460510230)); **24/39 exatos / 15/39 pendentes**, +0 raízes, mínimos **1857 global / 1855 escopo**. Itens e teletransporte provider-native, runtime/Survival ⚠️.
+
+
 **Atualização binária 2026-10-13:** [Companions! 1.3.4](providers/✅-companions/EXACT-BINARY-MAGIC-BOOKS-1.3.4.md): **9/9 itens Magic Book** com factories `AbstractMagicBook` SHA-exatas, [Java21 #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666). Campanha **23/39 exatos / 16/39 pendentes**, +0 raízes, mínimo **1857/1855**. Itens provider-native (não Iron's spell registry); runtime/Survival ⚠️.
 
 
