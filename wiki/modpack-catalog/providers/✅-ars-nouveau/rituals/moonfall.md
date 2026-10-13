@@ -23,3 +23,11 @@ Any future Black Arcana celestial/time ritual must be compared mechanically agai
 ## QA
 
 Source lifecycle is pinned to 5.13.1. Runtime interaction with other time-control mods/game rules in the full pack remains pending.
+
+## Engenharia para perks — execução do ritual
+
+- **Source pin:** [`RitualMoonfall.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualMoonfall.java), versão Ars Nouveau 5.13.1.
+- **Authority temporal:** `RitualMoonfall.tick()` usa `ServerLevel.getServer().overworld()`, mesmo quando o ritual está em outro lugar; isso é alteração do tempo global do servidor, não de dimensão local.
+- **Relógio:** se `dayTime%24000<13000` adiciona `100` day ticks por tick do ritual e envia `ClientboundSetTimePacket` aos players Overworld. **Detalhe corrigido do ciclo:** no `else`, `incrementProgress()` ocorre **a cada tick** quando a condição de dia deixou de ser atendida; separadamente, se `getGameTime()%20==0`, incrementa outra vez. Em progress `>=18`, define `MathUtil.getNextDaysTime(...NIGHT_TIME)`, sincroniza e `setFinished`.
+- **Perks/segurança:** progresso não tem uma cadência única fixa de 20 ticks; não duplicar atualização de tempo nem tratar observação visual como confirmação de conclusão. Qualquer magia temporal própria exige autoridade de mundo e limites.
+- **Status:** ✅ código fonte exato; ⚠️ configurações e comportamento físico dos providers adicionais pendentes; ⛔ mutabilidade em ritual ou integração com Mastery não é provada pelos eventos de glyph. Ritual runtime permanece Ars Nouveau.

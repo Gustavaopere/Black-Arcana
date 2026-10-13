@@ -29,3 +29,11 @@ Any independent Black Arcana terrain destruction remains subject to `WorldEffect
 ## QA
 
 Source semantics are pinned to 5.13.1. Full-pack claim-provider, drop and performance behavior remains runtime QA.
+
+## Engenharia para perks — execução do ritual
+
+- **Source pin:** [`RitualDig.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualDig.java), versão Ars Nouveau 5.13.1.
+- **Ativação:** `RitualDig.onStart` cria `EntityRitualProjectile` ligado à posição do ritual. `tick()` no servidor trabalha a cada `20` game ticks.
+- **Geometria:** começa em `tile.getBlockPos().north().below(context.progress)`, tenta **quatro** `BlockPos`: posição original, `south().south()`, `south().east()`, `south().west()`; depois `progress++` produz próxima camada. Sai quando o próximo anchor está fora de build height.
+- **World/admission:** `canBlockBeHarvested` exige destroy speed >=0 e `SpellUtil.isCorrectHarvestLevel(5,...) `; cada bloco exige `BlockUtil.destroyRespectsClaim`. O provider usa fake player e `Items.DIAMOND_PICKAXE` com `destroyBlockSafely`. **Perks:** não converter em mineração instantânea infinita nem bypass de claims. Black Arcana world effects sempre WorldEffectPolicy.
+- **Status:** ✅ código fonte exato; ⚠️ configurações e comportamento físico dos providers adicionais pendentes; ⛔ mutabilidade em ritual ou integração com Mastery não é provada pelos eventos de glyph. Ritual runtime permanece Ars Nouveau.
