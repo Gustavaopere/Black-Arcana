@@ -262,3 +262,7 @@ Black Arcana must not:
 `SOURCE REGISTRY EXACT / 83 SPELL PAGES PRESENT / SUPPORT SYSTEMS SOURCE-AUDITED / INSTALLED JAR IDENTITY EXACT / FULL RUNTIME QA NOT YET COMPLETE`
 
 The exact source pin supports factual source-derived cataloging. It does not by itself prove every optional mod bridge is active in the user's full 612-mod runtime. Phase 2L therefore closes source/catalog coverage while preserving runtime-QA flags wherever provider/environment behavior still requires execution.
+
+## Mapas de implementação para Codex / RPG Skill Tree
+
+Esta campanha acrescenta às **83 fichas já source-catalogadas** localizadores exatos de classes Java verificados pelo `SpellRegistry` do commit `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`; seis fichas de risco recebem cadeia causal detalhada. Não há novo spell registry, API de setter de geometria ou QA físico certificado. Regras de campos e estados: [padrão global](../../meta/PERK-READY-TECHNICAL-STANDARD.md).

@@ -183,3 +183,7 @@ Ars core already exposes Heal, Hex, Wither, Ignite, Flare, Gravity, summons, det
 - Glyph architecture, registry IDs, tiers, base costs and descriptions above: current public Ars 1.21.1 guide — HIGH.
 - The guide is addon-aware; ownership is determined by registry namespace, not page location.
 - No Java bytecode was decompiled for this catalog.
+
+## Fichas técnicas para Codex e perks
+
+A campanha transversal inclui leitura de código exato para `glyph_projectile`, `glyph_ignite`, `glyph_heal` e `ritual_flight`, preservando os contratos de augments, forma/efeito, mana/Source e ciclo do ritual. Os outros glifos/rituais exigem a mesma análise de classes, fórmulas e hooks por objeto: [padrão geral](../../meta/PERK-READY-TECHNICAL-STANDARD.md). Essa documentação não implementa um segundo SpellResolver nem representa QA do modpack.
