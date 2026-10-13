@@ -39,3 +39,11 @@ A Black Arcana observer must attribute all child/context segments to the origina
 ## QA / runtime
 
 The exact class is source-pinned to 5.13.1. Runtime/config behavior in the full pack remains separately pending.
+
+## Engenharia para perks — caminho causal individual
+
+- **Código exato:** [`EffectReset.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectReset.java), Ars 5.13.1.
+- **Registry distinto:** `ars_nouveau:reset` (não `glyph_reset`); `EffectReset implements IContextManipulator`, custo default 0 e conjunto de augments vazio. Não é magia terminal de dano/status.
+- **Segmentação:** `manipulate` obtém `context.getRemainingSpell().mutable()`, procura `indexOf(EffectReset.INSTANCE)`, cria `context.clone().withSpell(subList(0,index))`, e avança index do context original por `index`. `contextCanceled` reconhece `CancelReason.NEW_CONTEXT`, limpa cancelamento e pula até próximo Reset, permitindo continuidade.
+- **Bypasses internos:** `bypassCombinationLimitsFor()` e `bypassOccurrenceLimitsFor()` retornam `EffectReset.RESET_LIMITS`, conjunto preenchido por effects como Wall/Linger; não é permissão global para ilimitadas magias do Black Arcana. `shouldPushContext` retorna true. **Perks:** multiplicação de resolvers/contextos pode multiplicar observers; preservar identidade causal e gates de receitas Ars.
+- **Estado:** ✅ assinatura/source; ⚠️ integração de plugins proteção, configs e gameplay pending; ⛔ nenhum adapter RPG testado nem permissão para duplicar a cadeia causal/perk/mastery.
