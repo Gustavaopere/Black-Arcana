@@ -27,3 +27,9 @@ Compatible augments: Amplify, Dampen, Extend Time, Reduce Time. Amplify is limit
 Ars owns LightningEntity, Shocked and provider damage semantics. Black Arcana must preserve causal identity and avoid duplicate lightning damage/proc/mastery processing.
 
 Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
+
+## Dossiê de engenharia para perks — causalidade exata
+
+- **Código versionado:** [`EffectLightning.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectLightning.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectLightning` no Ars 5.13.1, método `onResolve`.
+- **Spawn:** cria `LightningEntity`, posiciona no hit, `setCause` quando shooter é `ServerPlayer`; executa `world.addFreshEntity`. **Dados enviados:** `amps=(float)spellStats.getAmpMultiplier()`, `extendTimes=(int)getDurationMultiplier()`, `ampScalar=AMP_VALUE.get()` default 3.0, `wetBonus=GENERIC_DOUBLE.get()` default 2.0; `setDamage(DAMAGE.get()+getDamageModifier())` com damage default 5.0. **Executor downstream:** stack Shocked, wet-bonus, timers e hit são geridos por `LightningEntity`, não por esta classe inicializadora. Amplify limit default 2. **Perks:** alterar campos nativos não equivale a spawnar lightning adicional; hook não verificado.
+- **Limite de integração:** ✅ source pin confirmado, ⚠️ config e classes auxiliares demandam QA; ⛔ hook de mutação RPG não verificado. Provider mantém autoridade de mana/efeito/owner; sem segundo cast/proc/settlement. Survival: PENDING.
