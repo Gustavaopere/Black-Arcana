@@ -32,3 +32,12 @@ The provider locator thread pool has a source-default maximum of **1 thread** an
 Structure discovery, recipe matching and Wayfinder state are provider-owned. Black Arcana must not mirror the lookup into a second unbounded search or treat a provider-found position as blanket teleport/world-effect authorization.
 
 Source checkpoint: `Jarva/Ars-Additions@91f102a90dc058cf40e4eac5a67a881e48b856b4` (`RitualLocateStructure`, `LocateStructureProvider`, `LocateStructureRecipe`, `ExplorationScrollData`, `ServerConfig`).
+
+## Engenharia para perks — execução exata 21.3.0
+
+- **Classe pinada:** [`RitualLocateStructure.java`](https://github.com/Jarva/Ars-Additions/blob/91f102a90dc058cf40e4eac5a67a881e48b856b4/src/main/java/com/github/jarva/arsadditions/common/ritual/RitualLocateStructure.java); commit `91f102a90dc058cf40e4eac5a67a881e48b856b4`, versão de source 21.3.0.
+- **Recipe gate:** `canStart` sets `recipe=getRecipe()` from `LocateStructureRegistry.INSTANCE.getRecipes().stream().filter(r->r.value().matches(getConsumedItems())).findFirst()`, then requires present; `canConsumeItem` returns true but **that does not bypass the start-time recipe validation**.
+- **Search:** `onStart` validates world/pos/recipe/server. Calls `LocateUtil.locateCenter(serverLevel,locator.getStructureHolder(serverLevel),getPos(),locator.getRadius(),locator.getSkipExisting(), callback)`. `tick()` is empty. The source snippet does not specify synchronous/async executor scheduling; follow `LocateUtil` before asserting thread affinity or timing.
+- **Outcomes:** callback null calls `fail`, respawning *consumed item stacks* and the ritual item near brazier, messaging player and marking finished. Success constructs provider `WAYFINDER` with optional `WAYFINDER_DATA` structure name and vanilla `LODESTONE_TRACKER=GlobalPos(serverDimension,locatedPos),false`, dispenses and finishes.
+- **Perks:** a located position is not a teleport entitlement nor proof of loaded chunks; don't duplicate structure scans or refund items from an observer. Thread-pool config default 1 must not be raised without work budget and game-thread completion QA.
+- **Estado:** ✅ classe versionada e entrada source-audited; ⚠️ diferença host Ars 5.13.1 versus build baseline 5.11.2, config instalada, helpers/callback, runtime e Survival ainda não aprovados; ⛔ nenhuma perk RPG/adaptador Black Arcana foi implementado ou testado. Não duplicar mana, Source, inventário ou resolução do provider.

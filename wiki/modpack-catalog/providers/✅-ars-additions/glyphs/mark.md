@@ -29,3 +29,11 @@ The Reliquary data component is the provider's persistent targeting reference. B
 Any Black Arcana remote targeting continues to require its own server-authoritative validation. Provider Mark state is not a bypass for loaded-chunk, dimension, protection or world-effect policy.
 
 Source checkpoint: `Jarva/Ars-Additions@91f102a90dc058cf40e4eac5a67a881e48b856b4` (`EffectMark`, `ServerConfig`).
+
+## Engenharia para perks — execução exata 21.3.0
+
+- **Classe pinada:** [`EffectMark.java`](https://github.com/Jarva/Ars-Additions/blob/91f102a90dc058cf40e4eac5a67a881e48b856b4/src/main/java/com/github/jarva/arsadditions/common/glyph/EffectMark.java); commit `91f102a90dc058cf40e4eac5a67a881e48b856b4`, versão de source 21.3.0.
+- **Target/settlement:** `onResolveBlock` uses `UnstableReliquary.getReliquaryFromCaster(context,shooter)` and, only when non-null, stores `new LocationMarkData(new GlobalPos(world.dimension(),hitBlockPos))` under `AddonDataComponentRegistry.MARK_DATA`. This is reference-data mutation, not a placed world block.
+- **Entity path:** with a valid Reliquary, stores `EntityMarkData(entity.getUUID(), entity.getType().builtInRegistryHolder(), optionalName)`. If target is a `Player`, also applies `MARKED_EFFECT` for `ServerConfig.SERVER.reliquary_effect_duration.get()*20` ticks (default 300 s declared elsewhere). The `MARK_DATA` write happens independently of whether the Marked potion later persists.
+- **Spell restrictions:** fixed provider `PER_SPELL_LIMIT` config defined with min=max=1; no compatible augments; default mana 25. **Perks:** stateful reference and player effect must not become two Mastery awards; no generic RPG hook to extend remote target storage is proven.
+- **Estado:** ✅ classe versionada e entrada source-audited; ⚠️ diferença host Ars 5.13.1 versus build baseline 5.11.2, config instalada, helpers/callback, runtime e Survival ainda não aprovados; ⛔ nenhuma perk RPG/adaptador Black Arcana foi implementado ou testado. Não duplicar mana, Source, inventário ou resolução do provider.
