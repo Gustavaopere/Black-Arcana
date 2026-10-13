@@ -1,5 +1,7 @@
 # Exorcism
 
+**Registro binário físico (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:exorcism`, classe `net.acetheeldritchking.discerning_the_eldritch.spells.holy.ExorcismSpell`, escola padrão `SchoolRegistry.HOLY_RESOURCE` ([Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207), [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). Insanity default off: presença no registry não garante uso em jogo. Custos/efeitos e Survival ⚠️; +0.
+
 - **ID:** `discerning_the_eldritch:exorcism`
 - **School:** Holy
 - **Level:** 1
