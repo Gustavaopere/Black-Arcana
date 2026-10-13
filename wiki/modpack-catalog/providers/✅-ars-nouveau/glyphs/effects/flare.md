@@ -29,3 +29,12 @@ Flare only damages living targets already burning, standing in fire, or carrying
 Flare occupies conditional fire detonation/cinder territory. Black Arcana Black Flame content must not be a cosmetic copy of this ignition-conditioned burst or duplicate Blasting settlement.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectFlare`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Source exato:** [`EffectFlare.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectFlare.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectFlare` no Ars Nouveau 5.13.1.
+- **Admissão:** `canDamage` exige fogo no alvo, `ModPotions.BLAST_EFFECT` ou estar em bloco com `BlockTags.FIRE`; dano nominal `DAMAGE+AMP_VALUE*getAmpMultiplier()` com defaults 7 e 3, via `IDamageEffect.attemptDamage`.
+- **Cinder spawn:** a classe chama `spawnCinders` depois de passar em `canDamage`, **independentemente do boolean de sucesso** dentro de `damage(...)`. Gera `(int)Math.ceil(3+getAoeMultiplier())` entidades `Cinder` com bloco `MAGIC_FIRE`, `baseDamage=0.5*(DAMAGE+AMP_VALUE*ampMultiplier)`, `dropItem=false`, `hurtEntities=true` e `ShapersFocus.tryPropagateEntitySpell`.
+- **Blasting:** se o alvo ainda tem `BLAST_EFFECT`, lê amplifier, remove efeito e chama `BlastEffect.explode(living,amplifier+1)`: uma causa distinta do dano direto e das Cinders, mas pertence à **mesma** cadeia de magia. Ramo bloco inicia Cinders quando bloco atingido ou vizinhos têm `BlockTags.FIRE`.
+- **Perks:** área é contagem de Cinders, não raio de dano diretamente. Verificar caps sobre entidades persistentes, proc rate e WorldEffectPolicy apenas na autoridade Black Arcana. Não creditar Blast+Flare+Cinders como três casts.
+- **Estado:** ✅ classe/fórmulas source-pinned; ⚠️ outcomes downstream, config física e Survival pendentes; ⛔ nenhuma alteração por RPG Skill Tree implementada ou testada. Avaliar a interface `EffectResolveEvent.Pre` per-effect com clamps e causalidade.

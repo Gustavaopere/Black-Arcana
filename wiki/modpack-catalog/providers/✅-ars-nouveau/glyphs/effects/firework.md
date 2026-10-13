@@ -27,3 +27,12 @@ Firework creates firework rockets at a block or living target. If the caster inv
 Ars Nouveau owns this firework-generation/casting surface and inventory lookup. Black Arcana should not duplicate a generic magical firework spell or replay projectile spawning when Ars is causal.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectFirework`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Source exato:** [`EffectFirework.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectFirework.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectFirework` no Ars Nouveau 5.13.1.
+- **Quantidade:** `onResolveBlock` e `onResolveEntity` fazem `count(Split)+1` iterações para gerar `FireworkRocketEntity`. O branch entidade exige `LivingEntity` atingida e chama `setOwner(shooter)`; turret em bloco escolhe orientação especial (ao contrário do jogador).
+- **Inventário e fallback:** `fireworkFromInv` procura `Items.FIREWORK_ROCKET` via `InventoryManager.findItem(...,InteractType.EXTRACT)` e obtém o stack daquele slot; se não encontra, gera com `getFirework((int)durationMultiplier,(int)ampMultiplier)`. O código mostrado *não* diminui o stack encontrado no inventário: é modelo/cópia sem afirmar consumo.
+- **Dados do foguete:** `getFirework` constrói `DataComponents.FIREWORKS` com `numGunpowder` recebido e `numStars` explosões via `getRandomStar` (`new Random` local). Limite default Amplify=2 na ficha. Variar estética não prova dano ou tempo/altitude exatos sem seguir `FireworkRocketEntity`.
+- **Perks:** Split multiplica entidades e carga visual; não cria novos casts, custos ou Mastery. RNG de cores/estrelas é provider-owned e não deve ser tratado como dano arcano determinístico.
+- **Estado:** ✅ classe/fórmulas source-pinned; ⚠️ outcomes downstream, config física e Survival pendentes; ⛔ nenhuma alteração por RPG Skill Tree implementada ou testada. Avaliar a interface `EffectResolveEvent.Pre` per-effect com clamps e causalidade.
