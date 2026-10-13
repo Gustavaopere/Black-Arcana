@@ -28,47 +28,28 @@ jobs:
           def read(url,timeout=35):
             req=urllib.request.Request(url,headers={"User-Agent":"Black-Arcana-static-physical-audit/1"})
             with urllib.request.urlopen(req,timeout=timeout) as res:return res.read(12000000)
-          ids=[]
-          for suffix in ("maven-metadata.xml","maven-metadata-local.xml"):
-            try:
-              data=read(base+suffix)
-              print("MAVEN_METADATA_BYTES="+str(len(data)),flush=True)
-              root=ET.fromstring(data)
-              ids=[v.text for v in root.findall(".//version") if v.text and v.text.isdigit()]
-              print("MAVEN_VERSIONS="+repr(ids[-38:]),flush=True)
-              if ids:break
-            except Exception as exc:print("MAVEN_METADATA_ERROR="+repr(exc)[:180],flush=True)
-          # Maven metadata may be blocked; fall back to extracting numeric file ID from
-          # public CurseForge HTML, never guess the JAR name or digest.
-          if not ids:
-            try:
-              html=read("https://www.curseforge.com/minecraft/mc-mods/fires-ender-expansion/files/all")
-              strings=html.decode("utf-8",errors="replace")
-              positions=[m.start() for m in re.finditer(re.escape(name),strings)]
-              print("HTML_FILE_NAME_OCCURRENCES="+str(len(positions)),flush=True)
-              for pos in positions[:8]:print("HTML_CONTEXT="+strings[max(0,pos-550):pos+550].replace("\n"," ")[:1100],flush=True)
-              ids=list(dict.fromkeys(re.findall(r'"id":(\d{7,9}).{0,300}"fileName":"'+re.escape(name)+r'"',strings)))
-              ids+=re.findall(r"/files/(\d{7,9})",strings)
-              ids=list(dict.fromkeys(ids))
-              print("HTML_FILE_IDS="+repr(ids[:40]),flush=True)
-            except Exception as exc:print("HTML_SEARCH_ERROR="+repr(exc)[:180],flush=True)
+          verified_fileid="8167304"
+          urls=[
+            "https://cursemaven.com/curse/maven/"+slug+"/"+verified_fileid+"/"+slug+"-"+verified_fileid+".jar",
+            "https://mediafilez.forgecdn.net/files/8167/304/"+name,
+            "https://media.forgecdn.net/files/8167/304/"+name,
+          ]
           out=pathlib.Path(os.environ["RUNNER_TEMP"])/name
           got=False
-          for fileid in list(reversed(ids))[:50]:
-            url=base+fileid+"/"+slug+"-"+fileid+".jar"
+          for url in urls:
             try:
-              buf=read(url,timeout=60)
+              buf=read(url,timeout=65)
               sha=hashlib.sha1(buf).hexdigest()
-              print("CANDIDATE_FILE_ID="+fileid+" BYTES="+str(len(buf))+" SHA1="+sha,flush=True)
+              print("CANDIDATE_URL="+url+" BYTES="+str(len(buf))+" SHA1="+sha,flush=True)
               if sha!=exp:continue
               out.write_bytes(buf)
               with zipfile.ZipFile(out) as z:assert z.testzip() is None
               print("PUBLISHER_EQUALS_PHYSICAL_SHA1=PASS",flush=True)
-              print("CERTIFIED_FILE_ID="+fileid,flush=True)
+              print("CERTIFIED_FILE_ID="+verified_fileid,flush=True)
               print("CERTIFIED_BYTES="+str(len(buf)),flush=True)
-              with open(os.environ["GITHUB_ENV"],"a") as env:env.write("EXACT_FEE_JAR="+str(out)+"\nEXACT_FEE_ID="+fileid+"\nEXACT_FEE_BYTES="+str(len(buf))+"\n")
+              with open(os.environ["GITHUB_ENV"],"a") as env:env.write("EXACT_FEE_JAR="+str(out)+"\nEXACT_FEE_ID="+verified_fileid+"\nEXACT_FEE_BYTES="+str(len(buf))+"\n")
               got=True;break
-            except Exception as exc:print("CANDIDATE_ERROR="+fileid+" "+repr(exc)[:100],flush=True)
+            except Exception as exc:print("CANDIDATE_ERROR="+repr(exc)[:180],flush=True)
           if not got:raise SystemExit("FAIL-CLOSED: SHA1-exact JAR not located; source pin is not physical registry proof")
           PY
       - name: Inspect compiled registry and 11 spell IDs
