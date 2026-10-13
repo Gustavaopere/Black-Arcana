@@ -69,3 +69,42 @@ jobs:
             except Exception as e:print('DISCOVERY_ERROR='+repr(e)[:180])
           print('STATIC_DISCOVERY_ONLY=TRUE')
           PY
+
+      - name: Inspect exact nine item factory call sites and book inheritance
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,pathlib,hashlib,subprocess,zipfile,re
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'companions-neoforge-1.21.1-1.3.4.jar'
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='23f6e4f27a457a8d016412e495e417c0b36fdcc1'
+          def javap(c):
+            p=subprocess.run(['javap','-c','-p','-classpath',str(jar),c],capture_output=True,text=True,timeout=50)
+            assert p.returncode==0,(c,p.stderr[:180])
+            return p.stdout
+          cls='dev.xylonity.companions.registry.CompanionsItems'
+          text=javap(cls)
+          lines=text.splitlines()
+          static=text.split('static {};',1)[1]
+          expected=['book_ice_shard','book_ice_tornado','book_fire_mark','book_heal_ring','book_stone_spikes','book_brace','book_magic_ray','book_black_hole','book_naginata']
+          names=re.findall(r'// String (book_[a-z_]+)',static)
+          print('ALL_COMPILED_BOOK_IDS='+repr(names))
+          assert names==expected,(names,expected)
+          for key in expected:
+            indices=[i for i,line in enumerate(lines) if '// String '+key in line and lines.index('  static {};')<i]
+            assert len(indices)==1,(key,indices)
+            idx=indices[0]
+            print('BOOK_REGISTER_SITE='+key+'|'+repr([s.strip() for s in lines[idx-1:idx+13]]))
+          print('BOOK_STATIC_BRANCHES='+repr([x.strip() for x in static.splitlines() if re.search(r'^\s*(?:3[3-9]\d|4\d\d): (?:if|goto|tableswitch|lookupswitch)',x)]))
+          print('METHOD_NAMES='+repr([s.strip() for s in lines if (s.startswith('  private ') or s.startswith('  public ')) and ('lambda$' in s or 'register' in s.lower())][:95]))
+          with zipfile.ZipFile(jar) as z:
+            physical=[x[:-6].replace('/','.') for x in z.namelist()
+                      if x.endswith('.class') and x.startswith('dev/xylonity/companions/common/item/book/')]
+          print('BOOK_CLASSFILES='+repr(physical[:110]))
+          for name in physical:
+            if '$' in name or name.endswith('AbstractMagicBook'):continue
+            details=javap(name)
+            title=next((x.strip() for x in details.splitlines() if x.startswith('public class ') or x.startswith('public abstract class ')),'')
+            print('BOOK_HIERARCHY='+name+'|'+title)
+          print('NINE_BOOK_STATIC_DISCOVERY=PASS')
+          PY
