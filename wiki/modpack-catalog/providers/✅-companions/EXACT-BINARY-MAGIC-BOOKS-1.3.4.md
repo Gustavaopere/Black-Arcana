@@ -5,7 +5,7 @@
 ## Evidência binária direta
 
 - Modlist física do sibling: `#104`, `companions-neoforge-1.21.1-1.3.4.jar`, mod ID `companions`, SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1`, KnightLib físico **2.0.1**.
-- [CurseForge file 8857294](https://www.curseforge.com/minecraft/mc-mods/companions-mod/files/8857294), **7.189.704 bytes**, SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1` = JAR físico.
+- [CurseForge file 8857294](https://www.curseforge.com/minecraft/mc-mods/companions-mod/files/8857294), **7.189.704 bytes** (valor exato: `7189704`), SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1` = JAR físico.
 - [Discovery Java21 #38457728494](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38457728494), [vínculos de classe e factory #38457998766](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38457998766), [asserções completas Java21 #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666): **SUCCESS**.
 - Workflow externo clean-room isolado na branch [`audit/companions-134-20261013`](https://github.com/Gustavaopere/Black-Arcana/tree/audit/companions-134-20261013); sem JAR, código ou assets copiados à `main`.
 
