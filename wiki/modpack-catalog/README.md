@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização binária 2026-10-13:** [ISS: Magic From The East 1.1.5](providers/✅-iss-magic-from-the-east/EXACT-BINARY-SPELLS-1.1.5.md) tem **22/22** IDs físicos exatos (**11 Symmetry + 11 Spirit**), [Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162), **+0 raízes**, campanha **20/39 exatos / 19/39 pendentes**. Mínimos estritos **1857 global / 1855 escopo**. Config/Survival/compatibilidade Iron's 3.16.3 ⚠️.
+
+
 **Atualização exata 2026-10-13:** [Tunes n' Tomes 1.1.0-HOTFIX](providers/✅-tunes-n-tomes/EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md) comprova 16/16 spell IDs e classes no registrador físico SHA-matched ([Java 21 #38445001328](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38445001328)), **+0 raízes**, campanha **19/39 exatos / 20/39 pendentes**; mínimos **1857 global / 1855 escopo**. Gameplay/Survival permanecem ⚠️.
 
 

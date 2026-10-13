@@ -1542,9 +1542,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(19, len(exact))
+        self.assertEqual(20, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1601,9 +1601,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(19, len(exact))
+        self.assertEqual(20, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -2007,6 +2007,70 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
         sem = next(r for r in ledger.splitlines() if r.startswith("| [Tunes n' Tomes]"))
         self.assertIn("| 1.1.0-HOTFIX | 16 | `COUNTED_EXACT` |", sem)
+
+    def test_iss_mfte_115_22_sha_exact_static_registrations_and_no_runtime(self):
+        folder = PROVIDERS / "✅-iss-magic-from-the-east"
+        filename = "EXACT-BINARY-SPELLS-1.1.5.md"
+        dossier = (folder / filename).read_text(encoding="utf-8")
+        names = (
+            ("symmetry", "sword_dance", "SwordDanceSpell"),
+            ("symmetry", "bagua_array_circle", "BaguaArrayCircleSpell"),
+            ("symmetry", "dragon_glide", "DragonGlideSpell"),
+            ("symmetry", "jade_judgement", "JadeJudgementSpell"),
+            ("symmetry", "jiangshi_invoke", "JiangshiInvokeSpell"),
+            ("symmetry", "underworld_aid", "UnderworldAidSpell"),
+            ("symmetry", "punishing_heaven", "PunishingHeavenSpell"),
+            ("symmetry", "drapes_of_reflection", "DrapesOfReflectionSpell"),
+            ("symmetry", "cloud_ride", "CloudRideSpell"),
+            ("symmetry", "nephrite_slash", "NephriteSlashSpell"),
+            ("symmetry", "jade_bullet", "JadeBulletSpell"),
+            ("spirit", "soul_catalyst", "SoulCatalystSpell"),
+            ("spirit", "soul_burst", "SoulBurstSpell"),
+            ("spirit", "spirit_challenging", "SpiritChallengingSpell"),
+            ("spirit", "bone_hands", "BoneHandsSpell"),
+            ("spirit", "calamity_cut", "CalamityCutSpell"),
+            ("spirit", "kitsune_pack", "KitsunePackSpell"),
+            ("spirit", "revenant_of_honor", "RevenantOfHonorSpell"),
+            ("spirit", "ashigaru_squad", "AshigaruSquadSpell"),
+            ("spirit", "phantom_charge", "PhantomChargeSpell"),
+            ("spirit", "anchoring_kunai", "AnchoringKunaiSpell"),
+            ("spirit", "splitting_shuriken", "SplittingShurikenSpell"),
+        )
+        rows = [line for line in dossier.splitlines()
+                if line.startswith("| ") and "`iss_magicfromtheeast:" in line]
+        self.assertEqual(22, len(rows))
+        for i, (school, ident, cls) in enumerate(names, 1):
+            self.assertIn(f"| {i} |", rows[i-1])
+            self.assertIn(f"`iss_magicfromtheeast:{ident}`", rows[i-1])
+            self.assertIn(f"`{school}.{cls}`", rows[i-1])
+            card = folder / school / (ident.replace("_", "-") + ".md")
+            contents = card.read_text(encoding="utf-8")
+            self.assertIn("COUNTED_EXACT", contents)
+            self.assertIn(f"iss_magicfromtheeast:{ident}", contents)
+            self.assertIn(f"spells.{school}.{cls}", contents)
+            self.assertIn(filename, contents)
+        for marker in (
+            "7385201", "1680780", "38449995162",
+            "e3552ea6b7b32b843c48bf0d857237d4b7129ab0",
+            "PHYSICAL_SPELL_REGISTRATIONS=22",
+            "NEW_SEMANTIC_ROOTS=0",
+            "EXACT_STATIC_REGISTRY_AUDIT=PASS",
+            "RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE",
+            "20/39", "19/39", "1857", "1855",
+        ):
+            self.assertIn(marker, dossier)
+        for doc in ("README.md", "TECHNICAL-AUDIT.md",
+                    "symmetry/README.md", "spirit/README.md"):
+            self.assertIn(filename, (folder / doc).read_text(encoding="utf-8"))
+        meta = ROOT / "wiki/modpack-catalog/meta"
+        matrix = (meta / "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith("| [ISS: Magic From The East]"))
+        self.assertIn("| 1.1.5 | 22 | COUNTED_EXACT |", row)
+        ledger = (meta / "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(x for x in ledger.splitlines()
+                   if x.startswith("| [ISS: Magic From The East]"))
+        self.assertIn("| 1.1.5 | 22 | `COUNTED_EXACT` |", row)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)

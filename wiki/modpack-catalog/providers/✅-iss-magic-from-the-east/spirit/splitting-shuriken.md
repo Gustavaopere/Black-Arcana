@@ -1,5 +1,7 @@
 # Splitting Shuriken
 
+**Registro físico confirmado:** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:splitting_shuriken`, classe `net.warphan.iss_magicfromtheeast.spells.spirit.SplittingShurikenSpell`, escola `MFTESchoolRegistries.SPIRIT_RESOURCE`, por [Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162). Dados numéricos source-pinned; runtime/Survival ⚠️; +0. [Dossiê](../EXACT-BINARY-SPELLS-1.1.5.md).
+
 - **ID:** `iss_magicfromtheeast:splitting_shuriken`
 - **School:** Spirit
 - **Levels:** 1–10

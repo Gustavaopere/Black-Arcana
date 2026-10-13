@@ -1,5 +1,9 @@
 # Jade Bullet
 
+**Registro físico confirmado:** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:jade_bullet`, classe `net.warphan.iss_magicfromtheeast.spells.symmetry.JadeBulletSpell` e `MFTESchoolRegistries.SYMMETRY_RESOURCE` verificados na [auditoria Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162). Parâmetros/custos efetivos e Survival ⚠️; +0 raízes. Ver [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md).
+
+**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:jade_bullet` / `net.warphan.iss_magicfromtheeast.spells.symmetry.JadeBulletSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+
 - **ID:** `iss_magicfromtheeast:jade_bullet`
 - **School:** Symmetry
 - **Levels:** 1–10

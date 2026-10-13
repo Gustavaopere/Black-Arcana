@@ -1,5 +1,8 @@
 # ISS: Magic From The East 1.1.5 — technical audit
 
+**Prova SHA-exata (2026-10-13):** ✅ [22/22 registros estáticos](EXACT-BINARY-SPELLS-1.1.5.md), [Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162) **SUCCESS**; CurseForge file `7385201`, **1680780 bytes**, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0` = JAR da modlist física #346. `MFTESpellRegistries` tem **11 Symmetry + 11 Spirit**, classes e IDs literais verificados sem branches; `ISS_MagicFromTheEast` liga o registrar no bootstrap. **COUNTED_EXACT** apenas para registro binário: **20/39 exatos / 19/39 pendentes**, **+0** raízes, mínimos **1857 global / 1855 escopo**. Fonte de parâmetros, runtime, Iron's 3.16.3, configuração e Survival continuam ⚠️. O workflow de auditoria fica fora da `main`.
+
+
 ## Provenance
 
 - pack: `iss_magicfromtheeast-1.1.5.jar`;

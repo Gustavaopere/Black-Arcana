@@ -1,6 +1,8 @@
 # Spirit — ISS: Magic From The East 1.1.5
 
-Status: `11/11 ACTIVE SPELLS CATALOGED`
+Status: `✅ 11/11 COUNTED_EXACT STATIC REGISTRY; RUNTIME/SURVIVAL ⚠️`
+
+[Dossiê físico 1.1.5](../EXACT-BINARY-SPELLS-1.1.5.md) e [Java21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162): 11 IDs/classes Spirit incondicionais e escola padrão confirmados; +0 novos.
 
 Source pin: `WarPhan78/ISS_MagicFromTheEast-1.21.x@13208302c9fdf5beb171a328558cbef07a25ba46`.
 
