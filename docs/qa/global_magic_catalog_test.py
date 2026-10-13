@@ -1270,9 +1270,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(7, len(exact))
+        self.assertEqual(8, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1329,9 +1329,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(7, len(exact))
+        self.assertEqual(8, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1519,6 +1519,50 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('| physical 0.1.2 / embedded 0.1.0 | 6 | `COUNTED_EXACT` |', entry)
         self.assertIn('7/39', self.index)
         self.assertIn('32/39', self.index)
+
+    def test_deeper_darker_133_version_b_four_exact_static_summons(self):
+        provider = PROVIDERS / '✅-deeper-and-darker-spellbooks'
+        name = 'EXACT-BINARY-SUMMONS-1.3.3-VER-B.md'
+        proof = (provider / name).read_text(encoding='utf-8')
+        expected = (
+            'darkermagic:summoned_warden',
+            'darkermagic:summoned_shattered',
+            'darkermagic:summoned_sculk_centipede',
+            'darkermagic:summoned_sculk_snapper',
+        )
+        for marker in (
+            '7897469', '38329132941',
+            '783123ae86c91c01527c10f338679caaef42eb42',
+            '100219', 'Version B', '1.3.3', '1.3.0',
+            'net.rev.darkermagic.registeries.DDISSSpellRegistery',
+            'net.rev.darkermagic.item.DDISSSpellRegistery',
+            'OWNED_SPELL_CLASS_COUNT=4',
+            'STATIC_REGISTER_SPELL_INVOCATIONS=4',
+            'ENTRYPOINT_TO_REGISTRY=True',
+            '8/39', '31/39', '1851', '1849', '+0', 'Survival',
+            *expected,
+        ):
+            self.assertIn(marker, proof)
+        rows = [x for x in proof.splitlines() if x.startswith('| ')
+                and 'darkermagic:' in x]
+        self.assertEqual(4, len(rows))
+        for path in ('README.md', 'TECHNICAL-AUDIT.md',
+                     'eldritch/summoned-warden.md',
+                     'eldritch/summoned-shattered.md',
+                     'eldritch/summoned-sculk-centipede.md',
+                     'eldritch/summoned-sculk-snapper.md'):
+            self.assertIn(name, (provider / path).read_text(encoding='utf-8'))
+        meta = ROOT / 'wiki/modpack-catalog/meta'
+        matrix = (meta / 'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith('| [Deeper & Darker Spellbooks]'))
+        self.assertIn('| 1.3.3 Version B | 4 | COUNTED_EXACT |', row)
+        ledger = (meta / 'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        entry = next(x for x in ledger.splitlines()
+                     if x.startswith('| [Deeper & Darker Spellbooks]'))
+        self.assertIn('| 1.3.3 Version B | 4 | `COUNTED_EXACT` |', entry)
+        self.assertIn('8/39', self.index)
+        self.assertIn('31/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)

@@ -1,5 +1,7 @@
 # Deeper and Darker: Spellbooks — catálogo canônico
 
+**Prova física 2026-10-12:** [quatro registros estáticos exatos da Version B 1.3.3](EXACT-BINARY-SUMMONS-1.3.3-VER-B.md) ([auditoria #38329132941](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38329132941)), SHA-1 publicador/físico `783123ae86c91c01527c10f338679caaef42eb42`. **✅ 4/4 `COUNTED_EXACT` só no registro**, campanha **8/39 / 31/39**, +0; mínimos 1851/1849. O registrador migrou do pacote `item` no source 1.3.0 para `registeries` no binário 1.3.3. ⚠️ Runtime, crash fix, config, aquisição e Survival não certificados.
+
 ## Estado
 
 - Mod ID: `darkermagic`
@@ -28,7 +30,8 @@ As fichas distinguem explicitamente:
 
 - **RELEASE 1.3.3 VER B CONFIRMADA** — identidade instalada, número de spells, variante B e changelog;
 - **SOURCE 1.3.0 BASELINE** — IDs, configs, fórmulas e lifecycle observados no último source público;
-- **NÃO VERIFICADO EM BYTECODE 1.3.3** — todo detalhe que a release não prova e que pode ter sido alterado pelo hotfix de summons.
+- **BYTECODE EXATO 1.3.3** — quatro identidades/classes de spell, registrador e bootstrap confirmados estaticamente;
+- **NÃO VERIFICADO FUNCIONALMENTE EM 1.3.3** — hotfix de servidor, fórmulas, lifecycle, configs, aquisição, multiplayer, Survival e release.
 
 Não promover o source 1.3.0 a authority 1.3.3.
 

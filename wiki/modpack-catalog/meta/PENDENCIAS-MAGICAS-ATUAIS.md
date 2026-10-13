@@ -1,5 +1,7 @@
 # Black Arcana — cinco pendências mágicas (acompanhamento)
 
+**Checkpoint Deeper & Darker Spellbooks 2026-10-12:** [auditoria Java 21 #38329132941](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38329132941), [dossiê](../providers/✅-deeper-and-darker-spellbooks/EXACT-BINARY-SUMMONS-1.3.3-VER-B.md), quatro summons no JAR 1.3.3 Version B, SHA físico exato; `DDISSSpellRegistery` movido de pacote em relação ao source 1.3.0. Campanha **8/39 exatos / 31/39 pendentes**, +0, mínimos **1851/1849**. ⚠️ Hotfix não testado com casting real, config, aquisição e Survival; Stage 06.05 🟡.
+
 **Checkpoint Backported Spellbooks 2026-10-12:** [prova binária #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989) e [dossiê exato](../providers/✅-backported-spellbooks/EXACT-BINARY-SPELLS-0.1.2.md) fecham seis spell IDs no JAR 0.1.2 (metadata interno 0.1.0). Campanha **7/39 exatos / 32/39 pendentes**, +0 novas; mínimos **1851/1849**. Config, gameplay, equipamento, worldgen e Survival ⚠️; Stage 06.05 🟡.
 
 **Checkpoint Wind's Spellbooks 2026-10-12:** [run #38312284152](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38312284152) e [dossiê](../providers/✅-winds-spellbooks/EXACT-BINARY-SPELLS-1.0.5.md) comprovam sete identidades no registro estático do JAR físico 1.0.5. **6/39 exatos / 33/39 pendentes**, +0, mínimos **1851/1849**. Config, gameplay e Survival ⚠️; Stage 06.05 🟡.
@@ -15,7 +17,7 @@
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **7/39 `COUNTED_EXACT` de registro mágico** (Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7 e Backported Spellbooks 6/6); ⚠️ **32/39** pendentes; nenhum PASS de execução/Survival |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **8/39 `COUNTED_EXACT` de registro mágico** (Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6 e Deeper & Darker Spellbooks 4/4); ⚠️ **31/39** pendentes; nenhum PASS de execução/Survival |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |
