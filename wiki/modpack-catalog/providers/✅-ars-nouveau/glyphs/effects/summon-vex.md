@@ -27,3 +27,11 @@ Compatible augments: Extend Time, Reduce Time through Ars Nouveau's common summo
 Ars Nouveau owns summon gating, Vex ownership/lifecycle and Summoning Sickness. Black Arcana must not create a parallel ownership ledger or bypass provider summon restrictions when interacting with these entities.
 
 Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
+
+## Engenharia para perks — caminho causal individual
+
+- **Source pin:** [`EffectSummonVex.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectSummonVex.java) do Ars 5.13.1.
+- **Admissão e número:** exige `canSummon(shooter)`; `ticks=(int)(20*(GENERIC_INT.get()+EXTEND_TIME.get()*durationMultiplier))`, defaults 15s e 10s; se `ticks<=0`, retorna. Laço **fixo de três** invoca `EntityAllyVex` em posições aleatórias perto do hit.
+- **Executor:** cada Vex passa por `finalizeSpawn(...MOB_SUMMONED)`, `setOwner(shooter)`, `setBoundOrigin(blockPos)`, `setLimitedLife(ticks)` e `summonLivingEntity`; caster recebe `SUMMONING_SICKNESS_EFFECT` com mesmos ticks. O código não usa AOE/Split para aumentar contagem neste effect.
+- **Perks:** count fixo e lifetime não devem ser extrapolados da quantidade de projéteis/augments de outras magias Ars; agentes autônomos podem causar dano posterior sem recast da origem.
+- **Estado:** ✅ classe/método do source pin; ⚠️ scripts de addons, config física e QA Survival pendentes; ⛔ bridge de perks RPG e mutação de `SpellStats` sem validação de causalidade e limites.

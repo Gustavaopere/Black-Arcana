@@ -37,3 +37,11 @@ This is an Ars Nouveau world/entity effect. Black Arcana must not replay the exp
 ## QA
 
 Exact spell-entry behavior is source-pinned to 5.13.1. Full-pack interaction with protection/claims and other wind-charge hooks remains runtime QA.
+
+## Engenharia para perks — caminho causal individual
+
+- **Source pin:** [`EffectWindburst.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectWindburst.java) do Ars 5.13.1.
+- **Explosão real:** `onResolve` chama `world.explode(...)` com `Level.ExplosionInteraction.TRIGGER` e particles/sound de wind charge. Tamanho enviado = `1.2f+(float)(getAoeMultiplier()*GENERIC_DOUBLE.getAsDouble())` (config scalar default 1.0), e strength ao `SimpleExplosionDamageCalculator` = `1.22f+(float)(getAmpMultiplier()*AMP_VALUE.getAsDouble())` (amp default 0.25). Não equiparar strength ao dano final causado por alvo sem examinar pipeline de explosion.
+- **Caster-protection:** com Sensitive, source de explosão é o shooter; sem ele, usa `dummyWindCharge`. Não há veto manual em `EffectWindburst`; todas as proteções aplicáveis dependem dos eventos vanilla/NeoForge e de `Level.explode`. Sensitive tem limite default 1.
+- **Perks:** modificação de AOE e Amplify afeta magnitude e raio por caminhos independentes; não reaplicar `ANExplosion` (esse executor é de outro glyph). WorldEffectPolicy só rege explosões de Black Arcana, não permite reemitir as do Ars.
+- **Estado:** ✅ classe/método do source pin; ⚠️ scripts de addons, config física e QA Survival pendentes; ⛔ bridge de perks RPG e mutação de `SpellStats` sem validação de causalidade e limites.
