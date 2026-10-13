@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## Waystones 21.1.45 — vigésima quarta prova física, 2026-10-13
+
+**Vigésima quarta prova binária (2026-10-13):** [Waystones 21.1.45](../providers/✅-waystones/EXACT-BINARY-ACTIONS-21.1.45.md), [Java21 #38460510230](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38460510230) **SUCCESS**. CurseForge file `8873000`, JAR **1219809 bytes**, SHA-1 `6ec1a176a102212db4f6391886db52ed103c830f` = físico #564. Três ações mágicas provider-native: teleport (`WaystonesAPI.tryTeleportAsync`), portal (`WarpPortalManager.spawnPortal`) e vínculo Twinbound (`TwinboundFeatherLinksComponent.with`). Ativação, binding Blank Scroll e attunement Warp Plate são preparações excluídas. **24/39 exatos / 15/39 pendentes**, **+0** raízes, mínimos **1857 global / 1855 escopo** inalterados. Não são spells Iron's; runtime/config/Survival ⚠️.
+
+
 ## Companions! 1.3.4 — vigésima terceira prova física, 2026-10-13
 
 **Vigésima terceira prova binária (2026-10-13):** [Companions! 1.3.4](../providers/✅-companions/EXACT-BINARY-MAGIC-BOOKS-1.3.4.md), [Java21 #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666) **SUCCESS**. Publisher CurseForge file `8857294`, **7189704 bytes**, SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1` = modlist física #104. `CompanionsItems.ITEMS` registra **9** nomes `companions:book_*` via `ResourceRegistry<Item>`, cada um com factory compilada para uma subclasse `AbstractMagicBook`; zero branches nesse bloco. Não são spells Iron's, Soul Mage reutiliza os nove. Campanha **23/39 exatos / 16/39 pendentes**, +0 raízes semânticas, mínimos **1857 global / 1855 escopo** inalterados. Runtime/KnightLib/Survival ⚠️.
