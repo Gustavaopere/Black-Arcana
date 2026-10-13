@@ -1,11 +1,13 @@
 # Magic Ray Magic Book
 
+**Prova física Java21 (2026-10-13):** ✅ `COUNTED_EXACT` — `companions:book_magic_ray`, `dev.xylonity.companions.common.item.book.books.MagicRayBook` (subclasse real de `AbstractMagicBook`), [auditoria #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666) e [dossiê SHA-exato](../EXACT-BINARY-MAGIC-BOOKS-1.3.4.md). Item mágico provider-native, não spell Iron's. Cooldown, cast e aquisição continuam source-pinned/Survival ⚠️; +0 identidade nova.
+
 - Provider: **Companions!** (`companions`)
 - Version: `1.3.4`
 - Registry id: `companions:book_magic_ray`
 - Concrete class: `MagicRayBook`
 - Semantic type: **provider-owned Magic Book action**
-- Semantic state: `COUNTED_SOURCE_PINNED`
+- Semantic state: `COUNTED_EXACT` (**identidade estática somente**)
 - Strict contribution: `1`
 - Source-default cooldown: **200 ticks**
 - Source-level survival acquisition: **provider injection into vanilla chest-table loot**
