@@ -65,3 +65,70 @@ jobs:
           else:
             raise SystemExit('FAIL-CLOSED: no official byte sequence matches physical modlist SHA')
           PY
+
+      - name: Prove 22 compiled unconditional registrations and extract literal IDs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib,os,zipfile,subprocess,re,hashlib
+          path=pathlib.Path(os.environ['RUNNER_TEMP'])/'iss_magicfromtheeast-1.1.5.jar'
+          assert path.is_file()
+          assert hashlib.sha1(path.read_bytes()).hexdigest()=='e3552ea6b7b32b843c48bf0d857237d4b7129ab0'
+          base='net.warphan.iss_magicfromtheeast.'
+          def javap(cls):
+            p=subprocess.run(['javap','-p','-c','-classpath',str(path),cls],capture_output=True,text=True,timeout=40)
+            assert p.returncode==0,(cls,p.stderr[:200])
+            return p.stdout
+          cls=base+'registries.MFTESpellRegistries'
+          reg=javap(cls)
+          assert 'SpellRegistry.SPELL_REGISTRY_KEY:' in reg
+          assert '// String iss_magicfromtheeast' in reg
+          assert 'DeferredRegister.create:' in reg
+          assert 'DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)' in reg
+          bus=reg.split('public static void register(',1)[1].split('private static ',1)[0]
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V' in bus
+          block=reg.split('static {};',1)[1]
+          classes=re.findall(r'// class net/warphan/iss_magicfromtheeast/spells/(symmetry|spirit)/([A-Za-z0-9_]+Spell)',block)
+          assert len(classes)==22,classes
+          assert classes[:11] and all(s=='symmetry' for s,c in classes[:11])
+          assert all(s=='spirit' for s,c in classes[11:])
+          assert len(set(classes))==22
+          assert block.count('Method registerSpell:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)')==22
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\b',block,re.M),'conditional initializer'
+          with zipfile.ZipFile(path) as z:
+            filenames=set(z.namelist())
+            roots=[x[:-6].replace('/','.') for x in filenames
+                   if x.endswith('.class') and '$' not in x and
+                   (x.count('/')<=3 or x.startswith('net/warphan/iss_magicfromtheeast/registries/'))]
+          callers=[]
+          for c in roots:
+            p=subprocess.run(['javap','-p','-c','-classpath',str(path),c],capture_output=True,text=True,timeout=25)
+            if p.returncode==0 and 'MFTESpellRegistries.register:' in p.stdout:
+              callers.append(c)
+          print('BOOTSTRAP_CALLERS='+repr(callers))
+          assert callers,'no entrypoint to registrar found in root/registry classfiles'
+          ids=[]
+          for idx,(family,klass) in enumerate(classes,1):
+            candidate='net/warphan/iss_magicfromtheeast/spells/'+family+'/'+klass+'.class'
+            assert candidate in filenames,candidate
+            body=javap(base+'spells.'+family+'.'+klass)
+            assert 'extends io.redspace.ironsspellbooks.api.spells.AbstractSpell' in body,klass
+            assert 'getSpellResource()' in body,klass
+            method=body.split('getSpellResource();',1)[1].split('\n  public ',1)[0].split('\n  protected ',1)[0].split('\n  private ',1)[0]
+            assert '// String iss_magicfromtheeast' in method,(klass,method[:400])
+            assert 'ResourceLocation.fromNamespaceAndPath:' in method,klass
+            texts=re.findall(r'// String ([a-z][a-z0-9_]*)',method)
+            suffixes=[x for x in texts if x!='iss_magicfromtheeast']
+            assert len(suffixes)==1,(klass,suffixes)
+            suffix=suffixes[0]
+            rid='iss_magicfromtheeast:'+suffix
+            assert rid not in ids,('duplicate ID',rid)
+            ids.append(rid)
+            print('EXACT_SPELL_'+str(idx)+'='+rid+'|'+family+'.'+klass)
+          assert len(ids)==22 and len(set(ids))==22
+          print('PHYSICAL_SPELL_REGISTRATIONS=22')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('EXACT_STATIC_REGISTRY_AUDIT=PASS')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
