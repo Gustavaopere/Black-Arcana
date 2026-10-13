@@ -34,3 +34,15 @@ Wololo é catalogado como capacidade existente, mas não deve bloquear nem justi
 ## Fonte / evidência
 
 Catálogo oficial atual: `https://iron.wiki/spells/` — consulta em 2026-09-06. A fonte não fornece semântica mecânica suficiente além dos metadados acima.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe de referência:** [`WololoSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/evocation/WololoSpell.java) (`e4056af90302d37eb1739f5ff05020b020e6e252`, 3.16.3).
+- **ID fonte:** `irons_spellbooks:wololo` (não inferir quando não extraído).
+- **Config:** raridade `LEGENDARY`, maxLevel `1`, cooldown s `10`, cast `LONG`.
+- **Campos Java:** `baseManaCost`=`10`; `manaCostPerLevel`=`5`; `baseSpellPower`=`4`; `spellPowerPerLevel`=`1`; `castTime`=`30`.
+- **Métodos:** `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `checkPreCastConditions()`, `onCast()`.
+- **Fórmulas de retorno simples:** não extraídas; checar métodos e auxiliares.
+- **Pistas técnicas:** `TargetEntityCastData`.
+
+**Para Codex:** seguir implementação e entidades auxiliares antes de gerar perks sobre alvo, status, duração, raio ou projéteis. Custo e spell power são provider-native com configs/atributos, não literais injetáveis em eventos. Sem hook comprovado manter ⚠️ condicionado/fail-closed e limites de custo/cap/deduplicação. Iron's: cast/custos. RPG Skill Tree: perks/Mastery/gates. Black Arcana: runtime próprio. Fonte estática, QA físico pendente. [Contrato geral](../TECHNICAL-PERK-MAP.md).
