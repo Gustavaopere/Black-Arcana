@@ -1,5 +1,7 @@
 # Quad Tornado
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT` — `legendary_spellbooks:quad_tornado`, classe `dev.higurashi.legendary_spellbooks.common.spells.lightning.QuadTornadoSpell` ([Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179); [dossiê SHA-exato](../EXACT-BINARY-SPELLS-0.3.2.md)). Valores e mecânicas source-pinned; runtime/Survival ⚠️; +0 raízes.
+
 - ID: `legendary_spellbooks:quad_tornado`
 - School: Lightning
 - Levels: 1–5
