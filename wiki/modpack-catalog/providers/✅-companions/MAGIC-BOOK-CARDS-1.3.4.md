@@ -1,5 +1,8 @@
 # Companions! 1.3.4 — canonical Magic Book action cards
 
+**Registro físico SHA-exato (2026-10-13):** ✅ [9/9 Magic Books provider-native](EXACT-BINARY-MAGIC-BOOKS-1.3.4.md), [Java 21 #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666) **SUCCESS**. CurseForge file `8857294`, **7189704 bytes**, SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1` = físico #104. `CompanionsItems.ITEMS` registra nove `ResourceEntry<Item>` com factories de subclasses concretas `AbstractMagicBook` (KnightLib), sem branches. **Não** são spells Iron's; `COUNTED_EXACT` só da identidade estática, catálogo de 9 já existente (+0), campanha **23/39 exatos / 16/39 pendentes**, mínimos **1857 global / 1855 escopo**; configuração e Survival ⚠️.
+
+
 Status: `✅ CATALOGED / 9 OF 9 MAGIC BOOK ACTIONS MATERIALIZED / COUNTED_SOURCE_PINNED / +9 STRICT / RUNTIME QA SEPARATE`
 
 This index materializes the complete source-pinned Magic Book semantic inventory for the current Companions! 1.3.4 catalog.
