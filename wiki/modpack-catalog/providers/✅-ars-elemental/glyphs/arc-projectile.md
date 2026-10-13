@@ -28,3 +28,11 @@ Projetis e spell contexts downstream são filhos do cast original Ars, não novo
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — propagação e cadeia de cast
+
+- **Classe:** [`MethodArcProjectile.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/MethodArcProjectile.java), commit fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d.
+- **Count/velocity:** `numSplits=getBuffCount(Split)` e loop `i=1;i<1+numSplits+1;i++` cria exatamente `1+numSplits` `EntityProjectileSpell` com tipo `SPELL_PROJ_ARC` e `setGravity(true)`. `velocity=max(0.2,1+accMultiplier/2)`; TTL config default `max_lifespan=60` segundos, efeito depende do executor.
+- **Cast:** `onCast` cria projectiles e retorna `CastResolveType.SUCCESS`; o overload `onCastOnBlock(BlockHitResult,LivingEntity,...)` (caster não-player) retorna **FAILURE**, enquanto UseOnContext de player cria projectiles e retorna SUCCESS. Não confundir com suporte irrestrito em turrets.
+- **Perks:** Pierce aumenta comportamento de ricochete/piercing downstream, não conta como casts extras; Split altera cardinalidade de entidades e exige budgets de lifecycle.
+- **Status:** ✅ identidade do JAR e fonte consultada; ⚠️ equivalência da implementação no JAR, addons/servidor/clientes e limites físicos pendentes; ⛔ nenhuma integração RPG ou perk aprovada nesta branch. O Ars mantém autoridade sobre SpellResolver, mana e entidade.

@@ -28,3 +28,11 @@ O propagador reemite a cadeia provider-owned através de Ars context/resolver, e
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — propagação e cadeia de cast
+
+- **Classe:** [`PropagatorHoming.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/PropagatorHoming.java), commit fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d.
+- **Contrato:** `IPropagator`, `getCastType=MethodHomingProjectile.INSTANCE`, `EffectReset.RESET_LIMITS.add(this)`, `onResolve→copyResolver`, typeIndex 8. `numSplits=1+getBuffCount(Split)` homing projectiles do mesmo resolver.
+- **Alvos/direção:** cria `EntityHomingProjectileSpell`, aplica `MethodHomingProjectile.basicIgnores(...)`, Dampen→gravidade, velocity do método host `getProjectileSpeed`. Com Extract ou `FakePlayer` usa `IPropagator.getDirection(shooter,resolver,hitPos)`; senão yaw/pitch do caster com spread lateral.
+- **Perks:** propagate + homing não deve produzir dupla atribuição de dano/custos/Mastery por spawn. Sem prova de persistência e callbacks do entity, modificação de targeting permanece condicionada.
+- **Status:** ✅ identidade do JAR e fonte consultada; ⚠️ equivalência da implementação no JAR, addons/servidor/clientes e limites físicos pendentes; ⛔ nenhuma integração RPG ou perk aprovada nesta branch. O Ars mantém autoridade sobre SpellResolver, mana e entidade.
