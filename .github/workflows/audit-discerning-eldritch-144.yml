@@ -62,3 +62,56 @@ jobs:
                 print('REG_BYTECODE='+line.strip()[:220])
           print('DISCOVERY_NOT_SURVIVAL=TRUE')
           PY
+
+      - name: Assert twenty-two unconditional compiled registrations and discover exact resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,os,pathlib,subprocess,zipfile,re,collections
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'discerning_the_eldritch-1.4.4-1.21.jar'
+          assert jar.is_file()
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='cf35c225aced23b705d1e0fd1bc5c62d96540e0c'
+          prefix='net.acetheeldritchking.discerning_the_eldritch.'
+          def javap(name):
+            p=subprocess.run(['javap','-c','-p','-classpath',str(jar),name],capture_output=True,text=True,timeout=35)
+            assert p.returncode==0,(name,p.stderr[:200])
+            return p.stdout
+          reg=javap(prefix+'registries.SpellRegistries')
+          assert 'SpellRegistry.SPELL_REGISTRY_KEY:' in reg
+          assert '// String discerning_the_eldritch' in reg
+          assert 'DeferredRegister.create:' in reg
+          assert 'DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)' in reg
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V' in reg
+          block=reg.split('static {};',1)[1]
+          entries=re.findall(r'// class net/acetheeldritchking/discerning_the_eldritch/spells/([a-z]+)/([A-Za-z0-9_]+Spell)',block)
+          assert len(entries)==22 and len(set(entries))==22,entries
+          assert block.count('Method registerSpell:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)')==22
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|if_icmp\w+|goto|tableswitch|lookupswitch)\b',block,re.M)
+          expected={'eldritch':9,'blood':1,'evocation':2,'fire':2,'holy':1,'ice':2,'ritual':5}
+          assert collections.Counter(f for f,_ in entries)==expected
+          print('STATIC_REGISTERED_SPELLS=22')
+          print('STATIC_REGISTRY_BRANCHES=0')
+          with zipfile.ZipFile(jar) as z:files=set(z.namelist())
+          for idx,(fam,cls) in enumerate(entries,1):
+            target='net/acetheeldritchking/discerning_the_eldritch/spells/'+fam+'/'+cls+'.class'
+            assert target in files,target
+            text=javap(prefix+'spells.'+fam+'.'+cls)
+            constants=re.findall(r'// String ([A-Za-z0-9_.:-]+)',text)
+            getter=text.find('getSpellResource')
+            assert getter>=0 or 'ResourceLocation' in text,cls
+            print('CANDIDATE_'+str(idx)+'='+fam+'.'+cls+' STRINGS='+repr(constants[:35])+' RESOURCE_LINES='+repr([l.strip() for l in text.splitlines() if 'ResourceLocation' in l][:12]))
+          with zipfile.ZipFile(jar) as z:
+            clslist=[x[:-6].replace('/','.') for x in z.namelist()
+                     if x.endswith('.class') and '$' not in x and x.startswith('net/acetheeldritchking/discerning_the_eldritch/')
+                     and x.count('/')<=5]
+          callers=[]
+          for name in clslist:
+            p=subprocess.run(['javap','-c','-p','-classpath',str(jar),name],capture_output=True,text=True,timeout=20)
+            if p.returncode==0 and 'SpellRegistries.register:' in p.stdout:
+              callers.append(name)
+          print('BOOTSTRAP_CALLERS='+repr(callers))
+          assert callers
+          print('REGISTRY_STATIC_PROOF=PASS')
+          print('DYNAMIC_RUNTIME_UNVERIFIED=TRUE')
+          PY
