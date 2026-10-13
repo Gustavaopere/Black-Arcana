@@ -49,3 +49,15 @@ Mantém um cone de energia elétrica à frente do caster e causa dano às criatu
 
 - `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Source 3.16.3: `ElectrocuteSpell.java` em `e4056af90302d37eb1739f5ff05020b020e6e252`.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`ElectrocuteSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/lightning/ElectrocuteSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:electrocute` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `COMMON`; maxLevel `10`; cooldown `12` segundos; cast `CONTINUOUS`.
+- **Campos Java:** `baseManaCost`=`3`; `manaCostPerLevel`=`1`; `baseSpellPower`=`1`; `spellPowerPerLevel`=`1`; `castTime`=`100`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getDamage()`.
+- **Fórmulas numéricas com retorno direto:** `getDamage = 1 + getSpellPower(spellLevel, caster) * .75f`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `addFreshEntity`.
+
+**Contrato de perks:** escola `lightning` não prova, sozinha, dano elétrico, arcos em cadeia ou stun. Conferir classe de descarga/targeting, i-frames, limites de saltos, duração e efeitos de bloco. Atributo nativo ≠ hook para raio, count ou chain. Exigir contrato de provider, cap e anti-proc-recursivo; caso contrário ⚠️ condicionado/fail-closed. Iron's controla cast/mana/efeitos, RPG Skill Tree perks/Mastery/gates, Black Arcana runtime mágico próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
