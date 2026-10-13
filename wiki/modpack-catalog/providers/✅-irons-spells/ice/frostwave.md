@@ -80,3 +80,15 @@ Já cobre radial Ice debuff → Chilled → fully-frozen tomb semantics.
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Changelog oficial 3.14.2.
 - Source 3.16.3 `e4056af...`: `FrostwaveSpell.java` + `gradle.properties`.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`FrostwaveSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ice/FrostwaveSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:frostwave` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `COMMON`; maxLevel `8`; cooldown `45` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`50`; `manaCostPerLevel`=`5`; `baseSpellPower`=`10`; `spellPowerPerLevel`=`3`; `castTime`=`20`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `onCast()`, `getRadius()`, `getDuration()`, `getCastStartAnimation()`, `getCastFinishAnimation()`.
+- **Fórmulas numéricas com retorno direto:** `getRadius = 6 + spellLevel * .75f`; `getDuration = (int) (getSpellPower(spellLevel, caster) * 20)`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `MobEffectInstance`, `DamageSources`, `addEffect`, `MobEffectRegistry`.
+
+**Contrato de perks:** a escola `ice` não garante, sozinha, um damage type de gelo/frost nem status de freeze. Identificar classe que aplica efeitos, limites de duração/slow e colisão antes de propor modificadores. Atributo nativo de Iron's não é hook universal de raio/ângulo/quantidade. Exigir adapter comprovado, proteção contra duplicação e caps; caso contrário ⚠️ condicionado/fail-closed. Iron's mantém cast/efeitos/mana; RPG Skill Tree possui perks/Mastery/gates; Black Arcana mantém runtime próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
