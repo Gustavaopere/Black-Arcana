@@ -37,3 +37,12 @@ Entity serialization, removal, Mob Jar data, special jar behavior and Source set
 ## QA
 
 Source entry path is pinned to 5.13.1. Effective Source batching, multipart/modded entity support and special Mob Jar behaviors remain runtime/provider QA.
+
+## Engenharia para perks — contrato de ritual
+
+- **Fonte:** [`RitualMobCapture.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualMobCapture.java), `com.hollingsworth.arsnouveau.common.ritual.RitualMobCapture`, Ars 5.13.1.
+- **Geometria/cadência:** a cada `60` ticks no servidor percorre posições `brazier±3` por eixo, isto é um cubo de `7×7×7` **candidatos a jarro** antes de filtro `MobJar`. Para cada `MobJarTile` vazio procura entidades em `AABB(jarPos).inflate(5)`, volume independente de 3 blocos do brazier. Divergência da descrição do provider deve permanecer explícita.
+- **Elegibilidade:** `canJar` aceita whitelist `JAR_WHITELIST` antes da blacklist; em seguida bloqueia `JAR_BLACKLIST`, `PartEntity`, `ItemEntity` com tag de item `JAR_ITEM_CAPTURE_BLACKLIST`; fallback admite `LivingEntity` não-player e não morta. A ordem whitelist→blacklist é significativa e não deve ser invertida por um gate customizado.
+- **Settlement:** desmonta passageiros/leash/raid/POI de Villagers antes de `tile.setEntityData(e)`; apenas após sucesso retira entidade com `RemovalReason.UNLOADED_TO_CHUNK` e cria efeitos visuais. Se ao menos uma captura teve sucesso marca `setNeedsSource(true)` ao final; `getSourceCost=500` não prova debit 500 por mob. Mesmo `MobJarTile` processa no máximo uma entidade por ciclo devido ao `break` interno.
+- **Perks:** captura, descarte, persistência do jarro, Source e conquistas especiais pertencem ao Ars; não duplicar entity serialization nem award XP por VFX.
+- **Estado:** ✅ source-pinned; ⚠️ tempo, recursos e proteção exigem observar config/JAR runtime. ⛔ não existe adapter RPG/Black Arcana demonstrado para reescrever Source, progresso, alvos ou world effects deste ritual.

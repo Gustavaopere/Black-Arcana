@@ -27,3 +27,11 @@ Raid creation, player association, raid group count and optional item consumptio
 ## QA
 
 Source behavior is pinned to 5.13.1. Effective interaction with other raid modifiers and full-pack village mechanics remains runtime QA.
+
+## Engenharia para perks — contrato de ritual
+
+- **Fonte:** [`RitualPillagerRaid.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualPillagerRaid.java), `com.hollingsworth.arsnouveau.common.ritual.RitualPillagerRaid`, Ars 5.13.1.
+- **Progresso:** a cada `20` ticks server avança `progress`, e quando `>=18` procura `ServerPlayer` em `AABB(brazier).inflate(5.0)`; usa o **primeiro** player retornado para `world.getRaids().createOrExtendRaid(player,brazierPos)`. Ritual só finaliza com `Raid` não nulo; sem player ou sem raid válida pode persistir.
+- **Modificador:** `canConsumeItem` permite item de `Tags.Items.GEMS_EMERALD` se dificuldade **não** HARD e `consumedItems` estiver vazio. Quando raid foi criada, `didConsumeItem(Items.EMERALD)` (tipo **exato**) altera `raid.numGroups=7`. A diferença entre aceitação por tag e teste de `Items.EMERALD` merece verificação com gems equivalentes; não presumir que qualquer emerald-tag tenha o mesmo resultado.
+- **Perks:** raid e waves pertencem ao manager vanilla/Ars. Não creditar Mastery por cada onda como conclusão independente, nem mutar `raid.numGroups`/consumo sem API de integração e validação de conflito com addons.
+- **Estado:** ✅ source-pinned; ⚠️ tempo, recursos e proteção exigem observar config/JAR runtime. ⛔ não existe adapter RPG/Black Arcana demonstrado para reescrever Source, progresso, alvos ou world effects deste ritual.
