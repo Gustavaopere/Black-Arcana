@@ -1,5 +1,7 @@
 # Blades Of Rancor
 
+**Prova física de registry (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:blades_of_rancor` / `net.acetheeldritchking.discerning_the_eldritch.spells.ritual.BladesOfRancorSpell`, escola `DTESchoolRegistry.RITUAL_RESOURCE` ([Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207); [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). É feitiço/ritual provider-native, **não** `RitualEngine` Black Arcana; cast/loot/source gates e Survival ⚠️; +0.
+
 - **ID:** `discerning_the_eldritch:blades_of_rancor`
 - **School:** Ritual
 - **Levels:** 1–5

@@ -1,5 +1,10 @@
 # Discerning The Eldritch 1.4.4 — technical audit
 
+## Prova binária exata 1.4.4-1.21 — 2026-10-13
+
+✅ [Dossiê de 22/22 IDs/classes físicos](EXACT-BINARY-SPELLS-1.4.4-1.21.md): [Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207) **SUCCESS**. CurseForge file `8816497`, JAR **22.098.930 bytes**, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c` = modlist física #220. `DiscerningTheEldritch → SpellRegistries` com **22/22** instâncias `AbstractSpell` registradas incondicionalmente, 9 Eldritch / 1 Blood / 2 Evocation / 2 Fire / 1 Holy / 2 Ice / 5 Ritual. IDs e escolas padrão verificados em cada classe. `COUNTED_EXACT` apenas quanto ao registro estático, campanha **22/39 exatos / 17/39 pendentes**, +0 raízes, mínimos **1857/1855** inalterados. Insanity/Exorcism, gates Ritual, config, Survival e compatibilidade runtime ⚠️.
+
+
 ## Provenance
 
 - Pack: `discerning_the_eldritch-1.4.4-1.21.jar`.

@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## Discerning The Eldritch 1.4.4 — vigésima segunda prova binária, 2026-10-13
+
+**Vigésima segunda prova binária (2026-10-13):** [Discerning The Eldritch 1.4.4-1.21](../providers/✅-discerning-the-eldritch/EXACT-BINARY-SPELLS-1.4.4-1.21.md), [Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207) **SUCCESS**. CurseForge `8816497`, JAR **22098930 bytes**, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c` = físico #220. `DiscerningTheEldritch → SpellRegistries`: **22** registros estáticos incondicionais e IDs únicos, com 9 Eldritch / 1 Blood / 2 Evocation / 2 Fire / 1 Holy / 2 Ice / 5 Ritual. `glacial_edge` é Glacial Cleave publicado; Exorcism consta no registry mas default Insanity é off; 5 Ritual são spells DTE. **22/39 exatos / 17/39 pendentes**, **+0** raízes, mínimos **1857 global / 1855 escopo** inalterados. Runtime/config/Survival ⚠️.
+
+
 ## Legendary Spellbooks 0.3.2 — vigésima primeira prova binária, 2026-10-13
 
 **Vigésima primeira prova binária (2026-10-13):** [Legendary Spellbooks 0.3.2](../providers/✅-legendary-spellbooks/EXACT-BINARY-SPELLS-0.3.2.md), [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) **SUCCESS**. CurseForge file `8255715`, JAR **510127 bytes**, SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5` = modlist física #372. `LegendarySpellbooks → LSSpellRegistry.register`, exatamente **30** chamadas incondicionais, **30** IDs binários distintos, 9 Annihilation / 3 Blood / 1 Evocation / 3 Fire / 2 Ice / 9 Lightning / 3 Nature. `PossessedFallingSoulBladeSpell` ausente do registry; +0 raízes, mínimos **1857 global / 1855 escopo** inalterados. Campanha **21/39 exatos / 18/39 pendentes**; runtime Iron's 3.16.3, Legendary Monsters 2.2.2 e Survival ⚠️.

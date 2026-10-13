@@ -1,5 +1,7 @@
 # Mend Flesh
 
+**Prova física de registry (2026-10-13):** ✅ `COUNTED_EXACT`, `discerning_the_eldritch:mend_flesh` / `net.acetheeldritchking.discerning_the_eldritch.spells.eldritch.MendFleshSpell`, escola padrão `SchoolRegistry.ELDRITCH_RESOURCE` ([Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207), [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). Custos/efeitos/Survival efetivos ⚠️; +0 identidades.
+
 - **ID:** `discerning_the_eldritch:mend_flesh`
 - **School:** Eldritch
 - **Levels:** 1–3

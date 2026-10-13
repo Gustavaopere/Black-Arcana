@@ -1,5 +1,7 @@
 # Vein Ripper
 
+**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:vein_ripper`, classe `net.acetheeldritchking.discerning_the_eldritch.spells.blood.VeinRipperSpell`, `SchoolRegistry.BLOOD_RESOURCE`; [Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207) e [dossiê SHA-exato](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Parâmetros source-pinned; runtime/Survival ⚠️; +0.
+
 - **ID:** `discerning_the_eldritch:vein_ripper`
 - **School:** Blood
 - **Levels:** 1–5

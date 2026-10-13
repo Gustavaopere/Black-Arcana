@@ -45,7 +45,8 @@ KNOWN_EXACT = {"Ypsilon's Fundamentalism": ('1.1.7.1', 15),
                "Ars 'n' Spells": ('3.3.4', 5),
                "Tunes n' Tomes": ('1.1.0-HOTFIX', 16),
                "ISS: Magic From The East": ('1.1.5', 22),
-               "Legendary Spellbooks": ('0.3.2', 30)}
+               "Legendary Spellbooks": ('0.3.2', 30),
+               "Discerning The Eldritch": ('1.4.4', 22)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')
