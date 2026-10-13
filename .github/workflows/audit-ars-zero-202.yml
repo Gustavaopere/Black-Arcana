@@ -1,0 +1,88 @@
+name: Ars Zero 2.0.2 physical JAR static inventory discovery
+on:
+  push:
+    branches:
+      - 'audit/ars-zero-202-*'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch exact official Ars Zero binary (fail closed)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,os,pathlib,urllib.request,zipfile
+          expected='ac9b6e6f7a2bd403ee7cdc16023509fde7c4e1d0'
+          dest=pathlib.Path(os.environ['RUNNER_TEMP'])/'ars_zero-1.21.1-2.0.2.jar'
+          urls=[
+            'https://mediafilez.forgecdn.net/files/8703/997/ars_zero-1.21.1-2.0.2.jar',
+            'https://media.forgecdn.net/files/8703/997/ars_zero-1.21.1-2.0.2.jar',
+            'https://cursemaven.com/curse/maven/ars-zero-1377482/8703997/ars-zero-1377482-8703997.jar',
+          ]
+          ok=False
+          for url in urls:
+              try:
+                  print('TRY='+url)
+                  req=urllib.request.Request(url,headers={'User-Agent':'Black-Arcana-read-only-binary-audit/1'})
+                  with urllib.request.urlopen(req,timeout=110) as s:
+                      data=s.read(12000000)
+                  sha=hashlib.sha1(data).hexdigest()
+                  print('BYTES='+str(len(data))+' SHA1='+sha)
+                  if sha!=expected: continue
+                  dest.write_bytes(data)
+                  with zipfile.ZipFile(dest) as z: assert z.testzip() is None
+                  print('PHYSICAL_SHA1_MATCH='+expected)
+                  ok=True
+                  break
+              except Exception as e:
+                  print('SOURCE_ERROR='+repr(e)[:240])
+          assert ok,'Exact physical SHA1 publisher JAR unavailable. No promotion.'
+          with open(os.environ['GITHUB_ENV'],'a') as f: f.write('AUDIT_JAR='+str(dest)+'\n')
+          PY
+      - name: Inspect metadata and compiled glyph registrar candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          path=os.environ['AUDIT_JAR']
+          with zipfile.ZipFile(path) as z:
+              classes=sorted(x for x in z.namelist() if x.endswith('.class'))
+              meta=[x for x in z.namelist() if x.endswith('neoforge.mods.toml') or x.endswith('mods.toml')]
+              print('TOTAL_CLASSES='+str(len(classes)))
+              for m in meta:
+                  txt=z.read(m).decode('utf-8',errors='replace')
+                  print('MOD_METADATA_PATH='+m)
+                  print('MOD_METADATA_IDS='+repr(re.findall(r'modId\s*=\s*["\x27]([^"\x27]+)',txt)[:25]))
+              packages=sorted({x.rsplit('/',1)[0] for x in classes if '$' not in x})
+              print('PACKAGE_PATHS='+repr(packages[:120]))
+              candidates=[x for x in classes if ('$' not in x and re.search(r'glyph|spell|registry|register|effect|augment|form|filter',x,re.I))]
+              print('CANDIDATE_CLASS_COUNT='+str(len(candidates)))
+              for x in candidates[:240]: print('CANDIDATE_CLASS='+x)
+              # Datapack glyph learning recipes may not mirror registry. Record separately.
+              recipes=[x for x in z.namelist() if ('recipe' in x and x.endswith('.json') and re.search(r'glyph|spell',x,re.I))]
+              print('RECIPE_CANDIDATES='+str(len(recipes)))
+              for x in sorted(recipes)[:80]:print('RECIPE_PATH='+x)
+          ranked=[x for x in candidates if re.search(r'glyph.*regist|regist.*glyph|spell.*regist|regist.*spell|arszero(?:mod)?\.class',x,re.I)]
+          ranked=ranked[:35]
+          print('REGISTRAR_CANDIDATES='+repr(ranked))
+          for x in ranked:
+              cls=x[:-6].replace('/','.')
+              try:
+                  p=subprocess.run(['javap','-p','-c','-classpath',path,cls],text=True,capture_output=True,timeout=35)
+                  raw=p.stdout
+                  print('DISASSEMBLED_CLASS='+cls+' return='+str(p.returncode)+' bytes='+str(len(raw)))
+                  keep=[v.strip() for v in raw.splitlines() if re.search(r'public static|registerSpell|registerGlyph|Register|register\(|INSTANCE|<clinit>|static \{|// class .*glyph|// class .*spell',v,re.I)]
+                  for v in keep[:125]:print('BC_'+cls+': '+v[:260])
+              except Exception as ex:print('JAVAP_ERROR='+cls+':'+str(ex)[:130])
+          print('AUDIT_DISCOVERY_ONLY=NO_COUNT_PROMOTION')
+          PY
