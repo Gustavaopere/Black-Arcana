@@ -1,0 +1,91 @@
+name: Ars n Spells 3.3.4 physical ritual and proxy audit
+on:
+  push:
+    branches:
+      - 'audit/ars-n-spells-334-*'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Resolve publisher JAR and check physical SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE="$RUNNER_TEMP/ars_n_spells-3.3.4.jar"
+          EXPECTED='53966330a468e626cd6469259af6778a5a7d9305'
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/8881/108/ars_n_spells-3.3.4.jar' \
+            'https://media.forgecdn.net/files/8881/108/ars_n_spells-3.3.4.jar' \
+            'https://www.curseforge.com/api/v1/mods/0/files/8881108/download'
+          do
+            rm -f "$FILE"
+            if curl --fail --silent --show-error --location --retry 2 --connect-timeout 12 --max-time 100 "$URL" -o "$FILE"; then
+              if file "$FILE" | grep -qE 'Zip archive|Java archive'; then
+                echo "PUBLISHER_FILE_ID=8881108"
+                break
+              fi
+            fi
+          done
+          test -s "$FILE"
+          echo "$EXPECTED  $FILE" | sha1sum --check
+          echo "PHYSICAL_SHA1_MATCH=$EXPECTED"
+          echo "JAR_BYTES=$(wc -c < "$FILE")"
+          echo "AUDIT_JAR=$FILE" >> "$GITHUB_ENV"
+      - name: Inspect NeoForge ritual registration paths and proxy pool via javap
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ['AUDIT_JAR']
+          with zipfile.ZipFile(jar) as z:
+            assert z.testzip() is None
+            entries=set(z.namelist())
+            for entry in sorted(x for x in entries if x.endswith('neoforge.mods.toml')):
+              print('MOD_METADATA='+entry)
+              for line in z.read(entry).decode('utf-8',errors='replace').splitlines():
+                if re.match(r'^\s*(modId|version|displayName)\s*=',line):
+                  print('METADATA_VALUE='+line.strip())
+            paths=sorted(x for x in entries if x.startswith('com/otectus/arsnspells/') and x.endswith('.class') and
+                  ('Ritual' in x or 'Proxy' in x) and '$' not in x)
+            print('RITUAL_PROXY_CLASS_PATHS='+repr(paths))
+          def get(name):
+            return subprocess.check_output(['javap','-p','-c','-constants','-classpath',jar,name],text=True)
+          for cls in [
+            'com.otectus.arsnspells.ArsNSpells',
+            'com.otectus.arsnspells.rituals.RitualRegistryHandler',
+            'com.otectus.arsnspells.spell.irons.ArsCrossProxyRegistry',
+            'com.otectus.arsnspells.spell.CrossModSpellComponents',
+          ]:
+            if cls.replace('.','/')+'.class' not in entries:
+              print('MISSING_BINARY_CLASS='+cls)
+              continue
+            s=get(cls)
+            print('BINARY_CLASS='+cls)
+            for line in s.splitlines():
+              if any(t in line for t in ['registerRitual','RitualRegistry.registerRitual','ModList.isLoaded',
+                   'SpellUninscriptionRitual','SpellTranscriptionRitual','SpellbookBindingRitual',
+                   'ManaInfusionRitual','ManaWellRitual','register:(Lnet/neoforged',
+                   'PROXY_POOL_SIZE','POOL_SIZE','ars_cross_','ArsCrossProxyRegistry',
+                   'isLoaded','registerRituals','DeferredRegister.register:','onCommonSetup']):
+                print('  '+line.strip()[:230])
+          for cls in ['SpellUninscriptionRitual','SpellTranscriptionRitual','SpellbookBindingRitual','ManaInfusionRitual','ManaWellRitual']:
+            fq='com.otectus.arsnspells.rituals.'+cls
+            if fq.replace('.','/')+'.class' not in entries:
+              print('MISSING_RITUAL='+cls)
+              continue
+            s=get(fq)
+            print('RITUAL_CLASS='+cls)
+            for line in s.splitlines():
+              if any(t in line for t in ['REGISTRY_PATH','ResourceLocation','getRegistryName','// String','extends ']):
+                print('  '+line.strip()[:200])
+          print('RESULT=STATIC_INTROSPECTION_COMPLETED_NOT_YET_PROMOTED')
+          PY
