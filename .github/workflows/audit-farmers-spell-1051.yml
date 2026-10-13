@@ -1,0 +1,106 @@
+name: Farmer's Spell 1.0.5.1 exact physical registry audit
+
+on:
+  push:
+    branches:
+      - 'audit/farmers-spell-1051-*'
+
+permissions:
+  contents: read
+
+jobs:
+  static-jar-proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download publisher JAR and verify installed physical SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE="$RUNNER_TEMP/farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar"
+          EXPECTED='f77355e029af39bbaba3854e10cc087a608351ff'
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/8760/428/farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar' \
+            'https://media.forgecdn.net/files/8760/428/farmers-spell-n-spellbook-1.0.5.1-1.21.1.jar' \
+            'https://www.curseforge.com/api/v1/mods/1631240/files/8760428/download'
+          do
+            rm -f "$FILE"
+            if curl --fail --silent --show-error --location --retry 2 --connect-timeout 14 --max-time 95 "$URL" -o "$FILE"; then
+              if file "$FILE" | grep -qE 'Zip archive|Java archive'; then
+                echo 'OFFICIAL_FILE_ID=8760428'
+                break
+              fi
+            fi
+          done
+          test -s "$FILE"
+          echo "$EXPECTED  $FILE" | sha1sum --check
+          echo "PHYSICAL_SHA1_MATCH=$EXPECTED"
+          echo "JAR_BYTES=$(wc -c < "$FILE")"
+          echo "AUDIT_JAR=$FILE" >> "$GITHUB_ENV"
+      - name: Prove six direct DeferredRegister entries and bootstrap in physical bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,zipfile,subprocess
+          jar=os.environ['AUDIT_JAR']
+          owner='com.chenjdy.farmers_spell'
+          names=[
+             ('goodberry','GoodberrySpell','GOODBERRY_SPELL'),
+             ('phantom_loot','PhantomLootSpell','PHANTOM_LOOT_SPELL'),
+             ('seal_coat','SealCoatSpell','SEAL_COAT_SPELL'),
+             ('bad_apple','BadAppleSpell','BAD_APPLE_SPELL'),
+             ('chaos_slash','ChaosSlashSpell','CHAOS_SLASH_SPELL'),
+             ('preserve_circle','PreserveCircleSpell','PRESERVE_CIRCLE_SPELL'),
+          ]
+          with zipfile.ZipFile(jar) as z:
+            assert z.testzip() is None,'corrupted ZIP'
+            entries=set(z.namelist())
+            for item in sorted(x for x in entries if x.endswith('neoforge.mods.toml')):
+              print('METADATA='+item)
+              for line in z.read(item).decode('utf-8','replace').splitlines():
+                if re.match(r'^\s*(modId|version|displayName)\s*=',line):
+                  print('  '+line.strip()[:180])
+            spell_dir='com/chenjdy/farmers_spell/spells/'
+            owned=sorted(x for x in entries if x.startswith(spell_dir) and x.endswith('Spell.class') and '$' not in x)
+            print('ALL_TOPLEVEL_PROVIDER_SPELL_CLASSES='+repr(owned))
+            assert len(owned)>=6, 'six concrete spell classes missing'
+            for id_,cls,slot in names:
+              assert spell_dir+cls+'.class' in entries,'missing '+cls
+            print('KNOWN_REGISTERED_SPELL_CLASSES='+str(len(names)))
+          def javap(cls):
+            return subprocess.check_output(['javap','-p','-c','-classpath',jar,cls],text=True)
+          reg=javap(owner+'.init.ModSpells')
+          init=reg.split('static {};')[-1]
+          entries_count=len(re.findall(r'// InterfaceMethod net/neoforged/neoforge/registries/DeferredRegister.register:',init))
+          entries_count+=len(re.findall(r'// Method net/neoforged/neoforge/registries/DeferredRegister.register:',init))
+          print('REGISTRAR='+owner+'.init.ModSpells')
+          print('STATIC_DEFERRED_REGISTER_INVOCATIONS='+str(entries_count))
+          print('STATIC_INITIALIZER_BRANCHES='+str(len(re.findall(r'^\s+\d+: (?:if\w*|goto|tableswitch|lookupswitch)\b',init,re.M))))
+          print('REGISTRAR_BUS_WIRING='+str('DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)' in reg))
+          print('REGISTRY_CREATE_SPELL_KEY='+str('SpellRegistry.SPELL_REGISTRY_KEY' in reg))
+          print('REGISTRY_REGISTER_LINES='+repr([x.strip() for x in init.splitlines() if 'DeferredRegister.register:' in x or 'String ' in x][:28]))
+          assert entries_count==6,'unexpected static registry cardinality'
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)' in reg
+          assert len(re.findall(r'^\s+\d+: (?:if\w*|goto|tableswitch|lookupswitch)\b',init,re.M))==0
+          main=javap(owner+'.FarmersSpell')
+          entry=('ModSpells.register:(Lnet/neoforged/bus/api/IEventBus;)' in main)
+          print('ENTRYPOINT_TO_REGISTRY='+str(entry))
+          assert entry,'mod bootstrap is not wired'
+          for id_,cls,slot in names:
+            spell=javap(owner+'.spells.'+cls)
+            keys=set(re.findall(r'// String ([a-z0-9_]+)',spell))
+            print('EXACT_BINARY_SPELL=farmers_spell:'+id_+';class='+cls+';registered_field='+slot+';id_literal='+str(id_ in keys))
+            assert id_ in keys,'resource literal missing '+id_
+            assert 'getSpellResource()' in spell, 'resource method missing '+id_
+            assert 'extends io.redspace.ironsspellbooks.api.spells.AbstractSpell' in spell,'wrong host inheritance'
+            assert ('Field '+slot+':') in init,'registry static field missing '+slot
+            assert ('// String '+id_) in init,'direct register key missing '+id_
+          print('RESULT=EXACT_SIX_DIRECT_STATIC_SPELL_REGISTRATIONS')
+          print('LIMITATIONS=NO_MODPACK_HOST_RUNTIME_NO_COOKING_DUPLICATION_QA_NO_CONFIG_NO_CAST_NO_SURVIVAL')
+          PY
