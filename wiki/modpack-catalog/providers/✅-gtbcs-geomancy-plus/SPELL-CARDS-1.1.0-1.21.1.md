@@ -3,13 +3,13 @@
 **Auditoria física 2026-10-12:** [12/12 IDs exatos do JAR](EXACT-BINARY-SPELLS-1.1.0-1.21.1.md) e [CI #38332395627](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38332395627). O JAR CurseForge file 7041615 tem SHA-1 `67e9652799f35f1fbd09968da6f400d0229f5599`, igual ao hash do snapshot físico do sibling. `GGSpells` registra 12 spells; `GeomancyPlusMod` referencia o registrador. `EarthshatterSpell` não foi registrada. Promoção `COUNTED_RELEASE_BOUNDED → COUNTED_EXACT` **somente para ID/cardinalidade estáticos**, 9/39 exatos e 30/39 pendentes, +0 novas magias; mínimos 1851/1849 preservados. Config/efeitos/aquisição/Survival permanecem ⚠️. Histórico abaixo retido como checkpoint.
 
 
-Status: **✅ 12/12 objetos catalogados / `COUNTED_RELEASE_BOUNDED` / sem validação física de execução no modpack.**
+Status atual: **✅ 12/12 objetos catalogados / `COUNTED_EXACT` quanto aos IDs de registry estático / sem validação física de execução no modpack.**
 
 ## Fontes e regra de contagem
 
 - **Versão identificada na modlist física congelada:** `gtbcs_geomancy_plus-1.1.0-1.21.1.jar`; mod id `gtbcs_geomancy_plus`. Minecraft 1.21.1, NeoForge.
 - **Registry examinado:** `GGSpells` do artefato publicado CurseForge File `7041615`; 12 `Supplier<AbstractSpell>` mapeados a 12 `registerSpell(...)`, com zero branches no inicializador. Consulta: [inventário canônico do provider](README.md) e [auditoria de JAR/release](EXACT-1.1.0-ARTIFACT-AUDIT.md).
-- **Provenance:** hash do artefato publisher SHA-1 `67e9652799f35f1fbd09968da6f400d0229f5599`. Este trabalho não extraiu nem revalidou o JAR da instalação. Preservar `COUNTED_RELEASE_BOUNDED` e o gate de execução física.
+- **Provenance atualizada 2026-10-12:** publisher file 7041615 e SHA-1 físico documentado pelo sibling `67e9652799f35f1fbd09968da6f400d0229f5599` coincidem; [auditoria independente Java 21 #38332395627](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38332395627) fechou doze IDs do registro estático. Preservar gates de runtime, configuração e Survival como não executados.
 - **Escopo:** dez registros Geo e dois Holy. Cada root de `GGSpells` aparece uma vez; subclasses não registradas, escolas, mixins, loot, itens e feitiços preexistentes do Iron's não somam objetos adicionais.
 - **Nomenclatura:** os cabeçalhos combinam o mod id declarado e o root exato do registry para indexação. O arquivo **não** prova a resolução final de `ResourceLocation`, configuração efetiva, interface de conjuração, aquisição no mundo ou comportamento vivo do servidor, ainda pendentes em QA.
 

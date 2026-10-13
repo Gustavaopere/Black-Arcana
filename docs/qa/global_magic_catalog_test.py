@@ -114,7 +114,8 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             school, _identifier, concrete = expected
             self.assertIn(f"- **Família confirmada:** {school}", body)
             self.assertIn(f"- **Classe concreta:** `{concrete}`", body)
-            self.assertIn("**Confiança:** `COUNTED_RELEASE_BOUNDED`", body)
+            self.assertIn("**Confiança atual:** `COUNTED_EXACT`", body)
+            self.assertIn("sem comprovação de gameplay, config ou Survival", body)
         self.assertIn("EarthshatterSpell", cards)
         self.assertIn("Earthquake", cards)
         self.assertIn("Stomp", cards)
