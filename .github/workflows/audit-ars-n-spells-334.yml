@@ -89,3 +89,69 @@ jobs:
                 print('  '+line.strip()[:200])
           print('RESULT=STATIC_INTROSPECTION_COMPLETED_NOT_YET_PROMOTED')
           PY
+      - name: Assert exactly five ritual identities and segregated eight-slot transport proxy
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ['AUDIT_JAR']
+          base='com.otectus.arsnspells'
+          rituals=[
+            ('spell_uninscription','SpellUninscriptionRitual','ALWAYS'),
+            ('mana_infusion','ManaInfusionRitual','IRONS_GATED'),
+            ('spell_transcription','SpellTranscriptionRitual','IRONS_GATED'),
+            ('mana_well','ManaWellRitual','IRONS_GATED'),
+            ('spellbook_binding','SpellbookBindingRitual','IRONS_GATED'),
+          ]
+          with zipfile.ZipFile(jar) as z:
+            assert z.testzip() is None
+            entries=set(z.namelist())
+            named=sorted(x for x in entries if x.startswith('com/otectus/arsnspells/rituals/')
+                   and x.endswith('Ritual.class') and '$' not in x
+                   and x.rsplit('/',1)[-1] not in ('AnsRitual.class',))
+            print('CONCRETE_RITUAL_CLASS_FILES='+repr(named))
+            assert len(named)==5, 'additional real ritual candidate; do not promote'
+          def code(s):
+            return subprocess.check_output(['javap','-p','-c','-constants','-classpath',jar,s],text=True)
+          handler=code(base+'.rituals.RitualRegistryHandler')
+          fn=handler.split('public static void registerRituals();')[1].split('private static void spliceTablet',1)[0]
+          registered=re.findall(r'// Method com/hollingsworth/arsnouveau/api/registry/RitualRegistry.registerRitual:',fn)
+          print('RITUAL_REGISTRATION_CALLS='+str(len(registered)))
+          assert len(registered)==5,'need exactly five ritual registration calls'
+          condition='// String irons_spellbooks' in fn and 'ModList.isLoaded:' in fn and re.search(r'\bifeq\b',fn)
+          print('IRON_SPELLBOOKS_RITUAL_GATE='+str(bool(condition)))
+          assert condition,'missing iron spellbooks gate'
+          un=fn.index('SpellUninscriptionRitual')
+          gate=fn.index('ModList.isLoaded:')
+          follow=fn.index('ManaInfusionRitual')
+          assert un<gate<follow,'uninscription must be ungated, other rituals gated'
+          print('RITUAL_GATE_ORDER=UNINSCRIPTION_BEFORE_IRONS_CHECK_BEFORE_FOUR_OTHERS')
+          for id_,name,gate_type in rituals:
+            cls=base+'.rituals.'+name
+            src=code(cls)
+            assert 'REGISTRY_PATH = "'+id_+'";' in src, 'ritual registry path mismatch: '+id_
+            assert ('// String ars_n_spells') in src and ('// String '+id_) in src, 'namespace/path not in bytecode'
+            assert 'fromNamespaceAndPath:' in src, 'resource location constructor absent'
+            assert name in fn,'ritual registration absent: '+name
+            print('EXACT_STATIC_RITUAL=ars_n_spells:'+id_+';class='+name+';gate='+gate_type)
+          app=code(base+'.ArsNSpells')
+          linked='RitualRegistryHandler.registerRituals:()V' in app
+          print('ENTRYPOINT_TO_RITUAL_REGISTRAR='+str(linked))
+          assert linked
+          proxy=code(base+'.spell.irons.ArsCrossProxyRegistry')
+          components=code(base+'.spell.CrossModSpellComponents')
+          assert 'POOL_SIZE = 8;' in proxy and 'PROXY_POOL_SIZE = 8;' in components
+          assert 'PROXY_SPELL_ID_PREFIX = "ars_n_spells:ars_cross_";' in components
+          assert 'PREFIX = "ars_cross_";' in proxy
+          assert len(re.findall(r'// Method net/neoforged/neoforge/registries/DeferredRegister.register:\(Ljava/lang/String;',proxy))==1, 'expected one bounded proxy loop body'
+          assert 'ArsCrossProxyRegistry.register:(Lnet/neoforged/bus/api/IEventBus;)V' in app
+          assert 'ModList.isLoaded:' in app and '// String irons_spellbooks' in app
+          print('PROXY_POOL_SIZE=8')
+          print('PROXY_NAMESPACE_PREFIX=ars_n_spells:ars_cross_')
+          print('PROXY_REGISTERED_ONLY_WHEN_IRONS_LOADED=True')
+          print('PROXY_REGISTER_STATIC_LOOP_BODIES=1')
+          print('PROXY_SEMANTIC_ROOTS_ADDED=0')
+          print('RESULT=EXACT_FIVE_STATIC_RITUAL_IDENTITIES_PLUS_EIGHT_NON_SEMANTIC_PROXIES')
+          print('LIMITATIONS=NO_MANA_SETTLEMENT_RUNTIME_NO_SCROLL_LOOM_QA_NO_CONFIG_NO_CLIENT_NO_SURVIVAL')
+          PY
