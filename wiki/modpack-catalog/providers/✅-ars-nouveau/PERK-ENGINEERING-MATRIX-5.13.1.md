@@ -1,6 +1,6 @@
 # Ars Nouveau 5.13.1 — mapa técnico para Codex e perks
 
-Status: 🟡 `SOURCE CAUSALITY IN PROGRESS` · **47/85 partes de spell com auditoria de perks e localizador** · **11/24 rituais** · hooks externos e gameplay físico ⚠️/⛔ conforme linha.
+Status: 🟡 `SOURCE CAUSALITY IN PROGRESS` · **59/85 partes de spell com auditoria de perks e localizador** · **24/24 rituais** · hooks externos e gameplay físico ⚠️/⛔ conforme linha.
 
 ## Identidade física e limite
 
@@ -22,17 +22,18 @@ Status: 🟡 `SOURCE CAUSALITY IN PROGRESS` · **47/85 partes de spell com audit
 | Tipo | Páginas com mapa | Dados que Codex já pode ler | Mutabilidade externa |
 |---|---|---|---|
 | Form 5/5 | [Projectile](glyphs/forms/projectile.md), [Self](glyphs/forms/self.md), [Touch](glyphs/forms/touch.md), [Underfoot](glyphs/forms/underfoot.md), [Pantomime](glyphs/forms/pantomime.md) | spawn, targeting, sobrecargas por contexto, status SUCCESS/FAILURE/RUNE | ⛔ sem hook provado |
-| Effect 29/67 — ofensivos | [Harm](glyphs/effects/harm.md), [Explosion](glyphs/effects/explosion.md), [Lightning](glyphs/effects/lightning.md), [Ignite](glyphs/effects/ignite.md), [Wither](glyphs/effects/wither.md) | dano/duration branches, formula downstream, wet bonus, efeito por tick | ⛔ sem hook provado |
-| Effect 29/67 — world | [Break](glyphs/effects/break.md), [Freeze](glyphs/effects/freeze.md), [Grow](glyphs/effects/grow.md), [Place Block](glyphs/effects/place-block.md) | AOE/depth e claim/event gates, item/loot, world mutation | ⛔ sem hook provado |
-| Effect 29/67 — controle/utilidade | [Blink](glyphs/effects/blink.md), [Snare](glyphs/effects/snare.md), [Summon Wolves](glyphs/effects/summon-wolves.md), [Rune](glyphs/effects/rune.md), [Heal](glyphs/effects/heal.md) | teleporte, debuffs, summons, delayed casts, healing/dano invertido | ⛔ sem hook provado |
-| Effect 29/67 — transformação e summons | [Burst](glyphs/effects/burst.md), [Cut](glyphs/effects/cut.md), [Intangible](glyphs/effects/intangible.md), [Summon Undead](glyphs/effects/summon-undead.md), [Wololo](glyphs/effects/wololo.md) | child-context em esfera, shearing/strip, restauração temporária, summon owners, dye/items | ⚠️ helpers/WorldEffectPolicy e adapters RPG pendentes |
+| Effect 41/67 — ofensivos | [Harm](glyphs/effects/harm.md), [Explosion](glyphs/effects/explosion.md), [Lightning](glyphs/effects/lightning.md), [Ignite](glyphs/effects/ignite.md), [Wither](glyphs/effects/wither.md) | dano/duration branches, formula downstream, wet bonus, efeito por tick | ⛔ sem hook provado |
+| Effect 41/67 — world | [Break](glyphs/effects/break.md), [Freeze](glyphs/effects/freeze.md), [Grow](glyphs/effects/grow.md), [Place Block](glyphs/effects/place-block.md) | AOE/depth e claim/event gates, item/loot, world mutation | ⛔ sem hook provado |
+| Effect 41/67 — controle/utilidade | [Blink](glyphs/effects/blink.md), [Snare](glyphs/effects/snare.md), [Summon Wolves](glyphs/effects/summon-wolves.md), [Rune](glyphs/effects/rune.md), [Heal](glyphs/effects/heal.md) | teleporte, debuffs, summons, delayed casts, healing/dano invertido | ⛔ sem hook provado |
+| Effect 41/67 — transformação e summons | [Burst](glyphs/effects/burst.md), [Cut](glyphs/effects/cut.md), [Intangible](glyphs/effects/intangible.md), [Summon Undead](glyphs/effects/summon-undead.md), [Wololo](glyphs/effects/wololo.md) | child-context em esfera, shearing/strip, restauração temporária, summon owners, dye/items | ⚠️ helpers/WorldEffectPolicy e adapters RPG pendentes |
+| Effect 41/67 — condições e consumíveis | [Access Ender Inventory](glyphs/effects/access-ender-inventory.md), [Animate Block](glyphs/effects/animate-block.md), [Bubble](glyphs/effects/bubble.md), [Cold Snap](glyphs/effects/cold-snap.md), [Conjure Water](glyphs/effects/conjure-water.md), [Crush](glyphs/effects/crush.md), [Firework](glyphs/effects/firework.md), [Flare](glyphs/effects/flare.md), [Hex](glyphs/effects/hex.md), [Infuse](glyphs/effects/infuse.md), [Knockback](glyphs/effects/knockback.md), [Sense Magic](glyphs/effects/sense-magic.md) | menu Ender, block-summon, Bubble pop, Cold Snap, recipes, Soaked, firework, Cinders, Hex, potions, knockback e Magic Find | ⚠️ efeito por executor, config e runtime; adapter RPG ⛔ |
 | Augment 13/13 — primeiros 4 | [Amplify](glyphs/augments/amplify.md), [AOE](glyphs/augments/aoe.md), [Split](glyphs/augments/split.md), [Pierce](glyphs/augments/pierce.md) | estatísticas transformadas versus contagem de augments, consumidores distintos | ⛔ sem hook provado |
-| Effect 29/67 — temporal e dispel | [Rewind](glyphs/effects/rewind.md), [Exchange](glyphs/effects/exchange.md), [Delay](glyphs/effects/delay.md), [Dispel](glyphs/effects/dispel.md), [Gravity](glyphs/effects/gravity.md) | event queue, time/teleport, DispelEvent, falling blocks e source policy | ⚠️ evento público observado; adapter ⛔ |
-| Effect 29/67 — campos e processamento | [Wall](glyphs/effects/wall.md), [Linger](glyphs/effects/linger.md), [Orbit](glyphs/effects/orbit.md), [Smelt](glyphs/effects/smelt.md), [Fangs](glyphs/effects/fangs.md) | child-context, entities, counters, receitas e spawn condicionado | ⚠️ API genérica de effect; comportamento auxiliar condicionado |
+| Effect 41/67 — temporal e dispel | [Rewind](glyphs/effects/rewind.md), [Exchange](glyphs/effects/exchange.md), [Delay](glyphs/effects/delay.md), [Dispel](glyphs/effects/dispel.md), [Gravity](glyphs/effects/gravity.md) | event queue, time/teleport, DispelEvent, falling blocks e source policy | ⚠️ evento público observado; adapter ⛔ |
+| Effect 41/67 — campos e processamento | [Wall](glyphs/effects/wall.md), [Linger](glyphs/effects/linger.md), [Orbit](glyphs/effects/orbit.md), [Smelt](glyphs/effects/smelt.md), [Fangs](glyphs/effects/fangs.md) | child-context, entities, counters, receitas e spawn condicionado | ⚠️ API genérica de effect; comportamento auxiliar condicionado |
 | Augment 9 restantes | [Accelerate](glyphs/augments/accelerate.md), [Decelerate](glyphs/augments/decelerate.md), [Dampen](glyphs/augments/dampen.md), [Extend Time](glyphs/augments/extend-time.md), [Reduce Time](glyphs/augments/reduce-time.md), [Extract](glyphs/augments/extract.md), [Fortune](glyphs/augments/fortune.md), [Randomize](glyphs/augments/randomize.md), [Sensitive](glyphs/augments/sensitive.md) | operadores, efeitos dependentes da contagem, config/caps e regras de alvo | ⚠️ alguns setters reais via evento EffectResolve, adapter ⛔ |
-| Ritual 11/24 | [Flight](rituals/flight.md), [Binding](rituals/binding.md), [Disintegration](rituals/disintegration.md), [Scrying](rituals/scrying.md), [Warping](rituals/warping.md), [Sanctuary](rituals/sanctuary.md), [Moonfall](rituals/moonfall.md), [Gravity](rituals/gravity.md), [Harvest](rituals/harvest.md), [Burrowing](rituals/burrowing.md), [Restoration](rituals/restoration.md) | range, ticks, Source cost, refresh/jump/packet | ⛔ sem hook provado |
+| Ritual 24/24 | [Flight](rituals/flight.md), [Binding](rituals/binding.md), [Disintegration](rituals/disintegration.md), [Scrying](rituals/scrying.md), [Warping](rituals/warping.md), [Sanctuary](rituals/sanctuary.md), [Moonfall](rituals/moonfall.md), [Gravity](rituals/gravity.md), [Harvest](rituals/harvest.md), [Burrowing](rituals/burrowing.md), [Restoration](rituals/restoration.md), [awakening](rituals/awakening.md), [challenge](rituals/challenge.md), [containment](rituals/containment.md), [fertility](rituals/fertility.md), [flowering](rituals/flowering.md), [forestation](rituals/forestation.md), [cloudshaping](rituals/cloudshaping.md), [conjure-island-desert](rituals/conjure-island-desert.md), [conjure-island-plains](rituals/conjure-island-plains.md), [overgrowth](rituals/overgrowth.md), [summon-animals](rituals/summon-animals.md), [summon-wilden](rituals/summon-wilden.md), [sunrise](rituals/sunrise.md) | range, ticks, Source cost, refresh/jump/packet | ⛔ sem hook provado |
 
-**As seis sublinhas Effect distribuem 29 fichas (5+4+5+5+5+5); Augments somam 4+9=13.** A contagem é de dossiês source-pinned, não de novas identidades semânticas.
+**As sete sublinhas Effect distribuem 41 fichas (5+4+5+5+5+5+12); Augments somam 4+9=13.** A contagem é de dossiês source-pinned, não de novas identidades semânticas.
 
 
 ## Análises adicionais de rituais e mundo
@@ -48,6 +49,15 @@ Status: 🟡 `SOURCE CAUSALITY IN PROGRESS` · **47/85 partes de spell com audit
 - **Burrowing:** quatro blocos por camada com checagens de hardness/claims e fake player.
 - **Restoration:** cura 10, ataque fake-player 10 a undead/inverted, conversão Zombie Villager, Source pendente.
 
+## Alertas de source — lote 59/85
+
+- **Crush:** método de transformação de blocos não traz `destroyRespectsClaim` local, mas a admissão completa não foi validada; não declarar exploit.
+- **Conjure Water:** `POTION_TIME` configura 20 segundos, mas o getter sem config usa fallback de 30; `Sense Magic` configura 60/15 segundos, getters sem config retornam 30/8. Apenas config carregada determina valores efetivos.
+- **Cold Snap:** Snare só é aplicada quando `attemptDamage` retorna sucesso, enquanto o caminho de shards segue após admissão do alvo e independentemente desse retorno. Máster/procs precisam separar branches.
+- **Containment:** jarros em cubo ±3, entidades em AABB inflate(5) de cada jarro, divergindo da descrição generalizada.
+- **Awakening:** DFS limitada a 350 por árvore candidata e conversão de entidades não é uma série de casts independente.
+- **Rituais 24/24:** mapeamento de entrada/source, laços, estados e bloqueios existe para cada ficha; **não** significa que efeitos auxiliares/JAR físico, plugins de proteção ou provider-native QA estejam aprovados.
+
 ## Riscos e bloqueios concretos para futuras perks
 
 1. **Amplificação não é sempre dano.** Pode significar Poison, harvest strength, intensidade, alcance etc. Só aplicar por consumidor e limites da receita.
@@ -59,7 +69,7 @@ Status: 🟡 `SOURCE CAUSALITY IN PROGRESS` · **47/85 partes de spell com audit
 
 ## Próximas verificações
 
-- Demais **0 Forms, 38 Effects, 0 Augments e 13 rituais**, sempre ficha a ficha.
+- Demais **0 Forms, 26 Effects, 0 Augments e 0 rituais**, sempre ficha a ficha.
 - `SpellCastEvent`, `SpellResolveEvent`, `EffectResolveEvent`, `SpellCostCalcEvent` e `DispelEvent` já foram source-pinados; agora falta adapter RPG com testes de sucesso/veto/exactly-once, custo Pre/Post e conflitos com addons.
 - Limites reais em `SpellResolver`, `SpellStats.Builder`, `SpellUtil`, claims, `RuneTile` e efeitos persistentes; validar config efetivamente carregada.
 - Ensaios em NeoForge 1.21.1/Ars 5.13.1 e modpack/Survival. **Nenhum realizado neste PR**.
