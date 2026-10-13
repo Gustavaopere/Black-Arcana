@@ -28,3 +28,9 @@ Compatible augments: Amplify, Dampen, Extend Time, Reduce Time, Fortune, Randomi
 Ars owns this damage/Poison branch, invulnerability-frame interactions and provider damage source. Black Arcana must not double-process damage, lifesteal, mastery or Arcane Danger when observing Ars-owned Harm damage.
 
 Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
+
+## Dossiê de engenharia para perks — causalidade exata
+
+- **Código versionado:** [`EffectHarm.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectHarm.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectHarm` no Ars 5.13.1, método `onResolveEntity`.
+- **Alvo/efeito:** `onResolveEntity` ignora `ItemEntity`; com Extend Time ou Duration Down **e** alvo vivo, usa `IPotionEffect.applyConfigPotion` com `MobEffects.POISON`, substituindo dano instantâneo; sem isso, tenta `IDamageEffect.attemptDamage`. **Dano bruto:** `DAMAGE.get()+AMP_VALUE.get()*spellStats.getAmpMultiplier()`, defaults configurados 5.0 e 2.0. **Poison:** defaults do construtor de config 5 (base) e 5 (Extend Time), efeito/ticks resolvidos por helper; amplificação local limitada a 2. **Perks:** não somar dano direto e Poison como dois casts nem assumir evento de mutação externa.
+- **Limite de integração:** ✅ fonte estática identificada; ⚠️ parâmetros condicionados à configuração carregada; ⛔ nenhum hook externo de mutação verificado. Mana, targeting e settlement pertencem a Ars; RPG Skill Tree não substitui o resolver. Gameplay/Survival e adapter real: PENDING.
