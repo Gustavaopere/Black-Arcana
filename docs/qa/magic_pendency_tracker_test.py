@@ -974,9 +974,9 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("PENDING / DEFERRED TO STAGE 09", stage09)
         self.assertIn("crash consistency", stage09)
 
-    def test_seven_exact_registries_do_not_certify_other_or_survival(self):
-        self.assertIn("7/39", self.status)
-        self.assertIn("32/39", self.status)
+    def test_eight_exact_registries_do_not_certify_other_or_survival(self):
+        self.assertIn("8/39", self.status)
+        self.assertIn("31/39", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
         self.assertIn("JARs fora da categoria Magic", self.status)
         self.assertIn("14 rotas", self.status)
@@ -986,8 +986,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
                    if s.startswith("| [Ars Additions]"))
         self.assertIn("| COUNTED_EXACT |", row)
         self.assertIn("HOST-GLYPH-IDS-EXACT-5.13.1.md", row)
-        self.assertIn("7/39", self.binary)
-        self.assertIn("32/39", self.binary)
+        self.assertIn("8/39", self.binary)
+        self.assertIn("31/39", self.binary)
         second = next(s for s in self.binary.splitlines()
                       if s.startswith("| [Ars Hex]"))
         self.assertIn("| COUNTED_EXACT |", second)
@@ -1012,6 +1012,10 @@ class MagicPendencyStatusTest(unittest.TestCase):
                        if s.startswith("| [Backported Spellbooks]"))
         self.assertIn("| COUNTED_EXACT |", seventh)
         self.assertIn("EXACT-BINARY-SPELLS-0.1.2.md", seventh)
+        eighth = next(s for s in self.binary.splitlines()
+                      if s.startswith("| [Deeper & Darker Spellbooks]"))
+        self.assertIn("| COUNTED_EXACT |", eighth)
+        self.assertIn("EXACT-BINARY-SUMMONS-1.3.3-VER-B.md", eighth)
 
     def test_historical_ritual_design_gate_preserves_original_blocker(self):
         self.assertIn("⛔ SEM INGRESSO CANÔNICO", self.stage)
