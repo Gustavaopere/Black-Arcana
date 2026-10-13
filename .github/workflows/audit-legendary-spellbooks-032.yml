@@ -63,3 +63,60 @@ jobs:
           print('SPELL_CLASS_CANDIDATES='+repr([x for x in classes if x.lower().endswith('spell')][:80]))
           print('DISCOVERY_ONLY_NOT_RUNTIME=TRUE')
           PY
+
+      - name: Verify unconditional 30 spell registrations and discover compiled IDs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, pathlib, zipfile, hashlib, subprocess, re
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'legendary_spellbooks-0.3.2.jar'
+          assert jar.is_file()
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='bda5b1fbe50ad834a6a76ad36789743c1057ebf5'
+          namespace='dev.higurashi.legendary_spellbooks.'
+          def javap(c):
+            p=subprocess.run(['javap','-c','-p','-classpath',str(jar),c],capture_output=True,text=True,timeout=20)
+            assert p.returncode==0,(c,p.stderr[:220])
+            return p.stdout
+          reg=javap(namespace+'registries.LSSpellRegistry')
+          assert 'SpellRegistry.SPELL_REGISTRY_KEY:' in reg
+          assert '// String legendary_spellbooks' in reg
+          assert 'DeferredRegister.create:' in reg
+          assert 'DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)' in reg
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V' in reg
+          block=reg.split('static {};',1)[1]
+          order=re.findall(r'// class dev/higurashi/legendary_spellbooks/common/spells/([a-z]+)/([A-Za-z0-9_]+Spell)',block)
+          assert len(order)==30,('registry-classes',len(order),order)
+          assert len(set(order))==30
+          assert block.count('Method registerSpell:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)')==30
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|goto|tableswitch|lookupswitch|if_icmp\w+)\b',block,re.M), 'conditional static initializer'
+          assert 'PossessedFallingSoulBlade' not in block
+          print('STATIC_REGISTRATIONS=30')
+          print('STATIC_INITIALIZER_BRANCHES=0')
+          print('UNREGISTERED_POSSSESSED_FALLING_SOUL_BLADE=EXCLUDED')
+          with zipfile.ZipFile(jar) as z:classes=set(z.namelist())
+          for i,(family,name) in enumerate(order,1):
+            path='dev/higurashi/legendary_spellbooks/common/spells/'+family+'/'+name+'.class'
+            assert path in classes,path
+            body=javap(namespace+'common.spells.'+family+'.'+name)
+            assert ('AbstractSpell' in body or 'BaseSpell' in body or 'BaseSummonSpell' in body or 'BaseDoubleSchoolSpell' in body)
+            assert 'getSpellResource' in body or 'spellId' in body or 'SPELL_ID' in body or 'ResourceLocation' in body,(name,'missing resource evidence')
+            literals=re.findall(r'// String ([A-Za-z][a-zA-Z0-9_:.-]+)',body)
+            call=[line.strip() for line in body.splitlines() if 'ResourceLocation' in line or 'SchoolResource' in line or 'SchoolRegistry' in line or 'LSSchoolRegistry' in line or 'SCHOOL_RESOURCE' in line]
+            print('CANDIDATE_SPELL_'+str(i)+'='+family+'.'+name+' STRINGS='+repr(literals[:17])+' RESOURCE_OPS='+repr(call[:11]))
+          # Entry point scan: discover an actual initializer path, not infer from class existence.
+          with zipfile.ZipFile(jar) as z:
+            roots=[f[:-6].replace('/','.') for f in z.namelist()
+                   if f.endswith('.class') and '$' not in f and
+                   f.startswith('dev/higurashi/legendary_spellbooks/') and
+                   f.count('/')<=5]
+          callers=[]
+          for c in roots:
+            p=subprocess.run(['javap','-c','-p','-classpath',str(jar),c],capture_output=True,text=True,timeout=15)
+            if p.returncode==0 and 'LSSpellRegistry.register:' in p.stdout:
+              callers.append(c)
+          print('BOOTSTRAP_CALLERS='+repr(callers))
+          assert callers,'no entrypoint -> spell registry'
+          print('REGISTRAR_STATIC_DISCOVERY=PASS')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
