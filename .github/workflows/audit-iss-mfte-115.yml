@@ -115,12 +115,22 @@ jobs:
             body=javap(base+'spells.'+family+'.'+klass)
             assert 'extends io.redspace.ironsspellbooks.api.spells.AbstractSpell' in body,klass
             assert 'getSpellResource()' in body,klass
-            method=body.split('getSpellResource();',1)[1].split('\n  public ',1)[0].split('\n  protected ',1)[0].split('\n  private ',1)[0]
-            assert '// String iss_magicfromtheeast' in method,(klass,method[:400])
-            assert 'ResourceLocation.fromNamespaceAndPath:' in method,klass
-            texts=re.findall(r'// String ([a-z][a-z0-9_]*)',method)
-            suffixes=[x for x in texts if x!='iss_magicfromtheeast']
-            assert len(suffixes)==1,(klass,suffixes)
+            # ISS stores the literal ResourceLocation in spellId during
+            # construction; getSpellResource() may only return that field.
+            assert 'ResourceLocation.fromNamespaceAndPath:' in body,klass
+            bytecode=body.splitlines()
+            suffixes=[]
+            for line_number,line in enumerate(bytecode):
+              if '// String iss_magicfromtheeast' not in line:continue
+              nearby=bytecode[line_number+1:line_number+8]
+              if not any('ResourceLocation.fromNamespaceAndPath:' in part for part in nearby):continue
+              for part in nearby:
+                m=re.search(r'// String ([a-z][a-z0-9_]*)',part)
+                if m and m.group(1)!='iss_magicfromtheeast':
+                  suffixes.append(m.group(1))
+                  break
+            assert len(suffixes)==1,(klass,suffixes,
+                 [x for x in bytecode if '// String ' in x][:20])
             suffix=suffixes[0]
             rid='iss_magicfromtheeast:'+suffix
             assert rid not in ids,('duplicate ID',rid)
