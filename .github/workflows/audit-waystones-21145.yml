@@ -65,3 +65,53 @@ jobs:
                 print('BYTECODE='+line.strip()[:215])
           print('DISCOVERY_ONLY_NOT_RUNTIME=TRUE')
           PY
+
+      - name: Reconcile exact compiled player actions and exclusions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,pathlib,hashlib,subprocess,zipfile,re
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'waystones-neoforge-1.21.1-21.1.45.jar'
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='6ec1a176a102212db4f6391886db52ed103c830f'
+          prefix='net.blay09.mods.waystones.'
+          targets=[
+            'api.WaystonesAPI',
+            'core.WarpPortalManager',
+            'item.PortalScrollItem',
+            'item.TwinboundFeatherItem',
+            'component.TwinboundFeatherLinksComponent',
+            'core.TwinboundFeatherTargets',
+            'item.WarpStoneItem',
+            'item.BlankScrollItem',
+            'block.WaystoneBlock',
+            'block.entity.WarpPlateBlockEntity',
+            'block.WarpPlateBlock'
+          ]
+          def javap(clazz):
+            p=subprocess.run(['javap','-p','-c','-classpath',str(jar),prefix+clazz],capture_output=True,text=True,timeout=30)
+            assert p.returncode==0,(clazz,p.stderr[:150])
+            return p.stdout
+          for clazz in targets:
+            code=javap(clazz)
+            print('CLASS_AUDITED='+clazz)
+            signatures=[x.strip() for x in code.splitlines() if x.startswith('  public ') or x.startswith('  private ') or x.startswith('  protected ')]
+            filtered=[s for s in signatures if any(t in s.lower() for t in ('teleport','portal','twinbound','link','use(','useon(','activate','attune','tick','warp','interact','bind','handle'))]
+            print('RELEVANT_METHODS='+repr(filtered[:50]))
+            calls=[x.strip() for x in code.splitlines() if ('// Method ' in x or '// InterfaceMethod ' in x) and any(t in x for t in ('tryTeleportAsync','spawnPortal','TwinboundFeatherLinksComponent','setBoundWaystone','PlayerWaystoneManager','attuneShard','activateWaystone','teleportFromPortal','activate','setLinked','addLink'))]
+            print('RELEVANT_CALLS='+repr(calls[:70]))
+          api=javap('api.WaystonesAPI')
+          manager=javap('core.WarpPortalManager')
+          portal=javap('item.PortalScrollItem')
+          feather=javap('item.TwinboundFeatherItem')
+          blank=javap('item.BlankScrollItem')
+          assert 'tryTeleportAsync(' in api
+          assert 'InternalMethods.tryTeleportAsync:' in api
+          assert 'spawnPortal(' in manager
+          assert 'WarpPortalManager.spawnPortal:' in portal
+          assert 'WaystonesAPI.tryTeleportAsync:' in manager
+          assert 'TwinboundFeatherLinksComponent.links:' in feather
+          assert 'WaystonesAPI.setBoundWaystone:' in blank
+          print('THREE_PHYSICAL_ACTION_FAMILIES_DISCOVERED=TRUE')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
