@@ -55,3 +55,11 @@ Spita uma orb de ácido que explode e aplica Rend. O source cria `AcidOrb`, disp
 - **Pistas de execução (verificar semântica):** `addFreshEntity`.
 
 **Contrato de perks:** escola `nature` não implica toxicidade, dano ácido, status ou transformação automática. Verificar aplicação real por helper, entidade, efeito ou damage source. Separar atributo nativo de mudar geometria/status/quantidade; exigir contrato real, caps, segurança e dedup; sem hook ⚠️ condicionado/fail-closed. Iron's controla cast/efeitos/mana; RPG Skill Tree perks/Mastery/gates; Black Arcana seu runtime mágico. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
+
+## Mecânica confirmada — leitura causal do código-fonte
+
+- **ID real apesar do nome de exibição:** `irons_spellbooks:acid_orb`, implementado por `AcidOrbSpell`. `onCast` cria `AcidOrb` e aplica `setExplosionRadius`, `setRendLevel` e `setRendDuration` antes de spawn.
+- **Fórmulas:** `radius=3*getSpellPower(level,caster)`; `rendAmplifier=level+2`; `rendDurationTicks=(int)(400*getSpellPower(level,caster))`. Os campos `rend` não devem ser automaticamente classificados como veneno/dano ácido sem olhar `AcidOrb` e o efeito Rend.
+- **Perks:** potencial aumento de área ou força do Rend requer adapter seguro, cap e classificação do status; modificar o atributo de spell power altera raio e duração **simultaneamente** neste feitiço.
+
+**Nível de prova:** inspeção do método do spell fixado no source 3.16.3; efeitos internos da entidade/projétil, possibilidade de patch por hooks externos e runtime Survival não validados.

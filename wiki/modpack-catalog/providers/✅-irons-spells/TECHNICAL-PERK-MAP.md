@@ -38,9 +38,20 @@ Fonte de interoperabilidade para o Codex. Minecraft 1.21.1 / NeoForge / Java 21.
 
 Fontes: [wiki oficial](https://iron.wiki/spells/), [índice do provider](README.md), [integração planejada no RPG Skill Tree](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/main/docs/integrations/irons.md), [decisões](../../../../plans/DECISIONS.md).
 
-## Andamento do enriquecimento
+## Andamento do enriquecimento — auditado na branch
 
-- ✅ Blood: 10/10 fichas com fórmulas e encadeamento de efeito auditados inicialmente.
-- ⚠️ Eldritch: 7/7 fichas com classes, campos e métodos diretamente extraídos; auxiliares ainda pendentes.
-- ⚠️ Ender: 16/16 fichas com âncoras de source e superfícies mecânicas extraídas; auxiliares e runtime pendentes.
-- Total desta entrega: **33/110 fichas com anexo técnico**; o catálogo de identidade permanece 110/110.
+**✅ 110/110 fichas individuais receberam anotações técnicas source-pinned**, sem acrescentar novas identidades ao catálogo. O nível de detalhe ainda é heterogêneo: 10 Blood foram revisadas manualmente em termos de causalidade, outras escolas receberam âncoras para métodos/constantes/fórmulas diretas e seis spells críticos receberam aprofundamento causal adicional (Fireball, Wall of Fire, Blizzard, Chain Lightning, Acid Spit, Poison Spray).
+
+| Escola | Fichas enriquecidas | Grau de evidência |
+|---|---:|---|
+| Blood | 10/10 | fórmulas e causalidade inicialmente revisadas; helpers/QA ainda pendentes |
+| Eldritch | 7/7 | âncoras estáticas de source; entidades/QA pendentes |
+| Ender | 16/16 | âncoras estáticas de source; entidades/QA pendentes |
+| Evocation | 17/17 | âncoras estáticas de source; entidades/QA pendentes |
+| Fire | 13/13 | âncoras + aprofundamento de Fireball/Wall of Fire; entidades/QA pendentes |
+| Holy | 12/12 | âncoras estáticas de source; efeitos/QA pendentes |
+| Ice | 12/12 | âncoras + aprofundamento de Blizzard; entidades/QA pendentes |
+| Lightning | 10/10 | âncoras + aprofundamento de Chain Lightning; entidades/QA pendentes |
+| Nature | 13/13 | âncoras + aprofundamento de Acid Spit/Poison Spray; entidades/QA pendentes |
+
+**Próximo gate de engenharia:** rastrear os métodos de impactos, `MobEffect`, entidades de AoE, helpers de targeting e registries, atribuindo tags de dano/status/geometry somente após evidência. Verificar contratos de eventos e adapters disponíveis no JAR/modpack exatos antes de qualquer implementação. Esta branch **não** prova casting, funcionamento de perks, compatibilidade real ou CI verde. Stage 06.05 segue sem promoção.

@@ -95,3 +95,11 @@ Já cobre vortex Ice móvel com pull/freezing semantics. Uma nova tempestade gla
 - **Pistas de execução (verificar semântica):** `RaycastBuilder`, `TargetEntityCastData`, `addFreshEntity`.
 
 **Contrato de perks:** a escola `ice` não garante, sozinha, um damage type de gelo/frost nem status de freeze. Identificar classe que aplica efeitos, limites de duração/slow e colisão antes de propor modificadores. Atributo nativo de Iron's não é hook universal de raio/ângulo/quantidade. Exigir adapter comprovado, proteção contra duplicação e caps; caso contrário ⚠️ condicionado/fail-closed. Iron's mantém cast/efeitos/mana; RPG Skill Tree possui perks/Mastery/gates; Black Arcana mantém runtime próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
+
+## Mecânica confirmada — leitura causal do código-fonte
+
+- **Área/efeito:** `checkPreCastConditions` tenta selecionar alvo até 32 blocos, mas admite cair para raycast de 32 blocos e escolha de solo; `onCast` instancia `BlizzardAoe` com owner, radius, duration e movimento horizontal de `0.05` por vetor de direção.
+- **Fórmulas:** `durationTicks=(int)(20*(10+1.5f*level))`; `radius=2+6*getEntityPowerMultiplier(caster)`. O raio não usa diretamente `level` nesta fórmula, enquanto duração sim. `getSpellPower` não é chamado no cálculo de raio, exceto que ambos podem envolver multiplicadores semelhantes.
+- **Perks:** duração/radius exigem interceptar ou parametrizar `BlizzardAoe`; a avaliação de acertos/congelamento real está nessa entidade, ainda sem QA e sem contrato de mutação provado.
+
+**Nível de prova:** inspeção do método do spell fixado no source 3.16.3; efeitos internos da entidade/projétil, possibilidade de patch por hooks externos e runtime Survival não validados.

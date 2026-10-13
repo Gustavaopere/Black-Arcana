@@ -44,3 +44,11 @@ Catálogo oficial atual: `https://iron.wiki/spells/` — consulta em 2026-09-06.
 - **Pistas de execução (verificar semântica):** `SpellDamageSource`, `addFreshEntity`.
 
 **Contrato de perks:** escola `fire` não certifica que todo dano/incêndio seja fire damage; verificar fonte de dano, duração de burning e entidades de projétil. Separar atributo de spell power nativo de mutações de área/contagem/efeito, que exigem hook específico, caps e world safety. Sem contrato comprovado: ⚠️ condicionado/fail-closed. RPG Skill Tree gerencia perks, Mastery e gates; Iron's mantém cast, mana e efeitos nativos; Black Arcana mantém seu runtime e WorldEffectPolicy para efeitos próprios. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
+
+## Mecânica confirmada — leitura causal do código-fonte
+
+- **Ciclo de recasts:** `getRecastCount=3`; primeira ação cria `FireWallData` e `RecastInstance` com janela de `40` ticks. `addAnchor` registra pontos de solo sob raio de escolha de alvo de 20 blocos; `onRecastFinished` instancia `WallOfFireEntity` com a coleção de âncoras.
+- **Parâmetros diretos:** `getWallLength(level,caster)=10+level*3*getEntityPowerMultiplier(caster)`, limitando o comprimento acumulado de segmentos. `getDamage=getSpellPower`; fonte de dano aplica `setFireTicks(80)`.
+- **Superfície da perk:** extensão de comprimento e tempo de fogo devem observar âncoras, limite de recast e entidade de parede. Não ampliar a cadeia ou criar segunda parede sem autorizações de custo, WorldEffectPolicy e deduplicação.
+
+**Nível de prova:** inspeção do método do spell fixado no source 3.16.3; efeitos internos da entidade/projétil, possibilidade de patch por hooks externos e runtime Survival não validados.

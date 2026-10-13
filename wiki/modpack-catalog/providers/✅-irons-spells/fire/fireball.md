@@ -54,3 +54,10 @@ O changelog confirma rework dos visuais de explosão na linha 3.1.0; a aparênci
 - **Pistas de execução (verificar semântica):** `addFreshEntity`, `Explosion`.
 
 **Contrato de perks:** escola `fire` não certifica que todo dano/incêndio seja fire damage; verificar fonte de dano, duração de burning e entidades de projétil. Separar atributo de spell power nativo de mutações de área/contagem/efeito, que exigem hook específico, caps e world safety. Sem contrato comprovado: ⚠️ condicionado/fail-closed. RPG Skill Tree gerencia perks, Mastery e gates; Iron's mantém cast, mana e efeitos nativos; Black Arcana mantém seu runtime e WorldEffectPolicy para efeitos próprios. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
+
+## Mecânica confirmada — leitura causal do código-fonte
+
+- **Controle explícito em `FireballSpell`:** `getDamage(level,caster) = 5 + 5*getSpellPower(level,caster)`; `getRadius(level,caster) = 2 + (int)getSpellPower(level,caster)`. `onCast` cria `MagicFireball`, configura `setDamage` e `setExplosionRadius`, posiciona perto dos olhos e atira na direção da mira. A entidade `MagicFireball` aplica a colisão/explosão; não há setter universal de raio acessível apenas por `SpellOnCastEvent` comprovado nesta análise.
+- **Riscos de perks:** raio inteiro aumenta de forma discreta e o custo de efeitos em área não cresce linearmente; impor teto explícito em qualquer adapter e respeitar a política de mundo aplicável. Não confundir raio da explosão com alcance do projétil.
+
+**Nível de prova:** inspeção do método do spell fixado no source 3.16.3; efeitos internos da entidade/projétil, possibilidade de patch por hooks externos e runtime Survival não validados.

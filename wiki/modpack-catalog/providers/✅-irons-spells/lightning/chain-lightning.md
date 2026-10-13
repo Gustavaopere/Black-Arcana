@@ -72,3 +72,11 @@ Já cobre chain-zap Lightning multi-target. `ChainLightning` é authority do gra
 - **Pistas de execução (verificar semântica):** `TargetEntityCastData`, `addFreshEntity`.
 
 **Contrato de perks:** escola `lightning` não prova, sozinha, dano elétrico, arcos em cadeia ou stun. Conferir classe de descarga/targeting, i-frames, limites de saltos, duração e efeitos de bloco. Atributo nativo ≠ hook para raio, count ou chain. Exigir contrato de provider, cap e anti-proc-recursivo; caso contrário ⚠️ condicionado/fail-closed. Iron's controla cast/mana/efeitos, RPG Skill Tree perks/Mastery/gates, Black Arcana runtime mágico próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
+
+## Mecânica confirmada — leitura causal do código-fonte
+
+- **Alvo primário:** `Utils.preCastTargetHelper(...,32,0.35f)`; `TargetEntityCastData` resolve entidade. `onCast` cria entidade `ChainLightning` e nela define `damage`, `range` e `maxConnections`.
+- **Fórmulas:** `damage=getSpellPower(level,caster)`; `maxConnections=3+level`; `chainRange=1+0.5*getSpellPower(level,caster)`. Os 32 blocos do targeting inicial não são o alcance de cada salto.
+- **Perks:** bônus de cadeia e distância não podem confundir `maxConnections` com número garantido de vítimas; seleção de alvos, anti-repeat e danos subsequentes dependem de `ChainLightning` e precisam de orçamento/cap.
+
+**Nível de prova:** inspeção do método do spell fixado no source 3.16.3; efeitos internos da entidade/projétil, possibilidade de patch por hooks externos e runtime Survival não validados.

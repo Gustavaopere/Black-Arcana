@@ -57,3 +57,11 @@ Geometry, cadence, poison duration, friendly-fire, PvP/boss/summon policy: `NÃO
 - **Pistas de execução (verificar semântica):** `addFreshEntity`.
 
 **Contrato de perks:** escola `nature` não implica toxicidade, dano ácido, status ou transformação automática. Verificar aplicação real por helper, entidade, efeito ou damage source. Separar atributo nativo de mudar geometria/status/quantidade; exigir contrato real, caps, segurança e dedup; sem hook ⚠️ condicionado/fail-closed. Iron's controla cast/efeitos/mana; RPG Skill Tree perks/Mastery/gates; Black Arcana seu runtime mágico. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
+
+## Mecânica confirmada — leitura causal do código-fonte
+
+- **ID real apesar do nome de exibição:** `irons_spellbooks:poison_breath` na classe `PoisonBreathSpell`. `CONTINUOUS` com `castTime=100` ticks nominais; `damage=1+0.75*getSpellPower(level,caster)`.
+- **Causalidade do cone:** no início, `onCast` gera `PoisonBreathProjectile` e grava `EntityCastData` para rastrear a entidade; durante a conjuração ativa, encontra `AbstractConeProjectile` e chama `setDealDamageActive()`. Isso é uma máquina de estado do efeito; não gerar projétil novo a cada tick de perk.
+- **Perks:** abertura do cone, duração e frequência do dano exigem inspeção de `PoisonBreathProjectile`/`AbstractConeProjectile`; o dano base pode escalar por spell power. Evitar duplicidade de tick e processamento em cascata.
+
+**Nível de prova:** inspeção do método do spell fixado no source 3.16.3; efeitos internos da entidade/projétil, possibilidade de patch por hooks externos e runtime Survival não validados.
