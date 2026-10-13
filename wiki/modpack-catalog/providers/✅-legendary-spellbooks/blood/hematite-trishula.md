@@ -1,5 +1,7 @@
 # Hematite Trishula
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT` — `legendary_spellbooks:hematite_trishula`, classe `dev.higurashi.legendary_spellbooks.common.spells.blood.HematiteTrishulaSpell`; [Java21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) / [dossiê](../EXACT-BINARY-SPELLS-0.3.2.md). Parâmetros efetivos e Survival ⚠️, +0 raízes.
+
 - ID: `legendary_spellbooks:hematite_trishula`
 - School: Blood
 - Levels: 1–3
