@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## Tunes n' Tomes 1.1.0-HOTFIX — décima nona prova binária, 2026-10-13
+
+[Java 21 #38445001328](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38445001328) confirmou [16/16 spell IDs físicos](../providers/✅-tunes-n-tomes/EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md), JAR CurseForge `8370271` de **21.903.598 bytes** e SHA-1 `6cac45631ea63577f8eeeab454e1df0ce8f78386` igual à modlist. `TSpellRegistry`: 16 registros incondicionais, classes e suffixes compilados. **19/39 exatos / 20/39 pendentes**, **+0** raízes; mínimo estrito **1857 global / 1855 escopo** inalterado. Resonance/Segno, Encore, Iron's 3.16.3, config/Survival ⚠️.
+
+
 ## Ypsilon Fundamental Principles 1.1.7.1 — décima oitava prova binária, 2026-10-13
 
 [Java21 #38436717443](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443) confirma [15/15 spell IDs no JAR físico](../providers/✅-ypsilons-fundamentalism/EXACT-BINARY-SPELLS-1.1.7.1.md), file `8558503`, 858749 bytes SHA-1 `a2855c253202a8fcc2925fcf5b1bf86d64fbe4da` igual ao registro da modlist; `StealSummonSpell` não inscrito. Principles 13 não geram cast/raízes extras. **18/39 exatos / 21/39 pendentes**, +0 raízes, mínimos **1857 global / 1855 escopo** inalterados. XP, configs e Survival ⚠️.
