@@ -1,5 +1,8 @@
 # Black Arcana — cinco pendências mágicas (acompanhamento)
 
+**Checkpoint Ars Controle 2026-10-13:** [Java 21 #38339934100](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38339934100), [dossiê 9/9](../providers/✅-ars-controle/EXACT-BINARY-GLYPHS-1.6.16.md), JAR oficial 313828 bytes hash-equal `795567371450debec83fe634fd0114c295f7da5a`, um efeito + oito filtros. **12/39 exatos / 27/39 pendentes**, +0 novas identidades, mínimos 1851/1849; execução/Survival ⚠️, Stage 06.05 🟡.
+
+
 **Checkpoint Ars 'n' Spells 2026-10-12:** [run Java 21 #38336011675](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38336011675), [dossiê](../providers/✅-ars-n-spells/EXACT-BINARY-RITUALS-3.3.4.md), cinco rituais estáticos exatos no JAR 3.3.4 com SHA-1 físico, quatro gated por Iron's; oito proxies não semânticos. **11/39 exatos / 28/39 pendentes**, +0 novas, mínimos **1851/1849**. Config, mana settlement, Spell Loom e Survival ⚠️; Stage 06.05 🟡.
 
 **Checkpoint Farmer's Spell 2026-10-12:** [Java 21 run #38334052069](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38334052069), [dossiê](../providers/✅-farmers-spell/EXACT-BINARY-SPELLS-1.0.5.1.md), seis IDs `farmers_spell:*` no registro estático do JAR 1.0.5.1 hash-equal; BerserkCleaver não está entre eles. **10/39 exatos / 29/39 pendentes**, +0 novas raízes, mínimos **1851/1849**. Casting, config, Foodgeist, Alchemist Pot e sticky-piston dupe fix, aquisição/Survival ⚠️; Stage 06.05 🟡.
@@ -23,7 +26,7 @@
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **11/39 `COUNTED_EXACT` de registro mágico** (Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 sob gate Iron's); ⚠️ **28/39** pendentes; nenhum PASS de execução/Survival |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **12/39 `COUNTED_EXACT` de registro mágico** (Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 sob gate Iron's); ⚠️ **27/39** pendentes; nenhum PASS de execução/Survival |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |

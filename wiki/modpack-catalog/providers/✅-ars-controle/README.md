@@ -1,6 +1,9 @@
 # Ars Controle — Ars Nouveau control/automation provider
 
-Status: `PHASE 2R / SOURCE-PINNED 1.6.16 REVALIDATED / 9 SEMANTIC SPELL PARTS / CATALOG COMPLETE / RUNTIME+CONFIG+CLIENT+PACK QA PENDING`
+**✅ Registro binário 2026-10-13:** [nove glyphs exatos](EXACT-BINARY-GLYPHS-1.6.16.md), [Java 21 #38339934100](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38339934100), JAR de 313828 bytes SHA-1 físico `795567371450debec83fe634fd0114c295f7da5a`. **12/39**, **27/39 pendentes**, +0 novas identidades; runtime/config/Survival ⚠️.
+
+
+Status: `BINARY REGISTRY COUNTED_EXACT 9/9 / CATALOG COMPLETE / RUNTIME+CONFIG+CLIENT+PACK QA PENDING`
 
 ## Exact installed identity
 
