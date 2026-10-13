@@ -14,7 +14,7 @@
 
 A terceira coluna indica **a situação incremental nesta branch a partir da baseline da `main`**, não diz que o provider esteja ❌ não catalogado. Os registros podem já possuir valores/fórmulas validados por outras auditorias: esses dados devem ser aproveitados e os gaps calculados arquivo a arquivo. Conferência de completude por provider requer filtrar fichas de identidade semântica e validar prova por campo; uma quantidade de Markdown não substitui essa operação.
 
-| Diretório do provider | Arquivos `.md` existentes | Gaps de dossiê técnico |
+| Diretório do provider | Arquivos `.md` na `main` baseline | Gaps de dossiê técnico |
 |---|---:|---|
 | `✅-a-good-place` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-aces-spell-utils` | 5 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -33,7 +33,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apprentice-codex` | 101 | 🟡 83/83 fichas de spell com source class; 6 com causalidade aprofundada; hooks/QA pendentes |
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
-| `✅-ars-controle` | 25 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-elemancy` | 11 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-elemental` | 59 | ✅ 47/47 objetos core (23 effects, 2 methods, 2 propagators, 12 filtros, 8 rituais) com dossiês source-located; ⚠️ config/QA; ⛔ adapter RPG |
@@ -44,7 +44,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-ars-polymorphia` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sable` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sophisticated-compat` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-technica` | 8 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ars-technica` | 8 | ✅ 11/11 objetos (10 effects + 1 augment) em 11 fichas novas com source 2.7.6; ⚠️ Ars/Create host/QA; ⛔ perk adapter RPG |
 | `✅-ars-two-way-portals` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-zero` | 24 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-arsdelight` | 6 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -191,6 +191,13 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - ✅ [Ars Additions 21.3.0](../providers/✅-ars-additions/PERK-ENGINEERING-MATRIX-21.3.0.md): 5/5 objetos de magias/rituais com métodos source-pinned, fórmulas e limites de perks. Fonte é 21.3.0; build baseline publica Ars 5.11.2, pack usa host 5.13.1 — compatibilidade ⚠️.
 - ✅ [Ars Elemental 0.7.10.1](../providers/✅-ars-elemental/PERK-ENGINEERING-MATRIX-0.7.10.1.md): 47/47 objetos (39 Glyph Parts + 8 Rituals) com classes source-pinned e dossiês por ficha. ID no JAR físico foi comprovado anteriormente; igualdade entre implementação do source pin e JAR não foi provada.
 - Este lote é +0 no denominador semântico; mantém mínimos 1857 global / 1855 escopo e 25/39 providers com prova binária. Nenhum teste de runtime/CI/Survival, adapter RPG, merge ou promoção de Stage por este lote.
+
+## Continuação — Ars Controle e Ars Technica (2026-10-13)
+
+- ✅ [Ars Controle 1.6.16](../providers/✅-ars-controle/PERK-ENGINEERING-MATRIX-1.6.16.md): 9/9 glifos existentes receberam source pin da release e detalhes de parser, efeitos de Delay, fórmulas de Random, operadores booleanos, validação e risco de estado singleton. IDs físicos anteriormente comprovados.
+- ✅ [Ars Technica 2.7.6](../providers/✅-ars-technica/PERK-ENGINEERING-MATRIX-2.7.6.md): os 11 objetos **já contados no catálogo** foram materializados pela primeira vez em 11 novos `glyphs/*.md` individuais com receitas Create, mana default, compatibilidade, cadeia causal e riscos de conservação. **+11 arquivos `.md`**, **+0 novas identidades de magia**.
+- As quantidades de `.md` na tabela e o total de 2899 são a contagem de arquivos que já existiam na main baseline. A branch draft adicionou fichas/matrizes, portanto seus números de arquivo são maiores; não atualizar o denominador semântico para refletir documentação nova.
+- Nenhum adapter Java, CI, GameTest, Survival ou Stage foi promovido. Testes de equivalência método↔JAR, config real, concorrência, claims e integração Create/Ars permanecem ⚠️ e adaptações de perks RPG ⛔.
 
 ## Priorização para próximos lotes
 
