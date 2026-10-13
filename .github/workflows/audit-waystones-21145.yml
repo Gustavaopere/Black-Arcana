@@ -115,3 +115,53 @@ jobs:
           print('THREE_PHYSICAL_ACTION_FAMILIES_DISCOVERED=TRUE')
           print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
           PY
+
+      - name: Certify three distinct causal roots and prevent setup overcount
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib,os,hashlib,subprocess,re
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'waystones-neoforge-1.21.1-21.1.45.jar'
+          assert jar.is_file() and hashlib.sha1(jar.read_bytes()).hexdigest()=='6ec1a176a102212db4f6391886db52ed103c830f'
+          p='net.blay09.mods.waystones.'
+          def compiled(name):
+            q=subprocess.run(['javap','-p','-c','-classpath',str(jar),p+name],capture_output=True,text=True,timeout=35)
+            assert q.returncode==0,(name,q.stderr[:140])
+            return q.stdout
+          api=compiled('api.WaystonesAPI')
+          portal=compiled('item.PortalScrollItem')
+          manager=compiled('core.WarpPortalManager')
+          feather=compiled('item.TwinboundFeatherItem')
+          component=compiled('component.TwinboundFeatherLinksComponent')
+          blank=compiled('item.BlankScrollItem')
+          plate=compiled('block.entity.WarpPlateBlockEntity')
+          activation=compiled('block.WaystoneBlock')
+          stone=compiled('item.WarpStoneItem')
+          assert 'InternalMethods.tryTeleportAsync:' in api
+          assert 'WaystonesAPI.tryTeleportAsync:' in manager
+          assert 'WaystonesAPI.tryTeleportAsync:' in plate
+          assert 'use(net.minecraft.world.level.Level' in stone
+          print('EXACT_ACTION_1=WAYSTONE_WARP_TELEPORT|WaystonesAPI.tryTeleportAsync|WarpPortalManager.teleportFromPortal|WarpPlateBlockEntity')
+          assert 'WarpPortalManager.spawnPortal:' in portal
+          assert 'public static boolean spawnPortal(' in manager
+          assert 'WaystonesAPI.tryTeleportAsync:' not in portal
+          print('EXACT_ACTION_2=WARP_PORTAL_CONJURATION|PortalScrollItem|WarpPortalManager.spawnPortal')
+          assert 'onUseTick(' in feather and 'use(net.minecraft.world.level.Level' in feather
+          assert 'TwinboundFeatherLinksComponent.with:' in feather
+          assert 'TwinboundFeatherLinksComponent.links:' in feather
+          assert 'public net.blay09.mods.waystones.component.TwinboundFeatherLinksComponent with(java.util.UUID)' in component
+          assert 'WaystonesAPI.tryTeleportAsync:' not in feather
+          print('EXACT_ACTION_3=TWINBOUND_LINK|TwinboundFeatherItem.onUseTick|TwinboundFeatherLinksComponent.with')
+          assert 'WaystonesAPI.setBoundWaystone:' in blank
+          assert 'PlayerWaystoneManager.activateWaystone:' in activation
+          assert 'WaystonesAPI.setBoundWaystone:' in plate
+          assert 'attuneShard(' in plate and 'serverTick()' in plate
+          print('EXCLUSION_1=WAYSTONE_ACTIVATION|SETUP_DISCOVERY')
+          print('EXCLUSION_2=BLANK_SCROLL_BINDING|ITEM_PREPARATION')
+          print('EXCLUSION_3=WARP_PLATE_ATTUNEMENT|AUTOMATED_INFRA_PREPARATION')
+          print('PHYSICAL_SEMANTIC_ROOTS=3')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('EXACT_STATIC_ACTION_AUDIT=PASS')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
