@@ -1542,9 +1542,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(18, len(exact))
+        self.assertEqual(19, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Tunes n' Tomes", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1601,9 +1601,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(18, len(exact))
+        self.assertEqual(19, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Tunes n' Tomes", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1957,11 +1957,35 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('11/39', self.index)
         self.assertIn('28/39', self.index)
 
+    def test_tunes_binary_exact_registers_sixteen_spell_cards(self):
+        provider = PROVIDERS / "✅-tunes-n-tomes"
+        note = (provider / "EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md").read_text(encoding="utf-8")
+        cards = (provider / "SPELL-CARDS-1.1.0-HOTFIX.md").read_text(encoding="utf-8")
+        matrix = (ROOT / "wiki/modpack-catalog/meta/REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines() if x.startswith("| [Tunes n' Tomes]"))
+        self.assertIn("| 1.1.0-HOTFIX | 16 | COUNTED_EXACT |", row)
+        self.assertEqual(16, cards.count("**ID e classe comprovados:**"))
+        self.assertIn("EXACT_STATIC_REGISTRY_AUDIT=PASS", note)
+        self.assertIn("NEW_SEMANTIC_ROOTS=0", note)
+        for suffix, cls in (("chord_blast", "ChordBlastSpell"), ("crescendo", "CrescendoSpell"),
+                            ("grand_finale", "GrandFinaleSpell"), ("celestial_chant", "CelestialChantSpell"),
+                            ("rhapsody", "RhapsodySpell"), ("sonata", "SonataSpell"),
+                            ("serenade", "SerenadeSpell"), ("fortissimo", "FortissimoSpell"),
+                            ("dal_segno", "DalSegnoSpell"), ("swift_melody", "SwiftMelodySpell"),
+                            ("hymn_of_hope", "HymnOfHopeSpell"), ("slumber_note", "SlumberNoteSpell"),
+                            ("clamor_note", "ClamorNoteSpell"), ("encore", "EncoreSpell"),
+                            ("harmonic_aria", "HarmonicAriaSpell"), ("piercing_solo", "PiercingSoloSpell")):
+            for content in (note, cards):
+                self.assertIn("tunes_n_tomes:" + suffix, content)
+                self.assertIn("net.alshanex.tunes_n_tomes.spells." + cls, content)
+        self.assertIn("38445001328", note)
+        self.assertIn("21903598", note)
+
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
         self.assertIn("97/97 dossiês", self.index)
         self.assertIn("denominador semântico final permanece aberto", self.index)
-        self.assertIn("COUNTED_RELEASE_BOUNDED", self.cards)
+        self.assertIn("COUNTED_EXACT", self.cards)
         self.assertIn("não verificados", self.cards)
 
 

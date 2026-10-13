@@ -1,8 +1,12 @@
-# Tunes n' Tomes 1.1.0-HOTFIX — release-bounded provider catalog
+# Tunes n' Tomes 1.1.0-HOTFIX — provider com registry binário comprovado
 
 ## Status
 
-`EXACT PHYSICAL 1.1.0-HOTFIX / EXACT PUBLISHER FILE 8370271 / CURRENT PUBLISHER MELODIC ROSTER 16/16 / SOURCE-JAR INTERNALS + RUNTIME QA PENDING / FAIL-CLOSED FOR PROVIDER-SPECIFIC HOOKS`
+`COUNTED_EXACT 16/16 STATIC SPELLS / SHA PUBLICADOR=MODLIST / RUNTIME CONFIG SURVIVAL FAIL-CLOSED`
+
+## Prova física
+
+O [JAR exato e 16 registros](EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md) foram auditados em [Java21 #38445001328](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38445001328) com SHA-1 `6cac45631ea63577f8eeeab454e1df0ce8f78386` e **21.903.598 bytes**. **19/39 exact / 20/39 pending**; +0 magias. Os IDs e as classes literais foram comprovados; não houve teste de gameplay/Survival, config, nem contrato de integração.
 
 ## Installed authority
 
@@ -30,7 +34,7 @@ The current Alshanex project/wiki still contains stale Sound/Bard prose. For 4.x
 
 ## Current publisher roster — 16 semantic spell identities
 
-**Fichas individuais dos 16 nomes oficiais:** [SPELL-CARDS-1.1.0-HOTFIX.md](SPELL-CARDS-1.1.0-HOTFIX.md). Essas fichas são de identidade editorial/release-bounded; não afirmam registry IDs/custos/runtime que ainda não foram comprovados.
+**Fichas individuais dos 16 nomes oficiais:** [SPELL-CARDS-1.1.0-HOTFIX.md](SPELL-CARDS-1.1.0-HOTFIX.md), agora com IDs/classes binários exatos; custos/runtime continuam não verificados.
 
 
 The current Tunes n' Tomes project page states that the Melodic School **features these spells** and enumerates exactly sixteen names:
@@ -52,7 +56,7 @@ The current Tunes n' Tomes project page states that the Melodic School **feature
 15. Harmonic Aria
 16. Piercing Solo
 
-For semantic-coverage accounting this closes a current publisher roster of **16** provider-owned spell identities at `COUNTED_RELEASE_BOUNDED` confidence. It does not prove registry IDs, classes, exact numerical values or byte-for-byte source/JAR equivalence.
+The exact 1.1.0-HOTFIX JAR now confirms **16 `COUNTED_EXACT` statically registered spells** and byte-equality of published and physically recorded SHA-1. Numerical settlement, real runtime and configuration remain unverified.
 
 The exact HOTFIX changelog only states that the build was updated to work with Iron's 3.16.2. It does not announce a spell-roster delta. The physical pack has Iron's 3.16.3, so runtime compatibility is still a regression gate rather than something inferred from the publisher's 3.16.2 statement.
 
@@ -81,13 +85,13 @@ The roster materially covers direct damage, stun/control, healing/protection, al
 
 Still unverified for the installed pack:
 
-- exact spell registry IDs/classes and internal APIs;
+- provider-specific supported integration hooks (IDs/classes and static registration have been verified);
 - exact mana/cooldown/damage/range/duration values after config;
 - runtime compatibility against Iron's 3.16.3 rather than the HOTFIX's stated 3.16.2 target;
 - Resonance/Segno persistence, cleanup, caps and multiplayer causality;
 - forced-recast recursion/permission behavior for Encore;
 - stable supported integration hooks suitable for Black Arcana or RPG Skill Tree;
-- exact source-to-installed-JAR equivalence.
+- independently captured installed-file bytes (publisher SHA-1 matches the sibling physical fingerprint, but physical modpack boot remains untested).
 
 Provider-specific integration therefore remains fail-closed until a safe current boundary is demonstrated.
 

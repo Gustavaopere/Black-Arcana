@@ -974,9 +974,9 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("PENDING / DEFERRED TO STAGE 09", stage09)
         self.assertIn("crash consistency", stage09)
 
-    def test_eighteen_exact_registries_do_not_certify_other_or_survival(self):
-        self.assertIn("18/39", self.status)
-        self.assertIn("21/39", self.status)
+    def test_nineteen_exact_registries_do_not_certify_other_or_survival(self):
+        self.assertIn("19/39", self.status)
+        self.assertIn("20/39", self.status)
         self.assertIn("0 novas provas binary-exact", self.status)
         self.assertIn("JARs fora da categoria Magic", self.status)
         self.assertIn("14 rotas", self.status)
@@ -986,8 +986,8 @@ class MagicPendencyStatusTest(unittest.TestCase):
                    if s.startswith("| [Ars Additions]"))
         self.assertIn("| COUNTED_EXACT |", row)
         self.assertIn("HOST-GLYPH-IDS-EXACT-5.13.1.md", row)
-        self.assertIn("18/39", self.binary)
-        self.assertIn("21/39", self.binary)
+        self.assertIn("19/39", self.binary)
+        self.assertIn("20/39", self.binary)
         second = next(s for s in self.binary.splitlines()
                       if s.startswith("| [Ars Hex]"))
         self.assertIn("| COUNTED_EXACT |", second)
@@ -1056,6 +1056,9 @@ class MagicPendencyStatusTest(unittest.TestCase):
                          if s.startswith("| [Ypsilon's Fundamentalism]"))
         self.assertIn("| 1.1.7.1 | 15 | COUNTED_EXACT |", eighteenth)
         self.assertIn("EXACT-BINARY-SPELLS-1.1.7.1.md", eighteenth)
+        nineteenth = next(x for x in self.binary.splitlines() if x.startswith("| [Tunes n' Tomes]"))
+        self.assertIn("| 1.1.0-HOTFIX | 16 | COUNTED_EXACT |", nineteenth)
+        self.assertIn("EXACT-BINARY-SPELLS-1.1.0-HOTFIX.md", nineteenth)
         self.assertIn("1857", self.binary)
         self.assertIn("1855", self.binary)
 
