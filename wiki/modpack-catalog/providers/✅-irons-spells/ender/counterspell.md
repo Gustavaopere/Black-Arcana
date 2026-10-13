@@ -36,7 +36,7 @@ A catalogar no runtime.
 
 - **Classe/commit:** [`CounterspellSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/CounterspellSpell.java), pin `e4056af90302d37eb1739f5ff05020b020e6e252` (Iron's 1.21.1-3.16.3).
 - **ID no source:** `irons_spellbooks:counterspell`; escola `ender`.
-- **Config na classe:** minRarity `NÃO EXTRAÍDO`, maxLevel `NÃO EXTRAÍDO`, cooldown `NÃO EXTRAÍDO` segundos, cast `NÃO EXTRAÍDO`.
+- **Config na classe:** minRarity `RARE`, maxLevel `1`, cooldown `10` segundos, cast `INSTANT`.
 - **Campos Java:** `baseManaCost`=`50`; `manaCostPerLevel`=`1`; `baseSpellPower`=`1`; `spellPowerPerLevel`=`1`; `castTime`=`0`.
 - **Métodos para localizar no Codex:** `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `onCast()`.
 - **Fórmulas com retorno numérico direto verificadas nesta classe:** não extraídas (inspecionar onCast/helpers/entidades). Essas fórmulas não cobrem cálculos imperativos ou de entidades auxiliares.

@@ -33,7 +33,7 @@ A catalogar no runtime.
 
 - **Classe/commit:** [`DragonBreathSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/DragonBreathSpell.java), pin `e4056af90302d37eb1739f5ff05020b020e6e252` (Iron's 1.21.1-3.16.3).
 - **ID no source:** `irons_spellbooks:dragon_breath`; escola `ender`.
-- **Config na classe:** minRarity `NÃO EXTRAÍDO`, maxLevel `NÃO EXTRAÍDO`, cooldown `NÃO EXTRAÍDO` segundos, cast `NÃO EXTRAÍDO`.
+- **Config na classe:** minRarity `COMMON`, maxLevel `10`, cooldown `12` segundos, cast `CONTINUOUS`.
 - **Campos Java:** `baseManaCost`=`5`; `manaCostPerLevel`=`1`; `baseSpellPower`=`0`; `spellPowerPerLevel`=`1`; `castTime`=`100`.
 - **Métodos para localizar no Codex:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getDamage()`.
 - **Fórmulas com retorno numérico direto verificadas nesta classe:** `getDamage = 1 + getSpellPower(spellLevel, caster) * .75f`. Essas fórmulas não cobrem cálculos imperativos ou de entidades auxiliares.

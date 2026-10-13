@@ -37,7 +37,7 @@ A catalogar no runtime.
 
 - **Classe/commit:** [`ArcaneShackleSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/ArcaneShackleSpell.java), pin `e4056af90302d37eb1739f5ff05020b020e6e252` (Iron's 1.21.1-3.16.3).
 - **ID no source:** `irons_spellbooks:arcane_shackle`; escola `ender`.
-- **Config na classe:** minRarity `NÃO EXTRAÍDO`, maxLevel `NÃO EXTRAÍDO`, cooldown `NÃO EXTRAÍDO` segundos, cast `NÃO EXTRAÍDO`.
+- **Config na classe:** minRarity `RARE`, maxLevel `8`, cooldown `45` segundos, cast `LONG`.
 - **Campos Java:** `baseManaCost`=`40`; `manaCostPerLevel`=`8`; `baseSpellPower`=`6`; `spellPowerPerLevel`=`2`; `castTime`=`10`.
 - **Métodos para localizar no Codex:** `getUniqueInfo()`, `getDefaultConfig()`, `getCastType()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getChainHealth()`, `getChainDuration()`, `getLashRadius()`, `getCastStartAnimation()`, `getCastFinishAnimation()`.
 - **Fórmulas com retorno numérico direto verificadas nesta classe:** `getChainHealth = 15 * getEntityPowerMultiplier(entity)`; `getChainDuration = (int) (100 + getSpellPower(spellLevel, entity) * 20)`; `getLashRadius = 5f`. Essas fórmulas não cobrem cálculos imperativos ou de entidades auxiliares.

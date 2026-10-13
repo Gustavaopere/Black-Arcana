@@ -46,7 +46,7 @@ O changelog atual da linha 3.16.x registra correção para impedir que Evasion e
 
 - **Classe/commit:** [`EvasionSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/EvasionSpell.java), pin `e4056af90302d37eb1739f5ff05020b020e6e252` (Iron's 1.21.1-3.16.3).
 - **ID no source:** `irons_spellbooks:evasion`; escola `ender`.
-- **Config na classe:** minRarity `NÃO EXTRAÍDO`, maxLevel `NÃO EXTRAÍDO`, cooldown `NÃO EXTRAÍDO` segundos, cast `NÃO EXTRAÍDO`.
+- **Config na classe:** minRarity `EPIC`, maxLevel `5`, cooldown `180` segundos, cast `INSTANT`.
 - **Campos Java:** `baseManaCost`=`40`; `manaCostPerLevel`=`20`; `baseSpellPower`=`0`; `spellPowerPerLevel`=`1`; `castTime`=`0`.
 - **Métodos para localizar no Codex:** `getUniqueInfo()`, `getDefaultConfig()`, `getCastType()`, `getSpellResource()`, `onCast()`.
 - **Fórmulas com retorno numérico direto verificadas nesta classe:** não extraídas (inspecionar onCast/helpers/entidades). Essas fórmulas não cobrem cálculos imperativos ou de entidades auxiliares.

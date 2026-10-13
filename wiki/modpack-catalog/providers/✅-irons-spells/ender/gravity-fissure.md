@@ -42,7 +42,7 @@ Catálogo oficial atual: `https://iron.wiki/spells/` — consulta em 2026-09-06.
 
 - **Classe/commit:** [`GravityFissureSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/GravityFissureSpell.java), pin `e4056af90302d37eb1739f5ff05020b020e6e252` (Iron's 1.21.1-3.16.3).
 - **ID no source:** `irons_spellbooks:gravity_fissure`; escola `ender`.
-- **Config na classe:** minRarity `NÃO EXTRAÍDO`, maxLevel `NÃO EXTRAÍDO`, cooldown `NÃO EXTRAÍDO` segundos, cast `NÃO EXTRAÍDO`.
+- **Config na classe:** minRarity `EPIC`, maxLevel `5`, cooldown `45` segundos, cast `LONG`.
 - **Campos Java:** `baseManaCost`=`150`; `manaCostPerLevel`=`25`; `baseSpellPower`=`3`; `spellPowerPerLevel`=`1`; `castTime`=`15`.
 - **Métodos para localizar no Codex:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getRadius()`, `getDurationTicks()`, `getCastStartAnimation()`, `getCastFinishAnimation()`.
 - **Fórmulas com retorno numérico direto verificadas nesta classe:** `getRadius = 3.5f`; `getDurationTicks = (int) (getSpellPower(spellLevel, entity) * 20)`. Essas fórmulas não cobrem cálculos imperativos ou de entidades auxiliares.

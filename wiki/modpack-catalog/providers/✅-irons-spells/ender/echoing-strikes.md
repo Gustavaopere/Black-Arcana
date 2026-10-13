@@ -34,7 +34,7 @@ A catalogar no runtime.
 
 - **Classe/commit:** [`EchoingStrikesSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/EchoingStrikesSpell.java), pin `e4056af90302d37eb1739f5ff05020b020e6e252` (Iron's 1.21.1-3.16.3).
 - **ID no source:** `irons_spellbooks:echoing_strikes`; escola `ender`.
-- **Config na classe:** minRarity `NÃO EXTRAÍDO`, maxLevel `NÃO EXTRAÍDO`, cooldown `NÃO EXTRAÍDO` segundos, cast `NÃO EXTRAÍDO`.
+- **Config na classe:** minRarity `RARE`, maxLevel `5`, cooldown `60` segundos, cast `INSTANT`.
 - **Campos Java:** `baseManaCost`=`50`; `manaCostPerLevel`=`10`; `baseSpellPower`=`20`; `spellPowerPerLevel`=`5`; `castTime`=`0`.
 - **Métodos para localizar no Codex:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastFinishSound()`, `onCast()`, `onClientCast()`, `getHitCount()`, `getAmplifierForLevel()`, `getCastStartAnimation()`, `getDamageSource()`.
 - **Fórmulas com retorno numérico direto verificadas nesta classe:** `getHitCount = spellLevel + 2`; `getAmplifierForLevel = (int) (.75 / EchoingStrikesEffect.PERCENT_PER_AMPLIFIER)`. Essas fórmulas não cobrem cálculos imperativos ou de entidades auxiliares.
