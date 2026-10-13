@@ -1,0 +1,114 @@
+name: GTBC Geomancy Plus 1.1.0 exact physical static spell registry audit
+
+on:
+  push:
+    branches:
+      - 'audit/gtbc-geomancy-plus-110-*'
+
+permissions:
+  contents: read
+
+jobs:
+  static-jar-proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download exact publisher NeoForge JAR and check sibling physical SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE="$RUNNER_TEMP/gtbcs_geomancy_plus-1.1.0-1.21.1.jar"
+          EXPECTED='67e9652799f35f1fbd09968da6f400d0229f5599'
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/7041/615/gtbcs_geomancy_plus-1.1.0-1.21.1.jar' \
+            'https://media.forgecdn.net/files/7041/615/gtbcs_geomancy_plus-1.1.0-1.21.1.jar' \
+            'https://www.curseforge.com/api/v1/mods/1352485/files/7041615/download'
+          do
+            rm -f "$FILE"
+            if curl -L --fail --silent --show-error --connect-timeout 15 --max-time 90 --retry 1 "$URL" -o "$FILE"; then
+              if file "$FILE" | grep -qE 'Zip archive|Java archive'; then
+                echo 'OFFICIAL_FILE_ID=7041615'
+                break
+              fi
+            fi
+          done
+          test -s "$FILE"
+          echo "$EXPECTED  $FILE" | sha1sum --check
+          echo "PHYSICAL_SHA1_MATCH=$EXPECTED"
+          echo "JAR_BYTES=$(wc -c < "$FILE")"
+          echo "AUDIT_JAR=$FILE" >> "$GITHUB_ENV"
+      - name: Enumerate registry, distinct spell classes and exact static registration paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ['AUDIT_JAR']
+          expected=[
+            ('chunker','ChunkerSpell'),
+            ('dripstone_bolt','DripstoneBoltSpell'),
+            ('eroding_boulder','ErodingBoulderSpell'),
+            ('fissure','FissureSpell'),
+            ('geo_conductor','GeoConductorSpell'),
+            ('petrivise','PetriviseSpell'),
+            ('pillar_of_the_resounding_earth','PillarOfTheResoundingEarthSpell'),
+            ('seismic_surf','SeismicSurfSpell'),
+            ('tremor_spike','TremorSpikeSpell'),
+            ('tremor_step','TremorStepSpell'),
+            ('solar_beam','SolarBeamSpell'),
+            ('solar_storm','SolarStormSpell'),
+          ]
+          with zipfile.ZipFile(jar) as z:
+            assert z.testzip() is None,'ZIP corruption'
+            entries=set(z.namelist())
+            metadata=[x for x in entries if x.endswith('neoforge.mods.toml')]
+            for item in metadata:
+              print('METADATA='+item)
+              for line in z.read(item).decode('utf-8',errors='replace').splitlines():
+                if re.match(r'^\s*(modId|version|displayName)\s*=',line):
+                  print('  '+line.strip()[:170])
+            registrars=sorted(x for x in entries if x.endswith('/GGSpells.class'))
+            print('REGISTRAR_CLASSES='+repr(registrars))
+            assert len(registrars)==1,'registry class GGSpells not unique'
+            registrar=registrars[0][:-6].replace('/','.')
+            concrete=[]
+            for id_,cls in expected:
+              matches=sorted(x for x in entries if x.endswith('/'+cls+'.class'))
+              assert len(matches)==1,'missing or duplicate physical spell class '+cls
+              concrete.append(matches[0])
+            print('OWNED_REGISTERED_SPELL_CLASSES='+repr(concrete))
+            print('EXPECTED_REGISTERED_SPELL_CLASS_COUNT='+str(len(concrete)))
+            possible=sorted(x for x in entries if x.endswith('Spell.class') and
+                            (x.rsplit('/',1)[-1][:-6].endswith('Spell')) and '$' not in x)
+            print('EXTRA_TOPLEVEL_SPELL_CLASSES='+repr(sorted(set(possible)-set(concrete))))
+          def javap(cls):
+            return subprocess.check_output(['javap','-p','-c','-classpath',jar,cls],text=True)
+          j=javap(registrar)
+          init=j.split('static {};')[-1]
+          print('REGISTRAR='+registrar)
+          print('REGISTRAR_SIGNATURES='+repr([x.strip() for x in j.splitlines()
+                  if 'Supplier<' in x or 'DeferredRegister<' in x][:23]))
+          count=len(re.findall(r'// Method registerSpell:',init))
+          fields=len(re.findall(r'Supplier<io\.redspace\.ironsspellbooks\.api\.spells\.AbstractSpell>',j))
+          print('STATIC_REGISTER_SPELL_INVOCATIONS='+str(count))
+          print('REGISTRAR_ABSTRACTSPELL_SUPPLIER_SIGNATURES='+str(fields))
+          print('STATIC_INITIALIZER_BRANCHES='+str(len(re.findall(r'^\s+\d+: (?:if\w*|goto|tableswitch|lookupswitch)\b',init,re.M))))
+          print('REGISTRY_HELPER_DEFERRED='+str('DeferredRegister.register:' in j))
+          assert count==12,'static initializer must register exactly 12 spells'
+          assert 'DeferredRegister.register:' in j,'deferred registrar helper absent'
+          for id_,cls in expected:
+            full=next(x for x in concrete if x.endswith('/'+cls+'.class'))[:-6].replace('/','.')
+            p=javap(full)
+            literals=set(re.findall(r'// String ([a-z0-9_]+)',p))
+            resource=id_ in literals
+            method='getSpellResource()' in p
+            print('EXACT_BINARY_SPELL=gtbcs_geomancy_plus:'+id_+';class='+full+';id_literal='+str(resource)+';resource_method='+str(method))
+            assert resource and method,'missing physical ResourceLocation identity '+id_
+          print('RESULT=EXACT_TWELVE_STATIC_REGISTRY_IDENTITIES_MATCH_PHYSICAL_JAR')
+          print('LIMITATIONS=NO_PACK_RUNTIME_NO_SPELL_CONFIG_NO_PVP_NO_CAST_TEST_NO_SURVIVAL')
+          PY
