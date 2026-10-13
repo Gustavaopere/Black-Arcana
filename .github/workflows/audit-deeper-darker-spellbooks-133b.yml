@@ -71,7 +71,16 @@ jobs:
                           print('  '+line.strip()[:190])
           def inspect(cls):
               return subprocess.check_output(['javap','-p','-c','-classpath',jar,cls],text=True)
-          reg=inspect('net.rev.darkermagic.item.DDISSSpellRegistery')
+          registrars=sorted(x for x in entries if x.startswith(base)
+                            and x.endswith('.class') and '$' not in x
+                            and 'Spell' in x and ('Registery' in x or 'Registry' in x))
+          print('BINARY_REGISTRAR_CANDIDATES='+repr(registrars))
+          print('TOP_LEVEL_BINARY_CLASSES='+repr(sorted(
+              x for x in entries if x.startswith(base) and x.endswith('.class')
+              and x.count('/')<=4 and '$' not in x)))
+          assert len(registrars)==1,'registrar classes do not resolve uniquely'
+          registry_cls=registrars[0][:-6].replace('/','.')
+          reg=inspect(registry_cls)
           static=reg.split('static {};')[-1]
           registrations=len(re.findall(r'// Method registerSpell:',static))
           helpers=len(re.findall(r'// Method net/neoforged/neoforge/registries/DeferredRegister.register:\(Ljava/lang/String;',reg))
@@ -81,7 +90,7 @@ jobs:
           assert registrations==4 and helpers==1, 'registrar registration chain is incomplete'
           assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)' in reg, 'registrar not on bus'
           mod=inspect('net.rev.darkermagic.DarkerMagic')
-          wired='DDISSSpellRegistery.register:(Lnet/neoforged/bus/api/IEventBus;)' in mod
+          wired=(registry_cls.rsplit('.',1)[-1]+'.register:(Lnet/neoforged/bus/api/IEventBus;)') in mod
           print('ENTRYPOINT_TO_REGISTRY='+str(wired))
           assert wired,'entrypoint does not attach registrar'
           for classname,spellid,slot in pairs:
