@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização física 2026-10-13:** [Ypsilon's Fundamentalism 1.1.7.1](providers/✅-ypsilons-fundamentalism/EXACT-BINARY-SPELLS-1.1.7.1.md) comprova **15/15** spell registrations no SHA do modpack, não adiciona 13 Principles à contagem. **18/39 providers exatos / 21/39 pendentes** e mínimos **1857 global / 1855 escopo**; runtime/Survival ⚠️.
+
+
 **Atualização binária 2026-10-13:** [Fire's Ender Expansion 2.4.1](providers/✅-fires-ender-expansion/EXACT-BINARY-SPELLS-2.4.1.md) possui **11/11** IDs físicos exatos, sem novos objetos semânticos; campanha **17/39 exatos / 22/39 pendentes**. Mínimos **1857 global / 1855 escopo** inalterados; nenhum PASS de gameplay/Survival.
 
 
