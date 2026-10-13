@@ -28,3 +28,11 @@ Intangible replaces eligible non-air blocks with Ars `Intangible Air`, storing t
 Ars Nouveau owns this temporary block-phasing/restoration ledger. Black Arcana must not reuse Ars' temporary-block storage as its own rollback authority or duplicate restoration. Independent Black Arcana phasing remains governed by `WorldEffectPolicy` and Black Arcana-owned persistence/compare-and-set restoration.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectIntangible`).
+
+## Engenharia de perks — evidência de execução individual
+
+- **Classe versionada:** [`EffectIntangible.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectIntangible.java) no Ars Nouveau 5.13.1.
+- **Blocos elegíveis:** `SpellUtil.calcAOEBlocks` combina AOE/Pierce; rejeita block entity, air, `INTANGIBLE_BLACKLIST`, insuficiente harvest e `!destroyRespectsClaim`.
+- **Persistência reversível:** guarda `Block.getId(state)`, muda bloco para `INTANGIBLE_AIR` e, quando `IntangibleAirTile` está presente, define `stateID=id` e `maxLength=duration*20`. `duration=(int)(GENERIC_INT.get()+EXTEND_TIME.get()*getDurationMultiplier())` em segundos, defaults 3 e 1.
+- **Perks:** duração de estado de mundo e política de restauração dependem de `IntangibleAirTile`, não apenas do glyph. Não criar outra camada de air/restoration; mundo Black Arcana próprio requer WorldEffectPolicy.
+- **Status:** ✅ code pin/identidade; ⚠️ downstream, config e Survival pendentes; mutação por RPG perk só pode ocorrer via [eventos reais](../../VERIFIED-EVENT-SURFACES-5.13.1.md) e adapter validado, não por inferência temática.

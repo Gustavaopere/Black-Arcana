@@ -29,3 +29,11 @@ Burst resolves the remaining spell across a spherical target set and then cancel
 Burst is an Ars spell-composition fan-out runtime. Black Arcana must not route those child executions through a parallel Black Arcana cast pipeline or duplicate resource/effect settlement.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectBurst`).
+
+## Engenharia de perks — evidência de execução individual
+
+- **Classe versionada:** [`EffectBurst.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectBurst.java) no Ars Nouveau 5.13.1.
+- **Raio efetivo:** `radius=(int)getAoeMultiplier()+(isSensitive()?1:3)`. A geometria de `Dampen` vira casca esférica com condição `distance<=radius+0.5 && distance>=radius-0.5`; sem Dampen usa esfera preenchida até `radius+0.5`. O source não demonstra clamp positivo; bounds e custos de varredura requerem QA.
+- **Alvos:** Sensitive percorre `BlockPos.withinManhattan(center,radius,radius,radius)` e filtra pela esfera; sem Sensitive percorre `world.getEntities(null,new AABB(center).inflate(radius,...))`, incluindo `LivingEntity` ou whitelist `BURST_WHITELIST`.
+- **Causalidade:** cada alvo recebe `resolver.getNewResolver(spellContext.clone().makeChildContext())`, que resolve as partes seguintes. Depois cancela parent. `PER_SPELL_LIMIT=1`, Sensitive limit 1, invalid combos Linger e Wall. **Perks:** não transformar cada child resolver em cast/custo/Mastery autônomo; limite de alvos exige budget.
+- **Status:** ✅ code pin/identidade; ⚠️ downstream, config e Survival pendentes; mutação por RPG perk só pode ocorrer via [eventos reais](../../VERIFIED-EVENT-SURFACES-5.13.1.md) e adapter validado, não por inferência temática.
