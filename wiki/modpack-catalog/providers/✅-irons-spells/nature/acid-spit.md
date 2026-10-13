@@ -43,3 +43,15 @@ Spita uma orb de ácido que explode e aplica Rend. O source cria `AcidOrb`, disp
 
 - `https://iron.wiki/spells/` — consulta 2026-09-06.
 - `AcidOrbSpell.java` — source 3.16.3 pinado.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`AcidOrbSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/AcidOrbSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:acid_orb`; o ID pode divergir do título de exibição.
+- **Config:** minRarity `COMMON`; maxLevel `8`; cooldown `15` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`40`; `manaCostPerLevel`=`10`; `baseSpellPower`=`1`; `spellPowerPerLevel`=`0`; `castTime`=`15`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getRadius()`, `getRendAmplifier()`, `getRendDuration()`, `getCastStartAnimation()`, `getCastFinishAnimation()`.
+- **Fórmulas numéricas com retorno direto:** `getRadius = getSpellPower(spellLevel, caster) * 3`; `getRendAmplifier = spellLevel + 2`; `getRendDuration = (int) (getSpellPower(spellLevel, caster) * 20 * 20)`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `addFreshEntity`.
+
+**Contrato de perks:** escola `nature` não implica toxicidade, dano ácido, status ou transformação automática. Verificar aplicação real por helper, entidade, efeito ou damage source. Separar atributo nativo de mudar geometria/status/quantidade; exigir contrato real, caps, segurança e dedup; sem hook ⚠️ condicionado/fail-closed. Iron's controla cast/efeitos/mana; RPG Skill Tree perks/Mastery/gates; Black Arcana seu runtime mágico. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
