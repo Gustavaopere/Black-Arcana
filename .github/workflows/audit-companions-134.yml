@@ -137,3 +137,57 @@ jobs:
             if news:print('BOOK_FACTORY='+name+'|'+repr(news))
           print('NINE_FACTORY_INSPECTION=PASS')
           PY
+
+      - name: Certify all nine Magic Book ID-to-factory mappings
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,pathlib,hashlib,subprocess,re,zipfile
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'companions-neoforge-1.21.1-1.3.4.jar'
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='23f6e4f27a457a8d016412e495e417c0b36fdcc1'
+          def javap(cls,verbose=False):
+            p=subprocess.run(['javap','-v' if verbose else '-c','-p','-classpath',str(jar),cls],capture_output=True,text=True,timeout=70)
+            assert p.returncode==0,(cls,p.stderr[:190])
+            return p.stdout
+          cls='dev.xylonity.companions.registry.CompanionsItems'
+          code=javap(cls)
+          verbose=javap(cls,True)
+          static=code.split('static {};',1)[1]
+          bootstrap=verbose.split('BootstrapMethods:',1)[1].split('InnerClasses:',1)[0]
+          expected=[
+            ('book_ice_shard','IceShardBook'),('book_ice_tornado','IceTornadoBook'),
+            ('book_fire_mark','FireMarkBook'),('book_heal_ring','HealRingBook'),
+            ('book_stone_spikes','StoneSpikesBook'),('book_brace','BraceBook'),
+            ('book_magic_ray','MagicRayBook'),('book_black_hole','BlackHoleBook'),
+            ('book_naginata','NaginataBook')]
+          actual=re.findall(r'// String (book_[a-z_]+)',static)
+          assert actual==[id for id,cl in expected],(actual,expected)
+          for slot,(ident,itemcls) in enumerate(expected,17):
+            statlines=static.splitlines()
+            ix=[i for i,s in enumerate(statlines) if '// String '+ident in s]
+            assert len(ix)==1,(ident,ix)
+            invocation='\n'.join(statlines[ix[0]:ix[0]+5])
+            assert 'InvokeDynamic #'+str(slot)+':get' in invocation,ident
+            assert 'ResourceRegistry.register:(Ljava/lang/String;Ljava/util/function/Supplier;)' in invocation,ident
+            assert 'putstatic' in invocation and 'BOOK_'+ident[5:].upper() in invocation,ident
+            entry=re.search(r'^\s*'+str(slot)+r':[^\n]*\n(?:(?!\n\s*\d+:)[\s\S])*?CompanionsItems.lambda\$static\$'+str(slot)+r':',bootstrap,re.M)
+            assert entry,('missing bootstrap mapping',ident,slot)
+            method=re.search(r'  private static net\.minecraft\.world\.item\.Item lambda\$static\$'+str(slot)+r'\(\);([\s\S]*?)(?=^  (?:private|public|static) |\Z)',code,re.M)
+            assert method,('lambda method missing',slot)
+            assert '// class dev/xylonity/companions/common/item/book/books/'+itemcls in method.group(1),(ident,itemcls)
+            item=javap('dev.xylonity.companions.common.item.book.books.'+itemcls)
+            assert 'extends dev.xylonity.companions.common.item.book.AbstractMagicBook' in item,itemcls
+            print('EXACT_MAGIC_BOOK_'+str(slot-16)+'=companions:'+ident+'|'+itemcls+'|AbstractMagicBook')
+          lines=static.splitlines()
+          start=next(i for i,l in enumerate(lines) if '// String book_ice_shard' in l)
+          finish=next(i for i,l in enumerate(lines) if '// Field BOOK_NAGINATA:' in l)
+          active='\n'.join(lines[start:finish+1])
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|if_icmp\w+|goto|tableswitch|lookupswitch)\b',active,re.M)
+          print('EXACT_PHYSICAL_ITEM_MAGIC_REGISTRATIONS=9')
+          print('PROVIDER_NATIVE_MAGIC_BOOK_CLASSES=9')
+          print('STATIC_ITEM_REGISTRATION_CONDITIONS=0')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('EXACT_STATIC_REGISTRY_AUDIT=PASS')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
