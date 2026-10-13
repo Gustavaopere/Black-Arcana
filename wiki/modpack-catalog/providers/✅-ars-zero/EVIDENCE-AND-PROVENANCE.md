@@ -1,5 +1,8 @@
 # Ars Zero 2.0.2 — Evidence and Provenance Ledger
 
+**Proveniência binária superveniente (2026-10-13):** [Java 21 #38343776242](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38343776242) verificou JAR CurseForge file 8703997 (6774561 bytes, SHA-1 `ac9b6e6f7a2bd403ee7cdc16023509fde7c4e1d0`) igual ao snapshot físico. [Dossiê 22/22](EXACT-BINARY-GLYPHS-2.0.2.md), 18 próprias + 4 copied optional. Observações factuais clean-room, sem importação de implementação.
+
+
 ## Installed artifact authority
 
 Latest physical modlist supplied 2026-09-08:

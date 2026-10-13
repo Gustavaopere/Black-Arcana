@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Catálogo semântico atualizado em 2026-10-13:** [Ars Zero físico 2.0.2](providers/✅-ars-zero/EXACT-BINARY-GLYPHS-2.0.2.md): 22 glifos registrados, 18 únicos, quatro copied optional, **+6** novas raízes. Mínimos **1857 global / 1855 escopo**; **14/39** registros binários fechados. Não alterar Stage ou status Survival por presunção.
+
+
 **Current catalog-only coverage (2026-10-08): 164 provider directories = 164 ✅ cataloged, 0 ❌ or ⚠️ catalog-incomplete.** The direct physical JARs close [Traveloptics 33/33](providers/✅-traveloptics/SPELL-CARDS-4.4.0.1.md) and [Deeper and Darker 3/3](providers/✅-deeper-and-darker/actions/PUBLIC-BASELINE-ACTIONS.md). This is an **inventory** conclusion, not provider runtime/eligibility certification; Soul Elytra configuration, Blackout survival, codec runtime and Aqua interoperability remain ⚠️ technical QA. Strict semantic minimum remains **1851**; global semantic denominator is open. Older historical checkpoint counts below remain archival.
 
 **Índice global atualizado:** [CATALOGO-GLOBAL-MAGIAS.md](meta/CATALOGO-GLOBAL-MAGIAS.md) — 164/164 READMEs canônicos ✅, 97/97 providers da categoria física Magic reconciliados, 162 dentro do escopo definido pelo usuário (Traveloptics e Deeper and Darker base excluídos). O catálogo de Tunes n' Tomes passa a possuir 16/16 [fichas individualizadas](providers/✅-tunes-n-tomes/SPELL-CARDS-1.1.0-HOTFIX.md). Validação de registry/config/runtime permanece separada e não recebe aprovação fictícia.
