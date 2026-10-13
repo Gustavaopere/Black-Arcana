@@ -69,3 +69,62 @@ jobs:
                 print(l.strip()[:210])
           print('DISCOVERY_NOT_RUNTIME_ACCEPTANCE=TRUE')
           PY
+
+      - name: Prove exact 16 unconditional compiled spell registrations and resource IDs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib,os,hashlib,zipfile,subprocess,re
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'tunes_n_tomes-1.1.0-HOTFIX.jar'
+          assert jar.exists(),'requires independently hash-pinned discovery step'
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='6cac45631ea63577f8eeeab454e1df0ce8f78386'
+          base='net.alshanex.tunes_n_tomes.'
+          ordered=[
+           ('chord_blast','ChordBlastSpell'),('crescendo','CrescendoSpell'),
+           ('grand_finale','GrandFinaleSpell'),('celestial_chant','CelestialChantSpell'),
+           ('rhapsody','RhapsodySpell'),('sonata','SonataSpell'),('serenade','SerenadeSpell'),
+           ('dal_segno','DalSegnoSpell'),('encore','EncoreSpell'),('fortissimo','FortissimoSpell'),
+           ('swift_melody','SwiftMelodySpell'),('hymn_of_hope','HymnOfHopeSpell'),
+           ('slumber_note','SlumberNoteSpell'),('clamor_note','ClamorNoteSpell'),
+           ('harmonic_aria','HarmonicAriaSpell'),('piercing_solo','PiercingSoloSpell')]
+          def disasm(cls):
+            p=subprocess.run(['javap','-p','-c','-classpath',str(jar),cls],capture_output=True,text=True,timeout=30)
+            assert p.returncode==0,(cls,p.stderr[:250])
+            return p.stdout
+          with zipfile.ZipFile(jar) as z:
+            names=set(z.namelist())
+            meta=z.read('META-INF/neoforge.mods.toml').decode('utf8')
+          assert 'modId="tunes_n_tomes"' in meta
+          start=disasm(base+'TunesNTomesMod')
+          assert 'TSpellRegistry.register:' in start,'mod entrypoint does not hook spell registry'
+          reg=disasm(base+'registry.TSpellRegistry')
+          assert 'SpellRegistry.SPELL_REGISTRY_KEY:' in reg
+          assert '// String tunes_n_tomes' in reg
+          assert 'DeferredRegister.create:' in reg
+          bus=reg.split('public static void register(',1)[1].split('private static ',1)[0]
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V' in bus
+          wrapper=reg.split('private static java.util.function.Supplier',1)[1].split('lambda$registerSpell',1)[0]
+          assert 'DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)' in wrapper
+          block=reg.split('static {};',1)[1]
+          classes=re.findall(r'// class net/alshanex/tunes_n_tomes/spells/([A-Za-z0-9_]+Spell)',block)
+          expected=[c for _,c in ordered]
+          assert classes==expected,('initializer class order mismatch',classes)
+          assert block.count('Method registerSpell:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)')==16
+          assert not re.search(r'^\\s*\\d+:\\s+(?:ifne|ifeq|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\\b',block,re.M),'conditional initializer'
+          for idx,(suffix,cls) in enumerate(ordered,1):
+            path='net/alshanex/tunes_n_tomes/spells/'+cls+'.class'
+            assert path in names,('missing',path)
+            body=disasm(base+'spells.'+cls)
+            assert 'extends io.redspace.ironsspellbooks.api.spells.AbstractSpell' in body,cls
+            assert 'getSpellResource()' in body,cls
+            assert '// String tunes_n_tomes' in body,cls
+            assert '// String '+suffix in body,('wrong resource',cls,suffix)
+            assert 'ResourceLocation.fromNamespaceAndPath:' in body,cls
+            assert 'setSchoolResource:' in body,('no school in default config',cls)
+            print('EXACT_SPELL_'+str(idx)+'=tunes_n_tomes:'+suffix+'|'+cls)
+          print('PHYSICAL_SPELL_REGISTRATIONS=16')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('EXACT_STATIC_REGISTRY_AUDIT=PASS')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
