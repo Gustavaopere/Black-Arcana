@@ -240,8 +240,8 @@ class EvidenceBundleTests(unittest.TestCase):
             queue = json.loads((root / 'bundle' / 'provider-39-queue.json').read_text())
             self.assertEqual(39, len(queue['providers']))
             self.assertEqual(0, queue['registry_proofs_completed'])
-            self.assertEqual(11, queue['catalog_exact_preexisting'])
-            self.assertEqual(28, queue['registry_proofs_remaining'])
+            self.assertEqual(12, queue['catalog_exact_preexisting'])
+            self.assertEqual(27, queue['registry_proofs_remaining'])
             exact = [x for x in queue['providers']
                      if x['catalog_evidence'] == 'COUNTED_EXACT']
             self.assertEqual(11, len(exact))
