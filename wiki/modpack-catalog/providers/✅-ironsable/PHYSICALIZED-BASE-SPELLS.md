@@ -1,5 +1,8 @@
 # IronSable 1.2.0 — physicalized base-spell overlay
 
+**Adendo físico 2026-10-13:** [7 registros próprios e handlers compilados](EXACT-BINARY-SPELLS-1.2.0.md), [run #38408009738](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38408009738) SHA-verificado. A prova identifica classes específicas de telekinesis, gust, sonic boom, shockwave, black hole/gravity fissure, earthquake, blizzard, stomp e raise hell; cinco overlays fazem `CompatGuard.registerIfPresent` no bootstrap, além dos handlers registrados diretamente e mixin checks. Não confundir classes presentes com hooks efetivamente disparados. **Nenhuma** das dez sobreposições vira novo spell ID; fonte Iron's continua authority para damage/mana/cooldown e Sable para física. Runtime/config/semântica exata do handler ⚠️.
+
+
 These are **not new IronSable spell IDs**. They remain canonical Iron's spells; IronSable adds Sable-ship physics to their existing casts.
 
 The official IronSable description explicitly states that damage, mana and cooldowns are untouched. Base stats therefore remain authoritative in the Iron's catalog.
