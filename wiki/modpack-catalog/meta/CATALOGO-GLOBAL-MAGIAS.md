@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## Companions! 1.3.4 — vigésima terceira prova física, 2026-10-13
+
+**Vigésima terceira prova binária (2026-10-13):** [Companions! 1.3.4](../providers/✅-companions/EXACT-BINARY-MAGIC-BOOKS-1.3.4.md), [Java21 #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666) **SUCCESS**. Publisher CurseForge file `8857294`, **7189704 bytes**, SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1` = modlist física #104. `CompanionsItems.ITEMS` registra **9** nomes `companions:book_*` via `ResourceRegistry<Item>`, cada um com factory compilada para uma subclasse `AbstractMagicBook`; zero branches nesse bloco. Não são spells Iron's, Soul Mage reutiliza os nove. Campanha **23/39 exatos / 16/39 pendentes**, +0 raízes semânticas, mínimos **1857 global / 1855 escopo** inalterados. Runtime/KnightLib/Survival ⚠️.
+
+
 ## Discerning The Eldritch 1.4.4 — vigésima segunda prova binária, 2026-10-13
 
 **Vigésima segunda prova binária (2026-10-13):** [Discerning The Eldritch 1.4.4-1.21](../providers/✅-discerning-the-eldritch/EXACT-BINARY-SPELLS-1.4.4-1.21.md), [Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207) **SUCCESS**. CurseForge `8816497`, JAR **22098930 bytes**, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c` = físico #220. `DiscerningTheEldritch → SpellRegistries`: **22** registros estáticos incondicionais e IDs únicos, com 9 Eldritch / 1 Blood / 2 Evocation / 2 Fire / 1 Holy / 2 Ice / 5 Ritual. `glacial_edge` é Glacial Cleave publicado; Exorcism consta no registry mas default Insanity é off; 5 Ritual são spells DTE. **22/39 exatos / 17/39 pendentes**, **+0** raízes, mínimos **1857 global / 1855 escopo** inalterados. Runtime/config/Survival ⚠️.

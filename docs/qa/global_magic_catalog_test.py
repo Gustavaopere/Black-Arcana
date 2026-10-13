@@ -1542,9 +1542,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(22, len(exact))
+        self.assertEqual(23, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1601,9 +1601,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(22, len(exact))
+        self.assertEqual(23, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -2211,6 +2211,56 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         row = next(x for x in ledger.splitlines()
                    if x.startswith("| [Discerning The Eldritch]"))
         self.assertIn("| 1.4.4 | 22 | `COUNTED_EXACT` |", row)
+
+    def test_companions_134_nine_sha_exact_magic_book_items(self):
+        provider = PROVIDERS / "✅-companions"
+        dossier = "EXACT-BINARY-MAGIC-BOOKS-1.3.4.md"
+        evidence = (provider / dossier).read_text(encoding="utf-8")
+        entries = (
+            ("book_ice_shard", "IceShardBook"),
+            ("book_ice_tornado", "IceTornadoBook"),
+            ("book_fire_mark", "FireMarkBook"),
+            ("book_heal_ring", "HealRingBook"),
+            ("book_stone_spikes", "StoneSpikesBook"),
+            ("book_brace", "BraceBook"),
+            ("book_magic_ray", "MagicRayBook"),
+            ("book_black_hole", "BlackHoleBook"),
+            ("book_naginata", "NaginataBook"),
+        )
+        rows = [r for r in evidence.splitlines()
+                if r.startswith("| ") and "`companions:book_" in r]
+        self.assertEqual(9, len(rows))
+        for i, (ident, cls) in enumerate(entries, 1):
+            self.assertIn(f"| {i} |", rows[i - 1])
+            self.assertIn(f"`companions:{ident}`", rows[i - 1])
+            self.assertIn(f"common.item.book.books.{cls}`", rows[i - 1])
+            card = provider / "magic-books" / (ident[5:].replace("_", "-") + ".md")
+            page = card.read_text(encoding="utf-8")
+            for token in ("COUNTED_EXACT", dossier, f"companions:{ident}",
+                          f"common.item.book.books.{cls}"):
+                self.assertIn(token, page)
+        for value in ("8857294", "7189704", "38458161666",
+                      "23f6e4f27a457a8d016412e495e417c0b36fdcc1",
+                      "EXACT_PHYSICAL_ITEM_MAGIC_REGISTRATIONS=9",
+                      "PROVIDER_NATIVE_MAGIC_BOOK_CLASSES=9",
+                      "STATIC_ITEM_REGISTRATION_CONDITIONS=0",
+                      "NEW_SEMANTIC_ROOTS=0", "EXACT_STATIC_REGISTRY_AUDIT=PASS",
+                      "RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE",
+                      "23/39", "16/39", "1857", "1855"):
+            self.assertIn(value, evidence)
+        for name in ("README.md", "MAGIC-BOOK-CARDS-1.3.4.md",
+                     "SOURCE-1.3.4-MAGIC-BOOK-INVENTORY.md"):
+            self.assertIn(dossier, (provider / name).read_text(encoding="utf-8"))
+        matrix = (ROOT / "wiki/modpack-catalog/meta" /
+                  "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith("| [Companions!]"))
+        self.assertIn("| 1.3.4 | 9 | COUNTED_EXACT |", row)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(x for x in ledger.splitlines()
+                   if x.startswith("| [Companions!]"))
+        self.assertIn("| 1.3.4 | 9 | `COUNTED_EXACT` |", row)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)

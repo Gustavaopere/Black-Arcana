@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização binária 2026-10-13:** [Companions! 1.3.4](providers/✅-companions/EXACT-BINARY-MAGIC-BOOKS-1.3.4.md): **9/9 itens Magic Book** com factories `AbstractMagicBook` SHA-exatas, [Java21 #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666). Campanha **23/39 exatos / 16/39 pendentes**, +0 raízes, mínimo **1857/1855**. Itens provider-native (não Iron's spell registry); runtime/Survival ⚠️.
+
+
 **Atualização binária 2026-10-13:** [Discerning The Eldritch 1.4.4-1.21](providers/✅-discerning-the-eldritch/EXACT-BINARY-SPELLS-1.4.4-1.21.md) registra **22/22** spells físicos com IDs/classes/escolas SHA-exatos ([Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207)). Campanha **22/39 exatos / 17/39 pendentes**, **+0** raízes, mínimos **1857 global / 1855 escopo**. Exorcism/Insanity, escola Ritual, runtime/Survival ⚠️.
 
 

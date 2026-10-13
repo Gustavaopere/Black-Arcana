@@ -1,11 +1,13 @@
 # Stone Spikes Magic Book
 
+**Prova física Java21 (2026-10-13):** ✅ `COUNTED_EXACT` — `companions:book_stone_spikes`, `dev.xylonity.companions.common.item.book.books.StoneSpikesBook` (subclasse real de `AbstractMagicBook`), [auditoria #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666) e [dossiê SHA-exato](../EXACT-BINARY-MAGIC-BOOKS-1.3.4.md). Item mágico provider-native, não spell Iron's. Cooldown, cast e aquisição continuam source-pinned/Survival ⚠️; +0 identidade nova.
+
 - Provider: **Companions!** (`companions`)
 - Version: `1.3.4`
 - Registry id: `companions:book_stone_spikes`
 - Concrete class: `StoneSpikesBook`
 - Semantic type: **provider-owned Magic Book action**
-- Semantic state: `COUNTED_SOURCE_PINNED`
+- Semantic state: `COUNTED_EXACT` (**identidade estática somente**)
 - Strict contribution: `1`
 - Source-default cooldown: **140 ticks**
 - Source-level survival acquisition: **End Minion + End Coin random reward**
