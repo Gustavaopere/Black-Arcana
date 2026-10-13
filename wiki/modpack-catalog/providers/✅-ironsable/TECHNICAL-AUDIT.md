@@ -1,5 +1,8 @@
 # IronSable 1.2.0 — technical audit
 
+**Complemento físico 2026-10-13:** [JAR oficial 1.2.0 igual ao físico por SHA-1 `6ea9ce03144ec741a1e8d322f06985366d9ecc9e`](EXACT-BINARY-SPELLS-1.2.0.md); [auditoria Java21 #38408009738](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38408009738) **SUCCESS**. Sete registries de spells estáticos em `Ironsable`, campos/classes e `getSpellResource()` comprovados; +0 raízes, dez overlays continuam físico-compat sem novo spell ID. `WindSchool.orEvocation` é gate comprovado; classes `PhysicsMagic`/handlers e assinaturas públicas físicas agora identificadas, mas hooks live/authority não aprovados. Afirmações históricas abaixo sobre bytecode não extraído e escolas não verificadas foram superadas **apenas para informações de símbolo/registry**, não configs/runtime.
+
+
 ## Evidence hierarchy
 
 1. Current modlist: `ironsable-1.2.0.jar`, runtime `1.2.0`.

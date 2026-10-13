@@ -1,5 +1,8 @@
 # IronSable — provider catalog
 
+**✅ Prova binária mais recente (2026-10-13):** [dossiê 7/7 IDs próprios](EXACT-BINARY-SPELLS-1.2.0.md), [Java 21 #38408009738](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38408009738) SUCCESS, JAR CurseForge 8598255 **130973 bytes**, SHA-1 físico/publicador `6ea9ce03144ec741a1e8d322f06985366d9ecc9e`. `COUNTED_EXACT` para os **7 registros estáticos**, dez overlays seguem separados e sem incremento, **+0** raízes, campanha **16/39 exact / 23/39 pending**, mínimos **1857/1855**. Escolas das quatro fichas anteriormente indeterminadas comprovadas: Gyroscopic Spin Lightning, Stasis Lock Ender, Kinetic Barrier Evocation, Elastic Tether Ender; três Wind condicionais com fallback Evocation. Runtimes Sable/Iron's, física, configs e Survival ⚠️. O estado `RELEASE-PINNED/JAR BYTECODE QA PENDING` abaixo é checkpoint histórico superado para registry/ID, **não** para gameplay.
+
+
 ## Installed identity
 
 - Mod ID: `ironsable`
