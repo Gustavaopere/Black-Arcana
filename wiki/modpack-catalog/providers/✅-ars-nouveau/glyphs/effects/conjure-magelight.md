@@ -26,3 +26,11 @@ Compatible augments: Amplify, Reduce Time, Dampen, Extend Time, Sensitive. Ampli
 Ars Nouveau owns Magelight blocks, potion effects, color presentation and provider config. Black Arcana lighting/world placement must remain policy-controlled and must not duplicate persistent provider lights without a distinct requirement.
 
 Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
+
+## Engenharia para perks — caminho causal individual
+
+- **Fonte versionada:** [`EffectLight.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectLight.java), Ars Nouveau 5.13.1.
+- **Ramo entidade:** se alvo implementa `ILightable`, chama `onLight` independentemente de ser LivingEntity. Para alvo vivo aplica `NIGHT_VISION` sempre; aplica `GLOWING` quando alvo != shooter ou Sensitive, e com Sensitive+Glowing confirmado envia `PacketUpdateGlowColor` baseado nas cores do spell.
+- **Ramo bloco:** calcula posição adjacente à face e exige `BlockUtil.destroyRespectsClaim` nessa posição. Pode acionar `ILightable` no bloco original/BlockEntity, ou mudar o texto luminoso de um `SignBlockEntity`. Quando posição é replaceable, unobstructed e in-bounds, cria `LIGHT_BLOCK` permanente se `durationMultiplier==0`, senão `T_LIGHT_BLOCK` temporário com `TempLightTile.lengthModifier`.
+- **Luminosidade:** valor clamped por `Math.max(0,Math.min(15,14+(int)ampMultiplier))`; config default potion 30s, ExtendTime 8s, Amplify e Sensitive max 1. **Perks:** luz bloco, Night Vision, Glowing e packet de cor são ramos independentes; uma perk não pode inferir Glow quando caster sem Sensitive.
+- **Estado:** ✅ source pin com métodos/fórmulas; ⚠️ auxiliaries, config real e Survival QA pendentes. API de `EffectResolveEvent.Pre` existe, mas adapter RPG para este glyph não foi implementado/testado; sem duplicação de custo/efeito/WorldEffectPolicy.

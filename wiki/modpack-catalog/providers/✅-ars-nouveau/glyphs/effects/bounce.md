@@ -28,3 +28,10 @@ Applies Ars' Bounce effect, causing targets to bounce upward after falling. Prov
 Ars Nouveau owns this bounce/mobility status. Black Arcana should not add a generic duplicate bounce buff or take over provider motion-state interpretation.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectBounce`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Fonte versionada:** [`EffectBounce.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectBounce.java), Ars Nouveau 5.13.1.
+- **Ramo único:** `onResolveEntity` valida `LivingEntity` e chama `IPotionEffect.applyConfigPotion(living,ModPotions.BOUNCE_EFFECT,stats)`; não altera velocidade nesta classe. Base de configuração 30s, Extend Time 8s; com os defaults carregados, `ticks=600+8*(int)(20*durationMultiplier)`, amplifier `(int)ampMultiplier` do helper.
+- **Efeito downstream:** preservar movimento adicional em bounce com Amplify é semântica de `BOUNCE_EFFECT`, não uma fórmula direta de `EffectBounce`; necessita classe de Potion/avaliação com movimento. Perk RPG não deve aplicar impulsos em paralelo com o tick do provider.
+- **Estado:** ✅ source pin com métodos/fórmulas; ⚠️ auxiliaries, config real e Survival QA pendentes. API de `EffectResolveEvent.Pre` existe, mas adapter RPG para este glyph não foi implementado/testado; sem duplicação de custo/efeito/WorldEffectPolicy.
