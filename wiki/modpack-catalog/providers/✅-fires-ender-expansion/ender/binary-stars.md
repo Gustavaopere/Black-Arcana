@@ -1,5 +1,8 @@
 # Binary Stars
 
+**✅ Identidade física exata 2026-10-13:** `firesenderexpansion:binary_stars` → `BinaryStarsSpell`, inscrito sem branch no JAR 2.4.1 SHA-1 `da87a4a0c926dd75236766584cddbae69c6aeff7`; [Java 21 #38434192044](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38434192044) SUCCESS, [dossiê](../EXACT-BINARY-SPELLS-2.4.1.md). Estado de registry `COUNTED_EXACT` **somente estático**; já contabilizado, **+0**. Mana/config/runtime de Iron's, teleport, domain e Survival ⚠️. Evidência anterior derivada de fonte abaixo mantém seu caráter histórico.
+
+
 - ID: `firesenderexpansion:binary_stars`
 - School: `irons_spellbooks:ender`
 - Levels: 1–5

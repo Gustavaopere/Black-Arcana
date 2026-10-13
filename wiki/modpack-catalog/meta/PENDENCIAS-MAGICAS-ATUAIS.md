@@ -1,5 +1,8 @@
 # Black Arcana — cinco pendências mágicas (acompanhamento)
 
+**Checkpoint Fire's Ender Expansion 2026-10-13:** [11/11 identidades físicas](../providers/✅-fires-ender-expansion/EXACT-BINARY-SPELLS-2.4.1.md) sob `SpellRegistries`, [Java 21 #38434192044](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38434192044) PASS e SHA-1 `da87a4a0c926dd75236766584cddbae69c6aeff7` coincidente com a modlist. Campanha **17/39 exatos / 22/39 pendentes**, **+0** objetos semânticos, mínimos **1857/1855** inalterados; Iron's host casting/mana e provider-native domain/teleport, configs e Survival ⚠️; Stage 06.05 🟡.
+
+
 **Bloqueio Aeromancy Additions 1.2.8 — 2026-10-13:** [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) confirmou [10/10 registros no publisher](../providers/✅-aeromancy-additions/EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md) (CurseForge 8251034, 753884 bytes, SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`) e cinco candidatos sem registro. **Falha de proveniência:** `Physical JAR SHA-1` histórico tem somente 35 caracteres; é inválido; nenhum hash completo foi lido diretamente do arquivo local `#009`. Não promover a exato. Campanha **16/39 / 23/39**, mínimos **1857/1855**, +0; configs/Survival ⚠️.
 
 
@@ -41,7 +44,7 @@
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **16/39 `COUNTED_EXACT` de registro mágico** (IronSable 7/7, Ars Elemental 47/47, Ars Zero 18/18, Ars Technica 11/11, Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 sob gate Iron's); ⚠️ **23/39** pendentes; nenhum PASS de execução/Survival |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **17/39 `COUNTED_EXACT` de registro mágico** (Fire's Ender Expansion 11/11, IronSable 7/7, Ars Elemental 47/47, Ars Zero 18/18, Ars Technica 11/11, Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 sob gate Iron's); ⚠️ **22/39** pendentes; nenhum PASS de execução/Survival |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |
