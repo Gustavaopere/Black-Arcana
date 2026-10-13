@@ -40,7 +40,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-ars-hex` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-morph` | 7 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-n-spells` | 15 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-nouveau` | 149 | 🟡 22/85 glyph parts (4 Forms, 14 Effects, 4 Augments) + 1/24 rituais com dossiê; hooks/QA pendentes |
+| `✅-ars-nouveau` | 149 | 🟡 42/85 glyph parts (5 Forms, 24 Effects, 13 Augments) + 6/24 rituais; eventos públicos reais source-pinned, adapter RPG e QA pendentes |
 | `✅-ars-polymorphia` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sable` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sophisticated-compat` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -184,7 +184,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 
 ## Ars Nouveau — checkpoint 2026-10-13
 
-**22/85 Glyph Parts** e **1/24 rituais** com mapeamento de perks/cadeia causal source-pinned nesta branch; sendo 4 Forms, 14 Effects, 4 Augments e 1 ritual. [Matriz técnica Ars 5.13.1](../providers/✅-ars-nouveau/PERK-ENGINEERING-MATRIX-5.13.1.md) com métodos, fórmulas, provas auxiliares e bloqueios. A cobertura semântica de identidade preexistente é diferente da profundidade técnica para perks.
+**42/85 Glyph Parts** e **6/24 rituais** com mapeamento de perks/cadeia causal source-pinned nesta branch; sendo 5 Forms, 24 Effects, 13 Augments e 6 rituais. [Matriz técnica Ars 5.13.1](../providers/✅-ars-nouveau/PERK-ENGINEERING-MATRIX-5.13.1.md) com métodos, fórmulas, provas auxiliares e bloqueios. [Eventos reais do Ars 5.13.1](../providers/✅-ars-nouveau/VERIFIED-EVENT-SURFACES-5.13.1.md) foram localizados, mas não constituem adapter implementado. A cobertura semântica de identidade preexistente é diferente da profundidade técnica para perks.
 
 ## Priorização para próximos lotes
 
