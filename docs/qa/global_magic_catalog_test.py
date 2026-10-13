@@ -820,6 +820,48 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("| 2.0.2 | 18 | `COUNTED_EXACT` |", row)
         self.assertIn("1857 global / 1855 scoped", ledger)
 
+    def test_ironsable_120_exact_seven_spells_without_ten_overlay_duplicates(self):
+        provider = PROVIDERS / "✅-ironsable"
+        note = (provider / "EXACT-BINARY-SPELLS-1.2.0.md").read_text(encoding="utf-8")
+        rows = [line for line in note.splitlines()
+                if re.match(r"^\| \d+ \| `ironsable:[a-z_]+` \|", line)]
+        self.assertEqual(7, len(rows))
+        self.assertEqual([str(i) for i in range(1, 8)],
+                         [r.split("|")[1].strip() for r in rows])
+        names = [r.split("|")[2].strip() for r in rows]
+        self.assertEqual(7, len(set(names)))
+        for token in ("ironsable:maelstrom", "ironsable:tempests_grasp",
+                      "ironsable:gyroscopic_spin", "ironsable:downburst",
+                      "ironsable:stasis_lock", "ironsable:kinetic_barrier",
+                      "ironsable:elastic_tether", "38408009738", "130973",
+                      "6ea9ce03144ec741a1e8d322f06985366d9ecc9e",
+                      "16/39 exact / 23/39 pending", "1857", "1855"):
+            self.assertIn(token, note)
+        self.assertIn("Lightning", note)
+        self.assertIn("Evocation", note)
+        self.assertIn("Ender", note)
+        self.assertIn("WindSchool.orEvocation()", note)
+        self.assertIn("registerIfPresent", note)
+        self.assertIn("PhysicsMagic", note)
+        self.assertIn("impulseOnBody", note)
+        matrix = (ROOT / "wiki/modpack-catalog/meta" /
+                  "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(v for v in matrix.splitlines() if v.startswith("| [IronSable]"))
+        self.assertIn("| 1.2.0 | 7 | COUNTED_EXACT |", row)
+        self.assertIn("EXACT-BINARY-SPELLS-1.2.0.md", row)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        entry = next(v for v in ledger.splitlines() if v.startswith("| [IronSable]"))
+        self.assertIn("COUNTED_EXACT", entry)
+        for name in ("maelstrom", "tempests-grasp", "downburst"):
+            card = (provider / "wind" / f"{name}.md").read_text(encoding="utf-8")
+            self.assertIn("COUNTED_EXACT", card)
+        for name in ("gyroscopic-spin", "stasis-lock",
+                     "kinetic-barrier", "elastic-tether"):
+            card = (provider / "school-unverified" / f"{name}.md").read_text(encoding="utf-8")
+            self.assertIn("COUNTED_EXACT", card)
+            self.assertIn("School (default verificado no JAR)", card)
+
     def test_ars_elemental_07101_exact_39_glyphs_eight_rituals(self):
         provider = PROVIDERS / "✅-ars-elemental"
         name = "EXACT-BINARY-GLYPHS-RITUALS-0.7.10.1.md"
@@ -1354,9 +1396,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(15, len(exact))
+        self.assertEqual(16, len(exact))
         self.assertEqual(
-            {"Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1413,9 +1455,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(15, len(exact))
+        self.assertEqual(16, len(exact))
         self.assertEqual(
-            {"Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
