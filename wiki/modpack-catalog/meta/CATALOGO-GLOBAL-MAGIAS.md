@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## Aeromancy Additions 1.2.8 — prova binária no publicador, gate de SHA físico, 2026-10-13
+
+[Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) comprovou [10/10 IDs no arquivo oficial de publicação](../providers/✅-aeromancy-additions/EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md), com cinco candidatos não inscritos. O registro legado de hash físico tem **35 caracteres** e não valida paridade. Portanto o provider segue `COUNTED_SOURCE_PINNED` e **⚠️ condicionado**, sem avançar a `COUNTED_EXACT`: **16/39** exatos/**23/39** pendentes, +0 novas raízes, mínimos **1857 global / 1855 escopo** inalterados. Validar SHA do JAR realmente instalado e configurações/Survival antes de qualquer promoção.
+
+
 ## IronSable 1.2.0 — décima sexta prova binária, 2026-10-13
 
 [Java 21 #38408009738](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38408009738) verificou [7 registros exatos de spells](../providers/✅-ironsable/EXACT-BINARY-SPELLS-1.2.0.md) no JAR oficial físico `6ea9ce03144ec741a1e8d322f06985366d9ecc9e` 130973 bytes; schools defaults binários e conditional Wind fallback identificados, **10 overlays** não aumentam a contagem de magias. **16/39 exatos / 23/39 pendentes**, +0 raízes; mínimos **1857 global / 1855 escopo** inalterados. Casting real, physics Sable, mana/config e Survival ⚠️. Checkpoints anteriores abaixo são históricos.

@@ -1,5 +1,10 @@
 # Semantic Magic Coverage Ledger
 
+## Latest addendum — Aeromancy 1.2.8 publisher binary proof with physical-hash gate, 2026-10-13
+
+[Independent Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) verified [10 unbranched spell registrations on the official 1.2.8 artifact](../providers/✅-aeromancy-additions/EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md), CurseForge file 8251034, 753884 bytes, SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`, plus five excluded source candidates. **Do not promote:** the recorded "physical JAR SHA-1" is only 35 characters and no independent complete digest of installed `aero_additions-1.2.8.jar` is available. The exact publisher bytecode result is not installed-JAR parity. Keep `COUNTED_SOURCE_PINNED` for 10 already counted roots. Cohort **16/39 exact / 23/39 pending**, **+0** strict roots; global **1857**, scoped **1855**, denominators still unknown; runtime/Survival remain QA.
+
+
 ## Latest addendum — IronSable 1.2.0 seven exact physical spells, 2026-10-13
 
 [Java 21 audit #38408009738](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38408009738) proved official CurseForge file 8598255 (**130973 bytes**, SHA-1 `6ea9ce03144ec741a1e8d322f06985366d9ecc9e`) identical to installed sibling `#344`. The `com.ironsable.Ironsable` static initializer registers **7** unbranched `ironsable:*` spell IDs via Iron's `SpellRegistry.SPELL_REGISTRY_KEY` and typed `DeferredHolder<AbstractSpell, ConcreteSpell>`; constructor wires to the NeoForge event bus. [Exact binary dossier](../providers/✅-ironsable/EXACT-BINARY-SPELLS-1.2.0.md) also verifies WindSchool conditional fallback and four formerly unverified default school identities. Ten host-Iron's physicalized spell overlays remain **duplicate carrier surfaces, not ten new spell identities**. Existing seven objects advance `COUNTED_RELEASE_BOUNDED → COUNTED_EXACT` for static registration only: **16/39 exact / 23/39 pending**, **+0** new semantic roots, strict minima **1857 global / 1855 scoped** unchanged. Real ship physics, Iron's/Sable API bridge, effective config and Survival remain ⚠️.

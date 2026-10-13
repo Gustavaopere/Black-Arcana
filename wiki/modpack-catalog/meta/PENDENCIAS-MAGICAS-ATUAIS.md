@@ -1,5 +1,8 @@
 # Black Arcana — cinco pendências mágicas (acompanhamento)
 
+**Bloqueio Aeromancy Additions 1.2.8 — 2026-10-13:** [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) confirmou [10/10 registros no publisher](../providers/✅-aeromancy-additions/EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md) (CurseForge 8251034, 753884 bytes, SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`) e cinco candidatos sem registro. **Falha de proveniência:** `Physical JAR SHA-1` histórico tem somente 35 caracteres; é inválido; nenhum hash completo foi lido diretamente do arquivo local `#009`. Não promover a exato. Campanha **16/39 / 23/39**, mínimos **1857/1855**, +0; configs/Survival ⚠️.
+
+
 **Checkpoint IronSable 2026-10-13:** [Java 21 #38408009738](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38408009738) provou [7/7 spells estáticos](../providers/✅-ironsable/EXACT-BINARY-SPELLS-1.2.0.md) e exclusão de 10 overlays Sable, file 8598255 SHA `6ea9ce03144ec741a1e8d322f06985366d9ecc9e` = físico. Schools próprias provadas no bytecode, inclusive conditional Wind→Evocation. Campanha **16/39 exatos / 23/39 pendentes**, **+0** raízes; mínimos **1857 global / 1855 escopo**. Casting físico, Sable/physics handles, configs, multiplayer e Survival ⚠️; Stage 06.05 🟡.
 
 

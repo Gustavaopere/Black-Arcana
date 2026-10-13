@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Auditoria publisher bloqueada por SHA físico — 2026-10-13:** [Aeromancy Additions 1.2.8](providers/✅-aeromancy-additions/EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md) registra dez spells no JAR oficial, mas o dado legado atribuído ao arquivo físico tem 35 caracteres (SHA-1 inválido). **Não** foi contado como `COUNTED_EXACT`; campanha **16/39** exatos/**23/39** pendentes; mínimos **1857/1855**. Nenhum gameplay/Survival PASS.
+
+
 **Atualização física 2026-10-13:** [IronSable 1.2.0](providers/✅-ironsable/EXACT-BINARY-SPELLS-1.2.0.md) fecha **7/7 spells estáticos** e o boundary dos dez overlays físicos sem novas identidades semânticas. **16/39** providers com registros físicos exatos, **23/39** pendentes; mínimos estritos continuam **1857 global / 1855 escopo**. JAR físico/publisher SHA coincidem, não implica runtime Sable nem Survival.
 
 
