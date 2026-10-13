@@ -47,61 +47,136 @@ jobs:
           else:
             raise SystemExit("Cannot fetch SHA-exact Ars Elemental 0.7.10.1; no promotion")
           PY
-      - name: Inspect exact 39 production glyph fields, eight rituals and identity suffixes
+      - name: Deterministically verify 39 production glyph IDs and eight rituals
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import os,re,subprocess,zipfile
           jar=os.environ['EXACT_JAR']
-          def java(c):
-            p=subprocess.run(['javap','-p','-c','-classpath',jar,c],text=True,capture_output=True,timeout=45)
-            assert p.returncode==0,(c,p.stderr[:180])
-            return p.stdout
-          reg=java('alexthw.ars_elemental.ArsNouveauRegistry')
-          def method(name):
-            anchor='public static void '+name+'();'
-            assert anchor in reg,anchor
-            lines=reg.split(anchor,1)[1].splitlines()
-            pos=next((i for i,line in enumerate(lines[2:],2) if line.startswith('  public ') or line.startswith('  private ') or line.startswith('  static {};')),len(lines))
-            return '\n'.join(lines[:pos])
-          glyph=method('registerGlyphs')
-          ritual=method('registerRituals')
-          print('PRODUCTION_STATIC_REGISTER_CALLS='+str(glyph.count('// Method register:(Lcom/hollingsworth/arsnouveau/api/spell/AbstractSpellPart;)V')))
-          print('REGISTRAR_BRANCHES='+repr([line.strip() for line in glyph.splitlines() if re.search(r'\bifne\b|\bifeq\b|\bifnull\b|\bgoto\b',line)]))
-          print('RITUAL_STATIC_REGISTER_CALLS='+str(ritual.count('// Method registerRitual:(Lcom/hollingsworth/arsnouveau/api/ritual/AbstractRitual;)V')))
-          print('RITUAL_BRANCHES='+repr([line.strip() for line in ritual.splitlines() if re.search(r'\bifne\b|\bifeq\b|\bgoto\b',line)]))
-          print('GLYPH_FIELDS_START')
-          fields=re.findall(r'// Field ([\w/$]+)\.(INSTANCE|NOT_INSTANCE):',glyph)
-          print('FIELD_COUNT='+str(len(fields)))
-          for i,(cls,field) in enumerate(fields,1):
-            print('GLYPH_FIELD_'+str(i)+'='+cls.replace('/','.')+'.'+field)
-          print('GLYPH_FIELDS_END')
-          ritual_classes=re.findall(r'// class (alexthw/ars_elemental/common/rituals/[\w/$]+)',ritual)
-          print('RITUAL_CLASS_COUNT='+str(len(ritual_classes)))
-          for i,c in enumerate(ritual_classes,1):print('RITUAL_CLASS_'+str(i)+'='+c.replace('/','.'))
-          print('ENTRYPOINT_INIT='+str('ArsNouveauRegistry.init:()V' in java('alexthw.ars_elemental.ArsElemental')))
-          print('INIT_CALLS='+repr([s.strip() for s in method('init').splitlines() if 'registerGlyphs:' in s or 'registerRituals:' in s]))
-          print('GLYPH_IDENTITIES_START')
-          by_cls=sorted(set(x[0] for x in fields))
-          for c in by_cls:
-            text=java(c.replace('/','.'))
-            lines=[l.strip() for l in text.splitlines() if ('// String ' in l or 'ArsElemental.prefix:' in l or 'ArsNouveau.prefix:' in l or 'GlyphLib.' in l or 'ResourceLocation' in l and ('prefix' in l or 'fromNamespace' in l))]
-            print('GLYPH_IDENTITY_CLASS='+c.replace('/','.'))
-            for line in lines[:20]:print('GLYPH_CONSTRUCTOR='+line[:260])
-          print('GLYPH_IDENTITIES_END')
-          print('RITUAL_IDENTITIES_START')
-          for c in ritual_classes:
-            text=java(c.replace('/','.'))
-            lines=[l.strip() for l in text.splitlines() if '// String ' in l or 'ArsElemental.prefix:' in l or 'ArsNouveau.prefix:' in l or 'ResourceLocation' in l and 'fromNamespace' in l]
-            print('RITUAL_IDENTITY_CLASS='+c.replace('/','.'))
-            for line in lines[:25]:print('RITUAL_CONSTRUCTOR='+line[:245])
-          print('RITUAL_IDENTITIES_END')
+          # Literal field/member and final ID expectations from exact-release source,
+          # independently verified below against current physical publisher JAR.
+          glyphs=[
+            ('EffectWaterGrave','INSTANCE','watery_grave'),
+            ('EffectBubbleShield','INSTANCE','bubble_shield'),
+            ('EffectConjureTerrain','INSTANCE','conjure_terrain'),
+            ('EffectCharm','INSTANCE','charm'),
+            ('EffectPhantom','INSTANCE','phantom_grasp'),
+            ('EffectLifeLink','INSTANCE','life_link'),
+            ('EffectSpores','INSTANCE','poison_spores'),
+            ('EffectEnvenom','INSTANCE','envenom'),
+            ('EffectSpike','INSTANCE','spike'),
+            ('EffectDischarge','INSTANCE','discharge'),
+            ('EffectSpark','INSTANCE','spark'),
+            ('EffectConflagrate','INSTANCE','conflagrate'),
+            ('EffectCauterize','INSTANCE','cauterize'),
+            ('EffectRage','INSTANCE','rage'),
+            ('EffectWaterJet','INSTANCE','water_jet'),
+            ('EffectGeyser','INSTANCE','geyser'),
+            ('EffectMist','INSTANCE','mist'),
+            ('EffectSlipper','INSTANCE','slip_feet'),
+            ('EffectCavitate','INSTANCE','cavitate'),
+            ('EffectOxidize','INSTANCE','oxidize'),
+            ('EffectSummonBee','INSTANCE','summon_bee'),
+            ('EffectSummonSlime','INSTANCE','summon_slime'),
+            ('MethodHomingProjectile','INSTANCE','homing_projectile'),
+            ('MethodArcProjectile','INSTANCE','arc_projectile'),
+            ('PropagatorHoming','INSTANCE','propagator_homing'),
+            ('PropagatorArc','INSTANCE','propagator_arc'),
+          ]
+          for name in ('aquatic','fiery','aerial','insect','undead','summon'):
+            cls=name.title()+'Filter'
+            glyphs.extend([(cls,'INSTANCE',name+'_filter'),(cls,'NOT_INSTANCE','not_'+name+'_filter')])
+          glyphs.append(('EffectNullify','INSTANCE','nullify_defense'))
+          assert len(glyphs)==39
+          rituals=[
+            ('SquirrelRitual','ritual_squirrels'),
+            ('TeslaRitual','ritual_tesla_coil'),
+            ('DetectionRitual','ritual_detection'),
+            ('RepulsionRitual','ritual_repulsion'),
+            ('AttractionRitual','ritual_attraction'),
+            ('PollinationRitual','ritual_pollination'),
+            ('forest.ArchwoodForestRitual','ritual_archwood_forest'),
+            ('forest.ArchwoodForestationRitual','ritual_archwood_forestation'),
+          ]
+          def java(name,verbose=False):
+            cmd=['javap','-p','-c']
+            if verbose:cmd.append('-v')
+            proc=subprocess.run([*cmd,'-classpath',jar,name],capture_output=True,text=True,timeout=50)
+            assert proc.returncode==0,(name,proc.stderr[:180])
+            return proc.stdout
           with zipfile.ZipFile(jar) as z:
-            metadata=next((x for x in z.namelist() if x.endswith('neoforge.mods.toml')),None)
-            print('MODS_METADATA='+str(metadata))
-            if metadata:
-              data=z.read(metadata).decode('utf8')
-              print('MOD_ID='+repr(re.findall(r'modId\s*=\s*["\x27]([^"\x27]+)',data)[:10]))
-          print('BINARY_DISCOVERY_COMPLETE=TRUE')
+            names=set(z.namelist())
+            meta=z.read('META-INF/neoforge.mods.toml').decode('utf-8')
+            assert re.search(r'modId\s*=\s*"ars_elemental"',meta)
+            assert len(set((x[0],x[1]) for x in glyphs))==39
+            assert len(set(x[2] for x in glyphs))==39
+          base='alexthw.ars_elemental.'
+          root=java(base+'ArsElemental')
+          assert 'ArsNouveauRegistry.init:()V' in root
+          assert '// String ars_elemental' in root
+          assert 'ResourceLocation.fromNamespaceAndPath:' in root
+          reg=java(base+'ArsNouveauRegistry')
+          assert 'GlyphRegistry.registerSpell:' in reg and 'RitualRegistry.registerRitual:' in reg
+          init=reg.split('public static void init();',1)[1].split('public static void',1)[0]
+          assert 'registerGlyphs:()V' in init and 'registerRituals:()V' in init
+          spell=reg.split('public static void registerGlyphs();',1)[1].split('public static void addSchool(',1)[0]
+          references=re.findall(r'// Field alexthw/ars_elemental/common/glyphs/(?:filters/)?(\w+)\.(INSTANCE|NOT_INSTANCE):',spell)
+          assert len(references)==40,('wrong field count',len(references))
+          assert references[:39]==[(a,b) for a,b,_ in glyphs],'39 production field order mismatch'
+          assert references[39]==('MethodCarianPhalanx','INSTANCE'),'dev-only method altered'
+          direct=re.findall(r'// Method register:\(Lcom/hollingsworth/arsnouveau/api/spell/AbstractSpellPart;\)V',spell)
+          assert len(direct)==40,('glyph registration calls',len(direct))
+          assert len(re.findall(r'^\s*\d+:\s+ifne\s+',spell,re.M))==1
+          assert 'FMLLoader.isProduction:()Z' in spell
+          # The only branch guards the 40th call: nonproduction extra.
+          guard=re.search(r'(\d+):\s+invokestatic\s+#[^\n]*// Method net/neoforged/fml/loading/FMLLoader.isProduction:\(\)Z\s+(\d+):\s+ifne\s+(\d+)',spell)
+          assert guard,'production gate absent'
+          target=int(guard.group(3))
+          tail=spell[guard.end():]
+          dev_load=re.search(r'(\d+):\s+getstatic\s+#[^\n]*// Field alexthw/ars_elemental/common/glyphs/MethodCarianPhalanx.INSTANCE',tail)
+          assert dev_load and int(dev_load.group(1))<target,'dev load not enclosed by production gate'
+          assert not re.findall(r'^\s*\d+:\s+(?:ifne|ifeq|goto|ifnonnull|ifnull|tableswitch|lookupswitch)\b',spell[:guard.start()],re.M)
+          wrapper=reg.split('public static void register(com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart);',1)[1].split('public static void',1)[0]
+          assert wrapper.count('GlyphRegistry.registerSpell:')==1
+          rblock=reg.split('public static void registerRituals();',1)[1].split('static {};',1)[0]
+          ritclasses=re.findall(r'// class alexthw/ars_elemental/common/rituals/([\w/]+)',rblock)
+          assert ritclasses==[k.replace('.','/') for k,_ in rituals],('ritual roster mismatch',ritclasses)
+          assert rblock.count('// Method registerRitual:')==8
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|goto|ifnull|ifnonnull)\b',rblock,re.M)
+          ritual_wrapper=reg.split('public static void registerRitual(com.hollingsworth.arsnouveau.api.ritual.AbstractRitual);',1)[1].split('public static',1)[0]
+          assert 'RitualRegistry.registerRitual:' in ritual_wrapper
+          # Verify provider-specific ID construction: glyph_ prefix and _filter suffix
+          # come from exact JAR abstract classes (not inferred from display labels).
+          effect=java(base+'common.glyphs.ElementalAbstractEffect',True)
+          form=java(base+'common.glyphs.ElementalAbstractForm',True)
+          filt=java(base+'common.glyphs.ElementalAbstractFilter',True)
+          for content,token in [(effect,'glyph_'),(form,'glyph_'),(filt,'_filter')]:
+            assert token in content and 'ArsElemental.prefix:' in content
+          for i,(cls,member,suffix) in enumerate(glyphs,1):
+            pkg='common.glyphs.filters.' if cls.endswith('Filter') else 'common.glyphs.'
+            txt=java(base+pkg+cls)
+            if cls.endswith('Filter'):
+              tag=suffix.removeprefix('not_').removesuffix('_filter')
+              expected_tag='not_'+tag if member=='NOT_INSTANCE' else tag
+              assert '// String '+expected_tag in txt,('filter constructor suffix missing',cls,expected_tag)
+            else:
+              assert '// String '+suffix in txt,('glyph constructor suffix missing',cls,suffix)
+            path='alexthw/ars_elemental/'+pkg.replace('.','/')+cls+'.class'
+            assert path in names,'missing binary spell part class '+path
+            print('EXACT_PRODUCTION_GLYPH_'+str(i)+'=ars_elemental:glyph_'+suffix+'|'+cls+'.'+member)
+          for i,(cls,id_) in enumerate(rituals,1):
+            path=base+'common.rituals.'+cls
+            txt=java(path)
+            assert '// String '+id_ in txt,(cls,id_)
+            assert 'ArsElemental.prefix:' in txt,(cls,'namespace method')
+            assert 'alexthw/ars_elemental/common/rituals/'+cls.replace('.','/')+'.class' in names
+            print('EXACT_RITUAL_'+str(i)+'=ars_elemental:'+id_+'|'+cls)
+          print('PRODUCTION_GLYPHS=39')
+          print('DEV_ONLY_NONPRODUCTION_GLYPH=1')
+          print('PHYSICAL_RITUALS=8')
+          print('EXACT_MAGIC_REGISTRY_OBJECTS=47')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('DOES_NOT_PROVE_CONFIG_SURVIVAL_RUNTIME=TRUE')
+          print('EXACT_STATIC_REGISTRY_AUDIT=PASS')
           PY
