@@ -82,3 +82,66 @@ jobs:
           print("SOURCE_CATALOG_IDS="+repr(["wind_charge","updraft","airstep","asphyxiate","feather_fall","wind_shield","airblast","wind_blade","flush","dash"]))
           print("PUBLISHER_DISCOVERY_ONLY_PHYSICAL_PARITY_NOT_PROVEN=TRUE")
           PY
+      - name: Assert ten unconditional publisher-release spell identities, exclude five unpublished spells
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ["AERO_JAR"]
+          expected=[
+            ('wind_charge','wind_charge.WindChargeSpell'),
+            ('updraft','updraft.UpdraftSpell'),
+            ('airstep','airstep.AirstepSpell'),
+            ('asphyxiate','asphyxiate.AsphyxiateSpell'),
+            ('feather_fall','feather_fall.FeatherFallSpell'),
+            ('wind_shield','wind_shield.WindShieldSpell'),
+            ('airblast','airblast.AirblastSpell'),
+            ('wind_blade','wind_blade.WindBladeSpell'),
+            ('flush','flush.FlushSpell'),
+            ('dash','dash.DashSpell'),
+          ]
+          def javap(c):
+            p=subprocess.run(['javap','-p','-c','-classpath',jar,c],capture_output=True,text=True,timeout=45)
+            assert p.returncode==0,(c,p.stderr[:250])
+            return p.stdout
+          with zipfile.ZipFile(jar) as z:
+            files=set(z.namelist())
+            meta=z.read('META-INF/neoforge.mods.toml').decode('utf8')
+            assert re.search(r'modId\s*=\s*"aero_additions"',meta)
+            assert 'META-INF/jarjar/expandability-neoforge-12.0.0.jar' in files
+          base='com.snackpirate.aeromancy.'
+          root=javap(base+'Aeromancy')
+          assert 'AASpells.register:(Lnet/neoforged/bus/api/IEventBus;)V' in root
+          reg=javap(base+'spells.AASpells')
+          assert 'SpellRegistry.SPELL_REGISTRY_KEY:' in reg and 'DeferredRegister.create:' in reg
+          wrapper=reg.split('private static java.util.function.Supplier',1)[1].split('public static void register(',1)[0]
+          assert 'DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)' in wrapper
+          assert 'getSpellName:' in wrapper
+          bus=reg.split('public static void register(',1)[1].split('private static',1)[0]
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V' in bus
+          static=reg.split('static {};',1)[1]
+          observed=re.findall(r'// class com/snackpirate/aeromancy/spells/([A-Za-z_0-9/]+Spell)',static)
+          expected_cls=[name.replace('.','/') for _,name in expected]
+          assert observed==expected_cls,('constructor order mismatch',observed)
+          assert static.count('// Method registerSpell:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)')==10,'unexpected registration count'
+          assert not re.search(r'^\s*\d+:\s+(?:ifeq|ifne|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\b',static,re.M),'conditional registration in static block'
+          # The bytecode actual classes, not source placeholders, must expose the ID suffix via own getSpellResource.
+          for i,(suffix,cls) in enumerate(expected,1):
+            f='com/snackpirate/aeromancy/spells/'+cls.replace('.','/')+'.class'
+            assert f in files,('missing concrete class',f)
+            out=javap(base+'spells.'+cls)
+            assert 'extends io.redspace.ironsspellbooks.api.spells.AbstractSpell' in out,cls
+            assert 'getSpellResource();' in out,(cls,'no spell id getter')
+            assert '// String '+suffix in out,('compiled suffix missing',cls,suffix)
+            assert 'Aeromancy.id:' in out,(cls,'namespace resource helper absent')
+            print('PUBLISHER_SPELL_ID_'+str(i)+'=aero_additions:'+suffix+'|'+cls)
+          for excluded in ['TornadoSpell','ThunderclapSpell','SummonBreezeSpell','TelelinkSpell','ShapeshiftSpell']:
+            assert excluded not in '/'.join(observed),'an excluded class is now active'
+          print('PUBLISHER_EXACT_STATIC_SPELLS=10')
+          print('UNREGISTERED_SOURCE_CANDIDATES_EXCLUDED=5')
+          print('JARJAR_EXPANDABILITY=12.0.0')
+          print('PUBLISHER_STATIC_IDENTITY_AUDIT=PASS')
+          print('PHYSICAL_INSTALLED_JAR_SHA_UNVERIFIED=TRUE')
+          print('COMPATIBILITY_RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
