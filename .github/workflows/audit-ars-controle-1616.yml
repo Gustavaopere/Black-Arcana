@@ -113,8 +113,15 @@ jobs:
              "GLYPH_FILTER_NOT":"glyph_filter_not",
              "GLYPH_FILTER_RANDOM":"glyph_filter_random",
           }
+          # The addon stores unprefixed suffixes and calls the Ars host
+          # GlyphLib.prependGlyph. Never infer full IDs from addon strings alone.
+          print("BINARY_ACNAMES_CLINIT="+names[names.rfind("static {};"):][:9000])
           for field,value in expected.items():
-              assert re.search(r'\b'+field+r'\s*=\s*"'+re.escape(value)+r'";',names),field+" differs from exact binary literal"
+              suffix=value.removeprefix("glyph_")
+              assert "// String "+suffix in names,"missing glyph suffix "+suffix
+              assert re.search(r'// Field '+field+r':Ljava/lang/String;',names),field+" is not initialized in binary"
+          assert names.count("GlyphLib.prependGlyph:")==9,"expected nine host prefix transformations"
+          print("HOST_PREFIX_GLYPHLIB_CALLS=9")
           calls=re.findall(r'// Method (?:dev/qther/ars_controle/registry/ACRegistry\$Glyphs\.)?register:\(Lcom/hollingsworth/arsnouveau/api/spell/AbstractSpellPart;\)',body)
           print("DIRECT_SPELL_PART_REGISTER_CALLS="+str(len(calls)))
           assert len(calls)==9,"registry is not exactly nine calls"
