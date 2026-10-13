@@ -1271,9 +1271,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(10, len(exact))
+        self.assertEqual(11, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1330,9 +1330,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(10, len(exact))
+        self.assertEqual(11, len(exact))
         self.assertEqual(
-            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks"},
+            {"Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1641,6 +1641,50 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn('| 1.0.5.1-1.21.1 | 6 | `COUNTED_EXACT` |', entry)
         self.assertIn('10/39', self.index)
         self.assertIn('29/39', self.index)
+
+    def test_ars_n_spells_334_exact_five_gated_rituals_and_eight_proxies(self):
+        provider = PROVIDERS / '✅-ars-n-spells'
+        name = 'EXACT-BINARY-RITUALS-3.3.4.md'
+        proof = (provider / name).read_text(encoding='utf-8')
+        ids = ('spell_uninscription', 'mana_infusion',
+               'spell_transcription', 'mana_well', 'spellbook_binding')
+        for marker in (
+            '8881108', '38336011675',
+            '53966330a468e626cd6469259af6778a5a7d9305',
+            '2222971', 'RitualRegistryHandler', 'ArsCrossProxyRegistry',
+            'RITUAL_REGISTRATION_CALLS=5',
+            'IRON_SPELLBOOKS_RITUAL_GATE=True',
+            'RITUAL_GATE_ORDER=UNINSCRIPTION_BEFORE_IRONS_CHECK_BEFORE_FOUR_OTHERS',
+            'ENTRYPOINT_TO_RITUAL_REGISTRAR=True',
+            'PROXY_POOL_SIZE=8', 'PROXY_SEMANTIC_ROOTS_ADDED=0',
+            '11/39', '28/39', '1851', '1849', '+0',
+            'Survival', *(f'ars_n_spells:{id}' for id in ids),
+        ):
+            self.assertIn(marker, proof)
+        rows = [x for x in proof.splitlines()
+                if x.startswith('| ') and 'ars_n_spells:' in x]
+        self.assertEqual(5, len(rows))
+        self.assertEqual(5, len(set(rows)))
+        self.assertTrue(any('ALWAYS' in x for x in rows))
+        self.assertEqual(4, sum('IRONS_GATED' in x for x in rows))
+        self.assertEqual(0, sum('ars_cross_' in x for x in rows))
+        for path in ('README.md', 'EVIDENCE-AND-PROVENANCE.md',
+                     'rituals/README.md', 'rituals/spell-uninscription.md',
+                     'rituals/mana-infusion.md', 'rituals/spell-transcription.md',
+                     'rituals/mana-well.md', 'rituals/spellbook-binding.md',
+                     'systems/cross-casting-and-proxy-pool.md'):
+            self.assertIn(name, (provider / path).read_text(encoding='utf-8'))
+        meta = ROOT / 'wiki/modpack-catalog/meta'
+        matrix = (meta / 'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf-8')
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith("| [Ars 'n' Spells]"))
+        self.assertIn('| 3.3.4 | 5 | COUNTED_EXACT |', row)
+        ledger = (meta / 'SEMANTIC-MAGIC-COVERAGE.md').read_text(encoding='utf-8')
+        entry = next(x for x in ledger.splitlines()
+                     if x.startswith("| [Ars 'n' Spells]"))
+        self.assertIn('| 3.3.4 | 5 | `COUNTED_EXACT` |', entry)
+        self.assertIn('11/39', self.index)
+        self.assertIn('28/39', self.index)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
