@@ -89,11 +89,9 @@ jobs:
           print('FOUND_CLASSES='+str(len(order))+' UNIQUE='+str(len(set(order)))+' NAMES='+repr(order))
           assert len(order)==30,('registry-classes',len(order),order)
           assert len(set(order))==30
-          registry_calls=re.findall(r'// Method ([A-Za-z0-9_$]+):\\(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;\\)',block)
-          print('REGISTRATION_CALL_SIGNATURES='+repr(registry_calls))
-          print('REGISTRY_INITIALIZER_INVOKES='+repr([x.strip() for x in block.splitlines() if 'invoke' in x and ('Method ' in x or 'InterfaceMethod' in x)][:105]))
-          assert len(registry_calls)==30,('registry-call-count',len(registry_calls),registry_calls)
-          assert len(set(registry_calls))==1,'registration-call-variants'
+          calls=[l.strip() for l in block.splitlines()
+                 if '// Method register:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)' in l]
+          assert len(calls)==30,('register wrapper calls',len(calls))
           assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|goto|tableswitch|lookupswitch|if_icmp\w+)\b',block,re.M), 'conditional static initializer'
           assert 'PossessedFallingSoulBlade' not in block
           print('STATIC_REGISTRATIONS=30')
