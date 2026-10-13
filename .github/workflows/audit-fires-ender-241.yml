@@ -83,3 +83,62 @@ jobs:
           print("BOOTSTRAP_END")
           print("DISCOVERY_ONLY=TRUE")
           PY
+      - name: Assert 11 unconditional compiled Iron's spell registrations with exact IDs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ["EXACT_FEE_JAR"]
+          expected=[
+             ("arcane_slice","ArcaneSliceSpell"),
+             ("aspect_of_the_shulker","AspectOfTheShulkerSpell"),
+             ("hollow_crystal","HollowCrystalSpell"),
+             ("dimensional_adaptation","DimensionalAdaptationSpell"),
+             ("obsidian_rod","ObsidianRodSpell"),
+             ("infinite_void","InfiniteVoidSpell"),
+             ("dragons_fury","DragonsFurySpell"),
+             ("gate_of_ender","GateOfEnderSpell"),
+             ("displacement_cage","DisplacementCageSpell"),
+             ("binary_stars","BinaryStarsSpell"),
+             ("scintillating_stride","ScintillatingStrideSpell"),
+          ]
+          base="net.fireofpower.firesenderexpansion."
+          def java(c):
+            proc=subprocess.run(["javap","-c","-p","-classpath",jar,c],capture_output=True,text=True,timeout=35)
+            assert proc.returncode==0,(c,proc.stderr[:200])
+            return proc.stdout
+          with zipfile.ZipFile(jar) as z:
+            paths=set(z.namelist())
+            toml=z.read("META-INF/neoforge.mods.toml").decode("utf8")
+            assert re.search(r'modId\s*=\s*"firesenderexpansion"',toml)
+          root=java(base+"FiresEnderExpansion")
+          registry=java(base+"registries.SpellRegistries")
+          assert 'SpellRegistries.register:(Lnet/neoforged/bus/api/IEventBus;)V' in root
+          assert "SpellRegistry.SPELL_REGISTRY_KEY:" in registry
+          assert 'DeferredRegister.create:' in registry and '// String firesenderexpansion' in registry
+          bus=registry.split("public static void register(",1)[1].split("public static",1)[0]
+          assert "DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V" in bus
+          wrapper=registry.split("public static java.util.function.Supplier",1)[1].split("static {};",1)[0]
+          assert "DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)" in wrapper
+          clinit=registry.split("static {};",1)[1]
+          classes=re.findall(r"// class net/fireofpower/firesenderexpansion/spells/([A-Za-z0-9_]+Spell)",clinit)
+          assert classes==[cls for _,cls in expected],("compiled registration order",classes)
+          calls=clinit.count("Method registerSpell:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)")
+          assert calls==11,("expected 11, got",calls)
+          assert not re.search(r'^\s*\d+:\s+(?:ifeq|ifne|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\b',clinit,re.M),"initializer gated"
+          for index,(suffix,cls) in enumerate(expected,1):
+            assert "net/fireofpower/firesenderexpansion/spells/"+cls+".class" in paths
+            text=java(base+"spells."+cls)
+            assert "extends io.redspace.ironsspellbooks.api.spells.AbstractSpell" in text,cls
+            assert "getSpellResource();" in text,cls
+            assert "ResourceLocation.fromNamespaceAndPath:" in text,cls
+            assert "// String "+suffix in text,("compiled exact spell suffix",cls,suffix)
+            assert "SchoolRegistry.ENDER_RESOURCE:" in text,("default Ender school",cls)
+            print("PHYSICAL_EXACT_SPELL_"+str(index)+"=firesenderexpansion:"+suffix+"|"+cls)
+          print("PHYSICAL_SPELL_REGISTRATIONS=11")
+          print("EXCLUDED_ADDITIONAL_SPELLS=0")
+          print("NEW_SEMANTIC_ROOTS=0")
+          print("EXACT_STATIC_REGISTRY_PROOF=PASS")
+          print("INSTALLED_PACK_RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE")
+          PY
