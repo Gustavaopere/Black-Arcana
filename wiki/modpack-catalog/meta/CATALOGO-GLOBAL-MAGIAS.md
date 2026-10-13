@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## Reliquified Ars Nouveau 0.8.1 — vigésima quinta prova binária, 2026-10-13
+
+**Vigésima quinta prova binária (2026-10-13):** [Reliquified Ars Nouveau 0.8.1](../providers/✅-reliquified-ars-nouveau/EXACT-BINARY-RELIC-ABILITIES-0.8.1.md), [Java21 #38461801129](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38461801129) **SUCCESS**. CurseForge `8104341`, JAR **1183912 bytes**, SHA-1 `4be1f4b0fd7fbec6618596e2e7c3705db88a7579` idêntico ao físico. Exatamente **19 itens** `DeferredRegister<Item>` e **19 habilidades principais** `AbilityTemplate.builder` em classes únicas, sem desvio no registro. **25/39 exatos / 14/39 pendentes**, +0 raízes, mínimos **1857 global / 1855 escopo** preservados. Subabilities não são novos spells Ars; gameplay/loot/Survival ⚠️.
+
+
 ## Waystones 21.1.45 — vigésima quarta prova física, 2026-10-13
 
 **Vigésima quarta prova binária (2026-10-13):** [Waystones 21.1.45](../providers/✅-waystones/EXACT-BINARY-ACTIONS-21.1.45.md), [Java21 #38460510230](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38460510230) **SUCCESS**. CurseForge file `8873000`, JAR **1219809 bytes**, SHA-1 `6ec1a176a102212db4f6391886db52ed103c830f` = físico #564. Três ações mágicas provider-native: teleport (`WaystonesAPI.tryTeleportAsync`), portal (`WarpPortalManager.spawnPortal`) e vínculo Twinbound (`TwinboundFeatherLinksComponent.with`). Ativação, binding Blank Scroll e attunement Warp Plate são preparações excluídas. **24/39 exatos / 15/39 pendentes**, **+0** raízes, mínimos **1857 global / 1855 escopo** inalterados. Não são spells Iron's; runtime/config/Survival ⚠️.

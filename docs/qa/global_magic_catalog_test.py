@@ -1542,9 +1542,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(24, len(exact))
+        self.assertEqual(25, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1601,9 +1601,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(24, len(exact))
+        self.assertEqual(25, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -2302,6 +2302,66 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         row = next(line for line in ledger.splitlines()
                    if line.startswith("| [Waystones]"))
         self.assertIn("| 21.1.45 | 3 | `COUNTED_EXACT` |", row)
+
+    def test_reliquified_ars_081_nineteen_exact_relic_ability_roots(self):
+        folder = PROVIDERS / "✅-reliquified-ars-nouveau"
+        dossier = "EXACT-BINARY-RELIC-ABILITIES-0.8.1.md"
+        text = (folder / dossier).read_text(encoding="utf-8")
+        records = (
+            ("architects_staff", "bridgecraft", "items.ArchitectsStaffItem"),
+            ("archmage_glove", "multicasted", "items.hands.ArchmageGloveItem"),
+            ("ballistarian_bracer", "ballistary", "items.bracelet.BallistarianBracerItem"),
+            ("cloak_of_concealment", "absorption", "items.back.CloakOfConcealmentItem"),
+            ("emblem_of_assault", "onslaught", "items.charm.EmblemOfAssaultItem"),
+            ("emblem_of_defense", "sentinel", "items.charm.EmblemOfDefenseItem"),
+            ("emblem_of_devotion", "devotion", "items.charm.EmblemOfDevotionItem"),
+            ("flaming_bracer", "pyroclastic", "items.bracelet.FlamingBracerItem"),
+            ("horn_of_the_wild_hunter", "summoner", "items.head.HornOfWildHunterItem"),
+            ("illusionists_mantle", "deception", "items.back.IllusionistsMantleItem"),
+            ("mana_ring", "resonance", "items.ring.ManaRingItem"),
+            ("quantum_bubble", "stasis", "items.head.QuantumBubbleItem"),
+            ("ring_of_last_will", "last_will", "items.ring.RingOfLastWillItem"),
+            ("ring_of_thrift", "thrift", "items.ring.RingOfThriftItem"),
+            ("spiked_cloak", "thorn_burst", "items.back.SpikedCloakItem"),
+            ("staff_of_the_spectral_walker", "spectral", "items.StaffOfTheSpectralWalkerItem"),
+            ("whirling_broom", "broom", "items.WhirlingBroomItem"),
+            ("whirlisprig_petals", "petal_lift", "items.WhirlisprigPetalsItem"),
+            ("wing_of_the_wild_stalker", "wild_flight", "items.body.WingWildStalkerItem"),
+        )
+        rows = [line for line in text.splitlines()
+                if line.startswith("| ") and "`reliquified_ars_nouveau:" in line]
+        self.assertEqual(19, len(rows))
+        self.assertEqual(19, len(set(rows)))
+        for i, (item, ident, cls) in enumerate(records, 1):
+            row = rows[i - 1]
+            for token in (f"| {i} |", f"`reliquified_ars_nouveau:{item}`",
+                          f"`{ident}`", f"`{cls}`"):
+                self.assertIn(token, row)
+            card = folder / "abilities" / (item.replace("_", "-") + ".md")
+            page = card.read_text(encoding="utf-8")
+            for token in (dossier, "COUNTED_EXACT",
+                          f"reliquified_ars_nouveau:{item}", f".{cls}",
+                          f"`{ident}`"):
+                self.assertIn(token, page)
+        for token in ("8104341", "1183912", "38461801129",
+                      "4be1f4b0fd7fbec6618596e2e7c3705db88a7579",
+                      "PHYSICAL_RELIC_ITEM_REGISTRATIONS=19",
+                      "UNIQUE_ROOT_ABILITY_BUILDERS=19",
+                      "STATIC_REGISTRY_BRANCHES=0",
+                      "NEW_SEMANTIC_ROOTS=0", "EXACT_STATIC_REGISTRY_AUDIT=PASS",
+                      "RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE",
+                      "25/39", "14/39", "1857", "1855"):
+            self.assertIn(token, text)
+        self.assertIn(dossier, (folder / "README.md").read_text(encoding="utf-8"))
+        root = ROOT / "wiki/modpack-catalog/meta"
+        matrix = (root / "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(line for line in matrix.splitlines()
+                   if line.startswith("| [Reliquified Ars Nouveau]"))
+        self.assertIn("| 0.8.1 | 19 | COUNTED_EXACT |", row)
+        ledger = (root / "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(line for line in ledger.splitlines()
+                   if line.startswith("| [Reliquified Ars Nouveau]"))
+        self.assertIn("| 0.8.1 | 19 | `COUNTED_EXACT` |", row)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)

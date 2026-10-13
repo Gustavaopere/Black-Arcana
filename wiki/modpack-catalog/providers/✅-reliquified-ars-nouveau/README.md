@@ -1,6 +1,9 @@
 # Reliquified Ars Nouveau — 0.8.1
 
-Status: `✅ CATALOGED / CURRENT PHYSICAL 0.8.1 / COUNTED_SOURCE_PINNED / 19 PROVIDER-OWNED RELIC ABILITY ROOTS / +19 STRICT / RUNTIME QA SEPARATE`
+**Prova física SHA-exata 2026-10-13:** ✅ [19/19 raízes de habilidade em itens de relíquia](EXACT-BINARY-RELIC-ABILITIES-0.8.1.md), [Java21 #38461801129](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38461801129) **SUCCESS**. CurseForge `8104341`, **1183912 bytes**, SHA-1 `4be1f4b0fd7fbec6618596e2e7c3705db88a7579` = físico. `ItemRegistry` registra 19 itens distintos e cada classe tem um `AbilityTemplate.builder` de root único. As [19 fichas individuais](abilities/) preservam os nomes localizados source-pinned. **`COUNTED_EXACT` somente identidade estática**, campanha **25/39 exatos / 14/39 pendentes**, +0 raízes; mínimos **1857 global / 1855 escopo** inalterados. Survival/valores de config/casts reais ⚠️.
+
+
+Status: `✅ CATALOGED / CURRENT PHYSICAL 0.8.1 / COUNTED_EXACT STATIC / 19 PROVIDER-OWNED RELIC ABILITY ROOTS / +19 STRICT / RUNTIME QA SEPARATE`
 
 ## Current physical identity
 
@@ -88,7 +91,7 @@ This is sufficient source-level evidence for a provider-owned acquisition route 
 
 The Black Arcana semantic metric counts discrete provider-owned supernatural player actions while excluding the relic item/gear container itself and downstream effects.
 
-The 19 owner-scoped Relics ability roots are distinct provider actions and are therefore **`COUNTED_SOURCE_PINNED`**.
+The 19 owner-scoped Relics ability roots are distinct provider actions and have **`COUNTED_EXACT` static identity evidence** (with source-pinned gameplay/loot metadata).
 
 Semantic contribution: **+19 strict objects**.
 
@@ -115,6 +118,6 @@ Catalog closure does not assert assembled-pack PASS. Relevant runtime gates incl
 
 ## Result
 
-**✅ Cataloged — `COUNTED_SOURCE_PINNED`.**
+**✅ Cataloged — `COUNTED_EXACT` (static item and ability root identities), gameplay/Survival ⚠️.**
 
 Current semantic inventory: **19 provider-owned supernatural Relics ability roots**. Strict global semantic delta: **+19**.
