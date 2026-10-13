@@ -1,5 +1,7 @@
 # Boogie Woogie
 
+**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:boogie_woogie`, classe `net.acetheeldritchking.discerning_the_eldritch.spells.evocation.BoogieWoogieSpell`, `SchoolRegistry.EVOCATION_RESOURCE`; [Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207) e [dossiê SHA-exato](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Parâmetros source-pinned; runtime/Survival ⚠️; +0.
+
 - **ID:** `discerning_the_eldritch:boogie_woogie`
 - **School:** Evocation
 - **Levels:** 1–5
