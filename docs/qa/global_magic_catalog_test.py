@@ -1542,9 +1542,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(20, len(exact))
+        self.assertEqual(21, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1601,9 +1601,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(20, len(exact))
+        self.assertEqual(21, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -2071,6 +2071,78 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         row = next(x for x in ledger.splitlines()
                    if x.startswith("| [ISS: Magic From The East]"))
         self.assertIn("| 1.1.5 | 22 | `COUNTED_EXACT` |", row)
+
+    def test_legendary_spellbooks_032_exact_thirty_binary_identities(self):
+        provider = PROVIDERS / "✅-legendary-spellbooks"
+        dossier = "EXACT-BINARY-SPELLS-0.3.2.md"
+        note = (provider / dossier).read_text(encoding="utf-8")
+        expected = (
+            ("annihilation", "annihilation_arrow", "AnnihilationArrowSpell", "annihilation-arrow"),
+            ("annihilation", "annihilation_beam", "AnnihilationBeamSpell", "annihilation-beam"),
+            ("annihilation", "annihilation_bomb", "AnnihilationBombSpell", "annihilation-bomb"),
+            ("annihilation", "annihilation_shockwave", "AnnihilationShockwaveSpell", "annihilation-shockwave"),
+            ("annihilation", "annihilation_resonance", "AnnihilationResonanceSpell", "annihilation-resonance"),
+            ("annihilation", "annihilation_geyser", "AnnihilationGeyserSpell", "annihilation-geyser"),
+            ("annihilation", "summon_flameborn_knights", "SummonFlamebornKnightsSpell", "summon-flameborn-knights"),
+            ("annihilation", "release_riftwalker_predator", "ReleaseRiftwalkerPredatorSpell", "release-riftwalker-predator"),
+            ("annihilation", "flameborn_drift", "FlamebornDriftSpell", "flameborn-drift"),
+            ("blood", "possessed_soul_blade", "PossessedSoulBladeSpell", "possessed-soul-blade"),
+            ("blood", "hematite_trishula", "HematiteTrishulaSpell", "hematite-trishula"),
+            ("blood", "possessed_wing", "PossessedWingSpell", "possessed-wing"),
+            ("evocation", "collapsed_kingdoms_legion", "CollapsedKingdomsLegionSpell", "collapsed-kingdoms-legion"),
+            ("fire", "flame_eater", "FlameEaterSpell", "flame-eater"),
+            ("fire", "flame_sector", "FlameSectorSpell", "flame-sector"),
+            ("fire", "sentinel_saturation", "SentinelSaturationSpell", "sentinel-saturation"),
+            ("ice", "glacier_eruption", "GlacierEruptionSpell", "glacier-eruption"),
+            ("ice", "glacier_ringburst", "GlacierRingburstSpell", "glacier-ringburst"),
+            ("lightning", "cloud_rail", "CloudRailSpell", "cloud-rail"),
+            ("lightning", "cloud_ring", "CloudRingSpell", "cloud-ring"),
+            ("lightning", "nimbus_array", "NimbusArraySpell", "nimbus-array"),
+            ("lightning", "triple_nimbus_array", "TripleNimbusArraySpell", "triple-nimbus-array"),
+            ("lightning", "thunder_fanburst", "ThunderFanburstSpell", "thunder-fanburst"),
+            ("lightning", "tornado", "TornadoSpell", "tornado"),
+            ("lightning", "quad_tornado", "QuadTornadoSpell", "quad-tornado"),
+            ("lightning", "energy_beam", "EnergyBeamSpell", "energy-beam"),
+            ("lightning", "cumulo_charge", "CumuloChargeSpell", "cumulo-charge"),
+            ("nature", "ambush_thorns", "AmbushThornsSpell", "ambush-thorns"),
+            ("nature", "overgrown_shockwave", "OvergrownShockwaveSpell", "overgrown-shockwave"),
+            ("nature", "fossilized_fury", "FossilizedFurySpell", "fossilized-fury"),
+        )
+        rows = [x for x in note.splitlines()
+                if x.startswith("| ") and "`legendary_spellbooks:" in x]
+        self.assertEqual(30, len(rows))
+        self.assertEqual(30, len(set(rows)))
+        for ordinal, (school, ident, cls, slug) in enumerate(expected, 1):
+            self.assertIn(f"| {ordinal} |", rows[ordinal - 1])
+            self.assertIn(f"`legendary_spellbooks:{ident}`", rows[ordinal - 1])
+            self.assertIn(f"common.spells.{school}.{cls}`", rows[ordinal - 1])
+            card = (provider / school / (slug + ".md")).read_text(encoding="utf-8")
+            for evidence in (dossier, "COUNTED_EXACT",
+                             f"legendary_spellbooks:{ident}",
+                             f"common.spells.{school}.{cls}"):
+                self.assertIn(evidence, card)
+        for required in ("8255715", "510127", "38453654179",
+                         "bda5b1fbe50ad834a6a76ad36789743c1057ebf5",
+                         "PHYSICAL_SPELL_REGISTRATIONS=30",
+                         "NEW_SEMANTIC_ROOTS=0",
+                         "STATIC_INITIALIZER_BRANCHES=0",
+                         "EXACT_STATIC_REGISTRY_AUDIT=PASS",
+                         "RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE",
+                         "21/39", "18/39", "1857", "1855",
+                         "PossessedFallingSoulBladeSpell"):
+            self.assertIn(required, note)
+        for name in ("README.md", "TECHNICAL-AUDIT.md"):
+            self.assertIn(dossier, (provider / name).read_text(encoding="utf-8"))
+        matrix = (ROOT / "wiki/modpack-catalog/meta" /
+                  "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines()
+                   if x.startswith("| [Legendary Spellbooks]"))
+        self.assertIn("| 0.3.2 | 30 | COUNTED_EXACT |", row)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(x for x in ledger.splitlines()
+                   if x.startswith("| [Legendary Spellbooks]"))
+        self.assertIn("| 0.3.2 | 30 | `COUNTED_EXACT` |", row)
 
     def test_current_status_does_not_promote_runtime(self):
         self.assertIn("164/164 diretórios", self.index)
