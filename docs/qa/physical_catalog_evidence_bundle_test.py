@@ -83,18 +83,18 @@ class EvidenceBundleTests(unittest.TestCase):
                         source_commit=pin, expected_physical_jars=69,
                         fingerprinted_pending_registry=0,
                         blocked_physical_artifact=39,
-                        catalog_exact_preexisting=11,
-                        registry_proofs_remaining=28,
+                        catalog_exact_preexisting=12,
+                        registry_proofs_remaining=27,
                         providers=[
                             dict(
-                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else 'Crystal Chronicles' if i == 3 else 'Dreamless Spells' if i == 4 else 'Paladin Spells' if i == 5 else "Wind's Spellbooks" if i == 6 else 'Backported Spellbooks' if i == 7 else 'Deeper & Darker Spellbooks' if i == 8 else "GTBC's Geomancy Plus" if i == 9 else "Farmer's Spell 'n Spellbooks" if i == 10 else "Ars 'n' Spells" if i == 11 else f'Provider {i}'),
-                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+                                provider=('Ars Additions' if i == 1 else 'Ars Hex' if i == 2 else 'Crystal Chronicles' if i == 3 else 'Dreamless Spells' if i == 4 else 'Paladin Spells' if i == 5 else "Wind's Spellbooks" if i == 6 else 'Backported Spellbooks' if i == 7 else 'Deeper & Darker Spellbooks' if i == 8 else "GTBC's Geomancy Plus" if i == 9 else "Farmer's Spell 'n Spellbooks" if i == 10 else "Ars 'n' Spells" if i == 11 else 'Ars Controle' if i == 12 else f'Provider {i}'),
+                                catalog_evidence=('COUNTED_EXACT' if i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
                                                   else 'COUNTED_SOURCE_PINNED'),
-                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '0.1.3-alpha' if i == 3 else '1.1.9' if i == 4 else '1.1.1' if i == 5 else '1.0.5' if i == 6 else 'physical 0.1.2 / embedded 0.1.0' if i == 7 else '1.3.3 Version B' if i == 8 else '1.1.0-1.21.1' if i == 9 else '1.0.5.1-1.21.1' if i == 10 else '3.3.4' if i == 11 else '1.0'),
-                                existing_semantic_objects=(5 if i == 1 else 1 if i in (2, 3) else 4 if i == 4 else 5 if i == 5 else 6 if i == 7 else 4 if i == 8 else 12 if i == 9 else 6 if i == 10 else 5 if i == 11 else i+1),
+                                declared_version=('21.3.0' if i == 1 else '5.0.4b' if i == 2 else '0.1.3-alpha' if i == 3 else '1.1.9' if i == 4 else '1.1.1' if i == 5 else '1.0.5' if i == 6 else 'physical 0.1.2 / embedded 0.1.0' if i == 7 else '1.3.3 Version B' if i == 8 else '1.1.0-1.21.1' if i == 9 else '1.0.5.1-1.21.1' if i == 10 else '3.3.4' if i == 11 else '1.6.16' if i == 12 else '1.0'),
+                                existing_semantic_objects=(5 if i == 1 else 1 if i in (2, 3) else 4 if i == 4 else 5 if i == 5 else 6 if i == 7 else 4 if i == 8 else 12 if i == 9 else 6 if i == 10 else 5 if i == 11 else 9 if i == 12 else i+1),
                                 physical_status='MISSING',
                                 status=('CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT'
-                                        if i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11) else 'PHYSICAL_ARTIFACT_BLOCKED'),
+                                        if i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12) else 'PHYSICAL_ARTIFACT_BLOCKED'),
                                 registry_verified=False,
                                 survival_verified=False,
                                 promotion_allowed=False,
@@ -240,15 +240,15 @@ class EvidenceBundleTests(unittest.TestCase):
             queue = json.loads((root / 'bundle' / 'provider-39-queue.json').read_text())
             self.assertEqual(39, len(queue['providers']))
             self.assertEqual(0, queue['registry_proofs_completed'])
-            self.assertEqual(11, queue['catalog_exact_preexisting'])
-            self.assertEqual(28, queue['registry_proofs_remaining'])
+            self.assertEqual(12, queue['catalog_exact_preexisting'])
+            self.assertEqual(27, queue['registry_proofs_remaining'])
             exact = [x for x in queue['providers']
                      if x['catalog_evidence'] == 'COUNTED_EXACT']
-            self.assertEqual(11, len(exact))
+            self.assertEqual(12, len(exact))
             self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                               'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                               'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
-                              "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells"},
+                              "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", "Ars Controle"},
                              {x['provider'] for x in exact})
             self.assertTrue(all(not row['registry_verified'] and
                                 not row['promotion_allowed'] for row in exact))

@@ -1,5 +1,8 @@
 # Ars Controle 1.6.16 — source revalidation
 
+**Nota posterior, 2026-10-13:** status `COUNTED_SOURCE_PINNED` histórico abaixo foi promovido a **9/9 `COUNTED_EXACT` para registry** após [auditoria do JAR físico](EXACT-BINARY-GLYPHS-1.6.16.md) ([CI #38339934100](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38339934100)); +0 novas raízes, gameplay/Survival ⚠️.
+
+
 Date: `2026-09-23`
 
 Status: `COUNTED_SOURCE_PINNED / REGISTRY CONTINUITY PROVEN / 9 SEMANTIC SPELL PARTS / RUNTIME QA FAIL-CLOSED`

@@ -1,5 +1,10 @@
 # Semantic Magic Coverage Ledger
 
+## Latest addendum — Ars Controle 1.6.16 nine static physical glyphs, 2026-10-13
+
+[Java 21 #38339934100](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38339934100) provou SHA-1 físico/pub `795567371450debec83fe634fd0114c295f7da5a` e nove registros binários sem branch, `GlyphLib.prependGlyph` e bootstrap. [Dossiê 9/9](../providers/✅-ars-controle/EXACT-BINARY-GLYPHS-1.6.16.md). `COUNTED_SOURCE_PINNED → COUNTED_EXACT` apenas quanto a registry; **12/39 exatos / 27/39 pendentes**, +0 magias; mínimos **1851/1849**; runtime/Survival ⚠️.
+
+
 ## Latest addendum — Ars 'n' Spells 3.3.4 five exact static rituals, 2026-10-12
 
 Official [CurseForge file 8881108](https://www.curseforge.com/minecraft/mc-mods/ars-n-spells/files/8881108), **2222971 bytes**, SHA-1 `53966330a468e626cd6469259af6778a5a7d9305` equal to documented physical sibling. [Independent Java 21 run #38336011675](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38336011675) confirmed five direct Ars Nouveau `RitualRegistry.registerRitual` calls with `ars_n_spells:spell_uninscription` unconditional and `mana_infusion`, `spell_transcription`, `mana_well`, `spellbook_binding` under an `irons_spellbooks` mod-loaded gate; entrypoint wired. The Iron's proxy pool is eight bounded `ars_cross_*` transport-only entries, zero independent semantic actions. [Dossier](../providers/✅-ars-n-spells/EXACT-BINARY-RITUALS-3.3.4.md). Five already-counted rituals advance `COUNTED_RELEASE_BOUNDED → COUNTED_EXACT` **for static identity/gates only**; campaign **11/39 exact / 28/39 pending**, **+0** objects, strict minima **1851 global / 1849 scoped** unchanged. Runtime payment, carriers, client/server and Survival ⚠️. Earlier release snapshots remain historical.
@@ -400,7 +405,7 @@ Arithmetic cross-check by provider family:
 | [Ars Nouveau](../providers/✅-ars-nouveau/README.md) | 5.13.1 | 109 | `COUNTED_SOURCE_PINNED` | 5 Forms + 13 Augments + 67 Effects + 24 rituals; arbitrary composed chains excluded |
 | [StarbuncleMania](../providers/✅-starbunclemania/README.md) | 1.5.8 | 2 | `COUNTED_EXACT` | physical SHA-1 equals exact publisher File `8778598`; exact artifact closes two unconditional Ars `AbstractEffect` glyphs plus their two packaged `ars_nouveau:glyph` acquisition recipes |
 | [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | `COUNTED_EXACT` | 3 glyphs + 2 rituals; host 5.13.1 glyph prefix directly verified; +0 previously counted |
-| [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | `COUNTED_SOURCE_PINNED` | 1 effect + 8 filters/spell parts; 1.6.15→1.6.16 registry source is blob-identical |
+| [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | `COUNTED_EXACT` | [9/9 glyphs físicos](../providers/✅-ars-controle/EXACT-BINARY-GLYPHS-1.6.16.md), 1 effect + 8 filters, static registry only; runtime ⚠️ |
 | [Ars Technica](../providers/✅-ars-technica/README.md) | 2.7.6 | 11 | `COUNTED_SOURCE_PINNED` | 11/11 registered spell parts |
 | [Ars Hex](../providers/✅-ars-hex/README.md) | 5.0.4b | 1 | `COUNTED_EXACT` | one Malum-gated Soul Shatter glyph, physically SHA-matched binary registry ID, +0 new |
 | [Ars Zero](../providers/✅-ars-zero/README.md) | 2.0.2 | 12 | `COUNTED_RELEASE_BOUNDED` | 12 current unique glyph capabilities; disabled copied AOE/Amplifier variants excluded |
