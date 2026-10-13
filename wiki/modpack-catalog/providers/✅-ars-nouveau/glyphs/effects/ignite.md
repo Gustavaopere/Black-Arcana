@@ -36,4 +36,4 @@ Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG Q
 - **Augments:** Extend Time, AOE, Pierce, Reduce Time, Sensitive; limite default de Sensitive 1.
 - **Risco:** fire ticks, área por bloco, e variantes de fogo são categorias separadas de perk; uma perk de "duração" não equivale à de "área" nem autoriza ignorar claims. Mutação de mundo do Ars permanece autoridade Ars.
 
-**Estado:** prova estática de parâmetros por leitura de código; habilidade de mutação por hook externo não verificada. Ars controla composição, execução, mana/Source e configurações; RPG Skill Tree controla perks/Mastery/gates; Black Arcana é autoridade somente de seu runtime próprio. [Padrão universal](../../../meta/PERK-READY-TECHNICAL-STANDARD.md).
+**Estado:** prova estática de parâmetros por leitura de código; habilidade de mutação por hook externo não verificada. Ars controla composição, execução, mana/Source e configurações; RPG Skill Tree controla perks/Mastery/gates; Black Arcana é autoridade somente de seu runtime próprio. [Padrão universal](../../../../meta/PERK-READY-TECHNICAL-STANDARD.md).

@@ -54,4 +54,4 @@ This page records source facts, not proof that the installed 612-mod pack preser
 - **Lifespan default:** `getProjectileLifespan` busca `PROJECTILE_TTL` configurável (fallback 60 segundos); não é um alcance máximo por blocos.
 - **Limites:** `getCompatibleAugments` permite Pierce, Split, Accelerate, Decelerate e Sensitive. Quantidade/velocidade são dados do `SpellStats` provider-native; nenhuma API de reescrita por RPG perk foi comprovada.
 
-**Estado:** prova estática de parâmetros por leitura de código; habilidade de mutação por hook externo não verificada. Ars controla composição, execução, mana/Source e configurações; RPG Skill Tree controla perks/Mastery/gates; Black Arcana é autoridade somente de seu runtime próprio. [Padrão universal](../../../meta/PERK-READY-TECHNICAL-STANDARD.md).
+**Estado:** prova estática de parâmetros por leitura de código; habilidade de mutação por hook externo não verificada. Ars controla composição, execução, mana/Source e configurações; RPG Skill Tree controla perks/Mastery/gates; Black Arcana é autoridade somente de seu runtime próprio. [Padrão universal](../../../../meta/PERK-READY-TECHNICAL-STANDARD.md).

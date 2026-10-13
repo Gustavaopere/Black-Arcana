@@ -7,12 +7,12 @@
 - **Isto não significa 2899 feitiços**: inclui índices, metadados, auditorias, arquivos de suporte, guias e objetos com classificação condicional.
 - A meta é que **cada ficha real de objeto mágico** contenha o dossiê definido em [PERK-READY-TECHNICAL-STANDARD.md](PERK-READY-TECHNICAL-STANDARD.md); arquivos agregados ficam como índices ou provas.
 - O Iron's base possui 110 fichas anotadas em [PR #795 (draft)](https://github.com/Gustavaopere/Black-Arcana/pull/795), **fora da main de referência**; não contam como conteúdo fundido.
-- O Apprentice's Codex 0.9.7.1 possui 83 fichas de spells previamente source-catalogadas. Os próximos commits desta branch passam a acrescentar localizadores de implementação em cada uma (sem reescrever os dados já auditados).
+- O Apprentice's Codex 0.9.7.1 possui 83 fichas de spells previamente source-catalogadas. Nesta branch, as **83/83 fichas receberam localizadores exatos** de classe/registro; seis tiveram rastreio causal específico (Higanbana, Blood Brand, Mist Form, Arcane Blast, Thermal Process, Echo Cast). É localização source-pinned, não prova de hooks ou runtime.
 - Este inventário **não** modifica o estado de catalogação semântica vigente (mínimos 1857 global / 1855 escopo) nem a campanha de prova binária 25/39.
 
 ## Convenção de acompanhamento
 
-A terceira coluna indica **somente a situação do dossiê de perks agregado nesta baseline da `main`**, não diz que o provider esteja ❌ não catalogado. Os registros podem já possuir valores/fórmulas validados por outras auditorias: esses dados devem ser aproveitados e os gaps calculados arquivo a arquivo. Conferência de completude por provider requer filtrar fichas de identidade semântica e validar prova por campo; uma quantidade de Markdown não substitui essa operação.
+A terceira coluna indica **a situação incremental nesta branch a partir da baseline da `main`**, não diz que o provider esteja ❌ não catalogado. Os registros podem já possuir valores/fórmulas validados por outras auditorias: esses dados devem ser aproveitados e os gaps calculados arquivo a arquivo. Conferência de completude por provider requer filtrar fichas de identidade semântica e validar prova por campo; uma quantidade de Markdown não substitui essa operação.
 
 | Diretório do provider | Arquivos `.md` existentes | Gaps de dossiê técnico |
 |---|---:|---|
@@ -31,7 +31,7 @@ A terceira coluna indica **somente a situação do dossiê de perks agregado nes
 | `✅-apothic-compats` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-enchanting` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-apprentice-codex` | 101 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-apprentice-codex` | 101 | 🟡 83/83 fichas de spell com source class; 6 com causalidade aprofundada; hooks/QA pendentes |
 | `✅-ars-additions` | 48 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-controle` | 25 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -40,7 +40,7 @@ A terceira coluna indica **somente a situação do dossiê de perks agregado nes
 | `✅-ars-hex` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-morph` | 7 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-n-spells` | 15 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-nouveau` | 149 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ars-nouveau` | 149 | 🟡 4 fichas (Projectile, Ignite, Heal, Flight ritual) aprofundadas; demais pendentes |
 | `✅-ars-polymorphia` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sable` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-sophisticated-compat` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -101,7 +101,7 @@ A terceira coluna indica **somente a situação do dossiê de perks agregado nes
 | `✅-farmers-spell` | 12 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-fires-ender-expansion` | 15 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-gaze` | 34 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-goety` | 375 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-goety` | 375 | ⚠️ 2 Focuses com boundary técnico e bloqueio explícito; código exato pendente |
 | `✅-goety-cataclysm` | 60 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-goety-iron` | 23 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-grapplemod-skybound` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
