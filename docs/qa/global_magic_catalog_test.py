@@ -18,7 +18,7 @@ INDEX_PATTERN = re.compile(
 CARD_PATTERN = re.compile(r"^### (?P<ordinal>\d{2}) (?P<spell>.+)$", re.MULTILINE)
 LINK_PATTERN = re.compile(
     r"^\| (?P<ordinal>\d+) \| (?P<spell>[^|]+) \| "
-    r"\[Ficha \d{2}\]\(#(?P<anchor>[^)]+)\) \| Publicador / release-bounded \|$",
+    r"\[Ficha \d{2}\]\(#(?P<anchor>[^)]+)\) \| \x60tunes_n_tomes:[a-z_]+\x60 \| JAR SHA-exato / Java 21 \|$",
     re.MULTILINE,
 )
 
@@ -55,7 +55,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
 
     def test_tunes_cards_match_all_publisher_named_roster_entries(self):
         roster_section = self.readme.split(
-            "## Current publisher roster — 16 semantic spell identities", 1
+            "## Roster 16/16 de feitiços — IDs exatos no JAR físico", 1
         )[1].split("\n## ", 1)[0]
         names = re.findall(r"^\d+\. (.+)$", roster_section, re.MULTILINE)
         cards = [m.groupdict() for m in CARD_PATTERN.finditer(self.cards)]
@@ -1544,7 +1544,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
         self.assertEqual(19, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1603,7 +1603,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
         self.assertEqual(19, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
