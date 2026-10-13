@@ -64,3 +64,11 @@ Occupies a close-range Blood summoned-blade/multihit/lifesteal niche. Future Bla
 - **Atributos/modificadores:** como addon do Iron's, `AbstractSpell` resolve spell power/custo e escola conforme seu contrato exato; parâmetros como raio, alvos e projéteis podem depender da classe acima ou de helpers/entidades *provider-owned*. Sua mutabilidade por perk está **CONDICIONADA** a evento/API/adapter validado na versão exata.
 - **Causalidade e proteção:** associar progressão ao cast original; não premiar projétil, dano indireto, summon ou recast como outro cast automaticamente. Nenhum teste de alteração de runtime, Survival ou hook foi conduzido por esta ficha.
 - **Proveniência:** fonte no commit 0.9.7.1 `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. Metadados e localizadores factuais; nenhuma cópia de implementação ou asset upstream.
+
+## Engenharia de perks — cadeia causal exata
+
+- **`Higanbana`** estende `AbstractSummonWeaponSpell<HiganbanaKatanaEntity>`; `onCastNoWeapon` instancia a arma; `onInitialCastWithWeapon` define `setDamage`, `setRemainingSlashCount(4)` e `setFirstSlashStandby(5)`. `onCastCompleteWithWeapon` escolhe `RELEASE_WEAPON` se cancelado ou `KEEP_WEAPON` caso contrário.
+- **Dano bruto:** `1 + getSpellPower(level,caster)/100` × `ApprenticeCodexServerConfig.damageMultiplier(HIGANBANA)`. `getRange` consulta `HiganbanaKatanaEntity.getAttackDepth()`, não um valor de alcance independente do caster.
+- **Perks:** spell power/dano pode escalar via Iron's e config; aumentar slash count/attack depth exige estudar `HiganbanaKatanaEntity` e ciclo da arma sem criar outro cast. O número quatro é intencionalmente fixo para separar progressão de dano da progressão de hits.
+
+**Confiança:** source auditado do commit fixado 0.9.7.1; hooks externos de mutação e teste em Survival permanecem pendentes.

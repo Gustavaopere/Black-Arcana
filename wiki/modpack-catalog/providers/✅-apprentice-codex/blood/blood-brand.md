@@ -75,3 +75,12 @@ Uses Iron's spell registry/scroll infrastructure. Exact 0.9.7.1 acquisition dist
 - **Atributos/modificadores:** como addon do Iron's, `AbstractSpell` resolve spell power/custo e escola conforme seu contrato exato; parâmetros como raio, alvos e projéteis podem depender da classe acima ou de helpers/entidades *provider-owned*. Sua mutabilidade por perk está **CONDICIONADA** a evento/API/adapter validado na versão exata.
 - **Causalidade e proteção:** associar progressão ao cast original; não premiar projétil, dano indireto, summon ou recast como outro cast automaticamente. Nenhum teste de alteração de runtime, Survival ou hook foi conduzido por esta ficha.
 - **Proveniência:** fonte no commit 0.9.7.1 `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. Metadados e localizadores factuais; nenhuma cópia de implementação ou asset upstream.
+
+## Engenharia de perks — cadeia causal exata
+
+- **`BloodBrand.onCast`** cria `BloodBrandKunai` somente em `ServerLevel`; entrega `setDamage`, `setBurstDamage`, `setBurstRange(5)` e `setProjectileVelocity` antes do spawn.
+- **Dano de contato:** `(1 + getSpellPower/100)*DamageMultiplierKey.BLOOD_BRAND`; **dano bruto de explosão:** `(8*getSpellPower/100)*DamageMultiplierKey.BLOOD_BRAND`, onde a chave é resolvida por `ApprenticeCodexServerConfig.damageMultiplier`.
+- **Alvo/direção:** `resolveLaunchGeometry` utiliza `RemoteOwnerCastContext` para `ServerPlayer` quando existe; caso contrário olhar e olhos do caster. A origem de cast remoto tem owner explícito.
+- **Perks:** raio cinco é repassado à entidade, mas não é comprovado setter externo por evento. A morte de vítima marcada e burst/heal continuam no ciclo de `BloodBrandKunai`/status; implementar proc exige correlacionar cast e morte exatamente uma vez.
+
+**Confiança:** source auditado do commit fixado 0.9.7.1; hooks externos de mutação e teste em Survival permanecem pendentes.

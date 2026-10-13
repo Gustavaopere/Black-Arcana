@@ -61,3 +61,12 @@ Occupies the **fast direct Ender/arcane hit that builds a short-lived charge res
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia de perks — cadeia causal exata
+
+- **`ArcaneBlast`** implementa `ICastHighlightSpell` com raycast `RAYCAST_WIDTH=0.1`, filtro `CombatTools.isValidCombatTarget`, e `getRange = 16+4*getSpellPower(level,caster)/10`.
+- **Dano:** `getDamage=(getSpellPower/10)*DamageMultiplierKey.ARCANE_BLAST`, aplicado por `CombatTools.applyDamage` com `DamageTypes.ARCANE_BLAST`. Não prosseguir com charge se o hit não for aceito.
+- **Carga ao acertar:** `ARCANE_CHARGE` é criado com duração `200` ticks, amplificador `0`, ou aumentado para `min(amplifier+1,2)` se já ativo.
+- **Perks:** power altera dano **e alcance simultaneamente**; stack de carga tem cap próprio 2, e o consumo posterior pelo Arcane Beam é outra fase do mesmo provider. Não tratar charge como novo cast.
+
+**Confiança:** source auditado do commit fixado 0.9.7.1; hooks externos de mutação e teste em Survival permanecem pendentes.

@@ -68,3 +68,12 @@ Occupies the **continuous Fire damage + smelting/processing utility** niche. A B
 - **Atributos/modificadores:** como addon do Iron's, `AbstractSpell` resolve spell power/custo e escola conforme seu contrato exato; parâmetros como raio, alvos e projéteis podem depender da classe acima ou de helpers/entidades *provider-owned*. Sua mutabilidade por perk está **CONDICIONADA** a evento/API/adapter validado na versão exata.
 - **Causalidade e proteção:** associar progressão ao cast original; não premiar projétil, dano indireto, summon ou recast como outro cast automaticamente. Nenhum teste de alteração de runtime, Survival ou hook foi conduzido por esta ficha.
 - **Proveniência:** fonte no commit 0.9.7.1 `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. Metadados e localizadores factuais; nenhuma cópia de implementação ou asset upstream.
+
+## Engenharia de perks — cadeia causal exata
+
+- **`ThermalProcess`** estende `AbstractSummonWeaponSpell<ThermalProcessThrowerEntity>` e implementa `ICraftsmansDelightAffectedSpell`/`IMagiAgentSuitAffectedSpell`; arma é criada em `onCastNoWeapon` e recebe `setSpellLevel`, `setDamage`, `setRange(12)` e `setBurnItemPerSecond`.
+- **Dano bruto:** `(0.5+1.5*getSpellPower/100)*DamageMultiplierKey.THERMAL_PROCESS`; processamento básico `2*getSpellPower/100` itens/s, com possível `CraftsmansDelight.applyProcessSpeedBonus` adicional.
+- **Ciclo:** em `onCastTickWithWeapon` pode aplicar `CraftsmansDelight.applyCastingMobility`; `onCastCompleteWithWeapon` devolve `RELEASE_WEAPON`.
+- **Perks:** spell power afeta dano e velocidade de processamento, e os modificadores do equipamento são provider-owned. Não duplicar processamento/Smelting ou sobrescrever entidade sem adapter verificável.
+
+**Confiança:** source auditado do commit fixado 0.9.7.1; hooks externos de mutação e teste em Survival permanecem pendentes.
