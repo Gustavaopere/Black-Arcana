@@ -1,5 +1,8 @@
 # Fire's Ender Expansion — catálogo canônico
 
+**✅ Checkpoint binário 2026-10-13:** [11/11 spells exatos no JAR físico/publicador](./EXACT-BINARY-SPELLS-2.4.1.md), [Java 21 #38434192044](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38434192044), CurseForge file `8167304`, 2442013 bytes SHA-1 `da87a4a0c926dd75236766584cddbae69c6aeff7` (igual ao registro da modlist). `COUNTED_EXACT` para **11 identidades de registry estático**; **+0** novas, campanha **17/39 exatos / 22/39 pendentes**, mínimos **1857/1855** inalterados. Config, casting, multiplayer, Iron's 3.16.3, world effects e Survival ⚠️. O material source-pinned abaixo permanece histórico/contratual, não atesta execução.
+
+
 ## Estado
 
 - Mod ID: `firesenderexpansion`
