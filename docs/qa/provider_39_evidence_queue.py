@@ -42,7 +42,8 @@ KNOWN_EXACT = {"Ypsilon's Fundamentalism": ('1.1.7.1', 15),
                'Deeper & Darker Spellbooks': ('1.3.3 Version B', 4),
                "GTBC's Geomancy Plus": ('1.1.0-1.21.1', 12),
                "Farmer's Spell 'n Spellbooks": ('1.0.5.1-1.21.1', 6),
-               "Ars 'n' Spells": ('3.3.4', 5)}
+               "Ars 'n' Spells": ('3.3.4', 5),
+               "Tunes n' Tomes": ('1.1.0-HOTFIX', 16)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')
