@@ -749,7 +749,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             encoding="utf-8"
         )
         pages = sorted((provider / "glyphs").glob("*.md"))
-        self.assertEqual(12, len(pages))
+        self.assertEqual(18, len(pages))
         for ordinal, (name, evidence, role, bound) in enumerate(capabilities, 1):
             slug = re.sub(r"^-|-$", "", re.sub(r"[^a-z0-9]+", "-", name.lower()))
             path = provider / "glyphs" / (slug + ".md")
@@ -774,6 +774,51 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("GLYPH-CARDS-2.0.2.md", self.index)
         self.assertIn("GLYPH-CARDS-2.0.2.md",
                       (provider / "README.md").read_text(encoding="utf-8"))
+
+
+    def test_ars_zero_202_physical_exact_twenty_two_with_six_new_unique(self):
+        """22 binary register slots != 22 unique semantic roots."""
+        provider = PROVIDERS / "✅-ars-zero"
+        dossier = (provider / "EXACT-BINARY-GLYPHS-2.0.2.md").read_text(encoding="utf-8")
+        rows = re.findall(
+            r"^\| (\d+) \| `(ars_zero:[a-z_]+)` \| `([^`]+)` \| (base|NEW|COPIED) \|$",
+            dossier, re.MULTILINE,
+        )
+        self.assertEqual(22, len(rows))
+        self.assertEqual([str(i) for i in range(1, 23)], [r[0] for r in rows])
+        self.assertEqual(22, len({r[1] for r in rows}))
+        self.assertEqual(18, sum(r[3] != "COPIED" for r in rows))
+        self.assertEqual(6, sum(r[3] == "NEW" for r in rows))
+        self.assertEqual(4, sum(r[3] == "COPIED" for r in rows))
+        self.assertIn("38343776242", dossier)
+        self.assertIn("6774561", dossier)
+        self.assertIn("ac9b6e6f7a2bd403ee7cdc16023509fde7c4e1d0", dossier)
+        expected = {
+            "sustain": ("sustain_effect", "SustainEffect"),
+            "discard": ("discard_effect", "DiscardEffect"),
+            "hollow": ("augment_hollow", "AugmentHollow"),
+            "sphere": ("augment_sphere", "AugmentSphere"),
+            "cube": ("augment_cube", "AugmentCube"),
+            "flatten": ("augment_flatten", "AugmentFlatten"),
+        }
+        for slug, (glyph_id, cls) in expected.items():
+            text = (provider / "glyphs" / f"{slug}.md").read_text(encoding="utf-8")
+            self.assertIn(f"ars_zero:{glyph_id}", text)
+            self.assertIn(cls, text)
+            self.assertIn("COUNTED_EXACT", text)
+            self.assertIn("NÃO VERIFICADO", text)
+        self.assertEqual(18, len(list((provider / "glyphs").glob("*.md"))))
+        matrix = (ROOT / "wiki/modpack-catalog/meta" /
+                  "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        arszero = next(x for x in matrix.splitlines() if x.startswith("| [Ars Zero]"))
+        self.assertIn("| 2.0.2 | 18 | COUNTED_EXACT |", arszero)
+        self.assertIn("14/39", matrix)
+        self.assertIn("25/39", matrix)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(x for x in ledger.splitlines() if x.startswith("| [Ars Zero]"))
+        self.assertIn("| 2.0.2 | 18 | `COUNTED_EXACT` |", row)
+        self.assertIn("1857 global / 1855 scoped", ledger)
 
     def test_ars_elemental_47_source_pinned_cards(self):
         provider = PROVIDERS / "✅-ars-elemental"
@@ -1271,9 +1316,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(13, len(exact))
+        self.assertEqual(14, len(exact))
         self.assertEqual(
-            {"Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1330,9 +1375,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(13, len(exact))
+        self.assertEqual(14, len(exact))
         self.assertEqual(
-            {"Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
+            {"Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)

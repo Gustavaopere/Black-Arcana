@@ -1,5 +1,8 @@
 # Ars Zero 2.0.2 — Geometrize
 
+**Adendo binário 2026-10-13:** ✅ `ars_zero:effect_geometrize` comprovado no JAR oficial/físico por [Java 21 #38343776242](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38343776242). Identidade agora **`COUNTED_EXACT` para o registro estático** (uma das 18 únicas). As afirmações antigas `COUNTED_RELEASE_BOUNDED` e “ID NÃO VERIFICADO” abaixo permanecem **históricas**; mana/config/Survival continuam ⚠️. [Dossiê 22/22](../EXACT-BINARY-GLYPHS-2.0.2.md).
+
+
 Estado: **✅ CATALOGADO como capacidade singular da release / `COUNTED_RELEASE_BOUNDED`** · **⚠️ registry binário, API e teste físico ainda condicionados**.
 
 ## Identidade com evidência pública

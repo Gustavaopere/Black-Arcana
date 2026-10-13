@@ -1,8 +1,11 @@
 # Black Arcana — Conditional Provider Closure Index
 
+**Revalidação Ars Zero 2026-10-13:** [22 registros / 18 raízes próprias](../providers/✅-ars-zero/EXACT-BINARY-GLYPHS-2.0.2.md) no JAR exato, incluindo **+6** novas raízes. Mínimos estritos atuais **1857 global / 1855 escopo**. Referências 1851/1849 anteriores são históricas. Runtime/Survival não promovidos.
+
+
 Checkpoint: 2026-10-08 current routing (supersedes 2026-10-06 pre-intake notes)
 
-Status: `0 CATALOG-OPEN DIRECTORIES / 14 DEPLOYED-EVIDENCE ROUTES / CURRENT PHYSICAL MAGIC TAXONOMY 97/97 MAPPED / 1851 GLOBAL STRICT MINIMUM (1849 USER SCOPE)`
+Status: `0 CATALOG-OPEN DIRECTORIES / 14 DEPLOYED-EVIDENCE ROUTES / CURRENT PHYSICAL MAGIC TAXONOMY 97/97 MAPPED / 1857 GLOBAL STRICT MINIMUM (1855 USER SCOPE)`
 
 ## Purpose
 
@@ -116,4 +119,4 @@ When one checklist closes:
 5. keep runtime/integration QA separate;
 6. recheck the latest physical modlist/provider version immediately before merge.
 
-This index is a routing document. It adds no semantic objects itself. The current strict reconstructible minimum is **1851 global**; it is **1849 for this user's scope**, excluding two Deeper and Darker base actions. The prior 1858 checkpoint is historical because Ars Morph (+8) and Woodwalkers SpellBooks (+1) are absent from the certified physical snapshot.
+This index is a routing document. It adds no semantic objects itself. The current strict reconstructible minimum is **1857 global**; it is **1855 for this user's scope**, excluding two Deeper and Darker base actions. The prior 1858 checkpoint is historical because Ars Morph (+8) and Woodwalkers SpellBooks (+1) are absent from the certified physical snapshot.
