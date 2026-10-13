@@ -115,3 +115,60 @@ jobs:
           print('REGISTRY_STATIC_PROOF=PASS')
           print('DYNAMIC_RUNTIME_UNVERIFIED=TRUE')
           PY
+
+      - name: Prove 22 exact ResourceLocations and default-school references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,os,pathlib,subprocess,re,collections,zipfile
+          jar=pathlib.Path(os.environ['RUNNER_TEMP'])/'discerning_the_eldritch-1.4.4-1.21.jar'
+          assert hashlib.sha1(jar.read_bytes()).hexdigest()=='cf35c225aced23b705d1e0fd1bc5c62d96540e0c'
+          root='net.acetheeldritchking.discerning_the_eldritch.'
+          def disasm(name):
+            p=subprocess.run(['javap','-c','-p','-classpath',str(jar),name],capture_output=True,text=True,timeout=30)
+            assert p.returncode==0,(name,p.stderr[:200])
+            return p.stdout
+          code=disasm(root+'registries.SpellRegistries')
+          block=code.split('static {};',1)[1]
+          spells=re.findall(r'// class net/acetheeldritchking/discerning_the_eldritch/spells/([a-z]+)/([A-Za-z0-9_]+Spell)',block)
+          assert len(spells)==22 and len(set(spells))==22
+          assert block.count('// Method registerSpell:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)')==22
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|if_icmp\w+|goto|tableswitch|lookupswitch)\b',block,re.M)
+          assert collections.Counter(f for f,c in spells)=={'eldritch':9,'blood':1,'evocation':2,'fire':2,'holy':1,'ice':2,'ritual':5}
+          identities=[]
+          for n,(school,cls) in enumerate(spells,1):
+            body=disasm(root+'spells.'+school+'.'+cls)
+            lines=body.splitlines()
+            pairs=[]
+            for i,l in enumerate(lines):
+              if 'ResourceLocation.fromNamespaceAndPath:' not in l:continue
+              preceding=lines[max(0,i-4):i]
+              suffixes=[m.group(1) for s in preceding if (m:=re.search(r'// String ([A-Za-z0-9_:.-]+)',s))]
+              if len(suffixes)<2 or suffixes[-2]!='discerning_the_eldritch':continue
+              nextlines=lines[i+1:i+5]
+              if not any('// Field spellId:' in s for s in nextlines):continue
+              pairs.append(suffixes[-1])
+            assert len(pairs)==1,(cls,pairs,[s.strip() for s in lines if 'ResourceLocation.fromNamespaceAndPath:' in s])
+            suffix=pairs[0]
+            assert re.fullmatch(r'[a-z0-9_]+',suffix)
+            id='discerning_the_eldritch:'+suffix
+            assert id not in identities,id
+            identities.append(id)
+            if school=='ritual':
+              token='DTESchoolRegistry.RITUAL_RESOURCE:'
+            else:
+              token='SchoolRegistry.'+school.upper()+'_RESOURCE:'
+            assert token in body,('school',cls,token)
+            assert 'DefaultConfig.setSchoolResource:' in body,('no default school setter',cls)
+            print('EXACT_SPELL_'+str(n)+'='+id+'|'+school+'.'+cls)
+          assert len(identities)==22
+          assert 'SpellRegistries.register:' in disasm(root+'DiscerningTheEldritch')
+          print('CERTIFIED_FILE_ID=8816497')
+          print('CERTIFIED_BYTES='+str(jar.stat().st_size))
+          print('PHYSICAL_SPELL_REGISTRATIONS=22')
+          print('STATIC_INITIALIZER_BRANCHES=0')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('EXACT_STATIC_REGISTRY_AUDIT=PASS')
+          print('RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
