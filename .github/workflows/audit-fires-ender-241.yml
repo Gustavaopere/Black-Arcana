@@ -1,0 +1,104 @@
+name: Fire's Ender Expansion 2.4.1 SHA-exact spell registry audit
+on:
+  push:
+    branches:
+      - 'audit/fires-ender-expansion-241-*'
+permissions:
+  contents: read
+jobs:
+  physical-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Locate official CurseForge 2.4.1 by CurseMaven metadata and SHA-verify physical version
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,hashlib,urllib.request,re,zipfile,pathlib,xml.etree.ElementTree as ET
+          exp="da87a4a0c926dd75236766584cddbae69c6aeff7"
+          name="firesenderexpansion-2.4.1.jar"
+          slug="fires-ender-expansion-1245989"
+          base="https://cursemaven.com/curse/maven/"+slug+"/"
+          def read(url,timeout=35):
+            req=urllib.request.Request(url,headers={"User-Agent":"Black-Arcana-static-physical-audit/1"})
+            with urllib.request.urlopen(req,timeout=timeout) as res:return res.read(12000000)
+          ids=[]
+          for suffix in ("maven-metadata.xml","maven-metadata-local.xml"):
+            try:
+              data=read(base+suffix)
+              print("MAVEN_METADATA_BYTES="+str(len(data)),flush=True)
+              root=ET.fromstring(data)
+              ids=[v.text for v in root.findall(".//version") if v.text and v.text.isdigit()]
+              print("MAVEN_VERSIONS="+repr(ids[-38:]),flush=True)
+              if ids:break
+            except Exception as exc:print("MAVEN_METADATA_ERROR="+repr(exc)[:180],flush=True)
+          # Maven metadata may be blocked; fall back to extracting numeric file ID from
+          # public CurseForge HTML, never guess the JAR name or digest.
+          if not ids:
+            try:
+              html=read("https://www.curseforge.com/minecraft/mc-mods/fires-ender-expansion/files/all")
+              strings=html.decode("utf-8",errors="replace")
+              positions=[m.start() for m in re.finditer(re.escape(name),strings)]
+              print("HTML_FILE_NAME_OCCURRENCES="+str(len(positions)),flush=True)
+              for pos in positions[:8]:print("HTML_CONTEXT="+strings[max(0,pos-550):pos+550].replace("\n"," ")[:1100],flush=True)
+              ids=list(dict.fromkeys(re.findall(r'"id":(\d{7,9}).{0,300}"fileName":"'+re.escape(name)+r'"',strings)))
+              ids+=re.findall(r"/files/(\d{7,9})",strings)
+              ids=list(dict.fromkeys(ids))
+              print("HTML_FILE_IDS="+repr(ids[:40]),flush=True)
+            except Exception as exc:print("HTML_SEARCH_ERROR="+repr(exc)[:180],flush=True)
+          out=pathlib.Path(os.environ["RUNNER_TEMP"])/name
+          got=False
+          for fileid in list(reversed(ids))[:50]:
+            url=base+fileid+"/"+slug+"-"+fileid+".jar"
+            try:
+              buf=read(url,timeout=60)
+              sha=hashlib.sha1(buf).hexdigest()
+              print("CANDIDATE_FILE_ID="+fileid+" BYTES="+str(len(buf))+" SHA1="+sha,flush=True)
+              if sha!=exp:continue
+              out.write_bytes(buf)
+              with zipfile.ZipFile(out) as z:assert z.testzip() is None
+              print("PUBLISHER_EQUALS_PHYSICAL_SHA1=PASS",flush=True)
+              print("CERTIFIED_FILE_ID="+fileid,flush=True)
+              print("CERTIFIED_BYTES="+str(len(buf)),flush=True)
+              with open(os.environ["GITHUB_ENV"],"a") as env:env.write("EXACT_FEE_JAR="+str(out)+"\nEXACT_FEE_ID="+fileid+"\nEXACT_FEE_BYTES="+str(len(buf))+"\n")
+              got=True;break
+            except Exception as exc:print("CANDIDATE_ERROR="+fileid+" "+repr(exc)[:100],flush=True)
+          if not got:raise SystemExit("FAIL-CLOSED: SHA1-exact JAR not located; source pin is not physical registry proof")
+          PY
+      - name: Inspect compiled registry and 11 spell IDs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,zipfile,subprocess
+          jar=os.environ["EXACT_FEE_JAR"]
+          def java(cls):
+            result=subprocess.run(["javap","-p","-c","-classpath",jar,cls],text=True,capture_output=True,timeout=30)
+            assert result.returncode==0,(cls,result.stderr[:180])
+            return result.stdout
+          with zipfile.ZipFile(jar) as z:
+            names=z.namelist()
+            print("BINARY_CLASS_COUNT="+str(sum(s.endswith(".class") for s in names)))
+            for p in names:
+              if p.endswith("neoforge.mods.toml"):
+                txt=z.read(p).decode("utf8",errors="replace")
+                print("MOD_IDS="+repr(re.findall(r'modId\s*=\s*["\x27]([^"\x27]+)',txt)))
+            print("SPELL_CLASS_FILES="+repr([s for s in names if s.endswith("Spell.class") and s.startswith("net/fireofpower/firesenderexpansion/spells/")]))
+          main=java("net.fireofpower.firesenderexpansion.FiresEnderExpansion")
+          spells=java("net.fireofpower.firesenderexpansion.registries.SpellRegistries")
+          print("ENTRYPOINT_REGISTER="+str("SpellRegistries.register:" in main))
+          print("BOOTSTRAP_START")
+          for line in spells.splitlines():
+            if line.strip().startswith("static {};"):
+              print("STATIC_INIT_BEGIN")
+            if "// class net/fireofpower/firesenderexpansion/spells/" in line or "registerSpell:" in line or "SpellRegistry.SPELL_REGISTRY_KEY:" in line or "DeferredRegister.create:" in line or "DeferredRegister.register:" in line:
+              print("REGISTRY_BC="+line.strip()[:220])
+          print("BOOTSTRAP_END")
+          print("DISCOVERY_ONLY=TRUE")
+          PY
