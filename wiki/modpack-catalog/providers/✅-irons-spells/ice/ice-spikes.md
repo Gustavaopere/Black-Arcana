@@ -77,3 +77,15 @@ Já cobre cascading ground spikes Ice com final spike fortalecido/antecipável p
 
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Source 3.16.3 `e4056af...`: `IceSpikesSpell.java` + `gradle.properties`.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`IceSpikesSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ice/IceSpikesSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:ice_spikes` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `COMMON`; maxLevel `10`; cooldown `15` segundos; cast `INSTANT`.
+- **Campos Java:** `baseManaCost`=`30`; `manaCostPerLevel`=`10`; `baseSpellPower`=`12`; `spellPowerPerLevel`=`1`; `castTime`=`0`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `checkPreCastConditions()`, `onCast()`, `getCount()`, `getDamage()`.
+- **Fórmulas numéricas com retorno direto:** `getCount = 7 + 3 * spellLevel / 2`; `getDamage = getSpellPower(spellLevel, entity)`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `TargetEntityCastData`, `addFreshEntity`.
+
+**Contrato de perks:** a escola `ice` não garante, sozinha, um damage type de gelo/frost nem status de freeze. Identificar classe que aplica efeitos, limites de duração/slow e colisão antes de propor modificadores. Atributo nativo de Iron's não é hook universal de raio/ângulo/quantidade. Exigir adapter comprovado, proteção contra duplicação e caps; caso contrário ⚠️ condicionado/fail-closed. Iron's mantém cast/efeitos/mana; RPG Skill Tree possui perks/Mastery/gates; Black Arcana mantém runtime próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
