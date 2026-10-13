@@ -1,5 +1,7 @@
 # Thunder Fanburst
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT`, `legendary_spellbooks:thunder_fanburst` / `dev.higurashi.legendary_spellbooks.common.spells.lightning.ThunderFanburstSpell`; [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179), [dossiê](../EXACT-BINARY-SPELLS-0.3.2.md). Dados numéricos source-pinned; execução/Survival ⚠️; +0.
+
 - ID: `legendary_spellbooks:thunder_fanburst`
 - School: Lightning
 - Levels: 1–10

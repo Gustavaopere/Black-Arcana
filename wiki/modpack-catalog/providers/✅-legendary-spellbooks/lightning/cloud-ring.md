@@ -1,5 +1,7 @@
 # Cloud Ring
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT`, `legendary_spellbooks:cloud_ring` / `dev.higurashi.legendary_spellbooks.common.spells.lightning.CloudRingSpell`; [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179), [dossiê](../EXACT-BINARY-SPELLS-0.3.2.md). Dados numéricos source-pinned; execução/Survival ⚠️; +0.
+
 - ID: `legendary_spellbooks:cloud_ring`
 - School: Lightning
 - Levels: 1–5

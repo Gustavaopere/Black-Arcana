@@ -1,5 +1,8 @@
 # Modpack Magic Catalog — Phase 2
 
+**Atualização binária 2026-10-13:** [Legendary Spellbooks 0.3.2](providers/✅-legendary-spellbooks/EXACT-BINARY-SPELLS-0.3.2.md) possui **30/30** IDs/classfiles físicos inscritos sem condições, [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179), **+0** raízes, campanha **21/39 exatos / 18/39 pendentes**, mínimos **1857 global / 1855 escopo** preservados. Survival/compatibilidade Iron's e Legendary Monsters ⚠️.
+
+
 **Atualização binária 2026-10-13:** [ISS: Magic From The East 1.1.5](providers/✅-iss-magic-from-the-east/EXACT-BINARY-SPELLS-1.1.5.md) tem **22/22** IDs físicos exatos (**11 Symmetry + 11 Spirit**), [Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162), **+0 raízes**, campanha **20/39 exatos / 19/39 pendentes**. Mínimos estritos **1857 global / 1855 escopo**. Config/Survival/compatibilidade Iron's 3.16.3 ⚠️.
 
 

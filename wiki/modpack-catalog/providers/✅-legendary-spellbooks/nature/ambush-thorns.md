@@ -1,5 +1,7 @@
 # Ambush Thorns
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT` — `legendary_spellbooks:ambush_thorns`, classe `dev.higurashi.legendary_spellbooks.common.spells.nature.AmbushThornsSpell` ([Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179); [dossiê SHA-exato](../EXACT-BINARY-SPELLS-0.3.2.md)). Valores e mecânicas source-pinned; runtime/Survival ⚠️; +0 raízes.
+
 - ID: `legendary_spellbooks:ambush_thorns`
 - School: Nature
 - Levels: 1–10

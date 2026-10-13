@@ -1,5 +1,10 @@
 # Legendary Spellbooks — catálogo canônico
 
+## Atualização binária exata — 13/10/2026
+
+✅ [Dossiê 30/30](EXACT-BINARY-SPELLS-0.3.2.md), [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) **SUCCESS**. CurseForge `8255715`, **510127 bytes**, SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5` idêntico ao JAR físico #372: **30** instâncias registradas sem branches em `LSSpellRegistry`, IDs/solo classes extraídos dos campos `ResourceLocation`, escolas compiladas inspecionadas. Confiança de identidade estática `COUNTED_EXACT`; **21/39 exatos / 18/39 pendentes**, +0 raízes, mínimo 1857/1855 inalterado. A fonte pinada abaixo permanece autoridade documental para mecânicas; gameplay, configuração, Iron's 3.16.3, Legendary Monsters 2.2.2 e Survival seguem **⚠️**.
+
+
 ## Estado
 
 - Mod ID: `legendary_spellbooks`
@@ -9,7 +14,7 @@
 - Provider base: Iron's Spells 'n Spellbooks
 - Provider de conteúdo associado: Legendary Monsters
 - Source pin: `Higurashi34m/Legendary-Spellbooks@62ced2f2b2693aa841251473cbbd726fdd928ed3` (`1.21.1-NeoForge`, `mod_version=0.3.2`)
-- Catálogo: **30/30 spells ativos documentados**
+- Catálogo: **30/30 spells ativos documentados e binariamente verificados (`COUNTED_EXACT` somente registro estático)**
 - Estado no Black Arcana: `JÁ EXISTE / SEM ALTERAÇÃO PLANEJADA`
 
 A modlist atual confirma o artefato `0.3.2`. O source pin acima declara a mesma versão e registra exatamente 30 spells ativos. A classe `PossessedFallingSoulBladeSpell` existe no source, porém sua linha de registro está comentada em `LSSpellRegistry`; ela é artefato não ativo e não entra no total.

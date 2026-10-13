@@ -1,5 +1,7 @@
 # Possessed Soul Blade
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT` — `legendary_spellbooks:possessed_soul_blade`, classe `dev.higurashi.legendary_spellbooks.common.spells.blood.PossessedSoulBladeSpell`; [Java21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) / [dossiê](../EXACT-BINARY-SPELLS-0.3.2.md). Parâmetros efetivos e Survival ⚠️, +0 raízes.
+
 - ID: `legendary_spellbooks:possessed_soul_blade`
 - School runtime: Evocation nos níveis 1–2; Blood nos níveis 3–4
 - Levels: 1–4

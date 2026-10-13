@@ -1,5 +1,7 @@
 # Collapsed Kingdom's Legion
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT`, `legendary_spellbooks:collapsed_kingdoms_legion` / `dev.higurashi.legendary_spellbooks.common.spells.evocation.CollapsedKingdomsLegionSpell`; [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179), [dossiê SHA-exato](../EXACT-BINARY-SPELLS-0.3.2.md). Números/comportamentos source-pinned; execução/Survival ⚠️; +0 magias.
+
 - ID: `legendary_spellbooks:collapsed_kingdoms_legion`
 - School: Evocation
 - Levels: 1–3

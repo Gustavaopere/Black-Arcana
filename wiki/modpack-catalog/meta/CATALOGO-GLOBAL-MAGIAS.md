@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## Legendary Spellbooks 0.3.2 — vigésima primeira prova binária, 2026-10-13
+
+**Vigésima primeira prova binária (2026-10-13):** [Legendary Spellbooks 0.3.2](../providers/✅-legendary-spellbooks/EXACT-BINARY-SPELLS-0.3.2.md), [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) **SUCCESS**. CurseForge file `8255715`, JAR **510127 bytes**, SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5` = modlist física #372. `LegendarySpellbooks → LSSpellRegistry.register`, exatamente **30** chamadas incondicionais, **30** IDs binários distintos, 9 Annihilation / 3 Blood / 1 Evocation / 3 Fire / 2 Ice / 9 Lightning / 3 Nature. `PossessedFallingSoulBladeSpell` ausente do registry; +0 raízes, mínimos **1857 global / 1855 escopo** inalterados. Campanha **21/39 exatos / 18/39 pendentes**; runtime Iron's 3.16.3, Legendary Monsters 2.2.2 e Survival ⚠️.
+
+
 ## ISS: Magic From The East 1.1.5 — vigésima prova binária, 2026-10-13
 
 **Vigésima prova binária (2026-10-13):** [ISS: Magic From The East 1.1.5](../providers/✅-iss-magic-from-the-east/EXACT-BINARY-SPELLS-1.1.5.md), [Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162) **SUCCESS**. Publisher CurseForge `7385201`, **1680780 bytes**, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0` = modlist física #346. `ISS_MagicFromTheEast → MFTESpellRegistries`: **22** chamadas incondicionais no `DeferredRegister<AbstractSpell>`, **11 Symmetry + 11 Spirit**, IDs/classes e escolas default provados individualmente; `Nephrite Slash` único registro, `Nephrite Splash` alias de release, não soma nova magia. **20/39 exatos / 19/39 pendentes**, **+0** raízes semânticas, mínimos **1857 global / 1855 escopo** inalterados. Iron's 3.16.3, configurações, casting e Survival ⚠️.

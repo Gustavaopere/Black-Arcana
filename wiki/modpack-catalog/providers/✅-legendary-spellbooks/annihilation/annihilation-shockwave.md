@@ -1,5 +1,7 @@
 # Annihilation Shockwave
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT`, identidade estática `legendary_spellbooks:annihilation_shockwave` / classe `dev.higurashi.legendary_spellbooks.common.spells.annihilation.AnnihilationShockwaveSpell` — [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179), [dossiê SHA-exato](../EXACT-BINARY-SPELLS-0.3.2.md). Valores/custos descritos da fonte continuam **⚠️ sem validação runtime/Survival**; +0 raízes.
+
 - ID: `legendary_spellbooks:annihilation_shockwave`
 - School: `legendary_spellbooks:annihilation`
 - Levels: 1–6

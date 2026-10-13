@@ -1,5 +1,7 @@
 # Possessed Wings
 
+**Prova binária física (2026-10-13):** ✅ `COUNTED_EXACT` — `legendary_spellbooks:possessed_wing`, classe `dev.higurashi.legendary_spellbooks.common.spells.blood.PossessedWingSpell`; [Java21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) / [dossiê](../EXACT-BINARY-SPELLS-0.3.2.md). Parâmetros efetivos e Survival ⚠️, +0 raízes.
+
 - ID: `legendary_spellbooks:possessed_wing`
 - School: Blood
 - Levels: 1–2

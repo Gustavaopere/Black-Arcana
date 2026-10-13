@@ -1,5 +1,10 @@
 # Legendary Spellbooks 0.3.2 — auditoria técnica
 
+## Atualização binária exata — 13/10/2026
+
+✅ [Dossiê 30/30](EXACT-BINARY-SPELLS-0.3.2.md), [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) **SUCCESS**. CurseForge `8255715`, **510127 bytes**, SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5` idêntico ao JAR físico #372: **30** instâncias registradas sem branches em `LSSpellRegistry`, IDs/solo classes extraídos dos campos `ResourceLocation`, escolas compiladas inspecionadas. Confiança de identidade estática `COUNTED_EXACT`; **21/39 exatos / 18/39 pendentes**, +0 raízes, mínimo 1857/1855 inalterado. A fonte pinada abaixo permanece autoridade documental para mecânicas; gameplay, configuração, Iron's 3.16.3, Legendary Monsters 2.2.2 e Survival seguem **⚠️**.
+
+
 ## Proveniência
 
 - Pack: `legendary_spellbooks-1.21.1+neo-0.3.2.jar` / mod id `legendary_spellbooks` / runtime `0.3.2`.
@@ -82,4 +87,4 @@ Quando o addon calcula dano por handler/entity, a página documenta a fórmula p
 
 ## Estado
 
-`SOURCE-PINNED 0.3.2 / CATÁLOGO 30/30 COMPLETO / RUNTIME QA PENDENTE`
+`COUNTED_EXACT STATIC REGISTRY 0.3.2 / 30/30 IDs FÍSICOS / RUNTIME QA PENDENTE`
