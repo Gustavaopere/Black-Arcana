@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe:** [`EffectMist.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectMist.java), commit exato `fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`, identidade estática do JAR físico já provada separadamente.
+- **Criador server-side:** `onResolve` retorna quando `world.isClientSide`; calcula `duration=(int)(100+getDurationMultiplier()*20)` em ticks e `radius=(float)(3.0+getAoeMultiplier())`, cria `EntityMistCloud(world,BlockPos.containing(hitLocation),duration,radius)` e chama `world.addFreshEntity(mist)`.
+- **Atributos sem clamp local:** este método não aplica `Math.max` a radius/duration. O efeito de obscurecer visão ou perder target pertence ao `EntityMistCloud` downstream e não é inferido como evento de hit. Config default mana 40, tier II, augments AOE/ExtendTime/DurationDown.
+- **Perks:** áreas persistentes requerem limites de raio, lifetime, mobs por tick, carregamento de chunks e deduplicação. Sem contrato validado não alterar o entity runtime via RPG ou reinventar concealment Black Arcana.
+- **Estado:** ✅ fonte/métodos source-located, ID confirmada no JAR; ⚠️ código-fonte→bytes JAR não equivalentes comprovados, config/QA de host não validados; ⛔ hook e adapter de perks RPG/Black Arcana não aprovados, sem duplicar mana ou efeitos.
