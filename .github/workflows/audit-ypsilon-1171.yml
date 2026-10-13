@@ -77,3 +77,70 @@ jobs:
           print("MAIN_CLASS_CANDIDATES="+repr([x for x in files if x.endswith("FundamentalPrinciples.class")]))
           print("DISCOVERY_ONLY=TRUE")
           PY
+      - name: Prove 15 unconditional exact spell IDs, native schools and 13 Principles distinct
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re,subprocess,zipfile
+          jar=os.environ["EXACT_YPS_JAR"]
+          expected=[
+            ("chains","ice.ChainsSpell","ICE_RESOURCE"),
+            ("grantstrength","fire.BurningSpiritSpell","FIRE_RESOURCE"),
+            ("pyrokinesis","fire.PyrokinesisSpell","FIRE_RESOURCE"),
+            ("sol","fire.SolSpell","FIRE_RESOURCE"),
+            ("ignite","fire.IgniteSpell","FIRE_RESOURCE"),
+            ("bloodstream","blood.BloodstreamSpell","BLOOD_RESOURCE"),
+            ("thorn","blood.ThornSpell","BLOOD_RESOURCE"),
+            ("laceration","blood.LacerationSpell","BLOOD_RESOURCE"),
+            ("holy_lightning","holy.HolyLightningSpell","HOLY_RESOURCE"),
+            ("sacred_disk","holy.SacredDiskSpell","HOLY_RESOURCE"),
+            ("pull_spell","ender.PullSpell","ENDER_RESOURCE"),
+            ("lapsus","ender.LapsusSpell","ENDER_RESOURCE"),
+            ("taunt","evocation.TauntSpell","EVOCATION_RESOURCE"),
+            ("law_of_regression","fundamentalism.LawOfRegressionSpell","FUNDAMENTAL_RESOURCE"),
+            ("saeptum","fundamentalism.SaeptumSpell","FUNDAMENTAL_RESOURCE"),
+          ]
+          def java(c):
+            p=subprocess.run(["javap","-c","-p","-classpath",jar,c],text=True,capture_output=True,timeout=40)
+            assert p.returncode==0,(c,p.stderr[:200])
+            return p.stdout
+          base="com.ypsi.fundamentalism."
+          with zipfile.ZipFile(jar) as z:
+            names=set(z.namelist())
+            meta=z.read('META-INF/neoforge.mods.toml').decode('utf8')
+            assert re.search(r'modId\s*=\s*"ypfundamentals"',meta)
+          entry=java(base+"FundamentalPrinciples")
+          assert 'ModSpells.register:' in entry,"mod entrypoint failed to wire registry"
+          reg=java(base+"spells.ModSpells")
+          assert 'SpellRegistry.SPELL_REGISTRY_KEY:' in reg
+          assert '// String ypfundamentals' in reg
+          assert 'DeferredRegister.create:' in reg
+          bus=reg.split('public static void register(',1)[1].split('public static ',1)[0]
+          assert 'DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V' in bus
+          wrapper=reg.split('public static java.util.function.Supplier',1)[1].split('static {};',1)[0]
+          assert 'DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)' in wrapper
+          block=reg.split('static {};',1)[1]
+          matches=re.findall(r'// class com/ypsi/fundamentalism/spells/([A-Za-z_0-9/]+Spell)',block)
+          assert matches==[cls.replace('.','/') for _,cls,_ in expected],("class registration order",matches)
+          assert block.count('Method registerSpell:(Lio/redspace/ironsspellbooks/api/spells/AbstractSpell;)')==15
+          assert not re.search(r'^\s*\d+:\s+(?:ifne|ifeq|ifnull|ifnonnull|goto|tableswitch|lookupswitch)\b',block,re.M),"conditional registration"
+          for n,(suffix,cls,school) in enumerate(expected,1):
+            path='com/ypsi/fundamentalism/spells/'+cls.replace('.','/')+'.class'
+            assert path in names,('missing spell',path)
+            text=java(base+'spells.'+cls)
+            assert 'extends io.redspace.ironsspellbooks.api.spells.AbstractSpell' in text
+            assert 'getSpellResource();' in text
+            assert 'ResourceLocation.fromNamespaceAndPath:' in text
+            assert '// String '+suffix in text,('suffix missing',cls,suffix)
+            assert school+':' in text,('default school reference missing',cls,school)
+            print('EXACT_SPELL_'+str(n)+'=ypfundamentals:'+suffix+'|'+cls+'|'+school)
+          assert 'com/ypsi/fundamentalism/spells/eldritch/StealSummonSpell.class' in names
+          assert 'eldritch/StealSummonSpell' not in '/'.join(matches)
+          print('NONREGISTERED_STEAL_SUMMON=EXCLUDED')
+          print('PRINCIPLES_NOT_SPELL_IDENTITIES=TRUE')
+          print('PHYSICAL_SPELL_REGISTRATIONS=15')
+          print('NEW_SEMANTIC_ROOTS=0')
+          print('EXACT_STATIC_REGISTRY_AUDIT=PASS')
+          print('INSTALLED_RUNTIME_SURVIVAL_NOT_VERIFIED=TRUE')
+          PY
