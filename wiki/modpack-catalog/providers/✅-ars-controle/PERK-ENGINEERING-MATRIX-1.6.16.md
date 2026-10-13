@@ -12,7 +12,7 @@
 | [filter-or](glyphs/filter-or.md) | `FilterBinary.OR` | 2 children; short-circuit boolean; cursor + skip | ⚠️ `FilterRandom` child2 recebe augments do índice inicial; adapter RPG ⛔ |
 | [filter-xor](glyphs/filter-xor.md) | `FilterBinary.XOR` | 2 children; true se resultados distintos | ⚠️ parser e singleton field `res`; adapter RPG ⛔ |
 | [filter-xnor](glyphs/filter-xnor.md) | `FilterBinary.XNOR` | 2 children; true se resultados iguais (ambos false também) | ⚠️ parser e singleton field `res`; adapter RPG ⛔ |
-| [filter-random](glyphs/filter-random.md) | `FilterRandom.INSTANCE` | base 0.5; AMP>0: 1−0.5/2^AMP; AMP<0: 0.5/2^−AMP | ⚠️ singleton `chance`, RNGenabled?; sem double-roll; adapter RPG ⛔ |
+| [filter-random](glyphs/filter-random.md) | `FilterRandom.INSTANCE` | base 0.5; AMP>0: 1−0.5/2^AMP; AMP<0: 0.5/2^−AMP | ⚠️ singleton `chance`, RNG provider; sem double-roll; adapter RPG ⛔ |
 
 ## Alertas para perks
 
