@@ -1,5 +1,7 @@
 # Ars 'n' Spells 3.3.4
 
+**Prova física 2026-10-12:** [cinco rituais exatos e oito proxies de transporte](EXACT-BINARY-RITUALS-3.3.4.md), [Java 21 #38336011675](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38336011675), SHA-1 `53966330a468e626cd6469259af6778a5a7d9305` igual ao sibling. `COUNTED_EXACT` **5/5** apenas em registry estático, quatro dependem de Iron's instalado. Proxies `ars_cross_1..8` não somam magias. **11/39 exatos / 28/39 pendentes**, +0 novos, mínimos 1851/1849. Runtime, settlement, carriers e Survival ⚠️.
+
 Status: `✅ CATALOGED / INSTALLED 3.3.4 / RELEASE-BOUNDED 3.3.4 / PUBLIC NEOFORGE SOURCE CURRENT THROUGH 3.3.3 / 5 PROVIDER RITUAL IDENTITIES / +0 VERSION-DELTA TO SEMANTIC COUNT`
 
 ## Physical identity
@@ -25,7 +27,7 @@ Therefore the current evidence stack is deliberately split:
 1. **physical/release-exact 3.3.4** — installed version/hash and publisher release delta;
 2. **source-pinned 3.3.3** — exact current public ritual registry/bridge architecture before the 3.3.4 payment/cast hardening;
 3. **release-bounded semantic closure for 3.3.4** — the 3.3.4 publisher delta does not introduce a new ritual/spell registration surface, while the named five-ritual provider model remains the documented/current bridge surface;
-4. **unproven 3.3.4 internals** — exact class byte parity/signatures are not claimed without the physical JAR or a public 3.3.4 source pin.
+4. **3.3.4 binary identity now checked** — the SHA-equal JAR proves five ritual registry identities/gates and bounded proxy pool; exact runtime/payment/carrier hooks remain unverified.
 
 The result is a current provider count of **5 ritual identities**, with **zero semantic count delta** from the previously counted 3.3.2 line.
 ## Provider classification

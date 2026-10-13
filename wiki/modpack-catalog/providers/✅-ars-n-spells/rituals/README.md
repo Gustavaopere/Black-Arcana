@@ -1,6 +1,6 @@
 # Ritual Catalog — Ars 'n' Spells 3.3.4
 
-This index is the current semantic catalog for physical 3.3.4. Detailed ritual implementations remain pinned to the audited NeoForge 1.21.1 `3.3.0` source baseline; public source is current through 3.3.3, while exact 3.3.4 binary registry parity remains unverified. Current semantic count remains **5** rituals.
+This index has **✅ five exact ritual static binary IDs/gates** from physical 3.3.4 ([dossier](../EXACT-BINARY-RITUALS-3.3.4.md), [CI #38336011675](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38336011675)). Functional semantics still derive from the older 3.3.0 source, not verified 3.3.4 runtime. Count remains **5**, +0 new objects.
 
 Under the physical pack condition where Iron's Spellbooks is installed, the baseline registers five ritual identities:
 
