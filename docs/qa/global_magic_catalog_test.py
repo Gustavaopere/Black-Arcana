@@ -820,6 +820,59 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("| 2.0.2 | 18 | `COUNTED_EXACT` |", row)
         self.assertIn("1857 global / 1855 scoped", ledger)
 
+    def test_aeromancy_128_publisher_exact_physical_hash_fail_closed(self):
+        folder = PROVIDERS / "✅-aeromancy-additions"
+        dossier_name = "EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md"
+        dossier = (folder / dossier_name).read_text(encoding="utf-8")
+        rows = [line for line in dossier.splitlines() if
+                re.match(r"^\| [0-9]+ \| .aero_additions:[a-z_]+. \|", line)]
+        expected = ("wind_charge", "updraft", "airstep", "asphyxiate",
+                    "feather_fall", "wind_shield", "airblast", "wind_blade",
+                    "flush", "dash")
+        self.assertEqual(10, len(rows))
+        self.assertEqual([str(i) for i in range(1, 11)],
+                         [line.split("|")[1].strip() for line in rows])
+        self.assertEqual([f"aero_additions:{suffix}" for suffix in expected],
+                         [line.split("|")[2].strip().strip(chr(96)) for line in rows])
+        self.assertEqual(10, len(set(line.split("|")[3].strip() for line in rows)))
+        self.assertIn("38431639191", dossier)
+        self.assertIn("8251034", dossier)
+        self.assertIn("753884", dossier)
+        official = "dee32c9fa84a9b3796e39846608f8f77591ea56f"
+        legacy = "dee32c9fa84d6e39846608f8f77591ea56f"
+        self.assertEqual(40, len(official))
+        self.assertEqual(35, len(legacy))
+        self.assertIn(official, dossier)
+        self.assertIn(legacy, dossier)
+        self.assertIn("PHYSICAL_INSTALLED_JAR_SHA_UNVERIFIED=TRUE", dossier)
+        self.assertIn("UNREGISTERED_SOURCE_CANDIDATES_EXCLUDED=5", dossier)
+        self.assertIn("COUNTED_SOURCE_PINNED", dossier)
+        self.assertIn("16/39 exatos / 23/39 pendentes", dossier)
+        self.assertIn("1857 global / 1855 escopo", dossier)
+        self.assertNotIn("COUNTED_EXACT", dossier.splitlines()[2])
+        provider = (folder / "README.md").read_text(encoding="utf-8")
+        self.assertIn("Physical JAR SHA-1: **NÃO VERIFICADO**", provider)
+        self.assertIn(legacy, provider)
+        for slug in ("wind-charge", "updraft", "airstep", "asphyxiate",
+                     "feather-fall", "wind-shield", "airblast", "wind-blade",
+                     "flush", "dash"):
+            card = (folder / "spells" / f"{slug}.md").read_text(encoding="utf-8")
+            self.assertIn("COUNTED_SOURCE_PINNED", card)
+            self.assertIn(dossier_name, card)
+        matrix = (ROOT / "wiki/modpack-catalog/meta" /
+                  "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(v for v in matrix.splitlines()
+                   if v.startswith("| [SnackPirate's Aeromancy Additions]"))
+        self.assertIn("| 1.2.8 | 10 | COUNTED_SOURCE_PINNED |", row)
+        self.assertIn(dossier_name, row)
+        self.assertNotIn("| COUNTED_EXACT |", row)
+        ledger = (ROOT / "wiki/modpack-catalog/meta" /
+                  "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        ledger_row = next(v for v in ledger.splitlines()
+                          if v.startswith("| [SnackPirate's Aeromancy Additions]"))
+        self.assertIn("COUNTED_SOURCE_PINNED", ledger_row)
+        self.assertNotIn("COUNTED_EXACT", ledger_row)
+
     def test_ironsable_120_exact_seven_spells_without_ten_overlay_duplicates(self):
         provider = PROVIDERS / "✅-ironsable"
         note = (provider / "EXACT-BINARY-SPELLS-1.2.0.md").read_text(encoding="utf-8")
