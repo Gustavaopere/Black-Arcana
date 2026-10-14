@@ -43,12 +43,14 @@ def expected_inventory(markdown: str) -> dict[str, str]:
 def instructions(disassembly: str) -> list[tuple[str, str]]:
     return [(m.group(1), (m.group(2) or '').strip()) for m in INSTRUCTION.finditer(disassembly)]
 
-def registry_classes(disassembly: str, expected_count: int) -> dict[str, str]:
+def registry_classes(disassembly: str, expected_count: int, *, strict: bool = True) -> dict[str, str]:
     if disassembly.count('  static {};') != 1:
         raise AuditError('registry static initializer missing or ambiguous')
     declarations, initializer = disassembly.split('  static {};', 1)
     fields = FIELD.findall(declarations)
-    if len(fields) != expected_count or len(set(fields)) != expected_count:
+    if len(fields) != len(set(fields)):
+        raise AuditError('duplicate declared registry Supplier fields')
+    if strict and len(fields) != expected_count:
         raise AuditError('registry Supplier fields do not match expected count')
     code = instructions(initializer)
     output = {}
@@ -71,9 +73,11 @@ def registry_classes(disassembly: str, expected_count: int) -> dict[str, str]:
         if f in output:
             raise AuditError('duplicate registry field assignment')
         output[f] = cl
-    if register_calls != expected_count or set(output) != set(fields):
+    if register_calls != len(fields) or set(output) != set(fields):
         raise AuditError('compiled registrations differ from declared Supplier fields')
-    if len(set(output.values())) != expected_count:
+    if strict and len(output) != expected_count:
+        raise AuditError('compiled registry cardinality differs from pinned source')
+    if len(set(output.values())) != len(output):
         raise AuditError('same spell implementation class reused for multiple registrations')
     return output
 
@@ -145,8 +149,10 @@ def audit(jar: Path, inventory: str) -> dict:
         if len(metadata)>256_000 or not re.search(rb'\bmodId\s*=\s*["\x27]ess_requiem["\x27]',metadata):
             raise AuditError('mod ID absent/mismatched')
     records=[]
+    observed_by_registry={}
     for reg, count in CLASSES.items():
-        mapping = registry_classes(run_javap(jar.resolve(), reg), count)
+        mapping = registry_classes(run_javap(jar.resolve(), reg), count, strict=False)
+        observed_by_registry[reg]=len(mapping)
         for field, clazz in mapping.items():
             if clazz.replace('.', '/')+'.class' not in names:
                 raise AuditError('registered spell class not found in JAR')
@@ -161,6 +167,10 @@ def audit(jar: Path, inventory: str) -> dict:
         'duplicate_ids': sorted(k for k,v in counts.items() if v!=1),
         'dte_root_mismatch': sorted(dte_roots ^ {'forever_dreaming','nightmare','nightmare_scream'}),
         'count_mismatch': len(records)!=58,
+        'registry_field_cardinality': {
+            reg: {'expected': count, 'observed': observed_by_registry[reg]}
+            for reg, count in CLASSES.items() if observed_by_registry[reg] != count
+        },
     }
     if signature(before)!=signature(jar.stat()) or hashlib.sha256(jar.read_bytes()).hexdigest()!=sha256:
         raise AuditError('JAR modified during inspection')
