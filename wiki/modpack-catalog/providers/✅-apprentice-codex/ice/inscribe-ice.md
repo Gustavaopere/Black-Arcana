@@ -91,3 +91,15 @@ Occupies the **multi-projectile Ice mark → third-hit burst → bounded chain p
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — mundo, channel e defesa (2026-10-14)
+
+**ID causal:** `apprenticecodex:inscribe_ice` — uma magia Iron's-native; ticks/jobs/entidades/impactos são efeitos-filhos, nunca um novo cast.
+
+**Source pin:** [InscribeIce.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/inscribeice/InscribeIce.java); [InscribeIceDaggerThrowJob.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/inscribeice/InscribeIceDaggerThrowJob.java); [InscribeIceDaggerThrowJobManager.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/inscribeice/InscribeIceDaggerThrowJobManager.java); [InscribeIceBurst.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/inscribeice/InscribeIceBurst.java).
+
+**Cadeia verificada em source:** InscribeIce.onCast cria o job, faz tick imediato e submete remanescentes; a geometria de RemoteOwnerCastContext é congelada porque o contexto só vive dentro de onCast. InscribeIceDaggerThrowJob.tick/releaseBucket separa os disparos por tick; encerra após conclusão, caster inválido ou deadline. Manager.onLevelTick retira jobs terminados. InscribeIceBurst.burst/burstChain remove marca NOTCHED_FROZEN na origem, deduplica IDs processados e só encadeia após dano aplicado a alvo marcado.
+
+**QA prioritário (não executado):** Concorrência de jobs por nível, cadeia recursiva, caster inválido, targets multipart, PvP e tiros remote.
+
+**Boundary:** mana/casting Iron's e efeitos Apprentice's; nenhuma segunda liquidação/XP/Mastery por Black Arcana; contrato RPG sem hook comprovado: ⛔ fail-closed. ⚠️ Sem prova de bytecode do JAR instalado, config nem QA físico.
