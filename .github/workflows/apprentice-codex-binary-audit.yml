@@ -35,6 +35,9 @@ jobs:
       - name: Deterministic synthetic-fixture tests (not physical QA)
         run: python3 docs/qa/apprentice_codex_binary_audit_test.py -v
 
+      - name: Synthetic 83-ID compiled SpellRegistry regression tests (not runtime QA)
+        run: python3 docs/qa/apprentice_codex_registry_binary_audit_test.py -v
+
       - name: Fetch CurseForge file 8768955 with exact installed SHA-1 gate
         shell: bash
         run: |
@@ -55,11 +58,19 @@ jobs:
             --jar 'build/apprentice-codex-binary-audit/apprentice_codex-0.9.7.1+mc1.21.1.jar' \
             --output build/apprentice-codex-binary-audit/evidence.json
 
+      - name: Reconcile 83 compiled registration pairs with catalog (exact SHA)
+        run: |
+          python3 docs/qa/apprentice_codex_registry_binary_audit.py \
+            --jar 'build/apprentice-codex-binary-audit/apprentice_codex-0.9.7.1+mc1.21.1.jar' \
+            --output build/apprentice-codex-binary-audit/registry-evidence.json
+
       - name: Upload narrow evidence report (never publish the provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: apprentice-codex-binary-report-${{ github.sha }}
-          path: build/apprentice-codex-binary-audit/evidence.json
+          path: |
+            build/apprentice-codex-binary-audit/evidence.json
+            build/apprentice-codex-binary-audit/registry-evidence.json
           if-no-files-found: ignore
           retention-days: 14
