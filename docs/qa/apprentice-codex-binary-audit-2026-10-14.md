@@ -40,3 +40,11 @@ python3 docs/qa/apprentice_codex_binary_audit.py \
 ~~~
 
 Record real GitHub Actions run IDs, digest and all four narrow results **only after they have been observed**. Do not infer a result from workflow configuration alone.
+
+## Evidência executada — exact-JAR run #38567741062 (2026-10-14)
+
+- [GitHub Actions read-only audit](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38567741062) — **SUCCESS** no job `exact_jar_bytecode`; coleta do CurseForge file 8768955 e `sha1sum --check` aprovadas. Este é um run na branch/PR #806, não teste em modpack.
+- JAR: `apprentice_codex-0.9.7.1+mc1.21.1.jar` · **9,945,619 bytes** · SHA-1 `b514315add32b93b0049c8673075627d7ef812e0` · SHA-256 `f0dfab67154f344c02c6fbe561f73456fa46ed9d018fae661dcdf4da95c67fe2`.
+- `beam_remainder_nonzero_damage_path`: **PASS**; `moon_antimagic_triggers_boosted_burst`: **PASS**; `palette_precast_cancels_event`: **PASS**; `mending_itemstack_reference_identity`: **PASS**. São **quatro padrões em classfiles exatos**, não certificação da equivalência source/JAR completa.
+- Artefato JSON restrito do workflow: `apprentice-codex-binary-report-cd4f091822bd61207749d08d65b1a3214ffb47d4` (artifact ID `11895504113`), sem JAR/código upstream. O source-level das outras 79 magias não é promovido automaticamente a bytecode-audited.
+- ⚠️ Continua **PENDING** a validação provider-native em jogo, classloader/mixins, config, efeitos reais e Stage 09. ⛔ Não existe adapter de perks/Mastery homologado com RPG Skill Tree; Stage 06.05 não é promovido.
