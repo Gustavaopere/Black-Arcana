@@ -291,3 +291,7 @@ Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` e JAR 
 **🟡 44/83** magias com dossiê source-level aprofundado (34 prévias + 10 deste lote); **✅ 83/83** identidades continuam catalogadas e **39/83** aguardam mesma profundidade; +0 roots. [Matriz de mundo/combate](PERK-ENGINEERING-MATRIX-WORLD-COMBAT-0.9.7.1.md) cobre Frost Rune, Inscribe Ice, Harvest Moon, Field Overseer, Graced Rain, Mage Light, Mystic Shield, Mirage Avoidance, Feather Rush e Phalanx Charge a partir do source fixado `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`.
 
 ⚠️ Bytecode compilado, config efetiva, Survival/dedicated-modpack, claims, PvP, estado NBT e concorrência ainda aguardam QA. ⛔ Sem adapter real de perks/Mastery e sem promoção de Stage 06.05. Nenhuma mudança de runtime.
+
+## Engenharia causal de armas conjuradas e efeitos derivados — 2026-10-14
+
+**🟡 54/83** dossiês aprofundados (44 anteriores + 10 source-auditados neste lote); **✅ 83/83** identidades catalogadas, **29/83** pendentes, **+0 roots**. A [matriz de armas conjuradas](PERK-ENGINEERING-MATRIX-SUMMONED-WEAPONS-0.9.7.1.md) rastreia Commence Fire, Breaching Enemy, Dual Acrobat, Fujin, Silent Assassin, Lethal Assault, Moon Light, Shiden, Fly Swatter e Precision Jack com classes/métodos da versão declarada 0.9.7.1. **⚠️** Sem equivalência binária JAR/QA físico de config, Survival, dedicated, claims, PvP ou performance; **⛔** adapter Mastery/perks sem contrato. Java/runtime, Stage 06.05 e autoridade de mana/casts inalterados.
