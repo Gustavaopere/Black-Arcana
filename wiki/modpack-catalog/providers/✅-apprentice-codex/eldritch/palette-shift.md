@@ -49,3 +49,13 @@ Occupies the **staff attunement / next-spell affinity capture** niche. It should
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — fechamento das nove fichas (2026-10-14)
+
+**Source:** [`paletteshift/PaletteShift.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/paletteshift/PaletteShift.java) · [`paletteshift/PaletteShiftReceptionEvent.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/paletteshift/PaletteShiftReceptionEvent.java).
+
+- **Duas etapas e cancelamento:** `PaletteShift.checkPreCastConditions` requer `PastelStaff` na mão principal ou secundária, então `onCast` aplica `PALETTE_RECEPTION` por **600 ticks**. `PaletteShiftReceptionEvent.onSpellPreCast` roda em `EventPriority.HIGHEST`, ignora a própria Palette Shift e, quando o efeito está ativo, tenta gravar `SchoolType` e cor na(s) Pastel Staff(s) empunhada(s).
+- **Consumo do próximo spell:** se ao menos um `PastelStaff` é modificado, o handler aplica efeitos de recepção, remove `PALETTE_RECEPTION` e chama **`event.setCanceled(true)`**, interrompendo o cast que forneceu a escola. Sem staff modificada, retorna sem consumir o efeito nesse handler.
+- **QA:** order de prioridade dos hooks de `SpellPreCastEvent`, cooldown/mana do spell interceptado, duas mãos e cores de escolas de outros mods, re-login e expiração. Não liquidar como duas magias bem-sucedidas no BA.
+
+🟡 Dossiê causal source-level; ⚠️ equivalência bytecode/JAR/config, PvP/claims e QA Survival/dedicated pendentes; ⛔ sem adapter Mastery/perks real. Black Arcana não apropria casts, mana ou efeitos do provider.

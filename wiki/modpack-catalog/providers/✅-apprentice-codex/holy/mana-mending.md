@@ -77,3 +77,13 @@ Occupies the **continuous direct-held-item magical repair** niche. Black Arcana 
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — fechamento das nove fichas (2026-10-14)
+
+**Source:** [`manamending/ManaMending.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/manamending/ManaMending.java) · [`manamending/ManaMending.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/manamending/ManaMending.java).
+
+- **Lock real do item:** `checkPreCastConditions` escolhe mão secundária primeiro, valida denylist, dano e elegibilidade de encantamento; grava `targetHand` e a referência `targetStack`. `ManaMendingCastData.matchesTarget` compara **identidade** `targetStack == stack`; trocas de objeto cancelam canalização, mesmo que conteúdo pareça igual. A referência é `transient` e não é serializada em NBT; após deserialização `hasTarget()` exige referência válida e o caminho `getOrCreateCastData` pode relockar, exigindo QA de retomada.
+- **Economia e frações:** `mendTarget` soma `pendingRepairAmount` ao bônus `CraftsmansDelight.applyProcessSpeedBonus(spellPower/100,...)`, converte por `Mth.floor`, aplica somente durabilidade de fato restaurada e retém saldo; **10 ticks** por processamento. Quando chega a zero dano, `finishMending` faz reset e `MagicTools.cancelCasting(entity,true)`.
+- **QA:** swap/stack replacement, hand race, logout/restart com fração pendente, receita/denylist, interação com outros reparos e cobrança host; não duplicar reparo no BA.
+
+🟡 Dossiê causal source-level; ⚠️ equivalência bytecode/JAR/config, PvP/claims e QA Survival/dedicated pendentes; ⛔ sem adapter Mastery/perks real. Black Arcana não apropria casts, mana ou efeitos do provider.
