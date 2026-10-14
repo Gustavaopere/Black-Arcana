@@ -71,3 +71,13 @@ Occupies the **broad Fire force-wave / burn / directional knockback** niche. Thi
 - **Atributos/modificadores:** como addon do Iron's, `AbstractSpell` resolve spell power/custo e escola conforme seu contrato exato; parâmetros como raio, alvos e projéteis podem depender da classe acima ou de helpers/entidades *provider-owned*. Sua mutabilidade por perk está **CONDICIONADA** a evento/API/adapter validado na versão exata.
 - **Causalidade e proteção:** associar progressão ao cast original; não premiar projétil, dano indireto, summon ou recast como outro cast automaticamente. Nenhum teste de alteração de runtime, Survival ou hook foi conduzido por esta ficha.
 - **Proveniência:** fonte no commit 0.9.7.1 `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. Metadados e localizadores factuais; nenhuma cópia de implementação ou asset upstream.
+
+## Engenharia causal aprofundada — utilidades, persistência e recursos (2026-10-14)
+
+**Registry:** `apprenticecodex:combustion_jet`. **Proveniência source:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1); classes e helpers: [CombustionJet.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/combustionjet/CombustionJet.java); [CombustionJetWaveEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/combustionjet/CombustionJetWaveEntity.java).
+
+**Cadeia causal no código-fonte:** CombustionJet.onCast cria CombustionJetWaveEntity com origem/owner, direção, dano, burnDuration e maxTravelDistance. CombustionJetWaveEntity.tick limita deslocamento ao range, verifica colisão de bloco, aplica danos apenas ao segmento percorrido, descarta em colisão/limite; affectEntities resolve multipart e usa victimUuids para um único hit por entidade na mesma onda. affectEntity também aplica knockback/fire conforme o fluxo próprio da wave, sem segunda mana.
+
+**QA prioritário pendente:** Perfuração/oclusão e claims, marcação de vítima no reload de projétil, fogo/knockback quando dano é negado, anti-magic, ownership e velocidade sob sobrecarga.
+
+**Governança:** o host Iron's controla cast/mana/recast; o addon controla o estado/efeito/custo especializado verificado. Um pulso, dano periódico, bloco, item gerado, job tick, cast visual ou cast derivado não é uma identidade semântica nova nem gatilho de Mastery/XP automático. Black Arcana não reprocessa recursos, eventos, mutação do mundo ou callback dos providers. ⚠️ Source-level não comprova bytecode idêntico/config efetiva/teste físico. ⛔ Nenhum contrato de RPG Skill Tree perks/Mastery homologado: fail-closed.
