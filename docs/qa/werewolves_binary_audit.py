@@ -32,8 +32,10 @@ EXPECTED = (
     ("leap", "LEAP"),
     ("hide_name", "HIDE_NAME"),
 )
-# These are a catalog/source-level semantic split, not an in-game discovery result.
-REACHABILITY_NOT_CERTIFIED = ("leap",)
+# From the source-based semantic ledger: Leap is counted via the skill/input
+# route despite hidden selector UI; Hide Name is presentation-only and excluded.
+# This classification is NOT proven by javap or any in-game observation.
+EXCLUDED_FROM_STRICT_SEMANTIC = ("hide_name",)
 INSTRUCTION = re.compile(r"^\s*\d+:\s+([a-z][a-z0-9_]+)\b")
 FIELD = re.compile(r"^\s*public static final [^\n]*DeferredHolder[^\n]*\s+([A-Z][A-Z0-9_]*);$", re.M)
 ID = re.compile(r"^[a-z][a-z0-9_]*$")
@@ -96,7 +98,7 @@ def reconcile(disassembly: str, expected=EXPECTED) -> dict:
         "registered_observed": len(pairs),
         "distinct_observed": len({id for id, _ in pairs}),
         "deviations": {k: value for k, value in deviation.items() if value},
-        "excluded_from_semantic_count_source_classification": list(REACHABILITY_NOT_CERTIFIED),
+        "excluded_from_semantic_count_source_classification": list(EXCLUDED_FROM_STRICT_SEMANTIC),
         "semantic_reachability_verified_by_binary": False,
     }
 

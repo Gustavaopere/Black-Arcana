@@ -91,10 +91,10 @@ class WerewolvesExactRegistryTests(unittest.TestCase):
         bad = self.disassembly.replace("invokevirtual", "invokestatic")
         self.assertEqual(0, mod.reconcile(bad, TEST_PAIRS)["registered_observed"])
 
-    def test_excluded_action_not_automatically_normal_reachable(self):
+    def test_presentation_action_not_counted_as_new_semantic_root(self):
         info = mod.reconcile(self.disassembly, TEST_PAIRS)
         self.assertFalse(info["semantic_reachability_verified_by_binary"])
-        self.assertEqual(["leap"], info["excluded_from_semantic_count_source_classification"])
+        self.assertEqual(["hide_name"], info["excluded_from_semantic_count_source_classification"])
 
     def test_wrong_real_publisher_hash_rejected(self):
         with self.assertRaisesRegex(mod.AuditError,"SHA-1 mismatch"):
