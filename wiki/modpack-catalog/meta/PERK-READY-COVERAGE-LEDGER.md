@@ -31,7 +31,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-apothic-compats` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-enchanting` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registry/source-located; 🟡 64/83 engenharia causal aprofundada (+10 utilidades e persistência); 19 pendentes; ⚠️ bytecode/config/Survival/QA; ⛔ RPG perk adapter |
+| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registry/source-located; 🟡 74/83 engenharia causal aprofundada (+10 ofensiva/movimento/detecção); 9 pendentes; ⚠️ bytecode/config/Survival/QA; ⛔ RPG perk adapter |
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -270,3 +270,11 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`; **10 dossiês**: Assist Wings, Manifestation Grimoire, Bullet Stream, Healing Bloom, Heavenly Fist, Edge Dancer, World Flatter, Divine Possession, Otherworld Lens e Totem of Permafrost. [Matriz de alta fidelidade source-located](../providers/✅-apprentice-codex/PERK-ENGINEERING-MATRIX-PERSISTENT-0.9.7.1.md).
 - Cobertura profunda avança **24/83→34/83**, restam **49/83**. **83/83 identidades já catalogadas, +0 raiz semântica**. Os eventos de entidades, visualização, timers e limpeza não ampliam o inventário de magias.
 - **⚠️** Source não certifica bytecode do JAR nem execução de addon físico, configuração, world claim checks, Survival, client/dedicated, NBT ou incompatibilidade com outros mods. **⛔** nenhum adapter RPG perks/Mastery implementado e homologado. Sem código runtime BA ou Stage 06.05 promotion.
+
+
+## Apprentice's Codex — ofensiva/movimento/detecção (+10), 2026-10-14
+
+- Baseline `Black-Arcana/main@94f19f9ecf2959cb30fc6fa3195d3a71ca27bf9c`; source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`; sibling modlist `main@63a41587ed91e6768a6b863e74dfaf44b9eb3a46`.
+- ✅ 83/83 catalogadas; 🟡 74/83 com engenharia causal, 9 pendentes; +10 dossiês anexados a fichas existentes, [matriz](../providers/✅-apprentice-codex/PERK-ENGINEERING-MATRIX-OFFENSE-MOVEMENT-0.9.7.1.md), +0 raízes semânticas.
+- Achado de auditoria: `ArcaneBeamEntity.tick` tem condição de frequência distinta do comentário. `MantisLeapMovementEvent` preserva fallback de pouso ao destino se os offsets falham; `SenseEvil` não apresenta cap explícito no coletor de highlights.
+- ⚠️ QA do JAR/config, claims/PvP, dedicated, client e packets pendente. ⛔ RPG adapter sem contrato; Black Arcana não alterou pipeline mágico nem promoveu Stage.
