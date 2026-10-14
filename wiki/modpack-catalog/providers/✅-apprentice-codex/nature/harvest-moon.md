@@ -66,3 +66,15 @@ Any future RPG/Mastery integration must collapse the entire submitted harvest jo
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — mundo, channel e defesa (2026-10-14)
+
+**ID causal:** `apprenticecodex:harvest_moon` — uma magia Iron's-native; ticks/jobs/entidades/impactos são efeitos-filhos, nunca um novo cast.
+
+**Source pin:** [HarvestMoon.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/harvestmoon/HarvestMoon.java); [HarvestMoonJob.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/harvestmoon/HarvestMoonJob.java); [HarvestMoonJobManager.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/harvestmoon/HarvestMoonJobManager.java); [HarvestMoonAction.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/harvestmoon/HarvestMoonAction.java); [HarvestMoonTargetCollector.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/harvestmoon/HarvestMoonTargetCollector.java).
+
+**Cadeia verificada em source:** HarvestMoon.onCast em ServerPlayer coleta ações, copia mainhand e agenda HarvestMoonJob com BLOCK_BUDGET_PER_TICK = 32. HarvestMoonJob.tick encerra quando starter morre/sai de nível e remove ações até o orçamento por job; manager percorre a lista por ServerLevel (WeakHashMap) em LevelTickEvent.Post e não apresenta cap global de jobs nesse método. TargetCollector e HarvestMoonAction aplicam a denylist HARVEST_MOON_DENYLIST e ações específicas de colheita/drops.
+
+**QA prioritário (não executado):** Muitos jobs em paralelo, chunks descarregados, claims/plantas modded, drops duplicados e interrupção/crash: job em memória não é durável.
+
+**Boundary:** mana/casting Iron's e efeitos Apprentice's; nenhuma segunda liquidação/XP/Mastery por Black Arcana; contrato RPG sem hook comprovado: ⛔ fail-closed. ⚠️ Sem prova de bytecode do JAR instalado, config nem QA físico.

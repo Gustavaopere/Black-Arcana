@@ -31,7 +31,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-apothic-compats` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-enchanting` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registry/source-located; 🟡 34/83 engenharia causal aprofundada (+10 persistentes); ⚠️ bytecode/config/Survival/QA; ⛔ RPG perk adapter |
+| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registry/source-located; 🟡 44/83 engenharia causal aprofundada (+10 mundo/combate); 39 pendentes; ⚠️ bytecode/config/Survival/QA; ⛔ RPG perk adapter |
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |

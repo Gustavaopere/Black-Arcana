@@ -285,3 +285,9 @@ Este incremento documenta callbacks, estado owner/UUID, recuperação de itens, 
 **🟡 34/83** fichas com dossiê source-located aprofundado (6 originais + 8 alto risco + 10 lifecycle + 10 [persistentes](PERK-ENGINEERING-MATRIX-PERSISTENT-0.9.7.1.md)); **✅ 83/83** identidades permanecem inventariadas e **49/83** ainda esperam engenharia desse nível. **+0** raízes globais. Três famílias críticas tratadas: entidades/itens gerados, efeitos periódicos de dano/cura e intervenções sobre blocos/sessões.
 
 Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` e JAR instalado 0.9.7.1 da modlist sibling. **⚠️** Leitura de callbacks no source não comprova equivalência binária dos métodos ou QA Survival no modpack. **⛔** perks/Mastery sem contrato interoperável; o runtime Black Arcana não foi alterado.
+
+## Engenharia causal de mundo, channel e defesa — 2026-10-14
+
+**🟡 44/83** magias com dossiê source-level aprofundado (34 prévias + 10 deste lote); **✅ 83/83** identidades continuam catalogadas e **39/83** aguardam mesma profundidade; +0 roots. [Matriz de mundo/combate](PERK-ENGINEERING-MATRIX-WORLD-COMBAT-0.9.7.1.md) cobre Frost Rune, Inscribe Ice, Harvest Moon, Field Overseer, Graced Rain, Mage Light, Mystic Shield, Mirage Avoidance, Feather Rush e Phalanx Charge a partir do source fixado `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`.
+
+⚠️ Bytecode compilado, config efetiva, Survival/dedicated-modpack, claims, PvP, estado NBT e concorrência ainda aguardam QA. ⛔ Sem adapter real de perks/Mastery e sem promoção de Stage 06.05. Nenhuma mudança de runtime.
