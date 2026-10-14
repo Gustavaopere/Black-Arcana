@@ -40,9 +40,12 @@ jobs:
           set -euo pipefail
           mkdir -p build/werewolves-2033
           JAR='build/werewolves-2033/Werewolves-1.21-2.0.3.3.jar'
+          # CurseForge file 7814024 returned HTTP 403 in first CI attempt.
+          # Exact same publisher release is on Modrinth version zkd687ts;
+          # only the frozen modlist SHA-1 can authorize this fallback file.
           curl --fail --show-error --silent --location --retry 3 \
             --connect-timeout 20 --max-time 180 \
-            'https://mediafilez.forgecdn.net/files/7814/024/Werewolves-1.21-2.0.3.3.jar' \
+            'https://cdn.modrinth.com/data/3ElBohKg/versions/zkd687ts/Werewolves-1.21-2.0.3.3.jar' \
             --output "$JAR"
           echo "12a400d50c6e2afdcd96caf73cb80d37877147c8  $JAR" | sha1sum --check --status
           test "$(stat -c %s "$JAR")" -gt 500000
