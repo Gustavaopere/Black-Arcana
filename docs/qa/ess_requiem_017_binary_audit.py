@@ -20,7 +20,9 @@ SHA1 = 'c4648cced4f9e96527cfa4e3f5edcdcead43abb1'
 MOD_ID = 'ess_requiem'
 BASE = 'net.ender.ess_requiem.registries.GGSpellRegistry'
 DTE = 'net.ender.ess_requiem.compat.dte.dte_registry.DTESpellRegistry'
-CLASSES = {BASE: 55, DTE: 3}
+CLASSES = {BASE: 54, DTE: 3}
+SOURCE_ONLY_NOT_COMPILED = frozenset({'gong'})
+COMPILED_EXPECTED = 57
 MAX_BYTES = 32 * 1024 * 1024
 ID_LINE = re.compile(r'^\| \x60ess_requiem:([a-z0-9_]+)\x60 \| (COUNTED_SOURCE_PINNED|EXCLUDED) \|', re.M)
 INSTRUCTION = re.compile(r'^[ \t]*\d+:[ \t]+([\w]+)(?:[ \t]+[^/\n]*)?(?:[ \t]*//[ \t]*(.*))?$', re.M)
@@ -124,6 +126,10 @@ def run_javap(jar: Path, clazz: str) -> str:
 
 def audit(jar: Path, inventory: str) -> dict:
     expected = expected_inventory(inventory)
+    if (not SOURCE_ONLY_NOT_COMPILED.issubset(expected)
+            or any(expected[name] != 'COUNTED_SOURCE_PINNED' for name in SOURCE_ONLY_NOT_COMPILED)
+            or len(expected) - len(SOURCE_ONLY_NOT_COMPILED) != COMPILED_EXPECTED):
+        raise AuditError('source-only physical discrepancy has drifted')
     if jar.name != JAR_NAME or jar.is_symlink() or not jar.is_file():
         raise AuditError('wrong publisher JAR name or type')
     before = jar.stat()
@@ -161,12 +167,14 @@ def audit(jar: Path, inventory: str) -> dict:
     roots=[x['root'] for x in records]
     counts=Counter(roots)
     dte_roots={x['root'] for x in records if x['registry']=='DTE'}
+    compiled_expected = set(expected) - SOURCE_ONLY_NOT_COMPILED
     deviations={
-        'missing_ids': sorted(set(expected)-set(roots)),
-        'unexpected_ids': sorted(set(roots)-set(expected)),
+        'missing_ids': sorted(compiled_expected-set(roots)),
+        'unexpected_ids': sorted(set(roots)-compiled_expected),
+        'source_only_id_unexpectedly_registered': sorted(set(roots) & SOURCE_ONLY_NOT_COMPILED),
         'duplicate_ids': sorted(k for k,v in counts.items() if v!=1),
         'dte_root_mismatch': sorted(dte_roots ^ {'forever_dreaming','nightmare','nightmare_scream'}),
-        'count_mismatch': len(records)!=58,
+        'count_mismatch': len(records)!=COMPILED_EXPECTED,
         'registry_field_cardinality': {
             reg: {'expected': count, 'observed': observed_by_registry[reg]}
             for reg, count in CLASSES.items() if observed_by_registry[reg] != count
@@ -180,7 +188,10 @@ def audit(jar: Path, inventory: str) -> dict:
         'evidence_class':'SHA1_MATCHED_COMPILED_REGISTRATION_AND_SPELL_ID_NOT_RUNTIME_QA',
         'publisher_jar':JAR_NAME, 'mod_id':MOD_ID,'version':'0.1.7',
         'sha1':sha1,'sha256':sha256,'size_bytes':len(raw),
-        'registry_roots':len(records),'base_roots':len(records)-len(dte_roots),
+        'registry_roots':len(records),'source_registry_roots':len(expected),
+        'publisher_source_discrepancy': {'source_only_roots': sorted(SOURCE_ONLY_NOT_COMPILED),
+                                         'source_58_publisher_57': True},
+        'base_roots':len(records)-len(dte_roots),
         'conditional_dte_roots':len(dte_roots),'unique_roots':len(counts),
         'semantically_counted':sum(expected.get(x)=='COUNTED_SOURCE_PINNED' for x in roots),
         'technically_excluded':sum(expected.get(x)=='EXCLUDED' for x in roots),
