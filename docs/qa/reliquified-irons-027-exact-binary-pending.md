@@ -1,6 +1,6 @@
 # Reliquified Iron's Spells 'n Spellbooks 0.2.7 — exact-JAR audit gate
 
-**Opened 2026-10-14 · status 🟡 implementation of read-only binary audit / ⚠️ exact artifact result PENDING.** Black Arcana baseline `main@b7af4777cd3040de8770f46e92cdd80e36f1cd9e`; sibling modlist `main@9e6436edb0049a8dcc4e47165db0f6850e5efa68`. No new spells, no runtime Java and no Stage promotion.
+**Opened 2026-10-14 · ✅ exact SHA-matched binary registry proof succeeded; ⚠️ runtime/Survival still PENDING.** Black Arcana baseline `main@b7af4777cd3040de8770f46e92cdd80e36f1cd9e`; sibling modlist `main@9e6436edb0049a8dcc4e47165db0f6850e5efa68`. No new spells, no runtime Java and no Stage promotion.
 
 ## Provenance
 
@@ -20,7 +20,7 @@ The independent collector `docs/qa/reliquified_irons_binary_audit.py` checks:
 3. Missing class, altered ID, ability mismatch, file hash mismatch, duplicated ZIP entry, invalid NeoForge metadata or unavailable javap **fails closed**. The tests generate **synthetic Java 21 fixtures**, never third-party gameplay.
 4. The JSON report includes SHA-1, SHA-256, file byte size, audited counts, limited deviations and explicit unproven-runtime list. Only the small JSON may be uploaded as workflow artifact.
 
-**Until an actual run ends in PASS, this document does not promote the provider to `COUNTED_EXACT`.** Current frozen campaign after PR #809: 26/39 exact, 13/39 pending. Reliquified Iron's is one of the pending 13. No global semantic count change: 25 already source-counted roots; strict minimum 1857 global / 1855 scoped.
+**Observed exact-JAR PASS:** [run #38595504032](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38595504032) on PR #810's initial head, 24/24 items and 25/25 ability roots, no deviations, official SHA1 matching sibling #478 and SHA256 `36f938eb757134de24e51d33a745c4bf52088be764688f330b74757316c40ed7`, 653721 bytes. This promotes the cohort's documentary/binary field to `COUNTED_EXACT`: **27/39** exact / **12/39** pending **only when integrated into the canonical roster**. No global semantic count change: all 25 already source-counted roots; strict minima 1857 global / 1855 scoped. **Current PR HEAD must rerun audit and canonical CI before merge.**
 
 ## Runtime blockers
 
