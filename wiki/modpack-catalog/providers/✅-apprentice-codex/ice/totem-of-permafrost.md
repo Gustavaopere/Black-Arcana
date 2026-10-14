@@ -77,3 +77,22 @@ Occupies the **temporary placed Ice area-denial totem / repeated pulse / freeze 
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+---
+
+## Engenharia causal aprofundada — lote persistente 0.9.7.1
+
+**Classes verificadas:** [`totemofpermafrost/TotemOfPermafrost.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/totemofpermafrost/TotemOfPermafrost.java) · [`totemofpermafrost/TotemOfPermafrostTotemEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/totemofpermafrost/TotemOfPermafrostTotemEntity.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` declarado 0.9.7.1; **não** há prova de equivalência bytecode dos métodos com o JAR físico da modlist. A inspeção não é um QA provider-native.
+
+### Execução e integridade
+
+- **Admissão e recast:** `TotemOfPermafrost.checkPreCastConditions` consulta `PlacementHelper` para posição adequada e não permite outro totem na placement box. `onCast` revalida target, cria `TotemOfPermafrostTotemEntity` com owner/anchor/dano/lentidão/raio, persiste UUID da entidade em cast data e registra `RecastInstance`. Em `onRecastFinished` remove a entidade correspondente se carregada.
+- **Pulse por tick:** `TotemOfPermafrostTotemEntity.tickOnServer` descarta totem sem owner vivo e no mesmo nível, ancora enquanto `PlacementHelper.hasSupportBelow`, ou permite queda sem suporte. `FIRST_PULSE_TICK=10` e `PULSE_INTERVAL_TICK=15` definem os disparos da aura.
+- **Targeting e efeitos:** `pulse` cria área `AABB.ofSize` horizontal `radius*2+1`, vertical **3 blocos**, resolve alvos únicos e exige linha de visão. Usa `CombatTools.applyDamage` com `DamageTypes.TOTEM_OF_PERMAFROST`. **Somente se houve sucesso de dano** incrementa freezing por 40 ticks com cap `MAX_FREEZE_TICK=300` e aplica `MOVEMENT_SLOWDOWN` por 40 ticks.
+- **Riscos:** targets aliados, claims, LOS, múltiplos totems/owners, tick budget, limpeza de recast e unload. O pulse periódico não é uma nova spell, nem o freezing permite Mastery por status sem receipt seguro.
+
+### Interoperabilidade e QA
+
+**Raiz contável:** `apprenticecodex:totem_of_permafrost`, já presente nas 83 spells. Efeitos secundários/ticks/entidades continuam provider-owned (Iron's/Apprentice's). **⛔** RPG Skill Tree só pode oferecer progressão/atributos/gates via contrato real; nenhum adapter de perks/Mastery foi implementado. Black Arcana não reexecuta nem debita recursos/cooldowns do provider. **⚠️** Persistem QA físico, modpack Survival, server+client, config, multiplayer, claims, lifecycle NBT e método de JAR. Stage 06.05 sem promoção.
+
+[Matriz técnica da etapa](../PERK-ENGINEERING-MATRIX-PERSISTENT-0.9.7.1.md).

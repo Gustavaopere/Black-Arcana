@@ -31,7 +31,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-apothic-compats` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-enchanting` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registry/source-located; 🟡 24/83 engenharia causal aprofundada (+10 entidades/automação); ⚠️ bytecode/config/Survival/QA; ⛔ RPG perk adapter |
+| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registry/source-located; 🟡 34/83 engenharia causal aprofundada (+10 persistentes); ⚠️ bytecode/config/Survival/QA; ⛔ RPG perk adapter |
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -262,3 +262,11 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - Cobertura de **engenharia causal** progride **14/83 → 24/83**, restam **59/83** sem a mesma profundidade. **Identidades catalogadas 83/83, +0 ao denominador semântico global**. Arquivos Markdown podem crescer, mas não são novas magias.
 - Riscos ⚠️: cobrança de restock, cleanup varrendo níveis, item inventory/cursor, UUID e NBT de pets, item reservation/refund, transferência via item handler e jobs sem cap agregado neste manager. Bytecode exato do JAR, pack config e QA físico não provados.
 - **Black Arcana e RPG Skill Tree:** nenhum adapter, cast replay, segunda liquidação, reward, claim policy ou world effect externo implementado; RPG perks/Mastery ⛔. Stage 06.05 permanece sem promoção.
+
+
+## Apprentice's Codex 0.9.7.1 — persistência, combate e mundo (+10), 2026-10-14
+
+- Baseline `Black-Arcana/main@504e00b83c1f4a09d4f265042af93369736d7a28`. Sibling modlist `main@82d7b7a8d15ab96ed7c59cc0c3e870edfe02cf4d` mantém `apprentice_codex-0.9.7.1+mc1.21.1.jar`, `apprenticecodex`, SHA-1 `b514315add32b93b0049c8673075627d7ef812e0`.
+- Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`; **10 dossiês**: Assist Wings, Manifestation Grimoire, Bullet Stream, Healing Bloom, Heavenly Fist, Edge Dancer, World Flatter, Divine Possession, Otherworld Lens e Totem of Permafrost. [Matriz de alta fidelidade source-located](../providers/✅-apprentice-codex/PERK-ENGINEERING-MATRIX-PERSISTENT-0.9.7.1.md).
+- Cobertura profunda avança **24/83→34/83**, restam **49/83**. **83/83 identidades já catalogadas, +0 raiz semântica**. Os eventos de entidades, visualização, timers e limpeza não ampliam o inventário de magias.
+- **⚠️** Source não certifica bytecode do JAR nem execução de addon físico, configuração, world claim checks, Survival, client/dedicated, NBT ou incompatibilidade com outros mods. **⛔** nenhum adapter RPG perks/Mastery implementado e homologado. Sem código runtime BA ou Stage 06.05 promotion.
