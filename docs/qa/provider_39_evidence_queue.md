@@ -1,5 +1,7 @@
 # 39 providers — fila de evidências para validação binária
 
+**Checkpoint atual 2026-10-14 — Reliquified Iron's 0.2.7:** [binário 24/24 + 25/25](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38595504032) **SUCCESS** em JAR publisher SHA-equal à modlist #478. Fila congelada: **✅ 27/39** proofs independentes, **⚠️ 12/39** pendentes. `registry_proofs_completed=0` no coletor de fingerprint continua correto porque esse coletor **não executa nenhuma dessas provas**. Config/Survival, Relics rank, e Iron's mana não foram validados em jogo. Checkpoints anteriores históricos.
+
 **Checkpoint atual (2026-10-14) — Apprentice's Codex 0.9.7.1:** [83/83 callsites compilados exatos](apprentice-codex-registry-binary-2026-10-14.md), [run #38578571735](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38578571735) **SUCCESS**. **✅ 26/39** provas independentes e **⚠️ 13/39** pendentes; +0 raízes, mínimos **1857/1855** mantidos. Fingerprint collector continua `registry_proofs_completed=0`, pois não executa nenhuma das 26 auditorias independentes. `AC-P01–AC-P05` PENDING e Stage 06.05 sem promoção. Snapshots abaixo históricos.
 
 **Checkpoint Paladin 2026-10-12:** [cinco IDs binários exatos](../../wiki/modpack-catalog/providers/✅-paladin-spells/EXACT-BINARY-SPELLS-1.1.1.md) auditados em [run #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364). **5/39** exatos e **34/39** pendentes; +0 novos, 1851/1849 inalterados. Fingerprint collector segue em `registry_proofs_completed=0`; checkpoints abaixo permanecem históricos.
