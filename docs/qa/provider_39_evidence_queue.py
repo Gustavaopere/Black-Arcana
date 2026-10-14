@@ -52,7 +52,8 @@ KNOWN_EXACT = {"Ypsilon's Fundamentalism": ('1.1.7.1', 15),
                "Reliquified Ars Nouveau": ('0.8.1', 19),
                "Apprentice's Codex": ('0.9.7.1', 83),
                "Reliquified Iron's Spells 'n Spellbooks": ('0.2.7', 25),
-               "Hexalia": ('1.3.7', 29)}
+               "Hexalia": ('1.3.7', 29),
+               "Ender's Spells and Stuff: Requiem": ('0.1.7', 52)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')
