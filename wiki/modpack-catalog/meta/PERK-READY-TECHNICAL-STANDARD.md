@@ -1,6 +1,6 @@
 # Black Arcana — padrão universal de dossiê técnico para perks, magias e rituais
 
-**Status:** NORMA EDITORIAL DE CATALOGAÇÃO / NÃO É API IMPLEMENTADA.  
+**Status:** NORMA EDITORIAL DE CATALOGAÇÃO / NÃO É API IMPLEMENTADA.
 **Aplicação:** toda ficha `.md` que representa identidade mágica catalogada: spell, glyph (form/effect/augment), ritual, Focus, summon/poder, relíquia ativa ou ação sobrenatural. Índices, inventários, README, auditorias, licenças e relatórios de CI não são *fichas por magia* e continuam sendo fontes/índices, não réplicas de dossiês.
 
 ## Objetivo
