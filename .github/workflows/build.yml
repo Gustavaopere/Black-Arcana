@@ -54,6 +54,11 @@ jobs:
       - name: Magic pendency tracker and cross-domain triage tests
         run: python3 docs/qa/magic_pendency_tracker_test.py
 
+      - name: Apprentice Codex provider-real evidence schema tests (not gameplay QA)
+        run: |
+          python3 docs/qa/apprentice_codex_provider_real_evidence_test.py -v
+          python3 docs/qa/apprentice_codex_provider_real_evidence.py
+
       - name: Full physical non-Magic archive triage tests
         run: python3 docs/qa/nonmagic_physical_jar_triage_test.py
 

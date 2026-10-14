@@ -52,3 +52,15 @@ is an explicit D035 handoff, **not** Stage promotion or manual PASS:
 - independently retain the **provider-vs-SavedData abrupt-crash consistency window** as PENDING; transition-time capture is not durable atomic disk commit.
 
 These rows remain `PENDING / DEFERRED TO STAGE 09` until observed on an exact release candidate. Automated evidence may support setup but never converts a manual row to PASS. Any FAIL reopens the originating plan for correction before release.
+
+## Apprentice's Codex 0.9.7.1 — five provider-real cases (D035)
+
+The exact-file SHA-verified binary audit is already captured in `docs/qa/apprentice-codex-binary-audit-2026-10-14.md`. It proves four compiled instruction/call patterns, **not** loaded modpack behavior. The [provider-real execution profile](../../docs/qa/apprentice-codex-provider-real-runbook.md) (relative to this Stage 09 matrix: `../../docs/qa/apprentice-codex-provider-real-runbook.md`) and [pending evidence JSON](../../docs/qa/apprentice-codex-provider-real-evidence.json) preserve **five mandatory PENDING** cases for the Stage 09 exact candidate:
+
+- **AC-P01**: exact official provider SHA/JAR, Iron's + Apprentice's mod IDs, dedicated/client boot and four legitimate spell registry entries.
+- **AC-P02**: Arcane Beam server tick/damage-attempt cadence, actual accepted damage, owner, and cast-cancel entity cleanup.
+- **AC-P03**: Unite Luna normal impact vs a legitimate Counterspell/antimagic hit before burst, including 3.0× raw-damage route, PvP/friendly-fire/claims.
+- **AC-P04**: Palette Shift Pastel Staff reception followed by **cancellation** of a different next spell's pre-cast, with actual staff affinity and mana/cooldown observations.
+- **AC-P05**: Mana Mending reference-identity hand swap, fractional repair, exact mana, logout/relog/save/restart and no duplicate repair.
+
+**State:** ⚠️ all five remain PENDING; **no** client/server world run is represented by source, JAR fingerprint, `javap`, CI or a well-formed evidence ledger. `python3 docs/qa/apprentice_codex_provider_real_evidence.py` only validates the evidence record shape and explicitly reports gameplay authenticity unverifiable in automation. Any operator-reported PASS requires independent review of captured real-game evidence. RPG Skill Tree perks/Mastery remain ⛔ fail-closed; Stage 06.05 is not promoted.
