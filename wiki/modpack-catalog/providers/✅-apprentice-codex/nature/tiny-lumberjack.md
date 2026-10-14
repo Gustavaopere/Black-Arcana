@@ -61,3 +61,25 @@ Occupies the **continuous magical saw / log-felling + close combat** niche.
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+---
+
+## Engenharia causal aprofundada — entidades 0.9.7.1
+
+**Fonte lida:** [`tinylumberjack/TinyLumberjack.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/tinylumberjack/TinyLumberjack.java) · [`tinylumberjack/TinyLumberjackJob.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/tinylumberjack/TinyLumberjackJob.java) · [`tinylumberjack/TinyLumberjackJobManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/tinylumberjack/TinyLumberjackJobManager.java) · [`tinylumberjack/TinyLumberjackDropMover.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/tinylumberjack/TinyLumberjackDropMover.java) · [`tinylumberjack/TinyLumberjackBlockClassifier.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/tinylumberjack/TinyLumberjackBlockClassifier.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` alinhado à release declarada 0.9.7.1. Versão e SHA do JAR são da modlist física; **corpos de bytecode destes métodos não foram provados como equivalentes ao source**.
+
+### Execução, persistência e efeitos secundários
+
+- **Fila causal:** `TinyLumberjackJob` conserva posição original, `logsPerTick=max(1,requested)`, `starter=ServerPlayer`, `logQueue` e `leafQueue`, conjuntos de visitados e `dropAttractPos`. `tick` processa até `logsPerTick` nós de log naquele ciclo; rejeita posições abaixo do Y original, testa classe de `TinyLumberjackBlockClassifier`, quebra logs e insere vizinhos e folhas próximos. Somente quando **ambas** filas ficam vazias marca job como completo.
+- **Gerenciador de jobs:** `TinyLumberjackJobManager.submit` armazena jobs por `ServerLevel` em `WeakHashMap`; `onLevelTick(LevelTickEvent.Post)` percorre a lista, executa `job.tick` e remove jobs completados. O source observado não impõe nesse gerenciador um limite global de quantidade de jobs simultâneos. Portanto, `logsPerTick` limita trabalho **por job**, não orçamento agregado de todos os players.
+- **Block break:** `breakBlock` chama `TinyLumberjackDropMover.breakBlockByPlayerHands` com dummy axe gerado pelo provider. Quando `CraftsmansDelight.isEquippedBy(player)` é falso, usa apenas `BlockTools.breakBlockByPlayerHands`; quando é verdadeiro, captura IDs de `ItemEntity` ao redor (AABB 1.5), executa break e move somente **novos** drops aos pés/centro do corte. Esse movimento de drops não é nova spell nem garante pickup.
+- **Risco de segurança:** a interação depende da `ServerPlayer` original para break; é preciso testar remoção do jogador, logout, chunk unload, proteção de claim, múltiplos jobs simultâneos, folhas conectadas, regras de tree/leaves e custos/balancing antes de perk de área. Black Arcana não deve duplicar corte, jobs, mana nem XP por log.
+
+### Boundary para perks e QA
+
+- **Raiz:** `apprenticecodex:tiny_lumberjack`, já contabilizada no registry 83/83. Spawn, cleanup, tick, drop, item handling e efeitos causais **não** são novos casts contáveis.
+- **Autoridade:** Iron's mantém escola, casting, mana e recast padrão; Apprentice's Codex detém entidades, itens e efeitos auxiliares; Black Arcana mantém apenas sua própria pipeline de magia/rituais, política de efeitos de mundo, Corruption e Strain.
+- **Bloqueio:** ⛔ nenhuma API ou bridge de Mastery/perks confirmada para executar intervenções seguras; não deduzir rewards de eventos locais.
+- **Pendências:** ⚠️ equivalência source/JAR, configuração, servidor dedicado com modpack real, multiplayer/PvP, inventários de terceiros, proteção de claims, save/reload e edge cases de entidades. Nenhuma prova de QA físico do provider nesta atualização.
+
+[Matriz de lifecycle](../PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md).
